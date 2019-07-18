@@ -459,7 +459,13 @@ test {
     CONFIG -= app_bundle
     !win32 {  # add memory checking on Linux and macOS test builds
         QMAKE_CFLAGS += -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
+        lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
+            QMAKE_CFLAGS -= -fsanitize-address-use-after-scope
+        }
         QMAKE_CXXFLAGS += -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
+        lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
+            QMAKE_CXXFLAGS -= -fsanitize-address-use-after-scope
+        }
         QMAKE_LFLAGS += -fsanitize=address
     }
 

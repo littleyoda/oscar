@@ -1,5 +1,6 @@
 /* EDF Parser Header
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -13,7 +14,6 @@
 #include <QVector>
 #include <QHash>
 #include <QList>
-#include <QMutex>
 
 #include "SleepLib/common.h"
 
@@ -24,7 +24,7 @@ const QString STR_ext_gz = ".gz";
     \brief  Represents the EDF+ header structure, used as a place holder while processing the text data.
     \note More information on the EDF+ file format can be obtained from http://edfplus.info
 */
-struct EDFHeader {
+struct EDFHeaderRaw {
     char version[8];
     char patientident[80];
     char recordingident[80];
@@ -39,8 +39,23 @@ struct EDFHeader {
 __attribute__((packed))
 #endif
 ;
+const int EDFHeaderSize = sizeof(EDFHeaderRaw);
 
-const int EDFHeaderSize = sizeof(EDFHeader);
+/*! \struct EDFHeaderQT
+    \brief Contains the QT version of the EDF header information
+    */
+struct EDFHeaderQT {
+  public:
+    long version;
+    QString patientident;
+    QString recordingident;
+    QDateTime startdate_orig;
+    long num_header_bytes;
+    QString reserved44;
+    long num_data_records;
+    long duration_Seconds;
+    long num_signals;
+};
 
 /*! \struct EDFSignal
     \brief Contains information about a single EDF+ Signal
@@ -48,47 +63,20 @@ const int EDFHeaderSize = sizeof(EDFHeader);
     */
 struct EDFSignal {
   public:
-    //! \brief Name of this Signal
-    QString label;
-
-    //! \brief Tranducer Type (source of the data, usually blank)
-    QString transducer_type;
-
-    //! \brief The units of measurements represented by this signal
-    QString physical_dimension;
-
-    //! \brief The minimum limits of the ungained data
-    EventDataType physical_minimum;
-
-    //! \brief The maximum limits of the ungained data
-    EventDataType physical_maximum;
-
-    //! \brief The minimum limits of the data with gain and offset applied
-    EventDataType digital_minimum;
-
-    //! \brief The maximum limits of the data with gain and offset applied
-    EventDataType digital_maximum;
-
-    //! \brief Raw integer data is multiplied by this value
-    EventDataType gain;
-
-    //! \brief This value is added to the raw data
-    EventDataType offset;
-
-    //! \brief Any prefiltering methods used (usually blank)
-    QString prefiltering;
-
-    //! \brief Number of records
-    long nr;
-
-    //! \brief Reserved (usually blank)
-    QString reserved;
-
-    //! \brief Pointer to the signals sample data
-    qint16 *data;
-
-    //! \brief a non-EDF extra used internally to count the signal data
-    int pos;
+    QString label; //! \brief Name of this Signal
+    QString transducer_type; //! \brief Tranducer Type (source of the data, usually blank)
+    QString physical_dimension; //! \brief The units of measurements represented by this signal
+    EventDataType physical_minimum; //! \brief The minimum limits of the ungained data
+    EventDataType physical_maximum; //! \brief The maximum limits of the ungained data
+    EventDataType digital_minimum; //! \brief The minimum limits of the data with gain and offset applied
+    EventDataType digital_maximum; //! \brief The maximum limits of the data with gain and offset applied
+    EventDataType gain; //! \brief Raw integer data is multiplied by this value
+    EventDataType offset; //! \brief This value is added to the raw data
+    QString prefiltering; //! \brief Any prefiltering methods used (usually blank)
+    long nr; //! \brief Number of records
+    QString reserved; //! \brief Reserved (usually blank)
+    qint16 *value; //! \brief Pointer to the signals sample data
+    int pos; //! \brief a non-EDF extra used internally to count the signal data
 };
 
 
@@ -108,11 +96,34 @@ class EDFParser
     //! \brief Open the EDF+ file, and read it's header
     bool Open(const QString & name);
 
+    //! \brief Parse the EDF+ file into the list of EDFSignals.. Must be call Open(..) first.
+    bool Parse();
+
     //! \brief Read n bytes of 8 bit data from the EDF+ data stream
     QString Read(unsigned n);
 
     //! \brief Read 16 bit word of data from the EDF+ data stream
     qint16 Read16();
+
+    //! \brief Return a ptr to the i'th signal with the given name (if multiple signal with the same name(?!))
+    EDFSignal *lookupLabel(const QString & name, int index=0);
+
+    //! \brief Returns the number of signals contained in this EDF file
+    long GetNumSignals() { return edfHdr.num_signals; }
+
+    //! \brief Returns the number of data records contained per signal.
+    long GetNumDataRecords() { return edfHdr.num_data_records; }
+
+    //! \brief Returns the duration represented by this EDF file (in milliseconds)
+    qint64 GetDuration() { return dur_data_record; }
+
+    //! \brief Returns the patientid field from the EDF header
+    QString GetPatient() { return edfHdr.patientident; }
+
+//  The data members follow
+
+    //! \brief The header in a QT friendly form
+    EDFHeaderQT edfHdr;
 
     //! \brief Vector containing the list of EDFSignals contained in this edf file
     QVector<EDFSignal> edfsignals;
@@ -120,50 +131,27 @@ class EDFParser
     //! \brief An by-name indexed into the EDFSignal data
     QStringList signal_labels;
 
-    //! \brief ResMed likes to use the SAME signal name
+    //! \brief ResMed sometimes re-uses the SAME signal name
     QHash<QString, QList<EDFSignal *> > signalList;
 
-    EDFSignal *lookupLabel(const QString & name, int index=0);
+    //! \brief The following are computed from the edfHdr data
+    QString serialnumber;
+    qint64 dur_data_record;
+    qint64 startdate;
+    qint64 enddate;
 
-    //! \brief Returns the number of signals contained in this EDF file
-    long GetNumSignals() { return num_signals; }
-
-    //! \brief Returns the number of data records contained per signal.
-    long GetNumDataRecords() { return num_data_records; }
-
-    //! \brief Returns the duration represented by this EDF file (in milliseconds)
-    qint64 GetDuration() { return dur_data_record; }
-
-    //! \brief Returns the patientid field from the EDF header
-    QString GetPatient() { return patientident; }
-
-    //! \brief Parse the EDF+ file into the list of EDFSignals.. Must be call Open(..) first.
-    bool Parse();
-    char *buffer;
-
+//  the following could be private
+    //! \brief This is the array holding the EDF file data
+    QByteArray fileData;
     //! \brief  The EDF+ files header structure, used as a place holder while processing the text data.
-    EDFHeader *header;
-    QByteArray data;
+    EDFHeaderRaw *hdrPtr;
+    //! \brief This is the array of signal descriptors and values
+    char *signalPtr;
 
     QString filename;
     long filesize;
     long datasize;
     long pos;
-
-    long version;
-    long num_header_bytes;
-    long num_data_records;
-    qint64 dur_data_record;
-    long num_signals;
-
-    QString patientident;
-    QString recordingident;
-    QString serialnumber;
-    QDateTime startdate_orig;
-    qint64 startdate;
-    qint64 enddate;
-    QString reserved44;
-//    static QMutex EDFMutex;
     bool eof;
 };
 
