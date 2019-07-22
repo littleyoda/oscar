@@ -20,6 +20,10 @@
 const QString STR_ext_EDF = "edf";
 const QString STR_ext_gz = ".gz";
 
+const char AnnoSep = 20;
+const char AnnoDurMark = 21;
+const char AnnoEnd = 0;
+
 /*! \struct EDFHeader
     \brief  Represents the EDF+ header structure, used as a place holder while processing the text data.
     \note More information on the EDF+ file format can be obtained from http://edfplus.info

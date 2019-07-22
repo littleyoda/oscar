@@ -40,12 +40,14 @@ EDFParser::~EDFParser()
 bool EDFParser::Open(const QString & name)
 {
     if (hdrPtr != nullptr) {
-        qWarning() << "EDFParser::Open() called with file already open" << name;
+        qWarning() << "EDFParser::Open() called with file already open " << name;
+        sleep(1);
         return false;
     }
     QFile fi(name);
     if (!fi.open(QFile::ReadOnly)) {
-        qDebug() << "EDFParser::Open() Couldn't open file" << name;
+        qDebug() << "EDFParser::Open() Couldn't open file " << name;
+        sleep(1);
         return false;
     }
     if (name.endsWith(STR_ext_gz)) {
@@ -55,7 +57,8 @@ bool EDFParser::Open(const QString & name)
     }
     fi.close();
     if (fileData.size() <= EDFHeaderSize) {
-        qDebug() << "EDFParser::Open() File too short" << name;
+        qDebug() << "EDFParser::Open() File too short " << name;
+        sleep(1);
         return false;
     }
     hdrPtr = (EDFHeaderRaw *)fileData.constData();
@@ -72,97 +75,64 @@ bool EDFParser::Parse()
     bool ok;
 
     if (hdrPtr == nullptr) {
-        qWarning() << "EDFParser::Parse() called without valid EDF data" << filename;
+        qWarning() << "EDFParser::Parse() called without valid EDF data " << filename;
+        sleep(1);
         return false;
     }
 
     eof = false;
     edfHdr.version = QString::fromLatin1(hdrPtr->version, 8).toLong(&ok);
     if (!ok) {
+        qWarning() << "EDFParser::Parser() Bad Version " << filename;
+        sleep(1);
         return false;
     }
 
     //patientident=QString::fromLatin1(header.patientident,80);
     edfHdr.recordingident = QString::fromLatin1(hdrPtr->recordingident, 80); // Serial number is in here..
-    int snp = edfHdr.recordingident.indexOf("SRN=");
-    serialnumber.clear();
-
-    for (int i = snp + 4; i < edfHdr.recordingident.length(); i++) {
-        if (edfHdr.recordingident[i] == ' ') {
-            break;
-        }
-
-        serialnumber += edfHdr.recordingident[i];
-    }
-
     edfHdr.startdate_orig = QDateTime::fromString(QString::fromLatin1(hdrPtr->datetime, 16), "dd.MM.yyHH.mm.ss");
-
-    QDate d2 = edfHdr.startdate_orig.date();
-
-    if (d2.year() < 2000) {
-        d2.setDate(d2.year() + 100, d2.month(), d2.day());
-        edfHdr.startdate_orig.setDate(d2);
-    }
-
-    if (!edfHdr.startdate_orig.isValid()) {
-        qDebug() << "Invalid date time retreieved parsing EDF File" << filename;
-        return false;
-    }
-
-    startdate = qint64(edfHdr.startdate_orig.toTime_t()) * 1000L;
-    //startdate-=timezoneOffset();
-    if (startdate == 0) {
-        qDebug() << "Invalid startdate = 0 in EDF File" << filename;
-        return false;
-    }
-
-    qDebug() << edfHdr.startdate_orig.toString("yyyy-MMM-dd HH:mm:ss") << "in" << filename;
-
     edfHdr.num_header_bytes = QString::fromLatin1(hdrPtr->num_header_bytes, 8).toLong(&ok);
-
     if (!ok) {
+        qWarning() << "EDFParser::Parde() Bad header byte count " << filename;
+        sleep(1);
         return false;
     }
-
     edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44);
     edfHdr.num_data_records = QString::fromLatin1(hdrPtr->num_data_records, 8).toLong(&ok);
-
     if (!ok) {
+        qWarning() << "EDFParser::Parse() Bad data record count " << filename;
+        sleep(1);
         return false;
     }
-
-    edfHdr.duration_Seconds = QString::fromLatin1(hdrPtr->dur_data_records, 8).toLong(&ok);
-
+    edfHdr.duration_Seconds = QString::fromLatin1(hdrPtr->dur_data_records, 8).toDouble(&ok);
     if (!ok) {
+        qWarning() << "EDFParser::Parse() Bad duration " << filename;
+        sleep(1);
         return false;
     }
-    dur_data_record = (edfHdr.duration_Seconds * 1000.0L);
-
     edfHdr.num_signals = QString::fromLatin1(hdrPtr->num_signals, 4).toLong(&ok);
-
     if (!ok) {
+        qWarning() << "EDFParser::Parse() Bad number of signals " << filename;
+        sleep(1);
         return false;
     }
-
-    enddate = startdate + dur_data_record * qint64(edfHdr.num_data_records);
-    // if (dur_data_record==0)
-    //   return false;
-
-    // this could be loaded quicker by transducer_type[signal] etc..
 
     // Initialize fixed-size signal list.
     edfsignals.resize(edfHdr.num_signals);
 
+    // Now copy all the Signal descriptives into edfsignals
     for (auto & sig : edfsignals) {
         sig.value = nullptr;
         sig.label = Read(16);
 
         signal_labels.push_back(sig.label);
         signalList[sig.label].push_back(&sig);
-        if (eof) 
+        if (eof) {
+            qWarning() << "EDFParser::Parse() Early end of file " << filename;
+            sleep(1);
             return false;
+        }
     }
-
     for (auto & sig : edfsignals) { 
         sig.transducer_type = Read(80); 
     }
@@ -194,10 +164,13 @@ bool EDFParser::Parse()
     }
 
     // could do it earlier, but it won't crash from > EOF Reads
-    if (eof) 
+    if (eof) {
+        qWarning() << "EDFParser::Parse() Early end of file " << filename;
+        sleep(1);
         return false;
+    }
 
-    // Now check the file isn't truncated before allocating all the memory
+    // Now check the file isn't truncated before allocating space for the values
     long allocsize = 0;
     for (auto & sig : edfsignals) {
         if (edfHdr.num_data_records > 0) {
@@ -207,11 +180,12 @@ bool EDFParser::Parse()
     if (allocsize > (datasize - pos)) {
         // Space required more than the remainder left to read,
         // so abort and let the user clean up the corrupted file themselves
-        qWarning() << "EDFParser::Parse():" << filename << " is too short!";
+        qWarning() << "EDFParser::Parse(): " << filename << " is too short!";
+        sleep(1);
         return false;
     }
 
-    // allocate the buffers for the signal values
+    // allocate the arrays for the signal values
     for (auto & sig : edfsignals) {
         long recs = sig.nr * edfHdr.num_data_records;
         if (edfHdr.num_data_records <= 0) {
@@ -237,6 +211,41 @@ bool EDFParser::Parse()
 #endif
         }
     }
+
+    // Now massage some stuff into OSCAR's layout
+    int snp = edfHdr.recordingident.indexOf("SRN=");
+    serialnumber.clear();
+
+    for (int i = snp + 4; i < edfHdr.recordingident.length(); i++) {
+        if (edfHdr.recordingident[i] == ' ') {
+            break;
+        }
+        serialnumber += edfHdr.recordingident[i];
+    }
+
+    QDate d2 = edfHdr.startdate_orig.date();
+    if (d2.year() < 2000) {
+        d2.setDate(d2.year() + 100, d2.month(), d2.day());
+        edfHdr.startdate_orig.setDate(d2);
+    }
+
+    if (!edfHdr.startdate_orig.isValid()) {
+        qDebug() << "Invalid date time retreieved parsing EDF File " << filename;
+        sleep(1);
+        return false;
+    }
+
+    startdate = qint64(edfHdr.startdate_orig.toTime_t()) * 1000LL;
+    //startdate-=timezoneOffset();
+    if (startdate == 0) {
+        qDebug() << "Invalid startdate = 0 in EDF File " << filename;
+        sleep(1);
+        return false;
+    }
+
+    dur_data_record = (edfHdr.duration_Seconds * 1000.0L);
+
+    enddate = startdate + dur_data_record * qint64(edfHdr.num_data_records);
 
     return true;
 }
