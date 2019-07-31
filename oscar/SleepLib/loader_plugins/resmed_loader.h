@@ -30,18 +30,46 @@ EDFType lookupEDFType(const QString & text);
 
 const QString resmed_class_name = STR_MACH_ResMed;
 
-class ResMedEDFParser:public EDFParser
+class ResMedEDFInfo : public EDFInfo
 {
 public:
-    ResMedEDFParser(QString filename = "");
-    ~ResMedEDFParser();
+    ResMedEDFInfo();
+    ~ResMedEDFInfo();
+    
+    virtual bool Parse(QByteArray * fileData) override;		// overrides and calls the super's Parse
+    
+    virtual qint64 GetDurationMillis() { return dur_data_record; }	// overrides the super 
+    
     EDFSignal *lookupSignal(ChannelID ch);
+    
+    
+    
+    //! \brief The following are computed from the edfHdr data
+    QString serialnumber;
+    qint64 dur_data_record;
+    qint64 startdate;
+    qint64 enddate;
+
+};
+
+class EDFduration
+{
+public:
+    EDFduration() { start = end = 0; type = EDF_UNKNOWN; }
+    EDFduration(quint32 start, quint32 end, QString path) :
+        start(start), end(end), path(path) {}
+
+    quint32 start;
+    quint32 end;
+    QString path;
+    QString filename;
+    EDFType type;
 };
 
 
-
-struct STRRecord
+class STRRecord
 {
+public:
     STRRecord() {
         maskon.clear();
         maskoff.clear();
@@ -125,82 +153,8 @@ struct STRRecord
 
         date=QDate();
     }
-    STRRecord(const STRRecord & copy) {
-        maskon = copy.maskon;
-        maskoff = copy.maskoff;
-        maskdur = copy.maskdur;
-        maskevents = copy.maskevents;
-        mode = copy.mode;
-        rms9_mode = copy.rms9_mode;
-        set_pressure = copy.set_pressure;
-        epap = copy.epap;
-        max_pressure = copy.max_pressure;
-        min_pressure = copy.min_pressure;
-        max_ps = copy.max_ps;
-        min_ps = copy.min_ps;
-        ps = copy.ps;
-        max_epap = copy.max_epap;
-        min_epap = copy.min_epap;
-        ipap = copy.ipap;
-        max_ipap = copy.max_ipap;
-        min_ipap = copy.min_ipap;
-        epr = copy.epr;
-        epr_level = copy.epr_level;
-        sessionid = copy.sessionid;
-        ahi = copy.ahi;
-        ai = copy.ai;
-        oai = copy.oai;
-        hi = copy.hi;
-        uai = copy.uai;
-        cai = copy.cai;
-        csr = copy.csr;
-
-        date = copy.date;
-        leak50 = copy.leak50;
-        leak95 = copy.leak95;
-        leakmax = copy.leakmax;
-        rr50 = copy.rr50;
-        rr95 = copy.rr95;
-        rrmax = copy.rrmax;
-        mv50 = copy.mv50;
-        mv95 = copy.mv95;
-        mvmax = copy.mvmax;
-        ie50 = copy.ie50;
-        ie95 = copy.ie95;
-        iemax = copy.iemax;
-        tv50 = copy.tv50;
-        tv95 = copy.tv95;
-        tvmax = copy.tvmax;
-        mp50 = copy.mp50;
-        mp95 = copy.mp95;
-        mpmax = copy.mpmax;
-
-
-        tgtepap50 = copy.tgtepap50;
-        tgtepap95 = copy.tgtepap95;
-        tgtepapmax = copy.tgtepapmax;
-        tgtipap50 = copy.tgtipap50;
-        tgtipap95 = copy.tgtipap95;
-        tgtipapmax = copy.tgtipapmax;
-
-        s_EPREnable = copy.s_EPREnable;
-        s_EPR_ClinEnable = copy.s_EPREnable;
-        s_RampEnable = copy.s_RampEnable;
-        s_RampTime = copy.s_RampTime;
-
-        s_SmartStart = copy.s_SmartStart;
-        s_PtAccess = copy.s_PtAccess;
-        s_ABFilter = copy.s_ABFilter;
-        s_Mask = copy.s_Mask;
-
-        s_Tube = copy.s_Tube;
-        s_ClimateControl = copy.s_ClimateControl;
-        s_HumEnable = copy.s_HumEnable;
-        s_HumLevel = copy.s_HumLevel;
-        s_TempEnable = copy.s_TempEnable;
-        s_Temp = copy.s_Temp;
-        ramp_pressure = copy.ramp_pressure;
-    }
+    
+// All the data members
     QVector<quint32> maskon;
     QVector<quint32> maskoff;
 
@@ -279,47 +233,6 @@ struct STRRecord
 
 class ResmedLoader;
 
-struct EDFGroup {
-    EDFGroup() { }
-    EDFGroup(QString &brp, QString &eve, QString &pld, QString &sad, QString &csl) {
-        BRP = brp;
-        EVE = eve;
-        CSL = csl;
-        PLD = pld;
-        SAD = sad;
-    }
-    EDFGroup(const EDFGroup & copy) {
-        BRP = copy.BRP;
-        EVE = copy.EVE;
-        CSL = copy.CSL;
-        PLD = copy.PLD;
-        SAD = copy.SAD;
-    }
-    QString BRP;
-    QString EVE;
-    QString CSL;
-    QString PLD;
-    QString SAD;
-};
-
-struct EDFduration {
-    EDFduration() { start = end = 0; type = EDF_UNKNOWN; }
-    EDFduration(const EDFduration & copy) {
-        path = copy.path;
-        start = copy.start;
-        end = copy.end;
-        type = copy.type;
-        filename = copy.filename;
-    }
-    EDFduration(quint32 start, quint32 end, QString path) :
-        start(start), end(end), path(path) {}
-    quint32 start;
-    quint32 end;
-    QString path;
-    QString filename;
-    EDFType type;
-};
-
 struct ResMedDay {
     QDate date;
     STRRecord str;
@@ -342,49 +255,18 @@ protected:
     ResMedDay * resday;
 };
 
-struct STRFile {
+class STRFile 
+{
+public:
     STRFile() :
         filename(QString()), edf(nullptr) {}
-    STRFile(QString name, ResMedEDFParser *str) :
+    STRFile(QString name, ResMedEDFInfo *str) :
         filename(name), edf(str) {}
-    STRFile(const STRFile & copy) {
-        filename = copy.filename;
-        edf = copy.edf;
-    }
-    ~STRFile() {
-    }
+    virtual ~STRFile() {}
 
     QString filename;
-    ResMedEDFParser * edf;
+    ResMedEDFInfo * edf;
 };
-
-/*class ResmedImport:public ImportTask
-{
-public:
-    ResmedImport(ResmedLoader * l, SessionID s, QHash<EDFType, QStringList> grp, Machine * m): loader(l), sessionid(s), files(grp), mach(m) {}
-    virtual ~ResmedImport() {}
-    virtual void run();
-
-protected:
-    ResmedLoader * loader;
-    SessionID sessionid;
-    QHash<EDFType, QStringList> files;
-    Machine * mach;
-};
-
-class ResmedImportStage2:public ImportTask
-{
-public:
-    ResmedImportStage2(ResmedLoader * l, STRRecord r, Machine * m): loader(l), R(r), mach(m) {}
-    virtual ~ResmedImportStage2() {}
-    virtual void run();
-
-protected:
-    ResmedLoader * loader;
-    STRRecord R;
-    Machine * mach;
-}; */
-
 
 
 
@@ -416,7 +298,7 @@ class ResmedLoader : public CPAPLoader
     virtual const QString &loaderName() { return resmed_class_name; }
 
     //! \brief Converts EDFSignal data to time delta packed EventList, and adds to Session
-    void ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &es, ChannelID code, long recs,
+    void ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code, long recs,
                      qint64 duration, EventDataType min = 0, EventDataType max = 0, bool square = false);
 
     //! \brief Register the ResmedLoader with the list of other machine loaders
@@ -443,7 +325,8 @@ class ResmedLoader : public CPAPLoader
     bool LoadPLD(Session *sess, const QString & path);
 
     virtual MachineInfo newInfo() {
-        return MachineInfo(MT_CPAP, 0, resmed_class_name, QObject::tr("ResMed"), QString(), QString(), QString(), QObject::tr("S9"), QDateTime::currentDateTime(), resmed_data_version);
+        return MachineInfo(MT_CPAP, 0, resmed_class_name, QObject::tr("ResMed"), QString(), 
+        QString(), QString(), QObject::tr("S9"), QDateTime::currentDateTime(), resmed_data_version);
     }
 
     virtual void initChannels();
@@ -463,17 +346,20 @@ class ResmedLoader : public CPAPLoader
     volatile int sessionCount;
 
 protected:
+//! \brief The STR.edf file is a unique edf file with many signals
     void ParseSTR(Machine *, QMap<QDate, STRFile> &);
-
 
     //! \brief Scan for new files to import, group into sessions and add to task que
     int scanFiles(Machine * mach, const QString & datalog_path);
 
+//! \brief Write a backup copy to the backup path
     QString backup(const QString & file, const QString & backup_path);
 
-    QMap<SessionID, QStringList> sessfiles;
-    QMap<quint32, STRRecord> strsess;
-    QMap<QDate, QList<STRRecord *> > strdate;
+// The data members
+//    QMap<SessionID, QStringList> sessfiles;
+//    QMap<quint32, STRRecord> strsess;
+//    QMap<QDate, QList<STRRecord *> > strdate;
+
     QMap<QDate, ResMedDay> resdayList;
 
 #ifdef DEBUG_EFFICIENCY
@@ -485,7 +371,7 @@ protected:
     volatile qint64 timeInLoadCSL;
     volatile qint64 timeInLoadSAD;
     volatile qint64 timeInEDFOpen;
-    volatile qint64 timeInEDFParser;
+    volatile qint64 timeInEDFInfo;
     volatile qint64 timeInAddWaveform;
     volatile qint64 timeInTimeDelta;
     QMutex timeMutex;

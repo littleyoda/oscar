@@ -59,11 +59,54 @@ const QString STR_ext_TGT = "tgt";
 const QString STR_ext_CRC = "crc";
 
 
-ResMedEDFParser::ResMedEDFParser(QString filename) :EDFParser(filename) { }
-ResMedEDFParser::~ResMedEDFParser() { }
+ResMedEDFInfo::ResMedEDFInfo() :EDFInfo() { }
+ResMedEDFInfo::~ResMedEDFInfo() { }
+
+bool ResMedEDFInfo::Parse(QByteArray * fileData )	// overrides and calls the super's Parse
+{
+	EDFInfo::Parse( fileData );
+	
+    // Now massage some stuff into OSCAR's layout
+    int snp = edfHdr.recordingident.indexOf("SRN=");
+    serialnumber.clear();
+
+    for (int i = snp + 4; i < edfHdr.recordingident.length(); i++) {
+        if (edfHdr.recordingident[i] == ' ') {
+            break;
+        }
+        serialnumber += edfHdr.recordingident[i];
+    }
+
+    QDate d2 = edfHdr.startdate_orig.date();
+    if (d2.year() < 2000) {
+        d2.setDate(d2.year() + 100, d2.month(), d2.day());
+        edfHdr.startdate_orig.setDate(d2);
+    }
+
+    if (!edfHdr.startdate_orig.isValid()) {
+        qDebug() << "Invalid date time retreieved parsing EDF File " << filename;
+        sleep(1);
+        return false;
+    }
+
+    startdate = qint64(edfHdr.startdate_orig.toTime_t()) * 1000LL;
+    //startdate-=timezoneOffset();
+    if (startdate == 0) {
+        qDebug() << "Invalid startdate = 0 in EDF File " << filename;
+        sleep(1);
+        return false;
+    }
+
+    dur_data_record = (edfHdr.duration_Seconds * 1000.0L);
+
+    enddate = startdate + dur_data_record * qint64(edfHdr.num_data_records);
+
+    return true;
+	
+}
 
 // Looks up foreign language Signal names that match this channelID
-EDFSignal *ResMedEDFParser::lookupSignal(ChannelID ch)
+EDFSignal *ResMedEDFInfo::lookupSignal(ChannelID ch)
 {
     // Get list of all known foreign language names for this channel
     auto channames = resmed_codes.find(ch);
@@ -113,7 +156,7 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
     int totalRecs = 0;
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
-        ResMedEDFParser & str = *file.edf;
+        ResMedEDFInfo & str = *file.edf;
         totalRecs += str.GetNumDataRecords();
     }
 
@@ -126,7 +169,7 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
         QString & strfile = file.filename;
-        ResMedEDFParser & str = *file.edf;
+        ResMedEDFInfo & str = *file.edf;
 
         QDate date = str.edfHdr.startdate_orig.date(); // each STR.edf record starts at 12 noon
 
@@ -569,7 +612,7 @@ ResmedLoader::ResmedLoader() {
     m_type = MT_CPAP;
 
     timeInTimeDelta = timeInLoadBRP = timeInLoadPLD = timeInLoadEVE = 0;
-    timeInLoadCSL = timeInLoadSAD = timeInEDFParser = timeInEDFOpen = timeInAddWaveform = 0;
+    timeInLoadCSL = timeInLoadSAD = timeInEDFInfo = timeInEDFOpen = timeInAddWaveform = 0;
 
 }
 
@@ -675,8 +718,9 @@ EDFType lookupEDFType(const QString & text)
 // Pretend to parse the EVE file to get the duration out of it.
 int PeekAnnotations(const QString & path, quint32 &start, quint32 &end)
 {
-    ResMedEDFParser edf(path);
-    if (!edf.Parse())
+	ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
+    if (!edf.Parse(fileData))
         return -1;
 
     QString t;
@@ -895,7 +939,7 @@ EDFduration getEDFDuration(const QString & filename)
         // Have to get the actual duration of the EVE file by parsing the annotations. :(
 
 
-        // Can we cache the stupid EDFParser file for later ???
+        // Can we cache the stupid EDFInfo file for later ???
 
         int recs = PeekAnnotations(filename, st2, en2);
         if (recs > 0) {
@@ -1764,8 +1808,9 @@ int ResmedLoader::Open(const QString & dirpath)
 
         // Now place any of these files in the Backup folder sorted by the file date
         for (auto & filename : strfiles) {
-            ResMedEDFParser * stredf = new ResMedEDFParser(filename);
-            if ( ! stredf->Parse()) {
+            ResMedEDFInfo * stredf = new ResMedEDFInfo();
+            QByteArray * fileData = stredf->Open(filename);
+            if ( ! stredf->Parse(fileData)) {
                 qDebug() << "Faulty STR file" << filename;
                 delete stredf;
                 continue;
@@ -1838,8 +1883,9 @@ int ResmedLoader::Open(const QString & dirpath)
         if (STRmap.contains(date))
             continue;
 
-        ResMedEDFParser * stredf = new ResMedEDFParser(fi.canonicalFilePath());
-        if (!stredf->Parse()) {
+        ResMedEDFInfo * stredf = new ResMedEDFInfo();
+        QByteArray * fileData = stredf->Open(fi.canonicalFilePath() );
+        if (!stredf->Parse(fileData)) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
             continue;
@@ -2002,7 +2048,7 @@ int ResmedLoader::Open(const QString & dirpath)
         qDebug() << "Total toTimeDelta function usage:" << totalbytes << "in" << double(totalns) / 1000000000.0 << "seconds";
 
         qDebug() << "Total CPU time in EDF Open" << timeInEDFOpen;
-        qDebug() << "Total CPU time in EDF Parser" << timeInEDFParser;
+        qDebug() << "Total CPU time in EDF Parser" << timeInEDFInfo;
         qDebug() << "Total CPU time in LoadBRP" << timeInLoadBRP;
         qDebug() << "Total CPU time in LoadPLD" << timeInLoadPLD;
         qDebug() << "Total CPU time in LoadSAD" << timeInLoadSAD;
@@ -2013,10 +2059,10 @@ int ResmedLoader::Open(const QString & dirpath)
     }
 #endif
 
-    sessfiles.clear();
-    strsess.clear();
+//    sessfiles.clear();
+//    strsess.clear();
+//    strdate.clear();
 
-    strdate.clear();
     channel_efficiency.clear();
     channel_time.clear();
 
@@ -2098,14 +2144,15 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     time.start();
 #endif
 
-    ResMedEDFParser edf(path);
+    ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
 
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
 
-    if (!edf.Parse())
+    if (!edf.Parse(fileData))
         return false;
 
 #ifdef DEBUG_EFFICIENCY
@@ -2249,7 +2296,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     timeMutex.lock();
     timeInLoadCSL += time.elapsed();
     timeInEDFOpen += edfopentime;
-    timeInEDFParser += edfparsetime;
+    timeInEDFInfo += edfparsetime;
     timeMutex.unlock();
 #endif
 
@@ -2262,12 +2309,13 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
-    ResMedEDFParser edf(path);
+    ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse())
+    if (!edf.Parse(fileData))
         return false;
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
@@ -2422,7 +2470,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     timeMutex.lock();
     timeInLoadEVE += time.elapsed();
     timeInEDFOpen += edfopentime;
-    timeInEDFParser += edfparsetime;
+    timeInEDFInfo += edfparsetime;
     timeMutex.unlock();
 #endif
 
@@ -2435,12 +2483,13 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
-    ResMedEDFParser edf(path);
+    ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse())
+    if (!edf.Parse(fileData))
         return false;
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
@@ -2450,7 +2499,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     sess->updateFirst(edf.startdate);
 
     QTime time2;
-    qint64 duration = edf.GetNumDataRecords() * edf.GetDuration();
+    qint64 duration = edf.GetNumDataRecords() * edf.GetDurationMillis();
     sess->updateLast(edf.startdate + duration);
 
     for (auto & es : edf.edfsignals) {
@@ -2510,7 +2559,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     timeMutex.lock();
     timeInLoadBRP += time.elapsed();
     timeInEDFOpen += edfopentime;
-    timeInEDFParser += edfparsetime;
+    timeInEDFInfo += edfparsetime;
     timeInAddWaveform += AddWavetime;
     timeMutex.unlock();
 #endif
@@ -2519,7 +2568,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
 }
 
 // Convert EDFSignal data to OSCAR's Time-Delta Event format
-void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &es, ChannelID code,
+void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code,
                                long recs, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
 {
     if (t_min == t_max) {
@@ -2569,9 +2618,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
 
                 break;
             }
-
             tt += rate;
-
         } while (sptr < eptr);
 
         if (!el)
@@ -2585,13 +2632,11 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
                     tmp = EventDataType(last) * es.gain;
 
                     if ((tmp >= t_min) && (tmp <= t_max)) {
-                        if (tmp < min) {
+                        if (tmp < min)
                             min = tmp;
-                        }
 
-                        if (tmp > max) {
+                        if (tmp > max)
                             max = tmp;
-                        }
 
                         el->AddEvent(tt, last);
                     } else {
@@ -2601,22 +2646,18 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
                             el->setDimension(es.physical_dimension);
 
                             el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-                        } else {
+                        } else
                             el->clear(); // reuse the object
-                        }
                     }
                 }
 
                 tmp = EventDataType(c) * es.gain;
 
                 if ((tmp >= t_min) && (tmp <= t_max)) {
-                    if (tmp < min) {
+                    if (tmp < min)
                         min = tmp;
-                    }
-
-                    if (tmp > max) {
+                    if (tmp > max)
                         max = tmp;
-                    }
 
                     el->AddEvent(tt, c);
                 } else {
@@ -2625,7 +2666,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
 
                         // Create and attach new EventList
                         el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-                    } else { el->clear(); }
+                    } else
+                        el->clear();
                 }
             }
 
@@ -2636,9 +2678,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
 
         tmp = EventDataType(c) * es.gain;
 
-        if ((tmp >= t_min) && (tmp <= t_max)) {
+        if ((tmp >= t_min) && (tmp <= t_max))
             el->AddEvent(tt, c);
-        }
 
         sess->setMin(code, min);
         sess->setMax(code, max);
@@ -2667,7 +2708,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFParser &edf, EDFSignal &e
     timeInTimeDelta += time.elapsed();
     timeMutex.unlock();
 #endif
-}
+}       // end ResMedLoader::ToTimeDelta
 
 // Load SAD Oximetry Signals
 bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
@@ -2677,14 +2718,15 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
     time.start();
 #endif
 
-    ResMedEDFParser edf(path);
+    ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
 
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
 
-    if (!edf.Parse())
+    if (!edf.Parse(fileData))
         return false;
 
 #ifdef DEBUG_EFFICIENCY
@@ -2693,7 +2735,7 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 #endif
 
     sess->updateFirst(edf.startdate);
-    qint64 duration = edf.GetNumDataRecords() * edf.GetDuration();
+    qint64 duration = edf.GetNumDataRecords() * edf.GetDurationMillis();
     sess->updateLast(edf.startdate + duration);
 
     for (auto & es : edf.edfsignals) {
@@ -2732,7 +2774,7 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
     timeMutex.lock();
     timeInLoadSAD += time.elapsed();
     timeInEDFOpen += edfopentime;
-    timeInEDFParser += edfparsetime;
+    timeInEDFInfo += edfparsetime;
     timeMutex.unlock();
 #endif
     return true;
@@ -2745,12 +2787,13 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
-    ResMedEDFParser edf(path);
+    ResMedEDFInfo edf;
+    QByteArray * fileData = edf.Open(path);
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse())
+    if (!edf.Parse(fileData))
         return false;
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
@@ -2760,7 +2803,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     // Is it safe to assume the order does not change here?
     enum PLDType { MaskPres = 0, TherapyPres, ExpPress, Leak, RR, Vt, Mv, SnoreIndex, FFLIndex, U1, U2 };
 
-    qint64 duration = edf.GetNumDataRecords() * edf.GetDuration();
+    qint64 duration = edf.GetNumDataRecords() * edf.GetDurationMillis();
     sess->updateFirst(edf.startdate);
     sess->updateLast(edf.startdate + duration);
     QString t;
@@ -2896,7 +2939,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     timeMutex.lock();
     timeInLoadPLD += time.elapsed();
     timeInEDFOpen += edfopentime;
-    timeInEDFParser += edfparsetime;
+    timeInEDFInfo += edfparsetime;
     timeMutex.unlock();
 #endif
 
