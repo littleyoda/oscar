@@ -77,12 +77,6 @@ bool ResMedEDFInfo::Parse(QByteArray * fileData )	// overrides and calls the sup
         serialnumber += edfHdr.recordingident[i];
     }
 
-    QDate d2 = edfHdr.startdate_orig.date();
-    if (d2.year() < 2000) {
-        d2.setDate(d2.year() + 100, d2.month(), d2.day());
-        edfHdr.startdate_orig.setDate(d2);
-    }
-
     if (!edfHdr.startdate_orig.isValid()) {
         qDebug() << "Invalid date time retreieved parsing EDF File " << filename;
         sleep(1);
@@ -207,14 +201,14 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
                 continue;
             }
 
-            int recstart = rec * maskon->nr;
+            int recstart = rec * maskon->sampleCnt;
 
             bool validday = false;
-            for (int s = 0; s < maskon->nr; ++s) {
-                qint32 on = maskon->value[recstart + s];
-                qint32 off = maskoff->value[recstart + s];
+            for (int s = 0; s < maskon->sampleCnt; ++s) {
+                qint32 on = maskon->dataArray[recstart + s];
+                qint32 off = maskoff->dataArray[recstart + s];
 
-                if ((on >= 0) && (off >= 0)) 
+                if (((on >= 0) && (off >= 0)) && (on != off)) // ignore very short on-off times
                     validday=true;
             }
             if (!validday) {
@@ -234,11 +228,11 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             // For every mask on, there will be a session within 1 minute either way
             // We can use that for data matching
             // Scan the mask on/off events by minute
-            R.maskon.resize(maskon->nr);
-            R.maskoff.resize(maskoff->nr);
-            for (int s = 0; s < maskon->nr; ++s) {
-                qint32 on = maskon->value[recstart + s];
-                qint32 off = maskoff->value[recstart + s];
+            R.maskon.resize(maskon->sampleCnt);
+            R.maskoff.resize(maskoff->sampleCnt);
+            for (int s = 0; s < maskon->sampleCnt; ++s) {
+                qint32 on = maskon->dataArray[recstart + s];
+                qint32 off = maskoff->dataArray[recstart + s];
 
                 R.maskon[s] = (on>0) ? (timestamp + (on * 60)) : 0;
                 R.maskoff[s] = (off>0) ? (timestamp + (off * 60)) : 0;
@@ -250,14 +244,14 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
                 R.maskon[0] = timestamp;
             }
-            if ((R.maskon[maskon->nr-1] > 0) && (R.maskoff[maskoff->nr-1] == 0)) {
-                R.maskoff[maskoff->nr-1] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
+            if ((R.maskon[maskon->sampleCnt-1] > 0) && (R.maskoff[maskoff->sampleCnt-1] == 0)) {
+                R.maskoff[maskoff->sampleCnt-1] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
             }
 
             CPAPMode mode = MODE_UNKNOWN;
 
             if ((sig = str.lookupSignal(CPAP_Mode))) {
-                int mod = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                int mod = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 R.rms9_mode = mod;
 
                 if (mod == 11) {
@@ -281,188 +275,188 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
 
                 // Settings.CPAP.Starting Pressure
                 if ((mod == 0) && (sig = str.lookupLabel("S.C.StartPress"))) {
-                    R.ramp_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // Settings.Adaptive Starting Pressure? // mode 11 = APAP for her?
                 if (((mod == 1) || (mod == 11)) && (sig = str.lookupLabel("S.AS.StartPress"))) {
-                    R.ramp_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((R.mode == MODE_BILEVEL_FIXED) && (sig = str.lookupLabel("S.BL.StartPress"))) {
                     // Bilevel Starting Pressure
-                    R.ramp_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
                     // Bilevel Starting Pressure
-                    R.ramp_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
             }
 
             if ((sig = str.lookupLabel("Mask Dur"))) {
-                R.maskdur = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.maskdur = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("Leak Med")) || (sig = str.lookupLabel("Leak.50"))) {
                 float gain = sig->gain * 60.0;
-                R.leak50 = EventDataType(sig->value[rec]) * gain;
+                R.leak50 = EventDataType(sig->dataArray[rec]) * gain;
             }
             if ((sig = str.lookupLabel("Leak Max"))|| (sig = str.lookupLabel("Leak.Max"))) {
                 float gain = sig->gain * 60.0;
-                R.leakmax = EventDataType(sig->value[rec]) * gain;
+                R.leakmax = EventDataType(sig->dataArray[rec]) * gain;
             }
             if ((sig = str.lookupLabel("Leak 95")) || (sig = str.lookupLabel("Leak.95"))) {
                 float gain = sig->gain * 60.0;
-                R.leak95 = EventDataType(sig->value[rec]) * gain;
+                R.leak95 = EventDataType(sig->dataArray[rec]) * gain;
             }
             if ((sig = str.lookupLabel("RespRate.50")) || (sig = str.lookupLabel("RR Med"))) {
-                R.rr50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.rr50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("RespRate.Max")) || (sig = str.lookupLabel("RR Max"))) {
-                R.rrmax = EventDataType(sig->value[rec]) * sig->gain;
+                R.rrmax = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("RespRate.95")) || (sig = str.lookupLabel("RR 95"))) {
-                R.rr95 = EventDataType(sig->value[rec]) * sig->gain;
+                R.rr95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("MinVent.50")) || (sig = str.lookupLabel("Min Vent Med"))) {
-                R.mv50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.mv50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("MinVent.Max")) || (sig = str.lookupLabel("Min Vent Max"))) {
-                R.mvmax = EventDataType(sig->value[rec]) * sig->gain;
+                R.mvmax = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("MinVent.95")) || (sig = str.lookupLabel("Min Vent 95"))) {
-                R.mv95 = EventDataType(sig->value[rec]) * sig->gain;
+                R.mv95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("TidVol.50")) || (sig = str.lookupLabel("Tid Vol Med"))) {
-                R.tv50 = EventDataType(sig->value[rec]) * (sig->gain*1000.0);
+                R.tv50 = EventDataType(sig->dataArray[rec]) * (sig->gain*1000.0);
             }
             if ((sig = str.lookupLabel("TidVol.Max")) || (sig = str.lookupLabel("Tid Vol Max"))) {
-                R.tvmax = EventDataType(sig->value[rec]) * (sig->gain*1000.0);
+                R.tvmax = EventDataType(sig->dataArray[rec]) * (sig->gain*1000.0);
             }
             if ((sig = str.lookupLabel("TidVol.95")) || (sig = str.lookupLabel("Tid Vol 95"))) {
-                R.tv95 = EventDataType(sig->value[rec]) * (sig->gain*1000.0);
+                R.tv95 = EventDataType(sig->dataArray[rec]) * (sig->gain*1000.0);
             }
 
             if ((sig = str.lookupLabel("MaskPress.50")) || (sig = str.lookupLabel("Mask Pres Med"))) {
-                R.mp50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.mp50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("MaskPress.Max")) || (sig = str.lookupLabel("Mask Pres Max"))) {
-                R.mpmax = EventDataType(sig->value[rec]) * sig->gain ;
+                R.mpmax = EventDataType(sig->dataArray[rec]) * sig->gain ;
             }
             if ((sig = str.lookupLabel("MaskPress.95")) || (sig = str.lookupLabel("Mask Pres 95"))) {
-                R.mp95 = EventDataType(sig->value[rec]) * sig->gain ;
+                R.mp95 = EventDataType(sig->dataArray[rec]) * sig->gain ;
             }
 
             if ((sig = str.lookupLabel("TgtEPAP.50")) || (sig = str.lookupLabel("Exp Pres Med"))) {
-                R.tgtepap50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtepap50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("TgtEPAP.Max")) || (sig = str.lookupLabel("Exp Pres Max"))) {
-                R.tgtepapmax = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtepapmax = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("TgtEPAP.95")) || (sig = str.lookupLabel("Exp Pres 95"))) {
-                R.tgtepap95 = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtepap95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
 
             if ((sig = str.lookupLabel("TgtIPAP.50")) || (sig = str.lookupLabel("Insp Pres Med"))) {
-                R.tgtipap50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtipap50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("TgtIPAP.Max")) || (sig = str.lookupLabel("Insp Pres Max"))) {
-                R.tgtipapmax = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtipapmax = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("TgtIPAP.95")) || (sig = str.lookupLabel("Insp Pres 95"))) {
-                R.tgtipap95 = EventDataType(sig->value[rec]) * sig->gain;
+                R.tgtipap95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
 
             if ((sig = str.lookupLabel("I:E Med"))) {
-                R.ie50 = EventDataType(sig->value[rec]) * sig->gain;
+                R.ie50 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("I:E Max"))) {
-                R.iemax = EventDataType(sig->value[rec]) * sig->gain;
+                R.iemax = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
             if ((sig = str.lookupLabel("I:E 95"))) {
-                R.ie95 = EventDataType(sig->value[rec]) * sig->gain;
+                R.ie95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
 
             bool haveipap = false;
             Q_UNUSED( haveipap );
 //          if (R.mode == MODE_BILEVEL_FIXED) {
             if ((sig = str.lookupSignal(CPAP_IPAP))) {
-                R.ipap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.ipap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 haveipap = true;
             }
             if ((sig = str.lookupSignal(CPAP_EPAP))) {
-                R.epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if (R.mode == MODE_ASV) {
                 if ((sig = str.lookupLabel("S.AV.StartPress"))) {
-                    EventDataType sp = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    EventDataType sp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     R.ramp_pressure = sp;
                 }
                 if ((sig = str.lookupLabel("S.AV.EPAP"))) {
-                    R.min_epap = R.max_epap = R.epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.min_epap = R.max_epap = R.epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AV.MinPS"))) {
-                    R.min_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.min_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AV.MaxPS"))) {
-                    R.max_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.max_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     R.max_ipap = R.epap + R.max_ps;
                     R.min_ipap = R.epap + R.min_ps;
                 }
             }
             if (R.mode == MODE_ASV_VARIABLE_EPAP) {
                 if ((sig = str.lookupLabel("S.AA.StartPress"))) {
-                    EventDataType sp = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    EventDataType sp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     R.ramp_pressure = sp;
                 }
                 if ((sig = str.lookupLabel("S.AA.MinEPAP"))) {
-                    R.min_epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.min_epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AA.MaxEPAP"))) {
-                    R.max_epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.max_epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AA.MinPS"))) {
-                    R.min_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.min_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AA.MaxPS"))) {
-                    R.max_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    R.max_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     R.max_ipap = R.max_epap + R.max_ps;
                     R.min_ipap = R.min_epap + R.min_ps;
                 }
             }
             if ((sig = str.lookupSignal(CPAP_PressureMax))) {
-                R.max_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.max_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(CPAP_PressureMin))) {
-                R.min_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.min_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(RMS9_SetPressure))) {
-                R.set_pressure = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.set_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(CPAP_EPAPHi))) {
-                R.max_epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.max_epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(CPAP_EPAPLo))) {
-                R.min_epap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.min_epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(CPAP_IPAPHi))) {
-                R.max_ipap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.max_ipap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 haveipap = true;
             }
             if ((sig = str.lookupSignal(CPAP_IPAPLo))) {
-                R.min_ipap = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.min_ipap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 haveipap = true;
             }
             if ((sig = str.lookupSignal(CPAP_PS))) {
-                R.ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
-            // Okay, problem here: THere are TWO PSMin & MAX values on the 36037 with the same string
+            // Okay, problem here: THere are TWO PSMin & MAX dataArrays on the 36037 with the same string
             // One is for ASV mode, and one is for ASVAuto
             int psvar = (mode == MODE_ASV_VARIABLE_EPAP) ? 1 : 0;
 
             if ((sig = str.lookupLabel("Max PS", psvar))) {
-                R.max_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.max_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("Min PS", psvar))) {
-                R.min_ps = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.min_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
 // /////    if (!haveipap) {
@@ -480,24 +474,24 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             bool a10 = false;
             if ((mode == MODE_CPAP) || (mode == MODE_APAP)) {
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
-                    epr= EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupSignal(RMS9_EPRLevel))) {
-                    epr_level= EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    epr_level= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.EPR.EPRType"))) {
                     a10 = true;
-                    epr = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    epr = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     epr += 1;
                 }
                 int epr_on=0, clin_epr_on=0;
                 if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check machines opinion
                     a10 = true;
-                    epr_on = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if (epr_on && (sig = str.lookupLabel("S.EPR.ClinEnable"))) {
                     a10 = true;
-                    clin_epr_on = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                    clin_epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if (a10 && !(epr_on && clin_epr_on)) {
                     epr = 0;
@@ -526,71 +520,71 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             }
 
             if ((sig = str.lookupLabel("AHI"))) {
-                R.ahi = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.ahi = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("AI"))) {
-                R.ai = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.ai = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("HI"))) {
-                R.hi = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.hi = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("UAI"))) {
-                R.uai = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.uai = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("CAI"))) {
-                R.cai = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.cai = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("OAI"))) {
-                R.oai = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.oai = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("CSR"))) {
-                R.csr = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.csr = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
             if ((sig = str.lookupLabel("S.RampTime"))) {
-                R.s_RampTime = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_RampTime = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.RampEnable"))) {
-                R.s_RampEnable = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_RampEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.EPR.ClinEnable"))) {
-                R.s_EPR_ClinEnable = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_EPR_ClinEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.EPR.EPREnable"))) {
-                R.s_EPREnable = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_EPREnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
             if ((sig = str.lookupLabel("S.ABFilter"))) {
-                R.s_ABFilter = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_ABFilter = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
             if ((sig = str.lookupLabel("S.ClimateControl"))) {
-                R.s_ClimateControl = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_ClimateControl = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
 
             if ((sig = str.lookupLabel("S.Mask"))) {
-                R.s_Mask = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_Mask = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.PtAccess"))) {
-                R.s_PtAccess = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.SmartStart"))) {
-                R.s_SmartStart = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.HumEnable"))) {
-                R.s_HumEnable = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_HumEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.HumLevel"))) {
-                R.s_HumLevel = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_HumLevel = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.TempEnable"))) {
-                R.s_TempEnable = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_TempEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.Temp"))) {
-                R.s_Temp = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_Temp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.Tube"))) {
-                R.s_Tube = EventDataType(sig->value[rec]) * sig->gain + sig->offset;
+                R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
         }
     }
@@ -739,9 +733,9 @@ int PeekAnnotations(const QString & path, quint32 &start, quint32 &end)
     tt = edf.startdate;
     // Process event annotation records
     for (int s = 0; s < edf.GetNumSignals(); s++) {
-        int charLen = edf.edfsignals[s].nr * edf.GetNumDataRecords() * 2;
+        int charLen = edf.edfsignals[s].sampleCnt * edf.GetNumDataRecords() * 2;
 
-        char * data = (char *)edf.edfsignals[s].value;
+        char * data = (char *)edf.edfsignals[s].dataArray;
         long pos = 0;
         double offset;
         double duration;
@@ -836,18 +830,22 @@ EDFduration getEDFDuration(const QString & filename)
 {
     QString ext = filename.section("_", -1).section(".",0,0).toUpper();
 
-    bool ok1, ok2;
+    if ((ext == "EVE") || (ext == "CSL")) {		// don't even try with Annotation-only edf files
+        EDFduration dur(0, 0, filename);
+        dur.type = lookupEDFType(ext.toUpper());
+        return dur;
+    }
 
+    bool ok1, ok2;
     int num_records;
     double rec_duration;
-
     QDateTime startDate;
 
+//	We will just look at the header part of the edf file here
     if (!filename.endsWith(".gz", Qt::CaseInsensitive)) {
         QFile file(filename);
-        if (!file.open(QFile::ReadOnly)) {
+        if (!file.open(QFile::ReadOnly))
             return EDFduration(0, 0, filename);
-        }
 
         if (!file.seek(0xa8)) {
             file.close();
@@ -855,7 +853,7 @@ EDFduration getEDFDuration(const QString & filename)
         }
 
         QByteArray bytes = file.read(16).trimmed();
-
+		// We'll fix the xx85 problem below
         startDate = QDateTime::fromString(QString::fromLatin1(bytes, 16), "dd.MM.yyHH.mm.ss");
 
         if (!file.seek(0xec)) {
@@ -871,10 +869,10 @@ EDFduration getEDFDuration(const QString & filename)
         file.close();
     } else {
         gzFile f = gzopen(filename.toLatin1(), "rb");
-        if (!f) {
+        if (!f)
             return EDFduration(0, 0, filename);
-        }
 
+        // Decompressed header and data block
         if (!gzseek(f, 0xa8, SEEK_SET)) {
             gzclose(f);
             return EDFduration(0, 0, filename);
@@ -890,7 +888,6 @@ EDFduration getEDFDuration(const QString & filename)
             return EDFduration(0, 0, filename);
         }
 
-        // Decompressed header and data block
         char cbytes[9] = {0};
         gzread(f, (char *)&cbytes, 8);
         str = QString(cbytes).trimmed();
@@ -901,7 +898,6 @@ EDFduration getEDFDuration(const QString & filename)
         rec_duration = str.toDouble(&ok2);
 
         gzclose(f);
-
     }
 
     QDate d2 = startDate.date();
@@ -915,9 +911,8 @@ EDFduration getEDFDuration(const QString & filename)
         return EDFduration(0, 0, filename);
     }
 
-    if (!(ok1 && ok2)) {
+    if (!(ok1 && ok2))
         return EDFduration(0, 0, filename);
-    }
 
     quint32 start = startDate.toTime_t();
     quint32 end = start + rec_duration * num_records;
@@ -927,35 +922,11 @@ EDFduration getEDFDuration(const QString & filename)
     QDateTime dt2 = QDateTime::fromString(filedate, "yyyyMMdd_hhmmss");
     quint32 st2 = dt2.toTime_t();
 
-    start = qMin(st2, start);
+    start = qMin(st2, start);	// They should be the same, usually
 
     if (end < start)
         end = qMax(st2, start);
 
-    if ((ext == "EVE") || (ext == "CSL")) {
-        // S10 Forces us to parse EVE files to find their real durations
-        quint32 en2;
-
-        // Have to get the actual duration of the EVE file by parsing the annotations. :(
-
-
-        // Can we cache the stupid EDFInfo file for later ???
-
-        int recs = PeekAnnotations(filename, st2, en2);
-        if (recs > 0) {
-            start = qMin(st2, start);
-            end = qMax(en2, end);
-            EDFduration dur(start, end, filename);
-
-            dur.type = lookupEDFType(ext.toUpper());
-
-            return dur;
-        } else {
-            // empty annotations file, don't give a crap about it...
-            return EDFduration(0, 0, filename);
-        }
-        // A Firmware bug causes (perhaps with failing SD card) sessions to sometimes take a long time to write
-    }
 
     EDFduration dur(start, end, filename);
 
@@ -984,6 +955,7 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     ///////////////////////////////////////////////////////////////////////////////////////
     // Generate list of files for later processing
     ///////////////////////////////////////////////////////////////////////////////////////
+    qDebug() << "Generating list of EDF files";
 
 #ifdef DEBUG_EFFICIENCY
     time.start();
@@ -1002,29 +974,43 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     QString filename;
     bool ok;
 
-    QFileInfoList flist = dir.entryInfoList();
-    int flistSize = flist.size();
+    QFileInfoList dirlist = dir.entryInfoList();
+    int dirlistSize = dirlist.size();
 
-    qDebug() << "Generating list of EDF files";
+    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+    
     // Scan for any sub folders and create files lists
-    for (int i = 0; i < flistSize ; i++) {
-        const QFileInfo & fi = flist.at(i);
+    for (int i = 0; i < dirlistSize ; i++) {
+        const QFileInfo & fi = dirlist.at(i);
         filename = fi.fileName();
 
         int len = filename.length();
-        if ((len == 4) || (len == 8)) {
+        if (len == 4) {					//	when does this happen?
             filename.toInt(&ok);
-            if (ok) {
-                // Get file lists under this directory
-
-                dir.setPath(fi.canonicalFilePath());
-                dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-                dir.setSorting(QDir::Name);
-
-                // Append all files to one big QFileInfoList
-                EDFfiles.append(dir.entryInfoList());
+            if ( ! ok ) {
+            	qDebug() << "Skipping directory " << filename;
+            	continue;
             }
+        } else if (len == 8) {		// test directory date
+        	if (ignoreOldSessions) {
+        		QDateTime dirDate = QDateTime().fromString(filename, "yyyyMMdd");
+        		if (dirDate.date() < ignoreBefore.date()) {
+	            	qDebug() << "Skipping directory " << filename;
+        			continue;
+        		}
+            }
+        } else {
+           	qDebug() << "Skipping directory " << filename;
+        	continue;
         }
+        // Get file lists under this directory
+        dir.setPath(fi.canonicalFilePath());
+        dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+        dir.setSorting(QDir::Name);
+
+        // Append all files to one big QFileInfoList
+        EDFfiles.append(dir.entryInfoList());
     }
 #ifdef DEBUG_EFFICIENCY
     qDebug() << "Generating EDF files list took" << time.elapsed() << "ms";
@@ -1054,8 +1040,6 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     QCoreApplication::processEvents();
 
     // Scan through all folders looking for EDF files, skip any already imported and peek inside to get durations
-    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
-    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
     qDebug() << "Starting EDF duration scan pass";
     for (int i=0; i < totalfiles; ++i) {
@@ -2181,9 +2165,9 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 
     // Process event annotation records
     for (int s = 0; s < edf.GetNumSignals(); s++) {
-        int recs = edf.edfsignals[s].nr * edf.GetNumDataRecords() * 2;
+        int recs = edf.edfsignals[s].sampleCnt * edf.GetNumDataRecords() * 2;
 
-        data = (char *)edf.edfsignals[s].value;
+        data = (char *)edf.edfsignals[s].dataArray;
         pos = 0;
         tt = edf.startdate;
 //      sess->updateFirst(tt);
@@ -2347,9 +2331,9 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 
     // Process event annotation records
     for (int s = 0; s < edf.GetNumSignals(); s++) {
-        recs = edf.edfsignals[s].nr * edf.GetNumDataRecords() * 2;
+        recs = edf.edfsignals[s].sampleCnt * edf.GetNumDataRecords() * 2;
 
-        data = (char *)edf.edfsignals[s].value;
+        data = (char *)edf.edfsignals[s].dataArray;
         pos = 0;
         tt = edf.startdate;
 
@@ -2503,7 +2487,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     sess->updateLast(edf.startdate + duration);
 
     for (auto & es : edf.edfsignals) {
-        long recs = es.nr * edf.GetNumDataRecords();
+        long recs = es.sampleCnt * edf.GetNumDataRecords();
         if (recs < 0)
             continue;
         ChannelID code;
@@ -2534,7 +2518,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
 #ifdef DEBUG_EFFICIENCY
             time2.start();
 #endif
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 #ifdef DEBUG_EFFICIENCY
             AddWavetime+= time2.elapsed();
 #endif
@@ -2593,7 +2577,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         tt += rate * startpos;
     }
 
-    qint16 *sptr = es.value;
+    qint16 *sptr = es.dataArray;
     qint16 *eptr = sptr + recs;
     sptr += startpos;
 
@@ -2740,13 +2724,13 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 
     for (auto & es : edf.edfsignals) {
         //qDebug() << "SAD:" << es.label << es.digital_maximum << es.digital_minimum << es.physical_maximum << es.physical_minimum;
-        long recs = es.nr * edf.GetNumDataRecords();
+        long recs = es.sampleCnt * edf.GetNumDataRecords();
         ChannelID code;
 
         bool hasdata = false;
 
         for (int i = 0; i < recs; ++i) {
-            if (es.value[i] != -1) {
+            if (es.dataArray[i] != -1) {
                 hasdata = true;
                 break;
             }
@@ -2815,7 +2799,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 
     for (auto & es : edf.edfsignals) {
         a = nullptr;
-        recs = es.nr * edf.GetNumDataRecords();
+        recs = es.sampleCnt * edf.GetNumDataRecords();
 
         if (recs <= 0)
             continue;
@@ -2848,7 +2832,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         } else if (matchSignal(CPAP_RespRate, es.label)) {
             code = CPAP_RespRate;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
         } else if (matchSignal(CPAP_TidalVolume, es.label)) {
             code = CPAP_TidalVolume;
             es.gain *= 1000.0;
@@ -2883,9 +2867,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          es.physical_maximum /= 100.0;
 //          es.physical_minimum /= 100.0;
 //          qDebug() << "IE Gain, Max, Min" << es.gain << es.physical_maximum << es.physical_minimum;
-//          qDebug() << "IE count, data..." << es.nr << es.value[0] << es.value[1] << es.value[2] << es.value[3] << es.value[4];
+//          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
@@ -2894,7 +2878,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             if (sess->eventlist.contains(code))
                 continue;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (matchSignal(CPAP_Te, es.label)) {
             code = CPAP_Te;
@@ -2902,12 +2886,12 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             if (sess->eventlist.contains(code))
                 continue;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (matchSignal(CPAP_TgMV, es.label)) {
             code = CPAP_TgMV;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.value, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
             //a=ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (es.label == "") { // What the hell resmed??
             if (emptycnt == 0) {

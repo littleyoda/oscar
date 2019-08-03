@@ -14,8 +14,11 @@
 #include <QVector>
 #include <QHash>
 #include <QList>
+#include <QDateTime>
 
-#include "SleepLib/common.h"
+// #include "SleepLib/common.h"
+
+typedef float EventDataType;
 
 const QString STR_ext_EDF = "edf";
 const QString STR_ext_gz = ".gz";
@@ -79,9 +82,8 @@ struct EDFSignal {
     QString prefiltering;               //! \brief Any prefiltering methods used (usually blank)
     long sampleCnt;                     //! \brief Number of samples per record
     QString reserved;                   //! \brief Reserved (usually blank)
-    qint16 * dataArray;                 //! \brief Pointer to the signals sample data
 
-//    int pos;                            //! \brief a non-EDF extra used internally to count the signal data
+    qint16 * dataArray;                   //! \brief Offset in record to the signals sample data
 };
 
 /*! \class Annotation
@@ -139,8 +141,10 @@ class EDFInfo
     EDFHeaderQT edfHdr;                             //! \brief The header in a QT friendly form
 
     QVector<EDFSignal> edfsignals;                  //! \brief Holds the EDFSignals contained in this edf file
+    
+//  QVector< QVector<qint16> > dataRecords;			//! \brief Holds the datarecords
 
-    QVector< QVector<Annotation> * > annotations;                //! \brief Holds the Annotaions for this EDF file
+    QVector< QVector<Annotation> * > annotations;   //! \brief Holds the Annotaions for this EDF file
 
     QStringList signal_labels;                      //! \brief An by-name indexed into the EDFSignal data
 
