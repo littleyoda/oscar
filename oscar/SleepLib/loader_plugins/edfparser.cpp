@@ -92,10 +92,10 @@ bool EDFInfo::Parse(QByteArray * fileData )
         return false;
     }
 
-    edfHdr.patientident=QString::fromLatin1(hdrPtr->patientident,80);
-    edfHdr.recordingident = QString::fromLatin1(hdrPtr->recordingident, 80); // Serial number is in here..
+    edfHdr.patientident=QString::fromLatin1(hdrPtr->patientident,80).trimmed();
+    edfHdr.recordingident = QString::fromLatin1(hdrPtr->recordingident, 80).trimmed(); // Serial number is in here..
     edfHdr.startdate_orig = QDateTime::fromString(QString::fromLatin1(hdrPtr->datetime, 16), "dd.MM.yyHH.mm.ss");
-    // This conversion will fail in 2086 after when the spec calls for the year to be 'yy' instead of digits
+    // This conversion will fail in 2084 after when the spec calls for the year to be 'yy' instead of digits
     // The solution is left for the afflicted - it won't be me!
     QDate d2 = edfHdr.startdate_orig.date();
     if (d2.year() < 2000) {
@@ -109,7 +109,7 @@ bool EDFInfo::Parse(QByteArray * fileData )
         sleep(1);
         return false;
     }
-    edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44);
+    edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44).trimmed();
     edfHdr.num_data_records = QString::fromLatin1(hdrPtr->num_data_records, 8).toLong(&ok);
     if (!ok) {
         qWarning() << "EDFInfo::Parse() Bad data record count " << filename;
@@ -199,17 +199,17 @@ bool EDFInfo::Parse(QByteArray * fileData )
 
     // allocate the arrays for the signal values
     for (auto & sig : edfsignals) {
-        long recs = sig.sampleCnt * edfHdr.num_data_records;
+        long samples = sig.sampleCnt * edfHdr.num_data_records;
         if (edfHdr.num_data_records <= 0) {
             sig.dataArray = nullptr;
             continue;
         }
-        sig.dataArray = new qint16 [recs];
+        sig.dataArray = new qint16 [samples];
 //      sig.pos = 0;
     }
     for (int recNo = 0; recNo < edfHdr.num_data_records; recNo++) {
         for (auto & sig : edfsignals) {
-            if ( sig.label.contains("ANNOTATIONS") ) {
+            if ( sig.label.contains("Annotations") ) {
                 annotations.push_back(ReadAnnotations( (char *)&signalPtr[pos], sig.sampleCnt*2));
                 pos += sig.sampleCnt * 2;
             } else {    // it's got genuine 16-bit values
@@ -224,9 +224,9 @@ bool EDFInfo::Parse(QByteArray * fileData )
 }
 
 // Parse the EDF file to get the annotations out of it.
-QVector<Annotation> * EDFInfo::ReadAnnotations(const char * data, int charLen)
+QVector<Annotation> EDFInfo::ReadAnnotations(const char * data, int charLen)
 {
-	QVector<Annotation> * annoVec = new QVector<Annotation>;
+	QVector<Annotation> annoVec = QVector<Annotation>();
 	
     // Process event annotation record
 
@@ -295,8 +295,8 @@ QVector<Annotation> * EDFInfo::ReadAnnotations(const char * data, int charLen)
                 pos++;      // officially UTF-8 is allowed here, so don't mangle it
                 textLen++;
             } while ((data[pos] != AnnoSep) && (pos < charLen)); // separator code
-            text.fromUtf8(textStart, textLen);
-            annoVec->push_back( Annotation( offset, duration, text) );
+            text = QString::fromUtf8(textStart, textLen);
+            annoVec.push_back( Annotation( offset, duration, text) );
             if (pos >= charLen) {
                 qDebug() << "Short EDF Annotations record";
         //      sleep(1);

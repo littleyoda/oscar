@@ -125,7 +125,7 @@ bool EDFInfo::Parse(QByteArray * fileData )
         sleep(1);
         return false;
     }
-    datasize = filesize - edfHdr.num_header_bytes;
+    datasize = filesize - EDFHeaderSize;
 
     // Initialize fixed-size signal list.
     edfsignals.resize(edfHdr.num_signals);
@@ -206,7 +206,8 @@ bool EDFInfo::Parse(QByteArray * fileData )
     }
     for (int recNo = 0; recNo < edfHdr.num_data_records; recNo++) {
         for (auto & sig : edfsignals) {
-        	if ( sig.label.contains("ANNOTATIONS") ) {
+        	if ( sig.label.contains("Annotation") ) {
+        	//	qDebug() << "Rec " << recNo << " Anno @ " << pos << " starts with " << signalPtr[pos];
         		annotations.push_back(ReadAnnotations( (char *)&signalPtr[pos], sig.sampleCnt*2));
         		pos += sig.sampleCnt * 2;
         	} else {      //  it's got genuine 16-bit values
@@ -221,9 +222,9 @@ bool EDFInfo::Parse(QByteArray * fileData )
 }
 
 // Parse the EDF file to get the annotations out of it.
-QVector<Annotation> * EDFInfo::ReadAnnotations(const char * data, int charLen)
+QVector<Annotation>  EDFInfo::ReadAnnotations(const char * data, int charLen)
 {
-	QVector<Annotation> * annoVec = new QVector<Annotation>;
+	QVector<Annotation>  annoVec =  QVector<Annotation>();
 	
     // Process event annotation record
 
@@ -279,6 +280,7 @@ QVector<Annotation> * EDFInfo::ReadAnnotations(const char * data, int charLen)
         }
 
         while ((data[pos] == AnnoSep) && (pos < charLen)) {
+        	text = "";
             int textLen = 0;
             pos++;
             const char * textStart = &data[pos];
@@ -292,8 +294,8 @@ QVector<Annotation> * EDFInfo::ReadAnnotations(const char * data, int charLen)
                 pos++;      // officially UTF-8 is allowed here, so don't mangle it
                 textLen++;
             } while ((data[pos] != AnnoSep) && (pos < charLen)); // separator code
-            text.fromUtf8(textStart, textLen);
-            annoVec->push_back( Annotation( offset, duration, text) );
+            text = QString::fromUtf8(textStart, textLen);
+            annoVec.push_back( Annotation( offset, duration, text) );
             if (pos >= charLen) {
                 qDebug() << "Short EDF Annotations record";
         //      sleep(1);

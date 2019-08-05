@@ -82,7 +82,8 @@ int main(int argc, char *argv[]) {
 
     EDFInfo str;
     QByteArray * buffer = str.Open(filename);
-    str.Parse(buffer);
+    if ( ! str.Parse(buffer) )
+        exit(-1);
 
     QDate d2 = str.edfHdr.startdate_orig.date();
     if (d2.year() < 2000) {

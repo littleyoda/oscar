@@ -140,7 +140,7 @@ class EDFInfo
 
     QVector<EDFSignal> edfsignals;                  //! \brief Holds the EDFSignals contained in this edf file
 
-    QVector< QVector<Annotation> * > annotations;                //! \brief Holds the Annotaions for this EDF file
+    QVector< QVector<Annotation> > annotations;     //! \brief Holds the Annotaions for this EDF file
 
     QStringList signal_labels;                      //! \brief An by-name indexed into the EDFSignal data
 
@@ -148,7 +148,7 @@ class EDFInfo
 
 //  the following could be private
   private:
-    QVector<Annotation> * ReadAnnotations( const char * data, int charLen );	//! \brief Create an Annotaion vector from the signal values
+    QVector<Annotation> ReadAnnotations( const char * data, int charLen );	//! \brief Create an Annotaion vector from the signal values
 
     QString ReadBytes(unsigned n);                                   //! \brief Read n bytes of 8 bit data from the EDF+ data stream
 
