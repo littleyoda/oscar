@@ -1666,12 +1666,90 @@ bool parseIdentTGT( QString path, MachineInfo  info, QHash<QString, QString>  id
 	return true;
 }
 
+void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInfo info, QMap<QDate, STRFile> STRmap ) {
+
+    QString strpath = path + RMS9_STR_strfile + STR_ext_EDF; // STR.edf file
+    QStringList strfiles;
+    // add primary STR.edf
+    strfiles.push_back(strpath);
+
+    // Just in case we are importing into a new folder, process OSCAR backup structures
+    QDir dir;
+    dir.setPath(path + "STR_Backup");
+    dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
+    QFileInfoList flist = dir.entryInfoList();
+
+    // Add any STR_Backup versions to the file list
+    for (auto & fi : flist) {
+        QString filename = fi.fileName();
+        if ( ! filename.startsWith("STR", Qt::CaseInsensitive))
+            continue;
+        if ( ! (filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
+            continue;
+        strfiles.push_back(fi.canonicalFilePath());
+    }
+
+    // Now place any of these files in the Backup folder sorted by the file date
+    for (auto & filename : strfiles) {
+        ResMedEDFInfo * stredf = new ResMedEDFInfo();
+        QByteArray * fileData = stredf->Open(filename);
+        if ( ! stredf->Parse(fileData)) {
+            qDebug() << "Faulty STR file" << filename;
+            delete stredf;
+            continue;
+        }
+        if (stredf->serialnumber != info.serial) {
+            qDebug() << "Identification.tgt Serial number doesn't match" << filename;
+            delete stredf;
+            continue;
+        }
+        QDate date = stredf->edfHdr.startdate_orig.date();
+        date = QDate(date.year(), date.month(), 1);
+        if (STRmap.contains(date)) {
+            delete stredf;
+            continue;
+        }
+        QString newname = "STR-"+date.toString("yyyyMM")+"."+STR_ext_EDF;
+
+        QString backupfile = strBackupPath+"/"+newname;
+
+        QString gzfile = backupfile + STR_ext_gz;
+        QString nongzfile = backupfile;
+
+        bool compress_backups = p_profile->session->compressBackupData();
+        backupfile = compress_backups ? gzfile : nongzfile;
+
+        if ( ! QFile::exists(backupfile)) {
+            if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
+                if (compress_backups) {                 // fine, copy it to backup folder
+                    QFile::copy(filename, backupfile);
+                } else {                                // oops, uncompress it to the backup folder
+                    uncompressFile(filename, backupfile);
+                }
+            } else {                                    // file is not compressed
+                if (compress_backups) {                 // so compress it into the backup folder
+                    compressFile(filename, backupfile);
+                } else {                                // and that's OK, just copy it over
+                    QFile::copy(filename, backupfile);
+                }
+            }
+        }
+        // Remove any duplicate compressed/uncompressed backup file
+        if (compress_backups)
+            QFile::exists(nongzfile) && QFile::remove(nongzfile);
+        else
+            QFile::exists(gzfile) && QFile::remove(gzfile);
+
+        STRmap[date] = STRFile(backupfile, stredf);
+    }   // end for walking the STR files list
+}
+
 int ResmedLoader::Open(const QString & dirpath)
 {
 
 //  QString key, value;
 //  QString line;
-    QString newpath;
+    QString datalogPath;
 //  QString filename;
 
     QHash<QString, QString> idmap;  // Temporary machine ID properties hash
@@ -1686,17 +1764,17 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // Strip off DATALOG from path, and set newpath to the path containing DATALOG
     if (path.endsWith(RMS9_STR_datalog)) {
-        newpath = path + "/";
+        datalogPath = path + "/";
         path = path.section("/", 0, -2);
     } else {
-        newpath = path + "/" + RMS9_STR_datalog + "/";
+        datalogPath = path + "/" + RMS9_STR_datalog + "/";
     }
 
     // Add separator back
     path += "/";
 
     // Check DATALOG folder exists and is readable
-    if (!QDir().exists(newpath)) {
+    if (!QDir().exists(datalogPath)) {
         return -1;
     }
 
@@ -1763,86 +1841,14 @@ int ResmedLoader::Open(const QString & dirpath)
 
     QMap<QDate, STRFile> STRmap;
 
-    QDir dir;
-
     // Create the STR_Backup folder if it doesn't exist
     QString strBackupPath = backup_path + "STR_Backup";
+    QDir dir;
     if ( ! dir.exists(strBackupPath))
         dir.mkpath(strBackupPath);
 
     if ( ! importing_backups ) {
-        QStringList strfiles;
-        // add primary STR.edf
-        strfiles.push_back(strpath);
-
-        // Just in case we are importing into a new folder, process OSCAR backup structures
-        dir.setPath(path + "STR_Backup");
-        dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
-        QFileInfoList flist = dir.entryInfoList();
-
-        // Add any STR_Backup versions to the file list
-        for (auto & fi : flist) {
-            QString filename = fi.fileName();
-            if ( ! filename.startsWith("STR", Qt::CaseInsensitive))
-                continue;
-            if ( ! (filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
-                continue;
-            strfiles.push_back(fi.canonicalFilePath());
-        }
-
-        // Now place any of these files in the Backup folder sorted by the file date
-        for (auto & filename : strfiles) {
-            ResMedEDFInfo * stredf = new ResMedEDFInfo();
-            QByteArray * fileData = stredf->Open(filename);
-            if ( ! stredf->Parse(fileData)) {
-                qDebug() << "Faulty STR file" << filename;
-                delete stredf;
-                continue;
-            }
-            if (stredf->serialnumber != info.serial) {
-                qDebug() << "Identification.tgt Serial number doesn't match" << filename;
-                delete stredf;
-                continue;
-            }
-            QDate date = stredf->edfHdr.startdate_orig.date();
-            date = QDate(date.year(), date.month(), 1);
-            if (STRmap.contains(date)) {
-                delete stredf;
-                continue;
-            }
-            QString newname = "STR-"+date.toString("yyyyMM")+"."+STR_ext_EDF;
-
-            QString backupfile = strBackupPath+"/"+newname;
-
-            QString gzfile = backupfile + STR_ext_gz;
-            QString nongzfile = backupfile;
-
-            backupfile = compress_backups ? gzfile : nongzfile;
-
-            if ( ! QFile::exists(backupfile)) {
-                if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {
-                    if (compress_backups) {
-                        QFile::copy(filename, backupfile);
-                    } else {
-                        uncompressFile(filename, backupfile);
-                    }
-                } else {
-                    if (compress_backups) {
-                        // already compressed, keep it.
-                        compressFile(filename, backupfile);
-                    } else {
-                        QFile::copy(filename, backupfile);
-                    }
-                }
-            }
-            // Remove any duplicate compressed/uncompressed
-            if (compress_backups)
-                QFile::exists(nongzfile) && QFile::remove(nongzfile);
-            else
-                QFile::exists(gzfile) && QFile::remove(gzfile);
-
-            STRmap[date] = STRFile(backupfile, stredf);
-        }   // end for walking the STR files list
+        BackupSTRfiles( path, strBackupPath, info, STRmap );
     }       // end if not importing the backup files
     qDebug() << "STRmap size is " << STRmap.size();
 
@@ -1900,12 +1906,11 @@ int ResmedLoader::Open(const QString & dirpath)
         delete it.value().edf;
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////
     // Create the backup folder for storing a copy of everything in..
     // (Unless we are importing from this backup folder)
     ///////////////////////////////////////////////////////////////////////////////////
-    dir.setPath(newpath);
+    dir.setPath(datalogPath);
     if (create_backups) {
         if ( ! dir.exists(backup_path)) {
             if ( ! dir.mkpath(backup_path + RMS9_STR_datalog)) {
@@ -1913,7 +1918,10 @@ int ResmedLoader::Open(const QString & dirpath)
             }
         }
 
-        compress_backups ? compressFile(path + "STR.edf", backup_path + "STR.edf.gz") : QFile::copy(path + "STR.edf", backup_path + "STR.edf");
+        if ( compress_backups )
+            compressFile(path + "STR.edf", backup_path + "STR.edf.gz");
+        else
+            QFile::copy(path + "STR.edf", backup_path + "STR.edf");
 
         // Copy Identification files to backup folder
         QFile::copy(path + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT);
@@ -1922,7 +1930,6 @@ int ResmedLoader::Open(const QString & dirpath)
         // Meh.. these can be calculated if ever needed for ResScan SDcard export
         QFile::copy(path + "STR.crc", backup_path + "STR.crc");
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Scan DATALOG files, sort, and import any new sessions
@@ -1939,7 +1946,7 @@ int ResmedLoader::Open(const QString & dirpath)
     if (isAborted())
         return 0;
 
-    scanFiles(mach, newpath);
+    scanFiles(mach, datalogPath);
     if (isAborted())
         return 0;
 
@@ -2144,17 +2151,6 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     time.start();
 #endif
 
-    QString t;
-
-//  long recs;
-//  double duration;
-//  char *data;
-//  char c;
-//  long pos;
-//  bool sign, ok;
-//  double d;
-    double tt;
-
     EventList *CSR = nullptr;
 
     // Allow for empty sessions..
@@ -2167,7 +2163,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
         qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
             qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
-            tt = edf.startdate + qint64(anno->offset*1000.0);
+            double tt = edf.startdate + qint64(anno->offset*1000.0);
 
             if ( ! anno->text.isEmpty()) {
                 if (anno->text == "csr start") {
@@ -2184,8 +2180,8 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
                     } else {
                         qDebug() << "Split csr event flag in " << edf.filename;
                     }
-                } else if (t != "recording starts") {
-                    qDebug() << "Unobserved ResMed CSL annotation field: " << t;
+                } else if (anno->text != "recording starts") {
+                    qDebug() << "Unobserved ResMed CSL annotation field: " << anno->text;
                 }
             }
         }
@@ -2225,17 +2221,6 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     time.start();
 #endif
 
-//    QString t;
-
-//    long recs;
-//    double duration=0;
-//    char *data;
-//    char c;
-//    long pos;
-//    bool sign, ok;
-//    double d;
-    double tt;
-
     // Notes: Event records have useless duration record.
     // Do not update session start / end times because they are needed to determine if events belong in this session or not...
 
@@ -2255,7 +2240,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
         qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
             qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
-            tt = edf.startdate + qint64(anno->offset*1000.0);
+            double tt = edf.startdate + qint64(anno->offset*1000.0);
 
             if ( ! anno->text.isEmpty()) {
                 if (matchSignal(CPAP_Obstructive, anno->text)) {
