@@ -969,6 +969,8 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     dir.setNameFilters(filter);
     QFileInfoList EDFfiles = dir.entryInfoList();
 
+    // Scan through all folders looking for EDF files, skip any already imported and peek inside to get durations
+
     dir.setNameFilters(QStringList());
     dir.setFilter(QDir::Dirs | QDir::Hidden | QDir::NoDotAndDotDot);
     QString filename;
@@ -989,19 +991,19 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
         if (len == 4) {					//	when does this happen?
             filename.toInt(&ok);
             if ( ! ok ) {
-            	qDebug() << "Skipping directory " << filename;
+            	qDebug() << "Skipping directory - bad 4-letter name" << filename;
             	continue;
             }
         } else if (len == 8) {		// test directory date
         	if (ignoreOldSessions) {
         		QDateTime dirDate = QDateTime().fromString(filename, "yyyyMMdd");
         		if (dirDate.date() < ignoreBefore.date()) {
-	            	qDebug() << "Skipping directory " << filename;
+	            	qDebug() << "Skipping directory - ignore before " << filename;
         			continue;
         		}
             }
         } else {
-           	qDebug() << "Skipping directory " << filename;
+           	qDebug() << "Skipping directory - bad name size " << filename;
         	continue;
         }
         // Get file lists under this directory
@@ -1015,6 +1017,7 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
 #ifdef DEBUG_EFFICIENCY
     qDebug() << "Generating EDF files list took" << time.elapsed() << "ms";
 #endif
+    qDebug() << "EDFfiles list size is " << EDFfiles.size();
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // Scan through EDF files, Extracting EDF Durations, and skipping already imported files
@@ -1038,8 +1041,6 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     emit setProgressValue(0);
     emit setProgressMax(totalfiles);
     QCoreApplication::processEvents();
-
-    // Scan through all folders looking for EDF files, skip any already imported and peek inside to get durations
 
     qDebug() << "Starting EDF duration scan pass";
     for (int i=0; i < totalfiles; ++i) {
@@ -1125,8 +1126,8 @@ void DetectPAPMode(Session *sess)
             sess->settings[CPAP_Pressure] = qRound(max * 10.0)/10.0;
             // early call.. It's CPAP mode
         } else {
-            // Ramp is ugly
-            if (sess->length() > 1800000L) {  // half an our
+            // Ramp is ugly - but this is a bad way to test for it
+            if (sess->length() > 1800000L) {  // half an hour
             }
             sess->settings[CPAP_Mode] = MODE_APAP;
             sess->settings[CPAP_PressureMin] = qRound(min * 10.0)/10.0;
@@ -1206,9 +1207,7 @@ void StoreSettings(Session * sess, STRRecord & R)
         sess->settings[CPAP_Mode] = R.mode;
         sess->settings[RMS9_Mode] = R.rms9_mode;
         if (R.mode == MODE_CPAP) {
-            if (R.set_pressure >= 0) {
-                sess->settings[CPAP_Pressure] = R.set_pressure;
-            }
+            if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
         } else if (R.mode == MODE_APAP) {
             if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
             if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
@@ -1342,6 +1341,7 @@ void ResDayTask::run()
         if (!resday->str.date.isValid()) {
             // No STR or files???
             // This condition should be impossible, but just in case something gets fudged up elsewhere later
+            qDebug() << "No edf files in resday, and the str date is inValid";
             return;
         }
         // Summary only day, create one session and tag it summary only
@@ -1549,6 +1549,7 @@ void ResDayTask::run()
 
         } else {
             // No corresponding STR.edf record, but we have EDF files
+            qDebug() << "EDF files without STR record" << resday->date.toString();
 
             bool foundprev = false;
             loader->sessionMutex.lock();
@@ -1579,6 +1580,7 @@ void ResDayTask::run()
             if (!foundprev) {
                 // We have no Summary or Settings data... we need to do something to indicate this, and detect the mode
                 if (sess->channelDataExists(CPAP_Pressure)) {
+                    qDebug() << "Guessing the PAP mode...";
                     DetectPAPMode(sess);
                 }
             }
@@ -1742,6 +1744,45 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
 
         STRmap[date] = STRFile(backupfile, stredf);
     }   // end for walking the STR files list
+}
+
+void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * mach ) {
+
+        Day * day = p_profile->FindDay(date, MT_CPAP);
+        bool reimporting = false;
+
+        if (day && day->hasMachine(mach)) {
+            // Sessions found for this machine, check if only summary info
+
+            if (day->summaryOnly(mach) && (resday.files.size()> 0)) {
+                // Note: if this isn't an EDF file, there's really no point doing this here,
+                // but the worst case scenario is this session is deleted and reimported.. this just slows things down a bit in that case
+                // This day was first imported as a summary from STR.edf, so we now totally want to redo this day
+                QList<Session *> sessions = day->getSessions(MT_CPAP);
+                for (auto & sess : sessions) {
+                    day->removeSession(sess);
+                    delete sess;
+                }
+            } else if (day->noSettings(mach) && resday.str.date.isValid()) {
+                // STR is present now, it wasn't before... we don't need to trash the files, but we do want the official settings.
+                // Do it right here
+                for (auto & sess : day->sessions) {
+                    if (sess->machine() != mach)
+                        continue;
+
+                    qDebug() << "Adding STR.edf information to session" << sess->session();
+                    StoreSettings(sess, resday.str);
+                    sess->setNoSettings(false);
+                    sess->SetChanged(true);
+                    sess->StoreSummary();
+                }
+            } else
+                return;
+        }
+
+        ResDayTask * rdt = new ResDayTask(this, mach, &resday);
+        rdt->reimporting = reimporting;
+        queTask(rdt);
 }
 
 int ResmedLoader::Open(const QString & dirpath)
@@ -1964,43 +2005,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
         ResMedDay & resday = rdi.value();
         resday.date = date;
+        checkSummaryDay( resday, date, mach );
 
-        Day * day = p_profile->FindDay(date, MT_CPAP);
-        bool reimporting = false;
-        if (day && day->hasMachine(mach)) {
-            // Sessions found for this machine, check if only summary info
-
-            if (day->summaryOnly(mach) && (resday.files.size()> 0)) {
-                // Note: if this isn't an EDF file, there's really no point doing this here,
-                // but the worst case scenario is this session is deleted and reimported.. this just slows things down a bit in that case
-
-                // This day was first imported as a summary from STR.edf, so we now totally want to redo this day
-                QList<Session *> sessions = day->getSessions(MT_CPAP);
-                for (auto & sess : sessions) {
-                    day->removeSession(sess);
-                    delete sess;
-                }
-
-                reimporting = true;
-            } else if (day->noSettings(mach) && resday.str.date.isValid()) {
-                // STR is present now, it wasn't before... we don't need to trash the files, but we do want the official settings.
-                // Do it right here
-                for (auto & sess : day->sessions) {
-                    if (sess->machine() != mach) continue;
-
-                    qDebug() << "Adding STR.edf information to session" << sess->session();
-                    StoreSettings(sess, resday.str);
-                    sess->setNoSettings(false);
-                    sess->SetChanged(true);
-                    sess->StoreSummary();
-                }
-            } else
-                continue;
-        }
-
-        ResDayTask * rdt = new ResDayTask(this, mach, &resday);
-        queTask(rdt);
-        rdt->reimporting = reimporting;
     }
 
     sessionCount = 0;
@@ -2058,6 +2064,7 @@ int ResmedLoader::Open(const QString & dirpath)
     channel_time.clear();
 
     qDebug() << "Total Events " << event_cnt;
+    qDebug() << "Total new Sessions " << num_new_sessions;
 
     return num_new_sessions;
 }

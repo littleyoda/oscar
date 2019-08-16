@@ -288,6 +288,8 @@ class ResmedLoader : public CPAPLoader
     //! \brief Look up machine model information of ResMed file structure stored at path
     virtual MachineInfo PeekInfo(const QString & path);
 
+    virtual void checkSummaryDay( ResMedDay & resday, QDate date, Machine * mach );
+
     //! \brief Scans for ResMed SD folder structure signature, and loads any new data if found
     virtual int Open(const QString &);
 
