@@ -2147,16 +2147,13 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     QString t;
 
 //  long recs;
-    double duration;
-    char *data;
+//  double duration;
+//  char *data;
 //  char c;
-    long pos;
-    bool sign, ok;
-    double d;
+//  long pos;
+//  bool sign, ok;
+//  double d;
     double tt;
-
-    // Notes: Event headers have useless duration value.
-   // sess->updateFirst(edf.startdate);
 
     EventList *CSR = nullptr;
 
@@ -2164,118 +2161,40 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     qint64 csr_starts = 0;
 
     // Process event annotation records
-    for (int s = 0; s < edf.GetNumSignals(); s++) {
-        int recs = edf.edfsignals[s].sampleCnt * edf.GetNumDataRecords() * 2;
+    qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
+    int vec = 1;
+    for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
+        qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
+        for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
+            qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
+            tt = edf.startdate + qint64(anno->offset*1000.0);
 
-        data = (char *)edf.edfsignals[s].dataArray;
-        pos = 0;
-        tt = edf.startdate;
-//      sess->updateFirst(tt);
-        duration = 0;
-
-        while (pos < recs) {
-            char c = data[pos];
-
-            if ((c != '+') && (c != '-')) {
-                break;
-            }
-
-            if (data[pos++] == '+') { sign = true; }
-            else { sign = false; }
-
-            t = "";
-            c = data[pos];
-
-            do {
-                t += c;
-                pos++;
-                c = data[pos];
-            } while ((c != 20) && (c != 21)); // start code
-
-            d = t.toDouble(&ok);
-            if (!ok) {
-                qDebug() << "Faulty EDF CSL file " << edf.filename;
-                break;
-            }
-
-            if (!sign) { d = -d; }
-
-            tt = edf.startdate + qint64(d * 1000.0);
-            duration = 0;
-            // First entry
-
-            if (data[pos] == 21) {
-                pos++;
-                // get duration.
-                t = "";
-
-                do {
-                    t += data[pos];
-                    pos++;
-                } while ((data[pos] != 20) && (pos < recs)); // start code
-
-                duration = t.toDouble(&ok);
-                if (!ok) {
-                    qDebug() << "Faulty EDF CSL file (at %" << pos << ") " << edf.filename;
-                    break;
-                }
-            }
-
-            while ((data[pos] == 20) && (pos < recs)) {
-                t = "";
-                pos++;
-
-                if (data[pos] == 0) {
-                    break;
-                }
-
-                if (data[pos] == 20) {
-                    pos++;
-                    break;
-                }
-
-                do {
-                    t += tolower(data[pos++]);
-                } while ((data[pos] != 20) && (pos < recs)); // start code
-
-                if (!t.isEmpty()) {
-                    if (t == "csr start") {
-                        csr_starts = tt;
-                    } else if (t == "csr end") {
-                        if (!CSR) {
-                            CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
-                        }
-
-                        if (csr_starts > 0) {
-                            if (sess->checkInside(csr_starts)) {
-                                CSR->AddEvent(tt, double(tt - csr_starts) / 1000.0);
-                            }
-                            csr_starts = 0;
-                        } else {
-                            qDebug() << "If you can read this, ResMed sucks and split CSR flagging!";
-                        }
-                    } else if (t != "recording starts") {
-                        qDebug() << "Unobserved ResMed CSL annotation field: " << t;
+            if ( ! anno->text.isEmpty()) {
+                if (anno->text == "csr start") {
+                    csr_starts = tt;
+                } else if (anno->text == "csr end") {
+                    if ( ! CSR) {
+                        CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
                     }
+                    if (csr_starts > 0) {
+                        if (sess->checkInside(csr_starts)) {
+                            CSR->AddEvent(tt, double(tt - csr_starts) / 1000.0);
+                        }
+                        csr_starts = 0;
+                    } else {
+                        qDebug() << "Split csr event flag in " << edf.filename;
+                    }
+                } else if (t != "recording starts") {
+                    qDebug() << "Unobserved ResMed CSL annotation field: " << t;
                 }
-
-                if (pos >= recs) {
-                    qDebug() << "Short EDF CSL file" << edf.filename;
-                    break;
-                }
-
-                // pos++;
             }
-
-            while ((pos < recs) && (data[pos] == 0)) { pos++; }
-
-            if (pos >= recs) { break; }
         }
-
-    //    sess->updateLast(tt);
     }
 
-    Q_UNUSED(duration)
+    if (csr_starts > 0) {
+        qDebug() << "Unfinished csr event in " << edf.filename;
+    }
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadCSL += time.elapsed();
@@ -2306,15 +2225,15 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     time.start();
 #endif
 
-    QString t;
+//    QString t;
 
-    long recs;
-    double duration=0;
-    char *data;
-    char c;
-    long pos;
-    bool sign, ok;
-    double d;
+//    long recs;
+//    double duration=0;
+//    char *data;
+//    char c;
+//    long pos;
+//    bool sign, ok;
+//    double d;
     double tt;
 
     // Notes: Event records have useless duration record.
@@ -2324,132 +2243,56 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 
     // Allow for empty sessions..
 
-    // Create EventLists
+    // Create some EventLists
     OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
     HY = sess->AddEventList(CPAP_Hypopnea, EVL_Event);
     UA = sess->AddEventList(CPAP_Apnea, EVL_Event);
 
     // Process event annotation records
-    for (int s = 0; s < edf.GetNumSignals(); s++) {
-        recs = edf.edfsignals[s].sampleCnt * edf.GetNumDataRecords() * 2;
+    qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
+    int vec = 1;
+    for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
+        qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
+        for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
+            qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
+            tt = edf.startdate + qint64(anno->offset*1000.0);
 
-        data = (char *)edf.edfsignals[s].dataArray;
-        pos = 0;
-        tt = edf.startdate;
-
-        while (pos < recs) {
-            c = data[pos];
-
-            if ((c != '+') && (c != '-')) {
-                break;
-            }
-
-            if (data[pos++] == '+') { sign = true; }
-            else { sign = false; }
-
-            t = "";
-            c = data[pos];
-
-            do {
-                t += c;
-                pos++;
-                c = data[pos];
-            } while ((c != 20) && (c != 21)); // start code
-
-            d = t.toDouble(&ok);
-
-            if (!ok) {
-                qDebug() << "Faulty EDF EVE file " << edf.filename;
-                break;
-            }
-
-            if (!sign) { d = -d; }
-
-            tt = edf.startdate + qint64(d * 1000.0);
-            duration = 0;
-            // First entry
-
-            if (data[pos] == 21) {
-                pos++;
-                // get duration.
-                t = "";
-
-                do {
-                    t += data[pos];
-                    pos++;
-                } while ((data[pos] != 20) && (pos < recs)); // start code
-
-                duration = t.toDouble(&ok);
-
-                if (!ok) {
-                    qDebug() << "Faulty EDF EVE file (at %" << pos << ") " << edf.filename;
-                    break;
-                }
-            }
-
-            while ((data[pos] == 20) && (pos < recs)) {
-                t = "";
-                pos++;
-
-                if (data[pos] == 0) {
-                    break;
-                }
-
-                if (data[pos] == 20) {
-                    pos++;
-                    break;
-                }
-
-                do {
-                    t += tolower(data[pos++]);
-                } while ((data[pos] != 20) && (pos < recs)); // start code
-
-                if (!t.isEmpty()) {
-                    if (matchSignal(CPAP_Obstructive, t)) {
-
-                        if (sess->checkInside(tt)) OA->AddEvent(tt, duration);
-                    } else if (matchSignal(CPAP_Hypopnea, t)) {
-                        if (sess->checkInside(tt)) HY->AddEvent(tt, duration /*+ 10*/); // Only Hyponea's Need the extra duration???
-                    } else if (matchSignal(CPAP_Apnea, t)) {
-                        if (sess->checkInside(tt)) UA->AddEvent(tt, duration);
-                    } else if (matchSignal(CPAP_RERA, t)) {
-                        // Not all machines have it, so only create it when necessary..
-                        if (!RE) {
-                            if (!(RE = sess->AddEventList(CPAP_RERA, EVL_Event))) {
-                                return false;
-                            }
-                        }
-                        if (sess->checkInside(tt)) RE->AddEvent(tt, duration);
-                    } else if (matchSignal(CPAP_ClearAirway, t)) {
-                        // Not all machines have it, so only create it when necessary..
-                        if (!CA) {
-                            if (!(CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event))) {
-                                return false;
-                            }
-                        }
-
-                        if (sess->checkInside(tt)) CA->AddEvent(tt, duration);
-                    } else {
-                        if (t != "recording starts") {
-                            qDebug() << "Unobserved ResMed annotation field: " << t;
-                        }
+            if ( ! anno->text.isEmpty()) {
+                if (matchSignal(CPAP_Obstructive, anno->text)) {
+                    if (sess->checkInside(tt))
+                        OA->AddEvent(tt, anno->duration);
+                } else if (matchSignal(CPAP_Hypopnea, anno->text)) {
+                    if (sess->checkInside(tt))
+                        HY->AddEvent(tt, anno->duration); // Hyponeas don't have any duration!
+                } else if (matchSignal(CPAP_Apnea, anno->text)) {
+                    if (sess->checkInside(tt))
+                        UA->AddEvent(tt, anno->duration);
+                } else if (matchSignal(CPAP_RERA, anno->text)) {
+                    // Not all machines have it, so only create it when necessary..
+                    if (!RE) {
+                        if (!(RE = sess->AddEventList(CPAP_RERA, EVL_Event)))
+                            return false;
+                    }
+                    if (sess->checkInside(tt))
+                        RE->AddEvent(tt, anno->duration);
+                } else if (matchSignal(CPAP_ClearAirway, anno->text)) {
+                    // Not all machines have it, so only create it when necessary..
+                    if (!CA) {
+                        if (!(CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event)))
+                            return false;
+                    }
+                    if (sess->checkInside(tt))
+                        CA->AddEvent(tt, anno->duration);
+                } else {
+                    if (anno->text != "recording starts") {
+                        qDebug() << "Unobserved ResMed annotation field: " << anno->text;
                     }
                 }
-
-                if (pos >= recs) {
-                    qDebug() << "Short EDF EVE file" << edf.filename;
-                    break;
-                }
-
-                // pos++;
             }
 
-            while ((pos < recs) && (data[pos] == 0)) { pos++; }
-
-            if (pos >= recs) { break; }
         }
-
     }
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadEVE += time.elapsed();
