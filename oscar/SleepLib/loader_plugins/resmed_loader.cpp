@@ -2005,8 +2005,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
         ResMedDay & resday = rdi.value();
         resday.date = date;
-        checkSummaryDay( resday, date, mach );
 
+        checkSummaryDay( resday, date, mach );
     }
 
     sessionCount = 0;
@@ -2386,6 +2386,30 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     return true;
 }
 
+void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
+        EventDataType *min, EventDataType *max, double tt, EventList *el, Session * sess, ChannelID code ) {
+    EventDataType tmp = EventDataType(est) * es.gain;
+
+    if ((tmp >= t_min) && (tmp <= t_max)) {
+        if (tmp < *min)
+            *min = tmp;
+
+        if (tmp > *max)
+            *max = tmp;
+
+        el->AddEvent(tt, est);
+    } else {
+        // Out of bounds value, start a new eventlist
+        if (el->count() > 1) {
+            // that should be in session, not the eventlist.. handy for debugging though
+            el->setDimension(es.physical_dimension);
+
+            el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
+        } else
+            el->clear(); // reuse the object
+    }
+}
+
 // Convert EDFSignal data to OSCAR's Time-Delta Event format
 void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code,
                                long recs, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
@@ -2448,46 +2472,48 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 
             if (last != c) {
                 if (square) {
-                    tmp = EventDataType(last) * es.gain;
-
-                    if ((tmp >= t_min) && (tmp <= t_max)) {
-                        if (tmp < min)
-                            min = tmp;
-
-                        if (tmp > max)
-                            max = tmp;
-
-                        el->AddEvent(tt, last);
-                    } else {
-                        // Out of bounds value, start a new eventlist
-                        if (el->count() > 1) {
-                            // that should be in session, not the eventlist.. handy for debugging though
-                            el->setDimension(es.physical_dimension);
-
-                            el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-                        } else
-                            el->clear(); // reuse the object
-                    }
+                    buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
+//                    tmp = EventDataType(last) * es.gain;
+//
+//                    if ((tmp >= t_min) && (tmp <= t_max)) {
+//                        if (tmp < min)
+//                            min = tmp;
+//
+//                        if (tmp > max)
+//                            max = tmp;
+//
+//                        el->AddEvent(tt, last);
+//                    } else {
+//                        // Out of bounds value, start a new eventlist
+//                        if (el->count() > 1) {
+//                            // that should be in session, not the eventlist.. handy for debugging though
+//                            el->setDimension(es.physical_dimension);
+//
+//                            el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
+//                        } else
+//                            el->clear(); // reuse the object
+//                    }
                 }
 
-                tmp = EventDataType(c) * es.gain;
-
-                if ((tmp >= t_min) && (tmp <= t_max)) {
-                    if (tmp < min)
-                        min = tmp;
-                    if (tmp > max)
-                        max = tmp;
-
-                    el->AddEvent(tt, c);
-                } else {
-                    if (el->count() > 1) {
-                        el->setDimension(es.physical_dimension);
-
-                        // Create and attach new EventList
-                        el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-                    } else
-                        el->clear();
-                }
+                buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
+//                tmp = EventDataType(c) * es.gain;
+//
+//                if ((tmp >= t_min) && (tmp <= t_max)) {
+//                    if (tmp < min)
+//                        min = tmp;
+//                    if (tmp > max)
+//                        max = tmp;
+//
+//                    el->AddEvent(tt, c);
+//                } else {
+//                    if (el->count() > 1) {
+//                        el->setDimension(es.physical_dimension);
+//
+//                        // Create and attach new EventList
+//                        el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
+//                    } else
+//                        el->clear();
+//                }
             }
 
             tt += rate;
