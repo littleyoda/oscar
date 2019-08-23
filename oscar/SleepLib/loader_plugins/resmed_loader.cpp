@@ -1848,7 +1848,24 @@ int ResmedLoader::Open(const QString & dirpath)
     ///////////////////////////////////////////////////////////////////////////////////
     // Create machine object (unless it's already registered)
     ///////////////////////////////////////////////////////////////////////////////////
-    Machine *mach = p_profile->CreateMachine(info);
+
+    QDateTime firstImportDay = QDateTime("2010January01T00:01:00");     // Before Series 8 machines (I think)
+
+    Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
+    if ( mach ) {       // we have seen this machine
+        qDebug() << "We have seen this machime";
+        QDate lastDate = p_profile->LastDay(MT_CPAP);
+        firstImportDay = lastDate.addDay(-1);
+    } else {            // Starting from new beginnings - new or purged
+        qDebug() << "New machine or just purged";
+        QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+        bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+        mach = p_profile->CreateMachine( info );
+
+        if (ignoreOldSessions) 
+            firstImportDay = ignoreBefore;
+    }
+    qDebug() << "First day to import: " << firstImportDay.toString();
 
     bool importing_backups = false;
     bool create_backups = p_profile->session->backupCardData();
@@ -1940,7 +1957,7 @@ int ResmedLoader::Open(const QString & dirpath)
     // Build a Date map of all records in STR.edf files, populating ResDayList
     ///////////////////////////////////////////////////////////////////////////////////
 
-    ParseSTR(mach, STRmap);
+    ParseSTR(mach, STRmap, firstImportDay);
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
@@ -1987,7 +2004,7 @@ int ResmedLoader::Open(const QString & dirpath)
     if (isAborted())
         return 0;
 
-    scanFiles(mach, datalogPath);
+    scanFiles(mach, datalogPath, firstImportDay);
     if (isAborted())
         return 0;
 
