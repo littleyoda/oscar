@@ -67,6 +67,8 @@ struct EDFHeaderQT {
     */
 struct EDFSignal {
   public:
+//  virtual ~EDFSignal();
+
     QString label;                      //! \brief Name of this Signal
     QString transducer_type;            //! \brief Tranducer Type (source of the data, usually blank)
     QString physical_dimension;         //! \brief The units of measurements represented by this signal
@@ -122,7 +124,11 @@ class EDFInfo
 
     virtual bool Parse(QByteArray * fileData);                          //! \brief Parse the EDF+ file into the EDFheaderQT. Must call Open(..) first.
 
-    virtual EDFSignal *lookupLabel(const QString & name, int index=0);  //! \brief Return a ptr to the i'th signal with that name
+    virtual bool parseHeader( EDFHeaderRaw * hdrPtr );                  //! \brief parse just the edf header for duration, etc
+
+    virtual EDFSignal * lookupLabel(const QString & name, int index=0);  //! \brief Return a ptr to the i'th signal with that name
+
+    virtual EDFHeaderQT * GetHeader( const QString & name);             //! \brief returna pointer to the header block
 
     virtual long GetNumSignals() { return edfHdr.num_signals; }         //! \brief Returns the number of signals contained in this EDF file
 

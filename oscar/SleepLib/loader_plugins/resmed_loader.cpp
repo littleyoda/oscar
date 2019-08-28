@@ -166,8 +166,10 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
         ResMedEDFInfo & str = *file.edf;
 
         QDate date = str.edfHdr.startdate_orig.date(); // each STR.edf record starts at 12 noon
+        int size = str.GetNumDataRecords();
 
-        qDebug() << "Parsing" << strfile << date << str.GetNumDataRecords() << str.GetNumSignals();
+        qDebug() << "Parsing" << strfile << date.toString() << size << str.GetNumSignals();
+        qDebug() << "Last day is" << date.addDays(size-1).toString();
         sleep(1);
 
         // ResMed and their consistent naming and spacing... :/
@@ -182,8 +184,6 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
 
         EDFSignal *sig = nullptr;
 
-        int size = str.GetNumDataRecords();
-
         // For each data record, representing 1 day each
         for (int rec = 0; rec < size; ++rec, date = date.addDays(1)) {
             emit setProgressValue(++currentRec);
@@ -191,6 +191,7 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
 
             if (ignoreOldSessions) {
                 if (date < ignoreBefore.date()) {
+                    qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
                     continue;
                 }
             }
@@ -198,6 +199,7 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             auto rit = resdayList.find(date);
             if (rit != resdayList.end()) {
                 // Already seen this record.. should check if the data is the same, but meh.
+                qDebug() << "Skipping" << date.toString() << "Already saw this one";
                 continue;
             }
 
@@ -213,11 +215,14 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             }
             if (!validday) {
                 // There are no mask on/off events, so this STR day is useless.
+                qDebug() << "Skipping" << date.toString() << "No mask events";
                 continue;
             }
 
             rit = resdayList.insert(date, ResMedDay());
 
+            qDebug() << "Setting up STRRecord for" << date.toString();
+            sleep(1);
             STRRecord &R = rit.value().str;
 
             uint timestamp = QDateTime(date,QTime(12,0,0)).toTime_t();
@@ -586,8 +591,12 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
+            qDebug() << "Finished" << date.toString();
+            sleep(1);
         }
     }
+    qDebug() << "Finished ParseSTR";
+    sleep(3);
 }
 
 ResmedLoader::ResmedLoader() {
@@ -1606,7 +1615,7 @@ void ResDayTask::run()
     ///////////////////////////////////////////////////////////////////////////////////
     // Parse Identification.tgt file (containing serial number and machine information)
     ///////////////////////////////////////////////////////////////////////////////////
-bool parseIdentTGT( QString path, MachineInfo  info, QHash<QString, QString>  idmap ) {
+bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
     QString filename = path + RMS9_STR_idfile + STR_ext_TGT;
     QFile f(filename);
 
@@ -1627,7 +1636,8 @@ bool parseIdentTGT( QString path, MachineInfo  info, QHash<QString, QString>  id
             QString value = line.section(" ", 1);
 
             if (key == "SRN") { // Serial Number
-                info.serial = value;
+                info->serial = value;
+                qDebug() << "Serial # is >" << value << "<";
                 continue;
 
             } else if (key == "PNA") {  // Product Name
@@ -1635,13 +1645,13 @@ bool parseIdentTGT( QString path, MachineInfo  info, QHash<QString, QString>  id
                 value.replace("_"," ");
                 if (value.contains(STR_ResMed_S9)) {
                     value.replace(STR_ResMed_S9, "");
-                    info.series = STR_ResMed_S9;
+                    info->series = STR_ResMed_S9;
                 } else if (value.contains(STR_ResMed_AirSense10)) {
                     value.replace(STR_ResMed_AirSense10, "");
-                    info.series = STR_ResMed_AirSense10;
+                    info->series = STR_ResMed_AirSense10;
                 } else if (value.contains(STR_ResMed_AirCurve10)) {
                     value.replace(STR_ResMed_AirCurve10, "");
-                    info.series = STR_ResMed_AirCurve10;
+                    info->series = STR_ResMed_AirCurve10;
                 }
                 value.replace("(","");
                 value.replace(")","");
@@ -1651,12 +1661,12 @@ bool parseIdentTGT( QString path, MachineInfo  info, QHash<QString, QString>  id
                         value.replace("Adapt", QObject::tr("VPAP Adapt"));
                     }
                 }
-                info.model = value.trimmed();
+                info->model = value.trimmed();
                 continue;
 
             } else if (key == "PCD") { // Product Code
                 qDebug() << "Prouct Code is >" << value << "<";
-                info.modelnumber = value;
+                info->modelnumber = value;
                 continue;
             }
 
@@ -1822,9 +1832,15 @@ int ResmedLoader::Open(const QString & dirpath)
     m_abort = false;
     MachineInfo info = newInfo();
 
-    if ( ! parseIdentTGT(path, info, idmap) )
+    if ( ! parseIdentTGT(path, & info, idmap) )
         return -1;
  
+    qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
+    qDebug() << "IdMap size:" << idmap.size();
+    foreach ( QString st , idmap.keys() ) {
+        qDebug() << "Key" << st << "Value" << idmap[st];
+    }
+
     // Abort if no serial number
     if (info.serial.isEmpty()) {
         qDebug() << "ResMed Data card has no valid serial number in Indentification.tgt";
@@ -1849,13 +1865,13 @@ int ResmedLoader::Open(const QString & dirpath)
     // Create machine object (unless it's already registered)
     ///////////////////////////////////////////////////////////////////////////////////
 
-    QDateTime firstImportDay = QDateTime("2010January01T00:01:00");     // Before Series 8 machines (I think)
+    QDate firstImportDay = QDate().fromString("2010-01-01", "yyyy-MM-dd");     // Before Series 8 machines (I think)
 
     Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
         QDate lastDate = p_profile->LastDay(MT_CPAP);
-        firstImportDay = lastDate.addDay(-1);
+        firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
@@ -1863,7 +1879,7 @@ int ResmedLoader::Open(const QString & dirpath)
         mach = p_profile->CreateMachine( info );
 
         if (ignoreOldSessions) 
-            firstImportDay = ignoreBefore;
+            firstImportDay = ignoreBefore.date();
     }
     qDebug() << "First day to import: " << firstImportDay.toString();
 
@@ -1957,12 +1973,16 @@ int ResmedLoader::Open(const QString & dirpath)
     // Build a Date map of all records in STR.edf files, populating ResDayList
     ///////////////////////////////////////////////////////////////////////////////////
 
-    ParseSTR(mach, STRmap, firstImportDay);
+    ParseSTR(mach, STRmap );    //  , firstImportDay);
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
+        qDebug() << "Deleting edf of" << it.value().filename;
+        sleep(1);
         delete it.value().edf;
     }
+    qDebug() << "Finished STRmap cleanup";
+    sleep(1);
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Create the backup folder for storing a copy of everything in..
@@ -2004,10 +2024,14 @@ int ResmedLoader::Open(const QString & dirpath)
     if (isAborted())
         return 0;
 
-    scanFiles(mach, datalogPath, firstImportDay);
+    qDebug() << "Starting scan of DATALOG";
+    sleep(1);
+    scanFiles(mach, datalogPath );      //  , firstImportDay);
     if (isAborted())
         return 0;
 
+    qDebug() << "Fisnished DATALOG scan";
+    sleep(1);
     // Now at this point we have resdayList populated with processable summary and EDF files data
     // that can be processed in threads..
 

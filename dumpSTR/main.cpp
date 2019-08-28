@@ -3,6 +3,7 @@
 #include <QApplication>
 // #include <iostream>
 #include <QDebug>
+#include <QThread>
 
 typedef float EventDataType;
 
@@ -154,5 +155,8 @@ int main(int argc, char *argv[]) {
             }
         }
 	}
-	
+    qDebug() << "Deleting the edf object";
+    delete &str;
+	QThread::sleep(1);
+    qDebug() << "Done";
 }
