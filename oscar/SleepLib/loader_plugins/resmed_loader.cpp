@@ -140,12 +140,12 @@ bool matchSignal(ChannelID ch, const QString & name)
 }
 
 // This function parses a list of STR files and creates a date ordered map of individual records
-void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
+void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate firstImport)
 {
     Q_UNUSED(mach)
 
-    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
-    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+//  QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+//  bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
     int totalRecs = 0;
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
@@ -167,10 +167,15 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
 
         QDate date = str.edfHdr.startdate_orig.date(); // each STR.edf record starts at 12 noon
         int size = str.GetNumDataRecords();
+        QDate lastDay = date.addDays(size-1);
 
         qDebug() << "Parsing" << strfile << date.toString() << size << str.GetNumSignals();
-        qDebug() << "Last day is" << date.addDays(size-1).toString();
-        sleep(1);
+        qDebug() << "Last day is" << lastDay;
+
+        if ( lastDay < firstImport ) {
+            qDebug() << "LastDay before firstImport, skipping" << file.filename;
+            continue;
+        }
 
         // ResMed and their consistent naming and spacing... :/
         EDFSignal *maskon = str.lookupLabel("Mask On");
@@ -189,12 +194,12 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             emit setProgressValue(++currentRec);
             QCoreApplication::processEvents();
 
-            if (ignoreOldSessions) {
-                if (date < ignoreBefore.date()) {
-                    qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
+        //  if (ignoreOldSessions) {
+                if (date < firstImport) {
+//                  qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
                     continue;
                 }
-            }
+        //  }
 
             auto rit = resdayList.find(date);
             if (rit != resdayList.end()) {
@@ -221,8 +226,8 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
 
             rit = resdayList.insert(date, ResMedDay());
 
-            qDebug() << "Setting up STRRecord for" << date.toString();
-            sleep(1);
+//          qDebug() << "Setting up STRRecord for" << date.toString();
+//          sleep(1);
             STRRecord &R = rit.value().str;
 
             uint timestamp = QDateTime(date,QTime(12,0,0)).toTime_t();
@@ -591,12 +596,12 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap)
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
-            qDebug() << "Finished" << date.toString();
-            sleep(1);
+//          qDebug() << "Finished" << date.toString();
+//          sleep(1);
         }
     }
-    qDebug() << "Finished ParseSTR";
-    sleep(3);
+//  qDebug() << "Finished ParseSTR";
+//  sleep(3);
 }
 
 ResmedLoader::ResmedLoader() {
@@ -648,6 +653,46 @@ bool ResmedLoader::Detect(const QString & givenpath)
     return true;
 }
 
+QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
+{
+    QHash<QString, QString> hash;
+
+    if (!line.isEmpty()) {
+        QString key = line.section(" ", 0, 0).section("#", 1);
+        QString value = line.section(" ", 1);
+
+        if (key == "SRN") { // Serial Number
+            info->serial = value;
+
+        } else if (key == "PNA") {  // Product Name
+            value.replace("_"," ");
+
+            if (value.contains(STR_ResMed_S9)) {
+                value.replace(STR_ResMed_S9, "");
+                info->series = STR_ResMed_S9;
+            } else if (value.contains(STR_ResMed_AirSense10)) {
+                value.replace(STR_ResMed_AirSense10, "");
+                info->series = STR_ResMed_AirSense10;
+            } else if (value.contains(STR_ResMed_AirCurve10)) {
+                value.replace(STR_ResMed_AirCurve10, "");
+                info->series = STR_ResMed_AirCurve10;
+            }
+            value.replace("(","");
+            value.replace(")","");
+            if (value.contains("Adapt", Qt::CaseInsensitive)) {
+                if (!value.contains("VPAP")) {
+                    value.replace("Adapt", QObject::tr("VPAP Adapt"));
+                }
+            }
+            info->model = value.trimmed();
+        } else if (key == "PCD") { // Product Code
+            info->modelnumber = value;
+        }
+        hash[key] = value;
+    }
+
+    return hash;
+}
 
 MachineInfo ResmedLoader::PeekInfo(const QString & path)
 {
@@ -665,39 +710,7 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
     // Parse # entries into idmap.
     while (!f.atEnd()) {
         QString line = f.readLine().trimmed();
-
-        if (!line.isEmpty()) {
-            QString key = line.section(" ", 0, 0).section("#", 1);
-            QString value = line.section(" ", 1);
-
-            if (key == "SRN") { // Serial Number
-                info.serial = value;
-
-            } else if (key == "PNA") {  // Product Name
-                value.replace("_"," ");
-
-                if (value.contains(STR_ResMed_S9)) {
-                    value.replace(STR_ResMed_S9, "");
-                    info.series = STR_ResMed_S9;
-                } else if (value.contains(STR_ResMed_AirSense10)) {
-                    value.replace(STR_ResMed_AirSense10, "");
-                    info.series = STR_ResMed_AirSense10;
-                } else if (value.contains(STR_ResMed_AirCurve10)) {
-                    value.replace(STR_ResMed_AirCurve10, "");
-                    info.series = STR_ResMed_AirCurve10;
-                }
-                value.replace("(","");
-                value.replace(")","");
-                if (value.contains("Adapt", Qt::CaseInsensitive)) {
-                    if (!value.contains("VPAP")) {
-                        value.replace("Adapt", QObject::tr("VPAP Adapt"));
-                    }
-                }
-                info.model = value.trimmed();
-            } else if (key == "PCD") { // Product Code
-                info.modelnumber = value;
-            }
-        }
+        QHash<QString, QString> hash = parseIdentLine( line, & info );
     }
 
     return info;
@@ -948,7 +961,7 @@ EDFduration getEDFDuration(const QString & filename)
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Sorted EDF files that need processing into date records according to ResMed noon split
 ///////////////////////////////////////////////////////////////////////////////////////////
-int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
+int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path, QDate firstImport)
 {
     QTime time;
 
@@ -988,8 +1001,8 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
     QFileInfoList dirlist = dir.entryInfoList();
     int dirlistSize = dirlist.size();
 
-    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
-    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+//  QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+//  bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
     
     // Scan for any sub folders and create files lists
     for (int i = 0; i < dirlistSize ; i++) {
@@ -1004,13 +1017,13 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
             	continue;
             }
         } else if (len == 8) {		// test directory date
-        	if (ignoreOldSessions) {
-        		QDateTime dirDate = QDateTime().fromString(filename, "yyyyMMdd");
-        		if (dirDate.date() < ignoreBefore.date()) {
+        //  if (ignoreOldSessions) {
+        		QDate dirDate = QDate().fromString(filename, "yyyyMMdd");
+        		if (dirDate < firstImport) {
 	            	qDebug() << "Skipping directory - ignore before " << filename;
         			continue;
         		}
-            }
+        //  }
         } else {
            	qDebug() << "Skipping directory - bad name size " << filename;
         	continue;
@@ -1079,10 +1092,10 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path)
             date = date.addDays(-1);
         }
 
-        if (ignoreOldSessions) {
-            if (date < ignoreBefore.date())
+//      if (ignoreOldSessions) {
+            if (date < firstImport)
                 continue;
-        }
+//      }
 
         // Chop off the .gz component if it exists, it's not needed at this stage
         if (filename.endsWith(STR_ext_gz)) {
@@ -1630,48 +1643,50 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
     // Parse # entries into idmap.
     while (!f.atEnd()) {
         QString line = f.readLine().trimmed();
+        QHash<QString, QString> hash = parseIdentLine( line, info );
+        idmap.unite(hash);
 
-        if (!line.isEmpty()) {
-            QString key = line.section(" ", 0, 0).section("#", 1);
-            QString value = line.section(" ", 1);
-
-            if (key == "SRN") { // Serial Number
-                info->serial = value;
-                qDebug() << "Serial # is >" << value << "<";
-                continue;
-
-            } else if (key == "PNA") {  // Product Name
-                qDebug() << "Prouct Name is >" << value << "<";
-                value.replace("_"," ");
-                if (value.contains(STR_ResMed_S9)) {
-                    value.replace(STR_ResMed_S9, "");
-                    info->series = STR_ResMed_S9;
-                } else if (value.contains(STR_ResMed_AirSense10)) {
-                    value.replace(STR_ResMed_AirSense10, "");
-                    info->series = STR_ResMed_AirSense10;
-                } else if (value.contains(STR_ResMed_AirCurve10)) {
-                    value.replace(STR_ResMed_AirCurve10, "");
-                    info->series = STR_ResMed_AirCurve10;
-                }
-                value.replace("(","");
-                value.replace(")","");
-
-                if (value.contains("Adapt", Qt::CaseInsensitive)) {
-                    if (!value.contains("VPAP")) {
-                        value.replace("Adapt", QObject::tr("VPAP Adapt"));
-                    }
-                }
-                info->model = value.trimmed();
-                continue;
-
-            } else if (key == "PCD") { // Product Code
-                qDebug() << "Prouct Code is >" << value << "<";
-                info->modelnumber = value;
-                continue;
-            }
-
-            idmap[key] = value;
-        }
+//        if (!line.isEmpty()) {
+//            QString key = line.section(" ", 0, 0).section("#", 1);
+//            QString value = line.section(" ", 1);
+//
+//            if (key == "SRN") { // Serial Number
+//                info->serial = value;
+//                qDebug() << "Serial # is >" << value << "<";
+//                continue;
+//
+//            } else if (key == "PNA") {  // Product Name
+//                qDebug() << "Prouct Name is >" << value << "<";
+//                value.replace("_"," ");
+//                if (value.contains(STR_ResMed_S9)) {
+//                    value.replace(STR_ResMed_S9, "");
+//                    info->series = STR_ResMed_S9;
+//                } else if (value.contains(STR_ResMed_AirSense10)) {
+//                    value.replace(STR_ResMed_AirSense10, "");
+//                    info->series = STR_ResMed_AirSense10;
+//                } else if (value.contains(STR_ResMed_AirCurve10)) {
+//                    value.replace(STR_ResMed_AirCurve10, "");
+//                    info->series = STR_ResMed_AirCurve10;
+//                }
+//                value.replace("(","");
+//                value.replace(")","");
+//
+//                if (value.contains("Adapt", Qt::CaseInsensitive)) {
+//                    if (!value.contains("VPAP")) {
+//                        value.replace("Adapt", QObject::tr("VPAP Adapt"));
+//                    }
+//                }
+//                info->model = value.trimmed();
+//                continue;
+//
+//            } else if (key == "PCD") { // Product Code
+//                qDebug() << "Prouct Code is >" << value << "<";
+//                info->modelnumber = value;
+//                continue;
+//            }
+//
+//            idmap[key] = value;
+//        }
     }
 
     f.close();
@@ -1973,7 +1988,7 @@ int ResmedLoader::Open(const QString & dirpath)
     // Build a Date map of all records in STR.edf files, populating ResDayList
     ///////////////////////////////////////////////////////////////////////////////////
 
-    ParseSTR(mach, STRmap );    //  , firstImportDay);
+    ParseSTR(mach, STRmap, firstImportDay);
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
@@ -2026,7 +2041,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
     qDebug() << "Starting scan of DATALOG";
     sleep(1);
-    scanFiles(mach, datalogPath );      //  , firstImportDay);
+    scanFiles(mach, datalogPath, firstImportDay);
     if (isAborted())
         return 0;
 
@@ -2206,11 +2221,11 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 
     // Process event annotation records
     qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
-    int vec = 1;
+//  int vec = 1;
     for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
-        qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
+//      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
-            qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
+//          qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
             double tt = edf.startdate + qint64(anno->offset*1000.0);
 
             if ( ! anno->text.isEmpty()) {
@@ -2228,7 +2243,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
                     } else {
                         qDebug() << "Split csr event flag in " << edf.filename;
                     }
-                } else if (anno->text != "recording starts") {
+                } else if (anno->text != "Recording starts") {
                     qDebug() << "Unobserved ResMed CSL annotation field: " << anno->text;
                 }
             }
@@ -2283,11 +2298,11 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 
     // Process event annotation records
     qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
-    int vec = 1;
+//  int vec = 1;
     for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
-        qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
+//      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
-            qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
+//          qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
             double tt = edf.startdate + qint64(anno->offset*1000.0);
 
             if ( ! anno->text.isEmpty()) {
@@ -2317,7 +2332,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
                     if (sess->checkInside(tt))
                         CA->AddEvent(tt, anno->duration);
                 } else {
-                    if (anno->text != "recording starts") {
+                    if (anno->text != "Recording starts") {
                         qDebug() << "Unobserved ResMed annotation field: " << anno->text;
                     }
                 }

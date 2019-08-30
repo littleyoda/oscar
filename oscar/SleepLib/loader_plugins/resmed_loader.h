@@ -349,10 +349,10 @@ class ResmedLoader : public CPAPLoader
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals
-    void ParseSTR(Machine *, QMap<QDate, STRFile> &);
+    void ParseSTR(Machine *, QMap<QDate, STRFile> &, QDate);
 
     //! \brief Scan for new files to import, group into sessions and add to task que
-    int scanFiles(Machine * mach, const QString & datalog_path);
+    int scanFiles(Machine * mach, const QString & datalog_path, QDate firstImport);
 
 //! \brief Write a backup copy to the backup path
     QString backup(const QString & file, const QString & backup_path);
