@@ -154,7 +154,10 @@ public:
         date=QDate();
     }
     
+    STRRecord(const STRRecord & copy) = default;
+
 // All the data members
+
     QVector<quint32> maskon;
     QVector<quint32> maskoff;
 
@@ -262,6 +265,8 @@ public:
         filename(QString()), edf(nullptr) {}
     STRFile(QString name, ResMedEDFInfo *str) :
         filename(name), edf(str) {}
+    STRFile(const STRFile & copy) = default;
+
     virtual ~STRFile() {}
 
     QString filename;

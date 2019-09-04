@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(logger, SIGNAL(outputLog(QString)), this, SLOT(logMessage(QString)));
     }
 
-    // Bring window to top (useful when language is changed) - GTS 3/31/2019
+    // Bring window to top (useful when language is changed)
     this->activateWindow();
     this->raise();
 
@@ -111,8 +111,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+bool setupRunning = false;
+
 void MainWindow::SetupGUI()
 {
+    setupRunning = true;
     QString version = getBranchVersion();
     setWindowTitle(STR_TR_OSCAR + QString(" %1").arg(version));
 
@@ -241,6 +244,7 @@ void MainWindow::SetupGUI()
     help = new Help(this);
     ui->tabWidget->addTab(help, tr("Help Browser"));
 #endif
+    setupRunning = false;
 }
 
 void MainWindow::logMessage(QString msg)
@@ -525,7 +529,11 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     AppSetting->setProfileName(p_profile->user->userName());
     setWindowTitle(STR_TR_OSCAR + QString(" %1 (" + tr("Profile") + ": %2)").arg(getBranchVersion()).arg(AppSetting->profileName()));
 
-    bool noMachines = (machines.isEmpty());
+    QList<Machine *> oximachines = p_profile->GetMachines(MT_OXIMETER);                // Machines of any type except Journal
+    QList<Machine *> posmachines = p_profile->GetMachines(MT_POSITION);
+    QList<Machine *> stgmachines = p_profile->GetMachines(MT_SLEEPSTAGE);
+    bool noMachines = machines.isEmpty() && posmachines.isEmpty() && oximachines.isEmpty() && stgmachines.isEmpty();
+
     ui->importButton->setDisabled(false);
     ui->oximetryButton->setDisabled(false);
     ui->dailyButton->setDisabled(noMachines);
@@ -533,7 +541,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     ui->statisticsButton->setDisabled(noMachines);
     ui->tabWidget->setTabEnabled(2, !noMachines);       // daily, STR_TR_Daily);
     ui->tabWidget->setTabEnabled(3, !noMachines);       // overview, STR_TR_Overview);
-    ui->tabWidget->setTabEnabled(4, !noMachines);       // overview, STR_TR_Overview);
+    ui->tabWidget->setTabEnabled(4, !noMachines);       // statistics, STR_TR_Statistics);
 
     int srm = 0;
     if (p_profile) {
@@ -1217,7 +1225,7 @@ void MainWindow::updateFavourites()
                     if (notes.size() > 0) {
                         tmp += QString("<tr><td><b><a href='daily=%1'>%2</a></b><br/>")
                                .arg(date.toString(Qt::ISODate))
-                               .arg(date.toString());
+                               .arg(date.toString(MedDateFormat));
 
                         tmp += "<list>";
 
@@ -1296,6 +1304,13 @@ void MainWindow::on_action_Reset_Graph_Layout_triggered()
     if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphLayout(); }
 }
 
+void MainWindow::on_action_Reset_Graph_Order_triggered()
+{
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(); }
+
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(); }
+}
+
 void MainWindow::on_action_Preferences_triggered()
 {
     if (!p_profile) {
@@ -1349,6 +1364,8 @@ void MainWindow::on_oximetryButton_clicked()
     if (p_profile) {
         OximeterImport oxiimp(this);
         oxiimp.exec();
+        if (overview) overview->ReloadGraphs();
+        if (welcome) welcome->refreshPage();
     }
 }
 
@@ -2469,8 +2486,9 @@ void MainWindow::on_actionLine_Cursor_toggled(bool b)
 void MainWindow::on_actionPie_Chart_toggled(bool visible)
 {
     AppSetting->setShowPieChart(visible);
-    if (daily && ui->tabWidget->currentWidget() == daily) {
-        daily->ReloadGraphs();
+    if (!setupRunning && daily) {
+        daily->updateLeftSidebar();
+//        daily->ReloadGraphs();
     }
 }
 

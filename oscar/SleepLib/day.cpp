@@ -1,5 +1,6 @@
 /* SleepLib Day Class Implementation
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -108,7 +109,7 @@ void Day::addSession(Session *s)
     if (mi != machines.end()) {
         if (mi.value() != s->machine()) {
             qDebug() << "OSCAR can't add session" << s->session()
-                     << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                     << "["+QDateTime::fromTime_t(s->first()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                      << "from machine" << mi.value()->serial() << "to machine" << s->machine()->serial()
                      << "to this day record, as it already contains a different machine of the same MachineType" << s->type();
             return;
@@ -117,12 +118,22 @@ void Day::addSession(Session *s)
         machines[s->type()] = s->machine();
     }
 
-    if (s->first() == 0)
+    if (s->first() == 0) {
         qWarning() << "Day::addSession discarding session" << s->session()
-                 << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                  << "from machine" << s->machine()->serial() << "with first=0";
-    else
-        sessions.push_back(s);
+        return;
+    }
+    
+    for (auto & sess : sessions) {
+        if (sess->session() == s->session() && sess->type() == s->type()) {
+            // This usually indicates a problem in purging or cleanup somewhere,
+            // unless there's a problem with a parser.
+            qCritical() << "Day object" << this->date().toString() << "adding duplicate session" << s->session();
+            // Don't skip this one, since it might have replaced the original elsewhere already.
+            //return;
+        }
+    }
+    sessions.push_back(s);
 }
 
 EventDataType Day::calcMiddle(ChannelID code)
@@ -1341,7 +1352,52 @@ bool Day::hasMachine(Machine * mach)
     return false;
 }
 
-QString Day::getCPAPMode()
+void Day::removeMachine(Machine * mach)
+{
+    // Yell about and fix any dangling references rather than possibly crashing later.
+    //
+    // This has no functional use and can be removed when the data structures are cleaned up
+    // with better encapsulation and fewer unnecessary references between each other.
+    
+    QList<Session*> list = sessions;  // make a copy so the iterator doesn't get broken by removals
+    for (auto & sess : list) {
+        if (sess->machine() == mach) {
+            // This indicates a problem with the Machine class not tracking all of its sessions, for
+            // example if there's a duplicate session ID.
+            qCritical() << "Day object" << this->date().toString()
+                        << "session" << sess->session() << "refers to machine" << mach->serial();
+            removeSession(sess);
+        }
+    }
+    
+    for (auto & m : machines.keys()) {
+        if (machines[m] == mach) {
+            // This indicates a problem internal to the Day class, since removeSession should remove
+            // machines from this list if there are no longer any sessions pointing to it.
+            qCritical() << "Day object" << this->date().toString()
+                        << "refers to machine" << mach->serial();
+            machines.remove(m);
+        }
+    }
+}
+
+int Day::getCPAPMode()
+{
+    Machine * mach = machine(MT_CPAP);
+    if (!mach) return 0;
+
+    CPAPLoader * loader = qobject_cast<CPAPLoader *>(mach->loader());
+
+    ChannelID modechan = loader->CPAPModeChannel();
+
+//    schema::Channel & chan = schema::channel[modechan];
+
+    int mode = (CPAPMode)(int)qRound(settings_wavg(modechan));
+
+    return mode;
+}
+
+QString Day::getCPAPModeStr()
 {
     Machine * mach = machine(MT_CPAP);
     if (!mach) return STR_MessageBox_Error;
@@ -1355,7 +1411,6 @@ QString Day::getCPAPMode()
     int mode = (CPAPMode)(int)qRound(settings_wavg(modechan));
 
     return chan.option(mode);
-
 
 //    if (mode == MODE_CPAP) {
 //        return QObject::tr("Fixed");

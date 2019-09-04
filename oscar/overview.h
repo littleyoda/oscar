@@ -55,6 +55,11 @@ class Overview : public QWidget
     //! \brief Reset graphs to uniform heights
     void ResetGraphLayout();
 
+    /*! \fn ResetGraphOrder()
+        \brief Resets all graphs in the main gGraphView back to their initial order.
+        */
+    void ResetGraphOrder();
+
     //! \brief Calls updateGL to redraw the overview charts
     void RedrawGraphs();
 
@@ -72,7 +77,7 @@ class Overview : public QWidget
 
     gSummaryChart * stg, *uc, *ahi, * pres, *lk, *npb, *rr, *mv, *tv, *nll, *sn, *ttia;
 
-    //! \breif List of SummaryCharts shown on the overview page
+    //! \brief List of SummaryCharts shown on the overview page
     QVector<SummaryChart *> OverviewCharts;
 
     void ResetGraph(QString name);
@@ -81,6 +86,9 @@ class Overview : public QWidget
 
   public slots:
     void onRebuildGraphs() { RebuildGraphs(true); }
+
+    //! \brief Resets view to currently shown start & end dates
+    void on_zoomButton_clicked();
 
   private slots:
     void updateGraphCombo();
@@ -97,9 +105,6 @@ class Overview : public QWidget
     //! \brief Updates the calendar highlighting when changing to a new month
     void dateEnd_currentPageChanged(int year, int month);
 
-    //! \brief Resets view to currently shown start & end dates
-    void on_toolButton_clicked();
-
     //void on_printDailyButton_clicked();
 
     void on_rangeCombo_activated(int index);
@@ -113,6 +118,8 @@ class Overview : public QWidget
 
 
   private:
+    void CreateAllGraphs();
+
     Ui::Overview *ui;
     gGraphView *GraphView;
     MyScrollBar *scrollbar;

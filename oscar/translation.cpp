@@ -1,5 +1,6 @@
-﻿/* Multilingual Support files
+/* Multilingual Support files
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -45,12 +46,13 @@ void initTranslations()
     // Add any languages with special character set needs to this list
     langNames["zh"] = "\xe6\xbc\xa2\xe8\xaa\x9e\xe7\xb9\x81\xe9\xab\x94\xe5\xad\x97";
     langNames["es"] = "Español";
+    langNames["es_MX"] = "Español (Mexico)";
     langNames["bg"] = "\xd0\xb1\xd1\x8a\xd0\xbb\xd0\xb3\xd0\xb0\xd1\x80\xd1\x81\xd0\xba\xd0\xb8";
-//  langNames["fr"] = "Français";       // this just confuses Qt
+    langNames["fr"] = "Français";       // this just confuses Qt (WHY?  trying enabling it -- gts 8/18/2019)
     langNames["en_UK"] = "English (UK)";
     langNames["nl"] = "Nederlands";
     langNames["pt_BR"] = "Portugues (BR)";
-    langNames["ro"] = "Romanian";
+    langNames["ro"] = "Românește";
 
     langNames[DefaultLanguage]="English (US)";
 
@@ -70,8 +72,11 @@ void initTranslations()
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList("*.qm"));
 
+    qDebug() << "number of built-in *.qm files" << dir.count();
     QFileInfoList list = dir.entryInfoList();
     for (const auto & fi : list) {
+        if (fi.fileName().indexOf("oscar_qt", 0) == 0)     // skip files named QT...  These are supplemental files for QT strings
+            continue;
         QString code = fi.fileName().section('.', 1, 1);
 
         if (!langNames.contains(code)) langNames[code]=fi.fileName().section('.', 0, 0);
@@ -82,19 +87,24 @@ void initTranslations()
         langPaths[code] = inbuiltPath;
     }
     std::sort(inbuilt.begin(), inbuilt.end());
-    qDebug() << "Inbuilt Translations:" << QString(inbuilt.join(", ")).toLocal8Bit().data();;
+    qDebug() << "Inbuilt Translations:" << QString(inbuilt.join(", ")).toLocal8Bit().data();
 
     QString externalPath = appResourcePath() +"/Translations";
     dir.setPath(externalPath);
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList("*.qm"));
     list = dir.entryInfoList();
-
-    // Add default language (English)
+    qDebug() << "number of external *.qm files" << dir.count();
 
     // Scan through available translations, and add them to the list
     QStringList extratrans, replaced;
+    int numExternal = 0;
     for (const auto & fi : list) {
+        if (fi.fileName().indexOf("oscar_qt", 0) == 0)     // skip files named QT...  These are supplemental files for QT strings
+            continue;
         QString code = fi.fileName().section('.', 1, 1);
 
+        numExternal++;
         if(!langNames.contains(code)) langNames[code] = fi.fileName().section('.', 0, 0);
         if (inbuilt.contains(code)) replaced.push_back(code); else extratrans.push_back(code);
 
@@ -103,6 +113,7 @@ void initTranslations()
     }
     std::sort(replaced.begin(), replaced.end());
     std::sort(extratrans.begin(), extratrans.end());
+    qDebug() << "Number of external translations is" << numExternal;
     if (replaced.size()>0) qDebug() << "Overridden Tranlsations:" << QString(replaced.join(", ")).toLocal8Bit().data();
     if (extratrans.size()>0) qDebug() << "Extra Translations:" << QString(extratrans.join(", ")).toLocal8Bit().data();
 
@@ -172,21 +183,25 @@ void initTranslations()
 
     if (language.compare(DefaultLanguage) != 0) {
         // Install QT translation files
-        QString qtLangPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
         QString qtLang = language.left(2);
-        if ( qtLang.compare("zh") == 0 )
+        if ( qtLang.compare("zh") == 0 )      // QT-supplied translation files have both _CN and _TW, but are the same for our purposes
             qtLang.append("_CN");
-        qDebug() << "Loading" << langname << "translation" << "qt_" + qtLang + ".qm" << "from" << qtLangPath.toLocal8Bit().data();
+        QString qtLangFile = "qt_" + qtLang + ".qm";
+        if (!QFileInfo(qtLangFile).exists()) {
+            qtLang = qtLang.left(2);        // Undo QT suffix for zh; we don't use that for our file
+            qtLangFile = "oscar_qt_" + qtLang + ".qm";
+        }
+        qDebug() << "Loading" << langname << "QT translation" << qtLangFile.toLocal8Bit().data() << "from" << langpath.toLocal8Bit().data();
         QTranslator * qtranslator = new QTranslator();
 
-        if (!langfile.isEmpty() && !qtranslator->load("qt_" + qtLang + ".qm", qtLangPath)) {
-             qWarning() << "Could not load QT translation" << langfile << "reverting to english :(";
+        if (!qtLangFile.isEmpty() && !qtranslator->load(qtLangFile, langpath)) {
+             qWarning() << "Could not load QT translation" << qtLangFile << "reverting to english :(";
         }
 
         qApp->installTranslator(qtranslator);
 
         // Install OSCAR translation files
-        qDebug() << "Loading" << langname << "translation" << langfile.toLocal8Bit().data() << "from" << langpath.toLocal8Bit().data();
+        qDebug() << "Loading" << langname << "OSCAR translation" << langfile.toLocal8Bit().data() << "from" << langpath.toLocal8Bit().data();
         QTranslator * translator = new QTranslator();
 
         if (!langfile.isEmpty() && !translator->load(langfile, langpath)) {

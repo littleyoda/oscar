@@ -1,5 +1,6 @@
 /* Daily Panel
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -62,6 +63,32 @@ inline QString channelInfo(ChannelID code) {
 //    return schema::channel[code].fullname()+"\n"+schema::channel[code].description()
 //            + (schema::channel[code].units() != "0" ? "\n("+schema::channel[code].units()+")" : "");
 }
+
+//
+// List here the graph codes in the order they are to be displayed.
+// Do NOT list a code twice, or Oscar will crash when the profile is closed!
+//
+// Standard graph order
+const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_FlowLimitation,
+                                           STR_GRAPH_Snore, STR_GRAPH_TidalVolume, STR_GRAPH_MaskPressure, STR_GRAPH_RespRate, STR_GRAPH_MinuteVent,
+                                           STR_GRAPH_PTB, STR_GRAPH_RespEvent, STR_GRAPH_Ti, STR_GRAPH_Te,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
+                                           STR_GRAPH_AHI, STR_GRAPH_TAP
+                                          };
+
+// Advanced graph order
+const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_MaskPressure, STR_GRAPH_TidalVolume, STR_GRAPH_MinuteVent,
+                                           STR_GRAPH_Ti, STR_GRAPH_Te, STR_GRAPH_FlowLimitation, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_Snore,
+                                           STR_GRAPH_RespRate, STR_GRAPH_PTB, STR_GRAPH_RespEvent,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
+                                           STR_GRAPH_AHI, STR_GRAPH_TAP
+                                          };
+
+// CPAP modes that should have Advanced graphs
+const QList<int> useAdvancedGraphs = {MODE_ASV, MODE_ASV_VARIABLE_EPAP, MODE_AVAPS};
+
 
 void Daily::setCalendarVisible(bool visible)
 {
@@ -181,8 +208,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
             *SF = nullptr,
             *AHI = nullptr;
 
-    const QString STR_GRAPH_DailySummary = "DailySummary";
-    const QString STR_GRAPH_TAP = "TimeAtPressure";
+//    const QString STR_GRAPH_DailySummary = "DailySummary";
 
 //    gGraph * SG;
 //    graphlist[STR_GRAPH_DailySummary] = SG = new gGraph(STR_GRAPH_DailySummary, GraphView, tr("Summary"), tr("Summary of this daily information"), default_height);
@@ -192,31 +218,42 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     graphlist[STR_GRAPH_SleepFlags] = SF = new gGraph(STR_GRAPH_SleepFlags, GraphView, STR_TR_EventFlags, STR_TR_EventFlags, default_height);
     SF->setPinned(true);
 
-    ChannelID cpapcodes[] = {
+    //============================================
+    // Create graphs from 'interesting' CPAP codes
+    //
+    // If this list of codes is changed, you must
+    // also adjust the standard and advanced graph
+    // order at the beginning of daily.cpp.
+    //============================================
+    const ChannelID cpapcodes[] = {
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
         /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, CPAP_Test1
     };
 
+    // Create graphs from the cpap code list
     int cpapsize = sizeof(cpapcodes) / sizeof(ChannelID);
-
-    ChannelID oxicodes[] = {
-        OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_Plethy
-    };
-    int oxisize = sizeof(oxicodes) / sizeof(ChannelID);
-
 
     for (int i=0; i < cpapsize; ++i) {
         ChannelID code = cpapcodes[i];
         graphlist[schema::channel[code].code()] = new gGraph(schema::channel[code].code(), GraphView, schema::channel[code].label(), channelInfo(code), default_height);
+//        qDebug() << "Creating graph for code" << code << schema::channel[code].code();
     }
+
+    const ChannelID oximetercodes[] = {
+        OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_Plethy
+    };
+
+    // Add graphs from the Oximeter code list
+    int oxisize = sizeof(oximetercodes) / sizeof(ChannelID);
 
     //int oxigrp=p_profile->ExistsAndTrue("SyncOximetry") ? 0 : 1; // Contemplating killing this setting...
     for (int i=0; i < oxisize; ++i) {
-        ChannelID code = oxicodes[i];
+        ChannelID code = oximetercodes[i];
         graphlist[schema::channel[code].code()] = new gGraph(schema::channel[code].code(), GraphView, schema::channel[code].label(), channelInfo(code), default_height);
     }
 
+    // Check for some impossible conditions
     if ( p_profile == nullptr ) {
         qDebug() << "In daily, p_profile is NULL";
         return;
@@ -225,14 +262,17 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         qDebug() << "In daily, p_profile->general is NULL";
         return;
     }
+
+    // Decide whether we are using AHI or RDI and create graph for the one we are using
     if (p_profile->general->calculateRDI()) {
-        AHI=new gGraph("AHI", GraphView,STR_TR_RDI, channelInfo(CPAP_RDI), default_height);
+        AHI=new gGraph(STR_GRAPH_AHI, GraphView,STR_TR_RDI, channelInfo(CPAP_RDI), default_height);
     } else {
-        AHI=new gGraph("AHI", GraphView,STR_TR_AHI, channelInfo(CPAP_AHI), default_height);
+        AHI=new gGraph(STR_GRAPH_AHI, GraphView,STR_TR_AHI, channelInfo(CPAP_AHI), default_height);
     }
 
-    graphlist["AHI"] = AHI;
+    graphlist[STR_GRAPH_AHI] = AHI;
 
+    // Event breakdown graph
     graphlist[STR_GRAPH_EventBreakdown] = GAHI = new gGraph(STR_GRAPH_EventBreakdown, snapGV,tr("Breakdown"),tr("events"),172);
     gSegmentChart * evseg=new gSegmentChart(GST_Pie);
     evseg->AddSlice(CPAP_Hypopnea,QColor(0x40,0x40,0xff,0xff),STR_TR_H);
@@ -248,14 +288,12 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         evseg->AddSlice(CPAP_UserFlag2,QColor(0xc0,0xc0,0xe0,0xff),tr("UF2"));
     }
 
-
-
     GAHI->AddLayer(evseg);
     GAHI->setMargins(0,0,0,0);
 
+    // Add event flags to the event flags graph
     gFlagsGroup *fg=new gFlagsGroup();
     SF->AddLayer(fg);
-
 
     SF->setBlockZoom(true);
     SF->AddLayer(new gShadowArea());
@@ -266,11 +304,13 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     SF->AddLayer(new gXAxis(COLOR_Text,false),LayerBottom,0,gXAxis::Margin);
 
 
+    // Now take care of xgrid/yaxis labels for all graphs
+
     // The following list contains graphs that don't have standard xgrid/yaxis labels
     QStringList skipgraph;
     skipgraph.push_back(STR_GRAPH_EventBreakdown);
     skipgraph.push_back(STR_GRAPH_SleepFlags);
-    skipgraph.push_back(STR_GRAPH_DailySummary);
+//    skipgraph.push_back(STR_GRAPH_DailySummary);
     skipgraph.push_back(STR_GRAPH_TAP);
 
     QHash<QString, gGraph *>::iterator it;
@@ -303,6 +343,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     pc->addPlot(CPAP_IPAP, square);
     pc->addPlot(CPAP_IPAPHi, square);
 
+    // Create Timea at Pressure graph
     gGraph * TAP2;
     graphlist[STR_GRAPH_TAP] = TAP2 = new gGraph(STR_GRAPH_TAP, GraphView, tr("Time at Pressure"), tr("Time at Pressure"), default_height);
     MinutesAtPressure * map;
@@ -311,6 +352,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     TAP2->AddLayer(new gXAxisPressure(),LayerBottom,gXAxisPressure::Margin);
     TAP2->setBlockSelect(true);
 
+    // Fill in the AHI graph
     if (p_profile->general->calculateRDI()) {
         AHI->AddLayer(new gLineChart(CPAP_RDI, square));
 //        AHI->AddLayer(AddCPAP(new AHIChart(QColor("#37a24b"))));
@@ -432,7 +474,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
     } else {
         ui->ouncesSpinBox->setVisible(false);
-        ui->weightSpinBox->setDecimals(3);
+        ui->weightSpinBox->setDecimals(1);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     }
 
@@ -444,6 +486,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     on_calButton_toggled(AppSetting->calendarVisible());
 
     GraphView->resetLayout();
+    GraphView->SaveDefaultSettings();
     GraphView->LoadSettings("Daily");
 
     connect(GraphView, SIGNAL(updateCurrentTime(double)), this, SLOT(on_LineCursorUpdate(double)));
@@ -582,10 +625,15 @@ void Daily::ReloadGraphs()
     ui->calendar->setSelectedDate(d);
     ui->calendar->blockSignals(false);
     Load(d);
-    ui->calButton->setText(ui->calendar->selectedDate().toString(Qt::TextDate));
+    ui->calButton->setText(ui->calendar->selectedDate().toString(MedDateFormat));
     graphView()->redraw();
 //    qDebug() << "Finished ReloadGraphs in Daily object";
 //    sleep(3);
+}
+
+void Daily::updateLeftSidebar() {
+    if (webView && !htmlLeftHeader.isEmpty())
+        webView->setHtml(getLeftSidebar(true));
 }
 
 void Daily::hideSpaceHogs()
@@ -636,10 +684,12 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
     if (p_profile->general->showUnknownFlags()) chantype |= schema::UNKNOWN;
     QList<ChannelID> chans = day->getSortedMachineChannels(chantype);
 
+    // Go through all the enabled sessions of the day
     for (QList<Session *>::iterator s=day->begin();s!=day->end();++s) {
         Session * sess = *s;
         if (!sess->enabled()) continue;
 
+        // For each session, go through all the channels
         QHash<ChannelID,QVector<EventList *> >::iterator m;
         for (int c=0; c < chans.size(); ++c) {
             ChannelID code = chans.at(c);
@@ -648,6 +698,7 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
 
             drift=(sess->type() == MT_CPAP) ? clockdrift : 0;
 
+            // Prepare title for this code, if there are any events
             QTreeWidgetItem *mcr;
             if (mcroot.find(code)==mcroot.end()) {
                 int cnt=day->count(code);
@@ -669,6 +720,10 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
                 mcr=mcroot[code];
             }
 
+            // number of digits required for count depends on total for day
+            int numDigits = ceil(log10(day->count(code)+1));
+
+            // Now we go through the event list for the *session* (not for the day)
             for (int z=0;z<m.value().size();z++) {
                 EventList & ev=*(m.value()[z]);
 
@@ -680,14 +735,13 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
                     }
                     QStringList a;
                     QDateTime d=QDateTime::fromMSecsSinceEpoch(t); // Localtime
-                    QString s=QString("#%1: %2").arg((int)(++mccnt[code]),(int)3,(int)10,QChar('0')).arg(d.toString("HH:mm:ss"));
+                    QString s=QString("#%1: %2").arg((int)(++mccnt[code]),(int)numDigits,(int)10,QChar('0')).arg(d.toString("HH:mm:ss"));
                     if (m.value()[z]->raw(o) > 0)
                             s += QString(" (%3)").arg(m.value()[z]->raw(o));
 
                     a.append(s);
                     QTreeWidgetItem *item=new QTreeWidgetItem(a);
                     item->setData(0,Qt::UserRole,t);
-                    //a.append(d.toString("yyyy-MM-dd HH:mm:ss"));
                     mcr->addChild(item);
                 }
             }
@@ -736,6 +790,7 @@ void Daily::UpdateCalendarDay(QDate date)
     cpaponly.setFontWeight(QFont::Normal);
     cpapjour.setForeground(QBrush(COLOR_Blue, Qt::SolidPattern));
     cpapjour.setFontWeight(QFont::Bold);
+//    cpapjour.setFontUnderline(true);
     oxiday.setForeground(QBrush(COLOR_Red, Qt::SolidPattern));
     oxiday.setFontWeight(QFont::Normal);
     oxicpap.setForeground(QBrush(COLOR_Red, Qt::SolidPattern));
@@ -773,6 +828,9 @@ void Daily::UpdateCalendarDay(QDate date)
     } else {
         ui->calendar->setDateTextFormat(date, nodata);
     }
+//    if (hasjournal) {
+//        ui->calendar->setDateTextFormat(date, cpapjour);
+//    }
     ui->calendar->setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
 }
 void Daily::LoadDate(QDate date)
@@ -820,7 +878,7 @@ void Daily::on_ReloadDay()
 
     //GraphView->fadeIn(fadedir);
     GraphView->redraw();
-    ui->calButton->setText(ui->calendar->selectedDate().toString(Qt::TextDate));
+    ui->calButton->setText(ui->calendar->selectedDate().toString(MedDateFormat));
     ui->calendar->setFocus(Qt::ActiveWindowFocusReason);
 
     if (p_profile->general->unitSystem()==US_English) {
@@ -830,7 +888,7 @@ void Daily::on_ReloadDay()
         ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
     } else {
         ui->ouncesSpinBox->setVisible(false);
-        ui->weightSpinBox->setDecimals(3);
+        ui->weightSpinBox->setDecimals(1);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     }
     this->setCursor(Qt::ArrowCursor);
@@ -843,6 +901,42 @@ void Daily::ResetGraphLayout()
 {
     GraphView->resetLayout();
 }
+void Daily::ResetGraphOrder()
+{
+    Day * day = p_profile->GetDay(previous_date,MT_CPAP);
+
+    int cpapMode = day->getCPAPMode();
+//    qDebug() << "Daily::ResetGraphOrder cpapMode" << cpapMode;
+
+    if (useAdvancedGraphs.contains(cpapMode))
+        GraphView->resetGraphOrder(true, advancedGraphOrder);
+    else
+        GraphView->resetGraphOrder(true, standardGraphOrder);
+
+    // Enable all graphs (make them not hidden)
+    for (int i=0;i<ui->graphCombo->count();i++) {
+        // If disabled, emulate a click to enable the graph
+        if (!ui->graphCombo->itemData(i,Qt::UserRole).toBool()) {
+//            qDebug() << "resetting graph" << i;
+            Daily::on_graphCombo_activated(i);
+        }
+    }
+
+    // Mark all events as active
+    for (int i=0;i<ui->eventsCombo->count();i++) {
+        // If disabled, emulate a click to enable the event
+        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
+        schema::Channel * chan = &schema::channel[code];
+        if (!chan->enabled()) {
+//            qDebug() << "resetting event" << i;
+            Daily::on_eventsCombo_activated(i);
+        }
+    }
+
+    // Reset graph heights (and repaint)
+    ResetGraphLayout();
+}
+
 void Daily::graphtogglebutton_toggled(bool b)
 {
     Q_UNUSED(b)
@@ -968,7 +1062,7 @@ QString Daily::getMachineSettings(Day * day) {
         html+="<tr><td colspan=5>&nbsp;</td></tr>";
 
         if (day->noSettings(cpap)) {
-            html+="<tr><td colspan=5 align=center><i>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing's changed since previous days.")+"</i></td></tr>\n";
+            html+="<tr><td colspan=5 align=center><i>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</i></td></tr>\n";
         } else if ((day->settingExists(CPAP_BrokenSummary))) {
             html+="<tr><td colspan=5 align=center><i>"+tr("Machine Settings Unavailable")+"</i></td></tr></table><hr/>\n";
             return html;
@@ -992,7 +1086,7 @@ QString Daily::getMachineSettings(Day * day) {
         first[cpapmode] = QString("<tr><td><p title='%2'>%1</p></td><td colspan=4>%3</td></tr>")
                 .arg(chan.label())
                 .arg(chan.description())
-                .arg(day->getCPAPMode());
+                .arg(day->getCPAPModeStr());
 
         if (sess) for (; it != it_end; ++it) {
             ChannelID code = it.key();
@@ -1119,10 +1213,10 @@ QString Daily::getCPAPInformation(Day * day)
 
     QString tooltip=tr("Model %1 - %2").arg(info.modelnumber).arg(info.serial);
     tooltip=tooltip.replace(" ","&nbsp;");
-    html+="<tr><td align=center><p title=\""+tooltip+"\">"+info.brand + " "+ info.series+"<br/> "+info.model+"</p></td></tr>\n";
+    html+="<tr><td align=center><p title=\""+tooltip+"\">"+info.brand+"<br/>"+info.model+"</p></td></tr>\n";
     html+="<tr><td align=center>";
 
-    html+=tr("PAP Mode: %1").arg(day->getCPAPMode())+"<br/>";
+    html+=tr("PAP Mode: %1").arg(day->getCPAPModeStr())+"<br/>";
     html+= day->getPressureSettings();
     html+="</td></tr>\n";
     if (day->noSettings(cpap)) {
@@ -1328,7 +1422,7 @@ QString Daily::getSleepTime(Day * day)
 }
 
 QString Daily::getPieChart (float values, Day * day) {
-    qDebug() << "Daily:getPieChart, values" << values;
+//    qDebug() << "Daily:getPieChart, values" << values;
     QString html = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>";
     if (values > 0) {
 //        html += "<tr><td align=center>&nbsp;</td></tr>";
@@ -1545,7 +1639,7 @@ void Daily::Load(QDate date)
             for (int i=0; i < available.size(); ++i) {
                 ChannelID code = available.at(i);
                 schema::Channel & chan = schema::channel[code];
-                if (!chan.enabled()) continue;
+//                if (!chan.enabled()) continue;
                 QString data;
                 if (chan.type() == schema::SPAN) {
                     val = (100.0 / hours)*(day->sum(code)/3600.0);
@@ -1688,7 +1782,7 @@ void Daily::Load(QDate date)
             double kg=journal->settings[Journal_Weight].toDouble(&ok);
 
             if (p_profile->general->unitSystem()==US_Metric) {
-                ui->weightSpinBox->setDecimals(3);
+                ui->weightSpinBox->setDecimals(1);
                 ui->weightSpinBox->blockSignals(true);
                 ui->weightSpinBox->setValue(kg);
                 ui->weightSpinBox->blockSignals(false);
@@ -1778,7 +1872,7 @@ void Daily::UnitsChanged()
     } else {
         kg=(ui->weightSpinBox->value()*(ounce_convert*16.0))+(ui->ouncesSpinBox->value()*ounce_convert);
         kg/=1000.0;
-        ui->weightSpinBox->setDecimals(3);
+        ui->weightSpinBox->setDecimals(1);
         ui->weightSpinBox->setValue(kg);
         ui->ouncesSpinBox->setVisible(false);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
@@ -2163,7 +2257,7 @@ void Daily::on_bookmarkTable_itemClicked(QTableWidgetItem *item)
         et2=et3;
     } else if (!day) return;
     if ((et<st2) || (st>et2)) {
-        mainwin->Notify(tr("This bookmarked is in a currently disabled area.."));
+        mainwin->Notify(tr("This bookmark is in a currently disabled area.."));
         return;
     }
 
@@ -2276,6 +2370,10 @@ void Daily::on_weightSpinBox_valueChanged(double arg1)
         double bmi=kg/(height * height);
         ui->BMI->display(bmi);
         ui->BMI->setVisible(true);
+        ui->BMIlabel->setVisible(true);
+    } else {
+        ui->BMI->setVisible(false);
+        ui->BMIlabel->setVisible(false);
     }
 }
 
@@ -2306,11 +2404,15 @@ void Daily::on_weightSpinBox_editingFinished()
         double bmi=kg/(height * height);
         ui->BMI->display(bmi);
         ui->BMI->setVisible(true);
+        ui->BMIlabel->setVisible(true);
         journal->settings[Journal_BMI]=bmi;
         if (gv) {
             g=gv->findGraph(STR_GRAPH_BMI);
             if (g) g->setDay(nullptr);
         }
+    } else {
+        ui->BMI->setVisible(false);
+        ui->BMIlabel->setVisible(false);
     }
     journal->SetChanged(true);
 }
@@ -2324,6 +2426,10 @@ void Daily::on_ouncesSpinBox_valueChanged(int arg1)
         double bmi=kg/(height * height);
         ui->BMI->display(bmi);
         ui->BMI->setVisible(true);
+        ui->BMIlabel->setVisible(true);
+    } else {
+        ui->BMI->setVisible(false);
+        ui->BMIlabel->setVisible(false);
     }
 }
 
@@ -2348,12 +2454,16 @@ void Daily::on_ouncesSpinBox_editingFinished()
         double bmi=kg/(height * height);
         ui->BMI->display(bmi);
         ui->BMI->setVisible(true);
+        ui->BMIlabel->setVisible(true);
 
         journal->settings[Journal_BMI]=bmi;
         if (mainwin->getOverview()) {
             g=mainwin->getOverview()->graphView()->findGraph(STR_GRAPH_BMI);
             if (g) g->setDay(nullptr);
         }
+    } else {
+        ui->BMI->setVisible(false);
+        ui->BMIlabel->setVisible(false);
     }
     journal->SetChanged(true);
 }
@@ -2388,6 +2498,7 @@ void Daily::on_graphCombo_activated(int index)
     GraphView->updateScale();
     GraphView->redraw();
 }
+
 void Daily::updateCube()
 {
     //brick..
@@ -2467,7 +2578,6 @@ void Daily::updateGraphCombo()
     }
     ui->graphCombo->setCurrentIndex(0);
 
-
     updateCube();
 }
 
@@ -2475,7 +2585,6 @@ void Daily::on_eventsCombo_activated(int index)
 {
     if (index<0)
         return;
-
 
     ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
     schema::Channel * chan = &schema::channel[code];

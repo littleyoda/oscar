@@ -48,7 +48,7 @@ NewProfile::NewProfile(QWidget *parent, const QString *user) :
     on_cpapModeCombo_activated(0);
     m_passwordHashed = false;
     ui->heightEdit2->setVisible(false);
-    ui->heightEdit->setDecimals(2);
+    ui->heightEdit->setDecimals(0);
     ui->heightEdit->setSuffix(STR_UNIT_CM);
 
     {
@@ -151,7 +151,7 @@ void NewProfile::on_nextButton_clicked()
         break;
 
     case 1:
-        if (ui->userNameEdit->text().isEmpty()) {
+        if (ui->userNameEdit->text().trimmed().isEmpty()) {
             QMessageBox::information(this, STR_MessageBox_Error, tr("Please provide a username for this profile"), QMessageBox::Ok);
             return;
         }
@@ -190,7 +190,7 @@ void NewProfile::on_nextButton_clicked()
         ui->stackedWidget->setCurrentIndex(index);
     } else {
         // Finish button clicked.
-        QString username = ui->userNameEdit->text();
+        QString username = ui->userNameEdit->text().trimmed();
 
         if (QMessageBox::question(this, tr("Profile Changes"), tr("Accept and save this information?"),
                                   QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
@@ -397,8 +397,8 @@ void NewProfile::edit(const QString name)
     } else { // good wholesome metric
         ui->heightEdit->setValue(v);
         ui->heightEdit2->setVisible(false);
-        ui->heightEdit->setDecimals(2);
-        ui->heightEdit->setSuffix(STR_UNIT_M);
+        ui->heightEdit->setDecimals(0);
+        ui->heightEdit->setSuffix(STR_UNIT_CM);
     }
 }
 
@@ -417,7 +417,7 @@ void NewProfile::on_heightCombo_currentIndexChanged(int index)
     if (index == 0) {
         //metric
         ui->heightEdit2->setVisible(false);
-        ui->heightEdit->setDecimals(2);
+        ui->heightEdit->setDecimals(0);
         ui->heightEdit->setSuffix(STR_UNIT_CM);
         double v = ui->heightEdit->value() * 30.48;
         v += ui->heightEdit2->value() * 2.54;

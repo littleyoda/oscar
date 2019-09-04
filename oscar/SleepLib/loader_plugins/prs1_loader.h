@@ -149,8 +149,11 @@ public:
     //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 6 machine
     bool ParseSummaryF0V6(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6?) machine
-    bool ParseSummaryF3(void);
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 3) machine
+    bool ParseSummaryF3V3(void);
+    
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6) machine
+    bool ParseSummaryF3V6(void);
     
     //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 0-2 machine
     bool ParseSummaryF5V012(void);
@@ -159,7 +162,7 @@ public:
     bool ParseSummaryF5V3(void);
 
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data
-    void ParseFlexSetting(quint8 flex, CPAPMode cpapmode);
+    void ParseFlexSetting(quint8 flex, int prs1mode);
     
     //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for fileversion 2 machines: F0V234, F5V012, and maybe others
     void ParseHumidifierSettingV2(int humid, bool supportsHeatedTubing=true);
@@ -171,8 +174,11 @@ public:
     bool ParseEvents(CPAPMode mode);
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP machine
-    bool ParseEventsF0(CPAPMode mode);
+    bool ParseEventsF0V234(CPAPMode mode);
     
+    //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
+    bool ParseEventsF0V6(CPAPMode mode);
+
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 3 machine
     bool ParseEventsF3V3(void);
     
@@ -206,6 +212,9 @@ protected:
 
     //! \brief Parse a settings slice from a .000 and .001 file
     bool ParseSettingsF5V3(const unsigned char* data, int size);
+
+    //! \brief Parse a settings slice from a .000 and .001 file
+    bool ParseSettingsF3V6(const unsigned char* data, int size);
 };
 
 
@@ -269,13 +278,15 @@ public:
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a standard system one machine
     bool ParseF0Events();
+    //! \brief Parse a single data chunk from a .002 file containing event data for a standard system one machine (family version 6)
+    bool ParseEventsF0V6();
     //! \brief Parse a single data chunk from a .002 file containing event data for a AVAPS 1060P machine
     bool ParseF3Events();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a AVAPS 1060P machine file version 3
-    bool ParseF3EventsV3();
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 6)
+    bool ParseEventsF3V6();
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV machine (which has a different format)
     bool ParseF5Events();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV file version 3 machine (which has a different format again)
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 machine (which has a different format again)
     bool ParseEventsF5V3();
 
 
@@ -287,6 +298,8 @@ protected:
 
     int summary_duration;
 
+    //! \brief Translate the PRS1-specific machine mode to the importable vendor-neutral enum.
+    CPAPMode importMode(int mode);
     //! \brief Parse all the chunks in a single machine session
     bool ParseSession(void);
     //! \brief Save parsed session data to the database

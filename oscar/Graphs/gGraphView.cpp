@@ -36,7 +36,7 @@
 #include "Graphs/gYAxis.h"
 #include "Graphs/gFlagsLine.h"
 #include "SleepLib/profiles.h"
-
+#include "overview.h"
 
 extern MainWindow *mainwin;
 
@@ -294,7 +294,7 @@ gGraph *gGraphView::popGraph()
     return g;
 }
 
-gGraphView::gGraphView(QWidget *parent, gGraphView *shared)
+gGraphView::gGraphView(QWidget *parent, gGraphView *shared, QWidget *caller)
 #ifdef BROKEN_OPENGL_BUILD
     : QWidget(parent),
 #elif QT_VERSION < QT_VERSION_CHECK(5,4,0)
@@ -304,6 +304,7 @@ gGraphView::gGraphView(QWidget *parent, gGraphView *shared)
 #endif
       m_offsetY(0), m_offsetX(0), m_scaleY(0.0), m_scrollbar(nullptr)
 {
+    this->caller = caller;
 
 //    this->grabGesture(Qt::SwipeGesture);
 //    this->grabGesture(Qt::PanGesture);
@@ -388,9 +389,11 @@ gGraphView::gGraphView(QWidget *parent, gGraphView *shared)
     snap_action = context_menu->addAction(QString(), this, SLOT(onSnapshotGraphToggle()));
     context_menu->addSeparator();
 
-
     zoom100_action = context_menu->addAction(tr("100% zoom level"), this, SLOT(resetZoom()));
-    zoom100_action->setToolTip(tr("Restore X-axis zoom too 100% to view entire days data."));
+    if (caller)
+        zoom100_action->setToolTip(tr("Restore X-axis zoom to 100% to view entire selected period."));
+    else
+        zoom100_action->setToolTip(tr("Restore X-axis zoom to 100% to view entire day's data."));
 
     QAction * action = context_menu->addAction(tr("Reset Graph Layout"), this, SLOT(resetLayout()));
     action->setToolTip(tr("Resets all graphs to a uniform height and default order."));
@@ -1067,6 +1070,16 @@ void gGraphView::GetRXBounds(qint64 &st, qint64 &et)
     }
 }
 
+void gGraphView::resetZoom() {
+    Overview *overvw = qobject_cast<Overview*>(caller);
+    if (overvw) {
+        overvw->on_zoomButton_clicked();
+        return;
+    }
+
+    ResetBounds(true);
+}
+
 void gGraphView::ResetBounds(bool refresh) //short group)
 {
     if (m_graphs.size() == 0) return;
@@ -1109,6 +1122,7 @@ void gGraphView::GetXBounds(qint64 &st, qint64 &et)
     et = m_maxx;
 }
 
+// Supplies time range to all graph objects in linked group, refreshing if requested
 void gGraphView::SetXBounds(qint64 minx, qint64 maxx, short group, bool refresh)
 {
     for (auto & graph : m_graphs) {
@@ -1117,7 +1131,7 @@ void gGraphView::SetXBounds(qint64 minx, qint64 maxx, short group, bool refresh)
         }
     }
 
-    m_minx = minx;
+    m_minx = minx;  // left and right edges of graph, in msec in epoch
     m_maxx = maxx;
 
     if (refresh) { timedRedraw(0); }
@@ -1552,8 +1566,50 @@ void gGraphView::paintGL()
 
 }
 
+QString gGraphView::getRangeInDaysString()
+{
+    QDateTime st = QDateTime::fromMSecsSinceEpoch(m_minx);
+    QDateTime et = QDateTime::fromMSecsSinceEpoch(m_maxx);
+
+    QDate std = st.date();
+    QDate etd = et.date();
+
+    if (std.year() == etd.year())
+        return st.toString(" d MMM") + " - " +  et.toString("d MMM yyyy");
+    else
+        return st.toString(" d MMM yyyy") + " - " +  et.toString("d MMM yyyy");
+}
+
 QString gGraphView::getRangeString()
 {
+    QDateTime st = QDateTime::fromMSecsSinceEpoch(m_minx);
+    QDateTime et = QDateTime::fromMSecsSinceEpoch(m_maxx);
+
+    QDate std = st.date();
+    QDate etd = et.date();
+
+    // Format if Begin and End are on different days
+    if (std != etd) {  // further adjust formatting if on different years
+        if (std.year() == etd.year())
+            return st.toString(" d MMM [ HH:mm:ss") + " - " +  et.toString("HH:mm:ss ] d MMM yyyy");
+        else
+            return st.toString(" d MMM yyyy [ HH:mm:ss") + " - " +  et.toString("HH:mm:ss ] d MMM yyyy");
+    }
+
+    // Range is within one (local) day
+    qint64 diff = m_maxx - m_minx;
+    QString fmt;
+
+    if (diff > 60000) {
+            fmt = "HH:mm:ss";
+        } else {
+            fmt = "HH:mm:ss:zzz";
+        }
+    QString txt = st.toString(QObject::tr("d MMM yyyy [ %1 - %2 ]").arg(fmt).arg(et.toString(fmt))) ;
+
+    return txt;
+
+/***** WTF is this code trying to do?  Replaced by above 8/9/2019
     // a note about time zone usage here
     // even though this string will be displayed to the user
     // the graph is drawn using UTC times, so no conversion
@@ -1566,7 +1622,7 @@ QString gGraphView::getRangeString()
 
     qint64 diff = m_maxx - m_minx;
 
-    if (diff > 86400000) {
+    if (diff > 86400000) {                  // 86400000 is one day, in milliseconds
         int days = ceil(double(m_maxx-m_minx) / 86400000.0);
 
         qint64 minx = floor(double(m_minx)/86400000.0);
@@ -1584,12 +1640,11 @@ QString gGraphView::getRangeString()
     } else {
         fmt = "HH:mm:ss:zzz";
     }
-    QDateTime st = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::UTC);
-    QDateTime et = QDateTime::fromMSecsSinceEpoch(m_maxx, Qt::UTC);
 
     QString txt = st.toString(QObject::tr("d MMM [ %1 - %2 ]").arg(fmt).arg(et.toString(fmt))) ;
 
     return txt;
+*/
 }
 
 void gGraphView::leaveEvent(QEvent * event)
@@ -3239,7 +3294,7 @@ void gGraphView::keyPressEvent(QKeyEvent *event)
     //qDebug() << "Keypress??";
 }
 
-
+// Sends day object to be distributed to all Graphs Layers objects
 void gGraphView::setDay(Day *day)
 {
 
@@ -3251,6 +3306,7 @@ void gGraphView::setDay(Day *day)
 
     ResetBounds(false);
 }
+
 bool gGraphView::isEmpty()
 {
     bool res = true;
@@ -3287,6 +3343,14 @@ void gGraphView::timedRedraw(int ms)
     timer->setSingleShot(true);
     timer->start(ms);
 }
+
+void gGraphView::deselect()
+{
+    for (auto & graph : m_graphs) {
+        if (graph) graph->deselect();
+    }
+}
+
 void gGraphView::resetLayout()
 {
     int default_height = AppSetting->graphHeight();
@@ -3298,11 +3362,58 @@ void gGraphView::resetLayout()
     updateScale();
     timedRedraw(0);
 }
-void gGraphView::deselect()
-{
-    for (auto & graph : m_graphs) {
-        if (graph) graph->deselect();
+// Reset order of current graphs to new order, remove pinning
+void gGraphView::resetGraphOrder(bool pinFirst, const QList<QString> graphOrder) {
+//    qDebug() << "gGraphView::resetGraphOrder new order" << graphOrder;
+    QList<gGraph *> new_graphs;
+    QList<gGraph *> old_graphs = m_graphs;
+
+    // Create new_graphs in order specified by graphOrder
+    for (int i = 0; i < graphOrder.size(); ++i) {
+        QString nextGraph = graphOrder.at(i);
+        auto it = m_graphsbyname.find(nextGraph);
+        if (it == m_graphsbyname.end()) {
+            qDebug() << "resetGraphOrder could not find" << nextGraph;
+            continue;  // should not happen
+        }
+        gGraph * graph = it.value();
+        new_graphs.append(graph);
+        int idx = old_graphs.indexOf(graph);
+        old_graphs.removeAt(idx);
+//        qDebug() << "resetGraphOrder added to new graphs" << nextGraph;
     }
+    // If we didn't find everything, append anything extra we have
+    for (int i = 0; i < old_graphs.size(); i++) {
+        qDebug() << "resetGraphOrder added leftover" << old_graphs.at(i)->name();
+        new_graphs.append(old_graphs.at(i));
+    }
+
+    m_graphs = new_graphs;
+
+    for (auto & graph : m_graphs) {
+        if (!graph) continue;
+        if (graph->isSnapshot()) continue;
+        graph->setPinned(false);
+    }
+    if (pinFirst)
+        m_graphs[0]->setPinned(true);
+}
+
+// Reset order of current graphs to match defaults, remove pinning
+void gGraphView::resetGraphOrder(bool pinFirst) {
+    m_graphs = m_default_graphs;
+
+    for (auto & graph : m_graphs) {
+        if (!graph) continue;
+        if (graph->isSnapshot()) continue;
+        graph->setPinned(false);
+    }
+    if (pinFirst)
+        m_graphs[0]->setPinned(true);
+}
+
+void gGraphView::SaveDefaultSettings() {
+    m_default_graphs = m_graphs;
 }
 
 const quint32 gvmagic = 0x41756728;
@@ -3326,7 +3437,7 @@ void gGraphView::SaveSettings(QString title)
     for (auto & graph : m_graphs) {
         if (!graph) continue;
         if (graph->isSnapshot()) continue;
-
+// qDebug() << "Saving graph" << title << graph->name();
         out << graph->name();
         out << graph->height();
         out << graph->visible();
@@ -3400,7 +3511,7 @@ bool gGraphView::LoadSettings(QString title)
         in >> vis;
         in >> recminy;
         in >> recmaxy;
-
+//qDebug() << "Loading graph" << title << name;
         if (gvversion >= 1) {
             in >> zoomy;
         }

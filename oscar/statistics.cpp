@@ -1,5 +1,6 @@
 /* Statistics Report Generator Implementation
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -19,6 +20,8 @@
 
 #include "mainwindow.h"
 #include "statistics.h"
+#include "cprogressbar.h"
+#include "SleepLib/common.h"
 
 extern MainWindow *mainwin;
 
@@ -158,6 +161,10 @@ bool rxAHILessThan(const RXItem * rx1, const RXItem * rx2)
 
 void Statistics::updateRXChanges()
 {
+    // Set conditional progress bar.
+    CProgressBar * progress = new CProgressBar (QObject::tr("Updating Statistics cache"), mainwin, p_profile->daylist.count());
+
+    // Clear loaded rx cache
     rxitems.clear();
 
     // Read the cache from disk
@@ -177,6 +184,8 @@ void Statistics::updateRXChanges()
     for (it = p_profile->daylist.begin(); it != it_end; ++it) {
         const QDate & date = it.key();
         Day * day = it.value();
+
+        progress->add (1);          // Increment progress bar
 
         Machine * mach = day->machine(MT_CPAP);
         if (mach == nullptr)
@@ -214,7 +223,7 @@ void Statistics::updateRXChanges()
 
                 // Generate the pressure/mode/relief strings
                 QString relief = day->getPressureRelief();
-                QString mode = day->getCPAPMode();
+                QString mode = day->getCPAPModeStr();
                 QString pressure = day->getPressureSettings();
 
                 // Do this days settings match this rx cache entry?
@@ -396,7 +405,7 @@ void Statistics::updateRXChanges()
 
         // Generate pressure/mode/`strings
         QString relief = day->getPressureRelief();
-        QString mode = day->getCPAPMode();
+        QString mode = day->getCPAPModeStr();
         QString pressure = day->getPressureSettings();
 
         // Now scan the rxcache to find the most previous entry, and the right place to insert
@@ -479,11 +488,9 @@ void Statistics::updateRXChanges()
             // And insert into rx record into the rx cache
             rxitems.insert(date, rx);
         }
-
     }
     // Store RX cache to disk
     saveRXChanges();
-
 
     // Now do the setup for the best worst highlighting
     QList<RXItem *> list;
@@ -510,8 +517,8 @@ void Statistics::updateRXChanges()
         list[0]->highlight = 1; // best
     }
 
-    // update record box info..
-
+    // Close the progress bar
+    progress->close();
 }
 
 
@@ -608,7 +615,7 @@ QString Statistics::getUserInfo () {
     if (!p_profile->user->firstName().isEmpty()) {
         userinfo = tr("Name: %1, %2").arg(p_profile->user->lastName()).arg(p_profile->user->firstName()) + "<br/>";
         if (!p_profile->user->DOB().isNull()) {
-            userinfo += tr("DOB: %1").arg(p_profile->user->DOB().toString()) + "<br/>";
+            userinfo += tr("DOB: %1").arg(p_profile->user->DOB().toString(MedDateFormat)) + "<br/>";
         }
         if (!p_profile->user->phone().isEmpty()) {
             userinfo += tr("Phone: %1").arg(p_profile->user->phone()) + "<br/>";
@@ -641,7 +648,7 @@ QString Statistics::generateHeader(bool onScreen)
         html += "p,a,td,body { font-family: 'Helvetica'; }";
 //                "p,a,td,body { font-size: 10px; }";
     }
-    qDebug() << "generateHeader font" << html;
+//    qDebug() << "generateHeader font" << html;
     html += "table.curved {"  // Borders not supported without webkit
 //            "border: 1px solid gray;"
 //            "border-radius:10px;"
@@ -866,9 +873,8 @@ QString Statistics::GenerateMachineList()
         html += "<thead>";
         html += "<tr bgcolor='"+heading_color+"'><th colspan=7 align=center><font size=+2>" + tr("Machine Information") + "</font></th></tr>";
 
-        html += QString("<tr><td><b>%1</b></td><td><b>%2</b></td><td><b>%3</b></td><td><b>%4</b></td><td><b>%5</b></td><td><b>%6</b></td></tr>")
+        html += QString("<tr><td><b>%1</b></td><td><b>%2</b></td><td><b>%3</b></td><td><b>%4</b></td><td><b>%5</b></td></tr>")
                 .arg(STR_TR_Brand)
-                .arg(STR_TR_Series)
                 .arg(STR_TR_Model)
                 .arg(STR_TR_Serial)
                 .arg(tr("First Use"))
@@ -882,18 +888,17 @@ QString Statistics::GenerateMachineList()
             m = mach.at(i);
 
             if (m->type() == MT_JOURNAL) { continue; }
-
+//qDebug() << "Machine" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
             QDate d1 = m->FirstDay();
             QDate d2 = m->LastDay();
             QString mn = m->modelnumber();
-            html += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td><td>%6</td></tr>")
+            html += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
                     .arg(m->brand())
-                    .arg(m->series())
                     .arg(m->model() +
                          (mn.isEmpty() ? "" : QString(" (") + mn + QString(")")))
                     .arg(m->serial())
-                    .arg(d1.toString(Qt::SystemLocaleShortDate))
-                    .arg(d2.toString(Qt::SystemLocaleShortDate));
+                    .arg(d1.toString(MedDateFormat))
+                    .arg(d2.toString(MedDateFormat));
 
         }
 
@@ -904,6 +909,11 @@ QString Statistics::GenerateMachineList()
 }
 QString Statistics::GenerateRXChanges()
 {
+    // Generate list only if there are CPAP machines
+    QList<Machine *> cpap_machines = p_profile->GetMachines(MT_CPAP);
+    if (cpap_machines.isEmpty())
+        return "";
+
     // do the actual data sorting...
     updateRXChanges();
 
@@ -979,12 +989,19 @@ QString Statistics::GenerateRXChanges()
         double ahi = rdi ? (double(rx.rdi) / rx.hours) : (double(rx.ahi) /rx.hours);
         double fli = double(rx.count(CPAP_FlowLimit)) / rx. hours;
 
-        html += QString("<td>%1</td>").arg(rx.start.toString())+
-                QString("<td>%1</td>").arg(rx.end.toString())+
+        QString machid = QString("<td>%1 (%2)</td>").arg(rx.machine->model())
+                                                       .arg(rx.machine->modelnumber());
+        if (AppSetting->includeSerial())
+            machid = QString("<td>%1 (%2) [%3]</td>").arg(rx.machine->model())
+                                                           .arg(rx.machine->modelnumber())
+                                                           .arg(rx.machine->serial());
+
+        html += QString("<td>%1</td>").arg(rx.start.toString(MedDateFormat))+
+                QString("<td>%1</td>").arg(rx.end.toString(MedDateFormat))+
                 QString("<td>%1</td>").arg(rx.days)+
                 QString("<td>%1</td>").arg(ahi, 0, 'f', 2)+
                 QString("<td>%1</td>").arg(fli, 0, 'f', 2)+
-                QString("<td>%1 (%2)</td>").arg(rx.machine->model()).arg(rx.machine->modelnumber())+
+                machid +
                 QString("<td>%1</td>").arg(formatRelief(rx.relief))+
                 QString("<td>%1</td>").arg(rx.mode)+
                 QString("<td>%1</td>").arg(rx.pressure)+
@@ -1169,14 +1186,14 @@ QString Statistics::GenerateCPAPUsage()
                         arg(tr("%1 day of %2 Data on %3")
                             .arg(value)
                             .arg(machine)
-                            .arg(last.toString()));
+                            .arg(last.toString(MedDateFormat)));
             } else {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>\n").arg(periods.size()+1).
                         arg(tr("%1 days of %2 Data, between %3 and %4")
                             .arg(value)
                             .arg(machine)
-                            .arg(first.toString())
-                            .arg(last.toString()));
+                            .arg(first.toString(MedDateFormat))
+                            .arg(last.toString(MedDateFormat)));
             }
             continue;
         } else if (row.calc == SC_SUBHEADING) {  // subheading..
@@ -1548,8 +1565,8 @@ QString Statistics::UpdateRecordsBox()
                 tr("Date: %1 - %2").arg(rxbest.start.toString(Qt::SystemLocaleShortDate)).arg(rxbest.end.toString(Qt::SystemLocaleShortDate)) + "</a><br/>";
             html += QString("%1").arg(rxbest.machine->model()) + "<br/>";
             html += QString("Serial: %1").arg(rxbest.machine->serial()) + "<br/>";
-            html += tr("Culminative AHI: %1").arg(double(rxbest.ahi) / rxbest.hours, 0, 'f', 2) + "<br/>";
-            html += tr("Culminative Hours: %1").arg(rxbest.hours, 0, 'f', 2) + "<br/>";
+            html += tr("AHI: %1").arg(double(rxbest.ahi) / rxbest.hours, 0, 'f', 2) + "<br/>";
+            html += tr("Total Hours: %1").arg(rxbest.hours, 0, 'f', 2) + "<br/>";
             html += QString("%1").arg(rxbest.pressure) + "<br/>";
             html += QString("%1").arg(formatRelief(rxbest.relief)) + "<br/>";
             html += "<br/>";
@@ -1560,8 +1577,8 @@ QString Statistics::UpdateRecordsBox()
                     tr("Date: %1 - %2").arg(rxworst.start.toString(Qt::SystemLocaleShortDate)).arg(rxworst.end.toString(Qt::SystemLocaleShortDate)) + "</a><br/>";
             html += QString("%1").arg(rxworst.machine->model()) + "<br/>";
             html += QString("Serial: %1").arg(rxworst.machine->serial()) + "<br/>";
-            html += tr("Culminative AHI: %1").arg(double(rxworst.ahi) / rxworst.hours, 0, 'f', 2) + "<br/>";
-            html += tr("Culminative Hours: %1").arg(rxworst.hours, 0, 'f', 2) + "<br/>";
+            html += tr("AHI: %1").arg(double(rxworst.ahi) / rxworst.hours, 0, 'f', 2) + "<br/>";
+            html += tr("Total Hours: %1").arg(rxworst.hours, 0, 'f', 2) + "<br/>";
 
             html += QString("%1").arg(rxworst.pressure) + "<br/>";
             html += QString("%1").arg(formatRelief(rxworst.relief)) + "<br/>";

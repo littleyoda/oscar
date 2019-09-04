@@ -285,6 +285,10 @@ bool Machine::AddSession(Session *s)
         qCritical() << "AddSession() called without a valid profile";
         return false;
     }
+    if (sessionlist.contains(s->session())) {
+        qCritical() << "Machine::AddSession called with duplicate session" << s->session() << "for machine" << serial();
+        return false;
+    }
 
     if (profile->session->ignoreOlderSessions()) {
         qint64 ignorebefore = profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch();
@@ -519,6 +523,7 @@ bool Machine::Purge(int secret)
 
     // Create a copy of the list so the hash can be manipulated
     QList<Session *> sessions = sessionlist.values();
+    QList<Day *> days = day.values();
 
     // Clean up any loaded sessions from memory first..
     //bool success = true;
@@ -532,6 +537,10 @@ bool Machine::Purge(int secret)
         }
 
         delete sess;
+    }
+    // Make sure there aren't any dangling references to this machine
+    for (auto & d : days) {
+        d->removeMachine(this);
     }
 
     // Remove EVERYTHING under Events folder..
@@ -1004,7 +1013,7 @@ bool Machine::LoadSummary(ProgressDialog * progress)
     progress->setProgressValue(sess_order.size());
     QApplication::processEvents();
 
-    qDebug() << "Loaded" << info.series.toLocal8Bit().data() << info.model.toLocal8Bit().data() << "data in" << time.elapsed() << "ms";
+    qDebug() << "Loaded" << info.model.toLocal8Bit().data() << "data in" << time.elapsed() << "ms";
 
     return true;
 }

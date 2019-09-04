@@ -320,7 +320,7 @@ class gGraphView
         But this must not be shared with Printers snapshot gGraphView object,
         or it will lead to display/font corruption
         */
-    explicit gGraphView(QWidget *parent = 0, gGraphView *shared = 0);
+    explicit gGraphView(QWidget *parent = 0, gGraphView *shared = 0, QWidget *caller = 0);
     virtual ~gGraphView();
     void closeEvent(QCloseEvent * event) override;
 
@@ -372,6 +372,15 @@ class gGraphView
 
     //! \brief Loads the current graph order, heights, min & max Y values from disk
     bool LoadSettings(QString title);
+
+    //! \brief Saves the current (initial) graph order, heights, min & Max Y values for future recovery
+    void SaveDefaultSettings();
+
+    //! \brief Reset the current graph order, heights, min & max Y values to match default values
+    void resetGraphOrder(bool pinFirst);
+
+    //! \brief Reset the current graph order, heights, min & max Y values to match default values
+    void resetGraphOrder(bool pinFirst, const QList<QString> graphOrder);
 
     //! \brief Returns the graph object matching the supplied name, nullptr if it does not exist.
     gGraph *findGraph(QString name);
@@ -505,6 +514,9 @@ class gGraphView
     //! \brief The current time the mouse pointer is hovering over
     inline double currentTime() { return m_currenttime; }
 
+    //! \brief Returns a context formatted text string with the currently selected time range in days
+    QString getRangeInDaysString();
+
     //! \brief Returns a context formatted text string with the currently selected time range
     QString getRangeString();
 
@@ -606,6 +618,9 @@ class gGraphView
     //! \brief List of all graphs contained, indexed by title
     QHash<QString, gGraph *> m_graphsbyname;
 
+    //! \brief List of initial settings of all graphs contained in this area
+    QList<gGraph *> m_default_graphs;
+
     //! \variable Vertical scroll offset (adjusted when scrollbar gets moved)
     int m_offsetY;
     //! \variable Horizontal scroll offset (unused, but can be made to work if necessary)
@@ -646,6 +661,7 @@ class gGraphView
 
     bool m_showsplitter;
 
+    // msec in epoch of first day and last day of range
     qint64 m_minx, m_maxx;
 
     QVector<SelectionHistoryItem> fwd_history;
@@ -680,6 +696,7 @@ class gGraphView
     QAction * snap_action;
 
     QAction * zoom100_action;
+    QWidget * caller;
 
     bool m_showAuthorMessage;
 
@@ -701,9 +718,7 @@ class gGraphView
     //! \brief Resets all contained graphs to have a uniform height.
     void resetLayout();
 
-    void resetZoom() {
-        ResetBounds(true);
-    }
+    void resetZoom();
 
     void dataChanged();
 

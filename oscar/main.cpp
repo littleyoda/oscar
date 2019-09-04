@@ -273,6 +273,8 @@ int main(int argc, char *argv[]) {
     }
 
     QString lastlanguage = settings.value(LangSetting, "").toString();
+    if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'
+        lastlanguage = "he";
 
     bool dont_load_profile = false;
     bool force_data_dir = false;
@@ -345,6 +347,8 @@ int main(int argc, char *argv[]) {
     relinfo = "("+QSysInfo::kernelType()+" "+QSysInfo::currentCpuArchitecture()+relinfo+")";
     qDebug() << "OSCAR starting" << QDateTime::currentDateTime();
     qDebug().noquote() << STR_AppName << VersionString << relinfo << "Built with Qt" << QT_VERSION_STR << __DATE__ << __TIME__;
+
+    SetDateFormat();
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Language Selection

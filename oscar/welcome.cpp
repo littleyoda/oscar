@@ -1,5 +1,6 @@
-﻿/* Welcome page Implementation
+/* Welcome page Implementation
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -34,19 +35,22 @@ void Welcome::refreshPage()
 {
     bool b;
 
-//    if (p_profile != nullptr) {
-        const auto & mlist = p_profile->GetMachines(MT_CPAP);
-        b = mlist.size() > 0;
-//    } else 
-//        b = false;
+    const auto & mlist = p_profile->GetMachines(MT_CPAP);
+    b = mlist.size() > 0;
 
-    bool showCardWarning = !b;
+    QList<Machine *> oximachines = p_profile->GetMachines(MT_OXIMETER);
+    QList<Machine *> posmachines = p_profile->GetMachines(MT_POSITION);
+    QList<Machine *> stgmachines = p_profile->GetMachines(MT_SLEEPSTAGE);
 
+    bool noMachines = mlist.isEmpty() && posmachines.isEmpty() && oximachines.isEmpty() && stgmachines.isEmpty();
+
+    bool showCardWarning = !noMachines;
 
     // The SDCard warning does not need to be seen anymore for people who DON'T use ResMed S9's.. show first import and only when S9 is present
     for (auto & mach :mlist) {
         if (mach->series().compare("S9") == 0) showCardWarning = true;
     }
+
     ui->S9Warning->setVisible(showCardWarning);
 
     if (!b) {
@@ -55,6 +59,8 @@ void Welcome::refreshPage()
         ui->cpapIcon->setPixmap(pixmap);
     }
 
+    b = !noMachines;
+
     // Copy application font to tool buttons
     ui->importButton->setFont(QApplication::font());
     ui->dailyButton->setFont(QApplication::font());
@@ -62,10 +68,9 @@ void Welcome::refreshPage()
     ui->statisticsButton->setFont(QApplication::font());
     ui->oximetryButton->setFont(QApplication::font());
 
-
     // Enable buttons that might be disabled
     ui->dailyButton->setEnabled(b);
-    ui->oximetryButton->setEnabled(b);  // looks like this was omitted from the list (gts 7/4/2019)
+    ui->oximetryButton->setEnabled(true);  // Import features always enabled
     ui->overviewButton->setEnabled(b);
     ui->statisticsButton->setEnabled(b);
 
@@ -77,13 +82,8 @@ void Welcome::refreshPage()
 
     mainwin->EnableTabs(b);
 
-/** MainWindow::ui->tabWidget->setTabEnabled(2, b);********* need to find some other way
-*** MainWindow::ui->tabWidget->setTabEnabled(3, b);********* to enable these tabs ******
-*** MainWindow::ui->tabWidget->setTabEnabled(4, b);************************************/
-
     ui->cpapInfo->setHtml(GenerateCPAPHTML());
     ui->oxiInfo->setHtml(GenerateOxiHTML());
-//    qDebug() << "CPAPhtml" << GenerateCPAPHTML();
 }
 
 void Welcome::on_dailyButton_clicked()
@@ -173,7 +173,7 @@ QString Welcome::GenerateCPAPHTML()
 
             ui->cpapIcon->setPixmap(QPixmap(cpapimage));
 
-            html+= "<b>"+tr("The last time you used your %1...").arg(cpap->brand()+" "+cpap->series()+" "+cpap->model())+"</b><br/>";
+            html+= "<b>"+tr("The last time you used your %1...").arg(cpap->brand()+" "+cpap->model())+"</b><br/>";
 
             int daysto = date.daysTo(QDate::currentDate());
             QString daystring;
@@ -198,11 +198,12 @@ QString Welcome::GenerateCPAPHTML()
 
             int averagedays = 7; // how many days to look back
 
-            QDate starttime = date.addDays(-(averagedays-1));
+            QDate starttime = date.addDays(-averagedays);
+            QDate endtime = date.addDays(-1);
 
 
             EventDataType ahi = (day->count(CPAP_Obstructive) + day->count(CPAP_Hypopnea) + day->count(CPAP_ClearAirway) + day->count(CPAP_Apnea)) / hours;
-            EventDataType ahidays = calcAHI(starttime, date);
+            EventDataType ahidays = calcAHI(starttime, endtime);
 
             const QString under = tr("under");
             const QString over = tr("over");
@@ -215,7 +216,7 @@ QString Welcome::GenerateCPAPHTML()
                 comp = under;
             } else if ((ahi > ahidays) && ((ahi - ahidays) >= 0.1)) {
                 comp = over;
-            } else if ((fabs(ahi > ahidays) >= 0.01) ) {
+            } else if ((fabs(ahi - ahidays) >= 0.01) ) {
                 comp = close;
             } else {
                 comp = equal;
@@ -261,7 +262,7 @@ QString Welcome::GenerateCPAPHTML()
             //EventDataType leaks = 1.0/hours * lat;
 
             EventDataType leak = day->avg(CPAP_Leak);
-            EventDataType leakdays = p_profile->calcAvg(CPAP_Leak, MT_CPAP, starttime, date);
+            EventDataType leakdays = p_profile->calcAvg(CPAP_Leak, MT_CPAP, starttime, endtime);
 
             if ((leak < leakdays) && ((leakdays - leak) >= 0.1)) {
                 comp = under;

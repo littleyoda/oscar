@@ -93,10 +93,10 @@ QMAKE_TARGET_PRODUCT = OSCAR
 QMAKE_TARGET_COMPANY = The OSCAR Team
 QMAKE_TARGET_COPYRIGHT = © 2019 The OSCAR Team
 QMAKE_TARGET_DESCRIPTION = "OpenSource CPAP Analysis Reporter"
-VERSION = 1.0.0
+VERSION = 0.0.0.0
 RC_ICONS = ./icons/logo.ico
 
-macx {
+macx  {
   QMAKE_TARGET_BUNDLE_PREFIX = "org.oscar-team"
 # QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
   LIBS             += -lz
@@ -136,6 +136,7 @@ macx {
 }
 
 TRANSLATIONS = $$files($$PWD/../Translations/*.ts)
+TRANSLATIONS += $$files($$PWD/../Translations/qt/*.ts)
 
 qtPrepareTool(LRELEASE, lrelease)
 
@@ -145,7 +146,6 @@ for(file, TRANSLATIONS) {
  qmfile ~= s,.ts$,.qm,
 
  qmdir = $$PWD/translations
-
  !exists($$qmdir) {
      mkpath($$qmdir)|error("Aborting.")
  }
@@ -165,7 +165,19 @@ macx {
         HelpFiles.path = Contents/Resources/Help
         QMAKE_BUNDLE_DATA += HelpFiles
     }
+
+# Removed because we are not using QT's translation files
+#    QtTransFiles.files = $$files($$[QT_INSTALL_TRANSLATIONS]/qt*.qm)
+#    QtTransFiles.path = Contents/translations
+#    QMAKE_BUNDLE_DATA += QtTransFiles
+
+    TransFiles.files = $${TRANSLATIONS_FILES}
+    TransFiles.path = Contents/Resources/translations
     QMAKE_BUNDLE_DATA += TransFiles
+
+    HtmlFiles.files = $${HTML_FILES}
+    HtmlFiles.path = Contents/Resources/html
+    QMAKE_BUNDLE_DATA += HtmlFiles
 } else {
     !contains(DEFINES, helpless) {
         HELPDIR = $$OUT_PWD/Help
@@ -174,7 +186,7 @@ macx {
     DDIR = $$OUT_PWD/Translations
     HTMLDIR = $$OUT_PWD/Html
 
-    TRANS_FILES += $$PWD/translations/*.qm
+    TRANS_FILES = $${TRANSLATIONS_FILES}
 
     win32 {
         TRANS_FILES_WIN = $${TRANS_FILES}
@@ -231,6 +243,7 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     common_gui.cpp \
+    cprogressbar.cpp \
     daily.cpp \
     exportcsv.cpp \
     main.cpp \
@@ -299,6 +312,7 @@ SOURCES += \
 
 HEADERS  += \
     common_gui.h \
+    cprogressbar.h \
     daily.h \
     exportcsv.h \
     mainwindow.h \
@@ -446,6 +460,25 @@ DISTFILES += help/default.css \
     help/help_nl/OSCAR_Guide_nl.qhp \
     help/help_en/OSCAR_Guide_en.qhp \
     help/index.qhcp
+}
+
+
+# Always treat warnings as errors, even (especially!) in release
+QMAKE_CFLAGS += -Werror
+QMAKE_CXXFLAGS += -Werror
+
+# Make deprecation warnings just warnings
+QMAKE_CFLAGS += -Wno-error=deprecated-declarations
+QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+
+
+# Create a debug GUI build by adding "CONFIG+=memdebug" to your qmake command
+memdebug {
+    !win32 {  # add memory checking on Linux and macOS debug builds
+        QMAKE_CFLAGS += -g -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
+        QMAKE_CXXFLAGS += -g -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
+        QMAKE_LFLAGS += -fsanitize=address
+    }
 }
 
 # Turn on unit testing by adding "CONFIG+=test" to your qmake command

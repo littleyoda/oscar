@@ -667,23 +667,27 @@ QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
         } else if (key == "PNA") {  // Product Name
             value.replace("_"," ");
 
-            if (value.contains(STR_ResMed_S9)) {
-                value.replace(STR_ResMed_S9, "");
-                info->series = STR_ResMed_S9;
-            } else if (value.contains(STR_ResMed_AirSense10)) {
+        //  if (value.contains(STR_ResMed_S9)) {
+        //      value.replace(STR_ResMed_S9, "");
+        //      info->series = STR_ResMed_S9;
+        //  } else if (value.contains(STR_ResMed_AirSense10)) {
+            if (value.contains(STR_ResMed_AirSense10)) {
                 value.replace(STR_ResMed_AirSense10, "");
                 info->series = STR_ResMed_AirSense10;
             } else if (value.contains(STR_ResMed_AirCurve10)) {
                 value.replace(STR_ResMed_AirCurve10, "");
                 info->series = STR_ResMed_AirCurve10;
+            } else {
+                value.replace(STR_ResMed_S9, "");
+                info->series = STR_ResMed_S9;
             }
-            value.replace("(","");
-            value.replace(")","");
-            if (value.contains("Adapt", Qt::CaseInsensitive)) {
-                if (!value.contains("VPAP")) {
-                    value.replace("Adapt", QObject::tr("VPAP Adapt"));
-                }
-            }
+        //  value.replace("(","");
+        //  value.replace(")","");
+        //  if (value.contains("Adapt", Qt::CaseInsensitive)) {
+        //      if (!value.contains("VPAP")) {
+        //          value.replace("Adapt", QObject::tr("VPAP Adapt"));
+        //      }
+        //  }
             info->model = value.trimmed();
         } else if (key == "PCD") { // Product Code
             info->modelnumber = value;
@@ -741,12 +745,8 @@ int PeekAnnotations(const QString & path, quint32 &start, quint32 &end)
 
     QString t;
 
-//  char *data;
-//  char c;
-//  long pos;
     double tt;
 
-//  int recs = 0;
     int goodrecs = 0;
 
     // Notes: Event headers have useless duration record.
@@ -1372,7 +1372,7 @@ void ResDayTask::run()
         for (int i=0;i<resday->str.maskon.size();++i) {
             quint32 maskon = resday->str.maskon[i];
             quint32 maskoff = resday->str.maskoff[i];
-            if (((maskon>0) && (maskoff>0)) && (maskon != maskoff)) {
+            if (((maskon>0) && (maskoff>0)) && (maskon != maskoff)) {   //ignore very short sessions
                 Session * sess = new Session(mach, maskon);
                 sess->set_first(quint64(maskon) * 1000L);
                 sess->set_last(quint64(maskoff) * 1000L);
@@ -1645,48 +1645,6 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
         QString line = f.readLine().trimmed();
         QHash<QString, QString> hash = parseIdentLine( line, info );
         idmap.unite(hash);
-
-//        if (!line.isEmpty()) {
-//            QString key = line.section(" ", 0, 0).section("#", 1);
-//            QString value = line.section(" ", 1);
-//
-//            if (key == "SRN") { // Serial Number
-//                info->serial = value;
-//                qDebug() << "Serial # is >" << value << "<";
-//                continue;
-//
-//            } else if (key == "PNA") {  // Product Name
-//                qDebug() << "Prouct Name is >" << value << "<";
-//                value.replace("_"," ");
-//                if (value.contains(STR_ResMed_S9)) {
-//                    value.replace(STR_ResMed_S9, "");
-//                    info->series = STR_ResMed_S9;
-//                } else if (value.contains(STR_ResMed_AirSense10)) {
-//                    value.replace(STR_ResMed_AirSense10, "");
-//                    info->series = STR_ResMed_AirSense10;
-//                } else if (value.contains(STR_ResMed_AirCurve10)) {
-//                    value.replace(STR_ResMed_AirCurve10, "");
-//                    info->series = STR_ResMed_AirCurve10;
-//                }
-//                value.replace("(","");
-//                value.replace(")","");
-//
-//                if (value.contains("Adapt", Qt::CaseInsensitive)) {
-//                    if (!value.contains("VPAP")) {
-//                        value.replace("Adapt", QObject::tr("VPAP Adapt"));
-//                    }
-//                }
-//                info->model = value.trimmed();
-//                continue;
-//
-//            } else if (key == "PCD") { // Product Code
-//                qDebug() << "Prouct Code is >" << value << "<";
-//                info->modelnumber = value;
-//                continue;
-//            }
-//
-//            idmap[key] = value;
-//        }
     }
 
     f.close();
@@ -1812,12 +1770,7 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 
 int ResmedLoader::Open(const QString & dirpath)
 {
-
-//  QString key, value;
-//  QString line;
     QString datalogPath;
-//  QString filename;
-
     QHash<QString, QString> idmap;  // Temporary machine ID properties hash
 
     QString path(dirpath);
