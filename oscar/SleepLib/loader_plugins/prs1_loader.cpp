@@ -1009,11 +1009,14 @@ enum PRS1ParsedEventType
     EV_PRS1_HY,
     EV_PRS1_TOTLEAK,
     EV_PRS1_LEAK,  // unintentional leak
-    EV_PRS1_PRESSURE,  // TODO: maybe fold PRESSURE and IPAP into one
-    EV_PRS1_IPAP,
+    EV_PRS1_PRESSURE_SET,  // TODO: maybe fold PRESSURE and IPAP into one
+    EV_PRS1_IPAP_SET,
+    EV_PRS1_EPAP_SET,
+    EV_PRS1_PRESSURE_AVG,  // TODO: maybe fold PRESSURE and IPAP into one
+    EV_PRS1_IPAP_AVG,
     EV_PRS1_IPAPLOW,
     EV_PRS1_IPAPHIGH,
-    EV_PRS1_EPAP,
+    EV_PRS1_EPAP_AVG,
     EV_PRS1_FLEX,
     EV_PRS1_RR,
     EV_PRS1_PTB,
@@ -1310,11 +1313,14 @@ PRS1_DURATION_EVENT(PRS1HypopneaEvent, EV_PRS1_HY);
 PRS1_VALUE_EVENT(PRS1TotalLeakEvent, EV_PRS1_TOTLEAK);
 PRS1_VALUE_EVENT(PRS1LeakEvent, EV_PRS1_LEAK);  // TODO: do machines really report unintentional leak?
 
-PRS1_PRESSURE_EVENT(PRS1CPAPEvent, EV_PRS1_PRESSURE);
-PRS1_PRESSURE_EVENT(PRS1IPAPEvent, EV_PRS1_IPAP);
+PRS1_PRESSURE_EVENT(PRS1PressureSetEvent, EV_PRS1_PRESSURE_SET);
+PRS1_PRESSURE_EVENT(PRS1IPAPSetEvent, EV_PRS1_IPAP_SET);
+PRS1_PRESSURE_EVENT(PRS1EPAPSetEvent, EV_PRS1_EPAP_SET);
+PRS1_PRESSURE_EVENT(PRS1PressureAverageEvent, EV_PRS1_PRESSURE_AVG);
+PRS1_PRESSURE_EVENT(PRS1IPAPAverageEvent, EV_PRS1_IPAP_AVG);
 PRS1_PRESSURE_EVENT(PRS1IPAPHighEvent, EV_PRS1_IPAPHIGH);
 PRS1_PRESSURE_EVENT(PRS1IPAPLowEvent, EV_PRS1_IPAPLOW);
-PRS1_PRESSURE_EVENT(PRS1EPAPEvent, EV_PRS1_EPAP);
+PRS1_PRESSURE_EVENT(PRS1EPAPAverageEvent, EV_PRS1_EPAP_AVG);
 PRS1_PRESSURE_EVENT(PRS1PressureReliefEvent, EV_PRS1_FLEX);  // value is pressure applied during pressure relief, similar to EPAP
 
 PRS1_VALUE_EVENT(PRS1RespiratoryRateEvent, EV_PRS1_RR);
@@ -1367,11 +1373,14 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_HY);
         ENUMSTRING(EV_PRS1_TOTLEAK);
         ENUMSTRING(EV_PRS1_LEAK);
-        ENUMSTRING(EV_PRS1_PRESSURE);
-        ENUMSTRING(EV_PRS1_IPAP);
+        ENUMSTRING(EV_PRS1_PRESSURE_SET);
+        ENUMSTRING(EV_PRS1_IPAP_SET);
+        ENUMSTRING(EV_PRS1_EPAP_SET);
+        ENUMSTRING(EV_PRS1_PRESSURE_AVG);
+        ENUMSTRING(EV_PRS1_IPAP_AVG);
         ENUMSTRING(EV_PRS1_IPAPLOW);
         ENUMSTRING(EV_PRS1_IPAPHIGH);
-        ENUMSTRING(EV_PRS1_EPAP);
+        ENUMSTRING(EV_PRS1_EPAP_AVG);
         ENUMSTRING(EV_PRS1_FLEX);
         ENUMSTRING(EV_PRS1_RR);
         ENUMSTRING(EV_PRS1_PTB);
@@ -1545,8 +1554,11 @@ bool PRS1Import::ParseEventsF5V3()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1IPAPEvent::TYPE:
-                IPAP->AddEvent(t, e->m_value);
+            case PRS1EPAPSetEvent::TYPE:
+                // TODO: The below belong in average channels and then this should go into the EPAP adjustment channel.
+                break;
+            case PRS1IPAPAverageEvent::TYPE:
+                IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
             case PRS1IPAPLowEvent::TYPE:
@@ -1555,8 +1567,8 @@ bool PRS1Import::ParseEventsF5V3()
             case PRS1IPAPHighEvent::TYPE:
                 IPAPHi->AddEvent(t, e->m_value);
                 break;
-            case PRS1EPAPEvent::TYPE:
-                EPAP->AddEvent(t, e->m_value);
+            case PRS1EPAPAverageEvent::TYPE:
+                EPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
                 break;
             case PRS1TimedBreathEvent::TYPE:
@@ -1707,8 +1719,7 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
 
         switch (code) {
             case 1:  // Pressure adjustment
-                // TODO: Have OSCAR treat EPAP adjustment events differently than (average?) stats below.
-                //this->AddEvent(new PRS1EPAPEvent(t, data[pos++], GAIN));
+                this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++], GAIN));
                 this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos-1, size+1));
                 break;
             case 2:  // Timed Breath
@@ -1720,7 +1731,7 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
                 break;
             case 3:  // Statistics
                 // These appear every 2 minutes, so presumably summarize the preceding period.
-                this->AddEvent(new PRS1IPAPEvent(t, data[pos+0], GAIN));               // 00=IPAP (average?)
+                this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos+0], GAIN));        // 00=IPAP
                 this->AddEvent(new PRS1IPAPLowEvent(t, data[pos+1], GAIN));            // 01=IAP Low
                 this->AddEvent(new PRS1IPAPHighEvent(t, data[pos+2], GAIN));           // 02=IAP High
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos+3]));                // 03=Total leak (average?)
@@ -1729,7 +1740,7 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
                 this->AddEvent(new PRS1MinuteVentilationEvent(t, data[pos+6]));        // 06=Minute Ventilation (average?)
                 this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos+7]));              // 07=Tidal Volume (average?)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
-                this->AddEvent(new PRS1EPAPEvent(t, data[pos+9], GAIN));               // 09=EPAP (average? see event 1 above)
+                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9], GAIN));        // 09=EPAP average
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?)
                 break;
             case 0x04:  // Pressure Pulse
@@ -1877,8 +1888,8 @@ bool PRS1Import::ParseF5Events()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1IPAPEvent::TYPE:
-                IPAP->AddEvent(t, e->m_value);
+            case PRS1IPAPAverageEvent::TYPE:
+                IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
             case PRS1IPAPLowEvent::TYPE:
@@ -1887,8 +1898,8 @@ bool PRS1Import::ParseF5Events()
             case PRS1IPAPHighEvent::TYPE:
                 IPAPHi->AddEvent(t, e->m_value);
                 break;
-            case PRS1EPAPEvent::TYPE:
-                EPAP->AddEvent(t, e->m_value);
+            case PRS1EPAPAverageEvent::TYPE:
+                EPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
                 break;
             case PRS1TimedBreathEvent::TYPE:
@@ -2163,7 +2174,7 @@ bool PRS1DataChunk::ParseEventsF5V012(void)
                 data1 = buffer[pos++];
                 //tt = t - qint64(data1) * 1000L;
             } else {
-                this->AddEvent(new PRS1IPAPEvent(t, buffer[pos++])); // 00=IAP
+                this->AddEvent(new PRS1IPAPAverageEvent(t, buffer[pos++])); // 00=IAP
                 data4 = buffer[pos++];
                 this->AddEvent(new PRS1IPAPLowEvent(t, data4));               // 01=IAP Low
                 data5 = buffer[pos++];
@@ -2177,7 +2188,7 @@ bool PRS1DataChunk::ParseEventsF5V012(void)
                 //tmp=buffer[pos++] * 10.0;
                 this->AddEvent(new PRS1TidalVolumeEvent(t, buffer[pos++]));             // 07=Tidal Volume
                 this->AddEvent(new PRS1SnoreEvent(t, buffer[pos++])); // 08=Snore
-                this->AddEvent(new PRS1EPAPEvent(t, data1 = buffer[pos++])); // 09=EPAP
+                this->AddEvent(new PRS1EPAPAverageEvent(t, data1 = buffer[pos++])); // 09=EPAP
                 if (this->familyVersion >= 1) {
                     data0 = buffer[pos++];
                 }
@@ -2187,7 +2198,7 @@ bool PRS1DataChunk::ParseEventsF5V012(void)
         case 0x0e: // Unknown
             // Family 5.2 has this code
             if (this->familyVersion>=2) {
-                this->AddEvent(new PRS1IPAPEvent(t, data1=buffer[pos+0])); // 0
+                this->AddEvent(new PRS1IPAPAverageEvent(t, data1=buffer[pos+0])); // 0
                 this->AddEvent(new PRS1IPAPLowEvent(t, buffer[pos+1])); // 1
                 this->AddEvent(new PRS1IPAPHighEvent(t, buffer[pos+2])); // 2
                 this->AddEvent(new PRS1LeakEvent(t, buffer[pos+3])); // 3  // F5V2, is this really unintentional leak rather than total leak?
@@ -2196,7 +2207,7 @@ bool PRS1DataChunk::ParseEventsF5V012(void)
                 this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, buffer[pos+5]));  // 5
                 this->AddEvent(new PRS1MinuteVentilationEvent(t,  buffer[pos+6])); //6
                 this->AddEvent(new PRS1SnoreEvent(t, buffer[pos+8])); //??
-                this->AddEvent(new PRS1EPAPEvent(t, buffer[pos+9])); // 9
+                this->AddEvent(new PRS1EPAPAverageEvent(t, buffer[pos+9])); // 9
                 pos+=11;
             } else {
                 qDebug() << "0x0E Observed in ASV data!!????";
@@ -2310,11 +2321,11 @@ bool PRS1Import::ParseEventsF3V6()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1IPAPEvent::TYPE:
-                IPAP->AddEvent(t, e->m_value);
+            case PRS1IPAPAverageEvent::TYPE:
+                IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 break;
-            case PRS1EPAPEvent::TYPE:
-                EPAP->AddEvent(t, e->m_value);
+            case PRS1EPAPAverageEvent::TYPE:
+                EPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 break;
             case PRS1TimedBreathEvent::TYPE:
                 // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
@@ -2490,8 +2501,8 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
             case 2:  // Statistics
                 // These appear every 2 minutes, so presumably summarize the preceding period.
                 //data[pos+0];  // TODO: 0 = ???
-                this->AddEvent(new PRS1EPAPEvent(t, data[pos+1], GAIN));               // 01=EPAP (average?)  // TODO: needs to be added second if we decide to calculate PS
-                this->AddEvent(new PRS1IPAPEvent(t, data[pos+2], GAIN));               // 02=IPAP (average?)
+                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+1], GAIN));        // 01=EPAP  // TODO: needs to be added second if we decide to calculate PS
+                this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos+2], GAIN));        // 02=IPAP
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos+3]));                // 03=Total leak (average?)
                 this->AddEvent(new PRS1RespiratoryRateEvent(t, data[pos+4]));          // 04=Breaths Per Minute (average?)
                 this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, data[pos+5]));  // 05=Patient Triggered Breaths (average?)
@@ -2603,10 +2614,10 @@ bool PRS1Import::ParseF3Events()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1IPAPEvent::TYPE:
+            case PRS1IPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
                 IPAP->AddEvent(t, e->m_value);
                 break;
-            case PRS1EPAPEvent::TYPE:
+            case PRS1EPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
                 EPAP->AddEvent(t, e->m_value);
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
@@ -2680,8 +2691,8 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
     const qint64 block_duration = 120;
 
     for (int x=0; x < size; x++) {
-        this->AddEvent(new PRS1IPAPEvent(t, h[0] | (h[1] << 8)));
-        this->AddEvent(new PRS1EPAPEvent(t, h[2] | (h[3] << 8)));
+        this->AddEvent(new PRS1IPAPAverageEvent(t, h[0] | (h[1] << 8)));
+        this->AddEvent(new PRS1EPAPAverageEvent(t, h[2] | (h[3] << 8)));
         this->AddEvent(new PRS1TotalLeakEvent(t, h[4]));
         this->AddEvent(new PRS1TidalVolumeEvent(t, h[5]));
         this->AddEvent(new PRS1FlowRateEvent(t, h[6]));
@@ -2863,21 +2874,21 @@ bool PRS1Import::ParseF0Events()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1CPAPEvent::TYPE:
+            case PRS1PressureSetEvent::TYPE:
                 if (!PRESSURE) {
                     if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
                 }
                 PRESSURE->AddEvent(t, e->m_value);
                 currentPressure = e->m_value;
                 break;
-            case PRS1IPAPEvent::TYPE:
+            case PRS1IPAPSetEvent::TYPE:
                 if(!IPAP) {
                     if (!(IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, e->m_gain))) { return false; }
                 }
                 IPAP->AddEvent(t, e->m_value);
                 currentPressure = e->m_value;
                 break;
-            case PRS1EPAPEvent::TYPE:
+            case PRS1EPAPSetEvent::TYPE:
                 if (!EPAP) {
                     if (!(EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, e->m_gain))) { return false; }
                 }
@@ -3033,7 +3044,7 @@ bool PRS1DataChunk::ParseEventsF0V234(CPAPMode mode)
 
         case 0x01: // Unknown
             if ((this->family == 0) && (this->familyVersion == 4)) {
-                this->AddEvent(new PRS1CPAPEvent(t, buffer[pos++]));
+                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
             } else {
                 this->AddEvent(new PRS1UnknownValueEvent(code, t, 0));
             }
@@ -3043,10 +3054,10 @@ bool PRS1DataChunk::ParseEventsF0V234(CPAPMode mode)
             if ((this->family == 0) && (this->familyVersion == 4)) {  // BiPAP Pressure
                 data0 = buffer[pos++];
                 data1 = buffer[pos++];
-                this->AddEvent(new PRS1IPAPEvent(t, data1));
-                this->AddEvent(new PRS1EPAPEvent(t, data0));  // EPAP needs to be added second to calculate PS
+                this->AddEvent(new PRS1IPAPSetEvent(t, data1));
+                this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             } else {
-                this->AddEvent(new PRS1CPAPEvent(t, buffer[pos++]));
+                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
             }
             break;
 
@@ -3054,8 +3065,8 @@ bool PRS1DataChunk::ParseEventsF0V234(CPAPMode mode)
             {
                 data0 = buffer[pos++];
                 data1 = buffer[pos++];
-                this->AddEvent(new PRS1IPAPEvent(t, data1));
-                this->AddEvent(new PRS1EPAPEvent(t, data0));  // EPAP needs to be added second to calculate PS
+                this->AddEvent(new PRS1IPAPSetEvent(t, data1));
+                this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             }
             break;
 
@@ -3263,21 +3274,21 @@ bool PRS1Import::ParseEventsF0V6()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1CPAPEvent::TYPE:
+            case PRS1PressureSetEvent::TYPE:
                 if (!PRESSURE) {
                     if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
                 }
                 PRESSURE->AddEvent(t, e->m_value);
                 currentPressure = e->m_value;
                 break;
-            case PRS1IPAPEvent::TYPE:
+            case PRS1IPAPSetEvent::TYPE:
                 if(!IPAP) {
                     if (!(IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, e->m_gain))) { return false; }
                 }
                 IPAP->AddEvent(t, e->m_value);
                 currentPressure = e->m_value;
                 break;
-            case PRS1EPAPEvent::TYPE:
+            case PRS1EPAPSetEvent::TYPE:
                 if (!EPAP) {
                     if (!(EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, e->m_gain))) { return false; }
                 }
@@ -3286,6 +3297,9 @@ bool PRS1Import::ParseEventsF0V6()
                 }
                 EPAP->AddEvent(t, e->m_value);
                 PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
+                break;
+            case PRS1PressureAverageEvent::TYPE:
+                // TODO, we need OSCAR channels for average stats
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
                 OA->AddEvent(t, e->m_duration);
@@ -3441,13 +3455,13 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 // adjustments. E.g. 6 at 28:11 and 7.3 at 29:05 results in the following dots:
                 // 6 at 28:11, 6.5 around 28:30, 7.0 around 28:50, 7(.3) at 29:05. That holds until
                 // subsequent "adjustment" of 7.3 at 30:09 followed by 8.0 at 30:19.
-                this->AddEvent(new PRS1CPAPEvent(t, data[pos]));
+                this->AddEvent(new PRS1PressureSetEvent(t, data[pos]));
                 break;
             case 0x02:  // Pressure adjustment (bi-level)
                 // TODO: Have OSCAR treat pressure adjustment events differently than (average?) stats below.
                 // See notes above on interpolation.
-                this->AddEvent(new PRS1IPAPEvent(t, data[pos+1]));
-                this->AddEvent(new PRS1EPAPEvent(t, data[pos]));  // EPAP needs to be added second to calculate PS
+                this->AddEvent(new PRS1IPAPSetEvent(t, data[pos+1]));
+                this->AddEvent(new PRS1EPAPSetEvent(t, data[pos]));  // EPAP needs to be added second to calculate PS
                 break;
             case 0x03:  // Auto-CPAP starting pressure
                 // Most of the time this occurs, it's at the start and end of a session with
@@ -3531,8 +3545,7 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 // Average pressure: this reads lower than the current CPAP set point when
                 // a flex mode is on, and exactly the current CPAP set point when off. For
                 // bi-level it's presumably an average of the actual pressures.
-                // TODO: What to do with this average pressure? Actual pressure adjustments are handled above.
-                //this->AddEvent(new PRS1EPAPEvent(t, data[pos+2]));
+                this->AddEvent(new PRS1PressureAverageEvent(t, data[pos+2]));
                 break;
             case 0x12:  // Snore count per pressure
                 // Some sessions (with lots of ramps) have multiple of these, each with a
@@ -5032,7 +5045,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first?
-                //CHECK_VALUES(data[pos], 1, 7);  // or 3, or 0?
+                //CHECK_VALUES(data[pos], 1, 7);  // or 3, or 0?  3 when machine turned on via auto-on, 1 when turned on via button
                 CHECK_VALUE(size, 1);
                 break;
             case 1:  // Settings
