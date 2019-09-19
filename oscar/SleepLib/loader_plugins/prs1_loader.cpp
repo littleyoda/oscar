@@ -1006,9 +1006,11 @@ enum PRS1ParsedEventType
     EV_PRS1_FL,
     EV_PRS1_PB,
     EV_PRS1_LL,
+    EV_PRS1_UNK_DURATION,  // unknown duration event, rename once we figure it out
     EV_PRS1_HY,
     EV_PRS1_TOTLEAK,
     EV_PRS1_LEAK,  // unintentional leak
+    EV_PRS1_AUTO_PRESSURE_SET,
     EV_PRS1_PRESSURE_SET,  // TODO: maybe fold PRESSURE and IPAP into one
     EV_PRS1_IPAP_SET,
     EV_PRS1_EPAP_SET,
@@ -1032,6 +1034,10 @@ enum PRS1ParsedEventType
     EV_PRS1_TEST2,
     EV_PRS1_SETTING,
     EV_PRS1_SLICE,
+    EV_PRS1_DISCONNECT_ALARM,
+    EV_PRS1_APNEA_ALARM,
+    EV_PRS1_LOW_MV_ALARM,
+    EV_PRS1_SNORES_AT_PRESSURE,
 };
 
 enum PRS1ParsedEventUnit
@@ -1283,6 +1289,58 @@ public:
 };
 
 
+class PRS1ParsedAlarmEvent : public PRS1ParsedEvent
+{
+public:
+    virtual QMap<QString,QString> contents(void)
+    {
+        QMap<QString,QString> out;
+        out["start"] = timeStr(m_start);
+        return out;
+    }
+
+protected:
+    PRS1ParsedAlarmEvent(PRS1ParsedEventType type, int start, int /*unused*/) : PRS1ParsedEvent(type, start) {}
+};
+
+
+class PRS1SnoresAtPressureEvent : public PRS1PressureEvent
+{
+public:
+    static const PRS1ParsedEventType TYPE = EV_PRS1_SNORES_AT_PRESSURE;
+
+    PRS1SnoresAtPressureEvent(int start, int kind, int pressure, int count, float gain=GAIN)
+        : PRS1PressureEvent(TYPE, start, pressure, gain)
+    {
+        m_kind = kind;
+        m_count = count;
+    }
+
+    virtual QMap<QString,QString> contents(void)
+    {
+        QString label;
+        switch (m_kind) {
+        case 0: label = "pressure"; break;
+        case 1: label = "epap"; break;
+        case 2: label = "ipap"; break;
+        default: label = "unknown_pressure"; break;
+        }
+        
+        QMap<QString,QString> out;
+        out["start"] = timeStr(m_start);
+        out[label] = QString::number(value());
+        out["count"] = QString::number(m_count);
+        return out;
+    }
+
+protected:
+    int m_kind;
+    // m_value is pressure
+    int m_count;
+};
+const PRS1ParsedEventType PRS1SnoresAtPressureEvent::TYPE;
+
+
 #define _PRS1_EVENT(T, E, P, ARG) \
 class T : public P \
 { \
@@ -1293,6 +1351,7 @@ public: \
 const PRS1ParsedEventType T::TYPE
 #define PRS1_DURATION_EVENT(T, E) _PRS1_EVENT(T, E, PRS1ParsedDurationEvent, duration)
 #define PRS1_VALUE_EVENT(T, E)    _PRS1_EVENT(T, E, PRS1ParsedValueEvent, value)
+#define PRS1_ALARM_EVENT(T, E)    _PRS1_EVENT(T, E, PRS1ParsedAlarmEvent, value)
 #define PRS1_PRESSURE_EVENT(T, E) \
 class T : public PRS1PressureEvent \
 { \
@@ -1308,11 +1367,13 @@ PRS1_DURATION_EVENT(PRS1ClearAirwayEvent, EV_PRS1_CA);
 PRS1_DURATION_EVENT(PRS1FlowLimitationEvent, EV_PRS1_FL);
 PRS1_DURATION_EVENT(PRS1PeriodicBreathingEvent, EV_PRS1_PB);
 PRS1_DURATION_EVENT(PRS1LargeLeakEvent, EV_PRS1_LL);
+PRS1_DURATION_EVENT(PRS1UnknownDurationEvent, EV_PRS1_UNK_DURATION);
 PRS1_DURATION_EVENT(PRS1HypopneaEvent, EV_PRS1_HY);
 
 PRS1_VALUE_EVENT(PRS1TotalLeakEvent, EV_PRS1_TOTLEAK);
 PRS1_VALUE_EVENT(PRS1LeakEvent, EV_PRS1_LEAK);  // TODO: do machines really report unintentional leak?
 
+PRS1_PRESSURE_EVENT(PRS1AutoPressureSetEvent, EV_PRS1_AUTO_PRESSURE_SET);
 PRS1_PRESSURE_EVENT(PRS1PressureSetEvent, EV_PRS1_PRESSURE_SET);
 PRS1_PRESSURE_EVENT(PRS1IPAPSetEvent, EV_PRS1_IPAP_SET);
 PRS1_PRESSURE_EVENT(PRS1EPAPSetEvent, EV_PRS1_EPAP_SET);
@@ -1335,6 +1396,9 @@ PRS1_VALUE_EVENT(PRS1FlowRateEvent, EV_PRS1_FLOWRATE);  // TODO: is this a singl
 PRS1_VALUE_EVENT(PRS1Test1Event, EV_PRS1_TEST1);
 PRS1_VALUE_EVENT(PRS1Test2Event, EV_PRS1_TEST2);
 
+PRS1_ALARM_EVENT(PRS1DisconnectAlarmEvent, EV_PRS1_DISCONNECT_ALARM);
+PRS1_ALARM_EVENT(PRS1ApneaAlarmEvent, EV_PRS1_APNEA_ALARM);
+PRS1_ALARM_EVENT(PRS1LowMinuteVentilationAlarmEvent, EV_PRS1_LOW_MV_ALARM);
 
 enum PRS1Mode {
     PRS1_MODE_UNKNOWN = -1,
@@ -1370,9 +1434,11 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_FL);
         ENUMSTRING(EV_PRS1_PB);
         ENUMSTRING(EV_PRS1_LL);
+        ENUMSTRING(EV_PRS1_UNK_DURATION);
         ENUMSTRING(EV_PRS1_HY);
         ENUMSTRING(EV_PRS1_TOTLEAK);
         ENUMSTRING(EV_PRS1_LEAK);
+        ENUMSTRING(EV_PRS1_AUTO_PRESSURE_SET);
         ENUMSTRING(EV_PRS1_PRESSURE_SET);
         ENUMSTRING(EV_PRS1_IPAP_SET);
         ENUMSTRING(EV_PRS1_EPAP_SET);
@@ -1396,6 +1462,10 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_TEST2);
         ENUMSTRING(EV_PRS1_SETTING);
         ENUMSTRING(EV_PRS1_SLICE);
+        ENUMSTRING(EV_PRS1_DISCONNECT_ALARM);
+        ENUMSTRING(EV_PRS1_APNEA_ALARM);
+        ENUMSTRING(EV_PRS1_LOW_MV_ALARM);
+        ENUMSTRING(EV_PRS1_SNORES_AT_PRESSURE);
         default:
             s = hex(t);
             qDebug() << "Unknown PRS1ParsedEventType type:" << qPrintable(s);
@@ -2321,6 +2391,8 @@ bool PRS1Import::ParseEventsF3V6()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
+            case PRS1ApneaAlarmEvent::TYPE:
+                break;  // not imported or displayed
             case PRS1IPAPAverageEvent::TYPE:
                 IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 break;
@@ -2566,7 +2638,7 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
                 break;
             case 0x0c:  // Apnea Alarm
                 // no additional data
-                // TODO: add a PRS1Event for this
+                this->AddEvent(new PRS1ApneaAlarmEvent(t, 0));
                 break;
             // case 0x0d?
             // case 0x0e?
@@ -3274,6 +3346,10 @@ bool PRS1Import::ParseEventsF0V6()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
+            case PRS1SnoresAtPressureEvent::TYPE:
+            case PRS1UnknownDurationEvent::TYPE:
+            case PRS1AutoPressureSetEvent::TYPE:
+                break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
                 if (!PRESSURE) {
                     if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
@@ -3417,7 +3493,7 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
     int pos = 0, startpos;
     int code, size;
     int t = 0;
-    int elapsed, duration;
+    int elapsed, duration, value;
     do {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
@@ -3449,7 +3525,6 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
             //case 0x00:  // never seen
             case 0x01:  // Pressure adjustment
                 // Matches pressure setting, both initial and when ramp button pressed.
-                // TODO: Have OSCAR treat CPAP adjustment events differently than (average?) stats below.
                 // Based on waveform reports, it looks like the pressure graph is drawn by
                 // interpolating between these pressure adjustments, by 0.5 cmH2O spaced evenly between
                 // adjustments. E.g. 6 at 28:11 and 7.3 at 29:05 results in the following dots:
@@ -3458,7 +3533,6 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 this->AddEvent(new PRS1PressureSetEvent(t, data[pos]));
                 break;
             case 0x02:  // Pressure adjustment (bi-level)
-                // TODO: Have OSCAR treat pressure adjustment events differently than (average?) stats below.
                 // See notes above on interpolation.
                 this->AddEvent(new PRS1IPAPSetEvent(t, data[pos+1]));
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos]));  // EPAP needs to be added second to calculate PS
@@ -3472,6 +3546,8 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 // night's pressure, unless there's a substantial gap between sessions, in
                 // which case the next session may use the new starting pressure.
                 //CHECK_VALUE(data[pos], 40);
+                // TODO: What does this mean in bi-level mode?
+                this->AddEvent(new PRS1AutoPressureSetEvent(t, data[pos]));
                 break;
             case 0x04:  // Pressure Pulse
                 duration = data[pos];  // TODO: is this a duration?
@@ -3525,7 +3601,7 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 duration = 2 * (data[pos] | (data[pos+1] << 8));  // this looks like a 16-bit value, so may be duration like PB?
                 elapsed = data[pos+2];  // this is always 60 seconds unless it's at the end, so it seems like elapsed
                 CHECK_VALUES(elapsed, 60, 0);
-                //this->AddEvent(new PRS1PeriodicBreathingEvent(t - elapsed - duration, duration));
+                this->AddEvent(new PRS1UnknownDurationEvent(t - elapsed - duration, duration));
                 break;
             case 0x0f:  // Periodic Breathing
                 // PB events are reported some time after they conclude, and they do have a reported duration.
@@ -3557,6 +3633,8 @@ bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
                 //CHECK_VALUE(data[pos+1], 0x78);  // pressure
                 //CHECK_VALUE(data[pos+2], 1);  // 16-bit snore count
                 //CHECK_VALUE(data[pos+3], 0);
+                value = (data[pos+2] | (data[pos+3] << 8));
+                this->AddEvent(new PRS1SnoresAtPressureEvent(t, data[pos], data[pos+1], value));
                 break;
             //case 0x13:  // never seen
             case 0x0a:  // Hypopnea
@@ -4723,7 +4801,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
                 break;
             case 0x10: // Auto-Trial mode
-                CHECK_VALUE(cpapmode, PRS1_MODE_CPAPCHECK);
+                CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);  // TODO: What's the difference between auto-trial and CPAP-Check?
                 CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
                 min_pressure = data[pos+1];
                 max_pressure = data[pos+2];
