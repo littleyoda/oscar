@@ -1070,9 +1070,9 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_HUMID_STATUS,
     PRS1_SETTING_HUMID_LEVEL,
     PRS1_SETTING_HEATED_TUBING,
-    PRS1_SETTING_SYSTEMONE_RESIST_LOCK,
-    PRS1_SETTING_SYSTEMONE_RESIST_SETTING,
-    PRS1_SETTING_SYSTEMONE_RESIST_STATUS,
+    PRS1_SETTING_MASK_RESIST_LOCK,
+    PRS1_SETTING_MASK_RESIST_SETTING,
+    PRS1_SETTING_MASK_RESIST_STATUS,
     PRS1_SETTING_HOSE_DIAMETER,
     PRS1_SETTING_AUTO_ON,
     PRS1_SETTING_AUTO_OFF,
@@ -1498,9 +1498,9 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_HUMID_STATUS);
         ENUMSTRING(PRS1_SETTING_HUMID_LEVEL);
         ENUMSTRING(PRS1_SETTING_HEATED_TUBING);
-        ENUMSTRING(PRS1_SETTING_SYSTEMONE_RESIST_LOCK);
-        ENUMSTRING(PRS1_SETTING_SYSTEMONE_RESIST_SETTING);
-        ENUMSTRING(PRS1_SETTING_SYSTEMONE_RESIST_STATUS);
+        ENUMSTRING(PRS1_SETTING_MASK_RESIST_LOCK);
+        ENUMSTRING(PRS1_SETTING_MASK_RESIST_SETTING);
+        ENUMSTRING(PRS1_SETTING_MASK_RESIST_STATUS);
         ENUMSTRING(PRS1_SETTING_HOSE_DIAMETER);
         ENUMSTRING(PRS1_SETTING_AUTO_ON);
         ENUMSTRING(PRS1_SETTING_AUTO_OFF);
@@ -3969,10 +3969,10 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     // Tubing lock has no setting byte
 
     // Menu Options
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, (data[0x0a] & 0x80) != 0)); // System One Resistance Lock Setting
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_STATUS, (data[0x0a] & 0x40) != 0));  // System One Resistance Status bit
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0a] & 0x80) != 0)); // System One Resistance Lock Setting
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_STATUS, (data[0x0a] & 0x40) != 0));  // System One Resistance Status bit
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0a] & 0x08) ? 15 : 22));  // TODO: unconfirmed
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_SETTING, data[0x0a] & 7));       // System One Resistance setting value
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[0x0a] & 7));       // System One Resistance setting value
     CHECK_VALUE(data[0x0a] & (0x20 | 0x10), 0);
 
     CHECK_VALUE(data[0x0b], 1);
@@ -4388,11 +4388,11 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUE(data[pos], 0);  // 0x80 = locked on F5V3, not yet observed on F3V6
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_SETTING, data[pos]));
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:
@@ -4857,11 +4857,11 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUES(data[pos], 0, 0x80);
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_SETTING, data[pos]));
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:
@@ -5363,11 +5363,11 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 = locked
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_SETTING, data[pos]));
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:
@@ -5508,14 +5508,14 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_HUMID_LEVEL:
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
-            case PRS1_SETTING_SYSTEMONE_RESIST_LOCK:
+            case PRS1_SETTING_MASK_RESIST_LOCK:
                 //TODO: channel.add if we ever want to import this
                 //session->settings[PRS1_SysLock] = (bool) e->m_value;
                 break;
-            case PRS1_SETTING_SYSTEMONE_RESIST_SETTING:
+            case PRS1_SETTING_MASK_RESIST_SETTING:
                 session->settings[PRS1_SysOneResistSet] = e->m_value;
                 break;
-            case PRS1_SETTING_SYSTEMONE_RESIST_STATUS:
+            case PRS1_SETTING_MASK_RESIST_STATUS:
                 session->settings[PRS1_SysOneResistStat] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
