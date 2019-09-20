@@ -4388,6 +4388,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUE(data[pos], 0);  // 0x80 = locked on F5V3, not yet observed on F3V6
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
@@ -4401,9 +4402,11 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 if (data[pos] != 0) {
                     CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
                 }
+                this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x3c:  // View Optional Screens
                 CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, data[pos] != 0));
                 break;
             default:
                 qDebug() << "Unknown setting:" << hex << code << "in" << this->sessionid << "at" << pos;
@@ -4637,6 +4640,22 @@ bool PRS1DataChunk::ParseComplianceF0V6(void)
 }
 
 
+void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
+{
+    int diam;
+    switch (type) {
+    case 0: diam = 22; break;
+    case 1: diam = 15; break;
+    case 2: diam = 15; break;  // 15HT, though the reports only say "15" for DreamStation models
+    case 3: diam = 12; break;  // seen on DreamStation Go models
+    default:
+        UNEXPECTED_VALUE(type, "known tubing type");
+        return;
+    }
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, diam));
+}
+
+
 // It turns out this is used by F5V3 in addition to F0V6, so it's likely common to all fileVersion 3 machines.
 void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting)
 {
@@ -4838,6 +4857,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
@@ -4847,24 +4867,29 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x39:
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-trial?
                 break;
-            case 0x3b:
+            case 0x3b:  // Tubing Type
                 if (data[pos] != 0) {
-                    CHECK_VALUES(data[pos], 2, 1);  // tubing type? 15HT = 2, 15 = 1, 22 = 0?
+                    CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
                 }
+                this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x40:  // new to 400G, also seen on 500X110, alternate tubing type? appears after 0x39 and before 0x3c
                 if (data[pos] != 3) {
                     CHECK_VALUES(data[pos], 1, 2);  // 1 = 15mm, 2 = 15HT, 3 = 12mm
                 }
+                this->ParseTubingTypeV3(data[pos]);
                 break;
-            case 0x3c:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe show AHI?
+            case 0x3c:  // View Optional Screens
+                CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, data[pos] != 0));
                 break;
-            case 0x3e:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-on?
+            case 0x3e:  // Auto On
+                CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, data[pos] != 0));
                 break;
-            case 0x3f:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-off?
+            case 0x3f:  // Auto Off
+                CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, data[pos] != 0));
                 break;
             case 0x43:  // new to 502G, sessions 3-8, Auto-Trial is off, Opti-Start is missing
                 CHECK_VALUE(data[pos], 0x3C);
@@ -5338,6 +5363,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 = locked
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SYSTEMONE_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
                 if (data[pos] != 0) {  // 0 == mask resistance off
@@ -5351,30 +5377,16 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 if (data[pos] != 0) {
                     CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
                 }
+                this->ParseTubingTypeV3(data[pos]);
                 break;
-            case 0x3c:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe show AHI?
+            case 0x3c:  // View Optional Screens
+                CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, data[pos] != 0));
                 break;
-            case 0x3d:  // new to ASV
-                //CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-on?
+            case 0x3d:  // Auto On (ASV variant)
+                CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, data[pos] != 0));
                 break;
-            /*
-            case 0x3e:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-on?
-                break;
-            case 0x3f:
-                CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-off?
-                break;
-            case 0x43:  // new to 502G, sessions 3-8, Auto-Trial is off, Opti-Start is missing
-                CHECK_VALUE(data[pos], 0x3C);
-                break;
-            case 0x44:  // new to 502G, sessions 3-8, Auto-Trial is off, Opti-Start is missing
-                CHECK_VALUE(data[pos], 0xFF);
-                break;
-            case 0x45:  // new to 400G, only in last session?
-                CHECK_VALUE(data[pos], 1);
-                break;
-            */
             default:
                 qDebug() << "Unknown setting:" << hex << code << "in" << this->sessionid << "at" << pos;
                 this->AddEvent(new PRS1UnknownDataEvent(QByteArray((const char*) data, size), pos, len));
@@ -5497,7 +5509,8 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
             case PRS1_SETTING_SYSTEMONE_RESIST_LOCK:
-                session->settings[PRS1_SysLock] = (bool) e->m_value;
+                //TODO: channel.add if we ever want to import this
+                //session->settings[PRS1_SysLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_SYSTEMONE_RESIST_SETTING:
                 session->settings[PRS1_SysOneResistSet] = e->m_value;
@@ -5506,7 +5519,7 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_SysOneResistStat] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
-                session->settings[PRS1_HoseDiam] = e->m_value == 15 ? QObject::tr("15mm") : QObject::tr("22mm");
+                session->settings[PRS1_HoseDiam] = QObject::tr("%1mm").arg(e->m_value);
                 break;
             case PRS1_SETTING_AUTO_ON:
                 session->settings[PRS1_AutoOn] = (bool) e->m_value;
@@ -5518,7 +5531,8 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_MaskAlert] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_SHOW_AHI:
-                session->settings[PRS1_ShowAHI] = (bool) e->m_value;
+                //TODO: channel.add if we ever want to import this
+                //session->settings[PRS1_ShowAHI] = (bool) e->m_value;
                 break;
             default:
                 qWarning() << "Unknown PRS1 setting type" << (int) s->m_setting;

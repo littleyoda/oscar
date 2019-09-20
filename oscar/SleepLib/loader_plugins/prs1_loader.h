@@ -170,6 +170,9 @@ public:
     //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 machines
     void ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting=false);
 
+    //! \brief Parse tubing type from a .001 containing summary data for fileversion 3 machines
+    void ParseTubingTypeV3(unsigned char type);
+
     //! \brief Figures out which Event Parser to call, based on machine family/version and calls it.
     bool ParseEvents(CPAPMode mode);
 
