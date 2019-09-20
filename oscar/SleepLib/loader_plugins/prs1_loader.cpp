@@ -864,7 +864,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
             ext = ext_s.toInt(&ok);
             if (!ok) {
                 // not a numerical extension
-                qWarning() << path << "unexpected filename";
+                qInfo() << path << "unexpected filename";
                 continue;
             }
 
@@ -872,7 +872,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
             sid = session_s.toInt(&ok, sessionid_base);
             if (!ok) {
                 // not a numerical session ID
-                qWarning() << path << "unexpected filename";
+                qInfo() << path << "unexpected filename";
                 continue;
             }
 
@@ -3752,6 +3752,30 @@ bool PRS1Import::ImportCompliance()
             case PRS1_SETTING_HUMID_LEVEL:
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
+            case PRS1_SETTING_MASK_RESIST_LOCK:
+                //TODO: channel.add if we ever want to import this
+                //session->settings[PRS1_SysLock] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_HOSE_DIAMETER:
+                session->settings[PRS1_HoseDiam] = QObject::tr("%1mm").arg(e->m_value);
+                break;
+            case PRS1_SETTING_AUTO_ON:
+                session->settings[PRS1_AutoOn] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_AUTO_OFF:
+                session->settings[PRS1_AutoOff] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_MASK_ALERT:
+                session->settings[PRS1_MaskAlert] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_SHOW_AHI:
+                //TODO: channel.add if we ever want to import this
+                //session->settings[PRS1_ShowAHI] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_FLEX_LOCK:
+            case PRS1_SETTING_RAMP_TYPE:
+                //TODO: define and add new channels for any of these that we want to import
+                break;
             default:
                 qWarning() << "Unknown PRS1 setting type" << (int) s->m_setting;
                 break;
@@ -4414,6 +4438,8 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 // On F5V3 the first byte could specify Bi-Flex or Rise Time, and second byte contained the value.
                 // On F3V6 there's only one byte, which seems to correspond to Rise Time on the reports in modes 2 and 4,
                 // and to Bi-Flex Setting (level) on mode 1.
+                CHECK_VALUE(size, 1);
+                // TODO: what's rise time vs. flex level vs. Ti?
                 break;
             case 0x2f:  // Rise Time lock? (was flex lock on F0V6, 0x80 for locked)
                 if (cpapmode == PRS1_MODE_S) {
@@ -4765,6 +4791,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
     bool ok = true;
 
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
+    FlexMode flexmode = FLEX_Unknown;
 
     int pressure = 0;
     int imin_ps   = 0;
@@ -4886,9 +4913,32 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, data[pos]));
                 break;
             case 0x2e:
-                if (data[pos] != 0) {
-                    CHECK_VALUES(data[pos], 0x80, 0x90);  // maybe flex related? 0x80 when c-flex? 0x90 when c-flex+ or A-flex?, 0x00 when no flex
+                switch (data[pos]) {
+                case 0:
+                    flexmode = FLEX_None;
+                    break;
+                case 0x80:
+                    flexmode = FLEX_CFlex;
+                    break;
+                case 0x90:  // C-Flex+ or A-Flex, depending on machine mode
+                    switch (cpapmode) {
+                    case PRS1_MODE_CPAP:
+                    case PRS1_MODE_CPAPCHECK:
+                        flexmode = FLEX_CFlexPlus;
+                        break;
+                    case PRS1_MODE_AUTOCPAP:
+                        flexmode = FLEX_AFlex;
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(cpapmode, "cpap or apap");
+                        break;
+                    }
+                    break;
+                default:
+                    UNEXPECTED_VALUE(data[pos], "known flex mode");
+                    break;
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, flexmode));
                 break;
             case 0x2f:  // Flex lock
                 CHECK_VALUES(data[pos], 0, 0x80);

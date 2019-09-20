@@ -277,7 +277,7 @@ void parseAndEmitChunkYaml(const QString & path)
             int ext = ext_s.toInt(&ok);
             if (!ok) {
                 // not a numerical extension
-                qWarning() << inpath << "unexpected filename";
+                qInfo() << inpath << "unexpected filename";
                 continue;
             }
 
@@ -285,7 +285,7 @@ void parseAndEmitChunkYaml(const QString & path)
             int sessionid = session_s.toInt(&ok, sessionid_base);
             if (!ok) {
                 // not a numerical session ID
-                qWarning() << inpath << "unexpected filename";
+                qInfo() << inpath << "unexpected filename";
                 continue;
             }
             
