@@ -197,7 +197,7 @@ static crc32_t CRC32wchar(const unsigned char *data, size_t data_len, crc32_t cr
 // for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
 
 
-enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_Unknown  };
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_Unknown  };
 
 ChannelID PRS1_TimedBreath = 0, PRS1_HeatedTubing = 0;
 
@@ -1051,6 +1051,7 @@ enum PRS1ParsedEventUnit
 enum PRS1ParsedSettingType
 {
     PRS1_SETTING_CPAP_MODE,
+    PRS1_SETTING_AUTO_TRIAL,
     PRS1_SETTING_PRESSURE,
     PRS1_SETTING_PRESSURE_MIN,
     PRS1_SETTING_PRESSURE_MAX,
@@ -1063,8 +1064,12 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_PS,
     PRS1_SETTING_PS_MIN,
     PRS1_SETTING_PS_MAX,
+    PRS1_SETTING_TIDAL_VOLUME,
+    PRS1_SETTING_EZ_START,
+    PRS1_SETTING_FLEX_LOCK,
     PRS1_SETTING_FLEX_MODE,
     PRS1_SETTING_FLEX_LEVEL,
+    PRS1_SETTING_RAMP_TYPE,
     PRS1_SETTING_RAMP_TIME,
     PRS1_SETTING_RAMP_PRESSURE,
     PRS1_SETTING_HUMID_STATUS,
@@ -1076,6 +1081,10 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_HOSE_DIAMETER,
     PRS1_SETTING_AUTO_ON,
     PRS1_SETTING_AUTO_OFF,
+    PRS1_SETTING_APNEA_ALARM,
+    PRS1_SETTING_DISCONNECT_ALARM,  // Is this any different from mask alert?
+    PRS1_SETTING_LOW_MV_ALARM,
+    PRS1_SETTING_LOW_TV_ALARM,
     PRS1_SETTING_MASK_ALERT,
     PRS1_SETTING_SHOW_AHI,
 };
@@ -1479,6 +1488,7 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
     QString s;
     switch (t) {
         ENUMSTRING(PRS1_SETTING_CPAP_MODE);
+        ENUMSTRING(PRS1_SETTING_AUTO_TRIAL);
         ENUMSTRING(PRS1_SETTING_PRESSURE);
         ENUMSTRING(PRS1_SETTING_PRESSURE_MIN);
         ENUMSTRING(PRS1_SETTING_PRESSURE_MAX);
@@ -1491,8 +1501,12 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_PS);
         ENUMSTRING(PRS1_SETTING_PS_MIN);
         ENUMSTRING(PRS1_SETTING_PS_MAX);
+        ENUMSTRING(PRS1_SETTING_TIDAL_VOLUME);
+        ENUMSTRING(PRS1_SETTING_EZ_START);
+        ENUMSTRING(PRS1_SETTING_FLEX_LOCK);
         ENUMSTRING(PRS1_SETTING_FLEX_MODE);
         ENUMSTRING(PRS1_SETTING_FLEX_LEVEL);
+        ENUMSTRING(PRS1_SETTING_RAMP_TYPE);
         ENUMSTRING(PRS1_SETTING_RAMP_TIME);
         ENUMSTRING(PRS1_SETTING_RAMP_PRESSURE);
         ENUMSTRING(PRS1_SETTING_HUMID_STATUS);
@@ -1504,6 +1518,10 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_HOSE_DIAMETER);
         ENUMSTRING(PRS1_SETTING_AUTO_ON);
         ENUMSTRING(PRS1_SETTING_AUTO_OFF);
+        ENUMSTRING(PRS1_SETTING_APNEA_ALARM);
+        ENUMSTRING(PRS1_SETTING_DISCONNECT_ALARM);
+        ENUMSTRING(PRS1_SETTING_LOW_MV_ALARM);
+        ENUMSTRING(PRS1_SETTING_LOW_TV_ALARM);
         ENUMSTRING(PRS1_SETTING_MASK_ALERT);
         ENUMSTRING(PRS1_SETTING_SHOW_AHI);
         default:
@@ -4177,17 +4195,27 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
             case 1:  // Settings
                 ok = this->ParseSettingsF3V6(data + pos, size);
                 break;
-            case 2:  // seems equivalent to F5V3 #9, comes right after settings, 9 bytes, identical values
+            case 2:  // seems equivalent to F5V3 #9, comes right after settings, usually 9 bytes, identical values
                 // TODO: This may be structurally similar to settings: a list of (code, length, value).
                 CHECK_VALUE(data[pos], 0);
                 CHECK_VALUE(data[pos+1], 1);
                 //CHECK_VALUE(data[pos+2], 0);  // Apnea Alarm (0=off, 1=10, 2=20)
+                if (data[pos+2] != 0) {
+                    CHECK_VALUES(data[pos+2], 1, 2);
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_APNEA_ALARM, data[pos+2] * 10));
+                }
                 CHECK_VALUE(data[pos+3], 1);
                 CHECK_VALUE(data[pos+4], 1);
                 CHECK_VALUE(data[pos+5], 0);
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
-                CHECK_VALUES(data[pos+8], 0, 1);  // 1 = patient disconnect alarm of 15 sec on F5V3, not sure where time is encoded
+                CHECK_VALUE(data[pos+8], 0);  // 1 = patient disconnect alarm of 15 sec on F5V3, not sure where time is encoded
+                if (size > 9) {
+                    CHECK_VALUE(data[pos+9],  3);
+                    CHECK_VALUE(data[pos+10], 1);
+                    CHECK_VALUE(data[pos+11], 0);
+                    CHECK_VALUE(size, 12);
+                }
                 break;
             case 4:  // Mask On
                 tt += data[pos] | (data[pos+1] << 8);
@@ -4268,6 +4296,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
     bool ok = true;
 
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
+    FlexMode flexmode = FLEX_Unknown;
 
     // F5V3 and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
     static const float GAIN = 0.125;  // TODO: parameterize this somewhere better
@@ -4312,13 +4341,21 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 break;
-            case 1: // ???
-                // How do these interact with the mode above?
-                if (data[pos] != 2) {  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
+            case 1: // Flex Mode
+                if (data[pos] == 2) {
+                    CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
+                } else {
                     CHECK_VALUES(data[pos], 0, 1);  // 0 = None, 1 = Bi-Flex
                 }
+                switch (data[pos]) {
+                    case 0:  flexmode = FLEX_None; break;
+                    case 1:  flexmode = FLEX_BiFlex; break;
+                    case 2:  flexmode = FLEX_AVAPS; break;
+                    default: break;
+                }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
                 break;
-            case 2: // ???
+            case 2: // ??? Maybe AAM?
                 CHECK_VALUE(data[pos], 0);
                 break;
             case 4: // EPAP Pressure
@@ -4353,8 +4390,9 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x19:  // Tidal Volume (AVAPS)
                 CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+                CHECK_VALUE(flexmode, FLEX_AVAPS);
                 //CHECK_VALUE(data[pos], 47);  // gain 10.0
-                // TODO: add a setting for this, and maybe mark the imported mode as AVAPS on import?
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TIDAL_VOLUME, data[pos] * 10.0));
                 break;
             case 0x1e:  // Backup rate (S/T and PC)
                 CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
@@ -4363,6 +4401,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 //CHECK_VALUE(data[pos+1], 10);  // BPM for mode 2
                 //CHECK_VALUE(data[pos+2], 10);  // timed inspiration for mode 2 (gain 0.1)
                 break;
+            //0x2b: Ramp type sounds like it's linear unless AAM is enabled, so no setting may be needed.
             case 0x2c:  // Ramp Time
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
@@ -4379,8 +4418,10 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 0x2f:  // Rise Time lock? (was flex lock on F0V6, 0x80 for locked)
                 if (cpapmode == PRS1_MODE_S) {
                     CHECK_VALUES(data[pos], 0, 0x80);  // Bi-Flex Lock
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 } else {
                     CHECK_VALUE(data[pos], 0);  // Rise Time Lock? not yet observed on F3V6
+                    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 }
                 break;
             case 0x35:  // Humidifier setting
@@ -4822,6 +4863,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x10: // Auto-Trial mode
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);  // TODO: What's the difference between auto-trial and CPAP-Check?
                 CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
                 min_pressure = data[pos+1];
                 max_pressure = data[pos+2];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
@@ -4829,9 +4871,11 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2a:  // EZ-Start
                 CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x2b:  // Ramp Type
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0 == "Linear", 0x80 = "SmartRamp"
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TYPE, data[pos] != 0));
                 break;
             case 0x2c:  // Ramp Time
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
@@ -4848,6 +4892,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2f:  // Flex lock
                 CHECK_VALUES(data[pos], 0, 0x80);
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 break;
             case 0x30:  // Flex level
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
@@ -4869,7 +4914,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x3b:  // Tubing Type
                 if (data[pos] != 0) {
-                    CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
+                    CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0
                 }
                 this->ParseTubingTypeV3(data[pos]);
                 break;
@@ -5164,6 +5209,10 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
                 CHECK_VALUES(data[pos+8], 0, 1);  // 1 = patient disconnect alarm of 15 sec, not sure where time is encoded
+                if (data[pos+8] != 0) {
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, data[pos+8] * 15));
+                }
+                CHECK_VALUE(size, 9);
                 break;
             case 3:  // Mask On
                 tt += data[pos] | (data[pos+1] << 8);
@@ -5330,6 +5379,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
             */
             case 0x2b:  // Ramp Type
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0 == "Linear", 0x80 = "SmartRamp"
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TYPE, data[pos] != 0));
                 break;
             case 0x2c:  // Ramp Time
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
@@ -5352,6 +5402,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x2f:  // Flex lock? (was on F0V6, 0x80 for locked)
                 CHECK_VALUE(data[pos], 0);
+                //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 break;
             /*
             case 0x30:  // Flex level
@@ -5533,6 +5584,17 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_SHOW_AHI:
                 //TODO: channel.add if we ever want to import this
                 //session->settings[PRS1_ShowAHI] = (bool) e->m_value;
+                break;
+            case PRS1_SETTING_TIDAL_VOLUME:
+            case PRS1_SETTING_AUTO_TRIAL:
+            case PRS1_SETTING_EZ_START:
+            case PRS1_SETTING_FLEX_LOCK:
+            case PRS1_SETTING_RAMP_TYPE:
+            case PRS1_SETTING_APNEA_ALARM:
+            case PRS1_SETTING_DISCONNECT_ALARM:
+            case PRS1_SETTING_LOW_MV_ALARM:
+            case PRS1_SETTING_LOW_TV_ALARM:
+                //TODO: define and add new channels for any of these that we want to import
                 break;
             default:
                 qWarning() << "Unknown PRS1 setting type" << (int) s->m_setting;
@@ -6586,6 +6648,7 @@ void PRS1Loader::initChannels()
     chan->addOption(FLEX_AFlex, QObject::tr("A-Flex"));
     chan->addOption(FLEX_RiseTime, QObject::tr("Rise Time"));
     chan->addOption(FLEX_BiFlex, QObject::tr("Bi-Flex"));
+    chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLevel = 0xe106, SETTING, MT_CPAP,   SESSION,
         "PRS1FlexSet",
