@@ -121,6 +121,10 @@ int main(int argc, char *argv[]) {
     if (lastSig == 0 )
         lastSig = str.GetNumSignals();
 
+    if (((first > 0)&&(last == 0)) || last > size)
+        last = size;
+
+    date = date.addDays(first);
     // For each data record, representing 1 day each
     for (int rec = first; rec < last+1; ++rec, date = date.addDays(1)) {
 		qDebug() << "Record no. " << rec << " Date: " << date.toString() ;
@@ -155,8 +159,8 @@ int main(int argc, char *argv[]) {
             }
         }
 	}
-    qDebug() << "Deleting the edf object";
-    delete &str;
+//  qDebug() << "Deleting the edf object";
+//  delete &str;
 	QThread::sleep(1);
     qDebug() << "Done";
 }

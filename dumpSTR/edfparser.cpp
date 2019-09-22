@@ -59,7 +59,7 @@ QByteArray * EDFInfo::Open(const QString & name)
 //    }
     fi.close();
     if (fileData->size() <= EDFHeaderSize) {
-    	delete fileData;
+    	fileData->clear();
         qDebug() << "EDFInfo::Open() File too short " << name;
         sleep(1);
         return nullptr;
