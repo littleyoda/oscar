@@ -1087,6 +1087,7 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path, QDate 
         if (fi.size() == 0) {
             qWarning() << fi.fileName() << "is empty and has been ignored";
             continue;
+        }
 
         filename = fi.fileName();
 
