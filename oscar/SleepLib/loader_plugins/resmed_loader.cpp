@@ -1078,7 +1078,14 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path, QDate 
         }
 
         // Forget about it if it can't be read.
-        if (!fi.isReadable())
+        if (!fi.isReadable()) {
+            qWarning() << fi.fileName() << "is unreadable and has been ignored";
+            continue;
+        }
+
+        // Skip empty files
+        if (fi.size() == 0) {
+            qWarning() << fi.fileName() << "is empty and has been ignored";
             continue;
 
         filename = fi.fileName();

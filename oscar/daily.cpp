@@ -64,6 +64,13 @@ inline QString channelInfo(ChannelID code) {
 //            + (schema::channel[code].units() != "0" ? "\n("+schema::channel[code].units()+")" : "");
 }
 
+// Charts displayed on the Daily page are defined in the Daily::Daily constructor.  They consist of some hard-coded charts and a table
+// of channel codes for which charts are generated.  If the list of channel codes is changed, the graph order lists below will need to
+// be changed correspondingly.
+//
+// Note that "graph codes" are strings used to identify graphs and are not the same as "channel codes."  The mapping between channel codes
+// and graph codes is found in schema.cpp.  (What we here call 'graph cdoes' are called 'lookup codes' in schema.cpp.)
+//
 //
 // List here the graph codes in the order they are to be displayed.
 // Do NOT list a code twice, or Oscar will crash when the profile is closed!
@@ -1714,9 +1721,11 @@ void Daily::Load(QDate date)
 
     htmlLeftFooter ="</body></html>";
 
+    // SessionBar colors.  Colors alternate.
     QColor cols[]={
         COLOR_Gold,
-        QColor("light blue"),
+//      QColor("light blue"),
+        QColor("skyblue"),
     };
     const int maxcolors=sizeof(cols)/sizeof(QColor);
     QList<Session *>::iterator i;
