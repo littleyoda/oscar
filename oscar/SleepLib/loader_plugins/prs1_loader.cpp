@@ -4928,7 +4928,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x2d:  // Ramp Pressure
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, data[pos]));
                 break;
-            case 0x2e:
+            case 0x2e:  // Flex mode
                 switch (data[pos]) {
                 case 0:
                     flexmode = FLEX_None;
@@ -5419,6 +5419,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 */
                 break;
             case 0x0a:  // ASV with variable EPAP pressure setting
+                CHECK_VALUE(len, 5);
                 CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
                 max_pressure = data[pos];
                 min_epap = data[pos+1];
@@ -5433,6 +5434,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, max_ps, GAIN));
                 break;
             case 0x14:  // ASV backup rate
+                CHECK_VALUE(len, 3);
                 CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
                 CHECK_VALUES(data[pos], 1, 2);  // 1 = auto, 2 = fixed BPM
                 //CHECK_VALUE(data[pos+1], 0);  // 0 for auto, BPM for mode 2
@@ -5444,63 +5446,76 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             */
             case 0x2b:  // Ramp Type
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0 == "Linear", 0x80 = "SmartRamp"
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TYPE, data[pos] != 0));
                 break;
             case 0x2c:  // Ramp Time
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
                 }
                 break;
             case 0x2d:  // Ramp Pressure (with ASV pressure encoding)
+                CHECK_VALUE(len, 1);
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, data[pos], GAIN));
                 break;
-            case 0x2e:
-                // [0x00, N] for Bi-Flex level N
-                // [0x20, 0x03] for no flex, rise time setting = 3, no rise lock
-                CHECK_VALUES(data[pos], 0, 0x20);
-                //CHECK_VALUES(data[pos+1], 2, 3);  // Bi-Flex level
-                /*
-                if (data[pos] != 0) {
-                    CHECK_VALUES(data[pos], 0x80, 0x90);  // maybe flex related? 0x80 when c-flex? 0x90 when c-flex+ or A-flex?, 0x00 when no flex
+            case 0x2e:  // Flex mode and level (ASV variant)
+                CHECK_VALUE(len, 2);
+                switch (data[pos]) {
+                case 0:  // Bi-Flex
+                    // [0x00, N] for Bi-Flex level N
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, FLEX_BiFlex));
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos+1]));
+                    break;
+                case 0x20:  // Rise Time
+                    // [0x20, 0x03] for no flex, rise time setting = 3, no rise lock
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos+1]));
+                    break;
+                default:
+                    CHECK_VALUES(data[pos], 0, 0x20);
+                    break;
                 }
-                */
                 break;
             case 0x2f:  // Flex lock? (was on F0V6, 0x80 for locked)
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0);
                 //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 break;
-            /*
-            case 0x30:  // Flex level
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
-                break;
-            */
+            //case 0x30: ASV puts the flex level in the 0x2e setting for some reason
             case 0x35:  // Humidifier setting
+                CHECK_VALUE(len, 2);
                 this->ParseHumidifierSettingV3(data[pos], data[pos+1], true);
                 break;
             case 0x36:  // Mask Resistance Lock
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 = locked
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0);  // 0x80 maybe auto-trial in F0V6?
                 break;
             case 0x3b:  // Tubing Type
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {
                     CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
                 }
                 this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x3c:  // View Optional Screens
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, data[pos] != 0));
                 break;
             case 0x3d:  // Auto On (ASV variant)
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, data[pos] != 0));
                 break;
