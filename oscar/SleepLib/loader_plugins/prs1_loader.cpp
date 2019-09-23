@@ -5483,9 +5483,22 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
             case 0x14:  // ASV backup rate
                 CHECK_VALUE(len, 3);
                 CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
-                CHECK_VALUES(data[pos], 1, 2);  // 1 = auto, 2 = fixed BPM
-                //CHECK_VALUE(data[pos+1], 0);  // 0 for auto, BPM for mode 2
-                //CHECK_VALUE(data[pos+2], 0);  // 0 for auto, timed inspiration for mode 2 (gain 0.1)
+                switch (data[pos]) {
+                //case 0:  // Breath Rate Off in F3V6 setting 0x1e
+                case 1:  // Breath Rate Auto
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Auto));
+                    CHECK_VALUE(data[pos+1], 0);  // 0 for auto
+                    CHECK_VALUE(data[pos+2], 0);  // 0 for auto
+                    break;
+                case 2:  // Breath Rate (fixed BPM)
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, data[pos+1]));  // BPM
+                    this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, data[pos+2], 0.1));
+                    break;
+                default:
+                    CHECK_VALUES(data[pos], 1, 2);  // 1 = auto, 2 = fixed BPM (0 = off in F3V6 setting 0x1e)
+                    break;
+                }
                 break;
             /*
             case 0x2a:  // EZ-Start
