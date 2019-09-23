@@ -4887,6 +4887,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
         switch (code) {
             case 0: // Device Mode
                 CHECK_VALUE(pos, 2);  // always first?
+                CHECK_VALUE(len, 1);
                 switch (data[pos]) {
                 case 0: cpapmode = PRS1_MODE_CPAP; break;
                 case 1: cpapmode = PRS1_MODE_BILEVEL; break;
@@ -4900,6 +4901,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 break;
             case 1: // ???
+                CHECK_VALUES(len, 1, 2);
                 if (data[pos] != 0 && data[pos] != 3) {
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
@@ -4908,11 +4910,13 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 }
                 break;
             case 0x0a:  // CPAP pressure setting
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(cpapmode, PRS1_MODE_CPAP);
                 pressure = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, pressure));
                 break;
             case 0x0c:  // CPAP-Check pressure setting
+                CHECK_VALUE(len, 3);
                 CHECK_VALUE(cpapmode, PRS1_MODE_CPAPCHECK);
                 min_pressure = data[pos];  // Min Setting on pressure graph
                 max_pressure = data[pos+1];  // Max Setting on pressure graph
@@ -4924,6 +4928,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, pressure));
                 break;
             case 0x0d:  // AutoCPAP pressure setting
+                CHECK_VALUE(len, 2);
                 CHECK_VALUE(cpapmode, PRS1_MODE_AUTOCPAP);
                 min_pressure = data[pos];
                 max_pressure = data[pos+1];
@@ -4931,6 +4936,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
                 break;
             case 0x0e:  // Bi-Level pressure setting
+                CHECK_VALUE(len, 2);
                 CHECK_VALUE(cpapmode, PRS1_MODE_BILEVEL);
                 min_pressure = data[pos];
                 max_pressure = data[pos+1];
@@ -4940,6 +4946,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS, imin_ps));
                 break;
             case 0x0f:  // Auto Bi-Level pressure setting
+                CHECK_VALUE(len, 4);
                 CHECK_VALUE(cpapmode, PRS1_MODE_AUTOBILEVEL);
                 min_pressure = data[pos];
                 max_pressure = data[pos+1];
@@ -4951,6 +4958,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
                 break;
             case 0x10: // Auto-Trial mode
+                CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);  // TODO: What's the difference between auto-trial and CPAP-Check?
                 CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
@@ -4960,22 +4968,27 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
                 break;
             case 0x2a:  // EZ-Start
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x2b:  // Ramp Type
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0 == "Linear", 0x80 = "SmartRamp"
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TYPE, data[pos] != 0));
                 break;
             case 0x2c:  // Ramp Time
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
                 }
                 break;
             case 0x2d:  // Ramp Pressure
+                CHECK_VALUE(len, 1);
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, data[pos]));
                 break;
             case 0x2e:  // Flex mode
+                CHECK_VALUE(len, 1);
                 switch (data[pos]) {
                 case 0:
                     flexmode = FLEX_None;
@@ -5004,58 +5017,72 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, flexmode));
                 break;
             case 0x2f:  // Flex lock
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
                 break;
             case 0x30:  // Flex level
+                CHECK_VALUE(len, 1);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 break;
             case 0x35:  // Humidifier setting
+                CHECK_VALUE(len, 2);
                 this->ParseHumidifierSettingV3(data[pos], data[pos+1], true);
                 break;
             case 0x36:  // Mask Resistance Lock
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0x80 maybe auto-trial?
                 break;
             case 0x3b:  // Tubing Type
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {
                     CHECK_VALUES(data[pos], 2, 1);  // 15HT = 2, 15 = 1, 22 = 0
                 }
                 this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x40:  // new to 400G, also seen on 500X110, alternate tubing type? appears after 0x39 and before 0x3c
+                CHECK_VALUE(len, 1);
                 if (data[pos] != 3) {
                     CHECK_VALUES(data[pos], 1, 2);  // 1 = 15mm, 2 = 15HT, 3 = 12mm
                 }
                 this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x3c:  // View Optional Screens
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, data[pos] != 0));
                 break;
             case 0x3e:  // Auto On
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, data[pos] != 0));
                 break;
             case 0x3f:  // Auto Off
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, data[pos] != 0));
                 break;
             case 0x43:  // new to 502G, sessions 3-8, Auto-Trial is off, Opti-Start is missing
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0x3C);
                 break;
             case 0x44:  // new to 502G, sessions 3-8, Auto-Trial is off, Opti-Start is missing
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0xFF);
                 break;
             case 0x45:  // new to 400G, only in last session?
+                CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 1);
                 break;
             default:
@@ -5449,6 +5476,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
         switch (code) {
             case 0: // Device Mode
                 CHECK_VALUE(pos, 2);  // always first?
+                CHECK_VALUE(len, 1);
                 switch (data[pos]) {
                 case 0: cpapmode = PRS1_MODE_ASV; break;
                 default:
@@ -5458,6 +5486,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 break;
             case 1: // ???
+                CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 1);  // 1 when when Opti-Start is on? 0 when off?
                 /*
                 if (data[pos] != 0 && data[pos] != 3) {
