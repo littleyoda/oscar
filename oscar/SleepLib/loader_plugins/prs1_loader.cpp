@@ -1069,6 +1069,7 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_FLEX_LOCK,
     PRS1_SETTING_FLEX_MODE,
     PRS1_SETTING_FLEX_LEVEL,
+    PRS1_SETTING_RISE_TIME,
     PRS1_SETTING_RAMP_TYPE,
     PRS1_SETTING_RAMP_TIME,
     PRS1_SETTING_RAMP_PRESSURE,
@@ -1506,6 +1507,7 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_FLEX_LOCK);
         ENUMSTRING(PRS1_SETTING_FLEX_MODE);
         ENUMSTRING(PRS1_SETTING_FLEX_LEVEL);
+        ENUMSTRING(PRS1_SETTING_RISE_TIME);
         ENUMSTRING(PRS1_SETTING_RAMP_TYPE);
         ENUMSTRING(PRS1_SETTING_RAMP_TIME);
         ENUMSTRING(PRS1_SETTING_RAMP_PRESSURE);
@@ -4366,16 +4368,22 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 break;
             case 1: // Flex Mode
-                if (data[pos] == 2) {
-                    CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
-                } else {
-                    CHECK_VALUES(data[pos], 0, 1);  // 0 = None, 1 = Bi-Flex
-                }
                 switch (data[pos]) {
-                    case 0:  flexmode = FLEX_None; break;
-                    case 1:  flexmode = FLEX_BiFlex; break;
-                    case 2:  flexmode = FLEX_AVAPS; break;
-                    default: break;
+                    case 0:  // 0 = None
+                        flexmode = FLEX_None;
+                        CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+                        break;
+                    case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
+                        flexmode = FLEX_BiFlex;
+                        CHECK_VALUE(cpapmode, PRS1_MODE_S);
+                        break;
+                    case 2:  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
+                        flexmode = FLEX_AVAPS;
+                        CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos], "known flex mode");
+                        break;
                 }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
                 break;
@@ -4436,10 +4444,18 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Bi-Flex level or Rise Time
                 // On F5V3 the first byte could specify Bi-Flex or Rise Time, and second byte contained the value.
-                // On F3V6 there's only one byte, which seems to correspond to Rise Time on the reports in modes 2 and 4,
-                // and to Bi-Flex Setting (level) on mode 1.
-                CHECK_VALUE(size, 1);
-                // TODO: what's rise time vs. flex level vs. Ti?
+                // On F3V6 there's only one byte, which seems to correspond to Rise Time on the reports with flex
+                // mode None or AVAPS and to Bi-Flex Setting (level) in Bi-Flex mode.
+                CHECK_VALUE(len, 1);
+                if (flexmode == FLEX_BiFlex) {
+                    // Bi-Flex level
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
+                } else if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
+                    // Rise time
+                    if (data[pos] < 1 || data[pos] > 4) UNEXPECTED_VALUE(data[pos], "1-4");  // 1-4 have been seen
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos]));
+                }
+                // TODO: where's timed inspiration?
                 break;
             case 0x2f:  // Rise Time lock? (was flex lock on F0V6, 0x80 for locked)
                 if (cpapmode == PRS1_MODE_S) {
@@ -5639,6 +5655,7 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_AUTO_TRIAL:
             case PRS1_SETTING_EZ_START:
             case PRS1_SETTING_FLEX_LOCK:
+            case PRS1_SETTING_RISE_TIME:
             case PRS1_SETTING_RAMP_TYPE:
             case PRS1_SETTING_APNEA_ALARM:
             case PRS1_SETTING_DISCONNECT_ALARM:
