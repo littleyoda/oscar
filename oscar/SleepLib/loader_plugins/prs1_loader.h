@@ -211,6 +211,12 @@ protected:
     bool ExtractStoredCrc(int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file
+    bool ParseSettingsF0V23(const unsigned char* data, int size);
+
+    //! \brief Parse a settings slice from a .000 and .001 file
+    bool ParseSettingsF0V4(const unsigned char* data, int size);
+
+    //! \brief Parse a settings slice from a .000 and .001 file
     bool ParseSettingsF0V6(const unsigned char* data, int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file

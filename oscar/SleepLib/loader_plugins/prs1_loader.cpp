@@ -3967,6 +3967,64 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         CHECK_VALUES(data[0x01] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
     }
 
+    ParseSettingsF0V23(data, 0x10);
+
+    // List of slices, really session-related events:
+    int start = 0;
+    int tt = start;
+
+    int len = this->size()-3;
+    int pos = 0x10;
+    do {
+        quint8 c = data[pos++];
+        int delta = data[pos] | data[pos+1] << 8;
+        pos+=2;
+        SliceStatus status;
+        if (c == 0x02) {
+            status = MaskOn;
+            if (tt == 0) {
+                CHECK_VALUE(delta, 0);  // we've never seen the initial MaskOn have any delta
+            } else {
+                if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
+            }
+        } else if (c == 0x03) {
+            status = MaskOff;
+            // These are 0x22 bytes in a summary vs. 3 bytes in compliance data
+            // TODO: What are these values?
+            pos += 0x1F;
+        } else if (c == 0x01) {
+            status = EquipmentOff;
+            // This has a delta if the mask was removed before the machine was shut off.
+        } else {
+            qDebug() << this->sessionid << "unknown slice status" << c;
+            break;
+        }
+        tt += delta;
+        this->AddEvent(new PRS1ParsedSliceEvent(tt, status));
+    } while (pos < len);
+
+    // seems to be trailing 01 [01 or 02] 83 after the slices?
+    if (pos == len) {
+        if (data[pos] != 1) {  // This is the usual value.
+            CHECK_VALUES(data[pos], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+        }
+        //CHECK_VALUES(data[pos+1], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
+        //CHECK_VALUES(data[pos+2], 0x81, 0x80);  // seems to be humidifier setting at end of session
+        if (data[pos+2] && (((data[pos+2] & 0x80) == 0) || (data[pos+2] & 0x07) > 5)) {
+            UNEXPECTED_VALUE(data[pos+2], "valid humidifier setting");
+        }
+    } else {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
+    }
+
+    this->duration = tt;
+
+    return true;
+}
+
+
+bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
+{
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
     switch (data[0x02]) {  // PRS1 mode   // 0 = CPAP, 2 = APAP
@@ -4052,64 +4110,12 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         CHECK_VALUE(data[0x0f], min_pressure + 20);
     }
 
-    // List of slices, really session-related events:
-    int start = 0;
-    int tt = start;
-
-    int len = this->size()-3;
-    int pos = 0x10;
-    do {
-        quint8 c = data[pos++];
-        int delta = data[pos] | data[pos+1] << 8;
-        pos+=2;
-        SliceStatus status;
-        if (c == 0x02) {
-            status = MaskOn;
-            if (tt == 0) {
-                CHECK_VALUE(delta, 0);  // we've never seen the initial MaskOn have any delta
-            } else {
-                if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
-            }
-        } else if (c == 0x03) {
-            status = MaskOff;
-            // These are 0x22 bytes in a summary vs. 3 bytes in compliance data
-            // TODO: What are these values?
-            pos += 0x1F;
-        } else if (c == 0x01) {
-            status = EquipmentOff;
-            // This has a delta if the mask was removed before the machine was shut off.
-        } else {
-            qDebug() << this->sessionid << "unknown slice status" << c;
-            break;
-        }
-        tt += delta;
-        this->AddEvent(new PRS1ParsedSliceEvent(tt, status));
-    } while (pos < len);
-
-    // seems to be trailing 01 [01 or 02] 83 after the slices?
-    if (pos == len) {
-        if (data[pos] != 1) {  // This is the usual value.
-            CHECK_VALUES(data[pos], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
-        }
-        //CHECK_VALUES(data[pos+1], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
-        //CHECK_VALUES(data[pos+2], 0x81, 0x80);  // seems to be humidifier setting at end of session
-        if (data[pos+2] && (((data[pos+2] & 0x80) == 0) || (data[pos+2] & 0x07) > 5)) {
-            UNEXPECTED_VALUE(data[pos+2], "valid humidifier setting");
-        }
-    } else {
-        qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
-    }
-
-    this->duration = tt;
-
     return true;
 }
 
 
-bool PRS1DataChunk::ParseSummaryF0V4(void)
+bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 {
-    const unsigned char * data = (unsigned char *)this->m_data.constData();
-
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
     switch (data[0x02]) {  // PRS1 mode   // 0 = CPAP, 2 = APAP
@@ -4161,6 +4167,16 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 
     int humid = data[0x0b];
     this->ParseHumidifierSettingV2(humid);
+
+    return true;
+}
+
+
+bool PRS1DataChunk::ParseSummaryF0V4(void)
+{
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+
+    ParseSettingsF0V4(data, 0x0c);
 
     this->duration = data[0x14] | data[0x15] << 8;
 
