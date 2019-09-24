@@ -3860,36 +3860,13 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
         return false;
     }
     CHECK_VALUES(data[0x01], 1, 0);  // usually 1, occasionally 0, no visible difference in report
-    CHECK_VALUE(data[0x02], 0);
 
-    PRS1Mode cpapmode = PRS1_MODE_CPAP;
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
+    ParseSettingsF0V23(data, 0x0e);
+    // Note that reports don't show mask resist settings or hose diameter, even though the underlying
+    // settings have mask resist off and locked and hose diameter of 22mm.
 
-    int min_pressure = data[0x03];
-   // EventDataType max_pressure = EventDataType(data[0x04]) / 10.0;
-    CHECK_VALUE(data[0x04], 0);
-    CHECK_VALUE(data[0x05], 0);
-
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, min_pressure));
-
-    int ramp_time = data[0x06];
-    int ramp_pressure = data[0x07];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
-
-    quint8 flex = data[0x08];  // TODO: why was this 0x09 originally? could the position vary?
-    this->ParseFlexSetting(flex, PRS1_MODE_CPAP);
-
-    int humid = data[0x09];  // TODO: why was this 0x0A originally? could the position vary?
-    this->ParseHumidifierSettingV2(humid, false);
-
-    // TODO: Where is Auto Off/On set? (both off)
-    // TODO: Where is "Altitude Compensation" set? (seems to be 1)
-    // TODO: Where are Mask Alert/Reminder Period set? (both off)
-    CHECK_VALUE(data[0x0a], 0x80);
-    CHECK_VALUE(data[0x0b], 1);
-    CHECK_VALUE(data[0x0c], 0);
-    CHECK_VALUE(data[0x0d], 0);
+    // TODO: Where is "Altitude Compensation" set? (seems to be 1/Low), only seen on brick report
+    // TODO: Where is Mask Reminder Period set? (off)
     
     // List of slices, really session-related events:
     int start = 0;
@@ -3967,7 +3944,14 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         CHECK_VALUES(data[0x01] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
     }
 
-    ParseSettingsF0V23(data, 0x10);
+    ParseSettingsF0V23(data, 0x0e);
+    // TODO: register these as pressure set events
+    //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
+    //if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
+    //    CHECK_VALUE(data[0x0f], max_pressure);
+    //} else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
+    //    CHECK_VALUE(data[0x0f], min_pressure + 20);
+    //}
 
     // List of slices, really session-related events:
     int start = 0;
@@ -4103,12 +4087,6 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     CHECK_VALUE(data[0x0c] & (0xA0 | 0x09), 0);
 
     CHECK_VALUE(data[0x0d], 0);
-    //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
-    if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
-        CHECK_VALUE(data[0x0f], max_pressure);
-    } else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
-        CHECK_VALUE(data[0x0f], min_pressure + 20);
-    }
 
     return true;
 }
@@ -4156,6 +4134,8 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
+    // TODO: data[0x07]?
+    
     quint8 flex = data[0x0a];
     this->ParseFlexSetting(flex, cpapmode);
 
@@ -4167,6 +4147,8 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 
     int humid = data[0x0b];
     this->ParseHumidifierSettingV2(humid);
+
+    // TODO: menu options?
 
     return true;
 }
