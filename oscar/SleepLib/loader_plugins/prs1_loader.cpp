@@ -3775,6 +3775,11 @@ bool PRS1Import::ImportCompliance()
                 //TODO: channel.add if we ever want to import this
                 //session->settings[PRS1_SysLock] = (bool) e->m_value;
                 break;
+            case PRS1_SETTING_MASK_RESIST_SETTING:
+            case PRS1_SETTING_MASK_RESIST_STATUS:
+                // Don't bother importing these for bricks, because they're always locked off.
+                CHECK_VALUE(e->m_value, 0);
+                break;
             case PRS1_SETTING_HOSE_DIAMETER:
                 session->settings[PRS1_HoseDiam] = QObject::tr("%1mm").arg(e->m_value);
                 break;
@@ -3925,79 +3930,93 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         qWarning() << "ParseSummaryF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    static const int minimum_sizes[] = { 0xf, 5, 2, 0x21 };
+    static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
+    // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
+    
     // TODO: hardcoding this is ugly, think of a better approach
-    if (this->m_data.size() < 59) {
+    if (chunk_size < 59) {
         qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
         return false;
     }
-    const unsigned char * data = (unsigned char *)this->m_data.constData();
 
-    CHECK_VALUE(data[0x00], 0);
-    if (data[0x00] != 0) {
-        if (data[0x00] != 5) {
-            qDebug() << this->sessionid << "summary first byte" << data[0x00] <<" != 0, skipping";
-        }
-        return false;
-    }
-    CHECK_VALUES(data[0x01] & 0xF0, 0x60, 0x70);  // TODO: what are these?
-    if ((data[0x01] & 0x0F) != 1) {  // This is the most frequent value.
-        CHECK_VALUES(data[0x01] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
-    }
-
-    ParseSettingsF0V23(data, 0x0e);
-    // TODO: register these as pressure set events
-    //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
-    //if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
-    //    CHECK_VALUE(data[0x0f], max_pressure);
-    //} else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
-    //    CHECK_VALUE(data[0x0f], min_pressure + 20);
-    //}
-
-    // List of slices, really session-related events:
-    int start = 0;
-    int tt = start;
-
-    int len = this->size()-3;
-    int pos = 0x10;
+    bool ok = true;
+    int pos = 0;
+    int code, size;
+    int tt = 0;
     do {
-        quint8 c = data[pos++];
-        int delta = data[pos] | data[pos+1] << 8;
-        pos+=2;
-        SliceStatus status;
-        if (c == 0x02) {
-            status = MaskOn;
-            if (tt == 0) {
-                CHECK_VALUE(delta, 0);  // we've never seen the initial MaskOn have any delta
-            } else {
-                if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
-            }
-        } else if (c == 0x03) {
-            status = MaskOff;
-            // These are 0x22 bytes in a summary vs. 3 bytes in compliance data
-            // TODO: What are these values?
-            pos += 0x1F;
-        } else if (c == 0x01) {
-            status = EquipmentOff;
-            // This has a delta if the mask was removed before the machine was shut off.
-        } else {
-            qDebug() << this->sessionid << "unknown slice status" << c;
+        code = data[pos++];
+        // There is no hblock prior to F0V6.
+        size = 0;
+        if (code < ncodes) {
+            // make sure the handlers below don't go past the end of the buffer
+            size = minimum_sizes[code];
+        } // else if it's past ncodes, we'll log its information below (rather than handle it)
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
             break;
         }
-        tt += delta;
-        this->AddEvent(new PRS1ParsedSliceEvent(tt, status));
-    } while (pos < len);
+        
+        switch (code) {
+            case 0:  // Equipment On
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUES(data[pos] & 0xF0, 0x60, 0x70);  // TODO: what are these?
+                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
+                    CHECK_VALUES(data[pos] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
+                }
+            // F0V23 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
+                ok = ParseSettingsF0V23(data, 0x0e);
+                // TODO: register these as pressure set events
+                //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
+                //if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
+                //    CHECK_VALUE(data[0x0f], max_pressure);
+                //} else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
+                //    CHECK_VALUE(data[0x0f], min_pressure + 20);
+                //}
+                break;
+            case 2:  // Mask On
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
+                // no per-slice humidifer settings as in F0V6
+                break;
+            case 3:  // Mask Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
+            // F0V23 doesn't have a separate stats record like F0V6 does, the stats just follow the MaskOff data.
+                // These are 0x22 bytes in a summary vs. 3 bytes in compliance data
+                // TODO: What are these values?
+                break;
+            case 1:  // Equipment Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
 
-    // seems to be trailing 01 [01 or 02] 83 after the slices?
-    if (pos == len) {
-        if (data[pos] != 1) {  // This is the usual value.
-            CHECK_VALUES(data[pos], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                // seems to be trailing 01 [01 or 02] 83 after equipment off?
+                if (data[pos+2] != 1) {  // This is the usual value.
+                    CHECK_VALUES(data[pos+2], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                }
+                //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
+                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
+                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
+                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
+                }
+                break;
+            case 5:  // Unknown, but occasionally encountered
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                ok = false;
+                break;
+            default:
+                UNEXPECTED_VALUE(code, "known slice code");
+                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                break;
         }
-        //CHECK_VALUES(data[pos+1], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
-        //CHECK_VALUES(data[pos+2], 0x81, 0x80);  // seems to be humidifier setting at end of session
-        if (data[pos+2] && (((data[pos+2] & 0x80) == 0) || (data[pos+2] & 0x07) > 5)) {
-            UNEXPECTED_VALUE(data[pos+2], "valid humidifier setting");
-        }
-    } else {
+        pos += size;
+    } while (ok && pos < chunk_size);
+
+    if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
     }
 
