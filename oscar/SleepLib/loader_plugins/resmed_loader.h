@@ -236,12 +236,13 @@ public:
 
 class ResmedLoader;
 
-struct ResMedDay {
+class ResMedDay {
+public:
+    ResMedDay( QDate d) : date(d) {}
+
     QDate date;
     STRRecord str;
-    QHash<QString, QString> files;
-//    QHash<QString, EDFduration> durations;
-
+    QHash<QString, QString> files;  // key is filename, value is fullpath
 };
 
 class ResDayTask:public ImportTask
@@ -250,6 +251,7 @@ public:
     ResDayTask(ResmedLoader * l, Machine * m, ResMedDay * d): reimporting(false), loader(l), mach(m), resday(d) {}
     virtual ~ResDayTask() {}
     virtual void run();
+
     bool reimporting;
 
 protected:

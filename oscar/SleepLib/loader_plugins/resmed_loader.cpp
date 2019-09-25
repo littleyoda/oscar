@@ -224,13 +224,13 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate 
                 continue;
             }
 
-            rit = resdayList.insert(date, ResMedDay());
+            rit = resdayList.insert(date, ResMedDay(date));
 
 //          qDebug() << "Setting up STRRecord for" << date.toString();
 //          sleep(1);
             STRRecord &R = rit.value().str;
 
-            uint timestamp = QDateTime(date,QTime(12,0,0)).toTime_t();
+            uint noonstamp = QDateTime(date,QTime(12,0,0)).toTime_t();
             R.date = date;
 
             // skipday = false;
@@ -241,19 +241,19 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate 
             R.maskon.resize(maskon->sampleCnt);
             R.maskoff.resize(maskoff->sampleCnt);
             for (int s = 0; s < maskon->sampleCnt; ++s) {
-                qint32 on = maskon->dataArray[recstart + s];
+                qint32 on = maskon->dataArray[recstart + s];    // these on/off times are minutes since noon
                 qint32 off = maskoff->dataArray[recstart + s];
 
-                R.maskon[s] = (on>0) ? (timestamp + (on * 60)) : 0;
-                R.maskoff[s] = (off>0) ? (timestamp + (off * 60)) : 0;
+                R.maskon[s] = (on>0) ? (noonstamp + (on * 60)) : 0; // convert them to seconds since midnight
+                R.maskoff[s] = (off>0) ? (noonstamp + (off * 60)) : 0;
             }
 
 
             // two conditions that need dealing with, mask running at noon start, and finishing at noon start..
             // (Sessions are forcibly split by resmed.. why the heck don't they store it that way???)
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
-                R.maskon[0] = timestamp;
-            }
+                R.maskon[0] = noonstamp;
+            }       // TODO This should be last non-zero sample, not the last sample in the array
             if ((R.maskon[maskon->sampleCnt-1] > 0) && (R.maskoff[maskoff->sampleCnt-1] == 0)) {
                 R.maskoff[maskoff->sampleCnt-1] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
             }
@@ -1123,7 +1123,7 @@ int ResmedLoader::scanFiles(Machine * mach, const QString & datalog_path, QDate 
         // Find or create ResMedDay object for this date
         auto rd = resdayList.find(date);
         if (rd == resdayList.end()) {
-            rd = resdayList.insert(date, ResMedDay());
+            rd = resdayList.insert(date, ResMedDay(date));
             rd.value().date = date;
 
             // We have data files without STR.edf record... the user MAY be planning on importing from another backup
@@ -1332,7 +1332,7 @@ void StoreSettings(Session * sess, STRRecord & R)
 struct OverlappingEDF {
     quint32 start;
     quint32 end;
-    QMultiMap<quint32, QString> filemap;
+    QMultiMap<quint32, QString> filemap;    // key is start time, value is filename
     Session * sess;
 };
 
@@ -1341,41 +1341,15 @@ void ResDayTask::run()
 //    if (this->resday->date == QDate(2016,1,6)) {
 //        qDebug() << "in resday" << this->resday->date;
 //    }
-/**************************************************
-//  loader->sessionMutex.lock();
-//  Day *day = p_profile->FindDay(resday->date, MT_CPAP);
-//  if (day) {
-//      if (day->summaryOnly(mach)) {
-//          if (resday->files.size() == 0) {
-//              // Summary only, and no new data files detected so we are done.
-//              loader->sessionMutex.unlock();
-//              return;
-//          }
-//          QList<Session *> sessions = day->getSessions(MT_CPAP);
-//
-//          // Delete sessions for this day so they recreate with a clean slate.
-//          for (int i=0;i<sessions.size();++i) {
-//              Session * sess = sessions[i];
-//              day->removeSession(sess);
-//              delete sess;
-//          }
-//
-//      } else {
-//          loader->sessionMutex.unlock();
-//          return;
-//      }
-//  }
-//  loader->sessionMutex.unlock();
-****************************************************/
-    if (resday->files.size() == 0) {
-        if (!resday->str.date.isValid()) {
-            // No STR or files???
+    if (resday->files.size() == 0) { // No EDF files???
+        if ( ! resday->str.date.isValid()) {
             // This condition should be impossible, but just in case something gets fudged up elsewhere later
-            qDebug() << "No edf files in resday, and the str date is inValid";
+            qDebug() << "No edf files in resday" << resday->date << "and the str date is inValid";
             return;
         }
-        // Summary only day, create one session and tag it summary only
+        // Summary only day, create sessions for each mask-on/off pair and tag them summary only
         STRRecord & R = resday->str;
+        qDebug() << "Creating summary-only sessions for" << resday->date;
 
         for (int i=0;i<resday->str.maskon.size();++i) {
             quint32 maskon = resday->str.maskon[i];
@@ -1384,10 +1358,8 @@ void ResDayTask::run()
                 Session * sess = new Session(mach, maskon);
                 sess->set_first(quint64(maskon) * 1000L);
                 sess->set_last(quint64(maskoff) * 1000L);
-                // Process the STR.edf settings
-                StoreSettings(sess, R);
-                // We want the summary information too otherwise we've got nothing.
-                StoreSummarySettings(sess, R);
+                StoreSettings(sess, R);         // Process the STR.edf settings
+                StoreSummarySettings(sess, R);  // We want the summary information too 
 
                 sess->setSummaryOnly(true);
                 sess->SetChanged(true);
@@ -1397,11 +1369,8 @@ void ResDayTask::run()
                 mach->AddSession(sess);
                 loader->sessionCount++;
                 loader->sessionMutex.unlock();
-
-                //sess->TrashEvents();
             }
         }
-
         return;
     }
 
@@ -1416,7 +1385,6 @@ void ResDayTask::run()
 
     int maskevents = resday->str.maskon.size();
     if (resday->str.date.isValid()) {
-
         //First populate Overlaps with Mask ON/OFF events
         for (int i=0; i < maskevents; ++i) {
             if ((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) {
@@ -1430,54 +1398,58 @@ void ResDayTask::run()
     }
 
     QMap<quint32, QString> EVElist, CSLlist;
-
-    for (auto fit=resday->files.begin(), fend=resday->files.end(); fit!=fend; ++fit) {
-        const QString & key = fit.key();
-        const QString & fullpath = fit.value();
-        QString ext = key.section("_", -1).section(".",0,0).toUpper();
+    for (auto f_itr=resday->files.begin(), fend=resday->files.end(); f_itr!=fend; ++f_itr) {
+        const QString & filename = f_itr.key();
+        const QString & fullpath = f_itr.value();
+        QString ext = filename.section("_", -1).section(".",0,0).toUpper();
         EDFType type = lookupEDFType(ext);
 
-        QString datestr = key.section("_", 0, 1);
-        QDateTime datetime = QDateTime().fromString(datestr,"yyyyMMdd_HHmmss");
+        QString datestr = filename.section("_", 0, 1);
+        QDateTime filetime = QDateTime().fromString(datestr,"yyyyMMdd_HHmmss");
 
-        quint32 tt = datetime.toTime_t();
+        quint32 filetime_t = filetime.toTime_t();
         if (type == EDF_EVE) {
-            EVElist[tt] = key;
+            EVElist[filetime_t] = filename;
             continue;
         } else if (type == EDF_CSL) {
-            CSLlist[tt] = key;
+            CSLlist[filetime_t] = filename;
             continue;
         }
-
         bool added = false;
         for (auto & ovr : overlaps) {
-            if ((tt >= (ovr.start)) && (tt < ovr.end)) {
-                ovr.filemap.insert(tt, key);
+            if ((filetime_t >= (ovr.start)) && (filetime_t < ovr.end)) {
+                ovr.filemap.insert(filetime_t, filename);
                 added = true;
                 break;
             }
         }
-        if (!added) {
-            // Didn't get a hit, look at the actual EDF files duration and check for an overlap
+        if (!added) {    // Didn't get a hit, look at the EDF files duration and check for an overlap
             EDFduration dur = getEDFDuration(fullpath);
             for (int i=overlaps.size()-1; i>=0; --i) {
                 OverlappingEDF & ovr = overlaps[i];
                 if ((ovr.start < dur.end) && (dur.start < ovr.end)) {
-                    ovr.filemap.insert(tt, key);
+                    ovr.filemap.insert(filetime_t, filename);
                     // Expand ovr's scope
                     //ovr.start = min(ovr.start, dur.start);
                     //ovr.end = max(ovr.end, dur.end);
                     added = true;
+                    qDebug() << "Adding" << filename << "to session" << i;
+                    qDebug() << "Starts:" << ovr.start << dur.start << "ends:" << ovr.end << dur.end;
                     break;
                 }
             }
-            if (!added) {
-                // Couldn't fit it in anywhere, create a new Overlap entry/session
-                OverlappingEDF ov;
-                ov.start = dur.start;
-                ov.end = dur.end;
-                ov.filemap.insert(tt, key);
-                overlaps.append(ov);
+            if ( ! added ) {
+                if (dur.start != dur.end) { // Couldn't fit it in anywhere, create a new Overlap entry/session
+	                OverlappingEDF ov;
+	                ov.start = dur.start;
+	                ov.end = dur.end;
+	                ov.filemap.insert(filetime_t, filename);
+	                qDebug() << "Creating session for" << filename;
+	                qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
+	                overlaps.append(ov);
+	            } else {
+                    qDebug() << "Skipping zero duration file" << filename;
+                }
             }
         }
     }
@@ -1559,8 +1531,11 @@ void ResDayTask::run()
         sess->setSummaryOnly(false);
         sess->SetChanged(true);
 
-        if (sess->length()>0) {
+        if (sess->length() == 0) {
             // we want empty sessions even though they are crap
+            qDebug() << "Session" << sess->session() 
+            << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+            << "has zero duration";
         }
 
         if (resday->str.date.isValid()) {
@@ -1617,6 +1592,8 @@ void ResDayTask::run()
         }
 
         sess->UpdateSummaries();
+        qDebug() << "Adding session" << sess->session()
+        << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
 
         // Save is not threadsafe? (meh... it seems to be)
        // loader->saveMutex.lock();
@@ -1630,7 +1607,7 @@ void ResDayTask::run()
 
         // Free the memory used by this session
         sess->TrashEvents();
-    }
+    }   // end for-loop walking the overlaps (file groups per session
 }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -2006,7 +1983,7 @@ int ResmedLoader::Open(const QString & dirpath)
     if (isAborted())
         return 0;
 
-    qDebug() << "Fisnished DATALOG scan";
+    qDebug() << "Finished DATALOG scan";
     sleep(1);
     // Now at this point we have resdayList populated with processable summary and EDF files data
     // that can be processed in threads..
@@ -2181,7 +2158,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     qint64 csr_starts = 0;
 
     // Process event annotation records
-    qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
+//  qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
 //  int vec = 1;
     for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
 //      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
@@ -2190,9 +2167,9 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
             double tt = edf.startdate + qint64(anno->offset*1000.0);
 
             if ( ! anno->text.isEmpty()) {
-                if (anno->text == "csr start") {
+                if (anno->text == "CSR Start") {
                     csr_starts = tt;
-                } else if (anno->text == "csr end") {
+                } else if (anno->text == "CSR End") {
                     if ( ! CSR) {
                         CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
                     }
@@ -2258,7 +2235,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     UA = sess->AddEventList(CPAP_Apnea, EVL_Event);
 
     // Process event annotation records
-    qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
+//  qDebug() << "File has " << edf.annotations.size() << "annotation vectors";
 //  int vec = 1;
     for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
 //      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
