@@ -4115,7 +4115,7 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
-    switch (data[0x02]) {  // PRS1 mode   // 0 = CPAP, 2 = APAP
+    switch (data[0x02]) {  // PRS1 mode
     case 0x00:
         cpapmode = PRS1_MODE_CPAP;
         break;
@@ -4127,7 +4127,15 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
         break;
     case 0x60:
         cpapmode = PRS1_MODE_AUTOBILEVEL;
+        break;
+    //case 0x80:  460P-1489 sessions 276-286, 560P-0055 7-12
+    //case 0xA0:  460P-1489 sessions 287-292, 560P-0055 6
+    default:
+        UNEXPECTED_VALUE(data[0x02], "known mode");
+        break;
     }
+
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
     int min_pressure = data[0x03];
     int max_pressure = data[0x04];
@@ -4136,13 +4144,20 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 
     if (cpapmode == PRS1_MODE_CPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, min_pressure));
+        CHECK_VALUE(max_pressure, 0);
+        CHECK_VALUE(min_ps, 0);
+        CHECK_VALUE(max_ps, 0);
     } else if (cpapmode == PRS1_MODE_AUTOCPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
+        CHECK_VALUE(min_ps, 0);
+        CHECK_VALUE(max_ps, 0);
     } else if (cpapmode == PRS1_MODE_BILEVEL) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, min_pressure));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP, max_pressure));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS, max_pressure - min_pressure));
+        CHECK_VALUE(min_ps, 0);  // this seems to be unused on fixed bilevel
+        CHECK_VALUE(max_ps, 0);  // this seems to be unused on fixed bilevel
     } else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MIN, min_pressure));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MAX, max_pressure));
@@ -4151,23 +4166,51 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, min_ps));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, max_ps));
     }
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
     // TODO: data[0x07]?
-    
-    quint8 flex = data[0x0a];
-    this->ParseFlexSetting(flex, cpapmode);
+    CHECK_VALUE(data[0x07], 0);  // 0x20 = Opti-Start?
+    // 560P-8829 334-370, 561P-0055 27+
 
     int ramp_time = data[0x08];
     int ramp_pressure = data[0x09];
-
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+
+    quint8 flex = data[0x0a];
+    this->ParseFlexSetting(flex, cpapmode);
 
     int humid = data[0x0b];
     this->ParseHumidifierSettingV2(humid);
 
     // TODO: menu options?
+    // 0x49, 0x03, 1, 0x52 = no resist, tube lock
+    // 0x05, 0x18 = resist = 3,
+    // 0x05, 0x01 = no resist, no tube lock, opti-start on
+    // 0x05, 0x00 = no resist, no tube lock
+    // 0x08, 0x11, 1, 3 = resist 2, no resist lock, no tube lock, no opti-start
+    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBE_LOCK, (data[0x0c] & 0x40) != 0));
+    CHECK_VALUE(data[0x0c] & 0x40, 0);  // 562P-0977 sessions 3, 150-956
+    // TODO: what are bits 8, 4, and 1?
+    CHECK_VALUE(data[0x0c] & (0x80|0x20|0x10|0x02), 0);
+    // 0x10: 460P-0566 sessions 732-736
+    // 0x10: 561P-0192
+    // 0x02: 460P-1489 sessions 69-97, 234-235, 307+ / 460P-2299 748+
+    // 0x02: 560P-8486 362, 363, 372-376
+    // 0x20: 460P-1489 sessions 826+, 560P-4727 184+
+    // 0x20: 560P-8486 335-357
+
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0d] & 0x01) ? 15 : 22));
+    // TODO: whare are bits 0x10, 8, 2, and 1?
+    CHECK_VALUE(data[0x0d] & (0x80|0x40|0x20|0x04), 0);
+    // 0x40: 560PBT-4631 57-94
+
+    CHECK_VALUE(data[0x0e], 1);
+
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, (data[0x0f] & 0x40) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, (data[0x0f] & 0x10) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_ALERT, (data[0x0f] & 0x04) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, (data[0x0f] & 0x02) != 0));
+    CHECK_VALUE(data[0x0f] & (0xA0 | 0x09), 0);  // TODO: what's bit 1? (460P-0566 sessions 333-) (560P-8486 sessions 376-7)
 
     return true;
 }
