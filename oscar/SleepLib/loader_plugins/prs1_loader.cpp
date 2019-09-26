@@ -1435,6 +1435,7 @@ enum PRS1Mode {
     PRS1_MODE_S,                // "S"
     PRS1_MODE_ST,               // "S/T"
     PRS1_MODE_PC,               // "PC"
+    PRS1_MODE_AUTOTRIAL,        // "Auto-Trial"
 };
 
 
@@ -1558,6 +1559,7 @@ static QString parsedModeName(int m)
         ENUMSTRING(PRS1_MODE_UNKNOWN);  // TODO: Remove this when all the parsers are complete.
         ENUMSTRING(PRS1_MODE_CPAP);
         ENUMSTRING(PRS1_MODE_CPAPCHECK);
+        ENUMSTRING(PRS1_MODE_AUTOTRIAL);
         ENUMSTRING(PRS1_MODE_AUTOCPAP);
         ENUMSTRING(PRS1_MODE_BILEVEL);
         ENUMSTRING(PRS1_MODE_AUTOBILEVEL);
@@ -4128,8 +4130,12 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     case 0x60:
         cpapmode = PRS1_MODE_AUTOBILEVEL;
         break;
-    //case 0x80:  460P-1489 sessions 276-286, 560P-0055 7-12
-    //case 0xA0:  460P-1489 sessions 287-292, 560P-0055 6
+    case 0x80:
+        cpapmode = PRS1_MODE_AUTOTRIAL;  // Auto-Trial TODO: where is duration?
+        break;
+    case 0xA0:
+        cpapmode = PRS1_MODE_CPAPCHECK;
+        break;
     default:
         UNEXPECTED_VALUE(data[0x02], "known mode");
         break;
@@ -4147,10 +4153,15 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
         CHECK_VALUE(max_pressure, 0);
         CHECK_VALUE(min_ps, 0);
         CHECK_VALUE(max_ps, 0);
-    } else if (cpapmode == PRS1_MODE_AUTOCPAP) {
+    } else if (cpapmode == PRS1_MODE_AUTOCPAP || cpapmode == PRS1_MODE_AUTOTRIAL) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
         CHECK_VALUE(min_ps, 0);
+        CHECK_VALUE(max_ps, 0);
+    } else if (cpapmode == PRS1_MODE_CPAPCHECK) {
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, min_ps));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
         CHECK_VALUE(max_ps, 0);
     } else if (cpapmode == PRS1_MODE_BILEVEL) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, min_pressure));
@@ -4167,20 +4178,70 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, max_ps));
     }
 
-    // TODO: data[0x07]?
     CHECK_VALUE(data[0x07], 0);  // 0x20 = Opti-Start?
-    // 560P-8829 334-370, 561P-0055 27+
 
     int ramp_time = data[0x08];
     int ramp_pressure = data[0x09];
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
+    // TODO: flex and humidifer were wrong for F0V4, so double-check F0V23 (and other users of ParseFlexSetting and ParseHumidifierSettingV2)
+    // esp. cpapcheck and autotrial
     quint8 flex = data[0x0a];
     this->ParseFlexSetting(flex, cpapmode);
 
-    int humid = data[0x0b];
-    this->ParseHumidifierSettingV2(humid);
+    //qWarning() << this->sessionid << hex(data[0x0b]) << hex(data[0x0c]);
+    // 333  90 05 = system one humid, humidifier off, (22mm hose)
+    // 307  B3 0A = system one humid, tube temp 5, humidity 3, humidity 3 on tube disconnect, tubing lock (15mm hose)
+    //  57  B3 0A = system one humid, tube temp 5, humidity 3, humidity 3 on tube disconnect, no tubing lock
+    //  27  A3 0A = system one humid, tube temp 5, humidity 2, humidity 3 on tube disconnect, no tubing lock
+    //   6  03 08 = system one humid, tube temp off [tube present?], humidity 3 on tube disconnect, no tubing lock
+    //   7  95 06 = system one humid, no tube [22mm hose], humidity 5 [on tube disconnect?]
+    // 150  A3 61 = classic humid [no tube/22mm hose], humidity 3
+    //   2  93 11 = system one humid, no tube [22mm hose], humidity 3 [on tube disconnect?]
+    //   3  95 41 = classic humid [no tube/22mm hose], humidity 5
+
+    //         40 = classic?
+    //       7    = humidity level without tube [on tube disconnect / system one with 22mm hose / classic] [0 = humidifier off?]
+    //       8    = ???
+    //      3     = humidity level with tube
+    //      4     = ??? [never seen]
+    //          8 = tube present
+    //         20 = ??? [41 vs 61? no visible difference in report, but it's in classic mode; TODO: search for other examples of this bit]
+    //      80    = ??? [03 08 = tube temp off, 80 usually set: when tube on, humidifer off, classic humidity, etc.?]
+    //          3 = ??? [03 08 = tube temp off, B3 0A = tube temp 5]
+    //          4 = ??? [90 05?, 95 06?] humidifier off? [TODO: search for other examples of this]
+    //         10 = ??? [93 11?] [TODO: search for other examples of this]
+    //         80 = ??? [never seen]
+    
+    int humid1 = data[0x0b];
+    int humid2 = data[0x0c];
+
+    int humidlevel = humid1 & 7;
+    CHECK_VALUE(humid1 & 8, 0);  // never seen
+    int tubehumidlevel = (humid1 >> 4) & 7;
+    CHECK_VALUE(tubehumidlevel & 4, 0);  // TODO: flag sessions so we can confirm whether the above mask is correct
+    CHECK_VALUE(humid1 & 0x80, 0x80);  // TODO: flag sessions so we can see where this is 0 (saw it once when tube temp was off)
+    
+    CHECK_VALUE(humid2 & 0x80, 0);  // never seen
+    int humidclassic = (humid2 & 0x40) != 0;
+    int tubepresent = (humid2 & 0x08) != 0;
+    CHECK_VALUE(humid2 & (0x20|0x10|0x04), 0);  // TODO: look for more examples of these
+    qWarning() << this->sessionid << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel << "tube" << tubepresent << "tube humidity" << tubehumidlevel;
+
+    /*
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, (humid & 0x80) != 0));        // Humidifier Connected
+    if (supportsHeatedTubing) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, (humid & 0x10) != 0));        // Heated Hose??
+        // TODO: 0x20 is seen on machines with System One humidification & heated tubing, not sure which setting it represents.
+    } else {
+        CHECK_VALUE(humid & 0x30, 0);
+    }
+    int humidlevel = humid & 7;
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));          // Humidifier Value
+
+    if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
+    */
 
     // TODO: menu options?
     // 0x49, 0x03, 1, 0x52 = no resist, tube lock
@@ -4189,19 +4250,21 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     // 0x05, 0x00 = no resist, no tube lock
     // 0x08, 0x11, 1, 3 = resist 2, no resist lock, no tube lock, no opti-start
     //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBE_LOCK, (data[0x0c] & 0x40) != 0));
-    CHECK_VALUE(data[0x0c] & 0x40, 0);  // 562P-0977 sessions 3, 150-956
+    //CHECK_VALUE(data[0x0c] & 0x40, 0);  // 562P-0977 sessions 3, 150-956
     // TODO: what are bits 8, 4, and 1?
-    CHECK_VALUE(data[0x0c] & (0x80|0x20|0x10|0x02), 0);
+    //CHECK_VALUE(data[0x0c] & (0x80|0x20|0x10|0x02), 0);
     // 0x10: 460P-0566 sessions 732-736
     // 0x10: 561P-0192
     // 0x02: 460P-1489 sessions 69-97, 234-235, 307+ / 460P-2299 748+
-    // 0x02: 560P-8486 362, 363, 372-376
     // 0x20: 460P-1489 sessions 826+, 560P-4727 184+
     // 0x20: 560P-8486 335-357
 
+    int resist_level = (data[0x0d] >> 3) & 7;  // 0x18 resist=3, 0x11 resist=2
+    CHECK_VALUE(data[0x0d] & 0x20, 0);  // TODO: flag sessions so we can confirm whether the above mask is correct
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, resist_level));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0d] & 0x01) ? 15 : 22));
-    // TODO: whare are bits 0x10, 8, 2, and 1?
-    CHECK_VALUE(data[0x0d] & (0x80|0x40|0x20|0x04), 0);
+    CHECK_VALUE(data[0x0d] & 0x02, 0);  // TODO: What is bit 2?  [see 307 tube lock]
+    CHECK_VALUE(data[0x0d] & (0x80|0x40|0x04), 0);
     // 0x40: 560PBT-4631 57-94
 
     CHECK_VALUE(data[0x0e], 1);
@@ -4210,7 +4273,7 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, (data[0x0f] & 0x10) != 0));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_ALERT, (data[0x0f] & 0x04) != 0));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, (data[0x0f] & 0x02) != 0));
-    CHECK_VALUE(data[0x0f] & (0xA0 | 0x09), 0);  // TODO: what's bit 1? (460P-0566 sessions 333-) (560P-8486 sessions 376-7)
+    CHECK_VALUE(data[0x0f] & (0xA0 | 0x09), 0);  // TODO: what's bit 1? (460P-0566 sessions 333-)
 
     return true;
 }
@@ -4674,9 +4737,9 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
         if (flex & 0x10) {
             flexmode = FLEX_RiseTime;
         } else if (flex & 8) { // Plus bit
-            if (split || (cpapmode == PRS1_MODE_CPAP)) {
+            if (split || (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_CPAPCHECK)) {
                 flexmode = FLEX_CFlexPlus;
-            } else if (cpapmode == PRS1_MODE_AUTOCPAP) {
+            } else if (cpapmode == PRS1_MODE_AUTOCPAP || cpapmode == PRS1_MODE_AUTOTRIAL) {
                 flexmode = FLEX_AFlex;
             }
         } else {
@@ -4699,6 +4762,10 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
         }
     } else flexmode = FLEX_None;
 
+    if (flexmode == FLEX_Unknown) {
+        qWarning() << this->sessionid << "unknown flex" << flex << "cpapmode" << cpapmode;
+    }
+    
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
 }
@@ -5018,6 +5085,8 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
                 break;
             case 0x10: // Auto-Trial mode
+                // TODO: F0V4 considers this a separate mode from CPAP or CPAPCHECK, should F0V6 as well?
+                // TODO: Check how auto-trial sessions are labeled in F0V6 reports.
                 CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);  // TODO: What's the difference between auto-trial and CPAP-Check?
                 CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
@@ -5734,6 +5803,7 @@ bool PRS1Import::ImportSummary()
                 if (cpapmode == MODE_CPAP) {  // Auto-Trial is reported as CPAP but with a minimum and maximum pressure,
                     cpapmode = MODE_APAP;     // so import it as APAP, since that's what it's really doing.
                 }
+                // TODO: what about CPAPCHECK?
                 break;
             case PRS1_SETTING_PRESSURE_MAX:
                 session->settings[CPAP_PressureMax] = e->value();
