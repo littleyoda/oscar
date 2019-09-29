@@ -278,6 +278,12 @@ void ProfileSelector::on_profileFilter_textChanged(const QString &arg1)
     proxy->setFilterRegExp(regExp);
 }
 
+// Clear filter list
+void ProfileSelector::on_resetFilterButton_clicked()
+{
+    ui->profileFilter->clear();
+}
+
 void ProfileSelector::on_buttonOpenProfile_clicked()
 {
     if (ui->profileView->currentIndex().isValid()) {
