@@ -1211,7 +1211,7 @@ QToolBox::tab:selected  {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -1669,7 +1669,7 @@ border: 2px solid #56789a; border-radius: 30px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -2714,7 +2714,7 @@ border-radius: 10px;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2728,7 +2728,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -2771,7 +2771,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2829,6 +2829,13 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menu_Reset_Graphs">
+     <property name="title">
+      <string>&amp;Reset Graphs</string>
+     </property>
+     <addaction name="action_Standard_Graph_Order"/>
+     <addaction name="action_Advanced_Graph_Order"/>
+    </widget>
     <addaction name="actionView_Statistics"/>
     <addaction name="actionView_Daily"/>
     <addaction name="actionView_Overview"/>
@@ -2836,7 +2843,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_Fullscreen"/>
     <addaction name="action_Screenshot"/>
     <addaction name="separator"/>
-    <addaction name="action_Reset_Graph_Order"/>
+    <addaction name="menu_Reset_Graphs"/>
     <addaction name="action_Reset_Graph_Layout"/>
     <addaction name="separator"/>
     <addaction name="actionLine_Cursor"/>
@@ -3231,12 +3238,20 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="action_Reset_Graph_Order">
+  <action name="action_Standard_Graph_Order">
    <property name="text">
-    <string>&amp;Reset Graphs</string>
+    <string>Standard</string>
    </property>
    <property name="toolTip">
-    <string>Reset order of graphs page to initial order</string>
+    <string>Standard graph order, good for CPAP, APAP, Bi-Level</string>
+   </property>
+  </action>
+  <action name="action_Advanced_Graph_Order">
+   <property name="text">
+    <string>Advanced</string>
+   </property>
+   <property name="toolTip">
+    <string>Advanced graph order, good for ASV, AVAPS</string>
    </property>
   </action>
  </widget>

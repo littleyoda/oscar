@@ -908,17 +908,23 @@ void Daily::ResetGraphLayout()
 {
     GraphView->resetLayout();
 }
-void Daily::ResetGraphOrder()
+void Daily::ResetGraphOrder(int type)
 {
-    Day * day = p_profile->GetDay(previous_date,MT_CPAP);
+    if (type == 0) {  // Auto order
+        Day * day = p_profile->GetDay(previous_date,MT_CPAP);
 
-    int cpapMode = day->getCPAPMode();
-//    qDebug() << "Daily::ResetGraphOrder cpapMode" << cpapMode;
+        int cpapMode = day->getCPAPMode();
+        //    qDebug() << "Daily::ResetGraphOrder cpapMode" << cpapMode;
 
-    if (useAdvancedGraphs.contains(cpapMode))
+        if (useAdvancedGraphs.contains(cpapMode))
+            GraphView->resetGraphOrder(true, advancedGraphOrder);
+        else
+            GraphView->resetGraphOrder(true, standardGraphOrder);
+    } else if (type == 2) { // Advanced order
         GraphView->resetGraphOrder(true, advancedGraphOrder);
-    else
+    } else {                // type == 1, standard order
         GraphView->resetGraphOrder(true, standardGraphOrder);
+    }
 
     // Enable all graphs (make them not hidden)
     for (int i=0;i<ui->graphCombo->count();i++) {
