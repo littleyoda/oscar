@@ -4024,7 +4024,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
 
     this->duration = tt;
 
-    return true;
+    return ok;
 }
 
 
@@ -4196,23 +4196,44 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     quint8 flex = data[0x0a];
     this->ParseFlexSetting(flex, cpapmode);
 
+    this->ParseHumidifierSettingF0V4(data[0x0b], data[0x0c], true);
 
-    // XX XX = F0V4 Humidifier bytes
-    //  7    = humidity level without tube [on tube disconnect / system one with 22mm hose / classic] [0 = humidifier off?]
-    //  8    = [never seen]
-    // 3     = humidity level with tube
-    // 4     = maybe part of humidity level? [never seen]
-    // 8   3 = tube temperature (high bit of humid 1 is low bit of temp)
-    //     4 = "System One" mode
-    //     8 = tube present
-    //    10 = no data in chart, maybe no humidifier attached?
-    //    20 = unknown, something tube related since whenever it's set tubepresent is false
-    //    40 = "Classic" mode
-    //    80 = [never seen]
-    
-    int humid1 = data[0x0b];
-    int humid2 = data[0x0c];
+    int resist_level = (data[0x0d] >> 3) & 7;  // 0x18 resist=3, 0x11 resist=2
+    CHECK_VALUE(data[0x0d] & 0x20, 0);  // never seen, but would clarify whether above mask is correct
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0d] & 0x40) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, resist_level));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0d] & 0x01) ? 15 : 22));
+    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[0x0d] & 0x02) != 0));  // TODO: add this internal setting
+    CHECK_VALUE(data[0x0d] & (0x80|0x04), 0);
 
+    CHECK_VALUE(data[0x0e], 1);
+
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, (data[0x0f] & 0x40) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, (data[0x0f] & 0x10) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_ALERT, (data[0x0f] & 0x04) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, (data[0x0f] & 0x02) != 0));
+    CHECK_VALUE(data[0x0f] & (0xA0 | 0x08), 0);
+    //CHECK_VALUE(data[0x0f] & 0x01, 0);  // What is bit 1? It's sometimes set.
+
+    return true;
+}
+
+
+// XX XX = F0V4 Humidifier bytes
+//  7    = humidity level without tube [on tube disconnect / system one with 22mm hose / classic] [0 = humidifier off?]
+//  8    = [never seen]
+// 3     = humidity level with tube
+// 4     = maybe part of humidity level? [never seen]
+// 8   3 = tube temperature (high bit of humid 1 is low bit of temp)
+//     4 = "System One" mode
+//     8 = tube present
+//    10 = no data in chart, maybe no humidifier attached?
+//    20 = unknown, something tube related since whenever it's set tubepresent is false
+//    40 = "Classic" mode
+//    80 = [never seen]
+
+void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned char humid2, bool add_setting)
+{
     int humidlevel = humid1 & 7;  // Ignored when heated tube is present: humidifier setting on tube disconnect is always reported as 3
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
     CHECK_VALUE(humid1 & 8, 0);  // never seen
@@ -4246,41 +4267,129 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
         qWarning() << this->sessionid << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
     }
     */
+    if (add_setting) {
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+    }
 
-
-    int resist_level = (data[0x0d] >> 3) & 7;  // 0x18 resist=3, 0x11 resist=2
-    CHECK_VALUE(data[0x0d] & 0x20, 0);  // never seen, but would clarify whether above mask is correct
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0d] & 0x40) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, resist_level));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0d] & 0x01) ? 15 : 22));
-    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[0x0d] & 0x02) != 0));  // TODO: add this internal setting
-    CHECK_VALUE(data[0x0d] & (0x80|0x04), 0);
-
-    CHECK_VALUE(data[0x0e], 1);
-
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_ON, (data[0x0f] & 0x40) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_OFF, (data[0x0f] & 0x10) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_ALERT, (data[0x0f] & 0x04) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, (data[0x0f] & 0x02) != 0));
-    CHECK_VALUE(data[0x0f] & (0xA0 | 0x08), 0);
-    //CHECK_VALUE(data[0x0f] & 0x01, 0);  // What is bit 1? It's sometimes set.
-
-    return true;
 }
 
 
 bool PRS1DataChunk::ParseSummaryF0V4(void)
 {
+    if (this->family != 0 || (this->familyVersion != 4)) {
+        qWarning() << "ParseSummaryF0V4 called with family" << this->family << "familyVersion" << this->familyVersion;
+        return false;
+    }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    static const int minimum_sizes[] = { 0x18, 7, 7, 0x24, 0, 4, 0, 4, 0xb };
+    static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
+    // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
+    
+    // TODO: hardcoding this is ugly, think of a better approach
+    if (chunk_size < 59) {
+        qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
+        return false;
+    }
 
-    ParseSettingsF0V4(data, 0x0c);
+    bool ok = true;
+    int pos = 0;
+    int code, size;
+    int tt = 0;
+    do {
+        code = data[pos++];
+        // There is no hblock prior to F0V6.
+        size = 0;
+        if (code < ncodes) {
+            // make sure the handlers below don't go past the end of the buffer
+            size = minimum_sizes[code];
+        } // else if it's past ncodes, we'll log its information below (rather than handle it)
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
+            break;
+        }
+        
+        switch (code) {
+            case 0:  // Equipment On
+                CHECK_VALUE(pos, 1);  // Always first
+                /*
+                CHECK_VALUES(data[pos] & 0xF0, 0x60, 0x70);  // TODO: what are these?
+                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
+                    CHECK_VALUES(data[pos] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
+                }
+                */
+            // F0V4 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
+                ok = ParseSettingsF0V4(data, 0x0c);  // TODO: given a length of 0x18 this is probably too short
+                // TODO: register these as pressure set events
+                //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
+                //if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
+                //    CHECK_VALUE(data[0x0f], max_pressure);
+                //} else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
+                //    CHECK_VALUE(data[0x0f], min_pressure + 20);
+                //}
+                break;
+            case 2:  // Mask On
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
+                // TODO: 3 bytes + 2-byte humidifier setting
+                break;
+            case 3:  // Mask Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
+            // F0V4 doesn't have a separate stats record like F0V6 does, the stats just follow the MaskOff data.
+                // There are 0x24 bytes in a summary
+                // TODO: What are these values?
+                break;
+            case 1:  // Equipment Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
+                // TODO: 7 bytes total, what are they?
+                /*
+                // seems to be trailing 01 [01 or 02] 83 after equipment off?
+                if (data[pos+2] != 1) {  // This is the usual value.
+                    CHECK_VALUES(data[pos+2], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                }
+                //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
+                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
+                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
+                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
+                }
+                */
+                break;
+            case 5:  // Unknown, but occasionally encountered
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                // the chunk_size test should fail, but TODO emit the data...
+                // TODO: check this against F0V23 as well...were there any event 5?
+                ok = false;
+                break;
+            case 7:  // Humidifier setting change
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                this->ParseHumidifierSettingF0V4(data[pos+2], data[pos+3]);
+                break;
+            /*
+            case 8:  // ???
+                // TODO: 8 bytes, any of them a time delta?
+                break;
+            */
+            default:
+                UNEXPECTED_VALUE(code, "known slice code");
+                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                break;
+        }
+        pos += size;
+    } while (ok && pos < chunk_size);
 
-    this->duration = data[0x14] | data[0x15] << 8;
+    if (ok && pos != chunk_size) {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
+    }
 
-    return true;
+    this->duration = tt;
+
+    return ok;
 }
 
 
@@ -5341,7 +5450,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                     //CHECK_VALUE(data[pos+3], 0);
                 }
                 break;
-            case 0x0a:  // Humidier setting change
+            case 0x0a:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSettingV3(data[pos+2], data[pos+3]);
                 break;
