@@ -190,6 +190,13 @@ static crc32_t CRC32wchar(const unsigned char *data, size_t data_len, crc32_t cr
 }
 
 
+static QString ts(qint64 msecs)
+{
+    // TODO: make this UTC so that tests don't vary by where they're run
+    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
+}
+
+
 // TODO: have UNEXPECTED_VALUE set a flag in the importer/machine that this data set is unusual
 #define UNEXPECTED_VALUE(SRC, VALS) { qWarning() << this->sessionid << QString("%1: %2 = %3 != %4").arg(__func__).arg(#SRC).arg(SRC).arg(VALS); }
 #define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
@@ -4268,14 +4275,15 @@ void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned ch
     }
     */
     if (add_setting) {
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
     }
 
 }
 
 
+//long LATEST = 0;
 bool PRS1DataChunk::ParseSummaryF0V4(void)
 {
     if (this->family != 0 || (this->familyVersion != 4)) {
@@ -4284,15 +4292,21 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const int minimum_sizes[] = { 0x18, 7, 7, 0x24, 0, 4, 0, 4, 0xb };
+    static const int minimum_sizes[] = { 0x18, 7, 7, 0x24, 2, 4, 0, 4, 0xb };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
     // TODO: hardcoding this is ugly, think of a better approach
-    if (chunk_size < 59) {
+    if (chunk_size < 5) {  // Event 5 seems to be a single-event summary. Also saw 33-byte summary for 760-5139 session 47.
         qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
         return false;
     }
+    /*
+    if (this->timestamp < LATEST) {
+        qDebug() << this->sessionid << "**" << ts(this->timestamp * 1000L);
+    }
+    LATEST = this->timestamp;
+    */
 
     bool ok = true;
     int pos = 0;
@@ -4359,22 +4373,55 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 }
                 */
                 break;
-            case 5:  // Unknown, but occasionally encountered
+            case 4:  // Time Elapsed
+                // For example: mask-on 5:18:49 in a session of 23:41:20 total leaves mask-off time of 18:22:31.
+                // That's represented by a mask-off event 19129 seconds after the mask-on, then a time-elapsed
+                // event after 65535 seconds, then an equipment off event after another 616 seconds.
+                tt += data[pos] | (data[pos+1] << 8);
+                // TODO: see if this event exists in other versions
+                break;
+            case 5:  // Unknown timestamp
                 CHECK_VALUE(pos, 1);  // Always first
-                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
-                // the chunk_size test should fail, but TODO emit the data...
-                // TODO: check this against F0V23 as well...were there any event 5?
+                CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
+                // This looks like it's minor adjustments to the clock, but 560PBT-3917 sessions 1-2 are weird:
+                // session 1 starts at 2015-12-23T00:01:20 and contains this event with timestamp 2015-12-23T00:05:14.
+                // session 2 starts at 2015-12-23T00:01:29, which suggests the event didn't change the clock.
+                /*
+                // TODO: check this against F0V23 and others as well:
+                {
+                    long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
+                    if (value < this->timestamp) {
+                        qWarning() << this->sessionid << "5" << ts(value * 1000L);
+                    } else {
+                        LATEST = value;
+                    }
+                }
+                */
+                // TODO: check this against F0V23 as well...were there any event 5? (ParseSummary was filtering out events 5 and 6!)
                 ok = false;
                 break;
+            //case 6:  // never seen
             case 7:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSettingF0V4(data[pos+2], data[pos+3]);
                 break;
-            /*
-            case 8:  // ???
-                // TODO: 8 bytes, any of them a time delta?
+            case 8:  // CPAP-Check related, follows Mask On in CPAP-Check mode
+                // TODO: 8 bytes, any of them a time delta? Probably, given that it is in F0V6:
+                // 561P-P00555996TEST session 6
+                // 460P-P14898571TEST session 287
+                /* From ParseSummaryF0V6:
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                //CHECK_VALUE(data[pos+2], 0);  // probably 16-bit value
+                CHECK_VALUE(data[pos+3], 0);
+                //CHECK_VALUE(data[pos+4], 0);  // probably 16-bit value
+                CHECK_VALUE(data[pos+5], 0);
+                //CHECK_VALUE(data[pos+6], 0);  // probably 16-bit value
+                CHECK_VALUE(data[pos+7], 0);
+                //CHECK_VALUE(data[pos+8], 0);  // probably 16-bit value
+                CHECK_VALUE(data[pos+9], 0);
+                //CHECK_VALUES(data[pos+0xa], 20, 60);  // or 0? 44 when changed pressure mid-session?
+                */
                 break;
-            */
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
                 ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
@@ -4388,6 +4435,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     }
 
     this->duration = tt;
+    //qDebug() << this->sessionid << "/" << ts((this->timestamp + this->duration) * 1000L);
 
     return ok;
 }
@@ -5478,7 +5526,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 //CHECK_VALUE(data[pos+3], 0x64);  // seems to match 90% IPAP
                 break;
             case 0x0b:
-                // CPAP-Check related? follows 3 in CPAP-Check mode
+                // CPAP-Check related, follows Mask On in CPAP-Check mode
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 //CHECK_VALUE(data[pos+2], 0);  // probably 16-bit value
                 CHECK_VALUE(data[pos+3], 0);
@@ -6032,6 +6080,7 @@ bool PRS1Import::ImportSummary()
 
 bool PRS1DataChunk::ParseSummary()
 {
+    /*
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     
     // TODO: 7 length 3, 8 length 3 have been seen on 960P, add those value checks once we look more closely at the data.
@@ -6048,6 +6097,7 @@ bool PRS1DataChunk::ParseSummary()
         //qDebug() << this->sessionid << "summary first byte" << data[0] << "!= 0, skipping";
         return false;
     }
+    */
 
     // Family 0 = XPAP
     // Family 3 = BIPAP AVAPS
@@ -6351,13 +6401,6 @@ bool PRS1Import::ParseOximetry()
         }
     }
     return true;
-}
-
-
-static QString ts(qint64 msecs)
-{
-    // TODO: make this UTC so that tests don't vary by where they're run
-    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
 }
 
 
