@@ -3945,11 +3945,14 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
+    /*
+    // There are some chunks with a single-byte event 6 and nothing else.
     // TODO: hardcoding this is ugly, think of a better approach
     if (chunk_size < 59) {
         qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
         return false;
     }
+    */
 
     bool ok = true;
     int pos = 0;
@@ -4012,10 +4015,20 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                     UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
                 }
                 break;
+            /*
             case 5:  // Unknown, but occasionally encountered
                 CHECK_VALUE(pos, 1);  // Always first
                 CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
                 ok = false;
+                break;
+            */
+            case 6:  // Cleared?
+                // Appears in the very first session when that session number is > 1.
+                // Presumably previous sessions were cleared out.
+                // TODO: add an internal event for this.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
@@ -4283,7 +4296,6 @@ void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned ch
 }
 
 
-//long LATEST = 0;
 bool PRS1DataChunk::ParseSummaryF0V4(void)
 {
     if (this->family != 0 || (this->familyVersion != 4)) {
@@ -4301,12 +4313,6 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
         qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
         return false;
     }
-    /*
-    if (this->timestamp < LATEST) {
-        qDebug() << this->sessionid << "**" << ts(this->timestamp * 1000L);
-    }
-    LATEST = this->timestamp;
-    */
 
     bool ok = true;
     int pos = 0;
@@ -4380,25 +4386,32 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 tt += data[pos] | (data[pos+1] << 8);
                 // TODO: see if this event exists in other versions
                 break;
-            case 5:  // Unknown timestamp
+            case 5:  // Clock adjustment?
                 CHECK_VALUE(pos, 1);  // Always first
                 CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
                 // This looks like it's minor adjustments to the clock, but 560PBT-3917 sessions 1-2 are weird:
                 // session 1 starts at 2015-12-23T00:01:20 and contains this event with timestamp 2015-12-23T00:05:14.
                 // session 2 starts at 2015-12-23T00:01:29, which suggests the event didn't change the clock.
-                /*
-                // TODO: check this against F0V23 and others as well:
-                {
+                //
+                // It looks like this happens when there are discontinuities in timestamps, for example 560P-4727:
+                // session 58 ends at 2015-05-26T09:53:17.
+                // session 59 starts at 2015-05-26T09:53:15 with an event 5 timestamp of 2015-05-26T09:53:18.
+                //
+                // So the session/chunk timestamp has gone backwards. Whenever this happens, it seems to be in
+                // a session with an event-5 event having a timestamp that hasn't gone backwards. So maybe
+                // this timestamp is the old clock before adjustment? This would explain the 560PBT-3917 sessions above.
+                //
+                // This doesn't seem particularly associated with discontinuities in the waveform data: there are
+                // often clock adjustments without corresponding discontinuities in the waveform, and vice versa.
+                // It's possible internal clock inaccuracy causes both independently.
+                //
+                // TODO: why do some machines have lots of these and others none? Maybe cellular modems make daily tweaks?
+                if (false) {
                     long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
-                    if (value < this->timestamp) {
-                        qWarning() << this->sessionid << "5" << ts(value * 1000L);
-                    } else {
-                        LATEST = value;
-                    }
+                    qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
+                                                << "to" << ts(this->timestamp * 1000L)
+                                                << "delta:" << (this->timestamp - value);
                 }
-                */
-                // TODO: check this against F0V23 as well...were there any event 5? (ParseSummary was filtering out events 5 and 6!)
-                ok = false;
                 break;
             //case 6:  // never seen
             case 7:  // Humidifier setting change
@@ -4435,7 +4448,6 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     }
 
     this->duration = tt;
-    //qDebug() << this->sessionid << "/" << ts((this->timestamp + this->duration) * 1000L);
 
     return ok;
 }
