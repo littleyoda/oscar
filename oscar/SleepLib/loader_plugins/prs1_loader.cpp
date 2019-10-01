@@ -4890,12 +4890,13 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
+    int imax_pressure = data[0x2];
     int imin_epap = data[0x3];
     int imax_epap = data[0x4];
     int imin_ps = data[0x5];
     int imax_ps = data[0x6];
-    int imax_pressure = data[0x2];
 
+    // Only one mode available, so apparently there's no byte in the settings that encodes it?
     cpapmode = PRS1_MODE_ASV;
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
@@ -4905,32 +4906,179 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, imax_pressure));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, imin_ps));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
-    
-    quint8 flex = data[0x0c];
-    this->ParseFlexSetting(flex, cpapmode);
+
+    CHECK_VALUES(data[0x07], 1, 2);
+    CHECK_VALUES(data[0x08], 0, 17);
+    CHECK_VALUES(data[0x09], 0, 12);
 
     int ramp_time = data[0x0a];
-    int ramp_pressure = data[0x0b];
-
+    int ramp_pressure = data[0x0b];  // looks like pressure gain for F5V2 may be 0.125
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
-    int humid = data[0x0d];
-    this->ParseHumidifierSettingV2(humid);
+    quint8 flex = data[0x0c];  // 82 F5V0, C9 F5V1, 8A F5V1, 2 F5V2; C9 looks like rise time = 2
+    this->ParseFlexSetting(flex, cpapmode);
+
+    int pos;
+    if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
+        this->ParseHumidifierSettingV2(data[0x0d]);  // 82
+        pos = 0xe;
+    } else {
+        this->ParseHumidifierSettingF0V4(data[0x0d], data[0x0e], true);  // 94 05, A0 4A F5V1; 93 09 F5V2
+        pos = 0xf;
+    }
+
+    CHECK_VALUE(data[pos] & ~(0x40|8|2|1), 0);
+    CHECK_VALUE(data[pos+1] & ~(0x40|1), 0);
+    CHECK_VALUE(data[pos+2], 0);
+    CHECK_VALUE(data[pos+3], 0);
+    CHECK_VALUE(data[pos+4], 0);
 
     return true;
 }
 
 
+// borrowed largely from ParseSummaryF0V4
 bool PRS1DataChunk::ParseSummaryF5V012(void)
 {
+    if (this->family != 5 || (this->familyVersion > 2)) {
+        qWarning() << "ParseSummaryF5V012 called with family" << this->family << "familyVersion" << this->familyVersion;
+        return false;
+    }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    QVector<int> minimum_sizes;
+    switch (this->familyVersion) {
+        case 0: minimum_sizes = { 0x12, 4, 3, 0x1f }; break;
+        case 1: minimum_sizes = { 0x13, 7, 5, 0x20, 0, 0, 0, 0, 0, 4 }; break;
+        case 2: minimum_sizes = { 0x13, 7, 5, 0x22, 0, 0, 0, 0, 0, 4 }; break;
+    }
+    // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
 
-    this->ParseSettingsF5V012(data, 0xc);
-    
-    this->duration = data[0x18] | data[0x19] << 8;
+    bool ok = true;
+    int pos = 0;
+    int code, size;
+    int tt = 0;
+    do {
+        code = data[pos++];
+        // There is no hblock prior to F0V6.
+        size = 0;
+        if (code < minimum_sizes.length()) {
+            // make sure the handlers below don't go past the end of the buffer
+            size = minimum_sizes[code];
+        } // else if it's past ncodes, we'll log its information below (rather than handle it)
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
+            break;
+        }
+        
+        switch (code) {
+            case 0:  // Equipment On
+                CHECK_VALUE(pos, 1);  // Always first
+                /*
+                CHECK_VALUE(data[pos] & 0xF0, 0);  // TODO: what are these?
+                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
+                    //CHECK_VALUES(data[pos] & 0x0F, 3, 5);  // TODO: what are these? 0 seems to be related to errors.
+                }
+                */
+            // F5V012 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
+                ok = this->ParseSettingsF5V012(data, size);
+                /*
+                CHECK_VALUE(data[pos+0x11], 0);
+                CHECK_VALUE(data[pos+0x12], 0);
+                CHECK_VALUE(data[pos+0x13], 0);
+                CHECK_VALUE(data[pos+0x14], 0);
+                CHECK_VALUE(data[pos+0x15], 0);
+                CHECK_VALUE(data[pos+0x16], 0);
+                CHECK_VALUE(data[pos+0x17], 0);
+                */
+                break;
+            case 2:  // Mask On
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
+                /*
+                //CHECK_VALUES(data[pos+2], 120, 110);  // probably initial pressure
+                //CHECK_VALUE(data[pos+3], 0);  // initial IPAP on bilevel?
+                //CHECK_VALUES(data[pos+4], 0, 130);  // minimum pressure in auto-cpap
+                this->ParseHumidifierSettingF0V4(data[pos+5], data[pos+6]);
+                */
+                break;
+            case 3:  // Mask Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
+            // F0V4 doesn't have a separate stats record like F0V6 does, the stats just follow the MaskOff data.
+                /*
+                //CHECK_VALUES(data[pos+2], 130);  // probably ending pressure
+                //CHECK_VALUE(data[pos+3], 0);  // ending IPAP for bilevel? average?
+                //CHECK_VALUES(data[pos+4], 0, 130);  // 130 pressure in auto-cpap: min pressure? 90% IPAP in bilevel?
+                //CHECK_VALUES(data[pos+5], 0, 130);  // 130 pressure in auto-cpap, 90% EPAP in bilevel?
+                //CHECK_VALUE(data[pos+6], 0);  // 145 maybe max pressure in Auto-CPAP?
+                //CHECK_VALUE(data[pos+7], 0);  // Average 90% Pressure (Auto-CPAP)
+                //CHECK_VALUE(data[pos+8], 0);  // Average CPAP (Auto-CPAP)
+                //CHECK_VALUES(data[pos+9], 0, 4);  // or 1; PB count? LL count? minutes of something?
+                CHECK_VALUE(data[pos+0xa], 0);
+                //CHECK_VALUE(data[pos+0xb], 0);  // OA count, probably 16-bit
+                CHECK_VALUE(data[pos+0xc], 0);
+                //CHECK_VALUE(data[pos+0xd], 0);
+                CHECK_VALUE(data[pos+0xe], 0);
+                //CHECK_VALUE(data[pos+0xf], 0);  // CA count, probably 16-bit
+                CHECK_VALUE(data[pos+0x10], 0);
+                //CHECK_VALUE(data[pos+0x11], 40);  // 16-bit something: 0x88, 0x26, etc. ???
+                //CHECK_VALUE(data[pos+0x12], 0);
+                //CHECK_VALUE(data[pos+0x13], 0);  // 16-bit minutes in LL
+                //CHECK_VALUE(data[pos+0x14], 0);
+                //CHECK_VALUE(data[pos+0x15], 0);  // minutes in PB, probably 16-bit
+                CHECK_VALUE(data[pos+0x16], 0);
+                //CHECK_VALUE(data[pos+0x17], 0);  // 16-bit VS count
+                //CHECK_VALUE(data[pos+0x18], 0);
+                //CHECK_VALUE(data[pos+0x19], 0);  // H count, probably 16-bit
+                CHECK_VALUE(data[pos+0x1a], 0);
+                //CHECK_VALUE(data[pos+0x1b], 0);  // 0 when no PB or LL?
+                CHECK_VALUE(data[pos+0x1c], 0);
+                //CHECK_VALUE(data[pos+0x1d], 9);  // RE count, probably 16-bit
+                CHECK_VALUE(data[pos+0x1e], 0);
+                //CHECK_VALUE(data[pos+0x1f], 0);  // FL count, probably 16-bit
+                CHECK_VALUE(data[pos+0x20], 0);
+                //CHECK_VALUE(data[pos+0x21], 0x32);  // 0x55, 0x19  // ???
+                //CHECK_VALUE(data[pos+0x22], 0x23);  // 0x3f, 0x14  // Average total leak
+                //CHECK_VALUE(data[pos+0x23], 0x40);  // 0x7d, 0x3d  // ???
+                */
+                break;
+            case 1:  // Equipment Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
+                /*
+                CHECK_VALUE(data[pos+2] & ~(0x40|8|4|2|1), 0);  // ???, seen various bit combinations
+                //CHECK_VALUE(data[pos+3], 0x19);  // 0x17, 0x16
+                //CHECK_VALUES(data[pos+4], 0, 1);  // or 2
+                //CHECK_VALUE(data[pos+5], 0x35);  // 0x36, 0x36
+                if (data[pos+6] != 1) {  // This is the usual value.
+                    CHECK_VALUE(data[pos+6] & ~(8|4|2|1), 0);  // On F0V23 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                }
+                // pos+4 == 2, pos+6 == 10 on the session that had a time-elapsed event, maybe it shut itself off
+                // when approaching 24h of continuous use?
+                */
+                break;
+            case 9:  // Humidifier setting change
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                this->ParseHumidifierSettingF0V4(data[pos+2], data[pos+3]);
+                break;
+            default:
+                UNEXPECTED_VALUE(code, "known slice code");
+                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                break;
+        }
+        pos += size;
+    } while (ok && pos < chunk_size);
 
-    return true;
+    if (ok && pos != chunk_size) {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
+    }
+
+    this->duration = tt;
+
+    return ok;
 }
 
 
@@ -4955,6 +5103,7 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
     }
     if (flex & 0x80) { // CFlex bit
         if (flex & 0x10) {
+            qWarning() << this->sessionid << "rise time mode?";  // double-check this
             flexmode = FLEX_RiseTime;
         } else if (flex & 8) { // Plus bit
             if (split || (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_CPAPCHECK)) {
