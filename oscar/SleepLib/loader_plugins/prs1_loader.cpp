@@ -4496,10 +4496,18 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 
 
 // TODO: Add support for F3V3 (1061T, 1160P). This is just a stub.
-bool PRS1DataChunk::ParseSummaryF3V3(void)
+bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* /*data*/, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
+    return true;
+}
+
+
+bool PRS1DataChunk::ParseSummaryF3V3(void)
+{
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+    this->ParseSettingsF3V3(data, 0);
     this->duration = 0;
     return true;
 }
@@ -4878,10 +4886,8 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
 }
 
 
-bool PRS1DataChunk::ParseSummaryF5V012(void)
+bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
 {
-    const unsigned char * data = (unsigned char *)this->m_data.constData();
-
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
     int imin_epap = data[0x3];
@@ -4912,6 +4918,16 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
     int humid = data[0x0d];
     this->ParseHumidifierSettingV2(humid);
 
+    return true;
+}
+
+
+bool PRS1DataChunk::ParseSummaryF5V012(void)
+{
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+
+    this->ParseSettingsF5V012(data, 0xc);
+    
     this->duration = data[0x18] | data[0x19] << 8;
 
     return true;
