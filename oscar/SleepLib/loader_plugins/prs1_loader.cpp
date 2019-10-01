@@ -4235,6 +4235,13 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     CHECK_VALUE(data[0x0f] & (0xA0 | 0x08), 0);
     //CHECK_VALUE(data[0x0f] & 0x01, 0);  // What is bit 1? It's sometimes set.
 
+    CHECK_VALUE(data[0x10], 0);
+    if (cpapmode == PRS1_MODE_AUTOTRIAL) {
+        CHECK_VALUE(data[0x11], 7);  // 7-day duration?
+    } else {
+        CHECK_VALUE(data[0x11], 0);
+    }
+
     return true;
 }
 
@@ -4308,11 +4315,14 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
+    /*
+    // There are some chunks with a single-byte event 6 and nothing else.
     // TODO: hardcoding this is ugly, think of a better approach
     if (chunk_size < 5) {  // Event 5 seems to be a single-event summary. Also saw 33-byte summary for 760-5139 session 47.
         qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
         return false;
     }
+    */
 
     bool ok = true;
     int pos = 0;
@@ -4335,49 +4345,79 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
-                /*
-                CHECK_VALUES(data[pos] & 0xF0, 0x60, 0x70);  // TODO: what are these?
+                CHECK_VALUES(data[pos] & 0xF0, 0x80, 0xC0);  // TODO: what are these?
                 if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
-                    CHECK_VALUES(data[pos] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
+                    //CHECK_VALUES(data[pos] & 0x0F, 3, 5);  // TODO: what are these? 0 seems to be related to errors.
                 }
-                */
             // F0V4 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
-                ok = ParseSettingsF0V4(data, 0x0c);  // TODO: given a length of 0x18 this is probably too short
-                // TODO: register these as pressure set events
-                //CHECK_VALUES(data[0x0e], ramp_pressure, min_pressure);  // initial CPAP/EPAP, can be minimum pressure or ramp, or whatever auto decides to use
-                //if (cpapmode == PRS1_MODE_BILEVEL) {  // initial IPAP for bilevel modes
-                //    CHECK_VALUE(data[0x0f], max_pressure);
-                //} else if (cpapmode == PRS1_MODE_AUTOBILEVEL) {
-                //    CHECK_VALUE(data[0x0f], min_pressure + 20);
-                //}
+                ok = ParseSettingsF0V4(data, 0x0f);
+                CHECK_VALUE(data[pos+0x11], 0);
+                CHECK_VALUE(data[pos+0x12], 0);
+                CHECK_VALUE(data[pos+0x13], 0);
+                CHECK_VALUE(data[pos+0x14], 0);
+                CHECK_VALUE(data[pos+0x15], 0);
+                CHECK_VALUE(data[pos+0x16], 0);
+                CHECK_VALUE(data[pos+0x17], 0);
                 break;
             case 2:  // Mask On
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
-                // TODO: 3 bytes + 2-byte humidifier setting
+                //CHECK_VALUES(data[pos+2], 120, 110);  // probably initial pressure
+                //CHECK_VALUE(data[pos+3], 0);  // initial IPAP on bilevel?
+                //CHECK_VALUES(data[pos+4], 0, 130);  // minimum pressure in auto-cpap
+                this->ParseHumidifierSettingF0V4(data[pos+5], data[pos+6]);
                 break;
             case 3:  // Mask Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
             // F0V4 doesn't have a separate stats record like F0V6 does, the stats just follow the MaskOff data.
-                // There are 0x24 bytes in a summary
-                // TODO: What are these values?
+                //CHECK_VALUES(data[pos+2], 130);  // probably ending pressure
+                //CHECK_VALUE(data[pos+3], 0);  // ending IPAP for bilevel? average?
+                //CHECK_VALUES(data[pos+4], 0, 130);  // 130 pressure in auto-cpap: min pressure? 90% IPAP in bilevel?
+                //CHECK_VALUES(data[pos+5], 0, 130);  // 130 pressure in auto-cpap, 90% EPAP in bilevel?
+                //CHECK_VALUE(data[pos+6], 0);  // 145 maybe max pressure in Auto-CPAP?
+                //CHECK_VALUE(data[pos+7], 0);  // Average 90% Pressure (Auto-CPAP)
+                //CHECK_VALUE(data[pos+8], 0);  // Average CPAP (Auto-CPAP)
+                //CHECK_VALUES(data[pos+9], 0, 4);  // or 1; PB count? LL count? minutes of something?
+                CHECK_VALUE(data[pos+0xa], 0);
+                //CHECK_VALUE(data[pos+0xb], 0);  // OA count, probably 16-bit
+                CHECK_VALUE(data[pos+0xc], 0);
+                //CHECK_VALUE(data[pos+0xd], 0);
+                CHECK_VALUE(data[pos+0xe], 0);
+                //CHECK_VALUE(data[pos+0xf], 0);  // CA count, probably 16-bit
+                CHECK_VALUE(data[pos+0x10], 0);
+                //CHECK_VALUE(data[pos+0x11], 40);  // 16-bit something: 0x88, 0x26, etc. ???
+                //CHECK_VALUE(data[pos+0x12], 0);
+                //CHECK_VALUE(data[pos+0x13], 0);  // 16-bit minutes in LL
+                //CHECK_VALUE(data[pos+0x14], 0);
+                //CHECK_VALUE(data[pos+0x15], 0);  // minutes in PB, probably 16-bit
+                CHECK_VALUE(data[pos+0x16], 0);
+                //CHECK_VALUE(data[pos+0x17], 0);  // 16-bit VS count
+                //CHECK_VALUE(data[pos+0x18], 0);
+                //CHECK_VALUE(data[pos+0x19], 0);  // H count, probably 16-bit
+                CHECK_VALUE(data[pos+0x1a], 0);
+                //CHECK_VALUE(data[pos+0x1b], 0);  // 0 when no PB or LL?
+                CHECK_VALUE(data[pos+0x1c], 0);
+                //CHECK_VALUE(data[pos+0x1d], 9);  // RE count, probably 16-bit
+                CHECK_VALUE(data[pos+0x1e], 0);
+                //CHECK_VALUE(data[pos+0x1f], 0);  // FL count, probably 16-bit
+                CHECK_VALUE(data[pos+0x20], 0);
+                //CHECK_VALUE(data[pos+0x21], 0x32);  // 0x55, 0x19  // ???
+                //CHECK_VALUE(data[pos+0x22], 0x23);  // 0x3f, 0x14  // Average total leak
+                //CHECK_VALUE(data[pos+0x23], 0x40);  // 0x7d, 0x3d  // ???
                 break;
             case 1:  // Equipment Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
-                // TODO: 7 bytes total, what are they?
-                /*
-                // seems to be trailing 01 [01 or 02] 83 after equipment off?
-                if (data[pos+2] != 1) {  // This is the usual value.
-                    CHECK_VALUES(data[pos+2], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                CHECK_VALUE(data[pos+2] & ~(0x40|8|4|2|1), 0);  // ???, seen various bit combinations
+                //CHECK_VALUE(data[pos+3], 0x19);  // 0x17, 0x16
+                //CHECK_VALUES(data[pos+4], 0, 1);  // or 2
+                //CHECK_VALUE(data[pos+5], 0x35);  // 0x36, 0x36
+                if (data[pos+6] != 1) {  // This is the usual value.
+                    CHECK_VALUE(data[pos+6] & ~(8|4|2|1), 0);  // On F0V23 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
                 }
-                //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
-                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
-                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
-                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
-                }
-                */
+                // pos+4 == 2, pos+6 == 10 on the session that had a time-elapsed event, maybe it shut itself off
+                // when approaching 24h of continuous use?
                 break;
             case 4:  // Time Elapsed
                 // For example: mask-on 5:18:49 in a session of 23:41:20 total leaves mask-off time of 18:22:31.
@@ -4413,27 +4453,29 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                                                 << "delta:" << (this->timestamp - value);
                 }
                 break;
-            //case 6:  // never seen
+            case 6:  // Cleared?
+                // Appears in the very first session when that session number is > 1.
+                // Presumably previous sessions were cleared out.
+                // TODO: add an internal event for this.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
+                break;
             case 7:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSettingF0V4(data[pos+2], data[pos+3]);
                 break;
             case 8:  // CPAP-Check related, follows Mask On in CPAP-Check mode
-                // TODO: 8 bytes, any of them a time delta? Probably, given that it is in F0V6:
-                // 561P-P00555996TEST session 6
-                // 460P-P14898571TEST session 287
-                /* From ParseSummaryF0V6:
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
-                //CHECK_VALUE(data[pos+2], 0);  // probably 16-bit value
+                CHECK_VALUES(data[pos+2], 0, 79);  // probably 16-bit value
                 CHECK_VALUE(data[pos+3], 0);
-                //CHECK_VALUE(data[pos+4], 0);  // probably 16-bit value
+                CHECK_VALUES(data[pos+4], 0, 10);  // probably 16-bit value
                 CHECK_VALUE(data[pos+5], 0);
-                //CHECK_VALUE(data[pos+6], 0);  // probably 16-bit value
+                CHECK_VALUES(data[pos+6], 0, 79);  // probably 16-bit value
                 CHECK_VALUE(data[pos+7], 0);
-                //CHECK_VALUE(data[pos+8], 0);  // probably 16-bit value
+                CHECK_VALUES(data[pos+8], 0, 10);  // probably 16-bit value
                 CHECK_VALUE(data[pos+9], 0);
-                //CHECK_VALUES(data[pos+0xa], 20, 60);  // or 0? 44 when changed pressure mid-session?
-                */
+                CHECK_VALUES(data[pos+0xa], 0, 4);  // or 0? 44 when changed pressure mid-session?
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
