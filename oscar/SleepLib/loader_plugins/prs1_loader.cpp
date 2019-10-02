@@ -4890,6 +4890,9 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
 
+    float GAIN = PRS1PressureSettingEvent::GAIN;
+    if (this->familyVersion == 2) GAIN = 0.125f;  // TODO: parameterize this somewhere better
+
     int imax_pressure = data[0x2];
     int imin_epap = data[0x3];
     int imax_epap = data[0x4];
@@ -4907,20 +4910,21 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, imin_ps));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
 
-    CHECK_VALUES(data[0x07], 1, 2);
-    CHECK_VALUES(data[0x08], 0, 17);
-    CHECK_VALUES(data[0x09], 0, 12);
+    //CHECK_VALUE(data[0x07], 1, 2);  // 1 = backup breath rate "Auto"; 2 = fixed BPM, see below
+    //CHECK_VALUE(data[0x08], 0);     // backup "Breath Rate" in mode 2
+    //CHECK_VALUE(data[0x09], 0);     // backup "Timed Inspiration" (gain 0.1) in mode 2
 
     int ramp_time = data[0x0a];
-    int ramp_pressure = data[0x0b];  // looks like pressure gain for F5V2 may be 0.125
+    int ramp_pressure = data[0x0b];
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
 
-    quint8 flex = data[0x0c];  // 82 F5V0, C9 F5V1, 8A F5V1, 2 F5V2; C9 looks like rise time = 2
-    this->ParseFlexSetting(flex, cpapmode);
+    quint8 flex = data[0x0c];  // TODO: 82 F5V0 = flex 2, C9 F5V1 = rise time 1 + rise time lock, 8A F5V1 = rise time 2, 02 F5V2 = flex 2!!!
+    this->ParseFlexSetting(flex, cpapmode);  // TODO: check this against all versions, may not be right ever, or only for very specific models
 
     int pos;
     if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
+        // TODO: Is there another flag for F5V0? Reports say "Bypass System One Humidification" as an option?
         this->ParseHumidifierSettingV2(data[0x0d]);  // 82
         pos = 0xe;
     } else {
@@ -4928,11 +4932,23 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
         pos = 0xf;
     }
 
-    CHECK_VALUE(data[pos] & ~(0x40|8|2|1), 0);
+    // TODO: menu options
+    // TODO: may differ between F5V0 and F5V12
+    // 0x01, 0x41 = auto-on, view AHI, tubing type = 15
+    // 0x41, 0x41 = auto-on, view AHI, tubing type = 15, resist lock
+    // 0x42, 0x01 = (no auto-on), view AHI, tubing type = 22, resist lock, tubing lock
+    //          1 = view AHI
+    //         4  = auto-on
+    //    3       = tubing type? 1=15, 2=22? or 0=22/2=tubing lock?
+    //   4        = resist lock
+    CHECK_VALUES(data[pos] & 3, 1, 2);  // is bit 2 a mask or are these two bits a single value?
+    CHECK_VALUE(data[pos] & ~(0x40|2|1), 0);
     CHECK_VALUE(data[pos+1] & ~(0x40|1), 0);
-    CHECK_VALUE(data[pos+2], 0);
-    CHECK_VALUE(data[pos+3], 0);
-    CHECK_VALUE(data[pos+4], 0);
+    
+    CHECK_VALUE(data[pos+2], !data[pos+4]);  // distinguish between disconnect and apnea alarm
+    CHECK_VALUES(data[pos+2], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
+    CHECK_VALUE(data[pos+3], 0);  // low MV alarm?
+    CHECK_VALUES(data[pos+4], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
 
     return true;
 }
@@ -4950,7 +4966,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
     QVector<int> minimum_sizes;
     switch (this->familyVersion) {
         case 0: minimum_sizes = { 0x12, 4, 3, 0x1f }; break;
-        case 1: minimum_sizes = { 0x13, 7, 5, 0x20, 0, 0, 0, 0, 0, 4 }; break;
+        case 1: minimum_sizes = { 0x13, 7, 5, 0x20, 0, 4, 0, 2, 2, 4 }; break;
         case 2: minimum_sizes = { 0x13, 7, 5, 0x22, 0, 0, 0, 0, 0, 4 }; break;
     }
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
@@ -5059,6 +5075,36 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 // pos+4 == 2, pos+6 == 10 on the session that had a time-elapsed event, maybe it shut itself off
                 // when approaching 24h of continuous use?
                 */
+                break;
+            case 5:  // Clock adjustment? See ParseSummaryF0V4.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
+                if (false) {
+                    long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
+                    qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
+                                                << "to" << ts(this->timestamp * 1000L)
+                                                << "delta:" << (this->timestamp - value);
+                }
+                break;
+            case 6:  // Cleared?
+                // Appears in the very first session when that session number is > 1.
+                // Presumably previous sessions were cleared out.
+                // TODO: add an internal event for this.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
+                break;
+            case 7:  // ??? 960P-4586 sessions 1121, 1129
+                CHECK_VALUE(pos, 1);
+                CHECK_VALUE(chunk_size, 3);
+                CHECK_VALUE(data[pos], 0);
+                CHECK_VALUE(data[pos+1], 0);
+                break;
+            case 8:  // ??? 960P-4586 sessions 1120, 1128
+                CHECK_VALUE(pos, 1);
+                CHECK_VALUE(chunk_size, 3);
+                CHECK_VALUE(data[pos], 0);
+                CHECK_VALUE(data[pos+1], 0);
                 break;
             case 9:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
