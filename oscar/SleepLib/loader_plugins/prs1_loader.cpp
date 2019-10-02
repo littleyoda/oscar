@@ -4932,20 +4932,30 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
         pos = 0xf;
     }
 
-    // TODO: menu options
     // TODO: may differ between F5V0 and F5V12
     // 0x01, 0x41 = auto-on, view AHI, tubing type = 15
     // 0x41, 0x41 = auto-on, view AHI, tubing type = 15, resist lock
     // 0x42, 0x01 = (no auto-on), view AHI, tubing type = 22, resist lock, tubing lock
+    // 0x00, 0x41 = auto-on, view AHI, tubing type = 22, no tubing lock
+    // 0x0B, 0x41 = mask resist 1, tube lock, tubing type = 15, auto-on, view AHI
+    // 0x09, 0x01 = mask resist 1, tubing 15, view AHI
+    // 0x19, 0x41 = mask resist 3, tubing 15, auto-on, view AHI
+    // 0x29, 0x41 = mask resist 5, tubing 15, auto-on, view AHI
     //          1 = view AHI
     //         4  = auto-on
-    //    3       = tubing type? 1=15, 2=22? or 0=22/2=tubing lock?
+    //    1       = tubing type: 0=22, 1=15
+    //    2       = tubing lock
+    //   38       = mask resist level
     //   4        = resist lock
-    CHECK_VALUES(data[pos] & 3, 1, 2);  // is bit 2 a mask or are these two bits a single value?
-    CHECK_VALUE(data[pos] & ~(0x40|2|1), 0);
+    int resist_level = (data[pos] >> 3) & 7;  // 0x09 resist=1, 0x11 resist=2, 0x19=resist 3, 0x29=resist 5
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[pos] & 0x40) != 0));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, resist_level));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[pos] & 0x01) ? 15 : 22));
+    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[pos] & 0x02) != 0));  // TODO: add this internal setting
+    CHECK_VALUE(data[pos] & (0x80|0x04), 0);
     CHECK_VALUE(data[pos+1] & ~(0x40|1), 0);
     
-    CHECK_VALUE(data[pos+2], !data[pos+4]);  // distinguish between disconnect and apnea alarm
+    if (data[pos+2]) CHECK_VALUE(data[pos+2], data[pos+4]);  // distinguish between disconnect and apnea alarm
     CHECK_VALUES(data[pos+2], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
     CHECK_VALUE(data[pos+3], 0);  // low MV alarm?
     CHECK_VALUES(data[pos+4], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
@@ -4967,7 +4977,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
     switch (this->familyVersion) {
         case 0: minimum_sizes = { 0x12, 4, 3, 0x1f }; break;
         case 1: minimum_sizes = { 0x13, 7, 5, 0x20, 0, 4, 0, 2, 2, 4 }; break;
-        case 2: minimum_sizes = { 0x13, 7, 5, 0x22, 0, 0, 0, 0, 0, 4 }; break;
+        case 2: minimum_sizes = { 0x13, 7, 5, 0x22, 0, 4, 0, 2, 2, 4 }; break;
     }
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
 
@@ -5094,16 +5104,14 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
                 if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
                 break;
-            case 7:  // ??? 960P-4586 sessions 1121, 1129
-                CHECK_VALUE(pos, 1);
-                CHECK_VALUE(chunk_size, 3);
-                CHECK_VALUE(data[pos], 0);
-                CHECK_VALUE(data[pos+1], 0);
+            case 7:  // ???
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 break;
-            case 8:  // ??? 960P-4586 sessions 1120, 1128
+            case 8:  // ???
+                tt += data[pos] | (data[pos+1] << 8);  // Since 7 and 8 seem to occur near each other, let's assume 8 also has a timestamp
                 CHECK_VALUE(pos, 1);
                 CHECK_VALUE(chunk_size, 3);
-                CHECK_VALUE(data[pos], 0);
+                CHECK_VALUE(data[pos], 0);  // and alert us if the timestamp is nonzero
                 CHECK_VALUE(data[pos+1], 0);
                 break;
             case 9:  // Humidifier setting change
