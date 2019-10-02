@@ -5136,8 +5136,16 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 }
 
 
+// TODO: Review this in more detail, comparing it across all families and versions. It may not be accurate.
+// F5V0 0x82 = Bi-Flex 2
+// F5V1 0x82 = Bi-Flex 2
+// F5V1 0x83 = Bi-Flex 3
+// F5V1 0x8A = Rise Time 2
+// F5V2 0x02 = Bi-Flex 2
+// F5V1 0xC9 = Rise Time 1, Rise Time Lock
 void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 {
+    //qWarning() << QString("F%1V%2 flex=%3").arg(this->family).arg(this->familyVersion).arg(flex, 2, 16, QChar('0'));
     int flexlevel = flex & 0x03;
     FlexMode flexmode = FLEX_Unknown;
 
@@ -5156,8 +5164,8 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
         split = true;
     }
     if (flex & 0x80) { // CFlex bit
-        if (flex & 0x10) {
-            qWarning() << this->sessionid << "rise time mode?";  // double-check this
+        if ((flex & 0x10) || cpapmode == PRS1_MODE_ASV) {
+            if (cpapmode != PRS1_MODE_ASV) qWarning() << this->sessionid << "rise time mode?";  // double-check this
             flexmode = FLEX_RiseTime;
         } else if (flex & 8) { // Plus bit
             if (split || (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_CPAPCHECK)) {
@@ -5194,6 +5202,11 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 }
 
 
+// TODO: Review and double-check this, since it seems like 60 Series (heated tube) use a 2-byte humidifier
+// setting, at least in F0V4. Also, PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not,
+// which should be distinct from system one vs. classic, etc.
+//
+// Generally, see ParseHumidifierSettingF0V4 and reconcile the two.
 void PRS1DataChunk::ParseHumidifierSettingV2(int humid, bool supportsHeatedTubing)
 {
     if (humid & (0x40 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
