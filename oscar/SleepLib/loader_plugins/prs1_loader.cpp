@@ -4495,21 +4495,220 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 }
 
 
-// TODO: Add support for F3V3 (1061T, 1160P). This is just a stub.
-bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* /*data*/, int /*size*/)
+// Support for 1061T, 1160P
+// logic largely borrowed from ParseSettingsF3V6, values based on sample data
+bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
+    FlexMode flexmode = FLEX_Unknown;
+
+    switch (data[2]) {
+        //case 1: cpapmode = PRS1_MODE_S; break;   // "S" mode
+        case 2: cpapmode = PRS1_MODE_ST; break;  // "S/T" mode; pressure seems variable?
+        //case 4: cpapmode = PRS1_MODE_PC; break;  // "PC" mode? Usually "PC - AVAPS", see setting 1 below
+        default:
+            UNEXPECTED_VALUE(data[2], "known device mode");
+            break;
+    }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
+
+    switch (data[3]) {
+        case 0:  // 0 = None
+            flexmode = FLEX_None;
+            //CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+            CHECK_VALUE(cpapmode, PRS1_MODE_ST);
+            break;
+        /*
+        case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
+            flexmode = FLEX_BiFlex;
+            CHECK_VALUE(cpapmode, PRS1_MODE_S);
+            break;
+        */
+        case 2:  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
+            flexmode = FLEX_AVAPS;
+            //CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+            CHECK_VALUE(cpapmode, PRS1_MODE_ST);
+            break;
+        default:
+            UNEXPECTED_VALUE(data[3], "known flex mode");
+            break;
+    }
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
+
+    int epap     = data[4] + (data[5] << 1);   // 0x82 = EPAP 13 cmH2O; 0x78 = EPAP 12 cmH2O; 0x50 = EPAP 8 cmH2O
+    int min_ipap = data[6] + (data[7] << 1);   // 0xA0 = IPAP 16 cmH2O; 0xBE = 19 cmH2O min IPAP (in AVAPS); 0x78 = IPAP 12 cmH2O
+    int max_ipap = data[8] + (data[9] << 1);   // 0xAA = ???;          0x12C = 30 cmH2O max IPAP (in AVAPS); 0x78 = ???
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, epap));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, min_ipap));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap));
+    // TODO: calculte PS or min/max PS? Create IPAP event when not AVAPS?
+
+    //CHECK_VALUE(data[0xa], 1, 3);  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
+    CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock
+    CHECK_VALUE(data[0xc], 0);
+    CHECK_VALUE(data[0xd], 0);
+
+    CHECK_VALUES(data[0xe], 0x14, 0x3C);  // 0x14 = ???; 0x3C = Tidal Volume 600
+    if (flexmode == FLEX_AVAPS) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TIDAL_VOLUME, data[0xe] * 10.0));
+    }
+
+    //CHECK_VALUES(data[0xf], 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10
+    //CHECK_VALUE(data[0x10], 0x0A, 0x14);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
+    if (data[0x0f] == 0) UNEXPECTED_VALUE(data[0x0f], "nonzero");  // Is this backup mode off?
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, data[0xf]));
+    this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, data[0x10], 0.1));
+
+    CHECK_VALUE(data[0x11], 0);
+
+    //CHECK_VALUE(data[0x12], 0x1E, 0x0F);  // 0x1E = ramp time 30 minutes, 0x0F = ramp time 15 minutes
+    //CHECK_VALUE(data[0x13], 0x3C, 0x5A, 0x28);  // 0x3C = ramp pressure 6 cmH2O, 0x28 = ramp pressure 4 cmH2O, 0x5A = ramp pressure 9 cmH2O
+    CHECK_VALUE(data[0x14], 0);  // the ramp pressure is probably a 16-bit value like the ones above are
+    int ramp_time = data[0x12];
+    int ramp_pressure = data[0x13];
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+
+    this->ParseHumidifierSettingF0V4(data[0x15], data[0x16], true);
+
+    // Menu options?
+    CHECK_VALUES(data[0x17], 0x10, 0x90);  // 0x10 = resist 1, tubing 22; 0x90 = resist 1, resist lock, tubing 22
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x17] & 0x80) != 0));
+    CHECK_VALUE(data[0x18], 0x16);
+    
+    // Alarms?
+    CHECK_VALUE(data[0x19], 0);
+    CHECK_VALUE(data[0x1a], 0);
+    CHECK_VALUE(data[0x1b], 0);
     return true;
 }
 
 
+// borrowed largely from ParseSummaryF5V012
 bool PRS1DataChunk::ParseSummaryF3V3(void)
 {
+    if (this->family != 3 || (this->familyVersion > 3)) {
+        qWarning() << "ParseSummaryF3V3 called with family" << this->family << "familyVersion" << this->familyVersion;
+        return false;
+    }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
-    this->ParseSettingsF3V3(data, 0);
-    this->duration = 0;
-    return true;
+    int chunk_size = this->m_data.size();
+    QVector<int> minimum_sizes = { 0x1b, 3, 5, 9 };
+    // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
+
+    bool ok = true;
+    int pos = 0;
+    int code, size;
+    int tt = 0;
+    do {
+        code = data[pos++];
+        // There is no hblock prior to F3V6.
+        size = 0;
+        if (code < minimum_sizes.length()) {
+            // make sure the handlers below don't go past the end of the buffer
+            size = minimum_sizes[code];
+        } // else if it's past ncodes, we'll log its information below (rather than handle it)
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
+            break;
+        }
+        
+        switch (code) {
+            case 0:  // Equipment On
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(data[pos], 0);
+                /*
+                CHECK_VALUE(data[pos] & 0xF0, 0);  // TODO: what are these?
+                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
+                    //CHECK_VALUES(data[pos] & 0x0F, 3, 5);  // TODO: what are these? 0 seems to be related to errors.
+                }
+                */
+            // F3V3 doesn't have a separate settings record like F3V6 does, the settings just follow the EquipmentOn data.
+                ok = this->ParseSettingsF3V3(data, size);
+                /*
+                CHECK_VALUE(data[pos+0x11], 0);
+                CHECK_VALUE(data[pos+0x12], 0);
+                CHECK_VALUE(data[pos+0x13], 0);
+                CHECK_VALUE(data[pos+0x14], 0);
+                CHECK_VALUE(data[pos+0x15], 0);
+                CHECK_VALUE(data[pos+0x16], 0);
+                CHECK_VALUE(data[pos+0x17], 0);
+                */
+                break;
+            case 2:  // Mask On
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
+                CHECK_VALUE(data[pos+2], 0);  // probably initial pressure
+                this->ParseHumidifierSettingF0V4(data[pos+3], data[pos+4]);
+                break;
+            case 3:  // Mask Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
+            // F3V3 doesn't have a separate stats record like F3V6 does, the stats just follow the MaskOff data.
+                CHECK_VALUE(data[pos+0x2], 0);
+                CHECK_VALUE(data[pos+0x3], 0);
+                CHECK_VALUE(data[pos+0x4], 0);
+                CHECK_VALUE(data[pos+0x5], 0);
+                CHECK_VALUE(data[pos+0x6], 0);
+                CHECK_VALUES(data[pos+0x7], 0, 2);
+                CHECK_VALUE(data[pos+0x8], 0);
+                break;
+            case 1:  // Equipment Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
+                CHECK_VALUE(data[pos+2], 0);
+                break;
+            /*
+            case 5:  // Clock adjustment? See ParseSummaryF0V4.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
+                if (false) {
+                    long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
+                    qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
+                                                << "to" << ts(this->timestamp * 1000L)
+                                                << "delta:" << (this->timestamp - value);
+                }
+                break;
+            case 6:  // Cleared?
+                // Appears in the very first session when that session number is > 1.
+                // Presumably previous sessions were cleared out.
+                // TODO: add an internal event for this.
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
+                if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
+                break;
+            case 7:  // ???
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                break;
+            case 8:  // ???
+                tt += data[pos] | (data[pos+1] << 8);  // Since 7 and 8 seem to occur near each other, let's assume 8 also has a timestamp
+                CHECK_VALUE(pos, 1);
+                CHECK_VALUE(chunk_size, 3);
+                CHECK_VALUE(data[pos], 0);  // and alert us if the timestamp is nonzero
+                CHECK_VALUE(data[pos+1], 0);
+                break;
+            case 9:  // Humidifier setting change
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                this->ParseHumidifierSettingF0V4(data[pos+2], data[pos+3]);
+                break;
+            */
+            default:
+                UNEXPECTED_VALUE(code, "known slice code");
+                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                break;
+        }
+        pos += size;
+    } while (ok && pos < chunk_size);
+
+    if (ok && pos != chunk_size) {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
+    }
+
+    this->duration = tt;
+
+    return ok;
 }
 
 
@@ -5008,7 +5207,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                     //CHECK_VALUES(data[pos] & 0x0F, 3, 5);  // TODO: what are these? 0 seems to be related to errors.
                 }
                 */
-            // F5V012 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
+            // F5V012 doesn't have a separate settings record like F5V3 does, the settings just follow the EquipmentOn data.
                 ok = this->ParseSettingsF5V012(data, size);
                 /*
                 CHECK_VALUE(data[pos+0x11], 0);
@@ -5033,7 +5232,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
             case 3:  // Mask Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
-            // F0V4 doesn't have a separate stats record like F0V6 does, the stats just follow the MaskOff data.
+            // F5V012 doesn't have a separate stats record like F5V3 does, the stats just follow the MaskOff data.
                 /*
                 //CHECK_VALUES(data[pos+2], 130);  // probably ending pressure
                 //CHECK_VALUE(data[pos+3], 0);  // ending IPAP for bilevel? average?
