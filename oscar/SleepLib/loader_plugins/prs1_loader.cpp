@@ -3106,55 +3106,44 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
         qWarning() << "ParseEventsF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    unsigned char code=0;
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    static const QMap<int,int> event_sizes = { {1,2}, {3,4}, {0xb,4}, {0xd,2}, {0xe,5}, {0xf,5}, {0x10,5}, {0x11,4}, {0x12,4} };
+   
+    if (chunk_size < 1) {
+        // This does occasionally happen in F0V6.
+        qDebug() << this->sessionid << "Empty event data";
+        return false;
+    }
 
+    bool ok = true;
+    int pos = 0, startpos;
+    int code, size;
+    int t = 0;
     EventDataType data0, data1, data2;
     Q_UNUSED(data2)
-    int cnt = 0;
-    short delta;
-    int pos;
-    int t = 0;
-    
-    unsigned char lastcode3 = 0, lastcode2 = 0, lastcode = 0;
-    int lastpos = 0, startpos = 0, lastpos2 = 0, lastpos3 = 0;
+    //int elapsed, duration, value;
+    do {
+        code = data[pos++];
 
-    int size = this->m_data.size();
-
-    CHECK_VALUE(this->fileVersion, 2);
-    unsigned char * buffer = (unsigned char *)this->m_data.data();
-
-    for (pos = 0; pos < size;) {
-        lastcode3 = lastcode2;
-        lastcode2 = lastcode;
-        lastcode = code;
-        lastpos3 = lastpos2;
-        lastpos2 = lastpos;
-        lastpos = startpos;
+        size = 3;  // default size = 2 bytes time delta + 1 byte data
+        if (event_sizes.contains(code)) {
+            size = event_sizes[code];
+        }
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "event" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
+            break;
+        }
         startpos = pos;
-        code = buffer[pos++];
-
-        if (code > 0x15) {
-            qDebug() << "Illegal PRS1 code " << hex << int(code) << " appeared at " << hex << startpos << "in" << this->sessionid;
-            qDebug() << "1: (" << hex << int(lastcode) << hex << lastpos << ")";
-            qDebug() << "2: (" << hex << int(lastcode2) << hex << lastpos2 << ")";
-            qDebug() << "3: (" << hex << int(lastcode3) << hex << lastpos3 << ")";
-            this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-            return false;
-        }
-
-        if (code != 0x12) {
-            delta = buffer[pos + 1] << 8 | buffer[pos];
+        if (code != 0x12) {  // This one event has no timestamp in F0V6
+            t += data[pos] | (data[pos+1] << 8);
             pos += 2;
-
-            t += delta;
         }
-
-        cnt++;
 
         switch (code) {
-
         case 0x00: // Unknown 00
-            this->AddEvent(new PRS1UnknownValueEvent(code, t, buffer[pos++]));
+            this->AddEvent(new PRS1UnknownValueEvent(code, t, data[pos++]));
             break;
 
         case 0x01: // Unknown
@@ -3162,51 +3151,51 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             break;
 
         case 0x02: // Pressure
-            this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
+            this->AddEvent(new PRS1PressureSetEvent(t, data[pos++]));
             break;
 
         case 0x03: // BIPAP Pressure
             {
-                data0 = buffer[pos++];
-                data1 = buffer[pos++];
+                data0 = data[pos++];
+                data1 = data[pos++];
                 this->AddEvent(new PRS1IPAPSetEvent(t, data1));
                 this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             }
             break;
 
         case 0x04: // Pressure Pulse
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1PressurePulseEvent(t, data0));
             break;
 
         case 0x05: // RERA
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1RERAEvent(t - data0, data0));
             break;
 
         case 0x06: // Obstructive Apoanea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1ObstructiveApneaEvent(t - data0, data0));
             break;
 
         case 0x07: // Clear Airway
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1ClearAirwayEvent(t - data0, data0));
             break;
 
         case 0x0a: // Hypopnea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             break;
 
         case 0x0c: // Flow Limitation
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             break;
 
         case 0x0b: // Breathing not Detected flag???? but it doesn't line up
-            data0 = buffer[pos];
-            data1 = buffer[pos+1];
+            data0 = data[pos];
+            data1 = data[pos+1];
             pos += 2;
 
             this->AddEvent(new PRS1UnknownValueEvent(code, t, data0));  // FIXME
@@ -3217,7 +3206,7 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             break;
 
         case 0x0e: // Unknown
-            data0 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos + 1] << 8 | data[pos];
             /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines?
@@ -3225,12 +3214,12 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             }
             */
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1UnknownValueEvent(code, t - data1, data0));  // TODO: start time should probably match PB below
             break;
 
         case 0x0f: // Cheyne Stokes Respiration
-            data0 = (buffer[pos + 1] << 8 | buffer[pos]);
+            data0 = (data[pos + 1] << 8 | data[pos]);
             /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines
@@ -3238,7 +3227,7 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             }
             */
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
 
             // TODO: this fixed some timing errors on parsing/import, but may have broken drawing, since OSCAR
             // apparently does treat a span's timestamp as an endpoint (at least when drawing, see gFlagsLine::paint)!
@@ -3246,7 +3235,7 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             break;
 
         case 0x10: // Large Leak
-            data0 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos + 1] << 8 | data[pos];
             /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines
@@ -3254,21 +3243,21 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             }
             */
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1LargeLeakEvent(t - data1, data0));  // TODO: start time should probably match PB above
             break;
 
         case 0x11: // Leak Rate & Snore Graphs
-            data0 = buffer[pos++];
-            data1 = buffer[pos++];
+            data0 = data[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1TotalLeakEvent(t, data0));
             this->AddEvent(new PRS1SnoreEvent(t, data1));
             break;
 
         case 0x12: // Summary
-            data0 = buffer[pos++];
-            data1 = buffer[pos++];
-            data2 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos++];
+            data1 = data[pos++];
+            data2 = data[pos + 1] << 8 | data[pos];
             pos += 2;
 
             // Could end here, but I've seen data sets valid data after!!!
@@ -3276,16 +3265,21 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
             break;
 
         default:
-            // ERROR!!!
-            qWarning() << "Some new fandangled PRS1 code detected in" << this->sessionid << hex
-                       << int(code) << " at " << pos - 1;
+            UNEXPECTED_VALUE(code, "known event code");
             this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-            return false;
+            ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+            break;
         }
+        pos = startpos + size;
+    } while (ok && pos < chunk_size);
+
+    if (ok && pos != chunk_size) {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing event bytes";
     }
+
     this->duration = t;
 
-    return true;
+    return ok;
 }
 
 
@@ -3310,7 +3304,7 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
     int size = this->m_data.size();
 
     CHECK_VALUE(this->fileVersion, 2);
-    unsigned char * buffer = (unsigned char *)this->m_data.data();
+    unsigned char * data = (unsigned char *)this->m_data.data();
 
     for (pos = 0; pos < size;) {
         lastcode3 = lastcode2;
@@ -3320,7 +3314,7 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
         lastpos2 = lastpos;
         lastpos = startpos;
         startpos = pos;
-        code = buffer[pos++];
+        code = data[pos++];
 
         if (code > 0x15) {
             qDebug() << "Illegal PRS1 code " << hex << int(code) << " appeared at " << hex << startpos << "in" << this->sessionid;
@@ -3332,7 +3326,7 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
         }
 
         if (code != 0x12) {
-            delta = buffer[pos + 1] << 8 | buffer[pos];
+            delta = data[pos + 1] << 8 | data[pos];
             pos += 2;
 
             t += delta;
@@ -3343,64 +3337,64 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
         switch (code) {
 
         case 0x00: // Unknown 00
-            this->AddEvent(new PRS1UnknownValueEvent(code, t, buffer[pos++]));
+            this->AddEvent(new PRS1UnknownValueEvent(code, t, data[pos++]));
             pos++;  // TODO
             break;
 
         case 0x01: // Unknown
-            this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
+            this->AddEvent(new PRS1PressureSetEvent(t, data[pos++]));
             break;
 
         case 0x02: // Pressure
             //if ((this->family == 0) && (this->familyVersion == 4)) {  // BiPAP Pressure
-            data0 = buffer[pos++];
-            data1 = buffer[pos++];
+            data0 = data[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1IPAPSetEvent(t, data1));
             this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             break;
 
         case 0x03: // BIPAP Pressure
             {
-                data0 = buffer[pos++];
-                data1 = buffer[pos++];
+                data0 = data[pos++];
+                data1 = data[pos++];
                 this->AddEvent(new PRS1IPAPSetEvent(t, data1));
                 this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             }
             break;
 
         case 0x04: // Pressure Pulse
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1PressurePulseEvent(t, data0));
             break;
 
         case 0x05: // RERA
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1RERAEvent(t - data0, data0));
             break;
 
         case 0x06: // Obstructive Apoanea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1ObstructiveApneaEvent(t - data0, data0));
             break;
 
         case 0x07: // Clear Airway
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1ClearAirwayEvent(t - data0, data0));
             break;
 
         case 0x0a: // Hypopnea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             break;
 
         case 0x0c: // Flow Limitation
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             break;
 
         case 0x0b: // Breathing not Detected flag???? but it doesn't line up
-            data0 = buffer[pos];
-            data1 = buffer[pos+1];
+            data0 = data[pos];
+            data1 = data[pos+1];
             pos += 2;
 
             // might not doublerize on older machines?
@@ -3414,18 +3408,18 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             break;
 
         case 0x0e: // Unknown
-            data0 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos + 1] << 8 | data[pos];
             data0 *= 2;
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1UnknownValueEvent(code, t - data1, data0));  // TODO: start time should probably match PB below
             break;
 
         case 0x0f: // Cheyne Stokes Respiration
-            data0 = (buffer[pos + 1] << 8 | buffer[pos]);
+            data0 = (data[pos + 1] << 8 | data[pos]);
             data0 *= 2;
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
             /*
             if (this->familyVersion == 2 || this->familyVersion == 3) {
                 // TODO: this fixed some timing errors on parsing/import, but may have broken drawing, since OSCAR
@@ -3437,21 +3431,21 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             break;
 
         case 0x10: // Large Leak
-            data0 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos + 1] << 8 | data[pos];
             data0 *= 2;
             pos += 2;
-            data1 = buffer[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1LargeLeakEvent(t - data1, data0));  // TODO: start time should probably match PB above
             break;
 
         case 0x11: // Leak Rate & Snore Graphs
-            data0 = buffer[pos++];
-            data1 = buffer[pos++];
+            data0 = data[pos++];
+            data1 = data[pos++];
             this->AddEvent(new PRS1TotalLeakEvent(t, data0));
             this->AddEvent(new PRS1SnoreEvent(t, data1));
 
             // EPAP / Flex Pressure
-            data0 = buffer[pos++];
+            data0 = data[pos++];
 
             // Perhaps this check is not necessary, as it will theoretically add extra resolution to pressure chart
             // for bipap models and above???
@@ -3461,9 +3455,9 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             break;
 
         case 0x12: // Summary
-            data0 = buffer[pos++];
-            data1 = buffer[pos++];
-            data2 = buffer[pos + 1] << 8 | buffer[pos];
+            data0 = data[pos++];
+            data1 = data[pos++];
+            data2 = data[pos + 1] << 8 | data[pos];
             pos += 2;
 
             // Could end here, but I've seen data sets valid data after!!!
@@ -3471,12 +3465,12 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             break;
         /*
         case 0x14:  // DreamStation Hypopnea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             break;
 
         case 0x15:  // DreamStation Hypopnea
-            data0 = buffer[pos++];
+            data0 = data[pos++];
             this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             break;
         */
