@@ -167,8 +167,11 @@ public:
     //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for fileversion 2 machines: F0V23, F5V012, and maybe others
     void ParseHumidifierSettingV2(int humid, bool supportsHeatedTubing=true);
 
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 machines and maybe others
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 machines and maybe others
     void ParseHumidifierSettingF0V4(unsigned char humid1, unsigned char humid2, bool add_setting=false);
+
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 machines and maybe others
+    void ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting=false);
 
     //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 machines
     void ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting=false);

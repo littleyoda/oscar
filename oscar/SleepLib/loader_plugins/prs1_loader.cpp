@@ -4495,6 +4495,75 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 }
 
 
+// XX XX = F3V3 Humidifier bytes
+// 42 80 = classic 2 (tube 22)
+// 42 08 = system one 2 (tube 22)
+// 43 08 = system one 3 (tube 22)
+// 45 08 = system one 5 (tube 22)
+// 40 60 = system one 3 (tube 22)??? Or maybe unconfigured/default? Or no data? (It shows up in session 1 on several machines.)
+// 40 90 = heated tube, tube off, (fallback system one 3)
+// 63 11 = heated tube temp 1, humidity 3, (fallback system one 3)
+// 63 13 = heated tube temp 3, humidity 3, (fallback system one 3)
+// 43 14 = heated tube temp 4, humidity 2, (fallback system one 3)
+//
+//  7    = humidity level without tube
+//  8    = ? (never seen)
+// 1     = ? (never seen)
+// 6     = heated tube humidity level (when tube present, 0x40 all other times? including when tube is off?)
+// 8     = ? (never seen)
+//     7 = tube temp
+//     8 = "System One" mode
+//    1  = tube present
+//    6  = ??? unconfigured? default? no data...?
+//    8  = (classic mode, heated tube present but off?)
+
+void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting)
+{
+    if (false) qWarning() << this->sessionid << "humid" << hex(humid1) << hex(humid2) << add_setting;
+
+    int humidlevel = humid1 & 7;  // Ignored when heated tube is present: humidifier setting on tube disconnect is always reported as 3
+    if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
+    CHECK_VALUE(humid1 & 0x40, 0x40);  // seems always set, even without heated tube
+    CHECK_VALUE(humid1 & 0x98, 0);  // never seen
+    int tubehumidlevel = (humid1 >> 5) & 7;  // This mask is a best guess based on other masks.
+    if (tubehumidlevel > 5) UNEXPECTED_VALUE(tubehumidlevel, "<= 5");
+    CHECK_VALUE(tubehumidlevel & 4, 0);  // never seen, but would clarify whether above mask is correct
+
+    int tubetemp = humid2 & 7;
+    if (tubetemp > 5) UNEXPECTED_VALUE(tubetemp, "<= 5");
+
+    if (this->sessionid != 1) CHECK_VALUE(humid2 & 0x60, 0);  // Only seen on 1-second session 1 of several machines, no humidifier data on chart.
+    CHECK_VALUE(humid2 & ~(0x80|0x60|0x10|8|7), 0);  // 0x60 is unknown but checked above
+    //bool humidclassic = (humid2 & 0x40) != 0;  // Set on classic mode reports; evidently ignored (sometimes set!) when tube is present
+    //bool no_tube? = (humid2 & 0x20) != 0;  // Something tube related: whenever it is set, tube is never present (inverse is not true)
+    //bool no_data = (humid2 & 0x10) != 0;  // As described in chart, settings still show up
+    int tubepresent = (humid2 & 0x10) != 0;
+    bool humidsystemone = (humid2 & 0x08) != 0;  // Set on "System One" humidification mode reports when tubepresent is false
+
+    //if (humidsystemone + tubepresent + no_data == 0) CHECK_VALUE(humidclassic, true);  // Always set when everything else is off
+    if (humidsystemone + tubepresent /*+ no_data*/ > 1) UNEXPECTED_VALUE(humid2, "one bit set");  // Only one of these ever seems to be set at a time
+    //if (tubepresent && tubetemp == 0) CHECK_VALUE(tubehumidlevel, 0);  // When the heated tube is off, tube humidity seems to be 0 in F0V4, but not F3V3
+    
+    //qWarning() << this->sessionid << (humidclassic ? "C" : ".") << (humid2 & 0x20 ? "?" : ".") << (tubepresent ? "T" : ".") << (no_data ? "X" : ".") << (humidsystemone ? "1" : ".");
+    /*
+    if (tubepresent) {
+        if (tubetemp) {
+            qWarning() << this->sessionid << "tube temp" << tubetemp << "tube humidity" << tubehumidlevel << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
+        } else {
+            qWarning() << this->sessionid << "heated tube off" << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
+        }
+    } else {
+        qWarning() << this->sessionid << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
+    }
+    */
+    if (add_setting) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+    }
+}
+
+
 // Support for 1061T, 1160P
 // logic largely borrowed from ParseSettingsF3V6, values based on sample data
 bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
@@ -4503,9 +4572,10 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     FlexMode flexmode = FLEX_Unknown;
 
     switch (data[2]) {
-        //case 1: cpapmode = PRS1_MODE_S; break;   // "S" mode
+        case 0: cpapmode = PRS1_MODE_CPAP; break;  // "CPAP" mode
+        case 1: cpapmode = PRS1_MODE_S; break;   // "S" mode
         case 2: cpapmode = PRS1_MODE_ST; break;  // "S/T" mode; pressure seems variable?
-        //case 4: cpapmode = PRS1_MODE_PC; break;  // "PC" mode? Usually "PC - AVAPS", see setting 1 below
+        case 4: cpapmode = PRS1_MODE_PC; break;  // "PC" mode? Usually "PC - AVAPS", see setting 1 below
         default:
             UNEXPECTED_VALUE(data[2], "known device mode");
             break;
@@ -4515,19 +4585,17 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     switch (data[3]) {
         case 0:  // 0 = None
             flexmode = FLEX_None;
-            //CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
-            CHECK_VALUE(cpapmode, PRS1_MODE_ST);
+            if (cpapmode != PRS1_MODE_CPAP) {
+                CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+            }
             break;
-        /*
         case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
             flexmode = FLEX_BiFlex;
             CHECK_VALUE(cpapmode, PRS1_MODE_S);
             break;
-        */
         case 2:  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
             flexmode = FLEX_AVAPS;
-            //CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
-            CHECK_VALUE(cpapmode, PRS1_MODE_ST);
+            CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
             break;
         default:
             UNEXPECTED_VALUE(data[3], "known flex mode");
@@ -4543,21 +4611,32 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap));
     // TODO: calculte PS or min/max PS? Create IPAP event when not AVAPS?
 
-    //CHECK_VALUE(data[0xa], 1, 3);  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
-    CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock
-    CHECK_VALUE(data[0xc], 0);
+    if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
+        //CHECK_VALUE(data[0xa], 1, 3);  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
+        CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock (in "None" and AVAPS flex mode)
+    } else {
+        CHECK_VALUES(data[0xa], 0, 3);  // May also be Bi-Flex 3? But how is this different from [0xc] below?
+        CHECK_VALUE(data[0xb], 0);
+    }
+    if (flexmode == FLEX_BiFlex) {
+        //CHECK_VALUE(data[0xc], 0, 3);  // 3 = Bi-Flex 3 (in bi-flex mode)
+        CHECK_VALUE(data[0x0a], data[0xc]);
+    } else {
+        CHECK_VALUE(data[0xc], 0);
+    }
     CHECK_VALUE(data[0xd], 0);
 
-    CHECK_VALUES(data[0xe], 0x14, 0x3C);  // 0x14 = ???; 0x3C = Tidal Volume 600
+    if (flexmode != FLEX_AVAPS && cpapmode != PRS1_MODE_CPAP) CHECK_VALUE(data[0xe], 0x14);  // 0x14 = ???
+    if (cpapmode == PRS1_MODE_CPAP) CHECK_VALUE(data[0xe], 0);
+    //CHECK_VALUES(data[0xe], 0x14, 0x3C);  // 0x14 = ???; 0x3C = Tidal Volume 600, 0x18 = Tidal Volume 240
     if (flexmode == FLEX_AVAPS) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TIDAL_VOLUME, data[0xe] * 10.0));
     }
 
     //CHECK_VALUES(data[0xf], 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10
     //CHECK_VALUE(data[0x10], 0x0A, 0x14);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
-    if (data[0x0f] == 0) UNEXPECTED_VALUE(data[0x0f], "nonzero");  // Is this backup mode off?
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, data[0xf]));
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, data[0xf]));  // can be 0
     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, data[0x10], 0.1));
 
     CHECK_VALUE(data[0x11], 0);
@@ -4570,12 +4649,14 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
-    this->ParseHumidifierSettingF0V4(data[0x15], data[0x16], true);
+    this->ParseHumidifierSettingF3V3(data[0x15], data[0x16], true);
 
     // Menu options?
-    CHECK_VALUES(data[0x17], 0x10, 0x90);  // 0x10 = resist 1, tubing 22; 0x90 = resist 1, resist lock, tubing 22
+    CHECK_VALUES(data[0x17], 0x10, 0x90);  // 0x10 = resist 1; 0x90 = resist 1, resist lock
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x17] & 0x80) != 0));
-    CHECK_VALUE(data[0x18], 0x16);
+    
+    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[0x18] & 0x80) != 0));  // TODO: add this internal setting
+    CHECK_VALUES(data[0x18] & 0x7f, 22, 15);  // 0x16 = tubing 22; 0x0F = tubing 15, 0x96 = tubing 22 with lock
     
     // Alarms?
     CHECK_VALUE(data[0x19], 0);
@@ -4627,32 +4708,23 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
                 */
             // F3V3 doesn't have a separate settings record like F3V6 does, the settings just follow the EquipmentOn data.
                 ok = this->ParseSettingsF3V3(data, size);
-                /*
-                CHECK_VALUE(data[pos+0x11], 0);
-                CHECK_VALUE(data[pos+0x12], 0);
-                CHECK_VALUE(data[pos+0x13], 0);
-                CHECK_VALUE(data[pos+0x14], 0);
-                CHECK_VALUE(data[pos+0x15], 0);
-                CHECK_VALUE(data[pos+0x16], 0);
-                CHECK_VALUE(data[pos+0x17], 0);
-                */
                 break;
             case 2:  // Mask On
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
-                CHECK_VALUE(data[pos+2], 0);  // probably initial pressure
-                this->ParseHumidifierSettingF0V4(data[pos+3], data[pos+4]);
+                CHECK_VALUE(data[pos+2], 0);
+                this->ParseHumidifierSettingF3V3(data[pos+3], data[pos+4]);
                 break;
             case 3:  // Mask Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
             // F3V3 doesn't have a separate stats record like F3V6 does, the stats just follow the MaskOff data.
                 CHECK_VALUE(data[pos+0x2], 0);
-                CHECK_VALUE(data[pos+0x3], 0);
+                CHECK_VALUE(data[pos+0x3], 0);  // probably OA count, but the only sample data is missing .002 files, so we can't yet verify
                 CHECK_VALUE(data[pos+0x4], 0);
-                CHECK_VALUE(data[pos+0x5], 0);
+                //CHECK_VALUE(data[pos+0x5], 0);  // CA count, probably 16-bit
                 CHECK_VALUE(data[pos+0x6], 0);
-                CHECK_VALUES(data[pos+0x7], 0, 2);
+                //CHECK_VALUE(data[pos+0x7], 0);  // H count, probably 16-bit
                 CHECK_VALUE(data[pos+0x8], 0);
                 break;
             case 1:  // Equipment Off
