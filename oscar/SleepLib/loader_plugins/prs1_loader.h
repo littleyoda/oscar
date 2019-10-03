@@ -183,7 +183,10 @@ public:
     bool ParseEvents(CPAPMode mode);
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP machine
-    bool ParseEventsF0V234(CPAPMode mode);
+    bool ParseEventsF0V23(CPAPMode mode);
+    
+    //! \brief Parse a single data chunk from a .002 file containing event data for a 60 Series family 0 CPAP/APAP 60machine
+    bool ParseEventsF0V4(CPAPMode mode);
     
     //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
     bool ParseEventsF0V6(CPAPMode mode);
