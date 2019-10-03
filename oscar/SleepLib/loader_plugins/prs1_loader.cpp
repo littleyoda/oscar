@@ -3100,7 +3100,7 @@ bool PRS1Import::ParseF0Events()
 }
 
 
-bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
+bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
 {
     if (this->family != 0 || this->familyVersion < 2 || this->familyVersion > 3) {
         qWarning() << "ParseEventsF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
@@ -3155,28 +3155,14 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
 
         case 0x00: // Unknown 00
             this->AddEvent(new PRS1UnknownValueEvent(code, t, buffer[pos++]));
-            if (((this->family == 0) && (this->familyVersion == 4))){
-                pos++;
-            }
             break;
 
         case 0x01: // Unknown
-            if ((this->family == 0) && (this->familyVersion == 4)) {
-                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
-            } else {
-                this->AddEvent(new PRS1UnknownValueEvent(code, t, 0));
-            }
+            this->AddEvent(new PRS1UnknownValueEvent(code, t, 0));
             break;
 
         case 0x02: // Pressure
-            if ((this->family == 0) && (this->familyVersion == 4)) {  // BiPAP Pressure
-                data0 = buffer[pos++];
-                data1 = buffer[pos++];
-                this->AddEvent(new PRS1IPAPSetEvent(t, data1));
-                this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
-            } else {
-                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
-            }
+            this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
             break;
 
         case 0x03: // BIPAP Pressure
@@ -3223,14 +3209,6 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
             data1 = buffer[pos+1];
             pos += 2;
 
-            if (this->familyVersion == 4) {
-                 // might not doublerize on older machines?
-              //  data0 *= 2;
-            }
-//            data1 = buffer[pos++];
-
-            //tt = t - qint64((data0+data1)*2) * 1000L;
-
             this->AddEvent(new PRS1UnknownValueEvent(code, t, data0));  // FIXME
             break;
 
@@ -3240,11 +3218,12 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
 
         case 0x0e: // Unknown
             data0 = buffer[pos + 1] << 8 | buffer[pos];
+            /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines?
                 data0 *= 2;
             }
-
+            */
             pos += 2;
             data1 = buffer[pos++];
             this->AddEvent(new PRS1UnknownValueEvent(code, t - data1, data0));  // TODO: start time should probably match PB below
@@ -3252,27 +3231,28 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
 
         case 0x0f: // Cheyne Stokes Respiration
             data0 = (buffer[pos + 1] << 8 | buffer[pos]);
+            /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines
                 data0 *= 2;
             }
+            */
             pos += 2;
             data1 = buffer[pos++];
-            if (this->familyVersion == 2 || this->familyVersion == 3) {
-                // TODO: this fixed some timing errors on parsing/import, but may have broken drawing, since OSCAR
-                // apparently does treat a span's timestamp as an endpoint (at least when drawing, see gFlagsLine::paint)!
-                this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1 - data0, data0));  // PB event appears data1 seconds after conclusion
-            } else {
-                this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));  // TODO: this should probably be the same as F0V23, but it hasn't been tested
-            }
+
+            // TODO: this fixed some timing errors on parsing/import, but may have broken drawing, since OSCAR
+            // apparently does treat a span's timestamp as an endpoint (at least when drawing, see gFlagsLine::paint)!
+            this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1 - data0, data0));  // PB event appears data1 seconds after conclusion
             break;
 
         case 0x10: // Large Leak
             data0 = buffer[pos + 1] << 8 | buffer[pos];
+            /*
             if (this->familyVersion == 4) {
                  // might not doublerize on older machines
                 data0 *= 2;
             }
+            */
             pos += 2;
             data1 = buffer[pos++];
             this->AddEvent(new PRS1LargeLeakEvent(t - data1, data0));  // TODO: start time should probably match PB above
@@ -3283,17 +3263,6 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
             data1 = buffer[pos++];
             this->AddEvent(new PRS1TotalLeakEvent(t, data0));
             this->AddEvent(new PRS1SnoreEvent(t, data1));
-
-            if ((this->family == 0) && (this->familyVersion == 4))  {
-                // EPAP / Flex Pressure
-                data0 = buffer[pos++];
-
-                // Perhaps this check is not necessary, as it will theoretically add extra resolution to pressure chart
-                // for bipap models and above???
-                if (mode <= MODE_BILEVEL_FIXED) {
-                    this->AddEvent(new PRS1PressureReliefEvent(t, data0));
-                }
-            }
             break;
 
         case 0x12: // Summary
@@ -3305,17 +3274,7 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode mode)
             // Could end here, but I've seen data sets valid data after!!!
 
             break;
-        /*
-        case 0x14:  // DreamStation Hypopnea
-            data0 = buffer[pos++];
-            this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
-            break;
 
-        case 0x15:  // DreamStation Hypopnea
-            data0 = buffer[pos++];
-            this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
-            break;
-        */
         default:
             // ERROR!!!
             qWarning() << "Some new fandangled PRS1 code detected in" << this->sessionid << hex
@@ -3385,28 +3344,19 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
 
         case 0x00: // Unknown 00
             this->AddEvent(new PRS1UnknownValueEvent(code, t, buffer[pos++]));
-            if (((this->family == 0) && (this->familyVersion == 4))){
-                pos++;
-            }
+            pos++;  // TODO
             break;
 
         case 0x01: // Unknown
-            if ((this->family == 0) && (this->familyVersion == 4)) {
-                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
-            } else {
-                this->AddEvent(new PRS1UnknownValueEvent(code, t, 0));
-            }
+            this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
             break;
 
         case 0x02: // Pressure
-            if ((this->family == 0) && (this->familyVersion == 4)) {  // BiPAP Pressure
-                data0 = buffer[pos++];
-                data1 = buffer[pos++];
-                this->AddEvent(new PRS1IPAPSetEvent(t, data1));
-                this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
-            } else {
-                this->AddEvent(new PRS1PressureSetEvent(t, buffer[pos++]));
-            }
+            //if ((this->family == 0) && (this->familyVersion == 4)) {  // BiPAP Pressure
+            data0 = buffer[pos++];
+            data1 = buffer[pos++];
+            this->AddEvent(new PRS1IPAPSetEvent(t, data1));
+            this->AddEvent(new PRS1EPAPSetEvent(t, data0));  // EPAP needs to be added second to calculate PS
             break;
 
         case 0x03: // BIPAP Pressure
@@ -3453,13 +3403,8 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             data1 = buffer[pos+1];
             pos += 2;
 
-            if (this->familyVersion == 4) {
-                 // might not doublerize on older machines?
-              //  data0 *= 2;
-            }
-//            data1 = buffer[pos++];
-
-            //tt = t - qint64((data0+data1)*2) * 1000L;
+            // might not doublerize on older machines?
+            //data0 *= 2;
 
             this->AddEvent(new PRS1UnknownValueEvent(code, t, data0));  // FIXME
             break;
@@ -3470,11 +3415,7 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
 
         case 0x0e: // Unknown
             data0 = buffer[pos + 1] << 8 | buffer[pos];
-            if (this->familyVersion == 4) {
-                 // might not doublerize on older machines?
-                data0 *= 2;
-            }
-
+            data0 *= 2;
             pos += 2;
             data1 = buffer[pos++];
             this->AddEvent(new PRS1UnknownValueEvent(code, t - data1, data0));  // TODO: start time should probably match PB below
@@ -3482,27 +3423,22 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
 
         case 0x0f: // Cheyne Stokes Respiration
             data0 = (buffer[pos + 1] << 8 | buffer[pos]);
-            if (this->familyVersion == 4) {
-                 // might not doublerize on older machines
-                data0 *= 2;
-            }
+            data0 *= 2;
             pos += 2;
             data1 = buffer[pos++];
+            /*
             if (this->familyVersion == 2 || this->familyVersion == 3) {
                 // TODO: this fixed some timing errors on parsing/import, but may have broken drawing, since OSCAR
                 // apparently does treat a span's timestamp as an endpoint (at least when drawing, see gFlagsLine::paint)!
                 this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1 - data0, data0));  // PB event appears data1 seconds after conclusion
             } else {
-                this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));  // TODO: this should probably be the same as F0V23, but it hasn't been tested
-            }
+            */
+            this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));  // TODO: this should probably be the same as F0V23, but it hasn't been tested
             break;
 
         case 0x10: // Large Leak
             data0 = buffer[pos + 1] << 8 | buffer[pos];
-            if (this->familyVersion == 4) {
-                 // might not doublerize on older machines
-                data0 *= 2;
-            }
+            data0 *= 2;
             pos += 2;
             data1 = buffer[pos++];
             this->AddEvent(new PRS1LargeLeakEvent(t - data1, data0));  // TODO: start time should probably match PB above
@@ -3514,15 +3450,13 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             this->AddEvent(new PRS1TotalLeakEvent(t, data0));
             this->AddEvent(new PRS1SnoreEvent(t, data1));
 
-            if ((this->family == 0) && (this->familyVersion == 4))  {
-                // EPAP / Flex Pressure
-                data0 = buffer[pos++];
+            // EPAP / Flex Pressure
+            data0 = buffer[pos++];
 
-                // Perhaps this check is not necessary, as it will theoretically add extra resolution to pressure chart
-                // for bipap models and above???
-                if (mode <= MODE_BILEVEL_FIXED) {
-                    this->AddEvent(new PRS1PressureReliefEvent(t, data0));
-                }
+            // Perhaps this check is not necessary, as it will theoretically add extra resolution to pressure chart
+            // for bipap models and above???
+            if (mode <= MODE_BILEVEL_FIXED) {
+                this->AddEvent(new PRS1PressureReliefEvent(t, data0));
             }
             break;
 
