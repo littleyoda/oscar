@@ -2994,6 +2994,9 @@ bool PRS1Import::ParseF0Events()
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
+            case PRS1SnoresAtPressureEvent::TYPE:
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: we should import and graph this
+                break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
                 if (!PRESSURE) {
                     if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
@@ -3564,7 +3567,7 @@ bool PRS1Import::ParseEventsF0V6()
         
         switch (e->m_type) {
             case PRS1SnoresAtPressureEvent::TYPE:
-            case PRS1UnknownDurationEvent::TYPE:
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this
             case PRS1AutoPressureSetEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
