@@ -3305,53 +3305,42 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
         qWarning() << "ParseEventsF0V4 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    unsigned char code=0;
+    const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    static const QMap<int,int> event_sizes = { {0,4}, {2,4}, {3,4}, {0xb,4}, {0xd,2}, {0xe,5}, {0xf,5}, {0x10,5}, {0x11,5}, {0x12,4} };
+   
+    if (chunk_size < 1) {
+        // This does occasionally happen in F0V6.
+        qDebug() << this->sessionid << "Empty event data";
+        return false;
+    }
 
+    bool ok = true;
+    int pos = 0, startpos;
+    int code, size;
+    int t = 0;
     EventDataType data0, data1, data2;
     Q_UNUSED(data2)
-    int cnt = 0;
-    short delta;
-    int pos;
-    int t = 0;
-    
-    unsigned char lastcode3 = 0, lastcode2 = 0, lastcode = 0;
-    int lastpos = 0, startpos = 0, lastpos2 = 0, lastpos3 = 0;
-
-    int size = this->m_data.size();
-
-    CHECK_VALUE(this->fileVersion, 2);
-    unsigned char * data = (unsigned char *)this->m_data.data();
-
-    for (pos = 0; pos < size;) {
-        lastcode3 = lastcode2;
-        lastcode2 = lastcode;
-        lastcode = code;
-        lastpos3 = lastpos2;
-        lastpos2 = lastpos;
-        lastpos = startpos;
-        startpos = pos;
+    //int elapsed, duration, value;
+    do {
         code = data[pos++];
 
-        if (code > 0x15) {
-            qDebug() << "Illegal PRS1 code " << hex << int(code) << " appeared at " << hex << startpos << "in" << this->sessionid;
-            qDebug() << "1: (" << hex << int(lastcode) << hex << lastpos << ")";
-            qDebug() << "2: (" << hex << int(lastcode2) << hex << lastpos2 << ")";
-            qDebug() << "3: (" << hex << int(lastcode3) << hex << lastpos3 << ")";
-            this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-            return false;
+        size = 3;  // default size = 2 bytes time delta + 1 byte data
+        if (event_sizes.contains(code)) {
+            size = event_sizes[code];
         }
-
-        if (code != 0x12) {
-            delta = data[pos + 1] << 8 | data[pos];
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "event" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
+            break;
+        }
+        startpos = pos;
+        if (code != 0x12) {  // This one event has no timestamp in F0V6
+            t += data[pos] | (data[pos+1] << 8);
             pos += 2;
-
-            t += delta;
         }
-
-        cnt++;
 
         switch (code) {
-
         case 0x00: // Unknown 00
             this->AddEvent(new PRS1UnknownValueEvent(code, t, data[pos++]));
             pos++;  // TODO
@@ -3491,16 +3480,22 @@ bool PRS1DataChunk::ParseEventsF0V4(CPAPMode mode)
             break;
         */
         default:
-            // ERROR!!!
-            qWarning() << "Some new fandangled PRS1 code detected in" << this->sessionid << hex
-                       << int(code) << " at " << pos - 1;
+            DUMP_EVENT();
+            UNEXPECTED_VALUE(code, "known event code");
             this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-            return false;
+            ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+            break;
         }
+        pos = startpos + size;
+    } while (ok && pos < chunk_size);
+
+    if (ok && pos != chunk_size) {
+        qWarning() << this->sessionid << (this->size() - pos) << "trailing event bytes";
     }
+
     this->duration = t;
 
-    return true;
+    return ok;
 }
 
 
