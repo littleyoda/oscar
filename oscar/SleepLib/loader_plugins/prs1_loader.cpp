@@ -259,6 +259,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "1160P",    3, 3, "BiPAP AVAPS 30 (System One 60 Series)" },
     { "1030X110", 3, 6, "DreamStation BiPAP S/T 30" },
     { "1130X110", 3, 6, "DreamStation BiPAP AVAPS 30" },
+    { "1131X150", 3, 6, "DreamStation BiPAP AVAPS 30 AE" },
     
     { "", 0, 0, "" },
 };
