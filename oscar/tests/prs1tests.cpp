@@ -315,7 +315,13 @@ void parseAndEmitChunkYaml(const QString & path)
                     case 0: ok = chunk->ParseCompliance(); break;
                     case 1: ok = chunk->ParseSummary(); break;
                     case 2: ok = chunk->ParseEvents(MODE_UNKNOWN); break;
-                    default: break;
+                    case 5: break;  // skip flow/pressure waveforms
+                    case 6:  // skip oximetry data (but log it)
+                        qWarning() << relative << "oximetry is untested";  // never encountered
+                        break;
+                    default:
+                        qWarning() << relative << "unexpected file type";
+                        break;
                 }
                 
                 // Emit the YAML.

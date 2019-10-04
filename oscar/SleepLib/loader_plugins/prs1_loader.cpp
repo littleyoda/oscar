@@ -922,6 +922,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     if (!task->wavefile.isEmpty()) continue;
                     task->wavefile = fi.canonicalFilePath();
                 } else if (ext == 6) {
+                    qWarning() << fi.canonicalFilePath() << "oximetry is untested";  // TODO: mark as untested/unexpected
                     if (!task->oxifile.isEmpty()) continue;
                     task->oxifile = fi.canonicalFilePath();
                 }
@@ -3122,6 +3123,10 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
         qWarning() << "ParseEventsF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
+    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // We should flag an actual familyVersion 3 file if we ever encounter one!
+    CHECK_VALUE(this->familyVersion, 2);
+    
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
     static const QMap<int,int> event_sizes = { {1,2}, {3,4}, {0xb,4}, {0xd,2}, {0xe,5}, {0xf,5}, {0x10,5}, {0x11,4}, {0x12,4} };
@@ -3132,7 +3137,6 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
         return false;
     }
 
-    CHECK_VALUE(this->familyVersion, 2);
     bool ok = true;
     int pos = 0, startpos;
     int code, size;
@@ -3157,7 +3161,16 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
         }
 
         switch (code) {
-            //case 0x00:  // never seen
+            case 0x00:  // ??? So far only seen on 451P and 551P occasionally, usually no more than once per session
+                // A nonzero delta corresponds to an N-second gap in data (value was 0x85, only seen once). Look for more.
+                CHECK_VALUE(data[startpos], 0);
+                CHECK_VALUE(data[startpos+1], 0);
+                if (data[pos] < 0x80 || data[pos] > 0x85) {
+                    UNEXPECTED_VALUE(data[pos], "0x80-0x85");
+                    DUMP_EVENT();
+                }
+                if (this->familyVersion == 3) DUMP_EVENT();
+                break;
             //case 0x01:  // never seen
             case 0x02:  // Pressure adjustment
                 // See notes in ParseEventsF0V6.
@@ -4012,8 +4025,8 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
         qWarning() << "ParseComplianceF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    // F0V3 is untested, but since summary and events seem to be the same for F0V2 and F0V3,
-    // we'll assume this one is for now, but flag it as unexpected.
+    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // We should flag an actual familyVersion 3 file if we ever encounter one!
     CHECK_VALUE(this->familyVersion, 2);
     
     // TODO: hardcoding this is ugly, think of a better approach
@@ -4096,6 +4109,10 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         qWarning() << "ParseSummaryF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
+    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // We should flag an actual familyVersion 3 file if we ever encounter one!
+    CHECK_VALUE(this->familyVersion, 2);
+    
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
     static const int minimum_sizes[] = { 0xf, 5, 2, 0x21 };
@@ -5593,7 +5610,7 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
     }
     if (flex & 0x80) { // CFlex bit
         if ((flex & 0x10) || cpapmode == PRS1_MODE_ASV) {
-            if (cpapmode != PRS1_MODE_ASV) qWarning() << this->sessionid << "rise time mode?";  // double-check this
+            //if (cpapmode != PRS1_MODE_ASV) qWarning() << this->sessionid << "rise time mode?";  // seems right for 750P, but need to test more
             flexmode = FLEX_RiseTime;
         } else if (flex & 8) { // Plus bit
             if (split || (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_CPAPCHECK)) {
