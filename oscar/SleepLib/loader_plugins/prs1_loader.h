@@ -197,8 +197,14 @@ public:
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 6 machine
     bool ParseEventsF3V6(void);
     
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 0-2 machine
-    bool ParseEventsF5V012(void);
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 0 machine
+    bool ParseEventsF5V0(void);
+
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 1 machine
+    bool ParseEventsF5V1(void);
+
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 2 machine
+    bool ParseEventsF5V2(void);
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 machine
     bool ParseEventsF5V3(void);
