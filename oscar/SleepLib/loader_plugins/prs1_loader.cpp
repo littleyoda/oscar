@@ -2228,36 +2228,38 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
             data0 = data[pos++];
             //qDebug() << "Code 8 found at " << hex << pos - 1 << " " << tt;
 
+            /*
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             } else {
+            */
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 //????
                 //data1=data[pos++]; // ???
                 //pos++;
-            }
             break;
 
         case 0x09: // ASV Codes
-            if (this->familyVersion<2) {
+            //if (this->familyVersion<2) {
                 //code=CPAP_FlowLimit;
                 data0 = data[pos++];
 
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
+            /*
             } else {
                 data0 = data[pos++];
                 data1 = data[pos++];
-            }
-
+            */
             break;
 
         case 0x0a:
             data0 = data[pos++];
+            /*
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             } else {
+            */
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
-            }
             break;
 
 
@@ -2272,7 +2274,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
             break;
 
         case 0x0c:
-
+            /*
             if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
@@ -2281,16 +2283,16 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
 
             } else {
+            */
                 data0 = data[pos++];
                 qDebug() << "Code 12 found at " << hex << pos - 1 << " " << t - data0;
 
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 pos += 2;
-            }
             break;
 
         case 0x0d: // All the other ASV graph stuff.
-
+            /*
             if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
@@ -2298,6 +2300,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 data1 = data[pos++];
                 //tt = t - qint64(data1) * 1000L;
             } else {
+            */
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos++])); // 00=IAP
                 data4 = data[pos++];
                 this->AddEvent(new PRS1IPAPLowEvent(t, data4));               // 01=IAP Low
@@ -2313,13 +2316,15 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos++]));             // 07=Tidal Volume
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos++])); // 08=Snore
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data1 = data[pos++])); // 09=EPAP
+                /*
                 if (this->familyVersion >= 1) {
                     data0 = data[pos++];
                 }
-            }
+                */
             break;
 
         case 0x0e: // Unknown
+            /*
             // Family 5.2 has this code
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data1=data[pos+0])); // 0
@@ -2334,11 +2339,9 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9])); // 9
                 pos+=11;
             } else {
+            */
                 qDebug() << "0x0E Observed in ASV data!!????";
                 data0 = data[pos++]; // << 8) | data[pos];
-
-            }
-            //session->AddEvent(new Event(t,cpapcode, 0, data, 1));
             break;
         case 0x0f:
             qDebug() << "0x0f Observed in ASV data!!????";
@@ -2511,36 +2514,39 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
             data0 = data[pos++];
             //qDebug() << "Code 8 found at " << hex << pos - 1 << " " << tt;
 
+            /*
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
             } else {
+            */
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 //????
                 //data1=data[pos++]; // ???
                 //pos++;
-            }
             break;
 
         case 0x09: // ASV Codes
-            if (this->familyVersion<2) {
+            //if (this->familyVersion<2) {
                 //code=CPAP_FlowLimit;
                 data0 = data[pos++];
 
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
+            /*
             } else {
                 data0 = data[pos++];
                 data1 = data[pos++];
             }
-
+            */
             break;
 
         case 0x0a:
             data0 = data[pos++];
+            /*
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             } else {
+            */
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
-            }
             break;
 
 
@@ -2555,7 +2561,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
             break;
 
         case 0x0c:
-
+            /*
             if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
@@ -2564,16 +2570,16 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
 
             } else {
+            */
                 data0 = data[pos++];
                 qDebug() << "Code 12 found at " << hex << pos - 1 << " " << t - data0;
 
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 pos += 2;
-            }
             break;
 
         case 0x0d: // All the other ASV graph stuff.
-
+            /*
             if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
@@ -2581,6 +2587,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 data1 = data[pos++];
                 //tt = t - qint64(data1) * 1000L;
             } else {
+            */
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos++])); // 00=IAP
                 data4 = data[pos++];
                 this->AddEvent(new PRS1IPAPLowEvent(t, data4));               // 01=IAP Low
@@ -2596,13 +2603,13 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos++]));             // 07=Tidal Volume
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos++])); // 08=Snore
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data1 = data[pos++])); // 09=EPAP
-                if (this->familyVersion >= 1) {
+                //if (this->familyVersion >= 1) {
                     data0 = data[pos++];
-                }
-            }
+                //}
             break;
 
         case 0x0e: // Unknown
+            /*
             // Family 5.2 has this code
             if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data1=data[pos+0])); // 0
@@ -2617,11 +2624,9 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9])); // 9
                 pos+=11;
             } else {
+            */
                 qDebug() << "0x0E Observed in ASV data!!????";
                 data0 = data[pos++]; // << 8) | data[pos];
-
-            }
-            //session->AddEvent(new Event(t,cpapcode, 0, data, 1));
             break;
         case 0x0f:
             qDebug() << "0x0f Observed in ASV data!!????";
@@ -2706,7 +2711,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
     int pos = 0, startpos;
     int code, size;
     int t = 0;
-    EventDataType data0, data1, data4, data5;
+    EventDataType data0, data1;
     //int elapsed, duration, value;
     do {
         code = data[pos++];
@@ -2794,36 +2799,40 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             data0 = data[pos++];
             //qDebug() << "Code 8 found at " << hex << pos - 1 << " " << tt;
 
-            if (this->familyVersion>=2) {
+            //if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
+            /*
             } else {
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 //????
                 //data1=data[pos++]; // ???
                 //pos++;
             }
+            */
             break;
 
         case 0x09: // ASV Codes
+            /*
             if (this->familyVersion<2) {
                 //code=CPAP_FlowLimit;
                 data0 = data[pos++];
 
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             } else {
+            */
                 data0 = data[pos++];
                 data1 = data[pos++];
-            }
-
             break;
 
         case 0x0a:
             data0 = data[pos++];
-            if (this->familyVersion>=2) {
+            //if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
+            /*
             } else {
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
             }
+            */
             break;
 
 
@@ -2839,13 +2848,13 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 
         case 0x0c:
 
-            if (this->familyVersion>=2) {
+            //if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
                 pos += 2;
                 data1 = data[pos++];
                 this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
-
+            /*
             } else {
                 data0 = data[pos++];
                 qDebug() << "Code 12 found at " << hex << pos - 1 << " " << t - data0;
@@ -2853,16 +2862,18 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
                 pos += 2;
             }
+            */
             break;
 
         case 0x0d: // All the other ASV graph stuff.
 
-            if (this->familyVersion>=2) {
+            //if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
                 pos += 2;
                 data1 = data[pos++];
                 //tt = t - qint64(data1) * 1000L;
+            /*
             } else {
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos++])); // 00=IAP
                 data4 = data[pos++];
@@ -2883,11 +2894,12 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                     data0 = data[pos++];
                 }
             }
+            */
             break;
 
         case 0x0e: // Unknown
             // Family 5.2 has this code
-            if (this->familyVersion>=2) {
+            //if (this->familyVersion>=2) {
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data1=data[pos+0])); // 0
                 this->AddEvent(new PRS1IPAPLowEvent(t, data[pos+1])); // 1
                 this->AddEvent(new PRS1IPAPHighEvent(t, data[pos+2])); // 2
@@ -2899,12 +2911,14 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8])); //??
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9])); // 9
                 pos+=11;
+            /*
             } else {
                 qDebug() << "0x0E Observed in ASV data!!????";
                 data0 = data[pos++]; // << 8) | data[pos];
 
             }
             //session->AddEvent(new Event(t,cpapcode, 0, data, 1));
+            */
             break;
         case 0x0f:
             qDebug() << "0x0f Observed in ASV data!!????";
