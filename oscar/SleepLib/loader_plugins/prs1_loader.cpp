@@ -1853,7 +1853,7 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
         switch (code) {
             case 1:  // Pressure adjustment
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++], GAIN));
-                this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos-1, size+1));
+                this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos-1, size+1));  // TODO: what is this?
                 break;
             case 2:  // Timed Breath
                 // TB events have a duration in 0.1s, based on the review of pressure waveforms.
@@ -2414,7 +2414,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const QMap<int,int> event_sizes = { {0,4}, {1,2}, {3,4}, {8,4}, {9,4}, {0xa,2}, {0xb,5}, {0xc,5}, {0xd,5}, {0xe,0xd}, {0xf,5}, {0x10,5}, {0x11,2}, {0x12,6} };
+    static const QMap<int,int> event_sizes = { {0,4}, {1,2}, {3,4}, {8,3}, {9,4}, {0xa,3}, {0xb,5}, {0xc,5}, {0xd,5}, {0xe,0xd}, {0xf,5}, {0x10,5}, {0x11,2}, {0x12,6} };
 
     if (chunk_size < 1) {
         // This does occasionally happen in F0V6.
@@ -2422,12 +2422,13 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
         return false;
     }
 
+    // F5V3 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+    static const float GAIN = 0.125;  // TODO: this should be parameterized somewhere more logical
     bool ok = true;
     int pos = 0, startpos;
     int code, size;
     int t = 0;
-    EventDataType data0, data1;
-    //int elapsed, duration, value;
+    int elapsed/*, duration, value*/;
     do {
         code = data[pos++];
 
@@ -2449,7 +2450,9 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
         }
 
         switch (code) {
+/*
         case 0x00: // Unknown (ASV Pressure value)
+            DUMP_EVENT();
             // offset?
             data0 = data[pos++];
 
@@ -2465,17 +2468,16 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             break;
 
         case 0x01: // Unknown
+            DUMP_EVENT();
             this->AddEvent(new PRS1UnknownValueEvent(code, t, 0, 0.1F));
             break;
-
-        case 0x02: // Pressure ???
-            data0 = data[pos++];
-            //            if (!Code[2]) {
-            //                if (!(Code[2]=session->AddEventList(cpapcode,EVL_Event,0.1))) return false;
-            //            }
-            //            Code[2]->AddEvent(t,data0);
-            break;
+*/
+            case 0x02:  // Pressure adjustment
+                this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++], GAIN));
+                break;
+/*
         case 0x03: // BIPAP Pressure
+            DUMP_EVENT();
             qDebug() << "0x03 Observed in ASV data!!????";
 
             data0 = data[pos++];
@@ -2485,75 +2487,69 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             //            session->AddEvent(new Event(t,CPAP_EAP, 0, data, 1));
             //            session->AddEvent(new Event(t,CPAP_IAP, 0, &data1, 1));
             break;
-
-        case 0x04: // Timed Breath
-            data0 = data[pos++];
-
-            this->AddEvent(new PRS1TimedBreathEvent(t, data0));
-            break;
-
-        case 0x05:
-            //code=CPAP_Obstructive;
-            data0 = data[pos++];
-            this->AddEvent(new PRS1ObstructiveApneaEvent(t - data0, data0));
-            break;
-
+*/
+            case 0x04:  // Timed Breath
+                // TB events have a duration in 0.1s, based on the review of pressure waveforms.
+                // TODO: Ideally the starting time here would be adjusted here, but PRS1ParsedEvents
+                // currently assume integer seconds rather than ms, so that's done at import.
+                duration = data[pos];
+                this->AddEvent(new PRS1TimedBreathEvent(t, duration));
+                break;
+            case 0x05:  // Obstructive Apnea
+                // OA events are instantaneous flags with no duration: reviewing waveforms
+                // shows that the time elapsed between the flag and reporting often includes
+                // non-apnea breathing.
+                elapsed = data[pos];
+                this->AddEvent(new PRS1ObstructiveApneaEvent(t - elapsed, 0));
+                break;
+/*
         case 0x06:
+            DUMP_EVENT();
             //code=CPAP_ClearAirway;
             data0 = data[pos++];
             this->AddEvent(new PRS1ClearAirwayEvent(t - data0, data0));
             break;
+*/
 
-        case 0x07:
-            //code=CPAP_Hypopnea;
-            data0 = data[pos++];
-            this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
-            break;
-
-        case 0x08: // ???
-            // This was breaking parsing for F5V1 prior to using fixed lengths.
-            // That means it's probably very wrong.
-            data0 = data[pos++];
-            //qDebug() << "Code 8 found at " << hex << pos - 1 << " " << tt;
-
-            //if (this->familyVersion>=2) {
-                this->AddEvent(new PRS1HypopneaEvent(t - data0, data0));
-            /*
-            } else {
-                this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
-                //????
-                //data1=data[pos++]; // ???
-                //pos++;
-            }
-            */
-            break;
-
+            case 0x07:  // Hypopnea
+                // NOTE: No additional (unknown) first byte as in F5V3 0x07, but see below.
+                // This seems closer to F5V3 0x0d or 0x0e.
+                // What's different about this an 0x08? This was seen in a PB at least once?
+                elapsed = data[pos];  // based on sample waveform, the hypopnea is over after this
+                this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
+                break;
+            case 0x08:  // Hypopnea, note this is 0x7 in F5V1
+                // TODO: How is this hypopnea different from event 0x9 and 0x7?
+                // NOTE: No additional (unknown) first byte as in F5V3 0x7, but see below.
+                // This seems closer to F5V3 0x0d or 0x0e.
+                elapsed = data[pos];  // based on sample waveform, the hypopnea is over after this
+                this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
+                break;
+/*
         case 0x09: // ASV Codes
-            /*
+            DUMP_EVENT();
+            / *
             if (this->familyVersion<2) {
                 //code=CPAP_FlowLimit;
                 data0 = data[pos++];
 
                 this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
             } else {
-            */
+            * /
                 data0 = data[pos++];
                 data1 = data[pos++];
             break;
-
-        case 0x0a:
-            data0 = data[pos++];
-            //if (this->familyVersion>=2) {
-                this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
-            /*
-            } else {
-                this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
-            }
-            */
-            break;
-
-
+*/
+            case 0x0a:  // Flow Limitation, note this is 0x9 in F5V1 and 0x8 in F5V3
+                // TODO: We should revisit whether this is elapsed or duration once (if)
+                // we start calculating flow limitations ourselves. Flow limitations aren't
+                // as obvious as OA/CA when looking at a waveform.
+                elapsed = data[pos];
+                this->AddEvent(new PRS1FlowLimitationEvent(t - elapsed, 0));
+                break;
+/*
         case 0x0b: // Cheyne Stokes
+            DUMP_EVENT();
             data0 = ((unsigned char *)data)[pos + 1] << 8 | ((unsigned char *)data)[pos];
             //data0*=2;
             pos += 2;
@@ -2562,82 +2558,41 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             //tt-=delta;
             this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
             break;
+*/
+            case 0x0c:  // Periodic Breathing, note this is 0xb in F5V1 and 0xa in F5V3
+                // PB events are reported some time after they conclude, and they do have a reported duration.
+                duration = 2 * (data[pos] | (data[pos+1] << 8));  // confirmed to double in F5V0
+                elapsed = data[pos+2];
+                this->AddEvent(new PRS1PeriodicBreathingEvent(t - elapsed - duration, duration));
+                break;
+/*
+        case 0x0d:
+            DUMP_EVENT();
 
-        case 0x0c:
-
-            //if (this->familyVersion>=2) {
-                data0 = (data[pos + 1] << 8 | data[pos]);
-                data0 *= 2;
-                pos += 2;
-                data1 = data[pos++];
-                this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
-            /*
-            } else {
-                data0 = data[pos++];
-                qDebug() << "Code 12 found at " << hex << pos - 1 << " " << t - data0;
-
-                this->AddEvent(new PRS1UnknownValueEvent(code, t - data0, data0));
-                pos += 2;
-            }
-            */
-            break;
-
-        case 0x0d: // All the other ASV graph stuff.
-
-            //if (this->familyVersion>=2) {
                 data0 = (data[pos + 1] << 8 | data[pos]);
                 data0 *= 2;
                 pos += 2;
                 data1 = data[pos++];
                 //tt = t - qint64(data1) * 1000L;
-            /*
-            } else {
-                this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos++])); // 00=IAP
-                data4 = data[pos++];
-                this->AddEvent(new PRS1IPAPLowEvent(t, data4));               // 01=IAP Low
-                data5 = data[pos++];
-                this->AddEvent(new PRS1IPAPHighEvent(t, data5));               // 02=IAP High
-
-                this->AddEvent(new PRS1TotalLeakEvent(t, data[pos++]));           // 03=LEAK
-
-                this->AddEvent(new PRS1RespiratoryRateEvent(t, data[pos++]));             // 04=Breaths Per Minute
-                this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, data[pos++]));            // 05=Patient Triggered Breaths
-                this->AddEvent(new PRS1MinuteVentilationEvent(t, data[pos++]));             // 06=Minute Ventilation
-                //tmp=data[pos++] * 10.0;
-                this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos++]));             // 07=Tidal Volume
-                this->AddEvent(new PRS1SnoreEvent(t, data[pos++])); // 08=Snore
-                this->AddEvent(new PRS1EPAPAverageEvent(t, data1 = data[pos++])); // 09=EPAP
-                if (this->familyVersion >= 1) {
-                    data0 = data[pos++];
-                }
-            }
-            */
             break;
-
-        case 0x0e: // Unknown
-            // Family 5.2 has this code
-            //if (this->familyVersion>=2) {
-                this->AddEvent(new PRS1IPAPAverageEvent(t, data1=data[pos+0])); // 0
-                this->AddEvent(new PRS1IPAPLowEvent(t, data[pos+1])); // 1
-                this->AddEvent(new PRS1IPAPHighEvent(t, data[pos+2])); // 2
-                this->AddEvent(new PRS1LeakEvent(t, data[pos+3])); // 3  // F5V2, is this really unintentional leak rather than total leak?
-                this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos+7])); // 7
-                this->AddEvent(new PRS1RespiratoryRateEvent(t, data[pos+4])); // 4
-                this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, data[pos+5]));  // 5
-                this->AddEvent(new PRS1MinuteVentilationEvent(t,  data[pos+6])); //6
-                this->AddEvent(new PRS1SnoreEvent(t, data[pos+8])); //??
-                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9])); // 9
-                pos+=11;
-            /*
-            } else {
-                qDebug() << "0x0E Observed in ASV data!!????";
-                data0 = data[pos++]; // << 8) | data[pos];
-
-            }
-            //session->AddEvent(new Event(t,cpapcode, 0, data, 1));
-            */
-            break;
+*/
+            case 0x0e:  // Statistics, note this was 0x0d in F5V0 and F5V1
+                // These appear every 2 minutes, so presumably summarize the preceding period.
+                this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos+0], GAIN));        // 00=IPAP
+                this->AddEvent(new PRS1IPAPLowEvent(t, data[pos+1], GAIN));            // 01=IAP Low
+                this->AddEvent(new PRS1IPAPHighEvent(t, data[pos+2], GAIN));           // 02=IAP High
+                this->AddEvent(new PRS1TotalLeakEvent(t, data[pos+3]));                // 03=Total leak (average?)
+                this->AddEvent(new PRS1RespiratoryRateEvent(t, data[pos+4]));          // 04=Breaths Per Minute (average?)
+                this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, data[pos+5]));  // 05=Patient Triggered Breaths (average?)
+                this->AddEvent(new PRS1MinuteVentilationEvent(t, data[pos+6]));        // 06=Minute Ventilation (average?)
+                this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos+7]));              // 07=Tidal Volume (average?)
+                this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
+                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9], GAIN));        // 09=EPAP average
+                this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?) new to F5V1 (originally found in F5V3)
+                break;
+/*
         case 0x0f:
+            DUMP_EVENT();
             qDebug() << "0x0f Observed in ASV data!!????";
 
             data0 = data[pos + 1] << 8 | data[pos];
@@ -2649,6 +2604,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             break;
 
         case 0x10: // Unknown
+            DUMP_EVENT();
             data0 = data[pos + 1] << 8 | data[pos];
             pos += 2;
             data1 = data[pos++];
@@ -2662,6 +2618,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             //session->AddEvent(new Event(t,cpapcode, 0, data, 3));
             break;
         case 0x11: // Not Leak Rate
+            DUMP_EVENT();
             qDebug() << "0x11 Observed in ASV data!!????";
             //if (!Code[24]) {
             //   Code[24]=new EventList(cpapcode,EVL_Event);
@@ -2671,6 +2628,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 
 
         case 0x12: // Summary
+            DUMP_EVENT();
             qDebug() << "0x12 Observed in ASV data!!????";
             data0 = data[pos++];
             data1 = data[pos++];
@@ -2678,7 +2636,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
             pos += 2;
             //session->AddEvent(new Event(t,cpapcode, 0, data,3));
             break;
-
+*/
             default:
                 DUMP_EVENT();
                 UNEXPECTED_VALUE(code, "known event code");
