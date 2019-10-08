@@ -2297,10 +2297,8 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
             break;
         }
         startpos = pos;
-        if (code != 0 && code != 0x12) {  // These two codes have no timestamp  TODO: verify this applies to F5V012
-            t += data[pos] /*| (data[pos+1] << 8)*/;  // TODO: Is this really only 1 byte?
-            if (data[pos+1] != 0) qWarning() << this->sessionid << "nonzero time? byte" << hex(startpos);
-            CHECK_VALUE(data[pos+1], 0);
+        if (code != 0) {  // Does this code really not have a timestamp? Never seen on F5V1, checked in F5V0.
+            t += data[pos] | (data[pos+1] << 8);
             pos += 2;
         }
 
