@@ -3059,19 +3059,23 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
     }
     
     int t = 0, tt;
-    int size = this->m_data.size()/0x10;
+    static const int record_size = 0x10;
+    int size = this->m_data.size()/record_size;
+    CHECK_VALUE(this->m_data.size() % record_size, 0);
     unsigned char * h = (unsigned char *)this->m_data.data();
 
     int hy, oa, ca;
     qint64 div = 0;
 
-    // TODO: make sure the assumptions here agree with the header:
-    // size == number of intervals
-    // interval seconds = 120
-    // interleave for each channel = 1
-    // also warn on any remainder of data size % record size (but don't fail)
+    // Make sure the assumptions here agree with the header
+    CHECK_VALUE(this->htype, PRS1_HTYPE_INTERVAL);
+    CHECK_VALUE(this->interval_count, size);
+    CHECK_VALUE(this->interval_seconds, 120);
+    for (auto & channel : this->waveformInfo) {
+        CHECK_VALUE(channel.interleave, 1);
+    }
     
-    const qint64 block_duration = 120;
+    static const qint64 block_duration = 120;
 
     for (int x=0; x < size; x++) {
         this->AddEvent(new PRS1IPAPAverageEvent(t, h[0] | (h[1] << 8)));
@@ -3081,49 +3085,51 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
         this->AddEvent(new PRS1FlowRateEvent(t, h[6]));
         this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, h[7]));
         this->AddEvent(new PRS1RespiratoryRateEvent(t, h[8]));
-        //TMV->AddEvent(t, h[9]); // not sure what this is.. encore doesn't graph it.
-        // h[10]?
+        if (h[9] < 13 || h[9] > 84) UNEXPECTED_VALUE(h[9], "13-84");  // not sure what this is.. encore doesn't graph it.
+        CHECK_VALUES(h[10], 0, 8);  // 8 shows as a Low Pressure (LP) alarm
         this->AddEvent(new PRS1MinuteVentilationEvent(t, h[11]));
-        this->AddEvent(new PRS1LeakEvent(t, h[15]));  // TODO: F3V3, is this really unintentional leak rather than total leak?
+        this->AddEvent(new PRS1LeakEvent(t, h[15]));
 
         hy = h[12];  // count of hypopnea events
         ca = h[13];  // count of clear airway events
         oa = h[14];  // count of obstructive events
 
         // divide each event evenly over the 2 minute block
-        // TODO: revisit whether this is the right approach and should be done here? should the durations be hy or div?
+        // NOTE: This is slightly fictional, but there's no waveform data for these machines, so it won't
+        // incorrectly associate specific events with specific flow or pressure events.
+        // TODO: Consider whether to have a numeric channel for H/CA/OA that gets charted like VS does.
+        // currently have another good way to represent flags with numeric values (s
         if (hy > 0) {
             div = block_duration / hy;
-
             tt = t;
             for (int i=0; i < hy; ++i) {
-                this->AddEvent(new PRS1HypopneaEvent(t, hy));
+                this->AddEvent(new PRS1HypopneaEvent(tt, 0));
                 tt += div;
             }
         }
         if (ca > 0) {
             div = block_duration / ca;
-
             tt = t;
-
             for (int i=0; i < ca; ++i) {
-                this->AddEvent(new PRS1ClearAirwayEvent(tt, ca));
+                this->AddEvent(new PRS1ClearAirwayEvent(tt, 0));
                 tt += div;
             }
         }
         if (oa > 0) {
             div = block_duration / oa;
-
             tt = t;
             for (int i=0; i < oa; ++i) {
-                this->AddEvent(new PRS1ObstructiveApneaEvent(t, oa));
+                this->AddEvent(new PRS1ObstructiveApneaEvent(tt, 0));
                 tt += div;
             }
         }
 
-        h += 0x10;
+        h += record_size;
         t += block_duration;
     }
+    
+    this->duration = t;
+
     return true;
 }
 
@@ -5104,6 +5110,9 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
             break;
         }
         
+        // NOTE: F3V3 doesn't use 16-bit time deltas in its summary events, it uses absolute timestamps!
+        // It's possible that these are 24-bit, but haven't yet seen a timestamp that large.
+        
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
@@ -5118,16 +5127,16 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
                 ok = this->ParseSettingsF3V3(data, size);
                 break;
             case 2:  // Mask On
-                tt += data[pos] | (data[pos+1] << 8);
+                tt = data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
-                CHECK_VALUE(data[pos+2], 0);
+                CHECK_VALUE(data[pos+2], 0);  // may be high byte of timestamp
                 this->ParseHumidifierSettingF3V3(data[pos+3], data[pos+4]);
                 break;
             case 3:  // Mask Off
-                tt += data[pos] | (data[pos+1] << 8);
+                tt = data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
             // F3V3 doesn't have a separate stats record like F3V6 does, the stats just follow the MaskOff data.
-                CHECK_VALUE(data[pos+0x2], 0);
+                CHECK_VALUE(data[pos+0x2], 0);  // may be high byte of timestamp
                 CHECK_VALUE(data[pos+0x3], 0);  // probably OA count, but the only sample data is missing .002 files, so we can't yet verify
                 CHECK_VALUE(data[pos+0x4], 0);
                 //CHECK_VALUE(data[pos+0x5], 0);  // CA count, probably 16-bit
@@ -5136,9 +5145,9 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
                 CHECK_VALUE(data[pos+0x8], 0);
                 break;
             case 1:  // Equipment Off
-                tt += data[pos] | (data[pos+1] << 8);
+                tt = data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
-                CHECK_VALUE(data[pos+2], 0);
+                CHECK_VALUE(data[pos+2], 0);  // may be high byte of timestamp
                 break;
             /*
             case 5:  // Clock adjustment? See ParseSummaryF0V4.
