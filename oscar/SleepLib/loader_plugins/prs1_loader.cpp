@@ -947,7 +947,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     qDebug() << fi.canonicalFilePath() << chunk_sid;
                 }
                 if (m->SessionExists(chunk_sid)) {
-                    qDebug() << path << "session already exists, skipping" << sid << chunk_sid;
+                    qDebug() << path << "session already imported, skipping" << sid << chunk_sid;
                     delete chunk;
                     continue;
                 }
@@ -982,6 +982,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     break;
                 case 2:
                     if (task->event) {
+                        // TODO: This happens on F3V3 events, which are formatted as waveforms,
+                        // with one chunk per mask-on slice, and thus multiple chunks per session.
+                        // We need to add support for this scenario.
                         qWarning() << path << "duplicate events?";
                         delete chunk;
                         continue;
@@ -1677,7 +1680,7 @@ bool PRS1Import::ParseEventsF5V3()
     session->updateFirst(t);
 
     bool ok;
-    ok = event->ParseEvents(MODE_UNKNOWN);
+    ok = event->ParseEvents();
     if (!ok) {
         return false;
     }
@@ -1982,6 +1985,7 @@ bool PRS1Import::ParseF5Events()
     EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
     EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
     EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);
 
     // On-demand channels
     ChannelID Codes[] = {
@@ -2014,13 +2018,16 @@ bool PRS1Import::ParseF5Events()
     session->updateFirst(t);
 
     bool ok;
-    ok = event->ParseEvents(MODE_UNKNOWN);
+    ok = event->ParseEvents();
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
+            case PRS1EPAPSetEvent::TYPE:
+                // TODO: The below belong in average channels and then this should go into the EPAP adjustment channel.
+                break;
             case PRS1IPAPAverageEvent::TYPE:
                 IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
@@ -2068,11 +2075,23 @@ bool PRS1Import::ParseF5Events()
             case PRS1LeakEvent::TYPE:
                 LEAK->AddEvent(t, e->m_value);
                 break;
-            case PRS1SnoreEvent::TYPE:
+            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
+                // TODO: The numeric snore graph is the right way to present this information,
+                // but it needs to be shifted left 2 minutes, since it's not a starting value
+                // but a past statistic.
                 SNORE->AddEvent(t, e->m_value);
                 if (e->m_value > 0) {
-                    VS->AddEvent(t, 0); //data2); // VSnore
+                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
+                    // since they don't have a precise timestamp. They should continue to be drawn
+                    // on the flags overview.
+                    VS2->AddEvent(t, 0);
                 }
+                break;
+            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
+                // TODO: These don't need to be drawn separately on the flag overview, since
+                // they're presumably included in the overall snore count statistic. They should
+                // continue to be drawn on the waveform, due to their precise timestamp.
+                VS->AddEvent(t, 0);
                 break;
             case PRS1RespiratoryRateEvent::TYPE:
                 RR->AddEvent(t, e->m_value);
@@ -2692,7 +2711,7 @@ bool PRS1Import::ParseEventsF3V6()
     session->updateFirst(t);
     
     bool ok;
-    ok = event->ParseEvents(MODE_UNKNOWN);
+    ok = event->ParseEvents();
     if (!ok) {
         return false;
     }
@@ -2985,12 +3004,14 @@ bool PRS1Import::ParseF3Events()
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, 0.1F);
     EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);
 
-
+    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
+    // each of which has a starting timestamp and events at offsets from that timestamp,
+    // all of which should be coalesced into a single imported session.
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
     bool ok;
-    ok = event->ParseEvents(MODE_UNKNOWN);
+    ok = event->ParseEvents();
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
@@ -3250,13 +3271,13 @@ bool PRS1Import::ParseF0Events()
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
 
-    CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
+    //CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
 
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
     bool ok;
-    ok = event->ParseEvents(mode);
+    ok = event->ParseEvents();
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
@@ -3379,7 +3400,7 @@ bool PRS1Import::ParseF0Events()
     return true;
 }
 
-bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
+bool PRS1DataChunk::ParseEventsF0V23()
 {
     if (this->family != 0 || this->familyVersion < 2 || this->familyVersion > 3) {
         qWarning() << "ParseEventsF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
@@ -3557,7 +3578,7 @@ bool PRS1DataChunk::ParseEventsF0V23(CPAPMode /*mode*/)
 }
 
 
-bool PRS1DataChunk::ParseEventsF0V4(CPAPMode /*mode*/)
+bool PRS1DataChunk::ParseEventsF0V4()
 {
     if (this->family != 0 || this->familyVersion != 4) {
         qWarning() << "ParseEventsF0V4 called with family" << this->family << "familyVersion" << this->familyVersion;
@@ -3784,14 +3805,14 @@ bool PRS1Import::ParseEventsF0V6()
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
 
-    CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
+    //CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
 
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
     bool ok;
-    ok = event->ParseEvents(mode);
+    ok = event->ParseEvents();
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
@@ -3924,7 +3945,7 @@ bool PRS1Import::ParseEventsF0V6()
 
 // DreamStation family 0 CPAP/APAP machines (400X-700X)
 // Originally derived from F5V3 parsing + (incomplete) F0V234 parsing + sample data
-bool PRS1DataChunk::ParseEventsF0V6(CPAPMode /*mode*/)
+bool PRS1DataChunk::ParseEventsF0V6()
 {
     if (this->family != 0 || this->familyVersion != 6) {
         qWarning() << "ParseEventsF0V6 called with family" << this->family << "familyVersion" << this->familyVersion;
@@ -7145,24 +7166,23 @@ bool PRS1DataChunk::ParseSummary()
 
 
 // TODO: Eventually PRS1Import::ImportEvents will call this directly, once the PRS1Import::ParseF*Events have been merged.
-bool PRS1DataChunk::ParseEvents(CPAPMode mode)
+// TODO: The nested switch statement below just begs for per-version subclasses.
+bool PRS1DataChunk::ParseEvents()
 {
     bool ok = false;
     switch (this->family) {
         case 0:
-            if (this->familyVersion == 6) {
-                ok = this->ParseEventsF0V6(mode);
-            } else if (this->familyVersion == 4) {
-                ok = this->ParseEventsF0V4(mode);
-            } else if (this->familyVersion >= 2 && this->familyVersion <= 3) {
-                ok = this->ParseEventsF0V23(mode);
+            switch (this->familyVersion) {
+                case 2: ok = this->ParseEventsF0V23(); break;
+                case 3: ok = this->ParseEventsF0V23(); break;
+                case 4: ok = this->ParseEventsF0V4(); break;
+                case 6: ok = this->ParseEventsF0V6(); break;
             }
             break;
         case 3:
-            if (this->familyVersion == 6) {
-                ok = this->ParseEventsF3V6();
-            } else if (this->familyVersion == 3) {
-                ok = this->ParseEventsF3V3();
+            switch (this->familyVersion) {
+                case 3: ok = this->ParseEventsF3V3(); break;
+                case 6: ok = this->ParseEventsF3V6(); break;
             }
             break;
         case 5:
@@ -7181,6 +7201,11 @@ bool PRS1DataChunk::ParseEvents(CPAPMode mode)
 
 
 // TODO: Eventually this will be renamed PRS1Import::ImportEvents, once PRS1Import::ParseF*Events have been merged and incorporated.
+// The functions are currently different due to different:
+// - Channel list (required and on-demand)
+// - Pressure gain (used to create pressure channels)
+// - Whether leak should be calculated from total leak
+// - Inadvertent inconsistencies
 bool PRS1Import::ParseEvents()
 {
     bool res = false;

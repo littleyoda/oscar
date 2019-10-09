@@ -180,16 +180,16 @@ public:
     void ParseTubingTypeV3(unsigned char type);
 
     //! \brief Figures out which Event Parser to call, based on machine family/version and calls it.
-    bool ParseEvents(CPAPMode mode);
+    bool ParseEvents(void);
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP machine
-    bool ParseEventsF0V23(CPAPMode mode);
+    bool ParseEventsF0V23(void);
     
     //! \brief Parse a single data chunk from a .002 file containing event data for a 60 Series family 0 CPAP/APAP 60machine
-    bool ParseEventsF0V4(CPAPMode mode);
+    bool ParseEventsF0V4(void);
     
     //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
-    bool ParseEventsF0V6(CPAPMode mode);
+    bool ParseEventsF0V6(void);
 
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 3 machine
     bool ParseEventsF3V3(void);
