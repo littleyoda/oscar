@@ -1691,9 +1691,12 @@ void PRS1DataChunk::AddEvent(PRS1ParsedEvent* const event)
 
 bool PRS1Import::ParseEventsF5V3()
 {
-    // F5V3 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
-    static const float GAIN = 0.125F;  // TODO: parameterize this somewhere better
-    
+    float GAIN = PRS1PressureEvent::GAIN;
+    if (event->familyVersion == 2 || event->familyVersion == 3) {
+        // F5V2 and F5V3 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+        GAIN = 0.125;  // TODO: this should be parameterized somewhere more logical
+    }
+
     // Required channels
     EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
@@ -1708,7 +1711,7 @@ bool PRS1Import::ParseEventsF5V3()
     EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // TODO: calculated for F5V0, reported by F5V1 and higher
     
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
@@ -1735,7 +1738,7 @@ bool PRS1Import::ParseEventsF5V3()
 
     bool ok;
     ok = event->ParseEvents();
-    if (!ok) {
+    if (!ok) {  // TODO: reconcile with F5V2 and earlier
         return false;
     }
     
@@ -1794,6 +1797,7 @@ bool PRS1Import::ParseEventsF5V3()
                 break;
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
+                // TODO: reconcile with F5V2 and earlier
                 break;
             case PRS1LeakEvent::TYPE:
                 LEAK->AddEvent(t, e->m_value);
@@ -1844,6 +1848,7 @@ bool PRS1Import::ParseEventsF5V3()
         }
     }
     
+    // TODO: why is the below commented out?
     //t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
@@ -2017,6 +2022,12 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
 
 bool PRS1Import::ParseF5Events()
 {
+    float GAIN = PRS1PressureEvent::GAIN;
+    if (event->familyVersion == 2 || event->familyVersion == 3) {
+        // F5V2 and F5V3 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+        GAIN = 0.125;  // TODO: this should be parameterized somewhere more logical
+    }
+
     // Required channels
     EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
@@ -2039,42 +2050,25 @@ bool PRS1Import::ParseF5Events()
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
     
     // TB could be on-demand
-    EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);
+    EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);  // TODO: a gain of 0.1 should affect display, but it doesn't
 
-    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, 0.1F);
-    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, 0.1F);
-    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, 0.1F);
-    EventList *IPAPLo = session->AddEventList(CPAP_IPAPLo, EVL_Event, 0.1F);
-    EventList *IPAPHi = session->AddEventList(CPAP_IPAPHi, EVL_Event, 0.1F);
+    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
+    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
+    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
+    EventList *IPAPLo = session->AddEventList(CPAP_IPAPLo, EVL_Event, GAIN);
+    EventList *IPAPHi = session->AddEventList(CPAP_IPAPHi, EVL_Event, GAIN);
 
     // On-demand channels
-    /*
-    ChannelID Codes[] = {
-        PRS1_00, PRS1_01, CPAP_Pressure, CPAP_EPAP, CPAP_PressurePulse, CPAP_Obstructive,
-        CPAP_ClearAirway, CPAP_Hypopnea, PRS1_08,  CPAP_FlowLimit, PRS1_0A, CPAP_PB,
-        PRS1_0C, CPAP_VSnore, PRS1_0E, PRS1_0F,
-        CPAP_LargeLeak, // Large leak apparently
-        CPAP_LeakTotal, PRS1_12
-    };
-
-    int ncodes = sizeof(Codes) / sizeof(ChannelID);
-    EventList *Code[0x20] = {nullptr};
-    */
-
-    //EventList * PRESSURE=nullptr;
     //EventList * PP=nullptr;
 
+    EventDataType currentPressure=0;
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    EventDataType currentPressure=0, leak;
-
     bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
     EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
-
 
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
@@ -2106,7 +2100,12 @@ bool PRS1Import::ParseF5Events()
                 PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
                 break;
             case PRS1TimedBreathEvent::TYPE:
-                TB->AddEvent(t, e->m_duration);
+                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
+                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
+                // they can express durations less than 1 second.
+                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
+                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
+                TB->AddEvent(t - duration, e->m_duration * 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
                 OA->AddEvent(t, e->m_duration);
@@ -2135,8 +2134,10 @@ bool PRS1Import::ParseF5Events()
                 TOTLEAK->AddEvent(t, e->m_value);
                 // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
                 // TODO: compare this value for the reported value for F5V1 and higher?
-                leak = e->m_value;
+                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
+                //   Or omit, because F5V1 and above reports unintentional leak below.
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
+                    EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
                     LEAK->AddEvent(t, leak);
@@ -2175,19 +2176,8 @@ bool PRS1Import::ParseF5Events()
             case PRS1TidalVolumeEvent::TYPE:
                 TV->AddEvent(t, e->m_value);
                 break;
-            /*
-            case PRS1UnknownValueEvent::TYPE:
-            {
-                int code = ((PRS1UnknownValueEvent*) e)->m_code;
-                Q_ASSERT(code < ncodes);
-                if (!Code[code]) {
-                    ChannelID cpapcode = Codes[(int)code];
-                    if (!(Code[code] = session->AddEventList(cpapcode, EVL_Event, e->m_gain))) { return false; }
-                }
-                Code[code]->AddEvent(t, e->m_value);
-                break;
-            }
-            */
+            // No PP event in F5V2 or earlier?
+            // Eat PRS1UnknownDataEvent like F5V3?
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
