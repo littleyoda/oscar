@@ -1712,7 +1712,7 @@ bool PRS1Import::ParseEventsF5V3()
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
     EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // TODO: calculated for F5V0, reported by F5V1 and higher
-    
+
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
     EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
@@ -1731,6 +1731,14 @@ bool PRS1Import::ParseEventsF5V3()
     EventList *PP = nullptr;
 
     EventDataType currentPressure=0;
+
+    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
+    // Only needed for F5V0: F5V1 and later report it directly
+    bool calcLeaks = (event->familyVersion == 0) && p_profile->cpap->calculateUnintentionalLeaks();
+    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
+    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
+    EventDataType lpm = lpm20 - lpm4;
+    EventDataType ppm = lpm / 16.0;
 
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
@@ -1794,7 +1802,16 @@ bool PRS1Import::ParseEventsF5V3()
                 break;
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
-                // TODO: reconcile with F5V2 and earlier
+                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
+                // TODO: compare this value for the reported value for F5V1 and higher?
+                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
+                //   Or omit, because F5V1 and above reports unintentional leak below.
+                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
+                    EventDataType leak = e->m_value;
+                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
+                    if (leak < 0) leak = 0;
+                    LEAK->AddEvent(t, leak);
+                }
                 break;
             case PRS1LeakEvent::TYPE:
                 LEAK->AddEvent(t, e->m_value);
@@ -1844,13 +1861,13 @@ bool PRS1Import::ParseEventsF5V3()
                 break;
         }
     }
-    
+
     if (!ok) {
         return false;
     }
     
-    // TODO: why is the below commented out?
-    //t = qint64(event->timestamp + event->duration) * 1000L;
+    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+    t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
     session->m_cph.clear();
@@ -2198,6 +2215,7 @@ bool PRS1Import::ParseF5Events()
         return false;
     }
     
+    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
     t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
@@ -2912,8 +2930,8 @@ bool PRS1Import::ParseEventsF3V6()
         return false;
     }
     
-    // TODO: Why is the below commented out?
-    //t = qint64(event->timestamp + event->duration) * 1000L;
+    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+    t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
     session->m_cph.clear();
