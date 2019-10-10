@@ -306,10 +306,8 @@ public:
     bool ParseOximetry();
 
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a standard system one machine
-    bool ParseF0Events();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a standard system one machine (family version 6)
-    bool ParseEventsF0V6();
+    //! \brief Import a single data chunk from a .002 file containing event data for a standard system one machine (family versions 2, 3, 4, and 6)
+    bool ImportEventsF0V2346();
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 3)
     bool ParseEventsF3V3();
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 6)

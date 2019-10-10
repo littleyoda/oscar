@@ -3321,7 +3321,8 @@ void SmoothEventList(Session * session, EventList * ev, ChannelID code)
 
 
 // 750P is F0V2; 550P is F0V2/F0V3; 450P is F0V3; 460P, 560P[BT], 660P, 760P are F0V4
-bool PRS1Import::ParseF0Events()
+// 200X, 400X, 400G, 500X, 502G, 600X, 700X are F0V6
+bool PRS1Import::ImportEventsF0V2346()
 {
     // Required channels
     EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
@@ -3843,177 +3844,6 @@ bool PRS1DataChunk::ParseEventsF0V4()
     this->duration = t;
 
     return ok;
-}
-
-
-// 200X, 400X, 400G, 500X, 502G, 600X, 700X are F0V6
-// Originally a copy of PRS1Import::ParseF0Events, modified based on F5V3/F3V6 importers and comparison to reports
-bool PRS1Import::ParseEventsF0V6()
-{
-    // Required channels
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
-    EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
-    EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-
-    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
-    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
-
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
-    EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
-    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // always calculated for F0V2 through F0V6
-
-    // Pressure initialized on demand due to possibility of bilevel vs. single pressure
-
-    // TODO: PP should be on-demand
-    EventList *PP = session->AddEventList(CPAP_PressurePulse, EVL_Event);
-
-
-    // On-demand channels
-    //Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
-
-    EventList *PRESSURE = nullptr;
-    EventList *EPAP = nullptr;
-    EventList *IPAP = nullptr;
-    EventList *PS = nullptr;
-
-
-    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    EventDataType currentPressure=0, leak;
-
-    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
-    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-
-    EventDataType lpm = lpm20 - lpm4;
-    EventDataType ppm = lpm / 16.0;
-
-    //CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
-
-    qint64 duration;
-    qint64 t = qint64(event->timestamp) * 1000L;
-    session->updateFirst(t);
-
-    bool ok;
-    ok = event->ParseEvents();
-    
-    for (int i=0; i < event->m_parsedData.count(); i++) {
-        PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        t = qint64(event->timestamp + e->m_start) * 1000L;
-        
-        switch (e->m_type) {
-            case PRS1SnoresAtPressureEvent::TYPE:
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
-            case PRS1AutoPressureSetEvent::TYPE:
-                break;  // not imported or displayed
-            case PRS1PressureSetEvent::TYPE:
-                if (!PRESSURE) {
-                    if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
-                }
-                PRESSURE->AddEvent(t, e->m_value);
-                currentPressure = e->m_value;
-                break;
-            case PRS1IPAPSetEvent::TYPE:
-                if(!IPAP) {
-                    if (!(IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, e->m_gain))) { return false; }
-                }
-                IPAP->AddEvent(t, e->m_value);
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPSetEvent::TYPE:
-                if (!EPAP) {
-                    if (!(EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, e->m_gain))) { return false; }
-                }
-                if(!PS) {
-                    if (!(PS = session->AddEventList(CPAP_PS, EVL_Event, e->m_gain))) { return false; }
-                }
-                EPAP->AddEvent(t, e->m_value);
-                PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
-                break;
-            case PRS1PressureAverageEvent::TYPE:
-                // TODO, we need OSCAR channels for average stats
-                break;
-            case PRS1ObstructiveApneaEvent::TYPE:
-                OA->AddEvent(t, e->m_duration);
-                break;
-            case PRS1ClearAirwayEvent::TYPE:
-                CA->AddEvent(t, e->m_duration);
-                break;
-            case PRS1HypopneaEvent::TYPE:
-                HY->AddEvent(t, e->m_duration);
-                break;
-            case PRS1FlowLimitationEvent::TYPE:
-                FL->AddEvent(t, e->m_duration);
-                break;
-            case PRS1PeriodicBreathingEvent::TYPE:
-                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
-                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                PB->AddEvent(t + duration, e->m_duration);
-                break;
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: see PB comment above.
-                duration = e->m_duration * 1000L;
-                LL->AddEvent(t + duration, e->m_duration);
-                break;
-            case PRS1TotalLeakEvent::TYPE:
-                TOTLEAK->AddEvent(t, e->m_value);
-                leak = e->m_value;
-                // F0 doesn't appear to report unintentional leak
-                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
-                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
-                    if (leak < 0) leak = 0;
-                    LEAK->AddEvent(t, leak);
-                }
-                break;
-            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
-                // TODO: The numeric snore graph is the right way to present this information,
-                // but it needs to be shifted left 2 minutes, since it's not a starting value
-                // but a past statistic.
-                SNORE->AddEvent(t, e->m_value);
-                if (e->m_value > 0) {
-                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
-                    // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview.
-                    VS2->AddEvent(t, 0);
-                }
-                break;
-            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
-                // TODO: These don't need to be drawn separately on the flag overview, since
-                // they're presumably included in the overall snore count statistic. They should
-                // continue to be drawn on the waveform, due to their precise timestamp.
-                VS->AddEvent(t, 0);
-                break;
-            case PRS1RERAEvent::TYPE:
-                RE->AddEvent(t, e->m_value);
-                break;
-            case PRS1PressurePulseEvent::TYPE:
-                PP->AddEvent(t, e->m_value);
-                break;
-            default:
-                qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
-                break;
-        }
-    }
-
-    if (!ok) {
-        return false;
-    }
-    
-    t = qint64(event->timestamp + event->duration) * 1000L;
-    session->updateLast(t);
-    session->m_cnt.clear();
-    session->m_cph.clear();
-
-    session->m_lastchan.clear();
-    session->m_firstchan.clear();
-    session->m_valuesummary[CPAP_Pressure].clear();
-    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
-
-    return true;
 }
 
 
@@ -7286,11 +7116,7 @@ bool PRS1Import::ParseEvents()
     if (!event) return false;
     switch (event->family) {
     case 0:
-        if (event->familyVersion == 6) {
-            res = this->ParseEventsF0V6();
-        } else {
-            res = this->ParseF0Events();
-        }
+        res = this->ImportEventsF0V2346();
         break;
     case 3:
         // NOTE: The original comment in the header for ParseF3EventsV3 said there was a 1060P with fileVersion 3.
