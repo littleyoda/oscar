@@ -2076,6 +2076,7 @@ bool PRS1Import::ParseF5Events()
     EventDataType ppm = lpm / 16.0;
 
 
+    qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
@@ -2120,10 +2121,15 @@ bool PRS1Import::ParseF5Events()
                 FL->AddEvent(t, e->m_duration);
                 break;
             case PRS1PeriodicBreathingEvent::TYPE:
-                PB->AddEvent(t, e->m_duration);
+                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
+                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
+                duration = e->m_duration * 1000L;
+                PB->AddEvent(t + duration, e->m_duration);
                 break;
             case PRS1LargeLeakEvent::TYPE:
-                LL->AddEvent(t, e->m_duration);
+                // TODO: see PB comment above.
+                duration = e->m_duration * 1000L;
+                LL->AddEvent(t + duration, e->m_duration);
                 break;
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
@@ -3370,6 +3376,7 @@ bool PRS1Import::ParseF0Events()
 
     //CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
 
+    qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
@@ -3425,12 +3432,15 @@ bool PRS1Import::ParseF0Events()
                 FL->AddEvent(t, e->m_duration);
                 break;
             case PRS1PeriodicBreathingEvent::TYPE:
-                // TODO: see whether this or F0V6 import is correct
-                PB->AddEvent(t, e->m_duration);
+                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
+                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
+                duration = e->m_duration * 1000L;
+                PB->AddEvent(t + duration, e->m_duration);
                 break;
             case PRS1LargeLeakEvent::TYPE:
-                // TODO: see whether this or F0V6 import is correct
-                LL->AddEvent(t, e->m_duration);
+                // TODO: see PB comment above.
+                duration = e->m_duration * 1000L;
+                LL->AddEvent(t + duration, e->m_duration);
                 break;
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
