@@ -1227,7 +1227,7 @@ protected:
     PRS1ParsedValueEvent(PRS1ParsedEventType type, int start, int value) : PRS1ParsedEvent(type, start) { m_value = value; }
 };
 
-
+/*
 class PRS1UnknownValueEvent : public PRS1ParsedValueEvent
 {
 public:
@@ -1243,7 +1243,7 @@ public:
     int m_code;
     PRS1UnknownValueEvent(int code, int start, int value, float gain=1.0) : PRS1ParsedValueEvent(TYPE, start, value), m_code(code) { m_gain = gain; }
 };
-
+*/
 
 class PRS1UnknownDataEvent : public PRS1ParsedEvent
 {
@@ -1695,28 +1695,34 @@ bool PRS1Import::ParseEventsF5V3()
     static const float GAIN = 0.125F;  // TODO: parameterize this somewhere better
     
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
+    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
+    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
+    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
+    // No RERA detection
+
+    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
     EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+    
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
     EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
+    
+    // TB could be on-demand
     EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event, 0.1F);  // TODO: a gain of 0.1 should affect display, but it doesn't
+
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
     EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
     EventList *IPAPLo = session->AddEventList(CPAP_IPAPLo, EVL_Event, GAIN);
     EventList *IPAPHi = session->AddEventList(CPAP_IPAPHi, EVL_Event, GAIN);
-    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);
 
     // On-demand channels
     EventList *PP = nullptr;
@@ -2012,30 +2018,37 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
 bool PRS1Import::ParseF5Events()
 {
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
+    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
+    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
+    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
+    // No RERA detection
+
+    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // TODO: calculated for F5V0, reported by F5V1 and higher
+
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
     EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
+    
+    // TB could be on-demand
     EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);
+
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, 0.1F);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, 0.1F);
     EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, 0.1F);
     EventList *IPAPLo = session->AddEventList(CPAP_IPAPLo, EVL_Event, 0.1F);
     EventList *IPAPHi = session->AddEventList(CPAP_IPAPHi, EVL_Event, 0.1F);
-    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);
 
     // On-demand channels
+    /*
     ChannelID Codes[] = {
         PRS1_00, PRS1_01, CPAP_Pressure, CPAP_EPAP, CPAP_PressurePulse, CPAP_Obstructive,
         CPAP_ClearAirway, CPAP_Hypopnea, PRS1_08,  CPAP_FlowLimit, PRS1_0A, CPAP_PB,
@@ -2046,6 +2059,7 @@ bool PRS1Import::ParseF5Events()
 
     int ncodes = sizeof(Codes) / sizeof(ChannelID);
     EventList *Code[0x20] = {nullptr};
+    */
 
     //EventList * PRESSURE=nullptr;
     //EventList * PP=nullptr;
@@ -2113,6 +2127,8 @@ bool PRS1Import::ParseF5Events()
                 break;
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
+                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
+                // TODO: compare this value for the reported value for F5V1 and higher?
                 leak = e->m_value;
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
@@ -2153,6 +2169,7 @@ bool PRS1Import::ParseF5Events()
             case PRS1TidalVolumeEvent::TYPE:
                 TV->AddEvent(t, e->m_value);
                 break;
+            /*
             case PRS1UnknownValueEvent::TYPE:
             {
                 int code = ((PRS1UnknownValueEvent*) e)->m_code;
@@ -2164,6 +2181,7 @@ bool PRS1Import::ParseF5Events()
                 Code[code]->AddEvent(t, e->m_value);
                 break;
             }
+            */
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -2730,26 +2748,35 @@ bool PRS1Import::ParseEventsF3V6()
     static const float GAIN = 0.125F;  // TODO: parameterize this somewhere better
     
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
+    // No FL detection?
+    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
+    // No individual VS events reported
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
+    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
+
+    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
     EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
     EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
+
+    // TB could be on-demand
     EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);
+
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
-    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *TMV = session->AddEventList(CPAP_Test1, EVL_Event);
-    EventList *FLOW = session->AddEventList(CPAP_Test2, EVL_Event);
+    // TODO: PS? Maybe only useful when it's variable?
+
+    EventList *TMV = session->AddEventList(CPAP_Test1, EVL_Event);  // ???
+    EventList *FLOW = session->AddEventList(CPAP_Test2, EVL_Event);  // ???
 
     // On-demand channels
     EventList *PP = nullptr;
@@ -2817,7 +2844,10 @@ bool PRS1Import::ParseEventsF3V6()
                 // but a past statistic.
                 SNORE->AddEvent(t, e->m_value);
                 if (e->m_value > 0) {
-                    VS->AddEvent(t, 0);  // VSnore flag on overview
+                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
+                    // since they don't have a precise timestamp. They should continue to be drawn
+                    // on the flags overview.
+                    VS2->AddEvent(t, 0);
                 }
                 break;
             case PRS1RespiratoryRateEvent::TYPE:
@@ -3035,22 +3065,34 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
 }
 
 
-bool PRS1Import::ParseF3Events()
+bool PRS1Import::ParseEventsF3V3()
 {
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
+    // No FL detection
+    // No VS detection
+    // No RERA detection
+
+    // No PB detection
+    // No LL detection
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
     EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+
     EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
     EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
     EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
+
+    // No TB reported
+
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, 0.1F);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, 0.1F);
-    EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);
+    // TODO: PS? Maybe only useful when it's variable?
+
+    EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);  // TODO: should this stat be calculated from flow waveforms on other models?
 
     // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
     // each of which has a starting timestamp and events at offsets from that timestamp,
@@ -3276,32 +3318,39 @@ void SmoothEventList(Session * session, EventList * ev, ChannelID code)
 bool PRS1Import::ParseF0Events()
 {
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
-    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
+    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
     EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);
-    EventList *PP = session->AddEventList(CPAP_PressurePulse, EVL_Event);
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
     EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
+
+    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
+    EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
+    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
+    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // always calculated for F0V2 through F0V6
+
+    // Pressure initialized on demand due to possibility of bilevel vs. single pressure
+
+    // TODO: PP should be on-demand
+    EventList *PP = session->AddEventList(CPAP_PressurePulse, EVL_Event);
 
 
     // On-demand channels
+    /*
     ChannelID Codes[] = {
         PRS1_00, PRS1_01, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         PRS1_0B, 0, 0, PRS1_0E
     };
 
     int ncodes = sizeof(Codes) / sizeof(ChannelID);
+    */
     EventList *Code[0x20] = {0};
 
     Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
-    EventList * LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
 
     EventList *PRESSURE = nullptr;
     EventList *EPAP = nullptr;
@@ -3363,14 +3412,6 @@ bool PRS1Import::ParseF0Events()
             case PRS1PressureAverageEvent::TYPE:
                 // TODO, we need OSCAR channels for average stats
                 break;
-            /*
-            case PRS1PressureReliefEvent::TYPE:
-                if (!EPAP) {
-                    if (!(EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, e->m_gain))) { return false; }
-                }
-                EPAP->AddEvent(t, e->m_value);
-                break;
-            */
             case PRS1ObstructiveApneaEvent::TYPE:
                 OA->AddEvent(t, e->m_duration);
                 break;
@@ -3384,9 +3425,11 @@ bool PRS1Import::ParseF0Events()
                 FL->AddEvent(t, e->m_duration);
                 break;
             case PRS1PeriodicBreathingEvent::TYPE:
+                // TODO: see whether this or F0V6 import is correct
                 PB->AddEvent(t, e->m_duration);
                 break;
             case PRS1LargeLeakEvent::TYPE:
+                // TODO: see whether this or F0V6 import is correct
                 LL->AddEvent(t, e->m_duration);
                 break;
             case PRS1TotalLeakEvent::TYPE:
@@ -3413,6 +3456,7 @@ bool PRS1Import::ParseF0Events()
             case PRS1PressurePulseEvent::TYPE:
                 PP->AddEvent(t, e->m_value);
                 break;
+            /*
             case PRS1UnknownValueEvent::TYPE:
             {
                 int code = ((PRS1UnknownValueEvent*) e)->m_code;
@@ -3425,6 +3469,7 @@ bool PRS1Import::ParseF0Events()
                 Code[code]->AddEvent(t, e->m_value);
                 break;
             }
+            */
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -3810,29 +3855,36 @@ bool PRS1DataChunk::ParseEventsF0V4()
 bool PRS1Import::ParseEventsF0V6()
 {
     // Required channels
+    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
     EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
 
+    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
+    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
+    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
+    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
+    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
+
+    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
     EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
-    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);
+
+    // Pressure initialized on demand due to possibility of bilevel vs. single pressure
+
+    // TODO: PP should be on-demand
     EventList *PP = session->AddEventList(CPAP_PressurePulse, EVL_Event);
-    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
 
 
     // On-demand channels
+    /*
     ChannelID Codes[] = {
         PRS1_00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, PRS1_0E
     };
 
     int ncodes = sizeof(Codes) / sizeof(ChannelID);
+    */
     EventList *Code[0x20] = {0};
 
     Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
@@ -3955,6 +4007,7 @@ bool PRS1Import::ParseEventsF0V6()
             case PRS1PressurePulseEvent::TYPE:
                 PP->AddEvent(t, e->m_value);
                 break;
+            /*
             case PRS1UnknownValueEvent::TYPE:
             {
                 int code = ((PRS1UnknownValueEvent*) e)->m_code;
@@ -3967,6 +4020,7 @@ bool PRS1Import::ParseEventsF0V6()
                 Code[code]->AddEvent(t, e->m_value);
                 break;
             }
+            */
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -7271,8 +7325,8 @@ bool PRS1Import::ParseEvents()
         // We've never seen that, so we're reverting to checking familyVersion.
         if (event->familyVersion == 6) {
             res = ParseEventsF3V6();
-        } else {
-            res = ParseF3Events();
+        } else if (event->familyVersion == 3) {
+            res = ParseEventsF3V3();
         }
         break;
     case 5:
