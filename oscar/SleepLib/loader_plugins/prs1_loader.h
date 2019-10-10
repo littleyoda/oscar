@@ -312,10 +312,8 @@ public:
     bool ParseEventsF3V3();
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 6)
     bool ParseEventsF3V6();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV machine (which has a different format)
-    bool ParseF5Events();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 machine (which has a different format again)
-    bool ParseEventsF5V3();
+    //! \brief Import a single data chunk from a .002 file containing event data for a family 5 ASV family machine (family versions 0-3)
+    bool ImportEventsF5V0123();
 
 
 protected:
