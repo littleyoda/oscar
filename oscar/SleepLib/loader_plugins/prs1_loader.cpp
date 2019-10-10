@@ -820,6 +820,28 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 }
 
 
+static QString relativePath(const QString & inpath)
+{
+    QStringList pathlist = QDir::toNativeSeparators(inpath).split(QDir::separator(), QString::SkipEmptyParts);
+    QString relative = pathlist.mid(pathlist.size()-3).join(QDir::separator());
+    return relative;
+}
+
+static bool chunksIdentical(const PRS1DataChunk* a, const PRS1DataChunk* b)
+{
+    return (a->timestamp == b->timestamp && a->storedCrc == b->storedCrc);
+}
+
+static QString chunkComparison(const PRS1DataChunk* a, const PRS1DataChunk* b)
+{
+    return QString("Session %1 in %2 @ %3 %4 %5 @ %6, skipping")
+            .arg(a->sessionid)
+            .arg(relativePath(a->m_path)).arg(a->m_filepos)
+            .arg(chunksIdentical(a, b) ? "is identical to" : "differs from")
+            .arg(relativePath(b->m_path)).arg(b->m_filepos);
+
+}
+
 void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machine * m)
 {
     SessionID sid;
@@ -966,7 +988,12 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 switch (ext) {
                 case 0:
                     if (task->compliance) {
-                        qWarning() << path << "duplicate compliance?";
+                        if (chunksIdentical(chunk, task->summary)) {
+                            // Never seen identical compliance chunks, so keep logging this for now.
+                            qDebug() << chunkComparison(chunk, task->summary);
+                        } else {
+                            qWarning() << chunkComparison(chunk, task->summary);
+                        }
                         delete chunk;
                         continue; // (skipping to avoid duplicates)
                     }
@@ -974,7 +1001,18 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     break;
                 case 1:
                     if (task->summary) {
-                        qWarning() << path << "duplicate summary?";
+                        if (chunksIdentical(chunk, task->summary)) {
+                            // This seems to be benign. It happens most often when a single file contains
+                            // a bunch of chunks and subsequent files each contain a single chunk that was
+                            // already covered by the first file. It also sometimes happens with entirely
+                            // duplicate files between e.g. a P1 and P0 directory.
+                            //
+                            // It's common enough that we don't emit a message about it by default.
+                            //qDebug() << chunkComparison(chunk, task->summary);
+                        } else {
+                            // Warn about any non-identical duplicate session IDs.
+                            qWarning() << chunkComparison(chunk, task->summary);
+                        }
                         delete chunk;
                         continue;
                     }
@@ -982,10 +1020,20 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     break;
                 case 2:
                     if (task->event) {
-                        // TODO: This happens on F3V3 events, which are formatted as waveforms,
-                        // with one chunk per mask-on slice, and thus multiple chunks per session.
-                        // We need to add support for this scenario.
-                        qWarning() << path << "duplicate events?";
+                        if (chunksIdentical(chunk, task->event)) {
+                            // See comment above regarding identical summary chunks.
+                            //qDebug() << chunkComparison(chunk, task->event);
+                        } else {
+                            // TODO: This happens on F3V3 events, which are formatted as waveforms,
+                            // with one chunk per mask-on slice, and thus multiple chunks per session.
+                            // We need to add support for this scenario instead of just dropping
+                            // the additional chunks.
+                            
+                            // Warn about any other non-identical duplicate session IDs.
+                            if (!(chunk->family == 3 && chunk->familyVersion == 3)) {
+                                qWarning() << chunkComparison(chunk, task->event);
+                            }
+                        }
                         delete chunk;
                         continue;
                     }
