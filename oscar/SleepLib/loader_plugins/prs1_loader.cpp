@@ -1738,9 +1738,6 @@ bool PRS1Import::ParseEventsF5V3()
 
     bool ok;
     ok = event->ParseEvents();
-    if (!ok) {  // TODO: reconcile with F5V2 and earlier
-        return false;
-    }
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
@@ -1832,7 +1829,7 @@ bool PRS1Import::ParseEventsF5V3()
             case PRS1TidalVolumeEvent::TYPE:
                 TV->AddEvent(t, e->m_value);
                 break;
-            case PRS1PressurePulseEvent::TYPE:
+            case PRS1PressurePulseEvent::TYPE:  // Only seen in F5V3, not F5V2 or earlier
                 if (!PP) {
                     if (!(PP = session->AddEventList(CPAP_PressurePulse, EVL_Event))) { return false; }
                 }
@@ -1846,6 +1843,10 @@ bool PRS1Import::ParseEventsF5V3()
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
         }
+    }
+    
+    if (!ok) {
+        return false;
     }
     
     // TODO: why is the below commented out?
@@ -2050,7 +2051,7 @@ bool PRS1Import::ParseF5Events()
     EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
     
     // TB could be on-demand
-    EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);  // TODO: a gain of 0.1 should affect display, but it doesn't
+    EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event, 0.1F);  // TODO: a gain of 0.1 should affect display, but it doesn't
 
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
@@ -2059,12 +2060,13 @@ bool PRS1Import::ParseF5Events()
     EventList *IPAPHi = session->AddEventList(CPAP_IPAPHi, EVL_Event, GAIN);
 
     // On-demand channels
-    //EventList * PP=nullptr;
+    EventList *PP = nullptr;
 
     EventDataType currentPressure=0;
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
+    // Only needed for F5V0: F5V1 and later report it directly
+    bool calcLeaks = (event->familyVersion == 0) && p_profile->cpap->calculateUnintentionalLeaks();
     EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
     EventDataType lpm = lpm20 - lpm4;
@@ -2176,8 +2178,16 @@ bool PRS1Import::ParseF5Events()
             case PRS1TidalVolumeEvent::TYPE:
                 TV->AddEvent(t, e->m_value);
                 break;
-            // No PP event in F5V2 or earlier?
-            // Eat PRS1UnknownDataEvent like F5V3?
+            case PRS1PressurePulseEvent::TYPE:  // Only seen in F5V3, not F5V2 or earlier
+                if (!PP) {
+                    if (!(PP = session->AddEventList(CPAP_PressurePulse, EVL_Event))) { return false; }
+                }
+                PP->AddEvent(t, e->m_value);
+                break;
+            case PRS1UnknownDataEvent::TYPE:
+                // These will show up in chunk YAML and any user alerts will be driven
+                // by the parser.
+                break;
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -2783,9 +2793,6 @@ bool PRS1Import::ParseEventsF3V6()
     
     bool ok;
     ok = event->ParseEvents();
-    if (!ok) {
-        return false;
-    }
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
@@ -2901,6 +2908,11 @@ bool PRS1Import::ParseEventsF3V6()
         }
     }
 
+    if (!ok) {
+        return false;
+    }
+    
+    // TODO: Why is the below commented out?
     //t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
