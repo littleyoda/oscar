@@ -3346,17 +3346,7 @@ bool PRS1Import::ParseF0Events()
 
 
     // On-demand channels
-    /*
-    ChannelID Codes[] = {
-        PRS1_00, PRS1_01, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        PRS1_0B, 0, 0, PRS1_0E
-    };
-
-    int ncodes = sizeof(Codes) / sizeof(ChannelID);
-    */
-    EventList *Code[0x20] = {0};
-
-    Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
+    //Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
 
     EventList *PRESSURE = nullptr;
     EventList *EPAP = nullptr;
@@ -3389,7 +3379,7 @@ bool PRS1Import::ParseF0Events()
         
         switch (e->m_type) {
             case PRS1SnoresAtPressureEvent::TYPE:
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: we should import and graph this
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
             case PRS1AutoPressureSetEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
@@ -3445,19 +3435,29 @@ bool PRS1Import::ParseF0Events()
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
                 leak = e->m_value;
+                // F0 doesn't appear to report unintentional leak
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
                     LEAK->AddEvent(t, leak);
                 }
                 break;
-            case PRS1SnoreEvent::TYPE:
+            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
+                // TODO: The numeric snore graph is the right way to present this information,
+                // but it needs to be shifted left 2 minutes, since it's not a starting value
+                // but a past statistic.
                 SNORE->AddEvent(t, e->m_value);
                 if (e->m_value > 0) {
-                    VS2->AddEvent(t, e->m_value);
+                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
+                    // since they don't have a precise timestamp. They should continue to be drawn
+                    // on the flags overview.
+                    VS2->AddEvent(t, 0);
                 }
                 break;
-            case PRS1VibratorySnoreEvent::TYPE:  // F0: Is this really distinct from SNORE and VS2?
+            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
+                // TODO: These don't need to be drawn separately on the flag overview, since
+                // they're presumably included in the overall snore count statistic. They should
+                // continue to be drawn on the waveform, due to their precise timestamp.
                 VS->AddEvent(t, 0);
                 break;
             case PRS1RERAEvent::TYPE:
@@ -3466,20 +3466,6 @@ bool PRS1Import::ParseF0Events()
             case PRS1PressurePulseEvent::TYPE:
                 PP->AddEvent(t, e->m_value);
                 break;
-            /*
-            case PRS1UnknownValueEvent::TYPE:
-            {
-                int code = ((PRS1UnknownValueEvent*) e)->m_code;
-                Q_ASSERT(code < ncodes);
-                if (!Code[code]) {
-                    ChannelID cpapcode = Codes[(int)code];
-                    Q_ASSERT(cpapcode);  // any unknown codes returned by chunk parser should be given a channel above
-                    if (!(Code[code] = session->AddEventList(cpapcode, EVL_Event, e->m_gain))) { return false; }
-                }
-                Code[code]->AddEvent(t, e->m_value);
-                break;
-            }
-            */
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -3878,7 +3864,7 @@ bool PRS1Import::ParseEventsF0V6()
     EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
     EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
     EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // always calculated for F0V2 through F0V6
 
     // Pressure initialized on demand due to possibility of bilevel vs. single pressure
 
@@ -3887,17 +3873,7 @@ bool PRS1Import::ParseEventsF0V6()
 
 
     // On-demand channels
-    /*
-    ChannelID Codes[] = {
-        PRS1_00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, PRS1_0E
-    };
-
-    int ncodes = sizeof(Codes) / sizeof(ChannelID);
-    */
-    EventList *Code[0x20] = {0};
-
-    Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
+    //Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
 
     EventList *PRESSURE = nullptr;
     EventList *EPAP = nullptr;
@@ -3930,7 +3906,7 @@ bool PRS1Import::ParseEventsF0V6()
         
         switch (e->m_type) {
             case PRS1SnoresAtPressureEvent::TYPE:
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
             case PRS1AutoPressureSetEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
@@ -3986,7 +3962,7 @@ bool PRS1Import::ParseEventsF0V6()
             case PRS1TotalLeakEvent::TYPE:
                 TOTLEAK->AddEvent(t, e->m_value);
                 leak = e->m_value;
-                // F0V6 doesn't appear to report non-total leak
+                // F0 doesn't appear to report unintentional leak
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
@@ -4017,20 +3993,6 @@ bool PRS1Import::ParseEventsF0V6()
             case PRS1PressurePulseEvent::TYPE:
                 PP->AddEvent(t, e->m_value);
                 break;
-            /*
-            case PRS1UnknownValueEvent::TYPE:
-            {
-                int code = ((PRS1UnknownValueEvent*) e)->m_code;
-                Q_ASSERT(code < ncodes);
-                if (!Code[code]) {
-                    ChannelID cpapcode = Codes[(int)code];
-                    Q_ASSERT(cpapcode);  // any unknown codes returned by chunk parser should be given a channel above
-                    if (!(Code[code] = session->AddEventList(cpapcode, EVL_Event, e->m_gain))) { return false; }
-                }
-                Code[code]->AddEvent(t, e->m_value);
-                break;
-            }
-            */
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
