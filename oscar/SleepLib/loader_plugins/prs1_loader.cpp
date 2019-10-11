@@ -2578,8 +2578,11 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 
 bool PRS1Import::ParseEventsF3V6()
 {
-    // F3V6 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
-    static const float GAIN = 0.125F;  // TODO: parameterize this somewhere better
+    float GAIN = PRS1PressureEvent::GAIN;
+    if (event->familyVersion == 6) {
+        // F3V6 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+        GAIN = 0.125F;  // TODO: parameterize this somewhere better
+    }
     
     // Required channels
     EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
@@ -2607,7 +2610,7 @@ bool PRS1Import::ParseEventsF3V6()
 
     EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
     EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
-    // TODO: PS? Maybe only useful when it's variable?
+    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
 
     EventList *TMV = session->AddEventList(CPAP_Test1, EVL_Event);  // ???
     EventList *FLOW = session->AddEventList(CPAP_Test2, EVL_Event);  // ???
@@ -2615,6 +2618,8 @@ bool PRS1Import::ParseEventsF3V6()
     // On-demand channels
     EventList *PP = nullptr;
     
+    EventDataType currentPressure=0;
+
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
@@ -2631,9 +2636,11 @@ bool PRS1Import::ParseEventsF3V6()
                 break;  // not imported or displayed
             case PRS1IPAPAverageEvent::TYPE:
                 IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
+                currentPressure = e->m_value;
                 break;
             case PRS1EPAPAverageEvent::TYPE:
                 EPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
+                PS->AddEvent(t, currentPressure - e->m_value);  // Pressure Support
                 break;
             case PRS1TimedBreathEvent::TYPE:
                 // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
@@ -2817,8 +2824,8 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
             case 2:  // Statistics
                 // These appear every 2 minutes, so presumably summarize the preceding period.
                 //data[pos+0];  // TODO: 0 = ???
-                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+1], GAIN));        // 01=EPAP  // TODO: needs to be added second if we decide to calculate PS
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos+2], GAIN));        // 02=IPAP
+                this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+1], GAIN));        // 01=EPAP, needs to be added second to calculate PS
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos+3]));                // 03=Total leak (average?)
                 this->AddEvent(new PRS1RespiratoryRateEvent(t, data[pos+4]));          // 04=Breaths Per Minute (average?)
                 this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, data[pos+5]));  // 05=Patient Triggered Breaths (average?)
@@ -2903,6 +2910,12 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
 
 bool PRS1Import::ParseEventsF3V3()
 {
+    float GAIN = PRS1PressureEvent::GAIN;
+    if (event->familyVersion == 6) {
+        // F3V6 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+        GAIN = 0.125F;  // TODO: parameterize this somewhere better
+    }
+
     // Required channels
     EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
     EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
@@ -2924,11 +2937,13 @@ bool PRS1Import::ParseEventsF3V3()
 
     // No TB reported
 
-    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, 0.1F);
-    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, 0.1F);
-    // TODO: PS? Maybe only useful when it's variable?
+    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
+    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
+    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
 
     EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);  // TODO: should this stat be calculated from flow waveforms on other models?
+    
+    EventDataType currentPressure=0;
 
     // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
     // each of which has a starting timestamp and events at offsets from that timestamp,
@@ -2946,9 +2961,11 @@ bool PRS1Import::ParseEventsF3V3()
         switch (e->m_type) {
             case PRS1IPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
                 IPAP->AddEvent(t, e->m_value);
+                currentPressure = e->m_value;
                 break;
             case PRS1EPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
                 EPAP->AddEvent(t, e->m_value);
+                PS->AddEvent(t, currentPressure - e->m_value);  // Pressure Support
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
                 OA->AddEvent(t, e->m_duration);
