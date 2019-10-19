@@ -1496,6 +1496,7 @@ enum PRS1Mode {
     PRS1_MODE_AUTOTRIAL,        // "Auto-Trial"
 };
 
+const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chunk);
 
 //********************************************************************************************
 
@@ -2716,27 +2717,9 @@ bool PRS1Import::ParseEventsF3V6()
                 PP->AddEvent(t, e->m_value);
                 break;
             case PRS1UnknownDataEvent::TYPE:
-            {
-                PRS1UnknownDataEvent* unk = (PRS1UnknownDataEvent*) e;
-                int code = unk->m_code;
-                char* data = unk->m_data.data();
-                QString dump;
-                if (!loader->unknownCodes.contains(code)) {
-                    loader->unknownCodes.insert(code, QStringList());
-                }
-                QStringList & str = loader->unknownCodes[code];
-                dump = QString("%1@0x%5: [%2] [%3 %4]")
-                       .arg(event->sessionid, 8, 16, QChar('0'))
-                       .arg(data[0], 2, 16, QChar('0'))
-                       .arg(data[1], 2, 16, QChar('0'))
-                       .arg(data[2], 2, 16, QChar('0'))
-                       .arg(unk->m_pos, 5, 16, QChar('0'));
-                for (int i=3; i<unk->m_data.size(); i++) {
-                    dump += QString(" %1").arg(data[i], 2, 16, QChar('0'));
-                }
-                str.append(dump.trimmed());
+                // These will show up in chunk YAML and any user alerts will be driven
+                // by the parser.
                 break;
-            }
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
                 break;
@@ -2759,6 +2742,30 @@ bool PRS1Import::ParseEventsF3V6()
     return true;
 }
 
+
+static const QVector<PRS1ParsedEventType> ParsedEventsF3V6 = {
+    PRS1TimedBreathEvent::TYPE,
+    PRS1IPAPAverageEvent::TYPE,
+    PRS1EPAPAverageEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1RespiratoryRateEvent::TYPE,
+    PRS1PatientTriggeredBreathsEvent::TYPE,
+    PRS1MinuteVentilationEvent::TYPE,
+    PRS1TidalVolumeEvent::TYPE,
+    PRS1Test2Event::TYPE,
+    PRS1Test1Event::TYPE,
+    PRS1SnoreEvent::TYPE,  // No individual VS, only snore count
+    PRS1LeakEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
+    PRS1ObstructiveApneaEvent::TYPE,
+    PRS1ClearAirwayEvent::TYPE,
+    PRS1HypopneaEvent::TYPE,
+    PRS1PeriodicBreathingEvent::TYPE,
+    PRS1RERAEvent::TYPE,
+    PRS1LargeLeakEvent::TYPE,
+    PRS1ApneaAlarmEvent::TYPE,
+    // No FL?
+};
 
 // 1030X, 11030X series
 // based on ParseEventsF5V3, updated for F3V6
@@ -2943,6 +2950,8 @@ bool PRS1Import::ParseEventsF3V3()
 
     EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);  // TODO: should this stat be calculated from flow waveforms on other models?
     
+    // No PP reported
+    
     EventDataType currentPressure=0;
 
     // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
@@ -3007,9 +3016,40 @@ bool PRS1Import::ParseEventsF3V3()
         return false;
     }
 
+    // This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // until there's a way for its parser to correctly set the timestamps for truncated
+    // intervals in sessions that don't end on a 2-minute boundary.
+    if (!(event->family == 3 && event->familyVersion == 3)) {
+        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+        t = qint64(event->timestamp + event->duration) * 1000L;
+        session->updateLast(t);
+    }
+    session->m_cnt.clear();
+    session->m_cph.clear();
+
+    session->m_valuesummary[CPAP_Pressure].clear();
+    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
+
     return true;
 }
 
+
+static const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
+    PRS1IPAPAverageEvent::TYPE,
+    PRS1EPAPAverageEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1TidalVolumeEvent::TYPE,
+    PRS1FlowRateEvent::TYPE,
+    PRS1PatientTriggeredBreathsEvent::TYPE,
+    PRS1RespiratoryRateEvent::TYPE,
+    PRS1MinuteVentilationEvent::TYPE,
+    PRS1LeakEvent::TYPE,
+    PRS1HypopneaEvent::TYPE,
+    PRS1ClearAirwayEvent::TYPE,
+    PRS1ObstructiveApneaEvent::TYPE,
+    // No PP, FL, VS, RERA, PB, LL
+    // No TB
+};
 
 // 1061T, 1160P series
 bool PRS1DataChunk::ParseEventsF3V3(void)
@@ -3042,6 +3082,16 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
     static const qint64 block_duration = 120;
 
     for (int x=0; x < size; x++) {
+        // TODO: t here is inconsistent with all other parsers: they receive events at the end
+        // of the 2-minute interval with stats for the preceding 2 minutes.  This uses the
+        // starting timestamp currently.
+        //
+        // TODO: The duration of the final interval isn't clearly defined in this format:
+        // there appears to be no way (apart from looking at the summary or waveform data)
+        // to determine the end time, which may truncate the last interval.
+        //
+        // TODO: What if there are multiple "final" intervals in a session due to multiple
+        // mask-on slices?
         this->AddEvent(new PRS1IPAPAverageEvent(t, h[0] | (h[1] << 8)));
         this->AddEvent(new PRS1EPAPAverageEvent(t, h[2] | (h[3] << 8)));
         this->AddEvent(new PRS1TotalLeakEvent(t, h[4]));
@@ -3095,6 +3145,23 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
     this->duration = t;
 
     return true;
+}
+
+
+// TODO: This really should be in some kind of class hierarchy, once we figure out
+// the right one.
+const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chunk)
+{
+    static const QVector<PRS1ParsedEventType> none;
+    
+    switch (chunk->family) {
+        case 3:
+            switch (chunk->familyVersion) {
+                case 3: return ParsedEventsF3V3; break;
+                case 6: return ParsedEventsF3V6; break;
+            }
+    }
+    return none;
 }
 
 
