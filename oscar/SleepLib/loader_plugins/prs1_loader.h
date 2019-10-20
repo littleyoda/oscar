@@ -321,6 +321,7 @@ protected:
     PRS1Loader * loader;
     SessionID sessionid;
     Machine * mach;
+    QHash<ChannelID,EventList*> m_importChannels;  // map channel ID to the session's current EventList*
 
     int summary_duration;
 
@@ -330,6 +331,13 @@ protected:
     bool ParseSession(void);
     //! \brief Save parsed session data to the database
     void SaveSessionToDatabase(void);
+
+    //! \brief Create all supported channels (except for on-demand ones that only get created if an event appears).
+    bool CreateEventChannels(void);
+    //! \brief Get the EventList* for the import channel, creating it if necessary.
+    EventList* GetImportChannel(ChannelID channel);
+    //! \brief Import a single event to a channel, creating the channel if necessary.
+    bool AddEvent(ChannelID channel, qint64 t, float value, float gain);
 };
 
 /*! \class PRS1Loader

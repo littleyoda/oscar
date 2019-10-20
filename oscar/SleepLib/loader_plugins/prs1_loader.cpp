@@ -1496,7 +1496,70 @@ enum PRS1Mode {
     PRS1_MODE_AUTOTRIAL,        // "Auto-Trial"
 };
 
+// Returns the set of all channels ever reported/supported by the parser for the given chunk.
 const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chunk);
+
+// The set of PRS1 "on-demand" channels that only get created on import if the session
+// contains events of that type.  Any channels not on this list always get created if
+// they're reported/supported by the parser.
+static const QVector<PRS1ParsedEventType> PRS1OnDemandChannels =
+{
+    //PRS1TimedBreathEvent::TYPE,  // TODO: TB could be on-demand
+    PRS1PressurePulseEvent::TYPE,
+    
+    // Pressure initialized on-demand for F0 due to the possibility of bilevel vs. single pressure.
+    PRS1PressureSetEvent::TYPE,
+    PRS1IPAPSetEvent::TYPE,
+    PRS1EPAPSetEvent::TYPE,
+};
+
+// The channel ID (referenced by pointer because their values aren't initialized
+// prior to runtime) to which a given PRS1 event should be added.  Events with
+// no channel IDs are silently dropped, and events with more than one channel ID
+// must be handled specially.
+static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap =
+{
+    { PRS1ClearAirwayEvent::TYPE,       { &CPAP_ClearAirway } },
+    { PRS1ObstructiveApneaEvent::TYPE,  { &CPAP_Obstructive } },
+    { PRS1HypopneaEvent::TYPE,          { &CPAP_Hypopnea } },
+    { PRS1FlowLimitationEvent::TYPE,    { &CPAP_FlowLimit } },
+    { PRS1SnoreEvent::TYPE,             { &CPAP_Snore, &CPAP_VSnore2 } },  // VSnore2 is calculated from snore count, used to flag nonzero intervals on overview
+    { PRS1VibratorySnoreEvent::TYPE,    { &CPAP_VSnore } },
+    { PRS1RERAEvent::TYPE,              { &CPAP_RERA } },
+
+    { PRS1PeriodicBreathingEvent::TYPE, { &CPAP_PB } },
+    { PRS1LargeLeakEvent::TYPE,         { &CPAP_LargeLeak } },
+    { PRS1TotalLeakEvent::TYPE,         { &CPAP_LeakTotal } },  // TODO: should Leak be listed here since it's sometimes calculated from TotalLeak?
+    { PRS1LeakEvent::TYPE,              { &CPAP_Leak } },
+
+    { PRS1RespiratoryRateEvent::TYPE,   { &CPAP_RespRate } },
+    { PRS1TidalVolumeEvent::TYPE,       { &CPAP_TidalVolume } },
+    { PRS1MinuteVentilationEvent::TYPE, { &CPAP_MinuteVent } },
+    { PRS1PatientTriggeredBreathsEvent::TYPE, { &CPAP_PTB } },
+    { PRS1TimedBreathEvent::TYPE,       { &PRS1_TimedBreath } },
+
+    // TODO: Distinguish between pressure-set and average-pressure events
+    // F0 imports pressure-set events and ignores pressure average events.
+    // F5 imports average events and ignores EPAP set events.
+    // F3 imports average events and has no set events.
+    { PRS1PressureSetEvent::TYPE,       { &CPAP_Pressure } },
+    { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAP } },
+    { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
+    { PRS1PressureAverageEvent::TYPE,   { &CPAP_Pressure } },
+    { PRS1IPAPAverageEvent::TYPE,       { &CPAP_IPAP } },
+    { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
+    { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
+    { PRS1IPAPHighEvent::TYPE,          { &CPAP_IPAPHi } },
+
+    { PRS1Test1Event::TYPE,             { &CPAP_Test1 } },
+    { PRS1Test2Event::TYPE,             { &CPAP_Test2 } },
+
+    { PRS1PressurePulseEvent::TYPE,     { &CPAP_PressurePulse } },
+    { PRS1ApneaAlarmEvent::TYPE,        { /* Not imported */ } },
+    { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imoprted */ } },
+    { PRS1AutoPressureSetEvent::TYPE,   { /* Not imported */ } },
+    { PRS1UnknownDurationEvent::TYPE,   { /* Not imported */ } },  // TODO: import as PRS1_0E
+};
 
 //********************************************************************************************
 
@@ -2577,6 +2640,65 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 }
 
 
+bool PRS1Import::CreateEventChannels(void)
+{
+    m_importChannels.clear();
+    
+    // Create all supported channels (except for on-demand ones that only get created if an event appears)
+    const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(event);
+    for (auto & e : supported) {
+        if (!PRS1OnDemandChannels.contains(e)) {
+            for (auto & pChannelID : PRS1ImportChannelMap[e]) {
+                if (!GetImportChannel(*pChannelID)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
+EventList* PRS1Import::GetImportChannel(ChannelID channel)
+{
+    EventList* C = m_importChannels[channel];
+    if (C == nullptr) {
+        C = session->AddEventList(channel, EVL_Event);
+        // TODO: figure out why this can fail and prevent it
+        if (C == nullptr) {
+            qWarning() << "Unable to create event list for channel" << channel;
+        } else {
+            m_importChannels[channel] = C;
+        }
+    }
+    return C;
+}
+
+
+bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
+{
+    EventList* C = GetImportChannel(channel);
+    if (C == nullptr) {
+        // Warnings are handled by GetImportChannel.
+        return false;
+    }
+    if (C->count() == 0) {
+        // Initialize the gain (here, since required channels are created with default gain).
+        C->setGain(gain);
+    } else {
+        // Any change in gain is a programming error.
+        if (gain != C->gain()) {
+            qWarning() << "gain mismatch for channel" << channel << "at" << ts(t);
+        }
+    }
+    
+    // Add the event
+    C->AddEvent(t, value, gain);
+    // TODO: can this ever fail?
+    return true;
+}
+
+
 bool PRS1Import::ParseEventsF3V6()
 {
     float GAIN = PRS1PressureEvent::GAIN;
@@ -2585,36 +2707,40 @@ bool PRS1Import::ParseEventsF3V6()
         GAIN = 0.125F;  // TODO: parameterize this somewhere better
     }
     
+    if (!CreateEventChannels()) {
+        return false;
+    }
+    
     // Required channels
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
-    EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
-    EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
+    EventList *CA = GetImportChannel(CPAP_ClearAirway);
+    EventList *OA = GetImportChannel(CPAP_Obstructive);
+    EventList *HY = GetImportChannel(CPAP_Hypopnea);
 
     // No FL detection?
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
+    EventList *SNORE = GetImportChannel(CPAP_Snore);  // snore count statistic
     // No individual VS events reported
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
-    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
+    EventList *VS2 = GetImportChannel(CPAP_VSnore2);  // flags nonzero snore-count intervals on overview
+    EventList *RE = GetImportChannel(CPAP_RERA);
 
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
-    EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
-    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
+    EventList *PB = GetImportChannel(CPAP_PB);
+    EventList *LL = GetImportChannel(CPAP_LargeLeak);
+    EventList *TOTLEAK = GetImportChannel(CPAP_LeakTotal);
+    EventList *LEAK = GetImportChannel(CPAP_Leak);
 
-    EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
-    EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
-    EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
-    EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
+    EventList *RR = GetImportChannel(CPAP_RespRate);
+    //EventList *TV = GetImportChannel(CPAP_TidalVolume);
+    EventList *MV = GetImportChannel(CPAP_MinuteVent);
+    EventList *PTB = GetImportChannel(CPAP_PTB);
 
     // TB could be on-demand
-    EventList *TB = session->AddEventList(PRS1_TimedBreath, EVL_Event);
+    EventList *TB = GetImportChannel(PRS1_TimedBreath);
 
-    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
-    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
-    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
+    //EventList *IPAP = GetImportChannel(CPAP_IPAP);
+    //EventList *EPAP = GetImportChannel(CPAP_EPAP);
+    //EventList *PS = GetImportChannel(CPAP_PS);
 
-    EventList *TMV = session->AddEventList(CPAP_Test1, EVL_Event);  // ???
-    EventList *FLOW = session->AddEventList(CPAP_Test2, EVL_Event);  // ???
+    EventList *TMV = GetImportChannel(CPAP_Test1);  // ???
+    EventList *FLOW = GetImportChannel(CPAP_Test2);  // ???
 
     // On-demand channels
     EventList *PP = nullptr;
@@ -2630,18 +2756,19 @@ bool PRS1Import::ParseEventsF3V6()
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
+        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
             case PRS1ApneaAlarmEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1IPAPAverageEvent::TYPE:
-                IPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPAverageEvent::TYPE:
-                EPAP->AddEvent(t, e->m_value);  // TODO: This belongs in an average channel rather than setting channel.
-                PS->AddEvent(t, currentPressure - e->m_value);  // Pressure Support
+                AddEvent(CPAP_EPAP, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(CPAP_PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
             case PRS1TimedBreathEvent::TYPE:
                 // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
@@ -2699,7 +2826,7 @@ bool PRS1Import::ParseEventsF3V6()
                 MV->AddEvent(t, e->m_value);
                 break;
             case PRS1TidalVolumeEvent::TYPE:
-                TV->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1RERAEvent::TYPE:
                 RE->AddEvent(t, e->m_value);
