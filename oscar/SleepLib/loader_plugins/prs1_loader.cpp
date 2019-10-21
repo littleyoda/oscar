@@ -1537,6 +1537,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1MinuteVentilationEvent::TYPE, { &CPAP_MinuteVent } },
     { PRS1PatientTriggeredBreathsEvent::TYPE, { &CPAP_PTB } },
     { PRS1TimedBreathEvent::TYPE,       { &PRS1_TimedBreath } },
+    { PRS1FlowRateEvent::TYPE,          { &CPAP_FlowRate } },  // Only reported by F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
 
     // TODO: Distinguish between pressure-set and average-pressure events
     // F0 imports pressure-set events and ignores pressure average events.
@@ -1551,8 +1552,8 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
     { PRS1IPAPHighEvent::TYPE,          { &CPAP_IPAPHi } },
 
-    { PRS1Test1Event::TYPE,             { &CPAP_Test1 } },
-    { PRS1Test2Event::TYPE,             { &CPAP_Test2 } },
+    { PRS1Test1Event::TYPE,             { &CPAP_Test1 } },  // ??? F3V6
+    { PRS1Test2Event::TYPE,             { &CPAP_Test2 } },  // ??? F3V6
 
     { PRS1PressurePulseEvent::TYPE,     { &CPAP_PressurePulse } },
     { PRS1ApneaAlarmEvent::TYPE,        { /* Not imported */ } },
@@ -2711,40 +2712,6 @@ bool PRS1Import::ParseEventsF3V6()
         return false;
     }
     
-    // Required channels
-    EventList *CA = GetImportChannel(CPAP_ClearAirway);
-    EventList *OA = GetImportChannel(CPAP_Obstructive);
-    EventList *HY = GetImportChannel(CPAP_Hypopnea);
-
-    // No FL detection?
-    EventList *SNORE = GetImportChannel(CPAP_Snore);  // snore count statistic
-    // No individual VS events reported
-    EventList *VS2 = GetImportChannel(CPAP_VSnore2);  // flags nonzero snore-count intervals on overview
-    EventList *RE = GetImportChannel(CPAP_RERA);
-
-    EventList *PB = GetImportChannel(CPAP_PB);
-    EventList *LL = GetImportChannel(CPAP_LargeLeak);
-    EventList *TOTLEAK = GetImportChannel(CPAP_LeakTotal);
-    EventList *LEAK = GetImportChannel(CPAP_Leak);
-
-    EventList *RR = GetImportChannel(CPAP_RespRate);
-    //EventList *TV = GetImportChannel(CPAP_TidalVolume);
-    EventList *MV = GetImportChannel(CPAP_MinuteVent);
-    EventList *PTB = GetImportChannel(CPAP_PTB);
-
-    // TB could be on-demand
-    EventList *TB = GetImportChannel(PRS1_TimedBreath);
-
-    //EventList *IPAP = GetImportChannel(CPAP_IPAP);
-    //EventList *EPAP = GetImportChannel(CPAP_EPAP);
-    //EventList *PS = GetImportChannel(CPAP_PS);
-
-    EventList *TMV = GetImportChannel(CPAP_Test1);  // ???
-    EventList *FLOW = GetImportChannel(CPAP_Test2);  // ???
-
-    // On-demand channels
-    EventList *PP = nullptr;
-    
     EventDataType currentPressure=0;
 
     qint64 duration;
@@ -2776,72 +2743,69 @@ bool PRS1Import::ParseEventsF3V6()
                 // they can express durations less than 1 second.
                 // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
                 duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                TB->AddEvent(t - duration, e->m_duration * 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
+                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 1);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
-                OA->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1ClearAirwayEvent::TYPE:
-                CA->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1HypopneaEvent::TYPE:
-                HY->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1PeriodicBreathingEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
                 duration = e->m_duration * 1000L;
-                PB->AddEvent(t + duration, e->m_duration);
+                AddEvent(*channels.at(0), t + duration, e->m_duration, e->m_gain);
                 break;
             case PRS1LargeLeakEvent::TYPE:
                 // TODO: see PB comment above.
                 duration = e->m_duration * 1000L;
-                LL->AddEvent(t + duration, e->m_duration);
+                AddEvent(*channels.at(0), t + duration, e->m_duration, e->m_gain);
                 break;
             case PRS1TotalLeakEvent::TYPE:
-                TOTLEAK->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1LeakEvent::TYPE:
-                LEAK->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
                 // TODO: The numeric snore graph is the right way to present this information,
                 // but it needs to be shifted left 2 minutes, since it's not a starting value
                 // but a past statistic.
-                SNORE->AddEvent(t, e->m_value);
+                AddEvent(CPAP_Snore, t, e->m_value, e->m_gain);
                 if (e->m_value > 0) {
                     // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                     // since they don't have a precise timestamp. They should continue to be drawn
                     // on the flags overview.
-                    VS2->AddEvent(t, 0);
+                    AddEvent(CPAP_VSnore2, t, 0, 1);
                 }
                 break;
             case PRS1RespiratoryRateEvent::TYPE:
-                RR->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1PatientTriggeredBreathsEvent::TYPE:
-                PTB->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1MinuteVentilationEvent::TYPE:
-                MV->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1TidalVolumeEvent::TYPE:
                 AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1RERAEvent::TYPE:
-                RE->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1Test1Event::TYPE:
-                TMV->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1Test2Event::TYPE:
-                FLOW->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1PressurePulseEvent::TYPE:
-                if (!PP) {
-                    if (!(PP = session->AddEventList(CPAP_PressurePulse, EVL_Event))) { return false; }
-                }
-                PP->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1UnknownDataEvent::TYPE:
                 // These will show up in chunk YAML and any user alerts will be driven
@@ -3050,34 +3014,9 @@ bool PRS1Import::ParseEventsF3V3()
         GAIN = 0.125F;  // TODO: parameterize this somewhere better
     }
 
-    // Required channels
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
-    EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
-    EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-
-    // No FL detection
-    // No VS detection
-    // No RERA detection
-
-    // No PB detection
-    // No LL detection
-    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);
-
-    EventList *RR = session->AddEventList(CPAP_RespRate, EVL_Event);
-    EventList *TV = session->AddEventList(CPAP_TidalVolume, EVL_Event, 10.0F);
-    EventList *MV = session->AddEventList(CPAP_MinuteVent, EVL_Event);
-    EventList *PTB = session->AddEventList(CPAP_PTB, EVL_Event);
-
-    // No TB reported
-
-    EventList *IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, GAIN);
-    EventList *EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, GAIN);
-    EventList *PS = session->AddEventList(CPAP_PS, EVL_Event, GAIN);
-
-    EventList *FLOW = session->AddEventList(CPAP_FlowRate, EVL_Event);  // TODO: should this stat be calculated from flow waveforms on other models?
-    
-    // No PP reported
+    if (!CreateEventChannels()) {
+        return false;
+    }
     
     EventDataType currentPressure=0;
 
@@ -3092,46 +3031,47 @@ bool PRS1Import::ParseEventsF3V3()
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
+        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
         switch (e->m_type) {
-            case PRS1IPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
-                IPAP->AddEvent(t, e->m_value);
+            case PRS1IPAPAverageEvent::TYPE:
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
-            case PRS1EPAPAverageEvent::TYPE:  // TODO: This belongs in an average channel rather than setting channel.
-                EPAP->AddEvent(t, e->m_value);
-                PS->AddEvent(t, currentPressure - e->m_value);  // Pressure Support
+            case PRS1EPAPAverageEvent::TYPE:
+                AddEvent(CPAP_EPAP, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(CPAP_PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
             case PRS1ObstructiveApneaEvent::TYPE:
-                OA->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1ClearAirwayEvent::TYPE:
-                CA->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1HypopneaEvent::TYPE:
-                HY->AddEvent(t, e->m_duration);
+                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
                 break;
             case PRS1TotalLeakEvent::TYPE:
-                TOTLEAK->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1LeakEvent::TYPE:
-                LEAK->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1RespiratoryRateEvent::TYPE:
-                RR->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1PatientTriggeredBreathsEvent::TYPE:
-                PTB->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1MinuteVentilationEvent::TYPE:
-                MV->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1TidalVolumeEvent::TYPE:
-                TV->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             case PRS1FlowRateEvent::TYPE:
-                FLOW->AddEvent(t, e->m_value);
+                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
                 break;
             default:
                 qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
