@@ -308,10 +308,8 @@ public:
 
     //! \brief Import a single data chunk from a .002 file containing event data for a standard system one machine (family versions 2, 3, 4, and 6)
     bool ImportEventsF0V2346();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 3)
-    bool ParseEventsF3V3();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 6)
-    bool ParseEventsF3V6();
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 3 or 6)
+    bool ImportEventsF3V36();
     //! \brief Import a single data chunk from a .002 file containing event data for a family 5 ASV family machine (family versions 0-3)
     bool ImportEventsF5V0123();
 

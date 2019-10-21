@@ -2700,7 +2700,7 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 }
 
 
-bool PRS1Import::ParseEventsF3V6()
+bool PRS1Import::ImportEventsF3V36()
 {
     if (!CreateEventChannels()) {
         return false;
@@ -2986,120 +2986,6 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
 }
 
 
-bool PRS1Import::ParseEventsF3V3()
-{
-    if (!CreateEventChannels()) {
-        return false;
-    }
-    
-    EventDataType currentPressure=0;
-
-    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
-    // each of which has a starting timestamp and events at offsets from that timestamp,
-    // all of which should be coalesced into a single imported session.
-    qint64 duration;
-    qint64 t = qint64(event->timestamp) * 1000L;
-    session->updateFirst(t);
-    
-    bool ok;
-    ok = event->ParseEvents();
-    
-    for (int i=0; i < event->m_parsedData.count(); i++) {
-        PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        t = qint64(event->timestamp + e->m_start) * 1000L;
-
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel, PS, VS2;
-        if (channels.count() > 0) {
-            channel = *channels.at(0);
-        }
-        
-        switch (e->m_type) {
-            case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPAverageEvent::TYPE:
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-
-            case PRS1TimedBreathEvent::TYPE:
-                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
-                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
-                // they can express durations less than 1 second.
-                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
-                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 1);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
-                break;
-
-            case PRS1ObstructiveApneaEvent::TYPE:
-            case PRS1ClearAirwayEvent::TYPE:
-            case PRS1HypopneaEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1PeriodicBreathingEvent::TYPE:
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
-                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
-                // TODO: The numeric snore graph is the right way to present this information,
-                // but it needs to be shifted left 2 minutes, since it's not a starting value
-                // but a past statistic.
-                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
-                if (e->m_value > 0) {
-                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
-                    // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview.
-                    VS2 = *channels.at(1);
-                    AddEvent(VS2, t, 0, 1);
-                }
-                break;
-
-            default:
-                if (channels.count() == 1) {
-                    // For most events, simply pass the value through to the mapped channel.
-                    AddEvent(channel, t, e->m_value, e->m_gain);
-                } else if (channels.count() > 1) {
-                    // Anything mapped to more than one channel must have a case statement above.
-                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
-                    break;
-                } else {
-                    // Not imported, no channels mapped to this event
-                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
-                }
-                break;
-        }
-    }
-
-    if (!ok) {
-        return false;
-    }
-
-    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
-    // until there's a way for its parser to correctly set the timestamps for truncated
-    // intervals in sessions that don't end on a 2-minute boundary.
-    if (!(event->family == 3 && event->familyVersion == 3)) {
-        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-        t = qint64(event->timestamp + event->duration) * 1000L;
-        session->updateLast(t);
-    }
-    session->m_cnt.clear();
-    session->m_cph.clear();
-
-    session->m_valuesummary[CPAP_Pressure].clear();
-    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
-
-    return true;
-}
-
-
 static const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
     PRS1IPAPAverageEvent::TYPE,
     PRS1EPAPAverageEvent::TYPE,
@@ -3126,6 +3012,11 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
     if (this->family != 3 || this->familyVersion != 3) {
         qWarning() << "ParseEventsF3V3 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
+    }
+    if (this->fileVersion == 3) {
+        // NOTE: The original comment in the header for ParseF3EventsV3 said there was a 1060P with fileVersion 3.
+        // We've never seen that, so warn if it ever shows up.
+        qWarning() << "F3V3 event file with fileVersion 3?";
     }
     
     int t = 0, tt;
@@ -7099,13 +6990,7 @@ bool PRS1Import::ParseEvents()
         res = this->ImportEventsF0V2346();
         break;
     case 3:
-        // NOTE: The original comment in the header for ParseF3EventsV3 said there was a 1060P with fileVersion 3.
-        // We've never seen that, so we're reverting to checking familyVersion.
-        if (event->familyVersion == 6) {
-            res = ParseEventsF3V6();
-        } else if (event->familyVersion == 3) {
-            res = ParseEventsF3V3();
-        }
+        res = this->ImportEventsF3V36();
         break;
     case 5:
         res = this->ImportEventsF5V0123();
