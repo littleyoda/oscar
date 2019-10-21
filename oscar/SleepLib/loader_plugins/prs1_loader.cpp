@@ -2702,12 +2702,6 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 
 bool PRS1Import::ParseEventsF3V6()
 {
-    float GAIN = PRS1PressureEvent::GAIN;
-    if (event->familyVersion == 6) {
-        // F3V6 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
-        GAIN = 0.125F;  // TODO: parameterize this somewhere better
-    }
-    
     if (!CreateEventChannels()) {
         return false;
     }
@@ -2723,17 +2717,23 @@ bool PRS1Import::ParseEventsF3V6()
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         t = qint64(event->timestamp + e->m_start) * 1000L;
+
+        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
+        ChannelID channel, PS, VS2;
+        if (channels.count() > 0) {
+            channel = *channels.at(0);
+        }
         
         switch (e->m_type) {
             case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPAverageEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                AddEvent(*channels.at(1), t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
 
             case PRS1TimedBreathEvent::TYPE:
@@ -2748,7 +2748,7 @@ bool PRS1Import::ParseEventsF3V6()
             case PRS1ObstructiveApneaEvent::TYPE:
             case PRS1ClearAirwayEvent::TYPE:
             case PRS1HypopneaEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
 
             case PRS1PeriodicBreathingEvent::TYPE:
@@ -2756,41 +2756,35 @@ bool PRS1Import::ParseEventsF3V6()
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
                 duration = e->m_duration * 1000L;
-                AddEvent(*channels.at(0), t + duration, e->m_duration, e->m_gain);
+                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
 
             case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
                 // TODO: The numeric snore graph is the right way to present this information,
                 // but it needs to be shifted left 2 minutes, since it's not a starting value
                 // but a past statistic.
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // Snore count
+                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
                 if (e->m_value > 0) {
                     // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                     // since they don't have a precise timestamp. They should continue to be drawn
                     // on the flags overview.
-                    AddEvent(*channels.at(1), t, 0, 1);  // VS2
+                    VS2 = *channels.at(1);
+                    AddEvent(VS2, t, 0, 1);
                 }
                 break;
 
-            case PRS1RespiratoryRateEvent::TYPE:
-            case PRS1PatientTriggeredBreathsEvent::TYPE:
-            case PRS1MinuteVentilationEvent::TYPE:
-            case PRS1TidalVolumeEvent::TYPE:
-            case PRS1TotalLeakEvent::TYPE:
-            case PRS1LeakEvent::TYPE:
-            case PRS1RERAEvent::TYPE:
-            case PRS1Test1Event::TYPE:
-            case PRS1Test2Event::TYPE:
-            case PRS1PressurePulseEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
-                break;
-            case PRS1ApneaAlarmEvent::TYPE:
-            case PRS1UnknownDataEvent::TYPE:
-                // These will show up in chunk YAML and any user alerts will be driven
-                // by the parser.
-                break;
             default:
-                qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
+                if (channels.count() == 1) {
+                    // For most events, simply pass the value through to the mapped channel.
+                    AddEvent(channel, t, e->m_value, e->m_gain);
+                } else if (channels.count() > 1) {
+                    // Anything mapped to more than one channel must have a case statement above.
+                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
+                    break;
+                } else {
+                    // Not imported, no channels mapped to this event
+                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
+                }
                 break;
         }
     }
@@ -2986,12 +2980,6 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
 
 bool PRS1Import::ParseEventsF3V3()
 {
-    float GAIN = PRS1PressureEvent::GAIN;
-    if (event->familyVersion == 6) {
-        // F3V6 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
-        GAIN = 0.125F;  // TODO: parameterize this somewhere better
-    }
-
     if (!CreateEventChannels()) {
         return false;
     }
@@ -3009,37 +2997,43 @@ bool PRS1Import::ParseEventsF3V3()
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
+        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
+        ChannelID channel, PS/*, VS2*/;
+        if (channels.count() > 0) {
+            channel = *channels.at(0);
+        }
+
         switch (e->m_type) {
             case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPAverageEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                AddEvent(*channels.at(1), t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
 
             case PRS1ObstructiveApneaEvent::TYPE:
             case PRS1ClearAirwayEvent::TYPE:
             case PRS1HypopneaEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1TotalLeakEvent::TYPE:
-            case PRS1LeakEvent::TYPE:
-            case PRS1RespiratoryRateEvent::TYPE:
-            case PRS1PatientTriggeredBreathsEvent::TYPE:
-            case PRS1MinuteVentilationEvent::TYPE:
-            case PRS1TidalVolumeEvent::TYPE:
-            case PRS1FlowRateEvent::TYPE:
-                AddEvent(*channels.at(0), t, e->m_value, e->m_gain);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
 
             default:
-                qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
+                if (channels.count() == 1) {
+                    // For most events, simply pass the value through to the mapped channel.
+                    AddEvent(channel, t, e->m_value, e->m_gain);
+                } else if (channels.count() > 1) {
+                    // Anything mapped to more than one channel must have a case statement above.
+                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
+                    break;
+                } else {
+                    // Not imported, no channels mapped to this event
+                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
+                }
                 break;
         }
     }
