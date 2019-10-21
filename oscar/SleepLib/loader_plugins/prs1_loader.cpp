@@ -2708,6 +2708,9 @@ bool PRS1Import::ParseEventsF3V6()
     
     EventDataType currentPressure=0;
 
+    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
+    // each of which has a starting timestamp and events at offsets from that timestamp,
+    // all of which should be coalesced into a single imported session.
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
@@ -2792,10 +2795,15 @@ bool PRS1Import::ParseEventsF3V6()
     if (!ok) {
         return false;
     }
-    
-    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-    t = qint64(event->timestamp + event->duration) * 1000L;
-    session->updateLast(t);
+
+    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // until there's a way for its parser to correctly set the timestamps for truncated
+    // intervals in sessions that don't end on a 2-minute boundary.
+    if (!(event->family == 3 && event->familyVersion == 3)) {
+        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+        t = qint64(event->timestamp + event->duration) * 1000L;
+        session->updateLast(t);
+    }
     session->m_cnt.clear();
     session->m_cph.clear();
 
@@ -2989,22 +2997,23 @@ bool PRS1Import::ParseEventsF3V3()
     // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
     // each of which has a starting timestamp and events at offsets from that timestamp,
     // all of which should be coalesced into a single imported session.
+    qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
-
+    
     bool ok;
     ok = event->ParseEvents();
     
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
-        
+
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel, PS/*, VS2*/;
+        ChannelID channel, PS, VS2;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
-
+        
         switch (e->m_type) {
             case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
@@ -3016,10 +3025,41 @@ bool PRS1Import::ParseEventsF3V3()
                 AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
 
+            case PRS1TimedBreathEvent::TYPE:
+                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
+                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
+                // they can express durations less than 1 second.
+                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
+                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
+                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 1);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
+                break;
+
             case PRS1ObstructiveApneaEvent::TYPE:
             case PRS1ClearAirwayEvent::TYPE:
             case PRS1HypopneaEvent::TYPE:
                 AddEvent(channel, t, e->m_duration, e->m_gain);
+                break;
+
+            case PRS1PeriodicBreathingEvent::TYPE:
+            case PRS1LargeLeakEvent::TYPE:
+                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
+                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
+                duration = e->m_duration * 1000L;
+                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
+                break;
+
+            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
+                // TODO: The numeric snore graph is the right way to present this information,
+                // but it needs to be shifted left 2 minutes, since it's not a starting value
+                // but a past statistic.
+                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
+                if (e->m_value > 0) {
+                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
+                    // since they don't have a precise timestamp. They should continue to be drawn
+                    // on the flags overview.
+                    VS2 = *channels.at(1);
+                    AddEvent(VS2, t, 0, 1);
+                }
                 break;
 
             default:
@@ -3042,7 +3082,7 @@ bool PRS1Import::ParseEventsF3V3()
         return false;
     }
 
-    // This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
     // until there's a way for its parser to correctly set the timestamps for truncated
     // intervals in sessions that don't end on a 2-minute boundary.
     if (!(event->family == 3 && event->familyVersion == 3)) {
