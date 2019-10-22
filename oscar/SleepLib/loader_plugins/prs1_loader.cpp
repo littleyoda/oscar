@@ -1763,8 +1763,11 @@ bool PRS1Import::ImportEventsF5V0123()
     EventDataType currentPressure=0;
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    // Only needed for F5V0: F5V1 and later report it directly
-    bool calcLeaks = (event->familyVersion == 0) && p_profile->cpap->calculateUnintentionalLeaks();
+    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
+    if (calcLeaks) {
+        // Only needed for machines that don't support it directly.
+        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
+    }
     EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
     EventDataType lpm = lpm20 - lpm4;
@@ -1795,17 +1798,12 @@ bool PRS1Import::ImportEventsF5V0123()
                 AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
                 break;
-            case PRS1IPAPLowEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1IPAPHighEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
             case PRS1EPAPAverageEvent::TYPE:
                 PS = *channels.at(1);
                 AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
+
             case PRS1TimedBreathEvent::TYPE:
                 // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
                 // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
@@ -1814,18 +1812,14 @@ bool PRS1Import::ImportEventsF5V0123()
                 duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
                 AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
                 break;
+
             case PRS1ObstructiveApneaEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1ClearAirwayEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1HypopneaEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1FlowLimitationEvent::TYPE:
                 AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
+
             case PRS1PeriodicBreathingEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
@@ -1837,6 +1831,7 @@ bool PRS1Import::ImportEventsF5V0123()
                 duration = e->m_duration * 1000L;
                 AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
+            
             case PRS1TotalLeakEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
                 // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
@@ -1850,9 +1845,7 @@ bool PRS1Import::ImportEventsF5V0123()
                     AddEvent(CPAP_Leak, t, leak, 1);  // TODO: should Leak be listed in channel map for TotalLeak and this refer to that?
                 }
                 break;
-            case PRS1LeakEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
+
             case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
                 // TODO: The numeric snore graph is the right way to present this information,
                 // but it needs to be shifted left 2 minutes, since it's not a starting value
@@ -1872,27 +1865,19 @@ bool PRS1Import::ImportEventsF5V0123()
                 // continue to be drawn on the waveform, due to their precise timestamp.
                 AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
-            case PRS1RespiratoryRateEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1PatientTriggeredBreathsEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1MinuteVentilationEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1TidalVolumeEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1PressurePulseEvent::TYPE:  // Only seen in F5V3, not F5V2 or earlier
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1UnknownDataEvent::TYPE:
-                // These will show up in chunk YAML and any user alerts will be driven
-                // by the parser.
-                break;
+
             default:
-                qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
+                if (channels.count() == 1) {
+                    // For most events, simply pass the value through to the mapped channel.
+                    AddEvent(channel, t, e->m_value, e->m_gain);
+                } else if (channels.count() > 1) {
+                    // Anything mapped to more than one channel must have a case statement above.
+                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
+                    break;
+                } else {
+                    // Not imported, no channels mapped to this event
+                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
+                }
                 break;
         }
     }
