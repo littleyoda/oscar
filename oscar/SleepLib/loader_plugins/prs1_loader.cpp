@@ -1529,7 +1529,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
 
     { PRS1PeriodicBreathingEvent::TYPE, { &CPAP_PB } },
     { PRS1LargeLeakEvent::TYPE,         { &CPAP_LargeLeak } },
-    { PRS1TotalLeakEvent::TYPE,         { &CPAP_LeakTotal } },  // TODO: should Leak be listed here since it's sometimes calculated from TotalLeak?
+    { PRS1TotalLeakEvent::TYPE,         { &CPAP_LeakTotal, &CPAP_Leak } },  // TODO: Remove CPAP_Leak if we get rid of unintentional leak calculation in the importer.
     { PRS1LeakEvent::TYPE,              { &CPAP_Leak } },
 
     { PRS1RespiratoryRateEvent::TYPE,   { &CPAP_RespRate } },
@@ -1546,7 +1546,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1PressureSetEvent::TYPE,       { &CPAP_Pressure } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAP } },
     { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
-    { PRS1PressureAverageEvent::TYPE,   { &CPAP_Pressure } },
+    { PRS1PressureAverageEvent::TYPE,   { /*&CPAP_Pressure*/ } },  // TODO: not currently imported, so don't create the channel
     { PRS1IPAPAverageEvent::TYPE,       { &CPAP_IPAP } },
     { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
     { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
@@ -1557,7 +1557,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
 
     { PRS1PressurePulseEvent::TYPE,     { &CPAP_PressurePulse } },
     { PRS1ApneaAlarmEvent::TYPE,        { /* Not imported */ } },
-    { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imoprted */ } },
+    { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imported */ } },
     { PRS1AutoPressureSetEvent::TYPE,   { /* Not imported */ } },
     { PRS1UnknownDurationEvent::TYPE,   { /* Not imported */ } },  // TODO: import as PRS1_0E
 };
@@ -3152,32 +3152,6 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
 }
 
 
-// TODO: This really should be in some kind of class hierarchy, once we figure out
-// the right one.
-const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chunk)
-{
-    static const QVector<PRS1ParsedEventType> none;
-    
-    switch (chunk->family) {
-        case 3:
-            switch (chunk->familyVersion) {
-                case 3: return ParsedEventsF3V3; break;
-                case 6: return ParsedEventsF3V6; break;
-            }
-            break;
-        case 5:
-            switch (chunk->familyVersion) {
-                case 0: return ParsedEventsF5V0; break;
-                case 1: return ParsedEventsF5V1; break;
-                case 2: return ParsedEventsF5V2; break;
-                case 3: return ParsedEventsF5V3; break;
-            }
-            break;
-    }
-    return none;
-}
-
-
 #if 0
 // Currently unused, apparently an abandoned effort to massage F0 pressure/IPAP/EPAP data.
 extern EventDataType CatmullRomSpline(EventDataType p0, EventDataType p1, EventDataType p2, EventDataType p3, EventDataType t = 0.5);
@@ -3251,36 +3225,9 @@ void SmoothEventList(Session * session, EventList * ev, ChannelID code)
 // 200X, 400X, 400G, 500X, 502G, 600X, 700X are F0V6
 bool PRS1Import::ImportEventsF0V2346()
 {
-    // Required channels
-    EventList *CA = session->AddEventList(CPAP_ClearAirway, EVL_Event);
-    EventList *OA = session->AddEventList(CPAP_Obstructive, EVL_Event);
-    EventList *HY = session->AddEventList(CPAP_Hypopnea, EVL_Event);
-
-    EventList *FL = session->AddEventList(CPAP_FlowLimit, EVL_Event);
-    EventList *SNORE = session->AddEventList(CPAP_Snore, EVL_Event);  // snore count statistic
-    EventList *VS = session->AddEventList(CPAP_VSnore, EVL_Event);
-    EventList *VS2 = session->AddEventList(CPAP_VSnore2, EVL_Event);  // flags nonzero snore-count intervals on overview
-    EventList *RE = session->AddEventList(CPAP_RERA, EVL_Event);
-
-    EventList *PB = session->AddEventList(CPAP_PB, EVL_Event);
-    EventList *LL = session->AddEventList(CPAP_LargeLeak, EVL_Event);
-    EventList *TOTLEAK = session->AddEventList(CPAP_LeakTotal, EVL_Event);
-    EventList *LEAK = session->AddEventList(CPAP_Leak, EVL_Event);  // always calculated for F0V2 through F0V6
-
-    // Pressure initialized on demand due to possibility of bilevel vs. single pressure
-
-    // TODO: PP should be on-demand
-    EventList *PP = session->AddEventList(CPAP_PressurePulse, EVL_Event);
-
-
-    // On-demand channels
-    //Code[0x0e] = session->AddEventList(PRS1_0E, EVL_Event);
-
-    EventList *PRESSURE = nullptr;
-    EventList *EPAP = nullptr;
-    EventList *IPAP = nullptr;
-    EventList *PS = nullptr;
-
+    if (!CreateEventChannels()) {
+        return false;
+    }
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
     EventDataType currentPressure=0, leak;
@@ -3305,97 +3252,109 @@ bool PRS1Import::ImportEventsF0V2346()
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
         
+        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
+        ChannelID channel = 0, PS, VS2, LEAK;
+        if (channels.count() > 0) {
+            channel = *channels.at(0);
+        }
+        
         switch (e->m_type) {
             case PRS1SnoresAtPressureEvent::TYPE:
             case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
             case PRS1AutoPressureSetEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
-                if (!PRESSURE) {
-                    if (!(PRESSURE = session->AddEventList(CPAP_Pressure, EVL_Event, e->m_gain))) { return false; }
-                }
-                PRESSURE->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 currentPressure = e->m_value;
                 break;
             case PRS1IPAPSetEvent::TYPE:
-                if(!IPAP) {
-                    if (!(IPAP = session->AddEventList(CPAP_IPAP, EVL_Event, e->m_gain))) { return false; }
-                }
-                IPAP->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPSetEvent::TYPE:
-                if (!EPAP) {
-                    if (!(EPAP = session->AddEventList(CPAP_EPAP, EVL_Event, e->m_gain))) { return false; }
-                }
-                if(!PS) {
-                    if (!(PS = session->AddEventList(CPAP_PS, EVL_Event, e->m_gain))) { return false; }
-                }
-                EPAP->AddEvent(t, e->m_value);
-                PS->AddEvent(t, currentPressure - e->m_value);           // Pressure Support
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
             case PRS1PressureAverageEvent::TYPE:
                 // TODO, we need OSCAR channels for average stats
                 break;
+
             case PRS1ObstructiveApneaEvent::TYPE:
-                OA->AddEvent(t, e->m_duration);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
             case PRS1ClearAirwayEvent::TYPE:
-                CA->AddEvent(t, e->m_duration);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
             case PRS1HypopneaEvent::TYPE:
-                HY->AddEvent(t, e->m_duration);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
             case PRS1FlowLimitationEvent::TYPE:
-                FL->AddEvent(t, e->m_duration);
+                AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
+
             case PRS1PeriodicBreathingEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
                 duration = e->m_duration * 1000L;
-                PB->AddEvent(t + duration, e->m_duration);
+                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
             case PRS1LargeLeakEvent::TYPE:
                 // TODO: see PB comment above.
                 duration = e->m_duration * 1000L;
-                LL->AddEvent(t + duration, e->m_duration);
+                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
+
             case PRS1TotalLeakEvent::TYPE:
-                TOTLEAK->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 leak = e->m_value;
                 // F0 doesn't appear to report unintentional leak
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
-                    LEAK->AddEvent(t, leak);
+                    LEAK = *channels.at(1);
+                    AddEvent(LEAK, t, leak, 1);
                 }
                 break;
+
             case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
                 // TODO: The numeric snore graph is the right way to present this information,
                 // but it needs to be shifted left 2 minutes, since it's not a starting value
                 // but a past statistic.
-                SNORE->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
                 if (e->m_value > 0) {
                     // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                     // since they don't have a precise timestamp. They should continue to be drawn
                     // on the flags overview.
-                    VS2->AddEvent(t, 0);
+                    VS2 = *channels.at(1);
+                    AddEvent(VS2, t, 0, 1);
                 }
                 break;
             case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
                 // TODO: These don't need to be drawn separately on the flag overview, since
                 // they're presumably included in the overall snore count statistic. They should
                 // continue to be drawn on the waveform, due to their precise timestamp.
-                VS->AddEvent(t, 0);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
             case PRS1RERAEvent::TYPE:
-                RE->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
             case PRS1PressurePulseEvent::TYPE:
-                PP->AddEvent(t, e->m_value);
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
+
             default:
-                qWarning() << "Unknown PRS1 event type" << (int) e->m_type;
+                if (channels.count() == 1) {
+                    // For most events, simply pass the value through to the mapped channel.
+                    AddEvent(channel, t, e->m_value, e->m_gain);
+                } else if (channels.count() > 1) {
+                    // Anything mapped to more than one channel must have a case statement above.
+                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
+                    break;
+                } else {
+                    // Not imported, no channels mapped to this event
+                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
+                }
                 break;
         }
     }
@@ -3416,6 +3375,25 @@ bool PRS1Import::ImportEventsF0V2346()
 
     return true;
 }
+
+
+static const QVector<PRS1ParsedEventType> ParsedEventsF0V23 = {
+    PRS1PressureSetEvent::TYPE,
+    PRS1IPAPSetEvent::TYPE,
+    PRS1EPAPSetEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
+    PRS1RERAEvent::TYPE,
+    PRS1ObstructiveApneaEvent::TYPE,
+    PRS1ClearAirwayEvent::TYPE,
+    PRS1HypopneaEvent::TYPE,
+    PRS1FlowLimitationEvent::TYPE,
+    PRS1VibratorySnoreEvent::TYPE,
+    PRS1PeriodicBreathingEvent::TYPE,
+    PRS1LargeLeakEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1SnoreEvent::TYPE,
+    PRS1SnoresAtPressureEvent::TYPE,
+};
 
 bool PRS1DataChunk::ParseEventsF0V23()
 {
@@ -3595,6 +3573,25 @@ bool PRS1DataChunk::ParseEventsF0V23()
 }
 
 
+static const QVector<PRS1ParsedEventType> ParsedEventsF0V4 = {
+    PRS1PressureSetEvent::TYPE,
+    PRS1IPAPSetEvent::TYPE,
+    PRS1EPAPSetEvent::TYPE,
+    PRS1AutoPressureSetEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
+    PRS1RERAEvent::TYPE,
+    PRS1ObstructiveApneaEvent::TYPE,
+    PRS1ClearAirwayEvent::TYPE,
+    PRS1HypopneaEvent::TYPE,
+    PRS1FlowLimitationEvent::TYPE,
+    PRS1VibratorySnoreEvent::TYPE,
+    PRS1PeriodicBreathingEvent::TYPE,
+    PRS1LargeLeakEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1SnoreEvent::TYPE,
+    PRS1SnoresAtPressureEvent::TYPE,
+};
+
 bool PRS1DataChunk::ParseEventsF0V4()
 {
     if (this->family != 0 || this->familyVersion != 4) {
@@ -3773,6 +3770,26 @@ bool PRS1DataChunk::ParseEventsF0V4()
     return ok;
 }
 
+
+static const QVector<PRS1ParsedEventType> ParsedEventsF0V6 = {
+    PRS1PressureSetEvent::TYPE,
+    PRS1IPAPSetEvent::TYPE,
+    PRS1EPAPSetEvent::TYPE,
+    PRS1AutoPressureSetEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
+    PRS1RERAEvent::TYPE,
+    PRS1ObstructiveApneaEvent::TYPE,
+    PRS1ClearAirwayEvent::TYPE,
+    PRS1HypopneaEvent::TYPE,
+    PRS1FlowLimitationEvent::TYPE,
+    PRS1VibratorySnoreEvent::TYPE,
+    PRS1PeriodicBreathingEvent::TYPE,
+    PRS1LargeLeakEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1SnoreEvent::TYPE,
+    PRS1PressureAverageEvent::TYPE,
+    PRS1SnoresAtPressureEvent::TYPE,
+};
 
 // DreamStation family 0 CPAP/APAP machines (400X-700X)
 // Originally derived from F5V3 parsing + (incomplete) F0V234 parsing + sample data
@@ -3969,6 +3986,41 @@ bool PRS1DataChunk::ParseEventsF0V6()
     this->duration = t;
 
     return ok;
+}
+
+
+// TODO: This really should be in some kind of class hierarchy, once we figure out
+// the right one.
+const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chunk)
+{
+    static const QVector<PRS1ParsedEventType> none;
+    
+    switch (chunk->family) {
+        case 0:
+            switch (chunk->familyVersion) {
+                case 2: return ParsedEventsF0V23; break;
+                case 3: return ParsedEventsF0V23; break;
+                case 4: return ParsedEventsF0V4; break;
+                case 6: return ParsedEventsF0V6; break;
+            }
+            break;
+        case 3:
+            switch (chunk->familyVersion) {
+                case 3: return ParsedEventsF3V3; break;
+                case 6: return ParsedEventsF3V6; break;
+            }
+            break;
+        case 5:
+            switch (chunk->familyVersion) {
+                case 0: return ParsedEventsF5V0; break;
+                case 1: return ParsedEventsF5V1; break;
+                case 2: return ParsedEventsF5V2; break;
+                case 3: return ParsedEventsF5V3; break;
+            }
+            break;
+    }
+    qWarning() << "Missing supported event list for family" << chunk->family << "version" << chunk->familyVersion;
+    return none;
 }
 
 
