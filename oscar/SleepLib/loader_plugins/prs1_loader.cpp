@@ -2752,6 +2752,17 @@ bool PRS1Import::ImportEventsF3V36()
     
     EventDataType currentPressure=0;
 
+    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
+    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
+    if (calcLeaks) {
+        // Only needed for machines that don't support it directly.
+        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
+    }
+    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
+    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
+    EventDataType lpm = lpm20 - lpm4;
+    EventDataType ppm = lpm / 16.0;
+
     // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
     // each of which has a starting timestamp and events at offsets from that timestamp,
     // all of which should be coalesced into a single imported session.
@@ -2767,7 +2778,7 @@ bool PRS1Import::ImportEventsF3V36()
         t = qint64(event->timestamp + e->m_start) * 1000L;
 
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel, PS, VS2;
+        ChannelID channel, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
@@ -2804,6 +2815,18 @@ bool PRS1Import::ImportEventsF3V36()
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
                 duration = e->m_duration * 1000L;
                 AddEvent(channel, t + duration, e->m_duration, e->m_gain);
+                break;
+
+            case PRS1TotalLeakEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                // F0 doesn't appear to report unintentional leak
+                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
+                    EventDataType leak = e->m_value;
+                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
+                    if (leak < 0) leak = 0;
+                    LEAK = *channels.at(1);
+                    AddEvent(LEAK, t, leak, 1);
+                }
                 break;
 
             case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
