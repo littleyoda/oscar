@@ -1785,7 +1785,7 @@ bool PRS1Import::ImportEventsF5V0123()
         t = qint64(event->timestamp + e->m_start) * 1000L;
 
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = 0, PS, VS2;
+        ChannelID channel = 0, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
@@ -1821,13 +1821,9 @@ bool PRS1Import::ImportEventsF5V0123()
                 break;
 
             case PRS1PeriodicBreathingEvent::TYPE:
+            case PRS1LargeLeakEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: see PB comment above.
                 duration = e->m_duration * 1000L;
                 AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
@@ -1842,7 +1838,8 @@ bool PRS1Import::ImportEventsF5V0123()
                     EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
-                    AddEvent(CPAP_Leak, t, leak, 1);  // TODO: should Leak be listed in channel map for TotalLeak and this refer to that?
+                    LEAK = *channels.at(1);
+                    AddEvent(LEAK, t, leak, 1);
                 }
                 break;
 
@@ -3229,17 +3226,18 @@ bool PRS1Import::ImportEventsF0V2346()
         return false;
     }
 
-    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    EventDataType currentPressure=0, leak;
+    EventDataType currentPressure=0;
 
+    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
     bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
+    if (calcLeaks) {
+        // Only needed for machines that don't support it directly.
+        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
+    }
     EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
-
-    //CPAPMode mode = (CPAPMode) session->settings[CPAP_Mode].toInt();
 
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
@@ -3259,9 +3257,7 @@ bool PRS1Import::ImportEventsF0V2346()
         }
         
         switch (e->m_type) {
-            case PRS1SnoresAtPressureEvent::TYPE:
             case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
-            case PRS1AutoPressureSetEvent::TYPE:
                 break;  // not imported or displayed
             case PRS1PressureSetEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
@@ -3281,35 +3277,25 @@ bool PRS1Import::ImportEventsF0V2346()
                 break;
 
             case PRS1ObstructiveApneaEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1ClearAirwayEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1HypopneaEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
             case PRS1FlowLimitationEvent::TYPE:
                 AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
 
             case PRS1PeriodicBreathingEvent::TYPE:
+            case PRS1LargeLeakEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: see PB comment above.
                 duration = e->m_duration * 1000L;
                 AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
 
             case PRS1TotalLeakEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                leak = e->m_value;
                 // F0 doesn't appear to report unintentional leak
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
+                    EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
                     if (leak < 0) leak = 0;
                     LEAK = *channels.at(1);
@@ -3336,12 +3322,6 @@ bool PRS1Import::ImportEventsF0V2346()
                 // continue to be drawn on the waveform, due to their precise timestamp.
                 AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
-            case PRS1RERAEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-            case PRS1PressurePulseEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
 
             default:
                 if (channels.count() == 1) {
@@ -3363,13 +3343,14 @@ bool PRS1Import::ImportEventsF0V2346()
         return false;
     }
     
+    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
     t = qint64(event->timestamp + event->duration) * 1000L;
     session->updateLast(t);
     session->m_cnt.clear();
     session->m_cph.clear();
 
-    session->m_lastchan.clear();
-    session->m_firstchan.clear();
+    //session->m_lastchan.clear();
+    //session->m_firstchan.clear();
     session->m_valuesummary[CPAP_Pressure].clear();
     session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
 
