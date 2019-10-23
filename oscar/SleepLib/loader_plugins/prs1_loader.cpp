@@ -1773,6 +1773,9 @@ bool PRS1Import::ImportEventsF5V0123()
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
 
+    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
+    // each of which has a starting timestamp and events at offsets from that timestamp,
+    // all of which should be coalesced into a single imported session.
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
@@ -1785,14 +1788,30 @@ bool PRS1Import::ImportEventsF5V0123()
         t = qint64(event->timestamp + e->m_start) * 1000L;
 
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = 0, PS, VS2, LEAK;
+        ChannelID channel = NoChannel, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
         
         switch (e->m_type) {
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
+                break;  // not imported or displayed
+            case PRS1PressureSetEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                currentPressure = e->m_value;
+                break;
+            case PRS1IPAPSetEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                currentPressure = e->m_value;
+                break;
             case PRS1EPAPSetEvent::TYPE:
-                // TODO: The below belong in average channels and then this should go into the EPAP adjustment channel.
+                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                break;
+            case PRS1PressureAverageEvent::TYPE:
+                // TODO, we need OSCAR channels for average stats
                 break;
             case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
@@ -1827,13 +1846,14 @@ bool PRS1Import::ImportEventsF5V0123()
                 duration = e->m_duration * 1000L;
                 AddEvent(channel, t + duration, e->m_duration, e->m_gain);
                 break;
-            
+
             case PRS1TotalLeakEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
+                // F0 up through F0V6 doesn't appear to report unintentional leak.
                 // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
                 // TODO: compare this value for the reported value for F5V1 and higher?
                 // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
-                //   Or omit, because F5V1 and above reports unintentional leak below.
+                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
@@ -1882,10 +1902,15 @@ bool PRS1Import::ImportEventsF5V0123()
     if (!ok) {
         return false;
     }
-    
-    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-    t = qint64(event->timestamp + event->duration) * 1000L;
-    session->updateLast(t);
+
+    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // until there's a way for its parser to correctly set the timestamps for truncated
+    // intervals in sessions that don't end on a 2-minute boundary.
+    if (!(event->family == 3 && event->familyVersion == 3)) {
+        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+        t = qint64(event->timestamp + event->duration) * 1000L;
+        session->updateLast(t);
+    }
     session->m_cnt.clear();
     session->m_cph.clear();
 
@@ -2749,7 +2774,7 @@ bool PRS1Import::ImportEventsF3V36()
     if (!CreateEventChannels()) {
         return false;
     }
-    
+
     EventDataType currentPressure=0;
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
@@ -2769,7 +2794,7 @@ bool PRS1Import::ImportEventsF3V36()
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
-    
+
     bool ok;
     ok = event->ParseEvents();
     
@@ -2778,12 +2803,31 @@ bool PRS1Import::ImportEventsF3V36()
         t = qint64(event->timestamp + e->m_start) * 1000L;
 
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel, PS, VS2, LEAK;
+        ChannelID channel = NoChannel, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
         
         switch (e->m_type) {
+            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
+                break;  // not imported or displayed
+            case PRS1PressureSetEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                currentPressure = e->m_value;
+                break;
+            case PRS1IPAPSetEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                currentPressure = e->m_value;
+                break;
+            case PRS1EPAPSetEvent::TYPE:
+                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                break;
+            case PRS1PressureAverageEvent::TYPE:
+                // TODO, we need OSCAR channels for average stats
+                break;
             case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
                 currentPressure = e->m_value;
@@ -2800,12 +2844,13 @@ bool PRS1Import::ImportEventsF3V36()
                 // they can express durations less than 1 second.
                 // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
                 duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 1);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
+                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
                 break;
 
             case PRS1ObstructiveApneaEvent::TYPE:
             case PRS1ClearAirwayEvent::TYPE:
             case PRS1HypopneaEvent::TYPE:
+            case PRS1FlowLimitationEvent::TYPE:
                 AddEvent(channel, t, e->m_duration, e->m_gain);
                 break;
 
@@ -2819,7 +2864,11 @@ bool PRS1Import::ImportEventsF3V36()
 
             case PRS1TotalLeakEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                // F0 doesn't appear to report unintentional leak
+                // F0 up through F0V6 doesn't appear to report unintentional leak.
+                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
+                // TODO: compare this value for the reported value for F5V1 and higher?
+                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
+                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
@@ -2841,6 +2890,12 @@ bool PRS1Import::ImportEventsF3V36()
                     VS2 = *channels.at(1);
                     AddEvent(VS2, t, 0, 1);
                 }
+                break;
+            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
+                // TODO: These don't need to be drawn separately on the flag overview, since
+                // they're presumably included in the overall snore count statistic. They should
+                // continue to be drawn on the waveform, due to their precise timestamp.
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 break;
 
             default:
@@ -3262,6 +3317,9 @@ bool PRS1Import::ImportEventsF0V2346()
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
 
+    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
+    // each of which has a starting timestamp and events at offsets from that timestamp,
+    // all of which should be coalesced into a single imported session.
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
@@ -3272,9 +3330,9 @@ bool PRS1Import::ImportEventsF0V2346()
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
-        
+
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = 0, PS, VS2, LEAK;
+        ChannelID channel = NoChannel, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
         }
@@ -3291,12 +3349,31 @@ bool PRS1Import::ImportEventsF0V2346()
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPSetEvent::TYPE:
+                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
                 PS = *channels.at(1);
                 AddEvent(channel, t, e->m_value, e->m_gain);
                 AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
             case PRS1PressureAverageEvent::TYPE:
                 // TODO, we need OSCAR channels for average stats
+                break;
+            case PRS1IPAPAverageEvent::TYPE:
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                currentPressure = e->m_value;
+                break;
+            case PRS1EPAPAverageEvent::TYPE:
+                PS = *channels.at(1);
+                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                break;
+
+            case PRS1TimedBreathEvent::TYPE:
+                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
+                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
+                // they can express durations less than 1 second.
+                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
+                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
+                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
                 break;
 
             case PRS1ObstructiveApneaEvent::TYPE:
@@ -3316,7 +3393,11 @@ bool PRS1Import::ImportEventsF0V2346()
 
             case PRS1TotalLeakEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                // F0 doesn't appear to report unintentional leak
+                // F0 up through F0V6 doesn't appear to report unintentional leak.
+                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
+                // TODO: compare this value for the reported value for F5V1 and higher?
+                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
+                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
                 if (calcLeaks) { // Much Quicker doing this here than the recalc method.
                     EventDataType leak = e->m_value;
                     leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
@@ -3365,15 +3446,18 @@ bool PRS1Import::ImportEventsF0V2346()
     if (!ok) {
         return false;
     }
-    
-    // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-    t = qint64(event->timestamp + event->duration) * 1000L;
-    session->updateLast(t);
+
+    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // until there's a way for its parser to correctly set the timestamps for truncated
+    // intervals in sessions that don't end on a 2-minute boundary.
+    if (!(event->family == 3 && event->familyVersion == 3)) {
+        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+        t = qint64(event->timestamp + event->duration) * 1000L;
+        session->updateLast(t);
+    }
     session->m_cnt.clear();
     session->m_cph.clear();
 
-    //session->m_lastchan.clear();
-    //session->m_firstchan.clear();
     session->m_valuesummary[CPAP_Pressure].clear();
     session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
 
