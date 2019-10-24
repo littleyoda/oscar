@@ -1754,172 +1754,6 @@ void PRS1DataChunk::AddEvent(PRS1ParsedEvent* const event)
     m_parsedData.push_back(event);
 }
 
-bool PRS1Import::ImportEventsF5V0123()
-{
-    if (!CreateEventChannels()) {
-        return false;
-    }
-
-    EventDataType currentPressure=0;
-
-    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
-    if (calcLeaks) {
-        // Only needed for machines that don't support it directly.
-        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
-    }
-    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-    EventDataType lpm = lpm20 - lpm4;
-    EventDataType ppm = lpm / 16.0;
-
-    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
-    // each of which has a starting timestamp and events at offsets from that timestamp,
-    // all of which should be coalesced into a single imported session.
-    qint64 duration;
-    qint64 t = qint64(event->timestamp) * 1000L;
-    session->updateFirst(t);
-
-    bool ok;
-    ok = event->ParseEvents();
-    
-    for (int i=0; i < event->m_parsedData.count(); i++) {
-        PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        t = qint64(event->timestamp + e->m_start) * 1000L;
-
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = NoChannel, PS, VS2, LEAK;
-        if (channels.count() > 0) {
-            channel = *channels.at(0);
-        }
-        
-        switch (e->m_type) {
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
-                break;  // not imported or displayed
-            case PRS1PressureSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
-                break;
-            case PRS1IPAPSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPSetEvent::TYPE:
-                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-            case PRS1PressureAverageEvent::TYPE:
-                // TODO, we need OSCAR channels for average stats
-                break;
-            case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPAverageEvent::TYPE:
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-
-            case PRS1TimedBreathEvent::TYPE:
-                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
-                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
-                // they can express durations less than 1 second.
-                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
-                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
-                break;
-
-            case PRS1ObstructiveApneaEvent::TYPE:
-            case PRS1ClearAirwayEvent::TYPE:
-            case PRS1HypopneaEvent::TYPE:
-            case PRS1FlowLimitationEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1PeriodicBreathingEvent::TYPE:
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
-                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1TotalLeakEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                // F0 up through F0V6 doesn't appear to report unintentional leak.
-                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
-                // TODO: compare this value for the reported value for F5V1 and higher?
-                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
-                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
-                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
-                    EventDataType leak = e->m_value;
-                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
-                    if (leak < 0) leak = 0;
-                    LEAK = *channels.at(1);
-                    AddEvent(LEAK, t, leak, 1);
-                }
-                break;
-
-            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
-                // TODO: The numeric snore graph is the right way to present this information,
-                // but it needs to be shifted left 2 minutes, since it's not a starting value
-                // but a past statistic.
-                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
-                if (e->m_value > 0) {
-                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
-                    // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview.
-                    VS2 = *channels.at(1);
-                    AddEvent(VS2, t, 0, 1);
-                }
-                break;
-            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
-                // TODO: These don't need to be drawn separately on the flag overview, since
-                // they're presumably included in the overall snore count statistic. They should
-                // continue to be drawn on the waveform, due to their precise timestamp.
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-
-            default:
-                if (channels.count() == 1) {
-                    // For most events, simply pass the value through to the mapped channel.
-                    AddEvent(channel, t, e->m_value, e->m_gain);
-                } else if (channels.count() > 1) {
-                    // Anything mapped to more than one channel must have a case statement above.
-                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
-                    break;
-                } else {
-                    // Not imported, no channels mapped to this event
-                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
-                }
-                break;
-        }
-    }
-
-    if (!ok) {
-        return false;
-    }
-
-    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
-    // until there's a way for its parser to correctly set the timestamps for truncated
-    // intervals in sessions that don't end on a 2-minute boundary.
-    if (!(event->family == 3 && event->familyVersion == 3)) {
-        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-        t = qint64(event->timestamp + event->duration) * 1000L;
-        session->updateLast(t);
-    }
-    session->m_cnt.clear();
-    session->m_cph.clear();
-
-    session->m_valuesummary[CPAP_Pressure].clear();
-    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
-
-    return true;
-}
-
 
 static const QVector<PRS1ParsedEventType> ParsedEventsF5V3 = {
     PRS1EPAPSetEvent::TYPE,
@@ -2769,7 +2603,7 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 }
 
 
-bool PRS1Import::ImportEventsF3V36()
+bool PRS1Import::ImportEvents()
 {
     if (!CreateEventChannels()) {
         return false;
@@ -3296,175 +3130,6 @@ void SmoothEventList(Session * session, EventList * ev, ChannelID code)
 #endif
 
 
-// 750P is F0V2; 550P is F0V2/F0V3; 450P is F0V3; 460P, 560P[BT], 660P, 760P are F0V4
-// 200X, 400X, 400G, 500X, 502G, 600X, 700X are F0V6
-bool PRS1Import::ImportEventsF0V2346()
-{
-    if (!CreateEventChannels()) {
-        return false;
-    }
-
-    EventDataType currentPressure=0;
-
-    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
-    if (calcLeaks) {
-        // Only needed for machines that don't support it directly.
-        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
-    }
-    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-    EventDataType lpm = lpm20 - lpm4;
-    EventDataType ppm = lpm / 16.0;
-
-    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
-    // each of which has a starting timestamp and events at offsets from that timestamp,
-    // all of which should be coalesced into a single imported session.
-    qint64 duration;
-    qint64 t = qint64(event->timestamp) * 1000L;
-    session->updateFirst(t);
-
-    bool ok;
-    ok = event->ParseEvents();
-    
-    for (int i=0; i < event->m_parsedData.count(); i++) {
-        PRS1ParsedEvent* e = event->m_parsedData.at(i);
-        t = qint64(event->timestamp + e->m_start) * 1000L;
-
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = NoChannel, PS, VS2, LEAK;
-        if (channels.count() > 0) {
-            channel = *channels.at(0);
-        }
-        
-        switch (e->m_type) {
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
-                break;  // not imported or displayed
-            case PRS1PressureSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
-                break;
-            case PRS1IPAPSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPSetEvent::TYPE:
-                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-            case PRS1PressureAverageEvent::TYPE:
-                // TODO, we need OSCAR channels for average stats
-                break;
-            case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                currentPressure = e->m_value;
-                break;
-            case PRS1EPAPAverageEvent::TYPE:
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-
-            case PRS1TimedBreathEvent::TYPE:
-                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
-                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
-                // they can express durations less than 1 second.
-                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
-                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
-                break;
-
-            case PRS1ObstructiveApneaEvent::TYPE:
-            case PRS1ClearAirwayEvent::TYPE:
-            case PRS1HypopneaEvent::TYPE:
-            case PRS1FlowLimitationEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1PeriodicBreathingEvent::TYPE:
-            case PRS1LargeLeakEvent::TYPE:
-                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
-                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
-
-            case PRS1TotalLeakEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                // F0 up through F0V6 doesn't appear to report unintentional leak.
-                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
-                // TODO: compare this value for the reported value for F5V1 and higher?
-                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
-                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
-                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
-                    EventDataType leak = e->m_value;
-                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
-                    if (leak < 0) leak = 0;
-                    LEAK = *channels.at(1);
-                    AddEvent(LEAK, t, leak, 1);
-                }
-                break;
-
-            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
-                // TODO: The numeric snore graph is the right way to present this information,
-                // but it needs to be shifted left 2 minutes, since it's not a starting value
-                // but a past statistic.
-                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
-                if (e->m_value > 0) {
-                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
-                    // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview.
-                    VS2 = *channels.at(1);
-                    AddEvent(VS2, t, 0, 1);
-                }
-                break;
-            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
-                // TODO: These don't need to be drawn separately on the flag overview, since
-                // they're presumably included in the overall snore count statistic. They should
-                // continue to be drawn on the waveform, due to their precise timestamp.
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-
-            default:
-                if (channels.count() == 1) {
-                    // For most events, simply pass the value through to the mapped channel.
-                    AddEvent(channel, t, e->m_value, e->m_gain);
-                } else if (channels.count() > 1) {
-                    // Anything mapped to more than one channel must have a case statement above.
-                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
-                    break;
-                } else {
-                    // Not imported, no channels mapped to this event
-                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
-                }
-                break;
-        }
-    }
-
-    if (!ok) {
-        return false;
-    }
-
-    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
-    // until there's a way for its parser to correctly set the timestamps for truncated
-    // intervals in sessions that don't end on a 2-minute boundary.
-    if (!(event->family == 3 && event->familyVersion == 3)) {
-        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-        t = qint64(event->timestamp + event->duration) * 1000L;
-        session->updateLast(t);
-    }
-    session->m_cnt.clear();
-    session->m_cph.clear();
-
-    session->m_valuesummary[CPAP_Pressure].clear();
-    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
-
-    return true;
-}
-
-
 static const QVector<PRS1ParsedEventType> ParsedEventsF0V23 = {
     PRS1PressureSetEvent::TYPE,
     PRS1IPAPSetEvent::TYPE,
@@ -3483,6 +3148,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V23 = {
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
+// 750P is F0V2; 550P is F0V2/F0V3 (properties.txt sometimes says F0V3, data files always say F0V2); 450P is F0V3
 bool PRS1DataChunk::ParseEventsF0V23()
 {
     if (this->family != 0 || this->familyVersion < 2 || this->familyVersion > 3) {
@@ -3680,6 +3346,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V4 = {
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
+// 460P, 560P[BT], 660P, 760P are F0V4
 bool PRS1DataChunk::ParseEventsF0V4()
 {
     if (this->family != 0 || this->familyVersion != 4) {
@@ -3879,7 +3546,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V6 = {
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
-// DreamStation family 0 CPAP/APAP machines (400X-700X)
+// DreamStation family 0 CPAP/APAP machines (400X-700X, 400G-502G)
 // Originally derived from F5V3 parsing + (incomplete) F0V234 parsing + sample data
 bool PRS1DataChunk::ParseEventsF0V6()
 {
@@ -7181,20 +6848,7 @@ bool PRS1Import::ParseEvents()
 {
     bool res = false;
     if (!event) return false;
-    switch (event->family) {
-    case 0:
-        res = this->ImportEventsF0V2346();
-        break;
-    case 3:
-        res = this->ImportEventsF3V36();
-        break;
-    case 5:
-        res = this->ImportEventsF5V0123();
-        break;
-    default:
-        qDebug() << "Unknown PRS1 familyVersion" << event->familyVersion;
-        return false;
-    }
+    res = this->ImportEvents();
 
     if (res) {
         if (session->count(CPAP_IPAP) > 0) {

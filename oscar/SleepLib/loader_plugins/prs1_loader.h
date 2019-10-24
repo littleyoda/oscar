@@ -306,14 +306,6 @@ public:
     bool ParseOximetry();
 
 
-    //! \brief Import a single data chunk from a .002 file containing event data for a standard system one machine (family versions 2, 3, 4, and 6)
-    bool ImportEventsF0V2346();
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator machine (family version 3 or 6)
-    bool ImportEventsF3V36();
-    //! \brief Import a single data chunk from a .002 file containing event data for a family 5 ASV family machine (family versions 0-3)
-    bool ImportEventsF5V0123();
-
-
 protected:
     Session * session;
     PRS1Loader * loader;
@@ -330,6 +322,8 @@ protected:
     //! \brief Save parsed session data to the database
     void SaveSessionToDatabase(void);
 
+    //! \brief Import a single data chunk from a .002 file containing event data.
+    bool ImportEvents();
     //! \brief Create all supported channels (except for on-demand ones that only get created if an event appears).
     bool CreateEventChannels(void);
     //! \brief Get the EventList* for the import channel, creating it if necessary.
