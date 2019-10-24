@@ -3928,77 +3928,81 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
     // We should flag an actual familyVersion 3 file if we ever encounter one!
     CHECK_VALUE(this->familyVersion, 2);
     
-    // TODO: hardcoding this is ugly, think of a better approach
-    if (this->m_data.size() < 0x13) {
-        qWarning() << this->sessionid << "compliance data too short:" << this->m_data.size();
-        return false;
-    }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
+    int chunk_size = this->m_data.size();
+    static const int minimum_sizes[] = { 0xd, 5, 2, 2 };
+    static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
+    // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
 
-    CHECK_VALUE(data[0x00], 0);
-    if (data[0x00] != 0) {
-        if (data[0x00] != 5) {
-            qDebug() << this->sessionid << "compliance first byte" << data[0x00] <<" != 0, skipping";
-        }
-        return false;
-    }
-    CHECK_VALUES(data[0x01], 1, 0);  // usually 1, occasionally 0, no visible difference in report
-
-    ParseSettingsF0V23(data, 0x0e);
-    // Note that reports don't show mask resist settings or hose diameter, even though the underlying
-    // settings have mask resist off and locked and hose diameter of 22mm.
-
-    // TODO: Where is "Altitude Compensation" set? (seems to be 1/Low), only seen on brick report
-    // TODO: Where is Mask Reminder Period set? (off)
-    
-    // List of slices, really session-related events:
-    int start = 0;
-    int tt = start;
-
-    int len = this->size()-3;
-    int pos = 0x0e;
+    bool ok = true;
+    int pos = 0;
+    int code, size, delta;
+    int tt = 0;
     do {
-        quint8 c = data[pos++];
-        // These aren't really slices as originally thought, they're events with a delta offset.
-        // We'll convert them to slices in the importer.
-        int delta = data[pos] | data[pos+1] << 8;
-        pos+=2;
-        SliceStatus status;
-        if (c == 0x02) {
-            status = MaskOn;
-            if (tt == 0) {
-                CHECK_VALUE(delta, 0);  // we've never seen the initial MaskOn have any delta
-            } else {
-                if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
-            }
-        } else if (c == 0x03) {
-            status = MaskOff;
-        } else if (c == 0x01) {
-            status = EquipmentOff;
-            // This has a delta if the mask was removed before the machine was shut off.
-        } else {
-            qDebug() << this->sessionid << "unknown slice status" << c;
+        code = data[pos++];
+        // There is no hblock prior to F0V6.
+        size = 0;
+        if (code < ncodes) {
+            // make sure the handlers below don't go past the end of the buffer
+            size = minimum_sizes[code];
+        } // else if it's past ncodes, we'll log its information below (rather than handle it)
+        if (pos + size > chunk_size) {
+            qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
+            ok = false;
             break;
         }
-        tt += delta;
-        this->AddEvent(new PRS1ParsedSliceEvent(tt, status));
-    } while (pos < len);
+        
+        switch (code) {
+            case 0:  // Equipment On
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUES(data[pos], 1, 0);  // usually 1, occasionally 0, no visible difference in report
+            // F0V23 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
+                ok = ParseSettingsF0V23(data, 0x0e);
+                // Compliance doesn't have pressure set events following settings like summary does.
+                break;
+            case 2:  // Mask On
+                delta = data[pos] | (data[pos+1] << 8);
+                if (tt == 0) {
+                    CHECK_VALUE(delta, 0);  // we've never seen the initial MaskOn have any delta
+                } else {
+                    if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
+                }
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
+                // no per-slice humidifer settings as in F0V6
+                break;
+            case 3:  // Mask Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
+                // Compliance doesn't record any stats after mask-off like summary does.
+                break;
+            case 1:  // Equipment Off
+                tt += data[pos] | (data[pos+1] << 8);
+                this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
 
-    // also seems to be a trailing 01 00 81 after the slices?
-    if (pos == len) {
-        CHECK_VALUES(data[pos], 1, 0);  // usually 1, occasionally 0, no visible difference in report
-        //CHECK_VALUE(data[pos+1], 0);  // sometimes 1, 2, or 5, no visible difference in report
-        //CHECK_VALUES(data[pos+2], 0x81, 0x80);  // seems to be humidifier setting at end of session
-        if (data[pos+2] && (((data[pos+2] & 0x80) == 0) || (data[pos+2] & 0x07) > 5)) {
-            UNEXPECTED_VALUE(data[pos+2], "valid humidifier setting");
+                // also seems to be a trailing 01 00 81 after the slices?
+                CHECK_VALUES(data[pos+2], 1, 0);  // usually 1, occasionally 0, no visible difference in report
+                //CHECK_VALUE(data[pos+3], 0);  // sometimes 1, 2, or 5, no visible difference in report
+                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
+                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
+                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
+                }
+                break;
+            default:
+                UNEXPECTED_VALUE(code, "known slice code");
+                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                break;
         }
-    } else {
+        pos += size;
+    } while (ok && pos < chunk_size);
+
+    if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
     }
 
     this->duration = tt;
 
-    return true;
+    return ok;
 }
 
 
