@@ -264,13 +264,12 @@ public:
     PRS1Import(PRS1Loader * l, SessionID s, Machine * m): loader(l), sessionid(s), mach(m) {
         summary = nullptr;
         compliance = nullptr;
-        event = nullptr;
         session = nullptr;
     }
     virtual ~PRS1Import() {
         delete compliance;
         delete summary;
-        delete event;
+        for (auto & e : m_event_chunks.values()) { delete e; }
         for (int i=0;i < waveforms.size(); ++i) { delete waveforms.at(i); }
     }
 
@@ -279,7 +278,7 @@ public:
 
     PRS1DataChunk * compliance;
     PRS1DataChunk * summary;
-    PRS1DataChunk * event;
+    QMap<qint64,PRS1DataChunk *> m_event_chunks;
     QList<PRS1DataChunk *> waveforms;
     QList<PRS1DataChunk *> oximetry;
 
@@ -293,8 +292,8 @@ public:
     //! \brief Imports the .001 summary file.
     bool ImportSummary();
 
-    //! \brief Figures out which Event Parser to call, based on machine family/version and calls it.
-    bool ParseEvents();
+    //! \brief Imports the .002 event file(s).
+    bool ImportEvents();
 
     //! \brief Coalesce contiguous .005 or .006 waveform chunks from the file into larger chunks for import.
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
@@ -323,9 +322,9 @@ protected:
     void SaveSessionToDatabase(void);
 
     //! \brief Import a single data chunk from a .002 file containing event data.
-    bool ImportEvents();
+    bool ImportEventChunk(PRS1DataChunk* event);
     //! \brief Create all supported channels (except for on-demand ones that only get created if an event appears).
-    bool CreateEventChannels(void);
+    bool CreateEventChannels(const PRS1DataChunk* event);
     //! \brief Get the EventList* for the import channel, creating it if necessary.
     EventList* GetImportChannel(ChannelID channel);
     //! \brief Import a single event to a channel, creating the channel if necessary.

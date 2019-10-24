@@ -1019,25 +1019,33 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     task->summary = chunk;
                     break;
                 case 2:
-                    if (task->event) {
-                        if (chunksIdentical(chunk, task->event)) {
-                            // See comment above regarding identical summary chunks.
-                            //qDebug() << chunkComparison(chunk, task->event);
-                        } else {
-                            // TODO: This happens on F3V3 events, which are formatted as waveforms,
-                            // with one chunk per mask-on slice, and thus multiple chunks per session.
-                            // We need to add support for this scenario instead of just dropping
-                            // the additional chunks.
-                            
-                            // Warn about any other non-identical duplicate session IDs.
-                            if (!(chunk->family == 3 && chunk->familyVersion == 3)) {
-                                qWarning() << chunkComparison(chunk, task->event);
+                    if (task->m_event_chunks.count() > 0) {
+                        PRS1DataChunk* previous;
+                        if (chunk->family == 3 && chunk->familyVersion == 3) {
+                            // F3V3 events are formatted as waveforms, with one chunk per mask-on slice,
+                            // and thus multiple chunks per session.
+                            previous = task->m_event_chunks[chunk->timestamp];
+                            if (previous != nullptr) {
+                                // Skip any chunks with identical timestamps.
+                                qWarning() << chunkComparison(chunk, previous);
+                                delete chunk;
+                                continue;
                             }
+                            // fall through to add the new chunk
+                        } else {
+                            // Nothing else should have multiple event chunks per session.
+                            previous = task->m_event_chunks.first();
+                            if (chunksIdentical(chunk, previous)) {
+                                // See comment above regarding identical summary chunks.
+                                //qDebug() << chunkComparison(chunk, previous);
+                            } else {
+                                qWarning() << chunkComparison(chunk, previous);
+                            }
+                            delete chunk;
+                            continue;
                         }
-                        delete chunk;
-                        continue;
                     }
-                    task->event = chunk;
+                    task->m_event_chunks[chunk->timestamp] = chunk;
                     break;
                 default:
                     qWarning() << path << "unexpected file";
@@ -2544,7 +2552,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 }
 
 
-bool PRS1Import::CreateEventChannels(void)
+bool PRS1Import::CreateEventChannels(const PRS1DataChunk* event)
 {
     m_importChannels.clear();
     
@@ -2603,12 +2611,8 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 }
 
 
-bool PRS1Import::ImportEvents()
+bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 {
-    if (!CreateEventChannels()) {
-        return false;
-    }
-
     EventDataType currentPressure=0;
 
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
@@ -2760,11 +2764,6 @@ bool PRS1Import::ImportEvents()
         t = qint64(event->timestamp + event->duration) * 1000L;
         session->updateLast(t);
     }
-    session->m_cnt.clear();
-    session->m_cph.clear();
-
-    session->m_valuesummary[CPAP_Pressure].clear();
-    session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
 
     return true;
 }
@@ -6842,26 +6841,31 @@ bool PRS1DataChunk::ParseEvents()
 }
 
 
-// TODO: This may be merged with PRS1Import::ImportEvents, or it may remain as a wrapper, depending on how multiple event chunks
-// are handled. Functions names TBD.
-bool PRS1Import::ParseEvents()
+bool PRS1Import::ImportEvents()
 {
-    bool ok = this->ImportEvents();
-
+    bool ok = CreateEventChannels(m_event_chunks.first());
+    
     if (ok) {
-        if (session->count(CPAP_IPAP) > 0) {
-            // There was originally some commented-out code that tried to
-            // convert pressure min/max settings into EPAP/IPAP and would
-            // remove any CPAP_Pressure data in the session.
-        } else {
-            // There was originally some code for single-pressure modes
-            // that would flag missing pressure and try to infer the
-            // settings. After fixing the parsers, pressure is never missing,
-            // so it no longer has any effect.
-            //
-            // TODO: Remove CPAP_BrokenSummary channel, which is no longer needed.
+        for (auto & event : m_event_chunks.values()) {
+            bool chunk_ok = this->ImportEventChunk(event);
+            if (!chunk_ok && m_event_chunks.count() > 1) {
+                // Specify which chunk had problems if there's more than one. ParseSession will warn about the overall result.
+                qWarning() << event->sessionid << QString("Error parsing events in %1 @ %2, continuing")
+                    .arg(relativePath(event->m_path))
+                    .arg(event->m_filepos);
+            }
+            ok &= chunk_ok;
         }
     }
+
+    if (ok) {
+        session->m_cnt.clear();
+        session->m_cph.clear();
+
+        session->m_valuesummary[CPAP_Pressure].clear();
+        session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
+    }
+
     return ok;
 }
 
@@ -7137,8 +7141,8 @@ bool PRS1Import::ParseSession(void)
         // and possibly filter out everything except mask on/off, since the gSessionTimesChart::paint
         // assumes that assumes that. Or rework the slice system to be more robust.
         
-        if (event != nullptr) {
-            ok = ParseEvents();
+        if (m_event_chunks.count() > 0) {
+            ok = ImportEvents();
             if (!ok) {
                 qWarning() << sessionid << "Error parsing events, proceeding anyway?";
             }
@@ -7183,7 +7187,7 @@ bool PRS1Import::ParseSession(void)
 
                 // TODO: It turns out waveforms *don't* update the timestamp, so this
                 // is depending entirely on events. See TODO below.
-                if (event != nullptr || !wavefile.isEmpty() || !oxifile.isEmpty()) {
+                if (m_event_chunks.count() > 0 || !wavefile.isEmpty() || !oxifile.isEmpty()) {
                     qWarning() << sessionid << "Downgrading session to summary only";
                 }
                 session->setSummaryOnly(true);
