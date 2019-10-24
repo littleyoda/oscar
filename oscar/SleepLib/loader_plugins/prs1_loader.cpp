@@ -1454,7 +1454,7 @@ PRS1_DURATION_EVENT(PRS1UnknownDurationEvent, EV_PRS1_UNK_DURATION);
 PRS1_DURATION_EVENT(PRS1HypopneaEvent, EV_PRS1_HY);
 
 PRS1_VALUE_EVENT(PRS1TotalLeakEvent, EV_PRS1_TOTLEAK);
-PRS1_VALUE_EVENT(PRS1LeakEvent, EV_PRS1_LEAK);  // TODO: do machines really report unintentional leak?
+PRS1_VALUE_EVENT(PRS1LeakEvent, EV_PRS1_LEAK);
 
 PRS1_PRESSURE_EVENT(PRS1AutoPressureSetEvent, EV_PRS1_AUTO_PRESSURE_SET);
 PRS1_PRESSURE_EVENT(PRS1PressureSetEvent, EV_PRS1_PRESSURE_SET);
@@ -3889,12 +3889,12 @@ bool PRS1Import::ImportCompliance()
     }
     if (compliance->duration == 0) {
         // This does occasionally happen and merely indicates a brief session with no useful data.
-        qDebug() << compliance->sessionid << "duration == 0";
-        return false;
+        // This requires the use of really_set_last below, which otherwise rejects 0 length.
+        qDebug() << compliance->sessionid << "compliance duration == 0";
     }
     session->setSummaryOnly(true);
     session->set_first(start);
-    session->set_last(qint64(compliance->timestamp + compliance->duration) * 1000L);
+    session->really_set_last(qint64(compliance->timestamp + compliance->duration) * 1000L);
 
     return true;
 }
@@ -7132,6 +7132,10 @@ bool PRS1Import::ParseSession(void)
             qWarning() << sessionid << "No compliance or summary, skipping session";
             break;
         }
+        
+        // TODO: filter out 0-length slices, since they cause problems for Day::total_time()
+        // and possibly filter out everything except mask on/off, since the gSessionTimesChart::paint
+        // assumes that assumes that. Or rework the slice system to be more robust.
         
         if (event != nullptr) {
             ok = ParseEvents();
