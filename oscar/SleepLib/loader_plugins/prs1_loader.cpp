@@ -3889,7 +3889,7 @@ bool PRS1Import::ImportCompliance()
     }
     if (compliance->duration == 0) {
         // This does occasionally happen and merely indicates a brief session with no useful data.
-        //qDebug() << compliance->sessionid << "duration == 0";
+        qDebug() << compliance->sessionid << "duration == 0";
         return false;
     }
     session->setSummaryOnly(true);
@@ -6838,65 +6838,27 @@ bool PRS1DataChunk::ParseEvents()
 }
 
 
-// TODO: Eventually this will be renamed PRS1Import::ImportEvents, once PRS1Import::ParseF*Events have been merged and incorporated.
-// The functions are currently different due to different:
-// - Channel list (required and on-demand)
-// - Pressure gain (used to create pressure channels)
-// - Whether leak should be calculated from total leak
-// - Inadvertent inconsistencies
+// TODO: This may be merged with PRS1Import::ImportEvents, or it may remain as a wrapper, depending on how multiple event chunks
+// are handled. Functions names TBD.
 bool PRS1Import::ParseEvents()
 {
-    bool res = false;
-    if (!event) return false;
-    res = this->ImportEvents();
+    bool ok = this->ImportEvents();
 
-    if (res) {
+    if (ok) {
         if (session->count(CPAP_IPAP) > 0) {
-//            if (session->settings[CPAP_Mode].toInt() != (int)MODE_ASV) {
-//                session->settings[CPAP_Mode] = MODE_BILEVEL_FIXED;
-//            }
-
-//            if (session->settings[CPAP_PresReliefType].toInt() != PR_NONE) {
-//                session->settings[CPAP_PresReliefType] = PR_BIFLEX;
-//            }
-
-//            EventDataType min = session->settings[CPAP_PressureMin].toDouble();
-//            EventDataType max = session->settings[CPAP_PressureMax].toDouble();
-//            session->settings[CPAP_EPAP] = min;
-//            session->settings[CPAP_IPAP] = max;
-
-//            session->settings[CPAP_PS] = max - min;
-//            session->settings.erase(session->settings.find(CPAP_PressureMin));
-//            session->settings.erase(session->settings.find(CPAP_PressureMax));
-
-//            session->m_valuesummary.erase(session->m_valuesummary.find(CPAP_Pressure));
-//            session->m_wavg.erase(session->m_wavg.find(CPAP_Pressure));
-//            session->m_min.erase(session->m_min.find(CPAP_Pressure));
-//            session->m_max.erase(session->m_max.find(CPAP_Pressure));
-//            session->m_gain.erase(session->m_gain.find(CPAP_Pressure));
-
+            // There was originally some commented-out code that tried to
+            // convert pressure min/max settings into EPAP/IPAP and would
+            // remove any CPAP_Pressure data in the session.
         } else {
-            if (!session->settings.contains(CPAP_Pressure) && !session->settings.contains(CPAP_PressureMin)) {
-                qWarning() << session->session() << "broken summary, missing pressure";
-                session->settings[CPAP_BrokenSummary] = true;
-
-                //session->set_last(session->first());
-                if (session->Min(CPAP_Pressure) == session->Max(CPAP_Pressure)) {
-                    session->settings[CPAP_Mode] = MODE_CPAP; // no ramp
-                    session->settings[CPAP_Pressure] = session->Min(CPAP_Pressure);
-                } else {
-                    session->settings[CPAP_Mode] = MODE_APAP;
-                    session->settings[CPAP_PressureMin] = session->Min(CPAP_Pressure);
-                    session->settings[CPAP_PressureMax] = 0; //session->Max(CPAP_Pressure);
-                }
-
-                //session->Set("FlexMode",PR_UNKNOWN);
-
-            }
+            // There was originally some code for single-pressure modes
+            // that would flag missing pressure and try to infer the
+            // settings. After fixing the parsers, pressure is never missing,
+            // so it no longer has any effect.
+            //
+            // TODO: Remove CPAP_BrokenSummary channel, which is no longer needed.
         }
-
     }
-    return res;
+    return ok;
 }
 
 
@@ -7147,7 +7109,7 @@ bool PRS1Import::ParseSession(void)
         if (compliance != nullptr) {
             ok = ImportCompliance();
             if (!ok) {
-                //qWarning() << sessionid << "Error parsing compliance, skipping session";
+                qWarning() << sessionid << "Error parsing compliance, skipping session";
                 break;
             }
         }
@@ -7158,7 +7120,7 @@ bool PRS1Import::ParseSession(void)
             }
             ok = ImportSummary();
             if (!ok) {
-                //qWarning() << sessionid << "Error parsing summary, skipping session";
+                qWarning() << sessionid << "Error parsing summary, skipping session";
                 break;
             }
         }
