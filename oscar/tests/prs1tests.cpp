@@ -238,6 +238,7 @@ void parseAndEmitChunkYaml(const QString & path)
 {
     qDebug() << path;
 
+    QHash<QString,QSet<quint64>> written;
     QStringList paths;
     QString propertyfile;
     int sessionid_base;
@@ -293,7 +294,9 @@ void parseAndEmitChunkYaml(const QString & path)
             QString suffix = QString(".%1-chunks.yml").arg(ext, 3, 10, QChar('0'));
             QString outpath = prs1OutputPath(path, m->serial(), sessionid, suffix);
             QFile file(outpath);
-            if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
+            // Truncate the first time we open this file, to clear out any previous test data.
+            // Otherwise append, allowing session chunks to be split among multiple files.
+            if (!file.open(QFile::WriteOnly | (written.contains(outpath) ? QFile::Append : QFile::Truncate))) {
                 qDebug() << outpath;
                 Q_ASSERT(false);
             }
@@ -302,30 +305,38 @@ void parseAndEmitChunkYaml(const QString & path)
             // keep only P1234568/Pn/00000000.001
             QStringList pathlist = QDir::toNativeSeparators(inpath).split(QDir::separator(), QString::SkipEmptyParts);
             QString relative = pathlist.mid(pathlist.size()-3).join(QDir::separator());
-            out << "file: " << relative << endl;
+            bool first_chunk_from_file = true;
 
             // Parse the chunks in the file.
             QList<PRS1DataChunk *> chunks = s_loader->ParseFile(inpath);
             for (int i=0; i < chunks.size(); i++) {
                 PRS1DataChunk * chunk = chunks.at(i);
-                bool ok = true;
-                
-                // Parse the inner data.
-                switch (chunk->ext) {
-                    case 0: ok = chunk->ParseCompliance(); break;
-                    case 1: ok = chunk->ParseSummary(); break;
-                    case 2: ok = chunk->ParseEvents(); break;
-                    case 5: break;  // skip flow/pressure waveforms
-                    case 6:  // skip oximetry data (but log it)
-                        qWarning() << relative << "oximetry is untested";  // never encountered
-                        break;
-                    default:
-                        qWarning() << relative << "unexpected file type";
-                        break;
+                // Only write unique chunks to the file.
+                if (written[outpath].contains(chunk->hash()) == false) {
+                    if (first_chunk_from_file) {
+                        out << "file: " << relative << endl;
+                        first_chunk_from_file = false;
+                    }
+                    bool ok = true;
+                    
+                    // Parse the inner data.
+                    switch (chunk->ext) {
+                        case 0: ok = chunk->ParseCompliance(); break;
+                        case 1: ok = chunk->ParseSummary(); break;
+                        case 2: ok = chunk->ParseEvents(); break;
+                        case 5: break;  // skip flow/pressure waveforms
+                        case 6:  // skip oximetry data (but log it)
+                            qWarning() << relative << "oximetry is untested";  // never encountered
+                            break;
+                        default:
+                            qWarning() << relative << "unexpected file type";
+                            break;
+                    }
+                    
+                    // Emit the YAML.
+                    ChunkToYaml(out, chunk, ok);
+                    written[outpath] += chunk->hash();
                 }
-                
-                // Emit the YAML.
-                ChunkToYaml(out, chunk, ok);
                 delete chunk;
             }
             

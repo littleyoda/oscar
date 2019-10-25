@@ -829,7 +829,7 @@ static QString relativePath(const QString & inpath)
 
 static bool chunksIdentical(const PRS1DataChunk* a, const PRS1DataChunk* b)
 {
-    return (a->timestamp == b->timestamp && a->storedCrc == b->storedCrc);
+    return (a->hash() == b->hash());
 }
 
 static QString chunkComparison(const PRS1DataChunk* a, const PRS1DataChunk* b)
@@ -942,11 +942,19 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 }
 
                 if (ext == 5) {
-                    if (!task->wavefile.isEmpty()) continue;
+                    if (!task->wavefile.isEmpty()) {
+                        qDebug() << sid << "already has waveform file" << relativePath(task->wavefile)
+                            << "skipping" << relativePath(fi.canonicalFilePath());
+                        continue;
+                    }
                     task->wavefile = fi.canonicalFilePath();
                 } else if (ext == 6) {
                     qWarning() << fi.canonicalFilePath() << "oximetry is untested";  // TODO: mark as untested/unexpected
-                    if (!task->oxifile.isEmpty()) continue;
+                    if (!task->oxifile.isEmpty()) {
+                        qDebug() << sid << "already has oximetry file" << relativePath(task->oxifile)
+                            << "skipping" << relativePath(fi.canonicalFilePath());
+                        continue;
+                    }
                     task->oxifile = fi.canonicalFilePath();
                 }
 

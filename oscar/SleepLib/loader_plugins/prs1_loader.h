@@ -119,6 +119,9 @@ public:
     quint32 storedCrc;      // header + data CRC stored in file, last 2-4 bytes of chunk
     quint32 calcCrc;        // header + data CRC as calculated when parsing
 
+    //! \brief Calculate a simplistic hash to check whether two chunks are identical.
+    inline quint64 hash(void) const { return ((((quint64) this->calcCrc) << 32) | this->timestamp); }
+    
     //! \brief Parse and return the next chunk from a PRS1 file
     static PRS1DataChunk* ParseNext(class QFile & f);
 
