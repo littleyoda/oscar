@@ -57,6 +57,8 @@ private slots:
 
     void on_selectionChanged(const QModelIndex &current, const QModelIndex &previous);
 
+    void on_resetFilterButton_clicked();
+
 private:
     QString getProfileDiskInfo(Profile *profile);
     QString formatSize(qint64 size);

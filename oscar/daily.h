@@ -70,7 +70,7 @@ public:
     /*! \fn ResetGraphOrder()
         \brief Resets all graphs in the main gGraphView back to their initial order.
         */
-    void ResetGraphOrder();
+    void ResetGraphOrder(int type = 0);
 
     /*! \fn updateLeftSidebar()
         /brief Updtes left sidebar to reflect changes in pie chart visibility

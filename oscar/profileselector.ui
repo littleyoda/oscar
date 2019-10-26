@@ -32,6 +32,25 @@
          </item>
          <item>
           <widget class="QToolButton" name="resetFilterButton">
+           <property name="toolTip">
+            <string>Reset filter to see all profiles</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QToolButton {
+ background: transparent;
+ border-radius: 8px;
+ border: 2px solid transparent;
+}
+
+QToolButton:hover {
+ border: 2px solid #456789;
+}
+
+QToolButton:pressed {
+ border: 2px solid #456789;
+ background-color: #89abcd;
+}</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>

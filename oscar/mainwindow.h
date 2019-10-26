@@ -216,6 +216,12 @@ class MainWindow : public QMainWindow
     //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
     void on_action_Reset_Graph_Order_triggered();
 
+    //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
+    void on_action_Standard_Graph_Order_triggered();
+
+    //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
+    void on_action_Advanced_Graph_Order_triggered();
+
     //! \brief Opens the Preferences Dialog, and saving changes if OK is pressed
     void on_action_Preferences_triggered();
 

@@ -58,7 +58,7 @@ class Overview : public QWidget
     /*! \fn ResetGraphOrder()
         \brief Resets all graphs in the main gGraphView back to their initial order.
         */
-    void ResetGraphOrder();
+    void ResetGraphOrder(int type);
 
     //! \brief Calls updateGL to redraw the overview charts
     void RedrawGraphs();

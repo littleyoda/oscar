@@ -1306,9 +1306,23 @@ void MainWindow::on_action_Reset_Graph_Layout_triggered()
 
 void MainWindow::on_action_Reset_Graph_Order_triggered()
 {
-    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(); }
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(0); }
 
-    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(); }
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(0); }
+}
+
+void MainWindow::on_action_Standard_Graph_Order_triggered()
+{
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(1); }
+
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(1); }
+}
+
+void MainWindow::on_action_Advanced_Graph_Order_triggered()
+{
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(2); }
+
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(2); }
 }
 
 void MainWindow::on_action_Preferences_triggered()
