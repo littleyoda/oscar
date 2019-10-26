@@ -286,7 +286,7 @@ public:
     QList<PRS1DataChunk *> oximetry;
 
 
-    QString wavefile;
+    QList<QString> m_wavefiles;
     QString oxifile;
 
     //! \brief Imports .000 files for bricks.
@@ -297,6 +297,9 @@ public:
 
     //! \brief Imports the .002 event file(s).
     bool ImportEvents();
+
+    //! \brief Imports the .005 event file(s).
+    bool ImportWaveforms();
 
     //! \brief Coalesce contiguous .005 or .006 waveform chunks from the file into larger chunks for import.
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
