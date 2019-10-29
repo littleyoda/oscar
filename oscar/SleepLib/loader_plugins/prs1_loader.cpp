@@ -1563,12 +1563,12 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     // F0 imports pressure-set events and ignores pressure average events.
     // F5 imports average events and ignores EPAP set events.
     // F3 imports average events and has no set events.
-    { PRS1PressureSetEvent::TYPE,       { &CPAP_Pressure } },
-    { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAP } },
-    { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
-    { PRS1PressureAverageEvent::TYPE,   { /*&CPAP_Pressure*/ } },  // TODO: not currently imported, so don't create the channel
+    { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
+    { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
+    { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAPSet } },            // EPAPset is supported on F5 without any corresponding IPAPset, so it shouldn't always create a PS channel
+    { PRS1PressureAverageEvent::TYPE,   { &CPAP_Pressure } },
     { PRS1IPAPAverageEvent::TYPE,       { &CPAP_IPAP } },
-    { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },  // PS is calculated from IPAP and EPAP
+    { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },     // PS is calculated from IPAP and EPAP averages (F3 and F5)
     { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
     { PRS1IPAPHighEvent::TYPE,          { &CPAP_IPAPHi } },
 
@@ -2627,11 +2627,17 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 {
     EventDataType currentPressure=0;
 
+    const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(event);
+    
+    // Calculate PS from IPAP/EPAP set events only when both are supported. This includes F0, but excludes
+    // F5, which only reports EPAP set events, but both IPAP/EPAP average, from which PS will be calculated.
+    bool calcPSfromSet = supported.contains(PRS1IPAPSetEvent::TYPE) && supported.contains(PRS1EPAPSetEvent::TYPE);
+    
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
     bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
     if (calcLeaks) {
         // Only needed for machines that don't support it directly.
-        calcLeaks = (GetSupportedEvents(event).contains(PRS1LeakEvent::TYPE) == false);
+        calcLeaks = (supported.contains(PRS1LeakEvent::TYPE) == false);
     }
     EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
@@ -2661,30 +2667,21 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         switch (e->m_type) {
             case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
                 break;  // not imported or displayed
-            case PRS1PressureSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
-                break;
             case PRS1IPAPSetEvent::TYPE:
+            case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
                 currentPressure = e->m_value;
                 break;
             case PRS1EPAPSetEvent::TYPE:
-                if (event->family == 5) break;  // TODO: Once there are separate average and setting channels, this special-case can be removed.
-                PS = *channels.at(1);
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
-            case PRS1PressureAverageEvent::TYPE:
-                // TODO, we need OSCAR channels for average stats
-                break;
-            case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
-                currentPressure = e->m_value;
+                if (calcPSfromSet) {
+                    PS = *(PRS1ImportChannelMap[PRS1IPAPSetEvent::TYPE].at(1));
+                    AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                }
                 break;
             case PRS1EPAPAverageEvent::TYPE:
                 PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);  // TODO: This belongs in an average channel rather than setting channel.
+                AddEvent(channel, t, e->m_value, e->m_gain);
                 AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
 

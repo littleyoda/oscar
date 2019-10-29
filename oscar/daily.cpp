@@ -349,6 +349,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     pc->addPlot(CPAP_IPAPLo, square);
     pc->addPlot(CPAP_IPAP, square);
     pc->addPlot(CPAP_IPAPHi, square);
+    pc->addPlot(CPAP_PressureSet, false);
+    pc->addPlot(CPAP_EPAPSet, false);
+    pc->addPlot(CPAP_IPAPSet, false);
 
     // Create Timea at Pressure graph
     gGraph * TAP2;

@@ -139,6 +139,9 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(PRS1_0C);
         CHANNELNAME(PRS1_0E);
         CHANNELNAME(PRS1_15);
+        CHANNELNAME(CPAP_PressureSet);
+        CHANNELNAME(CPAP_IPAPSet);
+        CHANNELNAME(CPAP_EPAPSet);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);
