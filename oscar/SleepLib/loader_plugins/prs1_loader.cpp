@@ -2644,9 +2644,6 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     EventDataType lpm = lpm20 - lpm4;
     EventDataType ppm = lpm / 16.0;
 
-    // TODO: For F3V3 this will need to be able to iterate over a list of event chunks,
-    // each of which has a starting timestamp and events at offsets from that timestamp,
-    // all of which should be coalesced into a single imported session.
     qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
@@ -2654,9 +2651,50 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     bool ok;
     ok = event->ParseEvents();
     
+    qint64 statIntervalStart = t, statIntervalEnd = t;
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
+
+        // Update statistical timestamps, which are reported at the end of a (generally)
+        // 2-minute interval, so that their timestamps reflect their start time as OSCAR
+        // excpects. When a session or slice ends, there will be a shorter interval, from
+        // the previous statistics to the end of the session/slice.
+        // TODO: Handle multiple slices correctly, updating the interval start when a slice starts (and starting a new eventlist)
+        // TODO: Handle the end of a slice/session correctly, adding a duplicate "end" event with the original timestamp.
+        //       (This will require some slight refactoring of the main switch statement below, including moving some
+        //        of the above variables into the PRS1Import object so that they can be shared between events, and
+        //        tracking the most recent stat event for each channel and emitting a duplicate when we reach the end
+        //        of the session/slice.)
+        switch (e->m_type) {
+            case PRS1PressureAverageEvent::TYPE:
+            case PRS1IPAPAverageEvent::TYPE:
+            case PRS1IPAPLowEvent::TYPE:
+            case PRS1IPAPHighEvent::TYPE:
+            case PRS1EPAPAverageEvent::TYPE:
+            case PRS1TotalLeakEvent::TYPE:
+            case PRS1LeakEvent::TYPE:
+            case PRS1RespiratoryRateEvent::TYPE:
+            case PRS1PatientTriggeredBreathsEvent::TYPE:
+            case PRS1MinuteVentilationEvent::TYPE:
+            case PRS1TidalVolumeEvent::TYPE:
+            case PRS1FlowRateEvent::TYPE:
+            case PRS1Test1Event::TYPE:
+            case PRS1Test2Event::TYPE:
+            case PRS1SnoreEvent::TYPE:
+                if (t != statIntervalEnd) {
+                    // When we encounter the first event of a series of stats (as identified by a new timestamp),
+                    // mark the interval start as the end of the previous interval.
+                    statIntervalStart = statIntervalEnd;
+                    statIntervalEnd = t;
+                }
+                // Set this event's timestamp as the start of the interval, since that what OSCAR assumes.
+                t = statIntervalStart;
+                // TODO: ideally we would also set the duration of the event, but OSCAR doesn't have any notion of that yet.
+            default:
+                // Leave normal events alone
+                break;
+        }
 
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         ChannelID channel = NoChannel, PS, VS2, LEAK;
