@@ -1579,7 +1579,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1ApneaAlarmEvent::TYPE,        { /* Not imported */ } },
     { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imported */ } },
     { PRS1AutoPressureSetEvent::TYPE,   { /* Not imported */ } },
-    { PRS1UnknownDurationEvent::TYPE,   { /* Not imported */ } },  // TODO: import as PRS1_0E
+    { PRS1UnknownDurationEvent::TYPE,   { &PRS1_0E } },
 };
 
 //********************************************************************************************
@@ -2665,8 +2665,7 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         }
         
         switch (e->m_type) {
-            case PRS1UnknownDurationEvent::TYPE:  // TODO: We should import and graph this as PRS1_0E
-                break;  // not imported or displayed
+            case PRS1PressureSetEvent::TYPE:  // currentPressure is used to calculate unintentional leak, not just PS
             case PRS1IPAPSetEvent::TYPE:
             case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
@@ -2703,6 +2702,7 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 
             case PRS1PeriodicBreathingEvent::TYPE:
             case PRS1LargeLeakEvent::TYPE:
+            case PRS1UnknownDurationEvent::TYPE:
                 // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
                 // Decide whether to preserve that behavior or change it universally and update either this code or comment.
                 duration = e->m_duration * 1000L;
@@ -3351,6 +3351,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V4 = {
     PRS1LargeLeakEvent::TYPE,
     PRS1TotalLeakEvent::TYPE,
     PRS1SnoreEvent::TYPE,
+    PRS1PressureAverageEvent::TYPE,
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
@@ -7864,58 +7865,14 @@ void PRS1Loader::initChannels()
     QString unknownname=QObject::tr("PRS1_%1");
     QString unknownshort=QObject::tr("PRS1_%1");
 
-    channel.add(GRP_CPAP, new Channel(PRS1_00 = 0x1150, UNKNOWN, MT_CPAP,    SESSION,
-        "PRS1_00",
-        QString(unknownname).arg(0,2,16,QChar('0')),
-        QString(unknowndesc).arg(0,2,16,QChar('0')),
-        QString(unknownshort).arg(0,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-
-    channel.add(GRP_CPAP, new Channel(PRS1_01 = 0x1151, UNKNOWN,  MT_CPAP,   SESSION,
-        "PRS1_01",
-        QString(unknownname).arg(1,2,16,QChar('0')),
-        QString(unknowndesc).arg(1,2,16,QChar('0')),
-        QString(unknownshort).arg(1,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-
-    channel.add(GRP_CPAP, new Channel(PRS1_08 = 0x1152, UNKNOWN, MT_CPAP,    SESSION,
-        "PRS1_08",
-        QString(unknownname).arg(8,2,16,QChar('0')),
-        QString(unknowndesc).arg(8,2,16,QChar('0')),
-        QString(unknownshort).arg(8,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-
-    channel.add(GRP_CPAP, new Channel(PRS1_0A = 0x1154, UNKNOWN, MT_CPAP,    SESSION,
-        "PRS1_0A",
-        QString(unknownname).arg(0xa,2,16,QChar('0')),
-        QString(unknowndesc).arg(0xa,2,16,QChar('0')),
-        QString(unknownshort).arg(0xa,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-    channel.add(GRP_CPAP, new Channel(PRS1_0B = 0x1155, UNKNOWN,  MT_CPAP,   SESSION,
-        "PRS1_0B",
-        QString(unknownname).arg(0xb,2,16,QChar('0')),
-        QString(unknowndesc).arg(0xb,2,16,QChar('0')),
-        QString(unknownshort).arg(0xb,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-    channel.add(GRP_CPAP, new Channel(PRS1_0C = 0x1156, UNKNOWN,  MT_CPAP,   SESSION,
-        "PRS1_0C",
-        QString(unknownname).arg(0xc,2,16,QChar('0')),
-        QString(unknowndesc).arg(0xc,2,16,QChar('0')),
-        QString(unknownshort).arg(0xc,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-    channel.add(GRP_CPAP, new Channel(PRS1_0E = 0x1157, UNKNOWN, MT_CPAP,    SESSION,
+    channel.add(GRP_CPAP, new Channel(PRS1_0E = 0x1157, SPAN, MT_CPAP,    SESSION,
         "PRS1_0E",
-        QString(unknownname).arg(0xe,2,16,QChar('0')),
+        "??",  // QString(unknownname).arg(0xe,2,16,QChar('0')),
         QString(unknowndesc).arg(0xe,2,16,QChar('0')),
-        QString(unknownshort).arg(0xe,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
+        "??",
+        STR_UNIT_Percentage,
+        DEFAULT,    QColor("#ffe8f0")));
+    qDebug() << channel[PRS1_0E].defaultColor();
     channel.add(GRP_CPAP, new Channel(PRS1_BND = 0x1159, SPAN,  MT_CPAP,   SESSION,
         "PRS1_BND",
         QObject::tr("Breathing Not Detected"),
@@ -7923,16 +7880,6 @@ void PRS1Loader::initChannels()
         QObject::tr("BND"),
         STR_UNIT_Unknown,
         DEFAULT,    QColor("light purple")));
-
-    channel.add(GRP_CPAP, new Channel(PRS1_15 = 0x115A, UNKNOWN,  MT_CPAP,   SESSION,
-        "PRS1_15",
-        QString(unknownname).arg(0x15,2,16,QChar('0')),
-        QString(unknowndesc).arg(0x15,2,16,QChar('0')),
-        QString(unknownshort).arg(0x15,2,16,QChar('0')),
-        STR_UNIT_Unknown,
-        DEFAULT,    QColor("black")));
-
-
     channel.add(GRP_CPAP, new Channel(PRS1_TimedBreath = 0x1180, MINOR_FLAG, MT_CPAP,    SESSION,
         "PRS1TimedBreath",
         QObject::tr("Timed Breath"),

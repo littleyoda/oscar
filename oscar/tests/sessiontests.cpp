@@ -131,14 +131,7 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_Test2);
         CHANNELNAME(CPAP_PressurePulse);
         CHANNELNAME(CPAP_Pressure);
-        CHANNELNAME(PRS1_00);
-        CHANNELNAME(PRS1_01);
-        CHANNELNAME(PRS1_08);
-        CHANNELNAME(PRS1_0A);
-        CHANNELNAME(PRS1_0B);
-        CHANNELNAME(PRS1_0C);
         CHANNELNAME(PRS1_0E);
-        CHANNELNAME(PRS1_15);
         CHANNELNAME(CPAP_PressureSet);
         CHANNELNAME(CPAP_IPAPSet);
         CHANNELNAME(CPAP_EPAPSet);
