@@ -302,6 +302,7 @@ bool Machine::AddSession(Session *s)
     if (profile->session->ignoreOlderSessions()) {
         qint64 ignorebefore = profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch();
         if (s->last() < ignorebefore) {
+            qDebug() << s->session() << "Ignoring old session";
             skipped_sessions++;
             return false;
         }
@@ -382,6 +383,7 @@ bool Machine::AddSession(Session *s)
 
     if (session_length < ignore_sessions) {
         // keep the session to save importing it again, but don't add it to the day record this time
+        qDebug() << s->session() << "Ignoring short session";
         return true;
     }
 
