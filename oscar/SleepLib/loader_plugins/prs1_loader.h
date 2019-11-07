@@ -327,6 +327,9 @@ protected:
     //! \brief Save parsed session data to the database
     void SaveSessionToDatabase(void);
 
+    //! \brief Import a single slice from a summary or compliance chunk.
+    void ImportSlice(qint64 chunk_start, PRS1ParsedEvent* e);
+
     //! \brief Import a single event from a data chunk.
     void ImportEvent(qint64 t, PRS1ParsedEvent* event);
     // State that needs to persist between individual events:

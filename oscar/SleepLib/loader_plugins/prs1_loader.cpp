@@ -2719,7 +2719,7 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
 {
     qint64 duration;
     
-        QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
+        const QVector<ChannelID*> & channels = PRS1ImportChannelMap[e->m_type];
         ChannelID channel = NoChannel, PS, VS2, LEAK;
         if (channels.count() > 0) {
             channel = *channels.at(0);
@@ -3868,13 +3868,7 @@ bool PRS1Import::ImportCompliance()
     for (int i=0; i < compliance->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = compliance->m_parsedData.at(i);
         if (e->m_type == PRS1ParsedSliceEvent::TYPE) {
-            PRS1ParsedSliceEvent* s = (PRS1ParsedSliceEvent*) e;
-            qint64 tt = start + qint64(s->m_start) * 1000L;
-            if (!session->m_slices.isEmpty()) {
-                SessionSlice & prevSlice = session->m_slices.last();
-                prevSlice.end = tt;
-            }
-            session->m_slices.append(SessionSlice(tt, tt, (SliceStatus) s->m_value));
+            ImportSlice(start, e);
             continue;
         } else if (e->m_type != PRS1ParsedSettingEvent::TYPE) {
             qWarning() << "Compliance had non-setting event:" << (int) e->m_type;
@@ -6594,6 +6588,19 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
 }
 
 
+void PRS1Import::ImportSlice(qint64 start, PRS1ParsedEvent* e)
+{
+    // TODO: See other comments re. filtering out empty events or anything other than mask-on/off
+    PRS1ParsedSliceEvent* s = (PRS1ParsedSliceEvent*) e;
+    qint64 tt = start + qint64(s->m_start) * 1000L;
+    if (!session->m_slices.isEmpty()) {
+        SessionSlice & prevSlice = session->m_slices.last();
+        prevSlice.end = tt;
+    }
+    session->m_slices.append(SessionSlice(tt, tt, (SliceStatus) s->m_value));
+}
+
+
 bool PRS1Import::ImportSummary()
 {
     if (!summary) {
@@ -6622,13 +6629,7 @@ bool PRS1Import::ImportSummary()
     for (int i=0; i < summary->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = summary->m_parsedData.at(i);
         if (e->m_type == PRS1ParsedSliceEvent::TYPE) {
-            PRS1ParsedSliceEvent* s = (PRS1ParsedSliceEvent*) e;
-            qint64 tt = start + qint64(s->m_start) * 1000L;
-            if (!session->m_slices.isEmpty()) {
-                SessionSlice & prevSlice = session->m_slices.last();
-                prevSlice.end = tt;
-            }
-            session->m_slices.append(SessionSlice(tt, tt, (SliceStatus) s->m_value));
+            ImportSlice(start, e);
             continue;
         } else if (e->m_type != PRS1ParsedSettingEvent::TYPE) {
             qWarning() << "Summary had non-setting event:" << (int) e->m_type;
@@ -6758,6 +6759,7 @@ bool PRS1Import::ImportSummary()
     summary_duration = summary->duration;
 
     if (summary->duration == 0) {
+        // TODO: Revisit the below.
         // This does occasionally happen and merely indicates a brief session with no useful data.
         //qDebug() << summary->sessionid << "duration == 0";
         return true;  // Don't bail for now, since some summary parsers are still very broken, so we want to proceed to events/waveforms.
