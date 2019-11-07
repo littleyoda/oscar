@@ -2625,26 +2625,25 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 
 bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 {
-    EventDataType currentPressure=0;
+    m_currentPressure=0;
 
     const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(event);
     
     // Calculate PS from IPAP/EPAP set events only when both are supported. This includes F0, but excludes
     // F5, which only reports EPAP set events, but both IPAP/EPAP average, from which PS will be calculated.
-    bool calcPSfromSet = supported.contains(PRS1IPAPSetEvent::TYPE) && supported.contains(PRS1EPAPSetEvent::TYPE);
+    m_calcPSfromSet = supported.contains(PRS1IPAPSetEvent::TYPE) && supported.contains(PRS1EPAPSetEvent::TYPE);
     
     // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    bool calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
-    if (calcLeaks) {
+    m_calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
+    if (m_calcLeaks) {
         // Only needed for machines that don't support it directly.
-        calcLeaks = (supported.contains(PRS1LeakEvent::TYPE) == false);
+        m_calcLeaks = (supported.contains(PRS1LeakEvent::TYPE) == false);
     }
-    EventDataType lpm4 = p_profile->cpap->custom4cmH2OLeaks();
+    m_lpm4 = p_profile->cpap->custom4cmH2OLeaks();
     EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-    EventDataType lpm = lpm20 - lpm4;
-    EventDataType ppm = lpm / 16.0;
+    EventDataType lpm = lpm20 - m_lpm4;
+    m_ppm = lpm / 16.0;
 
-    qint64 duration;
     qint64 t = qint64(event->timestamp) * 1000L;
     session->updateFirst(t);
 
@@ -2696,6 +2695,30 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 break;
         }
 
+        ImportEvent(t, e);
+    }
+
+    if (!ok) {
+        return false;
+    }
+
+    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // until there's a way for its parser to correctly set the timestamps for truncated
+    // intervals in sessions that don't end on a 2-minute boundary.
+    if (!(event->family == 3 && event->familyVersion == 3)) {
+        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
+        t = qint64(event->timestamp + event->duration) * 1000L;
+        session->updateLast(t);
+    }
+
+    return true;
+}
+
+
+void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
+{
+    qint64 duration;
+    
         QVector<ChannelID*> channels = PRS1ImportChannelMap[e->m_type];
         ChannelID channel = NoChannel, PS, VS2, LEAK;
         if (channels.count() > 0) {
@@ -2707,19 +2730,19 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             case PRS1IPAPSetEvent::TYPE:
             case PRS1IPAPAverageEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                currentPressure = e->m_value;
+                m_currentPressure = e->m_value;
                 break;
             case PRS1EPAPSetEvent::TYPE:
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                if (calcPSfromSet) {
+                if (m_calcPSfromSet) {
                     PS = *(PRS1ImportChannelMap[PRS1IPAPSetEvent::TYPE].at(1));
-                    AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                    AddEvent(PS, t, m_currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 }
                 break;
             case PRS1EPAPAverageEvent::TYPE:
                 PS = *channels.at(1);
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                AddEvent(PS, t, currentPressure - e->m_value, e->m_gain);  // Pressure Support
+                AddEvent(PS, t, m_currentPressure - e->m_value, e->m_gain);  // Pressure Support
                 break;
 
             case PRS1TimedBreathEvent::TYPE:
@@ -2754,9 +2777,9 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 // TODO: compare this value for the reported value for F5V1 and higher?
                 // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
                 //   Or omit, because machines with 0.125 gain report unintentional leak directly.
-                if (calcLeaks) { // Much Quicker doing this here than the recalc method.
+                if (m_calcLeaks) { // Much Quicker doing this here than the recalc method.
                     EventDataType leak = e->m_value;
-                    leak -= (((currentPressure/10.0f) - 4.0) * ppm + lpm4);
+                    leak -= (((m_currentPressure/10.0f) - 4.0) * m_ppm + m_lpm4);
                     if (leak < 0) leak = 0;
                     LEAK = *channels.at(1);
                     AddEvent(LEAK, t, leak, 1);
@@ -2797,22 +2820,6 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 }
                 break;
         }
-    }
-
-    if (!ok) {
-        return false;
-    }
-
-    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
-    // until there's a way for its parser to correctly set the timestamps for truncated
-    // intervals in sessions that don't end on a 2-minute boundary.
-    if (!(event->family == 3 && event->familyVersion == 3)) {
-        // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
-        t = qint64(event->timestamp + event->duration) * 1000L;
-        session->updateLast(t);
-    }
-
-    return true;
 }
 
 

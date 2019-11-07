@@ -327,6 +327,14 @@ protected:
     //! \brief Save parsed session data to the database
     void SaveSessionToDatabase(void);
 
+    //! \brief Import a single event from a data chunk.
+    void ImportEvent(qint64 t, PRS1ParsedEvent* event);
+    // State that needs to persist between individual events:
+    EventDataType m_currentPressure;
+    bool m_calcPSfromSet;
+    bool m_calcLeaks;
+    EventDataType m_lpm4, m_ppm;
+
     //! \brief Import a single data chunk from a .002 file containing event data.
     bool ImportEventChunk(PRS1DataChunk* event);
     //! \brief Create all supported channels (except for on-demand ones that only get created if an event appears).
