@@ -2564,7 +2564,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 }
 
 
-bool PRS1Import::CreateEventChannels(const PRS1DataChunk* event)
+void PRS1Import::CreateEventChannels(const PRS1DataChunk* event)
 {
     m_importChannels.clear();
     
@@ -2573,13 +2573,10 @@ bool PRS1Import::CreateEventChannels(const PRS1DataChunk* event)
     for (auto & e : supported) {
         if (!PRS1OnDemandChannels.contains(e)) {
             for (auto & pChannelID : PRS1ImportChannelMap[e]) {
-                if (!GetImportChannel(*pChannelID)) {
-                    return false;
-                }
+                GetImportChannel(*pChannelID);
             }
         }
     }
-    return true;
 }
 
 
@@ -2588,24 +2585,17 @@ EventList* PRS1Import::GetImportChannel(ChannelID channel)
     EventList* C = m_importChannels[channel];
     if (C == nullptr) {
         C = session->AddEventList(channel, EVL_Event);
-        // TODO: figure out why this can fail and prevent it
-        if (C == nullptr) {
-            qWarning() << "Unable to create event list for channel" << channel;
-        } else {
-            m_importChannels[channel] = C;
-        }
+        Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
+        m_importChannels[channel] = C;
     }
     return C;
 }
 
 
-bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
+void PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 {
     EventList* C = GetImportChannel(channel);
-    if (C == nullptr) {
-        // Warnings are handled by GetImportChannel.
-        return false;
-    }
+    Q_ASSERT(C);
     if (C->count() == 0) {
         // Initialize the gain (here, since required channels are created with default gain).
         C->setGain(gain);
@@ -2618,8 +2608,6 @@ bool PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
     
     // Add the event
     C->AddEvent(t, value, gain);
-    // TODO: can this ever fail?
-    return true;
 }
 
 
@@ -3365,7 +3353,7 @@ bool PRS1DataChunk::ParseEventsF0V23()
                 DUMP_EVENT();
                 UNEXPECTED_VALUE(code, "known event code");
                 this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                ok = false;  // unlike F0V6, we don't know the size of unknown events, so we can't recover
                 break;
         }
         pos = startpos + size;
@@ -3566,7 +3554,7 @@ bool PRS1DataChunk::ParseEventsF0V4()
                 DUMP_EVENT();
                 UNEXPECTED_VALUE(code, "known event code");
                 this->AddEvent(new PRS1UnknownDataEvent(m_data, startpos));
-                ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
+                ok = false;  // unlike F0V6, we don't know the size of unknown events, so we can't recover
                 break;
         }
         pos = startpos + size;
@@ -3868,7 +3856,7 @@ bool PRS1Import::ImportCompliance()
     for (int i=0; i < compliance->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = compliance->m_parsedData.at(i);
         if (e->m_type == PRS1ParsedSliceEvent::TYPE) {
-            ImportSlice(start, e);
+            AddSlice(start, e);
             continue;
         } else if (e->m_type != PRS1ParsedSettingEvent::TYPE) {
             qWarning() << "Compliance had non-setting event:" << (int) e->m_type;
@@ -6588,16 +6576,16 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
 }
 
 
-void PRS1Import::ImportSlice(qint64 start, PRS1ParsedEvent* e)
+void PRS1Import::AddSlice(qint64 start, PRS1ParsedEvent* e)
 {
-    // TODO: See other comments re. filtering out empty events or anything other than mask-on/off
+    // Cache all slices and incrementally calculate their durations.
     PRS1ParsedSliceEvent* s = (PRS1ParsedSliceEvent*) e;
     qint64 tt = start + qint64(s->m_start) * 1000L;
-    if (!session->m_slices.isEmpty()) {
-        SessionSlice & prevSlice = session->m_slices.last();
+    if (!m_slices.isEmpty()) {
+        SessionSlice & prevSlice = m_slices.last();
         prevSlice.end = tt;
     }
-    session->m_slices.append(SessionSlice(tt, tt, (SliceStatus) s->m_value));
+    m_slices.append(SessionSlice(tt, tt, (SliceStatus) s->m_value));
 }
 
 
@@ -6629,7 +6617,7 @@ bool PRS1Import::ImportSummary()
     for (int i=0; i < summary->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = summary->m_parsedData.at(i);
         if (e->m_type == PRS1ParsedSliceEvent::TYPE) {
-            ImportSlice(start, e);
+            AddSlice(start, e);
             continue;
         } else if (e->m_type != PRS1ParsedSettingEvent::TYPE) {
             qWarning() << "Summary had non-setting event:" << (int) e->m_type;
@@ -6903,7 +6891,8 @@ bool PRS1DataChunk::ParseEvents()
 
 bool PRS1Import::ImportEvents()
 {
-    bool ok = CreateEventChannels(m_event_chunks.first());
+    bool ok = true;
+    CreateEventChannels(m_event_chunks.first());
     
     if (ok) {
         for (auto & event : m_event_chunks.values()) {
@@ -7197,10 +7186,20 @@ bool PRS1Import::ParseSession(void)
             break;
         }
         
-        // TODO: filter out 0-length slices, since they cause problems for Day::total_time()
-        // and possibly filter out everything except mask on/off, since the gSessionTimesChart::paint
-        // assumes that assumes that. Or rework the slice system to be more robust.
-        
+        // Import the slices into the session
+        for (auto & slice : m_slices) {
+            // Filter out 0-length slices, since they cause problems for Day::total_time().
+            if (slice.end > slice.start) {
+                // Filter out everything except mask on/off, since gSessionTimesChart::paint assumes those are the only options.
+                if (slice.status == MaskOn) {
+                    session->m_slices.append(slice);
+                } else if (slice.status == MaskOff) {
+                    // TODO: Create BND event
+                    session->m_slices.append(slice);
+                }
+            }
+        }
+                
         if (m_event_chunks.count() > 0) {
             ok = ImportEvents();
             if (!ok) {
