@@ -154,7 +154,7 @@ void ResmedLoader::ParseSTR(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate 
         totalRecs += str.GetNumDataRecords();
     }
 
-    emit updateMessage("Parsing STR.edf records...");
+    emit updateMessage(QObject::tr("Parsing STR.edf records..."));
     emit setProgressMax(totalRecs);
     QCoreApplication::processEvents();
 
