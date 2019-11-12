@@ -1090,6 +1090,9 @@ enum PRS1ParsedEventType
     EV_PRS1_LL,
     EV_PRS1_UNK_DURATION,  // unknown duration event, rename once we figure it out
     EV_PRS1_HY,
+    EV_PRS1_OA_COUNT,     // F3V3 only
+    EV_PRS1_CA_COUNT,     // F3V3 only
+    EV_PRS1_HY_COUNT,     // F3V3 only
     EV_PRS1_TOTLEAK,
     EV_PRS1_LEAK,  // unintentional leak
     EV_PRS1_AUTO_PRESSURE_SET,
@@ -1497,6 +1500,9 @@ PRS1_VALUE_EVENT(PRS1RERAEvent, EV_PRS1_RERA);  // TODO: should this really be a
 PRS1_VALUE_EVENT(PRS1FlowRateEvent, EV_PRS1_FLOWRATE);  // TODO: is this a single event or an index/hour?
 PRS1_VALUE_EVENT(PRS1Test1Event, EV_PRS1_TEST1);
 PRS1_VALUE_EVENT(PRS1Test2Event, EV_PRS1_TEST2);
+PRS1_VALUE_EVENT(PRS1HypopneaCount, EV_PRS1_HY_COUNT);  // F3V3 only
+PRS1_VALUE_EVENT(PRS1ClearAirwayCount, EV_PRS1_CA_COUNT);  // F3V3 only
+PRS1_VALUE_EVENT(PRS1ObstructiveApneaCount, EV_PRS1_OA_COUNT);  // F3V3 only
 
 PRS1_ALARM_EVENT(PRS1DisconnectAlarmEvent, EV_PRS1_DISCONNECT_ALARM);
 PRS1_ALARM_EVENT(PRS1ApneaAlarmEvent, EV_PRS1_APNEA_ALARM);
@@ -1580,6 +1586,10 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imported */ } },
     { PRS1AutoPressureSetEvent::TYPE,   { /* Not imported */ } },
     { PRS1UnknownDurationEvent::TYPE,   { &PRS1_0E } },
+    
+    { PRS1HypopneaCount::TYPE,          { &CPAP_Hypopnea } },     // F3V3 only, generates individual events on import
+    { PRS1ObstructiveApneaCount::TYPE,  { &CPAP_Obstructive } },  // F3V3 only, generates individual events on import
+    { PRS1ClearAirwayCount::TYPE,       { &CPAP_ClearAirway } },  // F3V3 only, generates individual events on import
 };
 
 //********************************************************************************************
@@ -2683,7 +2693,44 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 break;
         }
 
-        ImportEvent(t, e);
+        switch (e->m_type) {
+            // F3V3 doesn't have individual HY/CA/OA events, only counts every 2 minutes, where
+            // nonzero counts show up as overview flags. Currently OSCAR doesn't have a way to
+            // chart those numeric statistics, so we generate events based on the count.
+            //
+            // TODO: This (and VS2) would probably be better handled as numeric charts only,
+            // along with enhancing overview flags to be drawn when channels have nonzero values,
+            // instead of the fictitious "events" that are currently generated.
+            case PRS1HypopneaCount::TYPE:
+            case PRS1ClearAirwayCount::TYPE:
+            case PRS1ObstructiveApneaCount::TYPE:
+                // Make sure PRS1ClearAirwayEvent/etc. isn't supported before generating events from counts.
+                CHECK_VALUE(supported.contains(PRS1HypopneaEvent::TYPE), false);
+                CHECK_VALUE(supported.contains(PRS1ClearAirwayEvent::TYPE), false);
+                CHECK_VALUE(supported.contains(PRS1ObstructiveApneaEvent::TYPE), false);
+
+                // Divide each count into events evenly spaced over the interval.
+                // NOTE: This is slightly fictional, but there's no waveform data for F3V3, so it won't
+                // incorrectly associate specific events with specific flow or pressure events.
+                if (e->m_value > 0) {
+                    qint64 blockduration = statIntervalEnd - statIntervalStart;
+                    qint64 div = blockduration / e->m_value;
+                    qint64 tt = t;
+                    PRS1ParsedDurationEvent ee(e->m_type, t, 0);
+                    for (int i=0; i < e->m_value; ++i) {
+                        ImportEvent(tt, &ee);
+                        tt += div;
+                    }
+                }
+                
+                // TODO: Consider whether to have a numeric channel for HY/CA/OA that gets charted like VS does,
+                // in which case we can fall through.
+                break;
+                
+            default:
+                ImportEvent(t, e);
+                break;
+        }
     }
 
     if (!ok) {
@@ -2782,7 +2829,8 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
                 if (e->m_value > 0) {
                     // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                     // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview.
+                    // on the flags overview. See the comment in ImportEventChunk regarding flags
+                    // for numeric channels.
                     VS2 = *channels.at(1);
                     AddEvent(VS2, t, 0, 1);
                 }
@@ -2993,9 +3041,9 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
     PRS1RespiratoryRateEvent::TYPE,
     PRS1MinuteVentilationEvent::TYPE,
     PRS1LeakEvent::TYPE,
-    PRS1HypopneaEvent::TYPE,
-    PRS1ClearAirwayEvent::TYPE,
-    PRS1ObstructiveApneaEvent::TYPE,
+    PRS1HypopneaCount::TYPE,
+    PRS1ClearAirwayCount::TYPE,
+    PRS1ObstructiveApneaCount::TYPE,
     // No PP, FL, VS, RERA, PB, LL
     // No TB
 };
@@ -3016,30 +3064,27 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
         qWarning() << "F3V3 event file with fileVersion 3?";
     }
     
-    int t = 0, tt;
+    int t = 0;
     static const int record_size = 0x10;
     int size = this->m_data.size()/record_size;
     CHECK_VALUE(this->m_data.size() % record_size, 0);
     unsigned char * h = (unsigned char *)this->m_data.data();
 
-    int hy, oa, ca;
-    qint64 div = 0;
+    static const qint64 block_duration = 120;
 
     // Make sure the assumptions here agree with the header
     CHECK_VALUE(this->htype, PRS1_HTYPE_INTERVAL);
     CHECK_VALUE(this->interval_count, size);
-    CHECK_VALUE(this->interval_seconds, 120);
+    CHECK_VALUE(this->interval_seconds, block_duration);
     for (auto & channel : this->waveformInfo) {
         CHECK_VALUE(channel.interleave, 1);
     }
     
-    static const qint64 block_duration = 120;
-
     for (int x=0; x < size; x++) {
-        // TODO: t here is inconsistent with all other parsers: they receive events at the end
-        // of the 2-minute interval with stats for the preceding 2 minutes.  This uses the
-        // starting timestamp currently.
-        //
+        // Use the timestamp of the end of this interval, to be consistent with other parsers,
+        // but see note below regarding the duration of the final interval.
+        t += block_duration;
+
         // TODO: The duration of the final interval isn't clearly defined in this format:
         // there appears to be no way (apart from looking at the summary or waveform data)
         // to determine the end time, which may truncate the last interval.
@@ -3056,44 +3101,12 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
         if (h[9] < 13 || h[9] > 84) UNEXPECTED_VALUE(h[9], "13-84");  // not sure what this is.. encore doesn't graph it.
         CHECK_VALUES(h[10], 0, 8);  // 8 shows as a Low Pressure (LP) alarm
         this->AddEvent(new PRS1MinuteVentilationEvent(t, h[11]));
+        this->AddEvent(new PRS1HypopneaCount(t, h[12]));          // count of hypopnea events
+        this->AddEvent(new PRS1ClearAirwayCount(t, h[13]));       // count of clear airway events
+        this->AddEvent(new PRS1ObstructiveApneaCount(t, h[14]));  // count of obstructive events
         this->AddEvent(new PRS1LeakEvent(t, h[15]));
 
-        hy = h[12];  // count of hypopnea events
-        ca = h[13];  // count of clear airway events
-        oa = h[14];  // count of obstructive events
-
-        // divide each event evenly over the 2 minute block
-        // NOTE: This is slightly fictional, but there's no waveform data for these machines, so it won't
-        // incorrectly associate specific events with specific flow or pressure events.
-        // TODO: Consider whether to have a numeric channel for H/CA/OA that gets charted like VS does.
-        // currently have another good way to represent flags with numeric values (s
-        if (hy > 0) {
-            div = block_duration / hy;
-            tt = t;
-            for (int i=0; i < hy; ++i) {
-                this->AddEvent(new PRS1HypopneaEvent(tt, 0));
-                tt += div;
-            }
-        }
-        if (ca > 0) {
-            div = block_duration / ca;
-            tt = t;
-            for (int i=0; i < ca; ++i) {
-                this->AddEvent(new PRS1ClearAirwayEvent(tt, 0));
-                tt += div;
-            }
-        }
-        if (oa > 0) {
-            div = block_duration / oa;
-            tt = t;
-            for (int i=0; i < oa; ++i) {
-                this->AddEvent(new PRS1ObstructiveApneaEvent(tt, 0));
-                tt += div;
-            }
-        }
-
         h += record_size;
-        t += block_duration;
     }
     
     this->duration = t;
