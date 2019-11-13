@@ -1227,7 +1227,6 @@ public:
         return out;
     }
 
-protected:
     static const PRS1ParsedEventUnit UNIT = PRS1_UNIT_S;
     
     PRS1ParsedDurationEvent(PRS1ParsedEventType type, int start, int duration) : PRS1ParsedEvent(type, start) { m_duration = duration; }
@@ -2621,6 +2620,19 @@ void PRS1Import::AddEvent(ChannelID channel, qint64 t, float value, float gain)
 }
 
 
+void PRS1Import::StartNewSlice(PRS1DataChunk* event, qint64 t)
+{
+    // TODO: Update a slice iterator to point to the slice mask-on slice encompassing time t.
+
+    // TODO: Possibly set the interval start/end times based on the slice's start time rather than t?
+    m_statIntervalStart = t;
+    m_statIntervalEnd = t;
+
+    // Create a new eventlist for this slice, to allow for a gap in the data between slices.
+    CreateEventChannels(event);
+}
+
+
 bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 {
     m_currentPressure=0;
@@ -2648,7 +2660,11 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     bool ok;
     ok = event->ParseEvents();
     
-    qint64 statIntervalStart = t, statIntervalEnd = t;
+    // Most machines have only a single event chunk. F3V3 has an event chunk per mask-on slice.
+    // Set up the initial slice based on the chunk's starting timestamp.
+    StartNewSlice(event, t);
+    // TODO: Multiple slices covered by a single event chunk should also call StartNewSlice.
+
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
@@ -2679,14 +2695,14 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             case PRS1Test1Event::TYPE:
             case PRS1Test2Event::TYPE:
             case PRS1SnoreEvent::TYPE:
-                if (t != statIntervalEnd) {
+                if (t != m_statIntervalEnd) {
                     // When we encounter the first event of a series of stats (as identified by a new timestamp),
                     // mark the interval start as the end of the previous interval.
-                    statIntervalStart = statIntervalEnd;
-                    statIntervalEnd = t;
+                    m_statIntervalStart = m_statIntervalEnd;
+                    m_statIntervalEnd = t;
                 }
                 // Set this event's timestamp as the start of the interval, since that what OSCAR assumes.
-                t = statIntervalStart;
+                t = m_statIntervalStart;
                 // TODO: ideally we would also set the duration of the event, but OSCAR doesn't have any notion of that yet.
             default:
                 // Leave normal events alone
@@ -2713,7 +2729,7 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 // NOTE: This is slightly fictional, but there's no waveform data for F3V3, so it won't
                 // incorrectly associate specific events with specific flow or pressure events.
                 if (e->m_value > 0) {
-                    qint64 blockduration = statIntervalEnd - statIntervalStart;
+                    qint64 blockduration = m_statIntervalEnd - m_statIntervalStart;
                     qint64 div = blockduration / e->m_value;
                     qint64 tt = t;
                     PRS1ParsedDurationEvent ee(e->m_type, t, 0);
@@ -6905,19 +6921,16 @@ bool PRS1DataChunk::ParseEvents()
 bool PRS1Import::ImportEvents()
 {
     bool ok = true;
-    CreateEventChannels(m_event_chunks.first());
     
-    if (ok) {
-        for (auto & event : m_event_chunks.values()) {
-            bool chunk_ok = this->ImportEventChunk(event);
-            if (!chunk_ok && m_event_chunks.count() > 1) {
-                // Specify which chunk had problems if there's more than one. ParseSession will warn about the overall result.
-                qWarning() << event->sessionid << QString("Error parsing events in %1 @ %2, continuing")
-                    .arg(relativePath(event->m_path))
-                    .arg(event->m_filepos);
-            }
-            ok &= chunk_ok;
+    for (auto & event : m_event_chunks.values()) {
+        bool chunk_ok = this->ImportEventChunk(event);
+        if (!chunk_ok && m_event_chunks.count() > 1) {
+            // Specify which chunk had problems if there's more than one. ParseSession will warn about the overall result.
+            qWarning() << event->sessionid << QString("Error parsing events in %1 @ %2, continuing")
+                .arg(relativePath(event->m_path))
+                .arg(event->m_filepos);
         }
+        ok &= chunk_ok;
     }
 
     if (ok) {
