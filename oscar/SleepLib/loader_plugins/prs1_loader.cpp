@@ -258,6 +258,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "1061T",    3, 3, "BiPAP S/T 30 (System One 60 Series)" },
     { "1160P",    3, 3, "BiPAP AVAPS 30 (System One 60 Series)" },
     { "1030X110", 3, 6, "DreamStation BiPAP S/T 30" },
+    { "1030X150", 3, 6, "DreamStation BiPAP S/T 30 with AAM" },
     { "1130X110", 3, 6, "DreamStation BiPAP AVAPS 30" },
     { "1131X150", 3, 6, "DreamStation BiPAP AVAPS 30 AE" },
     
@@ -5257,7 +5258,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 } else if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
                     // Rise time
-                    if (data[pos] < 1 || data[pos] > 4) UNEXPECTED_VALUE(data[pos], "1-4");  // 1-4 have been seen
+                    if (data[pos] < 1 || data[pos] > 6) UNEXPECTED_VALUE(data[pos], "1-6");  // 1-6 have been seen
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos]));
                 }
                 // TODO: where's timed inspiration?
@@ -7239,7 +7240,7 @@ bool PRS1Import::ParseSession(void)
                 }
             }
         }
-                
+        
         // TODO: There should be a way to distinguish between no-data-to-import vs. parsing errors
         // (once we figure out what's benign and what isn't).
         if (m_event_chunks.count() > 0) {
