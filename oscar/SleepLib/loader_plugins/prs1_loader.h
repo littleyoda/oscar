@@ -452,8 +452,6 @@ class PRS1Loader : public CPAPLoader
 
     //! \brief PRS1 Data files can store multiple sessions, so store them in this list for later processing.
     QHash<SessionID, Session *> new_sessions;
-
-    qint32 summary_duration;
 };
 
 

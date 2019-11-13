@@ -2655,7 +2655,11 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     m_ppm = lpm / 16.0;
 
     qint64 t = qint64(event->timestamp) * 1000L;
-    session->updateFirst(t);
+    if (session->first() == 0) {
+        qWarning() << sessionid << "Start time not set by summary?";
+    } else if (t < session->first()) {
+        qWarning() << sessionid << "Events start before summary?";
+    }
 
     bool ok;
     ok = event->ParseEvents();
@@ -2759,7 +2763,14 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     if (!(event->family == 3 && event->familyVersion == 3)) {
         // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
         t = qint64(event->timestamp + event->duration) * 1000L;
-        session->updateLast(t);
+        if (session->last() == 0) {
+            qWarning() << sessionid << "End time not set by summary?";
+        } else if (t > session->last()) {
+            // This has only been seen once, with corrupted data, in which the summary and event
+            // files each contained multiple conflicting sessions (all brief) with the same ID.
+            qWarning() << sessionid << "Events continue after summary?";
+        }
+        // Events can end before the session if the mask was off before the equipment turned off.
     }
 
     return true;
@@ -6773,19 +6784,12 @@ bool PRS1Import::ImportSummary()
     }
     session->settings[CPAP_Mode] = cpapmode;
     
-    summary_duration = summary->duration;
-
     if (summary->duration == 0) {
-        // TODO: Revisit the below.
         // This does occasionally happen and merely indicates a brief session with no useful data.
-        //qDebug() << summary->sessionid << "duration == 0";
-        return true;  // Don't bail for now, since some summary parsers are still very broken, so we want to proceed to events/waveforms.
+        // This requires the use of really_set_last below, which otherwise rejects 0 length.
+        //qDebug() << summary->sessionid << "session duration == 0";
     }
-    
-    // Intentionally don't set the session's duration based on the summary duration.
-    // That only happens in PRS1Import::ParseSession() as a last resort.
-    // TODO: Revisit this once summary parsing is reliable.
-    //session->set_last(...);
+    session->really_set_last(qint64(summary->timestamp + summary->duration) * 1000L);
     
     return true;
 }
@@ -7187,11 +7191,10 @@ bool PRS1Import::ParseSession(void)
     session = new Session(mach, sessionid);
 
     do {
-        // TODO: There should be a way to distinguish between no-data-to-import vs. parsing errors
-        // (once we figure out what's benign and what isn't).
         if (compliance != nullptr) {
             ok = ImportCompliance();
             if (!ok) {
+                // We don't see any parse errors with our test data, so warn if there's ever an error encountered.
                 qWarning() << sessionid << "Error parsing compliance, skipping session";
                 break;
             }
@@ -7203,15 +7206,26 @@ bool PRS1Import::ParseSession(void)
             }
             ok = ImportSummary();
             if (!ok) {
+                // We don't see any parse errors with our test data, so warn if there's ever an error encountered.
                 qWarning() << sessionid << "Error parsing summary, skipping session";
                 break;
             }
         }
         if (compliance == nullptr && summary == nullptr) {
+            // With one exception, the only time we've seen missing .000 or .001 data has been with a corrupted card,
+            // or occasionally with partial cards where the .002 is the first file in the Pn directory
+            // and we're missing the preceding directory. Since the lack of compliance or summary means we
+            // don't know the therapy settings or if the mask was ever off, we just skip this very rare case.
             qWarning() << sessionid << "No compliance or summary, skipping session";
             break;
         }
         
+        // If there's nothing beyond the compliance or summary (no event or waveform data), mark this session as
+        // a summary.
+        if (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && oxifile.isEmpty()) {
+            session->setSummaryOnly(true);
+        }
+
         // Import the slices into the session
         for (auto & slice : m_slices) {
             // Filter out 0-length slices, since they cause problems for Day::total_time().
@@ -7226,6 +7240,8 @@ bool PRS1Import::ParseSession(void)
             }
         }
                 
+        // TODO: There should be a way to distinguish between no-data-to-import vs. parsing errors
+        // (once we figure out what's benign and what isn't).
         if (m_event_chunks.count() > 0) {
             ok = ImportEvents();
             if (!ok) {
@@ -7251,36 +7267,7 @@ bool PRS1Import::ParseSession(void)
             }
         }
 
-        if (session->first() > 0) {
-            if (session->last() < session->first()) {
-                // Compliance uses set_last() to set the session's last timestamp, so it
-                // won't reach this point.
-                if (compliance != nullptr) {
-                    qWarning() << sessionid << "compliance didn't set session end?";
-                }
-
-                // Events and  use updateLast() to set the session's last timestamp,
-                // so they should only reach this point if there was a problem parsing them.
-
-                // TODO: It turns out waveforms *don't* update the timestamp, so this
-                // is depending entirely on events. See TODO below.
-                if (m_event_chunks.count() > 0 || !m_wavefiles.isEmpty() || !oxifile.isEmpty()) {
-                    qWarning() << sessionid << "Downgrading session to summary only";
-                }
-                session->setSummaryOnly(true);
-
-                // Only use the summary's duration if the session's duration couldn't be
-                // derived from events or waveforms.
-                
-                // TODO: Change this once summary parsing is reliable: event duration is less
-                // accurate than either waveforms or correctly-parsed summaries, since there
-                // won't necessarily be events at the very end of a session.
-                session->really_set_last(session->first()+(qint64(summary_duration) * 1000L));
-            }
-            save = true;
-        } else {
-            qWarning() << sessionid << "missing start time";
-        }
+        save = true;
     } while (false);
     
     return save;

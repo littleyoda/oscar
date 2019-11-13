@@ -237,10 +237,8 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
         // chunks and ParseWaveforms/ParseOximetry for the creation of eventlists per
         // coalesced chunk.
         //
-        // TODO: Is this only for waveform data?
-        if (ev_size > 1 && e.type() != EVL_Waveform) {
-            qWarning() << session->session() << eventChannel(*key) << "ev_size =" << ev_size;
-        }
+        // This can also be used for other discontiguous data, such as PRS1 statistics
+        // that are omitted when breathing is not detected.
 
         for (int j = 0; j < ev_size; j++) {
             e = *ev[j];
