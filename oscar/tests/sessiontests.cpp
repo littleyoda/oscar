@@ -195,10 +195,14 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
             out << "    end: " << ts(slice.end) << endl;
         }
     }
-    Day day;
-    day.addSession(session);
-    out << "  total_time: " << dur(day.total_time()) << endl;
-    day.removeSession(session);
+    qint64 total_time = 0;
+    if (session->first() != 0) {
+        Day day;
+        day.addSession(session);
+        total_time = day.total_time();
+        day.removeSession(session);
+    }
+    out << "  total_time: " << dur(total_time) << endl;
 
     out << "  settings:" << endl;
 

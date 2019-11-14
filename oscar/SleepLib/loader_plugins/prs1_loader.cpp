@@ -7221,12 +7221,6 @@ bool PRS1Import::ParseSession(void)
             break;
         }
         
-        // If there's nothing beyond the compliance or summary (no event or waveform data), mark this session as
-        // a summary.
-        if (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && oxifile.isEmpty()) {
-            session->setSummaryOnly(true);
-        }
-
         // Import the slices into the session
         for (auto & slice : m_slices) {
             // Filter out 0-length slices, since they cause problems for Day::total_time().
@@ -7241,6 +7235,14 @@ bool PRS1Import::ParseSession(void)
             }
         }
         
+        // If are no mask-on slices, then there's not any meaningful event or waveform data for the session.
+        // If there's no no event or waveform data, mark this session as a summary.
+        if (session->m_slices.count() == 0 || (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && oxifile.isEmpty())) {
+            session->setSummaryOnly(true);
+            save = true;
+            break;  // and skip the occasional fragmentary event or waveform data
+        }
+
         // TODO: There should be a way to distinguish between no-data-to-import vs. parsing errors
         // (once we figure out what's benign and what isn't).
         if (m_event_chunks.count() > 0) {
