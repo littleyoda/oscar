@@ -2673,17 +2673,8 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
+        bool intervalEvent = false;
 
-        // Update statistical timestamps, which are reported at the end of a (generally)
-        // 2-minute interval, so that their timestamps reflect their start time as OSCAR
-        // excpects. When a session or slice ends, there will be a shorter interval, from
-        // the previous statistics to the end of the session/slice.
-        // TODO: Handle multiple slices correctly, updating the interval start when a slice starts (and starting a new eventlist)
-        // TODO: Handle the end of a slice/session correctly, adding a duplicate "end" event with the original timestamp.
-        //       (This will require some slight refactoring of the main switch statement below, including moving some
-        //        of the above variables into the PRS1Import object so that they can be shared between events, and
-        //        tracking the most recent stat event for each channel and emitting a duplicate when we reach the end
-        //        of the session/slice.)
         switch (e->m_type) {
             case PRS1PressureAverageEvent::TYPE:
             case PRS1IPAPAverageEvent::TYPE:
@@ -2700,18 +2691,32 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             case PRS1Test1Event::TYPE:
             case PRS1Test2Event::TYPE:
             case PRS1SnoreEvent::TYPE:
-                if (t != m_statIntervalEnd) {
-                    // When we encounter the first event of a series of stats (as identified by a new timestamp),
-                    // mark the interval start as the end of the previous interval.
-                    m_statIntervalStart = m_statIntervalEnd;
-                    m_statIntervalEnd = t;
-                }
-                // Set this event's timestamp as the start of the interval, since that what OSCAR assumes.
-                t = m_statIntervalStart;
-                // TODO: ideally we would also set the duration of the event, but OSCAR doesn't have any notion of that yet.
-            default:
-                // Leave normal events alone
+                intervalEvent = true;
                 break;
+            default:
+                break;
+        }
+        
+        if (intervalEvent) {
+            // Update statistical timestamps, which are reported at the end of a (generally)
+            // 2-minute interval, so that their timestamps reflect their start time as OSCAR
+            // excpects. When a session or slice ends, there will be a shorter interval, from
+            // the previous statistics to the end of the session/slice.
+            // TODO: Handle multiple slices correctly, updating the interval start when a slice starts (and starting a new eventlist)
+            // TODO: Handle the end of a slice/session correctly, adding a duplicate "end" event with the original timestamp.
+            //       (This will require some slight refactoring of the main switch statement below, including moving some
+            //        of the above variables into the PRS1Import object so that they can be shared between events, and
+            //        tracking the most recent stat event for each channel and emitting a duplicate when we reach the end
+            //        of the session/slice.)
+            if (t != m_statIntervalEnd) {
+                // When we encounter the first event of a series of stats (as identified by a new timestamp),
+                // mark the interval start as the end of the previous interval.
+                m_statIntervalStart = m_statIntervalEnd;
+                m_statIntervalEnd = t;
+            }
+            // Set this event's timestamp as the start of the interval, since that what OSCAR assumes.
+            t = m_statIntervalStart;
+            // TODO: ideally we would also set the duration of the event, but OSCAR doesn't have any notion of that yet.
         }
 
         switch (e->m_type) {
