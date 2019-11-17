@@ -2634,6 +2634,43 @@ void PRS1Import::StartNewSlice(PRS1DataChunk* event, qint64 t)
 }
 
 
+bool PRS1Import::IsIntervalEvent(PRS1ParsedEvent* e)
+{
+    bool intervalEvent = false;
+
+    // Statistical timestamps are reported at the end of a (generally) 2-minute
+    // interval, rather than the start time that OSCAR expects for its imported
+    // events.  (When a session or slice ends, there will be a shorter interval,
+    // the previous statistics to the end of the session/slice.)
+    switch (e->m_type) {
+        case PRS1PressureAverageEvent::TYPE:
+        case PRS1IPAPAverageEvent::TYPE:
+        case PRS1IPAPLowEvent::TYPE:
+        case PRS1IPAPHighEvent::TYPE:
+        case PRS1EPAPAverageEvent::TYPE:
+        case PRS1TotalLeakEvent::TYPE:
+        case PRS1LeakEvent::TYPE:
+        case PRS1RespiratoryRateEvent::TYPE:
+        case PRS1PatientTriggeredBreathsEvent::TYPE:
+        case PRS1MinuteVentilationEvent::TYPE:
+        case PRS1TidalVolumeEvent::TYPE:
+        case PRS1FlowRateEvent::TYPE:
+        case PRS1Test1Event::TYPE:
+        case PRS1Test2Event::TYPE:
+        case PRS1SnoreEvent::TYPE:
+        case PRS1HypopneaCount::TYPE:
+        case PRS1ClearAirwayCount::TYPE:
+        case PRS1ObstructiveApneaCount::TYPE:
+            intervalEvent = true;
+            break;
+        default:
+            break;
+    }
+    
+    return intervalEvent;
+}
+
+
 bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 {
     m_currentPressure=0;
@@ -2673,35 +2710,10 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     for (int i=0; i < event->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = event->m_parsedData.at(i);
         t = qint64(event->timestamp + e->m_start) * 1000L;
-        bool intervalEvent = false;
 
-        switch (e->m_type) {
-            case PRS1PressureAverageEvent::TYPE:
-            case PRS1IPAPAverageEvent::TYPE:
-            case PRS1IPAPLowEvent::TYPE:
-            case PRS1IPAPHighEvent::TYPE:
-            case PRS1EPAPAverageEvent::TYPE:
-            case PRS1TotalLeakEvent::TYPE:
-            case PRS1LeakEvent::TYPE:
-            case PRS1RespiratoryRateEvent::TYPE:
-            case PRS1PatientTriggeredBreathsEvent::TYPE:
-            case PRS1MinuteVentilationEvent::TYPE:
-            case PRS1TidalVolumeEvent::TYPE:
-            case PRS1FlowRateEvent::TYPE:
-            case PRS1Test1Event::TYPE:
-            case PRS1Test2Event::TYPE:
-            case PRS1SnoreEvent::TYPE:
-                intervalEvent = true;
-                break;
-            default:
-                break;
-        }
-        
+        bool intervalEvent = IsIntervalEvent(e);
         if (intervalEvent) {
-            // Update statistical timestamps, which are reported at the end of a (generally)
-            // 2-minute interval, so that their timestamps reflect their start time as OSCAR
-            // excpects. When a session or slice ends, there will be a shorter interval, from
-            // the previous statistics to the end of the session/slice.
+            // Calculate the start timetamp for the interval described by this event.
             // TODO: Handle multiple slices correctly, updating the interval start when a slice starts (and starting a new eventlist)
             // TODO: Handle the end of a slice/session correctly, adding a duplicate "end" event with the original timestamp.
             //       (This will require some slight refactoring of the main switch statement below, including moving some

@@ -343,6 +343,9 @@ protected:
     void StartNewSlice(PRS1DataChunk* event, qint64 t);
     qint64 m_statIntervalStart, m_statIntervalEnd;
 
+    //! \brief Identify statistical events that are reported at the end of an interval.
+    bool IsIntervalEvent(PRS1ParsedEvent* e);
+
     //! \brief Import a single data chunk from a .002 file containing event data.
     bool ImportEventChunk(PRS1DataChunk* event);
     //! \brief Create all supported channels (except for on-demand ones that only get created if an event appears).
