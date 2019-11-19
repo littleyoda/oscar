@@ -268,6 +268,7 @@ public:
         summary = nullptr;
         compliance = nullptr;
         session = nullptr;
+        m_currentSliceInitialized = false;
     }
     virtual ~PRS1Import() {
         delete compliance;
@@ -339,8 +340,10 @@ protected:
     bool m_calcLeaks;
     EventDataType m_lpm4, m_ppm;
 
-    //! \brief Update import data structures for a new mask-on slice.
-    void StartNewSlice(PRS1DataChunk* event, qint64 t);
+    //! \brief Advance the current mask-on slice if needed and update import data structures accordingly.
+    bool UpdateCurrentSlice(PRS1DataChunk* chunk, qint64 t);
+    bool m_currentSliceInitialized;
+    QVector<SessionSlice>::const_iterator m_currentSlice;
     qint64 m_statIntervalStart, m_statIntervalEnd;
 
     //! \brief Identify statistical events that are reported at the end of an interval.
