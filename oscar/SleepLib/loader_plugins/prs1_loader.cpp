@@ -2779,13 +2779,9 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         }
         
         bool intervalEvent = IsIntervalEvent(e);
+        qint64 interval_end_t = 0;
         if (intervalEvent) {
             // Calculate the start timetamp for the interval described by this event.
-            // TODO: Handle the end of a slice/session correctly, adding a duplicate "end" event with the original timestamp.
-            //       (This will require some slight refactoring of the main switch statement below, including moving some
-            //        of the above variables into the PRS1Import object so that they can be shared between events, and
-            //        tracking the most recent stat event for each channel and emitting a duplicate when we reach the end
-            //        of the session/slice.)
             if (t != m_statIntervalEnd) {
                 // When we encounter the first event of a series of stats (as identified by a new timestamp),
                 // check whether the previous interval ended within the current slice. (Check the timestamp + 1
@@ -2798,7 +2794,8 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 }
                 m_statIntervalEnd = t;
             }
-            // TODO: save interval clamped end time
+            // Clamp this interval's end time to the end of the slice.
+            interval_end_t = min(t, (*m_currentSlice).end);
             // Set this event's timestamp as the start of the interval, since that what OSCAR assumes.
             t = m_statIntervalStart;
             // TODO: ideally we would also set the duration of the event, but OSCAR doesn't have any notion of that yet.
@@ -2839,9 +2836,8 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 // Divide each count into events evenly spaced over the interval.
                 // NOTE: This is slightly fictional, but there's no waveform data for F3V3, so it won't
                 // incorrectly associate specific events with specific flow or pressure events.
-                // TODO: use clamped end time
                 if (e->m_value > 0) {
-                    qint64 blockduration = m_statIntervalEnd - m_statIntervalStart;
+                    qint64 blockduration = interval_end_t - m_statIntervalStart;
                     qint64 div = blockduration / e->m_value;
                     qint64 tt = t;
                     PRS1ParsedDurationEvent ee(e->m_type, t, 0);
@@ -2857,7 +2853,11 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 
             default:
                 ImportEvent(t, e);
-                // TODO: if interval and its clamped end time == mask-on slice end time, emit duplicate event at that end time
+                // If this interval event is reported at the end of the slice, import an additional event
+                // marking the end of the data. (The above import marks the beginning of the interval.)
+                if (intervalEvent && interval_end_t == (*m_currentSlice).end) {
+                    ImportEvent(interval_end_t, e);
+                }
                 break;
         }
     }
@@ -7058,21 +7058,32 @@ bool PRS1Import::ImportEvents()
         // Then go through each required channel and make sure each eventlist is within
         // the bounds of the corresponding slice, warn if not.
         if (maskOn.count() > 0 && m_event_chunks.count() > 0) {
+            int offset = 0;
+            // F3V3 sometimes omits the (empty) first event chunk if the first slice is
+            // shorter than 2 minutes.
+            if (m_event_chunks.first()->family == 3 && m_event_chunks.first()->familyVersion == 3) {
+                offset = maskOn.count() - m_event_chunks.count();
+                if (offset < 0) {
+                    qCritical() << sessionid << "has more event chunks than mask-on slices!";
+                    offset = 0;  // avoid out-of-bounds references below
+                }
+            }
             const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(m_event_chunks.first());
             for (auto & e : supported) {
                 if (!PRS1OnDemandChannels.contains(e) && !PRS1NonSliceChannels.contains(e)) {
                     for (auto & pChannelID : PRS1ImportChannelMap[e]) {
                         auto & eventlists = session->eventlist[*pChannelID];
-                        if (eventlists.count() > maskOn.count()) {
-                            qWarning() << "**" << sessionid << "has" << maskOn.count() << "mask-on slices, channel"
+                        if (eventlists.count() + offset != maskOn.count()) {
+                            qWarning() << sessionid << "has" << maskOn.count() << "mask-on slices, channel"
                                 << *pChannelID << "has" << eventlists.count() << "eventlists";
                             continue;
                         }
                         for (int i = 0; i < eventlists.count(); i++) {
                             if (eventlists[i]->count() == 0) continue;  // no first/last timestamp
-                            if (eventlists[i]->first() < maskOn[i].start || eventlists[i]->first() > maskOn[i].end ||
-                                eventlists[i]->last() < maskOn[i].start || eventlists[i]->last() > maskOn[i].end) {
-                                qWarning() << "**" << sessionid << "channel" << *pChannelID << "has events outside of mask-on slice" << i;
+                            int j = i + offset;
+                            if (eventlists[i]->first() < maskOn[j].start || eventlists[i]->first() > maskOn[j].end ||
+                                eventlists[i]->last() < maskOn[j].start || eventlists[i]->last() > maskOn[j].end) {
+                                qWarning() << sessionid << "channel" << *pChannelID << "has events outside of mask-on slice" << i;
                             }
                         }
                     }
