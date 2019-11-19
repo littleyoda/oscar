@@ -2889,109 +2889,118 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
 void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
 {
     qint64 duration;
+
+    // TODO: Filter out duplicate/overlapping PB and RE events.
+    //
+    // These actually get reported by the machines, but they cause "unordered time" warnings
+    // and they throw off the session statistics. Even official reports show the wrong stats,
+    // for example counting each of 3 duplicate PBs towards the total time in PB.
+    //
+    // It's not clear whether filtering can reasonably be done here or whether it needs
+    // to be done in ImportEventChunk.
     
-        const QVector<ChannelID*> & channels = PRS1ImportChannelMap[e->m_type];
-        ChannelID channel = NoChannel, PS, VS2, LEAK;
-        if (channels.count() > 0) {
-            channel = *channels.at(0);
-        }
-        
-        switch (e->m_type) {
-            case PRS1PressureSetEvent::TYPE:  // currentPressure is used to calculate unintentional leak, not just PS
-            case PRS1IPAPSetEvent::TYPE:
-            case PRS1IPAPAverageEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                m_currentPressure = e->m_value;
-                break;
-            case PRS1EPAPSetEvent::TYPE:
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                if (m_calcPSfromSet) {
-                    PS = *(PRS1ImportChannelMap[PRS1IPAPSetEvent::TYPE].at(1));
-                    AddEvent(PS, t, m_currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                }
-                break;
-            case PRS1EPAPAverageEvent::TYPE:
-                PS = *channels.at(1);
-                AddEvent(channel, t, e->m_value, e->m_gain);
+    const QVector<ChannelID*> & channels = PRS1ImportChannelMap[e->m_type];
+    ChannelID channel = NoChannel, PS, VS2, LEAK;
+    if (channels.count() > 0) {
+        channel = *channels.at(0);
+    }
+    
+    switch (e->m_type) {
+        case PRS1PressureSetEvent::TYPE:  // currentPressure is used to calculate unintentional leak, not just PS
+        case PRS1IPAPSetEvent::TYPE:
+        case PRS1IPAPAverageEvent::TYPE:
+            AddEvent(channel, t, e->m_value, e->m_gain);
+            m_currentPressure = e->m_value;
+            break;
+        case PRS1EPAPSetEvent::TYPE:
+            AddEvent(channel, t, e->m_value, e->m_gain);
+            if (m_calcPSfromSet) {
+                PS = *(PRS1ImportChannelMap[PRS1IPAPSetEvent::TYPE].at(1));
                 AddEvent(PS, t, m_currentPressure - e->m_value, e->m_gain);  // Pressure Support
-                break;
+            }
+            break;
+        case PRS1EPAPAverageEvent::TYPE:
+            PS = *channels.at(1);
+            AddEvent(channel, t, e->m_value, e->m_gain);
+            AddEvent(PS, t, m_currentPressure - e->m_value, e->m_gain);  // Pressure Support
+            break;
 
-            case PRS1TimedBreathEvent::TYPE:
-                // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
-                // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
-                // they can express durations less than 1 second.
-                // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
-                duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
-                AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
-                break;
+        case PRS1TimedBreathEvent::TYPE:
+            // The duration appears to correspond to the length of the timed breath in seconds when multiplied by 0.1 (100ms)!
+            // TODO: consider changing parsers to use milliseconds for time, since it turns out there's at least one way
+            // they can express durations less than 1 second.
+            // TODO: consider allowing OSCAR to record millisecond durations so that the display will say "2.1" instead of "21" or "2".
+            duration = e->m_duration * 100L;  // for now do this here rather than in parser, since parser events don't use milliseconds
+            AddEvent(*channels.at(0), t - duration, e->m_duration * 0.1F, 0.1F);  // TODO: a gain of 0.1 should render this unnecessary, but gain doesn't seem to work currently
+            break;
 
-            case PRS1ObstructiveApneaEvent::TYPE:
-            case PRS1ClearAirwayEvent::TYPE:
-            case PRS1HypopneaEvent::TYPE:
-            case PRS1FlowLimitationEvent::TYPE:
-                AddEvent(channel, t, e->m_duration, e->m_gain);
-                break;
+        case PRS1ObstructiveApneaEvent::TYPE:
+        case PRS1ClearAirwayEvent::TYPE:
+        case PRS1HypopneaEvent::TYPE:
+        case PRS1FlowLimitationEvent::TYPE:
+            AddEvent(channel, t, e->m_duration, e->m_gain);
+            break;
 
-            case PRS1PeriodicBreathingEvent::TYPE:
-            case PRS1LargeLeakEvent::TYPE:
-            case PRS1UnknownDurationEvent::TYPE:
-                // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
-                // Decide whether to preserve that behavior or change it universally and update either this code or comment.
-                duration = e->m_duration * 1000L;
-                AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-                break;
+        case PRS1PeriodicBreathingEvent::TYPE:
+        case PRS1LargeLeakEvent::TYPE:
+        case PRS1UnknownDurationEvent::TYPE:
+            // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
+            // Decide whether to preserve that behavior or change it universally and update either this code or comment.
+            duration = e->m_duration * 1000L;
+            AddEvent(channel, t + duration, e->m_duration, e->m_gain);
+            break;
 
-            case PRS1TotalLeakEvent::TYPE:
+        case PRS1TotalLeakEvent::TYPE:
+            AddEvent(channel, t, e->m_value, e->m_gain);
+            // F0 up through F0V6 doesn't appear to report unintentional leak.
+            // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
+            // TODO: compare this value for the reported value for F5V1 and higher?
+            // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
+            //   Or omit, because machines with 0.125 gain report unintentional leak directly.
+            if (m_calcLeaks) { // Much Quicker doing this here than the recalc method.
+                EventDataType leak = e->m_value;
+                leak -= (((m_currentPressure/10.0f) - 4.0) * m_ppm + m_lpm4);
+                if (leak < 0) leak = 0;
+                LEAK = *channels.at(1);
+                AddEvent(LEAK, t, leak, 1);
+            }
+            break;
+
+        case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
+            // TODO: The numeric snore graph is the right way to present this information,
+            // but it needs to be shifted left 2 minutes, since it's not a starting value
+            // but a past statistic.
+            AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
+            if (e->m_value > 0) {
+                // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
+                // since they don't have a precise timestamp. They should continue to be drawn
+                // on the flags overview. See the comment in ImportEventChunk regarding flags
+                // for numeric channels.
+                VS2 = *channels.at(1);
+                AddEvent(VS2, t, 0, 1);
+            }
+            break;
+        case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
+            // TODO: These don't need to be drawn separately on the flag overview, since
+            // they're presumably included in the overall snore count statistic. They should
+            // continue to be drawn on the waveform, due to their precise timestamp.
+            AddEvent(channel, t, e->m_value, e->m_gain);
+            break;
+
+        default:
+            if (channels.count() == 1) {
+                // For most events, simply pass the value through to the mapped channel.
                 AddEvent(channel, t, e->m_value, e->m_gain);
-                // F0 up through F0V6 doesn't appear to report unintentional leak.
-                // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
-                // TODO: compare this value for the reported value for F5V1 and higher?
-                // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
-                //   Or omit, because machines with 0.125 gain report unintentional leak directly.
-                if (m_calcLeaks) { // Much Quicker doing this here than the recalc method.
-                    EventDataType leak = e->m_value;
-                    leak -= (((m_currentPressure/10.0f) - 4.0) * m_ppm + m_lpm4);
-                    if (leak < 0) leak = 0;
-                    LEAK = *channels.at(1);
-                    AddEvent(LEAK, t, leak, 1);
-                }
+            } else if (channels.count() > 1) {
+                // Anything mapped to more than one channel must have a case statement above.
+                qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
                 break;
-
-            case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
-                // TODO: The numeric snore graph is the right way to present this information,
-                // but it needs to be shifted left 2 minutes, since it's not a starting value
-                // but a past statistic.
-                AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
-                if (e->m_value > 0) {
-                    // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
-                    // since they don't have a precise timestamp. They should continue to be drawn
-                    // on the flags overview. See the comment in ImportEventChunk regarding flags
-                    // for numeric channels.
-                    VS2 = *channels.at(1);
-                    AddEvent(VS2, t, 0, 1);
-                }
-                break;
-            case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
-                // TODO: These don't need to be drawn separately on the flag overview, since
-                // they're presumably included in the overall snore count statistic. They should
-                // continue to be drawn on the waveform, due to their precise timestamp.
-                AddEvent(channel, t, e->m_value, e->m_gain);
-                break;
-
-            default:
-                if (channels.count() == 1) {
-                    // For most events, simply pass the value through to the mapped channel.
-                    AddEvent(channel, t, e->m_value, e->m_gain);
-                } else if (channels.count() > 1) {
-                    // Anything mapped to more than one channel must have a case statement above.
-                    qWarning() << "Missing import handler for PRS1 event type" << (int) e->m_type;
-                    break;
-                } else {
-                    // Not imported, no channels mapped to this event
-                    // These will show up in chunk YAML and any user alerts will be driven by the parser.
-                }
-                break;
-        }
+            } else {
+                // Not imported, no channels mapped to this event
+                // These will show up in chunk YAML and any user alerts will be driven by the parser.
+            }
+            break;
+    }
 }
 
 
