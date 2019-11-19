@@ -7224,10 +7224,8 @@ bool PRS1Import::ParseWaveforms()
     int size = waveforms.size();
     quint64 s1, s2;
 
-
     int discontinuities = 0;
     qint64 lastti=0;
-    EventList * bnd = nullptr; // Breathing Not Detected
 
     for (int i=0; i < size; ++i) {
         PRS1DataChunk * waveform = waveforms.at(i);
@@ -7243,7 +7241,17 @@ bool PRS1Import::ParseWaveforms()
 
         qint64 diff = ti - lastti;
         if ((lastti != 0) && (diff == 1000 || diff == -1000)) {
-            // TODO: Evidently the machines' internal clock drifts slightly, and in some sessions that
+            // TODO: Handle discontinuities properly.
+            // Option 1: preserve the discontinuity and make it apparent:
+            // - In the case of a 1-sec overlap, truncate the previous waveform by 1s (+1 sample).
+            // - Then start a new eventlist for the new section.
+            // > The down side of this approach is gaps in the data.
+            // Option 2: slide the waveform data a fraction of a second to avoid the discontinuity
+            // - In the case of a single discontinuity, simply adjust the timestamps of each section by 0.5s so they meet.
+            // - In the case of multiple discontinuities, fitting them is more complicated
+            // > The down side of this approach is that events won't line up exactly the same as official reports.
+            //
+            // Evidently the machines' internal clock drifts slightly, and in some sessions that
             // means two adjacent (5-minute) waveform chunks have have a +/- 1 second difference in
             // their notion of the correct time, since the machines only record time at 1-second
             // resolution. Presumably the real drift is fractional, but there's no way to tell from
@@ -7255,27 +7263,12 @@ bool PRS1Import::ParseWaveforms()
             //
             // At worst in the former case it seems preferable to drop the overlap and then one
             // additional second to mark the discontinuity. But depending how often these drifts
-            // occur, it may be possible to adjust all the data so that it's continuous. Alternatively,
-            // if it turns out overlapping waveform data always has overlapping identical values,
-            // it might be possible to drop the duplicated sample. Though that would mean that
-            // gaps are real, though potentially only by a single sample.
-            //
+            // occur, it may be possible to adjust all the data so that it's continuous. "Overlapping"
+            // data is not identical, so it seems like these discontinuities are simply an artifact
+            // of timestamping at 1-second intervals right around the 1-second boundary.
+
             //qDebug() << waveform->sessionid << "waveform discontinuity:" << (diff / 1000L) << "s @" << ts(waveform->timestamp * 1000L);
             discontinuities++;
-        }
-        if ((diff > 1000) && (lastti != 0)) {
-            if (!bnd) {
-                bnd = session->AddEventList(PRS1_BND, EVL_Event);
-            }
-            // TODO: The machines' notion of BND appears to derive from the summary (maskoff/maskon)
-            // slices, but the waveform data (when present) does seem to agree. This should be confirmed
-            // once all summary parsers support slices.
-            if ((((diff + 1000L) / 1000L) % 60) > 2) {
-                // Thus far all maskoff/maskon gaps have been multiples of 1 minute.
-                // (except for a +/- 1-second offset that's probably due to the discontinuities above)
-                qDebug() << waveform->sessionid << "BND?" << (diff / 1000L) << "=" << ts(waveform->timestamp * 1000L) << "-" << ts(lastti);
-            }
-            bnd->AddEvent(ti, double(diff)/1000.0);
         }
 
         if (num > 1) {
@@ -7382,7 +7375,8 @@ bool PRS1Import::ParseSession(void)
                 if (slice.status == MaskOn) {
                     session->m_slices.append(slice);
                 } else if (slice.status == MaskOff) {
-                    // TODO: Create BND event
+                    // Mark this slice as BND
+                    AddEvent(PRS1_BND, slice.end, (slice.end - slice.start) / 1000L, 1.0);
                     session->m_slices.append(slice);
                 }
             }
