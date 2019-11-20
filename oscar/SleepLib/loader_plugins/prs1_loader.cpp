@@ -1110,10 +1110,9 @@ enum PRS1ParsedEventType
     EV_PRS1_MV,
     EV_PRS1_TV,
     EV_PRS1_SNORE,
-    EV_PRS1_VS,  // F0: Is this different from SNORE?
+    EV_PRS1_VS,
     EV_PRS1_PP,
     EV_PRS1_RERA,
-    EV_PRS1_NRI,
     EV_PRS1_FLOWRATE,
     EV_PRS1_TEST1,
     EV_PRS1_TEST2,
@@ -1496,7 +1495,6 @@ PRS1_VALUE_EVENT(PRS1SnoreEvent, EV_PRS1_SNORE);
 PRS1_VALUE_EVENT(PRS1VibratorySnoreEvent, EV_PRS1_VS);
 PRS1_VALUE_EVENT(PRS1PressurePulseEvent, EV_PRS1_PP);
 PRS1_VALUE_EVENT(PRS1RERAEvent, EV_PRS1_RERA);  // TODO: should this really be a duration event?
-//PRS1_VALUE_EVENT(PRS1NonRespondingEvent, EV_PRS1_NRI);  // TODO: is this a single event or an index/hour?
 PRS1_VALUE_EVENT(PRS1FlowRateEvent, EV_PRS1_FLOWRATE);  // TODO: is this a single event or an index/hour?
 PRS1_VALUE_EVENT(PRS1Test1Event, EV_PRS1_TEST1);
 PRS1_VALUE_EVENT(PRS1Test2Event, EV_PRS1_TEST2);
@@ -1624,6 +1622,9 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_LL);
         ENUMSTRING(EV_PRS1_UNK_DURATION);
         ENUMSTRING(EV_PRS1_HY);
+        ENUMSTRING(EV_PRS1_OA_COUNT);
+        ENUMSTRING(EV_PRS1_CA_COUNT);
+        ENUMSTRING(EV_PRS1_HY_COUNT);
         ENUMSTRING(EV_PRS1_TOTLEAK);
         ENUMSTRING(EV_PRS1_LEAK);
         ENUMSTRING(EV_PRS1_AUTO_PRESSURE_SET);
@@ -1643,7 +1644,6 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_VS);
         ENUMSTRING(EV_PRS1_PP);
         ENUMSTRING(EV_PRS1_RERA);
-        ENUMSTRING(EV_PRS1_NRI);
         ENUMSTRING(EV_PRS1_FLOWRATE);
         ENUMSTRING(EV_PRS1_TEST1);
         ENUMSTRING(EV_PRS1_TEST2);
