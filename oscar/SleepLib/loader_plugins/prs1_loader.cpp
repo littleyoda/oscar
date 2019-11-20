@@ -249,6 +249,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
+    { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "960P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "961P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "960T",    5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },  // omits "(System One 60 Series)" on official reports
@@ -2009,7 +2010,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const QMap<int,int> event_sizes = { {1,2}, {3,4}, {0xa,2}, {0xb,5}, {0xc,5}, {0xd,0xc} };
+    static const QMap<int,int> event_sizes = { {1,2}, {3,4}, {8,4}, {0xa,2}, {0xb,5}, {0xc,5}, {0xd,0xc} };
 
     if (chunk_size < 1) {
         // This does occasionally happen in F0V6.
@@ -2046,7 +2047,9 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 // So far we've only seen 0 for the first 2 bytes. Look for nonzero to see if it's actually a timestamp. If so, fix above to read it.
                 CHECK_VALUE(data[pos], 0);
                 CHECK_VALUE(data[pos+1], 0);
-                CHECK_VALUES(data[pos+2], 0x81, 0x83);  // Only two values seen so far
+                if (data[pos+2] != 0x85) {
+                    CHECK_VALUES(data[pos+2], 0x81, 0x83);  // Only three values seen so far
+                }
                 break;
             //case 0x01:  // never seen on F5V0
             case 0x02:  // Pressure adjustment
@@ -2080,9 +2083,17 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 elapsed = data[pos];  // based on sample waveform, the hypopnea is over after this
                 this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
                 break;
-            //case 0x08:  // never seen on F5V0
-                //In F5V1, this is equivalent to F5V3 2-byte Hypoonea 0x07. Could it be the same in F5V0?
-                //If so, what's the difference between this and 0x07 above?
+            case 0x08:  // Hypopnea? See F5V1
+                // This has similar structure fo the event 8 HY in F5V1, but it doesn't seem
+                // to be drawn on official reports. This has been seen only once, along with
+                // a simultaneous event 7 HY, and only one HY was drawn. (This would have
+                // started at 2:43:47, and the subsequent HY starts at 2:43:51.)
+                //
+                // The event length at least is confirmed, so we can keep parsing, but
+                // for now don't import and just alert us to any other examples of this event.
+                CHECK_VALUE(t, 9860);
+                CHECK_VALUE(sessionid, 484);
+                break;
             case 0x09:  // Flow Limitation, note this is 0x8 in F5V3
                 // TODO: We should revisit whether this is elapsed or duration once (if)
                 // we start calculating flow limitations ourselves. Flow limitations aren't
