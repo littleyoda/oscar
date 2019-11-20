@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceding, because attempting to roll back later may break things.</source>
-        <translation>Ponieważ jest to wersja pre-release wskazane jest &lt;b&gt;ręczne wykonanie kopii zapasowej folderu danych&lt;/b&gt;, celem uniknięcia problemów w przyszłości.</translation>
+        <translation type="vanished">Ponieważ jest to wersja pre-release wskazane jest &lt;b&gt;ręczne wykonanie kopii zapasowej folderu danych&lt;/b&gt;, celem uniknięcia problemów w przyszłości.</translation>
     </message>
     <message>
         <source>To see if the license text is available in your language, see %1.</source>
@@ -62,6 +62,10 @@
     <message>
         <source>Sorry, could not locate Release Notes.</source>
         <translation>Nie mogę znaleźć notatek o wydaniu.</translation>
+    </message>
+    <message>
+        <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -363,7 +367,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing&apos;s changed since previous days.</source>
-        <translation>&lt;b&gt; Uwaga&lt;/b&gt; Wszystkie ustawienia pokazane poniżej są oparte na załozeniu, że nic się nie zmieniło względem poprzedzających dni.</translation>
+        <translation type="vanished">&lt;b&gt; Uwaga&lt;/b&gt; Wszystkie ustawienia pokazane poniżej są oparte na załozeniu, że nic się nie zmieniło względem poprzedzających dni.</translation>
     </message>
     <message>
         <source>SpO2 Desaturations</source>
@@ -431,7 +435,7 @@
     </message>
     <message>
         <source>This bookmarked is in a currently disabled area..</source>
-        <translation>To zaznaczenie jest w obszarze obecnie wyłączonym..</translation>
+        <translation type="vanished">To zaznaczenie jest w obszarze obecnie wyłączonym..</translation>
     </message>
     <message>
         <source>Bookmark at %1</source>
@@ -443,6 +447,14 @@
     </message>
     <message>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -820,7 +832,7 @@
     </message>
     <message>
         <source>&amp;Reset Graph Layout</source>
-        <translation>&amp;Resetuj układ wykresów</translation>
+        <translation type="vanished">&amp;Resetuj układ wykresów</translation>
     </message>
     <message>
         <source>Take &amp;Screenshot</source>
@@ -1280,6 +1292,26 @@
     </message>
     <message>
         <source>OSCAR Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Reset Graphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Graph &amp;Heights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3229,6 +3261,14 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Whether to include machine serial number on machine settings changes report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Serial Number</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileSelect</name>
@@ -3562,6 +3602,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>You must create a profile</source>
         <translation>Musisz utworzyć profil</translation>
+    </message>
+    <message>
+        <source>Reset filter to see all profiles</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4425,35 +4469,35 @@ TTIA: %1</translation>
     </message>
     <message>
         <source>RemStar Plus Compliance Only</source>
-        <translation>Tylko zgodność dla RemStar Plus</translation>
+        <translation type="vanished">Tylko zgodność dla RemStar Plus</translation>
     </message>
     <message>
         <source>RemStar Pro with C-Flex+</source>
-        <translation>RemStar Pro z C-Flex+</translation>
+        <translation type="vanished">RemStar Pro z C-Flex+</translation>
     </message>
     <message>
         <source>RemStar Auto with A-Flex</source>
-        <translation>RemStar Auto z A-Flex</translation>
+        <translation type="vanished">RemStar Auto z A-Flex</translation>
     </message>
     <message>
         <source>RemStar BiPAP Pro with Bi-Flex</source>
-        <translation>RemStar BiPAP Pro z Bi-Flex</translation>
+        <translation type="vanished">RemStar BiPAP Pro z Bi-Flex</translation>
     </message>
     <message>
         <source>RemStar BiPAP Auto with Bi-Flex</source>
-        <translation>RemStar BiPAP Auto z Bi-Flex</translation>
+        <translation type="vanished">RemStar BiPAP Auto z Bi-Flex</translation>
     </message>
     <message>
         <source>BiPAP autoSV Advanced</source>
-        <translation>BiPAP autoSV Advanced</translation>
+        <translation type="vanished">BiPAP autoSV Advanced</translation>
     </message>
     <message>
         <source>BiPAP AVAPS</source>
-        <translation>BiPAP AVAPS</translation>
+        <translation type="vanished">BiPAP AVAPS</translation>
     </message>
     <message>
         <source>Unknown Model</source>
-        <translation>Nieznany model</translation>
+        <translation type="vanished">Nieznany model</translation>
     </message>
     <message>
         <source>Machine Unsupported</source>
@@ -4573,27 +4617,27 @@ TTIA: %1</translation>
     </message>
     <message>
         <source>RemStar Plus</source>
-        <translation>RemStar Plus</translation>
+        <translation type="vanished">RemStar Plus</translation>
     </message>
     <message>
         <source>BiPAP autoSV Advanced 60 Series</source>
-        <translation>BiPAP autoSV Advanced 60 Series</translation>
+        <translation type="vanished">BiPAP autoSV Advanced 60 Series</translation>
     </message>
     <message>
         <source>CPAP Pro</source>
-        <translation>CPAP Pro</translation>
+        <translation type="vanished">CPAP Pro</translation>
     </message>
     <message>
         <source>Auto CPAP</source>
-        <translation>Auto CPAP</translation>
+        <translation type="vanished">Auto CPAP</translation>
     </message>
     <message>
         <source>BiPAP Pro</source>
-        <translation>BiPAP Pro</translation>
+        <translation type="vanished">BiPAP Pro</translation>
     </message>
     <message>
         <source>Auto BiPAP</source>
-        <translation>Auto BiPAP</translation>
+        <translation type="vanished">Auto BiPAP</translation>
     </message>
     <message>
         <source>Humidification Level</source>
@@ -5572,7 +5616,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <source>OSCAR v%1</source>
-        <translation>OSCAR v%1</translation>
+        <translation type="vanished">OSCAR v%1</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
@@ -5660,7 +5704,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%6)</source>
-        <translation>EPAP %1 PS %2-%3 (%6)</translation>
+        <translation type="vanished">EPAP %1 PS %2-%3 (%6)</translation>
     </message>
     <message>
         <source>%1 %2</source>
@@ -5794,7 +5838,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>d MMM [ %1 - %2 ]</source>
-        <translation>d MMM [ %1 - %2 ]</translation>
+        <translation type="vanished">d MMM [ %1 - %2 ]</translation>
     </message>
     <message>
         <source>%1</source>
@@ -5918,7 +5962,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>VPAP Adapt</source>
-        <translation>Adaptacja VPAP</translation>
+        <translation type="vanished">Adaptacja VPAP</translation>
     </message>
     <message>
         <source>Parsing Identification File</source>
@@ -6320,6 +6364,50 @@ Wiersz %2, kolumna %3</translation>
         <source>Usage Statistics</source>
         <translation type="unfinished">Statystyki użycia</translation>
     </message>
+    <message>
+        <source>d MMM yyyy [ %1 - %2 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPAP %1 PS %2-%3 (%4)</source>
+        <translation type="unfinished">EPAP %1 PS %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
+    </message>
+    <message>
+        <source>%1mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pressure Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pressure Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPAP Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IPAP Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPAP Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPAP Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading summaries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 OSCAR v%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -6435,7 +6523,7 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>This report was generated by OSCAR v%1</source>
-        <translation>Ten raport został wygenerowany przez OSCAR v%1</translation>
+        <translation type="vanished">Ten raport został wygenerowany przez OSCAR v%1</translation>
     </message>
     <message>
         <source>Days Used: %1</source>
@@ -6539,11 +6627,11 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Culminative AHI: %1</source>
-        <translation>Wynik AHI: %1</translation>
+        <translation type="vanished">Wynik AHI: %1</translation>
     </message>
     <message>
         <source>Culminative Hours: %1</source>
-        <translation>Wynik godzin: %1</translation>
+        <translation type="vanished">Wynik godzin: %1</translation>
     </message>
     <message>
         <source>Worst RX Setting</source>
@@ -6631,6 +6719,18 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>No data found?!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This report was prepared on %1 by OSCAR v%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AHI: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6884,7 +6984,7 @@ Wiersz %2, kolumna %3</translation>
         <translation>EPAP (ciśnienie na wydechu) było poniżej %1 %2 przez %3% czasu.</translation>
     </message>
     <message>
-        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Some operating systems write cache files which break their special filesystem Journal&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6903,7 +7003,7 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Restore X-axis zoom too 100% to view entire days data.</source>
-        <translation>Przywróć oś X do 100% aby obejrzeć dane z całego dnia.</translation>
+        <translation type="vanished">Przywróć oś X do 100% aby obejrzeć dane z całego dnia.</translation>
     </message>
     <message>
         <source>Reset Graph Layout</source>
@@ -6946,6 +7046,14 @@ Wiersz %2, kolumna %3</translation>
 Click and drag to reorder graphs</source>
         <translation>Kliknij dwukrotnie apy przypiąć/odpiąć
 Kliknij i przeciągnij aby zmienić układ wykresów</translation>
+    </message>
+    <message>
+        <source>Restore X-axis zoom to 100% to view entire selected period.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore X-axis zoom to 100% to view entire day&apos;s data.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
