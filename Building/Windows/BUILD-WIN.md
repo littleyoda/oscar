@@ -9,7 +9,7 @@ On my computers, I have QT installed in E:\\QT and the OSCAR code base in E:\\os
 
 The following programs and files are required to create Windows installers:
 
--   Inno Setup 6.0.2 from <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.2.exe.
+-   Inno Setup 6.0.3 from <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.3.exe.
     
 -   GIT for windows, from <https://gitforwindows.org/>. GIT for Windows adds itself to your path.
     
@@ -19,7 +19,7 @@ The following programs and files are required to create Windows installers:
 
 **Installing Inno Setup 6**
 
-Inno Setup 6.0.2 is found on <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.2.exe.
+Inno Setup 6.0.3 is found on <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.3.exe.
 
 The deployment batch file assumes that Inno Setup is installed into its default location: C:\\Program Files (x86)\\Inno Setup 6. If you put it somewhere else, you will have to change the batch file.
 
@@ -42,6 +42,8 @@ Go to <https://gitforwindows.org/> and click on the Download button. Run the ins
 -   Leave extra options as they default (enable file system caching, enable Git credential manager, but not symbolic links).
 
 GIT for Windows adds itself to your path.
+
+Create SSH key and upload to GitLab--See https://docs.gitlab.com/ce/ssh/README.html.
 
 **Installing Gawk (if Git for Windows’ gawk is not used)**
 
