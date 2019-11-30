@@ -9193,6 +9193,7 @@ Linie %2, coloana %3</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1801"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1854"/>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
         <translation>Dublu-click pe titlu pentru a fixa sau mobiliza, Click &amp; trage pentru a reaseza graficele in fereastra</translation>

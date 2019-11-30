@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ro_RO">
+<TS version="2.1" language="he">
 <context>
     <name>QShortcut</name>
     <message>
         <source>No</source>
-        <translation>Nu</translation>
+        <translation>לא</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>da</translation>
+        <translation>כן</translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation>O.K</translation>
+        <translation>אישור</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;Nu</translation>
+        <translation>&amp;לא</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Da</translation>
+        <translation>&amp;כן</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Ajutor</translation>
+        <translation>עזרה</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Deschis</translation>
+        <translation>פתיחה</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>salva</translation>
+        <translation>שמור</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Abandonați</translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>aplica</translation>
+        <translation>החל</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Închide</translation>
+        <translation>סגור</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Resetați</translation>
+        <translation>אפס</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation>Reîncercați</translation>
+        <translation>נסה שוב</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation>Restabiliti setarile de baza</translation>
+        <translation>שחזר ברירות מחדל</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Anulare</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>Ignora</translation>
+        <translation>התעלם</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>N&amp;u tuturor</translation>
+        <translation>ל&amp;א להכל</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation>Salvează tot</translation>
+        <translation>שמור הכל</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Renunțați</translation>
+        <translation>שכח</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>D&amp;a la toate</translation>
+        <translation>כן ל&amp;הכל</translation>
     </message>
 </context>
 </TS>

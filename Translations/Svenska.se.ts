@@ -8924,6 +8924,7 @@ Linje %2, kolumn %3</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1801"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1854"/>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
         <translation>Dubbelklicka på rubriken för att fästa / lossa

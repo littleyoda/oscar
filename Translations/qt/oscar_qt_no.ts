@@ -2,64 +2,89 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="nn_NO">
 <context>
-    <name>Help</name>
+    <name>QShortcut</name>
     <message>
         <source>No</source>
         <translation>Nei</translation>
     </message>
+    <message>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>QPlatformTheme</name>
     <message>
-        <source>No</source>
-        <translation>Nei</translation>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translation>&amp;Nei</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation>Ja</translation>
-    </message>
-    <message>
         <source>&amp;Yes</source>
         <translation>&amp;Ja</translation>
     </message>
-</context>
-<context>
-    <name>MainWindow</name>
     <message>
         <source>Help</source>
         <translation>Hjelp</translation>
     </message>
-</context>
-<context>
-    <name>ProgressDialog</name>
+    <message>
+        <source>Open</source>
+        <translation>Åpen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Lagre</translation>
+    </message>
     <message>
         <source>Abort</source>
         <translation>Avbryte</translation>
     </message>
-</context>
-<context>
-    <name>AboutDialog</name>
+    <message>
+        <source>Apply</source>
+        <translation>Søke om</translation>
+    </message>
     <message>
         <source>Close</source>
-        <translation>Lukk</translation>
+        <translation>lukke</translation>
     </message>
-</context>
-<context>
-    <name>OximeterImport</name>
     <message>
-        <source>Close</source>
-        <translation>Lukk</translation>
+        <source>Reset</source>
+        <translation>tilbakestille</translation>
     </message>
-</context>
-<context>
-    <name>ExportCSV</name>
+    <message>
+        <source>Retry</source>
+        <translation>Prøv på nytt</translation>
+    </message>
+    <message>
+        <source>Restore Defaults</source>
+        <translation>Gjenopprett standardverdier</translation>
+    </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>kansellere</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Overse</translation>
+    </message>
+    <message>
+        <source>N&amp;o to All</source>
+        <translation>N&amp;ei til alle</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation>Lagre alt</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Forkast</translation>
+    </message>
+    <message>
+        <source>Yes to &amp;All</source>
+        <translation>Ja til &amp;alt</translation>
     </message>
 </context>
 </TS>
