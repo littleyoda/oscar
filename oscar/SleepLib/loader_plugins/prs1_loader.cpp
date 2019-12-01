@@ -4243,7 +4243,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         // There is no hblock prior to F0V6.
         size = 0;
@@ -4321,7 +4321,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
@@ -4613,7 +4613,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         // There is no hblock prior to F0V6.
         size = 0;
@@ -4768,7 +4768,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
@@ -4967,7 +4967,7 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         // There is no hblock prior to F3V6.
         size = 0;
@@ -5060,7 +5060,7 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
@@ -5101,7 +5101,7 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
             qWarning() << this->sessionid << "missing hblock entry for" << code;
@@ -5215,7 +5215,7 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     this->duration = tt;
 
@@ -5544,7 +5544,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         // There is no hblock prior to F0V6.
         size = 0;
@@ -5683,7 +5683,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
@@ -6245,7 +6245,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
             qWarning() << this->sessionid << "missing hblock entry for" << code;
@@ -6394,7 +6394,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     this->duration = tt;
 
@@ -6432,7 +6432,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
             qWarning() << this->sessionid << "missing hblock entry for" << code;
@@ -6547,7 +6547,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     this->duration = tt;
 
