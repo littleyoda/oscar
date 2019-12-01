@@ -5668,11 +5668,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 break;
             case 8:  // ???
-                tt += data[pos] | (data[pos+1] << 8);  // Since 7 and 8 seem to occur near each other, let's assume 8 also has a timestamp
-                CHECK_VALUE(pos, 1);
-                CHECK_VALUE(chunk_size, 3);
-                CHECK_VALUE(data[pos], 0);  // and alert us if the timestamp is nonzero
-                CHECK_VALUE(data[pos+1], 0);
+                tt += data[pos] | (data[pos+1] << 8);  // This also adds to the total duration (otherwise it won't match report)
                 break;
             case 9:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
