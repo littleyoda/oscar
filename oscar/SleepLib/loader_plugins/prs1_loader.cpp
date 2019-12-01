@@ -5514,10 +5514,11 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     CHECK_VALUE(data[pos] & (0x80|0x04), 0);
     CHECK_VALUE(data[pos+1] & ~(0x40|1), 0);
     
-    if (data[pos+2]) CHECK_VALUE(data[pos+2], data[pos+4]);  // distinguish between disconnect and apnea alarm
-    CHECK_VALUES(data[pos+2], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
+    CHECK_VALUES(data[pos+2], 0, 1);  // 1 = apnea alarm 10
     CHECK_VALUE(data[pos+3], 0);  // low MV alarm?
-    CHECK_VALUES(data[pos+4], 0, 1);  // 1 = disconnect alarm 15 or apnea alarm 10
+    if (data[pos+4]) {
+        CHECK_VALUES(data[pos+4], 1, 2);  // 1 = disconnect alarm 15, 2 = disconnect alarm 60
+    }
 
     return true;
 }
