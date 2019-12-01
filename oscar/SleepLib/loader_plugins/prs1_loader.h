@@ -264,7 +264,7 @@ class PRS1Loader;
 class PRS1Import:public ImportTask
 {
 public:
-    PRS1Import(PRS1Loader * l, SessionID s, Machine * m): loader(l), sessionid(s), mach(m) {
+    PRS1Import(PRS1Loader * l, SessionID s, Machine * m, int base): loader(l), sessionid(s), mach(m), m_sessionid_base(base) {
         summary = nullptr;
         compliance = nullptr;
         session = nullptr;
@@ -320,6 +320,7 @@ protected:
     QHash<ChannelID,EventList*> m_importChannels;  // map channel ID to the session's current EventList*
 
     int summary_duration;
+    int m_sessionid_base;  // base for inferring session ID from filename
 
     //! \brief Translate the PRS1-specific machine mode to the importable vendor-neutral enum.
     CPAPMode importMode(int mode);

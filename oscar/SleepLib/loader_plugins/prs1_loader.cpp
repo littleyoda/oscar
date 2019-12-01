@@ -938,7 +938,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // Should probably check if session already imported has this data missing..
 
                     // Create the group if we see it first..
-                    task = new PRS1Import(this, sid, m);
+                    task = new PRS1Import(this, sid, m, sessionid_base);
                     sesstasks[sid] = task;
                     queTask(task);
                 }
@@ -994,7 +994,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 if (it != sesstasks.end()) {
                     task = it.value();
                 } else {
-                    task = new PRS1Import(this, chunk_sid, m);
+                    task = new PRS1Import(this, chunk_sid, m, sessionid_base);
                     sesstasks[chunk_sid] = task;
                     // save a loop an que this now
                     queTask(task);
@@ -7131,6 +7131,15 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
     for (int i=0; i < allchunks.size(); ++i) {
         chunk = allchunks.at(i);
         
+        // Log mismatched waveform session IDs
+        QFileInfo fi(chunk->m_path);
+        bool numeric;
+        QString session_s = fi.fileName().section(".", 0, -2);
+        qint32 sid = session_s.toInt(&numeric, m_sessionid_base);
+        if (!numeric || sid != chunk->sessionid) {
+            qWarning() << chunk->m_path << chunk->sessionid << "session ID mismatch";
+        }
+
         if (lastchunk != nullptr) {
             // Waveform files shouldn't contain multiple sessions
             if (lastchunk->sessionid != chunk->sessionid) {
@@ -7625,19 +7634,6 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f)
             break;
         }
 
-        // Log mismatched waveform session IDs
-        if (chunk->htype == PRS1_HTYPE_INTERVAL) {
-            QFileInfo fi(f);
-            bool numeric;
-            int sessionid_base = (chunk->fileVersion == 2 ? 10 : 16);
-            if (chunk->family == 3 && chunk->familyVersion >= 3) sessionid_base = 16;
-            QString session_s = fi.fileName().section(".", 0, -2);
-            qint32 sid = session_s.toInt(&numeric, sessionid_base);
-            if (!numeric || sid != chunk->sessionid) {
-                qWarning() << chunk->m_path << chunk->sessionid << "session ID mismatch";
-            }
-        }
-        
         // Read the block's data and calculate the block CRC.
         ok = chunk->ReadData(f);
         if (!ok) {
