@@ -2055,7 +2055,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
             case 0x02:  // Pressure adjustment
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++]));
                 break;
-            //case 0x03:  // never seen on F5V0
+            //case 0x03:  // never seen on F5V0; probably pressure pulse, see F5V1
             case 0x04:  // Timed Breath
                 // TB events have a duration in 0.1s, based on the review of pressure waveforms.
                 // TODO: Ideally the starting time here would be adjusted here, but PRS1ParsedEvents
@@ -2156,6 +2156,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
 
 static const QVector<PRS1ParsedEventType> ParsedEventsF5V1 = {
     PRS1EPAPSetEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
     PRS1TimedBreathEvent::TYPE,
     PRS1ObstructiveApneaEvent::TYPE,
     PRS1ClearAirwayEvent::TYPE,
@@ -2186,7 +2187,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const QMap<int,int> event_sizes = { {1,2}, {3,4}, {8,4}, {9,3}, {0xa,2}, {0xb,5}, {0xc,5}, {0xd,0xd} };
+    static const QMap<int,int> event_sizes = { {1,2}, {8,4}, {9,3}, {0xa,2}, {0xb,5}, {0xc,5}, {0xd,0xd} };
 
     if (chunk_size < 1) {
         // This does occasionally happen in F0V6.
@@ -2223,7 +2224,10 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
             case 0x02:  // Pressure adjustment
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++]));
                 break;
-            //case 0x03:  // never seen on F5V1
+            case 0x03:  // Pressure Pulse
+                duration = data[pos];  // TODO: is this a duration?
+                this->AddEvent(new PRS1PressurePulseEvent(t, duration));
+                break;
             case 0x04:  // Timed Breath
                 // TB events have a duration in 0.1s, based on the review of pressure waveforms.
                 // TODO: Ideally the starting time here would be adjusted here, but PRS1ParsedEvents
