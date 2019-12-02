@@ -955,7 +955,6 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // All samples exhibiting this behavior are DreamStations.
                     task->m_wavefiles.append(fi.canonicalFilePath());
                 } else if (ext == 6) {
-                    qWarning() << fi.canonicalFilePath() << "oximetry is untested";  // TODO: mark as untested/unexpected
                     if (!task->oxifile.isEmpty()) {
                         qDebug() << sid << "already has oximetry file" << relativePath(task->oxifile)
                             << "skipping" << relativePath(fi.canonicalFilePath());
@@ -1025,6 +1024,10 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                             //qDebug() << chunkComparison(chunk, task->summary);
                         } else {
                             // Warn about any non-identical duplicate session IDs.
+                            //
+                            // This seems to happen with F5V1 slice 8, which is the only slice in a session,
+                            // and which doesn't update the session ID, so the following slice 7 session
+                            // (which can be hours later) has the same session ID. Neither affects import.
                             qWarning() << chunkComparison(chunk, task->summary);
                         }
                         delete chunk;
@@ -7138,13 +7141,27 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         QString session_s = fi.fileName().section(".", 0, -2);
         qint32 sid = session_s.toInt(&numeric, m_sessionid_base);
         if (!numeric || sid != chunk->sessionid) {
-            qWarning() << chunk->m_path << chunk->sessionid << "session ID mismatch";
+            qWarning() << chunk->m_path << "@" << chunk->m_filepos << "session ID mismatch:" << chunk->sessionid;
         }
 
         if (lastchunk != nullptr) {
-            // Waveform files shouldn't contain multiple sessions
+            // A handful of 960P waveform files have been observed to have multiple sessions.
+            //
+            // This breaks the current approach of deferring waveform parsing until the (multithreaded)
+            // import, since each session is in a separate import task and could be in a separate
+            // thread, or already imported by the time it is discovered that this file contains
+            // more than one session.
+            //
+            // For now, we just dump the chunks that don't belong to the session currently
+            // being imported in this thread, since this happens so rarely.
+            //
+            // TODO: Rework the import process to handle waveform data after compliance/summary/
+            // events (since we're no longer inferring session information from it) and add it to the
+            // newly imported sessions.
             if (lastchunk->sessionid != chunk->sessionid) {
-                qWarning() << "lastchunk->sessionid != chunk->sessionid in PRS1Loader::CoalesceWaveformChunks()";
+                qWarning() << chunk->m_path << "@" << chunk->m_filepos
+                    << "session ID" << lastchunk->sessionid << "->" << chunk->sessionid
+                    << ", skipping" << allchunks.size() - i << "remaining chunks";
                 // Free any remaining chunks
                 for (int j=i; j < allchunks.size(); ++j) {
                     chunk = allchunks.at(j);
@@ -7190,8 +7207,20 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         }
         for (int n=0; n < num; n++) {
             int interleave = chunk->waveformInfo.at(n).interleave;
-            if (interleave != 5) {
-                qDebug() << chunk->m_path << "interleave?" << interleave;
+            switch (chunk->ext) {
+                case 5:  // flow data, 5 samples per second
+                    if (interleave != 5) {
+                        qDebug() << chunk->m_path << "interleave?" << interleave;
+                    }
+                    break;
+                case 6:  // oximetry, 1 sample per second
+                    if (interleave != 1) {
+                        qDebug() << chunk->m_path << "interleave?" << interleave;
+                    }
+                    break;
+                default:
+                    qWarning() << chunk->m_path << "unknown waveform?" << chunk->ext;
+                    break;
             }
         }
         
@@ -7210,6 +7239,7 @@ bool PRS1Import::ParseOximetry()
     for (int i=0; i < size; ++i) {
         PRS1DataChunk * oxi = oximetry.at(i);
         int num = oxi->waveformInfo.size();
+        CHECK_VALUE(num, 2);
 
         int size = oxi->m_data.size();
         if (size == 0) {
@@ -7643,8 +7673,15 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f)
         
         // Make sure the calculated CRC over the entire chunk (header and data) matches the stored CRC.
         if (chunk->calcCrc != chunk->storedCrc) {
-            // corrupt data block.. bleh..
+            // Correupt data block, warn about it.
             qWarning() << chunk->m_path << "@" << chunk->m_filepos << "block CRC calc" << hex << chunk->calcCrc << "!= stored" << hex << chunk->storedCrc;
+            
+            // TODO: When this happens, it's usually because the chunk was truncated and another chunk header
+            // exists within the blockSize bytes. In theory it should be possible to rewing and resync by
+            // looking for another chunk header with the same fileVersion, htype, family, familyVersion, and
+            // ext (blockSize and other fields could vary).
+            //
+            // But this is quite rare, so for now we bail on the rest of the file.
             break;
         }
 
