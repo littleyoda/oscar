@@ -204,7 +204,7 @@ static QString ts(qint64 msecs)
 // for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
 
 
-enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_Unknown  };
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_PFlex, FLEX_Unknown  };
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
@@ -243,6 +243,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
+    { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
@@ -6138,6 +6139,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                         break;
                     }
                     break;
+                case 0xB0:  // P-Flex
+                    flexmode = FLEX_PFlex;  // TOOD: There's a level present in the settings, does it have any effect?
+                    break;
                 default:
                     UNEXPECTED_VALUE(data[pos], "known flex mode");
                     break;
@@ -7995,6 +7999,7 @@ void PRS1Loader::initChannels()
     chan->addOption(FLEX_CFlex, QObject::tr("C-Flex"));
     chan->addOption(FLEX_CFlexPlus, QObject::tr("C-Flex+"));
     chan->addOption(FLEX_AFlex, QObject::tr("A-Flex"));
+    chan->addOption(FLEX_PFlex, QObject::tr("P-Flex"));
     chan->addOption(FLEX_RiseTime, QObject::tr("Rise Time"));
     chan->addOption(FLEX_BiFlex, QObject::tr("Bi-Flex"));
     chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));
