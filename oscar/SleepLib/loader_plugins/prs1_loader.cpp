@@ -6033,7 +6033,11 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    CHECK_VALUES(data[pos+1], 0, 0x20);  // Maybe related to Opti-Start?
+                    if (data[pos+1]) {
+                        // 0x20 seen with Opti-Start enabled
+                        // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
+                        CHECK_VALUES(data[pos+1], 0x20, 0x30);
+                    }
                 }
                 break;
             case 0x0a:  // CPAP pressure setting
@@ -6097,6 +6101,12 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
                 break;
             case 0x2a:  // EZ-Start
+                CHECK_VALUE(len, 1);
+                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
+                break;
+            case 0x42:  // EZ-Start for Auto-CPAP?
+                // Seen on 500X110 before 0x2b when EZ-Start is enabled on Auto-CPAP
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
@@ -6396,6 +6406,11 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 // Maybe ending pressure: matches ending CPAP-Check pressure if it changes mid-session.
                 // TODO: The daily details will show when it changed, so maybe there's an event that indicates a pressure change.
                 //CHECK_VALUES(data[pos], 90, 60);  // maybe CPAP-Check pressure, also matches EZ-Start Pressure
+                break;
+            case 0x0c:
+                // EZ-Start pressure for Auto-CPAP, seen on 500X110 following 4, before 8
+                // Appears to reflect the current session's EZ-Start pressure, though reported afterwards
+                //CHECK_VALUE(data[pos], 70, 80);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
