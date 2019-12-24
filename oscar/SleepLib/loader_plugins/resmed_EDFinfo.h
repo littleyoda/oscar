@@ -17,7 +17,7 @@
 
 enum EDFType { EDF_UNKNOWN, EDF_BRP, EDF_PLD, EDF_SAD, EDF_EVE, EDF_CSL };
 
-EDFType lookupEDFType(const QString & text);
+EDFType lookupEDFType(const QString & filename);
 
 const QString resmed_class_name = STR_MACH_ResMed;
 
@@ -56,6 +56,7 @@ public:
     EDFType type;
 };
 
+void dumpEDFduration( EDFduration dur );
 
 class STRRecord
 {

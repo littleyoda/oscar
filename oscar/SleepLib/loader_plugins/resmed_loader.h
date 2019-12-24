@@ -64,6 +64,9 @@ class ResmedLoader : public CPAPLoader
     ResmedLoader();
     virtual ~ResmedLoader();
 
+    //! \brief Register the ResmedLoader with the list of other machine loaders
+    static void Register();
+
     //! \brief Detect if the given path contains a valid Folder structure
     virtual bool Detect(const QString & path);
 
@@ -81,12 +84,16 @@ class ResmedLoader : public CPAPLoader
     //! \brief Returns the Machine class name of this loader. ("ResMed")
     virtual const QString &loaderName() { return resmed_class_name; }
 
+    virtual MachineInfo newInfo() {
+        return MachineInfo(MT_CPAP, 0, resmed_class_name, QObject::tr("ResMed"), QString(), 
+        QString(), QString(), QObject::tr("S9"), QDateTime::currentDateTime(), resmed_data_version);
+    }
+
+    virtual void initChannels();
+
     //! \brief Converts EDFSignal data to time delta packed EventList, and adds to Session
     void ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code, long recs,
                      qint64 duration, EventDataType min = 0, EventDataType max = 0, bool square = false);
-
-    //! \brief Register the ResmedLoader with the list of other machine loaders
-    static void Register();
 
     //! \brief Parse the EVE Event annotation data, and save to Session * sess
     //! This contains all Hypopnea, Obstructive Apnea, Central and Apnea codes
@@ -108,22 +115,15 @@ class ResmedLoader : public CPAPLoader
     //! This contains the Pressure, Leak, Respiratory Rate, Minute Ventilation, Tidal Volume, etc..
     bool LoadPLD(Session *sess, const QString & path);
 
-    virtual MachineInfo newInfo() {
-        return MachineInfo(MT_CPAP, 0, resmed_class_name, QObject::tr("ResMed"), QString(), 
-        QString(), QString(), QObject::tr("S9"), QDateTime::currentDateTime(), resmed_data_version);
-    }
-
-    virtual void initChannels();
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Now for some CPAPLoader overrides
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     virtual QString PresReliefLabel() { return QObject::tr("EPR: "); }
 
-    virtual ChannelID PresReliefMode();
-    virtual ChannelID PresReliefLevel();
-    virtual ChannelID CPAPModeChannel();
+    virtual ChannelID PresReliefMode() ;
+    virtual ChannelID PresReliefLevel() ;
+    virtual ChannelID CPAPModeChannel() ;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -131,13 +131,13 @@ class ResmedLoader : public CPAPLoader
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals
-    void ParseSTR(Machine *, QMap<QDate, STRFile> &, QDate);
+    void ProcessSTRfiles(Machine *, QMap<QDate, STRFile> &, QDate);
 
     //! \brief Scan for new files to import, group into sessions and add to task que
-    int scanFiles(Machine * mach, const QString & datalog_path, QDate firstImport);
+    int ScanFiles(Machine * mach, const QString & datalog_path, QDate firstImport);
 
 //! \brief Write a backup copy to the backup path
-    QString backup(const QString & file, const QString & backup_path);
+    QString Backup(const QString & file, const QString & backup_path);
 
 // The data members
 //    QMap<SessionID, QStringList> sessfiles;

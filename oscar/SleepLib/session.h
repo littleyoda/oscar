@@ -429,7 +429,7 @@ class Session
 
 
 
-#if defined(SESSION_DEBUG)
+#ifdef SESSION_DEBUG 
     QStringList session_files;
 #endif
 

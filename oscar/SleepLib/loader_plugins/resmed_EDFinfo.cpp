@@ -90,4 +90,8 @@ EDFSignal *ResMedEDFInfo::lookupSignal(ChannelID ch)
     return nullptr;
 }
 
+void dumpEDFduration( EDFduration dur )
+{
+    qDebug() << "Fullpath" << dur.path << "Filename" << dur.filename << "Start" << dur.start << "End" << dur.end;
+}
 
