@@ -3462,6 +3462,18 @@ void gGraphView::SaveSettings(QString title)
     f.close();
 }
 
+
+// Merge and overwrite two hashes. (We can't use QHash::unite because it doesn't overwrite.)
+// This is useful for loading settings, where we want to leave the defaults alone for features
+// that don't yet have settings specified.
+template <class T> inline void hashMerge(T & a, const T & b)
+{
+    for (auto key : b.keys()) {
+        a[key] = b[key];
+    }
+}
+
+
 bool gGraphView::LoadSettings(QString title)
 {
     QString filename = p_profile->Get("{DataFolder}/") + title.toLower() + ".shg";
@@ -3568,10 +3580,9 @@ bool gGraphView::LoadSettings(QString title)
                 if (layertype == LT_LineChart) {
                     gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
                     if (lc) {
-                        lc->m_flags_enabled = flags_enabled;
-                        lc->m_enabled = plots_enabled;
-
-                        lc->m_dot_enabled = dot_enabled;
+                        hashMerge(lc->m_flags_enabled, flags_enabled);
+                        hashMerge(lc->m_enabled, plots_enabled);
+                        hashMerge(lc->m_dot_enabled, dot_enabled);
                     }
                 }
             }
