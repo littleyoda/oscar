@@ -8090,16 +8090,12 @@ void PRS1Loader::initChannels()
 //     <Option id="3" value="AutoSV"/>
 //    </channel>
 
-    QString unknowndesc=QObject::tr("Unknown PRS1 Code %1");
-    QString unknownname=QObject::tr("PRS1_%1");
-    QString unknownshort=QObject::tr("PRS1_%1");
-
     channel.add(GRP_CPAP, new Channel(PRS1_0E = 0x1157, SPAN, MT_CPAP,    SESSION,
-        "PRS1_0E",
-        "??",  // QString(unknownname).arg(0xe,2,16,QChar('0')),
-        QString(unknowndesc).arg(0xe,2,16,QChar('0')),
+        "PRS1_UNK",
+        QObject::tr("PRS1 Unknown"),
+        QObject::tr("Unknown PRS1 span 0x0E"),
         "??",
-        STR_UNIT_Percentage,
+        STR_UNIT_Seconds,
         DEFAULT,    QColor("#ffe8f0")));
     qDebug() << channel[PRS1_0E].defaultColor();
     channel.add(GRP_CPAP, new Channel(PRS1_BND = 0x1159, SPAN,  MT_CPAP,   SESSION,
