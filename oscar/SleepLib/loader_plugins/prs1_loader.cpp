@@ -1574,10 +1574,6 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1TimedBreathEvent::TYPE,       { &PRS1_TimedBreath } },
     { PRS1FlowRateEvent::TYPE,          { &CPAP_FlowRate } },  // Only reported by F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
 
-    // TODO: Distinguish between pressure-set and average-pressure events
-    // F0 imports pressure-set events and ignores pressure average events.
-    // F5 imports average events and ignores EPAP set events.
-    // F3 imports average events and has no set events.
     { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
     { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAPSet } },            // EPAPset is supported on F5 without any corresponding IPAPset, so it shouldn't always create a PS channel
@@ -4234,15 +4230,6 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
-    /*
-    // There are some chunks with a single-byte event 6 and nothing else.
-    // TODO: hardcoding this is ugly, think of a better approach
-    if (chunk_size < 59) {
-        qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
-        return false;
-    }
-    */
-
     bool ok = true;
     int pos = 0;
     int code, size;
@@ -4604,15 +4591,6 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
-    /*
-    // There are some chunks with a single-byte event 6 and nothing else.
-    // TODO: hardcoding this is ugly, think of a better approach
-    if (chunk_size < 5) {  // Event 5 seems to be a single-event summary. Also saw 33-byte summary for 760-5139 session 47.
-        qWarning() << this->sessionid << "summary data too short:" << this->m_data.size();
-        return false;
-    }
-    */
-
     bool ok = true;
     int pos = 0;
     int code, size;
@@ -6927,29 +6905,6 @@ bool PRS1Import::ImportSummary()
 
 bool PRS1DataChunk::ParseSummary()
 {
-    /*
-    const unsigned char * data = (unsigned char *)this->m_data.constData();
-    
-    // TODO: 7 length 3, 8 length 3 have been seen on 960P, add those value checks once we look more closely at the data.
-    if (data[0] == 5) {
-        CHECK_VALUE(this->m_data.size(), 5);  // 4 more bytes before CRC, looks like a timestamp
-    } else if (data[0] == 6) {
-        CHECK_VALUE(this->m_data.size(), 1);  // 0 more bytes before CRC
-    } else {
-        CHECK_VALUE(data[0], 0);
-    }
-    // All machines have a first byte zero for clean summary
-    // TODO: this check should move down into the individual family parsers once the V3 parsing below has been relocated.
-    if (data[0] != 0) {
-        //qDebug() << this->sessionid << "summary first byte" << data[0] << "!= 0, skipping";
-        return false;
-    }
-    */
-
-    // Family 0 = XPAP
-    // Family 3 = BIPAP AVAPS
-    // Family 5 = BIPAP AutoSV
-
     switch (this->family) {
     case 0:
         if (this->familyVersion == 6) {
@@ -6982,42 +6937,9 @@ bool PRS1DataChunk::ParseSummary()
 
     qWarning() << "unexpected family" << this->family << "familyVersion" << this->familyVersion;
     return false;
-
-    //////////////////////////////////////////////////////////////////////////////////////////
-    // ASV Codes (Family 5) Recheck 17/10/2013
-    // These are all confirmed off Encore reports
-
-    //cpapmax=EventDataType(data[0x02])/10.0;   // Max Pressure in ASV machines
-    //minepap=EventDataType(data[0x03])/10.0;   // Min EPAP
-    //maxepap=EventDataType(data[0x04])/10.0;   // Max EPAP
-    //minps=EventDataType(data[0x05])/10.0      // Min Pressure Support
-    //maxps=EventDataType(data[0x06])/10.0      // Max Pressure Support
-
-    //duration=data[0x1B] | data[0x1C] << 8)  // Session length in seconds
-
-    //epap90=EventDataType(data[0x21])/10.0;    // EPAP 90%
-    //epapavg=EventDataType(data[0x22])/10.0;   // EPAP Average
-    //ps90=EventDataType(data[0x23])/10.0;      // Pressure Support 90%
-    //psavg=EventDataType(data[0x24])/10.0;     // Pressure Support Average
-
-    //TODO: minpb=data[0x] | data[0x] << 8;           // Minutes in PB
-    //TODO: minleak=data[0x] | data[0x] << 8;         // Minutes in Large Leak
-    //TODO: oa_cnt=data[0x] | data[0x] << 8;          // Obstructive events count
-
-    //ca_cnt=data[0x2d] | data[0x2e] << 8;      // Clear Airway Events count
-    //h_cnt=data[0x2f] | data[0x30] << 8;       // Hypopnea events count
-    //fl_cnt=data[0x33] | data[0x34] << 8;      // Flow Limitation events count
-
-    //avg_leak=EventDataType(data[0x35]);       // Average Leak
-    //avgptb=EventDataType(data[0x36]);         // Average Patient Triggered Breaths %
-    //avgbreathrate=EventDataType(data[0x37]);  // Average Breaths Per Minute
-    //avgminvent=EventDataType(data[0x38]);     // Average Minute Ventilation
-    //avg_tidalvol=EventDataType(data[0x39])*10.0;  // Average Tidal Volume
-    //////////////////////////////////////////////////////////////////////////////////////////
 }
 
 
-// TODO: Eventually PRS1Import::ImportEvents will call this directly, once the PRS1Import::ParseF*Events have been merged.
 // TODO: The nested switch statement below just begs for per-version subclasses.
 bool PRS1DataChunk::ParseEvents()
 {
