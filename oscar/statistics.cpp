@@ -556,13 +556,24 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("Pressure",   SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("Pressure",   SC_MAX,     MT_CPAP));
     rows.push_back(StatisticsRow("Pressure",   SC_90P,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_90P,     MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_WAVG,    MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_MAX,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_WAVG,    MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_90P,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_90P,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_MAX,     MT_CPAP));
 
     rows.push_back(StatisticsRow("", SC_HEADING, MT_OXIMETER));         // Just adds some space
     rows.push_back(StatisticsRow(tr("Oximeter Statistics"), SC_HEADING, MT_OXIMETER));

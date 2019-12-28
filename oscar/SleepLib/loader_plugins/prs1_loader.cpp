@@ -204,7 +204,7 @@ static QString ts(qint64 msecs)
 // for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
 
 
-enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_Unknown  };
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_PFlex, FLEX_Unknown  };
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
@@ -243,6 +243,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
+    { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
@@ -955,7 +956,6 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // All samples exhibiting this behavior are DreamStations.
                     task->m_wavefiles.append(fi.canonicalFilePath());
                 } else if (ext == 6) {
-                    qWarning() << fi.canonicalFilePath() << "oximetry is untested";  // TODO: mark as untested/unexpected
                     if (!task->oxifile.isEmpty()) {
                         qDebug() << sid << "already has oximetry file" << relativePath(task->oxifile)
                             << "skipping" << relativePath(fi.canonicalFilePath());
@@ -1025,6 +1025,10 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                             //qDebug() << chunkComparison(chunk, task->summary);
                         } else {
                             // Warn about any non-identical duplicate session IDs.
+                            //
+                            // This seems to happen with F5V1 slice 8, which is the only slice in a session,
+                            // and which doesn't update the session ID, so the following slice 7 session
+                            // (which can be hours later) has the same session ID. Neither affects import.
                             qWarning() << chunkComparison(chunk, task->summary);
                         }
                         delete chunk;
@@ -6007,7 +6011,11 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    CHECK_VALUES(data[pos+1], 0, 0x20);  // Maybe related to Opti-Start?
+                    if (data[pos+1]) {
+                        // 0x20 seen with Opti-Start enabled
+                        // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
+                        CHECK_VALUES(data[pos+1], 0x20, 0x30);
+                    }
                 }
                 break;
             case 0x0a:  // CPAP pressure setting
@@ -6075,6 +6083,12 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
+            case 0x42:  // EZ-Start for Auto-CPAP?
+                // Seen on 500X110 before 0x2b when EZ-Start is enabled on Auto-CPAP
+                CHECK_VALUE(len, 1);
+                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
+                break;
             case 0x2b:  // Ramp Type
                 CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);  // 0 == "Linear", 0x80 = "SmartRamp"
@@ -6112,6 +6126,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                         UNEXPECTED_VALUE(cpapmode, "cpap or apap");
                         break;
                     }
+                    break;
+                case 0xB0:  // P-Flex
+                    flexmode = FLEX_PFlex;  // TOOD: There's a level present in the settings, does it have any effect?
                     break;
                 default:
                     UNEXPECTED_VALUE(data[pos], "known flex mode");
@@ -6367,6 +6384,11 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 // Maybe ending pressure: matches ending CPAP-Check pressure if it changes mid-session.
                 // TODO: The daily details will show when it changed, so maybe there's an event that indicates a pressure change.
                 //CHECK_VALUES(data[pos], 90, 60);  // maybe CPAP-Check pressure, also matches EZ-Start Pressure
+                break;
+            case 0x0c:
+                // EZ-Start pressure for Auto-CPAP, seen on 500X110 following 4, before 8
+                // Appears to reflect the current session's EZ-Start pressure, though reported afterwards
+                //CHECK_VALUE(data[pos], 70, 80);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
@@ -7060,13 +7082,27 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         QString session_s = fi.fileName().section(".", 0, -2);
         qint32 sid = session_s.toInt(&numeric, m_sessionid_base);
         if (!numeric || sid != chunk->sessionid) {
-            qWarning() << chunk->m_path << chunk->sessionid << "session ID mismatch";
+            qWarning() << chunk->m_path << "@" << chunk->m_filepos << "session ID mismatch:" << chunk->sessionid;
         }
 
         if (lastchunk != nullptr) {
-            // Waveform files shouldn't contain multiple sessions
+            // A handful of 960P waveform files have been observed to have multiple sessions.
+            //
+            // This breaks the current approach of deferring waveform parsing until the (multithreaded)
+            // import, since each session is in a separate import task and could be in a separate
+            // thread, or already imported by the time it is discovered that this file contains
+            // more than one session.
+            //
+            // For now, we just dump the chunks that don't belong to the session currently
+            // being imported in this thread, since this happens so rarely.
+            //
+            // TODO: Rework the import process to handle waveform data after compliance/summary/
+            // events (since we're no longer inferring session information from it) and add it to the
+            // newly imported sessions.
             if (lastchunk->sessionid != chunk->sessionid) {
-                qWarning() << "lastchunk->sessionid != chunk->sessionid in PRS1Loader::CoalesceWaveformChunks()";
+                qWarning() << chunk->m_path << "@" << chunk->m_filepos
+                    << "session ID" << lastchunk->sessionid << "->" << chunk->sessionid
+                    << ", skipping" << allchunks.size() - i << "remaining chunks";
                 // Free any remaining chunks
                 for (int j=i; j < allchunks.size(); ++j) {
                     chunk = allchunks.at(j);
@@ -7112,8 +7148,20 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         }
         for (int n=0; n < num; n++) {
             int interleave = chunk->waveformInfo.at(n).interleave;
-            if (interleave != 5) {
-                qDebug() << chunk->m_path << "interleave?" << interleave;
+            switch (chunk->ext) {
+                case 5:  // flow data, 5 samples per second
+                    if (interleave != 5) {
+                        qDebug() << chunk->m_path << "interleave?" << interleave;
+                    }
+                    break;
+                case 6:  // oximetry, 1 sample per second
+                    if (interleave != 1) {
+                        qDebug() << chunk->m_path << "interleave?" << interleave;
+                    }
+                    break;
+                default:
+                    qWarning() << chunk->m_path << "unknown waveform?" << chunk->ext;
+                    break;
             }
         }
         
@@ -7132,6 +7180,7 @@ bool PRS1Import::ParseOximetry()
     for (int i=0; i < size; ++i) {
         PRS1DataChunk * oxi = oximetry.at(i);
         int num = oxi->waveformInfo.size();
+        CHECK_VALUE(num, 2);
 
         int size = oxi->m_data.size();
         if (size == 0) {
@@ -7565,8 +7614,15 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f)
         
         // Make sure the calculated CRC over the entire chunk (header and data) matches the stored CRC.
         if (chunk->calcCrc != chunk->storedCrc) {
-            // corrupt data block.. bleh..
+            // Correupt data block, warn about it.
             qWarning() << chunk->m_path << "@" << chunk->m_filepos << "block CRC calc" << hex << chunk->calcCrc << "!= stored" << hex << chunk->storedCrc;
+            
+            // TODO: When this happens, it's usually because the chunk was truncated and another chunk header
+            // exists within the blockSize bytes. In theory it should be possible to rewing and resync by
+            // looking for another chunk header with the same fileVersion, htype, family, familyVersion, and
+            // ext (blockSize and other fields could vary).
+            //
+            // But this is quite rare, so for now we bail on the rest of the file.
             break;
         }
 
@@ -7880,6 +7936,7 @@ void PRS1Loader::initChannels()
     chan->addOption(FLEX_CFlex, QObject::tr("C-Flex"));
     chan->addOption(FLEX_CFlexPlus, QObject::tr("C-Flex+"));
     chan->addOption(FLEX_AFlex, QObject::tr("A-Flex"));
+    chan->addOption(FLEX_PFlex, QObject::tr("P-Flex"));
     chan->addOption(FLEX_RiseTime, QObject::tr("Rise Time"));
     chan->addOption(FLEX_BiFlex, QObject::tr("Bi-Flex"));
     chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));
