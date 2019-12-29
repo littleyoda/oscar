@@ -63,7 +63,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
 
 2. (Optional) Package for distribution:
 
-        ~/Qt5.12.5/5.12.5/clang_64/bin/macdeployqt OSCAR.app -dmg
+        make dist-mac
 
    The dmg is at OSCAR.dmg.
 
@@ -87,7 +87,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
     8. Set the working directory to the build directory path copied in step 1.
     9. Click OK.
 5. To compile, select Build > Build Project "oscar". The application is in OSCAR.app.
-6. To create a .dmg, select Tools > External > Deploy. The dmg is at OSCAR.dmg.
+6. To create a .dmg, select Tools > External > Deploy. The dmg is at OSCAR.dmg. **Note that the resulting .dmg will NOT include the README.**
 
 [Qt 5.12.5]: http://download.qt.io/archive/qt/5.12/5.12.5/qt-opensource-mac-x64-5.12.5.dmg
 [macOS 10.14 Mojave]: https://apps.apple.com/us/app/macos-mojave/id1398502828?ls=1&mt=12

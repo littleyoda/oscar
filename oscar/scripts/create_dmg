@@ -1,0 +1,42 @@
+#!/bin/bash
+# Usage: create_dmg target_name file1 [file2...]
+
+# TODO: add background image and symlink to /Applications, once we have a signed app and no longer need the README
+
+STAGING_DIR="./Staging"
+
+# Extract the target name
+TARGET="$1"
+shift
+
+# Look for the .app in the files to be added to the .dmg
+APP=""
+for src in "$@"
+do
+    [[ "$src" == *.app ]] && APP="$src"
+done
+
+if [[ ${APP} != "" ]]; then
+    # Create deployable application bundle (if it hasn't been already been done)
+    if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
+        echo $QT_BIN/macdeployqt "${APP}"
+        $QT_BIN/macdeployqt "${APP}"
+    fi
+
+    # TODO: add version number to target .dmg filename
+    # 1. Set the version in the Info.plist during build.
+    # 2. Get the version from ${APP}/Contents/Info.plist
+fi
+
+mkdir "${STAGING_DIR}" || exit
+
+for src in "$@"
+do
+    echo "Copying ${src}"
+    cp -a "$src" "${STAGING_DIR}/."
+done
+
+echo "Creating .dmg"
+hdiutil create -srcfolder "${STAGING_DIR}" -volname "${TARGET}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}.dmg" -ov
+
+rm -rf "${STAGING_DIR}"

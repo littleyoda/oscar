@@ -508,7 +508,11 @@ test {
         tests/sessiontests.h
 }
 
-# On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave
 macx {
+    # On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave
     QMAKE_INFO_PLIST = "../Building/MacOS/Info.plist.in"
+
+    # Add a dist-mac target to build the distribution .dmg.
+    QMAKE_EXTRA_TARGETS += dist-mac
+    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/scripts/create_dmg OSCAR OSCAR.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd
 }
