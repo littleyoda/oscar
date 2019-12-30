@@ -319,11 +319,13 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( ! parseIdentTGT(path, & info, idmap) )
         return -1;
  
+#ifdef DEBUG_IDENT
     qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
     qDebug() << "IdMap size:" << idmap.size();
     foreach ( QString st , idmap.keys() ) {
         qDebug() << "Key" << st << "Value" << idmap[st];
     }
+#endif
 
     // Abort if no serial number
     if (info.serial.isEmpty()) {
@@ -1524,7 +1526,7 @@ EDFType lookupEDFType(const QString & filename)
 ///////////////////////////////////////////////////////////////////////////////
 EDFduration getEDFDuration(const QString & filename)
 {
-    qDebug() << "getEDFDuration called for" << filename;
+//    qDebug() << "getEDFDuration called for" << filename;
 
     QString ext = filename.section("_", -1).section(".",0,0).toUpper();
 
@@ -1840,8 +1842,9 @@ void ResDayTask::run()
         }
         // Summary only day, create sessions for each mask-on/off pair and tag them summary only
         STRRecord & R = resday->str;
+#ifdef SESSION_DEBUG
         qDebug() << "Creating summary-only sessions for" << resday->date;
-
+#endif
         for (int i=0;i<resday->str.maskon.size();++i) {
             quint32 maskon = resday->str.maskon[i];
             quint32 maskoff = resday->str.maskoff[i];
@@ -1870,7 +1873,7 @@ void ResDayTask::run()
     // files list containing unsorted EDF files that match this day
     // guaranteed no sessions for this day for this machine.
 
-    // Need to overlap check sessions
+    // Need to check overlapping files in session candidates
 
     QList<OverlappingEDF> overlaps;
 
@@ -1899,7 +1902,7 @@ void ResDayTask::run()
         QDateTime filetime = QDateTime().fromString(datestr,"yyyyMMdd_HHmmss");
 
         quint32 filetime_t = filetime.toTime_t();
-        if (type == EDF_EVE) {
+        if (type == EDF_EVE) {      // skip the EVE and CSL files, b/c they often cover all sessions
             EVElist[filetime_t] = filename;
             continue;
         } else if (type == EDF_CSL) {
@@ -1920,30 +1923,41 @@ void ResDayTask::run()
                 OverlappingEDF & ovr = overlaps[i];
                 if ((ovr.start < dur.end) && (dur.start < ovr.end)) {
                     ovr.filemap.insert(filetime_t, filename);
-                    // Expand ovr's scope
-                    //ovr.start = min(ovr.start, dur.start);
-                    //ovr.end = max(ovr.end, dur.end);
                     added = true;
-                    qDebug() << "Adding" << filename << "to session" << i;
-                    qDebug() << "Starts:" << ovr.start << dur.start << "ends:" << ovr.end << dur.end;
+#ifdef SESSION_DEBUG
+                    qDebug() << "Adding" << filename << "to overlap" << i;
+                    qDebug() << "Overlap starts:" << ovr.start << "ends:" << ovr.end;
+                    qDebug() << "File time starts:" << dur.start << "ends:" << dur.end;
+#endif
+                    // Expand ovr's scope -- I think this is necessary!! (PO)
+                    // YES! when the STR file is missing, there are no mask on/off entries
+                    // and the edf files are not always created at the same time
+                    ovr.start = min(ovr.start, dur.start);
+                    ovr.end = max(ovr.end, dur.end);
+//                  if ( (dur.start < ovr.start) || (dur.end > ovr.end) )
+//                      qDebug() << "Should have expanded overlap" << i << "for" << filename;
                     break;
                 }
-            }
+            }       // end for walk existing overlap entries
             if ( ! added ) {
-                if (dur.start != dur.end) { // Couldn't fit it in anywhere, create a new Overlap entry/session
+                if (dur.start != dur.end) { // Didn't fit it in anywhere, create a new Overlap entry/session
 	                OverlappingEDF ov;
 	                ov.start = dur.start;
 	                ov.end = dur.end;
 	                ov.filemap.insert(filetime_t, filename);
-	                qDebug() << "Creating session for" << filename;
+#ifdef SESSION_DEBUG
+                    qDebug() << "Creating session for" << filename;
 	                qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
-	                overlaps.append(ov);
+#endif
+                    overlaps.append(ov);
 	            } else {
+#ifdef SESSION_DEBUG
                     qDebug() << "Skipping zero duration file" << filename;
+#endif
                 }
-            }
-        }
-    }
+            }           // end create a new overlap entry
+        }           // end check for file overlap
+    }           // end for walk resday files list
 
     // Create an ordered map and see how far apart the sessions really are.
     QMap<quint32, OverlappingEDF> mapov;
@@ -1951,19 +1965,20 @@ void ResDayTask::run()
         mapov[ovr.start] = ovr;
     }
 
-    // Examine the gaps in between to see if we should merge sessions
-    for (auto oit=mapov.begin(), oend=mapov.end(); oit != oend; ++oit) {
-        // Get next in line
-        auto next_oit = oit+1;
-        if (next_oit != mapov.end()) {
-            OverlappingEDF & A = oit.value();
-            OverlappingEDF & B = next_oit.value();
-            int gap = B.start - A.end;
-            if (gap < 60) {     // TODO see if we should use the prefs value here... ???
-//                qDebug() << "Only a" << gap << "s sgap between ResMed sessions on" << resday->date.toString();
-            }
-        }
-    }
+// We are not going to merge close sessions - gaps can be useful markers for users
+//     // Examine the gaps in between to see if we should merge sessions
+//     for (auto oit=mapov.begin(), oend=mapov.end(); oit != oend; ++oit) {
+//         // Get next in line
+//         auto next_oit = oit+1;
+//         if (next_oit != mapov.end()) {
+//             OverlappingEDF & A = oit.value();
+//             OverlappingEDF & B = next_oit.value();
+//             int gap = B.start - A.end;
+//             if (gap < 60) {     // TODO see if we should use the prefs value here... ???
+// //                qDebug() << "Only a" << gap << "s sgap between ResMed sessions on" << resday->date.toString();
+//             }
+//         }
+//     }
 
     if (overlaps.size()==0)
         return;
@@ -2045,8 +2060,9 @@ void ResDayTask::run()
 
         } else {
             // No corresponding STR.edf record, but we have EDF files
+#ifdef SESSION_DEBUG
             qDebug() << "EDF files without STR record" << resday->date.toString();
-
+#endif
             bool foundprev = false;
             loader->sessionMutex.lock();
 
@@ -2083,8 +2099,10 @@ void ResDayTask::run()
         }
 
         sess->UpdateSummaries();
+#ifdef SESSION_DEBUG
         qDebug() << "Adding session" << sess->session()
         << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
+#endif
 
         // Save is not threadsafe? (meh... it seems to be)
        // loader->saveMutex.lock();

@@ -12,7 +12,9 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#define SESSION_DEBUG
+// this is added as DEFINES += SESSION_DEBUG in the Qmake line
+// to see how the Resmed loader assigns files to sessions
+// #define SESSION_DEBUG
 
 #include <QDebug>
 #include <QHash>
