@@ -1644,7 +1644,7 @@ void Daily::Load(QDate date)
             htmlLeftIndices = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
 
             quint32 zchans = schema::SPAN | schema::FLAG;
-            bool show_minors = true;
+            bool show_minors = false; // true;
             if (p_profile->general->showUnknownFlags()) zchans |= schema::UNKNOWN;
 
             if (show_minors) zchans |= schema::MINOR_FLAG;
