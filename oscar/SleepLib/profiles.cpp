@@ -61,6 +61,16 @@ Profile::Profile(QString path)
 
     Set(STR_GEN_DataFolder, QString("{home}/Profiles/{UserName}"));
 
+    // Reset import warnings when running a new version of OSCAR
+    init(STR_PREF_VersionString, VersionString);
+    QString prefVersion = (*this)[STR_PREF_VersionString].toString();
+    if (prefVersion != VersionString) {
+        qDebug() << "  Resetting import warnings: version" << prefVersion << "to" << VersionString;
+        Set(STR_PREF_VersionString, VersionString);
+        this->Erase(STR_IS_WarnOnUntestedMachine);
+        this->Erase(STR_IS_WarnOnUnexpectedData);
+    }
+
     doctor = new DoctorInfo(this);
     user = new UserInfo(this);
     cpap = new CPAPSettings(this);
