@@ -350,6 +350,8 @@ const QString STR_IS_CompressSessionData = "CompressSessionData";
 const QString STR_IS_IgnoreOlderSessions = "IgnoreOlderSessions";
 const QString STR_IS_IgnoreOlderSessionsDate = "IgnoreOlderSessionsDate";
 const QString STR_IS_LockSummarySessions = "LockSummarySessions";
+const QString STR_IS_WarnOnUntestedMachine = "WarnOnUntestedMachine";
+const QString STR_IS_WarnOnUnexpectedData = "WarnOnUnexpectedData";
 
 
 // UserSettings Strings
@@ -653,6 +655,8 @@ class SessionSettings : public PrefSettings
         m_ignoreOlderSessions = initPref(STR_IS_IgnoreOlderSessions, false).toBool();
         m_ignoreOlderSessionsDate=initPref(STR_IS_IgnoreOlderSessionsDate, QDateTime(QDate::currentDate().addYears(-1), daySplitTime()) ).toDateTime();
         m_lockSummarySessions = initPref(STR_IS_LockSummarySessions, true).toBool();
+        m_warnOnUntestedMachine = initPref(STR_IS_WarnOnUntestedMachine, true).toBool();
+        m_warnOnUnexpectedData = initPref(STR_IS_WarnOnUnexpectedData, true).toBool();
     }
 
     inline QTime daySplitTime() const { return m_daySplitTime; }
@@ -665,6 +669,8 @@ class SessionSettings : public PrefSettings
     inline bool ignoreOlderSessions() const { return m_ignoreOlderSessions; }
     inline QDateTime ignoreOlderSessionsDate() const { return m_ignoreOlderSessionsDate; }
     inline bool lockSummarySessions() const { return m_lockSummarySessions; }
+    inline bool warnOnUntestedMachine() const { return m_warnOnUntestedMachine; }
+    inline bool warnOnUnexpectedData() const { return m_warnOnUnexpectedData; }
 
     void setDaySplitTime(QTime time) { setPref(STR_IS_DaySplitTime, m_daySplitTime=time); }
     void setPreloadSummaries(bool b) { setPref(STR_IS_PreloadSummaries, m_preloadSummaries=b); }
@@ -676,11 +682,14 @@ class SessionSettings : public PrefSettings
     void setIgnoreOlderSessions(bool b) { setPref(STR_IS_IgnoreOlderSessions, m_ignoreOlderSessions=b); }
     void setIgnoreOlderSessionsDate(QDate date) { setPref(STR_IS_IgnoreOlderSessionsDate, m_ignoreOlderSessionsDate=QDateTime(date, daySplitTime())); }
     void setLockSummarySessions(bool b) { setPref(STR_IS_LockSummarySessions, m_lockSummarySessions=b); }
+    void setWarnOnUntestedMachine(bool b) { setPref(STR_IS_WarnOnUntestedMachine, m_warnOnUntestedMachine=b); }
+    void setWarnOnUnexpectedData(bool b) { setPref(STR_IS_WarnOnUnexpectedData, m_warnOnUnexpectedData=b); }
 
 
     QTime m_daySplitTime;
     QDateTime m_ignoreOlderSessionsDate;
     bool m_preloadSummaries, m_backupCardData, m_compressBackupData, m_compressSessionData, m_ignoreOlderSessions, m_lockSummarySessions;
+    bool m_warnOnUntestedMachine, m_warnOnUnexpectedData;
     double m_combineCloseSessions, m_ignoreShortSessions;
 };
 

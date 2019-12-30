@@ -568,7 +568,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
           <string>Memory and Startup Options</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_14">
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QCheckBox" name="autoLaunchImporter">
             <property name="toolTip">
              <string>Bypass the login screen and load the most recent User Profile</string>
@@ -591,7 +591,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
             </property>
            </spacer>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="0">
            <widget class="QCheckBox" name="cacheSessionData">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -611,20 +611,40 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QCheckBox" name="autoLoadLastUsed">
             <property name="text">
              <string>Automatically load last used profile on start-up</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="0" column="1">
            <widget class="QCheckBox" name="automaticImport">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>Import without asking for confirmation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="warnOnUntestedMachine">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Warn when importing data from an untested machine</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="warnOnUnexpectedData">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Warn when previously unseen data is encountered</string>
             </property>
            </widget>
           </item>
