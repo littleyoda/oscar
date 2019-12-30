@@ -799,17 +799,19 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
     // This time supply the machine object so it can populate machine properties..
     PeekProperties(m->info, propertyfile, m);
     
-    if (!m->untested() && !s_PRS1ModelInfo.IsTested(props)) {
-        m->setUntested(true);
+    if (!s_PRS1ModelInfo.IsTested(props)) {
         qDebug() << info.modelnumber << "untested";
+        if (p_profile->session->warnOnUntestedMachine() && !m->untested()) {
+            m->setUntested(true);  // don't warn the user more than once
 #ifndef UNITTEST_MODE
-        QMessageBox::information(QApplication::activeWindow(),
+            QMessageBox::information(QApplication::activeWindow(),
                                  QObject::tr("Machine Untested"),
                                  QObject::tr("Your Philips Respironics CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
                                  QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card and matching Encore .pdf reports to make sure it works with OSCAR.")
                                  ,QMessageBox::Ok);
 
 #endif
+        }
     }
 
     // Mark the machine in the profile as unsupported.
