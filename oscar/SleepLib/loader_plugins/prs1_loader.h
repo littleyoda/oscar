@@ -60,8 +60,8 @@ struct PRS1Waveform {
  *  \brief Representing a chunk of event/summary/waveform data after the header is parsed. */
 class PRS1DataChunk
 {
-    friend class PRS1DataGroup;
 public:
+    /*
     PRS1DataChunk() {
         fileVersion = 0;
         blockSize = 0;
@@ -77,7 +77,8 @@ public:
         m_filepos = -1;
         m_index = -1;
     }
-    PRS1DataChunk(class QFile & f);
+    */
+    PRS1DataChunk(class QFile & f, class PRS1Loader* loader);
     ~PRS1DataChunk();
     inline int size() const { return m_data.size(); }
 
@@ -123,7 +124,7 @@ public:
     inline quint64 hash(void) const { return ((((quint64) this->calcCrc) << 32) | this->timestamp); }
     
     //! \brief Parse and return the next chunk from a PRS1 file
-    static PRS1DataChunk* ParseNext(class QFile & f);
+    static PRS1DataChunk* ParseNext(class QFile & f, class PRS1Loader* loader);
 
     //! \brief Read and parse the next chunk header from a PRS1 file
     bool ReadHeader(class QFile & f);
@@ -213,6 +214,8 @@ public:
     bool ParseEventsF5V3(void);
 
 protected:
+    class PRS1Loader* loader;
+    
     //! \brief Add a parsed event to the chunk
     void AddEvent(class PRS1ParsedEvent* event);
 
@@ -422,7 +425,6 @@ class PRS1Loader : public CPAPLoader
 
 
     QHash<SessionID, PRS1Import*> sesstasks;
-    QMap<unsigned char, QStringList> unknownCodes;
 
   protected:
     QString last;
@@ -459,6 +461,16 @@ class PRS1Loader : public CPAPLoader
 
     //! \brief PRS1 Data files can store multiple sessions, so store them in this list for later processing.
     QHash<SessionID, Session *> new_sessions;
+
+    // TODO: This really belongs in a generic location that all loaders can use.
+    // But that will require retooling the overall call structure so that there's
+    // a top-level import job that's managing a specific import. Right now it's
+    // essentially managed by the importCPAP method rather than an object instance
+    // with state.
+    QMutex m_importMutex;
+    QSet<QString> m_unexpectedMessages;
+public:
+    void LogUnexpectedMessage(const QString & message);
 };
 
 

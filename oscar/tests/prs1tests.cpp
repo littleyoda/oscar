@@ -79,9 +79,8 @@ void parseAndEmitSessionYaml(const QString & path)
     qDebug() << path;
 
     // This mirrors the functional bits of PRS1Loader::OpenMachine.
-    // Maybe there's a clever way to add parameters to OpenMachine that
-    // would make it more amenable to automated tests. But for now
-    // something is better than nothing.
+    // TODO: Refactor PRS1Loader so that the tests can use the same
+    // underlying logic as OpenMachine rather than duplicating it here.
 
     QStringList paths;
     QString propertyfile;
@@ -109,7 +108,10 @@ void parseAndEmitSessionYaml(const QString & path)
         
         delete session;
         delete task;
-   }
+    }
+    if (s_loader->m_unexpectedMessages.count() > 0) {
+        qWarning() << "*** Found unexpected data";
+    }
 }
 
 void PRS1Tests::testSessionsToYaml()

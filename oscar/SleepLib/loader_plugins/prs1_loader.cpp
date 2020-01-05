@@ -197,11 +197,24 @@ static QString ts(qint64 msecs)
 }
 
 
-// TODO: have UNEXPECTED_VALUE set a flag in the importer/machine that this data set is unusual
-#define UNEXPECTED_VALUE(SRC, VALS) { qWarning() << this->sessionid << QString("%1: %2 = %3 != %4").arg(__func__).arg(#SRC).arg(SRC).arg(VALS); }
+// TODO: See the LogUnexpectedMessage TODO about generalizing this for other loaders.
+// Right now this macro assumes that it's called within a method that has a "loader" member
+// that points to the PRS1Loader* instance that's calling it.
+#define UNEXPECTED_VALUE(SRC, VALS) { \
+    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
+    qWarning() << this->sessionid << message; \
+    loader->LogUnexpectedMessage(message); \
+    }
 #define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
 #define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
 // for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
+
+void PRS1Loader::LogUnexpectedMessage(const QString & message)
+{
+    m_importMutex.lock();
+    m_unexpectedMessages += message;
+    m_importMutex.unlock();
+}
 
 
 enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_PFlex, FLEX_Unknown  };
@@ -696,7 +709,6 @@ int PRS1Loader::OpenMachine(const QString & path)
     ScanFiles(paths, sessionid_base, m);
 
     int tasks = countTasks();
-    unknownCodes.clear();
 
     emit updateMessage(QObject::tr("Importing Sessions..."));
     QCoreApplication::processEvents();
@@ -708,16 +720,16 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     finishAddingSessions();
 
-    if (unknownCodes.size() > 0) {
-        for (auto it = unknownCodes.begin(), end=unknownCodes.end(); it != end; ++it) {
-            qDebug() << QString("Unknown CPAP Codes '0x%1' was detected during import").arg((short)it.key(), 2, 16, QChar(0));
-            QStringList & strlist = it.value();
-            for (int i=0;i<it.value().size(); ++i) {
-                qDebug() << strlist.at(i);
-            }
-        }
-    }
-
+    // TODO: pop up a warning if m_unexpectedMessages isn't empty, based on
+    // p_profile->session->warnOnUnexpectedData pref.
+    //
+    // TODO: compare this to the list of messages previously seen for this machine
+    // and only alert if there are new ones.
+    //
+    // TODO: persist the list of previously seen messages along with the current
+    // OSCAR version number in the machine XML record. Reset the list when the
+    // OSCAR version changes.
+    
     return m->unsupported() ? -1 : tasks;
 }
 
@@ -860,6 +872,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     sesstasks.clear();
     new_sessions.clear(); // this hash is used by OpenFile
+    m_unexpectedMessages.clear();
 
 
     PRS1Import * task = nullptr;
@@ -7523,7 +7536,7 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
     int firstsession = 0;
 
     do {
-        chunk = PRS1DataChunk::ParseNext(f);
+        chunk = PRS1DataChunk::ParseNext(f, this);
         if (chunk == nullptr) {
             break;
         }
@@ -7576,7 +7589,7 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
 }
 
 
-PRS1DataChunk::PRS1DataChunk(QFile & f)
+PRS1DataChunk::PRS1DataChunk(QFile & f, PRS1Loader* in_loader) : loader(in_loader)
 {
     m_path = QFileInfo(f).canonicalFilePath();
 }
@@ -7590,10 +7603,10 @@ PRS1DataChunk::~PRS1DataChunk()
 }
 
 
-PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f)
+PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f, PRS1Loader* loader)
 {
     PRS1DataChunk* out_chunk = nullptr;
-    PRS1DataChunk* chunk = new PRS1DataChunk(f);
+    PRS1DataChunk* chunk = new PRS1DataChunk(f, loader);
 
     do {
         // Parse the header and calculate its checksum.
