@@ -720,15 +720,21 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     finishAddingSessions();
 
-    // TODO: pop up a warning if m_unexpectedMessages isn't empty, based on
-    // p_profile->session->warnOnUnexpectedData pref.
-    //
-    // TODO: compare this to the list of messages previously seen for this machine
-    // and only alert if there are new ones.
-    //
-    // TODO: persist the list of previously seen messages along with the current
-    // OSCAR version number in the machine XML record. Reset the list when the
-    // OSCAR version changes.
+    if (m_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
+        // Compare this to the list of messages previously seen for this machine
+        // and only alert if there are new ones.
+        QSet<QString> newMessages = m_unexpectedMessages - m->previouslySeenUnexpectedData();
+        if (newMessages.count() > 0) {
+            // TODO: Rework the importer call structure so that this can become an
+            // emit statement to the appropriate import job.
+            QMessageBox::information(QApplication::activeWindow(),
+                                     QObject::tr("Untested Data"),
+                                     QObject::tr("Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.").arg(m->getInfo().model).arg(m->getInfo().modelnumber) +"\n\n"+
+                                     QObject::tr("The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine's SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.")
+                                     ,QMessageBox::Ok);
+            m->previouslySeenUnexpectedData() += newMessages;
+        }
+    }
     
     return m->unsupported() ? -1 : tasks;
 }
@@ -813,9 +819,11 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
     
     if (!s_PRS1ModelInfo.IsTested(props)) {
         qDebug() << info.modelnumber << "untested";
-        if (p_profile->session->warnOnUntestedMachine() && !m->untested()) {
-            m->setUntested(true);  // don't warn the user more than once
+        if (p_profile->session->warnOnUntestedMachine() && m->warnOnUntested()) {
+            m->suppressWarnOnUntested();  // don't warn the user more than once
 #ifndef UNITTEST_MODE
+            // TODO: Rework the importer call structure so that this can become an
+            // emit statement to the appropriate import job.
             QMessageBox::information(QApplication::activeWindow(),
                                  QObject::tr("Machine Untested"),
                                  QObject::tr("Your Philips Respironics CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
