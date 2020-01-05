@@ -143,11 +143,16 @@ static QString byteList(QByteArray data, int limit=-1)
 {
     int count = data.size();
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
+    }
     QString s = l.join(" ");
     return s;
 }
