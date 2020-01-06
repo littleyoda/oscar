@@ -1150,6 +1150,7 @@ enum PRS1ParsedEventType
     EV_PRS1_APNEA_ALARM,
     EV_PRS1_LOW_MV_ALARM,
     EV_PRS1_SNORES_AT_PRESSURE,
+    EV_PRS1_INTERVAL_BOUNDARY,  // An artificial internal-only event used to separate stat intervals
 };
 
 enum PRS1ParsedEventUnit
@@ -1241,6 +1242,22 @@ public:
     virtual ~PRS1ParsedEvent()
     {
     }
+};
+
+
+class PRS1IntervalBoundaryEvent : public PRS1ParsedEvent
+{
+public:
+    virtual QMap<QString,QString> contents(void)
+    {
+        QMap<QString,QString> out;
+        out["start"] = timeStr(m_start);
+        return out;
+    }
+
+    static const PRS1ParsedEventType TYPE = EV_PRS1_INTERVAL_BOUNDARY;
+
+    PRS1IntervalBoundaryEvent(int start) : PRS1ParsedEvent(TYPE, start) {}
 };
 
 
@@ -1677,6 +1694,7 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_APNEA_ALARM);
         ENUMSTRING(EV_PRS1_LOW_MV_ALARM);
         ENUMSTRING(EV_PRS1_SNORES_AT_PRESSURE);
+        ENUMSTRING(EV_PRS1_INTERVAL_BOUNDARY);
         default:
             s = hex(t);
             qDebug() << "Unknown PRS1ParsedEventType type:" << qPrintable(s);
@@ -1919,6 +1937,7 @@ bool PRS1DataChunk::ParseEventsF5V3(void)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9], GAIN));        // 09=EPAP average
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?)
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x04:  // Pressure Pulse
                 duration = data[pos];  // TODO: is this a duration?
@@ -2156,6 +2175,7 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 this->AddEvent(new PRS1TidalVolumeEvent(t, data[pos+7]));              // 07=Tidal Volume (average?)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9]));              // 09=EPAP average
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             default:
                 DUMP_EVENT();
@@ -2326,6 +2346,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9]));              // 09=EPAP average
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?) new to F5V1 (originally found in F5V3)
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             default:
                 DUMP_EVENT();
@@ -2554,6 +2575,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+8]));                    // 08=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
                 this->AddEvent(new PRS1EPAPAverageEvent(t, data[pos+9], GAIN));        // 09=EPAP average
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?) new to F5V1 (originally found in F5V3)
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
 /*
         case 0x0f:
@@ -2814,6 +2836,11 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             // It has also happened once in a similar scenario for PB and 0E, even when
             // the two mask-on slices are in different sessions!
             continue;
+        }
+        
+        // TODO: Start a new interval
+        if (e->m_type == PRS1IntervalBoundaryEvent::TYPE) {
+            continue;  // skip for now, to avoid any change in import behavior
         }
         
         bool intervalEvent = IsIntervalEvent(e);
@@ -3141,6 +3168,7 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
                 this->AddEvent(new PRS1Test1Event(t, data[pos+9]));                    // 09=TMV???
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+0xa]));                  // 0A=Snore count  // TODO: not a VS on official waveform, but appears in flags and contributes to overall VS index
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xb]));                   // 0B=Leak (average?)
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x03:  // Pressure Pulse
                 duration = data[pos];  // TODO: is this a duration?
@@ -3288,6 +3316,7 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
         this->AddEvent(new PRS1ClearAirwayCount(t, h[13]));       // count of clear airway events
         this->AddEvent(new PRS1ObstructiveApneaCount(t, h[14]));  // count of obstructive events
         this->AddEvent(new PRS1LeakEvent(t, h[15]));
+        this->AddEvent(new PRS1IntervalBoundaryEvent(t));
 
         h += record_size;
     }
@@ -3531,6 +3560,7 @@ bool PRS1DataChunk::ParseEventsF0V23()
             case 0x11:  // Statistics
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos]));
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+1]));
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x12:  // Snore count per pressure
                 // Some sessions (with lots of ramps) have multiple of these, each with a
@@ -3732,6 +3762,7 @@ bool PRS1DataChunk::ParseEventsF0V4()
                 this->AddEvent(new PRS1PressureAverageEvent(t, data[pos+2]));
                 // TODO: The original code also handled the above differently for different modes. It looks like it ignored the
                 // value for Auto-BiLevel.
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x12:  // Snore count per pressure
                 // Some sessions (with lots of ramps) have multiple of these, each with a
@@ -3943,6 +3974,7 @@ bool PRS1DataChunk::ParseEventsF0V6()
                 // TODO: See F0V4 comments, this may be average EPAP with pressure relief.
                 // We should look carefully at what that means for bilevel, both fixed and auto.
                 this->AddEvent(new PRS1PressureAverageEvent(t, data[pos+2]));
+                this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x12:  // Snore count per pressure
                 // Some sessions (with lots of ramps) have multiple of these, each with a
