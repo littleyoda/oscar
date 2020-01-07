@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Implementation
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -2718,6 +2718,8 @@ bool PRS1Import::UpdateCurrentSlice(PRS1DataChunk* chunk, qint64 t)
     if (!m_currentSliceInitialized) {
         m_currentSliceInitialized = true;
         m_currentSlice = m_slices.constBegin();
+        m_lastIntervalEvents.clear();  // there was no previous slice, so there are no pending end-of-slice events
+        m_lastIntervalEnd = 0;
         updated = true;
     }
 
@@ -2732,16 +2734,55 @@ bool PRS1Import::UpdateCurrentSlice(PRS1DataChunk* chunk, qint64 t)
         }
     }
     
+    if (updated) {
+        // Write out any pending end-of-slice events.
+        FinishSlice();
+    }
+    
     if (updated && (*m_currentSlice).status == MaskOn) {
-        // Set the interval start/end times based on the new slice's start time.
-        m_statIntervalStart = (*m_currentSlice).start;
-        m_statIntervalEnd = m_statIntervalStart;
+        // Set the interval start times based on the new slice's start time.
+        m_statIntervalStart = 0;
+        StartNewInterval((*m_currentSlice).start);
 
         // Create a new eventlist for this new slice, to allow for a gap in the data between slices.
         CreateEventChannels(chunk);
     }
     
     return updated;
+}
+
+
+void PRS1Import::FinishSlice()
+{
+    qint64 t = m_lastIntervalEnd;  // end of the slice (at least of its interval data)
+
+    // If the most recently recorded interval stats aren't at the end of the slice,
+    // import additional events marking the end of the data.
+    if (t != m_prevIntervalStart) {
+        // Make sure to use the same pressure used to import the original events,
+        // otherwise calculated channels (such as PS or LEAK) will be wrong.
+        EventDataType orig_pressure = m_currentPressure;
+        m_currentPressure = m_intervalPressure;
+
+        // Import duplicates of each event with the end-of-slice timestamp.
+        for (auto & e : m_lastIntervalEvents) {
+            ImportEvent(t, e);
+        }
+
+        // Restore the current pressure.
+        m_currentPressure = orig_pressure;
+    }
+    m_lastIntervalEvents.clear();
+}
+
+
+void PRS1Import::StartNewInterval(qint64 t)
+{
+    if (t == m_prevIntervalStart) {
+        qWarning() << sessionid << "Multiple zero-length intervals at end of slice?";
+    }
+    m_prevIntervalStart = m_statIntervalStart;
+    m_statIntervalStart = t;
 }
 
 
@@ -2838,26 +2879,27 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             continue;
         }
         
-        // TODO: Start a new interval
         if (e->m_type == PRS1IntervalBoundaryEvent::TYPE) {
-            continue;  // skip for now, to avoid any change in import behavior
+            StartNewInterval(t);
+            continue;  // these internal pseudo-events don't get imported
         }
         
         bool intervalEvent = IsIntervalEvent(e);
         qint64 interval_end_t = 0;
         if (intervalEvent) {
-            // Calculate the start timetamp for the interval described by this event.
-            if (t != m_statIntervalEnd) {
-                // When we encounter the first event of a series of stats (as identified by a new timestamp),
-                // check whether the previous interval ended within the current slice. (Check the timestamp + 1
-                // since intervals can't start at the end of a slice, in contrast to regular (instantaneous)
-                // events below.)
-                if (!UpdateCurrentSlice(event, m_statIntervalEnd + 1)) {
-                    // If so, simply advance the interval to start where the previous one ended.
-                    m_statIntervalStart = m_statIntervalEnd;
-                    // (otherwise UpdateCurrentSlice will have set it to the slice start time.)
-                }
-                m_statIntervalEnd = t;
+            // Deal with statistics that are reported at the end of an interval, but which need to be imported
+            // at the start of the interval.
+
+            if (event->family == 3 && event->familyVersion == 3) {
+                // In F3V3, each slice has its own chunk, so the initial call to UpdateCurrentSlice()
+                // for this chunk is all that's needed.
+                //
+                // We can't just call it again here for simplicity, since the timestamps of F3V3 stat events
+                // can go past the end of the slice.
+            } else {
+                // For all other machines, the event's time stamp will be within bounds of its slice, so
+                // we can use it to find the current slice.
+                UpdateCurrentSlice(event, t);
             }
             // Clamp this interval's end time to the end of the slice.
             interval_end_t = min(t, (*m_currentSlice).end);
@@ -2882,6 +2924,7 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             }
         }
 
+        // Import the event.
         switch (e->m_type) {
             // F3V3 doesn't have individual HY/CA/OA events, only counts every 2 minutes, where
             // nonzero counts show up as overview flags. Currently OSCAR doesn't have a way to
@@ -2918,14 +2961,29 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 
             default:
                 ImportEvent(t, e);
-                // If this interval event is reported at the end of the slice, import an additional event
-                // marking the end of the data. (The above import marks the beginning of the interval.)
-                if (intervalEvent && interval_end_t == (*m_currentSlice).end) {
-                    ImportEvent(interval_end_t, e);
+
+                // Cache the most recently imported interval events so that we can import duplicate end-of-slice events if needed.
+                // We can't write them here because we don't yet know if they're the last in the slice.
+                if (intervalEvent) {
+                    // Reset the list of pending events when we encounter a stat event in a new interval.
+                    //
+                    // This logic has grown sufficiently complex that it may eventually be worth encapsulating
+                    // each batch of parsed interval events into a composite interval event when parsing,
+                    // rather than requiring timestamp-based gymnastics to infer that structure on import.
+                    if (m_lastIntervalEnd != interval_end_t) {
+                        m_lastIntervalEvents.clear();
+                        m_lastIntervalEnd = interval_end_t;
+                        m_intervalPressure = m_currentPressure;
+                    }
+                    // The events need to be in order so that any dynamically calculated channels (such as PS) are properly computed.
+                    m_lastIntervalEvents.append(e);
                 }
                 break;
         }
     }
+    
+    // Write out any pending end-of-slice events.
+    FinishSlice();
 
     if (!ok) {
         return false;

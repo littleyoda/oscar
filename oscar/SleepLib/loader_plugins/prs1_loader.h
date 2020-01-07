@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Header
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -348,8 +348,15 @@ protected:
     bool UpdateCurrentSlice(PRS1DataChunk* chunk, qint64 t);
     bool m_currentSliceInitialized;
     QVector<SessionSlice>::const_iterator m_currentSlice;
-    qint64 m_statIntervalStart, m_statIntervalEnd;
+    qint64 m_statIntervalStart, m_prevIntervalStart;
+    QList<PRS1ParsedEvent*> m_lastIntervalEvents;
+    qint64 m_lastIntervalEnd;
+    EventDataType m_intervalPressure;
 
+    //! \brief Write out any pending end-of-slice events.
+    void FinishSlice();
+    //! \brief Record the beginning timestamp of a new stat interval, and do related housekeeping.
+    void StartNewInterval(qint64 t);
     //! \brief Identify statistical events that are reported at the end of an interval.
     bool IsIntervalEvent(PRS1ParsedEvent* e);
 
