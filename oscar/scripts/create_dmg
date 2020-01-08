@@ -17,10 +17,15 @@ do
 done
 
 if [[ ${APP} != "" ]]; then
+    if [[ -z "$QT_BIN" ]]; then
+        echo "Error: QT_BIN must be defined"
+        exit 1
+    fi
+
     # Create deployable application bundle (if it hasn't been already been done)
     if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
-        echo $QT_BIN/macdeployqt "${APP}"
-        $QT_BIN/macdeployqt "${APP}"
+        echo "${QT_BIN}"/macdeployqt "${APP}"
+        "${QT_BIN}"/macdeployqt "${APP}" || exit
     fi
 
     # TODO: add version number to target .dmg filename

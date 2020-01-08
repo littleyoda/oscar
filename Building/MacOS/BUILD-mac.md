@@ -77,17 +77,13 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
     3. Click to expand "Details" for the **qmake** build step.
     4. Uncheck "Enable Qt Quick Compiler", click "No" to defer recompiling.
 4. Configure packaging for distribution:
-    1. Copy the "Build directory" path from the **Build Settings** panel above. (Default is "/Users/build/OSCAR-code/build-oscar-Desktop_Qt_5_12_5_clang_64bit-Release")
-    2. Tools > External > Configure...
-    3. Select "Add Tool" from the "Add" drop-down menu near the bottom of the window.
-    4. Set the name to "Deploy".
-    5. Set the Description to "Creates a distributable .dmg".
-    6. Set the Executable to the full path where you installed Qt: "/Users/build/Qt5.12.5/5.12.5/clang_64/bin/macdeployqt".
-    7. Set the Arguments to "OSCAR.app -dmg".
-    8. Set the working directory to the build directory path copied in step 1.
-    9. Click OK.
-5. To compile, select Build > Build Project "oscar". The application is in OSCAR.app.
-6. To create a .dmg, select Tools > External > Deploy. The dmg is at OSCAR.dmg. **Note that the resulting .dmg will NOT include the README.**
+    1. Click "Clone..." to the right of the "Edit build configuration" drop-down menu.
+    2. Name the new configuration "Deploy".
+    3. Click to expand "Details" for the **Make** build step.
+    4. Set the Make arguments for the Make step to "dist-mac".
+5. To build OSCAR, select "Release" from the "oscar" button in the left panel. Then select Build > Build Project "oscar". The application is in OSCAR.app.
+6. To build OSCAR and package for distribution, select "Deploy" from the "oscar" button in the left panel. Then select Build > Build Project "oscar". The dmg is at OSCAR.dmg.
+    * Progress in "Compile Output" will pause for several seconds while "Creating .dmg". This is normal.
 
 [Qt 5.12.5]: http://download.qt.io/archive/qt/5.12/5.12.5/qt-opensource-mac-x64-5.12.5.dmg
 [macOS 10.14 Mojave]: https://apps.apple.com/us/app/macos-mojave/id1398502828?ls=1&mt=12
