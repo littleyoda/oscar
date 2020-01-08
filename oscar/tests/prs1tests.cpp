@@ -1,6 +1,6 @@
 /* PRS1 Unit Tests
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -79,9 +79,8 @@ void parseAndEmitSessionYaml(const QString & path)
     qDebug() << path;
 
     // This mirrors the functional bits of PRS1Loader::OpenMachine.
-    // Maybe there's a clever way to add parameters to OpenMachine that
-    // would make it more amenable to automated tests. But for now
-    // something is better than nothing.
+    // TODO: Refactor PRS1Loader so that the tests can use the same
+    // underlying logic as OpenMachine rather than duplicating it here.
 
     QStringList paths;
     QString propertyfile;
@@ -109,7 +108,10 @@ void parseAndEmitSessionYaml(const QString & path)
         
         delete session;
         delete task;
-   }
+    }
+    if (s_loader->m_unexpectedMessages.count() > 0) {
+        qWarning() << "*** Found unexpected data";
+    }
 }
 
 void PRS1Tests::testSessionsToYaml()
@@ -141,11 +143,16 @@ static QString byteList(QByteArray data, int limit=-1)
 {
     int count = data.size();
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
+    }
     QString s = l.join(" ");
     return s;
 }

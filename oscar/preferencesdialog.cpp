@@ -165,6 +165,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     } else { ui->IgnoreLCD->display(STR_TR_Off); }
 
     ui->LockSummarySessionSplitting->setChecked(profile->session->lockSummarySessions());
+    ui->warnOnUntestedMachine->setChecked(profile->session->warnOnUntestedMachine());
+    ui->warnOnUnexpectedData->setChecked(profile->session->warnOnUnexpectedData());
 
     // macOS default system fonts are not in QFontCombobox because they are "private":
     // See https://github.com/musescore/MuseScore/commit/0eecb165664a0196c2eee12e42fb273dcfc9c637
@@ -799,6 +801,8 @@ bool PreferencesDialog::Save()
 
     AppSetting->setUserEventPieChart(ui->showUserFlagsInPie->isChecked());
     profile->session->setLockSummarySessions(ui->LockSummarySessionSplitting->isChecked());
+    profile->session->setWarnOnUntestedMachine(ui->warnOnUntestedMachine->isChecked());
+    profile->session->setWarnOnUnexpectedData(ui->warnOnUnexpectedData->isChecked());
 
     AppSetting->setOpenTabAtStart(ui->openingTabCombo->currentIndex());
     AppSetting->setOpenTabAfterImport(ui->importTabCombo->currentIndex());

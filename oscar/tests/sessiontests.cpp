@@ -1,6 +1,6 @@
 /* Session Testing Support
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -144,11 +144,16 @@ static QString eventChannel(ChannelID i)
 static QString intList(EventStoreType* data, int count, int limit=-1)
 {
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString::number(data[i]));
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString::number(data[i]));
+    }
     QString s = "[ " + l.join(",") + " ]";
     return s;
 }
@@ -156,11 +161,16 @@ static QString intList(EventStoreType* data, int count, int limit=-1)
 static QString intList(quint32* data, int count, int limit=-1)
 {
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString::number(data[i] / 1000));
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString::number(data[i] / 1000));
+    }
     QString s = "[ " + l.join(",") + " ]";
     return s;
 }

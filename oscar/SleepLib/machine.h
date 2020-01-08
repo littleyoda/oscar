@@ -179,8 +179,9 @@ class Machine
 
     bool unsupported() { return m_unsupported; }
     void setUnsupported(bool b) { m_unsupported = b; }
-    bool untested() { return m_untested; }
-    void setUntested(bool b) { m_untested = b; }
+    bool warnOnUntested() { return m_suppressUntestedWarning == false; }
+    void suppressWarnOnUntested() { m_suppressUntestedWarning = true; }
+    QSet<QString> & previouslySeenUnexpectedData() { return m_previousUnexpected; }
 
     inline MachineType type() const { return info.type; }
     inline QString brand() const { return info.brand; }
@@ -249,7 +250,8 @@ class Machine
     MachineInfo info;
 
     bool m_unsupported;
-    bool m_untested;
+    bool m_suppressUntestedWarning;
+    QSet<QString> m_previousUnexpected;
 
     //! \brief Contains a secondary index of day data, containing just this machines sessions
     QMap<QDate, Day *> day;
