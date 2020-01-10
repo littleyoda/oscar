@@ -4499,11 +4499,11 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
     quint8 flex = data[0x08];
-    HEX(flex);
+    //HEX(flex);
     this->ParseFlexSetting(flex, cpapmode);
 
     int humid = data[0x09];
-    this->ParseHumidifierSettingV2(humid, false);
+    this->ParseHumidifierSetting50Series(humid);
     
     // Tubing lock has no setting byte
 
@@ -4606,7 +4606,7 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
-    // TODO: flex and humidifer were wrong for F0V4, so double-check F0V23 (and other users of ParseFlexSetting and ParseHumidifierSettingV2)
+    // TODO: flex was wrong for F0V4, so double-check F0V23 (and other users of ParseFlexSetting)
     // esp. cpapcheck and autotrial
     quint8 flex = data[0x0a];
     HEX(flex);
@@ -5669,13 +5669,13 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
 
     quint8 flex = data[0x0c];  // TODO: 82 F5V0 = flex 2, C9 F5V1 = rise time 1 + rise time lock, 8A F5V1 = rise time 2, 02 F5V2 = flex 2!!!
-    HEX(flex);
+    //HEX(flex);
     this->ParseFlexSetting(flex, cpapmode);  // TODO: check this against all versions, may not be right ever, or only for very specific models
 
     int pos;
     if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
         // TODO: Is there another flag for F5V0? Reports say "Bypass System One Humidification" as an option?
-        this->ParseHumidifierSettingV2(data[0x0d]);  // 82
+        this->ParseHumidifierSetting50Series(data[0x0d]);
         pos = 0xe;
     } else {
         this->ParseHumidifierSettingF0V4(data[0x0d], data[0x0e], true);  // 94 05, A0 4A F5V1; 93 09 F5V2
@@ -5968,22 +5968,22 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 
 
 // Humid F0V2 confirmed
+// 0x00 = Off (presumably no humidifier present)
 // 0x80 = Off
+// 0x81 = 1
 // 0x82 = 2
 // 0x83 = 3
 // 0x84 = 4
 // 0x85 = 5
 
-// Humid F5V0 confirmed (no data charted?)
+// Humid F5V0 confirmed
+// 0x00 = Off (presumably no humidifier present)
+// 0x80 = Off
+// 0x81 = 1, bypass = no
 // 0x82 = 2, bypass = no
-// TODO: need more!
 
-// TODO: Review and double-check this, since it seems like 60 Series (heated tube) use a 2-byte humidifier
-// setting, at least in F0V4. Also, PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not,
-// which should be distinct from system one vs. classic, etc.
-//
-// Generally, see ParseHumidifierSettingF0V4 and reconcile the two.
-void PRS1DataChunk::ParseHumidifierSettingV2(int humid, bool supportsHeatedTubing)
+// TODO: PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not, which should be distinct from system one vs. classic, etc.
+void PRS1DataChunk::ParseHumidifierSetting50Series(int humid)
 {
     if (humid & (0x40 | 0x20 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
     
@@ -5991,20 +5991,16 @@ void PRS1DataChunk::ParseHumidifierSettingV2(int humid, bool supportsHeatedTubin
     int humidlevel = humid & 7;
 
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));        // Humidifier Connected
-    if (supportsHeatedTubing) {
-        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, (humid & 0x10) != 0));        // Heated Hose??
-        // TODO: 0x20 is seen on machines with System One humidification & heated tubing, not sure which setting it represents.
-    } else {
-        //CHECK_VALUE(humid & 0x30, 0);
-    }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));          // Humidifier Value
 
+    // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
+    if (!humidifier_present) CHECK_VALUE(humidlevel, 0);
 
-// DEBUG
-    CHECK_VALUE(humidifier_present, true);
-    if (humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "new value");
-    if (this->family == 5) CHECK_VALUE(humidlevel, 2);
+    // Check for previously unseen data that we expect to be normal:
+    if (this->family == 5) {
+        if (humidlevel > 2) UNEXPECTED_VALUE(humidlevel, "<= 2");
+    }
 }
 
 
