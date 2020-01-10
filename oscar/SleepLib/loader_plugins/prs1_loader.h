@@ -171,10 +171,10 @@ public:
     //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for original System One (50-Series) machines: F0V23 and F5V0
     void ParseHumidifierSetting50Series(int humid, bool add_setting=false);
 
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 machines and maybe others
-    void ParseHumidifierSettingF0V4(unsigned char humid1, unsigned char humid2, bool add_setting=false);
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 (60-Series) machines
+    void ParseHumidifierSetting60Series(unsigned char humid1, unsigned char humid2, bool add_setting=false);
 
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 machines and maybe others
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 machines (differs from other 60-Series machines)
     void ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting=false);
 
     //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 machines
