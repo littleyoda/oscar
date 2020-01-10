@@ -4405,9 +4405,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 }
                 //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
                 //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
-                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
-                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
-                }
+                ParseHumidifierSetting50Series(data[pos+4]);
                 break;
             /*
             case 5:  // Unknown, but occasionally encountered
@@ -4503,7 +4501,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     this->ParseFlexSetting(flex, cpapmode);
 
     int humid = data[0x09];
-    this->ParseHumidifierSetting50Series(humid);
+    this->ParseHumidifierSetting50Series(humid, true);
     
     // Tubing lock has no setting byte
 
@@ -5675,7 +5673,7 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     int pos;
     if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
         // TODO: Is there another flag for F5V0? Reports say "Bypass System One Humidification" as an option?
-        this->ParseHumidifierSetting50Series(data[0x0d]);
+        this->ParseHumidifierSetting50Series(data[0x0d], true);
         pos = 0xe;
     } else {
         this->ParseHumidifierSettingF0V4(data[0x0d], data[0x0e], true);  // 94 05, A0 4A F5V1; 93 09 F5V2
@@ -5825,7 +5823,11 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
             case 1:  // Equipment Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
-                /*
+                if (this->familyVersion == 0) {
+                    CHECK_VALUE(data[pos+2], 1);
+                    ParseHumidifierSetting50Series(data[pos+3]);
+                }
+                /* Possibly F5V12?
                 CHECK_VALUE(data[pos+2] & ~(0x40|8|4|2|1), 0);  // ???, seen various bit combinations
                 //CHECK_VALUE(data[pos+3], 0x19);  // 0x17, 0x16
                 //CHECK_VALUES(data[pos+4], 0, 1);  // or 2
@@ -5983,15 +5985,17 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 // 0x82 = 2, bypass = no
 
 // TODO: PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not, which should be distinct from system one vs. classic, etc.
-void PRS1DataChunk::ParseHumidifierSetting50Series(int humid)
+void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 {
     if (humid & (0x40 | 0x20 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
     
-    bool humidifier_present = ((humid & 0x80) != 0);
-    int humidlevel = humid & 7;
+    bool humidifier_present = ((humid & 0x80) != 0);  // humidifier connected
+    int humidlevel = humid & 7;  // humidification level
 
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));        // Humidifier Connected
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));          // Humidifier Value
+    if (add_setting) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+    }
 
     // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");

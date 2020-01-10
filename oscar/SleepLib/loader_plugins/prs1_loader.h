@@ -169,7 +169,7 @@ public:
     void ParseFlexSetting(quint8 flex, int prs1mode);
     
     //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for original System One (50-Series) machines: F0V23 and F5V0
-    void ParseHumidifierSetting50Series(int humid);
+    void ParseHumidifierSetting50Series(int humid, bool add_setting=false);
 
     //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 machines and maybe others
     void ParseHumidifierSettingF0V4(unsigned char humid1, unsigned char humid2, bool add_setting=false);
