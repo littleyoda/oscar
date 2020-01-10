@@ -208,6 +208,7 @@ static QString ts(qint64 msecs)
 #define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
 #define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
 // for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
+#define HEX(SRC) { qWarning() << this->sessionid << QString("%1:%2: %3 = %4").arg(__func__).arg(__LINE__).arg(#SRC).arg((SRC & 0xFF), 2, 16, QChar('0')); }
 
 void PRS1Loader::LogUnexpectedMessage(const QString & message)
 {
@@ -4498,6 +4499,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
     quint8 flex = data[0x08];
+    HEX(flex);
     this->ParseFlexSetting(flex, cpapmode);
 
     int humid = data[0x09];
@@ -4607,6 +4609,7 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     // TODO: flex and humidifer were wrong for F0V4, so double-check F0V23 (and other users of ParseFlexSetting and ParseHumidifierSettingV2)
     // esp. cpapcheck and autotrial
     quint8 flex = data[0x0a];
+    HEX(flex);
     this->ParseFlexSetting(flex, cpapmode);
 
     this->ParseHumidifierSettingF0V4(data[0x0b], data[0x0c], true);
@@ -4639,17 +4642,63 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 }
 
 
+// F0V4 confirmed
+// B3 0A = HT=5, H=3, HT
+// A3 0A = HT=5, H=2, HT
+// 33 0A = HT=4, H=3, HT
+// 23 4A = HT=4, H=2, HT
+// B3 09 = HT=3, H=3, HT
+// A4 09 = HT=3, H=2, HT
+// A3 49 = HT=3, H=2, HT
+// 22 09 = HT=2, H=2, HT
+// 33 09 = HT=2, H=3, HT
+// 21 09 = HT=2, H=2, HT
+// 13 09 = HT=2, H=1, HT
+// B5 08 = HT=1, H=3, HT
+// 03 08 = HT=off,    HT; data=tube t=0,h=0
+// 05 24 =       H=5, S1
+// 95 06 =       H=5, S1
+// 95 05 =       H=5, S1
+// 94 05 =       H=4, S1
+// 04 24 =       H=4, S1
+// 92 05 =       H=2, S1
+// A2 05 =       H=2, S1
+// 01 24 =       H=1, S1
+// 90 05 =       H=off, S1
+// 30 05 =       H=off, S1
+// 95 41 =       H=5, Classic
+// A3 61 =       H=3, Classic
+// A1 61 =       H=1, Classic
+// 90 41 =       H=Off, Classic; data=classic h=0
+// 94 11 =       H=3, S1, no data [note that bits encode H=4, so no data falls back to H=3]
+// 93 11 =       H=3, S1, no data
+// 04 30 =       H=3, S1, no data
+
+// F5V1 confirmed:
+// 92 05 =       H=2, S1
+// 91 05 =       H=1, S1
+// A0 4A = HT=5, H=2, HT
+// B1 09 = HT=3, H=3, HT
+// 32 09 = HT=2, H=3, HT
+// 94 05 =       H=4, S1? changed
+// 95 05 =       H=5, S1? variable
+
+// F5V2 confirmed:
+// 00 48 = HT=off, data=tube t=0,h=0
+// 93 09 = HT=3, H=1, HT
+
+
 // XX XX = F0V4 Humidifier bytes
-//  7    = humidity level without tube [on tube disconnect / system one with 22mm hose / classic] [0 = humidifier off?]
+//  7    = humidity level without tube [on tube disconnect / system one with 22mm hose / classic]  :  0 = humidifier off
 //  8    = [never seen]
 // 3     = humidity level with tube
 // 4     = maybe part of humidity level? [never seen]
 // 8   3 = tube temperature (high bit of humid 1 is low bit of temp)
-//     4 = "System One" mode
-//     8 = tube present
-//    10 = no data in chart, maybe no humidifier attached?
+//     4 = "System One" mode (valid even when humidifier is off)
+//     8 = heated tube present
+//    10 = no data in chart, maybe no humidifier attached? Seems to fall back on System One = 3 despite other (humidity level and S1) bits.
 //    20 = unknown, something tube related since whenever it's set tubepresent is false
-//    40 = "Classic" mode
+//    40 = "Classic" mode (valid even when humidifier is off, ignored when heated tube is present)
 //    80 = [never seen]
 
 void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned char humid2, bool add_setting)
@@ -4671,10 +4720,14 @@ void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned ch
     int tubepresent = (humid2 & 0x08) != 0;
     bool humidsystemone = (humid2 & 0x04) != 0;  // Set on "System One" humidification mode reports when tubepresent is false
 
+    // When no_data, reports always say "System One" with humidity level 3, regardless of humidlevel and humidsystemone
+
     if (humidsystemone + tubepresent + no_data == 0) CHECK_VALUE(humidclassic, true);  // Always set when everything else is off
     if (humidsystemone + tubepresent + no_data > 1) UNEXPECTED_VALUE(humid2, "one bit set");  // Only one of these ever seems to be set at a time
     if (tubepresent && tubetemp == 0) CHECK_VALUE(tubehumidlevel, 0);  // When the heated tube is off, tube humidity seems to be 0
     
+    if (tubepresent) humidclassic = false;  // Classic mode bit is evidently ignored when tube is present
+
     //qWarning() << this->sessionid << (humidclassic ? "C" : ".") << (humid2 & 0x20 ? "?" : ".") << (tubepresent ? "T" : ".") << (no_data ? "X" : ".") << (humidsystemone ? "1" : ".");
     /*
     if (tubepresent) {
@@ -4690,9 +4743,30 @@ void PRS1DataChunk::ParseHumidifierSettingF0V4(unsigned char humid1, unsigned ch
     if (add_setting) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp, where 0=off
     }
 
+// DEBUG
+    HEX(humid1);
+    HEX(humid2);
+    if (this->family == 0) {
+        if (tubetemp && (tubehumidlevel < 1 || tubehumidlevel > 3)) UNEXPECTED_VALUE(tubehumidlevel, "1-3");
+        if (humidsystemone && humidlevel == 3) UNEXPECTED_VALUE(humidlevel, "!= 3");
+        if (humidclassic && (humidlevel == 2 || humidlevel == 4)) UNEXPECTED_VALUE(humidlevel, "!= [1,3,5]");
+    } else if (this->familyVersion == 1) {
+        if (tubepresent && tubetemp != 2 && tubetemp != 3 && tubetemp != 5) UNEXPECTED_VALUE(tubetemp, "[2,3,5]");
+        if (tubepresent) CHECK_VALUES(tubehumidlevel, 2, 3);
+        if (humidsystemone) CHECK_VALUES(humidlevel, 1, 2);
+        CHECK_VALUE(humidclassic, false);
+        CHECK_VALUE(no_data, false);
+    } else if (this->familyVersion == 2) {
+        if (tubepresent) CHECK_VALUES(tubetemp, 0, 3);
+        if (tubepresent && tubetemp == 0) CHECK_VALUE(tubehumidlevel, 0);
+        if (tubepresent && tubetemp) CHECK_VALUE(tubehumidlevel, 1);
+        CHECK_VALUE(humidsystemone, false);
+        CHECK_VALUE(humidclassic, false);
+        CHECK_VALUE(no_data, false);
+    }
 }
 
 
@@ -4880,15 +4954,16 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 
 
 // XX XX = F3V3 Humidifier bytes
-// 42 80 = classic 2 (tube 22)
-// 42 08 = system one 2 (tube 22)
-// 43 08 = system one 3 (tube 22)
-// 45 08 = system one 5 (tube 22)
-// 40 60 = system one 3 (tube 22)??? Or maybe unconfigured/default? Or no data? (It shows up in session 1 on several machines.)
-// 40 90 = heated tube, tube off, (fallback system one 3)
-// 63 11 = heated tube temp 1, humidity 3, (fallback system one 3)
-// 63 13 = heated tube temp 3, humidity 3, (fallback system one 3)
-// 43 14 = heated tube temp 4, humidity 2, (fallback system one 3)
+// 43 80 = classic 3
+// 42 80 = classic 2
+// 42 08 = system one 2
+// 43 08 = system one 3
+// 45 08 = system one 5
+// 40 60 = system one 3, no data
+// 40 90 = heated tube, tube off, data=tube t=0,h=0
+// 63 11 = heated tube temp 1, humidity 3
+// 63 13 = heated tube temp 3, humidity 3
+// 43 14 = heated tube temp 4, humidity 2
 //
 //  7    = humidity level without tube
 //  8    = ? (never seen)
@@ -4898,11 +4973,15 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 //     7 = tube temp
 //     8 = "System One" mode
 //    1  = tube present
-//    6  = ??? unconfigured? default? no data...?
-//    8  = (classic mode, heated tube present but off?)
+//    6  = no data, seems to show system one 3 in settings, only seen in session 1 briefly
+//    8  = (classic mode; also seen when heated tube present but off, possibly ignored in that case)
+//
+// Note that, while containing similar fields as F0V4, the bit arrangement is different for F3V3!
 
 void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting)
 {
+    HEX(humid1);
+    HEX(humid2);
     if (false) qWarning() << this->sessionid << "humid" << hex(humid1) << hex(humid2) << add_setting;
 
     int humidlevel = humid1 & 7;  // Ignored when heated tube is present: humidifier setting on tube disconnect is always reported as 3
@@ -4918,16 +4997,18 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
 
     if (this->sessionid != 1) CHECK_VALUE(humid2 & 0x60, 0);  // Only seen on 1-second session 1 of several machines, no humidifier data on chart.
     CHECK_VALUE(humid2 & ~(0x80|0x60|0x10|8|7), 0);  // 0x60 is unknown but checked above
-    //bool humidclassic = (humid2 & 0x40) != 0;  // Set on classic mode reports; evidently ignored (sometimes set!) when tube is present
+    bool humidclassic = (humid2 & 0x80) != 0;  // Set on classic mode reports; evidently ignored (sometimes set!) when tube is present
     //bool no_tube? = (humid2 & 0x20) != 0;  // Something tube related: whenever it is set, tube is never present (inverse is not true)
-    //bool no_data = (humid2 & 0x10) != 0;  // As described in chart, settings still show up
+    bool no_data = (humid2 & 0x60) == 0x60;  // As described in chart, settings still show up
     int tubepresent = (humid2 & 0x10) != 0;
     bool humidsystemone = (humid2 & 0x08) != 0;  // Set on "System One" humidification mode reports when tubepresent is false
 
-    //if (humidsystemone + tubepresent + no_data == 0) CHECK_VALUE(humidclassic, true);  // Always set when everything else is off
+    if (humidsystemone + tubepresent + no_data == 0) CHECK_VALUE(humidclassic, true);  // Always set when everything else is off in F0V4
     if (humidsystemone + tubepresent /*+ no_data*/ > 1) UNEXPECTED_VALUE(humid2, "one bit set");  // Only one of these ever seems to be set at a time
     //if (tubepresent && tubetemp == 0) CHECK_VALUE(tubehumidlevel, 0);  // When the heated tube is off, tube humidity seems to be 0 in F0V4, but not F3V3
-    
+
+    if (tubepresent) humidclassic = false;  // Classic mode bit is evidently ignored when tube is present
+
     //qWarning() << this->sessionid << (humidclassic ? "C" : ".") << (humid2 & 0x20 ? "?" : ".") << (tubepresent ? "T" : ".") << (no_data ? "X" : ".") << (humidsystemone ? "1" : ".");
     /*
     if (tubepresent) {
@@ -4944,6 +5025,14 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+    }
+    
+// DEBUG
+    if (humidclassic) CHECK_VALUES(humidlevel, 2, 3);
+    if (humidsystemone && (humidlevel == 0 || humidlevel == 1 || humidlevel == 4)) UNEXPECTED_VALUE(humidlevel, "[2,3,5]");
+    if (tubepresent) {
+        if (tubetemp) CHECK_VALUES(tubehumidlevel, 2, 3);
+        if (tubetemp == 2 || tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "[0,1,3,4]");
     }
 }
 
@@ -4966,6 +5055,7 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
+    HEX(data[3]);
     switch (data[3]) {
         case 0:  // 0 = None
             flexmode = FLEX_None;
@@ -5380,6 +5470,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 1: // Flex Mode
                 CHECK_VALUE(len, 1);
+                HEX(data[pos]);
                 switch (data[pos]) {
                     case 0:  // 0 = None
                         flexmode = FLEX_None;
@@ -5578,6 +5669,7 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
 
     quint8 flex = data[0x0c];  // TODO: 82 F5V0 = flex 2, C9 F5V1 = rise time 1 + rise time lock, 8A F5V1 = rise time 2, 02 F5V2 = flex 2!!!
+    HEX(flex);
     this->ParseFlexSetting(flex, cpapmode);  // TODO: check this against all versions, may not be right ever, or only for very specific models
 
     int pos;
@@ -5791,6 +5883,24 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 }
 
 
+// Flex F0V2 confirmed
+// 0x00 = None
+// 0x81 = C-Flex 1
+// 0x82 = Bi-Flex 2
+// 0x89 = A-Flex 1
+// 0x8A = A-Flex 2
+// 0x8B = C-Flex+ 3
+// 0x93 = Rise Time 3
+
+// Flex F0V4 confirmed
+// 0x00 = off
+// 0x81 = C-Flex 1, Bi-Flex 1
+// 0x82 = C-Flex 2
+// 0x83 = Bi-Flex 3
+// 0x89 = A-Flex 1
+// 0x8A = C-Flex+ 2, A-Flex 2
+// 0x8B = C-Flex+ 3
+
 // TODO: Review this in more detail, comparing it across all families and versions. It may not be accurate.
 // F5V0 0x82 = Bi-Flex 2
 // F5V1 0x82 = Bi-Flex 2
@@ -5857,6 +5967,17 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 }
 
 
+// Humid F0V2 confirmed
+// 0x80 = Off
+// 0x82 = 2
+// 0x83 = 3
+// 0x84 = 4
+// 0x85 = 5
+
+// Humid F5V0 confirmed (no data charted?)
+// 0x82 = 2, bypass = no
+// TODO: need more!
+
 // TODO: Review and double-check this, since it seems like 60 Series (heated tube) use a 2-byte humidifier
 // setting, at least in F0V4. Also, PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not,
 // which should be distinct from system one vs. classic, etc.
@@ -5864,19 +5985,26 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 // Generally, see ParseHumidifierSettingF0V4 and reconcile the two.
 void PRS1DataChunk::ParseHumidifierSettingV2(int humid, bool supportsHeatedTubing)
 {
-    if (humid & (0x40 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
+    if (humid & (0x40 | 0x20 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
     
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, (humid & 0x80) != 0));        // Humidifier Connected
+    bool humidifier_present = ((humid & 0x80) != 0);
+    int humidlevel = humid & 7;
+
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));        // Humidifier Connected
     if (supportsHeatedTubing) {
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, (humid & 0x10) != 0));        // Heated Hose??
+        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, (humid & 0x10) != 0));        // Heated Hose??
         // TODO: 0x20 is seen on machines with System One humidification & heated tubing, not sure which setting it represents.
     } else {
-        CHECK_VALUE(humid & 0x30, 0);
+        //CHECK_VALUE(humid & 0x30, 0);
     }
-    int humidlevel = humid & 7;
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));          // Humidifier Value
 
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
+
+// DEBUG
+    CHECK_VALUE(humidifier_present, true);
+    if (humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "new value");
+    if (this->family == 5) CHECK_VALUE(humidlevel, 2);
 }
 
 
@@ -6004,25 +6132,79 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
 }
 
 
-// It turns out this is used by F5V3 in addition to F0V6, so it's likely common to all fileVersion 3 machines.
+// F0V6 confirmed
+// 90 B0 = HT=3!,H=3!,data=none [no humidifier appears to ignore HT and H bits and show HT=3,H=3 in details]
+// 8C 6C = HT=3, H=3, data=none
+// 80 00 = nothing listed in details, data=none, only seen on 400G and 502G
+// 54 B4 = HT=5, H=5, data=tube
+// 50 90 = HT=4, H=4, data=tube
+// 4C 6C = HT=3, H=3, data=tube
+// 50 50 = HT=2, H=4, data=tube
+// 4C 4C = HT=2, H=3, data=tube
+// 4C 0C = HT=off, H=3, data=tube t=0,h=3
+// 50 B0 = HT=5, H=4, adaptive
+// 30 B0 = HT=3, H=4, data=adaptive (4)
+// 30 50 = HT=3, H=4, data=adaptive (4)
+// 30 10 = HT=3!,H=4, data=adaptive (4) [adaptive mode appears to ignore HT bits and show HT=3 in details]
+// 30 70 = HT=3, H=4, data=adaptive (4)
+// 2C 6C = HT=3, H=3, data=adaptive (3)
+// 28 08 =       H=2, data=adaptive (2), no details (400G)
+// 28 48 = HT=3!,H=2, data=adaptive (2) [adaptive mode appears to ignore HT bits and show HT=3 in details]
+// 28 68 = HT=3, H=2, data=adaptive (2)
+// 20 60 = HT=3, H=off, data=adaptive (0)
+// 0C 6C = HT=3, H=3, data=fixed (3)
+// 04 64 = HT=3, H=1, data=fixed (1)
+
+// F5V3 confirmed:
+// 50 70 = HT=3, H=4, adaptive, data=tube t=3,h=4
+// 4C 6C = HT=3, H=3, adaptive, data=tube t=3,h=3
+// 4C 4C = HT=2, H=3, adaptive, data=tube t=2,h=3
+// 4C 0C = HT=off, H=3, adaptive, data=tube t=0,h=3
+// 2C 6C = HT=3, H=3, adaptive, data=s1 (3)
+
+// F3V6 confirmed:
+// 50 90 = HT=4, H=4, disconnect=adaptive, data=tube t=4,h=4
+// 44 84 = HT=4, H=1, disconnect=adaptive, data=tube t=4
+// 48 68 = HT=3, H=2, disconnect=adaptive, data=tube t=3,h=2
+// 44 44 = HT=2, H=1, disconnect=adaptive, data=tube t=2,h=1
+// 48 28 = HT=1, H=2, disconnect=adaptive, data=tube t=1,h=2
+// 30 70 = HT=3, H=4, disconnect=adaptive, data=s1 (4)
+// 2C 6C = HT=3, H=3, disconnect=adaptive, data=s1 (3)
+// 28 68 = HT=3, H=2, disconnect=adaptive, data=s1 (2,variable,alt with 2c,6c)
+// 10 10 = HT=3, H=4, disconnect=fixed, data=classic (4) [fixed mode appears to ignore HT bits and show HT=3 in details]
+// 04 64 = HT=3, H=1, disconnect=fixed, data=classic (1)
+
+// The data is consistent among all fileVersion 3 models: F0V6, F5V3, F3V6.
+//
+// NOTE: F5V3 and F3V6 charts report the "Adaptive" setting as "System One" and the "Fixed"
+// setting as "Classic", despite labeling the settings "Adaptive" and "Fixed" just like F0V6.
+// F0V6 is consistent and labels both settings and chart as "Adaptive" and "Fixed".
+//
+// 400G and 502G appear to omit the humidifier settings in their details, though they
+// do support humidifiers, and will show the humidification in the charts.
+
 void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting)
 {
+    bool humidfixed = false;  // formerly called "Classic"
+    bool humidadaptive = false;  // formerly called "System One"
+    bool tubepresent = false;
+
     // Byte 1: 0x90 (no humidifier data), 0x50 (15ht, tube 4/5, humid 4), 0x54 (15ht, tube 5, humid 5) 0x4c (15ht, tube temp 3, humidifier 3)
     // 0x0c (15, tube 3, humid 3, fixed)
-    // 0b10010000 no humidifier data
-    // 0b01010000 tube 4 and 5, humidifier 4
-    // 0b01010100 15ht, tube 5, humidifier 5
-    // 0b01001100 15ht, tube 3, humidifier 3
-    //      xxx   = humidifier setting
-    //   xxx      = humidifier status
-    //         ??
+    // 0b1001 0000 no humidifier data
+    // 0b0101 0000 tube 4 and 5, humidifier 4
+    // 0b0101 0100 15ht, tube 5, humidifier 5
+    // 0b0100 1100 15ht, tube 3, humidifier 3
+    //   842       = humidifier status
+    //      1 84   = humidifier setting
+    //          ??
     CHECK_VALUE(byte1 & 3, 0);
     int humid = byte1 >> 5;
     switch (humid) {
-    case 0: break;  // fixed
-    case 1: break;  // adaptive
-    case 2: break;  // heated tube
-    case 4: break;  // no humidifier, possibly a bit flag rather than integer value
+    case 0: humidfixed = true; break;  // fixed, ignores tubetemp bits and reports tubetemp=3
+    case 1: humidadaptive = true; break;  // adaptive, ignores tubetemp bits and reports tubetemp=3
+    case 2: tubepresent = true; break;  // heated tube
+    case 4: break;  // no humidifier, possibly a bit flag rather than integer value, reports tubetemp=3 and humidlevel=3
     default:
         UNEXPECTED_VALUE(humid, "known value");
         break;
@@ -6032,20 +6214,21 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
 
     // Byte 2: 0xB4 (15ht, tube 5, humid 5), 0xB0 (15ht, tube 5, humid 4), 0x90 (tube 4, humid 4), 0x6C (15ht, tube temp 3, humidifier 3)
     // 0x80?
-    // 0b10110100 15ht, tube 5, humidifier 5
-    // 0b10110000 15ht, tube 5, humidifier 4
-    // 0b10010000 tube 4, humidifier 4
-    // 0b01101100 15ht, tube 3, humidifier 3
-    //      xxx   = humidifier setting
-    //   xxx      = tube setting
-    //         ??
+    // 0b1011 0100 15ht, tube 5, humidifier 5
+    // 0b1011 0000 15ht, tube 5, humidifier 4
+    // 0b1001 0000 tube 4, humidifier 4
+    // 0b0110 1100 15ht, tube 3, humidifier 3
+    //   842       = tube temperature
+    //      1 84   = humidity level when using heated tube, thus far always identical to humidlevel
+    //          ??
     CHECK_VALUE(byte2 & 3, 0);
-    CHECK_VALUE(humidlevel, ((byte2 >> 2) & 7));
-    int tubelevel = (byte2 >> 5) & 7;
+    int tubehumidlevel = (byte2 >> 2) & 7;
+    CHECK_VALUE(humidlevel, tubehumidlevel);  // thus far always the same
+    int tubetemp = (byte2 >> 5) & 7;
     if (humidifier_present) {
         if (humidlevel > 5 || humidlevel < 0) UNEXPECTED_VALUE(humidlevel, "0-5");  // 0=off is valid when a humidifier is attached
         if (humid == 2) {  // heated tube
-            if (tubelevel > 5 || tubelevel < 0) UNEXPECTED_VALUE(tubelevel, "0-5");  // TODO: maybe this is only if heated tube? 0=off is valid even in heated tube mode
+            if (tubetemp > 5 || tubetemp < 0) UNEXPECTED_VALUE(tubetemp, "0-5");  // TODO: maybe this is only if heated tube? 0=off is valid even in heated tube mode
         }
     }
 
@@ -6056,6 +6239,39 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         
         // TODO: add a channel for PRS1 heated tubing
         //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBE_LEVEL, tubelevel));
+    }
+
+// DEBUG
+    HEX(byte1);
+    HEX(byte2);
+    if (family == 0) {
+        if (tubepresent) {
+            if (tubetemp == 1) UNEXPECTED_VALUE(tubetemp, "!= 1");
+            if (tubehumidlevel < 3) UNEXPECTED_VALUE(tubehumidlevel, "3-5");
+        } else if (humidadaptive) {
+            if (humidlevel == 1 || humidlevel == 5) UNEXPECTED_VALUE(humidlevel, "0,2-4");
+        } else if (humidfixed) {
+            CHECK_VALUES(humidlevel, 1, 3);
+        }
+    } else if (family == 5) {
+        CHECK_VALUE(humidifier_present, true);
+        if (tubepresent) {
+            if (tubetemp != 0 && tubetemp != 2 && tubetemp != 3) UNEXPECTED_VALUE(tubetemp, "[0,2,3]");
+            CHECK_VALUES(tubehumidlevel, 3, 4);
+        } else if (humidadaptive) {
+            CHECK_VALUE(humidlevel, 3);  // will yell about one variable sample 2
+        }
+        CHECK_VALUE(humidfixed, false);
+    } else if (family == 3) {
+        CHECK_VALUE(humidifier_present, true);
+        if (tubepresent) {
+            if (tubetemp == 0 || tubetemp == 5) UNEXPECTED_VALUE(tubetemp, "[1-4]");
+            if (tubehumidlevel == 5 || tubehumidlevel == 3 || tubehumidlevel == 0) UNEXPECTED_VALUE(tubehumidlevel, "[1,2,4]");
+        } else if (humidadaptive) {
+            CHECK_VALUES(humidlevel, 3, 4);  // will yell about one variable sample 2
+        } else if (humidfixed) {
+            CHECK_VALUES(humidlevel, 1, 4);
+        }
     }
 }
 
@@ -6219,6 +6435,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode
                 CHECK_VALUE(len, 1);
+                HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:
                     flexmode = FLEX_None;
@@ -6256,6 +6473,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x30:  // Flex level
                 CHECK_VALUE(len, 1);
+                HEX(data[pos]);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 break;
             case 0x35:  // Humidifier setting
@@ -6789,6 +7007,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode and level (ASV variant)
                 CHECK_VALUE(len, 2);
+                HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:  // Bi-Flex
                     // [0x00, N] for Bi-Flex level N
