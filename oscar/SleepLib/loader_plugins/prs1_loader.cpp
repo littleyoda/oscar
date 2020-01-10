@@ -4967,16 +4967,24 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 
 
 // XX XX = F3V3 Humidifier bytes
-// 43 80 = classic 3
-// 42 80 = classic 2
-// 42 08 = system one 2
-// 43 08 = system one 3
+// 43 15 = heated tube temp 5, humidity 2
+// 43 14 = heated tube temp 4, humidity 2
+// 63 13 = heated tube temp 3, humidity 3
+// 63 11 = heated tube temp 1, humidity 3
 // 45 08 = system one 5
+// 44 08 = system one 4
+// 43 08 = system one 3
+// 42 08 = system one 2
+// 41 08 = system one 1
+// 40 08 = system one 0 (off)
 // 40 60 = system one 3, no data
 // 40 90 = heated tube, tube off, data=tube t=0,h=0
-// 63 11 = heated tube temp 1, humidity 3
-// 63 13 = heated tube temp 3, humidity 3
-// 43 14 = heated tube temp 4, humidity 2
+// 45 80 = classic 5
+// 44 80 = classic 4
+// 43 80 = classic 3
+// 42 80 = classic 2
+
+// 40 80 = classic 0 (off)
 //
 //  7    = humidity level without tube
 //  8    = ? (never seen)
@@ -4993,8 +5001,6 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 
 void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting)
 {
-    HEX(humid1);
-    HEX(humid2);
     if (false) qWarning() << this->sessionid << "humid" << hex(humid1) << hex(humid2) << add_setting;
 
     int humidlevel = humid1 & 7;  // Ignored when heated tube is present: humidifier setting on tube disconnect is always reported as 3
@@ -5040,12 +5046,11 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
     }
     
-// DEBUG
-    if (humidclassic) CHECK_VALUES(humidlevel, 2, 3);
-    if (humidsystemone && (humidlevel == 0 || humidlevel == 1 || humidlevel == 4)) UNEXPECTED_VALUE(humidlevel, "[2,3,5]");
+    // Check for previously unseen data that we expect to be normal:
+    if (humidclassic && humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "!= 1");
     if (tubepresent) {
         if (tubetemp) CHECK_VALUES(tubehumidlevel, 2, 3);
-        if (tubetemp == 2 || tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "[0,1,3,4]");
+        if (tubetemp == 2) UNEXPECTED_VALUE(tubetemp, "!= 2");
     }
 }
 
@@ -5068,7 +5073,7 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
-    HEX(data[3]);
+    //HEX(data[3]);
     switch (data[3]) {
         case 0:  // 0 = None
             flexmode = FLEX_None;
