@@ -5488,7 +5488,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 1: // Flex Mode
                 CHECK_VALUE(len, 1);
-                HEX(data[pos]);
+                //HEX(data[pos]);
                 switch (data[pos]) {
                     case 0:  // 0 = None
                         flexmode = FLEX_None;
@@ -6165,9 +6165,13 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
 // 54 B4 = HT=5, H=5, data=tube
 // 50 90 = HT=4, H=4, data=tube
 // 4C 6C = HT=3, H=3, data=tube
+// 48 68 = HT=3, H=2, data=tube
+// 40 60 = HT=3, H=Off, data=tube t=3,h=0
 // 50 50 = HT=2, H=4, data=tube
 // 4C 4C = HT=2, H=3, data=tube
+// 50 30 = HT=1, H=4, data=tube
 // 4C 0C = HT=off, H=3, data=tube t=0,h=3
+// 34 74 = HT=3, H=5, data=adaptive (5)
 // 50 B0 = HT=5, H=4, adaptive
 // 30 B0 = HT=3, H=4, data=adaptive (4)
 // 30 50 = HT=3, H=4, data=adaptive (4)
@@ -6177,27 +6181,53 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
 // 28 08 =       H=2, data=adaptive (2), no details (400G)
 // 28 48 = HT=3!,H=2, data=adaptive (2) [adaptive mode appears to ignore HT bits and show HT=3 in details]
 // 28 68 = HT=3, H=2, data=adaptive (2)
+// 24 64 = HT=3, H=1, data=adaptive (1)
 // 20 60 = HT=3, H=off, data=adaptive (0)
+// 14 74 = HT=3, H=5, data=fixed (5)
+// 10 70 = HT=3, H=4, data=fixed (4)
 // 0C 6C = HT=3, H=3, data=fixed (3)
+// 08 48 = HT=3, H=2, data=fixed (2)
+// 08 68 = HT=3, H=2, data=fixed (2)
 // 04 64 = HT=3, H=1, data=fixed (1)
+// 00 00 = HT=3, H=off, data=fixed (0)
 
 // F5V3 confirmed:
+// 90 70 = HT=3, H=3, adaptive, data=no data
+// 54 14 = HT=Off, H=5, adaptive, data=tube t=0,h=5
+// 54 34 = HT=1, H=5, adaptive, data=tube t=1,h=5
 // 50 70 = HT=3, H=4, adaptive, data=tube t=3,h=4
 // 4C 6C = HT=3, H=3, adaptive, data=tube t=3,h=3
 // 4C 4C = HT=2, H=3, adaptive, data=tube t=2,h=3
+// 4C 2C = HT=1, H=3, adaptive, data=tube t=1,h=3
 // 4C 0C = HT=off, H=3, adaptive, data=tube t=0,h=3
+// 48 08 = HT=off, H=2, adaptive, data=tube t=0,h=2
+// 44 04 = HT=off, H=1, adaptive, data=tube t=0,h=1
+// 40 00 = HT=off,H=off, adaptive, data=tube t=0,h=0
+// 34 74 = HT=3, H=5, adaptive, data=s1 (5)
+// 30 70 = HT=3, H=4, adaptive, data=s1 (4)
 // 2C 6C = HT=3, H=3, adaptive, data=s1 (3)
+// 28 68 = HT=3, H=2, adaptive, data=s1 (2)
+// 24 64 = HT=3, H=1, adaptive, data=s1 (1)
 
 // F3V6 confirmed:
+// 84 24 = HT=3, H=3, disconnect=adaptive, data=no data
 // 50 90 = HT=4, H=4, disconnect=adaptive, data=tube t=4,h=4
-// 44 84 = HT=4, H=1, disconnect=adaptive, data=tube t=4
+// 44 84 = HT=4, H=1, disconnect=adaptive, data=tube t=4,h=1
+// 40 80 = HT=4, H=Off,disconnect=adaptive, data=tube t=4,h=0
+// 4C 6C = HT=3, H=3, disconnect=adaptive, data=tube t=3,h=3
 // 48 68 = HT=3, H=2, disconnect=adaptive, data=tube t=3,h=2
 // 44 44 = HT=2, H=1, disconnect=adaptive, data=tube t=2,h=1
 // 48 28 = HT=1, H=2, disconnect=adaptive, data=tube t=1,h=2
+// 54 14 = HT=Off,H=5, disconnect=adaptive data=tube t=0,h=5
+// 34 14 = HT=3, H=5, disconnect=adaptive, data=s1 (5)
 // 30 70 = HT=3, H=4, disconnect=adaptive, data=s1 (4)
 // 2C 6C = HT=3, H=3, disconnect=adaptive, data=s1 (3)
-// 28 68 = HT=3, H=2, disconnect=adaptive, data=s1 (2,variable,alt with 2c,6c)
+// 28 08 = HT=3, H=2, disconnect=adaptive, data=s1 (2)
+// 20 20 = HT=3, H=Off, disconnect=adaptive, data=s1 (0)
+// 14 14 = HT=3, H=3, disconnect=fixed, data=classic (5)
 // 10 10 = HT=3, H=4, disconnect=fixed, data=classic (4) [fixed mode appears to ignore HT bits and show HT=3 in details]
+// 0C 0C = HT=3, H=3, disconnect=fixed, data=classic (3)
+// 08 08 = HT=3, H=2, disconnect=fixed, data=classic (2)
 // 04 64 = HT=3, H=1, disconnect=fixed, data=classic (1)
 
 // The data is consistent among all fileVersion 3 models: F0V6, F5V3, F3V6.
@@ -6267,36 +6297,24 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBE_LEVEL, tubelevel));
     }
 
-// DEBUG
-    HEX(byte1);
-    HEX(byte2);
+    // Check for previously unseen data that we expect to be normal:
     if (family == 0) {
         if (tubepresent) {
-            if (tubetemp == 1) UNEXPECTED_VALUE(tubetemp, "!= 1");
-            if (tubehumidlevel < 3) UNEXPECTED_VALUE(tubehumidlevel, "3-5");
-        } else if (humidadaptive) {
-            if (humidlevel == 1 || humidlevel == 5) UNEXPECTED_VALUE(humidlevel, "0,2-4");
-        } else if (humidfixed) {
-            CHECK_VALUES(humidlevel, 1, 3);
+            if (tubehumidlevel == 1) UNEXPECTED_VALUE(tubehumidlevel, "!= 1");
         }
     } else if (family == 5) {
-        CHECK_VALUE(humidifier_present, true);
         if (tubepresent) {
-            if (tubetemp != 0 && tubetemp != 2 && tubetemp != 3) UNEXPECTED_VALUE(tubetemp, "[0,2,3]");
-            CHECK_VALUES(tubehumidlevel, 3, 4);
-        } else if (humidadaptive) {
-            CHECK_VALUE(humidlevel, 3);  // will yell about one variable sample 2
+            if (tubetemp != 0 && tubetemp > 3) UNEXPECTED_VALUE(tubetemp, "<= 3");
         }
         CHECK_VALUE(humidfixed, false);
     } else if (family == 3) {
-        CHECK_VALUE(humidifier_present, true);
         if (tubepresent) {
-            if (tubetemp == 0 || tubetemp == 5) UNEXPECTED_VALUE(tubetemp, "[1-4]");
-            if (tubehumidlevel == 5 || tubehumidlevel == 3 || tubehumidlevel == 0) UNEXPECTED_VALUE(tubehumidlevel, "[1,2,4]");
+            // The only 2 samples seen had multiple adjustments, so the reports are ambiguous.
+            if (tubetemp == 5 && sessionid != 24 && sessionid != 26) UNEXPECTED_VALUE(tubetemp, "[0-4]");
         } else if (humidadaptive) {
-            CHECK_VALUES(humidlevel, 3, 4);  // will yell about one variable sample 2
+            if (humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "[0,2-5]");
         } else if (humidfixed) {
-            CHECK_VALUES(humidlevel, 1, 4);
+            if (humidlevel == 0) UNEXPECTED_VALUE(humidlevel, "1-5");
         }
     }
 }
@@ -6461,7 +6479,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode
                 CHECK_VALUE(len, 1);
-                HEX(data[pos]);
+                //HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:
                     flexmode = FLEX_None;
@@ -6499,7 +6517,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x30:  // Flex level
                 CHECK_VALUE(len, 1);
-                HEX(data[pos]);
+                //HEX(data[pos]);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 break;
             case 0x35:  // Humidifier setting
@@ -7033,7 +7051,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode and level (ASV variant)
                 CHECK_VALUE(len, 2);
-                HEX(data[pos]);
+                //HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:  // Bi-Flex
                     // [0x00, N] for Bi-Flex level N
