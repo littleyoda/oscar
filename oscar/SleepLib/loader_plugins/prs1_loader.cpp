@@ -4507,8 +4507,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
     quint8 flex = data[0x08];
-    //HEX(flex);
-    this->ParseFlexSetting(flex, cpapmode);
+    this->ParseFlexSettingF0V234(flex, cpapmode);
 
     int humid = data[0x09];
     this->ParseHumidifierSetting50Series(humid, true);
@@ -4614,11 +4613,8 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
 
-    // TODO: flex was wrong for F0V4, so double-check F0V23 (and other users of ParseFlexSetting)
-    // esp. cpapcheck and autotrial
     quint8 flex = data[0x0a];
-    //HEX(flex);
-    this->ParseFlexSetting(flex, cpapmode);
+    this->ParseFlexSettingF0V234(flex, cpapmode);
 
     this->ParseHumidifierSetting60Series(data[0x0b], data[0x0c], true);
 
@@ -5118,7 +5114,6 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
-    //HEX(data[3]);
     switch (data[3]) {
         case 0:  // 0 = None
             flexmode = FLEX_None;
@@ -5148,6 +5143,7 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap));
     // TODO: calculte PS or min/max PS? Create IPAP event when not AVAPS?
 
+    // TODO: import rise time, bi-flex level
     if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
         //CHECK_VALUE(data[0xa], 1, 3);  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
         CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock (in "None" and AVAPS flex mode)
@@ -5533,7 +5529,6 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 1: // Flex Mode
                 CHECK_VALUE(len, 1);
-                //HEX(data[pos]);
                 switch (data[pos]) {
                     case 0:  // 0 = None
                         flexmode = FLEX_None;
@@ -5722,6 +5717,7 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, imin_ps));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
 
+    // TODO: add settings for backup breathing
     //CHECK_VALUE(data[0x07], 1, 2);  // 1 = backup breath rate "Auto"; 2 = fixed BPM, see below
     //CHECK_VALUE(data[0x08], 0);     // backup "Breath Rate" in mode 2
     //CHECK_VALUE(data[0x09], 0);     // backup "Timed Inspiration" (gain 0.1) in mode 2
@@ -5731,9 +5727,8 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
     this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
 
-    quint8 flex = data[0x0c];  // TODO: 82 F5V0 = flex 2, C9 F5V1 = rise time 1 + rise time lock, 8A F5V1 = rise time 2, 02 F5V2 = flex 2!!!
-    //HEX(flex);
-    this->ParseFlexSetting(flex, cpapmode);  // TODO: check this against all versions, may not be right ever, or only for very specific models
+    quint8 flex = data[0x0c];
+    this->ParseFlexSettingF5V012(flex, cpapmode);
 
     int pos;
     if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
@@ -5958,41 +5953,88 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 
 // Flex F0V2 confirmed
 // 0x00 = None
-// 0x81 = C-Flex 1
-// 0x82 = Bi-Flex 2
-// 0x89 = A-Flex 1
-// 0x8A = A-Flex 2
-// 0x8B = C-Flex+ 3
-// 0x93 = Rise Time 3
+// 0x81 = C-Flex 1, lock off (AutoCPAP mode)
+// 0x82 = Bi-Flex 2 (Bi-Level mode)
+// 0x89 = A-Flex 1 (AutoCPAP mode)
+// 0x8A = A-Flex 2, lock off (AutoCPAP mode)
+// 0x8B = C-Flex+ 3, lock off (CPAP mode)
+// 0x93 = Rise Time 3 (AutoBiLevel mode)
 
 // Flex F0V4 confirmed
-// 0x00 = off
-// 0x81 = C-Flex 1, Bi-Flex 1
-// 0x82 = C-Flex 2
-// 0x83 = Bi-Flex 3
-// 0x89 = A-Flex 1
-// 0x8A = C-Flex+ 2, A-Flex 2
-// 0x8B = C-Flex+ 3
+// 0x00 = None
+// 0x81 = Bi-Flex 1 (AutoBiLevel mode)
+// 0x81 = C-Flex 1 (AutoCPAP mode)
+// 0x82 = C-Flex 2 (CPAP mode)
+// 0x82 = C-Flex 2 (CPAP-Check mode)
+// 0x83 = Bi-Flex 3 (Bi-Level mode)
+// 0x89 = A-Flex 1 (AutoCPAP mode)
+// 0x8A = C-Flex+ 2 (CPAP mode)
+// 0x8A = C-Flex+ 2, lock off (CPAP-Check mode)
+// 0x8A = A-Flex 2, lock off (Auto-Trial mode)
+//
+// 0x8A = A-Flex 1 (AutoCPAP mode)
+// 0x8B = C-Flex+ 3 (CPAP mode)
+// 0x8B = A-Flex 3 (AutoCPAP mode)
 
-// TODO: Review this in more detail, comparing it across all families and versions. It may not be accurate.
-// F5V0 0x82 = Bi-Flex 2
-// F5V1 0x82 = Bi-Flex 2
-// F5V1 0x83 = Bi-Flex 3
-// F5V1 0x8A = Rise Time 2
-// F5V2 0x02 = Bi-Flex 2
-// F5V1 0xC9 = Rise Time 1, Rise Time Lock
-void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
+//   8  = enabled
+//   1  = rise time
+//    8 = C-Flex+ / A-Flex (depending on mode)
+//    3 = level
+
+// TODO: Check esp. CPAP-Check and auto-trial
+
+void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 {
-    //qWarning() << QString("F%1V%2 flex=%3").arg(this->family).arg(this->familyVersion).arg(flex, 2, 16, QChar('0'));
+    FlexMode flexmode = FLEX_None;
+    bool enabled  = (flex & 0x80) != 0;
+    bool risetime = (flex & 0x10) != 0;
+    bool plusmode = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
-    FlexMode flexmode = FLEX_Unknown;
+    // the original code suggested 0x40 was split, but we haven't seen any data with that yet
+    if (flex & (0x40 | 0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
 
-    // 88 CFlex+ / AFlex (depending on CPAP mode)
-    // 80 CFlex
-    // 00 NoFlex
+    HEX(flex);
+    if (enabled) {
+        if (flexlevel < 1) UNEXPECTED_VALUE(flexlevel, "!= 0");
+        if (risetime) {
+            flexmode = FLEX_RiseTime;
+            CHECK_VALUE(cpapmode, PRS1_MODE_AUTOBILEVEL);
+            CHECK_VALUE(plusmode, 0);
+        } else if (plusmode) {
+            switch (cpapmode) {
+                case PRS1_MODE_CPAP:
+                case PRS1_MODE_CPAPCHECK:
+                    flexmode = FLEX_CFlexPlus;
+                    break;
+                case PRS1_MODE_AUTOCPAP:
+                case PRS1_MODE_AUTOTRIAL:
+                    flexmode = FLEX_AFlex;
+                    break;
+                default:
+                    UNEXPECTED_VALUE(cpapmode, "expected C-Flex+/A-Flex mode");
+                    break;
+            }
+        } else {
+            switch (cpapmode) {
+                case PRS1_MODE_CPAP:
+                case PRS1_MODE_CPAPCHECK:
+                case PRS1_MODE_AUTOCPAP:
+                    flexmode = FLEX_CFlex;
+                    break;
+                case PRS1_MODE_BILEVEL:
+                case PRS1_MODE_AUTOBILEVEL:
+                    flexmode = FLEX_BiFlex;
+                    break;
+                default:
+                    UNEXPECTED_VALUE(cpapmode, "expected mode");
+                    break;
+            }
+        }
+    }
+
     // c0 Split CFlex then None
     // c8 Split CFlex+ then None
-
+    /*
     if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
 
     flex &= 0xf8;
@@ -6034,9 +6076,72 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
     if (flexmode == FLEX_Unknown) {
         qWarning() << this->sessionid << "unknown flex" << flex << "cpapmode" << cpapmode;
     }
+    */
     
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
+    if (enabled) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
+    }
+}
+
+
+// Flex F5V0 confirmed
+// 0x81 = Bi-Flex 1 (ASV mode)
+// 0x82 = Bi-Flex 2 (ASV mode)
+// 0x83 = Bi-Flex 3 (ASV mode)
+
+// Flex F5V1 confirmed
+// 0x82 = Bi-Flex 2 (ASV mode)
+// 0x83 = Bi-Flex 3 (ASV mode)
+// 0x8A = Rise Time 2 (ASV mode) (Shows "ASV - None" in mode summary, but then rise time in details)
+// 0x08 = Rise Time 2 (ASV mode) (backup breathing off)
+// 0xC9 = Rise Time 1, Rise Time Lock (ASV mode)
+
+// Flex F5V2 confirmed
+// 0x02 = Bi-Flex 2 (ASV mode) (breath rate auto, but min/max PS=0)
+
+//   8  = ? (once was 0 when rise time was on and backup breathing was off, rise time level was also 0 in that case)
+//          (was also 0 on F5V2)
+//   4  = Rise Time Lock
+//    8 = Rise Time (vs. Bi-Flex)
+//    3 = level
+
+void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
+{
+    /*
+    FlexMode flexmode = FLEX_None;
+    bool unknown  = (flex & 0x80) != 0;
+    bool lock     = (flex & 0x40) != 0;
+    bool risetime = (flex & 0x08) != 0;
+    int flexlevel = flex & 0x03;
+
+    if (flex & (0x20 | 0x10 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
+    CHECK_VALUE(unknown, true);
+    */
+    CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
+    if (this->familyVersion == 0) {
+        switch(flex) {
+        case 0x81: break;
+        case 0x82: break;
+        case 0x83: break;
+        default: HEX(flex); break;
+        }
+    } else if (this->familyVersion == 1) {
+        switch(flex) {
+        case 0x82: break;
+        case 0x83: break;
+        case 0x8A: break;
+        case 0x08: break;
+        case 0xC9: break;
+        default: HEX(flex); break;
+        }
+
+    } else {
+        switch(flex) {
+        case 0x02: break;
+        default: HEX(flex); break;
+        }
+    }
 }
 
 
@@ -6536,7 +6641,6 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode
                 CHECK_VALUE(len, 1);
-                //HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:
                     flexmode = FLEX_None;
@@ -6574,7 +6678,6 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x30:  // Flex level
                 CHECK_VALUE(len, 1);
-                //HEX(data[pos]);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 break;
             case 0x35:  // Humidifier setting
@@ -7108,7 +7211,6 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x2e:  // Flex mode and level (ASV variant)
                 CHECK_VALUE(len, 2);
-                //HEX(data[pos]);
                 switch (data[pos]) {
                 case 0:  // Bi-Flex
                     // [0x00, N] for Bi-Flex level N
@@ -7117,6 +7219,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                     break;
                 case 0x20:  // Rise Time
                     // [0x20, 0x03] for no flex, rise time setting = 3, no rise lock
+                    CHECK_VALUE(data[pos+1], 3);
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos+1]));
                     break;
                 default:
