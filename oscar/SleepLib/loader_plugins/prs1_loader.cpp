@@ -4698,6 +4698,10 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 // 92 05 =       H=2, S1
 // 91 05 =       H=1, S1
 // 90 05 =       H=Off, S1
+// 95 41 =       H=5, Classic
+// 94 41 =       H=4, Classic
+// 93 41 =       H=3, Classic
+// 92 41 =       H=2, Classic
 // 01 60 =       H=1, Classic
 // 00 60 =       H=Off, Classic
 // 00 70 =       H=3, S1, no data [no data ignores Classic mode, H bits, falls back to S1 H=3]
@@ -4794,7 +4798,6 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
                 if (tubehumidlevel == 0 || tubehumidlevel > 3) UNEXPECTED_VALUE(tubehumidlevel, "1-3");
             }
         }
-        if (humidclassic) CHECK_VALUES(humidlevel, 0, 1);
     } else if (this->familyVersion == 2) {
         // F5V2
         if (tubepresent) {
@@ -5892,7 +5895,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
                 if (this->familyVersion == 0) {
-                    CHECK_VALUE(data[pos+2], 1);
+                    //CHECK_VALUE(data[pos+2], 1);  // Usually 1, also seen 0, 6, and 7.
                     ParseHumidifierSetting50Series(data[pos+3]);
                 }
                 /* Possibly F5V12?
@@ -6051,6 +6054,9 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 // 0x80 = Off
 // 0x81 = 1, bypass = no
 // 0x82 = 2, bypass = no
+// 0x83 = 3, bypass = no
+// 0x84 = 4, bypass = no
+// 0x85 = 5, bypass = no
 
 void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 {
@@ -6071,11 +6077,6 @@ void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
     // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
     if (!humidifier_present) CHECK_VALUE(humidlevel, 0);
-
-    // Check for previously unseen data that we expect to be normal:
-    if (this->family == 5) {
-        if (humidlevel > 2) UNEXPECTED_VALUE(humidlevel, "<= 2");
-    }
 }
 
 
