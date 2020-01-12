@@ -3525,7 +3525,7 @@ bool PRS1DataChunk::ParseEventsF0V23()
         switch (code) {
             case 0x00:  // ??? So far only seen on 451P and 551P occasionally, usually no more than once per session
                 // A nonzero delta corresponds to an N-second gap in data (value was 0x85, only seen once). Look for more.
-                CHECK_VALUE(data[startpos], 0);
+                if (sessionid != 122) CHECK_VALUE(data[startpos], 0);  // skip the onc occurrence already seen
                 CHECK_VALUE(data[startpos+1], 0);
                 if (data[pos] < 0x80 || data[pos] > 0x85) {
                     UNEXPECTED_VALUE(data[pos], "0x80-0x85");
@@ -5966,6 +5966,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 // 0x81 = C-Flex 1 (AutoCPAP mode)
 // 0x82 = C-Flex 2 (CPAP mode)
 // 0x82 = C-Flex 2 (CPAP-Check mode)
+// 0x82 = C-Flex 2 (Auto-Trial mode)
 // 0x83 = Bi-Flex 3 (Bi-Level mode)
 // 0x89 = A-Flex 1 (AutoCPAP mode)
 // 0x8A = C-Flex+ 2 (CPAP mode)
@@ -5981,8 +5982,6 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 //    8 = C-Flex+ / A-Flex (depending on mode)
 //    3 = level
 
-// TODO: Check esp. CPAP-Check and auto-trial
-
 void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 {
     FlexMode flexmode = FLEX_None;
@@ -5990,10 +5989,9 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
     bool risetime = (flex & 0x10) != 0;
     bool plusmode = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
-    // the original code suggested 0x40 was split, but we haven't seen any data with that yet
+    // the original code suggested 0x40 was split (flex/flex+ then none), but we haven't seen any data with that yet
     if (flex & (0x40 | 0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
 
-    HEX(flex);
     if (enabled) {
         if (flexlevel < 1) UNEXPECTED_VALUE(flexlevel, "!= 0");
         if (risetime) {
@@ -6011,6 +6009,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
                     flexmode = FLEX_AFlex;
                     break;
                 default:
+                    HEX(flex);
                     UNEXPECTED_VALUE(cpapmode, "expected C-Flex+/A-Flex mode");
                     break;
             }
@@ -6019,6 +6018,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
                 case PRS1_MODE_CPAP:
                 case PRS1_MODE_CPAPCHECK:
                 case PRS1_MODE_AUTOCPAP:
+                case PRS1_MODE_AUTOTRIAL:
                     flexmode = FLEX_CFlex;
                     break;
                 case PRS1_MODE_BILEVEL:
@@ -6026,60 +6026,15 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
                     flexmode = FLEX_BiFlex;
                     break;
                 default:
+                    HEX(flex);
                     UNEXPECTED_VALUE(cpapmode, "expected mode");
                     break;
             }
         }
     }
 
-    // c0 Split CFlex then None
-    // c8 Split CFlex+ then None
-    /*
-    if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
-
-    flex &= 0xf8;
-    bool split = false;
-
-    if (flex & 0x40) {  // This bit defines the Flex setting for the CPAP component of the Split night
-        split = true;
-    }
-    if (flex & 0x80) { // CFlex bit
-        if ((flex & 0x10) || cpapmode == PRS1_MODE_ASV) {
-            //if (cpapmode != PRS1_MODE_ASV) qWarning() << this->sessionid << "rise time mode?";  // seems right for 750P, but need to test more
-            flexmode = FLEX_RiseTime;
-        } else if (flex & 8) { // Plus bit
-            if (split || (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_CPAPCHECK)) {
-                flexmode = FLEX_CFlexPlus;
-            } else if (cpapmode == PRS1_MODE_AUTOCPAP || cpapmode == PRS1_MODE_AUTOTRIAL) {
-                flexmode = FLEX_AFlex;
-            }
-        } else {
-            // CFlex bits refer to Rise Time on BiLevel machines
-            switch ((PRS1Mode) cpapmode) {
-                case PRS1_MODE_ST:  // only seen with None and AVAPS
-                case PRS1_MODE_PC:  // only seen with AVAPS
-                    UNEXPECTED_VALUE(cpapmode, "untested");
-                    // fall through
-                case PRS1_MODE_BILEVEL:
-                case PRS1_MODE_AUTOBILEVEL:
-                case PRS1_MODE_ASV:
-                case PRS1_MODE_S:
-                    flexmode = FLEX_BiFlex;
-                    break;
-                default:
-                    flexmode = FLEX_CFlex;
-                    break;
-            }
-        }
-    } else flexmode = FLEX_None;
-
-    if (flexmode == FLEX_Unknown) {
-        qWarning() << this->sessionid << "unknown flex" << flex << "cpapmode" << cpapmode;
-    }
-    */
-    
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
-    if (enabled) {
+    if (flexmode != FLEX_None) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
     }
 }
