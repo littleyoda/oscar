@@ -243,6 +243,7 @@ void ChunkToYaml(QTextStream & out, PRS1DataChunk* chunk, bool ok)
 
 void parseAndEmitChunkYaml(const QString & path)
 {
+    bool FV = false;  // set this to true to emit family/familyVersion for this path
     qDebug() << path;
 
     QHash<QString,QSet<quint64>> written;
@@ -318,6 +319,7 @@ void parseAndEmitChunkYaml(const QString & path)
             QList<PRS1DataChunk *> chunks = s_loader->ParseFile(inpath);
             for (int i=0; i < chunks.size(); i++) {
                 PRS1DataChunk * chunk = chunks.at(i);
+                if (i == 0 && FV) { qWarning() << QString("F%1V%2").arg(chunk->family).arg(chunk->familyVersion); FV=false; }
                 // Only write unique chunks to the file.
                 if (written[outpath].contains(chunk->hash()) == false) {
                     if (first_chunk_from_file) {

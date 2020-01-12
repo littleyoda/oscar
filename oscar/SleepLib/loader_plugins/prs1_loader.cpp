@@ -222,7 +222,9 @@ enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
-ChannelID PRS1_TimedBreath = 0, PRS1_HeatedTubing = 0;
+enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube };
+
+ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 
 struct PRS1TestedModel
 {
@@ -1191,8 +1193,9 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_RAMP_TIME,
     PRS1_SETTING_RAMP_PRESSURE,
     PRS1_SETTING_HUMID_STATUS,
+    PRS1_SETTING_HUMID_MODE,
+    PRS1_SETTING_HEATED_TUBE_TEMP,
     PRS1_SETTING_HUMID_LEVEL,
-    PRS1_SETTING_HEATED_TUBING,
     PRS1_SETTING_MASK_RESIST_LOCK,
     PRS1_SETTING_MASK_RESIST_SETTING,
     PRS1_SETTING_MASK_RESIST_STATUS,
@@ -1735,8 +1738,9 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_RAMP_TIME);
         ENUMSTRING(PRS1_SETTING_RAMP_PRESSURE);
         ENUMSTRING(PRS1_SETTING_HUMID_STATUS);
+        ENUMSTRING(PRS1_SETTING_HUMID_MODE);
+        ENUMSTRING(PRS1_SETTING_HEATED_TUBE_TEMP);
         ENUMSTRING(PRS1_SETTING_HUMID_LEVEL);
-        ENUMSTRING(PRS1_SETTING_HEATED_TUBING);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_LOCK);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_SETTING);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_STATUS);
@@ -4172,6 +4176,12 @@ bool PRS1Import::ImportCompliance()
             case PRS1_SETTING_HUMID_STATUS:
                 session->settings[PRS1_HumidStatus] = (bool) e->m_value;
                 break;
+            case PRS1_SETTING_HUMID_MODE:
+                session->settings[PRS1_HumidMode] = e->m_value;
+                break;
+            case PRS1_SETTING_HEATED_TUBE_TEMP:
+                session->settings[PRS1_TubeTemp] = e->m_value;
+                break;
             case PRS1_SETTING_HUMID_LEVEL:
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
@@ -4750,10 +4760,26 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
         qWarning() << this->sessionid << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
     }
     */
+    HumidMode humidmode = HUMID_Fixed;
+    if (tubepresent) {
+        humidmode = HUMID_HeatedTube;
+    } else {
+        if (humidsystemone + humidclassic > 1) UNEXPECTED_VALUE(humid2, "fixed or adaptive");
+        if (humidsystemone) humidmode = HUMID_Adaptive;
+    }
+
     if (add_setting) {
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp, where 0=off
+        bool humidifier_present = (no_data == 0);
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));
+        if (humidifier_present) {
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_MODE, humidmode));
+            if (humidmode == HUMID_HeatedTube) {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBE_TEMP, tubetemp));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubehumidlevel));
+            } else {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+            }
+        }
     }
 
     // Check for previously unseen data that we expect to be normal:
@@ -5040,10 +5066,26 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
         qWarning() << this->sessionid << (humidclassic ? "classic" : "systemone") << "humidity" << humidlevel;
     }
     */
+    HumidMode humidmode = HUMID_Fixed;
+    if (tubepresent) {
+        humidmode = HUMID_HeatedTube;
+    } else {
+        if (humidsystemone + humidclassic > 1) UNEXPECTED_VALUE(humid2, "fixed or adaptive");
+        if (humidsystemone) humidmode = HUMID_Adaptive;
+    }
+
     if (add_setting) {
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidlevel != 0));  // TODO: record classic vs. systemone setting
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, tubepresent));
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubepresent ? tubehumidlevel : humidlevel));  // TODO: we also need tubetemp
+        bool humidifier_present = (no_data == 0);
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));
+        if (humidifier_present) {
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_MODE, humidmode));
+            if (humidmode == HUMID_HeatedTube) {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBE_TEMP, tubetemp));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubehumidlevel));
+            } else {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+            }
+        }
     }
     
     // Check for previously unseen data that we expect to be normal:
@@ -6010,7 +6052,6 @@ void PRS1DataChunk::ParseFlexSetting(quint8 flex, int cpapmode)
 // 0x81 = 1, bypass = no
 // 0x82 = 2, bypass = no
 
-// TODO: PRS1_SETTING_HUMID_STATUS is ambiguous: we probably want connected vs. not, which should be distinct from system one vs. classic, etc.
 void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 {
     if (humid & (0x40 | 0x20 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
@@ -6018,9 +6059,13 @@ void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
     bool humidifier_present = ((humid & 0x80) != 0);  // humidifier connected
     int humidlevel = humid & 7;  // humidification level
 
+    HumidMode humidmode = HUMID_Fixed;  // 50-Series didn't have adaptive or heated tube humidification
     if (add_setting) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+        if (humidifier_present) {
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_MODE, humidmode));
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+        }
     }
 
     // Check for truly unexpected values:
@@ -6288,13 +6333,24 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         }
     }
 
+    HumidMode humidmode = HUMID_Fixed;
+    if (tubepresent) {
+        humidmode = HUMID_HeatedTube;
+    } else if (humidadaptive) {
+        humidmode = HUMID_Adaptive;
+    }
+
     if (add_setting) {
-        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, (humid & 0x80) != 0));  // this is F0V23 version, doesn't match F0V6
-        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBING, (humid & 0x10) != 0));  // this is F0V23 version, doesn't match F0V6
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
-        
-        // TODO: add a channel for PRS1 heated tubing
-        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBE_LEVEL, tubelevel));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_STATUS, humidifier_present));
+        if (humidifier_present) {
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_MODE, humidmode));
+            if (humidmode == HUMID_HeatedTube) {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HEATED_TUBE_TEMP, tubetemp));
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, tubehumidlevel));
+            } else {
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HUMID_LEVEL, humidlevel));
+            }
+        }
     }
 
     // Check for previously unseen data that we expect to be normal:
@@ -7232,8 +7288,11 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_HUMID_STATUS:
                 session->settings[PRS1_HumidStatus] = (bool) e->m_value;
                 break;
-            case PRS1_SETTING_HEATED_TUBING:
-                session->settings[PRS1_HeatedTubing] = (bool) e->m_value;
+            case PRS1_SETTING_HUMID_MODE:
+                session->settings[PRS1_HumidMode] = e->m_value;
+                break;
+            case PRS1_SETTING_HEATED_TUBE_TEMP:
+                session->settings[PRS1_TubeTemp] = e->m_value;
                 break;
             case PRS1_SETTING_HUMID_LEVEL:
                 session->settings[PRS1_HumidLevel] = e->m_value;
@@ -8340,27 +8399,41 @@ void PRS1Loader::initChannels()
     chan->addOption(0, QObject::tr("Disconnected"));
     chan->addOption(1, QObject::tr("Connected"));
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_HeatedTubing = 0xe10d, SETTING, MT_CPAP,  SESSION,
-        "PRS1HeatedTubing",
-        QObject::tr("Heated Tubing"),
-        QObject::tr("Heated Tubing Connected"),
-        QObject::tr("Heated Tubing"),
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_HumidMode = 0xe110, SETTING, MT_CPAP, SESSION,
+        "PRS1HumidMode",
+        QObject::tr("Humidification Mode"),
+        QObject::tr("PRS1 Humidification Mode"),
+        QObject::tr("Humid. Mode"),
         "", LOOKUP, Qt::green));
-    chan->addOption(0, QObject::tr("Yes"));
-    chan->addOption(1, QObject::tr("No"));
+    chan->addOption(0, QObject::tr("Fixed (Classic)"));
+    chan->addOption(1, QObject::tr("Adaptive (System One)"));
+    chan->addOption(2, QObject::tr("Heated Tube"));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_TubeTemp = 0xe10f, SETTING, MT_CPAP,  SESSION,
+        "PRS1TubeTemp",
+        QObject::tr("Tube Temperature"),
+        QObject::tr("PRS1 Heated Tube Temperature"),
+        QObject::tr("Tube"),
+        "", LOOKUP, Qt::red));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, QObject::tr("1"));
+    chan->addOption(2, QObject::tr("2"));
+    chan->addOption(3, QObject::tr("3"));
+    chan->addOption(4, QObject::tr("4"));
+    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_HumidLevel = 0xe102, SETTING,  MT_CPAP,  SESSION,
         "PRS1HumidLevel",
-        QObject::tr("Humidification Level"),
-        QObject::tr("PRS1 Humidification level"),
-        QObject::tr("Humid. Lvl."),
-        "", LOOKUP, Qt::green));
+        QObject::tr("Humidifier"),  // label varies in reports, "Humidifier Setting" in 50-series, "Humidity Level" in 60-series, "Humidifier" in DreamStation
+        QObject::tr("PRS1 Humidifier Setting"),
+        QObject::tr("Humid."),
+        "", LOOKUP, Qt::blue));
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("x1"));
-    chan->addOption(2, QObject::tr("x2"));
-    chan->addOption(3, QObject::tr("x3"));
-    chan->addOption(4, QObject::tr("x4"));
-    chan->addOption(5, QObject::tr("x5"));
+    chan->addOption(1, QObject::tr("1"));
+    chan->addOption(2, QObject::tr("2"));
+    chan->addOption(3, QObject::tr("3"));
+    chan->addOption(4, QObject::tr("4"));
+    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistStat = 0xe103, SETTING, MT_CPAP,   SESSION,
         "SysOneResistStat",
