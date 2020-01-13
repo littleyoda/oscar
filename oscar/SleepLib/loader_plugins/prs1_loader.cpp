@@ -6046,14 +6046,17 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 // 0x83 = Bi-Flex 3 (ASV mode)
 
 // Flex F5V1 confirmed
+// 0x81 = Bi-Flex 1 (ASV mode)
 // 0x82 = Bi-Flex 2 (ASV mode)
 // 0x83 = Bi-Flex 3 (ASV mode)
-// 0x8A = Rise Time 2 (ASV mode) (Shows "ASV - None" in mode summary, but then rise time in details)
-// 0x08 = Rise Time 2 (ASV mode) (backup breathing off)
 // 0xC9 = Rise Time 1, Rise Time Lock (ASV mode)
+// 0x8A = Rise Time 2 (ASV mode) (Shows "ASV - None" in mode summary, but then rise time in details)
+// 0x8B = Rise Time 3 (ASV mode) (breath rate auto)
+// 0x08 = Rise Time 2 (ASV mode) (falls back to level=2? bits encode level=0)
 
 // Flex F5V2 confirmed
 // 0x02 = Bi-Flex 2 (ASV mode) (breath rate auto, but min/max PS=0)
+// this could be different from F5V01, or PS=0 could disable flex?
 
 //   8  = ? (once was 0 when rise time was on and backup breathing was off, rise time level was also 0 in that case)
 //          (was also 0 on F5V2)
@@ -6063,39 +6066,43 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 
 void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
 {
-    /*
-    FlexMode flexmode = FLEX_None;
+    FlexMode flexmode = FLEX_Unknown;
     bool unknown  = (flex & 0x80) != 0;
     bool lock     = (flex & 0x40) != 0;
     bool risetime = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
 
     if (flex & (0x20 | 0x10 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
-    CHECK_VALUE(unknown, true);
-    */
     CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
     if (this->familyVersion == 0) {
-        switch(flex) {
-        case 0x81: break;
-        case 0x82: break;
-        case 0x83: break;
-        default: HEX(flex); break;
-        }
+        CHECK_VALUE(unknown, true);
+        CHECK_VALUE(lock, false);
+        CHECK_VALUE(risetime, false);
+        if (flexlevel == 0) UNEXPECTED_VALUE(flexlevel, "1-3");
     } else if (this->familyVersion == 1) {
-        switch(flex) {
-        case 0x82: break;
-        case 0x83: break;
-        case 0x8A: break;
-        case 0x08: break;
-        case 0xC9: break;
-        default: HEX(flex); break;
+        if (unknown == false) {
+            CHECK_VALUE(flex, 0x08);
+            flexlevel = 2;  // Why do reports say Rise Time 2 for this value?
         }
-
+        if (lock) CHECK_VALUE(risetime, true);  // so far we've only seen rise time lock, but this could mean bi-flex lock as well
+        if (flexlevel == 0 && unknown) UNEXPECTED_VALUE(flexlevel, "1-3");
     } else {
-        switch(flex) {
-        case 0x02: break;
-        default: HEX(flex); break;
+        CHECK_VALUE(flex, 0x02);  // only seen one example, unsure if it matches F5V01
+    }
+
+    // We're ony confident of values where the high bit is set
+    if (unknown) {
+        if (risetime) {
+            flexmode = FLEX_RiseTime;
+        } else {
+            flexmode = FLEX_BiFlex;
         }
+    }
+
+    // TODO: rise or bi-flex lock once we're confident about it
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
+    if (flexmode != FLEX_Unknown) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
     }
 }
 
