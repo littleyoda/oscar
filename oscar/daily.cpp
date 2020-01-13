@@ -1104,6 +1104,9 @@ QString Daily::getMachineSettings(Day * day) {
                 .arg(chan.description())
                 .arg(day->getCPAPModeStr());
 
+        // The order in which to present pressure settings, which will appear first.
+        QVector<ChannelID> first_channels = { cpapmode, CPAP_Pressure, CPAP_PressureMin, CPAP_PressureMax, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_PS, CPAP_PSMin, CPAP_PSMax };
+
         if (sess) for (; it != it_end; ++it) {
             ChannelID code = it.key();
 
@@ -1133,30 +1136,19 @@ QString Daily::getMachineSettings(Day * day) {
                     .arg(schema::channel[code].description())
                     .arg(data);
 
-            if ((code == CPAP_IPAP)
-            || (code == CPAP_EPAP)
-            || (code == CPAP_IPAPHi)
-            || (code == CPAP_EPAPHi)
-            || (code == CPAP_IPAPLo)
-            || (code == CPAP_EPAPLo)
-            || (code == CPAP_PressureMin)
-            || (code == CPAP_PressureMax)
-            || (code == CPAP_Pressure)
-            || (code == CPAP_PSMin)
-            || (code == CPAP_PSMax)
-            || (code == CPAP_PS)) {
+            if (first_channels.contains(code)) {
                 first[code] = tmp;
             } else {
                 other[schema::channel[code].label()] = tmp;
             }
         }
 
-        ChannelID order[] = { cpapmode, CPAP_Pressure, CPAP_PressureMin, CPAP_PressureMax, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_PS, CPAP_PSMin, CPAP_PSMax };
-        int os = sizeof(order) / sizeof(ChannelID);
-        for (int i=0 ;i < os; ++i) {
-            if (first.contains(order[i])) html += first[order[i]];
+        // Put the pressure settings in order.
+        for (auto & code : first_channels) {
+            if (first.contains(code)) html += first[code];
         }
 
+        // TODO: add logical (rather than alphabetical) ordering to this list, preferably driven by loader somehow
         for (QMap<QString,QString>::iterator it = other.begin(); it != other.end(); ++it) {
             html += it.value();
         }
