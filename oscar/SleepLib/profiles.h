@@ -1,6 +1,6 @@
 /* SleepLib Profiles Header
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -14,7 +14,6 @@
 #include <QCryptographicHash>
 #include <QThread>
 
-#include "version.h"
 #include "progressdialog.h"
 #include "machine.h"
 #include "machine_loader.h"

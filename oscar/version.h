@@ -1,5 +1,6 @@
-﻿/* Version.h
+/* Version.h
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -9,27 +10,17 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#include <qglobal.h>
-#include "build_number.h"
+#include <QString>
 
-const int major_version = 1;   // incompatible API changes
-const int minor_version = 1;   // new features that don't break things
-const int revision_number = 0; // bugfixes, revisions
-const QString ReleaseStatus = "beta"; // testing/nightly/unstable, beta/untamed, rc/almost, r/stable
+extern const int major_version;
+extern const int minor_version;
+extern const int revision_number;
+extern const QString ReleaseStatus;
+extern const int build_number;
 
-const QString VersionString = QString("%1.%2.%3-%4-%5").arg(major_version).arg(minor_version).arg(revision_number).arg(ReleaseStatus).arg(build_number);
-const QString ShortVersionString = QString("%1.%2.%3").arg(major_version).arg(minor_version).arg(revision_number);
+extern const QString VersionString;
+extern const QString ShortVersionString;
 
-#ifdef Q_OS_MAC
-const QString PlatformString = "MacOSX";
-#elif defined(Q_OS_WIN32)
-const QString PlatformString = "Win32";
-#elif defined(Q_OS_WIN64)
-const QString PlatformString = "Win64";
-#elif defined(Q_OS_LINUX)
-const QString PlatformString = "Linux";
-#elif defined(Q_OS_HAIKU)
-const QString PlatformString = "Haiku";
-#endif
+extern const QString PlatformString;
 
 #endif // VERSION_H

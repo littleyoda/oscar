@@ -1,5 +1,6 @@
 /* gGraphView Implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -1359,7 +1360,6 @@ bool gGraphView::renderGraphs(QPainter &painter)
     return numgraphs > 0;
 }
 
-#include "version.h"
 #ifdef BROKEN_OPENGL_BUILD
 void gGraphView::paintEvent(QPaintEvent *)
 #else

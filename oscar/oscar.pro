@@ -256,6 +256,7 @@ SOURCES += \
     sessionbar.cpp \
     updateparser.cpp \
     UpdaterWindow.cpp \
+    version.cpp \
     Graphs/gFlagsLine.cpp \
     Graphs/gFooBar.cpp \
     Graphs/gGraph.cpp \
