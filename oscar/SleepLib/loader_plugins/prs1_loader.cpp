@@ -8460,7 +8460,7 @@ void PRS1Loader::initChannels()
         "PRS1HumidStat",
         QObject::tr("Humidifier Status"),
         QObject::tr("PRS1 humidifier connected?"),
-        QObject::tr("Humidifier Status"),
+        QObject::tr("Humidifier"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, QObject::tr("Disconnected"));
     chan->addOption(1, QObject::tr("Connected"));
@@ -8479,7 +8479,7 @@ void PRS1Loader::initChannels()
         "PRS1TubeTemp",
         QObject::tr("Tube Temperature"),
         QObject::tr("PRS1 Heated Tube Temperature"),
-        QObject::tr("Tube"),
+        QObject::tr("Tube Temp."),
         "", LOOKUP, Qt::red));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, QObject::tr("1"));
@@ -8492,7 +8492,7 @@ void PRS1Loader::initChannels()
         "PRS1HumidLevel",
         QObject::tr("Humidifier"),  // label varies in reports, "Humidifier Setting" in 50-series, "Humidity Level" in 60-series, "Humidifier" in DreamStation
         QObject::tr("PRS1 Humidifier Setting"),
-        QObject::tr("Humid."),
+        QObject::tr("Humid. Lvl"),
         "", LOOKUP, Qt::blue));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, QObject::tr("1"));
