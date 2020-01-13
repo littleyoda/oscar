@@ -1,4 +1,4 @@
-﻿/* Common code and junk
+/* Common code and junk
  *
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -33,7 +33,6 @@ extern bool dayFirst;
 //! \brief Gets the first day of week from the system locale, to show in the calendars.
 Qt::DayOfWeek firstDayOfWeekFromLocale();
 
-QString getBranchVersion();
 QString getGFXEngine();
 
 bool gfxEgnineIsSupported(GFXEngine e);
@@ -44,8 +43,6 @@ QString appResourcePath();
 QString getGraphicsEngine();
 QString getOpenGLVersionString();
 float getOpenGLVersion();
-const QString & gitRevision();
-const QString & gitBranch();
 
 QStringList makeBuildInfo(QString relinfo, QString forcedEngine);
 QStringList getBuildInfo();

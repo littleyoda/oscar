@@ -45,8 +45,6 @@
 
 MainWindow *mainwin = nullptr;
 
-int compareVersion(QString version);
-
 int numFilesCopied = 0;
 
 // Count the number of files in this directory and all subdirectories

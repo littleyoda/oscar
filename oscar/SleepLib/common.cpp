@@ -30,7 +30,6 @@
 #include <zlib.h>
 #endif
 
-#include "git_info.h"
 #include "version.h"
 #include "profiles.h"
 #include "mainwindow.h"
@@ -68,15 +67,6 @@ void SetDateFormat () {
     qDebug() << "shortened date format" << MedDateFormat << "dayFirst" << dayFirst;
 }
 
-const QString & gitRevision()
-{
-    return GIT_REVISION;
-}
-const QString & gitBranch()
-{
-    return GIT_BRANCH;
-}
-
 const QString getDeveloperName()
 {
     return STR_DeveloperName;
@@ -92,9 +82,9 @@ const QString getAppName()
     QString name = STR_AppName;
 
     // Append branch if there is a branch specified
-    if (GIT_BRANCH != "master") {
-        name += "-"+GIT_BRANCH;
-//        qDebug() << "getAppName, not master, name is" << name << "branch is" << GIT_BRANCH;
+    if (gitBranch() != "master") {
+        name += "-"+gitBranch();
+//        qDebug() << "getAppName, not master, name is" << name << "branch is" << gitBranch();
     }
 
     // Append "-test" if not release
@@ -112,8 +102,8 @@ const QString getModifiedAppData()
     QString appdata = STR_AppData;
 
     // Append branch if there is a branch specified
-    if (GIT_BRANCH != "master")
-        appdata += "-"+GIT_BRANCH;
+    if (gitBranch() != "master")
+        appdata += "-"+gitBranch();
 
     // Append "-test" if not release
     else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
@@ -214,23 +204,6 @@ QString getGraphicsEngine()
 #endif
     return gfxEngine;
 }
-QString getBranchVersion()
-{
-    QString version = STR_TR_AppVersion;
-
-    if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-       (ReleaseStatus.compare("release", Qt::CaseInsensitive)==0)))
-        version += " ("+GIT_REVISION + ")";
-
-    if (GIT_BRANCH != "master") {
-        version += " [Branch: " + GIT_BRANCH + "]";
-    }
-
-#ifdef BROKEN_OPENGL_BUILD
-    version += " ["+CSTR_GFX_BrokenGL+"]";
-#endif
-    return version;
-}
 
 QStringList buildInfo;
 
@@ -238,10 +211,10 @@ QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
     buildInfo << (STR_AppName + " " + VersionString + " " + relinfo);
     buildInfo << (QObject::tr("Built with Qt") + " " + QT_VERSION_STR + " on " + __DATE__ + " " + __TIME__);
     QString branch = "";
-    if (GIT_BRANCH != "master") {
-        branch = QObject::tr("Branch:") + " " + GIT_BRANCH + ", ";
+    if (gitBranch() != "master") {
+        branch = QObject::tr("Branch:") + " " + gitBranch() + ", ";
     }
-    buildInfo << branch + (QObject::tr("Revision")) + " " + GIT_REVISION;
+    buildInfo << branch + (QObject::tr("Revision")) + " " + gitRevision();
     if (getAppName() != STR_AppName)        // Report any non-standard app key
         buildInfo << (QObject::tr("App key:") + " " + getAppName());
     buildInfo << QString("");

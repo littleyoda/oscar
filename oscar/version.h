@@ -23,4 +23,10 @@ extern const QString ShortVersionString;
 
 extern const QString PlatformString;
 
+int compareVersion(const QString & version);
+
+QString getBranchVersion();
+const QString & gitRevision();
+const QString & gitBranch();
+
 #endif // VERSION_H
