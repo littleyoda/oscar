@@ -541,12 +541,12 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
-    int vc = compareVersion(AppSetting->versionString());
-    if (vc < 0) {
+    Version settingsVersion = Version(AppSetting->versionString());
+    if (getVersion() > settingsVersion) {
         AppSetting->setShowAboutDialog(1);
 //      release_notes();
 //      check_updates = false;
-    } else if (vc > 0) {
+    } else if (getVersion() < settingsVersion) {
         if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
                                  QObject::tr("The version of OSCAR you just ran is OLDER than the one used to create this data (%1).").
                                  arg(AppSetting->versionString()) +"\n\n"+

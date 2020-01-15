@@ -42,8 +42,6 @@ const Version & getVersion();
 
 extern const QString VersionString;
 
-int compareVersion(const QString & version);
-
 QString getBranchVersion();
 QString getPrereleaseSuffix();
 const QString & gitRevision();
