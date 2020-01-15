@@ -12,6 +12,34 @@
 
 #include <QString>
 
+class Version
+{
+    friend class VersionTests;
+public:
+    Version(const QString & version_string);
+    operator const QString &() const;
+    bool IsReleaseVersion() const { return mPrerelease.isEmpty(); }
+    bool IsValid() const { return mIsValid; }
+    bool operator==(const Version & b) const { return Compare(*this, b) == 0; }
+    bool operator<(const Version & b) const { return Compare(*this, b) < 0; }
+    bool operator>(const Version & b) const { return Compare(*this, b) > 0; }
+
+protected:
+    const QString mString;
+    bool mIsValid;
+    
+    int mMajor, mMinor, mPatch;
+    QString mPrerelease, mBuild;
+    
+    void ParseSemanticVersion();
+    void FixLegacyVersions();
+    static int Compare(const Version & a, const Version & b);
+};
+
+//!brief Get the current version of the application
+const Version & getVersion();
+
+
 extern const QString VersionString;
 
 int compareVersion(const QString & version);

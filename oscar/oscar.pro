@@ -501,13 +501,15 @@ test {
     SOURCES += \
         tests/prs1tests.cpp \
         tests/resmedtests.cpp \
-        tests/sessiontests.cpp
+        tests/sessiontests.cpp \
+        tests/versiontests.cpp
 
     HEADERS += \
         tests/AutoTest.h \
         tests/prs1tests.h \
         tests/resmedtests.h \
-        tests/sessiontests.h
+        tests/sessiontests.h \
+        tests/versiontests.h
 }
 
 macx {
