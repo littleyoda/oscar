@@ -719,7 +719,7 @@ QString Statistics::generateFooter(bool showinfo)
         html += "<hr><div align=center><font size='-1'><i>";
         QDateTime timestamp = QDateTime::currentDateTime();
         html += tr("This report was prepared on %1 by OSCAR v%2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
-                                                                     .arg(ReleaseStatus == "r" ? ShortVersionString : VersionString + " (" + gitRevision() + ")")
+                                                                     .arg(VersionString + " (" + gitRevision() + ")")
                 + "<br/>"
                 + tr("OSCAR is free open-source CPAP report software");
         html += "</i></font></div>";

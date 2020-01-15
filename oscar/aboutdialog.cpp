@@ -125,7 +125,7 @@ QString AboutDialog::getRelnotes()
     "<body><span style=\" font-size:20pt;\">"+tr("Release Notes")+"</span><br/>"
     "<span style=\" font-size:14pt;\">"+tr("OSCAR v%1").arg(VersionString)+"</span>"
     "<hr/>";
-    if (ReleaseStatus != "r") {
+    if (isReleaseVersion() == false) {
         text += "<p><font color='red' size=+1><b>"+tr("Important:")+"</b></font> "
         "<font size=+1><i>"+tr("As this is a pre-release version, it is recommended that you <b>back up your data folder manually</b> before proceeding, because attempting to roll back later may break things.")+"</i></font></p><hr/>";
     }

@@ -60,6 +60,25 @@ QString getBranchVersion()
 }
 
 
+QString getPrereleaseSuffix()
+{
+    QString suffix;
+    
+    // Append branch if there is a branch specified
+    if (gitBranch() != "master") {
+        suffix += "-"+gitBranch();
+    }
+
+    // Append "-test" if not release
+    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
+               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
+        suffix += "-test";
+    }
+
+    return suffix;
+}
+
+
 int checkVersionStatus(QString statusstr)
 {
     bool ok;
@@ -201,3 +220,7 @@ int compareVersion(const QString & version)
     return 0;
 }
 
+bool isReleaseVersion()
+{
+    return (ReleaseStatus == "r");
+}

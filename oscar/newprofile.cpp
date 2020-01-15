@@ -1,4 +1,4 @@
-﻿/* Create New Profile Implementation
+/* Create New Profile Implementation
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -91,7 +91,7 @@ NewProfile::NewProfile(QWidget *parent, const QString *user) :
 
         f.close();
     }
-    ui->releaseStatus->setText("v" + VersionString);
+    ui->versionLabel->setText(VersionString);
 
     ui->textBrowser->setHtml(getIntroHTML());
 }

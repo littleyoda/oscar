@@ -80,36 +80,14 @@ const QString getDeveloperDomain()
 const QString getAppName()
 {
     QString name = STR_AppName;
-
-    // Append branch if there is a branch specified
-    if (gitBranch() != "master") {
-        name += "-"+gitBranch();
-//        qDebug() << "getAppName, not master, name is" << name << "branch is" << gitBranch();
-    }
-
-    // Append "-test" if not release
-    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
-        name += "-test";
-//        qDebug() << "getAppName, not release, name is" << name << "release type is" << ReleaseStatus;
-    }
-
+    name += getPrereleaseSuffix();
     return name;
 }
 
 const QString getModifiedAppData()
 {
     QString appdata = STR_AppData;
-
-    // Append branch if there is a branch specified
-    if (gitBranch() != "master")
-        appdata += "-"+gitBranch();
-
-    // Append "-test" if not release
-    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
-        appdata += "-test";
-    }
+    appdata += getPrereleaseSuffix();
     return appdata;
 }
 

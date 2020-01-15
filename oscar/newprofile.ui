@@ -882,7 +882,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="releaseStatus">
+        <widget class="QLabel" name="versionLabel">
          <property name="font">
           <font>
            <italic>true</italic>

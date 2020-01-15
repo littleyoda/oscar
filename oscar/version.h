@@ -12,21 +12,15 @@
 
 #include <QString>
 
-extern const int major_version;
-extern const int minor_version;
-extern const int revision_number;
-extern const QString ReleaseStatus;
-extern const int build_number;
-
 extern const QString VersionString;
-extern const QString ShortVersionString;
-
-extern const QString PlatformString;
 
 int compareVersion(const QString & version);
 
 QString getBranchVersion();
+QString getPrereleaseSuffix();
 const QString & gitRevision();
 const QString & gitBranch();
+
+bool isReleaseVersion();
 
 #endif // VERSION_H
