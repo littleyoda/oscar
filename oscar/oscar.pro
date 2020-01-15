@@ -304,6 +304,7 @@ SOURCES += \
     SleepLib/progressdialog.cpp \
     SleepLib/loader_plugins/cms50f37_loader.cpp \
     profileselector.cpp \
+    SleepLib/appsettings.cpp \
     SleepLib/loader_plugins/edfparser.cpp \
     aboutdialog.cpp \
     welcome.cpp

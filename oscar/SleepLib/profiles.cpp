@@ -1,6 +1,6 @@
 /* SleepLib Profiles Implementation
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -29,6 +29,7 @@
 
 #include "mainwindow.h"
 #include "translation.h"
+#include "version.h"
 
 extern MainWindow *mainwin;
 Preferences *p_pref;

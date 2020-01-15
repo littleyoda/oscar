@@ -1,5 +1,6 @@
 /* Create New Profile Implementation
  *
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -19,6 +20,7 @@
 #include "newprofile.h"
 #include "ui_newprofile.h"
 #include "mainwindow.h"
+#include "version.h"
 
 extern MainWindow *mainwin;
 

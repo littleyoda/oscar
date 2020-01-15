@@ -16,8 +16,6 @@ static void iterateTestCards(const QString & root, void (*action)(const QString 
 
 void ResmedTests::initTestCase(void)
 {
-    initializeStrings();
-    qDebug() << STR_TR_OSCAR + " " + getBranchVersion();
     QString profile_path = TESTDATA_PATH "profile/";
     Profiles::Create("test", &profile_path);
     p_pref = new Preferences("Preferences");

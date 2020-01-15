@@ -19,6 +19,7 @@
 #include "statistics.h"
 #include "mainwindow.h"
 #include "newprofile.h"
+#include "version.h"
 
 extern MainWindow * mainwin;
 

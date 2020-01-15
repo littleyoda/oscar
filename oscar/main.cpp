@@ -245,6 +245,9 @@ bool migrateFromSH(QString destDir) {
 
 int main(int argc, char* argv[])
 {
+    initializeStrings();
+    qDebug() << STR_TR_OSCAR + " " + getBranchVersion();
+
     AutoTest::run(argc, argv);
 }
 
