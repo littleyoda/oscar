@@ -148,6 +148,10 @@ void Version::ParseSemanticVersion()
         mIsValid = true;
         break;
     }
+
+    // If we ever encounter any really old version whose version isn't valid, its
+    // major version will be 0, so it will correctly be considered older than
+    // valid versions.
 }
 
 // Deal with non-Semantic-Versioning numbers used before 1.1.0-beta-2 to make sure they

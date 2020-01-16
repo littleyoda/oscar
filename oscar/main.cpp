@@ -542,11 +542,17 @@ int main(int argc, char *argv[]) {
 #endif
 
     Version settingsVersion = Version(AppSetting->versionString());
-    if (getVersion() > settingsVersion) {
+    Version currentVersion = getVersion();
+    if (currentVersion.IsValid() == false) {
+        // The defined version MUST be valid, otherwise comparisons between versions will fail.
+        QMessageBox::critical(nullptr, STR_MessageBox_Error, QObject::tr("Version \"%1\" is invalid, cannot continue!").arg(currentVersion));
+        return 0;
+    }
+    if (currentVersion > settingsVersion) {
         AppSetting->setShowAboutDialog(1);
 //      release_notes();
 //      check_updates = false;
-    } else if (getVersion() < settingsVersion) {
+    } else if (currentVersion < settingsVersion) {
         if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
                                  QObject::tr("The version of OSCAR you just ran is OLDER than the one used to create this data (%1).").
                                  arg(AppSetting->versionString()) +"\n\n"+
