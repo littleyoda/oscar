@@ -74,12 +74,6 @@ QString getPrereleaseSuffix()
 }
 
 
-bool isReleaseVersion()
-{
-    return getVersion().IsReleaseVersion();
-}
-
-
 static const Version s_Version(VERSION);
 const Version & getVersion()
 {
@@ -93,6 +87,11 @@ Version::Version(const QString & version_string) : mString(version_string), mIsV
 }
 
 Version::operator const QString &() const
+{
+    return toString();
+}
+
+const QString & Version::toString() const
 {
     return mString;
 }

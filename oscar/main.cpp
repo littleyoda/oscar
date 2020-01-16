@@ -347,7 +347,7 @@ int main(int argc, char *argv[]) {
 #endif
     relinfo = "("+QSysInfo::kernelType()+" "+QSysInfo::currentCpuArchitecture()+relinfo+")";
     qDebug() << "OSCAR starting" << QDateTime::currentDateTime();
-    qDebug().noquote() << STR_AppName << VersionString << relinfo << "Built with Qt" << QT_VERSION_STR << __DATE__ << __TIME__;
+    qDebug().noquote() << STR_AppName << getVersion() << relinfo << "Built with Qt" << QT_VERSION_STR << __DATE__ << __TIME__;
 
     SetDateFormat();
 
@@ -557,7 +557,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    AppSetting->setVersionString(VersionString);
+    AppSetting->setVersionString(getVersion());
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Register Importer Modules for autoscanner

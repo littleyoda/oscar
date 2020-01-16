@@ -186,7 +186,7 @@ QString getGraphicsEngine()
 QStringList buildInfo;
 
 QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
-    buildInfo << (STR_AppName + " " + VersionString + " " + relinfo);
+    buildInfo << (STR_AppName + " " + getVersion() + " " + relinfo);
     buildInfo << (QObject::tr("Built with Qt") + " " + QT_VERSION_STR + " on " + __DATE__ + " " + __TIME__);
     QString branch = "";
     if (gitBranch() != "master") {
@@ -761,7 +761,7 @@ void initializeStrings()
 
     STR_TR_Bookmarks = QObject::tr("Bookmarks");
     STR_TR_OSCAR = QObject::tr("OSCAR");
-    STR_TR_AppVersion = QObject::tr("v%1").arg(VersionString);
+    STR_TR_AppVersion = QObject::tr("v%1").arg(getVersion());
 
     STR_TR_Mode = QObject::tr("Mode");
     STR_TR_Model = QObject::tr("Model");

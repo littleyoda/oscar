@@ -329,9 +329,9 @@ void UpdaterWindow::ParseUpdatesXML(QIODevice *dev)
         qDebug() << " XML update structure parsed cleanly";
         QHash<QString, QString> CurrentVersion;
 
-        CurrentVersion[UPDATE_OSCAR] = VersionString;
+        CurrentVersion[UPDATE_OSCAR] = getVersion();
         CurrentVersion[UPDATE_QT] = QT_VERSION_STR;
-        CurrentVersion[UPDATE_Translations] = VersionString;
+        CurrentVersion[UPDATE_Translations] = getVersion();
 
         QList<PackageUpdate> updateList;
 

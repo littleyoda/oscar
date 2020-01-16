@@ -53,7 +53,7 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     initPref(STR_PREF_AllowEarlyUpdates, false);
     initPref(STR_GEN_UpdatesLastChecked, QDateTime());
 #endif
-    initPref(STR_PREF_VersionString, VersionString);
+    initPref(STR_PREF_VersionString, getVersion().toString());
     m_language = initPref(STR_GEN_Language, "en_US").toString();
     initPref(STR_GEN_ShowAboutDialog, 0);  // default to about screen, set to -1 afterwards
 }

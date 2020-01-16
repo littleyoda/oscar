@@ -63,11 +63,11 @@ Profile::Profile(QString path)
     Set(STR_GEN_DataFolder, QString("{home}/Profiles/{UserName}"));
 
     // Reset import warnings when running a new version of OSCAR
-    init(STR_PREF_VersionString, VersionString);
-    QString prefVersion = (*this)[STR_PREF_VersionString].toString();
-    if (prefVersion != VersionString) {
-        qDebug() << "  Resetting import warnings: version" << prefVersion << "to" << VersionString;
-        Set(STR_PREF_VersionString, VersionString);
+    init(STR_PREF_VersionString, getVersion().toString());
+    Version prefVersion = Version((*this)[STR_PREF_VersionString].toString());
+    if (prefVersion != getVersion()) {
+        qDebug() << "  Resetting import warnings: version" << prefVersion << "to" << getVersion();
+        Set(STR_PREF_VersionString, getVersion().toString());
         this->Erase(STR_IS_WarnOnUntestedMachine);
         this->Erase(STR_IS_WarnOnUnexpectedData);
     }
@@ -506,7 +506,7 @@ void Profile::DataFormatError(Machine *m)
     QString msg;
 
     msg = "<font size=+1>"+QObject::tr("OSCAR (%1) needs to upgrade its database for %2 %3 %4").
-            arg(VersionString).
+            arg(getVersion()).
             arg(m->brand()).arg(m->model()).arg(m->serial())
             + "</font><br/><br/>";
 

@@ -56,7 +56,7 @@ ProfileSelector::ProfileSelector(QWidget *parent) :
     showDiskUsage = false;  // in case I want to preference it later
     on_diskSpaceInfo_linkActivated(showDiskUsage ? "show" : "hide");
 
-    ui->versionLabel->setText(VersionString);
+    ui->versionLabel->setText(getVersion());
     ui->diskSpaceInfo->setVisible(false);
 
     QItemSelectionModel * sm = ui->profileView->selectionModel();

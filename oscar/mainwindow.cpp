@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) :
         // seems to need the systray menu for notifications to work
         systraymenu = new QMenu(this);
         systray->setContextMenu(systraymenu);
-        QAction *a = systraymenu->addAction(STR_TR_OSCAR + " v" + VersionString);
+        QAction *a = systraymenu->addAction(STR_TR_OSCAR + " v" + getVersion());
         a->setEnabled(false);
         systraymenu->addSeparator();
         systraymenu->addAction(tr("&About"), this, SLOT(on_action_About_triggered()));
@@ -2560,7 +2560,7 @@ void MainWindow::on_actionReport_a_Bug_triggered()
 //    QSettings settings;
 //    QString language = settings.value(LangSetting).toString();
 //
-//    QDesktopServices::openUrl(QUrl(QString("https://sleepyhead.jedimark.net/report_bugs.php?lang=%1&version=%2&platform=%3").arg(language).arg(VersionString).arg(PlatformString)));
+//    QDesktopServices::openUrl(QUrl(QString("https://sleepyhead.jedimark.net/report_bugs.php?lang=%1&version=%2&platform=%3").arg(language).arg(getVersion()).arg(PlatformString)));
     QMessageBox::information(nullptr, STR_MessageBox_Error, tr("Reporting issues is not yet implemented"));
 }
 

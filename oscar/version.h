@@ -10,7 +10,7 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#include <QString>
+#include <QVariant>
 
 class Version
 {
@@ -18,10 +18,12 @@ class Version
 public:
     Version(const QString & version_string);
     operator const QString &() const;
+    const QString & toString() const;
     const QString PrereleaseType() const;
     bool IsReleaseVersion() const { return mPrerelease.isEmpty(); }
     bool IsValid() const { return mIsValid; }
     bool operator==(const Version & b) const { return Compare(*this, b) == 0; }
+    bool operator!=(const Version & b) const { return Compare(*this, b) != 0; }
     bool operator<(const Version & b) const { return Compare(*this, b) < 0; }
     bool operator>(const Version & b) const { return Compare(*this, b) > 0; }
 
@@ -37,17 +39,12 @@ protected:
     static int Compare(const Version & a, const Version & b);
 };
 
-//!brief Get the current version of the application
+//!brief Get the current version of the application.
 const Version & getVersion();
-
-
-extern const QString VersionString;
 
 QString getBranchVersion();
 QString getPrereleaseSuffix();
 const QString & gitRevision();
 const QString & gitBranch();
-
-bool isReleaseVersion();
 
 #endif // VERSION_H

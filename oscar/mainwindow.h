@@ -1,4 +1,4 @@
-﻿/* OSCAR MainWindow Headers
+/* OSCAR MainWindow Headers
  *
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -113,7 +113,7 @@ class MainWindow : public QMainWindow
     void CloseProfile();
     bool OpenProfile(QString name, bool skippassword = false);
 
-    /*! \fn Notify(QString s,int ms=5000, QString title="OSCAR v"+VersionString());
+    /*! \fn Notify(QString s,int ms=5000, QString title="OSCAR v"+getVersion());
         \brief Pops up a message box near the system tray
         \param QString string
         \param title
