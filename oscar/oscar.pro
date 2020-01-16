@@ -327,6 +327,7 @@ HEADERS  += \
     updateparser.h \
     UpdaterWindow.h \
     version.h \
+    VERSION \
     Graphs/gFlagsLine.h \
     Graphs/gFooBar.h \
     Graphs/gGraph.h \

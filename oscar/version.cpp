@@ -7,13 +7,22 @@
  * for more details. */
 
 #include "version.h"
+#include "VERSION"
 #include "git_info.h"
 #include <QRegularExpression>
 
-#define VERSION "1.1.0-beta-1"
 
-// TODO: add preprocessor macros to build full version number including build metadata, accounting for tarball/non-git builds.
-static const Version s_Version(VERSION "+" + GIT_BRANCH + "-" + GIT_REVISION);
+// Initialize the Version instance with build metadata, if any.
+#ifdef GIT_REVISION
+  #ifdef GIT_BRANCH
+    #define BUILD_METADATA "+" GIT_BRANCH "-" GIT_REVISION
+  #else
+    #define BUILD_METADATA "+" GIT_REVISION
+  #endif
+#else
+  #define BUILD_METADATA ""
+#endif
+static const Version s_Version(VERSION BUILD_METADATA);
 
 // Technically this is the date and time that version.cpp was compiled, but since
 // it gets recompiled whenever git_info.h changes, it's about as close as we can
@@ -27,7 +36,7 @@ QString getPrereleaseSuffix()
     
     // Append branch if there is a branch specified
     if (GIT_BRANCH != "master") {
-        suffix += "-"+GIT_BRANCH;
+        suffix += "-" GIT_BRANCH;
     }
 
     // Append "-test" if not release or release candidate
