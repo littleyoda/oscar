@@ -33,8 +33,6 @@ public:
     const QString displayString() const;
     //!brief Returns the version string without any build metadata
     const QString minimalString() const;
-    //!brief Returns the build metadata
-    const QString & getBuildMetadata() const;
 
 protected:
     const QString mString;

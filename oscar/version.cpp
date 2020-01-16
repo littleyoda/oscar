@@ -8,27 +8,18 @@
 
 #include "version.h"
 #include "git_info.h"
-#include "SleepLib/common.h"
 #include <QRegularExpression>
 
 #define VERSION "1.1.0-beta-1"
 
-#ifdef Q_OS_MAC
-const QString PlatformString = "MacOSX";
-#elif defined(Q_OS_WIN32)
-const QString PlatformString = "Win32";
-#elif defined(Q_OS_WIN64)
-const QString PlatformString = "Win64";
-#elif defined(Q_OS_LINUX)
-const QString PlatformString = "Linux";
-#elif defined(Q_OS_HAIKU)
-const QString PlatformString = "Haiku";
-#endif
+// TODO: add preprocessor macros to build full version number including build metadata, accounting for tarball/non-git builds.
+static const Version s_Version(VERSION "+" + GIT_BRANCH + "-" + GIT_REVISION);
 
 // Technically this is the date and time that version.cpp was compiled, but since
 // it gets recompiled whenever git_info.h changes, it's about as close as we can
 // come without forcing recompiles every single build.
 static const QString s_BuildDateTime = __DATE__ " " __TIME__;
+
 
 QString getPrereleaseSuffix()
 {
@@ -54,40 +45,15 @@ const QString & getBuildDateTime()
     return s_BuildDateTime;
 }
 
-// TODO: add preprocessor macros to build full version number including build metadata, accounting for tarball/non-git builds.
-
-static const Version s_Version(VERSION "+" + GIT_BRANCH + "-" + GIT_REVISION);
 const Version & getVersion()
 {
     return s_Version;
 }
 
-Version::Version(const QString & version_string) : mString(version_string), mIsValid(false)
-{
-    ParseSemanticVersion();
-    FixLegacyVersions();
-}
-
-Version::operator const QString &() const
-{
-    return toString();
-}
-
-const QString & Version::toString() const
-{
-    return mString;
-}
-
-
 // Alternate formatting of the version string for display or logging
 const QString Version::minimalString() const
 {
     return toString().section("+", 0, 0);
-}
-
-const QString & Version::getBuildMetadata() const
-{
-    return mBuild;
 }
 
 const QString Version::displayString() const
@@ -110,7 +76,50 @@ const QString Version::PrereleaseType() const
     return type.toLower();
 }
 
-// Parse a version string as specified by Semantic Versioning 2.0.0, see https://semver.org/spec/v2.0.0.html
+// Deal with non-Semantic-Versioning numbers used before 1.1.0-beta-2 to make sure they
+// will have proper (lower) precedence compared to later versions.
+//
+// TODO: THIS CAN PROBABLY BE REMOVED AFTER THE RELEASE OF 1.1.0, since the release
+// version will take precedence over all 1.1.0 prereleases, as well as 1.0.1 of any
+// release status.
+//
+// Right now we just need to make sure that 1.1.0-beta versions take precedence over
+// 1.1.0-testing.
+void Version::FixLegacyVersions()
+{
+    if (mIsValid) {
+        // Replace prerelease "testing" with "alpha" for backwards compatibility with 1.1.0-testing-*
+        // versions: otherwise "testing" would take precedence over "beta".
+        mPrerelease.replace("testing", "alpha");
+
+        // Technically the use of "r1" in "1.0.1-r1" could also be corrected, as the code
+        // will incorrectly consider that release version to be a prerelease, but it doesn't
+        // matter because 1.1.0 and later will take precedence either way.
+    }
+}
+
+
+// ===================================================================================================
+// Version class for parsing and comparing version strings as specified by Semantic Versioning 2.0.0
+// See https://semver.org/spec/v2.0.0.html
+
+Version::Version(const QString & version_string) : mString(version_string), mIsValid(false)
+{
+    ParseSemanticVersion();
+    FixLegacyVersions();
+}
+
+Version::operator const QString &() const
+{
+    return toString();
+}
+
+const QString & Version::toString() const
+{
+    return mString;
+}
+
+// Parse a version string as specified by Semantic Versioning 2.0.0.
 void Version::ParseSemanticVersion()
 {
     // Use a C++11 raw string literal to keep the regular expression (mostly) legible.
@@ -134,28 +143,6 @@ void Version::ParseSemanticVersion()
     // If we ever encounter any really old version whose version isn't valid, its
     // major version will be 0, so it will correctly be considered older than
     // valid versions.
-}
-
-// Deal with non-Semantic-Versioning numbers used before 1.1.0-beta-2 to make sure they
-// will have proper (lower) precedence compared to later versions.
-//
-// TODO: THIS CAN PROBABLY BE REMOVED AFTER THE RELEASE OF 1.1.0, since the release
-// version will take precedence over all 1.1.0 prereleases, as well as 1.0.1 of any
-// release status.
-//
-// Right now we just need to make sure that 1.1.0-beta versions take precedence over
-// 1.1.0-testing.
-void Version::FixLegacyVersions()
-{
-    if (mIsValid) {
-        // Replace prerelease "testing" with "alpha" for backwards compatibility with 1.1.0-testing-*
-        // versions: otherwise "testing" would take precedence over "beta".
-        mPrerelease.replace("testing", "alpha");
-
-        // Technically the use of "r1" in "1.0.1-r1" could also be corrected, as the code
-        // will incorrectly consider that release version to be a prerelease, but it doesn't
-        // matter because 1.1.0 and later will take precedence either way.
-    }
 }
 
 // Compare two version instances in accordance with Semantic Versionin 2.0.0 precedence rules.
