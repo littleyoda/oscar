@@ -18,6 +18,7 @@ class Version
 public:
     Version(const QString & version_string);
     operator const QString &() const;
+    const QString PrereleaseType() const;
     bool IsReleaseVersion() const { return mPrerelease.isEmpty(); }
     bool IsValid() const { return mIsValid; }
     bool operator==(const Version & b) const { return Compare(*this, b) == 0; }

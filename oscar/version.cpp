@@ -9,19 +9,10 @@
 #include "version.h"
 #include "git_info.h"
 #include "SleepLib/common.h"
-
 #include <QRegularExpression>
 
-const int major_version = 1;   // incompatible API changes
-const int minor_version = 1;   // new features that don't break things
-const int revision_number = 0; // bugfixes, revisions
-const QString ReleaseStatus = "beta"; // testing/nightly/unstable, beta/untamed, rc/almost, r/stable
-#include "build_number.h"
-
 #define VERSION "1.1.0-beta-1"
-
-const QString VersionString = QString("%1.%2.%3-%4-%5").arg(major_version).arg(minor_version).arg(revision_number).arg(ReleaseStatus).arg(build_number);
-const QString ShortVersionString = QString("%1.%2.%3").arg(major_version).arg(minor_version).arg(revision_number);
+extern const QString VersionString = VERSION;
 
 #ifdef Q_OS_MAC
 const QString PlatformString = "MacOSX";
@@ -49,8 +40,7 @@ QString getBranchVersion()
 {
     QString version = STR_TR_AppVersion;
 
-    if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-       (ReleaseStatus.compare("release", Qt::CaseInsensitive)==0)))
+    if (getVersion().IsReleaseVersion() == false)
         version += " ("+GIT_REVISION + ")";
 
     if (GIT_BRANCH != "master") {
@@ -73,10 +63,11 @@ QString getPrereleaseSuffix()
         suffix += "-"+gitBranch();
     }
 
-    // Append "-test" if not release
-    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
-        suffix += "-test";
+    // Append "-test" if not release or release candidate
+    else if (getVersion().IsReleaseVersion() == false) {
+        if (getVersion().PrereleaseType().compare("rc") != 0) {
+            suffix += "-test";
+        }
     }
 
     return suffix;
@@ -85,7 +76,7 @@ QString getPrereleaseSuffix()
 
 bool isReleaseVersion()
 {
-    return (ReleaseStatus == "r");
+    return getVersion().IsReleaseVersion();
 }
 
 
@@ -104,6 +95,18 @@ Version::Version(const QString & version_string) : mString(version_string), mIsV
 Version::operator const QString &() const
 {
     return mString;
+}
+
+// This is application-specific interpretation of the prerelease data.
+const QString Version::PrereleaseType() const
+{
+    // Extract the first identifier
+    QString type = mPrerelease.section(".", 0);
+
+    // Remove any "-2", etc. that's included in the first identifier rather than as a dot-separated identifier
+    type = type.section("-", 0);
+
+    return type.toLower();
 }
 
 // Parse a version string as specified by Semantic Versioning 2.0.0, see https://semver.org/spec/v2.0.0.html
