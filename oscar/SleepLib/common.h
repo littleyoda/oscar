@@ -44,7 +44,7 @@ QString getGraphicsEngine();
 QString getOpenGLVersionString();
 float getOpenGLVersion();
 
-QStringList makeBuildInfo(QString relinfo, QString forcedEngine);
+QStringList makeBuildInfo(QString forcedEngine);
 QStringList getBuildInfo();
 QStringList addBuildInfo (QString value);
 

@@ -25,23 +25,18 @@ const QString PlatformString = "Linux";
 const QString PlatformString = "Haiku";
 #endif
 
-
-const QString & gitRevision()
-{
-    return GIT_REVISION;
-}
-const QString & gitBranch()
-{
-    return GIT_BRANCH;
-}
+// Technically this is the date and time that version.cpp was compiled, but since
+// it gets recompiled whenever git_info.h changes, it's about as close as we can
+// come without forcing recompiles every single build.
+static const QString s_BuildDateTime = __DATE__ " " __TIME__;
 
 QString getPrereleaseSuffix()
 {
     QString suffix;
     
     // Append branch if there is a branch specified
-    if (gitBranch() != "master") {
-        suffix += "-"+gitBranch();
+    if (GIT_BRANCH != "master") {
+        suffix += "-"+GIT_BRANCH;
     }
 
     // Append "-test" if not release or release candidate
@@ -52,6 +47,11 @@ QString getPrereleaseSuffix()
     }
 
     return suffix;
+}
+
+const QString & getBuildDateTime()
+{
+    return s_BuildDateTime;
 }
 
 // TODO: add preprocessor macros to build full version number including build metadata, accounting for tarball/non-git builds.

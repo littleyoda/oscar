@@ -340,14 +340,19 @@ int main(int argc, char *argv[]) {
     initializeLogger();
     QThread::msleep(50); // Logger takes a little bit to catch up
 
+    qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
+
 #ifdef QT_DEBUG
     QString relinfo = " debug";
 #else
     QString relinfo = "";
 #endif
     relinfo = "("+QSysInfo::kernelType()+" "+QSysInfo::currentCpuArchitecture()+relinfo+")";
-    qDebug() << "OSCAR starting" << QDateTime::currentDateTime();
-    qDebug().noquote() << STR_AppName << getVersion() << relinfo << "Built with Qt" << QT_VERSION_STR << __DATE__ << __TIME__;
+    relinfo = STR_AppName + " " + getVersion() + " " + relinfo;
+
+    qDebug().noquote() << relinfo;
+    qDebug().noquote() << "Built with Qt" << QT_VERSION_STR << "on" << getBuildDateTime();
+    addBuildInfo(relinfo);  // immediately add it to the build info that's accessible from the UI
 
     SetDateFormat();
 
@@ -365,7 +370,7 @@ int main(int argc, char *argv[]) {
 
 // Moved buildInfo calls to after translation is available as makeBuildInfo includes tr() calls
 
-    QStringList info = makeBuildInfo(relinfo, forcedEngine);
+    QStringList info = makeBuildInfo(forcedEngine);
     for (int i = 0; i < info.size(); ++i)
         qDebug().noquote() << info.at(i);
 
@@ -476,9 +481,8 @@ int main(int argc, char *argv[]) {
     }           // The folder doesn't exist
     else
         qDebug() << "AppData folder already exists, so ...";
-    qDebug() << "Using " + GetAppData() + " as OSCAR data folder";
+    qDebug().noquote() << "Using " + GetAppData() + " as OSCAR data folder";
 
-    addBuildInfo("");
     QString path = GetAppData();
     addBuildInfo(QObject::tr("Data directory:") + " <a href=\"file:///" + path + "\">" + path + "</a>");
 

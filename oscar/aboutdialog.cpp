@@ -30,16 +30,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->relnotesText->setHtml(getRelnotes());
     ui->versionLabel->setText("");
 
-//    QString gitrev = gitRevision();
-//
-//    if (!gitrev.isEmpty()) {
-//        gitrev = tr("Revision: %1").arg(QString("<a href='https://gitlab.com/sleepyhead/sleepyhead-code/commit/%1'>%1</a>").arg(gitrev))+"<br/>"
-//                +tr("Branch: %1").arg(QString("<a href='https://gitlab.com/sleepyhead/sleepyhead-code/commits/%1'>%1</a>").arg(gitBranch()))+"<br/>"
-//                +tr("Build Date: %1").arg(__DATE__)+"<br/>"
-//                +tr("Graphics Engine: %1").arg(getGraphicsEngine());
-//    }
-
     QString path = GetAppData();
+    // TODO: consider replacing gitrev below with a link or button to the System Information window
     QString text = /* gitrev + */ "<br/><br/><a href=\"file:///"+path+"\">"+tr("Show data folder")+"</a>";
     ui->infoLabel->setText(text);
 

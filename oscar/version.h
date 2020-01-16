@@ -51,8 +51,9 @@ protected:
 //!brief Get the current version of the application.
 const Version & getVersion();
 
+//!brief Get the date and time of the application was built.
+const QString & getBuildDateTime();
+
 QString getPrereleaseSuffix();
-const QString & gitRevision();
-const QString & gitBranch();
 
 #endif // VERSION_H

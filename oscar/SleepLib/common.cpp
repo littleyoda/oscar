@@ -185,16 +185,9 @@ QString getGraphicsEngine()
 
 QStringList buildInfo;
 
-QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
-    buildInfo << (STR_AppName + " " + getVersion() + " " + relinfo);
-    buildInfo << (QObject::tr("Built with Qt") + " " + QT_VERSION_STR + " on " + __DATE__ + " " + __TIME__);
-    QString branch = "";
-    if (gitBranch() != "master") {
-        branch = QObject::tr("Branch:") + " " + gitBranch() + ", ";
-    }
-    buildInfo << branch + (QObject::tr("Revision")) + " " + gitRevision();
-    if (getAppName() != STR_AppName)        // Report any non-standard app key
-        buildInfo << (QObject::tr("App key:") + " " + getAppName());
+QStringList makeBuildInfo (QString forcedEngine){
+    // application name and version has already been added
+    buildInfo << (QObject::tr("Built with Qt %1 on %2").arg(QT_VERSION_STR).arg(getBuildDateTime()));
     buildInfo << QString("");
     buildInfo << (QObject::tr("Operating system:") + " " + QSysInfo::prettyProductName());
     buildInfo << (QObject::tr("Graphics Engine:") + " " + getOpenGLVersionString());
@@ -202,6 +195,11 @@ QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
     if (forcedEngine != "")
         buildInfo << forcedEngine;
 
+    buildInfo << QString("");
+    if (getAppName() != STR_AppName)        // Report any non-standard app key
+        buildInfo << (QObject::tr("App key:") + " " + getAppName());
+    // Data directory will always be added, later.
+    
     return buildInfo;
 }
 
