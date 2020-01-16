@@ -28,7 +28,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->creditsText->setHtml(getCredits());
     ui->licenseText->setHtml(getLicense());
     ui->relnotesText->setHtml(getRelnotes());
-    ui->versionLabel->setText(getVersion());
+    ui->versionLabel->setText("");
 
 //    QString gitrev = gitRevision();
 //
@@ -44,7 +44,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->infoLabel->setText(text);
 
 
-    setWindowTitle(tr("About OSCAR"));
+    setWindowTitle(tr("About OSCAR %1").arg(getVersion().displayString()));
     setMinimumSize(QSize(400,400));
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     connect(ui->closeButton, SIGNAL(clicked(bool)), this, SLOT(accept()));
@@ -123,7 +123,7 @@ QString AboutDialog::getRelnotes()
     QString text = "<html>"
     "<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head>"
     "<body><span style=\" font-size:20pt;\">"+tr("Release Notes")+"</span><br/>"
-    "<span style=\" font-size:14pt;\">"+tr("OSCAR v%1").arg(getVersion())+"</span>"
+    "<span style=\" font-size:14pt;\">"+tr("OSCAR %1").arg(getVersion())+"</span>"
     "<hr/>";
     if (getVersion().IsReleaseVersion() == false) {
         text += "<p><font color='red' size=+1><b>"+tr("Important:")+"</b></font> "

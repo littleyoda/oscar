@@ -113,7 +113,7 @@ class MainWindow : public QMainWindow
     void CloseProfile();
     bool OpenProfile(QString name, bool skippassword = false);
 
-    /*! \fn Notify(QString s,int ms=5000, QString title="OSCAR v"+getVersion());
+    /*! \fn Notify(QString s, QString title="OSCAR (version)", int ms=5000);
         \brief Pops up a message box near the system tray
         \param QString string
         \param title
@@ -348,6 +348,7 @@ class MainWindow : public QMainWindow
 
 
 private:
+    QString getMainWindowTitle();
     void importCPAPBackups();
     void finishCPAPImport();
     QList<ImportPath> detectCPAPCards();

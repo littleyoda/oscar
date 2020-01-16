@@ -246,7 +246,7 @@ bool migrateFromSH(QString destDir) {
 int main(int argc, char* argv[])
 {
     initializeStrings();
-    qDebug() << STR_TR_OSCAR + " " + getBranchVersion();
+    qDebug() << STR_TR_OSCAR + " " + getVersion();
 
     AutoTest::run(argc, argv);
 }
@@ -554,8 +554,10 @@ int main(int argc, char *argv[]) {
 //      check_updates = false;
     } else if (currentVersion < settingsVersion) {
         if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                                 QObject::tr("The version of OSCAR you just ran is OLDER than the one used to create this data (%1).").
-                                 arg(AppSetting->versionString()) +"\n\n"+
+                                 QObject::tr("The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).")
+                                    .arg(currentVersion.displayString())
+                                    .arg(settingsVersion.displayString())
+                                 +"\n\n"+
                                  QObject::tr("It is likely that doing this will cause data corruption, are you sure you want to do this?"),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
 

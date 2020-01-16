@@ -51,7 +51,6 @@ protected:
 //!brief Get the current version of the application.
 const Version & getVersion();
 
-QString getBranchVersion();
 QString getPrereleaseSuffix();
 const QString & gitRevision();
 const QString & gitBranch();

@@ -93,7 +93,7 @@ NewProfile::NewProfile(QWidget *parent, const QString *user) :
 
         f.close();
     }
-    ui->versionLabel->setText(getVersion());
+    ui->versionLabel->setText("");
 
     ui->textBrowser->setHtml(getIntroHTML());
 }

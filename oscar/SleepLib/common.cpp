@@ -556,7 +556,7 @@ QString STR_TR_PrRelief; // Pressure Relief
 
 QString STR_TR_Bookmarks;
 QString STR_TR_OSCAR;
-QString STR_TR_AppVersion;
+//QString STR_TR_AppVersion;
 
 QString STR_TR_Default;
 
@@ -761,7 +761,7 @@ void initializeStrings()
 
     STR_TR_Bookmarks = QObject::tr("Bookmarks");
     STR_TR_OSCAR = QObject::tr("OSCAR");
-    STR_TR_AppVersion = QObject::tr("v%1").arg(getVersion());
+    //STR_TR_AppVersion = QObject::tr("v%1").arg(getVersion());
 
     STR_TR_Mode = QObject::tr("Mode");
     STR_TR_Model = QObject::tr("Model");

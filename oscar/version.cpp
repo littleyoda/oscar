@@ -35,24 +35,6 @@ const QString & gitBranch()
     return GIT_BRANCH;
 }
 
-QString getBranchVersion()
-{
-    QString version = STR_TR_AppVersion;
-
-    if (getVersion().IsReleaseVersion() == false)
-        version += " ("+GIT_REVISION + ")";
-
-    if (GIT_BRANCH != "master") {
-        version += " [Branch: " + GIT_BRANCH + "]";
-    }
-
-#ifdef BROKEN_OPENGL_BUILD
-    version += " ["+CSTR_GFX_BrokenGL+"]";
-#endif
-    return version;
-}
-
-
 QString getPrereleaseSuffix()
 {
     QString suffix;
@@ -100,7 +82,7 @@ const QString & Version::toString() const
 // Alternate formatting of the version string for display or logging
 const QString Version::minimalString() const
 {
-    return toString().section("+", 0);
+    return toString().section("+", 0, 0);
 }
 
 const QString & Version::getBuildMetadata() const
@@ -120,10 +102,10 @@ const QString Version::displayString() const
 const QString Version::PrereleaseType() const
 {
     // Extract the first identifier
-    QString type = mPrerelease.section(".", 0);
+    QString type = mPrerelease.section(".", 0, 0);
 
     // Remove any "-2", etc. that's included in the first identifier rather than as a dot-separated identifier
-    type = type.section("-", 0);
+    type = type.section("-", 0, 0);
 
     return type.toLower();
 }
