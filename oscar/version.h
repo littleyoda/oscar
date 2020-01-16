@@ -10,15 +10,13 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#include <QVariant>
+#include <QString>
 
 class Version
 {
     friend class VersionTests;
 public:
     Version(const QString & version_string);
-    operator const QString &() const;
-    const QString & toString() const;
     const QString PrereleaseType() const;
     bool IsReleaseVersion() const { return mPrerelease.isEmpty(); }
     bool IsValid() const { return mIsValid; }
@@ -26,6 +24,17 @@ public:
     bool operator!=(const Version & b) const { return Compare(*this, b) != 0; }
     bool operator<(const Version & b) const { return Compare(*this, b) < 0; }
     bool operator>(const Version & b) const { return Compare(*this, b) > 0; }
+
+    //!brief Returns the full version string, including all metadata, used in reports
+    operator const QString &() const;
+    //!brief Returns the full version string, including all metadata, used in reports
+    const QString & toString() const;
+    //!brief Returns the version string to display in the UI, without build metadata if a release version
+    const QString displayString() const;
+    //!brief Returns the version string without any build metadata
+    const QString minimalString() const;
+    //!brief Returns the build metadata
+    const QString & getBuildMetadata() const;
 
 protected:
     const QString mString;

@@ -12,7 +12,6 @@
 #include <QRegularExpression>
 
 #define VERSION "1.1.0-beta-1"
-extern const QString VersionString = VERSION;
 
 #ifdef Q_OS_MAC
 const QString PlatformString = "MacOSX";
@@ -73,8 +72,9 @@ QString getPrereleaseSuffix()
     return suffix;
 }
 
+// TODO: add preprocessor macros to build full version number including build metadata, accounting for tarball/non-git builds.
 
-static const Version s_Version(VERSION);
+static const Version s_Version(VERSION "+" + GIT_BRANCH + "-" + GIT_REVISION);
 const Version & getVersion()
 {
     return s_Version;
@@ -94,6 +94,26 @@ Version::operator const QString &() const
 const QString & Version::toString() const
 {
     return mString;
+}
+
+
+// Alternate formatting of the version string for display or logging
+const QString Version::minimalString() const
+{
+    return toString().section("+", 0);
+}
+
+const QString & Version::getBuildMetadata() const
+{
+    return mBuild;
+}
+
+const QString Version::displayString() const
+{
+    if (IsReleaseVersion())
+        return minimalString();
+    else
+        return toString();
 }
 
 // This is application-specific interpretation of the prerelease data.

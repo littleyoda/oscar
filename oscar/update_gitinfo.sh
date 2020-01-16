@@ -7,7 +7,7 @@ GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 GIT_REVISION=`git rev-parse --short HEAD`
 $(git diff-index --quiet HEAD --)
 if [ $? -ne 0 ]; then
-    GIT_REVISION="$GIT_REVISION+"  # uncommitted changes
+    GIT_REVISION="${GIT_REVISION}-plus"  # uncommitted changes
 fi
 
 [ -z "$GIT_BRANCH" ] &&	GIT_BRANCH="Unknown";
