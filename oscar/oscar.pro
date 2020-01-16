@@ -373,7 +373,6 @@ HEADERS  += \
     SleepLib/journal.h \
     SleepLib/progressdialog.h \
     SleepLib/loader_plugins/cms50f37_loader.h \
-    build_number.h \
     profileselector.h \
     SleepLib/appsettings.h \
     SleepLib/loader_plugins/edfparser.h \
