@@ -5,13 +5,6 @@
 
 #include "buildinfo.iss"
 
-#define MyAppVersion MyMajorVersion+"."+MyMinorVersion+"."+MyRevision+"-"+MyReleaseStatus
-#if MyReleaseStatus == "r"
-  #define MyAppVersion MyAppVersion+MyBuildNumber
-#else
-  #define MyAppVersion MyAppVersion+"-"+MyBuildNumber
-#endif
-
 #define MyAppPublisher "The OSCAR Team"
 #define MyAppExeName "OSCAR.exe"
 #define MyAppName "OSCAR"
@@ -52,7 +45,7 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}-{#MyPlatform}-{#MyGitRevision}{#MySuffix}
 AppVerName={#MyAppName} {#MyAppVersion}-{#MyPlatform}-{#MyGitRevision}{#MySuffix}
 AppPublisher={#MyAppPublisher}
-AppCopyright=Copyright 2019 {#MyAppPublisher}
+AppCopyright=Copyright 2019-2020 {#MyAppPublisher}
 ; **** AppCopyright=Copyright {GetDateTimeString('yyyy', #0, #0)} {%MyAppPublisher}
 DefaultDirName={pf}\{#MyDirName}
 DefaultGroupName={#MyGroupName}
