@@ -33,17 +33,32 @@ static const QString s_BuildDateTime = __DATE__ " " __TIME__;
 QString getPrereleaseSuffix()
 {
     QString suffix;
-    
-    // Append branch if there is a branch specified
-    if (GIT_BRANCH != "master") {
-        suffix += "-" GIT_BRANCH;
-    }
 
-    // Append "-test" if not release or release candidate
-    else if (getVersion().IsReleaseVersion() == false) {
-        if (getVersion().PrereleaseType().compare("rc") != 0) {
-            suffix += "-test";
-        }
+    if (getVersion().IsReleaseVersion() || getVersion().PrereleaseType().compare("rc") == 0) {
+        // No suffix for release or rc versions.
+        suffix = "";
+    } else {
+#ifdef GIT_TAG
+        // If this commit has a tag, then it's a full testing (alpha/beta/etc.) release.
+        // Put preferences/data in "-test".
+        suffix = "-test";
+#else
+        // Otherwise it's a development build, which will be identified by its branch in most cases.
+  #ifdef GIT_BRANCH
+        suffix = "-" GIT_BRANCH;
+  #elif GIT_REVISION
+        // If we've checked out an older version, we're in a headless state and not on any branch.
+        // If the older version was a previous testing release, it should be tagged, in which case
+        // it's treated as a testing release above.
+        //
+        // Otherwise this is probably being used for regression testing an older build.
+        suffix = "-" GIT_REVISION;
+  #else
+        // In theory someone might try to build a prerelease from a tarball, so we don't have any
+        // revision information. Just put it in an "-unreleased" sandbox.
+        suffix = "-unreleased";
+  #endif
+#endif
     }
 
     return suffix;
