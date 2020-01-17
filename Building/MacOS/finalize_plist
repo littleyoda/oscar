@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SRC=$1
+PLIST=$2
+
+if [[ ! -d ${SRC} ]]; then
+    echo "${SRC} is not a directory!"
+    exit 128
+fi
+if [[ ! -f ${PLIST} ]]; then
+    echo "${PLIST} does not exist!"
+    exit 128
+fi
+
+GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
+if [[ ${GIT_REVISION} != "" ]]; then
+    /usr/libexec/PlistBuddy -c "Add GitRevision string ${GIT_REVISION}" ${PLIST} 2>/dev/null
+    if [[ $? == 1 ]]; then
+        /usr/libexec/PlistBuddy -c "Set GitRevision ${GIT_REVISION}" ${PLIST}
+    fi
+fi
+
+# This is where we would set CFBundleVersion if needed in the future.
+

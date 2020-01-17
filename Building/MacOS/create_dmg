@@ -22,15 +22,23 @@ if [[ ${APP} != "" ]]; then
         exit 1
     fi
 
-    # Create deployable application bundle (if it hasn't been already been done)
+    # Create a deployable application bundle (if it hasn't been already been done).
     if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
         echo "${QT_BIN}"/macdeployqt "${APP}"
         "${QT_BIN}"/macdeployqt "${APP}" || exit
     fi
 
-    # TODO: add version number to target .dmg filename
-    # 1. Set the version in the Info.plist during build.
-    # 2. Get the version from ${APP}/Contents/Info.plist
+    # Get the version from the application bundle.
+    VERSION=`/usr/libexec/PlistBuddy -c "Print CFBundleGetInfoString" ${APP}/Contents/Info.plist`
+    echo ${APP} is version ${VERSION}
+
+    # If it's a prerelease version, include the git revision.
+    if [[ ${VERSION} == *-* ]]; then
+        GIT_REVISION=`/usr/libexec/PlistBuddy -c "Print GitRevision" ${APP}/Contents/Info.plist 2>/dev/null`
+        if [[ ${GIT_REVISION} != "" ]]; then
+            VERSION=${VERSION}-${GIT_REVISION}
+        fi
+    fi
 fi
 
 mkdir "${STAGING_DIR}" || exit
@@ -42,6 +50,6 @@ do
 done
 
 echo "Creating .dmg"
-hdiutil create -srcfolder "${STAGING_DIR}" -volname "${TARGET}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}.dmg" -ov
+hdiutil create -srcfolder "${STAGING_DIR}" -volname "${TARGET}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}-${VERSION}.dmg" -ov
 
 rm -rf "${STAGING_DIR}"

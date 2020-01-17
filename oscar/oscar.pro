@@ -93,7 +93,8 @@ QMAKE_TARGET_PRODUCT = OSCAR
 QMAKE_TARGET_COMPANY = The OSCAR Team
 QMAKE_TARGET_COPYRIGHT = © 2019 The OSCAR Team
 QMAKE_TARGET_DESCRIPTION = "OpenSource CPAP Analysis Reporter"
-VERSION = 0.0.0.0
+_VERSION_FILE = $$cat(./VERSION)
+VERSION = $$section(_VERSION_FILE, '"', 1, 1)
 RC_ICONS = ./icons/logo.ico
 
 macx  {
@@ -513,11 +514,20 @@ test {
 }
 
 macx {
-    # On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave
-    QMAKE_INFO_PLIST = "../Building/MacOS/Info.plist.in"
+    app_bundle {
+        # On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave.
+        QMAKE_INFO_PLIST = "../Building/MacOS/Info.plist.in"
+
+        # Add the git revision to the Info.plist.
+        Info_plist.target = Info.plist
+        Info_plist.depends = $${TARGET}.app/Contents/Info.plist
+        Info_plist.commands = $$_PRO_FILE_PWD_/../Building/MacOS/finalize_plist $$_PRO_FILE_PWD_ $${TARGET}.app/Contents/Info.plist
+        QMAKE_EXTRA_TARGETS += Info_plist
+        PRE_TARGETDEPS += $$Info_plist.target
+    }
 
     # Add a dist-mac target to build the distribution .dmg.
     QMAKE_EXTRA_TARGETS += dist-mac
-    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/../Building/MacOS/create_dmg OSCAR OSCAR.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd
+    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/../Building/MacOS/create_dmg $${TARGET} $${TARGET}.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd
     dist-mac.depends = $${TARGET}.app/Contents/MacOS/$${TARGET}
 }
