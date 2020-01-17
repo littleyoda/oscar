@@ -22,12 +22,6 @@ if [[ ${APP} != "" ]]; then
         exit 1
     fi
 
-    # Create a deployable application bundle (if it hasn't been already been done).
-    if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
-        echo "${QT_BIN}"/macdeployqt "${APP}"
-        "${QT_BIN}"/macdeployqt "${APP}" || exit
-    fi
-
     # Get the version from the application bundle.
     VERSION=`/usr/libexec/PlistBuddy -c "Print CFBundleGetInfoString" ${APP}/Contents/Info.plist`
     echo ${APP} is version ${VERSION}
@@ -38,7 +32,16 @@ if [[ ${APP} != "" ]]; then
         if [[ ${GIT_REVISION} != "" ]]; then
             VERSION=${VERSION}-${GIT_REVISION}
         fi
+
+        # TODO: possibly add -no-strip to macdeployqt for prerelease versions
     fi
+
+    # Create a deployable application bundle (if it hasn't been already been done).
+    # Edit: do it every time so that the application gets stripped, just suppress the spurious warnings.
+    #if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
+        echo "${QT_BIN}"/macdeployqt "${APP}"
+        "${QT_BIN}"/macdeployqt "${APP}" 2>/dev/null || exit
+    #fi
 fi
 
 mkdir "${STAGING_DIR}" || exit
