@@ -46,17 +46,19 @@ QString getPrereleaseSuffix()
         // Otherwise it's a development build, which will be identified by its branch in most cases.
   #ifdef GIT_BRANCH
         suffix = "-" GIT_BRANCH;
-  #elif GIT_REVISION
+  #else
+    #ifdef GIT_REVISION
         // If we've checked out an older version, we're in a headless state and not on any branch.
         // If the older version was a previous testing release, it should be tagged, in which case
         // it's treated as a testing release above.
         //
         // Otherwise this is probably being used for regression testing an older build.
         suffix = "-" GIT_REVISION;
-  #else
+    #else
         // In theory someone might try to build a prerelease from a tarball, so we don't have any
         // revision information. Just put it in an "-unreleased" sandbox.
         suffix = "-unreleased";
+    #endif
   #endif
 #endif
     }
