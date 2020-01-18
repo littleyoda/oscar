@@ -130,6 +130,12 @@ void MainWindow::SetupGUI()
 #ifdef Q_OS_MAC
     ui->action_About->setMenuRole(QAction::ApplicationSpecificRole);
     ui->action_Preferences->setMenuRole(QAction::ApplicationSpecificRole);
+
+    // For some reason, setShortcuts won't change the text of the menu item unless Qt has had a chance
+    // to do something first. Without the processEvents() call it still installs the shortcut, but
+    // not visible. (Any preceding UI such as QMessageBox seems to have the same effect.)
+    QApplication::processEvents();
+
     ui->action_Preferences->setShortcuts(QKeySequence::Preferences);
 #endif
 
