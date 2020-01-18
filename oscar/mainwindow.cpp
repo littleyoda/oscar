@@ -69,10 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->logText->setPlainText("00000: Startup: OSCAR Logger initialized");
 
     if (logger) {
         connect(logger, SIGNAL(outputLog(QString)), this, SLOT(logMessage(QString)));
+        logger->connectionReady();
     }
 
     // Bring window to top (useful when language is changed)
