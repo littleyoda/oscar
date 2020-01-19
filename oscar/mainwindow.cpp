@@ -69,10 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->logText->setPlainText("00000: Startup: OSCAR Logger initialized");
 
     if (logger) {
         connect(logger, SIGNAL(outputLog(QString)), this, SLOT(logMessage(QString)));
+        logger->connectionReady();
     }
 
     // Bring window to top (useful when language is changed)
@@ -128,9 +128,8 @@ void MainWindow::SetupGUI()
     setWindowTitle(getMainWindowTitle());
 
 #ifdef Q_OS_MAC
-    ui->action_About->setMenuRole(QAction::ApplicationSpecificRole);
-    ui->action_Preferences->setMenuRole(QAction::ApplicationSpecificRole);
-    ui->action_Preferences->setShortcuts(QKeySequence::Preferences);
+    ui->action_About->setMenuRole(QAction::AboutRole);
+    ui->action_Preferences->setMenuRole(QAction::PreferencesRole);
 #endif
 
     ui->actionLine_Cursor->setChecked(AppSetting->lineCursorMode());
