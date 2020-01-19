@@ -891,10 +891,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     QDateTime datetime;
 
-    /* Unused until we get an actual timestamp below.
-    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
-    */
+    QSet<SessionID> skipped;
 
     // for each p0/p1/p2/etc... folder
     for (int p=0; p < size; ++p) {
@@ -937,15 +936,6 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 continue;
             }
 
-            /* This never worked: the filename isn't a timestamp.
-            if (ignoreOldSessions) {
-                datetime = QDateTime::fromTime_t(sid);
-                if (datetime < ignoreBefore) {
-                    continue;
-                }
-            }
-            */
-
             // TODO: BUG: This isn't right, since files can have multiple session
             // chunks, which might not correspond to the filename. But before we can
             // fix this we need to come up with a reasonably fast way to filter previously
@@ -957,6 +947,16 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
             }
 
             if ((ext == 5) || (ext == 6)) {
+                if (skipped.contains(sid)) {
+                    // We don't know the timestamp until the file is parsed, which we only do for
+                    // waveform data at import (after scanning) since it's so large. If we relied
+                    // solely on the chunks' timestamps at that point, we'd get half of an otherwise
+                    // skipped session (the half after midnight).
+                    //
+                    // So we skip the entire file here based on the session's other data.
+                    continue;
+                }
+
                 // Waveform files aren't grouped... so we just want to add the filename for later
                 QHash<SessionID, PRS1Import *>::iterator it = sesstasks.find(sid);
                 if (it != sesstasks.end()) {
@@ -1013,7 +1013,14 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     delete chunk;
                     continue;
                 }
-
+                if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
+                    qDebug().noquote() << relativePath(path) << "skipping session" << chunk_sid << ":"
+                        << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
+                        << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
+                    skipped += chunk_sid;
+                    delete chunk;
+                    continue;
+                }
 
                 task = nullptr;
                 QHash<SessionID, PRS1Import *>::iterator it = sesstasks.find(chunk_sid);
@@ -7670,7 +7677,26 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         lastchunk = chunk;
     }
     
-    return coalesced;
+    // In theory there could be broken sessions that have waveform data but no summary or events.
+    // Those waveforms won't be skipped by the scanner, so we have to check for them here.
+    //
+    // This won't be perfect, since any coalesced chunks starting after midnight of the threshhold
+    // date will also be imported, but those should be relatively few, and tolerable imprecision.
+    QList<PRS1DataChunk *> coalescedAndFiltered;
+    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
+    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+
+    for (auto & chunk : coalesced) {
+        if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
+            qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
+                << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
+                << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
+            continue;
+        }
+        coalescedAndFiltered.append(chunk);
+    }
+
+    return coalescedAndFiltered;
 }
 
 
