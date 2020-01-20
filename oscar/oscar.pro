@@ -96,7 +96,7 @@ QMAKE_TARGET_DESCRIPTION = "OpenSource CPAP Analysis Reporter"
 _VERSION_FILE = $$cat(./VERSION)
 VERSION = $$section(_VERSION_FILE, '"', 1, 1)
 win32 {
-    VERSION=1.1.0.0
+    VERSION = $$section(VERSION, '-', 0, 0)
 }
 RC_ICONS = ./icons/logo.ico
 

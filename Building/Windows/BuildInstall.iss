@@ -63,7 +63,7 @@ VersionInfoProductName={#MyAppName}
 UninstallDisplayName={#MyGroupName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
-VersionInfoVersion={#MyMajorVersion}.{#MyMinorVersion}.{#MyRevision}.{#MyBuildNumber}
+VersionInfoVersion={#MyVersionNumbers}
 VersionInfoProductTextVersion={#MyAppVersion}
 
 [Languages]

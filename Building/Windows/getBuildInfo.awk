@@ -15,14 +15,17 @@
     version = $3
     print "#define MyAppVersion", version
 
-    split(version, v, "[\.\-]")
+    split(version, v, "[.-]")
     status = v[4] ? v[4] : "r"
     print "#define MyReleaseStatus \"" status "\""
     
-    split("alpha beta rc r", parts, " ")
+    split("alpha beta gamma rc r", parts, " ")
     for (i=1; i <= length(parts); i++) dict[parts[i]]=i
     build = dict[status]
-    print "#define MyBuildNumber \"" (build * 32) "\""
+    print "#define MyBuildNumber \"" (build * 100) "\""
+
+    # v[1] already includes a leading quote mark
+    print "#define MyVersionNumbers " v[1] "." v[2] "." v[3] "." (build * 100) "\""
 }
 
 /32.*bit/ { print "#define MyPlatform \"Win32\"" }
