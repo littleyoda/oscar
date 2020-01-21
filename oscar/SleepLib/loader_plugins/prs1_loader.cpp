@@ -895,7 +895,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
 #else
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
-#end
+#endif
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
     QSet<SessionID> skipped;
 
@@ -1026,7 +1026,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     qDebug().noquote() << relativePath(path) << "skipping session" << chunk_sid << ":"
                         << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
                         << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
-#end
+#endif
                     skipped += chunk_sid;
                     delete chunk;
                     continue;
@@ -7697,7 +7697,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
 #else
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
-#end
+#endif
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
     for (auto & chunk : coalesced) {
@@ -7710,7 +7710,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
             qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
                 << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
                 << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
-#end
+#endif
             continue;
         }
         coalescedAndFiltered.append(chunk);
