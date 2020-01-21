@@ -59,6 +59,7 @@
 
 #include "reports.h"
 #include "statistics.h"
+#include "zip.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
 #include <QOpenGLFunctions>
@@ -2591,6 +2592,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
     QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to archive this card?"));
 
     for (auto & datacard : datacards) {
+        QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
         
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
@@ -2614,7 +2616,6 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             }
             
             // Try again if the selected filename is within the SD card itself.
-            QString cardPath = QDir(datacard.path).canonicalPath();
             QString selectedPath = QFileInfo(filename).dir().canonicalPath();
             if (selectedPath.startsWith(cardPath)) {
                 if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
@@ -2631,9 +2632,23 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             filename += ".zip";
         }
         
-        qDebug() << "Create zip of SD card:" << filename;
+        qDebug() << "Create zip of SD card:" << cardPath;
 
-        // TODO: implement creation of .zip
+        ZipFile z;
+        bool ok = z.Open(filename);
+        if (ok) {
+            // TODO: need to add progress bar!
+            ok = z.Add(cardPath);
+            z.Close();
+        }
+        if (!ok) {
+            qWarning() << "Unable to create" << filename;
+            QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                QObject::tr("Unable to create archive!"),
+                QMessageBox::Ok);
+        } else {
+            qDebug() << "Created" << filename;
+        }
     }
 }
 
