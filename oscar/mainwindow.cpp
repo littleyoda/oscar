@@ -907,11 +907,22 @@ void MainWindow::on_action_Import_Data_triggered()
     ui->tabWidget->setCurrentWidget(welcome);
     QApplication::processEvents();
 
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to import from this location?"));
+    if (datacards.size() > 0) {
+        importCPAPDataCards(datacards);
+    }
+
+    in_import=false;
+}
+
+
+QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & /*prompt*/)
+{
     QList<ImportPath> datacards = detectCPAPCards();
 
     if (importScanCancelled) {
-        in_import = false;
-        return;
+        datacards.clear();
+        return datacards;
     }
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
@@ -948,8 +959,8 @@ void MainWindow::on_action_Import_Data_triggered()
 
             if (res == QMessageBox::Cancel) {
                 // Give the communal progress bar back
-                in_import=false;
-                return;
+                datacards.clear();
+                return datacards;
             } else if (res == QMessageBox::No) {
                 //waitmsg->setText(tr("Please wait, launching file dialog..."));
                 datacards.clear();
@@ -972,6 +983,7 @@ void MainWindow::on_action_Import_Data_triggered()
         if (p_profile->contains(STR_PREF_LastCPAPPath)) {
             folder = (*p_profile)[STR_PREF_LastCPAPPath].toString();
         } else {
+            // TODO: Is a writable path really the best place to direct the user to find their SD card data?
             folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         }
 
@@ -1006,9 +1018,8 @@ void MainWindow::on_action_Import_Data_triggered()
 //#endif
 
         if (w.exec() != QDialog::Accepted) {
-            in_import=false;
-
-            return;
+            datacards.clear();
+            return datacards;
         }
 
 
@@ -1021,7 +1032,13 @@ void MainWindow::on_action_Import_Data_triggered()
             }
         }
     }
+    
+    return datacards;
+}
 
+
+void MainWindow::importCPAPDataCards(const QList<ImportPath> & datacards)
+{
     bool newdata = false;
 
 //    QStringList goodlocations;
@@ -1074,9 +1091,8 @@ void MainWindow::on_action_Import_Data_triggered()
 
     prog->close();
     prog->deleteLater();
-    in_import=false;
-
 }
+
 
 QMenu *MainWindow::CreateMenu(QString title)
 {

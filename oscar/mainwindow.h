@@ -356,6 +356,8 @@ private:
     void importCPAPBackups();
     void finishCPAPImport();
     QList<ImportPath> detectCPAPCards();
+    QList<ImportPath> selectCPAPDataCards(const QString & prompt);
+    void importCPAPDataCards(const QList<ImportPath> & datacards);
 
 //    QString getWelcomeHTML();
     void FreeSessions();
