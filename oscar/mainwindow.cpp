@@ -916,7 +916,7 @@ void MainWindow::on_action_Import_Data_triggered()
 }
 
 
-QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & /*prompt*/)
+QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt)
 {
     QList<ImportPath> datacards = detectCPAPCards();
 
@@ -933,6 +933,8 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & /*prompt*/)
 
     bool asknew = false;
 
+    // TODO: This should either iterate over all detected cards and prompt for each, or it should only
+    // provide the one confirmed card in the list.
     if (datacards.size() > 0) {
         MachineInfo info = datacards[0].loader->PeekInfo(datacards[0].path);
         QString infostr;
@@ -946,7 +948,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & /*prompt*/)
         if (!p_profile->cpap->autoImport()) {
             QMessageBox mbox(QMessageBox::NoIcon,
                 tr("CPAP Data Located"), infostr+"\n\n"+QDir::toNativeSeparators(datacards[0].path)+"\n\n"+
-                tr("Would you like to import from this location?"),
+                prompt,
                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
             mbox.setDefaultButton(QMessageBox::Yes);
             mbox.setButtonText(QMessageBox::No, tr("Specify"));
@@ -972,9 +974,14 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & /*prompt*/)
         asknew = true;
     }
 
+    // TODO: Get rid of the reminder and instead validate the user's selection (using the loader detection
+    // below) and loop until the user either cancels or selects a valid folder.
+    //
+    // It doesn't look like there's any way to implement such a programmatic filter within the file
+    // selection dialog without resorting to a non-native dialog.
     if (asknew) {
        // popup.show();
-        mainwin->Notify(tr("Please remember to point the importer at the root folder or drive letter of your data-card, and not a subfolder."),
+        mainwin->Notify(tr("Please remember to select the root folder or drive letter of your data card, and not a folder inside it."),
                         tr("Import Reminder"),8000);
 
         QFileDialog w(this);
@@ -2581,10 +2588,53 @@ void MainWindow::on_mainsplitter_splitterMoved(int, int)
 
 void MainWindow::on_actionCreate_Card_zip_triggered()
 {
-    // TODO: use similar workflow to SD card import to select the card(s) to archive.
-    // TODO: select where to write the zip file, disallow the SD card itself
-    // TODO: implement creation of .zip
-    qDebug() << "Create zip of SD card";
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to archive this card?"));
+
+    for (auto & datacard : datacards) {
+        QString filename;
+        
+        // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
+        while (true) {
+            // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
+            QString folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+            
+            MachineInfo info = datacard.loader->PeekInfo(datacard.path);
+            QString infostr;
+            if (!info.modelnumber.isEmpty()) {
+                infostr = datacard.loader->loaderName() + "-" + info.modelnumber + "-" +info.serial;
+            } else {
+                infostr = datacard.loader->loaderName();
+            }
+            folder += QDir::separator() + infostr + ".zip";
+
+            filename = QFileDialog::getSaveFileName(this, tr("Choose where to save archive"), folder, tr("ZIP files (*.zip)"));
+
+            if (filename.isEmpty()) {
+                return;  // aborted
+            }
+            
+            // Try again if the selected filename is within the SD card itself.
+            QString cardPath = QDir(datacard.path).canonicalPath();
+            QString selectedPath = QFileInfo(filename).dir().canonicalPath();
+            if (selectedPath.startsWith(cardPath)) {
+                if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                        QObject::tr("Please select a location for your archive other than the data card itself!"),
+                        QMessageBox::Ok)) {
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        if (!filename.toLower().endsWith(".zip")) {
+            filename += ".zip";
+        }
+        
+        qDebug() << "Create zip of SD card:" << filename;
+
+        // TODO: implement creation of .zip
+    }
 }
 
 void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
