@@ -246,6 +246,8 @@ void MainWindow::SetupGUI()
 
     ui->actionChange_Data_Folder->setVisible(false);
     ui->action_Frequently_Asked_Questions->setVisible(false);
+    ui->actionReport_a_Bug->setVisible(false);  // remove this once we actually implement it
+    ui->actionExport_Review->setVisible(false);  // remove this once we actually implement it
 
 #ifndef helpless
     help = new Help(this);
@@ -2559,6 +2561,39 @@ void MainWindow::on_actionExport_Review_triggered()
 void MainWindow::on_mainsplitter_splitterMoved(int, int)
 {
     AppSetting->setRightPanelWidth(ui->mainsplitter->sizes()[1]);
+}
+
+void MainWindow::on_actionCreate_Card_zip_triggered()
+{
+    // TODO: use similar workflow to SD card import to select the card(s) to archive.
+    // TODO: select where to write the zip file, disallow the SD card itself
+    // TODO: implement creation of .zip
+    qDebug() << "Create zip of SD card";
+}
+
+void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
+{
+    QString folder;
+
+    // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
+    folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+
+    folder += QDir::separator() + STR_AppData + ".zip";
+
+    QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save archive"), folder, tr("ZIP files (*.zip)"));
+
+    if (filename.isEmpty()) {
+        return;  // aborted
+    }
+
+    if (!filename.toLower().endsWith(".zip")) {
+        filename += ".zip";
+    }
+    
+    qDebug() << "Create zip of OSCAR data folder:" << filename;
+    // TODO: implement creation of .zip
+    // TODO: write debug log to .txt file in data folder (or zip)
+    // NOTE: make sure not to include .zip in itself if the user chooses to write the zip in the data folder itself!
 }
 
 #include "translation.h"

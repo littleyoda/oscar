@@ -2865,8 +2865,11 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionDebug"/>
     <addaction name="actionShow_Performance_Counters"/>
     <addaction name="separator"/>
-    <addaction name="actionSystem_Information"/>
+    <addaction name="actionCreate_Card_zip"/>
+    <addaction name="actionCreate_OSCAR_Data_zip"/>
     <addaction name="actionReport_a_Bug"/>
+    <addaction name="separator"/>
+    <addaction name="actionSystem_Information"/>
     <addaction name="action_About"/>
    </widget>
    <widget class="QMenu" name="menu_Data">
@@ -2916,7 +2919,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <action name="action_Import_Data">
    <property name="text">
-    <string>&amp;Import SDcard Data</string>
+    <string>&amp;Import CPAP Card Data</string>
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F2</string>
@@ -3199,6 +3202,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Show Performance Information</string>
+   </property>
+  </action>
+  <action name="actionCreate_Card_zip">
+   <property name="text">
+    <string>Create archive of CPAP data card</string>
+   </property>
+  </action>
+  <action name="actionCreate_OSCAR_Data_zip">
+   <property name="text">
+    <string>Create archive of all OSCAR data</string>
    </property>
   </action>
   <action name="actionExport_CSV">
