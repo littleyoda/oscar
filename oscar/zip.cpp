@@ -58,6 +58,34 @@ bool ZipFile::Add(const QDir & root)
 
 bool ZipFile::Add(const QDir & inDir, const QString & prefix)
 {
+    bool ok;
+    FileQueue queue;
+    queue.Add(inDir, prefix);
+    ok = Add(queue);
+    return ok;
+}
+
+bool ZipFile::Add(const FileQueue & queue)
+{
+    bool ok;
+    
+    // TODO: add progress bar
+    qDebug() << "Adding" << queue.toString();
+    for (auto & entry : queue.files()) {
+        ok = Add(entry.path, entry.name);
+        if (!ok) {
+            break;
+        }
+    }
+
+    return ok;
+}
+
+
+// ==================================================================================================
+
+bool FileQueue::Add(const QDir & inDir, const QString & prefix)
+{
     QDir dir(inDir);
     
     if (!dir.exists() || !dir.isReadable()) {
@@ -124,6 +152,32 @@ bool ZipFile::Add(const QString & path, const QString & prefix)
     return ok;
 }
 
+bool FileQueue::Add(const QString & path, const QString & prefix)
+{
+    QFileInfo fi(path);
+    QString archive_name = prefix;
+    quint64 size;
+
+    if (fi.isDir()) {
+        m_dir_count++;
+        size = 0;
+    } else if (fi.exists()) {
+        m_file_count++;
+        size = fi.size();
+    } else {
+        qWarning() << "file doesn't exist" << path;
+        return false;
+    }
+    m_byte_count += size;
+    Entry entry = { path, archive_name };
+    m_files.append(entry);
+    return true;
+}
+
+const QString FileQueue::toString() const
+{
+    return QString("%1 directories, %2 files, %3 bytes").arg(m_dir_count).arg(m_file_count).arg(m_byte_count);
+}
 
 
 // ==================================================================================================
