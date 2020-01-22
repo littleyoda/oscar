@@ -2672,9 +2672,50 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
     }
     
     qDebug() << "Create zip of OSCAR data folder:" << filename;
-    // TODO: implement creation of .zip
-    // TODO: write debug log to .txt file in data folder (or zip)
-    // NOTE: make sure not to include .zip in itself if the user chooses to write the zip in the data folder itself!
+
+    QDir oscarData(GetAppData());
+    QFile debugLog(oscarData.canonicalPath() + QDir::separator() + "debuglog.txt");
+
+    ZipFile z;
+    bool ok = z.Open(filename);
+    if (ok) {
+        ProgressDialog * prog = new ProgressDialog(this);
+        prog->setMessage(tr("Calculating size..."));
+        prog->setWindowModality(Qt::ApplicationModal);
+        prog->open();
+
+        // Build the list of files and exclude any existing debug log.
+        FileQueue files;
+        files.AddDirectory(oscarData.canonicalPath(), oscarData.dirName());
+        files.Remove(debugLog.fileName());
+
+        prog->setMessage(tr("Creating archive..."));
+
+        // Create the zip.
+        ok = z.AddFiles(files, prog);
+        if (ok && z.aborted() == false) {
+            // Update the debug log and add it last.
+            ok = debugLog.open(QIODevice::WriteOnly);
+            if (ok) {
+                debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
+                debugLog.close();
+                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                ok = z.AddFile(debugLog.fileName(), debugLogName);
+                if (!ok) {
+                    qWarning() << "Unable to add debug log to archive!";
+                }
+            }
+        }
+
+        z.Close();
+    } else {
+        qWarning() << "Unable to open" << filename;
+    }
+    if (!ok) {
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
+            QObject::tr("Unable to create archive!"),
+            QMessageBox::Ok);
+    }
 }
 
 #include "translation.h"

@@ -25,7 +25,7 @@ public:
     bool Open(const QString & filepath);
     bool AddDirectory(const QString & path, ProgressDialog* progress=nullptr);  // add a directory and recurse
     bool AddDirectory(const QString & path, const QString & archive_name, ProgressDialog* progress=nullptr);  // add a directory and recurse
-    bool AddFiles(const class FileQueue & queue, ProgressDialog* progress=nullptr);  // add a fixed list of files
+    bool AddFiles(class FileQueue & queue, ProgressDialog* progress=nullptr);  // add a fixed list of files
     bool AddFile(const QString & path, const QString & archive_name);  // add a single file
     void Close();
     
@@ -42,7 +42,7 @@ protected:
     void* m_ctx;
     QFile m_file;
     bool m_abort;
-    int m_progress;
+    quint64 m_progress;
 };
 
 
@@ -62,6 +62,9 @@ public:
     FileQueue() : m_dir_count(0), m_file_count(0), m_byte_count(0) {}
     ~FileQueue() = default;
 
+    //!brief Remove a file from the queue, return the number of instances removed.
+    int Remove(const QString & path);
+    
     //!brief Recursively add a directory and its contents to the queue along with the prefix to be used in an archive.
     bool AddDirectory(const QString & path, const QString & prefix="");
     

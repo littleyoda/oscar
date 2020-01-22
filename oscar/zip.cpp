@@ -13,6 +13,7 @@
 #include <QCoreApplication>
 #include "SleepLib/progressdialog.h"
 
+static const quint64 PROGRESS_SCALE = 1024;  // QProgressBar only holds an int, so report progress in KiB.
 
 // Static functions to abstract the details of miniz from the primary logic.
 static void* zip_init();
@@ -67,10 +68,13 @@ bool ZipFile::AddDirectory(const QString & path, const QString & prefix, Progres
     return ok;
 }
 
-bool ZipFile::AddFiles(const FileQueue & queue, ProgressDialog* progress)
+bool ZipFile::AddFiles(FileQueue & queue, ProgressDialog* progress)
 {
     bool ok;
     
+    // Exclude the zip file that's being created (if it happens to be in the list).
+    queue.Remove(QFileInfo(m_file).canonicalFilePath());
+
     qDebug().noquote() << "Adding" << queue.toString();
     m_abort = false;
     m_progress = 0;
@@ -85,8 +89,8 @@ bool ZipFile::AddFiles(const FileQueue & queue, ProgressDialog* progress)
     }
 
     // Always emit, since the caller may have configured and connected a progress dialog manually.
-    emit setProgressValue(m_progress);
-    emit setProgressMax(queue.byteCount() + queue.dirCount());
+    emit setProgressValue(m_progress/PROGRESS_SCALE);
+    emit setProgressMax((queue.byteCount() + queue.dirCount())/PROGRESS_SCALE);
     QCoreApplication::processEvents();
 
     for (auto & entry : queue.files()) {
@@ -149,7 +153,7 @@ bool ZipFile::AddFile(const QString & path, const QString & name)
 
     bool ok = zip_add(m_ctx, archive_name, data, fi.lastModified());
 
-    emit setProgressValue(m_progress);
+    emit setProgressValue(m_progress/PROGRESS_SCALE);
     QCoreApplication::processEvents();
     
     return ok;
@@ -201,25 +205,49 @@ bool FileQueue::AddDirectory(const QString & path, const QString & prefix)
 bool FileQueue::AddFile(const QString & path, const QString & prefix)
 {
     QFileInfo fi(path);
+    QString canonicalPath = fi.canonicalFilePath();
     QString archive_name = prefix;
-    quint64 size;
 
     if (archive_name.isEmpty()) archive_name = fi.fileName();
 
     if (fi.isDir()) {
         m_dir_count++;
-        size = 0;
     } else if (fi.exists()) {
         m_file_count++;
-        size = fi.size();
+        m_byte_count += fi.size();
     } else {
-        qWarning() << "file doesn't exist" << path;
+        qWarning() << "file doesn't exist" << canonicalPath;
         return false;
     }
-    m_byte_count += size;
-    Entry entry = { path, archive_name };
+    Entry entry = { canonicalPath, archive_name };
     m_files.append(entry);
+    QCoreApplication::processEvents();
     return true;
+}
+
+int FileQueue::Remove(const QString & path)
+{
+    QFileInfo fi(path);
+    QString canonicalPath = fi.canonicalFilePath();
+    int removed = 0;
+
+    QMutableListIterator<Entry> i(m_files);
+    while (i.hasNext()) {
+        Entry & entry = i.next();
+        if (entry.path == canonicalPath) {
+            if (fi.isDir()) {
+                m_dir_count--;
+            } else {
+                m_file_count--;
+                m_byte_count -= fi.size();
+            }
+            i.remove();
+            removed++;
+            qDebug().noquote() << "skipping file:" << path;
+        }
+    }
+    
+    return removed;
 }
 
 const QString FileQueue::toString() const
