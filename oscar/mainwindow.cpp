@@ -2637,17 +2637,17 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         ZipFile z;
         bool ok = z.Open(filename);
         if (ok) {
-            // TODO: need to add progress bar!
-            ok = z.AddDirectory(cardPath);
+            ProgressDialog * prog = new ProgressDialog(this);
+            prog->setMessage(tr("Creating archive..."));
+            ok = z.AddDirectory(cardPath, prog);
             z.Close();
+        } else {
+            qWarning() << "Unable to open" << filename;
         }
         if (!ok) {
-            qWarning() << "Unable to create" << filename;
             QMessageBox::warning(nullptr, STR_MessageBox_Error,
                 QObject::tr("Unable to create archive!"),
                 QMessageBox::Ok);
-        } else {
-            qDebug() << "Created" << filename;
         }
     }
 }

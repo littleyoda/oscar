@@ -7,25 +7,42 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#include <QObject>
 #include <QString>
 #include <QDir>
 #include <QFile>
 
-class ZipFile
+class ProgressDialog;
+
+class ZipFile : public QObject
 {
+    Q_OBJECT
+
 public:
     ZipFile();
     virtual ~ZipFile();
     
     bool Open(const QString & filepath);
-    bool AddDirectory(const QString & path, const QString & archive_name="");  // add a directory and recurse
+    bool AddDirectory(const QString & path, ProgressDialog* progress=nullptr);  // add a directory and recurse
+    bool AddDirectory(const QString & path, const QString & archive_name, ProgressDialog* progress=nullptr);  // add a directory and recurse
+    bool AddFiles(const class FileQueue & queue, ProgressDialog* progress=nullptr);  // add a fixed list of files
     bool AddFile(const QString & path, const QString & archive_name);  // add a single file
-    bool AddFiles(const class FileQueue & queue);  // add a fixed list of files
     void Close();
+    
+    bool aborted() const { return m_abort; }
+
+public slots:
+    void abort() { m_abort = true; }
+
+signals:
+    void setProgressMax(int max);
+    void setProgressValue(int val);
 
 protected:
     void* m_ctx;
     QFile m_file;
+    bool m_abort;
+    int m_progress;
 };
 
 

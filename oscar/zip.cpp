@@ -10,6 +10,8 @@
 #include "zip.h"
 #include <QDebug>
 #include <QDateTime>
+#include <QCoreApplication>
+#include "SleepLib/progressdialog.h"
 
 
 // Static functions to abstract the details of miniz from the primary logic.
@@ -51,26 +53,67 @@ void ZipFile::Close()
     }
 }
 
-bool ZipFile::AddDirectory(const QString & path, const QString & prefix)
+bool ZipFile::AddDirectory(const QString & path, ProgressDialog* progress)
+{
+    return AddDirectory(path, "", progress);
+}
+
+bool ZipFile::AddDirectory(const QString & path, const QString & prefix, ProgressDialog* progress)
 {
     bool ok;
     FileQueue queue;
     queue.AddDirectory(path, prefix);
-    ok = AddFiles(queue);
+    ok = AddFiles(queue, progress);
     return ok;
 }
 
-bool ZipFile::AddFiles(const FileQueue & queue)
+bool ZipFile::AddFiles(const FileQueue & queue, ProgressDialog* progress)
 {
     bool ok;
     
-    // TODO: add progress bar
-    qDebug() << "Adding" << queue.toString();
+    qDebug().noquote() << "Adding" << queue.toString();
+    m_abort = false;
+    m_progress = 0;
+
+    if (progress) {
+        progress->addAbortButton();
+        progress->setWindowModality(Qt::ApplicationModal);
+        progress->open();
+        connect(this, SIGNAL(setProgressMax(int)), progress, SLOT(setProgressMax(int)));
+        connect(this, SIGNAL(setProgressValue(int)), progress, SLOT(setProgressValue(int)));
+        connect(progress, SIGNAL(abortClicked()), this, SLOT(abort()));
+    }
+
+    // Always emit, since the caller may have configured and connected a progress dialog manually.
+    emit setProgressValue(m_progress);
+    emit setProgressMax(queue.byteCount() + queue.dirCount());
+    QCoreApplication::processEvents();
+
     for (auto & entry : queue.files()) {
         ok = AddFile(entry.path, entry.name);
-        if (!ok) {
+        if (!ok || m_abort) {
             break;
         }
+    }
+    
+    if (progress) {
+        disconnect(progress, SIGNAL(abortClicked()), this, SLOT(abort()));
+        disconnect(this, SIGNAL(setProgressMax(int)), progress, SLOT(setProgressMax(int)));
+        disconnect(this, SIGNAL(setProgressValue(int)), progress, SLOT(setProgressValue(int)));
+        progress->close();
+        progress->deleteLater();
+    }
+
+    if (!ok) {
+        qWarning().noquote() << "Unable to create" << m_file.fileName();
+        Close();
+        m_file.remove();
+    } else if (aborted()) {
+        qDebug().noquote() << "User canceled zip creation.";
+        Close();
+        m_file.remove();
+    } else {
+        qDebug().noquote() << "Created" << m_file.fileName() << m_file.size() << "bytes";
     }
 
     return ok;
@@ -90,6 +133,7 @@ bool ZipFile::AddFile(const QString & path, const QString & name)
 
     if (fi.isDir()) {
         archive_name += QDir::separator();
+        m_progress += 1;
     } else {
         // Open and read file into memory.
         QFile f(path);
@@ -98,11 +142,16 @@ bool ZipFile::AddFile(const QString & path, const QString & name)
             return false;
         }
         data = f.readAll();
+        m_progress += data.size();
     }
 
     //qDebug() << "attempting to add" << archive_name << ":" << data.size() << "bytes";
 
     bool ok = zip_add(m_ctx, archive_name, data, fi.lastModified());
+
+    emit setProgressValue(m_progress);
+    QCoreApplication::processEvents();
+    
     return ok;
 }
 
