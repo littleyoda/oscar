@@ -891,11 +891,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     QDateTime datetime;
 
-#if QT_VERSION < QT_VERSION_CHECK(5,8,0)
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
-#else
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
-#endif
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
     QSet<SessionID> skipped;
 
@@ -1018,15 +1014,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     continue;
                 }
                 if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
-#if QT_VERSION < QT_VERSION_CHECK(5,8,0)
                     qDebug().noquote() << relativePath(path) << "skipping session" << chunk_sid << ":"
                         << QDateTime::fromMSecsSinceEpoch(chunk->timestamp*1000).toString() << "older than"
                         << QDateTime::fromMSecsSinceEpoch(ignoreBefore*1000).toString();
-#else
-                    qDebug().noquote() << relativePath(path) << "skipping session" << chunk_sid << ":"
-                        << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
-                        << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
-#endif
                     skipped += chunk_sid;
                     delete chunk;
                     continue;
@@ -7693,24 +7683,14 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
     // This won't be perfect, since any coalesced chunks starting after midnight of the threshhold
     // date will also be imported, but those should be relatively few, and tolerable imprecision.
     QList<PRS1DataChunk *> coalescedAndFiltered;
-#if QT_VERSION < QT_VERSION_CHECK(5,8,0)
     qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
-#else
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
-#endif
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
     for (auto & chunk : coalesced) {
         if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
-#if QT_VERSION < QT_VERSION_CHECK(5,8,0)
             qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
                 << QDateTime::fromMSecsSinceEpoch(chunk->timestamp*1000).toString() << "older than"
                 << QDateTime::fromMSecsSinceEpoch(ignoreBefore*1000).toString();
-#else
-            qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
-                << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
-                << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
-#endif
             continue;
         }
         coalescedAndFiltered.append(chunk);
