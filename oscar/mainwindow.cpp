@@ -2638,7 +2638,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         bool ok = z.Open(filename);
         if (ok) {
             // TODO: need to add progress bar!
-            ok = z.Add(cardPath);
+            ok = z.AddDirectory(cardPath);
             z.Close();
         }
         if (!ok) {

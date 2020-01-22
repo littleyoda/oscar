@@ -51,28 +51,23 @@ void ZipFile::Close()
     }
 }
 
-bool ZipFile::Add(const QDir & root)
-{
-    return Add(root, root.dirName());
-}
-
-bool ZipFile::Add(const QDir & inDir, const QString & prefix)
+bool ZipFile::AddDirectory(const QString & path, const QString & prefix)
 {
     bool ok;
     FileQueue queue;
-    queue.Add(inDir, prefix);
-    ok = Add(queue);
+    queue.AddDirectory(path, prefix);
+    ok = AddFiles(queue);
     return ok;
 }
 
-bool ZipFile::Add(const FileQueue & queue)
+bool ZipFile::AddFiles(const FileQueue & queue)
 {
     bool ok;
     
     // TODO: add progress bar
     qDebug() << "Adding" << queue.toString();
     for (auto & entry : queue.files()) {
-        ok = Add(entry.path, entry.name);
+        ok = AddFile(entry.path, entry.name);
         if (!ok) {
             break;
         }
@@ -81,49 +76,7 @@ bool ZipFile::Add(const FileQueue & queue)
     return ok;
 }
 
-
-// ==================================================================================================
-
-bool FileQueue::Add(const QDir & inDir, const QString & prefix)
-{
-    QDir dir(inDir);
-    
-    if (!dir.exists() || !dir.isReadable()) {
-        qWarning() << dir.canonicalPath() << "can't read directory";
-        return false;
-    }
-
-    // Add directory entry
-    bool ok = Add(dir.canonicalPath(), prefix);
-    if (!ok) {
-        return false;
-    }
-
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden);
-    dir.setSorting(QDir::Name);
-    QFileInfoList flist = dir.entryInfoList();
-
-    for (auto & fi : flist) {
-        QString canonicalPath = fi.canonicalFilePath();
-        QString relative_path = prefix + QDir::separator() + fi.fileName();
-        if (fi.isSymLink()) {
-            qWarning() << "skipping symlink" << canonicalPath << fi.symLinkTarget();
-        } else if (fi.isDir()) {
-            // Descend and recurse
-            ok = Add(QDir(canonicalPath), relative_path);
-        } else {
-            // Add the file to the zip
-            ok = Add(canonicalPath, relative_path);
-        }
-        if (!ok) {
-            break;
-        }
-    }
-
-    return ok;
-}
-
-bool ZipFile::Add(const QString & path, const QString & prefix)
+bool ZipFile::AddFile(const QString & path, const QString & name)
 {
     if (!m_file.isOpen()) {
         qWarning() << m_file.fileName() << "has not been opened for writing";
@@ -132,7 +85,8 @@ bool ZipFile::Add(const QString & path, const QString & prefix)
 
     QFileInfo fi(path);
     QByteArray data;
-    QString archive_name = prefix;
+    QString archive_name = name;
+    if (archive_name.isEmpty()) archive_name = fi.fileName();
 
     if (fi.isDir()) {
         archive_name += QDir::separator();
@@ -152,11 +106,56 @@ bool ZipFile::Add(const QString & path, const QString & prefix)
     return ok;
 }
 
-bool FileQueue::Add(const QString & path, const QString & prefix)
+
+// ==================================================================================================
+
+bool FileQueue::AddDirectory(const QString & path, const QString & prefix)
+{
+    QDir dir(path);
+    if (!dir.exists() || !dir.isReadable()) {
+        qWarning() << dir.canonicalPath() << "can't read directory";
+        return false;
+    }
+    QString base = prefix;
+    if (base.isEmpty()) base = dir.dirName();
+
+    // Add directory entry
+    bool ok = AddFile(dir.canonicalPath(), base);
+    if (!ok) {
+        return false;
+    }
+
+    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden);
+    dir.setSorting(QDir::Name);
+    QFileInfoList flist = dir.entryInfoList();
+
+    for (auto & fi : flist) {
+        QString canonicalPath = fi.canonicalFilePath();
+        QString relative_path = base + QDir::separator() + fi.fileName();
+        if (fi.isSymLink()) {
+            qWarning() << "skipping symlink" << canonicalPath << fi.symLinkTarget();
+        } else if (fi.isDir()) {
+            // Descend and recurse
+            ok = AddDirectory(canonicalPath, relative_path);
+        } else {
+            // Add the file to the zip
+            ok = AddFile(canonicalPath, relative_path);
+        }
+        if (!ok) {
+            break;
+        }
+    }
+
+    return ok;
+}
+
+bool FileQueue::AddFile(const QString & path, const QString & prefix)
 {
     QFileInfo fi(path);
     QString archive_name = prefix;
     quint64 size;
+
+    if (archive_name.isEmpty()) archive_name = fi.fileName();
 
     if (fi.isDir()) {
         m_dir_count++;
