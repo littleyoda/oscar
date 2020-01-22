@@ -891,7 +891,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     QDateTime datetime;
 
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
+    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
     QSet<SessionID> skipped;
 
@@ -1015,8 +1015,8 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 }
                 if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
                     qDebug().noquote() << relativePath(path) << "skipping session" << chunk_sid << ":"
-                        << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
-                        << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
+                        << QDateTime::fromMSecsSinceEpoch(chunk->timestamp*1000).toString() << "older than"
+                        << QDateTime::fromMSecsSinceEpoch(ignoreBefore*1000).toString();
                     skipped += chunk_sid;
                     delete chunk;
                     continue;
@@ -7683,14 +7683,14 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
     // This won't be perfect, since any coalesced chunks starting after midnight of the threshhold
     // date will also be imported, but those should be relatively few, and tolerable imprecision.
     QList<PRS1DataChunk *> coalescedAndFiltered;
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toSecsSinceEpoch();
+    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
     for (auto & chunk : coalesced) {
         if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {
             qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
-                << QDateTime::fromSecsSinceEpoch(chunk->timestamp).toString() << "older than"
-                << QDateTime::fromSecsSinceEpoch(ignoreBefore).toString();
+                << QDateTime::fromMSecsSinceEpoch(chunk->timestamp*1000).toString() << "older than"
+                << QDateTime::fromMSecsSinceEpoch(ignoreBefore*1000).toString();
             continue;
         }
         coalescedAndFiltered.append(chunk);
