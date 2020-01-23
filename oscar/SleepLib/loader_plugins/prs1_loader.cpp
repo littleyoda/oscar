@@ -5367,9 +5367,12 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
         if (code < ncodes) {
             // make sure the handlers below don't go past the end of the buffer
             if (size < minimum_sizes[code]) {
+                UNEXPECTED_VALUE(size, minimum_sizes[code]);
                 qWarning() << this->sessionid << "slice" << code << "too small" << size << "<" << minimum_sizes[code];
-                ok = false;
-                break;
+                if (code != 1) {  // Settings are variable-length, so shorter settings slices aren't fatal.
+                    ok = false;
+                    break;
+                }
             }
         } // else if it's past ncodes, we'll log its information below (rather than handle it)
         if (pos + size > chunk_size) {
@@ -6192,9 +6195,12 @@ bool PRS1DataChunk::ParseComplianceF0V6(void)
         }
         size = this->hblock[code];
         if (size < expected_sizes[code]) {
+            UNEXPECTED_VALUE(size, expected_sizes[code]);
             qWarning() << this->sessionid << "slice" << code << "too small" << size << "<" << expected_sizes[code];
-            ok = false;
-            break;
+            if (code != 1) {  // Settings are variable-length, so shorter settings slices aren't fatal.
+                ok = false;
+                break;
+            }
         }
         if (pos + size > chunk_size) {
             qWarning() << this->sessionid << "slice" << code << "@" << pos << "longer than remaining chunk";
@@ -6756,9 +6762,12 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
         if (code < ncodes) {
             // make sure the handlers below don't go past the end of the buffer
             if (size < minimum_sizes[code]) {
+                UNEXPECTED_VALUE(size, minimum_sizes[code]);
                 qWarning() << this->sessionid << "slice" << code << "too small" << size << "<" << minimum_sizes[code];
-                ok = false;
-                break;
+                if (code != 1) {  // Settings are variable-length, so shorter settings slices aren't fatal.
+                    ok = false;
+                    break;
+                }
             }
         } // else if it's past ncodes, we'll log its information below (rather than handle it)
         if (pos + size > chunk_size) {
@@ -6948,9 +6957,12 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
         if (code < ncodes) {
             // make sure the handlers below don't go past the end of the buffer
             if (size < minimum_sizes[code]) {
+                UNEXPECTED_VALUE(size, minimum_sizes[code]);
                 qWarning() << this->sessionid << "slice" << code << "too small" << size << "<" << minimum_sizes[code];
-                ok = false;
-                break;
+                if (code != 1) {  // Settings are variable-length, so shorter settings slices aren't fatal.
+                    ok = false;
+                    break;
+                }
             }
         } // else if it's past ncodes, we'll log its information below (rather than handle it)
         if (pos + size > chunk_size) {
