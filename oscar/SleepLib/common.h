@@ -249,6 +249,7 @@ extern QString STR_TR_EventFlags;
 
 extern QString STR_TR_Inclination;
 extern QString STR_TR_Orientation;
+extern QString STR_TR_Motion;
 
 // Machine type names.
 extern QString STR_TR_CPAP;    // Constant Positive Airway Pressure

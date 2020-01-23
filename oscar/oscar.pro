@@ -292,6 +292,7 @@ SOURCES += \
     SleepLib/loader_plugins/prs1_loader.cpp \
     SleepLib/loader_plugins/resmed_loader.cpp \
     SleepLib/loader_plugins/somnopose_loader.cpp \
+    SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
     zip.cpp \
     miniz.c \
@@ -366,6 +367,7 @@ HEADERS  += \
     SleepLib/loader_plugins/prs1_loader.h \
     SleepLib/loader_plugins/resmed_loader.h \
     SleepLib/loader_plugins/somnopose_loader.h \
+    SleepLib/loader_plugins/viatom_loader.h \
     SleepLib/loader_plugins/zeo_loader.h \
     zip.h \
     miniz.h \

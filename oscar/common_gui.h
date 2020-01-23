@@ -31,6 +31,7 @@ const QString STR_GRAPH_Te = "Te";
 const QString STR_GRAPH_SleepStage = "SleepStage";
 const QString STR_GRAPH_Inclination = "Inclination";
 const QString STR_GRAPH_Orientation = "Orientation";
+const QString STR_GRAPH_Motion = "Motion";
 const QString STR_GRAPH_TestChan1 = "TestChan1";
 const QString STR_GRAPH_TestChan2 = "TestChan2";
 const QString STR_GRAPH_AHI = "AHI";

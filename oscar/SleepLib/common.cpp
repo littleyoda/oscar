@@ -465,6 +465,7 @@ QString STR_TR_EventFlags;
 
 QString STR_TR_Inclination;
 QString STR_TR_Orientation;
+QString STR_TR_Motion;
 
 
 // Machine type names.
@@ -772,6 +773,7 @@ void initializeStrings()
 
     STR_TR_Inclination = QObject::tr("Inclination");
     STR_TR_Orientation = QObject::tr("Orientation");
+    STR_TR_Motion = QObject::tr("Motion");
 
     STR_TR_Name = QObject::tr("Name");
     STR_TR_DOB = QObject::tr("DOB");  // Date of Birth

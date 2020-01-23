@@ -41,8 +41,9 @@ void Welcome::refreshPage()
     QList<Machine *> oximachines = p_profile->GetMachines(MT_OXIMETER);
     QList<Machine *> posmachines = p_profile->GetMachines(MT_POSITION);
     QList<Machine *> stgmachines = p_profile->GetMachines(MT_SLEEPSTAGE);
+    QList<Machine *> mltmachines = p_profile->GetMachines(MT_MULTI);
 
-    bool noMachines = mlist.isEmpty() && posmachines.isEmpty() && oximachines.isEmpty() && stgmachines.isEmpty();
+    bool noMachines = mlist.isEmpty() && posmachines.isEmpty() && oximachines.isEmpty() && stgmachines.isEmpty() && mltmachines.isEmpty();
 
     bool showCardWarning = noMachines;
 

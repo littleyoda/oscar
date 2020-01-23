@@ -40,6 +40,7 @@
 // Custom loaders that don't autoscan..
 #include <SleepLib/loader_plugins/zeo_loader.h>
 #include <SleepLib/loader_plugins/somnopose_loader.h>
+#include <SleepLib/loader_plugins/viatom_loader.h>
 
 #ifdef REMSTAR_M_SUPPORT
 #include <SleepLib/loader_plugins/mseries_loader.h>
@@ -2394,6 +2395,30 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
         daily->LoadDate(daily->getDate());
     }
 
+}
+
+void MainWindow::on_actionImport_Viatom_Data_triggered()
+{
+    QFileDialog w;
+    w.setFileMode(QFileDialog::ExistingFiles);
+    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    w.setOption(QFileDialog::ShowDirsOnly, false);
+    w.setOption(QFileDialog::DontUseNativeDialog, true);
+    w.setNameFilters(QStringList("Viatom Data File (20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9])"));
+
+    ViatomLoader viatom;
+
+    if (w.exec() == QFileDialog::Accepted) {
+        QString filename = w.selectedFiles()[0];
+
+        if (!viatom.OpenFile(filename)) {
+            Notify(tr("There was a problem opening Viatom data file: ") + filename);
+            return;
+        }
+
+        Notify(tr("Viatom Data Import complete"));
+        daily->LoadDate(daily->getDate());
+    }
 }
 
 void MainWindow::GenerateStatistics()

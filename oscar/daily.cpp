@@ -79,7 +79,7 @@ inline QString channelInfo(ChannelID code) {
 const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_FlowLimitation,
                                            STR_GRAPH_Snore, STR_GRAPH_TidalVolume, STR_GRAPH_MaskPressure, STR_GRAPH_RespRate, STR_GRAPH_MinuteVent,
                                            STR_GRAPH_PTB, STR_GRAPH_RespEvent, STR_GRAPH_Ti, STR_GRAPH_Te,
-                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP
                                           };
@@ -88,7 +88,7 @@ const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
 const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_MaskPressure, STR_GRAPH_TidalVolume, STR_GRAPH_MinuteVent,
                                            STR_GRAPH_Ti, STR_GRAPH_Te, STR_GRAPH_FlowLimitation, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_Snore,
                                            STR_GRAPH_RespRate, STR_GRAPH_PTB, STR_GRAPH_RespEvent,
-                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP
                                           };
@@ -239,7 +239,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     const ChannelID cpapcodes[] = {
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
-        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, CPAP_Test1
+        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Motion, CPAP_Test1
     };
 
     // Create graphs from the cpap code list
@@ -400,6 +400,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     graphlist[schema::channel[POS_Inclination].code()]->AddLayer(new gLineChart(POS_Inclination));
     graphlist[schema::channel[POS_Orientation].code()]->AddLayer(new gLineChart(POS_Orientation));
+    graphlist[schema::channel[POS_Motion].code()]->AddLayer(new gLineChart(POS_Motion));
 
     graphlist[schema::channel[CPAP_MinuteVent].code()]->AddLayer(lc=new gLineChart(CPAP_MinuteVent, square));
     lc->addPlot(CPAP_TgMV, square);
@@ -1281,7 +1282,7 @@ QString Daily::getStatisticsInfo(Day * day)
         CPAP_Pressure,CPAP_EPAP,CPAP_IPAP,CPAP_PS,CPAP_PTB,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  /*  CPAP_IE,   */  CPAP_Ti,CPAP_Te, CPAP_TgMV,
-        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation
+        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Motion
     };
     int numchans=sizeof(chans)/sizeof(ChannelID);
     int ccnt=0;

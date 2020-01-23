@@ -50,7 +50,7 @@ enum SummaryType { ST_CNT, ST_SUM, ST_AVG, ST_WAVG, ST_PERC, ST_90P, ST_MIN, ST_
     \brief Generalized type of a machine. MT_CPAP is any type of xPAP machine, MT_OXIMETER any type of Oximeter
     \brief MT_SLEEPSTAGE stage of sleep detector (ZEO importer), MT_JOURNAL for optional notes, MT_POSITION for sleep position detector (Somnopose)
   */
-enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_UNCATEGORIZED = 99};
+enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_MULTI, MT_UNCATEGORIZED = 99};
 //void InitMapsWithoutAwesomeInitializerLists();
 
 /***** NEVER USED --- 8/2019
@@ -161,7 +161,7 @@ extern ChannelID ZEO_SleepStage, ZEO_ZQ, ZEO_TotalZ, ZEO_TimeToZ, ZEO_TimeInWake
        ZEO_FirstAlarmRing, ZEO_LastAlarmRing, ZEO_FirstSnoozeTime, ZEO_LastSnoozeTime, ZEO_SetAlarmTime,
        ZEO_RiseTime;
 
-extern ChannelID POS_Orientation, POS_Inclination;
+extern ChannelID POS_Orientation, POS_Inclination, POS_Motion;
 
 const QString GRP_CPAP = "CPAP";
 const QString GRP_POS = "POS";

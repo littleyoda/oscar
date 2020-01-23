@@ -276,6 +276,9 @@ void init()
     schema::channel.add(GRP_POS, new Channel(POS_Inclination         = 0x2991, WAVEFORM,   MT_POSITION, SESSION, STR_GRAPH_Inclination,
             QObject::tr("Inclination"), QObject::tr("Upright angle in degrees"),  QObject::tr("Inclination"),  STR_UNIT_Degrees, DEFAULT,  QColor("dark magenta")));
 
+    schema::channel.add(GRP_POS, new Channel(POS_Motion              = 0x2992, WAVEFORM,   MT_POSITION, SESSION, STR_GRAPH_Motion,
+            QObject::tr("Motion"), QObject::tr("Movement detector"),  QObject::tr("Movement"),  STR_UNIT_Unknown, DEFAULT,  QColor("dark green")));
+
     schema::channel.add(GRP_CPAP, new Channel(RMS9_MaskOnTime        = 0x1025, DATA,   MT_CPAP,  SESSION, "MaskOnTime",
             QObject::tr("Mask On Time"), QObject::tr("Time started according to str.edf"),  QObject::tr("Mask On Time"),  STR_UNIT_Unknown, DEFAULT,  Qt::black));
 

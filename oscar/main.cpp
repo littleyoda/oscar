@@ -43,6 +43,7 @@
 #include "SleepLib/loader_plugins/intellipap_loader.h"
 #include "SleepLib/loader_plugins/icon_loader.h"
 #include "SleepLib/loader_plugins/weinmann_loader.h"
+#include "SleepLib/loader_plugins/viatom_loader.h"
 
 MainWindow *mainwin = nullptr;
 
@@ -583,6 +584,7 @@ int main(int argc, char *argv[]) {
     CMS50Loader::Register();
     CMS50F37Loader::Register();
     MD300W1Loader::Register();
+    ViatomLoader::Register();
 
     schema::setOrders(); // could be called in init...
 
