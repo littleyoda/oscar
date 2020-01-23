@@ -21,7 +21,7 @@ const int viatom_data_version = 1;
 class ViatomLoader : public MachineLoader
 {
   public:
-    ViatomLoader() { m_type = MT_MULTI; }
+    ViatomLoader() { m_type = MT_OXIMETER; }
     virtual ~ViatomLoader() { }
 
     virtual bool Detect(const QString & path);
@@ -35,7 +35,7 @@ class ViatomLoader : public MachineLoader
     virtual const QString &loaderName() { return viatom_class_name; }
 
     virtual MachineInfo newInfo() {
-        return MachineInfo(MT_POSITION, 0, viatom_class_name, QObject::tr("Viatom"), QString(), QString(), QString(), QObject::tr("Viatom Software"), QDateTime::currentDateTime(), viatom_data_version);
+        return MachineInfo(MT_OXIMETER, 0, viatom_class_name, QObject::tr("Viatom"), QString(), QString(), QString(), QObject::tr("Viatom Software"), QDateTime::currentDateTime(), viatom_data_version);
     }
 
   //Machine *CreateMachine();

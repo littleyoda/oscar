@@ -50,7 +50,22 @@ enum SummaryType { ST_CNT, ST_SUM, ST_AVG, ST_WAVG, ST_PERC, ST_90P, ST_MIN, ST_
     \brief Generalized type of a machine. MT_CPAP is any type of xPAP machine, MT_OXIMETER any type of Oximeter
     \brief MT_SLEEPSTAGE stage of sleep detector (ZEO importer), MT_JOURNAL for optional notes, MT_POSITION for sleep position detector (Somnopose)
   */
-enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_MULTI, MT_UNCATEGORIZED = 99};
+// TODO: This really needs to be a bitmask, since there are increasing numbers of machines that provide
+// multiple kinds of data, such as oximetry + motion/position, or sleep stage + oximetry, etc.
+//
+// Machine/loader classes will use the bitmask to identify which data they are capable of importing.
+// It may be that we ultimately prefer to have each machine identify a primary type instead or in addition.
+//
+// The channel schema's use of these is probably fine.
+//
+// Days/Sessions/etc. that currently search for data based on the machines they contain will instead
+// need to search for channels with data of that MT type. And anywhere else the code makes decisions
+// based on MT.
+//
+// Unfortunately, this also includes previously imported data, as Session encodes the machine's type in
+// each file on disk. We might be partially saved by the fact that MT_CPAP and MT_OXIMETER were originally
+// 1 and 2, which would only break MT_SLEEPSTAGE and higher.
+enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_UNCATEGORIZED = 99};
 //void InitMapsWithoutAwesomeInitializerLists();
 
 /***** NEVER USED --- 8/2019
