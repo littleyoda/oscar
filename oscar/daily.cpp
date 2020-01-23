@@ -122,6 +122,10 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     qDebug() << "Creating new Daily object";
     ui->setupUi(this);
 
+    ui->JournalNotesBold->setShortcut(QKeySequence::Bold);
+    ui->JournalNotesItalic->setShortcut(QKeySequence::Italic);
+    ui->JournalNotesUnderline->setShortcut(QKeySequence::Underline);
+
     // Remove Incomplete Extras Tab
     //ui->tabWidget->removeTab(3);
 

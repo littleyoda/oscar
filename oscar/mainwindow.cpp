@@ -132,6 +132,7 @@ void MainWindow::SetupGUI()
     ui->action_About->setMenuRole(QAction::AboutRole);
     ui->action_Preferences->setMenuRole(QAction::PreferencesRole);
 #endif
+    ui->actionPrint_Report->setShortcuts(QKeySequence::Print);
 
     ui->actionLine_Cursor->setChecked(AppSetting->lineCursorMode());
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());

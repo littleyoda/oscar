@@ -3248,7 +3248,7 @@ p, li { white-space: pre-wrap; }
     <string>Show Pie Chart on Daily page</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+P</string>
+    <string>F3</string>
    </property>
   </action>
   <action name="action_Standard_Graph_Order">
