@@ -5340,7 +5340,7 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const int minimum_sizes[] = { 1, 0x2b, 9, 7, 4, 2, 1, 2, 2, 1, 0x18, 2, 4 };  // F5V3 = { 1, 0x38, 4, 2, 4, 0x1e, 2, 4, 9 };
+    static const int minimum_sizes[] = { 1, 0x25, 9, 7, 4, 2, 1, 2, 2, 1, 0x18, 2, 4 };  // F5V3 = { 1, 0x38, 4, 2, 4, 0x1e, 2, 4, 9 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: The sizes contained in hblock can vary, even within a single machine, as can the length of hblock itself!
 
@@ -5421,6 +5421,9 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
                 break;
+            case 6:  // Ventilator CPAP stats, presumably per mask-on slice
+                //CHECK_VALUE(data[pos], 0x3C);  // Average CPAP
+                break;
             case 7:  // Ventilator EPAP stats, presumably per mask-on slice
                 //CHECK_VALUE(data[pos], 0x69);  // Average EPAP
                 //CHECK_VALUE(data[pos+1], 0x80);  // Average 90% EPAP
@@ -5496,6 +5499,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
     // F5V3 and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
     static const float GAIN = 0.125;  // TODO: parameterize this somewhere better
 
+    int fixed_pressure = 0;
     int fixed_epap = 0;
     int fixed_ipap = 0;
     int min_ipap = 0;
@@ -5528,6 +5532,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 CHECK_VALUE(pos, 2);  // always first?
                 CHECK_VALUE(len, 1);
                 switch (data[pos]) {
+                case 0: cpapmode = PRS1_MODE_CPAP; break; // "CPAP" mode
                 case 1: cpapmode = PRS1_MODE_S; break;   // "S" mode
                 case 2: cpapmode = PRS1_MODE_ST; break;  // "S/T" mode; pressure seems variable?
                 case 4: cpapmode = PRS1_MODE_PC; break;  // "PC" mode? Usually "PC - AVAPS", see setting 1 below
@@ -5542,7 +5547,9 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 switch (data[pos]) {
                     case 0:  // 0 = None
                         flexmode = FLEX_None;
-                        CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+                        if (cpapmode != PRS1_MODE_CPAP) {
+                            CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+                        }
                         break;
                     case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
                         flexmode = FLEX_BiFlex;
@@ -5561,6 +5568,11 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 2: // ??? Maybe AAM?
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0);
+                break;
+            case 3: // CPAP Pressure
+                CHECK_VALUE(len, 1);
+                fixed_pressure = data[pos];
+                this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, fixed_pressure, GAIN));
                 break;
             case 4: // EPAP Pressure
                 CHECK_VALUE(len, 1);
@@ -5674,9 +5686,9 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
-            case 0x39:
+            case 0x39:  // Tubing Type Lock
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0);
+                CHECK_VALUES(data[pos], 0, 0x80);
                 break;
             case 0x3b:  // Tubing Type
                 CHECK_VALUE(len, 1);
@@ -6446,8 +6458,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         CHECK_VALUE(humidfixed, false);
     } else if (family == 3) {
         if (tubepresent) {
-            // The only 2 samples seen had multiple adjustments, so the reports are ambiguous.
-            if (tubetemp == 5 && sessionid != 24 && sessionid != 26) UNEXPECTED_VALUE(tubetemp, "[0-4]");
+            // All tube temperature and humidity levels seen.
         } else if (humidadaptive) {
             if (humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "[0,2-5]");
         } else if (humidfixed) {
