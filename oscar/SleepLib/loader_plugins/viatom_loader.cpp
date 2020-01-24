@@ -75,11 +75,10 @@ Session* ViatomLoader::ParseFile(const QString & filename)
         qDebug() << "Session" << v.sessionid() << "found...add data to it";
     }
 
-    EventList *ev_hr = sess->AddEventList(OXI_Pulse, EVL_Waveform,  1.0, 0.0, 0.0, 0.0, 2000.0);
-    EventList *ev_o2 = sess->AddEventList(OXI_SPO2, EVL_Waveform,   1.0, 0.0, 0.0, 0.0, 2000.0);
-    EventList *ev_mv = sess->AddEventList(POS_Motion, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, 2000.0);
-
     quint64  step = 2000;  // records @ 2000ms (2 sec)
+    EventList *ev_hr = sess->AddEventList(OXI_Pulse, EVL_Waveform,  1.0, 0.0, 0.0, 0.0, step);
+    EventList *ev_o2 = sess->AddEventList(OXI_SPO2, EVL_Waveform,   1.0, 0.0, 0.0, 0.0, step);
+    EventList *ev_mv = sess->AddEventList(POS_Motion, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, step);
 
     QList<ViatomFile::Record> records = v.ReadData();
 
@@ -149,7 +148,7 @@ bool ViatomFile::ParseHeader()
     QByteArray data;
     qint64 filesize = m_file.size();
 
-    data = m_file.read(50);
+    data = m_file.read(40);
 
     QDataStream in(data);
     in.setByteOrder(QDataStream::LittleEndian);
