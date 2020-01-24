@@ -31,7 +31,7 @@ class ViatomLoader : public MachineLoader
     Session* ParseFile(const QString & filename);
     void SaveSessionToDatabase(Session* session);
 
-	static void Register();
+    static void Register();
 
     virtual int Version() { return viatom_data_version; }
     virtual const QString &loaderName() { return viatom_class_name; }
