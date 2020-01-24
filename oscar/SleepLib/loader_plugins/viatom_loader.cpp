@@ -39,11 +39,21 @@ ViatomLoader::OpenFile( const QString & filename )
 {
 	qDebug() << "ViatomLoader::OpenFile(" << filename << ")";
 
+    Session* sess = ParseFile(filename);
+    if (sess != nullptr) {
+        SaveSessionToDatabase(sess);
+        return true;
+    }
+    return false;
+}
+
+Session* ViatomLoader::ParseFile(const QString & filename)
+{
     QFile		 file(filename);
 
 	if (!file.open( QFile::ReadOnly )) {
 		qDebug() << "Couldn't open Viatom data file" << filename;
-		return 0;
+		return nullptr;
     }
 
     QByteArray	 data;
@@ -68,7 +78,7 @@ ViatomLoader::OpenFile( const QString & filename )
 		(         M > 60) ||
 		(         S > 61)) {
 		qDebug( ) << filename << "does not appear to be a Viatom data file";
-		return false;
+		return nullptr;
 	}
 
 	char      dchr[32];
@@ -137,11 +147,17 @@ ViatomLoader::OpenFile( const QString & filename )
 	sess->setMax( POS_Motion, ev_mv->Max( ) );
 
 	sess->really_set_last( time_ms );
+
+    return sess;
+}
+
+void ViatomLoader::SaveSessionToDatabase(Session* sess)
+{
+    Machine* mach = sess->machine();
+    
 	sess->SetChanged( true );
 	mach->AddSession( sess );
 	mach->Save( );
-
-    return true;
 }
 
 static bool viatom_initialized = false;

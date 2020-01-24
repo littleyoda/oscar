@@ -28,6 +28,8 @@ class ViatomLoader : public MachineLoader
 
     virtual int Open(const QString & path);
     virtual int OpenFile(const QString & filename);
+    Session* ParseFile(const QString & filename);
+    void SaveSessionToDatabase(Session* session);
 
 	static void Register();
 

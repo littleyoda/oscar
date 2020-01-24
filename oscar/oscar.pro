@@ -516,14 +516,16 @@ test {
         tests/prs1tests.cpp \
         tests/resmedtests.cpp \
         tests/sessiontests.cpp \
-        tests/versiontests.cpp
+        tests/versiontests.cpp \
+        tests/viatomtests.cpp
 
     HEADERS += \
         tests/AutoTest.h \
         tests/prs1tests.h \
         tests/resmedtests.h \
         tests/sessiontests.h \
-        tests/versiontests.h
+        tests/versiontests.h \
+        tests/viatomtests.h
 }
 
 macx {

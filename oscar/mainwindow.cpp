@@ -2403,7 +2403,6 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
     w.setFileMode(QFileDialog::ExistingFiles);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setOption(QFileDialog::DontUseNativeDialog, true);
     w.setNameFilters(QStringList("Viatom Data File (20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9])"));
 
     ViatomLoader viatom;
