@@ -51,90 +51,56 @@ ViatomLoader::OpenFile(const QString & filename)
 Session* ViatomLoader::ParseFile(const QString & filename)
 {
     QFile file(filename);
-
     if (!file.open(QFile::ReadOnly)) {
         qDebug() << "Couldn't open Viatom data file" << filename;
         return nullptr;
     }
 
-    QByteArray data;
-    qint64 filesize = file.size();
-
-    data = file.readAll();
-
-    QDataStream in(data);
-    in.setByteOrder(QDataStream::LittleEndian);
-
-    quint16 sig;
-    quint16 Y;
-    quint8 m,d,H,M,S;
-
-    in >> sig >> Y >> m >> d >> H >> M >> S;
-
-    if (sig != 0x0003 ||
-        (Y < 2015 || Y > 2040) ||
-        (m < 1 || m > 12) ||
-        (d < 1 || d > 31) ||
-        (         H > 23) ||
-        (         M > 60) ||
-        (         S > 61)) {
-        qDebug() << filename << "does not appear to be a Viatom data file";
+    ViatomFile v(file);
+    if (v.ParseHeader() == false) {
         return nullptr;
     }
 
-    QDateTime data_timestamp = QDateTime(QDate(Y, m, d), QTime(H, M, S));
-    quint64 time_s = data_timestamp.toTime_t();
-    quint64 time_ms = time_s * 1000L;
-    SessionID sid = time_s;
-
-    qDebug() << filename << "looks like a Viatom file, size" << filesize << "bytes signature" << sig
-             << "start date/time" << data_timestamp << "(" << time_ms << ")";
-
-    in.skipRawData(41);  // total 50 byte header, not sure what the rest is.
-
     MachineInfo  info = newInfo();
     Machine     *mach = p_profile->CreateMachine(info);
-    Session     *sess = mach->SessionExists(sid);
+    Session     *sess = mach->SessionExists(v.sessionid());
+    quint64  time_ms = v.timestamp();
+    QDateTime data_timestamp = QDateTime::fromMSecsSinceEpoch(time_ms);
 
     if (!sess) {
-        qDebug() << "Session at" << data_timestamp << "not found...create new session" << sid;
-        sess = new Session(mach, sid);
+        qDebug() << "Session at" << data_timestamp << "not found...create new session" << v.sessionid();
+        sess = new Session(mach, v.sessionid());
         sess->really_set_first(time_ms);
     } else {
-        qDebug() << "Session" << sid << "found...add data to it";
+        qDebug() << "Session" << v.sessionid() << "found...add data to it";
     }
 
     EventList *ev_hr = sess->AddEventList(OXI_Pulse, EVL_Waveform,  1.0, 0.0, 0.0, 0.0, 2000.0);
     EventList *ev_o2 = sess->AddEventList(OXI_SPO2, EVL_Waveform,   1.0, 0.0, 0.0, 0.0, 2000.0);
     EventList *ev_mv = sess->AddEventList(POS_Motion, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, 2000.0);
 
-    unsigned char o2, hr, x, motion;
-    unsigned char o2_ = 99, hr_ = 60, motion_ = 0;
-    unsigned n_rec = 0;
     quint64  step = 2000;  // records @ 2000ms (2 sec)
 
-    // Read all Pulse, SPO2 and Motion data
-    do {
-        in >> o2 >> hr >> x >> motion >> x;
+    QList<ViatomFile::Record> records = v.ReadData();
 
-        if (o2 < 50 || o2 > 100) o2 = o2_;
-        if (hr < 20 || hr > 200) hr = hr_;
-        if (motion > 200) motion = motion_;
+    // Import data
+    ViatomFile::Record prev = { 99, 60, 0, 0, 0 };
+    for (auto & rec : records) {
+        if (rec.spo2 < 50 || rec.spo2 > 100) rec.spo2 = prev.spo2;
+        if (rec.hr < 20 || rec.hr > 200) rec.hr = prev.hr;
+        if (rec.motion > 200) rec.motion = prev.motion;
 
         sess->set_last(time_ms);
-        ev_hr->AddEvent(time_ms, hr);
-        ev_o2->AddEvent(time_ms, o2);
-        ev_mv->AddEvent(time_ms, motion);
+        ev_hr->AddEvent(time_ms, rec.hr);
+        ev_o2->AddEvent(time_ms, rec.spo2);
+        ev_mv->AddEvent(time_ms, rec.motion);
 
-        o2_ = o2;
-        hr_ = hr;
-        motion_ = motion;
+        prev = rec;
         time_ms += step;
-        n_rec += 1;
-    } while (!in.atEnd());
+    }
 
     qDebug() << "Read Viatom data from" << data_timestamp << "to" << (QDateTime::fromSecsSinceEpoch( time_ms / 1000L))
-             << n_rec << "records"
+             << records.count() << "records"
              << ev_mv->Min() << "<=Motion<=" << ev_mv->Max();
 
     sess->setMin(OXI_Pulse,  ev_hr->Min());
@@ -171,3 +137,64 @@ ViatomLoader::Register()
     }
 }
 
+
+// ===============================================================================================
+
+ViatomFile::ViatomFile(QFile & file) : m_file(file)
+{
+}
+
+bool ViatomFile::ParseHeader()
+{
+    QByteArray data;
+    qint64 filesize = m_file.size();
+
+    data = m_file.read(50);
+
+    QDataStream in(data);
+    in.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 sig;
+    quint16 Y;
+    quint8 m,d,H,M,S;
+
+    in >> sig >> Y >> m >> d >> H >> M >> S;
+
+    if (sig != 0x0003 ||
+        (Y < 2015 || Y > 2040) ||
+        (m < 1 || m > 12) ||
+        (d < 1 || d > 31) ||
+        (         H > 23) ||
+        (         M > 60) ||
+        (         S > 61)) {
+        qDebug() << m_file.fileName() << "does not appear to be a Viatom data file";
+        return false;
+    }
+
+    QDateTime data_timestamp = QDateTime(QDate(Y, m, d), QTime(H, M, S));
+    m_timestamp = data_timestamp.toMSecsSinceEpoch();
+    m_id = m_timestamp / 1000L;
+
+    qDebug() << m_file.fileName() << "looks like a Viatom file, size" << filesize << "bytes signature" << sig
+             << "start date/time" << data_timestamp << "(" << m_timestamp << ")";
+
+    return true;
+}
+
+QList<ViatomFile::Record> ViatomFile::ReadData()
+{
+    QByteArray data = m_file.readAll();
+    QDataStream in(data);
+    in.setByteOrder(QDataStream::LittleEndian);
+
+    QList<ViatomFile::Record> records;
+
+    // Read all Pulse, SPO2 and Motion data
+    do {
+        ViatomFile::Record rec;
+        in >> rec.spo2 >> rec.hr >> rec._unk1 >> rec.motion >> rec._unk2;
+        records.append(rec);
+    } while (!in.atEnd());
+
+    return records;
+}

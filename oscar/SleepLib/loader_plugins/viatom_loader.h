@@ -46,4 +46,29 @@ class ViatomLoader : public MachineLoader
   private:
 };
 
+class ViatomFile
+{
+public:
+    struct Record
+    {
+        unsigned char spo2;
+        unsigned char hr;
+        unsigned char _unk1;
+        unsigned char motion;
+        unsigned char _unk2;
+    };
+    ViatomFile(QFile & file);
+    ~ViatomFile() = default;
+
+    bool ParseHeader();
+    QList<Record> ReadData();
+    SessionID sessionid() const { return m_id; }
+    quint64 timestamp() const { return m_timestamp; }
+
+protected:
+    QFile & m_file;
+    quint64 m_timestamp;
+    SessionID m_id;
+};
+
 #endif // VIATOMLOADER_H
