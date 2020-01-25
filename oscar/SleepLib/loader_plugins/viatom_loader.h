@@ -62,13 +62,18 @@ public:
 
     bool ParseHeader();
     QList<Record> ReadData();
-    SessionID sessionid() const { return m_id; }
+    SessionID sessionid() const { return m_sessionid; }
     quint64 timestamp() const { return m_timestamp; }
+    int duration() const { return m_duration; }
 
 protected:
+    static const int RECORD_SIZE = 5;
     QFile & m_file;
     quint64 m_timestamp;
-    SessionID m_id;
+    int m_duration;
+    int m_record_count;
+    int m_resolution;
+    SessionID m_sessionid;
 };
 
 #endif // VIATOMLOADER_H
