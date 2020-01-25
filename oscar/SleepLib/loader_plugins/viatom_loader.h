@@ -43,6 +43,13 @@ class ViatomLoader : public MachineLoader
   //Machine *CreateMachine();
 
   protected:
+    void AddEvent(ChannelID channel, qint64 t, EventDataType value);
+    void EndEventList(ChannelID channel, qint64 t);
+
+    Session* m_session;
+    qint64 m_step;
+    QHash<ChannelID, EventList*> m_importChannels;
+    QHash<ChannelID, EventDataType> m_importLastValue;
   private:
 };
 
@@ -53,9 +60,9 @@ public:
     {
         unsigned char spo2;
         unsigned char hr;
-        unsigned char _unk1;
+        unsigned char oximetry_invalid;
         unsigned char motion;
-        unsigned char _unk2;
+        unsigned char _unk;
     };
     ViatomFile(QFile & file);
     ~ViatomFile() = default;

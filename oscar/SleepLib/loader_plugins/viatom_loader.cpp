@@ -96,40 +96,37 @@ Session* ViatomLoader::ParseFile(const QString & filename)
     MachineInfo  info = newInfo();
     Machine     *mach = p_profile->CreateMachine(info);
     Session     *sess = mach->SessionExists(v.sessionid());
-    quint64  time_ms = v.timestamp();
+    qint64    time_ms = v.timestamp();
     QDateTime data_timestamp = QDateTime::fromMSecsSinceEpoch(time_ms);
 
     if (!sess) {
         qDebug() << "Session at" << data_timestamp << "not found...create new session" << v.sessionid();
         sess = new Session(mach, v.sessionid());
-        sess->really_set_first(time_ms);
+        sess->set_first(time_ms);
     } else {
         qDebug() << "Session" << v.sessionid() << "found...add data to it";
     }
+    m_session = sess;
 
     QList<ViatomFile::Record> records = v.ReadData();
-
-    quint64  step = v.duration() / records.size() * 1000L;
-    EventList *ev_hr = sess->AddEventList(OXI_Pulse, EVL_Waveform,  1.0, 0.0, 0.0, 0.0, step);
-    EventList *ev_o2 = sess->AddEventList(OXI_SPO2, EVL_Waveform,   1.0, 0.0, 0.0, 0.0, step);
-    EventList *ev_mv = sess->AddEventList(POS_Motion, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, step);
+    m_step = v.duration() / records.size() * 1000L;
 
     // Import data
-    // TODO: Add support for multiple eventlists rather than holding the previous value.
-    ViatomFile::Record prev = { 99, 60, 0, 0, 0 };
     for (auto & rec : records) {
-        if (rec.spo2 < 50 || rec.spo2 > 100) rec.spo2 = prev.spo2;
-        if (rec.hr < 20 || rec.hr > 200) rec.hr = prev.hr;
-        if (rec.motion > 200) rec.motion = prev.motion;
-
-        sess->set_last(time_ms);
-        ev_hr->AddEvent(time_ms, rec.hr);
-        ev_o2->AddEvent(time_ms, rec.spo2);
-        ev_mv->AddEvent(time_ms, rec.motion);
-
-        prev = rec;
-        time_ms += step;
+        if (rec.oximetry_invalid) {
+            EndEventList(OXI_Pulse, time_ms);
+            EndEventList(OXI_SPO2, time_ms);
+        } else {
+            AddEvent(OXI_Pulse, time_ms, rec.hr);
+            AddEvent(OXI_SPO2, time_ms, rec.spo2);
+        }
+        AddEvent(POS_Motion, time_ms, rec.motion);
+        time_ms += m_step;
     }
+    EndEventList(OXI_Pulse, time_ms);
+    EndEventList(OXI_SPO2, time_ms);
+    EndEventList(POS_Motion, time_ms);
+    m_session->set_last(time_ms);
 
     /*
     qDebug() << "Read Viatom data from" << data_timestamp << "to" << (QDateTime::fromSecsSinceEpoch( time_ms / 1000L))
@@ -137,16 +134,7 @@ Session* ViatomLoader::ParseFile(const QString & filename)
              << ev_mv->Min() << "<=Motion<=" << ev_mv->Max();
     */
 
-    sess->setMin(OXI_Pulse,  ev_hr->Min());
-    sess->setMax(OXI_Pulse,  ev_hr->Max());
-    sess->setMin(OXI_SPO2,   ev_o2->Min());
-    sess->setMax(OXI_SPO2,   ev_o2->Max());
-    sess->setMin(POS_Motion, ev_mv->Min());
-    sess->setMax(POS_Motion, ev_mv->Max());
-
-    sess->really_set_last(time_ms);
-
-    return sess;
+    return m_session;
 }
 
 void ViatomLoader::SaveSessionToDatabase(Session* sess)
@@ -156,6 +144,32 @@ void ViatomLoader::SaveSessionToDatabase(Session* sess)
     sess->SetChanged(true);
     mach->AddSession(sess);
     mach->Save();
+}
+
+void ViatomLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
+{
+    EventList* C = m_importChannels[channel];
+    if (C == nullptr) {
+        C = m_session->AddEventList(channel, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, m_step);
+        Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
+        m_importChannels[channel] = C;
+    }
+    // Add the event
+    C->AddEvent(t, value);
+    m_importLastValue[channel] = value;
+}
+
+void ViatomLoader::EndEventList(ChannelID channel, qint64 /*t*/)
+{
+    EventList* C = m_importChannels[channel];
+    if (C != nullptr) {
+        // The below would be needed for square charts if the first sample represents
+        // the 4 seconds following the starting timestamp:
+        //C->AddEvent(t, m_importLastValue[channel]);
+        
+        // Mark this channel's event list as ended.
+        m_importChannels[channel] = nullptr;
+    }
 }
 
 static bool viatom_initialized = false;
@@ -233,6 +247,14 @@ bool ViatomFile::ParseHeader()
         return false;
     }
 
+    // It's unclear what the starting timestamp represents: is it the time at which
+    // the device starts measuring data, and the first sample is 4s after that? Or
+    // is the starting timestamp the time at which the first 4s average is reported
+    // (and the first 4 seconds being average precede the starting timestamp)?
+    //
+    // If the former, then the chart draws the first sample too early (right at the
+    // starting timestamp). Technically these should probably be square charts, but
+    // the code currently forces them to be non-square.
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
     m_timestamp = data_timestamp.toMSecsSinceEpoch();
     m_sessionid = m_timestamp / 1000L;
@@ -303,7 +325,13 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
     // Read all Pulse, SPO2 and Motion data
     do {
         ViatomFile::Record rec;
-        in >> rec.spo2 >> rec.hr >> rec._unk1 >> rec.motion >> rec._unk2;
+        in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec._unk;
+        CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF);
+        CHECK_VALUE(rec._unk, 0);
+        if (rec.oximetry_invalid == 0xFF) {
+            CHECK_VALUE(rec.spo2, 0xFF);
+            CHECK_VALUE(rec.hr, 0xFF);
+        }
         records.append(rec);
     } while (!in.atEnd());
 
@@ -318,9 +346,9 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
             auto & b = records.at(i+1);
             if (a.spo2 != b.spo2
                 || a.hr != b.hr
-                || a._unk1 != b._unk1
+                || a.oximetry_invalid != b.oximetry_invalid
                 || a.motion != b.motion
-                || a._unk2 != b._unk2) {
+                || a._unk != b._unk) {
                 all_are_duplicated = false;
                 break;
             }
