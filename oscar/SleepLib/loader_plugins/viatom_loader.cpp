@@ -144,6 +144,8 @@ void ViatomLoader::SaveSessionToDatabase(Session* sess)
     sess->SetChanged(true);
     mach->AddSession(sess);
     mach->Save();
+    mach->SaveSummaryCache();
+    p_profile->StoreMachines();
 }
 
 void ViatomLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
