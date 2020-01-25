@@ -110,7 +110,6 @@ Session* ViatomLoader::ParseFile(const QString & filename)
     QList<ViatomFile::Record> records = v.ReadData();
 
     quint64  step = v.duration() / records.size() * 1000L;
-    //CHECK_VALUES(step, 2000, 4000);  // TODO: once ReadData deduplicates the records, there will only be 4000
     EventList *ev_hr = sess->AddEventList(OXI_Pulse, EVL_Waveform,  1.0, 0.0, 0.0, 0.0, step);
     EventList *ev_o2 = sess->AddEventList(OXI_SPO2, EVL_Waveform,   1.0, 0.0, 0.0, 0.0, step);
     EventList *ev_mv = sess->AddEventList(POS_Motion, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, step);
@@ -308,21 +307,33 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
         records.append(rec);
     } while (!in.atEnd());
 
-    // TODO: deduplicate the samples
-    /* It turns out 2s files are actually just double-reported samples!
+    // It turns out 2s files are actually just double-reported samples!
     if (m_resolution == 2000) {
+        QList<ViatomFile::Record> dedup;
+        bool all_are_duplicated = true;
+
         CHECK_VALUE(records.size() % 2, 0);
         for (int i = 0; i < records.size(); i += 2) {
             auto & a = records.at(i);
             auto & b = records.at(i+1);
-            CHECK_VALUE(a.spo2, b.spo2);
-            CHECK_VALUE(a.hr, b.hr);
-            CHECK_VALUE(a._unk1, b._unk1);
-            CHECK_VALUE(a.motion, b.motion);
-            CHECK_VALUE(a._unk2, b._unk2);
+            if (a.spo2 != b.spo2
+                || a.hr != b.hr
+                || a._unk1 != b._unk1
+                || a.motion != b.motion
+                || a._unk2 != b._unk2) {
+                all_are_duplicated = false;
+                break;
+            }
+            dedup.append(a);
+        }
+        CHECK_VALUE(all_are_duplicated, true);
+        if (all_are_duplicated) {
+            // Return the deduplicated list.
+            records = dedup;
         }
     }
-    */
+    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
 
     return records;
 }
+
