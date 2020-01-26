@@ -34,35 +34,45 @@ ViatomLoader::Detect(const QString & path)
 int
 ViatomLoader::Open(const QString & dirpath)
 {
-    // I don't know under what circumstances this is called...
     qDebug() << "ViatomLoader::Open(" << dirpath << ")";
-    return 0;
+    int imported = 0;
+    int found = 0;
+    
+    if (QFileInfo(dirpath).isDir()) {
+        QDir dir(dirpath);
+        dir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden);
+        dir.setNameFilters(getNameFilter());
+        dir.setSorting(QDir::Name);
+
+        for (auto & fi : dir.entryInfoList()) {
+            imported += OpenFile(fi.canonicalFilePath());
+            found++;
+        }
+    }
+    else {
+        // This filename has already been filtered by QFileDialog.
+        imported = OpenFile(dirpath);
+        found++;
+    }
+
+    if (!found) {
+        return -1;
+    }
+    return imported;
 }
 
 int
 ViatomLoader::OpenFile(const QString & filename)
 {
-    bool ok = false;
+    int imported = 0;
     s_unexpectedMessages.clear();
     
-    qDebug() << "ViatomLoader::OpenFile(" << filename << ")";
-
     Session* sess = ParseFile(filename);
-    if (sess == nullptr) {
-        // TODO: This should not be an error condition, at least because we skip sessions that are already imported,
-        // and also since we may eventually scan a directory containing non-Viatom files, and those should simply
-        // be skipped.
-        /*
-        QMessageBox::information(QApplication::activeWindow(),
-                                 QObject::tr("Unrecognized File"),
-                                 QObject::tr("This file does not appear to be a Viatom data file.") +"\n\n"+
-                                 QObject::tr("If it is, the developers will need a copy of this file so that future versions of OSCAR will be able to read it.")
-                                 ,QMessageBox::Ok);
-        */
-    } else {
+    if (sess) {
         SaveSessionToDatabase(sess);
-        ok = true;
+        imported = 1;
 
+        // TODO: Move this to Open()
         if (s_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
             // Compare this to the list of messages previously seen for this machine
             // and only alert if there are new ones.
@@ -80,7 +90,7 @@ ViatomLoader::OpenFile(const QString & filename)
         }
     }
 
-    return ok;
+    return imported;
 }
 
 Session* ViatomLoader::ParseFile(const QString & filename)

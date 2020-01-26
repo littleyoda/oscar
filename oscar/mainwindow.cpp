@@ -2410,12 +2410,15 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
 
-        if (!viatom.OpenFile(filename)) {
-            Notify(tr("There was a problem opening Viatom data file: ") + filename);
-            return;
+        int c = viatom.Open(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+        } else if (c == 0) {
+            Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid data at\n\n%1").arg(filename),tr("Import Problem"));
         }
 
-        Notify(tr("Viatom Data Import complete"));
         daily->LoadDate(daily->getDate());
     }
 }
