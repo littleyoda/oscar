@@ -26,17 +26,19 @@ static QSet<QString> s_unexpectedMessages;
 bool
 ViatomLoader::Detect(const QString & path)
 {
-    // I don't know under what circumstances this is called...
+    // This is only used for CPAP machines, when detecting CPAP cards.
     qDebug() << "ViatomLoader::Detect(" << path << ")";
-    return true;
+    return false;
 }
 
 int
 ViatomLoader::Open(const QString & dirpath)
 {
     qDebug() << "ViatomLoader::Open(" << dirpath << ")";
+    Machine* mach = nullptr;
     int imported = 0;
     int found = 0;
+    s_unexpectedMessages.clear();
     
     if (QFileInfo(dirpath).isDir()) {
         QDir dir(dirpath);
@@ -45,52 +47,51 @@ ViatomLoader::Open(const QString & dirpath)
         dir.setSorting(QDir::Name);
 
         for (auto & fi : dir.entryInfoList()) {
-            imported += OpenFile(fi.canonicalFilePath());
+            mach = OpenFile(fi.canonicalFilePath());
+            if (mach) imported++;
             found++;
         }
     }
     else {
         // This filename has already been filtered by QFileDialog.
-        imported = OpenFile(dirpath);
+        mach = OpenFile(dirpath);
+        if (mach) imported++;
         found++;
     }
 
     if (!found) {
         return -1;
     }
-    return imported;
-}
-
-int
-ViatomLoader::OpenFile(const QString & filename)
-{
-    int imported = 0;
-    s_unexpectedMessages.clear();
-    
-    Session* sess = ParseFile(filename);
-    if (sess) {
-        SaveSessionToDatabase(sess);
-        imported = 1;
-
-        // TODO: Move this to Open()
-        if (s_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
-            // Compare this to the list of messages previously seen for this machine
-            // and only alert if there are new ones.
-            QSet<QString> newMessages = s_unexpectedMessages - sess->machine()->previouslySeenUnexpectedData();
-            if (newMessages.count() > 0) {
-                // TODO: Rework the importer call structure so that this can become an
-                // emit statement to the appropriate import job.
-                QMessageBox::information(QApplication::activeWindow(),
-                                         QObject::tr("Untested Data"),
-                                         QObject::tr("Your Viatom device generated data that OSCAR has never seen before.") +"\n\n"+
-                                         QObject::tr("The imported data may not be entirely accurate, so the developers would like a copy of this file to make sure OSCAR is handling the data correctly.")
-                                         ,QMessageBox::Ok);
-                sess->machine()->previouslySeenUnexpectedData() += newMessages;
-            }
+    if (mach && s_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
+        // Compare this to the list of messages previously seen for this machine
+        // and only alert if there are new ones.
+        QSet<QString> newMessages = s_unexpectedMessages - mach->previouslySeenUnexpectedData();
+        if (newMessages.count() > 0) {
+            // TODO: Rework the importer call structure so that this can become an
+            // emit statement to the appropriate import job.
+            QMessageBox::information(QApplication::activeWindow(),
+                                     QObject::tr("Untested Data"),
+                                     QObject::tr("Your Viatom device generated data that OSCAR has never seen before.") +"\n\n"+
+                                     QObject::tr("The imported data may not be entirely accurate, so the developers would like a copy of this file to make sure OSCAR is handling the data correctly.")
+                                     ,QMessageBox::Ok);
+            mach->previouslySeenUnexpectedData() += newMessages;
         }
     }
 
     return imported;
+}
+
+Machine* ViatomLoader::OpenFile(const QString & filename)
+{
+    Machine* mach = nullptr;
+    
+    Session* sess = ParseFile(filename);
+    if (sess) {
+        SaveSessionToDatabase(sess);
+        mach = sess->machine();
+    }
+
+    return mach;
 }
 
 Session* ViatomLoader::ParseFile(const QString & filename)

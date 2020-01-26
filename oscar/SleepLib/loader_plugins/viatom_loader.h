@@ -12,7 +12,7 @@
 #include "SleepLib/machine_loader.h"
 
 const QString viatom_class_name = "Viatom";
-const int viatom_data_version = 1;
+const int viatom_data_version = 2;
 
 
 /*! \class ViatomLoader
@@ -27,9 +27,7 @@ class ViatomLoader : public MachineLoader
     virtual bool Detect(const QString & path);
 
     virtual int Open(const QString & path);
-    virtual int OpenFile(const QString & filename);
     Session* ParseFile(const QString & filename);
-    void SaveSessionToDatabase(Session* session);
 
     static void Register();
 
@@ -45,6 +43,9 @@ class ViatomLoader : public MachineLoader
   //Machine *CreateMachine();
 
   protected:
+    Machine* OpenFile(const QString & filename);
+    void SaveSessionToDatabase(Session* session);
+
     void AddEvent(ChannelID channel, qint64 t, EventDataType value);
     void EndEventList(ChannelID channel, qint64 t);
 
