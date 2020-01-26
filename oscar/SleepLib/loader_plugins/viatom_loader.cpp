@@ -49,11 +49,16 @@ ViatomLoader::OpenFile(const QString & filename)
 
     Session* sess = ParseFile(filename);
     if (sess == nullptr) {
+        // TODO: This should not be an error condition, at least because we skip sessions that are already imported,
+        // and also since we may eventually scan a directory containing non-Viatom files, and those should simply
+        // be skipped.
+        /*
         QMessageBox::information(QApplication::activeWindow(),
                                  QObject::tr("Unrecognized File"),
                                  QObject::tr("This file does not appear to be a Viatom data file.") +"\n\n"+
                                  QObject::tr("If it is, the developers will need a copy of this file so that future versions of OSCAR will be able to read it.")
                                  ,QMessageBox::Ok);
+        */
     } else {
         SaveSessionToDatabase(sess);
         ok = true;
@@ -95,18 +100,17 @@ Session* ViatomLoader::ParseFile(const QString & filename)
     // That means you won't be able to import multiple Viatom devices in a single session/profile.
     MachineInfo  info = newInfo();
     Machine     *mach = p_profile->CreateMachine(info);
-    Session     *sess = mach->SessionExists(v.sessionid());
     qint64    time_ms = v.timestamp();
     QDateTime data_timestamp = QDateTime::fromMSecsSinceEpoch(time_ms);
 
-    if (!sess) {
-        qDebug() << "Session at" << data_timestamp << "not found...create new session" << v.sessionid();
-        sess = new Session(mach, v.sessionid());
-        sess->set_first(time_ms);
-    } else {
-        qDebug() << "Session" << v.sessionid() << "found...add data to it";
+    if (mach->SessionExists(v.sessionid())) {
+        // Skip already imported session
+        qDebug() << filename << "session already exists, skipping" << v.sessionid();
+        return nullptr;
     }
-    m_session = sess;
+
+    m_session = new Session(mach, v.sessionid());
+    m_session->set_first(time_ms);
 
     QList<ViatomFile::Record> records = v.ReadData();
     m_step = v.duration() / records.size() * 1000L;
@@ -127,12 +131,6 @@ Session* ViatomLoader::ParseFile(const QString & filename)
     EndEventList(OXI_SPO2, time_ms);
     EndEventList(POS_Motion, time_ms);
     m_session->set_last(time_ms);
-
-    /*
-    qDebug() << "Read Viatom data from" << data_timestamp << "to" << (QDateTime::fromSecsSinceEpoch( time_ms / 1000L))
-             << records.count() << "records"
-             << ev_mv->Min() << "<=Motion<=" << ev_mv->Max();
-    */
 
     return m_session;
 }
@@ -190,6 +188,7 @@ ViatomLoader::Register()
 
 // ===============================================================================================
 
+/*
 static QString ts(qint64 msecs)
 {
     // TODO: make this UTC so that tests don't vary by where they're run
@@ -206,6 +205,7 @@ static QString dur(qint64 msecs)
         .arg(m, 2, 10, QChar('0'))
         .arg(s, 2, 10, QChar('0'));
 }
+*/
 
 // TODO: Merge this with PRS1 macros and generalize for all loaders.
 #define UNEXPECTED_VALUE(SRC, VALS) { \
@@ -311,7 +311,7 @@ bool ViatomFile::ParseHeader()
     CHECK_VALUE(datasize % RECORD_SIZE, 0);
     CHECK_VALUE(m_duration % m_record_count, 0);
 
-    qDebug().noquote() << m_file.fileName() << ts(m_timestamp) << dur(m_duration * 1000L) << ":" << m_record_count << "records @" << m_resolution << "ms";
+    //qDebug().noquote() << m_file.fileName() << ts(m_timestamp) << dur(m_duration * 1000L) << ":" << m_record_count << "records @" << m_resolution << "ms";
 
     return true;
 }
