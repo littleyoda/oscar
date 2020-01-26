@@ -2399,13 +2399,13 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
 
 void MainWindow::on_actionImport_Viatom_Data_triggered()
 {
+    ViatomLoader viatom;
+
     QFileDialog w;
-    w.setFileMode(QFileDialog::ExistingFiles);
+    w.setFileMode(QFileDialog::AnyFile);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setNameFilters(QStringList("Viatom Data File (20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9])"));
-
-    ViatomLoader viatom;
+    w.setNameFilters(viatom.getNameFilter());
 
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];

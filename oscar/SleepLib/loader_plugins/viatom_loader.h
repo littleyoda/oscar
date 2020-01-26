@@ -39,6 +39,8 @@ class ViatomLoader : public MachineLoader
     virtual MachineInfo newInfo() {
         return MachineInfo(MT_OXIMETER, 0, viatom_class_name, QObject::tr("Viatom"), QString(), QString(), QString(), QObject::tr("Viatom Software"), QDateTime::currentDateTime(), viatom_data_version);
     }
+    
+    QStringList getNameFilter();
 
   //Machine *CreateMachine();
 

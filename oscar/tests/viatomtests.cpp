@@ -8,7 +8,6 @@
 
 #include "viatomtests.h"
 #include "sessiontests.h"
-#include <QRegularExpression>
 
 #define TESTDATA_PATH "./testdata/"
 
@@ -47,17 +46,14 @@ static void parseAndEmitSessionYaml(const QString & path)
 void ViatomTests::testSessionsToYaml()
 {
     static const QString root = TESTDATA_PATH "viatom/input/";
-    static const QRegularExpression re("(20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9])");
 
     QDir dir(root);
     dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setNameFilters(s_loader->getNameFilter());
     dir.setSorting(QDir::Name);
 
     for (auto & fi : dir.entryInfoList()) {
-        QRegularExpressionMatch match = re.match(fi.fileName());
-        if (match.hasMatch()) {
-            parseAndEmitSessionYaml(fi.canonicalFilePath());
-        }
+        parseAndEmitSessionYaml(fi.canonicalFilePath());
     }
 }
 
