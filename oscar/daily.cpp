@@ -1279,7 +1279,7 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Max);
 
     ChannelID chans[]={
-        CPAP_Pressure,CPAP_EPAP,CPAP_IPAP,CPAP_PS,CPAP_PTB,
+        CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  /*  CPAP_IE,   */  CPAP_Ti,CPAP_Te, CPAP_TgMV,
         CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement

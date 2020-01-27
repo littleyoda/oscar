@@ -1030,6 +1030,10 @@ void Session::destroyEvent(ChannelID code)
     // does not trash settings..
 }
 
+// TODO: The below assumes values are held for their duration. This does not properly handle
+// CPAP_PressureSet/EPAPSet/IPAPSet or other interpolated channels. The proper "value" held
+// for any given duration is the average of the starding and ending values, for the duration
+// between them.
 void Session::updateCountSummary(ChannelID code)
 {
     QHash<ChannelID, QVector<EventList *> >::iterator ev = eventlist.find(code);
