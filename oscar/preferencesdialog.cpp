@@ -237,6 +237,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
 //  ui->enableMultithreading->setChecked(AppSetting->multithreading());
     ui->enableMultithreading->setVisible(false);
     ui->removeCardNotificationCheckbox->setChecked(AppSetting->removeCardReminder());
+    ui->dontAskWhenSavingScreenshotsCheckbox->setChecked(AppSetting->dontAskWhenSavingScreenshots());
     ui->cacheSessionData->setChecked(AppSetting->cacheSessions());
     ui->preloadSummaries->setChecked(profile->session->preloadSummaries());
     ui->animationsAndTransitionsCheckbox->setChecked(AppSetting->animations());
@@ -825,6 +826,7 @@ bool PreferencesDialog::Save()
     profile->general->setShowUnknownFlags(ui->showUnknownFlags->isChecked());
     AppSetting->setMultithreading(ui->enableMultithreading->isChecked());
     AppSetting->setRemoveCardReminder(ui->removeCardNotificationCheckbox->isChecked());
+    AppSetting->setDontAskWhenSavingScreenshots(ui->dontAskWhenSavingScreenshotsCheckbox->isChecked());
 
     AppSetting->setCacheSessions(ui->cacheSessionData->isChecked());
     profile->session->setPreloadSummaries(ui->preloadSummaries->isChecked());

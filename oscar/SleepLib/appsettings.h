@@ -51,6 +51,7 @@ const QString STR_US_OpenTabAtStart = "OpenTabAtStart";
 const QString STR_US_OpenTabAfterImport = "OpenTabAfterImport";
 const QString STR_US_AutoLaunchImport = "AutoLaunchImport";
 const QString STR_US_RemoveCardReminder = "RemoveCardReminder";
+const QString STR_US_DontAskWhenSavingScreenshots = "DontAskWhenSavingScreenshots";
 const QString STR_IS_CacheSessions = "MemoryHog";
 
 const QString STR_GEN_AutoOpenLastUsed = "AutoOpenLastUsed";
@@ -137,6 +138,7 @@ public:
   int openTabAtStart() const { return getPref(STR_US_OpenTabAtStart).toInt(); }
   int openTabAfterImport() const { return getPref(STR_US_OpenTabAfterImport).toInt(); }
   bool removeCardReminder() const { return getPref(STR_US_RemoveCardReminder).toBool(); }
+  bool dontAskWhenSavingScreenshots() const { return getPref(STR_US_DontAskWhenSavingScreenshots).toBool(); }
   bool autoOpenLastUsed() const { return getPref(STR_GEN_AutoOpenLastUsed).toBool(); }
   inline const QString & language() const { return m_language; }
 
@@ -188,6 +190,7 @@ public:
   void setOpenTabAtStart(int idx) { setPref(STR_US_OpenTabAtStart, idx); }
   void setOpenTabAfterImport(int idx) { setPref(STR_US_OpenTabAfterImport, idx); }
   void setRemoveCardReminder(bool b) { setPref(STR_US_RemoveCardReminder, b); }
+  void setDontAskWhenSavingScreenshots(bool b) { setPref(STR_US_DontAskWhenSavingScreenshots, b); }
 
   void setVersionString(QString version) { setPref(STR_PREF_VersionString, version); }
 #ifndef NO_UPDATER

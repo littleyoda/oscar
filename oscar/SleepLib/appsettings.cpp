@@ -44,6 +44,7 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     initPref(STR_US_AutoLaunchImport, false);
     m_cacheSessions = initPref(STR_IS_CacheSessions, false).toBool();
     initPref(STR_US_RemoveCardReminder, true);
+    initPref(STR_US_DontAskWhenSavingScreenshots, false);
     m_profileName = initPref(STR_GEN_Profile, "").toString();
     initPref(STR_GEN_AutoOpenLastUsed, true);
 

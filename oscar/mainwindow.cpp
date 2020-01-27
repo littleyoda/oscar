@@ -1462,21 +1462,32 @@ void MainWindow::DelayedScreenshot()
                                                             screenshotRect.width(),
                                                             screenshotRect.height() + titleBarHeight);
 
-    QString a = p_pref->Get("{home}/Screenshots");
-    QDir dir(a);
+    QString default_filename = "/screenshot-" + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + ".png";
 
-    if (!dir.exists()) {
-        dir.mkdir(a);
+    QString png_filepath;
+    if (AppSetting->dontAskWhenSavingScreenshots()) {
+        png_filepath = p_pref->Get("{home}/Screenshots");
+        QDir dir(png_filepath);
+        if (!dir.exists()) {
+            dir.mkdir(png_filepath);
+        }
+        png_filepath += default_filename;
+    } else {
+        QString folder = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + default_filename;
+        png_filepath = QFileDialog::getSaveFileName(this, tr("Choose where to save screenshot"), folder, tr("Image files (*.png)"));
+        if (png_filepath.isEmpty() == false && png_filepath.toLower().endsWith(".png") == false) {
+            png_filepath += ".png";
+        }
     }
 
-    a += "/screenshot-" + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + ".png";
-
-    qDebug() << "Saving screenshot to" << a;
-
-    if (!pixmap.save(a)) {
-        Notify(tr("There was an error saving screenshot to file \"%1\"").arg(QDir::toNativeSeparators(a)));
-    } else {
-        Notify(tr("Screenshot saved to file \"%1\"").arg(QDir::toNativeSeparators(a)));
+    // png_filepath will be empty if the user canceled the file selection above.
+    if (png_filepath.isEmpty() == false) {
+        qDebug() << "Saving screenshot to" << png_filepath;
+        if (!pixmap.save(png_filepath)) {
+            Notify(tr("There was an error saving screenshot to file \"%1\"").arg(QDir::toNativeSeparators(png_filepath)));
+        } else {
+            Notify(tr("Screenshot saved to file \"%1\"").arg(QDir::toNativeSeparators(png_filepath)));
+        }
     }
 
     setUpdatesEnabled(false);

@@ -2003,6 +2003,13 @@ Mainly affects the importer.</string>
               </property>
              </widget>
             </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="dontAskWhenSavingScreenshotsCheckbox">
+              <property name="text">
+               <string>Always save screenshots in the OSCAR Data folder</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
