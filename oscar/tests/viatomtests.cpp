@@ -45,15 +45,19 @@ static void parseAndEmitSessionYaml(const QString & path)
 
 void ViatomTests::testSessionsToYaml()
 {
-    static const QString root = TESTDATA_PATH "viatom/input/";
+    static const QString root_path = TESTDATA_PATH "viatom/input/";
 
-    QDir dir(root);
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-    dir.setNameFilters(s_loader->getNameFilter());
-    dir.setSorting(QDir::Name);
-
-    for (auto & fi : dir.entryInfoList()) {
-        parseAndEmitSessionYaml(fi.canonicalFilePath());
+    QDir root(root_path);
+    root.setFilter(QDir::NoDotAndDotDot | QDir::Dirs);
+    root.setSorting(QDir::Name);
+    for (auto & dir_info : root.entryInfoList()) {
+        QDir dir(dir_info.canonicalFilePath());
+        dir.setFilter(QDir::Files | QDir::Hidden);
+        dir.setNameFilters(s_loader->getNameFilter());
+        dir.setSorting(QDir::Name);
+        for (auto & fi : dir.entryInfoList()) {
+            parseAndEmitSessionYaml(fi.canonicalFilePath());
+        }
     }
 }
 
@@ -62,11 +66,12 @@ void ViatomTests::testSessionsToYaml()
 
 QString viatomOutputPath(const QString & inpath, const QString & suffix)
 {
-    // Output to viatom/output/FILENAME(-session.yml, etc.)
+    // Output to viatom/output/DIR/FILENAME(-session.yml, etc.)
     QFileInfo path(inpath);
     QString basename = path.fileName();
+    QString foldername = path.dir().dirName();
 
-    QDir outdir(TESTDATA_PATH "viatom/output");
+    QDir outdir(TESTDATA_PATH "viatom/output/" + foldername);
     outdir.mkpath(".");
     
     QString filename = QString("%1%2")
