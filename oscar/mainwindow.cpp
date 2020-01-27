@@ -2633,7 +2633,7 @@ void MainWindow::on_mainsplitter_splitterMoved(int, int)
 
 void MainWindow::on_actionCreate_Card_zip_triggered()
 {
-    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to archive this card?"));
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to zip this card?"));
 
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();
@@ -2653,7 +2653,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             }
             folder += QDir::separator() + infostr + ".zip";
 
-            filename = QFileDialog::getSaveFileName(this, tr("Choose where to save archive"), folder, tr("ZIP files (*.zip)"));
+            filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
 
             if (filename.isEmpty()) {
                 return;  // aborted
@@ -2663,7 +2663,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             QString selectedPath = QFileInfo(filename).dir().canonicalPath();
             if (selectedPath.startsWith(cardPath)) {
                 if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                        QObject::tr("Please select a location for your archive other than the data card itself!"),
+                        QObject::tr("Please select a location for your zip other than the data card itself!"),
                         QMessageBox::Ok)) {
                     continue;
                 }
@@ -2682,7 +2682,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         bool ok = z.Open(filename);
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
-            prog->setMessage(tr("Creating archive..."));
+            prog->setMessage(tr("Creating zip..."));
             ok = z.AddDirectory(cardPath, prog);
             z.Close();
         } else {
@@ -2690,7 +2690,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         }
         if (!ok) {
             QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                QObject::tr("Unable to create archive!"),
+                QObject::tr("Unable to create zip!"),
                 QMessageBox::Ok);
         }
     }
@@ -2705,7 +2705,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
 
     folder += QDir::separator() + STR_AppData + ".zip";
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save archive"), folder, tr("ZIP files (*.zip)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
 
     if (filename.isEmpty()) {
         return;  // aborted
@@ -2733,7 +2733,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
         files.AddDirectory(oscarData.canonicalPath(), oscarData.dirName());
         files.Remove(debugLog.fileName());
 
-        prog->setMessage(tr("Creating archive..."));
+        prog->setMessage(tr("Creating zip..."));
 
         // Create the zip.
         ok = z.AddFiles(files, prog);
@@ -2746,7 +2746,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
                 QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
                 ok = z.AddFile(debugLog.fileName(), debugLogName);
                 if (!ok) {
-                    qWarning() << "Unable to add debug log to archive!";
+                    qWarning() << "Unable to add debug log to zip!";
                 }
             }
         }
@@ -2757,7 +2757,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
     }
     if (!ok) {
         QMessageBox::warning(nullptr, STR_MessageBox_Error,
-            QObject::tr("Unable to create archive!"),
+            QObject::tr("Unable to create zip!"),
             QMessageBox::Ok);
     }
 }

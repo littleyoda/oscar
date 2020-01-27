@@ -2856,20 +2856,27 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <widget class="QMenu" name="menuTroubleshooting">
+     <property name="title">
+      <string>Troubleshooting</string>
+     </property>
+     <addaction name="actionDebug"/>
+     <addaction name="actionShow_Performance_Counters"/>
+     <addaction name="separator"/>
+     <addaction name="actionCreate_Card_zip"/>
+     <addaction name="actionCreate_OSCAR_Data_zip"/>
+     <addaction name="actionReport_a_Bug"/>
+     <addaction name="separator"/>
+     <addaction name="actionSystem_Information"/>
+    </widget>
     <addaction name="actionOnline_Users_Guide"/>
     <addaction name="action_Frequently_Asked_Questions"/>
     <addaction name="actionSleep_Disorder_Terms_Glossary"/>
     <addaction name="separator"/>
     <addaction name="actionChange_Language"/>
     <addaction name="separator"/>
-    <addaction name="actionDebug"/>
-    <addaction name="actionShow_Performance_Counters"/>
+    <addaction name="menuTroubleshooting"/>
     <addaction name="separator"/>
-    <addaction name="actionCreate_Card_zip"/>
-    <addaction name="actionCreate_OSCAR_Data_zip"/>
-    <addaction name="actionReport_a_Bug"/>
-    <addaction name="separator"/>
-    <addaction name="actionSystem_Information"/>
     <addaction name="action_About"/>
    </widget>
    <widget class="QMenu" name="menu_Data">
@@ -3212,12 +3219,12 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionCreate_Card_zip">
    <property name="text">
-    <string>Create archive of CPAP data card</string>
+    <string>Create zip of CPAP data card</string>
    </property>
   </action>
   <action name="actionCreate_OSCAR_Data_zip">
    <property name="text">
-    <string>Create archive of all OSCAR data</string>
+    <string>Create zip of all OSCAR data</string>
    </property>
   </action>
   <action name="actionExport_CSV">
