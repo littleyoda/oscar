@@ -78,7 +78,7 @@ ViatomLoader::Open(const QString & dirpath)
             QMessageBox::information(QApplication::activeWindow(),
                                      QObject::tr("Untested Data"),
                                      QObject::tr("Your Viatom device generated data that OSCAR has never seen before.") +"\n\n"+
-                                     QObject::tr("The imported data may not be entirely accurate, so the developers would like a copy of this file to make sure OSCAR is handling the data correctly.")
+                                     QObject::tr("The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.")
                                      ,QMessageBox::Ok);
             mach->previouslySeenUnexpectedData() += newMessages;
         }
@@ -348,7 +348,7 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
         ViatomFile::Record rec;
         in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec._unk;
         CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF);
-        CHECK_VALUE(rec._unk, 0);
+        CHECK_VALUE(rec._unk, 0);  // maybe vibration, given column label in CSV
         if (rec.oximetry_invalid == 0xFF) {
             CHECK_VALUE(rec.spo2, 0xFF);
             CHECK_VALUE(rec.hr, 0xFF);
