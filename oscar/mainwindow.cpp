@@ -2528,6 +2528,11 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
             sess->Destroy();
             delete sess;
         }
+        // TODO: Fix this. It deletes the underlying session data file in the machine,
+        // but not from the machine's summary cache. This results in future launches
+        // of OSCAR thinking the day has oximetry data, but then it isn't really there.
+        // Currently this is only useful for reimporting a single day, which the purge
+        // permits, and which in turn creates a new data file for that day.
 
 
         if (daily) {
