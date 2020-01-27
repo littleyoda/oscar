@@ -658,7 +658,7 @@ bool gGraphView::pinchTriggered(QPinchGesture * gesture)
      double ww = double(origin_px) / double(width);
      double origin = ww * span;
 
-     double q = span * gesture->totalScaleFactor();
+     double q = span / gesture->totalScaleFactor();
 
      if (q > hardspan) { q = hardspan; }
 
