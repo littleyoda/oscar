@@ -113,12 +113,17 @@ Session* ViatomLoader::ParseFile(const QString & filename)
         return nullptr;
     }
 
-    // TODO: Figure out what to do about machine ID. Right now OSCAR generates a random ID since we don't specify one.
-    // That means you won't be able to import multiple Viatom devices in a single session/profile.
-    MachineInfo  info = newInfo();
-    Machine     *mach = p_profile->CreateMachine(info);
-    qint64    time_ms = v.timestamp();
-    QDateTime data_timestamp = QDateTime::fromMSecsSinceEpoch(time_ms);
+    MachineInfo info = newInfo();
+    // Check whether the enclosing folder looks like a Viatom serial number, and if so, use it.
+    QString foldername = QFileInfo(filename).dir().dirName();
+    if (foldername.length() >= 9) {
+        bool numeric;
+        foldername.right(4).toInt(&numeric);
+        if (numeric) {
+            info.serial = foldername;
+        }
+    }
+    Machine *mach = p_profile->CreateMachine(info);
 
     if (mach->SessionExists(v.sessionid())) {
         // Skip already imported session
@@ -126,6 +131,7 @@ Session* ViatomLoader::ParseFile(const QString & filename)
         return nullptr;
     }
 
+    qint64 time_ms = v.timestamp();
     m_session = new Session(mach, v.sessionid());
     m_session->set_first(time_ms);
 

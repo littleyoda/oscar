@@ -615,6 +615,7 @@ void Machine::setInfo(MachineInfo inf)
 
 const QString Machine::getDataPath()
 {    
+    // TODO: Rework the underlying database so that file storage doesn't rely on consistent presence or absence of the serial number.
     m_dataPath = p_pref->Get("{home}/Profiles/")+profile->user->userName()+"/"+info.loadername + "_"
                  + (info.serial.isEmpty() ? hexid() : info.serial) + "/";
     return m_dataPath;
