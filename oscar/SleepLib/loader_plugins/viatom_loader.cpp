@@ -62,6 +62,12 @@ ViatomLoader::Open(const QString & dirpath)
     if (!found) {
         return -1;
     }
+    if (mach) {
+        qDebug() << "Imported" << imported << "sessions";
+        mach->Save();
+        mach->SaveSummaryCache();
+        p_profile->StoreMachines();
+    }
     if (mach && s_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
         // Compare this to the list of messages previously seen for this machine
         // and only alert if there are new ones.
@@ -116,7 +122,7 @@ Session* ViatomLoader::ParseFile(const QString & filename)
 
     if (mach->SessionExists(v.sessionid())) {
         // Skip already imported session
-        qDebug() << filename << "session already exists, skipping" << v.sessionid();
+        //qDebug() << filename << "session already exists, skipping" << v.sessionid();
         return nullptr;
     }
 
@@ -135,12 +141,12 @@ Session* ViatomLoader::ParseFile(const QString & filename)
             AddEvent(OXI_Pulse, time_ms, rec.hr);
             AddEvent(OXI_SPO2, time_ms, rec.spo2);
         }
-        AddEvent(POS_Motion, time_ms, rec.motion);
+        AddEvent(POS_Movement, time_ms, rec.motion);
         time_ms += m_step;
     }
     EndEventList(OXI_Pulse, time_ms);
     EndEventList(OXI_SPO2, time_ms);
-    EndEventList(POS_Motion, time_ms);
+    EndEventList(POS_Movement, time_ms);
     m_session->set_last(time_ms);
 
     return m_session;
@@ -152,9 +158,6 @@ void ViatomLoader::SaveSessionToDatabase(Session* sess)
     
     sess->SetChanged(true);
     mach->AddSession(sess);
-    mach->Save();
-    mach->SaveSummaryCache();
-    p_profile->StoreMachines();
 }
 
 void ViatomLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)

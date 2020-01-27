@@ -176,7 +176,7 @@ extern ChannelID ZEO_SleepStage, ZEO_ZQ, ZEO_TotalZ, ZEO_TimeToZ, ZEO_TimeInWake
        ZEO_FirstAlarmRing, ZEO_LastAlarmRing, ZEO_FirstSnoozeTime, ZEO_LastSnoozeTime, ZEO_SetAlarmTime,
        ZEO_RiseTime;
 
-extern ChannelID POS_Orientation, POS_Inclination, POS_Motion;
+extern ChannelID POS_Orientation, POS_Inclination, POS_Movement;
 
 const QString GRP_CPAP = "CPAP";
 const QString GRP_POS = "POS";

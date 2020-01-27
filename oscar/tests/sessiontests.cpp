@@ -136,7 +136,7 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_PressureSet);
         CHANNELNAME(CPAP_IPAPSet);
         CHANNELNAME(CPAP_EPAPSet);
-        CHANNELNAME(POS_Motion);
+        CHANNELNAME(POS_Movement);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);

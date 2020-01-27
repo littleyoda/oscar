@@ -239,7 +239,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     const ChannelID cpapcodes[] = {
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
-        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Motion, CPAP_Test1
+        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Movement, CPAP_Test1
     };
 
     // Create graphs from the cpap code list
@@ -400,7 +400,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     graphlist[schema::channel[POS_Inclination].code()]->AddLayer(new gLineChart(POS_Inclination));
     graphlist[schema::channel[POS_Orientation].code()]->AddLayer(new gLineChart(POS_Orientation));
-    graphlist[schema::channel[POS_Motion].code()]->AddLayer(new gLineChart(POS_Motion));
+    graphlist[schema::channel[POS_Movement].code()]->AddLayer(new gLineChart(POS_Movement));
 
     graphlist[schema::channel[CPAP_MinuteVent].code()]->AddLayer(lc=new gLineChart(CPAP_MinuteVent, square));
     lc->addPlot(CPAP_TgMV, square);
@@ -1282,7 +1282,7 @@ QString Daily::getStatisticsInfo(Day * day)
         CPAP_Pressure,CPAP_EPAP,CPAP_IPAP,CPAP_PS,CPAP_PTB,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  /*  CPAP_IE,   */  CPAP_Ti,CPAP_Te, CPAP_TgMV,
-        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Motion
+        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement
     };
     int numchans=sizeof(chans)/sizeof(ChannelID);
     int ccnt=0;
