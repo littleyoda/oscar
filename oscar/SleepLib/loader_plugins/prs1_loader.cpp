@@ -1632,7 +1632,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
     { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAPSet } },            // EPAPset is supported on F5 without any corresponding IPAPset, so it shouldn't always create a PS channel
-    { PRS1PressureAverageEvent::TYPE,   { &CPAP_Pressure } },
+    { PRS1PressureAverageEvent::TYPE,   { &CPAP_EPAP } },               // This is effectively EPAP due to Flex reduced pressure in CPAP/APAP mode.
     { PRS1IPAPAverageEvent::TYPE,       { &CPAP_IPAP } },
     { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },     // PS is calculated from IPAP and EPAP averages (F3 and F5)
     { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
