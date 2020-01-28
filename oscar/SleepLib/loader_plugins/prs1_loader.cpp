@@ -258,6 +258,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "400X110", 0, 6, "DreamStation CPAP Pro" },
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
+    { "500X130", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
@@ -1006,7 +1007,17 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
                 SessionID chunk_sid = chunk->sessionid;
                 if (i == 0 && chunk_sid != sid) {  // log session ID mismatches
-                    qDebug() << fi.canonicalFilePath() << chunk_sid;
+                    // This appears to be benign, probably when a card is out of the machine one night and
+                    // then inserted in the morning. It writes out all of the still-in-memory summaries and
+                    // events up through the last night (and no waveform data).
+                    //
+                    // This differs from the first time a card is inserted, because in that case the filename
+                    // *is* equal to the first session contained within it, and then filenames for the
+                    // remaining sessions contained in that file are skipped.
+                    //
+                    // Because the card was present and previous sessions were written with their filenames,
+                    // the first available filename isn't the first session contained in the file.
+                    //qDebug() << fi.canonicalFilePath() << "first session is" << chunk_sid << "instead of" << sid;
                 }
                 if (m->SessionExists(chunk_sid)) {
                     qDebug() << path << "session already imported, skipping" << sid << chunk_sid;
@@ -4996,15 +5007,15 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 break;
             case 8:  // CPAP-Check related, follows Mask On in CPAP-Check mode
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
-                CHECK_VALUES(data[pos+2], 0, 79);  // probably 16-bit value
+                //CHECK_VALUES(data[pos+2], 0, 79);  // probably 16-bit value, sometimes matches OA + H + FL + VS + RE?
                 CHECK_VALUE(data[pos+3], 0);
-                CHECK_VALUES(data[pos+4], 0, 10);  // probably 16-bit value
+                //CHECK_VALUES(data[pos+4], 0, 10);  // probably 16-bit value
                 CHECK_VALUE(data[pos+5], 0);
-                CHECK_VALUES(data[pos+6], 0, 79);  // probably 16-bit value
+                //CHECK_VALUES(data[pos+6], 0, 79);  // probably 16-bit value, usually the same as +2, but not always?
                 CHECK_VALUE(data[pos+7], 0);
-                CHECK_VALUES(data[pos+8], 0, 10);  // probably 16-bit value
+                //CHECK_VALUES(data[pos+8], 0, 10);  // probably 16-bit value
                 CHECK_VALUE(data[pos+9], 0);
-                CHECK_VALUES(data[pos+0xa], 0, 4);  // or 0? 44 when changed pressure mid-session?
+                //CHECK_VALUES(data[pos+0xa], 0, 4);  // or 0? 44 when changed pressure mid-session?
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
@@ -6020,6 +6031,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 // 0x8A = C-Flex+ 2 (CPAP mode)
 // 0x8A = C-Flex+ 2, lock off (CPAP-Check mode)
 // 0x8A = A-Flex 2, lock off (Auto-Trial mode)
+// 0xCB = C-Flex+ 3 (CPAP-Check mode), C-Flex+ Lock on
 //
 // 0x8A = A-Flex 1 (AutoCPAP mode)
 // 0x8B = C-Flex+ 3 (CPAP mode)
@@ -6034,11 +6046,14 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 {
     FlexMode flexmode = FLEX_None;
     bool enabled  = (flex & 0x80) != 0;
+    bool lock     = (flex & 0x40) != 0;
     bool risetime = (flex & 0x10) != 0;
     bool plusmode = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
-    // the original code suggested 0x40 was split (flex/flex+ then none), but we haven't seen any data with that yet
-    if (flex & (0x40 | 0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
+    if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
+    if (this->familyVersion == 2) {
+        CHECK_VALUE(lock, false);  // haven't observed this yet
+    }
 
     if (enabled) {
         if (flexlevel < 1) UNEXPECTED_VALUE(flexlevel, "!= 0");
@@ -6085,6 +6100,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
     if (flexmode != FLEX_None) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
     }
+    // TODO: add flex mode lock
 }
 
 
@@ -6475,7 +6491,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
     // Check for previously unseen data that we expect to be normal:
     if (family == 0) {
         if (tubepresent) {
-            if (tubehumidlevel == 1) UNEXPECTED_VALUE(tubehumidlevel, "!= 1");
+            // All tube temperature and humidity levels seen.
         }
     } else if (family == 5) {
         if (tubepresent) {
@@ -6558,9 +6574,10 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    if (data[pos+1]) {
+                    if (data[pos+1] != 0 && data[pos+1] != 0x80) {
                         // 0x20 seen with Opti-Start enabled
                         // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
+                        // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
                         CHECK_VALUES(data[pos+1], 0x20, 0x30);
                     }
                 }
@@ -6661,7 +6678,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     switch (cpapmode) {
                         case PRS1_MODE_CPAP:
                         //case PRS1_MODE_CPAPCHECK:
-                        //case PRS1_MODE_AUTOCPAP:
+                        case PRS1_MODE_AUTOCPAP:
                         //case PRS1_MODE_AUTOTRIAL:
                             flexmode = FLEX_CFlex;
                             break;
@@ -6735,8 +6752,8 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x40:  // new to 400G, also seen on 500X110, alternate tubing type? appears after 0x39 and before 0x3c
                 CHECK_VALUE(len, 1);
-                if (data[pos] != 3) {
-                    CHECK_VALUES(data[pos], 1, 2);  // 1 = 15mm, 2 = 15HT, 3 = 12mm
+                if (data[pos] != 3 && data[pos] != 0) {
+                    CHECK_VALUES(data[pos], 1, 2);  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm
                 }
                 this->ParseTubingTypeV3(data[pos]);
                 break;
