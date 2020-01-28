@@ -6677,7 +6677,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 case 0x80:
                     switch (cpapmode) {
                         case PRS1_MODE_CPAP:
-                        //case PRS1_MODE_CPAPCHECK:
+                        case PRS1_MODE_CPAPCHECK:
                         case PRS1_MODE_AUTOCPAP:
                         //case PRS1_MODE_AUTOTRIAL:
                             flexmode = FLEX_CFlex;
@@ -7781,7 +7781,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
 }
 
 
-bool PRS1Import::ParseOximetry()
+void PRS1Import::ParseOximetry()
 {
     int size = oximetry.size();
 
@@ -7799,6 +7799,9 @@ bool PRS1Import::ParseOximetry()
         qint64 dur = qint64(oxi->duration) * 1000L;
 
         if (num > 1) {
+            CHECK_VALUE(oxi->waveformInfo.at(0).interleave, 1);
+            CHECK_VALUE(oxi->waveformInfo.at(1).interleave, 1);
+            
             // Process interleaved samples
             QVector<QByteArray> data;
             data.resize(num);
@@ -7811,24 +7814,40 @@ bool PRS1Import::ParseOximetry()
                     pos += interleave;
                 }
             } while (pos < size);
+            CHECK_VALUE(data[0].size(), data[1].size());
 
-            if (data[0].size() > 0) {
-                EventList * pulse = session->AddEventList(OXI_Pulse, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, dur / data[0].size());
-                pulse->AddWaveform(ti, (unsigned char *)data[0].data(), data[0].size(), dur);
-            }
+            ImportOximetryChannel(OXI_Pulse, data[0], ti, dur);
 
-            if (data[1].size() > 0) {
-                EventList * spo2 = session->AddEventList(OXI_SPO2, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, dur / data[1].size());
-                spo2->AddWaveform(ti, (unsigned char *)data[1].data(), data[1].size(), dur);
-            }
-
+            ImportOximetryChannel(OXI_SPO2, data[1], ti, dur);
         }
     }
-    return true;
 }
 
 
-bool PRS1Import::ParseWaveforms()
+void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, quint64 ti, qint64 dur)
+{
+    if (data.size() == 0)
+        return;
+
+    // TODO: Split eventlist on invalid values (255)
+    for (int i=0; i < data.size(); i++) {
+        unsigned char value = data.data()[i];
+
+        if (value == 255) continue;
+
+        if (channel == OXI_Pulse) {
+            if (value > 200) UNEXPECTED_VALUE(value, "<= 200 bpm");
+        } else {
+            if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
+        }
+    }
+
+    EventList * el = session->AddEventList(channel, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, dur / data.size());
+    el->AddWaveform(ti, (unsigned char *)data.data(), data.size(), dur);
+}
+
+
+void PRS1Import::ParseWaveforms()
 {
     int size = waveforms.size();
     quint64 s1, s2;
@@ -7925,8 +7944,6 @@ bool PRS1Import::ParseWaveforms()
     if (discontinuities > 1) {
         qWarning() << session->session() << "multiple discontinuities!" << discontinuities;
     }
-
-    return true;
 }
 
 void PRS1Import::run()
@@ -8010,20 +8027,14 @@ bool PRS1Import::ParseSession(void)
 
         if (!m_wavefiles.isEmpty()) {
             // Parse .005 Waveform files
-            ok = ImportWaveforms();
-            if (!ok) {
-                qWarning() << sessionid << "Error parsing waveforms, proceeding anyway?";
-            }
+            ImportWaveforms();
         }
 
         if (!oxifile.isEmpty()) {
             // Parse .006 Waveform file
             oximetry = loader->ParseFile(oxifile);
             oximetry = CoalesceWaveformChunks(oximetry);
-            ok = ParseOximetry();
-            if (!ok) {
-                qWarning() << sessionid << "Error parsing oximetry, proceeding anyway?";
-            }
+            ParseOximetry();
         }
 
         save = true;
@@ -8033,10 +8044,9 @@ bool PRS1Import::ParseSession(void)
 }
 
 
-bool PRS1Import::ImportWaveforms()
+void PRS1Import::ImportWaveforms()
 {
     QMap<qint64,PRS1DataChunk *> waveform_chunks;
-    bool ok = true;
 
     if (m_wavefiles.count() > 1) {
         qDebug() << session->session() << "Waveform data split across multiple files";
@@ -8072,9 +8082,7 @@ bool PRS1Import::ImportWaveforms()
     }
 
     // Extract raw data into channels.
-    ok = ParseWaveforms();
-    
-    return ok;
+    ParseWaveforms();
 }
 
 

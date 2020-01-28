@@ -306,16 +306,19 @@ public:
     bool ImportEvents();
 
     //! \brief Imports the .005 event file(s).
-    bool ImportWaveforms();
+    void ImportWaveforms();
 
     //! \brief Coalesce contiguous .005 or .006 waveform chunks from the file into larger chunks for import.
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
 
     //! \brief Takes the parsed list of Flow/MaskPressure waveform chunks and adds them to the database
-    bool ParseWaveforms();
+    void ParseWaveforms();
 
     //! \brief Takes the parsed list of oximeter waveform chunks and adds them to the database.
-    bool ParseOximetry();
+    void ParseOximetry();
+
+    //! \brief Adds a single channel of continuous oximetry data to the database, splitting on any missing samples.
+    void ImportOximetryChannel(ChannelID channel, QByteArray & data, quint64 ti, qint64 dur);
 
 
 protected:
