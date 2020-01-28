@@ -1135,10 +1135,11 @@ enum PRS1ParsedEventType
     EV_PRS1_TOTLEAK,
     EV_PRS1_LEAK,  // unintentional leak
     EV_PRS1_AUTO_PRESSURE_SET,
-    EV_PRS1_PRESSURE_SET,  // TODO: maybe fold PRESSURE and IPAP into one
+    EV_PRS1_PRESSURE_SET,
     EV_PRS1_IPAP_SET,
     EV_PRS1_EPAP_SET,
-    EV_PRS1_PRESSURE_AVG,  // TODO: maybe fold PRESSURE and IPAP into one
+    EV_PRS1_PRESSURE_AVG,
+    EV_PRS1_FLEX_PRESSURE_AVG,
     EV_PRS1_IPAP_AVG,
     EV_PRS1_IPAPLOW,
     EV_PRS1_IPAPHIGH,
@@ -1539,6 +1540,7 @@ PRS1_PRESSURE_EVENT(PRS1PressureSetEvent, EV_PRS1_PRESSURE_SET);
 PRS1_PRESSURE_EVENT(PRS1IPAPSetEvent, EV_PRS1_IPAP_SET);
 PRS1_PRESSURE_EVENT(PRS1EPAPSetEvent, EV_PRS1_EPAP_SET);
 PRS1_PRESSURE_EVENT(PRS1PressureAverageEvent, EV_PRS1_PRESSURE_AVG);
+PRS1_PRESSURE_EVENT(PRS1FlexPressureAverageEvent, EV_PRS1_FLEX_PRESSURE_AVG);
 PRS1_PRESSURE_EVENT(PRS1IPAPAverageEvent, EV_PRS1_IPAP_AVG);
 PRS1_PRESSURE_EVENT(PRS1IPAPHighEvent, EV_PRS1_IPAPHIGH);
 PRS1_PRESSURE_EVENT(PRS1IPAPLowEvent, EV_PRS1_IPAPLOW);
@@ -1591,6 +1593,10 @@ static const QVector<PRS1ParsedEventType> PRS1OnDemandChannels =
     PRS1PressureSetEvent::TYPE,
     PRS1IPAPSetEvent::TYPE,
     PRS1EPAPSetEvent::TYPE,
+    
+    // Pressure average initialized on-demand for F0 due to the different semantics of bilevel vs. single pressure.
+    PRS1PressureAverageEvent::TYPE,
+    PRS1FlexPressureAverageEvent::TYPE,
 };
 
 // The set of "non-slice" channels are independent of mask-on slices, i.e. they
@@ -1632,7 +1638,8 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
     { PRS1EPAPSetEvent::TYPE,           { &CPAP_EPAPSet } },            // EPAPset is supported on F5 without any corresponding IPAPset, so it shouldn't always create a PS channel
-    { PRS1PressureAverageEvent::TYPE,   { &CPAP_EPAP } },               // This is effectively EPAP due to Flex reduced pressure in CPAP/APAP mode.
+    { PRS1PressureAverageEvent::TYPE,   { &CPAP_Pressure } },           // This is the time-weighted average pressure in bilevel modes.
+    { PRS1FlexPressureAverageEvent::TYPE, { &CPAP_EPAP } },             // This is effectively EPAP due to Flex reduced pressure in single-pressure modes.
     { PRS1IPAPAverageEvent::TYPE,       { &CPAP_IPAP } },
     { PRS1EPAPAverageEvent::TYPE,       { &CPAP_EPAP, &CPAP_PS } },     // PS is calculated from IPAP and EPAP averages (F3 and F5)
     { PRS1IPAPLowEvent::TYPE,           { &CPAP_IPAPLo } },
@@ -1684,6 +1691,7 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_IPAP_SET);
         ENUMSTRING(EV_PRS1_EPAP_SET);
         ENUMSTRING(EV_PRS1_PRESSURE_AVG);
+        ENUMSTRING(EV_PRS1_FLEX_PRESSURE_AVG);
         ENUMSTRING(EV_PRS1_IPAP_AVG);
         ENUMSTRING(EV_PRS1_IPAPLOW);
         ENUMSTRING(EV_PRS1_IPAPHIGH);
@@ -2808,6 +2816,7 @@ bool PRS1Import::IsIntervalEvent(PRS1ParsedEvent* e)
     // the previous statistics to the end of the session/slice.)
     switch (e->m_type) {
         case PRS1PressureAverageEvent::TYPE:
+        case PRS1FlexPressureAverageEvent::TYPE:
         case PRS1IPAPAverageEvent::TYPE:
         case PRS1IPAPLowEvent::TYPE:
         case PRS1IPAPHighEvent::TYPE:
@@ -3683,6 +3692,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V4 = {
     PRS1TotalLeakEvent::TYPE,
     PRS1SnoreEvent::TYPE,
     PRS1PressureAverageEvent::TYPE,
+    PRS1FlexPressureAverageEvent::TYPE,
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
@@ -3708,6 +3718,7 @@ bool PRS1DataChunk::ParseEventsF0V4()
     int code, size;
     int t = 0;
     int elapsed, duration, value;
+    bool is_bilevel = false;
     do {
         code = data[pos++];
 
@@ -3738,6 +3749,7 @@ bool PRS1DataChunk::ParseEventsF0V4()
                 // See notes above on interpolation.
                 this->AddEvent(new PRS1IPAPSetEvent(t, data[pos+1]));
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos]));  // EPAP needs to be added second to calculate PS
+                is_bilevel = true;
                 break;
             case 0x03:  // Adjust Opti-Start pressure
                 // On F0V4 this occasionally shows up in the middle of a session.
@@ -3825,13 +3837,18 @@ bool PRS1DataChunk::ParseEventsF0V4()
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos]));
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+1]));
 
-                // TODO: We need to track down what this average means. The original code for F0V4 called it "EPAP / Flex Pressure".
-                // Other parsers treated it as an EPAP event. Most other parsers now treat it as an average pressure (as a guess).
-                // But sample data shows this value around 10.3 cmH2O for a prescribed pressure of 12.0 (C-Flex+ 3). That's too low
-                // for an average pressure over time, but could easily be an average commanded EPAP, per discussions.
-                this->AddEvent(new PRS1PressureAverageEvent(t, data[pos+2]));
-                // TODO: The original code also handled the above differently for different modes. It looks like it ignored the
-                // value for Auto-BiLevel.
+                value = data[pos+2];
+                if (is_bilevel) {
+                    // For bi-level modes, this appears to be the time-weighted average of EPAP and IPAP actually provided.
+                    this->AddEvent(new PRS1PressureAverageEvent(t, value));
+                } else {
+                    // For single-pressure modes, this appears to be the average effective "EPAP" provided by Flex.
+                    //
+                    // Sample data shows this value around 10.3 cmH2O for a prescribed pressure of 12.0 (C-Flex+ 3).
+                    // That's too low for an average pressure over time, but could easily be an average commanded EPAP.
+                    // When flex mode is off, this is exactly the current CPAP set point.
+                    this->AddEvent(new PRS1FlexPressureAverageEvent(t, value));
+                }
                 this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x12:  // Snore count per pressure
@@ -3885,6 +3902,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V6 = {
     PRS1TotalLeakEvent::TYPE,
     PRS1SnoreEvent::TYPE,
     PRS1PressureAverageEvent::TYPE,
+    PRS1FlexPressureAverageEvent::TYPE,
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
@@ -3912,6 +3930,7 @@ bool PRS1DataChunk::ParseEventsF0V6()
     int code, size;
     int t = 0;
     int elapsed, duration, value;
+    bool is_bilevel = false;
     do {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
@@ -3954,6 +3973,7 @@ bool PRS1DataChunk::ParseEventsF0V6()
                 // See notes above on interpolation.
                 this->AddEvent(new PRS1IPAPSetEvent(t, data[pos+1]));
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos]));  // EPAP needs to be added second to calculate PS
+                is_bilevel = true;
                 break;
             case 0x03:  // Auto-CPAP starting pressure
                 // Most of the time this occurs, it's at the start and end of a session with
@@ -4037,13 +4057,19 @@ bool PRS1DataChunk::ParseEventsF0V6()
             case 0x11:  // Statistics
                 this->AddEvent(new PRS1TotalLeakEvent(t, data[pos]));
                 this->AddEvent(new PRS1SnoreEvent(t, data[pos+1]));
-                // Average pressure: this reads lower than the current CPAP set point when
-                // a flex mode is on, and exactly the current CPAP set point when off. For
-                // bi-level it's presumably an average of the actual pressures.
-                //
-                // TODO: See F0V4 comments, this may be average EPAP with pressure relief.
-                // We should look carefully at what that means for bilevel, both fixed and auto.
-                this->AddEvent(new PRS1PressureAverageEvent(t, data[pos+2]));
+
+                value = data[pos+2];
+                if (is_bilevel) {
+                    // For bi-level modes, this appears to be the time-weighted average of EPAP and IPAP actually provided.
+                    this->AddEvent(new PRS1PressureAverageEvent(t, value));
+                } else {
+                    // For single-pressure modes, this appears to be the average effective "EPAP" provided by Flex.
+                    //
+                    // Sample data shows this value around 10.3 cmH2O for a prescribed pressure of 12.0 (C-Flex+ 3).
+                    // That's too low for an average pressure over time, but could easily be an average commanded EPAP.
+                    // When flex mode is off, this is exactly the current CPAP set point.
+                    this->AddEvent(new PRS1FlexPressureAverageEvent(t, value));
+                }
                 this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
             case 0x12:  // Snore count per pressure
