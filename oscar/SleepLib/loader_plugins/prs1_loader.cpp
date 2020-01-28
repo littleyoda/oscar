@@ -7829,21 +7829,48 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
     if (data.size() == 0)
         return;
 
-    // TODO: Split eventlist on invalid values (255)
+    unsigned char* raw = (unsigned char*) data.data();
+    qint64 step = dur / data.size();
+    CHECK_VALUE(dur % data.size(), 0);
+    
+    bool pending_samples = false;
+    quint64 start_ti;
+    int start_i;
+    
+    // Split eventlist on invalid values (255)
     for (int i=0; i < data.size(); i++) {
-        unsigned char value = data.data()[i];
+        unsigned char value = raw[i];
+        bool valid = (value != 255);
 
-        if (value == 255) continue;
-
-        if (channel == OXI_Pulse) {
-            if (value > 200) UNEXPECTED_VALUE(value, "<= 200 bpm");
+        if (valid) {
+            if (pending_samples == false) {
+                pending_samples = true;
+                start_i  = i;
+                start_ti = ti;
+            }
+            
+            if (channel == OXI_Pulse) {
+                if (value > 200) UNEXPECTED_VALUE(value, "<= 200 bpm");
+            } else {
+                if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
+            }
         } else {
-            if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
+            if (pending_samples) {
+                // Create the pending event list
+                EventList* el = session->AddEventList(channel, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, step);
+                el->AddWaveform(start_ti, &raw[start_i], i - start_i, ti - start_ti);
+                pending_samples = false;
+            }
         }
+        ti += step;
     }
 
-    EventList * el = session->AddEventList(channel, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, dur / data.size());
-    el->AddWaveform(ti, (unsigned char *)data.data(), data.size(), dur);
+    if (pending_samples) {
+        // Create the pending event list
+        EventList* el = session->AddEventList(channel, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, step);
+        el->AddWaveform(start_ti, &raw[start_i], data.size() - start_i, ti - start_ti);
+        pending_samples = false;
+    }
 }
 
 
