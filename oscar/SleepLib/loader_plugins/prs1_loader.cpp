@@ -8067,9 +8067,6 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
 
     int cnt = 0;
 
-    int cruft = 0;
-    int firstsession = 0;
-
     do {
         chunk = PRS1DataChunk::ParseNext(f, this);
         if (chunk == nullptr) {
@@ -8078,44 +8075,21 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
         chunk->SetIndex(cnt);  // for logging/debugging purposes
 
         if (lastchunk != nullptr) {
-            // If there's any mismatch between header information, try and skip the block
-            // This probably isn't the best approach for dealing with block corruption :/
             if ((lastchunk->fileVersion != chunk->fileVersion)
                     || (lastchunk->ext != chunk->ext)
                     || (lastchunk->family != chunk->family)
                     || (lastchunk->familyVersion != chunk->familyVersion)
                     || (lastchunk->htype != chunk->htype)) {
-                qWarning() << path << "unexpected header data, skipping";
-                
-                // TODO: Find a sample of this problem to see if the below approach has any
-                // value, or whether we should just drop the chunk.
-                QByteArray junk = f.read(lastchunk->blockSize - chunk->m_header.size());
-
-                Q_UNUSED(junk)
-                if (lastchunk->ext == 5) {
-                    // The data is random crap
-                    // lastchunk->m_data.append(junk.mid(lastheadersize-16));
-                }
-                ++cruft;
-                // quit after 3 attempts
-                if (cruft > 3) {
-                    qWarning() << path << "too many unexpected headers, bailing";
-                    break;
-                }
-
-                cnt++;
-                delete chunk;
-                continue;
-                // Corrupt header.. skip it.
+                QString message = "*** unexpected change in header data";
+                qWarning() << path << message;
+                LogUnexpectedMessage(message);
+                // There used to be error-recovery code here, written before we checked CRCs.
+                // If we ever encounter data with a valid CRC that triggers the above warnings,
+                // we can then revisit how to handle it.
             }
-        }
-        
-        if (!firstsession) {
-            firstsession = chunk->sessionid;
         }
 
         CHUNKS.append(chunk);
-
         lastchunk = chunk;
         cnt++;
     } while (!f.atEnd());
@@ -8164,7 +8138,7 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f, PRS1Loader* loader)
         
         // Make sure the calculated CRC over the entire chunk (header and data) matches the stored CRC.
         if (chunk->calcCrc != chunk->storedCrc) {
-            // Correupt data block, warn about it.
+            // Corrupt data block, warn about it.
             qWarning() << chunk->m_path << "@" << chunk->m_filepos << "block CRC calc" << hex << chunk->calcCrc << "!= stored" << hex << chunk->storedCrc;
             
             // TODO: When this happens, it's usually because the chunk was truncated and another chunk header
@@ -8360,23 +8334,20 @@ bool PRS1DataChunk::ReadWaveformHeader(QFile & f)
 
         // Parse the variable-length waveform information.
         // TODO: move these checks into the parser, after the header checksum has been verified
+        // For now just skip them for the one known sample with a bad checksum.
+        if (this->sessionid == 268962649) return true;
+
         int pos = 0x13;
         for (int i = 0; i < wvfm_signals; ++i) {
             quint8 kind = header[pos];
-            if (kind != i) {  // always seems to range from 0...wvfm_signals-1, alert if not
-                qWarning() << this->m_path << kind << "!=" << i << "waveform kind";
-                //break;  // don't break to avoid changing behavior (for now)
-            }
+            CHECK_VALUE(kind, i);  // always seems to range from 0...wvfm_signals-1, alert if not
             quint16 interleave = header[pos + 1] | header[pos + 2] << 8;  // samples per interval
             if (this->fileVersion == 2) {
                 this->waveformInfo.push_back(PRS1Waveform(interleave, kind));
                 pos += 3;
             } else if (this->fileVersion == 3) {
                 int always_8 = header[pos + 3];  // sample size in bits?
-                if (always_8 != 8) {
-                    qWarning() << this->m_path << always_8 << "!= 8 in waveform header";
-                    //break;  // don't break to avoid changing behavior (for now)
-                }
+                CHECK_VALUE(always_8, 8);
                 this->waveformInfo.push_back(PRS1Waveform(interleave, kind));
                 pos += 4;
             }
@@ -8384,10 +8355,7 @@ bool PRS1DataChunk::ReadWaveformHeader(QFile & f)
         
         // And the trailing byte, whatever it is.
         int always_0 = header[pos];
-        if (always_0 != 0) {
-            qWarning() << this->m_path << always_0 << "!= 0 in waveform header";
-            //break;  // don't break to avoid changing behavior (for now)
-        }
+        CHECK_VALUE(always_0, 0);
        
         ok = true;
     } while (false);
