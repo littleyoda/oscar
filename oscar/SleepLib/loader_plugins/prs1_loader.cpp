@@ -6658,7 +6658,22 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     flexmode = FLEX_None;
                     break;
                 case 0x80:
-                    flexmode = FLEX_CFlex;
+                    switch (cpapmode) {
+                        case PRS1_MODE_CPAP:
+                        //case PRS1_MODE_CPAPCHECK:
+                        //case PRS1_MODE_AUTOCPAP:
+                        //case PRS1_MODE_AUTOTRIAL:
+                            flexmode = FLEX_CFlex;
+                            break;
+                        case PRS1_MODE_BILEVEL:
+                        case PRS1_MODE_AUTOBILEVEL:
+                            flexmode = FLEX_BiFlex;
+                            break;
+                        default:
+                            HEX(flexmode);
+                            UNEXPECTED_VALUE(cpapmode, "untested mode");
+                            break;
+                    }
                     break;
                 case 0x90:  // C-Flex+ or A-Flex, depending on machine mode
                     switch (cpapmode) {
