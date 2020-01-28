@@ -4239,7 +4239,7 @@ bool PRS1Import::ImportCompliance()
                 CHECK_VALUE(e->m_value, 0);
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
-                session->settings[PRS1_HoseDiam] = QObject::tr("%1mm").arg(e->m_value);
+                session->settings[PRS1_HoseDiam] = e->m_value;
                 break;
             case PRS1_SETTING_AUTO_ON:
                 session->settings[PRS1_AutoOn] = (bool) e->m_value;
@@ -7462,7 +7462,7 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_SysOneResistStat] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
-                session->settings[PRS1_HoseDiam] = QObject::tr("%1mm").arg(e->m_value);
+                session->settings[PRS1_HoseDiam] = e->m_value;
                 break;
             case PRS1_SETTING_AUTO_ON:
                 session->settings[PRS1_AutoOn] = (bool) e->m_value;
@@ -8506,8 +8506,6 @@ void PRS1Loader::initChannels()
         QObject::tr("PRS1 pressure relief mode."),
         QObject::tr("Flex Mode"),
         "", LOOKUP, Qt::green));
-
-
     chan->addOption(FLEX_None, STR_TR_None);
     chan->addOption(FLEX_CFlex, QObject::tr("C-Flex"));
     chan->addOption(FLEX_CFlexPlus, QObject::tr("C-Flex+"));
@@ -8604,8 +8602,9 @@ void PRS1Loader::initChannels()
         QObject::tr("Diameter of primary CPAP hose"),
         QObject::tr("Hose Diameter"),
         "", LOOKUP, Qt::green));
-    chan->addOption(0, QObject::tr("22mm"));
-    chan->addOption(1, QObject::tr("15mm"));
+    chan->addOption(22, QObject::tr("22mm"));
+    chan->addOption(15, QObject::tr("15mm"));
+    chan->addOption(12, QObject::tr("12mm"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistStat = 0xe108, SETTING,  MT_CPAP,  SESSION,
         "SysOneLock",
