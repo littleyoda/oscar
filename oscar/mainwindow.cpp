@@ -2302,7 +2302,6 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
     w.setFileMode(QFileDialog::ExistingFiles);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setOption(QFileDialog::DontUseNativeDialog, true);
     w.setNameFilters(QStringList("Zeo CSV File (*.csv)"));
 
     ZEOLoader zeo;

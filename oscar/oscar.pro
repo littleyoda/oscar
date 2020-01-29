@@ -517,7 +517,8 @@ test {
         tests/resmedtests.cpp \
         tests/sessiontests.cpp \
         tests/versiontests.cpp \
-        tests/viatomtests.cpp
+        tests/viatomtests.cpp \
+        tests/zeotests.cpp
 
     HEADERS += \
         tests/AutoTest.h \
@@ -525,7 +526,8 @@ test {
         tests/resmedtests.h \
         tests/sessiontests.h \
         tests/versiontests.h \
-        tests/viatomtests.h
+        tests/viatomtests.h \
+        tests/zeotests.h
 }
 
 macx {

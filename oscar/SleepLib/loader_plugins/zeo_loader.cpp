@@ -1,5 +1,6 @@
-﻿/* SleepLib ZEO Loader Implementation
+/* SleepLib ZEO Loader Implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -81,7 +82,21 @@ int ZEOLoader::Open(const QString & dirpath)
 
 int ZEOLoader::OpenFile(const QString & filename)
 {
-    QFile file(filename);
+    if (!openCSV(filename)) {
+        return 0;
+    }
+    Session* sess;
+    while ((sess = readNextSession()) != nullptr) {
+        sess->SetChanged(true);
+        mach->AddSession(sess);
+    }
+    mach->Save();
+    return true;
+}
+
+bool ZEOLoader::openCSV(const QString & filename)
+{
+    file.setFileName(filename);
 
     if (filename.toLower().endsWith(".csv")) {
         if (!file.open(QFile::ReadOnly)) {
@@ -94,9 +109,47 @@ int ZEOLoader::OpenFile(const QString & filename)
         // not supported.
     }
 
-    QTextStream text(&file);
+    text.setDevice(&file);
     QString headerdata = text.readLine();
     QStringList header = headerdata.split(",");
+
+    MachineInfo info = newInfo();
+    mach = p_profile->CreateMachine(info);
+
+    idxZQ = header.indexOf("ZQ");
+    //int idxTotalZ = header.indexOf("Total Z");
+    idxAwakenings = header.indexOf("Awakenings");
+    idxSG = header.indexOf("Sleep Graph");
+    idxDSG = header.indexOf("Detailed Sleep Graph");
+    idxTimeInWake = header.indexOf("Time in Wake");
+    idxTimeToZ = header.indexOf("Time to Z");
+    idxTimeInREM = header.indexOf("Time in REM");
+    idxTimeInLight = header.indexOf("Time in Light");
+    idxTimeInDeep = header.indexOf("Time in Deep");
+    idxStartOfNight = header.indexOf("Start of Night");
+    idxEndOfNight = header.indexOf("End of Night");
+    idxRiseTime = header.indexOf("Rise Time");
+//    int idxAlarmReason = header.indexOf("Alarm Reason");
+//    int idxSnoozeTime = header.indexOf("Snooze Time");
+//    int idxWakeTone = header.indexOf("Wake Tone");
+//    int idxWakeWindow = header.indexOf("Wake Window");
+//    int idxAlarmType = header.indexOf("Alarm Type");
+    idxFirstAlaramRing = header.indexOf("First Alarm Ring");
+    idxLastAlaramRing = header.indexOf("Last Alarm Ring");
+    idxFirstSnoozeTime = header.indexOf("First Snooze Time");
+    idxLastSnoozeTime = header.indexOf("Last Snooze Time");
+    idxSetAlarmTime = header.indexOf("Set Alarm Time");
+    idxMorningFeel = header.indexOf("Morning Feel");
+    idxFirmwareVersion = header.indexOf("Firmware Version");
+    idxMyZEOVersion = header.indexOf("My ZEO Version");
+
+    return true;
+}
+
+
+Session* ZEOLoader::readNextSession()
+{
+    Session* sess = nullptr;
     QString line;
     QStringList linecomp;
     QDateTime start_of_night, end_of_night, rise_time;
@@ -115,37 +168,6 @@ int ZEOLoader::OpenFile(const QString & filename)
     QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
 
     QStringList SG, DSG;
-
-    MachineInfo info = newInfo();
-    Machine *mach = p_profile->CreateMachine(info);
-
-
-    int idxZQ = header.indexOf("ZQ");
-    //int idxTotalZ = header.indexOf("Total Z");
-    int idxAwakenings = header.indexOf("Awakenings");
-    int idxSG = header.indexOf("Sleep Graph");
-    int idxDSG = header.indexOf("Detailed Sleep Graph");
-    int idxTimeInWake = header.indexOf("Time in Wake");
-    int idxTimeToZ = header.indexOf("Time to Z");
-    int idxTimeInREM = header.indexOf("Time in REM");
-    int idxTimeInLight = header.indexOf("Time in Light");
-    int idxTimeInDeep = header.indexOf("Time in Deep");
-    int idxStartOfNight = header.indexOf("Start of Night");
-    int idxEndOfNight = header.indexOf("End of Night");
-    int idxRiseTime = header.indexOf("Rise Time");
-//    int idxAlarmReason = header.indexOf("Alarm Reason");
-//    int idxSnoozeTime = header.indexOf("Snooze Time");
-//    int idxWakeTone = header.indexOf("Wake Tone");
-//    int idxWakeWindow = header.indexOf("Wake Window");
-//    int idxAlarmType = header.indexOf("Alarm Type");
-    int idxFirstAlaramRing = header.indexOf("First Alarm Ring");
-    int idxLastAlaramRing = header.indexOf("Last Alarm Ring");
-    int idxFirstSnoozeTime = header.indexOf("First Snooze Time");
-    int idxLastSnoozeTime = header.indexOf("Last Snooze Time");
-    int idxSetAlarmTime = header.indexOf("Set Alarm Time");
-    int idxMorningFeel = header.indexOf("Morning Feel");
-    int idxFirmwareVersion = header.indexOf("Firmware Version");
-    int idxMyZEOVersion = header.indexOf("My ZEO Version");
 
     bool ok;
     bool dodgy;
@@ -266,7 +288,6 @@ int ZEOLoader::OpenFile(const QString & filename)
         SG = linecomp[idxSG].split(" ");
         DSG = linecomp[idxDSG].split(" ");
 
-        const int WindowSize = 30000;
         sid = start_of_night.toTime_t();
 
         if (DSG.size() == 0) {
@@ -277,7 +298,13 @@ int ZEOLoader::OpenFile(const QString & filename)
             continue;
         }
 
-        Session *sess = new Session(mach, sid);
+        sess = new Session(mach, sid);
+        break;
+
+    } while (!line.isNull());
+
+    if (sess) {
+        const int WindowSize = 30000;
 
         sess->settings[ZEO_Awakenings] = Awakenings;
         sess->settings[ZEO_MorningFeel] = MorningFeel;
@@ -305,17 +332,13 @@ int ZEOLoader::OpenFile(const QString & filename)
 
         sess->really_set_last(tt);
         int size = DSG.size();
-        sess->SetChanged(true);
-        mach->AddSession(sess);
 
 
         qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size <<
                  "30 second chunks";
+    }
 
-    } while (!line.isNull());
-
-    mach->Save();
-    return true;
+    return sess;
 }
 
 static bool zeo_initialized = false;

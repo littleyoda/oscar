@@ -1,5 +1,6 @@
-﻿/* SleepLib ZEO Loader Header
+/* SleepLib ZEO Loader Header
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -38,8 +39,34 @@ class ZEOLoader : public MachineLoader
         return MachineInfo(MT_SLEEPSTAGE, 0, zeo_class_name, QObject::tr("Zeo"), QString(), QString(), QString(), QObject::tr("Personal Sleep Coach"), QDateTime::currentDateTime(), zeo_data_version);
     }
 
+    bool openCSV(const QString & filename);
+    Session* readNextSession();
+
   protected:
   private:
+    QFile file;
+    QTextStream text;
+    Machine *mach;
+    int idxZQ;
+    int idxAwakenings;
+    int idxSG;
+    int idxDSG;
+    int idxTimeInWake;
+    int idxTimeToZ;
+    int idxTimeInREM;
+    int idxTimeInLight;
+    int idxTimeInDeep;
+    int idxStartOfNight;
+    int idxEndOfNight;
+    int idxRiseTime;
+    int idxFirstAlaramRing;
+    int idxLastAlaramRing;
+    int idxFirstSnoozeTime;
+    int idxLastSnoozeTime;
+    int idxSetAlarmTime;
+    int idxMorningFeel;
+    int idxFirmwareVersion;
+    int idxMyZEOVersion;
 };
 
 #endif // ZEOLOADER_H
