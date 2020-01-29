@@ -7772,6 +7772,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
             qWarning().noquote() << relativePath(chunk->m_path) << "skipping session" << chunk->sessionid << ":"
                 << QDateTime::fromMSecsSinceEpoch(chunk->timestamp*1000).toString() << "older than"
                 << QDateTime::fromMSecsSinceEpoch(ignoreBefore*1000).toString();
+            delete chunk;
             continue;
         }
         coalescedAndFiltered.append(chunk);

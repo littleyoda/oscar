@@ -281,6 +281,7 @@ public:
         delete summary;
         for (auto & e : m_event_chunks.values()) { delete e; }
         for (int i=0;i < waveforms.size(); ++i) { delete waveforms.at(i); }
+        for (auto & c : oximetry) { delete c; }
     }
 
     //! \brief PRS1Import thread starts execution here.
