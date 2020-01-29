@@ -11,9 +11,6 @@ Important: One id code per item, DO NOT CHANGE ID NUMBERS!!!
 
 
 
-  <channel id="0x111e" class="data" name="TestChan1" details="Debugging Channel #2" label="Test #1" unit="" color="pink"/>
-  <channel id="0x111f" class="data" name="TestChan2" details="Debugging Channel #2" label="Test #2" unit="" color="blue"/>
-
   <channel id="0x1160" class="data" name="RMS9_E01" details="RMS9 Empty 1" label="E01" unit="" color="black"/>
   <channel id="0x1161" class="data" name="RMS9_E02" details="RMS9 Empty 2" label="E02" unit="" color="black"/>
   <channel id="0x1162" class="data" name="SetPressure" details="Set Pressure" label="Pressure" unit="" color="black"/>
@@ -37,7 +34,8 @@ Important: One id code per item, DO NOT CHANGE ID NUMBERS!!!
  </group>
  <group name="RMS9">
   <!-- RESMED Settings -->
-  <channel id="0xe200" class="setting" scope="!session" name="RMS9Mode" details="PAP Mode" label="PAP Mode" type="integer" link="0x1200">
+  <!-- there was a link="0x1200" in the RMS9Mode channel, but it seems unlikely to have ever worked. -->
+  <channel id="0xe200" class="setting" scope="!session" name="RMS9Mode" details="PAP Mode" label="PAP Mode" type="integer">
    <Option id="0" value="CPAP"/>
    <Option id="1" value="Auto"/>
    <Option id="2" value="VPAP"/>

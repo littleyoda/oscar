@@ -359,13 +359,22 @@ void init()
 }
 
 
-void resetChannels()
+void done()
 {
-    schema::channel.channels.clear();
     schema::channel.names.clear();
+    for (auto & c : schema::channel.channels.values()) {
+        delete c;
+    }
+    schema::channel.channels.clear();
     schema::channel.groups.clear();
 
     schema_initialized = false;
+}
+
+
+void resetChannels()
+{
+    done();
     init();
 
     QList<MachineLoader *> list = GetLoaders();

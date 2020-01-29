@@ -120,7 +120,7 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
 Machine::~Machine()
 {
     saveSessionInfo();
-    qDebug() << "Destroy Machine" << info.loadername << hex << m_id;
+    //qDebug() << "Destroy Machine" << info.loadername << hex << m_id;
 }
 Session *Machine::SessionExists(SessionID session)
 {

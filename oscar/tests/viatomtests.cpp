@@ -16,8 +16,7 @@ static QString viatomOutputPath(const QString & inpath, const QString & suffix);
 
 void ViatomTests::initTestCase(void)
 {
-    QString profile_path = TESTDATA_PATH "profile/";
-    Profiles::Create("test", &profile_path);
+    p_profile = new Profile(TESTDATA_PATH "profile/", false);
 
     schema::init();
     ViatomLoader::Register();
@@ -26,6 +25,8 @@ void ViatomTests::initTestCase(void)
 
 void ViatomTests::cleanupTestCase(void)
 {
+    delete p_profile;
+    p_profile = nullptr;
 }
 
 

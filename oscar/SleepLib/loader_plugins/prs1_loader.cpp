@@ -8700,7 +8700,6 @@ void PRS1Loader::initChannels()
         "??",
         STR_UNIT_Seconds,
         DEFAULT,    QColor("#ffe8f0")));
-    qDebug() << channel[PRS1_0E].defaultColor();
     channel.add(GRP_CPAP, new Channel(PRS1_BND = 0x1159, SPAN,  MT_CPAP,   SESSION,
         "PRS1_BND",
         QObject::tr("Breathing Not Detected"),

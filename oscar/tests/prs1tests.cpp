@@ -18,8 +18,7 @@ static QString prs1OutputPath(const QString & inpath, const QString & serial, in
 
 void PRS1Tests::initTestCase(void)
 {
-    QString profile_path = TESTDATA_PATH "profile/";
-    Profiles::Create("test", &profile_path);
+    p_profile = new Profile(TESTDATA_PATH "profile/", false);
 
     schema::init();
     PRS1Loader::Register();
@@ -28,6 +27,8 @@ void PRS1Tests::initTestCase(void)
 
 void PRS1Tests::cleanupTestCase(void)
 {
+    delete p_profile;
+    p_profile = nullptr;
 }
 
 
@@ -348,6 +349,9 @@ void parseAndEmitChunkYaml(const QString & path)
             file.close();
         }
     }
+    
+    p_profile->removeMachine(m);
+    delete m;
 }
 
 void PRS1Tests::testChunksToYaml()

@@ -43,8 +43,8 @@ class SessionSettings;
 class Profile : public Preferences
 {
   public:
-    //! \brief Constructor.. Does not open profile
-    Profile(QString path);
+    //! \brief Constructor.. Does not open profile in UI, but loads it from disk by default
+    Profile(QString path, bool open=true);
 
     virtual ~Profile();
 

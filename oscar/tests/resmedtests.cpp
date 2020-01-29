@@ -16,8 +16,8 @@ static void iterateTestCards(const QString & root, void (*action)(const QString 
 
 void ResmedTests::initTestCase(void)
 {
-    QString profile_path = TESTDATA_PATH "profile/";
-    Profiles::Create("test", &profile_path);
+    p_profile = new Profile(TESTDATA_PATH "profile/", false);
+
     p_pref = new Preferences("Preferences");
     p_pref->Open();
     AppSetting = new AppWideSetting(p_pref);
@@ -29,6 +29,10 @@ void ResmedTests::initTestCase(void)
 
 void ResmedTests::cleanupTestCase(void)
 {
+    delete AppSetting;
+    delete p_pref;
+    delete p_profile;
+    p_profile = nullptr;
 }
 
 

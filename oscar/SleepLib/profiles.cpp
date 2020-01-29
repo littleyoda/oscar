@@ -36,7 +36,7 @@ Preferences *p_pref;
 Preferences *p_layout;
 Profile *p_profile;
 
-Profile::Profile(QString path)
+Profile::Profile(QString path, bool open)
   : is_first_day(true),
      m_opened(false)
 {
@@ -58,7 +58,9 @@ Profile::Profile(QString path)
     p_filename = p_path + p_name + STR_ext_XML;
     m_machlist.clear();
 
-    Open(p_filename);
+    if (open) {
+        Open(p_filename);
+    }
 
     Set(STR_GEN_DataFolder, QString("{home}/Profiles/{UserName}"));
 
@@ -80,13 +82,17 @@ Profile::Profile(QString path)
     session = new SessionSettings(this);
     general = new UserSettings(this);
 
-    OpenMachines();
-    m_opened=true;
+    if (open) {
+        OpenMachines();
+        m_opened=true;
+    }
 }
 
 Profile::~Profile()
 {
-    removeLock();
+    if (m_opened) {
+        removeLock();
+    }
 
     delete user;
     delete doctor;

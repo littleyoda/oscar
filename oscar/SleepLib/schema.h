@@ -265,6 +265,7 @@ class ChannelList
 extern ChannelList channel;
 
 void init();
+void done();
 
 } // namespace schema
 
