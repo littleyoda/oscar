@@ -90,6 +90,14 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(PRS1_MaskAlert);
         CHANNELNAME(PRS1_ShowAHI);
         CHANNELNAME(CPAP_BrokenSummary);
+        CHANNELNAME(ZEO_Awakenings);
+        CHANNELNAME(ZEO_MorningFeel);
+        CHANNELNAME(ZEO_TimeInWake);
+        CHANNELNAME(ZEO_TimeInREM);
+        CHANNELNAME(ZEO_TimeInLight);
+        CHANNELNAME(ZEO_TimeInDeep);
+        CHANNELNAME(ZEO_TimeToZ);
+        CHANNELNAME(ZEO_ZQ);
         s = hex(i);
         qDebug() << "setting channel" << qPrintable(s);
     } while(false);
@@ -137,6 +145,7 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_IPAPSet);
         CHANNELNAME(CPAP_EPAPSet);
         CHANNELNAME(POS_Movement);
+        CHANNELNAME(ZEO_SleepStage);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);

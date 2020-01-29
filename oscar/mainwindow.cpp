@@ -2309,12 +2309,17 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
 
-        if (!zeo.OpenFile(filename)) {
-            Notify(tr("There was a problem opening ZEO File: ") + filename);
-            return;
+        qDebug() << "Loading ZEO data from" << filename;
+        int c = zeo.OpenFile(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            qDebug() << "Imported" << c << "ZEO sessions";
+        } else if (c == 0) {
+            Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid ZEO CSV data at\n\n%1").arg(filename),tr("Import Problem"));
         }
 
-        Notify(tr("Zeo CSV Import complete"));
         daily->LoadDate(daily->getDate());
     }
 

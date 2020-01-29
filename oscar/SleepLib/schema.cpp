@@ -328,7 +328,7 @@ void init()
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInREM  = 0x2005, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInREM",    QObject::tr("Time In REM Sleep"), QObject::tr("Time spent in REM Sleep"), QObject::tr("Time in REM Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInLight= 0x2006, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInLight",QObject::tr("Time In Light Sleep"), QObject::tr("Time spent in light sleep"), QObject::tr("Time in Light Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInDeep = 0x2007, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInDeep",   QObject::tr("Time In Deep Sleep"), QObject::tr("Time spent in deep sleep"), QObject::tr("Time in Deep Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
-    schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInDeep = 0x2008, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeToZ",      QObject::tr("Time to Sleep"), QObject::tr("Time taken to get to sleep"), QObject::tr("Time to Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
+    schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeToZ    = 0x2008, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeToZ",      QObject::tr("Time to Sleep"), QObject::tr("Time taken to get to sleep"), QObject::tr("Time to Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_ZQ         = 0x2009, DATA,   MT_SLEEPSTAGE,  SESSION, "ZeoZQ", QObject::tr("Zeo ZQ"), QObject::tr("Zeo sleep quality measurement"), QObject::tr("ZEO ZQ"),  QString(), INTEGER,  Qt::black));
 
     NoChannel = 0;

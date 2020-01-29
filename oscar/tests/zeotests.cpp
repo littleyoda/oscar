@@ -12,7 +12,7 @@
 #define TESTDATA_PATH "./testdata/"
 
 static ZEOLoader* s_loader = nullptr;
-static QString zeoOutputPath(const QString & inpath, const QString & suffix);
+static QString zeoOutputPath(const QString & inpath, int sid, const QString & suffix);
 
 void ZeoTests::initTestCase(void)
 {
@@ -37,12 +37,19 @@ static void parseAndEmitSessionYaml(const QString & path)
     qDebug() << path;
 
     if (s_loader->openCSV(path)) {
+        int count = 0;
         Session* session;
         while ((session = s_loader->readNextSession()) != nullptr) {
-            QString outpath = zeoOutputPath(path, "-session.yml");
+            QString outpath = zeoOutputPath(path, session->session(), "-session.yml");
             SessionToYaml(outpath, session, true);
             delete session;
+            count++;
         }
+        if (count == 0) {
+            qWarning() << "no sessions found";
+        }
+    } else {
+        qWarning() << "unable to open file";
     }
 }
 
@@ -67,18 +74,19 @@ void ZeoTests::testSessionsToYaml()
 
 // ====================================================================================================
 
-QString zeoOutputPath(const QString & inpath, const QString & suffix)
+QString zeoOutputPath(const QString & inpath, int sid, const QString & suffix)
 {
     // Output to zeo/output/DIR/FILENAME(-session.yml, etc.)
     QFileInfo path(inpath);
-    QString basename = path.fileName();
+    QString basename = path.baseName();
     QString foldername = path.dir().dirName();
 
     QDir outdir(TESTDATA_PATH "zeo/output/" + foldername);
     outdir.mkpath(".");
     
-    QString filename = QString("%1%2")
+    QString filename = QString("%1-%2%3")
                         .arg(basename)
+                        .arg(sid, 8, 10, QChar('0'))
                         .arg(suffix);
     return outdir.path() + QDir::separator() + filename;
 }

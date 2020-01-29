@@ -83,15 +83,17 @@ int ZEOLoader::Open(const QString & dirpath)
 int ZEOLoader::OpenFile(const QString & filename)
 {
     if (!openCSV(filename)) {
-        return 0;
+        return -1;
     }
+    int count = 0;
     Session* sess;
     while ((sess = readNextSession()) != nullptr) {
         sess->SetChanged(true);
         mach->AddSession(sess);
+        count++;
     }
     mach->Save();
-    return true;
+    return count;
 }
 
 bool ZEOLoader::openCSV(const QString & filename)
@@ -101,11 +103,11 @@ bool ZEOLoader::openCSV(const QString & filename)
     if (filename.toLower().endsWith(".csv")) {
         if (!file.open(QFile::ReadOnly)) {
             qDebug() << "Couldn't open zeo file" << filename;
-            return 0;
+            return false;
         }
     } else {// if (filename.toLower().endsWith(".dat")) {
 
-        return 0;
+        return false;
         // not supported.
     }
 
@@ -211,15 +213,15 @@ Session* ZEOLoader::readNextSession()
 
         if (!ok) { dodgy = true; }
 
-        start_of_night = QDateTime::fromString(linecomp[idxStartOfNight], "MM/dd/yyyy HH:mm");
+        start_of_night = readDateTime(linecomp[idxStartOfNight]);
 
         if (!start_of_night.isValid()) { dodgy = true; }
 
-        end_of_night = QDateTime::fromString(linecomp[idxEndOfNight], "MM/dd/yyyy HH:mm");
+        end_of_night = readDateTime(linecomp[idxEndOfNight]);
 
         if (!end_of_night.isValid()) { dodgy = true; }
 
-        rise_time = QDateTime::fromString(linecomp[idxRiseTime], "MM/dd/yyyy HH:mm");
+        rise_time = readDateTime(linecomp[idxRiseTime]);
 
         if (!rise_time.isValid()) { dodgy = true; }
 
@@ -244,31 +246,31 @@ Session* ZEOLoader::readNextSession()
 //        if (!ok) { dodgy = true; }
 
         if (!linecomp[idxFirstAlaramRing].isEmpty()) {
-            FirstAlarmRing = QDateTime::fromString(linecomp[idxFirstAlaramRing], "MM/dd/yyyy HH:mm");
+            FirstAlarmRing = readDateTime(linecomp[idxFirstAlaramRing]);
 
             if (!FirstAlarmRing.isValid()) { dodgy = true; }
         }
 
         if (!linecomp[idxLastAlaramRing].isEmpty()) {
-            LastAlarmRing = QDateTime::fromString(linecomp[idxLastAlaramRing], "MM/dd/yyyy HH:mm");
+            LastAlarmRing = readDateTime(linecomp[idxLastAlaramRing]);
 
             if (!LastAlarmRing.isValid()) { dodgy = true; }
         }
 
         if (!linecomp[idxFirstSnoozeTime].isEmpty()) {
-            FirstSnoozeTime = QDateTime::fromString(linecomp[idxFirstSnoozeTime], "MM/dd/yyyy HH:mm");
+            FirstSnoozeTime = readDateTime(linecomp[idxFirstSnoozeTime]);
 
             if (!FirstSnoozeTime.isValid()) { dodgy = true; }
         }
 
         if (!linecomp[idxLastSnoozeTime].isEmpty()) {
-            LastSnoozeTime = QDateTime::fromString(linecomp[idxLastSnoozeTime], "MM/dd/yyyy HH:mm");
+            LastSnoozeTime = readDateTime(linecomp[idxLastSnoozeTime]);
 
             if (!LastSnoozeTime.isValid()) { dodgy = true; }
         }
 
         if (!linecomp[idxSetAlarmTime].isEmpty()) {
-            SetAlarmTime = QDateTime::fromString(linecomp[idxSetAlarmTime], "MM/dd/yyyy HH:mm");
+            SetAlarmTime = readDateTime(linecomp[idxSetAlarmTime]);
 
             if (!SetAlarmTime.isValid()) { dodgy = true; }
         }
@@ -331,14 +333,20 @@ Session* ZEOLoader::readNextSession()
         }
 
         sess->really_set_last(tt);
-        int size = DSG.size();
-
-
-        qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size <<
-                 "30 second chunks";
+        //int size = DSG.size();
+        //qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size << "30 second chunks";
     }
 
     return sess;
+}
+
+QDateTime ZEOLoader::readDateTime(const QString & text)
+{
+    QDateTime dt = QDateTime::fromString(text, "MM/dd/yyyy HH:mm");
+    if (!dt.isValid()) {
+        dt = QDateTime::fromString(text, "yyyy-MM-dd HH:mm:ss");
+    }
+    return dt;
 }
 
 static bool zeo_initialized = false;

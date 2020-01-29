@@ -43,6 +43,8 @@ class ZEOLoader : public MachineLoader
     Session* readNextSession();
 
   protected:
+    QDateTime readDateTime(const QString & text);
+
   private:
     QFile file;
     QTextStream text;
