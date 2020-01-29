@@ -40,6 +40,7 @@ class ZEOLoader : public MachineLoader
     }
 
     bool openCSV(const QString & filename);
+    void closeCSV();
     Session* readNextSession();
 
   protected:
@@ -47,28 +48,8 @@ class ZEOLoader : public MachineLoader
 
   private:
     QFile file;
-    QTextStream text;
+    class CSVReader* csv;
     Machine *mach;
-    int idxZQ;
-    int idxAwakenings;
-    int idxSG;
-    int idxDSG;
-    int idxTimeInWake;
-    int idxTimeToZ;
-    int idxTimeInREM;
-    int idxTimeInLight;
-    int idxTimeInDeep;
-    int idxStartOfNight;
-    int idxEndOfNight;
-    int idxRiseTime;
-    int idxFirstAlaramRing;
-    int idxLastAlaramRing;
-    int idxFirstSnoozeTime;
-    int idxLastSnoozeTime;
-    int idxSetAlarmTime;
-    int idxMorningFeel;
-    int idxFirmwareVersion;
-    int idxMyZEOVersion;
 };
 
 #endif // ZEOLOADER_H

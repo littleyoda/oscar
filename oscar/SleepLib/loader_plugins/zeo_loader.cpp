@@ -18,6 +18,7 @@
 #include <QTextStream>
 #include "zeo_loader.h"
 #include "SleepLib/machine.h"
+#include "csv.h"
 
 ZEOLoader::ZEOLoader()
 {
@@ -26,6 +27,7 @@ ZEOLoader::ZEOLoader()
 
 ZEOLoader::~ZEOLoader()
 {
+    closeCSV();
 }
 
 int ZEOLoader::Open(const QString & dirpath)
@@ -93,6 +95,7 @@ int ZEOLoader::OpenFile(const QString & filename)
         count++;
     }
     mach->Save();
+    closeCSV();
     return count;
 }
 
@@ -111,49 +114,46 @@ bool ZEOLoader::openCSV(const QString & filename)
         // not supported.
     }
 
-    text.setDevice(&file);
-    QString headerdata = text.readLine();
-    QStringList header = headerdata.split(",");
+    QStringList header;
+    csv = new CSVReader(file);
+    bool ok = csv->readRow(header);
+    if (!ok) {
+        qWarning() << "no header row";
+        return false;
+    }
+    csv->setFieldNames(header);
 
     MachineInfo info = newInfo();
     mach = p_profile->CreateMachine(info);
 
-    idxZQ = header.indexOf("ZQ");
-    //int idxTotalZ = header.indexOf("Total Z");
-    idxAwakenings = header.indexOf("Awakenings");
-    idxSG = header.indexOf("Sleep Graph");
-    idxDSG = header.indexOf("Detailed Sleep Graph");
-    idxTimeInWake = header.indexOf("Time in Wake");
-    idxTimeToZ = header.indexOf("Time to Z");
-    idxTimeInREM = header.indexOf("Time in REM");
-    idxTimeInLight = header.indexOf("Time in Light");
-    idxTimeInDeep = header.indexOf("Time in Deep");
-    idxStartOfNight = header.indexOf("Start of Night");
-    idxEndOfNight = header.indexOf("End of Night");
-    idxRiseTime = header.indexOf("Rise Time");
+    return true;
+}
+
+void ZEOLoader::closeCSV()
+{
+    if (csv != nullptr) {
+        delete csv;
+        csv = nullptr;
+    }
+    if (file.isOpen()) {
+        file.close();
+    }
+}
+
+//    int idxTotalZ = header.indexOf("Total Z");
 //    int idxAlarmReason = header.indexOf("Alarm Reason");
 //    int idxSnoozeTime = header.indexOf("Snooze Time");
 //    int idxWakeTone = header.indexOf("Wake Tone");
 //    int idxWakeWindow = header.indexOf("Wake Window");
 //    int idxAlarmType = header.indexOf("Alarm Type");
-    idxFirstAlaramRing = header.indexOf("First Alarm Ring");
-    idxLastAlaramRing = header.indexOf("Last Alarm Ring");
-    idxFirstSnoozeTime = header.indexOf("First Snooze Time");
-    idxLastSnoozeTime = header.indexOf("Last Snooze Time");
-    idxSetAlarmTime = header.indexOf("Set Alarm Time");
-    idxMorningFeel = header.indexOf("Morning Feel");
-    idxFirmwareVersion = header.indexOf("Firmware Version");
-    idxMyZEOVersion = header.indexOf("My ZEO Version");
-
-    return true;
-}
-
 
 Session* ZEOLoader::readNextSession()
 {
+    if (csv == nullptr) {
+        qWarning() << "no CSV open!";
+        return nullptr;
+    }
     Session* sess = nullptr;
-    QString line;
-    QStringList linecomp;
     QDateTime start_of_night, end_of_night, rise_time;
     SessionID sid;
 
@@ -174,121 +174,97 @@ Session* ZEOLoader::readNextSession()
     bool ok;
     bool dodgy;
 
-    do {
-        line = text.readLine();
+    QHash<QString,QString> row;
+    while (csv->readRow(row)) {
         dodgy = false;
 
-        if (line.isEmpty()) { continue; }
-
-        linecomp = line.split(",");
-        ZQ = linecomp[idxZQ].toInt(&ok);
-
+        ZQ = row["ZQ"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
 //        TotalZ = linecomp[idxTotalZ].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
-        TimeToZ = linecomp[idxTimeToZ].toInt(&ok);
-
+        TimeToZ = row["Time to Z"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        TimeInWake = linecomp[idxTimeInWake].toInt(&ok);
-
+        TimeInWake = row["Time in Wake"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        TimeInREM = linecomp[idxTimeInREM].toInt(&ok);
-
+        TimeInREM = row["Time in REM"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        TimeInLight = linecomp[idxTimeInLight].toInt(&ok);
-
+        TimeInLight = row["Time in Light"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        TimeInDeep = linecomp[idxTimeInDeep].toInt(&ok);
-
+        TimeInDeep = row["Time in Deep"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        Awakenings = linecomp[idxAwakenings].toInt(&ok);
-
+        Awakenings = row["Awakenings"].toInt(&ok);
         if (!ok) { dodgy = true; }
 
-        start_of_night = readDateTime(linecomp[idxStartOfNight]);
-
+        start_of_night = readDateTime(row["Start of Night"]);
         if (!start_of_night.isValid()) { dodgy = true; }
 
-        end_of_night = readDateTime(linecomp[idxEndOfNight]);
-
+        end_of_night = readDateTime(row["End of Night"]);
         if (!end_of_night.isValid()) { dodgy = true; }
 
-        rise_time = readDateTime(linecomp[idxRiseTime]);
-
+        rise_time = readDateTime(row["Rise Time"]);
         if (!rise_time.isValid()) { dodgy = true; }
 
 //        AlarmReason = linecomp[idxAlarmReason].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
 //        SnoozeTime = linecomp[idxSnoozeTime].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
 //        WakeTone = linecomp[idxWakeTone].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
 //        WakeWindow = linecomp[idxWakeWindow].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
 //        AlarmType = linecomp[idxAlarmType].toInt(&ok);
-
 //        if (!ok) { dodgy = true; }
 
-        if (!linecomp[idxFirstAlaramRing].isEmpty()) {
-            FirstAlarmRing = readDateTime(linecomp[idxFirstAlaramRing]);
-
+        if (!row["First Alarm Ring"].isEmpty()) {
+            FirstAlarmRing = readDateTime(row["First Alarm Ring"]);
             if (!FirstAlarmRing.isValid()) { dodgy = true; }
         }
 
-        if (!linecomp[idxLastAlaramRing].isEmpty()) {
-            LastAlarmRing = readDateTime(linecomp[idxLastAlaramRing]);
-
+        if (!row["Last Alarm Ring"].isEmpty()) {
+            LastAlarmRing = readDateTime(row["Last Alarm Ring"]);
             if (!LastAlarmRing.isValid()) { dodgy = true; }
         }
 
-        if (!linecomp[idxFirstSnoozeTime].isEmpty()) {
-            FirstSnoozeTime = readDateTime(linecomp[idxFirstSnoozeTime]);
+        if (!row["First Snooze Time"].isEmpty()) {
+            FirstSnoozeTime = readDateTime(row["First Snooze Time"]);
 
             if (!FirstSnoozeTime.isValid()) { dodgy = true; }
         }
 
-        if (!linecomp[idxLastSnoozeTime].isEmpty()) {
-            LastSnoozeTime = readDateTime(linecomp[idxLastSnoozeTime]);
-
+        if (!row["Last Snooze Time"].isEmpty()) {
+            LastSnoozeTime = readDateTime(row["Last Snooze Time"]);
             if (!LastSnoozeTime.isValid()) { dodgy = true; }
         }
 
-        if (!linecomp[idxSetAlarmTime].isEmpty()) {
-            SetAlarmTime = readDateTime(linecomp[idxSetAlarmTime]);
-
+        if (!row["Set Alarm Time"].isEmpty()) {
+            SetAlarmTime = readDateTime(row["Set Alarm Time"]);
             if (!SetAlarmTime.isValid()) { dodgy = true; }
         }
 
-        MorningFeel = linecomp[idxMorningFeel].toInt(&ok);
-
+        MorningFeel = row["Morning Feel"].toInt(&ok);
         if (!ok) { MorningFeel = 0; }
 
-        FirmwareVersion = linecomp[idxFirmwareVersion];
+        FirmwareVersion = row["Firmware Version"];
 
-        if (idxMyZEOVersion >= 0) { MyZeoVersion = linecomp[idxMyZEOVersion]; }
+        MyZeoVersion = row["My ZEO Version"];
 
         if (dodgy) {
             continue;
         }
 
-        SG = linecomp[idxSG].split(" ");
-        DSG = linecomp[idxDSG].split(" ");
+        SG = row["Sleep Graph"].split(" ");
+        DSG = row["Detailed Sleep Graph"].split(" ");
 
         sid = start_of_night.toTime_t();
 
@@ -302,11 +278,10 @@ Session* ZEOLoader::readNextSession()
 
         sess = new Session(mach, sid);
         break;
-
-    } while (!line.isNull());
+    };
 
     if (sess) {
-        const int WindowSize = 30000;
+        const int WindowSize = 30 * 1000;
 
         sess->settings[ZEO_Awakenings] = Awakenings;
         sess->settings[ZEO_MorningFeel] = MorningFeel;
@@ -324,11 +299,9 @@ Session* ZEOLoader::readNextSession()
 
         for (int i = 0; i < DSG.size(); i++) {
             stage = DSG[i].toInt(&ok);
-
             if (ok) {
                 sleepstage->AddEvent(tt, stage);
             }
-
             tt += WindowSize;
         }
 

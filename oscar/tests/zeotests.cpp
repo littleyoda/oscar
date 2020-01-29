@@ -48,6 +48,7 @@ static void parseAndEmitSessionYaml(const QString & path)
         if (count == 0) {
             qWarning() << "no sessions found";
         }
+        s_loader->closeCSV();
     } else {
         qWarning() << "unable to open file";
     }

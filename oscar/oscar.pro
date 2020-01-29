@@ -296,6 +296,7 @@ SOURCES += \
     SleepLib/loader_plugins/zeo_loader.cpp \
     zip.cpp \
     miniz.c \
+    csv.cpp \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
@@ -371,6 +372,7 @@ HEADERS  += \
     SleepLib/loader_plugins/zeo_loader.h \
     zip.h \
     miniz.h \
+    csv.h \
     translation.h \
     statistics.h \
     oximeterimport.h \
