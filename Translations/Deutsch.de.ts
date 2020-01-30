@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
-        <translation type="unfinished"></translation>
+        <translation>Da es sich um eine Vorabversion handelt, wird empfohlen, dass Sie &lt;b&gt;Ihre Daten manuell sichern&lt;/b&gt; bevor Sie fortfahren, denn der Versuch die Daten später zurückzuholen, kann scheitern.</translation>
     </message>
 </context>
 <context>
@@ -450,11 +450,11 @@
     </message>
     <message>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Bitte beachten Sie:&lt;/b&gt; Alle nachfolgend dargestellten Einstellungen basieren auf der Annahme, dass sich gegenüber den Vortagen nichts geändert hat.</translation>
     </message>
     <message>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Lesezeichen befindet sich in einem derzeit deaktivierten Bereich.</translation>
     </message>
 </context>
 <context>
@@ -1293,23 +1293,23 @@
     </message>
     <message>
         <source>&amp;Reset Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grafiken zurücksetzen</translation>
     </message>
     <message>
         <source>Reset Graph &amp;Heights</source>
-        <translation type="unfinished"></translation>
+        <translation>Graph &amp;Höhen zurücksetzen</translation>
     </message>
     <message>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard-Graphenanordnung, gut für CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Graphenanordnung, gut für ASV, AVAPS</translation>
     </message>
 </context>
 <context>
@@ -3278,11 +3278,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation type="unfinished"></translation>
+        <translation>Ob die Seriennummer des Gerätes in den Bericht über Änderungen der Geräteeinstellungen aufgenommen werden soll</translation>
     </message>
     <message>
         <source>Include Serial Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriennummer einbeziehen</translation>
     </message>
 </context>
 <context>
@@ -3620,7 +3620,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset filter to see all profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter zurücksetzen, um alle Profile zu sehen</translation>
     </message>
 </context>
 <context>
@@ -6380,47 +6380,47 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>d MMM yyyy [ %1 - %2 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>d MMM yyyy [ %1 - %2 ]</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 PS %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
         <source>%1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>%1mm</translation>
     </message>
     <message>
         <source>Pressure Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingestellter Druck</translation>
     </message>
     <message>
         <source>Pressure Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckeinstellung</translation>
     </message>
     <message>
         <source>IPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP-Set</translation>
     </message>
     <message>
         <source>IPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP-Einstellung</translation>
     </message>
     <message>
         <source>EPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP Set</translation>
     </message>
     <message>
         <source>EPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP Einstellungen</translation>
     </message>
     <message>
         <source>Loading summaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden von Zusammenfassungen</translation>
     </message>
     <message>
         <source>%1 OSCAR v%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 OSCAR v%2</translation>
     </message>
 </context>
 <context>
@@ -6737,15 +6737,15 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>This report was prepared on %1 by OSCAR v%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Bericht wurde erstellt am %1 von OSCAR v%2</translation>
     </message>
     <message>
         <source>AHI: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>AHI: %1</translation>
     </message>
     <message>
         <source>Total Hours: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Total Stunden: %1</translation>
     </message>
 </context>
 <context>
@@ -7003,7 +7003,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Achtung: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards müssen gesperrt werden &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;vor dem Einsetzen in Ihren Computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Einige Betriebssysteme schreiben ungefragt Indexdateien auf die Karte, was Ihre Karte für Ihren Rechner unlesbar machen kann.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7067,11 +7067,11 @@ Klicken und ziehen Sie, um Diagramme neu zu ordnen</translation>
     </message>
     <message>
         <source>Restore X-axis zoom to 100% to view entire selected period.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stellen Sie den X-Achsen-Zoom auf 100% zurück, um den gesamten ausgewählten Zeitraum zu betrachten.</translation>
     </message>
     <message>
         <source>Restore X-axis zoom to 100% to view entire day&apos;s data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stellen Sie den X-Achsen-Zoom auf 100% wieder her, um die Daten des gesamten Tages anzuzeigen.</translation>
     </message>
 </context>
 </TS>
