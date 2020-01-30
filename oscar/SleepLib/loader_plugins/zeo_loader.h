@@ -44,12 +44,14 @@ class ZEOLoader : public MachineLoader
     Session* readNextSession();
 
   protected:
-    QDateTime readDateTime(const QString & text);
+    QDateTime readDateTime(const QString & text, bool required=true);
+    int readInt(const QString & text, bool required=true);
 
   private:
     QFile file;
     class CSVReader* csv;
     Machine *mach;
+    bool invalid_fields;
 };
 
 #endif // ZEOLOADER_H

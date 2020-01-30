@@ -172,107 +172,70 @@ Session* ZEOLoader::readNextSession()
     QStringList SG, DSG;
 
     bool ok;
-    bool dodgy;
 
     QHash<QString,QString> row;
     while (csv->readRow(row)) {
-        dodgy = false;
+        invalid_fields = false;
 
-        ZQ = row["ZQ"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        start_of_night = readDateTime(row["Start of Night"]);
+        if (start_of_night.isValid()) {
+            sid = start_of_night.toTime_t();
+            if (mach->SessionExists(sid)) {
+                continue;
+            }
+        }
+
+        ZQ = readInt(row["ZQ"]);
 
 //        TotalZ = linecomp[idxTotalZ].toInt(&ok);
 //        if (!ok) { dodgy = true; }
 
-        TimeToZ = row["Time to Z"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        TimeToZ = readInt(row["Time to Z"]);
 
-        TimeInWake = row["Time in Wake"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        TimeInWake = readInt(row["Time in Wake"]);
 
-        TimeInREM = row["Time in REM"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        TimeInREM = readInt(row["Time in REM"]);
 
-        TimeInLight = row["Time in Light"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        TimeInLight = readInt(row["Time in Light"]);
 
-        TimeInDeep = row["Time in Deep"].toInt(&ok);
-        if (!ok) { dodgy = true; }
+        TimeInDeep = readInt(row["Time in Deep"]);
 
-        Awakenings = row["Awakenings"].toInt(&ok);
-        if (!ok) { dodgy = true; }
-
-        start_of_night = readDateTime(row["Start of Night"]);
-        if (!start_of_night.isValid()) { dodgy = true; }
+        Awakenings = readInt(row["Awakenings"]);
 
         end_of_night = readDateTime(row["End of Night"]);
-        if (!end_of_night.isValid()) { dodgy = true; }
 
         rise_time = readDateTime(row["Rise Time"]);
-        if (!rise_time.isValid()) { dodgy = true; }
 
 //        AlarmReason = linecomp[idxAlarmReason].toInt(&ok);
-//        if (!ok) { dodgy = true; }
-
 //        SnoozeTime = linecomp[idxSnoozeTime].toInt(&ok);
-//        if (!ok) { dodgy = true; }
-
 //        WakeTone = linecomp[idxWakeTone].toInt(&ok);
-//        if (!ok) { dodgy = true; }
-
 //        WakeWindow = linecomp[idxWakeWindow].toInt(&ok);
-//        if (!ok) { dodgy = true; }
-
 //        AlarmType = linecomp[idxAlarmType].toInt(&ok);
-//        if (!ok) { dodgy = true; }
 
-        if (!row["First Alarm Ring"].isEmpty()) {
-            FirstAlarmRing = readDateTime(row["First Alarm Ring"]);
-            if (!FirstAlarmRing.isValid()) { dodgy = true; }
-        }
+        FirstAlarmRing = readDateTime(row["First Alarm Ring"], false);
 
-        if (!row["Last Alarm Ring"].isEmpty()) {
-            LastAlarmRing = readDateTime(row["Last Alarm Ring"]);
-            if (!LastAlarmRing.isValid()) { dodgy = true; }
-        }
+        LastAlarmRing = readDateTime(row["Last Alarm Ring"], false);
 
-        if (!row["First Snooze Time"].isEmpty()) {
-            FirstSnoozeTime = readDateTime(row["First Snooze Time"]);
+        FirstSnoozeTime = readDateTime(row["First Snooze Time"], false);
 
-            if (!FirstSnoozeTime.isValid()) { dodgy = true; }
-        }
+        LastSnoozeTime = readDateTime(row["Last Snooze Time"], false);
 
-        if (!row["Last Snooze Time"].isEmpty()) {
-            LastSnoozeTime = readDateTime(row["Last Snooze Time"]);
-            if (!LastSnoozeTime.isValid()) { dodgy = true; }
-        }
+        SetAlarmTime = readDateTime(row["Set Alarm Time"], false);
 
-        if (!row["Set Alarm Time"].isEmpty()) {
-            SetAlarmTime = readDateTime(row["Set Alarm Time"]);
-            if (!SetAlarmTime.isValid()) { dodgy = true; }
-        }
-
-        MorningFeel = row["Morning Feel"].toInt(&ok);
-        if (!ok) { MorningFeel = 0; }
+        MorningFeel = readInt(row["Morning Feel"], false);
 
         FirmwareVersion = row["Firmware Version"];
 
         MyZeoVersion = row["My ZEO Version"];
 
-        if (dodgy) {
+        if (invalid_fields) {
             continue;
         }
 
         SG = row["Sleep Graph"].split(" ");
         DSG = row["Detailed Sleep Graph"].split(" ");
 
-        sid = start_of_night.toTime_t();
-
         if (DSG.size() == 0) {
-            continue;
-        }
-
-        if (mach->SessionExists(sid)) {
             continue;
         }
 
@@ -313,13 +276,32 @@ Session* ZEOLoader::readNextSession()
     return sess;
 }
 
-QDateTime ZEOLoader::readDateTime(const QString & text)
+QDateTime ZEOLoader::readDateTime(const QString & text, bool required)
 {
     QDateTime dt = QDateTime::fromString(text, "MM/dd/yyyy HH:mm");
-    if (!dt.isValid()) {
-        dt = QDateTime::fromString(text, "yyyy-MM-dd HH:mm:ss");
+    if (required || !text.isEmpty()) {
+        if (!dt.isValid()) {
+            dt = QDateTime::fromString(text, "yyyy-MM-dd HH:mm:ss");
+            if (!dt.isValid()) {
+                invalid_fields = true;
+            }
+        }
     }
     return dt;
+}
+
+int ZEOLoader::readInt(const QString & text, bool required)
+{
+    bool ok;
+    int value = text.toInt(&ok);
+    if (!ok) {
+        if (required) {
+            invalid_fields = true;
+        } else {
+            value = 0;
+        }
+    }
+    return value;
 }
 
 static bool zeo_initialized = false;
