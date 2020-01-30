@@ -74,6 +74,8 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_PSMax);
         CHANNELNAME(CPAP_RampTime);
         CHANNELNAME(CPAP_RampPressure);
+        CHANNELNAME(CPAP_RespRate);
+        CHANNELNAME(OXI_Pulse);
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);
         CHANNELNAME(PRS1_HumidStatus);

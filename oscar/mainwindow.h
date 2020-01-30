@@ -281,6 +281,8 @@ class MainWindow : public QMainWindow
 
     void on_actionImport_ZEO_Data_triggered();
 
+    void on_actionImport_Dreem_Data_triggered();
+
     void on_actionImport_RemStar_MSeries_Data_triggered();
 
     void on_actionSleep_Disorder_Terms_Glossary_triggered();

@@ -286,6 +286,7 @@ SOURCES += \
     SleepLib/schema.cpp \
     SleepLib/session.cpp \
     SleepLib/loader_plugins/cms50_loader.cpp \
+    SleepLib/loader_plugins/dreem_loader.cpp \
     SleepLib/loader_plugins/icon_loader.cpp \
     SleepLib/loader_plugins/intellipap_loader.cpp \
     SleepLib/loader_plugins/mseries_loader.cpp \
@@ -362,6 +363,7 @@ HEADERS  += \
     SleepLib/schema.h \
     SleepLib/session.h \
     SleepLib/loader_plugins/cms50_loader.h \
+    SleepLib/loader_plugins/dreem_loader.h \
     SleepLib/loader_plugins/icon_loader.h \
     SleepLib/loader_plugins/intellipap_loader.h \
     SleepLib/loader_plugins/mseries_loader.h \
@@ -520,6 +522,7 @@ test {
         tests/sessiontests.cpp \
         tests/versiontests.cpp \
         tests/viatomtests.cpp \
+        tests/dreemtests.cpp \
         tests/zeotests.cpp
 
     HEADERS += \
@@ -529,6 +532,7 @@ test {
         tests/sessiontests.h \
         tests/versiontests.h \
         tests/viatomtests.h \
+        tests/dreemtests.h \
         tests/zeotests.h
 }
 

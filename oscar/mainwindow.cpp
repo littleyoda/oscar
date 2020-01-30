@@ -39,6 +39,7 @@
 
 // Custom loaders that don't autoscan..
 #include <SleepLib/loader_plugins/zeo_loader.h>
+#include <SleepLib/loader_plugins/dreem_loader.h>
 #include <SleepLib/loader_plugins/somnopose_loader.h>
 #include <SleepLib/loader_plugins/viatom_loader.h>
 
@@ -2322,8 +2323,34 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
 
         daily->LoadDate(daily->getDate());
     }
+}
 
+void MainWindow::on_actionImport_Dreem_Data_triggered()
+{
+    QFileDialog w;
+    w.setFileMode(QFileDialog::ExistingFiles);
+    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    w.setOption(QFileDialog::ShowDirsOnly, false);
+    w.setNameFilters(QStringList("Dreem CSV File (*.csv)"));
 
+    DreemLoader dreem;
+
+    if (w.exec() == QFileDialog::Accepted) {
+        QString filename = w.selectedFiles()[0];
+
+        qDebug() << "Loading Dreem data from" << filename;
+        int c = dreem.OpenFile(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            qDebug() << "Imported" << c << "Dreem sessions";
+        } else if (c == 0) {
+            Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid Dreem CSV data at\n\n%1").arg(filename),tr("Import Problem"));
+        }
+
+        daily->LoadDate(daily->getDate());
+    }
 }
 
 void MainWindow::on_actionImport_RemStar_MSeries_Data_triggered()
