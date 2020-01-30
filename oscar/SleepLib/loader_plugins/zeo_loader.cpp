@@ -227,12 +227,15 @@ Session* ZEOLoader::readNextSession()
         st = qint64(start_of_night.toTime_t()) * 1000L;
         sess->really_set_first(st);
         tt = st;
-        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, 0, 4);
+        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, -4, 0);
 
         for (int i = 0; i < DSG.size(); i++) {
+            bool ok;
             stage = DSG[i].toInt(&ok);
             if (ok) {
-                sleepstage->AddEvent(tt, stage);
+                // 1 = Awake, 2 = REM, 3 = Light Sleep, 4 = Deep Sleep
+                // TODO: What is 0? What is 6?
+                sleepstage->AddEvent(tt, -stage);  // use negative values so that the chart is oriented the right way
             }
             tt += WindowSize;
         }

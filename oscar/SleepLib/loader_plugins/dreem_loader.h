@@ -12,7 +12,7 @@
 #include "SleepLib/machine_loader.h"
 
 const QString dreem_class_name = "Dreem";
-const int dreem_data_version = 1;
+const int dreem_data_version = 2;
 
 
 /*! \class DreemLoader

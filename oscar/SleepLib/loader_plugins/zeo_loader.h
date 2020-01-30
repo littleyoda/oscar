@@ -13,7 +13,7 @@
 #include "SleepLib/machine_loader.h"
 
 const QString zeo_class_name = "ZEO";
-const int zeo_data_version = 1;
+const int zeo_data_version = 2;
 
 
 /*! \class ZEOLoader

@@ -120,7 +120,7 @@ Session* DreemLoader::readNextSession()
     QDateTime start_time, stop_time;
     int sleep_onset, sleep_duration;
     int light_sleep_duration, deep_sleep_duration, rem_duration, awakened_duration;
-    int awakenings, position_changes, average_hr, average_rr;
+    int awakenings, position_changes;  // average_hr, average_rr;
     float sleep_efficiency;
     QStringList hypnogram;
 
@@ -147,12 +147,13 @@ Session* DreemLoader::readNextSession()
         awakened_duration = readDuration(row["Wake After Sleep Onset Duration"]);
         awakenings = readInt(row["Number of awakenings"]);
         position_changes = readInt(row["Position Changes"]);
-        average_hr = readInt(row["Mean Heart Rate"]);
-        average_rr = readInt(row["Mean Respiration CPM"]);
+        //average_hr = readInt(row["Mean Heart Rate"]);  // TODO: sometimes "None"
+        //average_rr = readInt(row["Mean Respiration CPM"]);
         // "Number of Stimulations" is 0 for US models
         sleep_efficiency = readInt(row["Sleep efficiency"]) / 100.0;
         
         if (invalid_fields) {
+            qWarning() << "invalid Dreem row, skipping" << start_time;
             continue;
         }
 
@@ -177,8 +178,8 @@ Session* DreemLoader::readNextSession()
         sess->settings[ZEO_TimeInREM] = rem_duration / 60;
         sess->settings[ZEO_TimeInLight] = light_sleep_duration / 60;
         sess->settings[ZEO_TimeInDeep] = deep_sleep_duration / 60;
-        sess->settings[OXI_Pulse] = average_hr;
-        sess->settings[CPAP_RespRate] = average_rr;
+        //sess->settings[OXI_Pulse] = average_hr;
+        //sess->settings[CPAP_RespRate] = average_rr;
         // Dreem also provides:
         // total sleep duration
         // # position changes
@@ -194,7 +195,7 @@ Session* DreemLoader::readNextSession()
         qint64 tt = st;
         qint64 second_sample_tt = ((tt + step - 1L) / step) * step;
 
-        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, 0, 4);
+        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, -4, 0);
 
         for (int i = 0; i < hypnogram.size(); i++) {
             auto & label = hypnogram.at(i);
@@ -209,7 +210,8 @@ Session* DreemLoader::readNextSession()
                     tt = last;
                 }
 
-                sleepstage->AddEvent(tt, stage);
+                if (stage == 0) qDebug() << start_time << "0 Dreem sleep stage?";
+                sleepstage->AddEvent(tt, -stage);  // use negative values so that the chart is oriented the right way
             }
             if (i == 0) {
                 tt = second_sample_tt;

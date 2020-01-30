@@ -663,7 +663,8 @@ void gGraph::roundY(EventDataType &miny, EventDataType &maxy)
         }
     }
 
-    if (miny < 0) {
+    // Make the range symmetrical if there are both positive and negative values.
+    if (miny < 0 && maxy > 0) {
         EventDataType tmp = qMax(qAbs(miny), qAbs(maxy));
         maxy = tmp;
         miny = -tmp;
