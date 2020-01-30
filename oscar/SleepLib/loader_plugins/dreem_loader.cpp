@@ -48,6 +48,7 @@ int DreemLoader::OpenFile(const QString & filename)
     }
     int count = 0;
     Session* sess;
+    // TODO: add progress bar support, perhaps move shared logic into shared parent class with Zeo loader
     while ((sess = readNextSession()) != nullptr) {
         sess->SetChanged(true);
         mach->AddSession(sess);

@@ -1,6 +1,7 @@
 /* SleepLib Viatom Loader Header
  *
- * Copyright (c) 2019 The OSCAR Team (written by dave madden <dhm@mersenne.com>)
+ * Copyright (c) 2019-2020 The OSCAR Team
+ * (Initial importer written by dave madden <dhm@mersenne.com>)
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code

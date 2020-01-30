@@ -89,6 +89,7 @@ int ZEOLoader::OpenFile(const QString & filename)
     }
     int count = 0;
     Session* sess;
+    // TODO: add progress bar support, perhaps move shared logic into shared parent class with Dreem loader
     while ((sess = readNextSession()) != nullptr) {
         sess->SetChanged(true);
         mach->AddSession(sess);
@@ -157,21 +158,14 @@ Session* ZEOLoader::readNextSession()
     QDateTime start_of_night, end_of_night, rise_time;
     SessionID sid;
 
-    //const qint64 WindowSize=30000;
     qint64 st, tt;
     int stage;
 
     int ZQ, TimeToZ, TimeInWake, TimeInREM, TimeInLight, TimeInDeep, Awakenings;
-
-    //int AlarmReason, SnoozeTime, WakeTone, WakeWindow, AlarmType, TotalZ;
     int MorningFeel;
     QString FirmwareVersion, MyZeoVersion;
-
     QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
-
     QStringList SG, DSG;
-
-    bool ok;
 
     QHash<QString,QString> row;
     while (csv->readRow(row)) {
@@ -186,46 +180,21 @@ Session* ZEOLoader::readNextSession()
         }
 
         ZQ = readInt(row["ZQ"]);
-
-//        TotalZ = linecomp[idxTotalZ].toInt(&ok);
-//        if (!ok) { dodgy = true; }
-
         TimeToZ = readInt(row["Time to Z"]);
-
         TimeInWake = readInt(row["Time in Wake"]);
-
         TimeInREM = readInt(row["Time in REM"]);
-
         TimeInLight = readInt(row["Time in Light"]);
-
         TimeInDeep = readInt(row["Time in Deep"]);
-
         Awakenings = readInt(row["Awakenings"]);
-
         end_of_night = readDateTime(row["End of Night"]);
-
         rise_time = readDateTime(row["Rise Time"]);
-
-//        AlarmReason = linecomp[idxAlarmReason].toInt(&ok);
-//        SnoozeTime = linecomp[idxSnoozeTime].toInt(&ok);
-//        WakeTone = linecomp[idxWakeTone].toInt(&ok);
-//        WakeWindow = linecomp[idxWakeWindow].toInt(&ok);
-//        AlarmType = linecomp[idxAlarmType].toInt(&ok);
-
         FirstAlarmRing = readDateTime(row["First Alarm Ring"], false);
-
         LastAlarmRing = readDateTime(row["Last Alarm Ring"], false);
-
         FirstSnoozeTime = readDateTime(row["First Snooze Time"], false);
-
         LastSnoozeTime = readDateTime(row["Last Snooze Time"], false);
-
         SetAlarmTime = readDateTime(row["Set Alarm Time"], false);
-
         MorningFeel = readInt(row["Morning Feel"], false);
-
         FirmwareVersion = row["Firmware Version"];
-
         MyZeoVersion = row["My ZEO Version"];
 
         if (invalid_fields) {
