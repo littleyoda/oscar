@@ -29,7 +29,7 @@ public:
     ResMedEDFInfo();
     ~ResMedEDFInfo();
     
-    virtual bool Parse(QByteArray * fileData) override;		// overrides and calls the super's Parse
+    virtual bool Parse() override;		// overrides and calls the super's Parse
     
     virtual qint64 GetDurationMillis() { return dur_data_record; }	// overrides the super 
     

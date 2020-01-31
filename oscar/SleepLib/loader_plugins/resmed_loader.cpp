@@ -434,8 +434,12 @@ int ResmedLoader::Open(const QString & dirpath)
             continue;
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
-        QByteArray * fileData = stredf->Open(fi.canonicalFilePath() );
-        if (!stredf->Parse(fileData)) {
+        if ( stredf->Open(fi.canonicalFilePath() ) ) {
+	    qDebug() << "Failed to open" << filename;
+	    delete stredf;
+	    continue;
+	}
+        if (!stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
             continue;
@@ -1407,8 +1411,11 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
     // Now place any of these files in the Backup folder sorted by the file date
     for (auto & filename : strfiles) {
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
-        QByteArray * fileData = stredf->Open(filename);
-        if ( ! stredf->Parse(fileData)) {
+        if ( ! stredf->Open(filename) ) {
+	    qDebug() << "Failed to open" << filename;
+	    continue;
+	}
+        if ( ! stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
             continue;
@@ -1456,6 +1463,7 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
             QFile::exists(gzfile) && QFile::remove(gzfile);
 
         STRmap[date] = STRFile(backupfile, stredf);
+//	delete stredf;
     }   // end for walking the STR files list
 }
 
@@ -2128,15 +2136,21 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 #endif
 
     ResMedEDFInfo edf;
-    QByteArray * fileData = edf.Open(path);
+    if ( ! edf.Open(path) ) {
+	qDebug() << "LoadCSL failed to open" << path;
+	return false;
+    }
 
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
 
-    if (!edf.Parse(fileData))
+    if (!edf.Parse()) {
+	qDebug() << "LoadCSL failed to parse" << path;
+//	fileData->clear();
         return false;
+    }
 
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
@@ -2183,6 +2197,8 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
         qDebug() << "Unfinished csr event in " << edf.filename;
     }
 
+//    fileData->clear();
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadCSL += time.elapsed();
@@ -2201,13 +2217,21 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     time.start();
 #endif
     ResMedEDFInfo edf;
-    QByteArray * fileData = edf.Open(path);
+    if ( ! edf.Open(path) ) {
+	qDebug() << "LoadEVE failed to open" << path;
+	return false;
+    }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse(fileData))
+
+    if (!edf.Parse()) {
+	qDebug() << "LoadEVE failed to parse" << path;
+//	fileData->clear();
         return false;
+    }
+
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
     time.start();
@@ -2270,6 +2294,8 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
         }
     }
 
+//    fileData->clear();
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadEVE += time.elapsed();
@@ -2288,13 +2314,19 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     time.start();
 #endif
     ResMedEDFInfo edf;
-    QByteArray * fileData = edf.Open(path);
+    if ( ! edf.Open(path) ) {
+	qDebug() << "LoadBRP failed to open" << path;
+	return false;
+    }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse(fileData))
+    if (!edf.Parse()) {
+	qDebug() << "LoadBRP failed to parse" << path;
+//	fileData->clear();
         return false;
+    }
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
     time.start();
@@ -2359,6 +2391,8 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
         }
     }
 
+//    fileData->clear();
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadBRP += time.elapsed();
@@ -2380,15 +2414,21 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 #endif
 
     ResMedEDFInfo edf;
-    QByteArray * fileData = edf.Open(path);
+    if ( ! edf.Open(path) ) {
+	qDebug() << "LoadSAD failed to  open" << path;
+	return false;
+    }
 
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
 
-    if (!edf.Parse(fileData))
+    if (!edf.Parse()) {
+	qDebug() << "LoadSAD failed to parse" << path;
+//	fileData->clear();
         return false;
+    }
 
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
@@ -2431,6 +2471,8 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
         }
     }
 
+//    fileData->clear();
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadSAD += time.elapsed();
@@ -2449,13 +2491,21 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     time.start();
 #endif
     ResMedEDFInfo edf;
-    QByteArray * fileData = edf.Open(path);
+    if ( ! edf.Open(path) ) {
+	qDebug() << "LoadPLD failed to open" << path;
+	return false;
+    }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
-    if (!edf.Parse(fileData))
+
+    if (!edf.Parse()) {
+	qDebug() << "LoadPLD failed to parse" << path;
+//	fileData->clear();
         return false;
+    }
+
 #ifdef DEBUG_EFFICIENCY
     int edfparsetime = time.elapsed();
     time.start();
@@ -2596,6 +2646,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         }
 
     }
+
+//    fileData->clear();
+
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadPLD += time.elapsed();

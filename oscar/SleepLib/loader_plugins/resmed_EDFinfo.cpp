@@ -28,9 +28,9 @@
 ResMedEDFInfo::ResMedEDFInfo() :EDFInfo() { }
 ResMedEDFInfo::~ResMedEDFInfo() { }
 
-bool ResMedEDFInfo::Parse(QByteArray * fileData )	// overrides and calls the super's Parse
+bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
 {
-	EDFInfo::Parse( fileData );
+	EDFInfo::Parse(  );
 	
     // Now massage some stuff into OSCAR's layout
     int snp = edfHdr.recordingident.indexOf("SRN=");

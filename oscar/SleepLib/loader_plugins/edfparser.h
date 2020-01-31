@@ -120,9 +120,9 @@ class EDFInfo
 
     virtual ~EDFInfo();
 
-    virtual QByteArray * Open(const QString & name);                    //! \brief Open the EDF+ file, and read it's header
+    virtual bool Open(const QString & name);                    //! \brief Open the EDF+ file, and read it's header
 
-    virtual bool Parse(QByteArray * fileData);                          //! \brief Parse the EDF+ file into the EDFheaderQT. Must call Open(..) first.
+    virtual bool Parse();                          //! \brief Parse the EDF+ file into the EDFheaderQT. Must call Open(..) first.
 
     virtual bool parseHeader( EDFHeaderRaw * hdrPtr );                  //! \brief parse just the edf header for duration, etc
 
@@ -161,7 +161,7 @@ class EDFInfo
     qint16 Read16();                                            //! \brief Read 16 bit word of data from the EDF+ data stream
 
     //! \brief This is the array holding the EDF file data
-    QByteArray  * fileData;
+    QByteArray  fileData;
     //! \brief  The EDF+ files header structure, used as a place holder while processing the text data.
     EDFHeaderRaw *hdrPtr;
     //! \brief This is the array of signal descriptors and values
