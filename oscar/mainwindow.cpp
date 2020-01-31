@@ -397,9 +397,11 @@ void MainWindow::PopulatePurgeMenu()
 
 void MainWindow::addMachineToMenu(Machine* mach, QMenu* menu)
 {
-    QString name =  mach->brand() + " "+
-                    mach->model() + " "+
-                    mach->serial();
+    QString name = mach->brand();
+    if (name.isEmpty()) {
+        name = mach->loaderName();
+    }
+    name += " " + mach->model() + " " + mach->serial();
 
     QAction * action = new QAction(name.replace("&","&&"), menu);
     action->setIconVisibleInMenu(true);
@@ -1424,6 +1426,7 @@ void MainWindow::on_oximetryButton_clicked()
     if (p_profile) {
         OximeterImport oxiimp(this);
         oxiimp.exec();
+        PopulatePurgeMenu();
         if (overview) overview->ReloadGraphs();
         if (welcome) welcome->refreshPage();
     }
@@ -2018,7 +2021,11 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     }
     if (!mach) return;
 
-    QString machname = mach->brand() + " " + mach->model() + " " + mach->modelnumber();
+    QString machname = mach->brand();
+    if (machname.isEmpty()) {
+        machname = mach->loaderName();
+    }
+    machname += " " + mach->model() + " " + mach->modelnumber();
     if (!mach->serial().isEmpty()) {
         machname += QString(" (%1)").arg(mach->serial());
     }
@@ -2039,7 +2046,7 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
             tr("You are about to <font size=+2>obliterate</font> OSCAR's machine database for the following machine:</p>") +
             "<p><font size=+2>" + machname + "</font></p>" +
             backupnotice+
-            "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>", 
+            "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>",
             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
         qDebug() << "Purging" << machname;
         purgeMachine(mach);
