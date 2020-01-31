@@ -2210,7 +2210,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1036"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can enter a 7 character name for this oximeter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Εδώ μπορείτε να εισάγετε ένα όνομα 7 χαρακτήρων για αυτό το οξύμετρο.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1077"/>
@@ -2337,7 +2337,7 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1917"/>
         <location filename="../oscar/oximeterimport.ui" line="1956"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1998"/>
@@ -2700,12 +2700,12 @@ Index</source>
     <message>
         <location filename="../oscar/oximetry.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Φόρμα</translation>
+        <translation>Μορφή</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="89"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ημερομηνία</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="102"/>
@@ -2715,7 +2715,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximetry.ui" line="131"/>
         <source>R&amp;eset</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Επαναφορά</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="160"/>
@@ -2725,37 +2725,37 @@ Index</source>
     <message>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφυγμός</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="346"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="366"/>
         <source>&amp;Open .spo/R File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Άνοιγμα αρχείου .spo/R</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="385"/>
         <source>Serial &amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Σειριακή εισαγωγή</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="398"/>
         <source>&amp;Start Live</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ξεκινήστε τη λειτουργία Live</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="421"/>
         <source>Serial Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Σειριακή θύρα</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="450"/>
         <source>&amp;Rescan Ports</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Επανασυνδέστε τις θύρες</translation>
     </message>
 </context>
 <context>
@@ -2763,35 +2763,35 @@ Index</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="23"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Προτιμήσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="64"/>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Εισαγωγή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="154"/>
         <source>Combine Close Sessions </source>
-        <translation type="unfinished"></translation>
+        <translation>Συνδυάστε Κλείσιμο Συνεδρίων </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="164"/>
         <location filename="../oscar/preferencesdialog.ui" line="249"/>
         <location filename="../oscar/preferencesdialog.ui" line="732"/>
         <source>Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>λεπτά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="184"/>
         <source>Multiple sessions closer together than this value will be kept on the same day.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Πολλές συνεδρίες πιο κοντά από αυτήν την τιμή θα διατηρούνται την ίδια ημέρα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="239"/>
         <source>Ignore Short Sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Αγνοήστε σύντομες περιόδους σύνδεσης</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="266"/>
@@ -2801,27 +2801,32 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Οι συνεδρίες μικρότερης διάρκειας από αυτή δεν θα εμφανίζονται&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="310"/>
         <source>Day Split Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Ημέρα χωριστής ώρας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="320"/>
         <source>Sessions starting before this time will go to the previous calendar day.</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι περιόδους λειτουργίας που ξεκινούν πριν από αυτή τη φορά θα μεταβούν στην προηγούμενη ημερολογιακή ημέρα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="393"/>
         <source>Session Storage Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές αποθήκευσης συνόδων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="440"/>
         <source>Compress SD Card Backups (slower first import, but makes backups smaller)</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπίεση αντιγράφων κάρτας SD (πιο αργή εισαγωγή, αλλά μικρότερο αντίγραφο ασφαλείας)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="638"/>
@@ -2831,30 +2836,33 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1268"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
-        <translation type="unfinished"></translation>
+        <translation>Λάβετε υπόψη τις ημέρες με τη χρήση αυτή ως &quot;μη συμβατές&quot;. 4 ώρες συνήθως θεωρούνται συμμορφούμενες.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1271"/>
         <source> hours</source>
-        <translation type="unfinished"></translation>
+        <translation> ώρες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="946"/>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the machine missed.
 This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποίηση / απενεργοποίηση βελτιώσεων σήμανσης πειραματικών συμβάντων.
+Επιτρέπει την ανίχνευση οριακών συμβάντων και μερικά χάνονται από το μηχάνημα.
+Αυτή η επιλογή πρέπει να είναι ενεργοποιημένη πριν από την εισαγωγή, διαφορετικά απαιτείται καθαρισμός.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1024"/>
         <source>Flow Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Περιορισμός ροής</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1065"/>
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
-        <translation type="unfinished"></translation>
+        <translation>Ποσοστό περιορισμού στην ροή αέρα από τη μέση τιμή.
+Μια τιμή 20% λειτουργεί καλά για την ανίχνευση των άπνοιων.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="988"/>
@@ -2871,12 +2879,16 @@ A value of 20% works well for detecting apneas. </source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Η προσαρμοσμένη επισήμανση είναι μια πειραματική μέθοδος ανίχνευσης συμβάντων που χάθηκαν από το μηχάνημα. Αυτοί είναι&lt;span style=&quot; text-decoration: underline;&quot;&gt;δεν&lt;/span&gt;περιλαμβάνονται στο AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1086"/>
         <source>Duration of airflow restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Διάρκεια περιορισμού ροής αέρα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="978"/>
@@ -2890,48 +2902,49 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1125"/>
         <source>Event Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Διάρκεια συμβάντος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1112"/>
         <source>Allow duplicates near machine events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αφήστε διπλότυπα κοντά στα συμβάντα του μηχανήματος.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1190"/>
         <source>Adjusts the amount of data considered for each point in the AHI/Hour graph.
 Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίζει την ποσότητα δεδομένων που λαμβάνεται υπόψη για κάθε σημείο στο γράφημα AHI / Hour.
+Προεπιλογή έως 60 λεπτά .. Συνιστάται ιδιαίτερα να μείνει σε αυτήν την τιμή.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1194"/>
         <source> minutes</source>
-        <translation type="unfinished"></translation>
+        <translation> λεπτά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1233"/>
         <source>Reset the counter to zero at beginning of each (time) window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφέρετε τον μετρητή στο μηδέν στην αρχή του κάθε παραθύρου (χρόνου).</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1236"/>
         <source>Zero Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Μηδενική επαναφορά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="685"/>
         <source>CPAP Clock Drift</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP Ρολόγια</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="501"/>
         <source>Do not import sessions older than:</source>
-        <translation type="unfinished"></translation>
+        <translation>Μην εισάγετε περιόδους μεγαλύτερες από:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="508"/>
         <source>Sessions older than this date will not be imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν θα εισαχθούν περιόδους μεγαλύτερης αυτής της ημερομηνίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="534"/>
@@ -2941,7 +2954,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1249"/>
         <source>User definable threshold considered large leak</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κατώφλι που ορίζεται από το χρήστη θεωρείται μεγάλη διαρροή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1252"/>
@@ -2951,23 +2964,23 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1216"/>
         <source>Whether to show the leak redline in the leak graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Είτε πρόκειται να εμφανιστεί η κόκκινη γραμμή διαρροής στο γράφημα διαρροών</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1793"/>
         <location filename="../oscar/preferencesdialog.ui" line="1865"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1489"/>
         <source>&amp;Oximetry</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Οξυμετρία</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1079"/>
         <source>Show in Event Breakdown Piechart</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση στην κατανομή συμβάντων Piechart</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1102"/>
@@ -2982,7 +2995,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1001"/>
         <source>Resync Machine Detected Events (Experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναλαμβανόμενα συμβάντα ανίχνευσης μηχανής (πειραματικό)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1641"/>
@@ -2992,17 +3005,17 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1703"/>
         <source>Percentage drop in oxygen saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ποσοστό πτώσης του κορεσμού οξυγόνου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1696"/>
         <source>Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφυγμός</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1661"/>
         <source>Sudden change in Pulse Rate of at least this amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Ξαφνική αλλαγή του ρυθμού παλμού τουλάχιστον αυτού του ποσού</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1553"/>
@@ -3014,97 +3027,97 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1648"/>
         <source>Minimum duration of drop in oxygen saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελάχιστη διάρκεια πτώσης του κορεσμού οξυγόνου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1677"/>
         <source>Minimum duration of pulse change event.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελάχιστη διάρκεια συμβάντος αλλαγής παλμού.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1560"/>
         <source>Small chunks of oximetry data under this amount will be discarded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μικρά τεμάχια δεδομένων οξυμετρίας κάτω από αυτό το ποσό θα απορριφθούν.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1921"/>
         <source>&amp;General</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Γενικός</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1316"/>
         <source>Changes to the following settings needs a restart, but not a recalc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγές στις ακόλουθες ρυθμίσεις απαιτούν επανεκκίνηση, αλλά όχι επανάληψη.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1319"/>
         <source>Preferred Calculation Methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Προτιμώμενες μέθοδοι υπολογισμού</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1348"/>
         <source>Middle Calculations</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέσοι υπολογισμοί</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1362"/>
         <source>Upper Percentile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανώτερο εκατοστημόριο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="91"/>
         <source>Session Splitting Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίσεις διαίρεσης περιόδου σύνδεσης</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="356"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This setting should be used with caution...&lt;/span&gt; Switching it off comes with consequences involving accuracy of summary only days, as certain calculations only work properly provided summary only sessions that came from individual day records are kept together. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ResMed users:&lt;/span&gt; Just because it seems natural to you and I that the 12 noon session restart should be in the previous day, does not mean ResMed&apos;s data agrees with us. The STF.edf summary index format has serious weaknesses that make doing this not a good idea.&lt;/p&gt;&lt;p&gt;This option exists to pacify those who don&apos;t care and want to see this &amp;quot;fixed&amp;quot; no matter the costs, but know it comes with a cost. If you keep your SD card in every night, and import at least once a week, you won&apos;t see problems with this very often.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Αυτή η ρύθμιση θα πρέπει να χρησιμοποιείται με προσοχή ...&lt;/span&gt; Η απενεργοποίησή του έρχεται με συνέπειες που αφορούν την ακρίβεια των περιλήψεων μόνο ημερών, δεδομένου ότι ορισμένοι υπολογισμοί λειτουργούν μόνο σωστά υπό την προϋπόθεση ότι συνοψίζονται μόνο οι συνεδρίες που προέρχονται από αρχεία μεμονωμένων ημερών διατηρούνται μαζί.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Χρήστες ResMed:&lt;/span&gt; Ακριβώς επειδή φαίνεται φυσικό για εσάς και εγώ ότι η επανεκκίνηση της περιόδου 12 μεσημέρι θα πρέπει να είναι την προηγούμενη ημέρα, δεν σημαίνει ότι τα δεδομένα του ResMed συμφωνούν μαζί μας. Η μορφή του δείκτη περίληψης STF.edf έχει σοβαρές αδυναμίες που κάνουν αυτό να μην είναι καλή ιδέα.&lt;/p&gt;&lt;p&gt;Αυτή η επιλογή υπάρχει για την ειρήνευση εκείνων που δεν ενδιαφέρονται και θέλουν να δουν αυτό &amp;quot;σταθερό&amp;quot; ανεξάρτητα από το κόστος, αλλά ξέρουν ότι έρχεται με ένα κόστος. Εάν κρατήσετε την κάρτα SD σας κάθε βράδυ και εισαγάγετε τουλάχιστον μία φορά την εβδομάδα, δεν θα δείτε προβλήματα με αυτό πολύ συχνά.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="359"/>
         <source>Don&apos;t Split Summary Days (Warning: read the tooltip!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Μην διαχωρίσετε τις συνοπτικές ημέρες (Προειδοποίηση: διαβάστε την επεξήγηση εργαλείου!)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="568"/>
         <source>Memory and Startup Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές μνήμης και εκκίνησης</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="610"/>
         <source>Pre-Load all summary data at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Προκαταλάβετε όλα τα συνοπτικά δεδομένα κατά την εκκίνηση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Αυτή η ρύθμιση διατηρεί τα δεδομένα κυματομορφής και συμβάντων στη μνήμη μετά τη χρήση για να επιταχύνει την αναθεώρηση των ημερών. Αυτό δεν είναι πραγματικά μια απαραίτητη επιλογή, καθώς το λειτουργικό σας σύστημα αποθηκεύει προσωρινά τα αρχεία που χρησιμοποιούσατε. Η σύσταση είναι να την αφήσετε απενεργοποιημένη, εκτός εάν ο υπολογιστής σας έχει τόνο μνήμης.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="600"/>
         <source>Keep Waveform/Event data in memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Διατηρήστε δεδομένα κυματομορφής / συμβάντων στη μνήμη</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μειώνει οποιουσδήποτε ασήμαντους διαλόγους επιβεβαίωσης κατά την εισαγωγή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="627"/>
         <source>Import without asking for confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή χωρίς να ζητήσετε επιβεβαίωση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1154"/>
         <source>General CPAP and Related Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Γενικά CPAP και συναφείς ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1163"/>
         <source>Enable Unknown Events Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποίηση καναλιών Άγνωστων συμβάντων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1294"/>
@@ -3121,197 +3134,199 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1170"/>
         <source>AHI/Hour Graph Time Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Παράθυρο χρόνου χρονικού διαγράμματος AHI / ώρας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1226"/>
         <source>Preferred major event index</source>
-        <translation type="unfinished"></translation>
+        <translation>Προτιμώμενος δείκτης μεγάλων γεγονότων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1177"/>
         <source>Compliance defined as</source>
-        <translation type="unfinished"></translation>
+        <translation>Η συμμόρφωση ορίζεται ως</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1219"/>
         <source>Flag leaks over threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημαίνει διαρροές πάνω από το όριο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="766"/>
         <source>Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Δευτερόλεπτα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="712"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Σημείωση: Αυτό δεν προορίζεται για διορθώσεις ζωνών ώρας! Βεβαιωθείτε ότι το ρολόι και η ζώνη ώρας του λειτουργικού σας συστήματος έχουν ρυθμιστεί σωστά.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="759"/>
         <source>Hours</source>
-        <translation type="unfinished"></translation>
+        <translation>Ωρες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1325"/>
         <source>For consistancy, ResMed users should use 95% here,
 as this is the only value available on summary-only days.</source>
-        <translation type="unfinished"></translation>
+        <translation>Για λόγους συνέπειας, οι χρήστες της ResMed θα πρέπει να χρησιμοποιούν το 95% εδώ,
+καθώς αυτή είναι η μόνη διαθέσιμη τιμή σε ημερήσιες μόνο περιόδους.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1376"/>
         <source>Median is recommended for ResMed users.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Median συνιστάται για τους χρήστες του ResMed.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1380"/>
         <location filename="../oscar/preferencesdialog.ui" line="1443"/>
         <source>Median</source>
-        <translation type="unfinished"></translation>
+        <translation>Διάμεσος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1385"/>
         <source>Weighted Average</source>
-        <translation type="unfinished"></translation>
+        <translation>Σταθμισμένος μέσος όρος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1390"/>
         <source>Normal Average</source>
-        <translation type="unfinished"></translation>
+        <translation>Κανονική Μέση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1414"/>
         <source>True Maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>Αληθές Μέγιστο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1419"/>
         <source>99% Percentile</source>
-        <translation type="unfinished"></translation>
+        <translation>99% εκατοστημόριο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1355"/>
         <source>Maximum Calcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέγιστα Calcs</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1950"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Γενικές Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2677"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
-        <translation type="unfinished"></translation>
+        <translation>Τα κουμπιά πλοήγησης ημερήσιας προβολής θα παραλείψουν τις ημέρες χωρίς την εγγραφή δεδομένων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2680"/>
         <source>Skip over Empty Days</source>
-        <translation type="unfinished"></translation>
+        <translation>Παράλειψη στις ημέρες άδειες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1971"/>
         <source>Allow use of multiple CPU cores where available to improve performance. 
 Mainly affects the importer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιτρέψτε τη χρήση πολλών πυρήνων CPU, όταν υπάρχουν, για να βελτιώσετε την απόδοση.
+Επηρεάζει κυρίως τον εισαγωγέα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1975"/>
         <source>Enable Multithreading</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποίηση της πολλαπλής επεξεργασίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="574"/>
         <source>Bypass the login screen and load the most recent User Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Καταργήστε την οθόνη σύνδεσης και φορτώστε το πιο πρόσφατο προφίλ χρήστη</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="483"/>
         <source>Create SD Card Backups during Import (Turn this off at your own peril!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργήστε αντίγραφα ασφαλείας καρτών SD κατά τη διάρκεια της εισαγωγής (Απενεργοποιήστε αυτό το δικό σας κίνδυνο!)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1410"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Το πραγματικό μέγιστο είναι το μέγιστο του συνόλου δεδομένων. Το 99ο εκατοστημόριο φιλτράρει τα σπανιότερα άσχημα.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1428"/>
         <source>Combined Count divided by Total Hours</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνδυασμένη μέτρηση διαιρούμενη με Συνολικές ώρες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1433"/>
         <source>Time Weighted average of Indice</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρόνος σταθμισμένος μέσος όρος του δείκτη</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1438"/>
         <source>Standard average of indice</source>
-        <translation type="unfinished"></translation>
+        <translation>Τυπικός μέσος όρος δείκτη</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1369"/>
         <source>Culminative Indices</source>
-        <translation type="unfinished"></translation>
+        <translation>Καλλιεργητικοί Δείκτες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="951"/>
         <source>Custom CPAP User Event Flagging</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμοσμένη καταγραφή συμβάντων χρήστη CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1770"/>
         <source>Events</source>
-        <translation type="unfinished">Εκδηλώσεις</translation>
+        <translation>Εκδηλώσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1816"/>
         <location filename="../oscar/preferencesdialog.ui" line="1895"/>
         <source>Reset &amp;Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφορά &amp;προεπιλογών</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1829"/>
         <location filename="../oscar/preferencesdialog.ui" line="1908"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Προειδοποίηση: &lt;/span&gt;Ακριβώς επειδή μπορείτε, δεν σημαίνει ότι είναι καλή πρακτική.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1842"/>
         <source>Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Κυματομορφές</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1629"/>
         <source>Flag rapid changes in oximetry stats</source>
-        <translation type="unfinished"></translation>
+        <translation>Επισημάνετε ταχείες αλλαγές στα στατιστικά στοιχεία οξυμετρίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1540"/>
         <source>Other oximetry options</source>
-        <translation type="unfinished"></translation>
+        <translation>Άλλες επιλογές οξυμετρίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1590"/>
         <source>Flag SPO2 Desaturations Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Επισημάνσεις SPO2 σημαίας παρακάτω</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1573"/>
         <source>Discard segments under</source>
-        <translation type="unfinished"></translation>
+        <translation>Καταργήστε τμήματα κάτω από</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1610"/>
         <source>Flag Pulse Rate Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημαία παλμού σημαίας παραπάνω</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1600"/>
         <source>Flag Pulse Rate Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμός παλμού σημαιών παρακάτω</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="432"/>
@@ -3321,24 +3336,31 @@ which is common on Mac &amp; Linux platforms..
 
 OSCAR can import from this compressed backup directory natively.. 
 To use it with ResScan will require the .gz files to be uncompressed first..</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπιέστε τα αντίγραφα ασφαλείας του ResMed (EDF) για να εξοικονομήσετε χώρο στο δίσκο.
+Τα υποστηριζόμενα αρχεία EDF αποθηκεύονται στη μορφή .gz,
+η οποία είναι κοινή στις πλατφόρμες Mac &amp; Linux ..
+
+Το OSCAR μπορεί να εισάγει εγγενώς από αυτόν τον συμπιεσμένο κατάλογο backup.
+Για να το χρησιμοποιήσετε με το ResScan, θα χρειαστεί πρώτα να αποσυμπιεστούν τα αρχεία .gz.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="452"/>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι ακόλουθες επιλογές επηρεάζουν το μέγεθος του χώρου που χρησιμοποιεί το OSCAR στο δίσκο και επηρεάζουν τον χρόνο που απαιτείται για την εισαγωγή.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="462"/>
         <source>This makes OSCAR&apos;s data take around half as much space.
 But it makes import and day changing take longer.. 
 If you&apos;ve got a new computer with a small solid state disk, this is a good option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό καθιστά τα δεδομένα του OSCAR περίπου μισό.
+Αλλά κάνει την εισαγωγή και την αλλαγή ημέρας να διαρκέσει περισσότερο.
+Αν έχετε νέο υπολογιστή με μικρό δίσκο στερεάς κατάστασης, αυτή είναι μια καλή επιλογή.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="467"/>
         <source>Compress Session Data (makes OSCAR data smaller, but day changing slower.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπίεση δεδομένων περιόδου σύνδεσης (καθιστά τα δεδομένα του OSCAR μικρότερα, αλλά η αλλαγή ημέρας είναι πιο αργή.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="474"/>
@@ -3349,12 +3371,18 @@ and graph data older than 30 days..
 
 OSCAR can keep a copy of this data if you ever need to reinstall. 
 (Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό διατηρεί ένα αντίγραφο ασφαλείας των δεδομένων καρτών SD για τις μηχανές ResMed,
+
+Οι μηχανές ResMed της σειράς S9 διαγράφουν δεδομένα υψηλής ανάλυσης μεγαλύτερα από 7 ημέρες,
+και δεδομένα γραφημάτων παλαιότερα από 30 ημέρες ..
+
+Το OSCAR μπορεί να διατηρήσει ένα αντίγραφο αυτών των δεδομένων αν χρειαστεί ποτέ να επανεγκαταστήσετε.
+(Συνιστάται εξαιρετικά, εκτός εάν ο μικρός χώρος στο δίσκο σας ή δεν ενδιαφέρεται για τα δεδομένα γραφήματος)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Κάνει την εκκίνηση του OSCAR λίγο πιο αργή, προφορτώνοντας εκ των προτέρων όλα τα συνοπτικά δεδομένα, γεγονός που επιταχύνει την περιήγηση σε γενικές γραμμές και μερικούς άλλους υπολογισμούς αργότερα. &lt;/p&gt;&lt;p&gt;IΑν έχετε μεγάλο όγκο δεδομένων, ίσως αξίζει τον κόπο να το απενεργοποιήσετε, αλλά αν θέλετε να βλέπετε &lt;span style=&quot; font-style:italic;&quot;&gt;τα πάντα&lt;/span&gt; στην επισκόπηση, όλα τα συνοπτικά δεδομένα πρέπει να φορτωθούν ούτως ή άλλως. &lt;/p&gt; &lt;p&gt; Σημειώστε ότι αυτή η ρύθμιση δεν επηρεάζει δεδομένα κυματομορφής και συμβάντων, τα οποία είναι πάντα φορτωμένα με τη ζήτηση ανάλογα με τις ανάγκες.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="782"/>
@@ -3363,12 +3391,16 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
 
 If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτός ο υπολογισμός απαιτεί να παρέχονται δεδομένα συνολικής διαρροής από τη μηχανή CPAP. (Π.χ. PRS1, αλλά όχι ResMed, η οποία έχει ήδη αυτά)
+
+Οι υπολογισμοί αθέλητης διαρροής που χρησιμοποιούνται εδώ είναι γραμμικοί, δεν μοντελοποιούν την καμπύλη εξαερισμού της μάσκας.
+
+Εάν χρησιμοποιείτε μερικές διαφορετικές μάσκες, επιλέξτε αντί για μέσες τιμές. Θα πρέπει να είναι αρκετά κοντά.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="789"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
-        <translation type="unfinished"></translation>
+        <translation>Υπολογίστε αθέλητες διαρροές όταν δεν υπάρχουν</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="885"/>
@@ -3383,57 +3415,57 @@ If you use a few different masks, pick average values instead. It should still b
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="927"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημείωση: Χρησιμοποιείται μια μέθοδος γραμμικής υπολογισμού. Η αλλαγή αυτών των τιμών απαιτεί επανυπολογισμό.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="998"/>
         <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτή η πειραματική επιλογή προσπαθεί να χρησιμοποιήσει το σύστημα εντοπισμού συμβάντων OSCAR για τη βελτίωση της τοποθέτησης συμβάντων που ανιχνεύθηκε από το μηχάνημα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1160"/>
         <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφανίστε σημαίες για συμβάντα που ανιχνεύθηκαν από μηχάνημα και δεν έχουν εντοπιστεί ακόμα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1982"/>
         <source>Show Remove Card reminder notification on OSCAR shutdown</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση ειδοποίησης υπενθύμισης κατάργησης κάρτας στο τερματισμό λειτουργίας του OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2014"/>
         <source>Automatically Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελέγξτε αυτόματα τις ενημερώσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2031"/>
         <source>Check for new version every</source>
-        <translation type="unfinished"></translation>
+        <translation>Ελέγξτε για κάθε νέα έκδοση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2038"/>
         <source>Sourceforge hosts this project for free.. Please be considerate of their resources..</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Sourceforge φιλοξενεί αυτό το έργο δωρεάν .. Παρακαλούμε να είστε προσεκτικοί από τους πόρους ..</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2054"/>
         <source>days.</source>
-        <translation type="unfinished"></translation>
+        <translation>ημέρες.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2119"/>
         <source>&amp;Check for Updates now</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ελέγξτε τώρα για τις Ενημερώσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2142"/>
         <source>Last Checked For Updates: </source>
-        <translation type="unfinished"></translation>
+        <translation>Τελευταία Έλεγχος για ενημερώσεις: </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2155"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ετικέτα κειμένου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2177"/>
@@ -3444,133 +3476,140 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If your interested in helping test new features and bugfixes early, click here.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;But please be warned this will sometimes mean breaky code..&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Αν σας ενδιαφέρει να δοκιμάσετε νωρίτερα νέες λειτουργίες και διορθώσεις, κάντε κλικ εδώ.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Αλλά παρακαλώ προειδοποιήστε ότι αυτό θα σημαίνει μερικές φορές &apos;breaky&apos; κώδικα.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2186"/>
         <source>I want to try experimental and test builds (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέλω να δοκιμάσω πειραματικές δοκιμές και δοκιμές (Προχωρημένοι χρήστες παρακαλώ μόνο.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2210"/>
         <source>&amp;Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Εμφάνιση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2239"/>
         <source>Graph Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίσεις γραφήματος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2255"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ποια καρτέλα ανοίγει κατά τη φόρτωση ενός προφίλ. (Σημείωση: Το προεπιλεγμένο προφίλ θα είναι εάν το OSCAR δεν έχει ανοίξει ένα προφίλ κατά την εκκίνηση)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2513"/>
         <source>Bar Tops</source>
-        <translation type="unfinished"></translation>
+        <translation>διάγραμμα ράβδων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2518"/>
         <source>Line Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Γράφημα γραμμής</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2608"/>
         <source>Overview Linecharts</source>
-        <translation type="unfinished"></translation>
+        <translation>Επισκόπηση Linecharts</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2729"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δοκιμάστε να την αλλάξετε από την προεπιλεγμένη ρύθμιση (Desktop OpenGL) αν αντιμετωπίζετε προβλήματα εμφάνισης με τα γραφήματα του OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2553"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Αυτό κάνει την κύλιση όταν διευρύνεται ευκολότερα στις ευαίσθητες επισημάνσεις διπλής κατεύθυνσης. 50ms είναι η συνιστώμενη τιμή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2447"/>
         <source>How long you want the tooltips to stay visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Πόσο καιρό θέλετε οι συμβουλές εργαλείων να παραμένουν ορατές.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2435"/>
         <source>Scroll Dampening</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακινηθείτε</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2425"/>
         <source>Tooltip Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Εργαλείο λήξης χρόνου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2532"/>
         <source>Default display height of graphs in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Προεπιλεγμένο ύψος προβολής γραφικών σε εικονοστοιχεία</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2505"/>
         <source>Graph Tooltips</source>
-        <translation type="unfinished"></translation>
+        <translation>Γραφήματα εργαλείων γραφημάτων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2381"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Η οπτική μέθοδος εμφάνισης σημαιών επικάλυψης κυματομορφής.
+</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2386"/>
         <source>Standard Bars</source>
-        <translation type="unfinished"></translation>
+        <translation>ιστογράμματα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2391"/>
         <source>Top Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Κορυφαίοι δείκτες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2339"/>
         <source>Graph Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Ύψος γραφικού</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="422"/>
         <source>Changing SD Backup compression options doesn&apos;t automatically recompress backup data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η αλλαγή των επιλογών συμπίεσης SD Backup δεν επαναφέρει αυτόματα τα δεδομένα δημιουργίας αντιγράφων ασφαλείας.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="577"/>
         <source>Auto-Launch CPAP Importer after opening profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη εκκίνηση του εισαγωγέα CPAP μετά το άνοιγμα του προφίλ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="617"/>
         <source>Automatically load last used profile on start-up</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη φόρτωση του τελευταίου χρησιμοποιούμενου προφίλ κατά την εκκίνηση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="798"/>
         <source>Your masks vent rate at 20 cmH2O pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Η μάσκα εξαερισμού ρυθμίζεται σε πίεση 20 cmH2O</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="854"/>
         <source>Your masks vent rate at 4 cmH2O pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Η μάσκα σας εξαερισμού σε πίεση 4 cmH2O</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1457"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Σημείωση: &lt;/span&gt;Λόγω περιορισμένων περιορισμών σχεδιασμού, τα μηχανήματα ResMed δεν υποστηρίζουν την αλλαγή αυτών των ρυθμίσεων.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1510"/>
         <source>Oximetry Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίσεις οξυμετρίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1750"/>
@@ -3587,71 +3626,83 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Συγχρονισμός δεδομένων οξυμετρίας και CPAP&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Τα δεδομένα CMS50 που εισάγονται από το SpO2Review (από αρχεία .spoR) ή η μέθοδος σειριακής εισαγωγής δεν έχει τη σωστή χρονική σήμανση που απαιτείται για συγχρονισμό.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Ο τρόπος ζωντανής προβολής (με τη χρήση σειριακού καλωδίου) είναι ένας τρόπος για να επιτευχθεί ακριβής συγχρονισμός στο οξύμετρο CMS50, αλλά δεν αντισταθμίζει την παρακέντηση ρολογιού CPAP.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Εάν ξεκινήσετε τη λειτουργία εγγραφής οξύμετρων ακριβώς την ίδια στιγμή που ξεκινάτε τη μηχανή CPAP, μπορείτε πλέον να πραγματοποιήσετε συγχρονισμό.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Η διαδικασία της σειριακής εισαγωγής παίρνει την ώρα εκκίνησης από την πρώτη συνεδρία CPAP της προηγούμενης νύχτας. (Να θυμάστε πρώτα να εισαγάγετε τα δεδομένα CPAP!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2245"/>
         <source>On Opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Στο άνοιγμα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2258"/>
         <location filename="../oscar/preferencesdialog.ui" line="2262"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Προφίλ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2267"/>
         <location filename="../oscar/preferencesdialog.ui" line="2306"/>
         <source>Welcome</source>
-        <translation type="unfinished"></translation>
+        <translation>καλως ΗΡΘΑΤΕ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2272"/>
         <location filename="../oscar/preferencesdialog.ui" line="2311"/>
         <source>Daily</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθημερινά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2282"/>
         <location filename="../oscar/preferencesdialog.ui" line="2321"/>
         <source>Statistics</source>
-        <translation type="unfinished">Στατιστικά</translation>
+        <translation>Στατιστική</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2290"/>
         <source>Switch Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεταβείτε στις καρτέλες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2301"/>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation>Καμία αλλαγή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2329"/>
         <source>After Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετά την εισαγωγή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2355"/>
         <source>Overlay Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημαίες επικάλυψης</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2365"/>
         <source>Line Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2401"/>
         <source>The pixel thickness of line plots</source>
-        <translation type="unfinished"></translation>
+        <translation>Το πάχος εικονοστοιχείων των διαγραμμάτων γραμμής</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2627"/>
         <source>Other Visual Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Άλλες οπτικές ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2633"/>
@@ -3660,193 +3711,197 @@ Certain plots look more attractive with this on.
 This also affects printed reports.
 
 Try it and see if you like it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Anti-Aliasing εφαρμόζει εξομάλυνση στα γραφήματα γραφικών.
+Ορισμένα οικόπεδα φαίνονται πιο ελκυστικά με αυτό.
+Αυτό επηρεάζει επίσης τις εκτυπώσεις.
+
+Δοκιμάστε το και δείτε αν σας αρέσει.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2640"/>
         <source>Use Anti-Aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε το Anti-Aliasing</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2647"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάνει ορισμένα οικόπεδα να φαίνονται πιο &quot;τετράγωνα κύματα&quot;.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2650"/>
         <source>Square Wave Plots</source>
-        <translation type="unfinished"></translation>
+        <translation>Τετράγωνο κύμα οικόπεδα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2657"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η προσωρινή αποθήκευση Pixmap είναι μια τεχνική επιτάχυνσης γραφικών. Μπορεί να προκαλέσει προβλήματα με την κατάρτιση γραμματοσειρών στην περιοχή εμφάνισης γραφικών στην πλατφόρμα σας.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2660"/>
         <source>Use Pixmap Caching</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρήση της προσωρινής αποθήκευσης Pixmap</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2667"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Αυτά τα χαρακτηριστικά έχουν πρόσφατα κλαδευτεί. Θα επιστρέψουν αργότερα. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2670"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
-        <translation type="unfinished"></translation>
+        <translation>Κινούμενα Σχέδια και Γεγονότα Fancy</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2687"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
-        <translation type="unfinished"></translation>
+        <translation>Είτε πρόκειται να επιτρέψετε την αλλαγή των κλιμάκων άξονα y κάνοντας διπλό κλικ στις ετικέτες x Axis</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2690"/>
         <source>Allow YAxis Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Αφήστε την κλίμακα άξονα Y</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2697"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αν θα συμπεριληφθεί ο σειριακός αριθμός του μηχανήματος στις αλλαγές στις ρυθμίσεις του μηχανήματος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2700"/>
         <source>Include Serial Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμπεριλάβετε τον σειριακό αριθμό</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2723"/>
         <source>Graphics Engine (Requires Restart)</source>
-        <translation type="unfinished"></translation>
+        <translation>Μηχανή γραφικών (απαιτείται επανεκκίνηση)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2754"/>
         <source>Fonts (Application wide settings)</source>
-        <translation type="unfinished"></translation>
+        <translation>Γραμματοσειρές (ρυθμίσεις ευρείας εφαρμογής)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2789"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Γραμματοσειρά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2808"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέγεθος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2827"/>
         <source>Bold  </source>
-        <translation type="unfinished"></translation>
+        <translation>Τολμηρός  </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2849"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Πλαίσιο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2862"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Εφαρμογή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2926"/>
         <source>Graph Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Γραφικό κείμενο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2987"/>
         <source>Graph Titles</source>
-        <translation type="unfinished"></translation>
+        <translation>Τίτλοι γραφημάτων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3048"/>
         <source>Big  Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγάλο κείμενο</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3115"/>
         <location filename="../oscar/preferencesdialog.cpp" line="444"/>
         <location filename="../oscar/preferencesdialog.cpp" line="576"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Λεπτομέριες</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3159"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ματαίωση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3166"/>
         <source>&amp;Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Εντάξει</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="439"/>
         <location filename="../oscar/preferencesdialog.cpp" line="570"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ονομα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="440"/>
         <location filename="../oscar/preferencesdialog.cpp" line="571"/>
         <source>Color</source>
-        <translation type="unfinished">Χρώμα</translation>
+        <translation>Χρώμα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="442"/>
         <source>Flag Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Τύπος σημαίας</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="443"/>
         <location filename="../oscar/preferencesdialog.cpp" line="575"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιγραφή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="460"/>
         <source>CPAP Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκδηλώσεις CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="461"/>
         <source>Oximeter Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Οξύμετρο Γεγονότα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="462"/>
         <source>Positional Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέματα γεγονότων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <source>Sleep Stage Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκδηλώσεις ύπνου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="464"/>
         <source>Unknown Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Άγνωστα συμβάντα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="636"/>
         <source>Double click to change the descriptive name this channel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε διπλό κλικ για να αλλάξετε το περιγραφικό όνομα αυτού του καναλιού.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="514"/>
         <location filename="../oscar/preferencesdialog.cpp" line="643"/>
         <source>Double click to change the default color for this channel plot/flag/data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε διπλό κλικ για να αλλάξετε το προεπιλεγμένο χρώμα για αυτό το διάγραμμα / σημαία / δεδομένα του καναλιού.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="65"/>
         <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Παρακαλώ σημειώστε: &lt;/b&gt; Οι προηγμένες δυνατότητες διάσπασης συνεδριών του OSCAR δεν είναι δυνατές με τα μηχανήματα &lt;b&gt; ResMed &lt;/b&gt; λόγω περιορισμών στον τρόπο αποθήκευσης των ρυθμίσεων και των συνοπτικών δεδομένων τους έχει απενεργοποιηθεί για αυτό το προφίλ. &lt;/p&gt; &lt;p&gt; Στις μηχανές ResMed, οι ημέρες &lt;b&gt; θα διαχωριστούν το μεσημέρι &lt;/b&gt; όπως στο εμπορικό λογισμικό της ResMed. &lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="299"/>
@@ -3862,177 +3917,183 @@ Try it and see if you like it.</source>
         <location filename="../oscar/preferencesdialog.cpp" line="441"/>
         <location filename="../oscar/preferencesdialog.cpp" line="572"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>ΣΦΑΙΡΙΚΗ ΕΙΚΟΝΑ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="506"/>
         <source>Double click to change the descriptive name the &apos;%1&apos; channel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε διπλό κλικ για να αλλάξετε το περιγραφικό όνομα το κανάλι &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="519"/>
         <source>Whether this flag has a dedicated overview chart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Είτε αυτή η σημαία έχει ειδικό χάρτη επισκόπησης.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="529"/>
         <source>Here you can change the type of flag shown for this event</source>
-        <translation type="unfinished"></translation>
+        <translation>Εδώ μπορείτε να αλλάξετε τον τύπο της σημαίας που εμφανίζεται για αυτό το συμβάν</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="534"/>
         <location filename="../oscar/preferencesdialog.cpp" line="667"/>
         <source>This is the short-form label to indicate this channel on screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτή είναι η ετικέτα μικρής μορφής για την ένδειξη αυτού του καναλιού στην οθόνη.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="540"/>
         <location filename="../oscar/preferencesdialog.cpp" line="673"/>
         <source>This is a description of what this channel does.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτή είναι μια περιγραφή του τι κάνει αυτό το κανάλι.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="573"/>
         <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <translation>χαμηλότερος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="574"/>
         <source>Upper</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανώτερος</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="593"/>
         <source>CPAP Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP κυματομορφές</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Oximeter Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Ομομετρικά κύματα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="595"/>
         <source>Positional Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέση κυματομορφών</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="596"/>
         <source>Sleep Stage Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Κυματομορφές φάσης ύπνου</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="652"/>
         <source>Whether a breakdown of this waveform displays in overview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Είτε υπάρχει ανάλυση της κυματομορφής αυτής σε επισκόπηση.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="657"/>
         <source>Here you can set the &lt;b&gt;lower&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Εδώ μπορείτε να ορίσετε το κατώτατο όριο &lt;b&gt; χαμηλότερο &lt;/b&gt; που χρησιμοποιείται για ορισμένους υπολογισμούς στην κυματομορφή %1</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="662"/>
         <source>Here you can set the &lt;b&gt;upper&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Εδώ μπορείτε να ορίσετε το κατώτατο όριο &lt;b&gt; άνω &lt;/b&gt; που χρησιμοποιείται για ορισμένους υπολογισμούς στην κυματομορφή %1</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="772"/>
         <source>Data Processing Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Απαιτείται επεξεργασία δεδομένων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="773"/>
         <source>A data re/decompression proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
 Are you sure you want to make these changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Για την εφαρμογή αυτών των αλλαγών απαιτείται διαδικασία επανάληψης / αποσυμπίεσης δεδομένων. Η ενέργεια αυτή μπορεί να διαρκέσει μερικά λεπτά για να ολοκληρωθεί.
+
+Είστε βέβαιοι ότι θέλετε να κάνετε αυτές τις αλλαγές;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="781"/>
         <source>Data Reindex Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Απαιτείται αναδημιουργία δεδομένων</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="782"/>
         <source>A data reindexing proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
 Are you sure you want to make these changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Απαιτείται μια διαδικασία reindexing δεδομένων για την εφαρμογή αυτών των αλλαγών. Η ενέργεια αυτή μπορεί να διαρκέσει μερικά λεπτά για να ολοκληρωθεί.
+
+Είστε βέβαιοι ότι θέλετε να κάνετε αυτές τις αλλαγές;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="788"/>
         <source>Restart Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Απαιτείται επανεκκίνηση</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="789"/>
         <source>One or more of the changes you have made will require this application to be restarted, in order for these changes to come into effect.
 
 Would you like do this now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Μία ή περισσότερες από τις αλλαγές που κάνατε θα απαιτήσουν την επανεκκίνηση αυτής της εφαρμογής, για να τεθούν σε ισχύ αυτές οι αλλαγές.
+
+Θα θέλατε να το κάνετε τώρα;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1145"/>
         <source> If you ever need to reimport this data again (whether in OSCAR or ResScan) this data won&apos;t come back.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αν ποτέ χρειαστεί να επανεισάγετε ξανά αυτά τα δεδομένα (είτε στο OSCAR είτε στο ResScan), αυτά τα δεδομένα δεν θα επανέλθουν.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1146"/>
         <source> If you need to conserve disk space, please remember to carry out manual backups.</source>
-        <translation type="unfinished"></translation>
+        <translation> Εάν θέλετε να εξοικονομήσετε χώρο στο δίσκο, παρακαλούμε να θυμάστε να κάνετε χειροκίνητα αντίγραφα ασφαλείας.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1147"/>
         <source> Are you sure you want to disable these backups?</source>
-        <translation type="unfinished"></translation>
+        <translation> Είστε βέβαιοι ότι θέλετε να απενεργοποιήσετε αυτά τα αντίγραφα ασφαλείας;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1191"/>
         <source>Switching off backups is not a good idea, because OSCAR needs these to rebuild the database if errors are found.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Η απενεργοποίηση των αντιγράφων ασφαλείας δεν είναι καλή ιδέα, επειδή το OSCAR τις χρειάζεται για την ανασύσταση της βάσης δεδομένων αν εντοπιστούν σφάλματα.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1192"/>
         <source>Are you really sure you want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Είστε σίγουροι ότι θέλετε να το κάνετε αυτό;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="49"/>
         <source>Flag</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημαία</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Minor Flag</source>
-        <translation type="unfinished"></translation>
+        <translation>Μικρή σημαία</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="51"/>
         <source>Span</source>
-        <translation type="unfinished"></translation>
+        <translation>Σπιθαμή</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="52"/>
         <source>Always Minor</source>
-        <translation type="unfinished"></translation>
+        <translation>Πάντα Μικρά</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="272"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Ποτέ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1143"/>
         <source>This may not be a good idea</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό μπορεί να μην είναι μια καλή ιδέα</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1144"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι μηχανές ResMed S9 διαγράφουν συστηματικά ορισμένα δεδομένα από την κάρτα SD παλαιότερα των 7 και 30 ημερών (ανάλογα με την ανάλυση).</translation>
     </message>
 </context>
 <context>
