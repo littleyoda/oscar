@@ -362,6 +362,7 @@ private:
     QList<ImportPath> detectCPAPCards();
     QList<ImportPath> selectCPAPDataCards(const QString & prompt);
     void importCPAPDataCards(const QList<ImportPath> & datacards);
+    void addMachineToMenu(Machine* mach, QMenu* menu);
 
 //    QString getWelcomeHTML();
     void FreeSessions();

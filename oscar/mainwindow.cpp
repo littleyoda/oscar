@@ -377,25 +377,25 @@ void MainWindow::PopulatePurgeMenu()
     QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
     for (int i=0; i < machines.size(); ++i) {
         Machine *mach = machines.at(i);
-        QString name =  mach->brand() + " "+
-                        mach->model() + " "+
-                        mach->serial();
-
-        QAction * action = new QAction(name.replace("&","&&"), ui->menu_Rebuild_CPAP_Data);
-        action->setIconVisibleInMenu(true);
-        action->setIcon(mach->getPixmap());
-        action->setData(mach->loaderName()+":"+mach->serial());
-        ui->menu_Rebuild_CPAP_Data->addAction(action);
-
-        action = new QAction(name.replace("&","&&"), ui->menuPurge_CPAP_Data);
-        action->setIconVisibleInMenu(true);
-        action->setIcon(mach->getPixmap()); //getCPAPIcon(mach->loaderName()));
-        action->setData(mach->loaderName()+":"+mach->serial());
-
-        ui->menuPurge_CPAP_Data->addAction(action);
+        addMachineToMenu(mach, ui->menu_Rebuild_CPAP_Data);
+        addMachineToMenu(mach, ui->menuPurge_CPAP_Data);
     }
+
     ui->menu_Rebuild_CPAP_Data->connect(ui->menu_Rebuild_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionRebuildCPAP(QAction*)));
     ui->menuPurge_CPAP_Data->connect(ui->menuPurge_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionPurgeMachine(QAction*)));
+}
+
+void MainWindow::addMachineToMenu(Machine* mach, QMenu* menu)
+{
+    QString name =  mach->brand() + " "+
+                    mach->model() + " "+
+                    mach->serial();
+
+    QAction * action = new QAction(name.replace("&","&&"), menu);
+    action->setIconVisibleInMenu(true);
+    action->setIcon(mach->getPixmap());
+    action->setData(mach->loaderName()+":"+mach->serial());
+    menu->addAction(action);
 }
 
 void MainWindow::firstRunMessage()
@@ -2315,6 +2315,7 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
         if (c > 0) {
             Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "ZEO sessions";
+            PopulatePurgeMenu();
         } else if (c == 0) {
             Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2343,6 +2344,7 @@ void MainWindow::on_actionImport_Dreem_Data_triggered()
         if (c > 0) {
             Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "Dreem sessions";
+            PopulatePurgeMenu();
         } else if (c == 0) {
             Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2434,6 +2436,7 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
         }
 
         Notify(tr("Somnopause Data Import complete"));
+        PopulatePurgeMenu();
         daily->LoadDate(daily->getDate());
     }
 
@@ -2455,6 +2458,7 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
         int c = viatom.Open(filename);
         if (c > 0) {
             Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            PopulatePurgeMenu();
         } else if (c == 0) {
             Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
