@@ -157,20 +157,20 @@ Session* ZEOLoader::readNextSession()
         return nullptr;
     }
     Session* sess = nullptr;
-    QDateTime start_of_night, end_of_night, rise_time;
-    SessionID sid;
+    QDateTime start_of_night;  //, end_of_night, rise_time;
 
     qint64 st, tt;
     int stage;
 
     int ZQ, TimeToZ, TimeInWake, TimeInREM, TimeInLight, TimeInDeep, Awakenings;
     int MorningFeel;
-    QString FirmwareVersion, MyZeoVersion;
-    QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
-    QStringList SG, DSG;
+    //QString FirmwareVersion, MyZeoVersion;
+    //QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
+    QStringList /*SG,*/ DSG;
 
     QHash<QString,QString> row;
     while (csv->readRow(row)) {
+        SessionID sid = 0;
         invalid_fields = false;
 
         start_of_night = readDateTime(row["Start of Night"]);
@@ -179,7 +179,7 @@ Session* ZEOLoader::readNextSession()
             if (mach->SessionExists(sid)) {
                 continue;
             }
-        }
+        } // else invalid_fields will be true
 
         ZQ = readInt(row["ZQ"]);
         TimeToZ = readInt(row["Time to Z"]);
@@ -188,22 +188,22 @@ Session* ZEOLoader::readNextSession()
         TimeInLight = readInt(row["Time in Light"]);
         TimeInDeep = readInt(row["Time in Deep"]);
         Awakenings = readInt(row["Awakenings"]);
-        end_of_night = readDateTime(row["End of Night"]);
-        rise_time = readDateTime(row["Rise Time"]);
-        FirstAlarmRing = readDateTime(row["First Alarm Ring"], false);
-        LastAlarmRing = readDateTime(row["Last Alarm Ring"], false);
-        FirstSnoozeTime = readDateTime(row["First Snooze Time"], false);
-        LastSnoozeTime = readDateTime(row["Last Snooze Time"], false);
-        SetAlarmTime = readDateTime(row["Set Alarm Time"], false);
+        //end_of_night = readDateTime(row["End of Night"]);
+        //rise_time = readDateTime(row["Rise Time"]);
+        //FirstAlarmRing = readDateTime(row["First Alarm Ring"], false);
+        //LastAlarmRing = readDateTime(row["Last Alarm Ring"], false);
+        //FirstSnoozeTime = readDateTime(row["First Snooze Time"], false);
+        //LastSnoozeTime = readDateTime(row["Last Snooze Time"], false);
+        //SetAlarmTime = readDateTime(row["Set Alarm Time"], false);
         MorningFeel = readInt(row["Morning Feel"], false);
-        FirmwareVersion = row["Firmware Version"];
-        MyZeoVersion = row["My ZEO Version"];
+        //FirmwareVersion = row["Firmware Version"];
+        //MyZeoVersion = row["My ZEO Version"];
 
         if (invalid_fields) {
             continue;
         }
 
-        SG = row["Sleep Graph"].trimmed().split(" ");
+        //SG = row["Sleep Graph"].trimmed().split(" ");
         DSG = row["Detailed Sleep Graph"].trimmed().split(" ");
 
         if (DSG.size() == 0) {

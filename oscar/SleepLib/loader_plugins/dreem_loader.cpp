@@ -118,15 +118,15 @@ Session* DreemLoader::readNextSession()
     Session* sess = nullptr;
 
     QDateTime start_time, stop_time;
-    int sleep_onset, sleep_duration;
+    int sleep_onset;  //, sleep_duration;
     int light_sleep_duration, deep_sleep_duration, rem_duration, awakened_duration;
-    int awakenings, position_changes;  // average_hr, average_rr;
+    int awakenings;  //, position_changes, average_hr, average_rr;
     float sleep_efficiency;
     QStringList hypnogram;
 
     QHash<QString,QString> row;
     while (csv->readRow(row)) {
-        SessionID sid;
+        SessionID sid = 0;
         invalid_fields = false;
 
         start_time = readDateTime(row["Start Time"]);
@@ -135,18 +135,18 @@ Session* DreemLoader::readNextSession()
             if (mach->SessionExists(sid)) {
                 continue;
             }
-        }
+        } // else invalid_fields will be true
 
         // "Type" always seems to be "night"
         stop_time = readDateTime(row["Stop Time"]);
         sleep_onset = readDuration(row["Sleep Onset Duration"]);
-        sleep_duration = readDuration(row["Sleep Duration"]);
+        //sleep_duration = readDuration(row["Sleep Duration"]);
         light_sleep_duration = readDuration(row["Light Sleep Duration"]);
         deep_sleep_duration = readDuration(row["Deep Sleep Duration"]);
         rem_duration = readDuration(row["REM Duration"]);
         awakened_duration = readDuration(row["Wake After Sleep Onset Duration"]);
         awakenings = readInt(row["Number of awakenings"]);
-        position_changes = readInt(row["Position Changes"]);
+        //position_changes = readInt(row["Position Changes"]);
         //average_hr = readInt(row["Mean Heart Rate"]);  // TODO: sometimes "None"
         //average_rr = readInt(row["Mean Respiration CPM"]);
         // "Number of Stimulations" is 0 for US models
