@@ -519,6 +519,7 @@ void Statistics::updateRXChanges()
 
     // Close the progress bar
     progress->close();
+    delete progress;
 }
 
 

@@ -523,6 +523,7 @@ void Overview::on_rangeCombo_activated(int index)
         day->OpenSummary();     // This can be slow if summary needs to be updated to new version
     }
     progress->close();
+    delete progress;
 
     // first and last dates for ANY machine type
     setRange(start, end);
