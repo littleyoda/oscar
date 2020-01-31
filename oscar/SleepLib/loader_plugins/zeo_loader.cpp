@@ -110,7 +110,7 @@ bool ZEOLoader::openCSV(const QString & filename)
             return false;
         }
     } else {// if (filename.toLower().endsWith(".dat")) {
-
+        // TODO: add direct support for .dat files
         return false;
         // not supported.
     }
@@ -147,6 +147,8 @@ void ZEOLoader::closeCSV()
 //    int idxWakeTone = header.indexOf("Wake Tone");
 //    int idxWakeWindow = header.indexOf("Wake Window");
 //    int idxAlarmType = header.indexOf("Alarm Type");
+
+static const EventDataType GAIN = 0.25;  // allow for fractional sleep stages (such as Deep (2))
 
 Session* ZEOLoader::readNextSession()
 {
@@ -201,8 +203,8 @@ Session* ZEOLoader::readNextSession()
             continue;
         }
 
-        SG = row["Sleep Graph"].split(" ");
-        DSG = row["Detailed Sleep Graph"].split(" ");
+        SG = row["Sleep Graph"].trimmed().split(" ");
+        DSG = row["Detailed Sleep Graph"].trimmed().split(" ");
 
         if (DSG.size() == 0) {
             continue;
@@ -214,6 +216,7 @@ Session* ZEOLoader::readNextSession()
 
     if (sess) {
         const int WindowSize = 30 * 1000;
+        m_session = sess;
 
         sess->settings[ZEO_Awakenings] = Awakenings;
         sess->settings[ZEO_MorningFeel] = MorningFeel;
@@ -227,25 +230,68 @@ Session* ZEOLoader::readNextSession()
         st = qint64(start_of_night.toTime_t()) * 1000L;
         sess->really_set_first(st);
         tt = st;
-        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, -4, 0);
 
         for (int i = 0; i < DSG.size(); i++) {
             bool ok;
             stage = DSG[i].toInt(&ok);
             if (ok) {
-                // 1 = Awake, 2 = REM, 3 = Light Sleep, 4 = Deep Sleep
-                // TODO: What is 0? What is 6?
-                sleepstage->AddEvent(tt, -stage);  // use negative values so that the chart is oriented the right way
+                // 0 = no data, 1 = Awake, 2 = REM, 3 = Light Sleep, 4 = Deep Sleep, 6 = Deep Sleep (2), drawn slightly less deep
+                int value = -stage / GAIN;  // use negative values so that the chart is oriented the right way
+                switch (stage) {
+                    case 0:
+                        EndEventList(ZEO_SleepStage, tt);
+                        break;
+                    case 6:
+                        // According to ZeoViewer, 6 is a "Deep (2)" and is drawn somewhere between Light and Deep.
+                        value = -3.75 / GAIN;
+                        // fall through
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        AddEvent(ZEO_SleepStage, tt, value);
+                        break;
+                    default:
+                        qWarning() << sess->session() << start_of_night << "@" << i << "unknown sleep stage" << stage;
+                        break;
+                }
+            } else {
+                qWarning() << sess->session() << start_of_night << "@" << i << "unknown sleep stage" << DSG[i];
             }
             tt += WindowSize;
         }
 
+        EndEventList(ZEO_SleepStage, tt);
         sess->really_set_last(tt);
         //int size = DSG.size();
         //qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size << "30 second chunks";
     }
 
     return sess;
+}
+
+void ZEOLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
+{
+    EventList* C = m_importChannels[channel];
+    if (C == nullptr) {
+        C = m_session->AddEventList(channel, EVL_Event, GAIN, 0, -5, 0);
+        Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
+        m_importChannels[channel] = C;
+    }
+    // Add the event
+    C->AddEvent(t, value);
+    m_importLastValue[channel] = value;
+}
+
+void ZEOLoader::EndEventList(ChannelID channel, qint64 t)
+{
+    EventList* C = m_importChannels[channel];
+    if (C != nullptr) {
+        C->AddEvent(t, m_importLastValue[channel]);
+        
+        // Mark this channel's event list as ended.
+        m_importChannels[channel] = nullptr;
+    }
 }
 
 QDateTime ZEOLoader::readDateTime(const QString & text, bool required)

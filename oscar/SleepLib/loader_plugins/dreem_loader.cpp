@@ -215,7 +215,7 @@ Session* DreemLoader::readNextSession()
                     AddEvent(ZEO_SleepStage, tt, -stage);  // use negative values so that the chart is oriented the right way
                 }
             } else {
-                qWarning() << sess->session() << "unknown sleep stage" << label;
+                qWarning() << sess->session() << start_time << "@" << i << "unknown sleep stage" << label;
             }
 
             if (i == 0) {
@@ -235,7 +235,7 @@ void DreemLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
 {
     EventList* C = m_importChannels[channel];
     if (C == nullptr) {
-        C = m_session->AddEventList(channel, EVL_Event, 1, 0, -4, 0);
+        C = m_session->AddEventList(channel, EVL_Event, 1, 0, -5, 0);
         Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
         m_importChannels[channel] = C;
     }

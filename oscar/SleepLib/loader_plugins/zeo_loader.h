@@ -52,6 +52,12 @@ class ZEOLoader : public MachineLoader
     class CSVReader* csv;
     Machine *mach;
     bool invalid_fields;
+
+    void AddEvent(ChannelID channel, qint64 t, EventDataType value);
+    void EndEventList(ChannelID channel, qint64 t);
+    Session* m_session;
+    QHash<ChannelID, EventList*> m_importChannels;
+    QHash<ChannelID, EventDataType> m_importLastValue;
 };
 
 #endif // ZEOLOADER_H
