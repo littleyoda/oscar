@@ -218,7 +218,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1231"/>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
-        <translation type="unfinished"></translation>
+        <translation>If height is greater than zero in Preferences Dialogue, setting weight here will show Body Mass Index (BMI) value</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1301"/>
@@ -6203,7 +6203,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
         <source>An apnea that couldn&apos;t be determined as Central or Obstructive.</source>
-        <translation type="unfinished"></translation>
+        <translation>An apnoea that couldn&apos;t be determined as Central or Obstructive.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>

@@ -72,7 +72,7 @@
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="130"/>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
-        <translation type="unfinished"></translation>
+        <translation>Como se trata de uma versão de pré-lançamento, é recomendável que você &lt;b&gt;faça um backup manual&lt;/b&gt; da sua pasta de dados antes de proceder, porque a tentativa de retroceder mais tarde pode causar danos.</translation>
     </message>
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceding, because attempting to roll back later may break things.</source>
@@ -372,7 +372,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1081"/>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Por favor note:&lt;/b&gt; Todas as configurações mostradas abaixo se baseiam em suposições de que nada mudou desde os dias anteriores.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1083"/>
@@ -442,7 +442,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2278"/>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation type="unfinished"></translation>
+        <translation>Este favorito está em uma área desativada atualmente..</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1276"/>
@@ -956,7 +956,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
         <source>&amp;Reset Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Este favorito está em uma área desativada atualmente..</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2857"/>
@@ -1001,7 +1001,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3018"/>
         <source>Reset Graph &amp;Heights</source>
-        <translation type="unfinished"></translation>
+        <translation>Redefinir &amp;Altura de Gráficos</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3021"/>
@@ -1061,17 +1061,17 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3246"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordem padrão de gráfico, bom para CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3251"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançado</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3254"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordem de gráfico avançada, bom para ASV, AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2927"/>
@@ -3786,12 +3786,12 @@ Experimente e veja se você gosta.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2697"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation type="unfinished"></translation>
+        <translation>Se deseja incluir o número de série do equipamento no relatório de mudanças de configurações de equipamento</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2700"/>
         <source>Include Serial Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Inclui Número de Série</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2723"/>
@@ -4294,7 +4294,7 @@ Você gostaria de fazer isso agora?</translation>
     <message>
         <location filename="../oscar/profileselector.ui" line="36"/>
         <source>Reset filter to see all profiles</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="55"/>
@@ -5749,7 +5749,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="4070"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="6875"/>
         <source>%1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>%1mm</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="8042"/>
@@ -6429,7 +6429,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/reports.cpp" line="560"/>
         <source>%1 OSCAR v%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 OSCAR v%2</translation>
     </message>
     <message>
         <source>OSCAR v%1</source>
@@ -6939,32 +6939,32 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Pressure Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Pressão Configurada</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Pressure Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuração de Pressão</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>IPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP Configurado</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>IPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações de IPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>EPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP Configurado</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>EPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações de EPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
@@ -7525,7 +7525,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1499"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 PS %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 PS %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%6)</source>
@@ -7704,7 +7704,7 @@ Por favor, Reconstrua os dados CPAP</translation>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1608"/>
         <source>d MMM yyyy [ %1 - %2 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>d MMM aaaa [ %1 - %2 ]</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2166"/>
@@ -8203,7 +8203,7 @@ Linha %2, coluna %3</translation>
     <message>
         <location filename="../oscar/overview.cpp" line="512"/>
         <source>Loading summaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregando resumos</translation>
     </message>
 </context>
 <context>
@@ -8512,13 +8512,13 @@ Linha %2, coluna %3</translation>
         <location filename="../oscar/statistics.cpp" line="1581"/>
         <location filename="../oscar/statistics.cpp" line="1593"/>
         <source>AHI: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>IAH: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1582"/>
         <location filename="../oscar/statistics.cpp" line="1594"/>
         <source>Total Hours: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Total de Horas: %1</translation>
     </message>
     <message>
         <source>Culminative AHI: %1</source>
@@ -8541,7 +8541,7 @@ Linha %2, coluna %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="710"/>
         <source>This report was prepared on %1 by OSCAR v%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Este relatório foi preparado no %1 por OSCAR v%2</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="946"/>
@@ -8799,7 +8799,7 @@ Linha %2, coluna %3</translation>
     <message>
         <location filename="../oscar/welcome.ui" line="581"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Atenção: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;cartões SD ResMed S9 precisam ser travados&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;&gt;antes de inseri-los no seu computador&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;color:#000000;&quot;&gt;&lt;br&gt;Alguns sistemas operacionais escrevem arquivos de cache que corrompem o sistema de arquivos especial do diário deles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Some operating systems write cache files which break their special filesystem Journal&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8959,12 +8959,12 @@ Linha %2, coluna %3</translation>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="394"/>
         <source>Restore X-axis zoom to 100% to view entire selected period.</source>
-        <translation type="unfinished"></translation>
+        <translation>Restore a aproximação de EixoX para 100% para ver os dados completos do período selecionado.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="396"/>
         <source>Restore X-axis zoom to 100% to view entire day&apos;s data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Restore a aproximação de EixoX para 100% para ver os dados completos do dia.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="398"/>

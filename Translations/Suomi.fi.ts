@@ -1057,17 +1057,17 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3246"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Normaali grafiikka. Hyvä CPAP, APAP ja Bi-PAP laitteille</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3251"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3254"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Laajempi grafiikkavalinta. Hyvä ASV- ja AVAPS laitteille</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
@@ -4101,7 +4101,7 @@ Oletko varma että haluat jatkaa?</translation>
         <source>One or more of the changes you have made will require this application to be restarted, in order for these changes to come into effect.
 
 Would you like do this now?</source>
-        <translation>Yhden tai useamman asetuksen muutos tulee voimaan kun käynnistät tämän sovelluksen uudelleen.&#x2028;&#x2028;Haluatko käynnistää uudelleen nyt?</translation>
+        <translation>Yhden tai useamman asetuksen muutos tulee voimaan kun käynnistät tämän sovelluksen uudelleen.  Haluatko käynnistää uudelleen nyt?</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1143"/>
@@ -4294,7 +4294,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/profileselector.ui" line="36"/>
         <source>Reset filter to see all profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Palauta suodatin nähdäksesi kaikki profiilit</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="55"/>
@@ -5813,7 +5813,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="4070"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="6875"/>
         <source>%1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>%1mm</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="8042"/>
@@ -6758,32 +6758,32 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Pressure Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Paineasetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Pressure Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Paineen asetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>IPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP asetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>IPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP:n asetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>EPAP Set</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP asetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>EPAP Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP:n asetus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
@@ -7466,7 +7466,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1499"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 PS %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%6)</source>
@@ -8524,7 +8524,7 @@ rivi %2, sarake %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="710"/>
         <source>This report was prepared on %1 by OSCAR v%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä raportti on tehty %1 ohjelmalla OSCAR v%2</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="954"/>
