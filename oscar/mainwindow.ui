@@ -2895,7 +2895,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QMenu" name="menuPurge_CPAP_Data">
       <property name="title">
-       <string>Purge ALL CPAP Data</string>
+       <string>Purge ALL Machine Data</string>
       </property>
      </widget>
      <addaction name="actionPurge_Current_Day"/>

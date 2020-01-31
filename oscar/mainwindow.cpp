@@ -374,10 +374,20 @@ void MainWindow::PopulatePurgeMenu()
     ui->menuPurge_CPAP_Data->disconnect(ui->menuPurge_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionPurgeMachine(QAction *)));
     ui->menuPurge_CPAP_Data->clear();
 
+    // Only allow rebuilding for CPAP for now, since that's the only thing that makes backups.
     QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
     for (int i=0; i < machines.size(); ++i) {
         Machine *mach = machines.at(i);
         addMachineToMenu(mach, ui->menu_Rebuild_CPAP_Data);
+    }
+    
+    // Add any imported machine (except the built-in journal) to the purge menu.
+    machines = p_profile->GetMachines();
+    for (int i=0; i < machines.size(); ++i) {
+        Machine *mach = machines.at(i);
+        if (mach->type() == MT_JOURNAL) {
+            continue;
+        }
         addMachineToMenu(mach, ui->menuPurge_CPAP_Data);
     }
 
@@ -1997,7 +2007,7 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     QString data = action->data().toString();
     QString cls = data.section(":",0,0);
     QString serial = data.section(":", 1);
-    QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
+    QList<Machine *> machines = p_profile->GetMachines();
     Machine * mach = nullptr;
     for (int i=0; i < machines.size(); ++i) {
         Machine * m = machines.at(i);
@@ -2008,13 +2018,30 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     }
     if (!mach) return;
 
+    QString machname = mach->brand() + " " + mach->model() + " " + mach->modelnumber();
+    if (!mach->serial().isEmpty()) {
+        machname += QString(" (%1)").arg(mach->serial());
+    }
+
+    QString backupnotice;
+    QString bpath = mach->getBackupPath();
+    bool backups = (dirCount(bpath) > 0) ? true : false;
+    if (backups) {
+        backupnotice = "<p>" + tr("Note as a precaution, the backup folder will be left in place.") + "</p>";
+    } else {
+        backupnotice = "<p>" + tr("OSCAR does not have any backups for this machine!") + "</p>" +
+                       "<p>" + tr("Unless you have made <i>your <b>own</b> backups for ALL of your data for this machine</i>, "
+                                  "<font size=+2>you will lose this machine's data <b>permanently</b>!</font>") + "</p>";
+    }
+
     if (QMessageBox::question(this, STR_MessageBox_Warning, 
             "<p><b>"+STR_MessageBox_Warning+":</b> "  +
             tr("You are about to <font size=+2>obliterate</font> OSCAR's machine database for the following machine:</p>") +
-            "<p>"+mach->brand() + " " + mach->model() + " " + mach->modelnumber() + " (" + mach->serial() + ")" + "</p>" +
-            "<p>"+tr("Note as a precaution, the backup folder will be left in place.")+"</p>"+
+            "<p><font size=+2>" + machname + "</font></p>" +
+            backupnotice+
             "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>", 
             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        qDebug() << "Purging" << machname;
         purgeMachine(mach);
     }
 
@@ -2031,14 +2058,14 @@ void MainWindow::purgeMachine(Machine * mach)
         mach->day.clear();
         QDir dir;
         QString path = mach->getDataPath();
-        qDebug() << "path to machine" << path;
         path.chop(1);
+        qDebug() << "path to machine" << path;
 
         p_profile->DelMachine(mach);
         delete mach;
         // remove the directory unless it's got unexpected crap in it..
         bool deleted = false;
-        if (!dir.remove(path)) {
+        if (!dir.rmdir(path)) {
 #ifdef Q_OS_WIN
             wchar_t* directoryPtr = (wchar_t*)path.utf16();
             SetFileAttributes(directoryPtr, GetFileAttributes(directoryPtr) & ~FILE_ATTRIBUTE_READONLY);
