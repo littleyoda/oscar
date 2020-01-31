@@ -100,7 +100,7 @@ void DreemLoader::closeCSV()
 
 
 
-const QStringList s_sleepStageLabels = { "WAKE", "REM", "Light", "Deep" };
+const QStringList s_sleepStageLabels = { "NA", "WAKE", "REM", "Light", "Deep" };
 
 Session* DreemLoader::readNextSession()
 {
@@ -111,7 +111,7 @@ Session* DreemLoader::readNextSession()
     static QHash<const QString,int> s_sleepStages;
     for (int i = 0; i < s_sleepStageLabels.size(); i++) {
         const QString & label = s_sleepStageLabels[i];
-        s_sleepStages[label] = i+1;  // match ZEO sleep stages for now
+        s_sleepStages[label] = i;  // match ZEO sleep stages for now
         // TODO: generalize sleep stage integers between Dreem and Zeo
     }
 
@@ -169,6 +169,7 @@ Session* DreemLoader::readNextSession()
 
     if (sess) {
         const quint64 step = 30 * 1000;
+        m_session = sess;
 
         // TODO: rename Zeo channels to be generic
         sess->settings[ZEO_Awakenings] = awakenings;
@@ -195,8 +196,6 @@ Session* DreemLoader::readNextSession()
         qint64 tt = st;
         qint64 second_sample_tt = ((tt + step - 1L) / step) * step;
 
-        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, -4, 0);
-
         for (int i = 0; i < hypnogram.size(); i++) {
             auto & label = hypnogram.at(i);
             if (s_sleepStages.contains(label)) {
@@ -210,20 +209,50 @@ Session* DreemLoader::readNextSession()
                     tt = last;
                 }
 
-                if (stage == 0) qDebug() << start_time << "0 Dreem sleep stage?";
-                sleepstage->AddEvent(tt, -stage);  // use negative values so that the chart is oriented the right way
+                if (stage == 0) {
+                    EndEventList(ZEO_SleepStage, tt);
+                } else {
+                    AddEvent(ZEO_SleepStage, tt, -stage);  // use negative values so that the chart is oriented the right way
+                }
+            } else {
+                qWarning() << sess->session() << "unknown sleep stage" << label;
             }
+
             if (i == 0) {
                 tt = second_sample_tt;
             } else {
                 tt += step;
             }
         }
-
+        EndEventList(ZEO_SleepStage, last);
         sess->really_set_last(last);
     }
 
     return sess;
+}
+
+void DreemLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
+{
+    EventList* C = m_importChannels[channel];
+    if (C == nullptr) {
+        C = m_session->AddEventList(channel, EVL_Event, 1, 0, -4, 0);
+        Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
+        m_importChannels[channel] = C;
+    }
+    // Add the event
+    C->AddEvent(t, value);
+    m_importLastValue[channel] = value;
+}
+
+void DreemLoader::EndEventList(ChannelID channel, qint64 t)
+{
+    EventList* C = m_importChannels[channel];
+    if (C != nullptr) {
+        C->AddEvent(t, m_importLastValue[channel]);
+        
+        // Mark this channel's event list as ended.
+        m_importChannels[channel] = nullptr;
+    }
 }
 
 QDateTime DreemLoader::readDateTime(const QString & text)
