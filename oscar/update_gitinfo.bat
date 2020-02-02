@@ -10,7 +10,7 @@ for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set GIT_BRANCH=%%i
 if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=""
 for /f %%i in ('git rev-parse --short HEAD') do set GIT_REVISION=%%i
 for /f %%i in ('git diff-index --quiet HEAD --') do set GIT_INDEX=%%i
-if "%GIT_INDEX%"=="" (
+if "%GIT_INDEX%"!=="" (
   set GIT_REVISION=%GIT_REVISION%-plus
   set GIT_TAG=
   goto GitDone
