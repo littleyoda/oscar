@@ -435,10 +435,10 @@ int ResmedLoader::Open(const QString & dirpath)
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( stredf->Open(fi.canonicalFilePath() ) ) {
-	    qDebug() << "Failed to open" << filename;
-	    delete stredf;
-	    continue;
-	}
+        qDebug() << "Failed to open" << filename;
+        delete stredf;
+        continue;
+    }
         if (!stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
@@ -598,7 +598,7 @@ int ResmedLoader::Open(const QString & dirpath)
     qDebug() << "Total new Sessions " << num_new_sessions;
 
     return num_new_sessions;
-}	// end Open()
+}   // end Open()
 
 void StoreSettings(Session * sess, STRRecord & R);  // forward
 void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * mach )
@@ -692,23 +692,23 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
         filename = fi.fileName();
 
         int len = filename.length();
-        if (len == 4) {					//	when does this happen?
+        if (len == 4) {                    // when does this happen?
             filename.toInt(&ok);
             if ( ! ok ) {
-            	qDebug() << "Skipping directory - bad 4-letter name" << filename;
-            	continue;
+                qDebug() << "Skipping directory - bad 4-letter name" << filename;
+                continue;
             }
-        } else if (len == 8) {		// test directory date
-        //  if (ignoreOldSessions) {
-        		QDate dirDate = QDate().fromString(filename, "yyyyMMdd");
-        		if (dirDate < firstImport) {
-	            	qDebug() << "Skipping directory - ignore before " << filename;
-        			continue;
-        		}
-        //  }
+        } else if (len == 8) {        // test directory date
+            QDate dirDate = QDate().fromString(filename, "yyyyMMdd");
+            if (dirDate < firstImport) {
+#ifdef SESSION_DEBUG
+                qDebug() << "Skipping directory - ignore before " << filename;
+#endif
+                continue;
+            }
         } else {
-           	qDebug() << "Skipping directory - bad name size " << filename;
-        	continue;
+            qDebug() << "Skipping directory - bad name size " << filename;
+            continue;
         }
         // Get file lists under this directory
         dir.setPath(fi.canonicalFilePath());
@@ -782,10 +782,8 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
             date = date.addDays(-1);
         }
 
-//      if (ignoreOldSessions) {
-            if (date < firstImport)
-                continue;
-//      }
+        if (date < firstImport)
+            continue;
 
         // Chop off the .gz component if it exists, it's not needed at this stage
         if (filename.endsWith(STR_ext_gz)) {
@@ -950,7 +948,9 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
         //  if (ignoreOldSessions) {
                 if (date < firstImport) {
-//                  qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
+#ifdef SESSION_DEBUG
+                   qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
+#endif
                     continue;
                 }
         //  }
@@ -958,7 +958,9 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             auto rit = resdayList.find(date);
             if (rit != resdayList.end()) {
                 // Already seen this record.. should check if the data is the same, but meh.
+#ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "Already saw this one";
+#endif
                 continue;
             }
 
@@ -972,9 +974,11 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 if (((on >= 0) && (off >= 0)) && (on != off)) // ignore very short on-off times
                     validday=true;
             }
-            if (!validday) {
+            if ( ! validday) {
                 // There are no mask on/off events, so this STR day is useless.
+#ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "No mask events";
+#endif
                 continue;
             }
 
@@ -1271,7 +1275,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     static bool warn=false;
                     if (!warn) { // just nag once
                         qDebug() << "If you can read this, please tell the developers you found a ResMed with EPR but no EPR_LEVEL so he can remove this warning";
-                        sleep(1);
+//                        sleep(1);
                         warn = true;
                     }
 
@@ -1382,7 +1386,7 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
     }
 
     f.close();
-	return true;
+    return true;
 }
 
 void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInfo info, QMap<QDate, STRFile> STRmap ) {
@@ -1412,9 +1416,9 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
     for (auto & filename : strfiles) {
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(filename) ) {
-	    qDebug() << "Failed to open" << filename;
-	    continue;
-	}
+        qDebug() << "Failed to open" << filename;
+        continue;
+    }
         if ( ! stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
@@ -1463,7 +1467,6 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
             QFile::exists(gzfile) && QFile::remove(gzfile);
 
         STRmap[date] = STRFile(backupfile, stredf);
-//	delete stredf;
     }   // end for walking the STR files list
 }
 
@@ -1551,7 +1554,7 @@ EDFduration getEDFDuration(const QString & filename)
     double rec_duration;
     QDateTime startDate;
 
-//	We will just look at the header part of the edf file here
+//  We will just look at the header part of the edf file here
     if (!filename.endsWith(".gz", Qt::CaseInsensitive)) {
         QFile file(filename);
         if (!file.open(QFile::ReadOnly))
@@ -1563,8 +1566,9 @@ EDFduration getEDFDuration(const QString & filename)
         }
 
         QByteArray bytes = file.read(16).trimmed();
-		// We'll fix the xx85 problem below
-        startDate = QDateTime::fromString(QString::fromLatin1(bytes, 16), "dd.MM.yyHH.mm.ss");
+//      We'll fix the xx85 problem below
+//      startDate = QDateTime::fromString(QString::fromLatin1(bytes, 16), "dd.MM.yyHH.mm.ss");
+        startDate = EDFInfo::getStartDT(QString::fromLatin1(bytes,16));
 
         if (!file.seek(0xec)) {
             file.close();
@@ -1590,8 +1594,8 @@ EDFduration getEDFDuration(const QString & filename)
         char datebytes[17] = {0};
         gzread(f, (char *)&datebytes, 16);
         QString str = QString(QString::fromLatin1(datebytes,16)).trimmed();
-
-        startDate = QDateTime::fromString(str, "dd.MM.yyHH.mm.ss");
+//      startDate = QDateTime::fromString(str, "dd.MM.yyHH.mm.ss");
+        startDate = EDFInfo::getStartDT(str);
 
         if (!gzseek(f, 0xec-0xa8-16, SEEK_CUR)) { // 0xec
             gzclose(f);
@@ -1616,7 +1620,7 @@ EDFduration getEDFDuration(const QString & filename)
         d2.setDate(d2.year() + 100, d2.month(), d2.day());
         startDate.setDate(d2);
     }
-    if (!startDate.isValid()) {
+    if ( ! startDate.isValid() ) {
         qDebug() << "Invalid date time retreieved parsing EDF duration for" << filename;
         return EDFduration(0, 0, filename);
     }
@@ -1628,15 +1632,16 @@ EDFduration getEDFDuration(const QString & filename)
     quint32 end = start + rec_duration * num_records;
 
     QString filedate = filename.section("/",-1).section("_",0,1);
-
-    QDateTime dt2 = QDateTime::fromString(filedate, "yyyyMMdd_hhmmss");
+//  QDateTime dt2 = QDateTime::fromString(filedate, "yyyyMMdd_hhmmss");
+    d2 = QDate::fromString( filedate.left(8), "yyyyMMdd");
+    QTime t2 = QTime::fromString( filedate.right(6), "hhmmss");
+    QDateTime dt2 = QDateTime( d2, t2, EDFInfo::localNoDST );
     quint32 st2 = dt2.toTime_t();
 
     start = qMin(st2, start);	// They should be the same, usually
 
     if (end < start)
         end = qMax(st2, start);
-
 
     EDFduration dur(start, end, filename);
 
@@ -1681,32 +1686,32 @@ void StoreSummaryStatistics(Session * sess, STRRecord & R)
     }
 
     if (R.leak50 >= 0) {
-//        sess->setp95(CPAP_Leak, R.leak95);
-//        sess->setp50(CPAP_Leak, R.leak50);
+//      sess->setp95(CPAP_Leak, R.leak95);
+//      sess->setp50(CPAP_Leak, R.leak50);
         sess->setMax(CPAP_Leak, R.leakmax);
     }
 
     if (R.rr50 >= 0) {
-//        sess->setp95(CPAP_RespRate, R.rr95);
-//        sess->setp50(CPAP_RespRate, R.rr50);
+//      sess->setp95(CPAP_RespRate, R.rr95);
+//      sess->setp50(CPAP_RespRate, R.rr50);
         sess->setMax(CPAP_RespRate, R.rrmax);
     }
 
     if (R.mv50 >= 0) {
-//        sess->setp95(CPAP_MinuteVent, R.mv95);
-//        sess->setp50(CPAP_MinuteVent, R.mv50);
+//      sess->setp95(CPAP_MinuteVent, R.mv95);
+//      sess->setp50(CPAP_MinuteVent, R.mv50);
         sess->setMax(CPAP_MinuteVent, R.mvmax);
     }
 
     if (R.tv50 >= 0) {
-  //      sess->setp95(CPAP_TidalVolume, R.tv95);
-//        sess->setp50(CPAP_TidalVolume, R.tv50);
+//      sess->setp95(CPAP_TidalVolume, R.tv95);
+//      sess->setp50(CPAP_TidalVolume, R.tv50);
         sess->setMax(CPAP_TidalVolume, R.tvmax);
     }
 
     if (R.mp50 >= 0) {
-//        sess->setp95(CPAP_MaskPressure, R.mp95);
-//        sess->seTTtp50(CPAP_MaskPressure, R.mp50);
+//      sess->setp95(CPAP_MaskPressure, R.mp95);
+//      sess->seTTtp50(CPAP_MaskPressure, R.mp50);
         sess->setMax(CPAP_MaskPressure, R.mpmax);
     }
 
@@ -1839,9 +1844,6 @@ struct OverlappingEDF {
 
 void ResDayTask::run()
 {
-//    if (this->resday->date == QDate(2016,1,6)) {
-//        qDebug() << "in resday" << this->resday->date;
-//    }
     if (resday->files.size() == 0) { // No EDF files???
         if ( ! resday->str.date.isValid()) {
             // This condition should be impossible, but just in case something gets fudged up elsewhere later
@@ -1949,16 +1951,16 @@ void ResDayTask::run()
             }       // end for walk existing overlap entries
             if ( ! added ) {
                 if (dur.start != dur.end) { // Didn't fit it in anywhere, create a new Overlap entry/session
-	                OverlappingEDF ov;
-	                ov.start = dur.start;
-	                ov.end = dur.end;
-	                ov.filemap.insert(filetime_t, filename);
+                    OverlappingEDF ov;
+                    ov.start = dur.start;
+                    ov.end = dur.end;
+                    ov.filemap.insert(filetime_t, filename);
 #ifdef SESSION_DEBUG
                     qDebug() << "Creating session for" << filename;
-	                qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
+                    qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
 #endif
                     overlaps.append(ov);
-	            } else {
+                } else {
 #ifdef SESSION_DEBUG
                     qDebug() << "Skipping zero duration file" << filename;
 #endif
@@ -2137,8 +2139,8 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-	qDebug() << "LoadCSL failed to open" << path;
-	return false;
+        qDebug() << "LoadCSL failed to open" << path;
+        return false;
     }
 
 #ifdef DEBUG_EFFICIENCY
@@ -2147,8 +2149,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-	qDebug() << "LoadCSL failed to parse" << path;
-//	fileData->clear();
+        qDebug() << "LoadCSL failed to parse" << path;
         return false;
     }
 
@@ -2197,8 +2198,6 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
         qDebug() << "Unfinished csr event in " << edf.filename;
     }
 
-//    fileData->clear();
-
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadCSL += time.elapsed();
@@ -2218,8 +2217,8 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 #endif
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-	qDebug() << "LoadEVE failed to open" << path;
-	return false;
+        qDebug() << "LoadEVE failed to open" << path;
+        return false;
     }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
@@ -2227,8 +2226,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-	qDebug() << "LoadEVE failed to parse" << path;
-//	fileData->clear();
+        qDebug() << "LoadEVE failed to parse" << path;
         return false;
     }
 
@@ -2294,8 +2292,6 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
         }
     }
 
-//    fileData->clear();
-
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadEVE += time.elapsed();
@@ -2315,16 +2311,15 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
 #endif
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-	qDebug() << "LoadBRP failed to open" << path;
-	return false;
+        qDebug() << "LoadBRP failed to open" << path;
+        return false;
     }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
     time.start();
 #endif
     if (!edf.Parse()) {
-	qDebug() << "LoadBRP failed to parse" << path;
-//	fileData->clear();
+        qDebug() << "LoadBRP failed to parse" << path;
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2391,8 +2386,6 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
         }
     }
 
-//    fileData->clear();
-
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadBRP += time.elapsed();
@@ -2415,8 +2408,8 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-	qDebug() << "LoadSAD failed to  open" << path;
-	return false;
+        qDebug() << "LoadSAD failed to  open" << path;
+        return false;
     }
 
 #ifdef DEBUG_EFFICIENCY
@@ -2425,8 +2418,7 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-	qDebug() << "LoadSAD failed to parse" << path;
-//	fileData->clear();
+        qDebug() << "LoadSAD failed to parse" << path;
         return false;
     }
 
@@ -2471,8 +2463,6 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
         }
     }
 
-//    fileData->clear();
-
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();
     timeInLoadSAD += time.elapsed();
@@ -2492,8 +2482,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 #endif
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-	qDebug() << "LoadPLD failed to open" << path;
-	return false;
+        qDebug() << "LoadPLD failed to open" << path;
+        return false;
     }
 #ifdef DEBUG_EFFICIENCY
     int edfopentime = time.elapsed();
@@ -2501,8 +2491,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-	qDebug() << "LoadPLD failed to parse" << path;
-//	fileData->clear();
+        qDebug() << "LoadPLD failed to parse" << path;
         return false;
     }
 
@@ -2646,8 +2635,6 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         }
 
     }
-
-//    fileData->clear();
 
 #ifdef DEBUG_EFFICIENCY
     timeMutex.lock();

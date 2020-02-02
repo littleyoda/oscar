@@ -14,6 +14,8 @@
 #include <QVector>
 #include <QHash>
 #include <QList>
+#include <QDateTime>
+#include <QTimeZone>
 
 #include "SleepLib/common.h"
 
@@ -138,7 +140,12 @@ class EDFInfo
 
     virtual QString GetPatient() { return edfHdr.patientident; }        //! \brief Returns the patientid field from the EDF header
 
+    static QDateTime getStartDT(const QString str);                    //! \brief Returns the start time using noLocalDST
+
 //  The data members follow
+
+    static int  TZ_offset;
+    static QTimeZone localNoDST;
 
     QString filename;								//!	\brief For debug and error messages
 

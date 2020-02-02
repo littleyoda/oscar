@@ -8,6 +8,7 @@
  * for more details. */
 
 #include <QDateTime>
+#include <QTimeZone>
 #include <QDebug>
 #include <QFile>
 #include <QMutexLocker>
@@ -34,6 +35,9 @@ EDFInfo::EDFInfo()
     hdrPtr = nullptr;
 //    fileData = nullptr;
 }
+
+    int EDFInfo::TZ_offset = QTimeZone::systemTimeZone().offsetFromUtc(QDateTime::currentDateTime());
+    QTimeZone EDFInfo::localNoDST = QTimeZone(TZ_offset);
 
 EDFInfo::~EDFInfo()
 {
@@ -83,6 +87,20 @@ bool EDFInfo::Open(const QString & name)
     return true;
 }
 
+QDateTime EDFInfo::getStartDT( QString dateTimeStr )
+{
+//  edfHdr.startdate_orig = QDateTime::fromString(QString::fromLatin1(hdrPtr->datetime, 16), "dd.MM.yyHH.mm.ss");
+//  QString dateTimeStr;    // , dateStr, timeStr;
+    QDate qDate;
+    QTime qTime;
+//  dateTimeStr = QString::fromLatin1(hdrPtr->datetime, 16);
+//    dateStr = dateTimeStr.left(8);
+//    timeStr = dateTimeStr.right(8);
+    qDate = QDate::fromString(dateTimeStr.left(8), "dd.MM.yy");
+    qTime = QTime::fromString(dateTimeStr.right(8), "HH.mm.ss");
+    return QDateTime(qDate, qTime, localNoDST);
+}
+
 bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
 {
     bool ok;
@@ -97,7 +115,7 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
 
     edfHdr.patientident=QString::fromLatin1(hdrPtr->patientident,80).trimmed();
     edfHdr.recordingident = QString::fromLatin1(hdrPtr->recordingident, 80).trimmed(); // Serial number is in here..
-    edfHdr.startdate_orig = QDateTime::fromString(QString::fromLatin1(hdrPtr->datetime, 16), "dd.MM.yyHH.mm.ss");
+    edfHdr.startdate_orig = getStartDT(QString::fromLatin1(hdrPtr->datetime, 16));
     // This conversion will fail in 2084 after when the spec calls for the year to be 'yy' instead of digits
     // The solution is left for the afflicted - it won't be me!
     QDate d2 = edfHdr.startdate_orig.date();
