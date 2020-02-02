@@ -451,8 +451,9 @@ void Overview::ResetGraphLayout()
     GraphView->resetLayout();
 }
 
-void Overview::ResetGraphOrder()
+void Overview::ResetGraphOrder(int type)
 {
+    Q_UNUSED(type)
     GraphView->resetGraphOrder(false);
     ResetGraphLayout();
 }

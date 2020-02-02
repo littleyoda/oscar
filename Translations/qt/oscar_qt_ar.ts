@@ -84,7 +84,7 @@
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished">ن&amp;عم للكلّ</translation>
+        <translation>ن&amp;عم للكلّ</translation>
     </message>
 </context>
 </TS>

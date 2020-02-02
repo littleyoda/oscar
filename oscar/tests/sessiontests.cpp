@@ -1,6 +1,6 @@
 /* Session Testing Support
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -53,7 +53,7 @@ static QString eventListTypeName(EventListType t)
 // for names, make sure there aren't duplicate values, etc. For now we just fill the
 // below by hand.
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
-extern ChannelID PRS1_TimedBreath, PRS1_HeatedTubing;
+extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
 
 static QString settingChannel(ChannelID i)
 {
@@ -74,10 +74,13 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_PSMax);
         CHANNELNAME(CPAP_RampTime);
         CHANNELNAME(CPAP_RampPressure);
+        CHANNELNAME(CPAP_RespRate);
+        CHANNELNAME(OXI_Pulse);
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);
         CHANNELNAME(PRS1_HumidStatus);
-        CHANNELNAME(PRS1_HeatedTubing);        
+        CHANNELNAME(PRS1_HumidMode);
+        CHANNELNAME(PRS1_TubeTemp);
         CHANNELNAME(PRS1_HumidLevel);
         CHANNELNAME(PRS1_SysLock);
         CHANNELNAME(PRS1_SysOneResistSet);
@@ -89,6 +92,14 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(PRS1_MaskAlert);
         CHANNELNAME(PRS1_ShowAHI);
         CHANNELNAME(CPAP_BrokenSummary);
+        CHANNELNAME(ZEO_Awakenings);
+        CHANNELNAME(ZEO_MorningFeel);
+        CHANNELNAME(ZEO_TimeInWake);
+        CHANNELNAME(ZEO_TimeInREM);
+        CHANNELNAME(ZEO_TimeInLight);
+        CHANNELNAME(ZEO_TimeInDeep);
+        CHANNELNAME(ZEO_TimeToZ);
+        CHANNELNAME(ZEO_ZQ);
         s = hex(i);
         qDebug() << "setting channel" << qPrintable(s);
     } while(false);
@@ -131,14 +142,12 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_Test2);
         CHANNELNAME(CPAP_PressurePulse);
         CHANNELNAME(CPAP_Pressure);
-        CHANNELNAME(PRS1_00);
-        CHANNELNAME(PRS1_01);
-        CHANNELNAME(PRS1_08);
-        CHANNELNAME(PRS1_0A);
-        CHANNELNAME(PRS1_0B);
-        CHANNELNAME(PRS1_0C);
         CHANNELNAME(PRS1_0E);
-        CHANNELNAME(PRS1_15);
+        CHANNELNAME(CPAP_PressureSet);
+        CHANNELNAME(CPAP_IPAPSet);
+        CHANNELNAME(CPAP_EPAPSet);
+        CHANNELNAME(POS_Movement);
+        CHANNELNAME(ZEO_SleepStage);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);
@@ -148,11 +157,16 @@ static QString eventChannel(ChannelID i)
 static QString intList(EventStoreType* data, int count, int limit=-1)
 {
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString::number(data[i]));
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString::number(data[i]));
+    }
     QString s = "[ " + l.join(",") + " ]";
     return s;
 }
@@ -160,11 +174,16 @@ static QString intList(EventStoreType* data, int count, int limit=-1)
 static QString intList(quint32* data, int count, int limit=-1)
 {
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString::number(data[i] / 1000));
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString::number(data[i] / 1000));
+    }
     QString s = "[ " + l.join(",") + " ]";
     return s;
 }
@@ -199,10 +218,14 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
             out << "    end: " << ts(slice.end) << endl;
         }
     }
-    Day day;
-    day.addSession(session);
-    out << "  total_time: " << dur(day.total_time()) << endl;
-    day.removeSession(session);
+    qint64 total_time = 0;
+    if (session->first() != 0) {
+        Day day;
+        day.addSession(session);
+        total_time = day.total_time();
+        day.removeSession(session);
+    }
+    out << "  total_time: " << dur(total_time) << endl;
 
     out << "  settings:" << endl;
 
@@ -241,10 +264,8 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
         // chunks and ParseWaveforms/ParseOximetry for the creation of eventlists per
         // coalesced chunk.
         //
-        // TODO: Is this only for waveform data?
-        if (ev_size > 1 && e.type() != EVL_Waveform) {
-            qWarning() << session->session() << eventChannel(*key) << "ev_size =" << ev_size;
-        }
+        // This can also be used for other discontiguous data, such as PRS1 statistics
+        // that are omitted when breathing is not detected.
 
         for (int j = 0; j < ev_size; j++) {
             e = *ev[j];

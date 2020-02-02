@@ -1211,7 +1211,7 @@ QToolBox::tab:selected  {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -1669,7 +1669,7 @@ border: 2px solid #56789a; border-radius: 30px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -2714,7 +2714,7 @@ border-radius: 10px;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2728,7 +2728,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>175</width>
+          <width>174</width>
           <height>687</height>
          </rect>
         </property>
@@ -2771,7 +2771,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2829,6 +2829,13 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menu_Reset_Graphs">
+     <property name="title">
+      <string>&amp;Reset Graphs</string>
+     </property>
+     <addaction name="action_Standard_Graph_Order"/>
+     <addaction name="action_Advanced_Graph_Order"/>
+    </widget>
     <addaction name="actionView_Statistics"/>
     <addaction name="actionView_Daily"/>
     <addaction name="actionView_Overview"/>
@@ -2836,7 +2843,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_Fullscreen"/>
     <addaction name="action_Screenshot"/>
     <addaction name="separator"/>
-    <addaction name="action_Reset_Graph_Order"/>
+    <addaction name="menu_Reset_Graphs"/>
     <addaction name="action_Reset_Graph_Layout"/>
     <addaction name="separator"/>
     <addaction name="actionLine_Cursor"/>
@@ -2849,17 +2856,27 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <widget class="QMenu" name="menuTroubleshooting">
+     <property name="title">
+      <string>Troubleshooting</string>
+     </property>
+     <addaction name="actionDebug"/>
+     <addaction name="actionShow_Performance_Counters"/>
+     <addaction name="separator"/>
+     <addaction name="actionCreate_Card_zip"/>
+     <addaction name="actionCreate_OSCAR_Data_zip"/>
+     <addaction name="actionReport_a_Bug"/>
+     <addaction name="separator"/>
+     <addaction name="actionSystem_Information"/>
+    </widget>
     <addaction name="actionOnline_Users_Guide"/>
     <addaction name="action_Frequently_Asked_Questions"/>
     <addaction name="actionSleep_Disorder_Terms_Glossary"/>
     <addaction name="separator"/>
     <addaction name="actionChange_Language"/>
     <addaction name="separator"/>
-    <addaction name="actionDebug"/>
-    <addaction name="actionShow_Performance_Counters"/>
+    <addaction name="menuTroubleshooting"/>
     <addaction name="separator"/>
-    <addaction name="actionSystem_Information"/>
-    <addaction name="actionReport_a_Bug"/>
     <addaction name="action_About"/>
    </widget>
    <widget class="QMenu" name="menu_Data">
@@ -2878,7 +2895,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QMenu" name="menuPurge_CPAP_Data">
       <property name="title">
-       <string>Purge ALL CPAP Data</string>
+       <string>Purge ALL Machine Data</string>
       </property>
      </widget>
      <addaction name="actionPurge_Current_Day"/>
@@ -2894,7 +2911,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionView_Oximetry"/>
     <addaction name="separator"/>
     <addaction name="actionImport_ZEO_Data"/>
+    <addaction name="actionImport_Dreem_Data"/>
     <addaction name="actionImport_Somnopose_Data"/>
+    <addaction name="actionImport_Viatom_Data"/>
     <addaction name="actionImport_RemStar_MSeries_Data"/>
     <addaction name="separator"/>
     <addaction name="action_Rebuild_Oximetry_Index"/>
@@ -2909,7 +2928,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <action name="action_Import_Data">
    <property name="text">
-    <string>&amp;Import SDcard Data</string>
+    <string>&amp;Import CPAP Card Data</string>
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F2</string>
@@ -3101,6 +3120,11 @@ p, li { white-space: pre-wrap; }
     <string>Import &amp;ZEO Data</string>
    </property>
   </action>
+  <action name="actionImport_Dreem_Data">
+   <property name="text">
+    <string>Import &amp;Dreem Data</string>
+   </property>
+  </action>
   <action name="actionImport_RemStar_MSeries_Data">
    <property name="text">
     <string>Import RemStar &amp;MSeries Data</string>
@@ -3124,6 +3148,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionImport_Somnopose_Data">
    <property name="text">
     <string>Import &amp;Somnopose Data</string>
+   </property>
+  </action>
+  <action name="actionImport_Viatom_Data">
+   <property name="text">
+    <string>Import &amp;Viatom Data</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDaysOximetry">
@@ -3194,6 +3223,16 @@ p, li { white-space: pre-wrap; }
     <string>Show Performance Information</string>
    </property>
   </action>
+  <action name="actionCreate_Card_zip">
+   <property name="text">
+    <string>Create zip of CPAP data card</string>
+   </property>
+  </action>
+  <action name="actionCreate_OSCAR_Data_zip">
+   <property name="text">
+    <string>Create zip of all OSCAR data</string>
+   </property>
+  </action>
   <action name="actionExport_CSV">
    <property name="text">
     <string>CSV Export Wizard</string>
@@ -3228,15 +3267,23 @@ p, li { white-space: pre-wrap; }
     <string>Show Pie Chart on Daily page</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+P</string>
+    <string>F3</string>
    </property>
   </action>
-  <action name="action_Reset_Graph_Order">
+  <action name="action_Standard_Graph_Order">
    <property name="text">
-    <string>&amp;Reset Graphs</string>
+    <string>Standard</string>
    </property>
    <property name="toolTip">
-    <string>Reset order of graphs page to initial order</string>
+    <string>Standard graph order, good for CPAP, APAP, Bi-Level</string>
+   </property>
+  </action>
+  <action name="action_Advanced_Graph_Order">
+   <property name="text">
+    <string>Advanced</string>
+   </property>
+   <property name="toolTip">
+    <string>Advanced graph order, good for ASV, AVAPS</string>
    </property>
   </action>
  </widget>

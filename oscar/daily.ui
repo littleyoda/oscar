@@ -1049,9 +1049,6 @@ QToolButton:pressed {
               <property name="text">
                <string> i </string>
               </property>
-              <property name="shortcut">
-               <string notr="true">Ctrl+I</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1065,9 +1062,6 @@ QToolButton:pressed {
               <property name="text">
                <string>B</string>
               </property>
-              <property name="shortcut">
-               <string notr="true">Ctrl+B</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1079,9 +1073,6 @@ QToolButton:pressed {
               </property>
               <property name="text">
                <string>u</string>
-              </property>
-              <property name="shortcut">
-               <string notr="true">Ctrl+U</string>
               </property>
              </widget>
             </item>

@@ -1,5 +1,6 @@
-﻿/* Channel / Schema Implementation
+/* Channel / Schema Implementation
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -134,6 +135,9 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RampTime      = 0x1022, SETTING,     MT_CPAP, SESSION, "RampTime",       QObject::tr("Ramp Time") ,      QObject::tr("Ramp Delay Period"),              QObject::tr("Ramp Time"),    STR_UNIT_Minutes,      DEFAULT,    QColor("black")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RampPressure  = 0x1023, SETTING,     MT_CPAP, SESSION, "RampPressure",   QObject::tr("Ramp Pressure"),   QObject::tr("Starting Ramp Pressure"),         QObject::tr("Ramp Pressure"),STR_UNIT_CMH2O,        DEFAULT,    QColor("black")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Ramp          = 0x1027, SPAN,        MT_CPAP, SESSION, "Ramp",           QObject::tr("Ramp Event") ,     QObject::tr("Ramp Event"),                     QObject::tr("Ramp"),         STR_UNIT_EventsPerHour,DEFAULT,    QColor("light blue")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_PressureSet   = 0x11A4, WAVEFORM,    MT_CPAP, SESSION, "PressureSet",    QObject::tr("Pressure Set"),    QObject::tr("Pressure Setting"),               QObject::tr("Pressure Set"), STR_UNIT_CMH2O,        DEFAULT,    QColor("dark red")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_IPAPSet       = 0x11A5, WAVEFORM,    MT_CPAP, SESSION, "IPAPSet",        QObject::tr("IPAP Set"),        QObject::tr("IPAP Setting"),                   QObject::tr("IPAP Set"),     STR_UNIT_CMH2O,        DEFAULT,    QColor("dark red")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_EPAPSet       = 0x11A6, WAVEFORM,    MT_CPAP, SESSION, "EPAPSet",        QObject::tr("EPAP Set"),        QObject::tr("EPAP Setting"),                   QObject::tr("EPAP Set"),     STR_UNIT_CMH2O,        DEFAULT,    QColor("dark green")));
     // Flags
     schema::channel.add(GRP_CPAP, new Channel(CPAP_CSR           = 0x1000, SPAN,        MT_CPAP, SESSION, "CSR",
             QObject::tr("Cheyne Stokes Respiration"), QObject::tr("An abnormal period of Cheyne Stokes Respiration"), QObject::tr("CSR"), STR_UNIT_Percentage,DEFAULT,    COLOR_CSR));
@@ -272,6 +276,9 @@ void init()
     schema::channel.add(GRP_POS, new Channel(POS_Inclination         = 0x2991, WAVEFORM,   MT_POSITION, SESSION, STR_GRAPH_Inclination,
             QObject::tr("Inclination"), QObject::tr("Upright angle in degrees"),  QObject::tr("Inclination"),  STR_UNIT_Degrees, DEFAULT,  QColor("dark magenta")));
 
+    schema::channel.add(GRP_POS, new Channel(POS_Movement            = 0x2992, WAVEFORM,   MT_POSITION, SESSION, STR_GRAPH_Motion,
+            QObject::tr("Movement"), QObject::tr("Movement detector"),  QObject::tr("Movement"),  STR_UNIT_Unknown, DEFAULT,  QColor("dark green")));
+
     schema::channel.add(GRP_CPAP, new Channel(RMS9_MaskOnTime        = 0x1025, DATA,   MT_CPAP,  SESSION, "MaskOnTime",
             QObject::tr("Mask On Time"), QObject::tr("Time started according to str.edf"),  QObject::tr("Mask On Time"),  STR_UNIT_Unknown, DEFAULT,  Qt::black));
 
@@ -321,7 +328,7 @@ void init()
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInREM  = 0x2005, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInREM",    QObject::tr("Time In REM Sleep"), QObject::tr("Time spent in REM Sleep"), QObject::tr("Time in REM Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInLight= 0x2006, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInLight",QObject::tr("Time In Light Sleep"), QObject::tr("Time spent in light sleep"), QObject::tr("Time in Light Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInDeep = 0x2007, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInDeep",   QObject::tr("Time In Deep Sleep"), QObject::tr("Time spent in deep sleep"), QObject::tr("Time in Deep Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
-    schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInDeep = 0x2008, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeToZ",      QObject::tr("Time to Sleep"), QObject::tr("Time taken to get to sleep"), QObject::tr("Time to Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
+    schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeToZ    = 0x2008, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeToZ",      QObject::tr("Time to Sleep"), QObject::tr("Time taken to get to sleep"), QObject::tr("Time to Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_ZQ         = 0x2009, DATA,   MT_SLEEPSTAGE,  SESSION, "ZeoZQ", QObject::tr("Zeo ZQ"), QObject::tr("Zeo sleep quality measurement"), QObject::tr("ZEO ZQ"),  QString(), INTEGER,  Qt::black));
 
     NoChannel = 0;
@@ -352,13 +359,22 @@ void init()
 }
 
 
-void resetChannels()
+void done()
 {
-    schema::channel.channels.clear();
     schema::channel.names.clear();
+    for (auto & c : schema::channel.channels.values()) {
+        delete c;
+    }
+    schema::channel.channels.clear();
     schema::channel.groups.clear();
 
     schema_initialized = false;
+}
+
+
+void resetChannels()
+{
+    done();
     init();
 
     QList<MachineLoader *> list = GetLoaders();

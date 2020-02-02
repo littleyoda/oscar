@@ -1,6 +1,6 @@
 /* PRS1 Unit Tests
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -18,10 +18,7 @@ static QString prs1OutputPath(const QString & inpath, const QString & serial, in
 
 void PRS1Tests::initTestCase(void)
 {
-    initializeStrings();
-    qDebug() << STR_TR_OSCAR + " " + getBranchVersion();
-    QString profile_path = TESTDATA_PATH "profile/";
-    Profiles::Create("test", &profile_path);
+    p_profile = new Profile(TESTDATA_PATH "profile/", false);
 
     schema::init();
     PRS1Loader::Register();
@@ -30,6 +27,8 @@ void PRS1Tests::initTestCase(void)
 
 void PRS1Tests::cleanupTestCase(void)
 {
+    delete p_profile;
+    p_profile = nullptr;
 }
 
 
@@ -79,9 +78,8 @@ void parseAndEmitSessionYaml(const QString & path)
     qDebug() << path;
 
     // This mirrors the functional bits of PRS1Loader::OpenMachine.
-    // Maybe there's a clever way to add parameters to OpenMachine that
-    // would make it more amenable to automated tests. But for now
-    // something is better than nothing.
+    // TODO: Refactor PRS1Loader so that the tests can use the same
+    // underlying logic as OpenMachine rather than duplicating it here.
 
     QStringList paths;
     QString propertyfile;
@@ -109,7 +107,10 @@ void parseAndEmitSessionYaml(const QString & path)
         
         delete session;
         delete task;
-   }
+    }
+    if (s_loader->m_unexpectedMessages.count() > 0) {
+        qWarning() << "*** Found unexpected data";
+    }
 }
 
 void PRS1Tests::testSessionsToYaml()
@@ -141,11 +142,16 @@ static QString byteList(QByteArray data, int limit=-1)
 {
     int count = data.size();
     if (limit == -1 || limit > count) limit = count;
+    int first = limit / 2;
+    int last = limit - first;
     QStringList l;
-    for (int i = 0; i < limit; i++) {
+    for (int i = 0; i < first; i++) {
         l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
     }
     if (limit < count) l.push_back("...");
+    for (int i = count - last; i < count; i++) {
+        l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
+    }
     QString s = l.join(" ");
     return s;
 }
@@ -236,8 +242,10 @@ void ChunkToYaml(QTextStream & out, PRS1DataChunk* chunk, bool ok)
 
 void parseAndEmitChunkYaml(const QString & path)
 {
+    bool FV = false;  // set this to true to emit family/familyVersion for this path
     qDebug() << path;
 
+    QHash<QString,QSet<quint64>> written;
     QStringList paths;
     QString propertyfile;
     int sessionid_base;
@@ -277,7 +285,7 @@ void parseAndEmitChunkYaml(const QString & path)
             int ext = ext_s.toInt(&ok);
             if (!ok) {
                 // not a numerical extension
-                qWarning() << inpath << "unexpected filename";
+                qInfo() << inpath << "unexpected filename";
                 continue;
             }
 
@@ -285,7 +293,7 @@ void parseAndEmitChunkYaml(const QString & path)
             int sessionid = session_s.toInt(&ok, sessionid_base);
             if (!ok) {
                 // not a numerical session ID
-                qWarning() << inpath << "unexpected filename";
+                qInfo() << inpath << "unexpected filename";
                 continue;
             }
             
@@ -293,7 +301,9 @@ void parseAndEmitChunkYaml(const QString & path)
             QString suffix = QString(".%1-chunks.yml").arg(ext, 3, 10, QChar('0'));
             QString outpath = prs1OutputPath(path, m->serial(), sessionid, suffix);
             QFile file(outpath);
-            if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
+            // Truncate the first time we open this file, to clear out any previous test data.
+            // Otherwise append, allowing session chunks to be split among multiple files.
+            if (!file.open(QFile::WriteOnly | (written.contains(outpath) ? QFile::Append : QFile::Truncate))) {
                 qDebug() << outpath;
                 Q_ASSERT(false);
             }
@@ -302,30 +312,46 @@ void parseAndEmitChunkYaml(const QString & path)
             // keep only P1234568/Pn/00000000.001
             QStringList pathlist = QDir::toNativeSeparators(inpath).split(QDir::separator(), QString::SkipEmptyParts);
             QString relative = pathlist.mid(pathlist.size()-3).join(QDir::separator());
-            out << "file: " << relative << endl;
+            bool first_chunk_from_file = true;
 
             // Parse the chunks in the file.
             QList<PRS1DataChunk *> chunks = s_loader->ParseFile(inpath);
             for (int i=0; i < chunks.size(); i++) {
                 PRS1DataChunk * chunk = chunks.at(i);
-                bool ok = true;
-                
-                // Parse the inner data.
-                switch (chunk->ext) {
-                    case 0: ok = chunk->ParseCompliance(); break;
-                    case 1: ok = chunk->ParseSummary(); break;
-                    case 2: ok = chunk->ParseEvents(MODE_UNKNOWN); break;
-                    default: break;
+                if (i == 0 && FV) { qWarning() << QString("F%1V%2").arg(chunk->family).arg(chunk->familyVersion); FV=false; }
+                // Only write unique chunks to the file.
+                if (written[outpath].contains(chunk->hash()) == false) {
+                    if (first_chunk_from_file) {
+                        out << "file: " << relative << endl;
+                        first_chunk_from_file = false;
+                    }
+                    bool ok = true;
+                    
+                    // Parse the inner data.
+                    switch (chunk->ext) {
+                        case 0: ok = chunk->ParseCompliance(); break;
+                        case 1: ok = chunk->ParseSummary(); break;
+                        case 2: ok = chunk->ParseEvents(); break;
+                        case 5: break;  // skip flow/pressure waveforms
+                        case 6: break;  // skip oximetry data
+                        default:
+                            qWarning() << relative << "unexpected file type";
+                            break;
+                    }
+                    
+                    // Emit the YAML.
+                    ChunkToYaml(out, chunk, ok);
+                    written[outpath] += chunk->hash();
                 }
-                
-                // Emit the YAML.
-                ChunkToYaml(out, chunk, ok);
                 delete chunk;
             }
             
             file.close();
         }
     }
+    
+    p_profile->removeMachine(m);
+    delete m;
 }
 
 void PRS1Tests::testChunksToYaml()

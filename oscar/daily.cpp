@@ -79,7 +79,7 @@ inline QString channelInfo(ChannelID code) {
 const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_FlowLimitation,
                                            STR_GRAPH_Snore, STR_GRAPH_TidalVolume, STR_GRAPH_MaskPressure, STR_GRAPH_RespRate, STR_GRAPH_MinuteVent,
                                            STR_GRAPH_PTB, STR_GRAPH_RespEvent, STR_GRAPH_Ti, STR_GRAPH_Te,
-                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP
                                           };
@@ -88,7 +88,7 @@ const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
 const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowRate, STR_GRAPH_MaskPressure, STR_GRAPH_TidalVolume, STR_GRAPH_MinuteVent,
                                            STR_GRAPH_Ti, STR_GRAPH_Te, STR_GRAPH_FlowLimitation, STR_GRAPH_Pressure, STR_GRAPH_LeakRate, STR_GRAPH_Snore,
                                            STR_GRAPH_RespRate, STR_GRAPH_PTB, STR_GRAPH_RespEvent,
-                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_TestChan1,
+                                           STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP
                                           };
@@ -121,6 +121,10 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 {
     qDebug() << "Creating new Daily object";
     ui->setupUi(this);
+
+    ui->JournalNotesBold->setShortcut(QKeySequence::Bold);
+    ui->JournalNotesItalic->setShortcut(QKeySequence::Italic);
+    ui->JournalNotesUnderline->setShortcut(QKeySequence::Underline);
 
     // Remove Incomplete Extras Tab
     //ui->tabWidget->removeTab(3);
@@ -235,7 +239,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     const ChannelID cpapcodes[] = {
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
-        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, CPAP_Test1
+        /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Movement, CPAP_Test1
     };
 
     // Create graphs from the cpap code list
@@ -349,6 +353,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     pc->addPlot(CPAP_IPAPLo, square);
     pc->addPlot(CPAP_IPAP, square);
     pc->addPlot(CPAP_IPAPHi, square);
+    pc->addPlot(CPAP_PressureSet, false);
+    pc->addPlot(CPAP_EPAPSet, false);
+    pc->addPlot(CPAP_IPAPSet, false);
 
     // Create Timea at Pressure graph
     gGraph * TAP2;
@@ -393,6 +400,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     graphlist[schema::channel[POS_Inclination].code()]->AddLayer(new gLineChart(POS_Inclination));
     graphlist[schema::channel[POS_Orientation].code()]->AddLayer(new gLineChart(POS_Orientation));
+    graphlist[schema::channel[POS_Movement].code()]->AddLayer(new gLineChart(POS_Movement));
 
     graphlist[schema::channel[CPAP_MinuteVent].code()]->AddLayer(lc=new gLineChart(CPAP_MinuteVent, square));
     lc->addPlot(CPAP_TgMV, square);
@@ -908,17 +916,23 @@ void Daily::ResetGraphLayout()
 {
     GraphView->resetLayout();
 }
-void Daily::ResetGraphOrder()
+void Daily::ResetGraphOrder(int type)
 {
-    Day * day = p_profile->GetDay(previous_date,MT_CPAP);
+    if (type == 0) {  // Auto order
+        Day * day = p_profile->GetDay(previous_date,MT_CPAP);
 
-    int cpapMode = day->getCPAPMode();
-//    qDebug() << "Daily::ResetGraphOrder cpapMode" << cpapMode;
+        int cpapMode = day->getCPAPMode();
+        //    qDebug() << "Daily::ResetGraphOrder cpapMode" << cpapMode;
 
-    if (useAdvancedGraphs.contains(cpapMode))
+        if (useAdvancedGraphs.contains(cpapMode))
+            GraphView->resetGraphOrder(true, advancedGraphOrder);
+        else
+            GraphView->resetGraphOrder(true, standardGraphOrder);
+    } else if (type == 2) { // Advanced order
         GraphView->resetGraphOrder(true, advancedGraphOrder);
-    else
+    } else {                // type == 1, standard order
         GraphView->resetGraphOrder(true, standardGraphOrder);
+    }
 
     // Enable all graphs (make them not hidden)
     for (int i=0;i<ui->graphCombo->count();i++) {
@@ -1095,6 +1109,9 @@ QString Daily::getMachineSettings(Day * day) {
                 .arg(chan.description())
                 .arg(day->getCPAPModeStr());
 
+        // The order in which to present pressure settings, which will appear first.
+        QVector<ChannelID> first_channels = { cpapmode, CPAP_Pressure, CPAP_PressureMin, CPAP_PressureMax, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_PS, CPAP_PSMin, CPAP_PSMax };
+
         if (sess) for (; it != it_end; ++it) {
             ChannelID code = it.key();
 
@@ -1124,30 +1141,19 @@ QString Daily::getMachineSettings(Day * day) {
                     .arg(schema::channel[code].description())
                     .arg(data);
 
-            if ((code == CPAP_IPAP)
-            || (code == CPAP_EPAP)
-            || (code == CPAP_IPAPHi)
-            || (code == CPAP_EPAPHi)
-            || (code == CPAP_IPAPLo)
-            || (code == CPAP_EPAPLo)
-            || (code == CPAP_PressureMin)
-            || (code == CPAP_PressureMax)
-            || (code == CPAP_Pressure)
-            || (code == CPAP_PSMin)
-            || (code == CPAP_PSMax)
-            || (code == CPAP_PS)) {
+            if (first_channels.contains(code)) {
                 first[code] = tmp;
             } else {
                 other[schema::channel[code].label()] = tmp;
             }
         }
 
-        ChannelID order[] = { cpapmode, CPAP_Pressure, CPAP_PressureMin, CPAP_PressureMax, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_PS, CPAP_PSMin, CPAP_PSMax };
-        int os = sizeof(order) / sizeof(ChannelID);
-        for (int i=0 ;i < os; ++i) {
-            if (first.contains(order[i])) html += first[order[i]];
+        // Put the pressure settings in order.
+        for (auto & code : first_channels) {
+            if (first.contains(code)) html += first[code];
         }
 
+        // TODO: add logical (rather than alphabetical) ordering to this list, preferably driven by loader somehow
         for (QMap<QString,QString>::iterator it = other.begin(); it != other.end(); ++it) {
             html += it.value();
         }
@@ -1273,10 +1279,10 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Max);
 
     ChannelID chans[]={
-        CPAP_Pressure,CPAP_EPAP,CPAP_IPAP,CPAP_PS,CPAP_PTB,
+        CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  /*  CPAP_IE,   */  CPAP_Ti,CPAP_Te, CPAP_TgMV,
-        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation
+        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement
     };
     int numchans=sizeof(chans)/sizeof(ChannelID);
     int ccnt=0;
@@ -1635,7 +1641,7 @@ void Daily::Load(QDate date)
             htmlLeftIndices = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
 
             quint32 zchans = schema::SPAN | schema::FLAG;
-            bool show_minors = true;
+            bool show_minors = false; // true;
             if (p_profile->general->showUnknownFlags()) zchans |= schema::UNKNOWN;
 
             if (show_minors) zchans |= schema::MINOR_FLAG;

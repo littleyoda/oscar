@@ -30,7 +30,6 @@
 #include <zlib.h>
 #endif
 
-#include "git_info.h"
 #include "version.h"
 #include "profiles.h"
 #include "mainwindow.h"
@@ -68,15 +67,6 @@ void SetDateFormat () {
     qDebug() << "shortened date format" << MedDateFormat << "dayFirst" << dayFirst;
 }
 
-const QString & gitRevision()
-{
-    return GIT_REVISION;
-}
-const QString & gitBranch()
-{
-    return GIT_BRANCH;
-}
-
 const QString getDeveloperName()
 {
     return STR_DeveloperName;
@@ -90,36 +80,14 @@ const QString getDeveloperDomain()
 const QString getAppName()
 {
     QString name = STR_AppName;
-
-    // Append branch if there is a branch specified
-    if (GIT_BRANCH != "master") {
-        name += "-"+GIT_BRANCH;
-//        qDebug() << "getAppName, not master, name is" << name << "branch is" << GIT_BRANCH;
-    }
-
-    // Append "-test" if not release
-    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
-        name += "-test";
-//        qDebug() << "getAppName, not release, name is" << name << "release type is" << ReleaseStatus;
-    }
-
+    name += getPrereleaseSuffix();
     return name;
 }
 
 const QString getModifiedAppData()
 {
     QString appdata = STR_AppData;
-
-    // Append branch if there is a branch specified
-    if (GIT_BRANCH != "master")
-        appdata += "-"+GIT_BRANCH;
-
-    // Append "-test" if not release
-    else if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-               (ReleaseStatus.compare("rc", Qt::CaseInsensitive)==0) )) {
-        appdata += "-test";
-    }
+    appdata += getPrereleaseSuffix();
     return appdata;
 }
 
@@ -214,36 +182,12 @@ QString getGraphicsEngine()
 #endif
     return gfxEngine;
 }
-QString getBranchVersion()
-{
-    QString version = STR_TR_AppVersion;
-
-    if (!((ReleaseStatus.compare("r", Qt::CaseInsensitive)==0) ||
-       (ReleaseStatus.compare("release", Qt::CaseInsensitive)==0)))
-        version += " ("+GIT_REVISION + ")";
-
-    if (GIT_BRANCH != "master") {
-        version += " [Branch: " + GIT_BRANCH + "]";
-    }
-
-#ifdef BROKEN_OPENGL_BUILD
-    version += " ["+CSTR_GFX_BrokenGL+"]";
-#endif
-    return version;
-}
 
 QStringList buildInfo;
 
-QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
-    buildInfo << (STR_AppName + " " + VersionString + " " + relinfo);
-    buildInfo << (QObject::tr("Built with Qt") + " " + QT_VERSION_STR + " on " + __DATE__ + " " + __TIME__);
-    QString branch = "";
-    if (GIT_BRANCH != "master") {
-        branch = QObject::tr("Branch:") + " " + GIT_BRANCH + ", ";
-    }
-    buildInfo << branch + (QObject::tr("Revision")) + " " + GIT_REVISION;
-    if (getAppName() != STR_AppName)        // Report any non-standard app key
-        buildInfo << (QObject::tr("App key:") + " " + getAppName());
+QStringList makeBuildInfo (QString forcedEngine){
+    // application name and version has already been added
+    buildInfo << (QObject::tr("Built with Qt %1 on %2").arg(QT_VERSION_STR).arg(getBuildDateTime()));
     buildInfo << QString("");
     buildInfo << (QObject::tr("Operating system:") + " " + QSysInfo::prettyProductName());
     buildInfo << (QObject::tr("Graphics Engine:") + " " + getOpenGLVersionString());
@@ -251,6 +195,11 @@ QStringList makeBuildInfo (QString relinfo, QString forcedEngine){
     if (forcedEngine != "")
         buildInfo << forcedEngine;
 
+    buildInfo << QString("");
+    if (getAppName() != STR_AppName)        // Report any non-standard app key
+        buildInfo << (QObject::tr("App key:") + " " + getAppName());
+    // Data directory will always be added, later.
+    
     return buildInfo;
 }
 
@@ -516,6 +465,7 @@ QString STR_TR_EventFlags;
 
 QString STR_TR_Inclination;
 QString STR_TR_Orientation;
+QString STR_TR_Motion;
 
 
 // Machine type names.
@@ -605,7 +555,7 @@ QString STR_TR_PrRelief; // Pressure Relief
 
 QString STR_TR_Bookmarks;
 QString STR_TR_OSCAR;
-QString STR_TR_AppVersion;
+//QString STR_TR_AppVersion;
 
 QString STR_TR_Default;
 
@@ -810,7 +760,7 @@ void initializeStrings()
 
     STR_TR_Bookmarks = QObject::tr("Bookmarks");
     STR_TR_OSCAR = QObject::tr("OSCAR");
-    STR_TR_AppVersion = QObject::tr("v%1").arg(VersionString);
+    //STR_TR_AppVersion = QObject::tr("v%1").arg(getVersion());
 
     STR_TR_Mode = QObject::tr("Mode");
     STR_TR_Model = QObject::tr("Model");
@@ -823,6 +773,7 @@ void initializeStrings()
 
     STR_TR_Inclination = QObject::tr("Inclination");
     STR_TR_Orientation = QObject::tr("Orientation");
+    STR_TR_Motion = QObject::tr("Motion");
 
     STR_TR_Name = QObject::tr("Name");
     STR_TR_DOB = QObject::tr("DOB");  // Date of Birth

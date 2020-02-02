@@ -91,9 +91,13 @@ QMAKE_EXTRA_TARGETS += gitinfotarget
 
 QMAKE_TARGET_PRODUCT = OSCAR
 QMAKE_TARGET_COMPANY = The OSCAR Team
-QMAKE_TARGET_COPYRIGHT = © 2019 The OSCAR Team
+QMAKE_TARGET_COPYRIGHT = © 2019-2020 The OSCAR Team
 QMAKE_TARGET_DESCRIPTION = "OpenSource CPAP Analysis Reporter"
-VERSION = 0.0.0.0
+_VERSION_FILE = $$cat(./VERSION)
+VERSION = $$section(_VERSION_FILE, '"', 1, 1)
+win32 {
+    VERSION = $$section(VERSION, '-', 0, 0)
+}
 RC_ICONS = ./icons/logo.ico
 
 macx  {
@@ -256,6 +260,7 @@ SOURCES += \
     sessionbar.cpp \
     updateparser.cpp \
     UpdaterWindow.cpp \
+    version.cpp \
     Graphs/gFlagsLine.cpp \
     Graphs/gFooBar.cpp \
     Graphs/gGraph.cpp \
@@ -281,6 +286,7 @@ SOURCES += \
     SleepLib/schema.cpp \
     SleepLib/session.cpp \
     SleepLib/loader_plugins/cms50_loader.cpp \
+    SleepLib/loader_plugins/dreem_loader.cpp \
     SleepLib/loader_plugins/icon_loader.cpp \
     SleepLib/loader_plugins/intellipap_loader.cpp \
     SleepLib/loader_plugins/mseries_loader.cpp \
@@ -288,7 +294,11 @@ SOURCES += \
     SleepLib/loader_plugins/resmed_loader.cpp \
     SleepLib/loader_plugins/resmed_EDFinfo.cpp \
     SleepLib/loader_plugins/somnopose_loader.cpp \
+    SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
+    zip.cpp \
+    miniz.c \
+    csv.cpp \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
@@ -304,6 +314,7 @@ SOURCES += \
     SleepLib/progressdialog.cpp \
     SleepLib/loader_plugins/cms50f37_loader.cpp \
     profileselector.cpp \
+    SleepLib/appsettings.cpp \
     SleepLib/loader_plugins/edfparser.cpp \
     aboutdialog.cpp \
     welcome.cpp
@@ -326,6 +337,7 @@ HEADERS  += \
     updateparser.h \
     UpdaterWindow.h \
     version.h \
+    VERSION \
     Graphs/gFlagsLine.h \
     Graphs/gFooBar.h \
     Graphs/gGraph.h \
@@ -352,6 +364,7 @@ HEADERS  += \
     SleepLib/schema.h \
     SleepLib/session.h \
     SleepLib/loader_plugins/cms50_loader.h \
+    SleepLib/loader_plugins/dreem_loader.h \
     SleepLib/loader_plugins/icon_loader.h \
     SleepLib/loader_plugins/intellipap_loader.h \
     SleepLib/loader_plugins/mseries_loader.h \
@@ -359,7 +372,11 @@ HEADERS  += \
     SleepLib/loader_plugins/resmed_loader.h \
     SleepLib/loader_plugins/resmed_EDFinfo.h \
     SleepLib/loader_plugins/somnopose_loader.h \
+    SleepLib/loader_plugins/viatom_loader.h \
     SleepLib/loader_plugins/zeo_loader.h \
+    zip.h \
+    miniz.h \
+    csv.h \
     translation.h \
     statistics.h \
     oximeterimport.h \
@@ -373,7 +390,6 @@ HEADERS  += \
     SleepLib/journal.h \
     SleepLib/progressdialog.h \
     SleepLib/loader_plugins/cms50f37_loader.h \
-    build_number.h \
     profileselector.h \
     SleepLib/appsettings.h \
     SleepLib/loader_plugins/edfparser.h \
@@ -513,16 +529,38 @@ test {
     SOURCES += \
         tests/prs1tests.cpp \
         tests/resmedtests.cpp \
-        tests/sessiontests.cpp
+        tests/sessiontests.cpp \
+        tests/versiontests.cpp \
+        tests/viatomtests.cpp \
+        tests/dreemtests.cpp \
+        tests/zeotests.cpp
 
     HEADERS += \
         tests/AutoTest.h \
         tests/prs1tests.h \
         tests/resmedtests.h \
-        tests/sessiontests.h
+        tests/sessiontests.h \
+        tests/versiontests.h \
+        tests/viatomtests.h \
+        tests/dreemtests.h \
+        tests/zeotests.h
 }
 
-# On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave
 macx {
-    QMAKE_INFO_PLIST = "../Building/MacOS/Info.plist.in"
+    app_bundle {
+        # On macOS put a custom Info.plist into the bundle that disables dark mode on Mojave.
+        QMAKE_INFO_PLIST = "../Building/MacOS/Info.plist.in"
+
+        # Add the git revision to the Info.plist.
+        Info_plist.target = Info.plist
+        Info_plist.depends = $${TARGET}.app/Contents/Info.plist
+        Info_plist.commands = $$_PRO_FILE_PWD_/../Building/MacOS/finalize_plist $$_PRO_FILE_PWD_ $${TARGET}.app/Contents/Info.plist
+        QMAKE_EXTRA_TARGETS += Info_plist
+        PRE_TARGETDEPS += $$Info_plist.target
+    }
+
+    # Add a dist-mac target to build the distribution .dmg.
+    QMAKE_EXTRA_TARGETS += dist-mac
+    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/../Building/MacOS/create_dmg $${TARGET} $${TARGET}.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd
+    dist-mac.depends = $${TARGET}.app/Contents/MacOS/$${TARGET}
 }

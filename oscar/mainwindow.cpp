@@ -1,5 +1,6 @@
-﻿/* OSCAR MainWindow Implementation
+/* OSCAR MainWindow Implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -38,7 +39,9 @@
 
 // Custom loaders that don't autoscan..
 #include <SleepLib/loader_plugins/zeo_loader.h>
+#include <SleepLib/loader_plugins/dreem_loader.h>
 #include <SleepLib/loader_plugins/somnopose_loader.h>
+#include <SleepLib/loader_plugins/viatom_loader.h>
 
 #ifdef REMSTAR_M_SUPPORT
 #include <SleepLib/loader_plugins/mseries_loader.h>
@@ -55,10 +58,10 @@
 #include "UpdaterWindow.h"
 #include "SleepLib/calcs.h"
 #include "SleepLib/progressdialog.h"
-#include "version.h"
 
 #include "reports.h"
 #include "statistics.h"
+#include "zip.h"
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
 #include <QOpenGLFunctions>
@@ -69,10 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->logText->setPlainText("00000: Startup: OSCAR Logger initialized");
 
     if (logger) {
         connect(logger, SIGNAL(outputLog(QString)), this, SLOT(logMessage(QString)));
+        logger->connectionReady();
     }
 
     // Bring window to top (useful when language is changed)
@@ -94,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
         // seems to need the systray menu for notifications to work
         systraymenu = new QMenu(this);
         systray->setContextMenu(systraymenu);
-        QAction *a = systraymenu->addAction(STR_TR_OSCAR + " v" + VersionString);
+        QAction *a = systraymenu->addAction(STR_TR_OSCAR + " " + getVersion().displayString());
         a->setEnabled(false);
         systraymenu->addSeparator();
         systraymenu->addAction(tr("&About"), this, SLOT(on_action_About_triggered()));
@@ -113,17 +116,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
 bool setupRunning = false;
 
+QString MainWindow::getMainWindowTitle()
+{
+    QString title = STR_TR_OSCAR + " " + getVersion().displayString();
+#ifdef BROKEN_OPENGL_BUILD
+    title += " ["+CSTR_GFX_BrokenGL+"]";
+#endif
+    return title;
+}
+
 void MainWindow::SetupGUI()
 {
     setupRunning = true;
-    QString version = getBranchVersion();
-    setWindowTitle(STR_TR_OSCAR + QString(" %1").arg(version));
+    setWindowTitle(getMainWindowTitle());
 
 #ifdef Q_OS_MAC
-    ui->action_About->setMenuRole(QAction::ApplicationSpecificRole);
-    ui->action_Preferences->setMenuRole(QAction::ApplicationSpecificRole);
-    ui->action_Preferences->setShortcuts(QKeySequence::Preferences);
+    ui->action_About->setMenuRole(QAction::AboutRole);
+    ui->action_Preferences->setMenuRole(QAction::PreferencesRole);
 #endif
+    ui->actionPrint_Report->setShortcuts(QKeySequence::Print);
 
     ui->actionLine_Cursor->setChecked(AppSetting->lineCursorMode());
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());
@@ -239,6 +250,8 @@ void MainWindow::SetupGUI()
 
     ui->actionChange_Data_Folder->setVisible(false);
     ui->action_Frequently_Asked_Questions->setVisible(false);
+    ui->actionReport_a_Bug->setVisible(false);  // remove this once we actually implement it
+    ui->actionExport_Review->setVisible(false);  // remove this once we actually implement it
 
 #ifndef helpless
     help = new Help(this);
@@ -317,7 +330,7 @@ void MainWindow::EnableTabs(bool b)
 void MainWindow::Notify(QString s, QString title, int ms)
 {
     if (title.isEmpty()) {
-        title = tr("%1 %2").arg(STR_TR_OSCAR).arg(STR_TR_AppVersion);
+        title = STR_TR_OSCAR + " " + getVersion().displayString();
     }
     if (systray) {
         QString msg = s;
@@ -361,28 +374,40 @@ void MainWindow::PopulatePurgeMenu()
     ui->menuPurge_CPAP_Data->disconnect(ui->menuPurge_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionPurgeMachine(QAction *)));
     ui->menuPurge_CPAP_Data->clear();
 
+    // Only allow rebuilding for CPAP for now, since that's the only thing that makes backups.
     QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
     for (int i=0; i < machines.size(); ++i) {
         Machine *mach = machines.at(i);
-        QString name =  mach->brand() + " "+
-                        mach->model() + " "+
-                        mach->serial();
-
-        QAction * action = new QAction(name.replace("&","&&"), ui->menu_Rebuild_CPAP_Data);
-        action->setIconVisibleInMenu(true);
-        action->setIcon(mach->getPixmap());
-        action->setData(mach->loaderName()+":"+mach->serial());
-        ui->menu_Rebuild_CPAP_Data->addAction(action);
-
-        action = new QAction(name.replace("&","&&"), ui->menuPurge_CPAP_Data);
-        action->setIconVisibleInMenu(true);
-        action->setIcon(mach->getPixmap()); //getCPAPIcon(mach->loaderName()));
-        action->setData(mach->loaderName()+":"+mach->serial());
-
-        ui->menuPurge_CPAP_Data->addAction(action);
+        addMachineToMenu(mach, ui->menu_Rebuild_CPAP_Data);
     }
+    
+    // Add any imported machine (except the built-in journal) to the purge menu.
+    machines = p_profile->GetMachines();
+    for (int i=0; i < machines.size(); ++i) {
+        Machine *mach = machines.at(i);
+        if (mach->type() == MT_JOURNAL) {
+            continue;
+        }
+        addMachineToMenu(mach, ui->menuPurge_CPAP_Data);
+    }
+
     ui->menu_Rebuild_CPAP_Data->connect(ui->menu_Rebuild_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionRebuildCPAP(QAction*)));
     ui->menuPurge_CPAP_Data->connect(ui->menuPurge_CPAP_Data, SIGNAL(triggered(QAction*)), this, SLOT(on_actionPurgeMachine(QAction*)));
+}
+
+void MainWindow::addMachineToMenu(Machine* mach, QMenu* menu)
+{
+    QString name = mach->brand();
+    if (name.isEmpty()) {
+        name = mach->loaderName();
+    }
+    name += " " + mach->model() + " " + mach->serial();
+
+    QAction * action = new QAction(name.replace("&","&&"), menu);
+    action->setIconVisibleInMenu(true);
+    action->setIcon(mach->getPixmap());
+    action->setData(mach->loaderName()+":"+mach->serial());
+    menu->addAction(action);
 }
 
 void MainWindow::firstRunMessage()
@@ -527,7 +552,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     PopulatePurgeMenu();
 
     AppSetting->setProfileName(p_profile->user->userName());
-    setWindowTitle(STR_TR_OSCAR + QString(" %1 (" + tr("Profile") + ": %2)").arg(getBranchVersion()).arg(AppSetting->profileName()));
+    setWindowTitle(tr("%1 (Profile: %2)").arg(getMainWindowTitle()).arg(AppSetting->profileName()));
 
     QList<Machine *> oximachines = p_profile->GetMachines(MT_OXIMETER);                // Machines of any type except Journal
     QList<Machine *> posmachines = p_profile->GetMachines(MT_POSITION);
@@ -898,11 +923,22 @@ void MainWindow::on_action_Import_Data_triggered()
     ui->tabWidget->setCurrentWidget(welcome);
     QApplication::processEvents();
 
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to import from this location?"));
+    if (datacards.size() > 0) {
+        importCPAPDataCards(datacards);
+    }
+
+    in_import=false;
+}
+
+
+QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt)
+{
     QList<ImportPath> datacards = detectCPAPCards();
 
     if (importScanCancelled) {
-        in_import = false;
-        return;
+        datacards.clear();
+        return datacards;
     }
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
@@ -913,6 +949,8 @@ void MainWindow::on_action_Import_Data_triggered()
 
     bool asknew = false;
 
+    // TODO: This should either iterate over all detected cards and prompt for each, or it should only
+    // provide the one confirmed card in the list.
     if (datacards.size() > 0) {
         MachineInfo info = datacards[0].loader->PeekInfo(datacards[0].path);
         QString infostr;
@@ -926,7 +964,7 @@ void MainWindow::on_action_Import_Data_triggered()
         if (!p_profile->cpap->autoImport()) {
             QMessageBox mbox(QMessageBox::NoIcon,
                 tr("CPAP Data Located"), infostr+"\n\n"+QDir::toNativeSeparators(datacards[0].path)+"\n\n"+
-                tr("Would you like to import from this location?"),
+                prompt,
                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, this);
             mbox.setDefaultButton(QMessageBox::Yes);
             mbox.setButtonText(QMessageBox::No, tr("Specify"));
@@ -939,8 +977,8 @@ void MainWindow::on_action_Import_Data_triggered()
 
             if (res == QMessageBox::Cancel) {
                 // Give the communal progress bar back
-                in_import=false;
-                return;
+                datacards.clear();
+                return datacards;
             } else if (res == QMessageBox::No) {
                 //waitmsg->setText(tr("Please wait, launching file dialog..."));
                 datacards.clear();
@@ -952,9 +990,14 @@ void MainWindow::on_action_Import_Data_triggered()
         asknew = true;
     }
 
+    // TODO: Get rid of the reminder and instead validate the user's selection (using the loader detection
+    // below) and loop until the user either cancels or selects a valid folder.
+    //
+    // It doesn't look like there's any way to implement such a programmatic filter within the file
+    // selection dialog without resorting to a non-native dialog.
     if (asknew) {
        // popup.show();
-        mainwin->Notify(tr("Please remember to point the importer at the root folder or drive letter of your data-card, and not a subfolder."),
+        mainwin->Notify(tr("Please remember to select the root folder or drive letter of your data card, and not a folder inside it."),
                         tr("Import Reminder"),8000);
 
         QFileDialog w(this);
@@ -963,6 +1006,7 @@ void MainWindow::on_action_Import_Data_triggered()
         if (p_profile->contains(STR_PREF_LastCPAPPath)) {
             folder = (*p_profile)[STR_PREF_LastCPAPPath].toString();
         } else {
+            // TODO: Is a writable path really the best place to direct the user to find their SD card data?
             folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         }
 
@@ -997,9 +1041,8 @@ void MainWindow::on_action_Import_Data_triggered()
 //#endif
 
         if (w.exec() != QDialog::Accepted) {
-            in_import=false;
-
-            return;
+            datacards.clear();
+            return datacards;
         }
 
 
@@ -1012,7 +1055,13 @@ void MainWindow::on_action_Import_Data_triggered()
             }
         }
     }
+    
+    return datacards;
+}
 
+
+void MainWindow::importCPAPDataCards(const QList<ImportPath> & datacards)
+{
     bool newdata = false;
 
 //    QStringList goodlocations;
@@ -1065,9 +1114,8 @@ void MainWindow::on_action_Import_Data_triggered()
 
     prog->close();
     prog->deleteLater();
-    in_import=false;
-
 }
+
 
 QMenu *MainWindow::CreateMenu(QString title)
 {
@@ -1306,9 +1354,23 @@ void MainWindow::on_action_Reset_Graph_Layout_triggered()
 
 void MainWindow::on_action_Reset_Graph_Order_triggered()
 {
-    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(); }
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(0); }
 
-    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(); }
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(0); }
+}
+
+void MainWindow::on_action_Standard_Graph_Order_triggered()
+{
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(1); }
+
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(1); }
+}
+
+void MainWindow::on_action_Advanced_Graph_Order_triggered()
+{
+    if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(2); }
+
+    if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(2); }
 }
 
 void MainWindow::on_action_Preferences_triggered()
@@ -1364,6 +1426,7 @@ void MainWindow::on_oximetryButton_clicked()
     if (p_profile) {
         OximeterImport oxiimp(this);
         oxiimp.exec();
+        PopulatePurgeMenu();
         if (overview) overview->ReloadGraphs();
         if (welcome) welcome->refreshPage();
     }
@@ -1413,21 +1476,32 @@ void MainWindow::DelayedScreenshot()
                                                             screenshotRect.width(),
                                                             screenshotRect.height() + titleBarHeight);
 
-    QString a = p_pref->Get("{home}/Screenshots");
-    QDir dir(a);
+    QString default_filename = "/screenshot-" + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + ".png";
 
-    if (!dir.exists()) {
-        dir.mkdir(a);
+    QString png_filepath;
+    if (AppSetting->dontAskWhenSavingScreenshots()) {
+        png_filepath = p_pref->Get("{home}/Screenshots");
+        QDir dir(png_filepath);
+        if (!dir.exists()) {
+            dir.mkdir(png_filepath);
+        }
+        png_filepath += default_filename;
+    } else {
+        QString folder = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + default_filename;
+        png_filepath = QFileDialog::getSaveFileName(this, tr("Choose where to save screenshot"), folder, tr("Image files (*.png)"));
+        if (png_filepath.isEmpty() == false && png_filepath.toLower().endsWith(".png") == false) {
+            png_filepath += ".png";
+        }
     }
 
-    a += "/screenshot-" + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + ".png";
-
-    qDebug() << "Saving screenshot to" << a;
-
-    if (!pixmap.save(a)) {
-        Notify(tr("There was an error saving screenshot to file \"%1\"").arg(QDir::toNativeSeparators(a)));
-    } else {
-        Notify(tr("Screenshot saved to file \"%1\"").arg(QDir::toNativeSeparators(a)));
+    // png_filepath will be empty if the user canceled the file selection above.
+    if (png_filepath.isEmpty() == false) {
+        qDebug() << "Saving screenshot to" << png_filepath;
+        if (!pixmap.save(png_filepath)) {
+            Notify(tr("There was an error saving screenshot to file \"%1\"").arg(QDir::toNativeSeparators(png_filepath)));
+        } else {
+            Notify(tr("Screenshot saved to file \"%1\"").arg(QDir::toNativeSeparators(png_filepath)));
+        }
     }
 
     setUpdatesEnabled(false);
@@ -1936,7 +2010,7 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     QString data = action->data().toString();
     QString cls = data.section(":",0,0);
     QString serial = data.section(":", 1);
-    QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
+    QList<Machine *> machines = p_profile->GetMachines();
     Machine * mach = nullptr;
     for (int i=0; i < machines.size(); ++i) {
         Machine * m = machines.at(i);
@@ -1947,13 +2021,34 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     }
     if (!mach) return;
 
+    QString machname = mach->brand();
+    if (machname.isEmpty()) {
+        machname = mach->loaderName();
+    }
+    machname += " " + mach->model() + " " + mach->modelnumber();
+    if (!mach->serial().isEmpty()) {
+        machname += QString(" (%1)").arg(mach->serial());
+    }
+
+    QString backupnotice;
+    QString bpath = mach->getBackupPath();
+    bool backups = (dirCount(bpath) > 0) ? true : false;
+    if (backups) {
+        backupnotice = "<p>" + tr("Note as a precaution, the backup folder will be left in place.") + "</p>";
+    } else {
+        backupnotice = "<p>" + tr("OSCAR does not have any backups for this machine!") + "</p>" +
+                       "<p>" + tr("Unless you have made <i>your <b>own</b> backups for ALL of your data for this machine</i>, "
+                                  "<font size=+2>you will lose this machine's data <b>permanently</b>!</font>") + "</p>";
+    }
+
     if (QMessageBox::question(this, STR_MessageBox_Warning, 
             "<p><b>"+STR_MessageBox_Warning+":</b> "  +
             tr("You are about to <font size=+2>obliterate</font> OSCAR's machine database for the following machine:</p>") +
-            "<p>"+mach->brand() + " " + mach->model() + " " + mach->modelnumber() + " (" + mach->serial() + ")" + "</p>" +
-            "<p>"+tr("Note as a precaution, the backup folder will be left in place.")+"</p>"+
-            "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>", 
+            "<p><font size=+2>" + machname + "</font></p>" +
+            backupnotice+
+            "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>",
             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        qDebug() << "Purging" << machname;
         purgeMachine(mach);
     }
 
@@ -1970,14 +2065,14 @@ void MainWindow::purgeMachine(Machine * mach)
         mach->day.clear();
         QDir dir;
         QString path = mach->getDataPath();
-        qDebug() << "path to machine" << path;
         path.chop(1);
+        qDebug() << "path to machine" << path;
 
         p_profile->DelMachine(mach);
         delete mach;
         // remove the directory unless it's got unexpected crap in it..
         bool deleted = false;
-        if (!dir.remove(path)) {
+        if (!dir.rmdir(path)) {
 #ifdef Q_OS_WIN
             wchar_t* directoryPtr = (wchar_t*)path.utf16();
             SetFileAttributes(directoryPtr, GetFileAttributes(directoryPtr) & ~FILE_ATTRIBUTE_READONLY);
@@ -2242,7 +2337,6 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
     w.setFileMode(QFileDialog::ExistingFiles);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setOption(QFileDialog::DontUseNativeDialog, true);
     w.setNameFilters(QStringList("Zeo CSV File (*.csv)"));
 
     ZEOLoader zeo;
@@ -2250,16 +2344,49 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
 
-        if (!zeo.OpenFile(filename)) {
-            Notify(tr("There was a problem opening ZEO File: ") + filename);
-            return;
+        qDebug() << "Loading ZEO data from" << filename;
+        int c = zeo.OpenFile(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            qDebug() << "Imported" << c << "ZEO sessions";
+            PopulatePurgeMenu();
+        } else if (c == 0) {
+            Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid ZEO CSV data at\n\n%1").arg(filename),tr("Import Problem"));
         }
 
-        Notify(tr("Zeo CSV Import complete"));
         daily->LoadDate(daily->getDate());
     }
+}
 
+void MainWindow::on_actionImport_Dreem_Data_triggered()
+{
+    QFileDialog w;
+    w.setFileMode(QFileDialog::ExistingFiles);
+    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    w.setOption(QFileDialog::ShowDirsOnly, false);
+    w.setNameFilters(QStringList("Dreem CSV File (*.csv)"));
 
+    DreemLoader dreem;
+
+    if (w.exec() == QFileDialog::Accepted) {
+        QString filename = w.selectedFiles()[0];
+
+        qDebug() << "Loading Dreem data from" << filename;
+        int c = dreem.OpenFile(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            qDebug() << "Imported" << c << "Dreem sessions";
+            PopulatePurgeMenu();
+        } else if (c == 0) {
+            Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid Dreem CSV data at\n\n%1").arg(filename),tr("Import Problem"));
+        }
+
+        daily->LoadDate(daily->getDate());
+    }
 }
 
 void MainWindow::on_actionImport_RemStar_MSeries_Data_triggered()
@@ -2343,9 +2470,37 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
         }
 
         Notify(tr("Somnopause Data Import complete"));
+        PopulatePurgeMenu();
         daily->LoadDate(daily->getDate());
     }
 
+}
+
+void MainWindow::on_actionImport_Viatom_Data_triggered()
+{
+    ViatomLoader viatom;
+
+    QFileDialog w;
+    w.setFileMode(QFileDialog::AnyFile);
+    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    w.setOption(QFileDialog::ShowDirsOnly, false);
+    w.setNameFilters(viatom.getNameFilter());
+
+    if (w.exec() == QFileDialog::Accepted) {
+        QString filename = w.selectedFiles()[0];
+
+        int c = viatom.Open(filename);
+        if (c > 0) {
+            Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
+            PopulatePurgeMenu();
+        } else if (c == 0) {
+            Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
+        } else {
+            Notify(tr("Couldn't find any valid data at\n\n%1").arg(filename),tr("Import Problem"));
+        }
+
+        daily->LoadDate(daily->getDate());
+    }
 }
 
 void MainWindow::GenerateStatistics()
@@ -2453,6 +2608,11 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
             sess->Destroy();
             delete sess;
         }
+        // TODO: Fix this. It deletes the underlying session data file in the machine,
+        // but not from the machine's summary cache. This results in future launches
+        // of OSCAR thinking the day has oximetry data, but then it isn't really there.
+        // Currently this is only useful for reimporting a single day, which the purge
+        // permits, and which in turn creates a new data file for that day.
 
 
         if (daily) {
@@ -2540,13 +2700,144 @@ void MainWindow::on_mainsplitter_splitterMoved(int, int)
     AppSetting->setRightPanelWidth(ui->mainsplitter->sizes()[1]);
 }
 
+void MainWindow::on_actionCreate_Card_zip_triggered()
+{
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to zip this card?"));
+
+    for (auto & datacard : datacards) {
+        QString cardPath = QDir(datacard.path).canonicalPath();
+        QString filename;
+        
+        // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
+        while (true) {
+            // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
+            QString folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+            
+            MachineInfo info = datacard.loader->PeekInfo(datacard.path);
+            QString infostr;
+            if (!info.modelnumber.isEmpty()) {
+                infostr = datacard.loader->loaderName() + "-" + info.modelnumber + "-" +info.serial;
+            } else {
+                infostr = datacard.loader->loaderName();
+            }
+            folder += QDir::separator() + infostr + ".zip";
+
+            filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
+
+            if (filename.isEmpty()) {
+                return;  // aborted
+            }
+            
+            // Try again if the selected filename is within the SD card itself.
+            QString selectedPath = QFileInfo(filename).dir().canonicalPath();
+            if (selectedPath.startsWith(cardPath)) {
+                if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                        QObject::tr("Please select a location for your zip other than the data card itself!"),
+                        QMessageBox::Ok)) {
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        if (!filename.toLower().endsWith(".zip")) {
+            filename += ".zip";
+        }
+        
+        qDebug() << "Create zip of SD card:" << cardPath;
+
+        ZipFile z;
+        bool ok = z.Open(filename);
+        if (ok) {
+            ProgressDialog * prog = new ProgressDialog(this);
+            prog->setMessage(tr("Creating zip..."));
+            ok = z.AddDirectory(cardPath, prog);
+            z.Close();
+        } else {
+            qWarning() << "Unable to open" << filename;
+        }
+        if (!ok) {
+            QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                QObject::tr("Unable to create zip!"),
+                QMessageBox::Ok);
+        }
+    }
+}
+
+void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
+{
+    QString folder;
+
+    // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
+    folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+
+    folder += QDir::separator() + STR_AppData + ".zip";
+
+    QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
+
+    if (filename.isEmpty()) {
+        return;  // aborted
+    }
+
+    if (!filename.toLower().endsWith(".zip")) {
+        filename += ".zip";
+    }
+    
+    qDebug() << "Create zip of OSCAR data folder:" << filename;
+
+    QDir oscarData(GetAppData());
+    QFile debugLog(oscarData.canonicalPath() + QDir::separator() + "debuglog.txt");
+
+    ZipFile z;
+    bool ok = z.Open(filename);
+    if (ok) {
+        ProgressDialog * prog = new ProgressDialog(this);
+        prog->setMessage(tr("Calculating size..."));
+        prog->setWindowModality(Qt::ApplicationModal);
+        prog->open();
+
+        // Build the list of files and exclude any existing debug log.
+        FileQueue files;
+        files.AddDirectory(oscarData.canonicalPath(), oscarData.dirName());
+        files.Remove(debugLog.fileName());
+
+        prog->setMessage(tr("Creating zip..."));
+
+        // Create the zip.
+        ok = z.AddFiles(files, prog);
+        if (ok && z.aborted() == false) {
+            // Update the debug log and add it last.
+            ok = debugLog.open(QIODevice::WriteOnly);
+            if (ok) {
+                debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
+                debugLog.close();
+                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                ok = z.AddFile(debugLog.fileName(), debugLogName);
+                if (!ok) {
+                    qWarning() << "Unable to add debug log to zip!";
+                }
+            }
+        }
+
+        z.Close();
+    } else {
+        qWarning() << "Unable to open" << filename;
+    }
+    if (!ok) {
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
+            QObject::tr("Unable to create zip!"),
+            QMessageBox::Ok);
+    }
+}
+
 #include "translation.h"
 void MainWindow::on_actionReport_a_Bug_triggered()
 {
 //    QSettings settings;
 //    QString language = settings.value(LangSetting).toString();
 //
-//    QDesktopServices::openUrl(QUrl(QString("https://sleepyhead.jedimark.net/report_bugs.php?lang=%1&version=%2&platform=%3").arg(language).arg(VersionString).arg(PlatformString)));
+//    QDesktopServices::openUrl(QUrl(QString("https://sleepyhead.jedimark.net/report_bugs.php?lang=%1&version=%2&platform=%3").arg(language).arg(getVersion()).arg(PlatformString)));
     QMessageBox::information(nullptr, STR_MessageBox_Error, tr("Reporting issues is not yet implemented"));
 }
 

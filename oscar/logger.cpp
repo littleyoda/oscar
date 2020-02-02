@@ -1,5 +1,6 @@
-﻿/* OSCAR Logger module implementation
+/* OSCAR Logger module implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -59,18 +60,32 @@ void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QS
 
 }
 
+static QMutex s_LoggerRunning;
+
 void initializeLogger()
 {
+    s_LoggerRunning.lock();  // lock until the thread starts running
     logger = new LogThread();
     otherThreadPool = new QThreadPool();
     bool b = otherThreadPool->tryStart(logger);
+    if (b) {
+        s_LoggerRunning.lock();  // wait until the thread begins running
+        s_LoggerRunning.unlock();  // we no longer need the lock
+    }
     qInstallMessageHandler(MyOutputHandler);
     if (b) {
         qDebug() << "Started logging thread";
     } else {
         qWarning() << "Logging thread did not start correctly";
     }
+}
 
+void LogThread::connectionReady()
+{
+    strlock.lock();
+    connected = true;
+    strlock.unlock();
+    qDebug() << "Logging UI initialized";
 }
 
 void shutdownLogger()
@@ -117,10 +132,11 @@ void LogThread::quit() {
 void LogThread::run()
 {
     running = true;
+    s_LoggerRunning.unlock();  // unlock as soon as the thread begins to run
     do {
         strlock.lock();
         //int r = receivers(SIGNAL(outputLog(QString())));
-        while (!buffer.isEmpty()) {
+        while (connected && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
                 fprintf(stderr, "%s\n", msg.toLocal8Bit().data());
                 emit outputLog(msg);

@@ -63,6 +63,12 @@ EventDataType EventList::data2(quint32 i)
     return EventDataType(m_data2[i]);
 }
 
+static QString ts(qint64 msecs)
+{
+    // TODO: make this UTC so that tests don't vary by where they're run
+    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
+}
+
 void EventList::AddEvent(qint64 time, EventStoreType data)
 {
     // Apply gain & offset
@@ -85,7 +91,7 @@ void EventList::AddEvent(qint64 time, EventStoreType data)
     if (m_first > time) {
         // Crud.. Update all the previous records
         // This really shouldn't happen.
-        qDebug() << "Unordered time detected in AddEvent()" << m_count << m_first << time << data;
+        qDebug() << "Unordered time detected in AddEvent()" << m_count << ts(m_first) << ts(time) << data;
 
         qint32 delta = (m_first - time);
 

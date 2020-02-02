@@ -9,17 +9,17 @@ On my computers, I have QT installed in E:\\QT and the OSCAR code base in E:\\os
 
 The following programs and files are required to create Windows installers:
 
--   Inno Setup 6.0.2 from <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.2.exe.
+-   Inno Setup 6.0.3 from <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.3.exe.
     
 -   GIT for windows, from <https://gitforwindows.org/>. GIT for Windows adds itself to your path.
     
 -   Gawk is required. You can use the version included with Git for Windows or install Gawk for Windows from <http://gnuwin32.sourceforge.net/packages/gawk.htm>. The deployment batch file will use the Git for Windows version if gawk.exe is not in your PATH.
     
--   QT Open Source edition from <https://www.qt.io/download>. I use version 5.12.4. More recent versions may also work but I have not tested any.
+-   QT Open Source edition from <https://www.qt.io/download>. I use version 5.12.5. More recent versions in the 5.12 series should also work.
 
 **Installing Inno Setup 6**
 
-Inno Setup 6.0.2 is found on <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.2.exe.
+Inno Setup 6.0.3 is found on <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.3.exe.
 
 The deployment batch file assumes that Inno Setup is installed into its default location: C:\\Program Files (x86)\\Inno Setup 6. If you put it somewhere else, you will have to change the batch file.
 
@@ -43,6 +43,8 @@ Go to <https://gitforwindows.org/> and click on the Download button. Run the ins
 
 GIT for Windows adds itself to your path.
 
+Create SSH key and upload to GitLab--See https://docs.gitlab.com/ce/ssh/README.html.
+
 **Installing Gawk (if Git for Windows’ gawk is not used)**
 
 From <http://gnuwin32.sourceforge.net/packages/gawk.htm>, download setup for “Complete package, except sources”. When downloaded, run the setup program. Accept default options and location. The deployment batch file assumes that gawk.exe is in your PATH, so either add c:\\Program Files (x86)\\gnuwin32\\bin to your PATH or copy the executables to some other directory already in your PATH.
@@ -59,7 +61,7 @@ Go to QT at <https://www.qt.io/download> and download the Open Source edition of
     
 -   Select components:
 
-    -   In QT 5.12.4:
+    -   In QT 5.12.5:
 
         -   MinGW 7.3.0 32-bit
 
@@ -69,7 +71,7 @@ Go to QT at <https://www.qt.io/download> and download the Open Source edition of
 
     -   In Developer and Designer Tools:
 
-        -   QT Creator 4.10.0 CDB Debug (this may not be required)
+        -   QT Creator 4.10.0 CDB Debug
 
         -   MinGW 7.3.0 32-bit
 

@@ -1,6 +1,6 @@
 /* SleepLib Profiles Implementation
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -29,13 +29,14 @@
 
 #include "mainwindow.h"
 #include "translation.h"
+#include "version.h"
 
 extern MainWindow *mainwin;
 Preferences *p_pref;
 Preferences *p_layout;
 Profile *p_profile;
 
-Profile::Profile(QString path)
+Profile::Profile(QString path, bool open)
   : is_first_day(true),
      m_opened(false)
 {
@@ -57,9 +58,21 @@ Profile::Profile(QString path)
     p_filename = p_path + p_name + STR_ext_XML;
     m_machlist.clear();
 
-    Open(p_filename);
+    if (open) {
+        Open(p_filename);
+    }
 
     Set(STR_GEN_DataFolder, QString("{home}/Profiles/{UserName}"));
+
+    // Reset import warnings when running a new version of OSCAR
+    init(STR_PREF_VersionString, getVersion().toString());
+    Version prefVersion = Version((*this)[STR_PREF_VersionString].toString());
+    if (prefVersion != getVersion()) {
+        qDebug() << "  Resetting import warnings: version" << prefVersion << "to" << getVersion();
+        Set(STR_PREF_VersionString, getVersion().toString());
+        this->Erase(STR_IS_WarnOnUntestedMachine);
+        this->Erase(STR_IS_WarnOnUnexpectedData);
+    }
 
     doctor = new DoctorInfo(this);
     user = new UserInfo(this);
@@ -69,13 +82,17 @@ Profile::Profile(QString path)
     session = new SessionSettings(this);
     general = new UserSettings(this);
 
-    OpenMachines();
-    m_opened=true;
+    if (open) {
+        OpenMachines();
+        m_opened=true;
+    }
 }
 
 Profile::~Profile()
 {
-    removeLock();
+    if (m_opened) {
+        removeLock();
+    }
 
     delete user;
     delete doctor;
@@ -494,8 +511,8 @@ void Profile::DataFormatError(Machine *m)
 {
     QString msg;
 
-    msg = "<font size=+1>"+QObject::tr("OSCAR (%1) needs to upgrade its database for %2 %3 %4").
-            arg(VersionString).
+    msg = "<font size=+1>"+QObject::tr("OSCAR %1 needs to upgrade its database for %2 %3 %4").
+            arg(getVersion().displayString()).
             arg(m->brand()).arg(m->model()).arg(m->serial())
             + "</font><br/><br/>";
 
@@ -599,15 +616,18 @@ void Profile::LoadMachineData(ProgressDialog *progress)
         if (loader) {
             if (mach->version() < loader->Version()) {
                 qDebug() << "LoadMachineData data format error, machine version" << mach->version() << "loader version" << loader->Version();
+                progress->hide();
                 DataFormatError(mach);
+                progress->show();
             } else {
                 try {
                     mach->Load(progress);
                 } catch (OldDBVersion& e) {
                     qDebug() << "LoadMachineData mach->load failure, machine version" << mach->version() << "loader version" << loader->Version();
                     Q_UNUSED(e)
+                    progress->hide();
                     DataFormatError(mach);
-
+                    progress->show();
                 }
             }
         } else {

@@ -50,6 +50,21 @@ enum SummaryType { ST_CNT, ST_SUM, ST_AVG, ST_WAVG, ST_PERC, ST_90P, ST_MIN, ST_
     \brief Generalized type of a machine. MT_CPAP is any type of xPAP machine, MT_OXIMETER any type of Oximeter
     \brief MT_SLEEPSTAGE stage of sleep detector (ZEO importer), MT_JOURNAL for optional notes, MT_POSITION for sleep position detector (Somnopose)
   */
+// TODO: This really needs to be a bitmask, since there are increasing numbers of machines that provide
+// multiple kinds of data, such as oximetry + motion/position, or sleep stage + oximetry, etc.
+//
+// Machine/loader classes will use the bitmask to identify which data they are capable of importing.
+// It may be that we ultimately prefer to have each machine identify a primary type instead or in addition.
+//
+// The channel schema's use of these is probably fine.
+//
+// Days/Sessions/etc. that currently search for data based on the machines they contain will instead
+// need to search for channels with data of that MT type. And anywhere else the code makes decisions
+// based on MT.
+//
+// Unfortunately, this also includes previously imported data, as Session encodes the machine's type in
+// each file on disk. We might be partially saved by the fact that MT_CPAP and MT_OXIMETER were originally
+// 1 and 2, which would only break MT_SLEEPSTAGE and higher.
 enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_UNCATEGORIZED = 99};
 //void InitMapsWithoutAwesomeInitializerLists();
 
@@ -138,11 +153,11 @@ extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CP
        CPAP_RespEvent, CPAP_Snore, CPAP_MinuteVent, CPAP_RespRate, CPAP_TidalVolume, CPAP_PTB, CPAP_Leak,
        CPAP_LeakMedian, CPAP_LeakTotal, CPAP_MaxLeak, CPAP_FLG, CPAP_IE, CPAP_Te, CPAP_Ti, CPAP_TgMV,
        CPAP_UserFlag1, CPAP_UserFlag2, CPAP_UserFlag3, CPAP_BrokenSummary, CPAP_BrokenWaveform, CPAP_RDI,
-       CPAP_PresReliefMode, CPAP_PresReliefLevel, CPAP_Test1, CPAP_Test2;
+       CPAP_PresReliefMode, CPAP_PresReliefLevel, CPAP_Test1, CPAP_Test2,
+       CPAP_PressureSet, CPAP_IPAPSet, CPAP_EPAPSet;
 
 extern ChannelID RMS9_E01, RMS9_E02, RMS9_SetPressure, RMS9_MaskOnTime;
-extern ChannelID PRS1_00, PRS1_01, PRS1_08, PRS1_0A, PRS1_0B, PRS1_0C, PRS1_0E, PRS1_0F, CPAP_LargeLeak,
-       PRS1_12, PRS1_13, PRS1_15, PRS1_BND,
+extern ChannelID PRS1_0E, CPAP_LargeLeak, PRS1_BND,
        PRS1_FlexMode, PRS1_FlexLevel, PRS1_HumidStatus, PRS1_HumidLevel, CPAP_HumidSetting, PRS1_SysLock,
        PRS1_SysOneResistStat,
        PRS1_SysOneResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
@@ -161,7 +176,7 @@ extern ChannelID ZEO_SleepStage, ZEO_ZQ, ZEO_TotalZ, ZEO_TimeToZ, ZEO_TimeInWake
        ZEO_FirstAlarmRing, ZEO_LastAlarmRing, ZEO_FirstSnoozeTime, ZEO_LastSnoozeTime, ZEO_SetAlarmTime,
        ZEO_RiseTime;
 
-extern ChannelID POS_Orientation, POS_Inclination;
+extern ChannelID POS_Orientation, POS_Inclination, POS_Movement;
 
 const QString GRP_CPAP = "CPAP";
 const QString GRP_POS = "POS";

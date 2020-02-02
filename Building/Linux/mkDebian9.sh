@@ -1,7 +1,26 @@
 #! /bin/bash
-# First parameter is version number - (ex: 1.0.0)
-# Second parametr is build or release status - (ex: beta or release)
 #
+# First (optional) parameter is package version (ex: "1") 
+#
+# This generally should start at 1 for each VERSION and increment any time the
+# package needs to be updated.
+#
+# see https://serverfault.com/questions/604541/debian-packages-version-convention
+
+ITERATION=$1
+[[ ${ITERATION} == ""] && ITERATION="1"
+
+SRC=./OSCAR-code
+
+VERSION=`awk '/#define VERSION / { gsub(/"/, "", $3); print $3 }' ${SRC}/VERSION
+if [[ VERSION == *-* ]]; then
+    # Use ~ for prerelease information so that it sorts correctly compared to release
+    # versions. See https://www.debian.org/doc/debian-policy/ch-controlfields.html#version
+    IFS="-" read -r VERSION PRERELEASE <<< ${VERSION}
+    VERSION="${VERSION}~${PRERELEASE}"
+fi
+GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
+
 rm -r tempDir
 mkdir tempDir
 cp build/oscar/OSCAR tempDir
@@ -16,7 +35,7 @@ fpm --input-type dir --output-type deb  \
     --prefix /opt                   \
     --after-install ln_usrlocalbin.sh   \
     --before-remove rm_usrlocalbin.sh   \
-    --name oscar --version $1 --iteration $2 \
+    --name oscar --version ${VERSION} --iteration ${ITERATION} \
     --category Other                \
     --maintainer oscar@nightowlsoftwre.ca   \
     --license GPL-v3                \

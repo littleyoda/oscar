@@ -1,5 +1,6 @@
-﻿/* gLineChart Implementation
+/* gLineChart Implementation
  *
+ * Copyright (c) 2019 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -348,11 +349,11 @@ QString gLineChart::getMetaString(qint64 time)
             val = m_day->lookupValue(code, time, m_square_plot);
             lasttext += " "+QString("%1: %2").arg(schema::channel[code].label()).arg(val,0,'f',2); //.arg(schema::channel[code].units());
 
-            if (code == CPAP_IPAP) {
+            if (code == CPAP_IPAP || code == CPAP_IPAPSet) {
                 ipap = val;
                 addPS = true;
             }
-            if (code == CPAP_EPAP) {
+            if (code == CPAP_EPAP || code == CPAP_EPAPSet) {
                 epap = val;
             }
         }
@@ -526,7 +527,10 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
     float lineThickness = AppSetting->lineThickness()+0.001F;
 
-    for (const auto & code : m_codes) {
+    for (int ic = 0; ic < m_codes.count(); ic++) {
+        const auto & code = m_codes[ic];
+        square_plot = m_square[ic];  // set the mode per-channel
+
         const schema::Channel &chan = schema::channel[code];
 
         ////////////////////////////////////////////////////////////////////////
@@ -613,7 +617,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
                 if (m_disable_accel) { accel = false; }
 
-                square_plot = m_square_plot;
+                //square_plot = m_square_plot;  // now we set this per-channel above
 
                 if (accel || num_points > 20000) { // Don't square plot if too many points or waveform
                     square_plot = false;

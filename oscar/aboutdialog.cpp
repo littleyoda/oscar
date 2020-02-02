@@ -28,23 +28,15 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->creditsText->setHtml(getCredits());
     ui->licenseText->setHtml(getLicense());
     ui->relnotesText->setHtml(getRelnotes());
-    ui->versionLabel->setText(VersionString);
-
-//    QString gitrev = gitRevision();
-//
-//    if (!gitrev.isEmpty()) {
-//        gitrev = tr("Revision: %1").arg(QString("<a href='https://gitlab.com/sleepyhead/sleepyhead-code/commit/%1'>%1</a>").arg(gitrev))+"<br/>"
-//                +tr("Branch: %1").arg(QString("<a href='https://gitlab.com/sleepyhead/sleepyhead-code/commits/%1'>%1</a>").arg(gitBranch()))+"<br/>"
-//                +tr("Build Date: %1").arg(__DATE__)+"<br/>"
-//                +tr("Graphics Engine: %1").arg(getGraphicsEngine());
-//    }
+    ui->versionLabel->setText("");
 
     QString path = GetAppData();
+    // TODO: consider replacing gitrev below with a link or button to the System Information window
     QString text = /* gitrev + */ "<br/><br/><a href=\"file:///"+path+"\">"+tr("Show data folder")+"</a>";
     ui->infoLabel->setText(text);
 
 
-    setWindowTitle(tr("About OSCAR"));
+    setWindowTitle(tr("About OSCAR %1").arg(getVersion().displayString()));
     setMinimumSize(QSize(400,400));
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     connect(ui->closeButton, SIGNAL(clicked(bool)), this, SLOT(accept()));
@@ -123,9 +115,9 @@ QString AboutDialog::getRelnotes()
     QString text = "<html>"
     "<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head>"
     "<body><span style=\" font-size:20pt;\">"+tr("Release Notes")+"</span><br/>"
-    "<span style=\" font-size:14pt;\">"+tr("OSCAR v%1").arg(VersionString)+"</span>"
+    "<span style=\" font-size:14pt;\">"+tr("OSCAR %1").arg(getVersion())+"</span>"
     "<hr/>";
-    if (ReleaseStatus != "r") {
+    if (getVersion().IsReleaseVersion() == false) {
         text += "<p><font color='red' size=+1><b>"+tr("Important:")+"</b></font> "
         "<font size=+1><i>"+tr("As this is a pre-release version, it is recommended that you <b>back up your data folder manually</b> before proceeding, because attempting to roll back later may break things.")+"</i></font></p><hr/>";
     }

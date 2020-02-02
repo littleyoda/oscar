@@ -1,4 +1,4 @@
-﻿/* OSCAR MainWindow Headers
+/* OSCAR MainWindow Headers
  *
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -113,7 +113,7 @@ class MainWindow : public QMainWindow
     void CloseProfile();
     bool OpenProfile(QString name, bool skippassword = false);
 
-    /*! \fn Notify(QString s,int ms=5000, QString title="OSCAR v"+VersionString());
+    /*! \fn Notify(QString s, QString title="OSCAR (version)", int ms=5000);
         \brief Pops up a message box near the system tray
         \param QString string
         \param title
@@ -216,6 +216,12 @@ class MainWindow : public QMainWindow
     //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
     void on_action_Reset_Graph_Order_triggered();
 
+    //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
+    void on_action_Standard_Graph_Order_triggered();
+
+    //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
+    void on_action_Advanced_Graph_Order_triggered();
+
     //! \brief Opens the Preferences Dialog, and saving changes if OK is pressed
     void on_action_Preferences_triggered();
 
@@ -275,6 +281,8 @@ class MainWindow : public QMainWindow
 
     void on_actionImport_ZEO_Data_triggered();
 
+    void on_actionImport_Dreem_Data_triggered();
+
     void on_actionImport_RemStar_MSeries_Data_triggered();
 
     void on_actionSleep_Disorder_Terms_Glossary_triggered();
@@ -288,6 +296,8 @@ class MainWindow : public QMainWindow
     void on_actionChange_Data_Folder_triggered();
 
     void on_actionImport_Somnopose_Data_triggered();
+
+    void on_actionImport_Viatom_Data_triggered();
 
     //! \brief Populates the statistics with information.
     void on_statisticsButton_clicked();
@@ -326,6 +336,10 @@ class MainWindow : public QMainWindow
 
     void on_mainsplitter_splitterMoved(int pos, int index);
 
+    void on_actionCreate_Card_zip_triggered();
+
+    void on_actionCreate_OSCAR_Data_zip_triggered();
+
     void on_actionReport_a_Bug_triggered();
 
     void on_actionSystem_Information_triggered();
@@ -342,9 +356,13 @@ class MainWindow : public QMainWindow
 
 
 private:
+    QString getMainWindowTitle();
     void importCPAPBackups();
     void finishCPAPImport();
     QList<ImportPath> detectCPAPCards();
+    QList<ImportPath> selectCPAPDataCards(const QString & prompt);
+    void importCPAPDataCards(const QList<ImportPath> & datacards);
+    void addMachineToMenu(Machine* mach, QMenu* menu);
 
 //    QString getWelcomeHTML();
     void FreeSessions();

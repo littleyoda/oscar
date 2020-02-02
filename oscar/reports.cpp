@@ -1,6 +1,6 @@
 /* Reports/Printing Module
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -18,6 +18,7 @@
 #include "mainwindow.h"
 #include "common_gui.h"
 #include "SleepLib/progressdialog.h"
+#include "version.h"
 
 extern MainWindow *mainwin;
 
@@ -557,8 +558,9 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
         if (first) {
             QDateTime timestamp = QDateTime::currentDateTime();
-            QString footer = QObject::tr("%1 OSCAR v%2").arg(timestamp.toString(MedDateFormat+" hh:mm"))
-                                                           .arg(ReleaseStatus == "r" ? ShortVersionString : VersionString+" (" + gitRevision() + ")");
+            QString footer = QObject::tr("%1 %2 %3").arg(timestamp.toString(MedDateFormat+" hh:mm"))
+                                                           .arg(STR_TR_OSCAR)
+                                                           .arg(getVersion());
 
 
             QRectF bounds = painter.boundingRect(QRectF(0, virt_height, virt_width, normal_height), footer,

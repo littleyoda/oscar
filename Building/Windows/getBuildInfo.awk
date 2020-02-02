@@ -7,15 +7,26 @@
 #        gawk -f getBuildInfo.awk version.h >>buildInfo.iss
 #        echo %cd% | gawk -f %sourcedir%getBuildInfo.awk >>buildInfo.iss
 
-/ build_number / { print "#define MyBuildNumber \"" substr($5,1,length($5)-1) "\""}
+/#define GIT_BRANCH / { print "#define MyGitBranch", $3 }
+/#define GIT_REVISION / { print "#define MyGitRevision", $3 }
+/#define GIT_TAG / { print "#define MyGitTag", $3 }
 
-/const QString GIT_BRANCH/ { print "#define MyGitBranch \"" substr($3,13,length($3)-14) "\"" }
-/const QString GIT_REVISION/ { print "#define MyGitRevision \"" substr($3,15,length($3)-16) "\"" }
+/#define VERSION / {
+    version = $3
+    print "#define MyAppVersion", version
 
-/const int major_version / { print "#define MyMajorVersion \"" substr($5,1,length($5)-1) "\""}
-/const int minor_version / { print "#define MyMinorVersion \"" substr($5,1,length($5)-1) "\""}
-/const int revision_number / { print "#define MyRevision \"" substr($5,1,length($5)-1) "\""}
-/const QString ReleaseStatus/ { print "#define MyReleaseStatus " substr($5,1,length($5)-1) }
+    split(version, v, "[.-]")
+    status = v[4] ? v[4] : "r"
+    print "#define MyReleaseStatus \"" status "\""
+    
+    split("alpha beta gamma rc r", parts, " ")
+    for (i=1; i <= length(parts); i++) dict[parts[i]]=i
+    build = dict[status]
+    print "#define MyBuildNumber \"" (build * 100) "\""
+
+    # v[1] already includes a leading quote mark
+    print "#define MyVersionNumbers " v[1] "." v[2] "." v[3] "." (build * 100) "\""
+}
 
 /32.*bit/ { print "#define MyPlatform \"Win32\"" }
 /64.*bit/ { print "#define MyPlatform \"Win64\"" }

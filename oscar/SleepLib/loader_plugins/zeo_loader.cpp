@@ -1,5 +1,6 @@
-﻿/* SleepLib ZEO Loader Implementation
+/* SleepLib ZEO Loader Implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -17,6 +18,7 @@
 #include <QTextStream>
 #include "zeo_loader.h"
 #include "SleepLib/machine.h"
+#include "csv.h"
 
 ZEOLoader::ZEOLoader()
 {
@@ -25,6 +27,7 @@ ZEOLoader::ZEOLoader()
 
 ZEOLoader::~ZEOLoader()
 {
+    closeCSV();
 }
 
 int ZEOLoader::Open(const QString & dirpath)
@@ -81,203 +84,139 @@ int ZEOLoader::Open(const QString & dirpath)
 
 int ZEOLoader::OpenFile(const QString & filename)
 {
-    QFile file(filename);
+    if (!openCSV(filename)) {
+        return -1;
+    }
+    int count = 0;
+    Session* sess;
+    // TODO: add progress bar support, perhaps move shared logic into shared parent class with Dreem loader
+    while ((sess = readNextSession()) != nullptr) {
+        sess->SetChanged(true);
+        mach->AddSession(sess);
+        count++;
+    }
+    mach->Save();
+    closeCSV();
+    return count;
+}
+
+bool ZEOLoader::openCSV(const QString & filename)
+{
+    file.setFileName(filename);
 
     if (filename.toLower().endsWith(".csv")) {
         if (!file.open(QFile::ReadOnly)) {
             qDebug() << "Couldn't open zeo file" << filename;
-            return 0;
+            return false;
         }
     } else {// if (filename.toLower().endsWith(".dat")) {
-
-        return 0;
+        // TODO: add direct support for .dat files
+        return false;
         // not supported.
     }
 
-    QTextStream text(&file);
-    QString headerdata = text.readLine();
-    QStringList header = headerdata.split(",");
-    QString line;
-    QStringList linecomp;
-    QDateTime start_of_night, end_of_night, rise_time;
-    SessionID sid;
-
-    //const qint64 WindowSize=30000;
-    qint64 st, tt;
-    int stage;
-
-    int ZQ, TimeToZ, TimeInWake, TimeInREM, TimeInLight, TimeInDeep, Awakenings;
-
-    //int AlarmReason, SnoozeTime, WakeTone, WakeWindow, AlarmType, TotalZ;
-    int MorningFeel;
-    QString FirmwareVersion, MyZeoVersion;
-
-    QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
-
-    QStringList SG, DSG;
+    QStringList header;
+    csv = new CSVReader(file);
+    bool ok = csv->readRow(header);
+    if (!ok) {
+        qWarning() << "no header row";
+        return false;
+    }
+    csv->setFieldNames(header);
 
     MachineInfo info = newInfo();
-    Machine *mach = p_profile->CreateMachine(info);
+    mach = p_profile->CreateMachine(info);
 
+    return true;
+}
 
-    int idxZQ = header.indexOf("ZQ");
-    //int idxTotalZ = header.indexOf("Total Z");
-    int idxAwakenings = header.indexOf("Awakenings");
-    int idxSG = header.indexOf("Sleep Graph");
-    int idxDSG = header.indexOf("Detailed Sleep Graph");
-    int idxTimeInWake = header.indexOf("Time in Wake");
-    int idxTimeToZ = header.indexOf("Time to Z");
-    int idxTimeInREM = header.indexOf("Time in REM");
-    int idxTimeInLight = header.indexOf("Time in Light");
-    int idxTimeInDeep = header.indexOf("Time in Deep");
-    int idxStartOfNight = header.indexOf("Start of Night");
-    int idxEndOfNight = header.indexOf("End of Night");
-    int idxRiseTime = header.indexOf("Rise Time");
+void ZEOLoader::closeCSV()
+{
+    if (csv != nullptr) {
+        delete csv;
+        csv = nullptr;
+    }
+    if (file.isOpen()) {
+        file.close();
+    }
+}
+
+//    int idxTotalZ = header.indexOf("Total Z");
 //    int idxAlarmReason = header.indexOf("Alarm Reason");
 //    int idxSnoozeTime = header.indexOf("Snooze Time");
 //    int idxWakeTone = header.indexOf("Wake Tone");
 //    int idxWakeWindow = header.indexOf("Wake Window");
 //    int idxAlarmType = header.indexOf("Alarm Type");
-    int idxFirstAlaramRing = header.indexOf("First Alarm Ring");
-    int idxLastAlaramRing = header.indexOf("Last Alarm Ring");
-    int idxFirstSnoozeTime = header.indexOf("First Snooze Time");
-    int idxLastSnoozeTime = header.indexOf("Last Snooze Time");
-    int idxSetAlarmTime = header.indexOf("Set Alarm Time");
-    int idxMorningFeel = header.indexOf("Morning Feel");
-    int idxFirmwareVersion = header.indexOf("Firmware Version");
-    int idxMyZEOVersion = header.indexOf("My ZEO Version");
 
-    bool ok;
-    bool dodgy;
+static const EventDataType GAIN = 0.25;  // allow for fractional sleep stages (such as Deep (2))
 
-    do {
-        line = text.readLine();
-        dodgy = false;
+Session* ZEOLoader::readNextSession()
+{
+    if (csv == nullptr) {
+        qWarning() << "no CSV open!";
+        return nullptr;
+    }
+    Session* sess = nullptr;
+    QDateTime start_of_night;  //, end_of_night, rise_time;
 
-        if (line.isEmpty()) { continue; }
+    qint64 st, tt;
+    int stage;
 
-        linecomp = line.split(",");
-        ZQ = linecomp[idxZQ].toInt(&ok);
+    int ZQ, TimeToZ, TimeInWake, TimeInREM, TimeInLight, TimeInDeep, Awakenings;
+    int MorningFeel;
+    //QString FirmwareVersion, MyZeoVersion;
+    //QDateTime FirstAlarmRing, LastAlarmRing, FirstSnoozeTime, LastSnoozeTime, SetAlarmTime;
+    QStringList /*SG,*/ DSG;
 
-        if (!ok) { dodgy = true; }
+    QHash<QString,QString> row;
+    while (csv->readRow(row)) {
+        SessionID sid = 0;
+        invalid_fields = false;
 
-//        TotalZ = linecomp[idxTotalZ].toInt(&ok);
+        start_of_night = readDateTime(row["Start of Night"]);
+        if (start_of_night.isValid()) {
+            sid = start_of_night.toTime_t();
+            if (mach->SessionExists(sid)) {
+                continue;
+            }
+        } // else invalid_fields will be true
 
-//        if (!ok) { dodgy = true; }
+        ZQ = readInt(row["ZQ"]);
+        TimeToZ = readInt(row["Time to Z"]);
+        TimeInWake = readInt(row["Time in Wake"]);
+        TimeInREM = readInt(row["Time in REM"]);
+        TimeInLight = readInt(row["Time in Light"]);
+        TimeInDeep = readInt(row["Time in Deep"]);
+        Awakenings = readInt(row["Awakenings"]);
+        //end_of_night = readDateTime(row["End of Night"]);
+        //rise_time = readDateTime(row["Rise Time"]);
+        //FirstAlarmRing = readDateTime(row["First Alarm Ring"], false);
+        //LastAlarmRing = readDateTime(row["Last Alarm Ring"], false);
+        //FirstSnoozeTime = readDateTime(row["First Snooze Time"], false);
+        //LastSnoozeTime = readDateTime(row["Last Snooze Time"], false);
+        //SetAlarmTime = readDateTime(row["Set Alarm Time"], false);
+        MorningFeel = readInt(row["Morning Feel"], false);
+        //FirmwareVersion = row["Firmware Version"];
+        //MyZeoVersion = row["My ZEO Version"];
 
-        TimeToZ = linecomp[idxTimeToZ].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        TimeInWake = linecomp[idxTimeInWake].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        TimeInREM = linecomp[idxTimeInREM].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        TimeInLight = linecomp[idxTimeInLight].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        TimeInDeep = linecomp[idxTimeInDeep].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        Awakenings = linecomp[idxAwakenings].toInt(&ok);
-
-        if (!ok) { dodgy = true; }
-
-        start_of_night = QDateTime::fromString(linecomp[idxStartOfNight], "MM/dd/yyyy HH:mm");
-
-        if (!start_of_night.isValid()) { dodgy = true; }
-
-        end_of_night = QDateTime::fromString(linecomp[idxEndOfNight], "MM/dd/yyyy HH:mm");
-
-        if (!end_of_night.isValid()) { dodgy = true; }
-
-        rise_time = QDateTime::fromString(linecomp[idxRiseTime], "MM/dd/yyyy HH:mm");
-
-        if (!rise_time.isValid()) { dodgy = true; }
-
-//        AlarmReason = linecomp[idxAlarmReason].toInt(&ok);
-
-//        if (!ok) { dodgy = true; }
-
-//        SnoozeTime = linecomp[idxSnoozeTime].toInt(&ok);
-
-//        if (!ok) { dodgy = true; }
-
-//        WakeTone = linecomp[idxWakeTone].toInt(&ok);
-
-//        if (!ok) { dodgy = true; }
-
-//        WakeWindow = linecomp[idxWakeWindow].toInt(&ok);
-
-//        if (!ok) { dodgy = true; }
-
-//        AlarmType = linecomp[idxAlarmType].toInt(&ok);
-
-//        if (!ok) { dodgy = true; }
-
-        if (!linecomp[idxFirstAlaramRing].isEmpty()) {
-            FirstAlarmRing = QDateTime::fromString(linecomp[idxFirstAlaramRing], "MM/dd/yyyy HH:mm");
-
-            if (!FirstAlarmRing.isValid()) { dodgy = true; }
-        }
-
-        if (!linecomp[idxLastAlaramRing].isEmpty()) {
-            LastAlarmRing = QDateTime::fromString(linecomp[idxLastAlaramRing], "MM/dd/yyyy HH:mm");
-
-            if (!LastAlarmRing.isValid()) { dodgy = true; }
-        }
-
-        if (!linecomp[idxFirstSnoozeTime].isEmpty()) {
-            FirstSnoozeTime = QDateTime::fromString(linecomp[idxFirstSnoozeTime], "MM/dd/yyyy HH:mm");
-
-            if (!FirstSnoozeTime.isValid()) { dodgy = true; }
-        }
-
-        if (!linecomp[idxLastSnoozeTime].isEmpty()) {
-            LastSnoozeTime = QDateTime::fromString(linecomp[idxLastSnoozeTime], "MM/dd/yyyy HH:mm");
-
-            if (!LastSnoozeTime.isValid()) { dodgy = true; }
-        }
-
-        if (!linecomp[idxSetAlarmTime].isEmpty()) {
-            SetAlarmTime = QDateTime::fromString(linecomp[idxSetAlarmTime], "MM/dd/yyyy HH:mm");
-
-            if (!SetAlarmTime.isValid()) { dodgy = true; }
-        }
-
-        MorningFeel = linecomp[idxMorningFeel].toInt(&ok);
-
-        if (!ok) { MorningFeel = 0; }
-
-        FirmwareVersion = linecomp[idxFirmwareVersion];
-
-        if (idxMyZEOVersion >= 0) { MyZeoVersion = linecomp[idxMyZEOVersion]; }
-
-        if (dodgy) {
+        if (invalid_fields) {
             continue;
         }
 
-        SG = linecomp[idxSG].split(" ");
-        DSG = linecomp[idxDSG].split(" ");
-
-        const int WindowSize = 30000;
-        sid = start_of_night.toTime_t();
+        //SG = row["Sleep Graph"].trimmed().split(" ");
+        DSG = row["Detailed Sleep Graph"].trimmed().split(" ");
 
         if (DSG.size() == 0) {
             continue;
         }
 
-        if (mach->SessionExists(sid)) {
-            continue;
-        }
+        sess = new Session(mach, sid);
+        break;
+    };
 
-        Session *sess = new Session(mach, sid);
+    if (sess) {
+        const int WindowSize = 30 * 1000;
+        m_session = sess;
 
         sess->settings[ZEO_Awakenings] = Awakenings;
         sess->settings[ZEO_MorningFeel] = MorningFeel;
@@ -291,31 +230,96 @@ int ZEOLoader::OpenFile(const QString & filename)
         st = qint64(start_of_night.toTime_t()) * 1000L;
         sess->really_set_first(st);
         tt = st;
-        EventList *sleepstage = sess->AddEventList(ZEO_SleepStage, EVL_Event, 1, 0, 0, 4);
 
         for (int i = 0; i < DSG.size(); i++) {
+            bool ok;
             stage = DSG[i].toInt(&ok);
-
             if (ok) {
-                sleepstage->AddEvent(tt, stage);
+                // 0 = no data, 1 = Awake, 2 = REM, 3 = Light Sleep, 4 = Deep Sleep, 6 = Deep Sleep (2), drawn slightly less deep
+                int value = -stage / GAIN;  // use negative values so that the chart is oriented the right way
+                switch (stage) {
+                    case 0:
+                        EndEventList(ZEO_SleepStage, tt);
+                        break;
+                    case 6:
+                        // According to ZeoViewer, 6 is a "Deep (2)" and is drawn somewhere between Light and Deep.
+                        value = -3.75 / GAIN;
+                        // fall through
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        AddEvent(ZEO_SleepStage, tt, value);
+                        break;
+                    default:
+                        qWarning() << sess->session() << start_of_night << "@" << i << "unknown sleep stage" << stage;
+                        break;
+                }
+            } else {
+                qWarning() << sess->session() << start_of_night << "@" << i << "unknown sleep stage" << DSG[i];
             }
-
             tt += WindowSize;
         }
 
+        EndEventList(ZEO_SleepStage, tt);
         sess->really_set_last(tt);
-        int size = DSG.size();
-        sess->SetChanged(true);
-        mach->AddSession(sess);
+        //int size = DSG.size();
+        //qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size << "30 second chunks";
+    }
 
+    return sess;
+}
 
-        qDebug() << linecomp[0] << start_of_night << end_of_night << rise_time << size <<
-                 "30 second chunks";
+void ZEOLoader::AddEvent(ChannelID channel, qint64 t, EventDataType value)
+{
+    EventList* C = m_importChannels[channel];
+    if (C == nullptr) {
+        C = m_session->AddEventList(channel, EVL_Event, GAIN, 0, -5, 0);
+        Q_ASSERT(C);  // Once upon a time AddEventList could return nullptr, but not any more.
+        m_importChannels[channel] = C;
+    }
+    // Add the event
+    C->AddEvent(t, value);
+    m_importLastValue[channel] = value;
+}
 
-    } while (!line.isNull());
+void ZEOLoader::EndEventList(ChannelID channel, qint64 t)
+{
+    EventList* C = m_importChannels[channel];
+    if (C != nullptr) {
+        C->AddEvent(t, m_importLastValue[channel]);
+        
+        // Mark this channel's event list as ended.
+        m_importChannels[channel] = nullptr;
+    }
+}
 
-    mach->Save();
-    return true;
+QDateTime ZEOLoader::readDateTime(const QString & text, bool required)
+{
+    QDateTime dt = QDateTime::fromString(text, "MM/dd/yyyy HH:mm");
+    if (required || !text.isEmpty()) {
+        if (!dt.isValid()) {
+            dt = QDateTime::fromString(text, "yyyy-MM-dd HH:mm:ss");
+            if (!dt.isValid()) {
+                invalid_fields = true;
+            }
+        }
+    }
+    return dt;
+}
+
+int ZEOLoader::readInt(const QString & text, bool required)
+{
+    bool ok;
+    int value = text.toInt(&ok);
+    if (!ok) {
+        if (required) {
+            invalid_fields = true;
+        } else {
+            value = 0;
+        }
+    }
+    return value;
 }
 
 static bool zeo_initialized = false;

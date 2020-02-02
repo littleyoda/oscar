@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="he">
+<TS version="2.1" language="he_IL">
 <context>
     <name>QShortcut</name>
     <message>
@@ -16,7 +16,7 @@
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation>אישור</translation>
+        <translation>בסדר</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -32,11 +32,11 @@
     </message>
     <message>
         <source>Open</source>
-        <translation>פתיחה</translation>
+        <translation>פתוח</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>שמור</translation>
+        <translation>לְהוֹשִׁיעַ</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Apply</source>
-        <translation>החל</translation>
+        <translation>שלח</translation>
     </message>
     <message>
         <source>Close</source>
@@ -60,7 +60,7 @@
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation>שחזר ברירות מחדל</translation>
+        <translation>לשחזר את ברירות מחדל</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -68,11 +68,11 @@
     </message>
     <message>
         <source>Ignore</source>
-        <translation>התעלם</translation>
+        <translation>להתעלם</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>ל&amp;א להכל</translation>
+        <translation>לא לכולם</translation>
     </message>
     <message>
         <source>Save All</source>
@@ -80,11 +80,11 @@
     </message>
     <message>
         <source>Discard</source>
-        <translation>שכח</translation>
+        <translation>להשליך</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>כן ל&amp;הכל</translation>
+        <translation>כן לכולם</translation>
     </message>
 </context>
 </TS>

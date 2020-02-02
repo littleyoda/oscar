@@ -88,7 +88,10 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
     day.clear();
     highest_sessionid = 0;
     m_unsupported = false;
-    m_untested = false;
+    m_suppressUntestedWarning = false;
+    // TODO: Have the machine write m_suppressUntestedWarning and m_previousUnexpected
+    // to XML (along with the current OSCAR version number) so that they persist across
+    // application launches (but reset with each new OSCAR version).
 
     if (!id) {
         srand(time(nullptr));
@@ -117,7 +120,7 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
 Machine::~Machine()
 {
     saveSessionInfo();
-    qDebug() << "Destroy Machine" << info.loadername << hex << m_id;
+    //qDebug() << "Destroy Machine" << info.loadername << hex << m_id;
 }
 Session *Machine::SessionExists(SessionID session)
 {
@@ -302,6 +305,7 @@ bool Machine::AddSession(Session *s)
     if (profile->session->ignoreOlderSessions()) {
         qint64 ignorebefore = profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch();
         if (s->last() < ignorebefore) {
+            qDebug() << s->session() << "Ignoring old session";
             skipped_sessions++;
             return false;
         }
@@ -382,6 +386,7 @@ bool Machine::AddSession(Session *s)
 
     if (session_length < ignore_sessions) {
         // keep the session to save importing it again, but don't add it to the day record this time
+        qDebug() << s->session() << "Ignoring short session";
         return true;
     }
 
@@ -610,6 +615,7 @@ void Machine::setInfo(MachineInfo inf)
 
 const QString Machine::getDataPath()
 {    
+    // TODO: Rework the underlying database so that file storage doesn't rely on consistent presence or absence of the serial number.
     m_dataPath = p_pref->Get("{home}/Profiles/")+profile->user->userName()+"/"+info.loadername + "_"
                  + (info.serial.isEmpty() ? hexid() : info.serial) + "/";
     return m_dataPath;

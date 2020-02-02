@@ -1,0 +1,58 @@
+#!/bin/bash
+# Usage: create_dmg target_name file1 [file2...]
+
+# TODO: add background image and symlink to /Applications, once we have a signed app and no longer need the README
+
+STAGING_DIR="./Staging"
+
+# Extract the target name
+TARGET="$1"
+shift
+
+# Look for the .app in the files to be added to the .dmg
+APP=""
+for src in "$@"
+do
+    [[ "$src" == *.app ]] && APP="$src"
+done
+
+if [[ ${APP} != "" ]]; then
+    if [[ -z "$QT_BIN" ]]; then
+        echo "Error: QT_BIN must be defined"
+        exit 1
+    fi
+
+    # Get the version from the application bundle.
+    VERSION=`/usr/libexec/PlistBuddy -c "Print CFBundleGetInfoString" ${APP}/Contents/Info.plist`
+    echo ${APP} is version ${VERSION}
+
+    # If it's a prerelease version, include the git revision.
+    if [[ ${VERSION} == *-* ]]; then
+        GIT_REVISION=`/usr/libexec/PlistBuddy -c "Print GitRevision" ${APP}/Contents/Info.plist 2>/dev/null`
+        if [[ ${GIT_REVISION} != "" ]]; then
+            VERSION=${VERSION}-${GIT_REVISION}
+        fi
+
+        # TODO: possibly add -no-strip to macdeployqt for prerelease versions
+    fi
+
+    # Create a deployable application bundle (if it hasn't been already been done).
+    # Edit: do it every time so that the application gets stripped, just suppress the spurious warnings.
+    #if [[ ! -d "${APP}/Contents/Frameworks/QtCore.framework" ]]; then
+        echo "${QT_BIN}"/macdeployqt "${APP}"
+        "${QT_BIN}"/macdeployqt "${APP}" 2>/dev/null || exit
+    #fi
+fi
+
+mkdir "${STAGING_DIR}" || exit
+
+for src in "$@"
+do
+    echo "Copying ${src}"
+    cp -a "$src" "${STAGING_DIR}/."
+done
+
+echo "Creating .dmg"
+hdiutil create -srcfolder "${STAGING_DIR}" -volname "${TARGET}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}-${VERSION}.dmg" -ov
+
+rm -rf "${STAGING_DIR}"

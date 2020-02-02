@@ -1,4 +1,4 @@
-﻿/* UpdaterWindow
+/* UpdaterWindow
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -273,147 +273,6 @@ void UpdaterWindow::requestFile()
 ************************************************************/
 #endif
 
-int checkVersionStatus(QString statusstr)
-{
-    bool ok;
-    // because Qt Install Framework is dumb and doesn't handle beta/release strings in version numbers,
-    // so we store them numerically instead
-    int v =statusstr.toInt(&ok);
-    if (ok) {
-        return v;
-    }
-
-    if ((statusstr.compare("testing", Qt::CaseInsensitive) == 0) || (statusstr.compare("unstable", Qt::CaseInsensitive) == 0)) return 0;
-    else if ((statusstr.compare("beta", Qt::CaseInsensitive) == 0) || (statusstr.compare("untamed", Qt::CaseInsensitive) == 0)) return 1;
-    else if ((statusstr.compare("rc", Qt::CaseInsensitive) == 0)  || (statusstr.compare("almost", Qt::CaseInsensitive) == 0)) return 2;
-    else if ((statusstr.compare("r", Qt::CaseInsensitive) == 0)  || (statusstr.compare("stable", Qt::CaseInsensitive) == 0)) return 3;
-
-    // anything else is considered a test build
-    return 0;
-}
-struct VersionStruct {
-    short major;
-    short minor;
-    short revision;
-    short status;
-    short build;
-};
-
-VersionStruct parseVersion(QString versionstring)
-{
-    static VersionStruct version;
-
-    QStringList parts = versionstring.split(".");
-    bool ok, dodgy = false;
-
-    if (parts.size() < 3) dodgy = true;
-
-    short major = parts[0].toInt(&ok);
-    if (!ok) dodgy = true;
-
-    short minor = parts[1].toInt(&ok);
-    if (!ok) dodgy = true;
-
-    QStringList patchver = parts[2].split("-");
-    if (patchver.size() < 3) dodgy = true;
-
-    short rev = patchver[0].toInt(&ok);
-    if (!ok) dodgy = true;
-
-    short build = patchver[2].toInt(&ok);
-    if (!ok) dodgy = true;
-
-    int status = checkVersionStatus(patchver[1]);
-
-    if (!dodgy) {
-        version.major = major;
-        version.minor = minor;
-        version.revision = rev;
-        version.status = status;
-        version.build = build;
-    }
-    return version;
-}
-
-
-// Compare supplied version string with current version
-// < 0 = this one is newer or version supplied is dodgy, 0 = same, and > 0 there is a newer version
-int compareVersion(QString version)
-{
-    // v1.0.0-beta-2
-    QStringList parts = version.split(".");
-    bool ok;
-
-    if (parts.size() < 3) {
-        // dodgy version string supplied.
-        return -1;
-    }
-
-    int major = parts[0].toInt(&ok);
-    if (!ok) return -1;
-
-    int minor = parts[1].toInt(&ok);
-    if (!ok) return -1;
-
-    if (major > major_version) {
-        return 1;
-    } else if (major < major_version) {
-        return -1;
-    }
-
-    if (minor > minor_version) {
-        return 1;
-    } else if (minor < minor_version) {
-        return -1;
-    }
-
-    int build_index = 1;
-    int build = 0;
-    int status = 0;
-    QStringList patchver = parts[2].split("-");
-    if (patchver.size() >= 3) {
-        build_index = 2;
-        status = checkVersionStatus(patchver[1]);
-
-    } else if (patchver.size() < 2) {
-        return -1;
-        // dodgy version string supplied.
-    }
-
-    int rev = patchver[0].toInt(&ok);
-    if (!ok) return -1;
-    if (rev > revision_number) {
-        return 1;
-    } else if (rev < revision_number) {
-        return -1;
-    }
-
-
-    build = patchver[build_index].toInt(&ok);
-    if (!ok) return -1;
-
-    int rstatus = checkVersionStatus(ReleaseStatus);
-
-    if (patchver.size() == 3) {
-        // read it if it's actually present.
-    }
-
-    if (status > rstatus) {
-        return 1;
-    } else if (status < rstatus) {
-        return -1;
-    }
-
-    if (build > build_number) {
-        return 1;
-    } else if (build < build_number) {
-        return -1;
-    }
-
-    // Versions match
-    return 0;
-}
-
 #ifndef NO_UPDATER
 
 const QString UPDATE_ROSCAR = "com.jedimark.sleepyhead";
@@ -470,9 +329,9 @@ void UpdaterWindow::ParseUpdatesXML(QIODevice *dev)
         qDebug() << " XML update structure parsed cleanly";
         QHash<QString, QString> CurrentVersion;
 
-        CurrentVersion[UPDATE_OSCAR] = VersionString;
+        CurrentVersion[UPDATE_OSCAR] = getVersion();
         CurrentVersion[UPDATE_QT] = QT_VERSION_STR;
-        CurrentVersion[UPDATE_Translations] = VersionString;
+        CurrentVersion[UPDATE_Translations] = getVersion();
 
         QList<PackageUpdate> updateList;
 

@@ -1,5 +1,6 @@
 /* gGraphView Implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -657,7 +658,7 @@ bool gGraphView::pinchTriggered(QPinchGesture * gesture)
      double ww = double(origin_px) / double(width);
      double origin = ww * span;
 
-     double q = span * gesture->totalScaleFactor();
+     double q = span / gesture->totalScaleFactor();
 
      if (q > hardspan) { q = hardspan; }
 
@@ -1359,7 +1360,6 @@ bool gGraphView::renderGraphs(QPainter &painter)
     return numgraphs > 0;
 }
 
-#include "version.h"
 #ifdef BROKEN_OPENGL_BUILD
 void gGraphView::paintEvent(QPaintEvent *)
 #else
@@ -1851,7 +1851,7 @@ void gGraphView::mouseMoveEvent(QMouseEvent *event)
                 if (x >= titleWidth + 10) {
                     this->setCursor(Qt::ArrowCursor);
                 } else {
-                    m_tooltip->display("Double click title to pin / unpin\nClick and drag to reorder graphs", x + 10, y, TT_AlignLeft);
+                    m_tooltip->display(tr("Double click title to pin / unpin\nClick and drag to reorder graphs"), x + 10, y, TT_AlignLeft);
                     timedRedraw(0);
 
                     this->setCursor(Qt::OpenHandCursor);
@@ -3462,6 +3462,18 @@ void gGraphView::SaveSettings(QString title)
     f.close();
 }
 
+
+// Merge and overwrite two hashes. (We can't use QHash::unite because it doesn't overwrite.)
+// This is useful for loading settings, where we want to leave the defaults alone for features
+// that don't yet have settings specified.
+template <class T> inline void hashMerge(T & a, const T & b)
+{
+    for (auto key : b.keys()) {
+        a[key] = b[key];
+    }
+}
+
+
 bool gGraphView::LoadSettings(QString title)
 {
     QString filename = p_profile->Get("{DataFolder}/") + title.toLower() + ".shg";
@@ -3568,10 +3580,9 @@ bool gGraphView::LoadSettings(QString title)
                 if (layertype == LT_LineChart) {
                     gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
                     if (lc) {
-                        lc->m_flags_enabled = flags_enabled;
-                        lc->m_enabled = plots_enabled;
-
-                        lc->m_dot_enabled = dot_enabled;
+                        hashMerge(lc->m_flags_enabled, flags_enabled);
+                        hashMerge(lc->m_enabled, plots_enabled);
+                        hashMerge(lc->m_dot_enabled, dot_enabled);
                     }
                 }
             }

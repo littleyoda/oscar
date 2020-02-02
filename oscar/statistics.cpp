@@ -1,6 +1,6 @@
 /* Statistics Report Generator Implementation
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -22,6 +22,7 @@
 #include "statistics.h"
 #include "cprogressbar.h"
 #include "SleepLib/common.h"
+#include "version.h"
 
 extern MainWindow *mainwin;
 
@@ -557,13 +558,24 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("Pressure",   SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("Pressure",   SC_MAX,     MT_CPAP));
     rows.push_back(StatisticsRow("Pressure",   SC_90P,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("PressureSet",   SC_90P,     MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_WAVG,    MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("EPAP",       SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("EPAPSet",       SC_MAX,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_WAVG,    MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_90P,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAP",       SC_MAX,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_WAVG,    MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_90P,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_MIN,     MT_CPAP));
+    rows.push_back(StatisticsRow("IPAPSet",       SC_MAX,     MT_CPAP));
 
     rows.push_back(StatisticsRow("", SC_HEADING, MT_OXIMETER));         // Just adds some space
     rows.push_back(StatisticsRow(tr("Oximeter Statistics"), SC_HEADING, MT_OXIMETER));
@@ -708,8 +720,8 @@ QString Statistics::generateFooter(bool showinfo)
     if (showinfo) {
         html += "<hr><div align=center><font size='-1'><i>";
         QDateTime timestamp = QDateTime::currentDateTime();
-        html += tr("This report was prepared on %1 by OSCAR v%2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
-                                                                     .arg(ReleaseStatus == "r" ? ShortVersionString : VersionString + " (" + gitRevision() + ")")
+        html += tr("This report was prepared on %1 by OSCAR %2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
+                                                                     .arg(getVersion())
                 + "<br/>"
                 + tr("OSCAR is free open-source CPAP report software");
         html += "</i></font></div>";

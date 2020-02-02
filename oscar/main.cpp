@@ -1,5 +1,6 @@
 /* OSCAR Main
  *
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -42,10 +43,9 @@
 #include "SleepLib/loader_plugins/intellipap_loader.h"
 #include "SleepLib/loader_plugins/icon_loader.h"
 #include "SleepLib/loader_plugins/weinmann_loader.h"
+#include "SleepLib/loader_plugins/viatom_loader.h"
 
 MainWindow *mainwin = nullptr;
-
-int compareVersion(QString version);
 
 int numFilesCopied = 0;
 
@@ -247,6 +247,9 @@ bool migrateFromSH(QString destDir) {
 
 int main(int argc, char* argv[])
 {
+    initializeStrings();
+    qDebug() << STR_TR_OSCAR + " " + getVersion();
+
     AutoTest::run(argc, argv);
 }
 
@@ -337,7 +340,8 @@ int main(int argc, char *argv[]) {
     }
 
     initializeLogger();
-    QThread::msleep(50); // Logger takes a little bit to catch up
+
+    qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
 
 #ifdef QT_DEBUG
     QString relinfo = " debug";
@@ -345,8 +349,11 @@ int main(int argc, char *argv[]) {
     QString relinfo = "";
 #endif
     relinfo = "("+QSysInfo::kernelType()+" "+QSysInfo::currentCpuArchitecture()+relinfo+")";
-    qDebug() << "OSCAR starting" << QDateTime::currentDateTime();
-    qDebug().noquote() << STR_AppName << VersionString << relinfo << "Built with Qt" << QT_VERSION_STR << __DATE__ << __TIME__;
+    relinfo = STR_AppName + " " + getVersion() + " " + relinfo;
+
+    qDebug().noquote() << relinfo;
+    qDebug().noquote() << "Built with Qt" << QT_VERSION_STR << "on" << getBuildDateTime();
+    addBuildInfo(relinfo);  // immediately add it to the build info that's accessible from the UI
 
     SetDateFormat();
 
@@ -364,7 +371,7 @@ int main(int argc, char *argv[]) {
 
 // Moved buildInfo calls to after translation is available as makeBuildInfo includes tr() calls
 
-    QStringList info = makeBuildInfo(relinfo, forcedEngine);
+    QStringList info = makeBuildInfo(forcedEngine);
     for (int i = 0; i < info.size(); ++i)
         qDebug().noquote() << info.at(i);
 
@@ -475,9 +482,8 @@ int main(int argc, char *argv[]) {
     }           // The folder doesn't exist
     else
         qDebug() << "AppData folder already exists, so ...";
-    qDebug() << "Using " + GetAppData() + " as OSCAR data folder";
+    qDebug().noquote() << "Using " + GetAppData() + " as OSCAR data folder";
 
-    addBuildInfo("");
     QString path = GetAppData();
     addBuildInfo(QObject::tr("Data directory:") + " <a href=\"file:///" + path + "\">" + path + "</a>");
 
@@ -540,15 +546,23 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
-    int vc = compareVersion(AppSetting->versionString());
-    if (vc < 0) {
+    Version settingsVersion = Version(AppSetting->versionString());
+    Version currentVersion = getVersion();
+    if (currentVersion.IsValid() == false) {
+        // The defined version MUST be valid, otherwise comparisons between versions will fail.
+        QMessageBox::critical(nullptr, STR_MessageBox_Error, QObject::tr("Version \"%1\" is invalid, cannot continue!").arg(currentVersion));
+        return 0;
+    }
+    if (currentVersion > settingsVersion) {
         AppSetting->setShowAboutDialog(1);
 //      release_notes();
 //      check_updates = false;
-    } else if (vc > 0) {
+    } else if (currentVersion < settingsVersion) {
         if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                                 QObject::tr("The version of OSCAR you just ran is OLDER than the one used to create this data (%1).").
-                                 arg(AppSetting->versionString()) +"\n\n"+
+                                 QObject::tr("The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).")
+                                    .arg(currentVersion.displayString())
+                                    .arg(settingsVersion.displayString())
+                                 +"\n\n"+
                                  QObject::tr("It is likely that doing this will cause data corruption, are you sure you want to do this?"),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
 
@@ -556,7 +570,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    AppSetting->setVersionString(VersionString);
+    AppSetting->setVersionString(getVersion());
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Register Importer Modules for autoscanner
@@ -570,6 +584,7 @@ int main(int argc, char *argv[]) {
     CMS50Loader::Register();
     CMS50F37Loader::Register();
     MD300W1Loader::Register();
+    ViatomLoader::Register();
 
     schema::setOrders(); // could be called in init...
 
