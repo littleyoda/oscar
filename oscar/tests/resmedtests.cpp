@@ -30,9 +30,9 @@ void ResmedTests::initTestCase(void)
 void ResmedTests::cleanupTestCase(void)
 {
     delete AppSetting;
-    delete p_pref;
     delete p_profile;
     p_profile = nullptr;
+    delete p_pref;
 }
 
 

@@ -94,14 +94,6 @@ Profile::~Profile()
         removeLock();
     }
 
-    delete user;
-    delete doctor;
-    delete cpap;
-    delete oxi;
-    delete appearance;
-    delete session;
-    delete general;
-
     // delete machine objects...
     for (auto & mach : m_machlist) {
         delete mach;
@@ -111,6 +103,13 @@ Profile::~Profile()
         delete day;
     }
 
+    delete user;
+    delete doctor;
+    delete cpap;
+    delete oxi;
+    delete appearance;
+    delete session;
+    delete general;
 }
 
 bool Profile::Save(QString filename)
