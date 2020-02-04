@@ -6647,10 +6647,12 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
-            case 0x42:  // EZ-Start for Auto-CPAP?
+            case 0x42:  // EZ-Start enabled for Auto-CPAP?
                 // Seen on 500X110 before 0x2b when EZ-Start is enabled on Auto-CPAP
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                CHECK_VALUES(data[pos], 0x00, 0x80);  // both seem to mean enabled, 0x00 appears when Opti-Start is used instead
+                // TODO: How to represent which one is active in practice? Should this always be "true" since
+                // either value means that the setting is enabled?
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x2b:  // Ramp Type
