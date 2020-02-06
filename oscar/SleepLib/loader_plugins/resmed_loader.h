@@ -21,7 +21,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation.
 //
-const int resmed_data_version = 12;
+const int resmed_data_version = 13;
 //
 //********************************************************************************************
 

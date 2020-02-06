@@ -356,17 +356,17 @@ int ResmedLoader::Open(const QString & dirpath)
     Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
-        QDate lastDate = p_profile->LastDay(MT_CPAP);
-        firstImportDay = lastDate.addDays(-1);
+//      QDate lastDate = p_profile->LastDay(MT_CPAP);
+//      firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
-        QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
-        bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
-        mach = p_profile->CreateMachine( info );
-
-        if (ignoreOldSessions) 
-            firstImportDay = ignoreBefore.date();
     }
+    QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
+    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+    mach = p_profile->CreateMachine( info );
+
+    if (ignoreOldSessions) 
+        firstImportDay = ignoreBefore.date();
     qDebug() << "First day to import: " << firstImportDay.toString();
 
     bool importing_backups = false;
@@ -435,10 +435,10 @@ int ResmedLoader::Open(const QString & dirpath)
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( stredf->Open(fi.canonicalFilePath() ) ) {
-        qDebug() << "Failed to open" << filename;
-        delete stredf;
-        continue;
-    }
+            qDebug() << "Failed to open" << filename;
+            delete stredf;
+            continue;
+        }
         if (!stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
@@ -453,6 +453,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
         // Don't trust the filename date, pick the one inside the STR...
         date = stredf->edfHdr.startdate_orig.date();
+        qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
         date = QDate(date.year(), date.month(), 1);
 
         STRmap[date] = STRFile(fi.canonicalFilePath(), stredf);
@@ -468,11 +469,11 @@ int ResmedLoader::Open(const QString & dirpath)
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         qDebug() << "Deleting edf of" << it.value().filename;
-        sleep(1);
+//      sleep(1);
         delete it.value().edf;
     }
     qDebug() << "Finished STRmap cleanup";
-    sleep(1);
+//  sleep(1);
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Create the backup folder for storing a copy of everything in..
@@ -515,13 +516,14 @@ int ResmedLoader::Open(const QString & dirpath)
         return 0;
 
     qDebug() << "Starting scan of DATALOG";
-    sleep(1);
+//  sleep(1);
     ScanFiles(mach, datalogPath, firstImportDay);
     if (isAborted())
         return 0;
 
     qDebug() << "Finished DATALOG scan";
-    sleep(1);
+//  sleep(1);
+
     // Now at this point we have resdayList populated with processable summary and EDF files data
     // that can be processed in threads..
 
@@ -904,6 +906,8 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         STRFile & file = it.value();
         ResMedEDFInfo & str = *file.edf;
         totalRecs += str.GetNumDataRecords();
+        qDebug() << "STR file is" << file.filename;
+        qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << totalRecs << "days";
     }
 
     emit updateMessage(QObject::tr("Parsing STR.edf records..."));
@@ -930,13 +934,17 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         }
 
         // ResMed and their consistent naming and spacing... :/
-        EDFSignal *maskon = str.lookupLabel("Mask On");
+        EDFSignal *maskon = str.lookupLabel("Mask On");     // Series 9 machines
         if (!maskon) {
-            maskon = str.lookupLabel("MaskOn");
+            maskon = str.lookupLabel("MaskOn");             // Series 10 machines
         }
         EDFSignal *maskoff = str.lookupLabel("Mask Off");
         if (!maskoff) {
              maskoff = str.lookupLabel("MaskOff");
+        }
+        EDFSignal *maskeventcount = str.lookupLabel("Mask Events");
+        if (!maskeventcount) {
+             maskeventcount = str.lookupLabel("MaskEvents");
         }
 
         EDFSignal *sig = nullptr;
@@ -949,7 +957,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         //  if (ignoreOldSessions) {
                 if (date < firstImport) {
 #ifdef SESSION_DEBUG
-                   qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
+                   qDebug() << "Skipping" << date.toString() << "Before" << firstImport.toString();
 #endif
                     continue;
                 }
@@ -958,6 +966,11 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             auto rit = resdayList.find(date);
             if (rit != resdayList.end()) {
                 // Already seen this record.. should check if the data is the same, but meh.
+                // At least check the maskeventcount to see if it changed...
+//              if ( maskeventcount* != rit...maskevents ) {
+//                  qDebug() << "Maske events don't match, purge" << rit...date().toString;
+//                  purge...
+//              }
 #ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "Already saw this one";
 #endif
@@ -984,7 +997,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
             rit = resdayList.insert(date, ResMedDay(date));
 
-//          qDebug() << "Setting up STRRecord for" << date.toString();
+            qDebug() << "Setting up STRRecord for" << date.toString();
 //          sleep(1);
             STRRecord &R = rit.value().str;
 
@@ -998,23 +1011,34 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             // Scan the mask on/off events by minute
             R.maskon.resize(maskon->sampleCnt);
             R.maskoff.resize(maskoff->sampleCnt);
+            int lastOn = -1;
+            int lastOff = -1;
             for (int s = 0; s < maskon->sampleCnt; ++s) {
                 qint32 on = maskon->dataArray[recstart + s];    // these on/off times are minutes since noon
                 qint32 off = maskoff->dataArray[recstart + s];
-
-                R.maskon[s] = (on>0) ? (noonstamp + (on * 60)) : 0; // convert them to seconds since midnight
-                R.maskoff[s] = (off>0) ? (noonstamp + (off * 60)) : 0;
+                if ( on > 0 ) {       // convert them to seconds since midnight
+                    lastOn = s;
+                    R.maskon[s] = (noonstamp + (on * 60));
+                } else
+                    R.maskon[s] = 0;
+                if ( off > 0 ) {
+                    lastOff = s;
+                    R.maskoff[s] = (noonstamp + (off * 60));
+                } else
+                    R.maskoff[s] = 0;
             }
-
 
             // two conditions that need dealing with, mask running at noon start, and finishing at noon start..
             // (Sessions are forcibly split by resmed.. why the heck don't they store it that way???)
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
                 R.maskon[0] = noonstamp;
             }       // TODO This should be last non-zero sample, not the last sample in the array
-            if ((R.maskon[maskon->sampleCnt-1] > 0) && (R.maskoff[maskoff->sampleCnt-1] == 0)) {
-                R.maskoff[maskoff->sampleCnt-1] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
+                    // DONE
+            if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
+                R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
             }
+
+            R.maskevents = maskeventcount->dataArray[rec];
 
             CPAPMode mode = MODE_UNKNOWN;
 
@@ -1354,11 +1378,11 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
-//          qDebug() << "Finished" << date.toString();
+            qDebug() << "Finished" << date.toString();
 //          sleep(1);
         }
     }
-//  qDebug() << "Finished ParseSTR";
+    qDebug() << "Finished ProcessSTR";
 //  sleep(3);
 }
 
@@ -1416,9 +1440,10 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
     for (auto & filename : strfiles) {
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(filename) ) {
-        qDebug() << "Failed to open" << filename;
-        continue;
-    }
+            qDebug() << "Failed to open" << filename;
+            delete stredf;
+            continue;
+        }
         if ( ! stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
@@ -1432,6 +1457,7 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
         QDate date = stredf->edfHdr.startdate_orig.date();
         date = QDate(date.year(), date.month(), 1);
         if (STRmap.contains(date)) {
+            qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd");
             delete stredf;
             continue;
         }
@@ -1468,6 +1494,7 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
 
         STRmap[date] = STRFile(backupfile, stredf);
     }   // end for walking the STR files list
+//  qDebug() << "STRmap has" << STRmap.size{} << "entries";
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
@@ -1887,10 +1914,10 @@ void ResDayTask::run()
 
     QList<OverlappingEDF> overlaps;
 
-    int maskevents = resday->str.maskon.size();
+    int maskOnSize = resday->str.maskon.size();
     if (resday->str.date.isValid()) {
         //First populate Overlaps with Mask ON/OFF events
-        for (int i=0; i < maskevents; ++i) {
+        for (int i=0; i < maskOnSize; ++i) {
             if ((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) {
                 OverlappingEDF ov;
                 ov.start = resday->str.maskon[i];
