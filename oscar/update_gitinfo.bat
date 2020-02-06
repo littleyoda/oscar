@@ -10,12 +10,15 @@ for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set GIT_BRANCH=%%i
 if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=""
 for /f %%i in ('git rev-parse --short HEAD') do set GIT_REVISION=%%i
 git diff-index --quiet HEAD --
-if %ERRORLEVEL% NEQ 0 (
-  set GIT_REVISION=%GIT_REVISION%-plus
-  set GIT_TAG=
-  goto GitDone
-)
+set GIT_INDEX=%errorlevel%
 
+if "%GIT_INDEX%"=="0" goto GitTag
+
+set GIT_REVISION=%GIT_REVISION%-plus
+set GIT_TAG=
+goto GitDone
+
+:GitTag
 for /f %%i in ('git describe --exact-match --tags') do set GIT_TAG=%%i
 
 :GitDone
