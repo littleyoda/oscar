@@ -352,9 +352,9 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
     // Read all Pulse, SPO2 and Motion data
     do {
         ViatomFile::Record rec;
-        in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec._unk;
+        in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec.vibration;
         CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF);
-        CHECK_VALUE(rec._unk, 0);  // maybe vibration, given column label in CSV
+        CHECK_VALUES(rec.vibration, 0, 0x80);  // 0x80 when vibration is triggered
         if (rec.oximetry_invalid == 0xFF) {
             CHECK_VALUE(rec.spo2, 0xFF);
             CHECK_VALUE(rec.hr, 0xFF);
@@ -375,7 +375,7 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
                 || a.hr != b.hr
                 || a.oximetry_invalid != b.oximetry_invalid
                 || a.motion != b.motion
-                || a._unk != b._unk) {
+                || a.vibration != b.vibration) {
                 all_are_duplicated = false;
                 break;
             }
