@@ -1494,7 +1494,7 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
 
         STRmap[date] = STRFile(backupfile, stredf);
     }   // end for walking the STR files list
-//  qDebug() << "STRmap has" << STRmap.size{} << "entries";
+    qDebug() << "STRmap has" << STRmap.size() << "entries";
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
@@ -1649,6 +1649,8 @@ EDFduration getEDFDuration(const QString & filename)
     }
     if ( ! startDate.isValid() ) {
         qDebug() << "Invalid date time retreieved parsing EDF duration for" << filename;
+        qDebug() << "Time zone(Utc) is" << startDate.timeZone.abbreviation(QDateTime::currentDateTimeUtc());
+        qDebug() << "Time zone is" << startDate.timeZone.abbreviation(QDateTime::currentDateTime());
         return EDFduration(0, 0, filename);
     }
 
