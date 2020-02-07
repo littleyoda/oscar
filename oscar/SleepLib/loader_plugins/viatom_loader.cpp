@@ -297,10 +297,12 @@ bool ViatomFile::ParseHeader()
     //int spo2_avg = header[17];
     //int spo2_min = header[18];
     //int spo2_3pct = header[19];  // number of events
-    //int spo2_4pct = header[20];  // number of events
-    CHECK_VALUE(header[21], 0);
-    //int time_under_90pct = header[22];  // in seconds
-    CHECK_VALUE(header[23], 0);
+    int spo2_4pct = header[20];  // number of events
+    if (header[21] > spo2_4pct) {
+        //CHECK_VALUE(header[21], 0);  // sometimes nonzero; maybe spo2_5pct or something like that?
+        UNEXPECTED_VALUE(header[21], "< drops over 4%");
+    }
+    //int time_under_90pct = header[22] | (header[23] << 8);  // in seconds
     //int events_under_90pct = header[24];  // number of distinct events
     //float o2_score = header[25] * 0.1;
     CHECK_VALUE(header[26], 0);
