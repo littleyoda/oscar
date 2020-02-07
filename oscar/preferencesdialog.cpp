@@ -75,14 +75,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
 
     if (haveResMed) {
         profile->forceResmedPrefs();
-//        profile->session->setDaySplitTime(QTime(12,0,0));
-//        profile->session->setIgnoreShortSessions(0);
-//        profile->session->setCombineCloseSessions(0);
-//        profile->session->setLockSummarySessions(true);
-//        p_profile->general->setPrefCalcPercentile(95.0);    // 95%
-//        p_profile->general->setPrefCalcMiddle(0);           // Median (50%)
-//        p_profile->general->setPrefCalcMax(1);              // 99.9th percentile max
-//        p_profile->session->setBackupCardData(true);
         ui->sessionSplitWidget->setVisible(!haveResMed);
         ui->prefCalcMax->setEnabled(false);
         ui->prefCalcMiddle->setEnabled(false);
