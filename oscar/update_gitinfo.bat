@@ -1,29 +1,34 @@
 @echo off
 setlocal EnableDelayedExpansion
 set DIR=%~dp0
+:::set DIR=\oscar\oscar-code\oscar\
 cd %DIR%
 
-for /f %%i in ('git rev-parse --git-dir') do set GIT_DIR=%%i
-if "%GIT_DIR%"=="" goto GitDone
+:: Check git in path and git directory can be found
+where /Q git.exe
+if errorlevel 1 goto GitFail
 
-for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set GIT_BRANCH=%%i
-if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=""
-for /f %%i in ('git rev-parse --short HEAD') do set GIT_REVISION=%%i
-git diff-index --quiet HEAD --
-set GIT_INDEX=%errorlevel%
+git rev-parse --git-dir >nul 2>&1
+if errorlevel 1 goto GitFail
 
-if "%GIT_INDEX%"=="0" goto GitTag
+  for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set GIT_BRANCH=%%i
+  if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=""
+  for /f %%i in ('git rev-parse --short HEAD') do set GIT_REVISION=%%i
 
-set GIT_REVISION=%GIT_REVISION%-plus
-set GIT_TAG=
-goto GitDone
-
-:GitTag
-for /f %%i in ('git describe --exact-match --tags') do set GIT_TAG=%%i
-
+  git diff-index --quiet HEAD --
+  if %errorlevel%==0 goto GitTag
+    set GIT_REVISION=%GIT_REVISION%-plus
+    set GIT_TAG=
+    goto GitDone
+  :GitTag
+    for /f %%i in ('git describe --exact-match --tags') do set GIT_TAG=%%i
+    goto GitDone
+    
+:GitFail
+  set GIT_REVISION="private"
 :GitDone
 
-@echo Update_gtinfo.bat: GIT_DIR=%GIT_DIR%, GIT_BRANCH=%GIT_BRANCH%, GIT_REVISION=%GIT_REVISION%, GIT_TAG=%GIT_TAG%
+@echo Update_gtinfo.bat: GIT_BRANCH=%GIT_BRANCH%, GIT_REVISION=%GIT_REVISION%, GIT_TAG=%GIT_TAG%
 
 echo // This is an auto generated file > %DIR%git_info.new
 
@@ -37,9 +42,6 @@ if "%GIT_TAG%"=="" goto DefinesDone
   echo #define GIT_TAG "%GIT_TAG%" >> %DIR%git_info.new
 :DefinesDone
 
-:::type %DIR%git_info.new
-:::set
-
 fc %DIR%git_info.h %DIR%git_info.new 1>nul 2>nul && del /q %DIR%git_info.new || goto NewFile
 goto AllDone
 
@@ -48,3 +50,4 @@ echo Updating %DIR%git_info.h
 move /y %DIR%git_info.new %DIR%git_info.h
 
 :AllDone
+endlocal
