@@ -353,7 +353,17 @@ qint64 Profile::diskSpace()
     return (diskSpaceSummaries()+diskSpaceEvents()+diskSpaceBackups());
 }
 
-
+void Profile::forceResmedPrefs()
+{
+        session->setBackupCardData(true);
+        session->setDaySplitTime(QTime(12,0,0));
+        session->setIgnoreShortSessions(0);
+        session->setCombineCloseSessions(0);
+        session->setLockSummarySessions(true);
+        general->setPrefCalcPercentile(95.0);    // 95%
+        general->setPrefCalcMiddle(0);           // Median (50%)
+        general->setPrefCalcMax(1);              // 99.9th percentile max
+}
 
 #if defined(Q_OS_WIN)
 class Environment

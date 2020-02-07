@@ -360,6 +360,7 @@ int ResmedLoader::Open(const QString & dirpath)
         firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
+        p_profile->forceResmedPrefs();
         QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
         bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
         mach = p_profile->CreateMachine( info );
@@ -949,7 +950,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         //  if (ignoreOldSessions) {
                 if (date < firstImport) {
 #ifdef SESSION_DEBUG
-                   qDebug() << "Skipping" << date.toString() << "Before" << ignoreBefore.date().toString();
+                   qDebug() << "Skipping" << date.toString() << "Before" << firstImport.toString();
 #endif
                     continue;
                 }

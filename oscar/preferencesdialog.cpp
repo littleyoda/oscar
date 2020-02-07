@@ -52,12 +52,20 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     channeltype[schema::UNKNOWN] = tr("Always Minor");
     bool haveResMed = false;
     QList<Machine *> machines = profile->GetMachines(MT_CPAP);
-    for (QList<Machine *>::iterator it = machines.begin(); it != machines.end(); ++it) {
-        const QString & mclass=(*it)->loaderName();
-        if (mclass == STR_MACH_ResMed) {
-            haveResMed = true;
-            break;
+//  qDebug() << "Machile list size is" << machines.size();
+    if ( machines.size() > 0 ) {
+        for (QList<Machine *>::iterator it = machines.begin(); it != machines.end(); ++it) {
+            const QString & mclass=(*it)->loaderName();
+            if (mclass == STR_MACH_ResMed) {
+                haveResMed = true;
+                break;
+            }
         }
+    } else {
+        if (QMessageBox::question(this, tr("No CPAP machines detected"),
+                tr("Will you be using a ResMed brand machine?"),
+                QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes )
+            haveResMed = true;
     }
 
 #ifdef LOCK_RESMED_SESSIONS
@@ -66,21 +74,21 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->ResMedWarning->setVisible(haveResMed);
 
     if (haveResMed) {
+        profile->forceResmedPrefs();
+//        profile->session->setDaySplitTime(QTime(12,0,0));
+//        profile->session->setIgnoreShortSessions(0);
+//        profile->session->setCombineCloseSessions(0);
+//        profile->session->setLockSummarySessions(true);
+//        p_profile->general->setPrefCalcPercentile(95.0);    // 95%
+//        p_profile->general->setPrefCalcMiddle(0);           // Median (50%)
+//        p_profile->general->setPrefCalcMax(1);              // 99.9th percentile max
+//        p_profile->session->setBackupCardData(true);
         ui->sessionSplitWidget->setVisible(!haveResMed);
-        profile->session->setDaySplitTime(QTime(12,0,0));
-        profile->session->setIgnoreShortSessions(0);
-        profile->session->setCombineCloseSessions(0);
-        profile->session->setLockSummarySessions(true);
-        p_profile->general->setPrefCalcPercentile(95.0);    // 95%
-        p_profile->general->setPrefCalcMiddle(0);           // Median (50%)
-        p_profile->general->setPrefCalcMax(1);              // 99.9th percentile max
         ui->prefCalcMax->setEnabled(false);
         ui->prefCalcMiddle->setEnabled(false);
         ui->prefCalcPercentile->setEnabled(false);
         ui->showUnknownFlags->setEnabled(false);
         ui->calculateUnintentionalLeaks->setEnabled(false);
-
-        p_profile->session->setBackupCardData(true);
         ui->createSDBackups->setChecked(true);
         ui->createSDBackups->setEnabled(false);
 
