@@ -94,14 +94,6 @@ Profile::~Profile()
         removeLock();
     }
 
-    delete user;
-    delete doctor;
-    delete cpap;
-    delete oxi;
-    delete appearance;
-    delete session;
-    delete general;
-
     // delete machine objects...
     for (auto & mach : m_machlist) {
         delete mach;
@@ -111,6 +103,13 @@ Profile::~Profile()
         delete day;
     }
 
+    delete user;
+    delete doctor;
+    delete cpap;
+    delete oxi;
+    delete appearance;
+    delete session;
+    delete general;
 }
 
 bool Profile::Save(QString filename)
@@ -354,7 +353,17 @@ qint64 Profile::diskSpace()
     return (diskSpaceSummaries()+diskSpaceEvents()+diskSpaceBackups());
 }
 
-
+void Profile::forceResmedPrefs()
+{
+        session->setBackupCardData(true);
+        session->setDaySplitTime(QTime(12,0,0));
+        session->setIgnoreShortSessions(0);
+        session->setCombineCloseSessions(0);
+        session->setLockSummarySessions(true);
+        general->setPrefCalcPercentile(95.0);    // 95%
+        general->setPrefCalcMiddle(0);           // Median (50%)
+        general->setPrefCalcMax(1);              // 99.9th percentile max
+}
 
 #if defined(Q_OS_WIN)
 class Environment

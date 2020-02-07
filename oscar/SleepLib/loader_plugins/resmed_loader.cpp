@@ -360,10 +360,11 @@ int ResmedLoader::Open(const QString & dirpath)
 //      firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
+        p_profile->forceResmedPrefs();
+        mach = p_profile->CreateMachine( info );
     }
     QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
-    mach = p_profile->CreateMachine( info );
 
     if (ignoreOldSessions) 
         firstImportDay = ignoreBefore.date();
@@ -469,11 +470,9 @@ int ResmedLoader::Open(const QString & dirpath)
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         qDebug() << "Deleting edf of" << it.value().filename;
-//      sleep(1);
         delete it.value().edf;
     }
     qDebug() << "Finished STRmap cleanup";
-//  sleep(1);
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Create the backup folder for storing a copy of everything in..

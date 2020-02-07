@@ -66,7 +66,7 @@ public:
         unsigned char hr;
         unsigned char oximetry_invalid;
         unsigned char motion;
-        unsigned char _unk;
+        unsigned char vibration;
     };
     ViatomFile(QFile & file);
     ~ViatomFile() = default;

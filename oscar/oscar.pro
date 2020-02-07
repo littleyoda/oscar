@@ -488,7 +488,10 @@ QMAKE_CXXFLAGS += -Werror
 # Make deprecation warnings just warnings
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
-
+lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
+    QMAKE_CFLAGS += -Wno-error=strict-aliasing
+    QMAKE_CXXFLAGS += -Wno-error=strict-aliasing
+}
 
 # Create a debug GUI build by adding "CONFIG+=memdebug" to your qmake command
 memdebug {

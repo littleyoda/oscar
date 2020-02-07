@@ -57,6 +57,9 @@ class Profile : public Preferences
     qint64 diskSpaceBackups();
     qint64 diskSpace();
 
+    //! \brief Force some preferences for ResMed machines
+    virtual void forceResmedPrefs();
+
     //! \brief Returns hostname that locked profile, or empty string if unlocked
     QString checkLock();
 
