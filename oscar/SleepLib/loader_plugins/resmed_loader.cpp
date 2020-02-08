@@ -283,7 +283,8 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
 long event_cnt = 0;
 
 bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap );    // forward
-void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInfo info, QMap<QDate, STRFile> STRmap );  // forward
+void BackupSTRfiles( const QString strpath, const QString path, const QString strBackupPath,
+                        MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 int ResmedLoader::Open(const QString & dirpath)
 {
     QString datalogPath;
@@ -409,9 +410,11 @@ int ResmedLoader::Open(const QString & dirpath)
         dir.mkpath(strBackupPath);
 
     if ( ! importing_backups ) {
-        BackupSTRfiles( path, strBackupPath, info, STRmap );
+        BackupSTRfiles( strpath, path, strBackupPath, info, STRmap );
     }       // end if not importing the backup files
+#ifdef STR_DEBUG
     qDebug() << "STRmap size is " << STRmap.size();
+#endif
 
     // Now we open the REAL STR_Backup, and open the rest for later parsing
 
@@ -419,7 +422,9 @@ int ResmedLoader::Open(const QString & dirpath)
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
     QFileInfoList flist = dir.entryInfoList();
     QDate date;
+#ifdef STR_DEBUG
     qDebug() << "STR_Backup folder size is " << flist.size();
+#endif
 
     // Add any STR_Backup versions to the file list
     for (auto & fi : flist) {
@@ -459,7 +464,9 @@ int ResmedLoader::Open(const QString & dirpath)
 
         STRmap[date] = STRFile(fi.canonicalFilePath(), stredf);
     }       // end for walking the STR_Backup directory
+#ifdef STR_DEBUG
     qDebug() << "STRmap size is now " << STRmap.size();
+#endif
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Build a Date map of all records in STR.edf files, populating ResDayList
@@ -469,10 +476,14 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
+#ifdef STR_DEBUG
         qDebug() << "Deleting edf of" << it.value().filename;
+#endif
         delete it.value().edf;
     }
+#ifdef STR_DEBUG
     qDebug() << "Finished STRmap cleanup";
+#endif
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Create the backup folder for storing a copy of everything in..
@@ -905,8 +916,10 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         STRFile & file = it.value();
         ResMedEDFInfo & str = *file.edf;
         totalRecs += str.GetNumDataRecords();
+#ifdef STR_DEBUG        
         qDebug() << "STR file is" << file.filename;
         qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << totalRecs << "days";
+#endif
     }
 
     emit updateMessage(QObject::tr("Parsing STR.edf records..."));
@@ -924,11 +937,13 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         int size = str.GetNumDataRecords();
         QDate lastDay = date.addDays(size-1);
 
+#ifdef STR_DEBUG        
         qDebug() << "Parsing" << strfile << date.toString() << size << str.GetNumSignals();
         qDebug() << "Last day is" << lastDay;
+#endif
 
         if ( lastDay < firstImport ) {
-            qDebug() << "LastDay before firstImport, skipping" << file.filename;
+            qDebug() << "LastDay before firstImport, skipping" << strfile;
             continue;
         }
 
@@ -996,8 +1011,9 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
             rit = resdayList.insert(date, ResMedDay(date));
 
+#ifdef STR_DEBUG        
             qDebug() << "Setting up STRRecord for" << date.toString();
-//          sleep(1);
+#endif
             STRRecord &R = rit.value().str;
 
             uint noonstamp = QDateTime(date,QTime(12,0,0)).toTime_t();
@@ -1031,10 +1047,13 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             // (Sessions are forcibly split by resmed.. why the heck don't they store it that way???)
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
                 R.maskon[0] = noonstamp;
-            }       // TODO This should be last non-zero sample, not the last sample in the array
+            }
+            // TODO This should be last non-zero sample, not the last sample in the array
                     // DONE
-            if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
-                R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
+            if ( (lastOn >= 0) && (lastOff >= 0) ) {
+                if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
+                    R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
+                }
             }
 
             R.maskevents = maskeventcount->dataArray[rec];
@@ -1377,12 +1396,14 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
+#ifdef STR_DEBUG
             qDebug() << "Finished" << date.toString();
-//          sleep(1);
+#endif
         }
     }
+#ifdef STR_DEBUG
     qDebug() << "Finished ProcessSTR";
-//  sleep(3);
+#endif
 }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -1412,9 +1433,9 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
     return true;
 }
 
-void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInfo info, QMap<QDate, STRFile> STRmap ) {
-
-    QString strpath = path + RMS9_STR_strfile + STR_ext_EDF; // STR.edf file
+void BackupSTRfiles( const QString strpath, const QString path, const QString strBackupPath, 
+                    MachineInfo & info, QMap<QDate, STRFile> & STRmap )
+{
     QStringList strfiles;
     // add primary STR.edf
     strfiles.push_back(strpath);
@@ -1434,6 +1455,9 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
             continue;
         strfiles.push_back(fi.canonicalFilePath());
     }
+#ifdef STR_DEBUG
+    qDebug() << "STR file list size is" << strfiles.size();
+#endif
 
     // Now place any of these files in the Backup folder sorted by the file date
     for (auto & filename : strfiles) {
@@ -1471,6 +1495,9 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
         backupfile = compress_backups ? gzfile : nongzfile;
 
         if ( ! QFile::exists(backupfile)) {
+#ifdef STR_DEBUG
+            qDebug() << "Copying" << filename << "to" << backupfile;
+#endif
             if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
                 if (compress_backups) {                 // fine, copy it to backup folder
                     QFile::copy(filename, backupfile);
@@ -1493,7 +1520,9 @@ void BackupSTRfiles( const QString path, const QString strBackupPath, MachineInf
 
         STRmap[date] = STRFile(backupfile, stredf);
     }   // end for walking the STR files list
+#ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
+#endif
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
@@ -1648,8 +1677,8 @@ EDFduration getEDFDuration(const QString & filename)
     }
     if ( ! startDate.isValid() ) {
         qDebug() << "Invalid date time retreieved parsing EDF duration for" << filename;
-        qDebug() << "Time zone(Utc) is" << startDate.timeZone.abbreviation(QDateTime::currentDateTimeUtc());
-        qDebug() << "Time zone is" << startDate.timeZone.abbreviation(QDateTime::currentDateTime());
+        qDebug() << "Time zone(Utc) is" << startDate.timeZone().abbreviation(QDateTime::currentDateTimeUtc());
+        qDebug() << "Time zone is" << startDate.timeZone().abbreviation(QDateTime::currentDateTime());
         return EDFduration(0, 0, filename);
     }
 
