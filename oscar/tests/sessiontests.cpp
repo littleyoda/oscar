@@ -148,6 +148,15 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_EPAPSet);
         CHANNELNAME(POS_Movement);
         CHANNELNAME(ZEO_SleepStage);
+        // Resmed-specific channels
+        CHANNELNAME(CPAP_Apnea);
+        CHANNELNAME(CPAP_MaskPressure);
+        CHANNELNAME(CPAP_Te);
+        CHANNELNAME(CPAP_Ti);
+        CHANNELNAME(CPAP_IE);
+        CHANNELNAME(CPAP_FLG);
+        CHANNELNAME(CPAP_AHI);
+        CHANNELNAME(CPAP_TgMV);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);

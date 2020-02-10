@@ -1,18 +1,19 @@
 /* ResMed Unit Tests
  *
- * Copyright (c) 2019 The OSCAR Team
+ * Copyright (c) 2019-2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
 #include "resmedtests.h"
-//#include "sessiontests.h"
+#include "sessiontests.h"
 
 #define TESTDATA_PATH "./testdata/"
 
 static ResmedLoader* s_loader = nullptr;
 static void iterateTestCards(const QString & root, void (*action)(const QString &));
+static QString resmedOutputPath(const QString & inpath, int session, const QString & suffix);
 
 void ResmedTests::initTestCase(void)
 {
@@ -38,18 +39,24 @@ void ResmedTests::cleanupTestCase(void)
 
 // ====================================================================================================
 
+static QString s_currentPath;
+
+static void emitSessionYaml(ResmedLoader* /*loader*/, Session* session)
+{
+    // Emit the parsed session data to compare against our regression benchmarks
+    QString outpath = resmedOutputPath(s_currentPath, session->session(), "-session.yml");
+    SessionToYaml(outpath, session, true);
+}
 
 static void parseAndEmitSessionYaml(const QString & path)
 {
     qDebug() << path;
 
-    // This blindly calls ResmedLoader::Open() so that we can run address and
-    // leak sanitizers against the ResMed loader.
-    //
-    // Once the ResMed loader is refactored support importing without writing
-    // to the database, this can be updated to pass the imported Session objects
-    // to SessionToYaml like the PRS1 tests do.
-    s_loader->Open(path);
+    // TODO: Refactor Resmed so that passing callbacks and using static globals isn't
+    // necessary for testing. Both are used for now in order to introduce the minimal
+    // set of changes into the Resmed loader needed for testing.
+    s_currentPath = path;
+    s_loader->Open(path, emitSessionYaml);
 }
 
 void ResmedTests::testSessionsToYaml()
@@ -59,6 +66,22 @@ void ResmedTests::testSessionsToYaml()
 
 
 // ====================================================================================================
+
+QString resmedOutputPath(const QString & inpath, int session, const QString & suffix)
+{
+    // Output to resmed/output/FOLDER/000000(-session.yml, etc.)
+    QDir path(inpath);
+    QStringList pathlist = QDir::toNativeSeparators(inpath).split(QDir::separator(), QString::SkipEmptyParts);
+    QString foldername = pathlist.last();
+
+    QDir outdir(TESTDATA_PATH "resmed/output/" + foldername);
+    outdir.mkpath(".");
+    
+    QString filename = QString("%1%2")
+                        .arg(session)
+                        .arg(suffix);
+    return outdir.path() + QDir::separator() + filename;
+}
 
 void iterateTestCards(const QString & root, void (*action)(const QString &))
 {
