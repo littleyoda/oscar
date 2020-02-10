@@ -331,8 +331,8 @@ bool Machine::AddSession(Session *s)
 
     int ignore_sessions = profile->session->ignoreShortSessions();
 
-    int session_length = s->last() - s->first();
-    session_length /= 60000;
+    qint64 session_length = s->last() - s->first();
+    session_length /= 60000L;
 
     sessionlist[s->session()] = s; // To make sure it get's saved later even if it's not wanted.
 
@@ -386,7 +386,8 @@ bool Machine::AddSession(Session *s)
 
     if (session_length < ignore_sessions) {
         // keep the session to save importing it again, but don't add it to the day record this time
-        qDebug() << s->session() << "Ignoring short session";
+        qDebug() << s->session() << "Ignoring short session <" << ignore_sessions
+            << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
         return true;
     }
 

@@ -128,7 +128,8 @@ void Day::addSession(Session *s)
         if (sess->session() == s->session() && sess->type() == s->type()) {
             // This usually indicates a problem in purging or cleanup somewhere,
             // unless there's a problem with a parser.
-            qCritical() << "Day object" << this->date().toString() << "adding duplicate session" << s->session();
+            qCritical() << "Day object" << this->date().toString() << "adding duplicate session" << s->session()
+                     << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
             // Don't skip this one, since it might have replaced the original elsewhere already.
             //return;
         }
