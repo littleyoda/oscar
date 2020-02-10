@@ -60,13 +60,11 @@ bool EDFInfo::Open(const QString & name)
 {
     if (hdrPtr != nullptr) {
         qWarning() << "EDFInfo::Open() called with file already open " << name;
-        sleep(1);
         return false;
     }
     QFile fi(name);
     if (!fi.open(QFile::ReadOnly)) {
         qDebug() << "EDFInfo::Open() Couldn't open file " << name;
-        sleep(1);
         return false;
     }
 //    fileData = new QByteArray();
@@ -79,7 +77,6 @@ bool EDFInfo::Open(const QString & name)
     if (fileData.size() <= EDFHeaderSize) {
     	fileData.clear();;
         qDebug() << "EDFInfo::Open() File too short " << name;
-        sleep(1);
         return false;
     }
     filename = name;
