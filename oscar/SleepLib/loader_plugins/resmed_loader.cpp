@@ -440,12 +440,12 @@ int ResmedLoader::Open(const QString & dirpath)
             continue;
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
-        if ( stredf->Open(fi.canonicalFilePath() ) ) {
-            qDebug() << "Failed to open" << filename;
+        if ( ! stredf->Open(fi.canonicalFilePath() ) ) {
+            qDebug() << "Failed to open" << fi.canonicalFilePath();
             delete stredf;
             continue;
         }
-        if (!stredf->Parse()) {
+        if ( ! stredf->Parse()) {
             qDebug() << "Faulty STR file" << filename;
             delete stredf;
             continue;
@@ -1016,7 +1016,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 #endif
             STRRecord &R = rit.value().str;
 
-            uint noonstamp = QDateTime(date,QTime(12,0,0)).toTime_t();
+            uint noonstamp = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).toTime_t();
             R.date = date;
 
             // skipday = false;
@@ -1052,7 +1052,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     // DONE
             if ( (lastOn >= 0) && (lastOff >= 0) ) {
                 if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
-                    R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0)).addDays(1).toTime_t() - 1;
+                    R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).addDays(1).toTime_t() - 1;
                 }
             }
 
@@ -1623,6 +1623,7 @@ EDFduration getEDFDuration(const QString & filename)
         QByteArray bytes = file.read(16).trimmed();
 //      We'll fix the xx85 problem below
 //      startDate = QDateTime::fromString(QString::fromLatin1(bytes, 16), "dd.MM.yyHH.mm.ss");
+//      getStartDT ought to be named getStartNoDST ... TODO someday
         startDate = EDFInfo::getStartDT(QString::fromLatin1(bytes,16));
 
         if (!file.seek(0xec)) {
@@ -1930,6 +1931,7 @@ void ResDayTask::run()
                 mach->AddSession(sess);
                 loader->sessionCount++;
                 loader->sessionMutex.unlock();
+//              delete sess;
             }
         }
         return;
@@ -1948,7 +1950,8 @@ void ResDayTask::run()
     if (resday->str.date.isValid()) {
         //First populate Overlaps with Mask ON/OFF events
         for (int i=0; i < maskOnSize; ++i) {
-            if ((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) {
+            if (((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) 
+                    && (resday->str.maskon[i] != resday->str.maskoff[i]) ) {
                 OverlappingEDF ov;
                 ov.start = resday->str.maskon[i];
                 ov.end = resday->str.maskoff[i];
@@ -1966,7 +1969,10 @@ void ResDayTask::run()
         EDFType type = lookupEDFType(filename);
 
         QString datestr = filename.section("_", 0, 1);
-        QDateTime filetime = QDateTime().fromString(datestr,"yyyyMMdd_HHmmss");
+//      QDateTime filetime = QDateTime().fromString(datestr,"yyyyMMdd_HHmmss");
+        QDate d2 = QDate::fromString( datestr.left(8), "yyyyMMdd");
+        QTime t2 = QTime::fromString( datestr.right(6), "hhmmss");
+        QDateTime filetime = QDateTime( d2, t2, EDFInfo::localNoDST );
 
         quint32 filetime_t = filetime.toTime_t();
         if (type == EDF_EVE) {      // skip the EVE and CSL files, b/c they often cover all sessions
@@ -2055,12 +2061,13 @@ void ResDayTask::run()
         if (ovr.filemap.size() == 0)
             continue;
         Session * sess = new Session(mach, ovr.start);
+        sess->set_first(quint64(ovr.start)*1000L);
+        sess->set_last(quint64(ovr.end)*1000L);
         ovr.sess = sess;
 
         for (auto mit=ovr.filemap.begin(), mend=ovr.filemap.end(); mit != mend; ++mit) {
             const QString & filename = mit.value();
             const QString & fullpath = resday->files[filename];
-//            QString ext = filename.section("_", -1).section(".",0,0).toUpper();
             EDFType type = lookupEDFType(filename);
 
 #ifdef SESSION_DEBUG
@@ -2107,8 +2114,15 @@ void ResDayTask::run()
         if (sess->length() == 0) {
             // we want empty sessions even though they are crap
             qDebug() << "Session" << sess->session()
-            << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
-            << "has zero duration";
+                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "has zero duration";
+        }
+        if (sess->length() < 0) {
+            // we want empty sessions even though they are crap
+            qDebug() << "Session" << sess->session()
+                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "has negative duration";
+            qDebug() << "Start:" << sess->realFirst() << "End:" << sess->realLast();
         }
 
         if (resday->str.date.isValid()) {
@@ -2183,6 +2197,7 @@ void ResDayTask::run()
 
         // Free the memory used by this session
         sess->TrashEvents();
+//      delete sess;
     }   // end for-loop walking the overlaps (file groups per session
 }
 
