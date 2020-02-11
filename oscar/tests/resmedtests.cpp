@@ -18,6 +18,7 @@ static QString resmedOutputPath(const QString & inpath, int session, const QStri
 void ResmedTests::initTestCase(void)
 {
     p_profile = new Profile(TESTDATA_PATH "profile/", false);
+    p_profile->session->setBackupCardData(false);
 
     p_pref = new Preferences("Preferences");
     p_pref->Open();
