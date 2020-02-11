@@ -1,5 +1,6 @@
-﻿/* SleepLib RESMED Loader Header
+/* SleepLib RESMED Loader Header
  *
+ * Copyright (c) 2019-2020 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -37,10 +38,12 @@ public:
     QHash<QString, QString> files;  // key is filename, value is fullpath
 };
 
+typedef void (*ResDaySaveCallback)(ResmedLoader* loader, Session* session);
+
 class ResDayTask:public ImportTask
 {
 public:
-    ResDayTask(ResmedLoader * l, Machine * m, ResMedDay * d): reimporting(false), loader(l), mach(m), resday(d) {}
+    ResDayTask(ResmedLoader * l, Machine * m, ResMedDay * d, ResDaySaveCallback s): reimporting(false), loader(l), mach(m), resday(d), save(s) {}
     virtual ~ResDayTask() {}
     virtual void run();
 
@@ -50,6 +53,7 @@ protected:
     ResmedLoader * loader;
     Machine * mach;
     ResMedDay * resday;
+    ResDaySaveCallback save;
 };
 
 /*! \class ResmedLoader
@@ -128,6 +132,9 @@ class ResmedLoader : public CPAPLoader
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     volatile int sessionCount;
+    static void SaveSession(ResmedLoader* loader, Session* session);
+    ResDaySaveCallback saveCallback;
+    int Open(const QString & dirpath, ResDaySaveCallback s);
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals

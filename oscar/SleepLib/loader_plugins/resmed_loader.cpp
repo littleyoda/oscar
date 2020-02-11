@@ -56,6 +56,7 @@ ResmedLoader::ResmedLoader() {
     timeInTimeDelta = timeInLoadBRP = timeInLoadPLD = timeInLoadEVE = 0;
     timeInLoadCSL = timeInLoadSAD = timeInEDFInfo = timeInEDFOpen = timeInAddWaveform = 0;
 
+    saveCallback = SaveSession;
 }
 
 ResmedLoader::~ResmedLoader() { }
@@ -285,6 +286,16 @@ long event_cnt = 0;
 bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap );    // forward
 void BackupSTRfiles( const QString strpath, const QString path, const QString strBackupPath,
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
+
+int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)                       // alternate for unit testing
+{
+    ResDaySaveCallback origCallback = saveCallback;
+    saveCallback = s;
+    int value = Open(dirpath);
+    saveCallback = origCallback;
+    return value;
+}
+
 int ResmedLoader::Open(const QString & dirpath)
 {
     QString datalogPath;
@@ -647,7 +658,7 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
             return;
     }
 
-    ResDayTask * rdt = new ResDayTask(this, mach, &resday);
+    ResDayTask * rdt = new ResDayTask(this, mach, &resday, saveCallback);
     rdt->reimporting = reimporting;
     queTask(rdt);
 }
@@ -1926,12 +1937,14 @@ void ResDayTask::run()
                 sess->setSummaryOnly(true);
                 sess->SetChanged(true);
 
-                loader->sessionMutex.lock();
-                sess->Store(mach->getDataPath());
-                mach->AddSession(sess);
-                loader->sessionCount++;
-                loader->sessionMutex.unlock();
-//              delete sess;
+//                loader->sessionMutex.lock();          // This chunk moved into SaveSession below
+//                sess->Store(mach->getDataPath());
+//                mach->AddSession(sess);
+//                loader->sessionCount++;
+//                loader->sessionMutex.unlock();
+////              delete sess;
+
+                save(loader, sess);                     // This is aliased to SaveSession - unless testing
             }
         }
         return;
@@ -2189,16 +2202,23 @@ void ResDayTask::run()
        // loader->saveMutex.lock();
        // loader->saveMutex.unlock();
 
-        loader->sessionMutex.lock();
-        sess->Store(mach->getDataPath());
-        mach->AddSession(sess);  // AddSession definitely ain't threadsafe.
-        loader->sessionCount++;
-        loader->sessionMutex.unlock();
+        save(loader, sess);
 
         // Free the memory used by this session
         sess->TrashEvents();
 //      delete sess;
     }   // end for-loop walking the overlaps (file groups per session
+}
+
+void ResmedLoader::SaveSession(ResmedLoader* loader, Session* sess)
+{
+    Machine* mach = sess->machine();
+
+    loader->sessionMutex.lock();
+    sess->Store(mach->getDataPath());
+    mach->AddSession(sess);  // AddSession definitely ain't threadsafe.
+    loader->sessionCount++;
+    loader->sessionMutex.unlock();
 }
 
 bool matchSignal(ChannelID ch, const QString & name);		// forward
