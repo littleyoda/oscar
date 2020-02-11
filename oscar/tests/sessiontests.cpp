@@ -55,6 +55,10 @@ static QString eventListTypeName(EventListType t)
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
 extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
 
+extern ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
+         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
+         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable;
+
 static QString settingChannel(ChannelID i)
 {
     QString s;
@@ -100,6 +104,20 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(ZEO_TimeInDeep);
         CHANNELNAME(ZEO_TimeToZ);
         CHANNELNAME(ZEO_ZQ);
+        // Resmed-specific channels
+        CHANNELNAME(RMS9_EPR);
+        CHANNELNAME(RMS9_EPRLevel);
+        CHANNELNAME(RMS9_Mode);
+        CHANNELNAME(RMS9_SmartStart);
+        CHANNELNAME(RMS9_HumidStatus);
+        CHANNELNAME(RMS9_HumidLevel);
+        CHANNELNAME(RMS9_Temp);
+        CHANNELNAME(RMS9_TempEnable);
+        CHANNELNAME(RMS9_ABFilter);
+        CHANNELNAME(RMS9_PtAccess);
+        CHANNELNAME(RMS9_ClimateControl);
+        CHANNELNAME(RMS9_Mask);
+        CHANNELNAME(RMS9_RampEnable);
         s = hex(i);
         qDebug() << "setting channel" << qPrintable(s);
     } while(false);
