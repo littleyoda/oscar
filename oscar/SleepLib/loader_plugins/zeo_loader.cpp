@@ -95,7 +95,11 @@ int ZEOLoader::OpenFile(const QString & filename)
         mach->AddSession(sess);
         count++;
     }
-    mach->Save();
+    if (count > 0) {
+        mach->Save();
+        mach->SaveSummaryCache();
+        p_profile->StoreMachines();
+    }
     closeCSV();
     return count;
 }
