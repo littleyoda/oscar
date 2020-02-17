@@ -255,6 +255,17 @@ int main(int argc, char* argv[])
 
 #else
 
+bool shiftKeyPressedAtLaunch(int argc, char *argv[])
+{
+    // Reliably detecting the shift key requires a QGuiApplication instance, but
+    // we need to create the real QApplication afterwards, so create a temporary
+    // instance here.
+    QGuiApplication* app = new QGuiApplication(argc, argv);
+    Qt::KeyboardModifiers keymodifier = QGuiApplication::queryKeyboardModifiers();
+    delete app;
+    return keymodifier == Qt::ShiftModifier;
+}
+
 int main(int argc, char *argv[]) {
 
     QString homeDocs = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/";
@@ -265,9 +276,8 @@ int main(int argc, char *argv[]) {
     QSettings settings;
 
     // If shift key was held down when OSCAR was launched, force Software graphics Engine (aka LegacyGFX)
-    Qt::KeyboardModifiers keymodifier = QApplication::keyboardModifiers();
     QString forcedEngine = "";
-    if (keymodifier == Qt::ShiftModifier){
+    if (shiftKeyPressedAtLaunch(argc, argv)){
         settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
         forcedEngine = "Software Engine forced by shift key at launch";
     }
