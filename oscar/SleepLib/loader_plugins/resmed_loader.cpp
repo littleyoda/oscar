@@ -368,6 +368,7 @@ int ResmedLoader::Open(const QString & dirpath)
     Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
+        mach->setInfo( info );                      // update info
 //      QDate lastDate = p_profile->LastDay(MT_CPAP);
 //      firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
