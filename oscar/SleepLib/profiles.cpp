@@ -566,10 +566,11 @@ void Profile::DataFormatError(Machine *m)
         // Note: I deliberately haven't added a Profile help for this
         if (backups) {
             MachineLoader * loader = lookupLoader(m);
-            int c = mainwin->importCPAP(ImportPath(m->getBackupPath(), loader),
-                           QObject::tr("Rebuilding from %1 Backup").arg(m->brand()));
-            if ( c > 0 )
-                m->info.version = loader->Version();
+            /* int c = */  
+            mainwin->importCPAP(ImportPath(m->getBackupPath(), loader),
+                                QObject::tr("Rebuilding from %1 Backup").arg(m->brand()));
+//          if ( c > 0 )
+//              m->info.version = loader->Version();
         } else {
             if (!p_profile->session->backupCardData()) {
                 // Automatic backups not available for Intellipap users yet, so don't taunt them..
