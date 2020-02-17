@@ -25,7 +25,6 @@ if errorlevel 1 goto GitFail
     goto GitDone
     
 :GitFail
-  set GIT_REVISION="private"
 :GitDone
 
 @echo Update_gtinfo.bat: GIT_BRANCH=%GIT_BRANCH%, GIT_REVISION=%GIT_REVISION%, GIT_TAG=%GIT_TAG%

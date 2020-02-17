@@ -1064,35 +1064,17 @@ void MainWindow::importCPAPDataCards(const QList<ImportPath> & datacards)
 {
     bool newdata = false;
 
-//    QStringList goodlocations;
-
-    ProgressDialog * prog = new ProgressDialog(this);
-    prog->setMessage(tr("Processing import list..."));
-    prog->addAbortButton();
-    prog->setWindowModality(Qt::ApplicationModal);
-
-    prog->open();
-
     int c = -1;
     for (int i = 0; i < datacards.size(); i++) {
         QString dir = datacards[i].path;
         MachineLoader * loader = datacards[i].loader;
         if (!loader) continue;
-        connect(loader, SIGNAL(updateMessage(QString)), prog, SLOT(setMessage(QString)));
-        connect(loader, SIGNAL(setProgressMax(int)), prog, SLOT(setProgressMax(int)));
-        connect(loader, SIGNAL(setProgressValue(int)), prog, SLOT(setProgressValue(int)));
-        connect(prog, SIGNAL(abortClicked()), loader, SLOT(abortImport()));
-
-        QPixmap image = loader->getPixmap(loader->PeekInfo(dir).series);
-        image = image.scaled(64,64);
-        prog->setPixmap(image);
 
         if (!dir.isEmpty()) {
             c = importCPAP(datacards[i], tr("Importing Data"));
             qDebug() << "Finished Importing data" << c;
 
             if (c >= 0) {
-            //    goodlocations.push_back(dir);
                 QDir d(dir.section("/",0,-1));
                 (*p_profile)[STR_PREF_LastCPAPPath] = d.absolutePath();
             }
@@ -1101,19 +1083,12 @@ void MainWindow::importCPAPDataCards(const QList<ImportPath> & datacards)
                 newdata = true;
             }
         }
-        disconnect(prog, SIGNAL(abortClicked()), loader, SLOT(abortImport()));
-        disconnect(loader, SIGNAL(setProgressMax(int)), prog, SLOT(setProgressMax(int)));
-        disconnect(loader, SIGNAL(setProgressValue(int)), prog, SLOT(setProgressValue(int)));
-        disconnect(loader, SIGNAL(updateMessage(QString)), prog, SLOT(setMessage(QString)));
     }
 
     if (newdata)  {
         finishCPAPImport();
         PopulatePurgeMenu();
     }
-
-    prog->close();
-    prog->deleteLater();
 }
 
 
@@ -1352,12 +1327,14 @@ void MainWindow::on_action_Reset_Graph_Layout_triggered()
     if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphLayout(); }
 }
 
+/*
 void MainWindow::on_action_Reset_Graph_Order_triggered()
 {
     if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(0); }
 
     if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(0); }
 }
+*/
 
 void MainWindow::on_action_Standard_Graph_Order_triggered()
 {
@@ -1442,14 +1419,14 @@ void MainWindow::CheckForUpdates()
 #endif
 }
 
+#ifndef NO_UPDATER
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     qDebug() << "procedure <on_actionCheck_for_Updates_triggered> called";
-#ifndef NO_UPDATER
     UpdaterWindow *w = new UpdaterWindow(this);
     w->checkForUpdates();
-#endif
 }
+#endif
 
 bool toolbox_visible = false;
 void MainWindow::on_action_Screenshot_triggered()
@@ -2424,11 +2401,13 @@ void MainWindow::on_actionSleep_Disorder_Terms_Glossary_triggered()
         QDesktopServices::openUrl(QUrl("https://www.apneaboard.com/wiki/index.php?title=Definitions"));
 }
 
+/*
 void MainWindow::on_actionHelp_Support_OSCAR_Development_triggered()
 {
 //    QDesktopServices().openUrl(QUrl("https://sleepyhead.jedimark.net/donate.php"));
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Donations are not implemented"));
 }
+*/
 
 void MainWindow::on_actionChange_Language_triggered()
 {
@@ -2485,6 +2464,10 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
     w.setNameFilters(viatom.getNameFilter());
+#if defined(Q_OS_WIN)
+    // Windows can't handle this name filter.
+    w.setOption(QFileDialog::DontUseNativeDialog, true);
+#endif
 
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];

@@ -3,6 +3,10 @@
 ;
 ; See DEPLOY.BAT for documentation on how this is used to build OSCAR installer 
 
+#define MyGitRevision "unreleased"
+#define MyReleaseStatus ""
+#define MyVersionNumbers "0.0.0.0"
+
 #include "buildinfo.iss"
 
 #define MyAppPublisher "The OSCAR Team"

@@ -264,16 +264,37 @@ int main(int argc, char *argv[]) {
 
     QSettings settings;
 
-    QApplication a(argc, argv);
-    QStringList args = a.arguments();
-
     // If shift key was held down when OSCAR was launched, force Software graphics Engine (aka LegacyGFX)
-    Qt::KeyboardModifiers keymodifier = QApplication::queryKeyboardModifiers();
+    Qt::KeyboardModifiers keymodifier = QApplication::keyboardModifiers();
     QString forcedEngine = "";
     if (keymodifier == Qt::ShiftModifier){
         settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
         forcedEngine = "Software Engine forced by shift key at launch";
     }
+    // This argument needs to be processed before creating the QApplication,
+    // based on sample code at https://doc.qt.io/qt-5/qapplication.html#details
+    for (int i = 1; i < argc; ++i) {
+        if (!qstrcmp(argv[i], "--legacy")) {
+            settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
+            forcedEngine = "Software Engine forced by --legacy command line switch";
+        }
+    }
+    GFXEngine gfxEngine = (GFXEngine)qMin((unsigned int)settings.value(GFXEngineSetting, (unsigned int)GFX_OpenGL).toUInt(), (unsigned int)MaxGFXEngine);
+    switch (gfxEngine) {
+    case 0:  // GFX_OpenGL
+        QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+        break;
+    case 1:  // GFX_ANGLE
+        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+        break;
+    case 2:  // GFX_Software
+    default:
+        QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+    }
+
+    QApplication a(argc, argv);
+    QStringList args = a.arguments();
+
 
     QString lastlanguage = settings.value(LangSetting, "").toString();
     if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'
@@ -296,10 +317,7 @@ int main(int argc, char *argv[]) {
             changing_language = true; // reset to force language dialog
             settings.setValue(LangSetting,"");
         }
-        else if (args[i] == "--legacy") {
-            settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
-            forcedEngine = "Software Engine forced by --legacy command line switch";
-        }
+        // "--legacy" is handle above, as it needs to be processed before creating QApplication.
         else if (args[i] == "-p")
             QThread::msleep(1000);
         else if (args[i] == "--profile") {
@@ -324,22 +342,13 @@ int main(int argc, char *argv[]) {
         }
     }   // end of for args loop
 
-
-    GFXEngine gfxEngine = (GFXEngine)qMin((unsigned int)settings.value(GFXEngineSetting, (unsigned int)GFX_OpenGL).toUInt(), (unsigned int)MaxGFXEngine);
-
-    switch (gfxEngine) {
-    case 0:
-        QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-        break;
-    case 1:
-        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-        break;
-    case 2:
-    default:
-        QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
-    }
-
     initializeLogger();
+    // After initializing the logger, any qDebug() messages will be queued but not written to console
+    // until MainWindow is constructed below. In spite of that, we initialize the logger here so that
+    // the intervening messages to show up in the debug pane.
+    //
+    // The only time this is really noticeable is when initTranslations() presents its language
+    // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
 
     qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
 

@@ -368,6 +368,7 @@ int ResmedLoader::Open(const QString & dirpath)
     Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
+        mach->setInfo( info );                      // update info
 //      QDate lastDate = p_profile->LastDay(MT_CPAP);
 //      firstImportDay = lastDate.addDays(-1);
     } else {            // Starting from new beginnings - new or purged
@@ -483,7 +484,10 @@ int ResmedLoader::Open(const QString & dirpath)
     // Build a Date map of all records in STR.edf files, populating ResDayList
     ///////////////////////////////////////////////////////////////////////////////////
 
-    ProcessSTRfiles(mach, STRmap, firstImportDay);
+    if ( ! ProcessSTRfiles(mach, STRmap, firstImportDay) ) {
+        qCritical() << "ProcessSTR failed, abandoning this import";
+        return -1;
+    }
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
@@ -915,7 +919,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
 
 
 // This function parses a list of STR files and creates a date ordered map of individual records
-void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate firstImport)
+bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate firstImport)
 {
     Q_UNUSED(mach)
 
@@ -970,6 +974,10 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         EDFSignal *maskeventcount = str.lookupLabel("Mask Events");
         if (!maskeventcount) {
              maskeventcount = str.lookupLabel("MaskEvents");
+        }
+        if ( !maskon || !maskoff || !maskeventcount ) {
+            qCritical() << "Corrupt or untranslated STR.edf file";
+            return false;
         }
 
         EDFSignal *sig = nullptr;
@@ -1415,6 +1423,7 @@ void ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 #ifdef STR_DEBUG
     qDebug() << "Finished ProcessSTR";
 #endif
+    return true;
 }
 
     ///////////////////////////////////////////////////////////////////////////////////

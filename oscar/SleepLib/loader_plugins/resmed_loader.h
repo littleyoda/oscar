@@ -138,7 +138,7 @@ class ResmedLoader : public CPAPLoader
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals
-    void ProcessSTRfiles(Machine *, QMap<QDate, STRFile> &, QDate);
+    bool ProcessSTRfiles(Machine *, QMap<QDate, STRFile> &, QDate);
 
     //! \brief Scan for new files to import, group into sessions and add to task que
     int ScanFiles(Machine * mach, const QString & datalog_path, QDate firstImport);
