@@ -2460,6 +2460,10 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
     w.setNameFilters(viatom.getNameFilter());
+#if defined(Q_OS_WIN)
+    // Windows can't handle this name filter.
+    w.setOption(QFileDialog::DontUseNativeDialog, true);
+#endif
 
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
