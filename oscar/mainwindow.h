@@ -214,7 +214,7 @@ class MainWindow : public QMainWindow
     void on_action_Reset_Graph_Layout_triggered();
 
     //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
-    void on_action_Reset_Graph_Order_triggered();
+    //void on_action_Reset_Graph_Order_triggered();
 
     //! \brief passes the ResetGraphOrder menu click to the Daily & Overview views
     void on_action_Standard_Graph_Order_triggered();
@@ -229,7 +229,9 @@ class MainWindow : public QMainWindow
     void on_oximetryButton_clicked();
 
     //! \brief Creates the UpdaterWindow object that actually does the real check for updates
+#ifndef NO_UPDATER
     void on_actionCheck_for_Updates_triggered();
+#endif
 
     //! \brief Attempts to do a screenshot of the application window
     void on_action_Screenshot_triggered();
@@ -287,7 +289,7 @@ class MainWindow : public QMainWindow
 
     void on_actionSleep_Disorder_Terms_Glossary_triggered();
 
-    void on_actionHelp_Support_OSCAR_Development_triggered();
+    //void on_actionHelp_Support_OSCAR_Development_triggered();
 
     void aboutBoxLinkClicked(const QUrl &url);
 

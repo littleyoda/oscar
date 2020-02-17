@@ -1327,12 +1327,14 @@ void MainWindow::on_action_Reset_Graph_Layout_triggered()
     if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphLayout(); }
 }
 
+/*
 void MainWindow::on_action_Reset_Graph_Order_triggered()
 {
     if (daily && (ui->tabWidget->currentWidget() == daily)) { daily->ResetGraphOrder(0); }
 
     if (overview && (ui->tabWidget->currentWidget() == overview)) { overview->ResetGraphOrder(0); }
 }
+*/
 
 void MainWindow::on_action_Standard_Graph_Order_triggered()
 {
@@ -1417,14 +1419,14 @@ void MainWindow::CheckForUpdates()
 #endif
 }
 
+#ifndef NO_UPDATER
 void MainWindow::on_actionCheck_for_Updates_triggered()
 {
     qDebug() << "procedure <on_actionCheck_for_Updates_triggered> called";
-#ifndef NO_UPDATER
     UpdaterWindow *w = new UpdaterWindow(this);
     w->checkForUpdates();
-#endif
 }
+#endif
 
 bool toolbox_visible = false;
 void MainWindow::on_action_Screenshot_triggered()
@@ -2399,11 +2401,13 @@ void MainWindow::on_actionSleep_Disorder_Terms_Glossary_triggered()
         QDesktopServices::openUrl(QUrl("https://www.apneaboard.com/wiki/index.php?title=Definitions"));
 }
 
+/*
 void MainWindow::on_actionHelp_Support_OSCAR_Development_triggered()
 {
 //    QDesktopServices().openUrl(QUrl("https://sleepyhead.jedimark.net/donate.php"));
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Donations are not implemented"));
 }
+*/
 
 void MainWindow::on_actionChange_Language_triggered()
 {
