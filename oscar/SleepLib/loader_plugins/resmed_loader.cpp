@@ -485,7 +485,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
     if ( ! ProcessSTRfiles(mach, STRmap, firstImportDay) ) {
         qCritical() << "ProcessSTR failed, abandoning this import";
-        return 0;
+        return -1;
     }
 
     // We are done with the Parsed STR EDF objects, so delete them
