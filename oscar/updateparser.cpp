@@ -1,4 +1,4 @@
-﻿/* UpdateParser Implementation (Autoupdater component)
+/* UpdateParser Implementation (Autoupdater component)
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
@@ -10,11 +10,6 @@
 #include <QXmlStreamAttribute>
 
 #include "updateparser.h"
-
-#ifndef nullptr
-#define nullptr NULL
-#endif
-
 
 Update::Update()
 {

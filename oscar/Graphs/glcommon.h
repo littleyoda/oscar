@@ -11,10 +11,6 @@
 
 #include <QColor>
 
-#ifndef nullptr
-#define nullptr NULL
-#endif
-
 //! \brief Returns the grayscale brightness (between 0 and 1) of a color
 float brightness(QColor color);
 

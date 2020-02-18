@@ -125,16 +125,6 @@ float median(RandAccessIter begin, RandAccessIter end)
 }
 
 
-#ifndef nullptr
-#define nullptr NULL
-#endif
-
-#ifdef TEST_BUILD
-const QString STR_TestBuild = "-Testing";
-#else
-const QString STR_TestBuild = "";
-#endif
-
 const QString getAppName();
 const QString getDeveloperName();
 const QString getDeveloperDomain();

@@ -13,11 +13,6 @@
 #include <QDateTime>
 #include <QObject>
 
-
-#ifndef nullptr
-#define nullptr NULL
-#endif
-
 typedef float EventDataType;
 
 #endif // COMMON_H
