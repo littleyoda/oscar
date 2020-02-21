@@ -45,6 +45,18 @@ void dumpSignals( const QVector<EDFSignal>  sigs ) {
     }
 }
 
+void usage() {
+    qDebug() << "dumpSTR [ options ] filename";
+    qDebug() << "Options";
+    qDebug() << "\t-a Show all";
+    qDebug() << "\t-f ### First day";
+    qDebug() << "\t-l ### Last day";
+    qDebug() << "\t-g ### First signal";
+    qDebug() << "\t-m ### Last signal";
+    qDebug() << "\t-s Signal list only";
+    qDebug() << "\t-h or -? This help message";
+}
+
 int main(int argc, char *argv[]) {
 
 //    QString homeDocs = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/";
@@ -77,14 +89,23 @@ int main(int argc, char *argv[]) {
             lastSig = args[++i].toInt();
         else if (args[i] == "-a")
             showall = true;
-        else if (args[i] == "-b")
+        else if (args[i] == "-s")
             brief = true;
+        else if ((args[i] == "-?") || (args[i] == "-h")) {
+            usage();
+            exit(0);
+        }
     }
 
     EDFInfo str;
-    QByteArray * buffer = str.Open(filename);
-    if ( ! str.Parse(buffer) )
+    if ( ! str.Open(filename) ) {
+        qDebug() << "Failed to open" << filename;
         exit(-1);
+    }
+    if ( ! str.Parse() ) {
+        qDebug() << "Parsing failed on" << filename;
+        exit(-1);
+    }
 
     QDate d2 = str.edfHdr.startdate_orig.date();
     if (d2.year() < 2000) {

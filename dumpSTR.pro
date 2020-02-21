@@ -12,6 +12,8 @@ CONFIG -= debug_and_release
 
 QT += core widgets
 
+DEFINES+=DUMPSTR
+
 TARGET = dumpSTR
 
 TEMPLATE = app
@@ -24,9 +26,9 @@ VERSION = 0.5.0
 
 SOURCES += \
 	dumpSTR/main.cpp \
-	dumpSTR/edfparser.cpp \
+	dumpSTR/edfparser.cpp 
 
 HEADERS  += \
-    dumpSTR/common.h \
-    dumpSTR/edfparser.h \
+    dumpSTR/SleepLib/common.h \
+    dumpSTR/edfparser.h 
 

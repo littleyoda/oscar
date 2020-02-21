@@ -68,11 +68,15 @@ bool EDFInfo::Open(const QString & name)
         return false;
     }
 //    fileData = new QByteArray();
+#ifndef DUMPSTR
     if (name.endsWith(STR_ext_gz)) {
         fileData = gUncompress(fi.readAll()); // Open and decompress file
     } else {
         fileData = fi.readAll(); // Open and read uncompressed file
     }
+#else
+    fileData = fi.readAll(); // Open and read uncompressed file
+#endif    
     fi.close();
     if (fileData.size() <= EDFHeaderSize) {
     	fileData.clear();;
@@ -280,11 +284,15 @@ EDFHeaderQT * EDFInfo::GetHeader( const QString & name)
         return nullptr;
     }
 //    fileData = new QByteArray();
+#ifndef DUMPSTR
     if (name.endsWith(STR_ext_gz)) {
         fileData = gUncompress(fi.read(sizeof(EDFHeaderRaw))); // Open and decompress file
     } else {
         fileData = fi.read(sizeof(EDFHeaderRaw)); // Open and read uncompressed file
     }
+#else
+    fileData = fi.read(sizeof(EDFHeaderRaw)); // Open and read uncompressed file
+#endif    
     fi.close();
     filename = name;
     hdrPtr = (EDFHeaderRaw *)fileData.constData();
