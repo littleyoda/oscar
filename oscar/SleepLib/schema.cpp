@@ -215,7 +215,7 @@ void init()
             QObject::tr("Mask Pressure"), QObject::tr("Mask Pressure"), QObject::tr("Mask Pressure"), STR_UNIT_CMH2O,    DEFAULT,    QColor("blue")));
 
     schema::channel.add(GRP_CPAP, new Channel(CPAP_MaskPressureHi    = 0x1102, WAVEFORM,    MT_CPAP, SESSION, "MaskPressureHi",
-            QObject::tr("Mask Pressure"), QObject::tr("Mask Pressure (High resolution)"), QObject::tr("Mask Pressure"), STR_UNIT_CMH2O,    DEFAULT,    QColor("blue"), 0x1101)); // linked to CPAP_MaskPressure
+            QObject::tr("Mask Pressure"), QObject::tr("Mask Pressure (High frequency)"), QObject::tr("Mask Pressure"), STR_UNIT_CMH2O,    DEFAULT,    QColor("blue"), 0x1101)); // linked to CPAP_MaskPressure
 
     schema::channel.add(GRP_CPAP, new Channel(CPAP_TidalVolume       = 0x1103, WAVEFORM,    MT_CPAP, SESSION, STR_GRAPH_TidalVolume,
             QObject::tr("Tidal Volume"), QObject::tr("Amount of air displaced per breath"), QObject::tr("Tidal Volume"), STR_UNIT_ml,    DEFAULT,    QColor("magenta")));
@@ -245,8 +245,8 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Ti                = 0x110B, WAVEFORM,    MT_CPAP, SESSION, STR_GRAPH_Ti,
             QObject::tr("Inspiratory Time"), QObject::tr("Time taken to breathe in"), QObject::tr("Insp. Time"),         STR_UNIT_Seconds,  DEFAULT,    QColor("dark blue")));
 
-    schema::channel.add(GRP_CPAP, new Channel(CPAP_RespEvent         = 0x1112, DATA,   MT_CPAP,  SESSION, STR_GRAPH_RespEvent,
-            QObject::tr("Respiratory Event"), QObject::tr("A ResMed data source showing Respiratory Events"),  QObject::tr("Resp. Event"), STR_UNIT_EventsPerHour,   DEFAULT,    QColor("black")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_RespEvent         = 0x1112, WAVEFORM,   MT_CPAP,  SESSION, STR_GRAPH_RespEvent,
+            QObject::tr("Respiratory Event"), QObject::tr("A ResMed data item: Trigger Cycle Event"),  QObject::tr("Resp. Event"), STR_UNIT_CMH2O,   DEFAULT,    QColor("black")));
 
     schema::channel.add(GRP_CPAP, new Channel(CPAP_FLG               = 0x1113, WAVEFORM,   MT_CPAP,  SESSION, STR_GRAPH_FlowLimitation,
             QObject::tr("Flow Limitation"), QObject::tr("Graph showing severity of flow limitations"),   QObject::tr("Flow Limit."), STR_UNIT_Severity,      DEFAULT,    QColor("#585858")));

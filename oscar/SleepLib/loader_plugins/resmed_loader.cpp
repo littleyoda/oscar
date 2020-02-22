@@ -2453,6 +2453,10 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
         } else if (matchSignal(CPAP_RespEvent, es.label)) {
             code = CPAP_RespEvent;
 
+//      } else if (es.label == "TrigCycEvt.40ms") {         // we need a real code for this signal
+//          code = CPAP_TriggerEvent;                       // Well, it got folded into RespEvent
+//          continue;
+
         } else if (es.label != "Crc16") {
             qDebug() << "Unobserved ResMed BRP Signal " << es.label;
             continue;
@@ -2914,10 +2918,12 @@ void setupResMedTranslationMap()
     // BRP file
     resmed_codes[CPAP_FlowRate] = QStringList{ "Flow", "Flow.40ms" };
     resmed_codes[CPAP_MaskPressureHi] = QStringList{ "Mask Pres", "Press.40ms" };
+//  resmed_codes[CPAP_TriggerEvent] = QStringList{ "TrigCycEvt.40ms" };             // AC10 VAuto and -S
+    resmed_codes[CPAP_RespEvent] = QStringList {"Resp Event", "TrigCycEvt.40ms" };  // S9 VPAPS and STA-IVAPS call it RespEvent
 
     // PLD File
     resmed_codes[CPAP_MaskPressure] = QStringList { "Mask Pres", "MaskPress.2s" };
-    resmed_codes[CPAP_RespEvent] = QStringList {"Resp Event" };
+//  resmed_codes[CPAP_RespEvent] = QStringList {"Resp Event" };
     resmed_codes[CPAP_Pressure] = QStringList { "Therapy Pres", "Press.2s" };   // Un problemo... IPAP also uses Press.2s.. check the mode :/
     resmed_codes[CPAP_IPAP] = QStringList { "Insp Pres", "IPAP", "S.BL.IPAP" };
     resmed_codes[CPAP_EPAP] = QStringList { "Exp Pres", "EprPress.2s", "EPAP", "S.BL.EPAP", "EPRPress.2s" };
