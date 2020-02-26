@@ -1,0 +1,28 @@
+The files that are in Building/Linux are for creating an installable package, and assume 
+you have already compiled and linked OSCAR using qmake and make, or QtCreator. 
+
+The packages, once built, can be installed using 'dpkg i' or 'gdebi' - with either su or sudo. If you use
+sudo, you will get a desktop icon installed, which must be double-clicked and trusted to see the actual icon.
+
+The packaged file cannot be installed using apt, apt-get, or aptitude, because those programs 
+install from the distribution repository, but not a plan package file.
+
+The scripts assume the following folder structure:
+
+/home/username/OSCAR/
+the packaging scripts
+/home/username/OSCAR/build/
+/home/username/OSCAR/OSCAR-code/
+/home/username/OSCAR/OSCAR-code/oscar ...etc
+
+The fpm program used in the mkXxxx scripts can be found at https://fpm.readthedocs.io/en/latest/intro.html 
+
+Read the installation notes there, installation is sort of convoluted, then once it is installed type 'fpm -help' to see all the options.
+
+The code to put a desktop icon in the Desktop folder, regardless of language, was contributed by UnToutSeul05.
+
+Getting a menu item istalled is largely due to the efforts of CrimsonNape.
+
+Finally, the mkRedHat.sh script has not been tested.
+
+
