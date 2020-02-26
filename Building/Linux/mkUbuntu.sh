@@ -33,9 +33,8 @@ fi
 if [ -n "$3" ]; then
     iter="$iter"~"$3"
 fi
-
 # temporary folder (absolute path is better)
-temp_folder="/home/$USER/tmp_deb_${appli_name}/"
+temp_folder="/home/$USER/tmp_Ubu_${appli_name}/"
 
 # destination folder in the .deb file
 dest_folder="/usr/"
@@ -137,7 +136,7 @@ fpm --input-type dir --output-type deb  \
     --depends libdouble-conversion1 \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends 'libqt5core5a > 5.7.0'    \
+    --depends 'libqt5core5a > 5.9.0'    \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \

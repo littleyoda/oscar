@@ -1,15 +1,13 @@
 [Desktop Entry]
 Version=1.1
-Name=OSCAR
+Name=OSCAR-test
 GenericName=CPAP Reporter
-TryExec=OSCAR
-Exec=OSCAR
+TryExec=OSCAR-test
+Exec=OSCAR-test
 Terminal=false
-Icon=/usr/share/icons/hicolor/48x48/apps/OSCAR.png
+Icon=/usr/share/icons/hicolor/48x48/apps/OSCAR-test.png
 Type=Application
-Categories=Education;Science;
+Categories=Science;Education;
 StartupNotify=true
 X-GNOME-UsesNotifications=true
 Name[en_CA]=OSCAR-test
-
-
