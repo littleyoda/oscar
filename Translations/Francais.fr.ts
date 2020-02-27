@@ -32,10 +32,6 @@
         <translation>Affiche le répertoire des données</translation>
     </message>
     <message>
-        <source>About OSCAR</source>
-        <translation>À propos de OSCAR</translation>
-    </message>
-    <message>
         <source>Sorry, could not locate About file.</source>
         <translation>Désolé, je ne trouve pas À propos.</translation>
     </message>
@@ -44,16 +40,8 @@
         <translation>Désolé, je ne trouve pas Remerciements.</translation>
     </message>
     <message>
-        <source>OSCAR v%1</source>
-        <translation>OSCAR v%1</translation>
-    </message>
-    <message>
         <source>Important:</source>
         <translation>Important :</translation>
-    </message>
-    <message>
-        <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceding, because attempting to roll back later may break things.</source>
-        <translation type="vanished">Comme c&apos;est une préversion il est recommandé de &lt;b&gt;sauvegarder vos données à la main&lt;b&gt; avant de continuer. Tenter un retour arrière plus tard pourrait endommager les données.</translation>
     </message>
     <message>
         <source>To see if the license text is available in your language, see %1.</source>
@@ -66,6 +54,14 @@
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
         <translation>Comme c&apos;est une préversion il est recommandé de &lt;b&gt;sauvegarder vos données à la main&lt;b&gt; avant de continuer. Tenter un retour arrière plus tard pourrait endommager les données.</translation>
+    </message>
+    <message>
+        <source>About OSCAR %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1</source>
+        <translation>OSCAR %1</translation>
     </message>
 </context>
 <context>
@@ -110,7 +106,7 @@
     </message>
     <message>
         <source> i </source>
-        <translation>Italique</translation>
+        <translation>.i.</translation>
     </message>
     <message>
         <source>Big</source>
@@ -237,10 +233,6 @@
         <translation>Poids</translation>
     </message>
     <message>
-        <source>This bookmarked is in a currently disabled area..</source>
-        <translation type="vanished">Ce favori pointe vers une zone inactive...</translation>
-    </message>
-    <message>
         <source>Zombie</source>
         <translation>Zombie</translation>
     </message>
@@ -363,10 +355,6 @@
     <message>
         <source>Oximetry Sessions</source>
         <translation>Sessions d&apos;oxymétrie</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing&apos;s changed since previous days.</source>
-        <translation type="vanished">&lt;b&gt;Veuillez noter :&lt;b&gt;les réglages affichés ci-dessous sont basés sur la supposition que rien n&apos;a changé depuis les jours précédents.</translation>
     </message>
     <message>
         <source>Model %1 - %2</source>
@@ -724,10 +712,6 @@
         <translation>Insérez la carte de données PPC svp...</translation>
     </message>
     <message>
-        <source>%1 %2</source>
-        <translation>%1 %2</translation>
-    </message>
-    <message>
         <source>Daily Calendar</source>
         <translation>Calendrier quotidien</translation>
     </message>
@@ -880,10 +864,6 @@
         <translation>Voulez-vous effacer les données de l&apos;oxymètre pour %1</translation>
     </message>
     <message>
-        <source>Purge ALL CPAP Data</source>
-        <translation>Purger toutes les données de la PPC</translation>
-    </message>
-    <message>
         <source>O&amp;ximetry Wizard</source>
         <translation>Assistant d&apos;o&amp;xymétrie</translation>
     </message>
@@ -906,10 +886,6 @@
     <message>
         <source>Date Range</source>
         <translation>Période</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>View Statistics</source>
@@ -980,10 +956,6 @@
         <translation>Standard</translation>
     </message>
     <message>
-        <source>There was a problem opening ZEO File: </source>
-        <translation>Problème à l&apos;ouverture du fichier ZEO : </translation>
-    </message>
-    <message>
         <source>Statistics</source>
         <translation>Statistiques</translation>
     </message>
@@ -994,10 +966,6 @@
     <message>
         <source>&amp;Statistics</source>
         <translation>&amp;Statistiques</translation>
-    </message>
-    <message>
-        <source>Please remember to point the importer at the root folder or drive letter of your data-card, and not a subfolder.</source>
-        <translation>S&apos;il vous plaît, choisissez le dossier racine ou la lettre de lecteur de votre carte de données, et non pas un sous-dossier.</translation>
     </message>
     <message>
         <source>Backup &amp;Journal</source>
@@ -1022,10 +990,6 @@
     <message>
         <source>&amp;Advanced</source>
         <translation>&amp;Avancé</translation>
-    </message>
-    <message>
-        <source>Zeo CSV Import complete</source>
-        <translation>Import du fichier CSV ZEO terminé</translation>
     </message>
     <message>
         <source>Print &amp;Report</source>
@@ -1216,10 +1180,6 @@
         <translation>Aucun profil sélectionné pour l&apos;import.</translation>
     </message>
     <message>
-        <source>&amp;Import SDcard Data</source>
-        <translation>&amp;Importer les données de la carte SD</translation>
-    </message>
-    <message>
         <source>Show Daily view</source>
         <translation>Voir la vue quotidienne</translation>
     </message>
@@ -1276,10 +1236,6 @@
         <translation>Voir le graphique sectoriel sur la page quotidienne</translation>
     </message>
     <message>
-        <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
-    </message>
-    <message>
         <source>&amp;Reset Graphs</source>
         <translation>&amp;Réinitialiser les graphiques</translation>
     </message>
@@ -1306,6 +1262,136 @@
     <message>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation>Ordre des graph avancé, bon pour ASV, AVAPS</translation>
+    </message>
+    <message>
+        <source>Troubleshooting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purge ALL Machine Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import CPAP Card Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import &amp;Dreem Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import &amp;Viatom Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of CPAP data card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of all OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F3</source>
+        <translation>F3</translation>
+    </message>
+    <message>
+        <source>%1 (Profile: %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose where to save screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR does not have any backups for this machine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 ZEO session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with ZEO data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid ZEO CSV data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 Dreem session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with Dreem data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid Dreem CSV data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 oximetry session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with oximetry data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Would you like to zip this card?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose where to save zip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZIP files (*.zip)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating zip...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculating size...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3264,6 +3350,26 @@ p, li { white-space: pre-wrap; }
         <source>Include Serial Number</source>
         <translation>Inclure le numéro de série</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warn when importing data from an untested machine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warn when previously unseen data is encountered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always save screenshots in the OSCAR Data folder</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileSelect</name>
@@ -3953,10 +4059,6 @@ p, li { white-space: pre-wrap; }
         <translation>bpm</translation>
     </message>
     <message>
-        <source>v%1</source>
-        <translation>v%1</translation>
-    </message>
-    <message>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
@@ -4087,10 +4189,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Save</source>
         <translation>&amp;Sauvegarder</translation>
-    </message>
-    <message>
-        <source>RemStar Pro with C-Flex+</source>
-        <translation type="vanished">RemStar Pro avec C-Flex+</translation>
     </message>
     <message>
         <source>???: </source>
@@ -4241,10 +4339,6 @@ p, li { white-space: pre-wrap; }
         <translation>Coach personnel de sommeil</translation>
     </message>
     <message>
-        <source>PRS1 Humidification level</source>
-        <translation>Niveau humidification PRS1</translation>
-    </message>
-    <message>
         <source>Clear Airway</source>
         <translation>Centrale</translation>
     </message>
@@ -4281,10 +4375,6 @@ p, li { white-space: pre-wrap; }
         <translation>Il y a un fort risque de perte de données, êtes-vous sûr de vouloir continuer ?</translation>
     </message>
     <message>
-        <source>Auto BiPAP</source>
-        <translation type="vanished">Auto BIPAP</translation>
-    </message>
-    <message>
         <source>Pat. Trig. Breath</source>
         <translation>Resp. par patient</translation>
     </message>
@@ -4295,10 +4385,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ramp Delay Period</source>
         <translation>Période de délai de la rampe</translation>
-    </message>
-    <message>
-        <source>RemStar BiPAP Auto with Bi-Flex</source>
-        <translation type="vanished">RemStar BiPAP Auto avec Bi-Flex</translation>
     </message>
     <message>
         <source>Sessions Switched Off</source>
@@ -4325,20 +4411,8 @@ p, li { white-space: pre-wrap; }
         <translation>État de la résistance Sys1</translation>
     </message>
     <message>
-        <source>BiPAP AVAPS</source>
-        <translation type="vanished">BiPAP AVAPS</translation>
-    </message>
-    <message>
         <source>Minute Vent.</source>
         <translation>Vent. minute</translation>
-    </message>
-    <message>
-        <source>Heated Tubing Connected</source>
-        <translation>Tube chauffé connecté</translation>
-    </message>
-    <message>
-        <source>VPAP Adapt</source>
-        <translation type="vanished">VPAP adaptable</translation>
     </message>
     <message>
         <source>SpO2 Drop</source>
@@ -4505,10 +4579,6 @@ p, li { white-space: pre-wrap; }
         <translation>Vent. cible</translation>
     </message>
     <message>
-        <source>Humidification Level</source>
-        <translation>Niveau humidification</translation>
-    </message>
-    <message>
         <source>Sleep position in degrees</source>
         <translation>Position du sommeil en degrés</translation>
     </message>
@@ -4582,24 +4652,12 @@ p, li { white-space: pre-wrap; }
         <translation>C-Flex</translation>
     </message>
     <message>
-        <source>BiPAP Pro</source>
-        <translation type="vanished">BIPAP Pro</translation>
-    </message>
-    <message>
-        <source>CPAP Pro</source>
-        <translation type="vanished">CPAP Pro</translation>
-    </message>
-    <message>
         <source>VPAP-S/T</source>
         <translation>VPAP-S/T</translation>
     </message>
     <message>
         <source>VPAPauto</source>
         <translation>VPAP Auto</translation>
-    </message>
-    <message>
-        <source>RemStar Plus Compliance Only</source>
-        <translation type="vanished">Conformité RemStar Plus seulement</translation>
     </message>
     <message>
         <source>Apnea Hypopnea Index</source>
@@ -4652,20 +4710,12 @@ Line %2, column %3</source>
 Ligne %2, colonne %3</translation>
     </message>
     <message>
-        <source>BiPAP autoSV Advanced</source>
-        <translation type="vanished">BiPAP autoSV avancé</translation>
-    </message>
-    <message>
         <source>Ramp Enable</source>
         <translation>Rampe active</translation>
     </message>
     <message>
         <source>(% %1 in events)</source>
         <translation>(% %1 en évènements)</translation>
-    </message>
-    <message>
-        <source>RemStar BiPAP Pro with Bi-Flex</source>
-        <translation type="vanished">RemStar BiPAP Pro avec Bi-Flex</translation>
     </message>
     <message>
         <source>Lower Threshold</source>
@@ -4740,10 +4790,6 @@ Merci de reconstruire les données de PPC</translation>
     <message>
         <source>Plethy</source>
         <translation>Pléthy</translation>
-    </message>
-    <message>
-        <source>PRS1_%1</source>
-        <translation>PRS1_%1</translation>
     </message>
     <message>
         <source>SensAwake</source>
@@ -4940,10 +4986,6 @@ Début : %2
 </translation>
     </message>
     <message>
-        <source>Humid. Lvl.</source>
-        <translation>Niv. humid.</translation>
-    </message>
-    <message>
         <source>I:E Ratio</source>
         <translation>Ratio Inspiration/Expiration</translation>
     </message>
@@ -5036,16 +5078,8 @@ Début : %2
         <translation>Statistiques d&apos;utilisation</translation>
     </message>
     <message>
-        <source>BiPAP autoSV Advanced 60 Series</source>
-        <translation type="vanished">BiPAP autoSV avancé Série 60</translation>
-    </message>
-    <message>
         <source>Perfusion Index</source>
         <translation>Index de perfusion</translation>
-    </message>
-    <message>
-        <source>RemStar Auto with A-Flex</source>
-        <translation type="vanished">RemStar Pro avec A-Flex</translation>
     </message>
     <message>
         <source>Graph displaying snore volume</source>
@@ -5250,10 +5284,6 @@ TTIA : %1</translation>
         <translation>(il y a %2 jours)</translation>
     </message>
     <message>
-        <source>Unknown PRS1 Code %1</source>
-        <translation>Code PRS1 %1 inconnu</translation>
-    </message>
-    <message>
         <source>Diameter of primary CPAP hose</source>
         <translation>Diamètre du tuyau principal de PPC</translation>
     </message>
@@ -5346,18 +5376,6 @@ TTIA : %1</translation>
         <translation>Source de données ResMed montrant les évènements respiratoires</translation>
     </message>
     <message>
-        <source>Heated Tubing</source>
-        <translation>Tube chauffé</translation>
-    </message>
-    <message>
-        <source>Auto CPAP</source>
-        <translation type="vanished">Auto CPAP</translation>
-    </message>
-    <message>
-        <source>EPAP %1 PS %2-%3 (%6)</source>
-        <translation type="vanished">EPAP %1 PS %2-%3 (%6)</translation>
-    </message>
-    <message>
         <source>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</source>
         <translation>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%</translation>
     </message>
@@ -5432,10 +5450,6 @@ TTIA : %1</translation>
     <message>
         <source>Summary Only</source>
         <translation>Résumé seulement</translation>
-    </message>
-    <message>
-        <source>Unknown Model</source>
-        <translation type="vanished">Modèle inconnu</translation>
     </message>
     <message>
         <source>Bi-Level</source>
@@ -5584,14 +5598,6 @@ Heures : %1</translation>
     <message>
         <source>Total Leak Rate</source>
         <translation>Total des fuites</translation>
-    </message>
-    <message>
-        <source>RemStar Plus</source>
-        <translation type="vanished">RemStar Plus</translation>
-    </message>
-    <message>
-        <source>d MMM [ %1 - %2 ]</source>
-        <translation type="vanished">j MMM [%1 - %2]</translation>
     </message>
     <message>
         <source>Max Pressure</source>
@@ -6196,10 +6202,6 @@ corporelle</translation>
         <translation>Le répertoire n&apos;est pas vide et ne contient pas de données de OSCAR valides.</translation>
     </message>
     <message>
-        <source>The version of OSCAR you just ran is OLDER than the one used to create this data (%1).</source>
-        <translation>Cette version de OSCAR est antérieure à celle qui a crée ces données (%1).</translation>
-    </message>
-    <message>
         <source>OSCAR Reminder</source>
         <translation>Rappel de OSCAR</translation>
     </message>
@@ -6210,10 +6212,6 @@ corporelle</translation>
     <message>
         <source>If you are using cloud storage, make sure OSCAR is closed and syncing has completed first on the other computer before proceeding.</source>
         <translation>Si vous utilisez un stockage en cloud, assurez-vous qu&apos;OSCAR est fermé et que la synchronisation est terminée sur l&apos;autre ordinateur avant de poursuivre.</translation>
-    </message>
-    <message>
-        <source>OSCAR v%1</source>
-        <translation type="vanished">OSCAR v%1</translation>
     </message>
     <message>
         <source>You must run the OSCAR Migration Tool</source>
@@ -6228,10 +6226,6 @@ corporelle</translation>
 </source>
         <translation>, SleepyHead trouvé -
 </translation>
-    </message>
-    <message>
-        <source>OSCAR (%1) needs to upgrade its database for %2 %3 %4</source>
-        <translation>OSCAR (%1) doit mettre à jour sa base de données pour %2 %3 %4</translation>
     </message>
     <message>
         <source>An apnea that couldn&apos;t be determined as Central or Obstructive.</source>
@@ -6260,18 +6254,6 @@ corporelle</translation>
     <message>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>Choisissez ou créez un nouveau répertoire pour les données de OSCAR</translation>
-    </message>
-    <message>
-        <source>Built with Qt</source>
-        <translation>Compilé avec Qt</translation>
-    </message>
-    <message>
-        <source>Branch:</source>
-        <translation>Branche :</translation>
-    </message>
-    <message>
-        <source>Revision</source>
-        <translation>Révision</translation>
     </message>
     <message>
         <source>App key:</source>
@@ -6370,10 +6352,6 @@ corporelle</translation>
         <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <source>%1mm</source>
-        <translation>%1mm</translation>
-    </message>
-    <message>
         <source>Pressure Set</source>
         <translation>Activation de la pression</translation>
     </message>
@@ -6402,8 +6380,160 @@ corporelle</translation>
         <translation>Chargement du résumé</translation>
     </message>
     <message>
-        <source>%1 OSCAR v%2</source>
-        <translation>%1 OSCAR v%2</translation>
+        <source>Built with Qt %1 on %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Motion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n/a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dreem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untested Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P-Flex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humidification Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRS1 Humidification Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humid. Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed (Classic)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adaptive (System One)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heated Tube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRS1 Heated Tube Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Temp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation>2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation>3</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation>4</translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation>5</translation>
+    </message>
+    <message>
+        <source>PRS1 Humidifier Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humid. Lvl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>12mm</source>
+        <translation>12mm</translation>
+    </message>
+    <message>
+        <source>PRS1 Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown PRS1 span 0x0E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Viatom device generated data that OSCAR has never seen before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Viatom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Viatom Software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1 needs to upgrade its database for %2 %3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement detector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a location for your zip other than the data card itself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create zip!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2 %3</source>
+        <translation>%1 %2 %3</translation>
     </message>
 </context>
 <context>
@@ -6583,10 +6713,6 @@ corporelle</translation>
         <translation>Adresse :</translation>
     </message>
     <message>
-        <source>This report was generated by OSCAR v%1</source>
-        <translation type="vanished">Rapport généré par OSCAR V%1</translation>
-    </message>
-    <message>
         <source>Days Used: %1</source>
         <translation>Jours d&apos;utilisation : %1</translation>
     </message>
@@ -6719,8 +6845,8 @@ corporelle</translation>
         <translation>Total Heures : %1</translation>
     </message>
     <message>
-        <source>This report was prepared on %1 by OSCAR v%2</source>
-        <translation>Rapport préparé le %1 par OSCAR v%2</translation>
+        <source>This report was prepared on %1 by OSCAR %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7021,10 +7147,6 @@ corporelle</translation>
     <message>
         <source>Reset Graph Layout</source>
         <translation>Réinitialiser la disposition des graphiques</translation>
-    </message>
-    <message>
-        <source>Restore X-axis zoom too 100% to view entire days data.</source>
-        <translation type="vanished">RAZ du zoom des X à 100% pour afficher une journée complète.</translation>
     </message>
     <message>
         <source>100% zoom level</source>
