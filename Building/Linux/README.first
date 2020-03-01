@@ -7,10 +7,9 @@ sudo, you will get a desktop icon installed, which must be double-clicked and tr
 The packaged file cannot be installed using apt, apt-get, or aptitude, because those programs 
 install from the distribution repository, but not a plan package file.
 
-The scripts assume the following folder structure:
+The packaging scripts assume the following folder structure:
 
 /home/username/OSCAR/
-the packaging scripts
 /home/username/OSCAR/build/
 /home/username/OSCAR/OSCAR-code/
 /home/username/OSCAR/OSCAR-code/oscar ...etc

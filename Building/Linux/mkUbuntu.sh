@@ -94,7 +94,7 @@ cp ./${appli_name}.png ${temp_folder}/share/icons/hicolor/48x48/apps/${appli_nam
 cp ./${appli_name}.svg ${temp_folder}/share/icons/hicolor/scalable/apps/${appli_name}.svg
 cp ./${appli_name}.desktop ${temp_folder}/share/applications/${appli_name}.desktop
 
-echo "Copyright 2019 nightowlsoftware.ca <oscar@nightowlsoftware.ca>" > $share_doc_folder/copyright
+echo "Copyright 2019-2020 team-oscar.org <oscar@team-oscar.org>" > $share_doc_folder/copyright
 
 changelog_file="$share_doc_folder/changelog"
 
@@ -107,8 +107,7 @@ echo "$appli_name ($1-$2) whatever; urgency=medium" > $changelog_file
 echo "" >> $changelog_file
 echo "  * Package created with FPM." >> $changelog_file
 echo "" >> $changelog_file
-echo " -- nightowlsoftware.ca <oscar@nightowlsoftware.ca>" >> $changelog_file
-# -- <oscar@nightowlsoftware.ca>  Sat, 03 Aug 2019 15:22:22 +0200
+echo " -- team-oscar.org <oscar@team-oscar.org>" >> $changelog_file
 gzip --best $changelog_file
 description='Open Source CPAP Analysis Reporter\n<extended description needed to be filled with the right value>'
 # trick for dummies : need to use echo -e to take care of \n (cariage return to slip description and extra one
@@ -127,9 +126,9 @@ fpm --input-type dir --output-type deb  \
     --name ${appli_name} --version $1 --iteration $iter \
     --category misc               \
     --deb-priority optional \
-    --maintainer " -- nightowlsoftware.ca <oscar@nightowlsoftware.ca>"   \
+    --maintainer " -- team-oscar.org <oscar@team-oscar.org>"   \
     --license GPL-v3                \
-    --vendor nightowlsoftware.ca    \
+    --vendor team-oscar.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
     --deb-no-default-config-files   \

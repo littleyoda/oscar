@@ -74,7 +74,7 @@ cp -r ${build_folder}/oscar/Translations ${temp_folder}/share/${appli_name} 2>/d
 cp ./OSCAR.png ${temp_folder}/share/icons/${appli_name}/${appli_name}.png
 cp ./OSCAR.desktop ${temp_folder}/share/applications/${appli_name}.desktop
 
-echo "Copyright 2019 nightowlsoftware.ca <oscar@nightowlsoftware.ca>" > $share_doc_folder/copyright
+echo "Copyright 20192020 team-oscar.org <oscar@team-oscar.org>" > $share_doc_folder/copyright
 
 changelog_file="$share_doc_folder/changelog"
 
@@ -87,8 +87,7 @@ echo "$appli_name ($1-$2) whatever; urgency=medium" > $changelog_file
 echo "" >> $changelog_file
 echo "  * Package created with FPM." >> $changelog_file
 echo "" >> $changelog_file
-echo " -- nightowlsoftware.ca <oscar@nightowlsoftware.ca>" >> $changelog_file
-# -- <oscar@nightowlsoftware.ca>  Sat, 03 Aug 2019 15:22:22 +0200
+echo " -- team-oscar.org <oscar@team-oscar.org>" >> $changelog_file
 gzip --best $changelog_file
 
 description='Open Source CPAP Analysis Reporter\n<extended description needed to be filled with the right value>'
@@ -107,9 +106,9 @@ fpm --input-type dir --output-type rpm  \
     --after-remove clean_rm.sh \
     --name ${appli_name} --version $1 --iteration $2 \
     --category misc               \
-    --maintainer " -- nightowlsoftware.ca <oscar@nightowlsoftware.ca>"   \
+    --maintainer " -- team-oscar.org <oscar@team-oscar.org>"   \
     --license GPL-v3                \
-    --vendor nightowlsoftware.ca    \
+    --vendor team-oscar.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
     -C ${temp_folder} \
