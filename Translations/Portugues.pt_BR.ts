@@ -6827,6 +6827,11 @@ TTIA: %1</translation>
         <translation>Ronco Vibratório (VS2) </translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
+        <source>A ResMed data item: Trigger Cycle Event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="283"/>
         <source>Mask On Time</source>
         <translation>Tempo com Máscara</translation>
@@ -7028,11 +7033,6 @@ TTIA: %1</translation>
         <translation>Pressão de Máscara</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="218"/>
-        <source>Mask Pressure (High resolution)</source>
-        <translation>Pressão de Máscara (alta resolução)</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="221"/>
         <source>Amount of air displaced per breath</source>
         <translation>Quantidade de ar deslocado por respiração</translation>
@@ -7227,6 +7227,11 @@ TTIA: %1</translation>
         <translation>Índice Perf. %</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="218"/>
+        <source>Mask Pressure (High frequency)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="243"/>
         <source>Expiratory Time</source>
         <translation>Tempo Expiratório</translation>
@@ -7250,11 +7255,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
         <source>Respiratory Event</source>
         <translation>Evento Respiratório</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
-        <source>A ResMed data source showing Respiratory Events</source>
-        <translation>Uma fonte de dados da ResMed mostrando Eventos Respiratórios</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
