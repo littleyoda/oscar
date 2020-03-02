@@ -32,10 +32,6 @@
         <translation>显示数据文件夹</translation>
     </message>
     <message>
-        <source>About OSCAR</source>
-        <translation>关于OSCAR</translation>
-    </message>
-    <message>
         <source>Sorry, could not locate About file.</source>
         <translation>抱歉，无法找到相关文件.</translation>
     </message>
@@ -44,16 +40,8 @@
         <translation>抱歉，无法找到信用证书.</translation>
     </message>
     <message>
-        <source>OSCAR v%1</source>
-        <translation>OSCAR v%1</translation>
-    </message>
-    <message>
         <source>Important:</source>
         <translation>重要提示:</translation>
-    </message>
-    <message>
-        <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceding, because attempting to roll back later may break things.</source>
-        <translation type="vanished">由于这是预发布版本，因此建议您在进行处理之前手动备份数据文件夹，因为稍后返回操作可能会破坏数据文件夹。</translation>
     </message>
     <message>
         <source>To see if the license text is available in your language, see %1.</source>
@@ -66,6 +54,14 @@
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About OSCAR %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -207,10 +203,6 @@
     <message>
         <source>Weight</source>
         <translation>体重</translation>
-    </message>
-    <message>
-        <source>This bookmarked is in a currently disabled area..</source>
-        <translation type="vanished">此标记位于当前禁用的区域。</translation>
     </message>
     <message>
         <source>Zombie</source>
@@ -363,10 +355,6 @@
     <message>
         <source>Oximetry Sessions</source>
         <translation>血氧测定法</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing&apos;s changed since previous days.</source>
-        <translation type="vanished">&lt;b&gt;请注意:&lt;/b&gt;下面显示的所有设置都基于自前几天以来&apos;s 未发生任何更改的假设。</translation>
     </message>
     <message>
         <source>Model %1 - %2</source>
@@ -820,10 +808,6 @@
         <translation>右&amp;侧边栏</translation>
     </message>
     <message>
-        <source>Profile</source>
-        <translation>配置文件</translation>
-    </message>
-    <message>
         <source>View Statistics</source>
         <translation>查看统计信息</translation>
     </message>
@@ -860,10 +844,6 @@
         <translation>标准</translation>
     </message>
     <message>
-        <source>There was a problem opening ZEO File: </source>
-        <translation>打开Zeo文件时出现问题: </translation>
-    </message>
-    <message>
         <source>Statistics</source>
         <translation>统计</translation>
     </message>
@@ -872,24 +852,12 @@
         <translation>&amp;统计</translation>
     </message>
     <message>
-        <source>Please remember to point the importer at the root folder or drive letter of your data-card, and not a subfolder.</source>
-        <translation>请记住将导入程序指向数据卡的根文件夹或驱动器号，而不是子文件夹。</translation>
-    </message>
-    <message>
         <source>&amp;Advanced</source>
         <translation>&amp;高级</translation>
     </message>
     <message>
-        <source>Zeo CSV Import complete</source>
-        <translation>Zeo CSV导入完成</translation>
-    </message>
-    <message>
         <source>Print &amp;Report</source>
         <translation>打印&amp;报告</translation>
-    </message>
-    <message>
-        <source>&amp;Reset Graph Layout</source>
-        <translation type="vanished">&amp;重置图表布局</translation>
     </message>
     <message>
         <source>Take &amp;Screenshot</source>
@@ -1036,10 +1004,6 @@
         <translation>存档</translation>
     </message>
     <message>
-        <source>Purge ALL CPAP Data</source>
-        <translation>删除所有CPAP数据</translation>
-    </message>
-    <message>
         <source>Daily Sidebar</source>
         <translation>每日侧边栏</translation>
     </message>
@@ -1120,10 +1084,6 @@
         <translation>导出查看</translation>
     </message>
     <message>
-        <source>%1 %2</source>
-        <translation>%1 %2</translation>
-    </message>
-    <message>
         <source>Import is already running in the background.</source>
         <translation>已在后台执行导入操作.</translation>
     </message>
@@ -1142,10 +1102,6 @@
     <message>
         <source>Loading profile &quot;%1&quot;</source>
         <translation>加载配置文件&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Processing import list...</source>
-        <translation>正在处理导入列表...</translation>
     </message>
     <message>
         <source>Please open a profile first.</source>
@@ -1200,10 +1156,6 @@
         <translation>没有可用的帮助。</translation>
     </message>
     <message>
-        <source>Donations are not implemented</source>
-        <translation>捐赠不可用</translation>
-    </message>
-    <message>
         <source>Export review is not yet implemented</source>
         <translation>导出检查不可用</translation>
     </message>
@@ -1221,10 +1173,6 @@
     </message>
     <message>
         <source>No profile has been selected for Import.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Import SDcard Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1284,10 +1232,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OSCAR Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1309,6 +1253,136 @@
     </message>
     <message>
         <source>Advanced graph order, good for ASV, AVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Troubleshooting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purge ALL Machine Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import CPAP Card Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import &amp;Dreem Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import &amp;Viatom Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of CPAP data card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of all OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F3</source>
+        <translation>F3</translation>
+    </message>
+    <message>
+        <source>%1 (Profile: %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose where to save screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR does not have any backups for this machine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 ZEO session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with ZEO data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid ZEO CSV data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 Dreem session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with Dreem data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid Dreem CSV data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported %1 oximetry session(s) from
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already up to date with oximetry data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid data at
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Would you like to zip this card?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose where to save zip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZIP files (*.zip)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating zip...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculating size...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3247,10 +3321,38 @@ ResMed S9系列设备删除超过7天的高分辨率数据，
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Whether to include machine serial number on machine settings changes report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Serial Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warn when importing data from an untested machine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warn when previously unseen data is encountered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always save screenshots in the OSCAR Data folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
@@ -3263,11 +3365,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Whether to include machine serial number on machine settings changes report</source>
+        <source>No CPAP machines detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Include Serial Number</source>
+        <source>Will you be using a ResMed brand machine?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4241,10 +4343,6 @@ p, li { white-space: pre-wrap; }
         <translation>体重</translation>
     </message>
     <message>
-        <source>Mask Pressure (High resolution)</source>
-        <translation>面罩压力(高分辨率)</translation>
-    </message>
-    <message>
         <source>Orientation</source>
         <translation>定位</translation>
     </message>
@@ -4433,10 +4531,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>User Flag #3</source>
         <translation>用户标记#3</translation>
-    </message>
-    <message>
-        <source>A ResMed data source showing Respiratory Events</source>
-        <translation>瑞思迈数据源显示的呼吸时间</translation>
     </message>
     <message>
         <source>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</source>
@@ -4769,14 +4863,6 @@ p, li { white-space: pre-wrap; }
         <translation>无可用数据</translation>
     </message>
     <message>
-        <source>Unknown PRS1 Code %1</source>
-        <translation>未知耳朵PRS1编码%1</translation>
-    </message>
-    <message>
-        <source>PRS1_%1</source>
-        <translation>PRS1_%1</translation>
-    </message>
-    <message>
         <source>Launching Windows Explorer failed</source>
         <translation>启动视窗浏览器失败</translation>
     </message>
@@ -4997,10 +5083,6 @@ Please Rebuild CPAP Data</source>
         <translation>最小呼气压力%1 最大吸气压力%2 压力 %3-%4 (%5)</translation>
     </message>
     <message>
-        <source>EPAP %1 PS %2-%3 (%6)</source>
-        <translation type="vanished">呼气压力 %1 压力 %2-%3 (%6)</translation>
-    </message>
-    <message>
         <source>SmartFlex Mode</source>
         <translation>SmartFlex模式</translation>
     </message>
@@ -5109,18 +5191,6 @@ Please Rebuild CPAP Data</source>
         <translation>连接</translation>
     </message>
     <message>
-        <source>Humidification Level</source>
-        <translation>加湿程度</translation>
-    </message>
-    <message>
-        <source>PRS1 Humidification level</source>
-        <translation>PRS1加湿水平</translation>
-    </message>
-    <message>
-        <source>Humid. Lvl.</source>
-        <translation>Humid. Lvl.</translation>
-    </message>
-    <message>
         <source>System One Resistance Status</source>
         <translation>System One Resistance Status</translation>
     </message>
@@ -5203,10 +5273,6 @@ Please Rebuild CPAP Data</source>
     <message>
         <source>TB</source>
         <translation>TB</translation>
-    </message>
-    <message>
-        <source>VPAP Adapt</source>
-        <translation type="vanished">VPAP自适应</translation>
     </message>
     <message>
         <source>EPR</source>
@@ -5313,20 +5379,8 @@ Please Rebuild CPAP Data</source>
         <translation>%1% %2</translation>
     </message>
     <message>
-        <source>Heated Tubing</source>
-        <translation>加热管路</translation>
-    </message>
-    <message>
-        <source>Heated Tubing Connected</source>
-        <translation>加热管路已连接</translation>
-    </message>
-    <message>
-        <source>d MMM [ %1 - %2 ]</source>
-        <translation type="vanished">d MMM [ %1 - %2 ]</translation>
-    </message>
-    <message>
         <source>%1</source>
-        <translation>%1%</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <source>Hide All Events</source>
@@ -5462,7 +5516,7 @@ Please Rebuild CPAP Data</source>
     </message>
     <message>
         <source>???: </source>
-        <translation></translation>
+        <translation>???: </translation>
     </message>
     <message>
         <source>Max: %1</source>
@@ -5547,39 +5601,6 @@ TTIA: %1</source>
         <translation>CMS50E/F</translation>
     </message>
     <message>
-        <source>RemStar Plus Compliance Only</source>
-        <translation type="vanished">仅适用 RemStar Plus</translation>
-    </message>
-    <message>
-        <source>RemStar Pro with C-Flex+</source>
-        <translation type="vanished">RemStar Pro with C-Flex+</translation>
-    </message>
-    <message>
-        <source>RemStar Auto with A-Flex</source>
-        <translation type="vanished">RemStar Auto with A-Flex</translation>
-    </message>
-    <message>
-        <source>RemStar BiPAP Pro with Bi-Flex</source>
-        <translation type="vanished">RemStar BiPAP Pro with Bi-Flex</translation>
-    </message>
-    <message>
-        <source>RemStar BiPAP Auto with Bi-Flex</source>
-        <translation type="vanished">RemStar BiPAP Auto with Bi-Flex</translation>
-    </message>
-    <message>
-        <source>BiPAP autoSV Advanced</source>
-        <translatorcomment>双水平ASV高级</translatorcomment>
-        <translation type="vanished">BiPAP autoSV Advanced</translation>
-    </message>
-    <message>
-        <source>BiPAP AVAPS</source>
-        <translation type="vanished">BiPAP AVAPS</translation>
-    </message>
-    <message>
-        <source>Unknown Model</source>
-        <translation type="vanished">未知模式</translation>
-    </message>
-    <message>
         <source>Machine Unsupported</source>
         <translation>不支持的机型</translation>
     </message>
@@ -5662,34 +5683,6 @@ TTIA: %1</source>
     <message>
         <source>AVAPS</source>
         <translation>AVAPS</translation>
-    </message>
-    <message>
-        <source>v%1</source>
-        <translation>v%1</translation>
-    </message>
-    <message>
-        <source>RemStar Plus</source>
-        <translation type="vanished">RemStar Plus</translation>
-    </message>
-    <message>
-        <source>BiPAP autoSV Advanced 60 Series</source>
-        <translation type="vanished">BiPAP autoSV Advanced 60系列</translation>
-    </message>
-    <message>
-        <source>CPAP Pro</source>
-        <translation type="vanished">CPAP Pro</translation>
-    </message>
-    <message>
-        <source>Auto CPAP</source>
-        <translation type="vanished">Auto CPAP</translation>
-    </message>
-    <message>
-        <source>BiPAP Pro</source>
-        <translation type="vanished">BiPAP Pro</translation>
-    </message>
-    <message>
-        <source>Auto BiPAP</source>
-        <translation type="vanished">Auto BiPAP</translation>
     </message>
     <message>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
@@ -6014,10 +6007,6 @@ Line %2, column %3</source>
         <translation>BND</translation>
     </message>
     <message>
-        <source>Parsing Identification File</source>
-        <translation>解析识别文件</translation>
-    </message>
-    <message>
         <source>Locating STR.edf File(s)...</source>
         <translation>正在查找str.edf文件...</translation>
     </message>
@@ -6080,26 +6069,6 @@ Line %2, column %3</source>
     <message>
         <source>Desktop OpenGL</source>
         <translation>桌面OpenGL</translation>
-    </message>
-    <message>
-        <source>Debugging channel #1</source>
-        <translation>调试通道#1</translation>
-    </message>
-    <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation>不允许查看内部绝密文件</translation>
-    </message>
-    <message>
-        <source>Test #1</source>
-        <translation>测试#1</translation>
-    </message>
-    <message>
-        <source>Debugging channel #2</source>
-        <translation>调试通道#2</translation>
-    </message>
-    <message>
-        <source>Test #2</source>
-        <translation>测试#2</translation>
     </message>
     <message>
         <source>Peak %1</source>
@@ -6198,10 +6167,6 @@ Line %2, column %3</source>
         <translation>您选择的文件夹不是空的，也不包含有效的OSCAR数据。</translation>
     </message>
     <message>
-        <source>The version of OSCAR you just ran is OLDER than the one used to create this data (%1).</source>
-        <translation>刚运行的OSCAR版本早于用于创建此数据的版本(%1)。</translation>
-    </message>
-    <message>
         <source>OSCAR Reminder</source>
         <translation>OSCAR提醒</translation>
     </message>
@@ -6214,10 +6179,6 @@ Line %2, column %3</source>
         <translation>如果正在使用云存储，请确保OSCAR已关闭，并且在继续操作之前已在另一台计算机上完成同步。</translation>
     </message>
     <message>
-        <source>OSCAR v%1</source>
-        <translation type="vanished">OSCAR v%1</translation>
-    </message>
-    <message>
         <source>You must run the OSCAR Migration Tool</source>
         <translation>必须运行OSCAR迁移工具</translation>
     </message>
@@ -6228,10 +6189,6 @@ Line %2, column %3</source>
     <message>
         <source>, found SleepyHead -
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSCAR (%1) needs to upgrade its database for %2 %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6311,18 +6268,6 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Built with Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Branch:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revision</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>App key:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6368,15 +6313,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>d MMM yyyy [ %1 - %2 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>d MMM yyyy [ %1 - %2 ]</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation type="unfinished">呼气压力 %1 压力 %2-%3 (%6) {1 ?} {2-%3 ?} {4)?}</translation>
-    </message>
-    <message>
-        <source>%1mm</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
         <source>Pressure Set</source>
@@ -6407,7 +6348,171 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 OSCAR v%2</source>
+        <source>Built with Qt %1 on %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Motion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n/a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dreem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untested Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P-Flex</source>
+        <translation>P-Flex</translation>
+    </message>
+    <message>
+        <source>Humidification Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRS1 Humidification Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humid. Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed (Classic)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adaptive (System One)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heated Tube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRS1 Heated Tube Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Temp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation>2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation>3</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation>4</translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation>5</translation>
+    </message>
+    <message>
+        <source>PRS1 Humidifier Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humid. Lvl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>12mm</source>
+        <translation>12mm</translation>
+    </message>
+    <message>
+        <source>PRS1 Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown PRS1 span 0x0E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Viatom device generated data that OSCAR has never seen before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Viatom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Viatom Software</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1 needs to upgrade its database for %2 %3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement detector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a location for your zip other than the data card itself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create zip!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2 %3</source>
+        <translation>%1 %2 %3</translation>
+    </message>
+    <message>
+        <source>Parsing STR.edf records...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Pressure (High frequency)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A ResMed data item: Trigger Cycle Event</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6712,15 +6817,15 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This report was prepared on %1 by OSCAR v%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>AHI: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Total Hours: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This report was prepared on %1 by OSCAR %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7010,10 +7115,6 @@ Line %2, column %3</source>
     <message>
         <source>Dotted Lines</source>
         <translation>虚线</translation>
-    </message>
-    <message>
-        <source>Restore X-axis zoom too 100% to view entire days data.</source>
-        <translation type="vanished">重置X轴到100%来查看所有数据.</translation>
     </message>
     <message>
         <source>Resets all graphs to a uniform height and default order.</source>
