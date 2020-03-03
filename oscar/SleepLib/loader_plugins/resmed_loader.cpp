@@ -2617,6 +2617,10 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     double rate;
     long recs;
     ChannelID code;
+    // The following is a hack to skip the multiple uses of Ti and Te by Resmed for signal labels
+    // It should be replaced when code in resmed_info class changes the labels to be unique
+    bool found_Ti_code = false;
+    bool found_Te_code = false;
 
     for (auto & es : edf.edfsignals) {
         a = nullptr;
@@ -2694,18 +2698,20 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
-            // There are TWO of these with the same label on my VPAP Adapt 36037
-
-            if (sess->eventlist.contains(code))
+            // There are TWO of these with the same label on 36037, 36039, 36377 and others
+            // Also 37051 has R5Ti.2s and Ti.2s. We use R5Ti.2s and ignore the Ti.2s
+            if ( found_Ti_code )
                 continue;
+            found_Ti_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
             a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
         } else if (matchSignal(CPAP_Te, es.label)) {
             code = CPAP_Te;
             // There are TWO of these with the same label on my VPAP Adapt 36037
-            if (sess->eventlist.contains(code))
+            if ( found_Te_code )
                 continue;
+            found_Te_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
             a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
