@@ -74,7 +74,7 @@ cp -r ${build_folder}/oscar/Translations ${temp_folder}/share/${appli_name} 2>/d
 cp ./OSCAR.png ${temp_folder}/share/icons/${appli_name}/${appli_name}.png
 cp ./OSCAR.desktop ${temp_folder}/share/applications/${appli_name}.desktop
 
-echo "Copyright 20192020 team-oscar.org <oscar@team-oscar.org>" > $share_doc_folder/copyright
+echo "Copyright 20192020 oscar-team.org <oscar@oscar-team.org>" > $share_doc_folder/copyright
 
 changelog_file="$share_doc_folder/changelog"
 
@@ -87,7 +87,7 @@ echo "$appli_name ($1-$2) whatever; urgency=medium" > $changelog_file
 echo "" >> $changelog_file
 echo "  * Package created with FPM." >> $changelog_file
 echo "" >> $changelog_file
-echo " -- team-oscar.org <oscar@team-oscar.org>" >> $changelog_file
+echo " -- oscar-team.org <oscar@oscar-team.org>" >> $changelog_file
 gzip --best $changelog_file
 
 description='Open Source CPAP Analysis Reporter\n<extended description needed to be filled with the right value>'
@@ -106,9 +106,9 @@ fpm --input-type dir --output-type rpm  \
     --after-remove clean_rm.sh \
     --name ${appli_name} --version $1 --iteration $2 \
     --category misc               \
-    --maintainer " -- team-oscar.org <oscar@team-oscar.org>"   \
+    --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \
     --license GPL-v3                \
-    --vendor team-oscar.org    \
+    --vendor oscar-team.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
     -C ${temp_folder} \
