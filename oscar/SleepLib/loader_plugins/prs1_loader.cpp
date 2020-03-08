@@ -2713,6 +2713,9 @@ void PRS1Import::CreateEventChannels(const PRS1DataChunk* chunk)
 
 EventList* PRS1Import::GetImportChannel(ChannelID channel)
 {
+    if (!channel) {
+        qCritical() << this->sessionid << "channel in import table has not been added to schema!";
+    }
     EventList* C = m_importChannels[channel];
     if (C == nullptr) {
         C = session->AddEventList(channel, EVL_Event);
