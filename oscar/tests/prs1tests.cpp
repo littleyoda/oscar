@@ -395,31 +395,45 @@ void iterateTestCards(const QString & root, void (*action)(const QString &))
     QFileInfoList flist = dir.entryInfoList();
 
     // Look through each folder in the given root
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
+    for (auto & fi : flist) {
         if (fi.isDir()) {
             // If it contains a P-Series folder, it's a PRS1 SD card
             QDir pseries(fi.canonicalFilePath() + QDir::separator() + "P-Series");
+            if (!pseries.exists()) {
+                // Check for the all-caps version in case this is on a case-sensitive filesystem.
+                pseries = QDir(fi.canonicalFilePath() + QDir::separator() + "P-SERIES");
+            }
             if (pseries.exists()) {
                 pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
                 pseries.setSorting(QDir::Name);
                 QFileInfoList plist = pseries.entryInfoList();
 
                 // Look for machine directories (containing a PROP.TXT or properties.txt)
-                for (int j = 0; j < plist.size(); j++) {
-                    QFileInfo pfi = plist.at(j);
+                QFileInfoList propertyfiles;
+                for (auto & pfi : plist) {
                     if (pfi.isDir()) {
                         QString machinePath = pfi.canonicalFilePath();
                         QDir machineDir(machinePath);
                         QFileInfoList mlist = machineDir.entryInfoList();
-                        for (int k = 0; k < mlist.size(); k++) {
-                            QFileInfo mfi = mlist.at(k);
+                        for (auto & mfi : mlist) {
                             if (QDir::match("PROP*.TXT", mfi.fileName())) {
                                 // Found a properties file, this is a machine folder
-                                action(machinePath);
+                                propertyfiles.append(mfi);
                             }
                         }
                     }
+                }
+
+                // Sort machines from oldest to newest.
+                std::sort(propertyfiles.begin(), propertyfiles.end(),
+                    [](const QFileInfo & a, const QFileInfo & b)
+                {
+                    return a.lastModified() < b.lastModified();
+                });
+                // Process machine.
+                for (auto & propertyfile : propertyfiles) {
+                    QString machinePath = propertyfile.canonicalPath();
+                    action(machinePath);
                 }
             }
         }
