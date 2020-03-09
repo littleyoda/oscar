@@ -5366,8 +5366,9 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
         qWarning() << this->sessionid << "summary data too short:" << chunk_size;
         return false;
     }
-    // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 9, equipment-off
-    if (chunk_size < 75) UNEXPECTED_VALUE(chunk_size, ">= 75");
+    // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 2, equipment-off
+    // (And we've seen something similar in F5V3.)
+    if (chunk_size < 58) UNEXPECTED_VALUE(chunk_size, ">= 58");
 
     bool ok = true;
     int pos = 0;
@@ -6991,6 +6992,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
         return false;
     }
     // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 9, equipment-off
+    // (And we've seen something similar in F3V6.)
     if (chunk_size < 75) UNEXPECTED_VALUE(chunk_size, ">= 75");
 
     bool ok = true;
