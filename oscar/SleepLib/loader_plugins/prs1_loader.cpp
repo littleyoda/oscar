@@ -238,6 +238,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     // This first set says "(Philips Respironics)" intead of "(System One)" on official reports.
     { "251P", 0, 2, "REMstar Plus (System One)" },  // (brick)
     { "450P", 0, 3, "REMstar Pro (System One)" },
+    { "451P", 0, 2, "REMstar Pro (System One)" },
     { "451P", 0, 3, "REMstar Pro (System One)" },
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
