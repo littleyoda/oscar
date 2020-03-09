@@ -394,6 +394,12 @@ void copyPath(QString src, QString dst)
 
         if (!QFile::exists(destFile)) {
             QFile::copy(srcFile, destFile);
+            // TODO: Since copyPath is only used by loaders, it should
+            // build the list of files first, and then update the progress bar
+            // while copying.
+            // TODO: copyPath should also either hide the abort button
+            // or respond to it.
+            QCoreApplication::processEvents();
         }
     }
 }

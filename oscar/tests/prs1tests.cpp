@@ -395,32 +395,22 @@ void iterateTestCards(const QString & root, void (*action)(const QString &))
     QFileInfoList flist = dir.entryInfoList();
 
     // Look through each folder in the given root
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
+    for (auto & fi : flist) {
         if (fi.isDir()) {
-            // If it contains a P-Series folder, it's a PRS1 SD card
-            QDir pseries(fi.canonicalFilePath() + QDir::separator() + "P-Series");
-            if (pseries.exists()) {
-                pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-                pseries.setSorting(QDir::Name);
-                QFileInfoList plist = pseries.entryInfoList();
+            QStringList machinePaths = s_loader->FindMachinesOnCard(fi.canonicalFilePath());
 
-                // Look for machine directories (containing a PROP.TXT or properties.txt)
-                for (int j = 0; j < plist.size(); j++) {
-                    QFileInfo pfi = plist.at(j);
-                    if (pfi.isDir()) {
-                        QString machinePath = pfi.canonicalFilePath();
-                        QDir machineDir(machinePath);
-                        QFileInfoList mlist = machineDir.entryInfoList();
-                        for (int k = 0; k < mlist.size(); k++) {
-                            QFileInfo mfi = mlist.at(k);
-                            if (QDir::match("PROP*.TXT", mfi.fileName())) {
-                                // Found a properties file, this is a machine folder
-                                action(machinePath);
-                            }
-                        }
-                    }
-                }
+            // Tests should be run newest to oldest, since older sets tend to have more
+            // complete data. (These are usually previously cleared data in the Clear0/Cn
+            // directories.) The machines themselves will write out the summary data they
+            // remember when they see an empty folder, without event or waveform data.
+            // And since these tests (by design) overwrite existing output, we want the
+            // earlier (more complete) data to be what's written last.
+            //
+            // Since the loader itself keeps only the first set of data it sees for a session,
+            // we want to leave its earliest-to-latest ordering in place, and just reverse it
+            // here.
+            for (auto i = machinePaths.crbegin(); i != machinePaths.crend(); i++) {
+                action(*i);
             }
         }
     }

@@ -238,6 +238,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     // This first set says "(Philips Respironics)" intead of "(System One)" on official reports.
     { "251P", 0, 2, "REMstar Plus (System One)" },  // (brick)
     { "450P", 0, 3, "REMstar Pro (System One)" },
+    { "451P", 0, 2, "REMstar Pro (System One)" },
     { "451P", 0, 3, "REMstar Pro (System One)" },
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
@@ -402,73 +403,88 @@ bool isdigit(QChar c)
     return false;
 }
 
-const QString PR_STR_PSeries = "P-Series";
-
 
 // Tests path to see if it has (what looks like) a valid PRS1 folder structure
-bool PRS1Loader::Detect(const QString & path)
+// This is used both to detect newly inserted media and to decide which loader
+// to use after the user selects a folder.
+//
+// TODO: Ideally there should be a way to handle the two scenarios slightly
+// differently. In the latter case, it should clean up the selection and
+// return the canonical path if it detects one, allowing us to remove the
+// notification about selecting the root of the card. That kind of cleanup
+// wouldn't be appropriate when scanning devices.
+bool PRS1Loader::Detect(const QString & selectedPath)
 {
-    QString newpath = checkDir(path);
+    QString path = selectedPath;
+    if (GetPSeriesPath(path).isEmpty()) {
+        // Try up one level in case the user selected the P-Series folder within the SD card.
+        path = QFileInfo(path).canonicalPath();
+    }
 
-    return !newpath.isEmpty();
+    QStringList machines = FindMachinesOnCard(path);
+    return !machines.isEmpty();
 }
 
-
-QString PRS1Loader::checkDir(const QString & path)
+QString PRS1Loader::GetPSeriesPath(const QString & path)
 {
-    QString newpath = path;
-
-    newpath.replace("\\", "/");
-
-    if (!newpath.endsWith("/" + PR_STR_PSeries)) {
-        newpath = path + "/" + PR_STR_PSeries;
+    QString outpath = "";
+    QDir root(path);
+    QStringList dirs = root.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Hidden | QDir::NoSymLinks);
+    for (auto & dir : dirs) {
+        // We've seen P-Series, P-SERIES, and p-series, so we need to search for the directory
+        // in a way that won't break on a case-sensitive filesystem.
+        if (dir.toUpper() == "P-SERIES") {
+            outpath = path + QDir::separator() + dir;
+            break;
+        }
     }
+    return outpath;
+}
 
-    QDir dir(newpath);
+QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
+{
+    QStringList machinePaths;
 
-    if ((!dir.exists() || !dir.isReadable())) {
-        return QString();
-    }
-    qDebug() << "PRS1Loader::Detect path=" << newpath;
+    QString pseriesPath = this->GetPSeriesPath(cardPath);
+    QDir pseries(pseriesPath);
 
-    QFile lastfile(newpath+"/last.txt");
+    // If it contains a P-Series folder, it's a PRS1 SD card
+    if (!pseriesPath.isEmpty() && pseries.exists()) {
+        pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+        pseries.setSorting(QDir::Name);
+        QFileInfoList plist = pseries.entryInfoList();
 
-    bool exists = true;
-    if (!lastfile.exists()) {
-        lastfile.setFileName(newpath+"/LAST.TXT");
-        if (!lastfile.exists())
-            exists = false;
-    }
-
-    QString machpath;
-    if (exists) {
-        if (!lastfile.open(QIODevice::ReadOnly)) {
-            qDebug() << "PRS1Loader: last.txt exists but I couldn't open it!";
-        } else {
-            QTextStream ts(&lastfile);
-            QString serial = ts.readLine(64).trimmed();
-            lastfile.close();
-
-            machpath = newpath+"/"+serial;
-
-            if (!QDir(machpath).exists()) {
-                machpath = QString();
+        // Look for machine directories (containing a PROP.TXT or properties.txt)
+        QFileInfoList propertyfiles;
+        for (auto & pfi : plist) {
+            if (pfi.isDir()) {
+                QString machinePath = pfi.canonicalFilePath();
+                QDir machineDir(machinePath);
+                QFileInfoList mlist = machineDir.entryInfoList();
+                for (auto & mfi : mlist) {
+                    if (QDir::match("PROP*.TXT", mfi.fileName())) {
+                        // Found a properties file, this is a machine folder
+                        propertyfiles.append(mfi);
+                    }
+                }
             }
         }
-    }
 
-    if (machpath.isEmpty()) {
-        QDir dir(newpath);
-        QStringList dirs = dir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
-        if (dirs.size() > 0) {
-            machpath = dir.cleanPath(newpath+"/"+dirs[0]);
+        // Sort machines from oldest to newest.
+        std::sort(propertyfiles.begin(), propertyfiles.end(),
+            [](const QFileInfo & a, const QFileInfo & b)
+        {
+            return a.lastModified() < b.lastModified();
+        });
 
+        for (auto & propertyfile : propertyfiles) {
+            machinePaths.append(propertyfile.canonicalPath());
         }
     }
 
-
-    return machpath;
+    return machinePaths;
 }
+
 
 void parseModel(MachineInfo & info, const QString & modelnum)
 {
@@ -583,89 +599,44 @@ bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Ma
 
 MachineInfo PRS1Loader::PeekInfo(const QString & path)
 {
-    QString newpath = checkDir(path);
-    if (newpath.isEmpty())
+    QStringList machines = FindMachinesOnCard(path);
+    if (machines.isEmpty()) {
         return MachineInfo();
+    }
 
+    // Present information about the newest machine on the card.
+    QString newpath = machines.last();
+    
     MachineInfo info = newInfo();
-    info.serial = newpath.section("/", -1);
-
     if (!PeekProperties(info, newpath+"/properties.txt")) {
-        PeekProperties(info, newpath+"/PROP.TXT");
+        if (!PeekProperties(info, newpath+"/PROP.TXT")) {
+            qWarning() << "No properties file found in" << newpath;
+        }
     }
     return info;
 }
 
 
-int PRS1Loader::Open(const QString & dirpath)
+int PRS1Loader::Open(const QString & selectedPath)
 {
-    QString newpath;
-    QString path(dirpath);
-    path = path.replace("\\", "/");
-
-    if (path.endsWith("/" + PR_STR_PSeries)) {
-        newpath = path;
-    } else {
-        newpath = path + "/" + PR_STR_PSeries;
+    QString path = selectedPath;
+    if (GetPSeriesPath(path).isEmpty()) {
+        // Try up one level in case the user selected the P-Series folder within the SD card.
+        path = QFileInfo(path).canonicalPath();
     }
 
-    qDebug() << "PRS1Loader::Open path=" << newpath;
-
-    QDir dir(newpath);
-
-    if ((!dir.exists() || !dir.isReadable())) {
+    QStringList machines = FindMachinesOnCard(path);
+    // Return an error if no machines were found.
+    if (machines.isEmpty()) {
+        qDebug() << "No PRS1 machines found at" << path;
         return -1;
     }
 
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-    dir.setSorting(QDir::Name);
-    QFileInfoList flist = dir.entryInfoList();
-
-    QStringList SerialNumbers;
-    QStringList::iterator sn;
-
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
-        QString filename = fi.fileName();
-
-        if (fi.isDir() && (filename.size() > 4) && (isdigit(filename[1])) && (isdigit(filename[2]))) {
-            SerialNumbers.push_back(filename);
-        } else if (filename.toLower() == "last.txt") { // last.txt points to the current serial number
-            QString file = fi.canonicalFilePath();
-            QFile f(file);
-
-            if (!fi.isReadable()) {
-                qDebug() << "PRS1Loader: last.txt exists but I couldn't read it!";
-                continue;
-            }
-
-            if (!f.open(QIODevice::ReadOnly)) {
-                qDebug() << "PRS1Loader: last.txt exists but I couldn't open it!";
-                continue;
-            }
-
-            last = f.readLine(64);
-            last = last.trimmed();
-            f.close();
-        }
-    }
-
-    if (SerialNumbers.empty()) { return -1; }
-
+    // Import each machine, from oldest to newest.
     int c = 0;
-
-    for (sn = SerialNumbers.begin(); sn != SerialNumbers.end(); sn++) {
-        if ((*sn)[0].isLetter()) {
-            c += OpenMachine(newpath + "/" + *sn);
-        }
+    for (auto & machinePath : machines) {
+        c += OpenMachine(machinePath);
     }
-    // Serial numbers that don't start with a letter.
-    for (sn = SerialNumbers.begin(); sn != SerialNumbers.end(); sn++) {
-        if (!(*sn)[0].isLetter()) {
-            c += OpenMachine(newpath + "/" + *sn);
-        }
-    }
-
     return c;
 }
 
@@ -699,6 +670,9 @@ int PRS1Loader::OpenMachine(const QString & path)
     if (m == nullptr) {
         return -1;
     }
+
+    emit updateMessage(QObject::tr("Backing Up Files..."));
+    QCoreApplication::processEvents();
 
     QString backupPath = m->getBackupPath() + path.section("/", -2);
 
@@ -909,6 +883,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
         // Scan for individual session files
         for (int i = 0; i < flist.size(); i++) {
+#ifndef UNITTEST_MODE
+            QCoreApplication::processEvents();
+#endif
             if (isAborted()) {
                 qDebug() << "received abort signal";
                 break;
@@ -2713,6 +2690,9 @@ void PRS1Import::CreateEventChannels(const PRS1DataChunk* chunk)
 
 EventList* PRS1Import::GetImportChannel(ChannelID channel)
 {
+    if (!channel) {
+        qCritical() << this->sessionid << "channel in import table has not been added to schema!";
+    }
     EventList* C = m_importChannels[channel];
     if (C == nullptr) {
         C = session->AddEventList(channel, EVL_Event);
@@ -5386,8 +5366,9 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
         qWarning() << this->sessionid << "summary data too short:" << chunk_size;
         return false;
     }
-    // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 9, equipment-off
-    if (chunk_size < 75) UNEXPECTED_VALUE(chunk_size, ">= 75");
+    // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 2, equipment-off
+    // (And we've seen something similar in F5V3.)
+    if (chunk_size < 58) UNEXPECTED_VALUE(chunk_size, ">= 58");
 
     bool ok = true;
     int pos = 0;
@@ -7011,6 +6992,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
         return false;
     }
     // We've once seen a short summary with no mask-on/off: just equipment-on, settings, 9, equipment-off
+    // (And we've seen something similar in F3V6.)
     if (chunk_size < 75) UNEXPECTED_VALUE(chunk_size, ">= 75");
 
     bool ok = true;

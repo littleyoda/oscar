@@ -387,9 +387,6 @@ class PRS1Loader : public CPAPLoader
     PRS1Loader();
     virtual ~PRS1Loader();
 
-    //! \brief Examine path and return it back if it contains what looks to be a valid PRS1 SD card structure
-    QString checkDir(const QString & path);
-
     //! \brief Peek into PROP.TXT or properties.txt at given path, and return it as a normalized key/value hash
     bool PeekProperties(const QString & filename, QHash<QString,QString> & props);
     
@@ -443,6 +440,12 @@ class PRS1Loader : public CPAPLoader
   protected:
     QString last;
     QHash<QString, Machine *> PRS1List;
+
+    //! \brief Returns the path of the P-Series folder (whatever case) if present on the card
+    QString GetPSeriesPath(const QString & path);
+
+    //! \brief Returns the path for each machine detected on an SD card, from oldest to newest
+    QStringList FindMachinesOnCard(const QString & cardPath);
 
     //! \brief Opens the SD folder structure for this machine, scans for data files and imports any new sessions
     int OpenMachine(const QString & path);

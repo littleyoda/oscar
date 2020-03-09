@@ -338,8 +338,8 @@ void init()
 //  <channel id="0x111e" class="data" name="TestChan1" details="Debugging Channel #1" label="Test #1" unit="" color="pink"/>
 //  <channel id="0x111f" class="data" name="TestChan2" details="Debugging Channel #2" label="Test #2" unit="" color="blue"/>
 
-//  schema::channel.add(GRP_CPAP, ch=new Channel(CPAP_Test1 = 0x111e, DATA, MT_CPAP, SESSION, STR_GRAPH_TestChan1, QObject::tr("Debugging channel #1"), QObject::tr("Top secret internal stuff you're not supposed to see ;)"), QObject::tr("Test #1"),  QString(), INTEGER,  QColor("pink")));
-//  schema::channel.add(GRP_CPAP, ch=new Channel(CPAP_Test2 = 0x111f, DATA, MT_CPAP, SESSION, STR_GRAPH_TestChan2, QObject::tr("Debugging channel #2"), QObject::tr("Top secret internal stuff you're not supposed to see ;)"), QObject::tr("Test #2"),  QString(), INTEGER,  Qt::blue));
+    schema::channel.add(GRP_CPAP, ch=new Channel(CPAP_Test1 = 0x111e, DATA, MT_CPAP, SESSION, STR_GRAPH_TestChan1, QObject::tr("Debugging channel #1"), QObject::tr("Top secret internal stuff you're not supposed to see ;)"), QObject::tr("Test #1"),  QString(), INTEGER,  QColor("pink")));
+    schema::channel.add(GRP_CPAP, ch=new Channel(CPAP_Test2 = 0x111f, DATA, MT_CPAP, SESSION, STR_GRAPH_TestChan2, QObject::tr("Debugging channel #2"), QObject::tr("Top secret internal stuff you're not supposed to see ;)"), QObject::tr("Test #2"),  QString(), INTEGER,  Qt::blue));
 
     RMS9_E01 = schema::channel["RMS9_E01"].id();
     RMS9_E02 = schema::channel["RMS9_E02"].id();
