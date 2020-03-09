@@ -402,12 +402,18 @@ bool isdigit(QChar c)
     return false;
 }
 
-const QString PR_STR_PSeries = "P-Series";
-
 
 // Tests path to see if it has (what looks like) a valid PRS1 folder structure
-bool PRS1Loader::Detect(const QString & path)
+// This is used both to detect newly inserted media and to decide which loader
+// to use after the user selects a folder.
+bool PRS1Loader::Detect(const QString & selectedPath)
 {
+    QString path = selectedPath;
+    if (GetPSeriesPath(path).isEmpty()) {
+        // Try up one level in case the user selected the P-Series folder within the SD card.
+        path = QFileInfo(path).canonicalPath();
+    }
+
     QStringList machines = FindMachinesOnCard(path);
     return !machines.isEmpty();
 }
@@ -602,75 +608,26 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
 }
 
 
-int PRS1Loader::Open(const QString & dirpath)
+int PRS1Loader::Open(const QString & selectedPath)
 {
-    QString newpath;
-    QString path(dirpath);
-    path = path.replace("\\", "/");
-
-    if (path.endsWith("/" + PR_STR_PSeries)) {
-        newpath = path;
-    } else {
-        newpath = path + "/" + PR_STR_PSeries;
+    QString path = selectedPath;
+    if (GetPSeriesPath(path).isEmpty()) {
+        // Try up one level in case the user selected the P-Series folder within the SD card.
+        path = QFileInfo(path).canonicalPath();
     }
 
-    qDebug() << "PRS1Loader::Open path=" << newpath;
-
-    QDir dir(newpath);
-
-    if ((!dir.exists() || !dir.isReadable())) {
+    QStringList machines = FindMachinesOnCard(path);
+    // Return an error if no machines were found.
+    if (machines.isEmpty()) {
+        qDebug() << "No PRS1 machines found at" << path;
         return -1;
     }
 
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-    dir.setSorting(QDir::Name);
-    QFileInfoList flist = dir.entryInfoList();
-
-    QStringList SerialNumbers;
-    QStringList::iterator sn;
-
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
-        QString filename = fi.fileName();
-
-        if (fi.isDir() && (filename.size() > 4) && (isdigit(filename[1])) && (isdigit(filename[2]))) {
-            SerialNumbers.push_back(filename);
-        } else if (filename.toLower() == "last.txt") { // last.txt points to the current serial number
-            QString file = fi.canonicalFilePath();
-            QFile f(file);
-
-            if (!fi.isReadable()) {
-                qDebug() << "PRS1Loader: last.txt exists but I couldn't read it!";
-                continue;
-            }
-
-            if (!f.open(QIODevice::ReadOnly)) {
-                qDebug() << "PRS1Loader: last.txt exists but I couldn't open it!";
-                continue;
-            }
-
-            last = f.readLine(64);
-            last = last.trimmed();
-            f.close();
-        }
-    }
-
-    if (SerialNumbers.empty()) { return -1; }
-
+    // Import each machine, from oldest to newest.
     int c = 0;
-
-    for (sn = SerialNumbers.begin(); sn != SerialNumbers.end(); sn++) {
-        if ((*sn)[0].isLetter()) {
-            c += OpenMachine(newpath + "/" + *sn);
-        }
+    for (auto & machinePath : machines) {
+        c += OpenMachine(machinePath);
     }
-    // Serial numbers that don't start with a letter.
-    for (sn = SerialNumbers.begin(); sn != SerialNumbers.end(); sn++) {
-        if (!(*sn)[0].isLetter()) {
-            c += OpenMachine(newpath + "/" + *sn);
-        }
-    }
-
     return c;
 }
 
@@ -704,6 +661,9 @@ int PRS1Loader::OpenMachine(const QString & path)
     if (m == nullptr) {
         return -1;
     }
+
+    emit updateMessage(QObject::tr("Backing Up Files..."));
+    QCoreApplication::processEvents();
 
     QString backupPath = m->getBackupPath() + path.section("/", -2);
 
