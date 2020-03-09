@@ -444,6 +444,9 @@ class PRS1Loader : public CPAPLoader
     QString last;
     QHash<QString, Machine *> PRS1List;
 
+    //! \brief Returns the path of the P-Series folder (whatever case) if present on the card
+    QString GetPSeriesPath(const QString & path);
+
     //! \brief Returns the path for each machine detected on an SD card, from oldest to newest
     QStringList FindMachinesOnCard(const QString & cardPath);
 

@@ -470,18 +470,31 @@ QString PRS1Loader::checkDir(const QString & path)
     return machpath;
 }
 
+QString PRS1Loader::GetPSeriesPath(const QString & path)
+{
+    QString outpath = "";
+    QDir root(path);
+    QStringList dirs = root.entryList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Hidden | QDir::NoSymLinks);
+    for (auto & dir : dirs) {
+        // We've seen P-Series, P-SERIES, and p-series, so we need to search for the directory
+        // in a way that won't break on a case-sensitive filesystem.
+        if (dir.toUpper() == "P-SERIES") {
+            outpath = path + QDir::separator() + dir;
+            break;
+        }
+    }
+    return outpath;
+}
 
 QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
 {
     QStringList machinePaths;
 
+    QString pseriesPath = this->GetPSeriesPath(cardPath);
+    QDir pseries(pseriesPath);
+
     // If it contains a P-Series folder, it's a PRS1 SD card
-    QDir pseries(cardPath + QDir::separator() + "P-Series");
-    if (!pseries.exists()) {
-        // Check for the all-caps version in case this is on a case-sensitive filesystem.
-        pseries = QDir(cardPath + QDir::separator() + "P-SERIES");
-    }
-    if (pseries.exists()) {
+    if (!pseriesPath.isEmpty() && pseries.exists()) {
         pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
         pseries.setSorting(QDir::Name);
         QFileInfoList plist = pseries.entryInfoList();
