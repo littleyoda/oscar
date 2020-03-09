@@ -387,9 +387,6 @@ class PRS1Loader : public CPAPLoader
     PRS1Loader();
     virtual ~PRS1Loader();
 
-    //! \brief Examine path and return it back if it contains what looks to be a valid PRS1 SD card structure
-    QString checkDir(const QString & path);
-
     //! \brief Peek into PROP.TXT or properties.txt at given path, and return it as a normalized key/value hash
     bool PeekProperties(const QString & filename, QHash<QString,QString> & props);
     

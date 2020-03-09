@@ -408,66 +408,8 @@ const QString PR_STR_PSeries = "P-Series";
 // Tests path to see if it has (what looks like) a valid PRS1 folder structure
 bool PRS1Loader::Detect(const QString & path)
 {
-    QString newpath = checkDir(path);
-
-    return !newpath.isEmpty();
-}
-
-
-QString PRS1Loader::checkDir(const QString & path)
-{
-    QString newpath = path;
-
-    newpath.replace("\\", "/");
-
-    if (!newpath.endsWith("/" + PR_STR_PSeries)) {
-        newpath = path + "/" + PR_STR_PSeries;
-    }
-
-    QDir dir(newpath);
-
-    if ((!dir.exists() || !dir.isReadable())) {
-        return QString();
-    }
-    qDebug() << "PRS1Loader::Detect path=" << newpath;
-
-    QFile lastfile(newpath+"/last.txt");
-
-    bool exists = true;
-    if (!lastfile.exists()) {
-        lastfile.setFileName(newpath+"/LAST.TXT");
-        if (!lastfile.exists())
-            exists = false;
-    }
-
-    QString machpath;
-    if (exists) {
-        if (!lastfile.open(QIODevice::ReadOnly)) {
-            qDebug() << "PRS1Loader: last.txt exists but I couldn't open it!";
-        } else {
-            QTextStream ts(&lastfile);
-            QString serial = ts.readLine(64).trimmed();
-            lastfile.close();
-
-            machpath = newpath+"/"+serial;
-
-            if (!QDir(machpath).exists()) {
-                machpath = QString();
-            }
-        }
-    }
-
-    if (machpath.isEmpty()) {
-        QDir dir(newpath);
-        QStringList dirs = dir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
-        if (dirs.size() > 0) {
-            machpath = dir.cleanPath(newpath+"/"+dirs[0]);
-
-        }
-    }
-
-
-    return machpath;
+    QStringList machines = FindMachinesOnCard(path);
+    return !machines.isEmpty();
 }
 
 QString PRS1Loader::GetPSeriesPath(const QString & path)
@@ -644,13 +586,15 @@ bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Ma
 
 MachineInfo PRS1Loader::PeekInfo(const QString & path)
 {
-    QString newpath = checkDir(path);
-    if (newpath.isEmpty())
+    QStringList machines = FindMachinesOnCard(path);
+    if (machines.isEmpty()) {
         return MachineInfo();
+    }
 
+    // Present information about the newest machine on the card.
+    QString newpath = machines.last();
+    
     MachineInfo info = newInfo();
-    info.serial = newpath.section("/", -1);
-
     if (!PeekProperties(info, newpath+"/properties.txt")) {
         PeekProperties(info, newpath+"/PROP.TXT");
     }
@@ -970,6 +914,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
         // Scan for individual session files
         for (int i = 0; i < flist.size(); i++) {
+#ifndef UNITTEST_MODE
+            QCoreApplication::processEvents();
+#endif
             if (isAborted()) {
                 qDebug() << "received abort signal";
                 break;
