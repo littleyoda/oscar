@@ -470,6 +470,54 @@ QString PRS1Loader::checkDir(const QString & path)
     return machpath;
 }
 
+
+QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
+{
+    QStringList machinePaths;
+
+    // If it contains a P-Series folder, it's a PRS1 SD card
+    QDir pseries(cardPath + QDir::separator() + "P-Series");
+    if (!pseries.exists()) {
+        // Check for the all-caps version in case this is on a case-sensitive filesystem.
+        pseries = QDir(cardPath + QDir::separator() + "P-SERIES");
+    }
+    if (pseries.exists()) {
+        pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+        pseries.setSorting(QDir::Name);
+        QFileInfoList plist = pseries.entryInfoList();
+
+        // Look for machine directories (containing a PROP.TXT or properties.txt)
+        QFileInfoList propertyfiles;
+        for (auto & pfi : plist) {
+            if (pfi.isDir()) {
+                QString machinePath = pfi.canonicalFilePath();
+                QDir machineDir(machinePath);
+                QFileInfoList mlist = machineDir.entryInfoList();
+                for (auto & mfi : mlist) {
+                    if (QDir::match("PROP*.TXT", mfi.fileName())) {
+                        // Found a properties file, this is a machine folder
+                        propertyfiles.append(mfi);
+                    }
+                }
+            }
+        }
+
+        // Sort machines from oldest to newest.
+        std::sort(propertyfiles.begin(), propertyfiles.end(),
+            [](const QFileInfo & a, const QFileInfo & b)
+        {
+            return a.lastModified() < b.lastModified();
+        });
+
+        for (auto & propertyfile : propertyfiles) {
+            machinePaths.append(propertyfile.canonicalPath());
+        }
+    }
+
+    return machinePaths;
+}
+
+
 void parseModel(MachineInfo & info, const QString & modelnum)
 {
     info.modelnumber = modelnum;

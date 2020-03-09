@@ -397,44 +397,20 @@ void iterateTestCards(const QString & root, void (*action)(const QString &))
     // Look through each folder in the given root
     for (auto & fi : flist) {
         if (fi.isDir()) {
-            // If it contains a P-Series folder, it's a PRS1 SD card
-            QDir pseries(fi.canonicalFilePath() + QDir::separator() + "P-Series");
-            if (!pseries.exists()) {
-                // Check for the all-caps version in case this is on a case-sensitive filesystem.
-                pseries = QDir(fi.canonicalFilePath() + QDir::separator() + "P-SERIES");
-            }
-            if (pseries.exists()) {
-                pseries.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-                pseries.setSorting(QDir::Name);
-                QFileInfoList plist = pseries.entryInfoList();
+            QStringList machinePaths = s_loader->FindMachinesOnCard(fi.canonicalFilePath());
 
-                // Look for machine directories (containing a PROP.TXT or properties.txt)
-                QFileInfoList propertyfiles;
-                for (auto & pfi : plist) {
-                    if (pfi.isDir()) {
-                        QString machinePath = pfi.canonicalFilePath();
-                        QDir machineDir(machinePath);
-                        QFileInfoList mlist = machineDir.entryInfoList();
-                        for (auto & mfi : mlist) {
-                            if (QDir::match("PROP*.TXT", mfi.fileName())) {
-                                // Found a properties file, this is a machine folder
-                                propertyfiles.append(mfi);
-                            }
-                        }
-                    }
-                }
-
-                // Sort machines from oldest to newest.
-                std::sort(propertyfiles.begin(), propertyfiles.end(),
-                    [](const QFileInfo & a, const QFileInfo & b)
-                {
-                    return a.lastModified() < b.lastModified();
-                });
-                // Process machine.
-                for (auto & propertyfile : propertyfiles) {
-                    QString machinePath = propertyfile.canonicalPath();
-                    action(machinePath);
-                }
+            // Tests should be run newest to oldest, since older sets tend to have more
+            // complete data. (These are usually previously cleared data in the Clear0/Cn
+            // directories.) The machines themselves will write out the summary data they
+            // remember when they see an empty folder, without event or waveform data.
+            // And since these tests (by design) overwrite existing output, we want the
+            // earlier (more complete) data to be what's written last.
+            //
+            // Since the loader itself keeps only the first set of data it sees for a session,
+            // we want to leave its earliest-to-latest ordering in place, and just reverse it
+            // here.
+            for (auto i = machinePaths.crbegin(); i != machinePaths.crend(); i++) {
+                action(*i);
             }
         }
     }
