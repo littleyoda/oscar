@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>OSCAR %1</source>
-        <translation>OSCAR %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -106,7 +106,7 @@
     </message>
     <message>
         <source> i </source>
-        <translation>.i.</translation>
+        <translation>Italique</translation>
     </message>
     <message>
         <source>Big</source>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>B.M.I.</source>
-        <translation>B.M.I.</translation>
+        <translation>I.M.C.</translation>
     </message>
     <message>
         <source>Sleep Stage Sessions</source>
@@ -218,7 +218,7 @@
     </message>
     <message>
         <source>CPAP Sessions</source>
-        <translation>Sessions CPAP</translation>
+        <translation>Sessions PPC</translation>
     </message>
     <message>
         <source>Medium</source>
@@ -473,7 +473,7 @@
     </message>
     <message>
         <source>Event</source>
-        <translation>Évènement</translation>
+        <translation>Évènements</translation>
     </message>
     <message>
         <source>Start</source>
@@ -769,7 +769,7 @@
     </message>
     <message>
         <source>Online Users &amp;Guide</source>
-        <translation>&amp;Guide utilisateur en ligne</translation>
+        <translation>&amp;Guide de l&apos;utilisateur en ligne</translation>
     </message>
     <message>
         <source>View &amp;Welcome</source>
@@ -1181,7 +1181,7 @@
     </message>
     <message>
         <source>&amp;Maximize Toggle</source>
-        <translation>&amp;Maximiser le bouton</translation>
+        <translation>&amp;Plein écran</translation>
     </message>
     <message>
         <source>Maximize window</source>
@@ -1285,7 +1285,7 @@
     </message>
     <message>
         <source>F3</source>
-        <translation>F3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 (Profile: %2)</source>
@@ -1513,7 +1513,7 @@
     </message>
     <message>
         <source>CPAP Mode</source>
-        <translation>Mode CPAP</translation>
+        <translation>Mode PPC</translation>
     </message>
     <message>
         <source>Select Country</source>
@@ -1910,7 +1910,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Contec CMS50D+ devices do not have an internal clock, and do not record a starting time. If you do not have a CPAP session to link a recording to, you will have to enter the start time manually after the import process is completed.</source>
-        <translation>Le Contec CMS50D+ n&apos;a pas d&apos;horloge interne et n&apos;enregistre donc pas l&apos;horaire de départ. Si vous n&apos;avez pas de session de PPC à lier avec, vous allez devoir entrer l&apos;horaire de départ manuellement après import.</translation>
+        <translation>Le Contec CMS50D+ n&apos;a pas d&apos;horloge interne et donc, n&apos;enregistre pas l&apos;horaire de départ. Si vous n&apos;avez pas de session de PPC à lier avec, vous allez devoir entrer l&apos;horaire de départ manuellement après import.</translation>
     </message>
     <message>
         <source>HH:mm:ssap</source>
@@ -1998,7 +1998,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Pulse Oximeters are medical devices used to measure blood oxygen saturation. During extended Apnea events and abnormal breathing patterns, blood oxygen saturation levels can drop significantly, and can indicate issues that need medical attention.</source>
-        <translation>Les oxymètres sont des appareils médicaux pour mesurer la saturation en oxygène du sang. Pendant de longues apnées et des respirations anormales, la saturation du sang en oxygène peut baisser significativement et indiquer un besoin de consultation médicale.</translation>
+        <translation>Les oxymètres sont des appareils médicaux pour mesurer la saturation en oxygène du sang. Pendant de longues apnées ou lors de respirations anormales, la saturation du sang en oxygène peut baisser significativement et indiquer un besoin de consultation médicale.</translation>
     </message>
     <message>
         <source>Start Time</source>
@@ -2421,7 +2421,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
-        <translation>% de restriction de flux à partir de la valeur médiane.
+        <translation>% de restriction de flux à partir de la valeur moyenne.
 Une valeur de 20% est adéquate pour détecter les apnées. </translation>
     </message>
     <message>
@@ -2430,7 +2430,7 @@ Une valeur de 20% est adéquate pour détecter les apnées. </translation>
     </message>
     <message>
         <source>Session Storage Options</source>
-        <translation>Option de stockage des sessions</translation>
+        <translation>Options de stockage des sessions</translation>
     </message>
     <message>
         <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
@@ -2454,14 +2454,14 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Le marquage personnalisé est une méthode expérimentale de détection des évènements ratés par la machine. Il ne sont &lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;b&gt;pas&lt;/b&gt;&lt;/span&gt; pris en compte dans l&apos;IAH (Index d&apos;Apnées et Hypopnées).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Le marquage personnalisé est une méthode expérimentale de détection des évènements ratés par la machine. Il ne sont &lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;b&gt;pas&lt;/b&gt;&lt;/span&gt; pris en compte dans l&apos;IAH (Index des Apnées et Hypopnées).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the machine missed.
 This option must be enabled before import, otherwise a purge is required.</source>
         <translation>Active/désactive le marquage amélioré expérimental.
-Il permet de détecter des évènements ratés par certaines machines.
+Permet de détecter des évènements ratés par certaines machines.
 Option à activer avant import, sinon une purge est nécessaire.</translation>
     </message>
     <message>
@@ -2514,7 +2514,7 @@ Option à activer avant import, sinon une purge est nécessaire.</translation>
     </message>
     <message>
         <source> L/min</source>
-        <translation> L/min</translation>
+        <translation> l/min</translation>
     </message>
     <message>
         <source>Flag leaks over threshold</source>
@@ -2566,7 +2566,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Memory and Startup Options</source>
-        <translation>Options Mémoire et Démarrage</translation>
+        <translation>Options mémoire et démarrage</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -2658,7 +2658,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median is recommended for ResMed users.</source>
-        <translation>Médian est recommandé pour les machines ResMed.</translation>
+        <translation>Moyenne est recommandé pour les machines ResMed.</translation>
     </message>
     <message>
         <source>Oximeter Events</source>
@@ -2686,7 +2686,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median</source>
-        <translation>Médian</translation>
+        <translation>Moyenne</translation>
     </message>
     <message>
         <source>Flag rapid changes in oximetry stats</source>
@@ -2856,7 +2856,7 @@ Si vous utilisez des masques différents, utilisez plutôt la valeur moyenne, ce
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note : N&apos;est pas destiné aux corrections de fuseau horaire ! Assurez-vous que l&apos;horloge PPC  et le fuseau horaire du système d&apos;exploitation sont correctement synchronisés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note : n&apos;est pas destiné aux corrections de fuseau horaire ! Assurez-vous que l&apos;horloge PPC  et le fuseau horaire du système d&apos;exploitation sont correctement synchronisés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Other Visual Settings</source>
@@ -2954,7 +2954,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce paramètre conserve les données de forme d&apos;onde et d&apos;évènements en mémoire après utilisation pour accélérer les jours de revisite.&lt;/p&gt;&lt;p&gt;Ce n&apos;est pas vraiment une option nécessaire, car votre système d&apos;exploitation garde en cache les fichiers déjà lus .&lt;/p&gt;&lt;p&gt;Il est recommandé de le laisser décoché, à moins que votre ordinateur ne dispose d&apos;une grande quantité de mémoire..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce paramètre conserve les données de forme d&apos;ondes et d&apos;évènements en mémoire après utilisation pour accélérer les jours de revisite.&lt;/p&gt;&lt;p&gt;Ce n&apos;est pas vraiment une option nécessaire, car votre système d&apos;exploitation garde en cache les fichiers déjà lus .&lt;/p&gt;&lt;p&gt;Il est recommandé de le laisser décoché, à moins que votre ordinateur ne dispose d&apos;une grande quantité de mémoire...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Changes to the following settings needs a restart, but not a recalc.</source>
@@ -3331,10 +3331,6 @@ OSCAR peut garder ces données si vous devez réinstaller. (Hautement recommand�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Always save screenshots in the OSCAR Data folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3358,9 +3354,13 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Le mode &quot;temps réel&quot; (à l&apos;aide d&apos;un câble série) est un moyen d&apos;obtenir une synchronisation précise sur l&apos;oxymètre CMS50, mais ne contrebalance pas la dérive de l&apos;horloge PPC. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Si vous démarrez votre enregistrement de l&apos;oxymètre &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactement &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;en même temps que votre machine PPC, la synchronisation fonctionnera... &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Si vous démarrez l&apos;enregistrement de l&apos;oxymètre &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactement &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;en même temps que votre machine PPC, la synchronisation fonctionnera... &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Le processus d&apos;importation en série prend l&apos;heure de début de la première session PPC de la nuit précédente. (N&apos;oubliez pas d&apos;importer vos données CPAP en premier !)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {2&apos;?} {7.84158p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {600;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {2R?} {10p?} {600;?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {10p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?}</translation>
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Le processus d&apos;importation en série prend l&apos;heure de début de la première session PPC de la nuit précédente. (N&apos;oubliez pas d&apos;importer vos données PPC en premier !)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {2&apos;?} {7.84158p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {600;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {2R?} {10p?} {600;?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {10p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?}</translation>
+    </message>
+    <message>
+        <source>Always save screenshots in the OSCAR Data folder</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No CPAP machines detected</source>
@@ -3630,11 +3630,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Hide disk usage information</source>
-        <translation>Cache les informations d&apos;utilisation disque</translation>
+        <translation>Cacher les informations d&apos;utilisation disque</translation>
     </message>
     <message>
         <source>Show disk usage information</source>
-        <translation>Affiche les informations d&apos;utilisation disque</translation>
+        <translation>Afficher les informations d&apos;utilisation disque</translation>
     </message>
     <message>
         <source>Name: %1, %2</source>
@@ -3916,7 +3916,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>BMI</source>
-        <translation>BMI</translation>
+        <translation>IMC</translation>
     </message>
     <message>
         <source>CAI</source>
@@ -3988,7 +3988,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Max</source>
-        <translation>Max</translation>
+        <translation>max</translation>
     </message>
     <message>
         <source>May</source>
@@ -3996,11 +3996,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Med</source>
-        <translation>Mil</translation>
+        <translation>moy</translation>
     </message>
     <message>
         <source>Min</source>
-        <translation>Min</translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>Nov</source>
@@ -4096,7 +4096,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Min EPAP</source>
-        <translation>EPAP min</translation>
+        <translation>EPAP mini</translation>
     </message>
     <message>
         <source>EPAP</source>
@@ -4112,7 +4112,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Min IPAP</source>
-        <translation>IPAP min</translation>
+        <translation>IPAP mini</translation>
     </message>
     <message>
         <source>IPAP</source>
@@ -4240,11 +4240,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>L/min</source>
-        <translation>L/min</translation>
+        <translation>l/min</translation>
     </message>
     <message>
         <source>Hours</source>
-        <translation>Heures</translation>
+        <translation>Durée</translation>
     </message>
     <message>
         <source>MD300</source>
@@ -4284,7 +4284,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>W-Avg</source>
-        <translation>Moyenne W</translation>
+        <translation>moyenne W</translation>
     </message>
     <message>
         <source>Snore</source>
@@ -4316,7 +4316,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Hypopnea</source>
-        <translation>Hypopnée</translation>
+        <translation>hypopnées</translation>
     </message>
     <message>
         <source>ratio</source>
@@ -4340,7 +4340,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Clear Airway</source>
-        <translation>Centrale</translation>
+        <translation>apnées centrales</translation>
     </message>
     <message>
         <source>Respironics</source>
@@ -4420,7 +4420,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ramp Event</source>
-        <translation>Évènement de rampe.</translation>
+        <translation>Évènement de rampe</translation>
     </message>
     <message>
         <source>SensAwake feature will reduce pressure when waking is detected.</source>
@@ -4739,7 +4739,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Median</source>
-        <translation>Médian</translation>
+        <translation>Moyenne</translation>
     </message>
     <message>
         <source>Fixed %1 (%2)</source>
@@ -4747,7 +4747,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Min %1</source>
-        <translation>%1 Min</translation>
+        <translation>%1 min</translation>
     </message>
     <message>
         <source>Could not find explorer.exe in path to launch Windows Explorer.</source>
@@ -4771,7 +4771,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>PS Min</source>
-        <translation>PS min</translation>
+        <translation>PS mini</translation>
     </message>
     <message>
         <source>Database Outdated
@@ -4871,7 +4871,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>Event Flags</source>
-        <translation>Évènement</translation>
+        <translation>Évènements</translation>
     </message>
     <message>
         <source>A few breaths automatically starts machine</source>
@@ -4895,7 +4895,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>CPAP Mode</source>
-        <translation>Mode CPAP</translation>
+        <translation>Mode PPC</translation>
     </message>
     <message>
         <source>SmartFlex Settings</source>
@@ -4911,11 +4911,11 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>Pin %1 Graph</source>
-        <translation>Attacher le graph. %1</translation>
+        <translation>Attacher le graphique %1</translation>
     </message>
     <message>
         <source>Unpin %1 Graph</source>
-        <translation>Détacher le graph %1</translation>
+        <translation>Détacher le graphique %1</translation>
     </message>
     <message>
         <source>Hours: %1h, %2m, %3s</source>
@@ -4969,7 +4969,7 @@ Début : %2</translation>
     </message>
     <message>
         <source>Pillows</source>
-        <translation>Oreillers</translation>
+        <translation>Coussinets</translation>
     </message>
     <message>
         <source>%1
@@ -5265,7 +5265,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Obstructive</source>
-        <translation>Apnée obstructive</translation>
+        <translation>apnées obstructives</translation>
     </message>
     <message>
         <source>Pressure Max</source>
@@ -5273,7 +5273,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Pressure Min</source>
-        <translation>Pression min</translation>
+        <translation>Pression mini</translation>
     </message>
     <message>
         <source>(%2 day ago)</source>
@@ -5321,7 +5321,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
-        <translation>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
+        <translation>Mini EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
         <source>System One</source>
@@ -5531,7 +5531,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Machine Information</source>
-        <translation>Informations de la machine</translation>
+        <translation>Informations machine</translation>
     </message>
     <message>
         <source>Pressure Support Maximum</source>
@@ -5544,7 +5544,7 @@ Heures : %1</translation>
     <message>
         <source>: %1 hours, %2 minutes, %3 seconds
 </source>
-        <translation>: %1 heures; %2 minutes, %3 secondes
+        <translation>: %1 heure(s); %2 minute(s), %3 seconde(s)
 </translation>
     </message>
     <message>
@@ -5963,11 +5963,11 @@ corporelle</translation>
     </message>
     <message>
         <source>Pop out Graph</source>
-        <translation>Graph. de réveil</translation>
+        <translation>Graphique</translation>
     </message>
     <message>
         <source>Popout %1 Graph</source>
-        <translation>Graph. de réveil %1</translation>
+        <translation>Graphique %1</translation>
     </message>
     <message>
         <source> m</source>
@@ -6179,7 +6179,7 @@ corporelle</translation>
     </message>
     <message>
         <source>If you are using cloud storage, make sure OSCAR is closed and syncing has completed first on the other computer before proceeding.</source>
-        <translation>Si vous utilisez un stockage en cloud, assurez-vous qu&apos;OSCAR est fermé et que la synchronisation est terminée sur l&apos;autre ordinateur avant de poursuivre.</translation>
+        <translation>Si vous utilisez un stockage en cloud, assurez-vous que OSCAR est fermé et que la synchronisation est terminée sur l&apos;autre ordinateur avant de poursuivre.</translation>
     </message>
     <message>
         <source>You must run the OSCAR Migration Tool</source>
@@ -6417,23 +6417,23 @@ corporelle</translation>
     </message>
     <message>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="unfinished">90% {1?}</translation>
     </message>
     <message>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="unfinished">90% {2?}</translation>
     </message>
     <message>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="unfinished">90% {3?}</translation>
     </message>
     <message>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="unfinished">90% {4?}</translation>
     </message>
     <message>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="unfinished">90% {5?}</translation>
     </message>
     <message>
         <source>PRS1 Humidifier Setting</source>
@@ -6445,7 +6445,7 @@ corporelle</translation>
     </message>
     <message>
         <source>12mm</source>
-        <translation>12mm</translation>
+        <translation type="unfinished">22mm {12m?}</translation>
     </message>
     <message>
         <source>PRS1 Unknown</source>
@@ -6453,6 +6453,10 @@ corporelle</translation>
     </message>
     <message>
         <source>Unknown PRS1 span 0x0E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parsing STR.edf records...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6473,6 +6477,14 @@ corporelle</translation>
     </message>
     <message>
         <source>OSCAR %1 needs to upgrade its database for %2 %3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Pressure (High frequency)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A ResMed data item: Trigger Cycle Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6501,19 +6513,7 @@ corporelle</translation>
     </message>
     <message>
         <source>%1 %2 %3</source>
-        <translation>%1 %2 %3</translation>
-    </message>
-    <message>
-        <source>Parsing STR.edf records...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask Pressure (High frequency)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A ResMed data item: Trigger Cycle Event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 %2 %3</translation>
     </message>
 </context>
 <context>
@@ -6586,7 +6586,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Max %1</source>
-        <translation>%1 Max</translation>
+        <translation>%1 max</translation>
     </message>
     <message>
         <source>%1 Median</source>
@@ -6594,7 +6594,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Min %1</source>
-        <translation>%1 Min</translation>
+        <translation>%1 mini</translation>
     </message>
     <message>
         <source>Most Recent</source>
@@ -6602,7 +6602,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Pressure Settings</source>
-        <translation>Réglage de la pression</translation>
+        <translation>Réglages de la pression</translation>
     </message>
     <message>
         <source>Pressure Statistics</source>
@@ -6650,7 +6650,7 @@ corporelle</translation>
     </message>
     <message>
         <source>%1 days of %2 Data, between %3 and %4</source>
-        <translation>%1 jours de %2 , entre %3 et %4</translation>
+        <translation>%1 jours de %2, entre %3 et %4</translation>
     </message>
     <message>
         <source>Last Session</source>
@@ -6670,7 +6670,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Average Hours per Night</source>
-        <translation>Moyenne des heures par nuit</translation>
+        <translation>Moyenne d&apos;utilisation par nuit</translation>
     </message>
     <message>
         <source>Name: %1, %2</source>
@@ -6678,7 +6678,7 @@ corporelle</translation>
     </message>
     <message>
         <source>DOB: %1</source>
-        <translation>Date de naissance %1</translation>
+        <translation>Date de naissance : %1</translation>
     </message>
     <message>
         <source>Phone: %1</source>
@@ -6806,11 +6806,11 @@ corporelle</translation>
     </message>
     <message>
         <source>Compliance (%1 hrs/day)</source>
-        <translation>Conformité : (%1 hrs/jour)</translation>
+        <translation>Conformité (%1 heures/jour)</translation>
     </message>
     <message>
         <source>Changes to Machine Settings</source>
-        <translation>Changements des réglages machine</translation>
+        <translation>Changements de réglages machine</translation>
     </message>
     <message>
         <source>No data found?!?</source>
@@ -6976,7 +6976,7 @@ corporelle</translation>
     </message>
     <message>
         <source>The last time you used your %1...</source>
-        <translation>La dernière fois que vous avez utilisé votre %1 ...</translation>
+        <translation>Dernière utilisation de la machine %1  :</translation>
     </message>
     <message>
         <source>last night</source>
@@ -6992,15 +6992,15 @@ corporelle</translation>
     </message>
     <message>
         <source>was %1 (on %2)</source>
-        <translation>c&apos;était %1 (le %2)</translation>
+        <translation>%1 (%2)</translation>
     </message>
     <message>
         <source>%1 hours, %2 minutes and %3 seconds</source>
-        <translation>%1 heures, %2 minutes et %3 secondes</translation>
+        <translation>%1 heure(s), %2 minute(s) et %3 seconde(s)</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
-        <translation>Votre machine a fonctionné pendant %1.</translation>
+        <translation type="unfinished">La machine a fonctionné pendant %1</translation>
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
@@ -7024,15 +7024,15 @@ corporelle</translation>
     </message>
     <message>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation>Vous aviez un IAH de %1, qui est %2 votre moyenne quotidienne de %4 des %3 derniers jours.</translation>
+        <translation>IAH de %1 (%2 la moyenne quotidienne (%4) des %3 derniers jours)</translation>
     </message>
     <message>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>Votre machine était en dessous de %1-%2 %3 pendant %4% du temps.</translation>
+        <translation>La machine était en dessous de %1-%2 %3 pendant %4% du temps</translation>
     </message>
     <message>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation>Vos fuites moyennes étaient de %1 %2, ce qui est %3 votre moyenne quotidienne de %5 des %4 derniers jours.</translation>
+        <translation>Fuites moyennes de %1 %2 (%3 à la moyenne quotidienne (%5) des %4 derniers jours)</translation>
     </message>
     <message>
         <source>No CPAP data has been imported yet.</source>
@@ -7056,27 +7056,27 @@ corporelle</translation>
     </message>
     <message>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation>Votre appareil PPC a utilisé une pression d&apos;air constante de %1 %2</translation>
+        <translation>L&apos;appareil PPC a utilisé une pression d&apos;air constante de %1 %2</translation>
     </message>
     <message>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Votre pression a été inférieure à %1 %2 pendant %3% du temps.</translation>
+        <translation>La pression a été inférieure à %1 %2 pendant %3% du temps</translation>
     </message>
     <message>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation>Votre appareil a utilisé une pression d&apos;air constante de %1 %2 %3.</translation>
+        <translation>L&apos;appareil a utilisé une pression d&apos;air constante de %1 %2 %3.</translation>
     </message>
     <message>
         <source>Your EPAP pressure fixed at %1 %2.</source>
-        <translation>Votre pression EPAP s&apos;est fixé %1 %2.</translation>
+        <translation>La pression EPAP s&apos;est fixée %1 %2.</translation>
     </message>
     <message>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Votre pression IPAP était en dessous de %1 %2 pendant %3% du temps.</translation>
+        <translation>Pression IPAP en dessous de %1 %2 pendant %3% du temps</translation>
     </message>
     <message>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Votre pression EPAP était en dessous de %1 %2 pendant %3% du temps.</translation>
+        <translation>Pression EPAP en dessous de %1 %2 pendant %3% du temps</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7094,7 +7094,7 @@ corporelle</translation>
     <name>gGraphView</name>
     <message>
         <source>Clone %1 Graph</source>
-        <translation>Cloner le graphe %1</translation>
+        <translation>Cloner le graphique %1</translation>
     </message>
     <message>
         <source>Oximeter Overlays</source>

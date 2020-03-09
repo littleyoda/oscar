@@ -6829,7 +6829,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
         <source>A ResMed data item: Trigger Cycle Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Um ítem de dados ResMed:Disparo Evento Cíclico</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="283"/>
@@ -7229,7 +7229,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="218"/>
         <source>Mask Pressure (High frequency)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pressão da Máscara (Alta frequencia)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="243"/>
