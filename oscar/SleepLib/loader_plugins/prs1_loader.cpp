@@ -406,6 +406,12 @@ bool isdigit(QChar c)
 // Tests path to see if it has (what looks like) a valid PRS1 folder structure
 // This is used both to detect newly inserted media and to decide which loader
 // to use after the user selects a folder.
+//
+// TODO: Ideally there should be a way to handle the two scenarios slightly
+// differently. In the latter case, it should clean up the selection and
+// return the canonical path if it detects one, allowing us to remove the
+// notification about selecting the root of the card. That kind of cleanup
+// wouldn't be appropriate when scanning devices.
 bool PRS1Loader::Detect(const QString & selectedPath)
 {
     QString path = selectedPath;
@@ -602,7 +608,9 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
     
     MachineInfo info = newInfo();
     if (!PeekProperties(info, newpath+"/properties.txt")) {
-        PeekProperties(info, newpath+"/PROP.TXT");
+        if (!PeekProperties(info, newpath+"/PROP.TXT")) {
+            qWarning() << "No properties file found in" << newpath;
+        }
     }
     return info;
 }
