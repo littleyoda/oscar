@@ -1,18 +1,22 @@
 #! /bin/bash
-# First parameter is version number - (ex: 1.0.0)
-# Second parametr is build or release status - (ex: test, beta, or release)
-# Third parameter is optional
+# First parameter is optional
 #
 
-if [ -z "$1" ]; then
-  echo "1st parameter must be the version number (x.y.z)"
-  exit
+ITERATION=$1
+if [  -z ${ITERATION} ]; then
+    ITERATION="1"
 fi
 
-if [ "$2" != "test" ] && [ "$2" != "beta" ] && [ "$2" != "release" ]; then
-  echo "2nd parameter must be 'test' or 'beta' or 'release'."
-  exit
+SRC=/home/$USER/OSCAR/OSCAR-code/oscar
+
+VERSION=`awk '/#define VERSION / { gsub(/"/, "", $3); print $3 }' ${SRC}/VERSION`
+if [[ ${VERSION} == *-* ]]; then
+    # Use ~ for prerelease information so that it sorts correctly compared to release
+    # versions. See https://www.debian.org/doc/debian-policy/ch-controlfields.html#version
+    IFS="-" read -r VERSION PRERELEASE <<< ${VERSION}
+    VERSION="${VERSION}~${PRERELEASE}"
 fi
+GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
 
 # application name
 appli_name="OSCAR"
@@ -20,19 +24,15 @@ pre_inst="tst_user.sh"
 post_inst="ln_usrbin.sh"
 pre_rem="rm_usrbin.sh"
 post_rem="clean_rm.sh"
-iter=""
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
-if [ "$2" != "release" ]; then
+if [ -n ${PRERELEASE} ]; then
     appli_name=${appli_name}-test
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
     post_rem="clean_rm-test.sh"
-    iter="$2"
 fi
-if [ -n "$3" ]; then
-    iter="$iter"~"$3"
-fi
+
 # temporary folder (absolute path is better)
 temp_folder="/home/$USER/tmp_Ubu_${appli_name}/"
 
@@ -46,7 +46,7 @@ if [ "$archi_tmp" = "x86_64" ];then
 else
     archi="unknown"
 fi
-deb_file="${appli_name}_$1-$2_$archi.deb"
+deb_file="${appli_name}_${VERSION}-${ITERATION}_$archi.deb"
 
 # if deb file exists, fatal error
 if [ -f "./$deb_file" ]; then
@@ -103,7 +103,7 @@ changelog_file="$share_doc_folder/changelog"
 # it seems that it needs both of them...
 
 # creation of the changelog.Debian.gz
-echo "$appli_name ($1-$2) whatever; urgency=medium" > $changelog_file
+echo "$appli_name (${VERSION}-${ITERATION}) whatever; urgency=medium" > $changelog_file
 echo "" >> $changelog_file
 echo "  * Package created with FPM." >> $changelog_file
 echo "" >> $changelog_file
@@ -123,7 +123,7 @@ fpm --input-type dir --output-type deb  \
     --after-install ${post_inst}   \
     --before-remove ${pre_rem}   \
     --after-remove ${post_rem} \
-    --name ${appli_name} --version $1 --iteration $iter \
+    --name ${appli_name} --version ${VERSION} --iteration ${ITERATION} \
     --category misc               \
     --deb-priority optional \
     --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \
