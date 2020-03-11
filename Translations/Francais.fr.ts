@@ -6515,6 +6515,30 @@ corporelle</translation>
         <source>%1 %2 %3</source>
         <translation type="unfinished">%1 %2 %3</translation>
     </message>
+    <message>
+        <source>Backing Up Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debugging channel #1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test #1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debugging channel #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test #2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
