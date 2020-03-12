@@ -98,14 +98,17 @@
     <name>Daily</name>
     <message>
         <source>B</source>
+        <translatorcomment>Gras: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
         <translation>G</translation>
     </message>
     <message>
         <source>u</source>
+        <translatorcomment>Souligné: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
         <translation>s</translation>
     </message>
     <message>
         <source> i </source>
+        <translatorcomment>Italique: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
         <translation> i </translation>
     </message>
     <message>
@@ -753,7 +756,7 @@
     </message>
     <message>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
-        <translation>Erreur en enregistrant la copie du fichier &quot;%1&quot;</translation>
+        <translation>Erreur en enregistrant la copie d&apos;écran dans le fichier &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Choose a folder</source>
@@ -1121,11 +1124,11 @@
     </message>
     <message>
         <source>Updates are not yet implemented</source>
-        <translation>Désolé, fonction non encore implémentée</translation>
+        <translation>Désolé, fonction mises à jour non encore implémentée</translation>
     </message>
     <message>
         <source>The FAQ is not yet implemented</source>
-        <translation>Désolé, fonction non encore implémentée</translation>
+        <translation>Désolé, fonction FAQ non encore implémentée</translation>
     </message>
     <message>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
@@ -1265,7 +1268,7 @@
     </message>
     <message>
         <source>&amp;Import CPAP Card Data</source>
-        <translation>&amp;Importer des données de carte PPC</translation>
+        <translation>&amp;Importer les données PPC depuis la carte SD</translation>
     </message>
     <message>
         <source>Import &amp;Dreem Data</source>
@@ -4490,7 +4493,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>A vibratory snore</source>
-        <translation>Une ronflement vibratoire.</translation>
+        <translation>Une ronflement vibratoire</translation>
     </message>
     <message>
         <source>Vibratory Snore</source>
@@ -4594,7 +4597,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
-        <translation>Une baisse soudaine d&apos;oxygénation du sang (définissable par l&apos;utilisateur).</translation>
+        <translation>Une baisse soudaine d&apos;oxygénation du sang (définissable par l&apos;utilisateur)</translation>
     </message>
     <message>
         <source>There are no graphs visible to print</source>
@@ -4638,7 +4641,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>An abnormal period of Periodic Breathing</source>
-        <translation>Période anormale de respiration périodique.</translation>
+        <translation>Période anormale de respiration périodique</translation>
     </message>
     <message>
         <source>ResMed Mask Setting</source>
@@ -4929,7 +4932,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>An apnea where the airway is open</source>
-        <translation>Apnée où le passage de l&apos;air est ouvert.</translation>
+        <translation>Apnée où le passage de l&apos;air est ouvert</translation>
     </message>
     <message>
         <source>Flow Limitation</source>
@@ -5411,7 +5414,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>A vibratory snore as detcted by a System One machine</source>
-        <translation>Ronflement vibratoire détecté par un appareil SystemOne.</translation>
+        <translation>Ronflement vibratoire détecté par un appareil SystemOne</translation>
     </message>
     <message>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
@@ -5423,7 +5426,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
-        <translation>Période anormale de respiration périodique ou Cheyne-Stokes.</translation>
+        <translation>Période anormale de respiration périodique ou Cheyne-Stokes</translation>
     </message>
     <message>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
@@ -5583,7 +5586,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>A partially obstructed airway</source>
-        <translation>Passage de l&apos;air partiellement obstrué.</translation>
+        <translation>Passage de l&apos;air partiellement obstrué</translation>
     </message>
     <message>
         <source>Pressure Support Minimum</source>
@@ -5731,7 +5734,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>A sudden (user definable) change in heart rate</source>
-        <translation>Un changement soudain de pouls (définissable par l&apos;utilisateur).</translation>
+        <translation>Un changement soudain de pouls (définissable par l&apos;utilisateur)</translation>
     </message>
     <message>
         <source>Oximetry</source>
@@ -5755,7 +5758,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Machine Initiated Breath</source>
-        <translation>Respiration provoquée par l&apos;appareil.</translation>
+        <translation>Respiration provoquée par l&apos;appareil</translation>
     </message>
     <message>
         <source>Machine Database Changes</source>
@@ -5823,7 +5826,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>An apnea caused by airway obstruction</source>
-        <translation>Apnée causée par une obstruction du passage de l&apos;air.</translation>
+        <translation>Apnée causée par une obstruction du passage de l&apos;air</translation>
     </message>
     <message>
         <source>Vibratory Snore (VS2) </source>
@@ -6415,7 +6418,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Humid. Mode</source>
-        <translation>Mode hum.</translation>
+        <translation>Mode humid.</translation>
     </message>
     <message>
         <source>Fixed (Classic)</source>
@@ -6439,7 +6442,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Tube Temp.</source>
-        <translation>Tube Temp.</translation>
+        <translation>Temp. tube</translation>
     </message>
     <message>
         <source>1</source>
@@ -7002,7 +7005,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>The last time you used your %1...</source>
-        <translation>Dernière utilisation de la machine %1  :</translation>
+        <translation>Dernière utilisation de la machine %1...</translation>
     </message>
     <message>
         <source>last night</source>
@@ -7026,7 +7029,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
-        <translation>La machine a fonctionné pendant %1</translation>
+        <translation>La machine a fonctionné pendant %1.</translation>
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
