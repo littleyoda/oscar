@@ -362,7 +362,7 @@ int main(int argc, char *argv[]) {
 
     qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
     qDebug() << "APP-NAME:" << QCoreApplication::applicationName();
-    qDebug() << "APP-PATH:" << QCoreApplication::applicationFilePath();
+    qDebug() << "APP-PATH:" << QCoreApplication::applicationDirPath();
     qDebug() << "APP-RESOURCES:" << appResourcePath();
 
 #ifdef QT_DEBUG
