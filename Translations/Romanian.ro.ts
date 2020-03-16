@@ -5420,12 +5420,6 @@ TTIA: %1</translation>
         <translation>EPI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
-        <source>ÇSR</source>
-        <translatorcomment>Respiratie Cheyne Stokes</translatorcomment>
-        <translation>RCS</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>PB</source>
@@ -6846,6 +6840,7 @@ TTIA: %1</translation>
         <translation>Respiratie Cheyne Stokes (RCS)</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>CSR</source>
         <translatorcomment> Respiratie Cheyne Stokes</translatorcomment>

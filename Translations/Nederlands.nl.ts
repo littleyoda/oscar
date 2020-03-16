@@ -5002,11 +5002,6 @@ TTiA: %1</translation>
         <translation>Max. IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
-        <source>ÇSR</source>
-        <translation>CSR</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="803"/>
         <source>On</source>
         <translation>Aan</translation>
@@ -6859,6 +6854,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
         <translation>Cheyne Stokes Ademhaling (CSR)</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>CSR</source>
         <translation>CSR</translation>

@@ -3985,10 +3985,6 @@ p, li { white-space: pre-wrap; }
         <translation>次每分钟</translation>
     </message>
     <message>
-        <source>ÇSR</source>
-        <translation>潮式呼吸</translation>
-    </message>
-    <message>
         <source>APAP</source>
         <translation>全自动正压通气</translation>
     </message>

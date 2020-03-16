@@ -5436,10 +5436,6 @@ TTIA: %1</translation>
         <translation>EPI</translation>
     </message>
     <message>
-        <source>ÇSR</source>
-        <translation type="vanished">CSR</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>PB</source>

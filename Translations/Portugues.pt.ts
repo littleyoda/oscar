@@ -5365,11 +5365,6 @@ TTIA: %1</translation>
         <translation>AS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
-        <source>ÇSR</source>
-        <translation>RCS</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>PB</source>
@@ -7056,6 +7051,7 @@ TTIA: %1</translation>
         <translation>Um período anormal de respiração Cheyne Stokes</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>CSR</source>
         <translation>RCS</translation>

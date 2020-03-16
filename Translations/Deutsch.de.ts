@@ -4233,10 +4233,6 @@ p, li { white-space: pre-wrap; }
         <translation>Null</translation>
     </message>
     <message>
-        <source>ÇSR</source>
-        <translation>CSR</translation>
-    </message>
-    <message>
         <source>Resp. Event</source>
         <translation>Resp. Ereignis</translation>
     </message>

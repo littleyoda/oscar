@@ -5356,11 +5356,6 @@ TTIA: %1</translation>
         <translation>SA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
-        <source>ÇSR</source>
-        <translation>CSR</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>PB</source>
@@ -7055,6 +7050,7 @@ TTIA: %1</translation>
         <translation>Чейн-Стоксово дишане</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>CSR</source>
         <translation>CSR</translation>

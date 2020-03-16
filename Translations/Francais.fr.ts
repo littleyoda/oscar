@@ -5849,10 +5849,6 @@ Heures : %1</translation>
         <translation>ms</translation>
     </message>
     <message>
-        <source>ÇSR</source>
-        <translation>RCS</translation>
-    </message>
-    <message>
         <source>Height</source>
         <translation>Taille</translation>
     </message>
@@ -6543,6 +6539,30 @@ Corporelle</translation>
     <message>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
+    </message>
+    <message>
+        <source>Backing Up Files...</source>
+        <translation>Sauvegarde de fichiers ...</translation>
+    </message>
+    <message>
+        <source>Debugging channel #1</source>
+        <translation>Canal de débogage #1</translation>
+    </message>
+    <message>
+        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
+        <translation>Des trucs internes top secrets que vous n&apos;êtes pas censés voir  ;)</translation>
+    </message>
+    <message>
+        <source>Test #1</source>
+        <translation>Test n°1</translation>
+    </message>
+    <message>
+        <source>Debugging channel #2</source>
+        <translation>Canal de débogage #2</translation>
+    </message>
+    <message>
+        <source>Test #2</source>
+        <translation>Test n°2</translation>
     </message>
 </context>
 <context>

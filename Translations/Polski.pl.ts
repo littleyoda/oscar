@@ -4274,10 +4274,6 @@ TTIA: %1</translation>
         <translation>EPI</translation>
     </message>
     <message>
-        <source>ÇSR</source>
-        <translation>CSR</translation>
-    </message>
-    <message>
         <source>PB</source>
         <translation>PB</translation>
     </message>
