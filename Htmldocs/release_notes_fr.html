@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <title>release_notes_fr</title>
+  <meta content="Arie Klerk" name="author">
+</head>
+<body>
+<h1>Notes de version</h1>
+<hr style="width: 100%; height: 2px;"><span style="font-weight: bold;">OSCAR
+est basé sur SleepyHead v1.1.0-unstable-0</span>, qui a été écrit et
+déposé en 2011-2018 © Mark Watkins.<br>
+<br>
+<span style="font-weight: bold;">Modifications et correctifs dans OSCAR
+v1.1.0-beta-2</span><br>
+Des portions d'OSCAR sont © 2019-2020 par l'équipe OSCAR<br>
+<ul>
+  <li>[nouveau] Ajout de la prise en charge préliminaire des oxymètres
+de pouls Viatom / Wellue</li>
+  <li>[nouveau] Demande où enregistrer les captures d'écran</li>
+  <li>[correction] Amélioration de l'importation des paramètres flex et
+d'humidification de Philips Respironics</li>
+  <li>[nouveau] Réorganisation en profondeur de l'importateur ResMed
+pour faciliter la compréhension et les améliorations futures</li>
+</ul>
+<br>
+<span style="font-weight: bold;">Modifications et correctifs dans OSCAR
+v1.1.0-beta-1</span><br>
+Des portions d'OSCAR sont © 2019 par l'équipe OSCAR<br>
+<ul>
+  <li>[nouveau] Refonte complète de l'importateur Philips Respironics,
+résolvant tous les problèmes connus.</li>
+  <li>[nouveau] Les appareils Philips Respironics suivants sont
+désormais testés et entièrement pris en charge: REMstar Plus (System
+One) (251P), REMstar Pro (System One) (450P, 451P), REMstar Auto
+(System One) (550P, 551P), BiPAP Auto (System One) (750P), BiPAP AutoSV
+Advanced System One (950P, 951P), REMstar Pro (System One 60 Series)
+(460P, 461P), REMstar Auto (System One 60 Series) (560P, 561P, 562P,
+560PBT) ), BiPAP Pro (System One 60 Series) (660P), BiPAP Auto (System
+One 60 Series) (760P), BiPAP autoSV Advanced (System One 60 Series)
+(960P, 961P), BiPAP autoSV Advanced 30 (System One 60 Series) ) (960T),
+BiPAP S / T 30 (System One 60 Series) (1061T), BiPAP AVAPS 30 (System
+One 60 Series) (1160P), DreamStation CPAP (200X110), DreamStation CPAP
+Pro (400X110, 400X150), DreamStation Go (400G110), DreamStation Auto
+CPAP (500X110, 500X150), DreamStation Go Auto (500G110, 502G150),
+DreamStation BiPAP Pro (600X110), DreamStation Auto BiPAP (700X110),
+DreamStation BiPAP autoSV (900X110, 900X120), DreamStation BiPAP S / T
+3 0 (1030X110), DreamStation BiPAP S / T 30 avec AAM (1030X150),
+DreamStation BiPAP AVAPS 30 (1130X110), DreamStation BiPAP AVAPS 30 AE
+(1131X150)</li>
+  <li>[nouveau] Fichiers de traduction mis à jour et nouvelles langues
+ajoutées</li>
+  <li>[nouveau] Permet à l'utilisateur de réinitialiser l'ordre des
+graphiques sur la page quotidienne en ordre standard ou avancé (souvent
+utile pour les modes AVS et AVAPS CPAP)</li>
+  <li>[nouveau] Ajout d'un paramètre de préférence pour inclure le
+numéro de série dans la liste des paramètres de l'appareil</li>
+  <li>[nouveau] Modifications importantes de l'importateur ResMed</li>
+  <li>[correction] Placer la date, l'heure et la version d'Oscar dans
+les pieds de page du rapport</li>
+  <li>[correction] Mettre à jour l'identification des appareils ResMed
+S9 sur la page d'accueil</li>
+  <li>[correction] Formatage correct du numéro d'événement dans
+l'onglet Événements quotidiens</li>
+  <li>[correction] Correction du fuseau horaire correct pour les
+importations Somnopose</li>
+  <li>[correction] Afficher une barre de défilement lors de la
+définition de la plage de présentation sur un grand nombre de jours</li>
+  <li>[correction] Rend les barres des graphique de session plus
+claires sur la page quotidienne en utilisant une meilleure couleur</li>
+  <li>[correction] Liste améliorée des appareils sur la page
+Statistiques</li>
+  <li>[correction] Signaler la pression lorsque les données IPAP sont
+manquantes</li>
+  <li>[correction] Implémentation d'un bouton Actualiser sur la page
+Profil</li>
+</ul>
+<br style="font-weight: bold;">
+<span style="font-weight: bold;">Les notes de publication des
+modifications et correctifs dans OSCAR v1.1.0-testing-4 indiquent:</span><br>
+<ul>
+  <li>[nouveau] Les programmes d'installation pour Windows prennent en
+charge Oscar, Oscar 32 bits, Oscar (test) et Oscar 32 bits (test)</li>
+  <li>[correction] Les versions distribués utilisent une clé Paramètres
+d'OSCAR, les versions de test utilisent OSCAR-test et les versions de
+branche utilisent OSCAR-branche. Les répertoires de données par défaut
+portent le même nom.</li>
+  <li>[correction] Correction des problèmes de l’aperçu graphique
+lorsque les données PPC et d'oxymétrie étaient incluses.</li>
+  <li>[correction] Traductions mises à jour pour toutes les langues.
+Espagnol (Mexique) et norvégien ajoutés</li>
+  <li>[correction] Toutes les langues maintenant disponibles sur Mac</li>
+  <li>[correction] La barre de date en bas du graphique quotidien est
+maintenant à l'heure locale quand aucun curseur de ligne ne s'affiche
+et le formatage est amélioré</li>
+  <li>[correction] Le zoom à 100% fonctionne désormais sur la page
+Présentation</li>
+  <li>[correction] Afficher / Réinitialiser les graphiques active
+désormais tous les graphiques et tous les drapeaux d'événements</li>
+  <li>[correction] La date du calendrier est désormais formatée selon
+les paramètres nationaux</li>
+  <li>[correction] Ajout des boutons de la liste des sessions
+quotidienne et des événements et des listes de graphiques sont devenus
+des cases à cocher</li>
+</ul>
+<br>
+<span style="font-weight: bold;">Les notes de publication des
+modifications et correctifs dans OSCAR v1.1.0-testing-3 indiquent:</span><br>
+<ul>
+  <li>[nouveau] Les ventilateurs DreamStation BiPAP S / T et AVAPS
+(1030X et 1130X) sont désormais pris en charge. Les paramètres ne sont
+pas encore affichés correctement, mais les événements de thérapie et
+les graphiques devraient maintenant s'afficher correctement.</li>
+  <li>[nouveau] Afficher / réinitialiser les graphiques organise les
+graphiques dans leur ordre d'origine</li>
+  <li>[correction] Format des dates pour nationale telles que
+rapportées par le système d'exploitation</li>
+  <li>[correction] Améliorer la barre de progression pour la mise à
+jour du cache de statistiques</li>
+  <li>[correction] Calculs corrects de l'IAH sur sept jours et du taux
+de fuite sur la page d'accueil</li>
+  <li>[correction] Clarifier les étiquettes IAH et heures sur l'onglet
+Enregistrements de la barre latérale droite</li>
+  <li>[correction] Correction d’Erreur d'importation entraînant des
+temps écoulés non valides et des valeurs AHI incroyablement élevées</li>
+</ul>
+<br>
+<span style="font-weight: bold;">Les notes de publication des
+modifications et correctifs dans OSCAR v1.1.0-testing-2 indiquent:</span><br>
+<ul>
+  <li>[nouveau] Afficher une barre de progression lorsque la page
+Statistiques doit actualiser le cache de plus de 180 jours </li>
+  <li>[nouveau] la langue Roumaine est prise en charge</li>
+  <li>[correction] Afficher l'ID de validation dans la barre de titre
+pour les tests et les versions bêta</li>
+  <li>[correction] Afficher l'étiquette BMI et la valeur calculée
+uniquement lorsque le poids et la taille sont différents de zéro</li>
+  <li>[correction] Améliorer l'affichage de l'IMC dans les notes
+quotidienes</li>
+  <li>[correction] Boîte de dialogue de profil corrigé pour afficher la
+hauteur est mesurée en cm, pas en mètres lorsque le système d'unités
+est métrique</li>
+  <li>[correction] Toujours afficher les index des événements sur la
+page Quotidienne même lorsque certains indicateurs d'événement sont
+désactivés</li>
+</ul>
+<br style="font-weight: bold;">
+<span style="font-weight: bold;">Les notes de publication des
+modifications et correctifs dans OSCAR v1.1.0-testing-1 indiquent:</span><br>
+<ul>
+  <li>[nouveau] propositionde Migration si un répertoire non par défaut
+est sélectionné lors de la première utilisation</li>
+  <li>[nouveau] Appuyez sur la touche MAJ lors du démarrage d'OSCAR
+pour utiliser le moteur de rendu graphique logiciel</li>
+  <li>[nouveau] La prise en charge de DreamStation BiPAP autoSV (900X)
+devrait maintenant être terminée</li>
+  <li>[nouveau] Prise en charge améliorée de Dreamstation</li>
+  <li>[nouveau] Amélioration de l'importation d'oxymètre pour CM550D +</li>
+  <li>[nouveau] Désactiver le mode sombre sur Mac</li>
+  <li>[nouveau] Afficher les heures / jour constituant la conformité
+sur la page Statistiques</li>
+  <li>[nouveau] Meilleur ordre des graphiques sur la page Quotidienne
+pour les profils nouvellement créés</li>
+  <li>[nouveau] Aide / Informations système affiche des informations
+sur OSCAR, le système d'exploitation et l'emplacement des données</li>
+  <li>[nouveau] Déplacer l'option de graphique à secteurs de la boîte
+de dialogue Préférences vers le menu Affichage</li>
+  <li>[nouveau] Masquer le graphique à secteurs lors de la capture
+d'écran</li>
+  <li>[nouveau] Avec l'option --datadir, le nom complet est désormais
+autorisé sous Windows</li>
+  <li>[correction] Résoudre certains problèmes d'importation d'oxymètre</li>
+  <li>[correction] Utilisez l'heure locale plutôt que l'UTC dans
+l'importation d'oxymètre</li>
+  <li>[correction] Améliorez la capture d'écran sur Mac</li>
+  <li>[correction] Correction de plantages lors de la reconstruction
+des données PPC, purge d'un appareil</li>
+  <li>[correction] Empêche le plantage si vous prenez une capture
+d'écran avant l'ouverture d'un profil</li>
+  <li>[correction] Augmentez les plages de vitesse de ventilation du
+masque</li>
+  <li>[correction] Barre de session correcte si aucune session n'est
+présente</li>
+  <li>[correction] Mois corrects affichés sur la page mensuelle de la
+page Statistiques</li>
+  <li>[correction] Calcule la conformité sur la page Statistiques en
+fonction du nombre total de jours, et non des jours utilisés</li>
+  <li>[correction] Pagine le rapport de statistiques lors de
+l'impression</li>
+  <li>[correction] Correction de la «date fantôme» (31/12/1969) lors de
+certaines importations ResMed</li>
+  <li>[correction] Police par défaut utilisée lorsqu'une police
+spécifiée n'est pas valide</li>
+  <li>[correction] Changement des préférences des unités de mesure au
+choix en métrique ou en impériale</li>
+  <li>[correction] Amélioration de l'affichage des nombres cmH2O</li>
+  <li>[correction] Affiche correctement le moteur graphique dans la
+barre de titre</li>
+  <li>[correction] Ajustement de la taille de la boîte de dialogue
+Préférences pour s'adapter à des écrans plus petits</li>
+  <li>[correction] Étiquette le contrôle climatique comme manuel ou
+automatique correctement lors de l'importation ResMed</li>
+  <li>[correction] Déplace des informations moins utiles de la barre de
+titre vers Aide / Informations système</li>
+  <li>[correction] Changement de "Paramètres de prescription" en
+"Paramètres de l'appareil"</li>
+  <li>[correction] Amélioration des icônes, en particulier les plus
+petites</li>
+  <li>[correction] Corrige les problèmes du menu Mac</li>
+  <li>[correction] Améliore les messages dans le volet de débogage</li>
+  <li>[correction] Réorganise les instructions de construction et
+autres nettoyages</li>
+</ul>
+</body>
+</html>
