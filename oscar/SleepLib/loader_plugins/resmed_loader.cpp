@@ -331,8 +331,8 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( ! parseIdentTGT(path, & info, idmap) )
         return -1;
  
-#ifdef DEBUG_IDENT
     qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
+#ifdef DEBUG_IDENT
     qDebug() << "IdMap size:" << idmap.size();
     foreach ( QString st , idmap.keys() ) {
         qDebug() << "Key" << st << "Value" << idmap[st];
@@ -1559,22 +1559,26 @@ QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
         } else if (key == "PNA") {  // Product Name
             value.replace("_"," ");
 
-        //  if (value.contains(STR_ResMed_S9)) {
-        //      value.replace(STR_ResMed_S9, "");
-        //      info->series = STR_ResMed_S9;
-        //  } else if (value.contains(STR_ResMed_AirSense10)) {
-            if (value.contains(STR_ResMed_AirSense10)) {
-                value.replace(STR_ResMed_AirSense10, "");
+            if (value.contains(STR_ResMed_S9)) {
+                value.replace("(","");
+                value.replace(")","");
+                if ( ! value.startsWith(STR_ResMed_S9)) {
+                    value.replace(STR_ResMed_S9, "");
+                    value.insert(0, " ");               // There's proablely a better way than this
+                    value.insert(0, STR_ResMed_S9);     // two step way to put "S9 " at the start
+                }
+                info->series = STR_ResMed_S9;
+            } else if (value.contains(STR_ResMed_AirSense10)) {
+        //  if (value.contains(STR_ResMed_AirSense10)) {
+        //      value.replace(STR_ResMed_AirSense10, "");
                 info->series = STR_ResMed_AirSense10;
             } else if (value.contains(STR_ResMed_AirCurve10)) {
-                value.replace(STR_ResMed_AirCurve10, "");
+        //      value.replace(STR_ResMed_AirCurve10, "");
                 info->series = STR_ResMed_AirCurve10;
-            } else {
-                value.replace(STR_ResMed_S9, "");
-                info->series = STR_ResMed_S9;
+        //  } else {
+        //      value.replace(STR_ResMed_S9, "");
+        //      info->series = STR_ResMed_S9;
             }
-        //  value.replace("(","");
-        //  value.replace(")","");
         //  if (value.contains("Adapt", Qt::CaseInsensitive)) {
         //      if (!value.contains("VPAP")) {
         //          value.replace("Adapt", QObject::tr("VPAP Adapt"));
