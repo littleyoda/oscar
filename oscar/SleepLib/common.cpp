@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QSettings>
 #include <QFontDatabase>
+#include <QStandardPaths>
 #include <QMenuBar>
 
 #include "SleepLib/common.h"
@@ -214,12 +215,36 @@ QStringList getBuildInfo() {
 
 QString appResourcePath()
 {
+     static QString path;
+     if ( path.size() != 0 )
+         return path;
+
 #ifdef Q_OS_MAC
-    QString path = QDir::cleanPath(QCoreApplication::applicationDirPath() + "/../Resources");
+    path = QDir::cleanPath(QCoreApplication::applicationDirPath() + "/../Resources");
 #else
-    // not sure where it goes on Linux yet
-    QString path = QCoreApplication::applicationDirPath();
+//    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);
+    // Check the Appiication Path first, so we can execute out of the build directory
+    QStringList paths;
+    // This one will be used if the Html and Translations folders 
+    // are in the same folder as  the OSCAR executable
+    paths.push_back( QCoreApplication::applicationDirPath() );
+#ifdef Q_OS_LINUX    
+    paths.push_back( QString( "/usr/share/" ) + QCoreApplication::applicationName() );
+    paths.push_back( QString( "/usr/local/share/" ) + QCoreApplication::applicationName() );
+#endif    
+    for (auto p = begin(paths); p != end(paths); ++p ) {
+        QString fname = *p+QString("/Translations/oscar_qt_fr.qm");
+        qDebug() << "Trying" << fname;
+        QFileInfo f = QFileInfo(fname);
+        if ( f.exists() ) {
+            path = *p;
+            break;
+        }
+    }
+    if ( path.size() == 0 )
+        path = QCoreApplication::applicationDirPath();
 #endif
+        
     return path;
 }
 

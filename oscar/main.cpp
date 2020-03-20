@@ -361,6 +361,9 @@ int main(int argc, char *argv[]) {
     // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
 
     qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
+    qDebug() << "APP-NAME:" << QCoreApplication::applicationName();
+    qDebug() << "APP-PATH:" << QCoreApplication::applicationDirPath();
+    qDebug() << "APP-RESOURCES:" << appResourcePath();
 
 #ifdef QT_DEBUG
     QString relinfo = " debug";
