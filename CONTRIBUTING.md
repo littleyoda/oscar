@@ -24,13 +24,14 @@ Setting aside the religious wars that can arise over any development methodology
 0. Create your own fork of the repo and configure it to stay up-to-date with the upstream repo.
 	* Go to https://gitlab.com/pholy/OSCAR-code and click on **Fork** in the top right of the project page.
 	* In your fork's sidebar, go to **Settings > Repository** then click on **Expand** for "Mirroring repositories".
-	* Enter "https://gitlab.com/pholy/OSCAR-code" for the repository **URL**, make sure the mirror is set to **Pull** and then click **Mirror repository**.
+	* Enter "https://gitlab.com/pholy/OSCAR-code.git" for the repository **URL**, make sure the mirror is set to **Pull** and then click **Mirror repository**.
 
 1. Create a branch to work on your feature or bugfix:
 
         git clone https://gitlab.com/my-repo/OSCAR-code.git
         cd OSCAR-code
         git checkout -b my-branch
+    **Note:** Because OSCAR includes the branch name in its [version string](https://semver.org/spec/v2.0.0.html), **the branch name must contain only alphanumeric characters or "-"** ([0-9a-zA-Z-]).
 
 2. Write your code, committing to your branch as you go, using `git add` and `git commit -a`.
 
