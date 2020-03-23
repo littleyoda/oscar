@@ -4222,7 +4222,7 @@ bool PRS1Import::ImportCompliance()
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_LOCK:
-                session->settings[PRS1_SysLock] = (bool) e->m_value;
+                session->settings[PRS1_MaskResistLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_SETTING:
                 // Don't bother importing these for bricks, because they're always locked off.
@@ -7548,10 +7548,10 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_LOCK:
-                session->settings[PRS1_SysLock] = (bool) e->m_value;
+                session->settings[PRS1_MaskResistLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_SETTING:
-                session->settings[PRS1_SysOneResistSet] = e->m_value;
+                session->settings[PRS1_MaskResistSet] = e->m_value;
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
                 session->settings[PRS1_HoseDiam] = e->m_value;
@@ -8712,11 +8712,11 @@ void PRS1Loader::initChannels()
     chan->addOption(4, QObject::tr("4"));
     chan->addOption(5, QObject::tr("5"));
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistSet = 0xe104, SETTING, MT_CPAP,   SESSION,
-        "SysOneResistSet",
-        QObject::tr("System One Resistance Setting"),
-        QObject::tr("System One Mask Resistance Setting"),
-        QObject::tr("Sys1 Resist. Set"),
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskResistSet = 0xe104, SETTING, MT_CPAP,   SESSION,
+        "MaskResistSet",
+        QObject::tr("Mask Resistance Setting"),
+        QObject::tr("Mask Resistance Setting"),
+        QObject::tr("Mask Resist."),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, QObject::tr("x1"));
@@ -8744,11 +8744,11 @@ void PRS1Loader::initChannels()
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_SysLock = 0xe108, SETTING,  MT_CPAP,  SESSION,
-        "SysOneLock",
-        QObject::tr("System One Resistance Lock"),
-        QObject::tr("Whether System One resistance settings are available to you."),
-        QObject::tr("Sys1 Resist. Lock"),
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskResistLock = 0xe108, SETTING,  MT_CPAP,  SESSION,
+        "MaskResistLock",
+        QObject::tr("Mask Resistance Lock"),
+        QObject::tr("Whether mask resistance settings are available to you."),
+        QObject::tr("Mask Resist. Lock"),
         "", LOOKUP, Qt::black));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
