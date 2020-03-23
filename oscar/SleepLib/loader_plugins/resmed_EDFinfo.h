@@ -15,7 +15,7 @@
 #include "SleepLib/profiles.h"
 #include "SleepLib/loader_plugins/edfparser.h"
 
-enum EDFType { EDF_UNKNOWN, EDF_BRP, EDF_PLD, EDF_SAD, EDF_EVE, EDF_CSL };
+enum EDFType { EDF_UNKNOWN, EDF_BRP, EDF_PLD, EDF_SAD, EDF_EVE, EDF_CSL, EDF_AEV };
 
 EDFType lookupEDFType(const QString & filename);
 

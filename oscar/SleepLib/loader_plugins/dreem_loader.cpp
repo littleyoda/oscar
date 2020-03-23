@@ -23,6 +23,17 @@
 
 static QSet<QString> s_unexpectedMessages;
 
+DreemLoader::DreemLoader()
+{
+    m_type = MT_SLEEPSTAGE;
+    csv = nullptr;
+}
+
+DreemLoader::~DreemLoader()
+{
+    closeCSV();
+}
+
 bool
 DreemLoader::Detect(const QString & path)
 {

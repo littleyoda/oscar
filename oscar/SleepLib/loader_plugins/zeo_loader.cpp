@@ -23,6 +23,7 @@
 ZEOLoader::ZEOLoader()
 {
     m_type = MT_SLEEPSTAGE;
+    csv = nullptr;
 }
 
 ZEOLoader::~ZEOLoader()
@@ -85,6 +86,7 @@ int ZEOLoader::Open(const QString & dirpath)
 int ZEOLoader::OpenFile(const QString & filename)
 {
     if (!openCSV(filename)) {
+        closeCSV();
         return -1;
     }
     int count = 0;

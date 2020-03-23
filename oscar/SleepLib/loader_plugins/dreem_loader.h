@@ -20,8 +20,8 @@ const int dreem_data_version = 2;
 class DreemLoader : public MachineLoader
 {
   public:
-    DreemLoader() { m_type = MT_SLEEPSTAGE; }
-    virtual ~DreemLoader() { }
+    DreemLoader();
+    virtual ~DreemLoader();
 
     virtual bool Detect(const QString & path);
 
