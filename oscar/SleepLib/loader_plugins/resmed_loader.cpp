@@ -1559,8 +1559,14 @@ QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
         } else if (key == "PNA") {  // Product Name
             value.replace("_"," ");
 
-            if (value.contains(STR_ResMed_S9)) {
-                value.replace("(","");
+            if (value.contains(STR_ResMed_AirSense10)) {
+        //      value.replace(STR_ResMed_AirSense10, "");
+                info->series = STR_ResMed_AirSense10;
+            } else if (value.contains(STR_ResMed_AirCurve10)) {
+        //      value.replace(STR_ResMed_AirCurve10, "");
+                info->series = STR_ResMed_AirCurve10;
+            } else {    // it will be a Series 9, and might not contain (STR_ResMed_S9)) 
+                value.replace("("," ");     // might sometimes have a double space... 
                 value.replace(")","");
                 if ( ! value.startsWith(STR_ResMed_S9)) {
                     value.replace(STR_ResMed_S9, "");
@@ -1568,16 +1574,7 @@ QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
                     value.insert(0, STR_ResMed_S9);     // two step way to put "S9 " at the start
                 }
                 info->series = STR_ResMed_S9;
-            } else if (value.contains(STR_ResMed_AirSense10)) {
-        //  if (value.contains(STR_ResMed_AirSense10)) {
-        //      value.replace(STR_ResMed_AirSense10, "");
-                info->series = STR_ResMed_AirSense10;
-            } else if (value.contains(STR_ResMed_AirCurve10)) {
-        //      value.replace(STR_ResMed_AirCurve10, "");
-                info->series = STR_ResMed_AirCurve10;
-        //  } else {
         //      value.replace(STR_ResMed_S9, "");
-        //      info->series = STR_ResMed_S9;
             }
         //  if (value.contains("Adapt", Qt::CaseInsensitive)) {
         //      if (!value.contains("VPAP")) {
@@ -1607,6 +1604,8 @@ EDFType lookupEDFType(const QString & filename)
         return EDF_SAD;
     } else if (text == "CSL") {
         return EDF_CSL;
+    } else if (text == "AEV") {
+        return EDF_AEV;
     } else return EDF_UNKNOWN;
 }
 
@@ -2111,6 +2110,7 @@ void ResDayTask::run()
                 break;
             case EDF_EVE:
             case EDF_CSL:
+            case EDF_AEV:   // this is in the 36039 - must figure out what to do with it
                 break;
             default:
                 qWarning() << "Unrecognized file type for" << filename;
@@ -2724,7 +2724,10 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
             a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
 //          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+        } else if (es.label == "Va") {  // Signal used in 36039... What to do with it???
+            a = nullptr;                // We'll skip it for now
         } else if (es.label == "") { // What the hell resmed??
+        // these empty lables should be changed in resmed_EDFInfo to something unique
             if (emptycnt == 0) {
                 code = RMS9_E01;
 //                ToTimeDelta(sess, edf, es, code, recs, duration);
