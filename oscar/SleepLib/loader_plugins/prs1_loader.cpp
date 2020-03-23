@@ -225,6 +225,7 @@ enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube };
 
 ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
+ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
 
 struct PRS1TestedModel
 {
@@ -1195,7 +1196,6 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_HUMID_LEVEL,
     PRS1_SETTING_MASK_RESIST_LOCK,
     PRS1_SETTING_MASK_RESIST_SETTING,
-    PRS1_SETTING_MASK_RESIST_STATUS,
     PRS1_SETTING_HOSE_DIAMETER,
     PRS1_SETTING_TUBING_LOCK,
     PRS1_SETTING_AUTO_ON,
@@ -1749,7 +1749,6 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_HUMID_LEVEL);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_LOCK);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_SETTING);
-        ENUMSTRING(PRS1_SETTING_MASK_RESIST_STATUS);
         ENUMSTRING(PRS1_SETTING_HOSE_DIAMETER);
         ENUMSTRING(PRS1_SETTING_TUBING_LOCK);
         ENUMSTRING(PRS1_SETTING_AUTO_ON);
@@ -4198,11 +4197,17 @@ bool PRS1Import::ImportCompliance()
             case PRS1_SETTING_FLEX_LEVEL:
                 session->settings[PRS1_FlexLevel] = e->m_value;
                 break;
+            case PRS1_SETTING_FLEX_LOCK:
+                session->settings[PRS1_FlexLock] = (bool) e->m_value;
+                break;
             case PRS1_SETTING_RAMP_TIME:
                 session->settings[CPAP_RampTime] = e->m_value;
                 break;
             case PRS1_SETTING_RAMP_PRESSURE:
                 session->settings[CPAP_RampPressure] = e->value();
+                break;
+            case PRS1_SETTING_RAMP_TYPE:
+                session->settings[PRS1_RampType] = e->m_value;
                 break;
             case PRS1_SETTING_HUMID_STATUS:
                 session->settings[PRS1_HumidStatus] = (bool) e->m_value;
@@ -4217,16 +4222,17 @@ bool PRS1Import::ImportCompliance()
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_LOCK:
-                //TODO: channel.add if we ever want to import this
-                //session->settings[PRS1_SysLock] = (bool) e->m_value;
+                session->settings[PRS1_SysLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_SETTING:
-            case PRS1_SETTING_MASK_RESIST_STATUS:
                 // Don't bother importing these for bricks, because they're always locked off.
                 CHECK_VALUE(e->m_value, 0);
                 break;
             case PRS1_SETTING_HOSE_DIAMETER:
                 session->settings[PRS1_HoseDiam] = e->m_value;
+                break;
+            case PRS1_SETTING_TUBING_LOCK:
+                session->settings[PRS1_TubeLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_AUTO_ON:
                 session->settings[PRS1_AutoOn] = (bool) e->m_value;
@@ -4238,13 +4244,7 @@ bool PRS1Import::ImportCompliance()
                 session->settings[PRS1_MaskAlert] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_SHOW_AHI:
-                //TODO: channel.add if we ever want to import this
-                //session->settings[PRS1_ShowAHI] = (bool) e->m_value;
-                break;
-            case PRS1_SETTING_FLEX_LOCK:
-            case PRS1_SETTING_TUBING_LOCK:
-            case PRS1_SETTING_RAMP_TYPE:
-                //TODO: define and add new channels for any of these that we want to import
+                session->settings[PRS1_ShowAHI] = (bool) e->m_value;
                 break;
             default:
                 qWarning() << "Unknown PRS1 setting type" << (int) s->m_setting;
@@ -4547,10 +4547,12 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     // Tubing lock has no setting byte
 
     // Menu Options
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0a] & 0x80) != 0)); // System One Resistance Lock Setting
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_STATUS, (data[0x0a] & 0x40) != 0));  // System One Resistance Status bit
+    bool mask_resist_on = ((data[0x0a] & 0x40) != 0);  // System One Resistance Status bit
+    int mask_resist_setting = data[0x0a] & 7;  // System One Resistance setting value
+    CHECK_VALUE(mask_resist_on, mask_resist_setting > 0);  // Confirm that we can ignore the status bit.
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0a] & 0x80) != 0)); // System One Resistance Lock Setting, only seen on bricks
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0a] & 0x08) ? 15 : 22));  // TODO: unconfirmed
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[0x0a] & 7));       // System One Resistance setting value
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, mask_resist_setting));
     CHECK_VALUE(data[0x0a] & (0x20 | 0x10), 0);
 
     CHECK_VALUE(data[0x0b], 1);
@@ -7521,11 +7523,17 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_FLEX_LEVEL:
                 session->settings[PRS1_FlexLevel] = e->m_value;
                 break;
+            case PRS1_SETTING_FLEX_LOCK:
+                session->settings[PRS1_FlexLock] = (bool) e->m_value;
+                break;
             case PRS1_SETTING_RAMP_TIME:
                 session->settings[CPAP_RampTime] = e->m_value;
                 break;
             case PRS1_SETTING_RAMP_PRESSURE:
                 session->settings[CPAP_RampPressure] = e->value();
+                break;
+            case PRS1_SETTING_RAMP_TYPE:
+                session->settings[PRS1_RampType] = e->m_value;
                 break;
             case PRS1_SETTING_HUMID_STATUS:
                 session->settings[PRS1_HumidStatus] = (bool) e->m_value;
@@ -7540,17 +7548,16 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_HumidLevel] = e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_LOCK:
-                //TODO: channel.add if we ever want to import this
-                //session->settings[PRS1_SysLock] = (bool) e->m_value;
+                session->settings[PRS1_SysLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_MASK_RESIST_SETTING:
                 session->settings[PRS1_SysOneResistSet] = e->m_value;
                 break;
-            case PRS1_SETTING_MASK_RESIST_STATUS:
-                session->settings[PRS1_SysOneResistStat] = (bool) e->m_value;
-                break;
             case PRS1_SETTING_HOSE_DIAMETER:
                 session->settings[PRS1_HoseDiam] = e->m_value;
+                break;
+            case PRS1_SETTING_TUBING_LOCK:
+                session->settings[PRS1_TubeLock] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_AUTO_ON:
                 session->settings[PRS1_AutoOn] = (bool) e->m_value;
@@ -7562,8 +7569,7 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_MaskAlert] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_SHOW_AHI:
-                //TODO: channel.add if we ever want to import this
-                //session->settings[PRS1_ShowAHI] = (bool) e->m_value;
+                session->settings[PRS1_ShowAHI] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_BACKUP_BREATH_MODE:
             case PRS1_SETTING_BACKUP_BREATH_RATE:
@@ -7571,11 +7577,8 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_TIDAL_VOLUME:
             case PRS1_SETTING_AUTO_TRIAL:
             case PRS1_SETTING_EZ_START:
-            case PRS1_SETTING_FLEX_LOCK:
-            case PRS1_SETTING_TUBING_LOCK:
             case PRS1_SETTING_RISE_TIME:
             case PRS1_SETTING_RISE_TIME_LOCK:
-            case PRS1_SETTING_RAMP_TYPE:
             case PRS1_SETTING_APNEA_ALARM:
             case PRS1_SETTING_DISCONNECT_ALARM:
             case PRS1_SETTING_LOW_MV_ALARM:
@@ -8655,6 +8658,15 @@ void PRS1Loader::initChannels()
     chan->addOption(4, QObject::tr("x4"));
     chan->addOption(5, QObject::tr("x5"));
 
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLock = 0xe111, SETTING, MT_CPAP,   SESSION,
+        "PRS1FlexLock",
+        QObject::tr("Flex Lock"),
+        QObject::tr("Whether Flex settings are available to you."),
+        QObject::tr("Flex Lock"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
+
     channel.add(GRP_CPAP, chan = new Channel(PRS1_HumidStatus = 0xe101, SETTING, MT_CPAP, SESSION,
         "PRS1HumidStat",
         QObject::tr("Humidifier Status"),
@@ -8700,15 +8712,6 @@ void PRS1Loader::initChannels()
     chan->addOption(4, QObject::tr("4"));
     chan->addOption(5, QObject::tr("5"));
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistStat = 0xe103, SETTING, MT_CPAP,   SESSION,
-        "SysOneResistStat",
-        QObject::tr("System One Resistance Status"),
-        QObject::tr("System One Resistance Status"),
-        QObject::tr("Sys1 Resist. Status"),
-        "", LOOKUP, Qt::green));
-    chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, STR_TR_On);
-
     channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistSet = 0xe104, SETTING, MT_CPAP,   SESSION,
         "SysOneResistSet",
         QObject::tr("System One Resistance Setting"),
@@ -8732,12 +8735,21 @@ void PRS1Loader::initChannels()
     chan->addOption(15, QObject::tr("15mm"));
     chan->addOption(12, QObject::tr("12mm"));
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_SysOneResistStat = 0xe108, SETTING,  MT_CPAP,  SESSION,
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_TubeLock = 0xe112, SETTING, MT_CPAP,   SESSION,
+        "PRS1TubeLock",
+        QObject::tr("Tubing Type Lock"),
+        QObject::tr("Whether tubing type settings are available to you."),
+        QObject::tr("Tube Lock"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_SysLock = 0xe108, SETTING,  MT_CPAP,  SESSION,
         "SysOneLock",
         QObject::tr("System One Resistance Lock"),
         QObject::tr("Whether System One resistance settings are available to you."),
         QObject::tr("Sys1 Resist. Lock"),
-        "", LOOKUP, Qt::green));
+        "", LOOKUP, Qt::black));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
@@ -8768,15 +8780,25 @@ void PRS1Loader::initChannels()
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
-    channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskAlert = 0xe10c, SETTING, MT_CPAP,   SESSION,
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_ShowAHI = 0xe10c, SETTING, MT_CPAP,   SESSION,
         "PRS1ShowAHI",
         QObject::tr("Show AHI"),
-        QObject::tr("Whether or not machine shows AHI via LCD panel."),
+        QObject::tr("Whether or not machine shows AHI via built-in display."),
         QObject::tr("Show AHI"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_RampType = 0xe113, SETTING, MT_CPAP,   SESSION,
+        "PRS1RampType",
+        QObject::tr("Ramp Type"),
+        QObject::tr("Type of ramp curve to use."),
+        QObject::tr("Ramp Type"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, QObject::tr("Linear"));
+    chan->addOption(1, QObject::tr("SmartRamp"));
+
+    // TODO: is the below useful?
 //    <channel id="0xe10e" class="setting" scope="!session" name="PRS1Mode" details="PAP Mode" label="PAP Mode" type="integer" link="0x1200">
 //     <Option id="0" value="CPAP"/>
 //     <Option id="1" value="Auto"/>

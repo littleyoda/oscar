@@ -54,6 +54,7 @@ static QString eventListTypeName(EventListType t)
 // below by hand.
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
 extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
+extern ChannelID PRS1_FlexLock, PRS1_TubeLock, PRS1_RampType;
 
 extern ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
@@ -88,13 +89,15 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(PRS1_HumidLevel);
         CHANNELNAME(PRS1_SysLock);
         CHANNELNAME(PRS1_SysOneResistSet);
-        CHANNELNAME(PRS1_SysOneResistStat);
         CHANNELNAME(PRS1_TimedBreath);
         CHANNELNAME(PRS1_HoseDiam);
         CHANNELNAME(PRS1_AutoOn);
         CHANNELNAME(PRS1_AutoOff);
         CHANNELNAME(PRS1_MaskAlert);
         CHANNELNAME(PRS1_ShowAHI);
+        CHANNELNAME(PRS1_FlexLock);
+        CHANNELNAME(PRS1_TubeLock);
+        CHANNELNAME(PRS1_RampType);
         CHANNELNAME(CPAP_BrokenSummary);
         CHANNELNAME(ZEO_Awakenings);
         CHANNELNAME(ZEO_MorningFeel);
