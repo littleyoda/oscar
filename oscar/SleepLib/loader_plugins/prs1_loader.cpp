@@ -5224,8 +5224,10 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             break;
         case PRS1_MODE_ST:
             if (flexmode == FLEX_AVAPS) {
-                CHECK_VALUES(breath_rate, 0, 10);
-                CHECK_VALUES(timed_inspiration, 10, 30);
+                if (breath_rate) {
+                    CHECK_VALUES(breath_rate, 9, 10);
+                }
+                if (timed_inspiration < 10 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "10-30");
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // can be 0 on reports
                 this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -5234,7 +5236,7 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             // fall through
         default:
             CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10
-            CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2  // TODO: confirm other values
+            CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // can be 0; TODO: what does this mean in the general case?
             this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -5695,7 +5697,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    CHECK_VALUES(breath_rate, 10, 12);  // TODO
+                    if (breath_rate < 9 || breath_rate > 12) UNEXPECTED_VALUE(breath_rate, "9-12");
                     if (timed_inspiration < 10 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "10-20");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
@@ -5754,7 +5756,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 0x38:  // Mask Resistance
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    CHECK_VALUES(data[pos], 1, 2);  // TODO
+                    if (data[pos] < 1 || data[pos] > 5) UNEXPECTED_VALUE(data[pos], "1-5");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
@@ -5832,8 +5834,8 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
         case 2:
             breath_rate = data[pos+1];
             timed_inspiration = data[pos+2];
-            if (breath_rate < 10 || breath_rate > 18) UNEXPECTED_VALUE(breath_rate, "10-18");
-            if (timed_inspiration < 10 || timed_inspiration > 18) UNEXPECTED_VALUE(timed_inspiration, "10-18");
+            if (breath_rate < 4 || breath_rate > 29) UNEXPECTED_VALUE(breath_rate, "4-29");
+            if (timed_inspiration < 5 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "5-20");
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
             this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -6776,13 +6778,13 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     }
                     break;
                 case 0xB0:  // P-Flex
-                    flexmode = FLEX_PFlex;  // TOOD: There's a level present in the settings, does it have any effect?
+                    flexmode = FLEX_PFlex;
                     switch (cpapmode) {
                         case PRS1_MODE_AUTOCPAP:
                             break;
-                        default:  // TODO
+                        default:
                             HEX(flexmode);
-                            UNEXPECTED_VALUE(cpapmode, "untested mode");
+                            UNEXPECTED_VALUE(cpapmode, "apap");
                             break;
                     }
                     break;
@@ -6816,14 +6818,13 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x38:  // Mask Resistance
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    CHECK_VALUES(data[pos], 1, 2);  // TODO
+                    if (data[pos] < 1 || data[pos] > 3) UNEXPECTED_VALUE(data[pos], "1-3");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
                 break;
             case 0x39:  // Tubing Type Lock
                 CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);
-                CHECK_VALUE(data[pos], 0);  // TODO to confirm in more samples
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, data[pos] != 0));
                 break;
             case 0x3b:  // Tubing Type
@@ -7317,8 +7318,8 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    CHECK_VALUE(breath_rate, 10);  // TODO
-                    CHECK_VALUE(timed_inspiration, 24);  // TODO
+                    CHECK_VALUE(breath_rate, 10);
+                    CHECK_VALUE(timed_inspiration, 24);
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
