@@ -12,7 +12,7 @@ git rev-parse --git-dir >nul 2>&1
 if errorlevel 1 goto GitFail
 
   for /f %%i in ('git rev-parse --abbrev-ref HEAD') do set GIT_BRANCH=%%i
-  if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=""
+  if "%GIT_BRANCH%"=="HEAD" set GIT_BRANCH=
   for /f %%i in ('git rev-parse --short HEAD') do set GIT_REVISION=%%i
 
   git diff-index --quiet HEAD --
