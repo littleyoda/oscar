@@ -5216,30 +5216,29 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             break;
         case PRS1_MODE_PC:
             CHECK_VALUE(flexmode, FLEX_AVAPS);
-            CHECK_VALUE(breath_rate, 0);
+            CHECK_VALUE(breath_rate, 0);  // only ever seen 0 on reports so far
             CHECK_VALUE(timed_inspiration, 30);
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // can be 0 on reports
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
             this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
             break;
         case PRS1_MODE_ST:
             if (flexmode == FLEX_AVAPS) {
-                if (breath_rate) {
+                if (breath_rate) {  // can be 0 on reports
                     CHECK_VALUES(breath_rate, 9, 10);
                 }
                 if (timed_inspiration < 10 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "10-30");
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // can be 0 on reports
-                this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
-                break;
+            } else if (flexmode == FLEX_None){
+                CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10, can this be 0?
+                CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
             }
-            // fall through
-        default:
-            CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10
-            CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // can be 0; TODO: what does this mean in the general case?
+            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
             this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
+            break;
+        default:
+            UNEXPECTED_VALUE(cpapmode, "CPAP, S, S/T, or PC");
+            break;
     }
 
     CHECK_VALUE(data[0x11], 0);
