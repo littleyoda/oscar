@@ -55,6 +55,8 @@ static QString eventListTypeName(EventListType t)
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
 extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
 extern ChannelID PRS1_FlexLock, PRS1_TubeLock, PRS1_RampType;
+extern ChannelID PRS1_BackupBreathMode, PRS1_BackupBreathRate, PRS1_BackupBreathTi;
+extern ChannelID PRS1_AutoTrial, PRS1_EZStart, PRS1_RiseTime, PRS1_RiseTimeLock;
 
 extern ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
@@ -80,7 +82,10 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_RampTime);
         CHANNELNAME(CPAP_RampPressure);
         CHANNELNAME(CPAP_RespRate);
+        CHANNELNAME(CPAP_TidalVolume);
         CHANNELNAME(OXI_Pulse);
+        CHANNELNAME(CPAP_BrokenSummary);  // TODO: possibly obsolete and unused
+        // PRS1-specific channels
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);
         CHANNELNAME(PRS1_HumidStatus);
@@ -98,7 +103,14 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(PRS1_FlexLock);
         CHANNELNAME(PRS1_TubeLock);
         CHANNELNAME(PRS1_RampType);
-        CHANNELNAME(CPAP_BrokenSummary);
+        CHANNELNAME(PRS1_BackupBreathMode);
+        CHANNELNAME(PRS1_BackupBreathRate);
+        CHANNELNAME(PRS1_BackupBreathTi);
+        CHANNELNAME(PRS1_AutoTrial);
+        CHANNELNAME(PRS1_EZStart);
+        CHANNELNAME(PRS1_RiseTime);
+        CHANNELNAME(PRS1_RiseTimeLock);
+        // ZEO-specific channels
         CHANNELNAME(ZEO_Awakenings);
         CHANNELNAME(ZEO_MorningFeel);
         CHANNELNAME(ZEO_TimeInWake);

@@ -226,6 +226,8 @@ enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube };
 
 ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
+ChannelID PRS1_BackupBreathMode = 0, PRS1_BackupBreathRate = 0, PRS1_BackupBreathTi = 0;
+ChannelID PRS1_AutoTrial = 0, PRS1_EZStart = 0, PRS1_RiseTime = 0, PRS1_RiseTimeLock = 0;
 
 struct PRS1TestedModel
 {
@@ -5713,8 +5715,9 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 0x2c:  // Ramp Time
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
+                    if (data[pos] < 5 || data[pos] > 45) UNEXPECTED_VALUE(data[pos], "5-45");
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
                 break;
             case 0x2d:  // Ramp Pressure (with ASV/ventilator pressure encoding), only present when ramp is on
                 CHECK_VALUE(len, 1);
@@ -5758,8 +5761,8 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
                     if (data[pos] < 1 || data[pos] > 5) UNEXPECTED_VALUE(data[pos], "1-5");
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 break;
             case 0x39:  // Tubing Type Lock
                 CHECK_VALUE(len, 1);
@@ -5836,7 +5839,7 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
             breath_rate = data[pos+1];
             timed_inspiration = data[pos+2];
             if (breath_rate < 4 || breath_rate > 29) UNEXPECTED_VALUE(breath_rate, "4-29");
-            if (timed_inspiration < 5 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "5-20");
+            if (timed_inspiration < 5 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "5-30");
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
             this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
             this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -6733,8 +6736,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x2c:  // Ramp Time
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
+                    if (data[pos] < 5 || data[pos] > 45) UNEXPECTED_VALUE(data[pos], "5-45");
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
                 break;
             case 0x2d:  // Ramp Pressure
                 CHECK_VALUE(len, 1);
@@ -6819,9 +6823,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
             case 0x38:  // Mask Resistance
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    if (data[pos] < 1 || data[pos] > 3) UNEXPECTED_VALUE(data[pos], "1-3");
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
+                    if (data[pos] < 1 || data[pos] > 5) UNEXPECTED_VALUE(data[pos], "1-5");
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 break;
             case 0x39:  // Tubing Type Lock
                 CHECK_VALUE(len, 1);
@@ -7343,8 +7347,9 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
             case 0x2c:  // Ramp Time
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == ramp off, and ramp pressure setting doesn't appear
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
+                    if (data[pos] < 5 || data[pos] > 45) UNEXPECTED_VALUE(data[pos], "5-45");
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, data[pos]));
                 break;
             case 0x2d:  // Ramp Pressure (with ASV pressure encoding)
                 CHECK_VALUE(len, 1);
@@ -7386,8 +7391,9 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
             case 0x38:  // Mask Resistance
                 CHECK_VALUE(len, 1);
                 if (data[pos] != 0) {  // 0 == mask resistance off
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
+                    if (data[pos] < 1 || data[pos] > 5) UNEXPECTED_VALUE(data[pos], "1-5");
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, data[pos]));
                 break;
             case 0x39:
                 CHECK_VALUE(len, 1);
@@ -7482,7 +7488,8 @@ bool PRS1Import::ImportSummary()
                 if (cpapmode == MODE_CPAP) {  // Auto-Trial is reported as CPAP but with a minimum and maximum pressure,
                     cpapmode = MODE_APAP;     // so import it as APAP, since that's what it's really doing.
                 }
-                // TODO: what about CPAPCHECK?
+                // CPAP-Check no longer reports min/max pressures, since it should be treated as CPAP.
+                // (It only adjusts the CPAP pressure by 1 cmH2O every 30 hours at most.)
                 break;
             case PRS1_SETTING_PRESSURE_MAX:
                 session->settings[CPAP_PressureMax] = e->value();
@@ -7572,18 +7579,34 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_ShowAHI] = (bool) e->m_value;
                 break;
             case PRS1_SETTING_BACKUP_BREATH_MODE:
+                session->settings[PRS1_BackupBreathMode] = e->m_value;
+                break;
             case PRS1_SETTING_BACKUP_BREATH_RATE:
+                session->settings[PRS1_BackupBreathRate] = e->m_value;
+                break;
             case PRS1_SETTING_BACKUP_TIMED_INSPIRATION:
+                session->settings[PRS1_BackupBreathTi] = e->m_value;
+                break;
             case PRS1_SETTING_TIDAL_VOLUME:
+                session->settings[CPAP_TidalVolume] = e->m_value;
+                break;
             case PRS1_SETTING_AUTO_TRIAL:
+                session->settings[PRS1_AutoTrial] = e->m_value;
+                break;
             case PRS1_SETTING_EZ_START:
+                session->settings[PRS1_EZStart] = (bool) e->m_value;
+                break;
             case PRS1_SETTING_RISE_TIME:
+                session->settings[PRS1_RiseTime] = e->m_value;
+                break;
             case PRS1_SETTING_RISE_TIME_LOCK:
+                session->settings[PRS1_RiseTimeLock] = (bool) e->m_value;
+                break;
             case PRS1_SETTING_APNEA_ALARM:
             case PRS1_SETTING_DISCONNECT_ALARM:
             case PRS1_SETTING_LOW_MV_ALARM:
             case PRS1_SETTING_LOW_TV_ALARM:
-                //TODO: define and add new channels for any of these that we want to import
+                // TODO: define and add new channels for alarms once we have more samples and can reliably parse them.
                 break;
             default:
                 qWarning() << "Unknown PRS1 setting type" << (int) s->m_setting;
@@ -8652,17 +8675,33 @@ void PRS1Loader::initChannels()
         "", LOOKUP, Qt::blue));
 
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("x1"));
-    chan->addOption(2, QObject::tr("x2"));
-    chan->addOption(3, QObject::tr("x3"));
-    chan->addOption(4, QObject::tr("x4"));
-    chan->addOption(5, QObject::tr("x5"));
+    chan->addOption(1, QObject::tr("1"));
+    chan->addOption(2, QObject::tr("2"));
+    chan->addOption(3, QObject::tr("3"));
+    chan->addOption(4, QObject::tr("4"));
+    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLock = 0xe111, SETTING, MT_CPAP,   SESSION,
         "PRS1FlexLock",
         QObject::tr("Flex Lock"),
         QObject::tr("Whether Flex settings are available to you."),
         QObject::tr("Flex Lock"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_RiseTime = 0xe119, SETTING, MT_CPAP,   SESSION,
+        "PRS1RiseTime",
+        QObject::tr("Rise Time"),
+        QObject::tr("Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition"),
+        QObject::tr("Rise Time"),
+        "", LOOKUP, Qt::blue));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_RiseTimeLock = 0xe11a, SETTING, MT_CPAP,   SESSION,
+        "PRS1RiseTimeLock",
+        QObject::tr("Rise Time Lock"),
+        QObject::tr("Whether Rise Time settings are available to you."),
+        QObject::tr("Rise Lock"),
         "", LOOKUP, Qt::black));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
@@ -8719,11 +8758,11 @@ void PRS1Loader::initChannels()
         QObject::tr("Mask Resist."),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("x1"));
-    chan->addOption(2, QObject::tr("x2"));
-    chan->addOption(3, QObject::tr("x3"));
-    chan->addOption(4, QObject::tr("x4"));
-    chan->addOption(5, QObject::tr("x5"));
+    chan->addOption(1, QObject::tr("1"));
+    chan->addOption(2, QObject::tr("2"));
+    chan->addOption(3, QObject::tr("3"));
+    chan->addOption(4, QObject::tr("4"));
+    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_HoseDiam = 0xe107, SETTING,  MT_CPAP,  SESSION,
         "PRS1HoseDiam",
@@ -8797,6 +8836,47 @@ void PRS1Loader::initChannels()
         "", LOOKUP, Qt::black));
     chan->addOption(0, QObject::tr("Linear"));
     chan->addOption(1, QObject::tr("SmartRamp"));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_BackupBreathMode = 0xe114, SETTING, MT_CPAP,   SESSION,
+        "PRS1BackupBreathMode",
+        QObject::tr("Backup Breath Mode"),
+        QObject::tr("The kind of backup breath rate in use: none (off), automatic, or fixed"),
+        QObject::tr("Breath Rate"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, QObject::tr("Off"));
+    chan->addOption(1, QObject::tr("Auto"));
+    chan->addOption(2, QObject::tr("Fixed"));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_BackupBreathRate = 0xe115, SETTING, MT_CPAP,   SESSION,
+        "PRS1BackupBreathRate",
+        QObject::tr("Fixed Backup Breath BPM"),
+        QObject::tr("Minimum breaths per minute (BPM) below which a timed breath will be initiated"),
+        QObject::tr("Breath BPM"),
+        "", LOOKUP, Qt::black));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_BackupBreathTi = 0xe116, SETTING, MT_CPAP,   SESSION,
+        "PRS1BackupBreathTi",
+        QObject::tr("Timed Inspiration"),
+        QObject::tr("The time (in seconds) that a timed breath will provide IPAP before transitioning to EPAP"),
+        QObject::tr("Timed Insp."),
+        "", LOOKUP, Qt::blue));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_AutoTrial = 0xe117, SETTING, MT_CPAP,   SESSION,
+        "PRS1AutoTrial",
+        QObject::tr("Auto-Trial"),
+        QObject::tr("The number of days left in the Auto-CPAP trial period, after which the machine will revert to CPAP only"),
+        QObject::tr("Auto-Trial"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, STR_TR_Off);
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_EZStart = 0xe118, SETTING, MT_CPAP,   SESSION,
+        "PRS1EZStart",
+        QObject::tr("EZ-Start"),
+        QObject::tr("Whether or not EZ-Start is enabled"),
+        QObject::tr("EZ-Start"),
+        "", LOOKUP, Qt::black));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
 
     // TODO: is the below useful?
 //    <channel id="0xe10e" class="setting" scope="!session" name="PRS1Mode" details="PAP Mode" label="PAP Mode" type="integer" link="0x1200">
