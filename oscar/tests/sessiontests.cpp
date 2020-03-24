@@ -53,6 +53,7 @@ static QString eventListTypeName(EventListType t)
 // for names, make sure there aren't duplicate values, etc. For now we just fill the
 // below by hand.
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
+extern ChannelID PRS1_Mode;
 extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
 extern ChannelID PRS1_FlexLock, PRS1_TubeLock, PRS1_RampType;
 extern ChannelID PRS1_BackupBreathMode, PRS1_BackupBreathRate, PRS1_BackupBreathTi;
@@ -85,6 +86,7 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_TidalVolume);
         CHANNELNAME(OXI_Pulse);
         // PRS1-specific channels
+        CHANNELNAME(PRS1_Mode);
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);
         CHANNELNAME(PRS1_HumidStatus);
