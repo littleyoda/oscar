@@ -152,7 +152,7 @@ extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CP
        CPAP_MaskPressureHi,
        CPAP_RespEvent, CPAP_Snore, CPAP_MinuteVent, CPAP_RespRate, CPAP_TidalVolume, CPAP_PTB, CPAP_Leak,
        CPAP_LeakMedian, CPAP_LeakTotal, CPAP_MaxLeak, CPAP_FLG, CPAP_IE, CPAP_Te, CPAP_Ti, CPAP_TgMV,
-       CPAP_UserFlag1, CPAP_UserFlag2, CPAP_UserFlag3, CPAP_BrokenSummary, CPAP_BrokenWaveform, CPAP_RDI,
+       CPAP_UserFlag1, CPAP_UserFlag2, CPAP_UserFlag3, /*CPAP_BrokenSummary, CPAP_BrokenWaveform,*/ CPAP_RDI,
        CPAP_PresReliefMode, CPAP_PresReliefLevel, CPAP_Test1, CPAP_Test2,
        CPAP_PressureSet, CPAP_IPAPSet, CPAP_EPAPSet;
 

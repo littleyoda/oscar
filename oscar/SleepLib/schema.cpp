@@ -332,8 +332,10 @@ void init()
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_ZQ         = 0x2009, DATA,   MT_SLEEPSTAGE,  SESSION, "ZeoZQ", QObject::tr("Zeo ZQ"), QObject::tr("Zeo sleep quality measurement"), QObject::tr("ZEO ZQ"),  QString(), INTEGER,  Qt::black));
 
     NoChannel = 0;
+    /*
     CPAP_BrokenSummary = schema::channel["BrokenSummary"].id();
     CPAP_BrokenWaveform = schema::channel["BrokenWaveform"].id();
+    */
 
 //  <channel id="0x111e" class="data" name="TestChan1" details="Debugging Channel #1" label="Test #1" unit="" color="pink"/>
 //  <channel id="0x111f" class="data" name="TestChan2" details="Debugging Channel #2" label="Test #2" unit="" color="blue"/>

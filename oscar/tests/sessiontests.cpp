@@ -84,7 +84,6 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_RespRate);
         CHANNELNAME(CPAP_TidalVolume);
         CHANNELNAME(OXI_Pulse);
-        CHANNELNAME(CPAP_BrokenSummary);  // TODO: possibly obsolete and unused
         // PRS1-specific channels
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);

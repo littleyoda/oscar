@@ -983,7 +983,7 @@ QString Daily::getSessionInformation(Day * day)
  //   Machine * cpap = day->machine(MT_CPAP);
 
     QDateTime fd,ld;
-    bool corrupted_waveform=false;
+    //bool corrupted_waveform=false;
 
     QString type;
 
@@ -1023,9 +1023,11 @@ QString Daily::getSessionInformation(Day * day)
         QList<Session *> sesslist = day->getSessions(mi.key(), true);
 
         for (QList<Session *>::iterator s=sesslist.begin(); s != sesslist.end(); ++s) {
+            /*
             if (((*s)->type() == MT_CPAP) &&
                 ((*s)->settings.find(CPAP_BrokenWaveform) != (*s)->settings.end()))
                     corrupted_waveform=true;
+            */
 
             fd=QDateTime::fromTime_t((*s)->first()/1000L);
             ld=QDateTime::fromTime_t((*s)->last()/1000L);
@@ -1066,9 +1068,11 @@ QString Daily::getSessionInformation(Day * day)
         }
     }
 
+    /*
     if (corrupted_waveform) {
         html+=QString("<tr><td colspan=5 align=center><i>%1</i></td></tr>").arg(tr("One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly."));
     }
+    */
     html+="</table>";
     return html;
 }
@@ -1084,9 +1088,11 @@ QString Daily::getMachineSettings(Day * day) {
 
         if (day->noSettings(cpap)) {
             html+="<tr><td colspan=5 align=center><i>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</i></td></tr>\n";
+        /*
         } else if ((day->settingExists(CPAP_BrokenSummary))) {
             html+="<tr><td colspan=5 align=center><i>"+tr("Machine Settings Unavailable")+"</i></td></tr></table><hr/>\n";
             return html;
+        */
         }
 
         QMap<QString, QString> other;
