@@ -218,7 +218,7 @@ void PRS1Loader::LogUnexpectedMessage(const QString & message)
 }
 
 
-enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_AVAPS, FLEX_PFlex, FLEX_Unknown  };
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_PFlex, FLEX_Unknown  };
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
@@ -1577,6 +1577,8 @@ enum PRS1Mode {
     PRS1_MODE_S,                // "S"
     PRS1_MODE_ST,               // "S/T"
     PRS1_MODE_PC,               // "PC"
+    PRS1_MODE_ST_AVAPS,         // "S/T - AVAPS"
+    PRS1_MODE_PC_AVAPS,         // "PC - AVAPS"
 };
 
 // Returns the set of all channels ever reported/supported by the parser for the given chunk.
@@ -1793,6 +1795,8 @@ static QString parsedModeName(int m)
         ENUMSTRING(PRS1_MODE_S);
         ENUMSTRING(PRS1_MODE_ST);
         ENUMSTRING(PRS1_MODE_PC);
+        ENUMSTRING(PRS1_MODE_ST_AVAPS);
+        ENUMSTRING(PRS1_MODE_PC_AVAPS);
         default:
             s = hex(m);
             qDebug() << "Unknown PRS1Mode:" << qPrintable(s);
@@ -4171,6 +4175,8 @@ CPAPMode PRS1Import::importMode(int prs1mode)
         case PRS1_MODE_S:           mode = MODE_BILEVEL_FIXED; break;  // TODO
         case PRS1_MODE_ST:          mode = MODE_BILEVEL_FIXED; break;  // TODO, pressure seems variable
         case PRS1_MODE_PC:          mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
+        case PRS1_MODE_ST_AVAPS:    mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
+        case PRS1_MODE_PC_AVAPS:    mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
         default:
             UNEXPECTED_VALUE(prs1mode, "known PRS1 mode");
             break;
@@ -5162,13 +5168,16 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             UNEXPECTED_VALUE(data[2], "known device mode");
             break;
     }
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
     switch (data[3]) {
         case 0:  // 0 = None
-            flexmode = FLEX_None;
-            if (cpapmode != PRS1_MODE_CPAP) {
-                CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+            switch (cpapmode) {
+                case PRS1_MODE_CPAP: flexmode = FLEX_None; break;
+                case PRS1_MODE_S:    flexmode = FLEX_RiseTime; break;  // reports say "None" but then list a rise time setting
+                case PRS1_MODE_ST:   flexmode = FLEX_RiseTime; break;  // reports say "None" but then list a rise time setting
+                default:
+                    UNEXPECTED_VALUE(cpapmode, "CPAP, S, or S/T");
+                    break;
             }
             break;
         case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
@@ -5176,87 +5185,116 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             CHECK_VALUE(cpapmode, PRS1_MODE_S);
             break;
         case 2:  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
-            flexmode = FLEX_AVAPS;
-            CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+            switch (cpapmode) {
+                case PRS1_MODE_ST: cpapmode = PRS1_MODE_ST_AVAPS; break;
+                case PRS1_MODE_PC: cpapmode = PRS1_MODE_PC_AVAPS; break;
+                default:
+                    UNEXPECTED_VALUE(cpapmode, "S/T or PC");
+                    break;
+            }
+            flexmode = FLEX_RiseTime;  // reports say "AVAPS" but then list a rise time setting
             break;
         default:
             UNEXPECTED_VALUE(data[3], "known flex mode");
             break;
     }
+    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
 
-    // TODO: add based on mode
     int epap     = data[4] + (data[5] << 8);   // 0x82 = EPAP 13 cmH2O; 0x78 = EPAP 12 cmH2O; 0x50 = EPAP 8 cmH2O
     int min_ipap = data[6] + (data[7] << 8);   // 0xA0 = IPAP 16 cmH2O; 0xBE = 19 cmH2O min IPAP (in AVAPS); 0x78 = IPAP 12 cmH2O
     int max_ipap = data[8] + (data[9] << 8);   // 0xAA = ???;          0x12C = 30 cmH2O max IPAP (in AVAPS); 0x78 = ???
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, epap));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, min_ipap));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap));
-    // TODO: calculate PS or min/max PS? Create IPAP event when not AVAPS?
-
-    if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
-        int rise_time = data[0xa];  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
-        if (cpapmode == PRS1_MODE_CPAP) {
-            CHECK_VALUE(rise_time, 0);
-        } else {
-            if (rise_time < 1 || rise_time > 6) UNEXPECTED_VALUE(rise_time, "1-6");  // TODO: what is 0?
-            CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock (in "None" and AVAPS flex mode)
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, rise_time));
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, data[0xb] == 1));
-        }
-    } else {
-        CHECK_VALUES(data[0xa], 0, 3);  // TODO: May also be Bi-Flex 3? But how is this different from [0xc] below?
-        CHECK_VALUE(data[0xb], 0);
+    switch (cpapmode) {
+        case PRS1_MODE_CPAP:
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, epap));
+            CHECK_VALUE(min_ipap, 0);
+            CHECK_VALUE(max_ipap, 0);
+            break;
+        case PRS1_MODE_S:
+        case PRS1_MODE_ST:
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, epap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP, min_ipap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS, min_ipap - epap));
+            //CHECK_VALUES(max_ipap, 170, 300);
+            break;
+        case PRS1_MODE_ST_AVAPS:
+        case PRS1_MODE_PC_AVAPS:
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, epap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, min_ipap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, min_ipap - epap));
+            this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, max_ipap - epap));
+            break;
+        default:
+            UNEXPECTED_VALUE(cpapmode, "expected mode");
+            break;
     }
-    if (flexmode == FLEX_BiFlex) {
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[0xc]));  // 3 = Bi-Flex 3 (in bi-flex mode)
+
+    if (cpapmode == PRS1_MODE_CPAP) {
+        CHECK_VALUE(flexmode, FLEX_None);
+        CHECK_VALUE(data[0xa], 0);
+        CHECK_VALUE(data[0xb], 0);
+        CHECK_VALUE(data[0xc], 0);
+    }
+    if (flexmode == FLEX_RiseTime) {
+        int rise_time = data[0xa];  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
+        if (rise_time < 1 || rise_time > 6) UNEXPECTED_VALUE(rise_time, "1-6");  // TODO: what is 0?
+        CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock (in "None" and AVAPS flex mode)
+        CHECK_VALUE(data[0xc], 0);
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, rise_time));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, data[0xb] == 1));
+    } else if (flexmode == FLEX_BiFlex) {
+        CHECK_VALUE(data[0xa], 3);  // TODO: May also be Bi-Flex 3? But how is this different from [0xc] below?
+        CHECK_VALUE(data[0xb], 0);
         CHECK_VALUE(data[0xc], 3);
         CHECK_VALUE(data[0x0a], data[0xc]);
-    } else {
-        CHECK_VALUE(data[0xc], 0);
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[0xc]));  // 3 = Bi-Flex 3 (in bi-flex mode)
     }
     CHECK_VALUE(data[0xd], 0);
 
-    if (flexmode != FLEX_AVAPS && cpapmode != PRS1_MODE_CPAP) CHECK_VALUE(data[0xe], 0x14);  // 0x14 = ??? in S and non-AVAPS S/T and PC
-    if (cpapmode == PRS1_MODE_CPAP) CHECK_VALUE(data[0xe], 0);
-    if (flexmode == FLEX_AVAPS) {
+    if (flexmode == FLEX_None) CHECK_VALUE(data[0xe], 0);
+    if (cpapmode == PRS1_MODE_ST_AVAPS || cpapmode == PRS1_MODE_PC_AVAPS) {
         if (data[0xe] < 24 || data[0xe] > 65) UNEXPECTED_VALUE(data[0xe], "24-65");
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TIDAL_VOLUME, data[0xe] * 10.0));
+    } else if (flexmode == FLEX_BiFlex || flexmode == FLEX_RiseTime) {
+        CHECK_VALUE(data[0xe], 0x14);  // 0x14 = ???
     }
+
 
     int breath_rate = data[0xf];
     int timed_inspiration = data[0x10];
+    bool backup = false;
     switch (cpapmode) {
         case PRS1_MODE_CPAP:
         case PRS1_MODE_S:
             CHECK_VALUE(breath_rate, 0);
             CHECK_VALUE(timed_inspiration, 0);
             break;
-        case PRS1_MODE_PC:
-            CHECK_VALUE(flexmode, FLEX_AVAPS);
+        case PRS1_MODE_PC_AVAPS:
             CHECK_VALUE(breath_rate, 0);  // only ever seen 0 on reports so far
             CHECK_VALUE(timed_inspiration, 30);
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
-            this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
+            backup = true;
+            break;
+        case PRS1_MODE_ST_AVAPS:
+            if (breath_rate) {  // can be 0 on reports
+                CHECK_VALUES(breath_rate, 9, 10);
+            }
+            if (timed_inspiration < 10 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "10-30");
+            backup = true;
             break;
         case PRS1_MODE_ST:
-            if (flexmode == FLEX_AVAPS) {
-                if (breath_rate) {  // can be 0 on reports
-                    CHECK_VALUES(breath_rate, 9, 10);
-                }
-                if (timed_inspiration < 10 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "10-30");
-            } else if (flexmode == FLEX_None){
-                CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10, can this be 0?
-                CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
-            }
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
-            this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
-            this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
+            CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10, can this be 0?
+            CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
+            backup = true;
             break;
         default:
             UNEXPECTED_VALUE(cpapmode, "CPAP, S, S/T, or PC");
             break;
+    }
+    if (backup) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
+        this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
     }
 
     CHECK_VALUE(data[0x11], 0);
@@ -5625,15 +5663,18 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                     UNEXPECTED_VALUE(data[pos], "known device mode");
                     break;
                 }
-                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 break;
             case 1: // Flex Mode
                 CHECK_VALUE(len, 1);
                 switch (data[pos]) {
                     case 0:  // 0 = None
-                        flexmode = FLEX_None;
-                        if (cpapmode != PRS1_MODE_CPAP) {
-                            CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
+                        switch (cpapmode) {
+                            case PRS1_MODE_CPAP: flexmode = FLEX_None; break;
+                            case PRS1_MODE_S:    flexmode = FLEX_RiseTime; break;  // reports say "None" but then list a rise time setting
+                            case PRS1_MODE_ST:   flexmode = FLEX_RiseTime; break;  // reports say "None" but then list a rise time setting
+                            default:
+                                UNEXPECTED_VALUE(cpapmode, "CPAP, S, or S/T");
+                                break;
                         }
                         break;
                     case 1:  // 1 = Bi-Flex, only seen with "S - Bi-Flex"
@@ -5641,13 +5682,20 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                         CHECK_VALUE(cpapmode, PRS1_MODE_S);
                         break;
                     case 2:  // 2 = AVAPS: usually "PC - AVAPS", sometimes "S/T - AVAPS"
-                        flexmode = FLEX_AVAPS;
-                        CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+                        switch (cpapmode) {
+                            case PRS1_MODE_ST: cpapmode = PRS1_MODE_ST_AVAPS; break;
+                            case PRS1_MODE_PC: cpapmode = PRS1_MODE_PC_AVAPS; break;
+                            default:
+                                UNEXPECTED_VALUE(cpapmode, "S/T or PC");
+                                break;
+                        }
+                        flexmode = FLEX_RiseTime;  // reports say "AVAPS" but then list a rise time setting
                         break;
                     default:
                         UNEXPECTED_VALUE(data[pos], "known flex mode");
                         break;
                 }
+                this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
                 break;
             case 2: // ??? Maybe AAM?
@@ -5656,17 +5704,20 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 3: // CPAP Pressure
                 CHECK_VALUE(len, 1);
+                CHECK_VALUE(cpapmode, PRS1_MODE_CPAP);
                 fixed_pressure = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, fixed_pressure, GAIN));
                 break;
             case 4: // EPAP Pressure
                 CHECK_VALUE(len, 1);
+                if (cpapmode == PRS1_MODE_CPAP) UNEXPECTED_VALUE(cpapmode, "!cpap");
                 // pressures seem variable on practice, maybe due to ramp or leaks?
                 fixed_epap = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP, fixed_epap, GAIN));
                 break;
             case 7: // IPAP Pressure
                 CHECK_VALUE(len, 1);
+                CHECK_VALUES(cpapmode, PRS1_MODE_S, PRS1_MODE_ST);
                 // pressures seem variable on practice, maybe due to ramp or leaks?
                 fixed_ipap = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP, fixed_ipap, GAIN));
@@ -5677,6 +5728,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 8:  // Min IPAP
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(fixed_ipap, 0);
+                CHECK_VALUES(cpapmode, PRS1_MODE_ST_AVAPS, PRS1_MODE_PC_AVAPS);
                 min_ipap = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, min_ipap, GAIN));
                 // TODO: We need to revisit whether PS should be shown as a setting.
@@ -5686,6 +5738,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
             case 9:  // Max IPAP
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(fixed_ipap, 0);
+                CHECK_VALUES(cpapmode, PRS1_MODE_ST_AVAPS, PRS1_MODE_PC_AVAPS);
                 if (min_ipap == 0) UNEXPECTED_VALUE(min_ipap, ">0");
                 max_ipap = data[pos];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, max_ipap, GAIN));
@@ -5695,14 +5748,13 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x19:  // Tidal Volume (AVAPS)
                 CHECK_VALUE(len, 1);
-                CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
-                CHECK_VALUE(flexmode, FLEX_AVAPS);
+                CHECK_VALUES(cpapmode, PRS1_MODE_ST_AVAPS, PRS1_MODE_PC_AVAPS);
                 //CHECK_VALUE(data[pos], 47);  // gain 10.0
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TIDAL_VOLUME, data[pos] * 10.0));
                 break;
             case 0x1e:  // (Backup) Breath Rate (S/T and PC)
                 CHECK_VALUE(len, 3);
-                CHECK_VALUES(cpapmode, PRS1_MODE_ST, PRS1_MODE_PC);
+                if (cpapmode == PRS1_MODE_CPAP || cpapmode == PRS1_MODE_S) UNEXPECTED_VALUE(cpapmode, "S/T or PC");
                 switch (data[pos]) {
                 case 0:  // Breath Rate Off
                     // TODO: Is this mode essentially bilevel? The pressure graphs are confusing.
@@ -5745,7 +5797,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 if (flexmode == FLEX_BiFlex) {
                     // Bi-Flex level
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
-                } else if (flexmode == FLEX_None || flexmode == FLEX_AVAPS) {
+                } else if (flexmode == FLEX_RiseTime) {
                     // Rise time
                     if (data[pos] < 1 || data[pos] > 6) UNEXPECTED_VALUE(data[pos], "1-6");  // 1-6 have been seen
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos]));
@@ -8673,16 +8725,18 @@ void PRS1Loader::initChannels()
         QObject::tr("PAP Mode"),
         QObject::tr("Mode"),
         "", LOOKUP, Qt::green));
-    chan->addOption(0, QObject::tr("CPAP-Check"));
-    chan->addOption(1, QObject::tr("CPAP"));
-    chan->addOption(2, QObject::tr("AutoCPAP"));
-    chan->addOption(3, QObject::tr("Auto-Trial"));
-    chan->addOption(4, QObject::tr("Bi-Level"));
-    chan->addOption(5, QObject::tr("AutoBiLevel"));
-    chan->addOption(6, QObject::tr("ASV"));
-    chan->addOption(7, QObject::tr("S"));
-    chan->addOption(8, QObject::tr("S/T"));
-    chan->addOption(9, QObject::tr("PC"));
+    chan->addOption(PRS1_MODE_CPAPCHECK, QObject::tr("CPAP-Check"));
+    chan->addOption(PRS1_MODE_CPAP,      QObject::tr("CPAP"));
+    chan->addOption(PRS1_MODE_AUTOCPAP,  QObject::tr("AutoCPAP"));
+    chan->addOption(PRS1_MODE_AUTOTRIAL, QObject::tr("Auto-Trial"));
+    chan->addOption(PRS1_MODE_BILEVEL,   QObject::tr("Bi-Level"));
+    chan->addOption(PRS1_MODE_AUTOBILEVEL, QObject::tr("AutoBiLevel"));
+    chan->addOption(PRS1_MODE_ASV,       QObject::tr("ASV"));
+    chan->addOption(PRS1_MODE_S,         QObject::tr("S"));
+    chan->addOption(PRS1_MODE_ST,        QObject::tr("S/T"));
+    chan->addOption(PRS1_MODE_PC,        QObject::tr("PC"));
+    chan->addOption(PRS1_MODE_ST_AVAPS,  QObject::tr("S/T - AVAPS"));
+    chan->addOption(PRS1_MODE_PC_AVAPS,  QObject::tr("PC - AVAPS"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexMode = 0xe105, SETTING,  MT_CPAP,  SESSION,
         "PRS1FlexMode", QObject::tr("Flex Mode"),
@@ -8696,7 +8750,7 @@ void PRS1Loader::initChannels()
     chan->addOption(FLEX_PFlex, QObject::tr("P-Flex"));
     chan->addOption(FLEX_RiseTime, QObject::tr("Rise Time"));
     chan->addOption(FLEX_BiFlex, QObject::tr("Bi-Flex"));
-    chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));
+    //chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));  // Converted into AVAPS PRS1_Mode with FLEX_RiseTime
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLevel = 0xe106, SETTING, MT_CPAP,   SESSION,
         "PRS1FlexSet",
