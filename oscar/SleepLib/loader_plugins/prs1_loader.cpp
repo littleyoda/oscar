@@ -6264,7 +6264,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
 void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
 {
     FlexMode flexmode = FLEX_Unknown;
-    bool unknown  = (flex & 0x80) != 0;
+    bool valid    = (flex & 0x80) != 0;
     bool lock     = (flex & 0x40) != 0;
     bool risetime = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
@@ -6272,34 +6272,36 @@ void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
     if (flex & (0x20 | 0x10 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
     CHECK_VALUE(cpapmode, PRS1_MODE_ASV);
     if (this->familyVersion == 0) {
-        CHECK_VALUE(unknown, true);
+        CHECK_VALUE(valid, true);
         CHECK_VALUE(lock, false);
         CHECK_VALUE(risetime, false);
-        if (flexlevel == 0) UNEXPECTED_VALUE(flexlevel, "1-3");
     } else if (this->familyVersion == 1) {
-        if (unknown == false) {
+        if (valid == false) {
             CHECK_VALUE(flex, 0x08);
-            flexlevel = 2;  // TODO: Why do reports say Rise Time 2 for this value?
+            flexlevel = 2;  // These get reported as Rise Time 2
+            valid = true;
         }
-        if (lock) CHECK_VALUE(risetime, true);  // so far we've only seen rise time lock, but this could mean bi-flex lock as well
-        if (flexlevel == 0 && unknown) UNEXPECTED_VALUE(flexlevel, "1-3");
     } else {
-        CHECK_VALUE(flex, 0x02);  // only seen one example, unsure if it matches F5V01
+        CHECK_VALUE(flex, 0x02);  // only seen one example, unsure if it matches F5V01; seems to encode Bi-Flex 2
+        valid = true;  // add the flex mode and setting to the parsed settings
     }
+    if (flexlevel == 0 || flexlevel >3) UNEXPECTED_VALUE(flexlevel, "1-3");
 
-    // We're only confident of values where the high bit is set
-    if (unknown) {
-        if (risetime) {
-            flexmode = FLEX_RiseTime;
-        } else {
-            flexmode = FLEX_BiFlex;
-        }
+    CHECK_VALUE(valid, true);
+    if (risetime) {
+        flexmode = FLEX_RiseTime;
+    } else {
+        flexmode = FLEX_BiFlex;
     }
-
-    // TODO: rise or bi-flex lock once we're confident about it
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
-    if (flexmode != FLEX_Unknown) {
+
+    if (flexmode == FLEX_BiFlex) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, flexlevel));
+        CHECK_VALUE(lock, 0);  // Flag any sample data that will let us confirm flex lock
+        //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, lock != 0));
+    } else {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, flexlevel));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, lock != 0));
     }
 }
 
