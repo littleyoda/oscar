@@ -1128,7 +1128,11 @@ QString Daily::getMachineSettings(Day * day) {
             QString data;
 
             if (chan.datatype() == schema::LOOKUP) {
-                data = chan.option(it.value().toInt());
+                int value = it.value().toInt();
+                data = chan.option(value);
+                if (data.isEmpty()) {
+                    data = QString().number(value) + " " + chan.units();;
+                }
             } else if (chan.datatype() == schema::BOOL) {
                 data = (it.value().toBool() ? STR_TR_Yes : STR_TR_No);
             } else if (chan.datatype() == schema::DOUBLE) {
