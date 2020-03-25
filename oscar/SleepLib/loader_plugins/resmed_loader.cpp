@@ -2086,8 +2086,10 @@ void ResDayTask::run()
         if (ovr.filemap.size() == 0)
             continue;
         Session * sess = new Session(mach, ovr.start);
-        sess->set_first(quint64(ovr.start)*1000L);
-        sess->set_last(quint64(ovr.end)*1000L);
+//      Do not set the session times according to Mask on/off times
+//      The LoadXXX edf routines will update them with recording start and durations
+//      sess->set_first(quint64(ovr.start)*1000L);
+//      sess->set_last(quint64(ovr.end)*1000L);
         ovr.sess = sess;
 
         for (auto mit=ovr.filemap.begin(), mend=ovr.filemap.end(); mit != mend; ++mit) {
