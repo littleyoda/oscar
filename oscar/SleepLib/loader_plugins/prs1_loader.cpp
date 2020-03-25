@@ -4172,17 +4172,15 @@ CPAPMode PRS1Import::importMode(int prs1mode)
         case PRS1_MODE_BILEVEL:     mode = MODE_BILEVEL_FIXED; break;
         case PRS1_MODE_AUTOBILEVEL: mode = MODE_BILEVEL_AUTO_VARIABLE_PS; break;
         case PRS1_MODE_ASV:         mode = MODE_ASV_VARIABLE_EPAP; break;
-        case PRS1_MODE_S:           mode = MODE_BILEVEL_FIXED; break;  // TODO
-        case PRS1_MODE_ST:          mode = MODE_BILEVEL_FIXED; break;  // TODO, pressure seems variable
-        case PRS1_MODE_PC:          mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
-        case PRS1_MODE_ST_AVAPS:    mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
-        case PRS1_MODE_PC_AVAPS:    mode = MODE_AVAPS; break;          // TODO, maybe only PC - AVAPS mode
+        case PRS1_MODE_S:           mode = MODE_BILEVEL_FIXED; break;
+        case PRS1_MODE_ST:          mode = MODE_BILEVEL_FIXED; break;
+        case PRS1_MODE_PC:          mode = MODE_BILEVEL_FIXED; break;
+        case PRS1_MODE_ST_AVAPS:    mode = MODE_AVAPS; break;
+        case PRS1_MODE_PC_AVAPS:    mode = MODE_AVAPS; break;
         default:
             UNEXPECTED_VALUE(prs1mode, "known PRS1 mode");
             break;
     }
-    // TODO: fixed vs. variable PS seems to be independent from ventilator mode, for example
-    // S/T can be fixed (single IPAP pressure) or variable (IPAP min/max).
 
     return mode;
 }

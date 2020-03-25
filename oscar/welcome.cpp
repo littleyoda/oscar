@@ -244,7 +244,7 @@ QString Welcome::GenerateCPAPHTML()
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
                 EventDataType epap = day->percentile(CPAP_EPAP, perc/100.0);
                 html += tr("Your machine was under %1-%2 %3 for %4% of the time.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
-            } else if (cpapmode == MODE_ASV){
+            } else if (cpapmode == MODE_ASV || cpapmode == MODE_AVAPS){
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
                 EventDataType epap = qRound(day->settings_wavg(CPAP_EPAP));
 
