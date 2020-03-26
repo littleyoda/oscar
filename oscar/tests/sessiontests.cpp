@@ -53,7 +53,12 @@ static QString eventListTypeName(EventListType t)
 // for names, make sure there aren't duplicate values, etc. For now we just fill the
 // below by hand.
 #define CHANNELNAME(CH) if (i == CH) { s = #CH; break; }
+extern ChannelID PRS1_Mode;
 extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
+extern ChannelID PRS1_FlexLock, PRS1_TubeLock, PRS1_RampType;
+extern ChannelID PRS1_BackupBreathMode, PRS1_BackupBreathRate, PRS1_BackupBreathTi;
+extern ChannelID PRS1_AutoTrial, PRS1_EZStart, PRS1_RiseTime, PRS1_RiseTimeLock;
+extern ChannelID PRS1_VariableBreathing;
 
 extern ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
@@ -79,23 +84,35 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(CPAP_RampTime);
         CHANNELNAME(CPAP_RampPressure);
         CHANNELNAME(CPAP_RespRate);
+        CHANNELNAME(CPAP_TidalVolume);
         CHANNELNAME(OXI_Pulse);
+        // PRS1-specific channels
+        CHANNELNAME(PRS1_Mode);
         CHANNELNAME(PRS1_FlexMode);
         CHANNELNAME(PRS1_FlexLevel);
         CHANNELNAME(PRS1_HumidStatus);
         CHANNELNAME(PRS1_HumidMode);
         CHANNELNAME(PRS1_TubeTemp);
         CHANNELNAME(PRS1_HumidLevel);
-        CHANNELNAME(PRS1_SysLock);
-        CHANNELNAME(PRS1_SysOneResistSet);
-        CHANNELNAME(PRS1_SysOneResistStat);
+        CHANNELNAME(PRS1_MaskResistLock);
+        CHANNELNAME(PRS1_MaskResistSet);
         CHANNELNAME(PRS1_TimedBreath);
         CHANNELNAME(PRS1_HoseDiam);
         CHANNELNAME(PRS1_AutoOn);
         CHANNELNAME(PRS1_AutoOff);
         CHANNELNAME(PRS1_MaskAlert);
         CHANNELNAME(PRS1_ShowAHI);
-        CHANNELNAME(CPAP_BrokenSummary);
+        CHANNELNAME(PRS1_FlexLock);
+        CHANNELNAME(PRS1_TubeLock);
+        CHANNELNAME(PRS1_RampType);
+        CHANNELNAME(PRS1_BackupBreathMode);
+        CHANNELNAME(PRS1_BackupBreathRate);
+        CHANNELNAME(PRS1_BackupBreathTi);
+        CHANNELNAME(PRS1_AutoTrial);
+        CHANNELNAME(PRS1_EZStart);
+        CHANNELNAME(PRS1_RiseTime);
+        CHANNELNAME(PRS1_RiseTimeLock);
+        // ZEO-specific channels
         CHANNELNAME(ZEO_Awakenings);
         CHANNELNAME(ZEO_MorningFeel);
         CHANNELNAME(ZEO_TimeInWake);
@@ -160,7 +177,7 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_Test2);
         CHANNELNAME(CPAP_PressurePulse);
         CHANNELNAME(CPAP_Pressure);
-        CHANNELNAME(PRS1_0E);
+        CHANNELNAME(PRS1_VariableBreathing);
         CHANNELNAME(CPAP_PressureSet);
         CHANNELNAME(CPAP_IPAPSet);
         CHANNELNAME(CPAP_EPAPSet);

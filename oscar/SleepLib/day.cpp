@@ -805,6 +805,8 @@ qint64 Day::total_time(MachineType type)
 }
 
 ChannelID Day::getPressureChannelID() {
+    // TODO: This is an awful hack that depends on the enum ordering of the generic CPAP_Mode channel.
+    // See the comment in getCPAPModeStr().
     // Determined the preferred pressure channel (CPAP_IPAP or CPAP_Pressure)
     CPAPMode cpapmode = (CPAPMode)(int)settings_max(CPAP_Mode);
     ChannelID preferredID = CPAP_Pressure;
@@ -1401,15 +1403,23 @@ void Day::removeMachine(Machine * mach)
 
 int Day::getCPAPMode()
 {
+    // NOTE: This needs to return the generic mode, unlike getCPAPModeStr().
+    // This function is used only to determine whether to use advanced graphs,
+    // which refer to the generic mode.
+    /*
     Machine * mach = machine(MT_CPAP);
     if (!mach) return 0;
 
     CPAPLoader * loader = qobject_cast<CPAPLoader *>(mach->loader());
 
     ChannelID modechan = loader->CPAPModeChannel();
+    */
+    ChannelID modechan = CPAP_Mode;
 
 //    schema::Channel & chan = schema::channel[modechan];
 
+    // TODO: This is an awful hack that depends on the enum ordering of the machine-specific CPAP mode.
+    // See the comment in getCPAPModeStr().
     int mode = (CPAPMode)(int)qRound(settings_wavg(modechan));
 
     return mode;
@@ -1426,6 +1436,10 @@ QString Day::getCPAPModeStr()
 
     schema::Channel & chan = schema::channel[modechan];
 
+    // TODO: This is an awful hack that depends on the enum ordering of the machine-specific CPAP mode.
+    // Instead, we should calculate how long each mode was in operation and
+    // determine the one that was running the longest, along with the settings
+    // while that mode was in operation.
     int mode = (CPAPMode)(int)qRound(settings_wavg(modechan));
 
     return chan.option(mode);
@@ -1463,6 +1477,8 @@ QString Day::getPressureRelief()
     ChannelID pr_mode_chan = loader->PresReliefMode();
 
     if ((pr_mode_chan != NoChannel) && settingExists(pr_mode_chan)) {
+        // TODO: This is an awful hack that depends on the enum ordering of the pressure relief mode.
+        // See the comment in getCPAPModeStr().
         int pr_mode = qRound(settings_wavg(pr_mode_chan));
         pr_str = QObject::tr("%1%2").arg(loader->PresReliefLabel()).arg(schema::channel[pr_mode_chan].option(pr_mode));
 
@@ -1488,6 +1504,8 @@ QString Day::getPressureSettings()
         return QString();
     }
 
+    // TODO: This is an awful hack that depends on the enum ordering of the generic CPAP_Mode channel.
+    // See the comment in getCPAPModeStr().
     CPAPMode mode = (CPAPMode)(int)settings_max(CPAP_Mode);
     QString units = schema::channel[CPAP_Pressure].units();
 
@@ -1516,9 +1534,10 @@ QString Day::getPressureSettings()
                 arg(validPressure(settings_min(CPAP_PSMax))).
                 arg(units);
     } else if (mode == MODE_AVAPS) {
-        return QObject::tr("EPAP %1 IPAP %2 (%3)").
+        return QObject::tr("EPAP %1 IPAP %2-%3 (%4)").
                 arg(validPressure(settings_min(CPAP_EPAP))).
-                arg(validPressure(settings_max(CPAP_IPAP))).
+                arg(validPressure(settings_max(CPAP_IPAPLo))).
+                arg(validPressure(settings_max(CPAP_IPAPHi))).
                 arg(units);
     }
 

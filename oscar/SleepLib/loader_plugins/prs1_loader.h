@@ -25,7 +25,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation
 // BEFORE making a release
-const int prs1_data_version = 17;
+const int prs1_data_version = 18;
 //
 //********************************************************************************************
 #if 0  // Apparently unused
@@ -420,16 +420,18 @@ class PRS1Loader : public CPAPLoader
     }
 
 
-    virtual QString PresReliefLabel() { return QObject::tr(""); }
+    virtual QString PresReliefLabel();
     //! \brief Returns the PRS1 specific code for Pressure Relief Mode
-    virtual ChannelID PresReliefMode() { return PRS1_FlexMode; }
+    virtual ChannelID PresReliefMode();
     //! \brief Returns the PRS1 specific code for Pressure Relief Setting
-    virtual ChannelID PresReliefLevel() { return PRS1_FlexLevel; }
+    virtual ChannelID PresReliefLevel();
+    //! \brief Returns the PRS1 specific code for PAP mode
+    virtual ChannelID CPAPModeChannel();
 
     //! \brief Returns the PRS1 specific code for Humidifier Connected
-    virtual ChannelID HumidifierConnected() { return PRS1_HumidStatus; }
+    virtual ChannelID HumidifierConnected();
     //! \brief Returns the PRS1 specific code for Humidifier Level
-    virtual ChannelID HumidifierLevel() { return PRS1_HumidLevel; }
+    virtual ChannelID HumidifierLevel();
 
     //! \brief Called at application init, to set up any custom PRS1 Channels
     void initChannels();
