@@ -1607,6 +1607,8 @@ void Daily::Load(QDate date)
     if (cpap) {
         float hours=day->hours(MT_CPAP);
         if (GraphView->isEmpty() && (hours>0)) {
+            // TODO: Eventually we should get isBrick from the loader, since some summary days
+            // on a non-brick might legitimately have no graph data.
             if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea)) {
                 GraphView->setEmptyText(STR_Empty_Brick);
 

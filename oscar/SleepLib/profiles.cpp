@@ -541,7 +541,7 @@ void Profile::DataFormatError(Machine *m)
         msg = msg + QObject::tr("This means you will need to import this machine data again afterwards from your own backups or data card.") + "<br/><br/>";
     }
 
-    msg += "<font size=+1>"+QObject::tr("Important:")+"</font> "+QObject::tr("Once you upgrade, you <font size=+1>can not</font> use this profile with the previous version anymore.")+"<br/><br/>"+
+    msg += "<font size=+1>"+QObject::tr("Important:")+"</font> "+QObject::tr("Once you upgrade, you <font size=+1>cannot</font> use this profile with the previous version anymore.")+"<br/><br/>"+
             QObject::tr("If you are concerned, click No to exit, and backup your profile manually, before starting OSCAR again.")+ "<br/><br/>";
     msg = msg + "<font size=+1>"+QObject::tr("Are you ready to upgrade, so you can run the new version of OSCAR?")+"</font>";
 
