@@ -229,6 +229,7 @@ ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
 ChannelID PRS1_BackupBreathMode = 0, PRS1_BackupBreathRate = 0, PRS1_BackupBreathTi = 0;
 ChannelID PRS1_AutoTrial = 0, PRS1_EZStart = 0, PRS1_RiseTime = 0, PRS1_RiseTimeLock = 0;
+ChannelID PRS1_VariableBreathing = 0;  // TODO: UNCONFIRMED, but seems to match sample data
 
 QString PRS1Loader::PresReliefLabel() { return QObject::tr(""); }
 ChannelID PRS1Loader::PresReliefMode() { return PRS1_FlexMode; }
@@ -1127,7 +1128,7 @@ enum PRS1ParsedEventType
     EV_PRS1_FL,
     EV_PRS1_PB,
     EV_PRS1_LL,
-    EV_PRS1_UNK_DURATION,  // unknown duration event, rename once we figure it out
+    EV_PRS1_VB,           // UNCONFIRMED
     EV_PRS1_HY,
     EV_PRS1_OA_COUNT,     // F3V3 only
     EV_PRS1_CA_COUNT,     // F3V3 only
@@ -1530,7 +1531,7 @@ PRS1_DURATION_EVENT(PRS1ClearAirwayEvent, EV_PRS1_CA);
 PRS1_DURATION_EVENT(PRS1FlowLimitationEvent, EV_PRS1_FL);
 PRS1_DURATION_EVENT(PRS1PeriodicBreathingEvent, EV_PRS1_PB);
 PRS1_DURATION_EVENT(PRS1LargeLeakEvent, EV_PRS1_LL);
-PRS1_DURATION_EVENT(PRS1UnknownDurationEvent, EV_PRS1_UNK_DURATION);
+PRS1_DURATION_EVENT(PRS1VariableBreathingEvent, EV_PRS1_VB);
 PRS1_DURATION_EVENT(PRS1HypopneaEvent, EV_PRS1_HY);
 
 PRS1_VALUE_EVENT(PRS1TotalLeakEvent, EV_PRS1_TOTLEAK);
@@ -1589,7 +1590,7 @@ const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chu
 // they're reported/supported by the parser.
 static const QVector<PRS1ParsedEventType> PRS1OnDemandChannels =
 {
-    //PRS1TimedBreathEvent::TYPE,  // TODO: TB could be on-demand
+    PRS1TimedBreathEvent::TYPE,
     PRS1PressurePulseEvent::TYPE,
     
     // Pressure initialized on-demand for F0 due to the possibility of bilevel vs. single pressure.
@@ -1655,7 +1656,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1ApneaAlarmEvent::TYPE,        { /* Not imported */ } },
     { PRS1SnoresAtPressureEvent::TYPE,  { /* Not imported */ } },
     { PRS1AutoPressureSetEvent::TYPE,   { /* Not imported */ } },
-    { PRS1UnknownDurationEvent::TYPE,   { &PRS1_0E } },
+    { PRS1VariableBreathingEvent::TYPE, { &PRS1_VariableBreathing } },  // UNCONFIRMED
     
     { PRS1HypopneaCount::TYPE,          { &CPAP_Hypopnea } },     // F3V3 only, generates individual events on import
     { PRS1ObstructiveApneaCount::TYPE,  { &CPAP_Obstructive } },  // F3V3 only, generates individual events on import
@@ -1682,7 +1683,7 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
         ENUMSTRING(EV_PRS1_FL);
         ENUMSTRING(EV_PRS1_PB);
         ENUMSTRING(EV_PRS1_LL);
-        ENUMSTRING(EV_PRS1_UNK_DURATION);
+        ENUMSTRING(EV_PRS1_VB);
         ENUMSTRING(EV_PRS1_HY);
         ENUMSTRING(EV_PRS1_OA_COUNT);
         ENUMSTRING(EV_PRS1_CA_COUNT);
@@ -2897,15 +2898,15 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             continue;
         }
         
-        // Skip zero-length PB or LL (or unknown duration 0E) events
-        if ((e->m_type == PRS1PeriodicBreathingEvent::TYPE || e->m_type == PRS1LargeLeakEvent::TYPE || e->m_type == PRS1UnknownDurationEvent::TYPE) &&
+        // Skip zero-length PB or LL or VB events
+        if ((e->m_type == PRS1PeriodicBreathingEvent::TYPE || e->m_type == PRS1LargeLeakEvent::TYPE || e->m_type == PRS1VariableBreathingEvent::TYPE) &&
             (e->m_duration == 0)) {
             // LL occasionally appear about a minute before a new mask-on slice
             // begins, when the previous mask-on slice ended with a large leak.
             // This probably indicates the end of LL and beginning
             // of breath detection, but we don't get any real data until mask-on.
             //
-            // It has also happened once in a similar scenario for PB and 0E, even when
+            // It has also happened once in a similar scenario for PB and VB, even when
             // the two mask-on slices are in different sessions!
             continue;
         }
@@ -2947,9 +2948,9 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         // Sanity check: warn if a (non-slice) event is earlier than the current mask-on slice
         if (t < (*m_currentSlice).start && (*m_currentSlice).status == MaskOn) {
             if (!PRS1NonSliceChannels.contains(e->m_type)) {
-                // LL and PRS1_0E at the beginning of a mask-on session sometimes start 1 second early,
+                // LL and VB at the beginning of a mask-on session sometimes start 1 second early,
                 // so suppress that warning.
-                if ((*m_currentSlice).start - t > 1000 || (e->m_type != PRS1LargeLeakEvent::TYPE && e->m_type != PRS1UnknownDurationEvent::TYPE)) {
+                if ((*m_currentSlice).start - t > 1000 || (e->m_type != PRS1LargeLeakEvent::TYPE && e->m_type != PRS1VariableBreathingEvent::TYPE)) {
                     qWarning() << sessionid << "Event" << e->m_type << "before mask-on slice:" << ts(t);
                 }
             }
@@ -3097,7 +3098,7 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
 
         case PRS1PeriodicBreathingEvent::TYPE:
         case PRS1LargeLeakEvent::TYPE:
-        case PRS1UnknownDurationEvent::TYPE:
+        case PRS1VariableBreathingEvent::TYPE:
             // TODO: The graphs silently treat the timestamp of a span as an end time rather than start (see gFlagsLine::paint).
             // Decide whether to preserve that behavior or change it universally and update either this code or comment.
             duration = e->m_duration * 1000L;
@@ -3497,7 +3498,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V23 = {
     PRS1HypopneaEvent::TYPE,
     PRS1FlowLimitationEvent::TYPE,
     PRS1VibratorySnoreEvent::TYPE,
-    PRS1UnknownDurationEvent::TYPE,
+    PRS1VariableBreathingEvent::TYPE,
     PRS1PeriodicBreathingEvent::TYPE,
     PRS1LargeLeakEvent::TYPE,
     PRS1TotalLeakEvent::TYPE,
@@ -3621,13 +3622,12 @@ bool PRS1DataChunk::ParseEventsF0V23()
                 // no data bytes
                 this->AddEvent(new PRS1VibratorySnoreEvent(t, 0));
                 break;
-            case 0x0e:  // ???
-                // 5 bytes like PB and LL, but what is it?
+            case 0x0e:  // Variable Breathing?
                 // TODO: does duration double like F0V4?
-                duration = (data[pos] | (data[pos+1] << 8));  // this looks like a 16-bit value, so may be duration like PB?
+                duration = (data[pos] | (data[pos+1] << 8));
                 elapsed = data[pos+2];  // this is always 60 seconds unless it's at the end, so it seems like elapsed
                 CHECK_VALUES(elapsed, 60, 0);
-                this->AddEvent(new PRS1UnknownDurationEvent(t - elapsed - duration, duration));
+                this->AddEvent(new PRS1VariableBreathingEvent(t - elapsed - duration, duration));
                 break;
             case 0x0f:  // Periodic Breathing
                 // PB events are reported some time after they conclude, and they do have a reported duration.
@@ -3697,7 +3697,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V4 = {
     PRS1HypopneaEvent::TYPE,
     PRS1FlowLimitationEvent::TYPE,
     PRS1VibratorySnoreEvent::TYPE,
-    PRS1UnknownDurationEvent::TYPE,
+    PRS1VariableBreathingEvent::TYPE,
     PRS1PeriodicBreathingEvent::TYPE,
     PRS1LargeLeakEvent::TYPE,
     PRS1TotalLeakEvent::TYPE,
@@ -3822,13 +3822,12 @@ bool PRS1DataChunk::ParseEventsF0V4()
                 // no data bytes
                 this->AddEvent(new PRS1VibratorySnoreEvent(t, 0));
                 break;
-            case 0x0e:  // ???
-                // 5 bytes like PB and LL, but what is it?
+            case 0x0e:  // Variable Breathing?
                 // TODO: does duration double like it does for PB/LL?
-                duration = 2 * (data[pos] | (data[pos+1] << 8));  // this looks like a 16-bit value, so may be duration like PB?
+                duration = 2 * (data[pos] | (data[pos+1] << 8));
                 elapsed = data[pos+2];  // this is always 60 seconds unless it's at the end, so it seems like elapsed
                 CHECK_VALUES(elapsed, 60, 0);
-                this->AddEvent(new PRS1UnknownDurationEvent(t - elapsed - duration, duration));
+                this->AddEvent(new PRS1VariableBreathingEvent(t - elapsed - duration, duration));
                 break;
             case 0x0f:  // Periodic Breathing
                 // PB events are reported some time after they conclude, and they do have a reported duration.
@@ -3907,7 +3906,7 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF0V6 = {
     PRS1HypopneaEvent::TYPE,
     PRS1FlowLimitationEvent::TYPE,
     PRS1VibratorySnoreEvent::TYPE,
-    PRS1UnknownDurationEvent::TYPE,
+    PRS1VariableBreathingEvent::TYPE,
     PRS1PeriodicBreathingEvent::TYPE,
     PRS1LargeLeakEvent::TYPE,
     PRS1TotalLeakEvent::TYPE,
@@ -4046,12 +4045,11 @@ bool PRS1DataChunk::ParseEventsF0V6()
                 // no data bytes
                 this->AddEvent(new PRS1VibratorySnoreEvent(t, 0));
                 break;
-            case 0x0e:  // ???
-                // 5 bytes like PB and LL, but what is it?
-                duration = 2 * (data[pos] | (data[pos+1] << 8));  // this looks like a 16-bit value, so may be duration like PB?
+            case 0x0e:  // Variable Breathing?
+                duration = 2 * (data[pos] | (data[pos+1] << 8));
                 elapsed = data[pos+2];  // this is always 60 seconds unless it's at the end, so it seems like elapsed
                 CHECK_VALUES(elapsed, 60, 0);
-                this->AddEvent(new PRS1UnknownDurationEvent(t - elapsed - duration, duration));
+                this->AddEvent(new PRS1VariableBreathingEvent(t - elapsed - duration, duration));
                 break;
             case 0x0f:  // Periodic Breathing
                 // PB events are reported some time after they conclude, and they do have a reported duration.
@@ -8945,21 +8943,15 @@ void PRS1Loader::initChannels()
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
-    // TODO: is the below useful?
-//    <channel id="0xe10e" class="setting" scope="!session" name="PRS1Mode" details="PAP Mode" label="PAP Mode" type="integer" link="0x1200">
-//     <Option id="0" value="CPAP"/>
-//     <Option id="1" value="Auto"/>
-//     <Option id="2" value="BIPAP"/>
-//     <Option id="3" value="AutoSV"/>
-//    </channel>
-
-    channel.add(GRP_CPAP, new Channel(PRS1_0E = 0x1157, SPAN, MT_CPAP,    SESSION,
-        "PRS1_UNK",
-        QObject::tr("PRS1 Unknown"),
-        QObject::tr("Unknown PRS1 span 0x0E"),
-        "??",
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_VariableBreathing = 0x1156, SPAN, MT_CPAP,    SESSION,
+        "PRS1_VariableBreathing",
+        QObject::tr("Variable Breathing"),
+        QObject::tr("UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend"),
+        "VB",
         STR_UNIT_Seconds,
         DEFAULT,    QColor("#ffe8f0")));
+    chan->setEnabled(false);  // disable by default
+
     channel.add(GRP_CPAP, new Channel(PRS1_BND = 0x1159, SPAN,  MT_CPAP,   SESSION,
         "PRS1_BND",
         QObject::tr("Breathing Not Detected"),
