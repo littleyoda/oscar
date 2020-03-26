@@ -2887,7 +2887,7 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>&amp;Advanced</string>
      </property>
-     <widget class="QMenu" name="menuPurge_Oximetery_Data">
+     <widget class="QMenu" name="menuPurge_Oximetry_Data">
       <property name="title">
        <string>Purge Oximetry Data</string>
       </property>
@@ -2901,7 +2901,7 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionPurge_Current_Day"/>
      <addaction name="menuPurge_CPAP_Data"/>
      <addaction name="separator"/>
-     <addaction name="menuPurge_Oximetery_Data"/>
+     <addaction name="menuPurge_Oximetry_Data"/>
     </widget>
     <widget class="QMenu" name="menu_Rebuild_CPAP_Data">
      <property name="title">
