@@ -2251,7 +2251,7 @@ Index</translation>
     <message>
         <location filename="../oscar/overview.cpp" line="191"/>
         <source>Usage</source>
-        <translation>Användning</translation>
+        <translation>Compliance</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="191"/>
@@ -3508,7 +3508,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view läge (med en seriekabel) är ett sätt att uppnå en exakt synkronisering på CMS50 oximeter, men motverkar inte för CPAP-klockdrift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Om du startar din pulsoximeter &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samtidigt som du startar din CPAP, så kan du också uppnå synkronisering. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Om du startar din pulsoximeter &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exact &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samtidigt som du startar din CPAP, så kan du också uppnå synkronisering. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Den seriella importprocessen tar starttiden från kvällens första CPAP-session. (Kom ihåg att importera dina CPAP-data först!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -5426,7 +5426,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Resp. Rate</source>
-        <translation>Andningsfrekvens</translation>
+        <translation>Andningsfrekv.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="778"/>
@@ -5487,7 +5487,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="788"/>
         <source>Usage</source>
-        <translation>Användning</translation>
+        <translation>Compliance</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="789"/>
@@ -6637,12 +6637,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1001"/>
         <source>Low Usage Days: %1</source>
-        <translation>Dagar med låg användning: %1</translation>
+        <translation>Dagar med låg compliance: %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1002"/>
         <source>(%1% compliant, defined as &gt; %2 hours)</source>
-        <translation>(%1% användning, definerad som &gt; %2 timmar)</translation>
+        <translation>(%1% compliant, definerad som &gt; %2 timmar)</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1118"/>
@@ -6927,12 +6927,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Clear Airway</source>
-        <translation>Central Apne-utebliven andningsimpuls</translation>
+        <translation>Central Apne</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>Obstructive</source>
-        <translation>Obstruktiv-stopp i halsen</translation>
+        <translation>Obstruktiv Apne</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
@@ -7114,7 +7114,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Respiratory Rate</source>
-        <translation>Andningsfrekvens</translation>
+        <translation>Andningsfrekv.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
@@ -8499,7 +8499,7 @@ Linje %2, kolumn %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="1356"/>
         <source>Low Use Days: %1</source>
-        <translation>Dagar med låg användning: %1</translation>
+        <translation>Dagar med låg compliance: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1357"/>
@@ -8709,7 +8709,7 @@ Linje %2, kolumn %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="723"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
-        <translation>Denna rapport utarbetades på %1 av OSCAR %2</translation>
+        <translation>Denna rapport utarbetades %1 av OSCAR %2</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="967"/>
@@ -8734,12 +8734,12 @@ Linje %2, kolumn %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="906"/>
         <source>First Use</source>
-        <translation>Första användning</translation>
+        <translation>Först använd</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="907"/>
         <source>Last Use</source>
-        <translation>Sista användning</translation>
+        <translation>Sist använd</translation>
     </message>
 </context>
 <context>
@@ -8927,7 +8927,7 @@ Linje %2, kolumn %3</translation>
     <message>
         <location filename="../oscar/welcome.ui" line="581"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Varning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD-kort behöver skrivskyddas &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;före insättning i datorns kortläsare.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Vissa operativsystem skriver små indexfiler till minneskortet utan att fråga först, vilket gör kortet oläsligt av din CPAP.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Varning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD-kort behöver skrivskyddas &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;före insättning i datorns kortläsare.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Vissa operativsystem skriver små indexfiler till minneskortet utan att fråga först, vilket gör kortet oläsligt för din CPAP.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
@@ -8952,7 +8952,7 @@ Linje %2, kolumn %3</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="176"/>
         <source>The last time you used your %1...</source>
-        <translation>Senaste gången du använde din %1...</translation>
+        <translation>Sista gången du använde din %1...</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="180"/>
