@@ -2587,16 +2587,19 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
         }
 
         QList<Session *> sessionlist=day->getSessions(MT_OXIMETER);
+        QSet<Machine *> machines;
 
         for (auto & sess : sessionlist) {
+            machines += sess->machine();
             sess->Destroy();
             delete sess;
         }
-        // TODO: Fix this. It deletes the underlying session data file in the machine,
-        // but not from the machine's summary cache. This results in future launches
-        // of OSCAR thinking the day has oximetry data, but then it isn't really there.
-        // Currently this is only useful for reimporting a single day, which the purge
-        // permits, and which in turn creates a new data file for that day.
+        
+        // We have to update the summary cache for the affected machine(s),
+        // otherwise OSCAR will still think this day has oximetry data at next launch.
+        for (auto & mach : machines) {
+            mach->SaveSummaryCache();
+        }
 
 
         if (daily) {
