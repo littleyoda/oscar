@@ -6734,10 +6734,8 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // The time of change is most likely in the events file. See slice 6 for ending pressure.
                 //CHECK_VALUE(pressure, 0x5a);
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, pressure));
-                // TODO: Once OSCAR can handle more modes, we can include these settings; right now including
-                // these settings makes it think this is AutoCPAP.
-                //this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
-                //this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
+                this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
+                this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MAX, max_pressure));
                 break;
             case 0x0d:  // AutoCPAP pressure setting
                 CHECK_VALUE(len, 2);
@@ -6770,12 +6768,16 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
                 break;
             case 0x10: // Auto-Trial mode
-                // TODO: F0V4 considers this a separate mode from CPAP or CPAPCHECK, should F0V6 as well?
-                // TODO: Check how auto-trial sessions are labeled in F0V6 reports.
+                // This is not encoded as a separate mode as in F0V4, but instead as an auto-trial
+                // duration on top of the CPAP or CPAP-Check mode. Reports show Auto-CPAP results,
+                // but curiously report the use of C-Flex+, even though Auto-CPAP uses A-Flex.
                 CHECK_VALUE(len, 3);
-                CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);  // TODO: What's the difference between auto-trial and CPAP-Check?
+                CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);
                 CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
+                // If we want C-Flex+ to be reported as A-Flex, we can set cpapmode = PRS1_MODE_AUTOTRIAL here.
+                // (Note that the setting event has already been added above, which is why ImportSummary needs
+                // to adjust it when it sees this setting.)
                 min_pressure = data[pos+1];
                 max_pressure = data[pos+2];
                 this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
@@ -7517,6 +7519,7 @@ bool PRS1Import::ImportSummary()
     qint64 start = qint64(summary->timestamp) * 1000L;
     session->set_first(start);
 
+    // TODO: The below max pressures aren't right for the 30 cmH2O models.
     session->setPhysMax(CPAP_LeakTotal, 120);
     session->setPhysMin(CPAP_LeakTotal, 0);
     session->setPhysMax(CPAP_Pressure, 25);
@@ -7531,6 +7534,7 @@ bool PRS1Import::ImportSummary()
     bool ok;
     ok = summary->ParseSummary();
     
+    PRS1Mode nativemode = PRS1_MODE_UNKNOWN;
     CPAPMode cpapmode = MODE_UNKNOWN;
     for (int i=0; i < summary->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = summary->m_parsedData.at(i);
@@ -7544,7 +7548,7 @@ bool PRS1Import::ImportSummary()
         PRS1ParsedSettingEvent* s = (PRS1ParsedSettingEvent*) e;
         switch (s->m_setting) {
             case PRS1_SETTING_CPAP_MODE:
-                session->settings[PRS1_Mode] = (PRS1Mode) e->m_value;
+                nativemode = (PRS1Mode) e->m_value;
                 cpapmode = importMode(e->m_value);
                 break;
             case PRS1_SETTING_PRESSURE:
@@ -7552,11 +7556,6 @@ bool PRS1Import::ImportSummary()
                 break;
             case PRS1_SETTING_PRESSURE_MIN:
                 session->settings[CPAP_PressureMin] = e->value();
-                if (cpapmode == MODE_CPAP) {  // Auto-Trial is reported as CPAP but with a minimum and maximum pressure,
-                    cpapmode = MODE_APAP;     // so import it as APAP, since that's what it's really doing.
-                }
-                // CPAP-Check no longer reports min/max pressures, since it should be treated as CPAP.
-                // (It only adjusts the CPAP pressure by 1 cmH2O every 30 hours at most.)
                 break;
             case PRS1_SETTING_PRESSURE_MAX:
                 session->settings[CPAP_PressureMax] = e->value();
@@ -7578,9 +7577,6 @@ bool PRS1Import::ImportSummary()
                 break;
             case PRS1_SETTING_IPAP_MIN:
                 session->settings[CPAP_IPAPLo] = e->value();
-                if (cpapmode == MODE_BILEVEL_FIXED) {
-                    cpapmode = MODE_BILEVEL_AUTO_VARIABLE_PS;  // TODO: this isn't quite right, on ventilators it's actually fixed EPAP with variable PS
-                }
                 break;
             case PRS1_SETTING_IPAP_MAX:
                 session->settings[CPAP_IPAPHi] = e->value();
@@ -7657,8 +7653,10 @@ bool PRS1Import::ImportSummary()
             case PRS1_SETTING_TIDAL_VOLUME:
                 session->settings[CPAP_TidalVolume] = e->m_value;
                 break;
-            case PRS1_SETTING_AUTO_TRIAL:
+            case PRS1_SETTING_AUTO_TRIAL:  // new to F0V6
                 session->settings[PRS1_AutoTrial] = e->m_value;
+                nativemode = PRS1_MODE_AUTOTRIAL;  // Note: F0V6 reports show the underlying CPAP mode rather than Auto-Trial.
+                cpapmode = importMode(nativemode);
                 break;
             case PRS1_SETTING_EZ_START:
                 session->settings[PRS1_EZStart] = (bool) e->m_value;
@@ -7684,8 +7682,14 @@ bool PRS1Import::ImportSummary()
     if (!ok) {
         return false;
     }
-    session->settings[CPAP_Mode] = cpapmode;
     
+    if (summary->m_parsedData.count() > 0) {
+        if (nativemode == PRS1_MODE_UNKNOWN) UNEXPECTED_VALUE(nativemode, "known mode");
+        if (cpapmode == MODE_UNKNOWN) UNEXPECTED_VALUE(cpapmode, "known mode");
+        session->settings[PRS1_Mode] = nativemode;
+        session->settings[CPAP_Mode] = cpapmode;
+    }
+
     if (summary->duration == 0) {
         // This does occasionally happen and merely indicates a brief session with no useful data.
         // This requires the use of really_set_last below, which otherwise rejects 0 length.
@@ -8758,13 +8762,7 @@ void PRS1Loader::initChannels()
         QObject::tr("PRS1 pressure relief setting."),
         QObject::tr("Flex Level"),
         "", LOOKUP, Qt::blue));
-
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("1"));
-    chan->addOption(2, QObject::tr("2"));
-    chan->addOption(3, QObject::tr("3"));
-    chan->addOption(4, QObject::tr("4"));
-    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLock = 0xe111, SETTING, MT_CPAP,   SESSION,
         "PRS1FlexLock",
@@ -8780,7 +8778,7 @@ void PRS1Loader::initChannels()
         QObject::tr("Rise Time"),
         QObject::tr("Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition"),
         QObject::tr("Rise Time"),
-        "", DEFAULT, Qt::blue));
+        "", LOOKUP, Qt::blue));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_RiseTimeLock = 0xe11a, SETTING, MT_CPAP,   SESSION,
         "PRS1RiseTimeLock",
@@ -8817,11 +8815,6 @@ void PRS1Loader::initChannels()
         QObject::tr("Tube Temp."),
         "", LOOKUP, Qt::red));
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("1"));
-    chan->addOption(2, QObject::tr("2"));
-    chan->addOption(3, QObject::tr("3"));
-    chan->addOption(4, QObject::tr("4"));
-    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_HumidLevel = 0xe102, SETTING,  MT_CPAP,  SESSION,
         "PRS1HumidLevel",
@@ -8830,11 +8823,6 @@ void PRS1Loader::initChannels()
         QObject::tr("Humid. Lvl"),
         "", LOOKUP, Qt::blue));
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("1"));
-    chan->addOption(2, QObject::tr("2"));
-    chan->addOption(3, QObject::tr("3"));
-    chan->addOption(4, QObject::tr("4"));
-    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskResistSet = 0xe104, SETTING, MT_CPAP,   SESSION,
         "MaskResistSet",
@@ -8843,11 +8831,6 @@ void PRS1Loader::initChannels()
         QObject::tr("Mask Resist."),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
-    chan->addOption(1, QObject::tr("1"));
-    chan->addOption(2, QObject::tr("2"));
-    chan->addOption(3, QObject::tr("3"));
-    chan->addOption(4, QObject::tr("4"));
-    chan->addOption(5, QObject::tr("5"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_HoseDiam = 0xe107, SETTING,  MT_CPAP,  SESSION,
         "PRS1HoseDiam",
@@ -8928,7 +8911,7 @@ void PRS1Loader::initChannels()
         QObject::tr("The kind of backup breath rate in use: none (off), automatic, or fixed"),
         QObject::tr("Breath Rate"),
         "", LOOKUP, Qt::black));
-    chan->addOption(0, QObject::tr("Off"));
+    chan->addOption(0, STR_TR_Off);
     chan->addOption(1, QObject::tr("Auto"));
     chan->addOption(2, QObject::tr("Fixed"));
 
@@ -8937,7 +8920,7 @@ void PRS1Loader::initChannels()
         QObject::tr("Fixed Backup Breath BPM"),
         QObject::tr("Minimum breaths per minute (BPM) below which a timed breath will be initiated"),
         QObject::tr("Breath BPM"),
-        STR_UNIT_BreathsPerMinute, DEFAULT, Qt::black));
+        STR_UNIT_BreathsPerMinute, LOOKUP, Qt::black));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_BackupBreathTi = 0xe116, SETTING, MT_CPAP,   SESSION,
         "PRS1BackupBreathTi",
@@ -8948,11 +8931,10 @@ void PRS1Loader::initChannels()
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_AutoTrial = 0xe117, SETTING, MT_CPAP,   SESSION,
         "PRS1AutoTrial",
-        QObject::tr("Auto-Trial"),
-        QObject::tr("The number of days left in the Auto-CPAP trial period, after which the machine will revert to CPAP only"),
-        QObject::tr("Auto-Trial"),
+        QObject::tr("Auto-Trial Duration"),
+        QObject::tr("The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP"),
+        QObject::tr("Auto-Trial Dur."),
         "", LOOKUP, Qt::black));
-    chan->addOption(0, STR_TR_Off);
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_EZStart = 0xe118, SETTING, MT_CPAP,   SESSION,
         "PRS1EZStart",
