@@ -6907,7 +6907,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x40:  // new to 400G, also seen on 500X110, alternate tubing type? appears after 0x39 and before 0x3c
                 CHECK_VALUE(len, 1);
-                if (data[pos] < 0 || data[pos] > 3) UNEXPECTED_VALUE(data[pos], "0-3");  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm
+                if (data[pos] > 3) UNEXPECTED_VALUE(data[pos], "0-3");  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm
                 this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x3c:  // View Optional Screens
@@ -7467,7 +7467,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             case 0x3b:  // Tubing Type
                 CHECK_VALUE(len, 1);
-                if (data[pos] < 0 || data[pos] > 2) UNEXPECTED_VALUE(data[pos], "0-2");  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
+                if (data[pos] > 2) UNEXPECTED_VALUE(data[pos], "0-2");  // 15HT = 2, 15 = 1, 22 = 0, though report only says "15" for 15HT
                 this->ParseTubingTypeV3(data[pos]);
                 break;
             case 0x3c:  // View Optional Screens
