@@ -390,28 +390,26 @@ QString prs1OutputPath(const QString & inpath, const QString & serial, const QSt
 void iterateTestCards(const QString & root, void (*action)(const QString &))
 {
     QDir dir(root);
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs);
     dir.setSorting(QDir::Name);
     QFileInfoList flist = dir.entryInfoList();
 
     // Look through each folder in the given root
     for (auto & fi : flist) {
-        if (fi.isDir()) {
-            QStringList machinePaths = s_loader->FindMachinesOnCard(fi.canonicalFilePath());
+        QStringList machinePaths = s_loader->FindMachinesOnCard(fi.canonicalFilePath());
 
-            // Tests should be run newest to oldest, since older sets tend to have more
-            // complete data. (These are usually previously cleared data in the Clear0/Cn
-            // directories.) The machines themselves will write out the summary data they
-            // remember when they see an empty folder, without event or waveform data.
-            // And since these tests (by design) overwrite existing output, we want the
-            // earlier (more complete) data to be what's written last.
-            //
-            // Since the loader itself keeps only the first set of data it sees for a session,
-            // we want to leave its earliest-to-latest ordering in place, and just reverse it
-            // here.
-            for (auto i = machinePaths.crbegin(); i != machinePaths.crend(); i++) {
-                action(*i);
-            }
+        // Tests should be run newest to oldest, since older sets tend to have more
+        // complete data. (These are usually previously cleared data in the Clear0/Cn
+        // directories.) The machines themselves will write out the summary data they
+        // remember when they see an empty folder, without event or waveform data.
+        // And since these tests (by design) overwrite existing output, we want the
+        // earlier (more complete) data to be what's written last.
+        //
+        // Since the loader itself keeps only the first set of data it sees for a session,
+        // we want to leave its earliest-to-latest ordering in place, and just reverse it
+        // here.
+        for (auto i = machinePaths.crbegin(); i != machinePaths.crend(); i++) {
+            action(*i);
         }
     }
 }

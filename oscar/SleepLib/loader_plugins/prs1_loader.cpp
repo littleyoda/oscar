@@ -8142,6 +8142,11 @@ void PRS1Import::ParseWaveforms()
             }
 
             if (s2 > 0) {
+                // NOTE: The 900X (F5V3) clamps the values at 127 (15.875 cmH2O) for some reason.
+                //
+                // Previous autoSV machines (950P-961P, F5V0-F5V2) didn't, nor do 1030X (F3V6).
+                // 1130X (also F3V6) is unknown, but likely follows the 1030X. Older ventilators
+                // (F3V3) are also unknown.
                 EventList * pres = session->AddEventList(CPAP_MaskPressureHi, EVL_Waveform, pressure_gain, 0.0f, 0.0f, 0.0f, double(dur) / double(s2));
                 pres->AddWaveform(ti, (unsigned char *)data[1].data(), data[1].size(), dur);
             }
