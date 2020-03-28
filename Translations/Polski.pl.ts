@@ -282,10 +282,6 @@
         <translation>Ustawienia aparatu</translation>
     </message>
     <message>
-        <source>Machine Settings Unavailable</source>
-        <translation>Ustawienia aparatu niedostępne</translation>
-    </message>
-    <message>
         <source>Model %1 - %2</source>
         <translation>Model %1 - %2</translation>
     </message>
@@ -356,10 +352,6 @@
     <message>
         <source>%1h %2m %3s</source>
         <translation>%1h %2m %3s</translation>
-    </message>
-    <message>
-        <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
-        <translation>Jeden lub więcej zapisów dla tej sesji ma uszkodzone dane. Niektóre wykresy mogą nie być poprawne.</translation>
     </message>
     <message>
         <source>SpO2 Desaturations</source>
@@ -4642,26 +4634,6 @@ TTIA: %1</translation>
         <translation>Ustawienia ulgi ciśnienia PRS1.</translation>
     </message>
     <message>
-        <source>x1</source>
-        <translation>x1</translation>
-    </message>
-    <message>
-        <source>x2</source>
-        <translation>x2</translation>
-    </message>
-    <message>
-        <source>x3</source>
-        <translation>x3</translation>
-    </message>
-    <message>
-        <source>x4</source>
-        <translation>x4</translation>
-    </message>
-    <message>
-        <source>x5</source>
-        <translation>x5</translation>
-    </message>
-    <message>
         <source>Humidifier Status</source>
         <translation>Status nawilżacza</translation>
     </message>
@@ -4698,44 +4670,12 @@ TTIA: %1</translation>
         <translation>Kończę...</translation>
     </message>
     <message>
-        <source>System One Resistance Status</source>
-        <translation>Status oporu System One</translation>
-    </message>
-    <message>
-        <source>Sys1 Resist. Status</source>
-        <translation>St.oporu Sys1</translation>
-    </message>
-    <message>
-        <source>System One Resistance Setting</source>
-        <translation>Ustawienie oporu System One</translation>
-    </message>
-    <message>
-        <source>System One Mask Resistance Setting</source>
-        <translation>Ustawienia oporu maski SystemOne</translation>
-    </message>
-    <message>
-        <source>Sys1 Resist. Set</source>
-        <translation>Ust.oporu Sys1</translation>
-    </message>
-    <message>
         <source>Hose Diameter</source>
         <translation>Średnica węża</translation>
     </message>
     <message>
         <source>Diameter of primary CPAP hose</source>
         <translation>Średnica węża podstawowego CPAP</translation>
-    </message>
-    <message>
-        <source>System One Resistance Lock</source>
-        <translation>Blokada oporu System One</translation>
-    </message>
-    <message>
-        <source>Whether System One resistance settings are available to you.</source>
-        <translation>Czy ustawienia oporu System One są dostępne.</translation>
-    </message>
-    <message>
-        <source>Sys1 Resist. Lock</source>
-        <translation>Blok. oporu Sys1</translation>
     </message>
     <message>
         <source>Auto On</source>
@@ -4764,10 +4704,6 @@ TTIA: %1</translation>
     <message>
         <source>Show AHI</source>
         <translation>Pokaż AHI</translation>
-    </message>
-    <message>
-        <source>Whether or not machine shows AHI via LCD panel.</source>
-        <translation>Czy aparat pokazuje AHI na panelu LCD.</translation>
     </message>
     <message>
         <source>Breathing Not Detected</source>
@@ -4824,10 +4760,6 @@ TTIA: %1</translation>
     <message>
         <source>Important:</source>
         <translation>Ważne:</translation>
-    </message>
-    <message>
-        <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>Po aktualizacji &lt;font size=+1&gt;nie można&lt;/font&gt; używać tego profilu w poprzedniej wersji.</translation>
     </message>
     <message>
         <source>If you are concerned, click No to exit, and backup your profile manually, before starting OSCAR again.</source>
@@ -6439,26 +6371,6 @@ Wiersz %2, kolumna %3</translation>
         <translation>Temp. rury.</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation>1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation>2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation>3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation>4</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation>5</translation>
-    </message>
-    <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>Ustawienie nawilżania PRS1</translation>
     </message>
@@ -6469,14 +6381,6 @@ Wiersz %2, kolumna %3</translation>
     <message>
         <source>12mm</source>
         <translation>12mm</translation>
-    </message>
-    <message>
-        <source>PRS1 Unknown</source>
-        <translation>Nieznany PRS1</translation>
-    </message>
-    <message>
-        <source>Unknown PRS1 span 0x0E</source>
-        <translation>Nieznany zakres PRS1 0x0E</translation>
     </message>
     <message>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
@@ -6560,6 +6464,194 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Test #2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPAP %1 IPAP %2-%3 (%4)</source>
+        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+    </message>
+    <message>
+        <source>CPAP-Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoCPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoBiLevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S/T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S/T - AVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PC - AVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flex Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether Flex settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether Rise Time settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resistance Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hose Diam.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tubing Type Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether tubing type settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resistance Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether mask resistance settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Res. Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether or not machine shows AHI via built-in display.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ramp Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type of ramp curve to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SmartRamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Breath Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breath Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Backup Breath BPM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breath BPM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed Inspiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed Insp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial Dur.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EZ-Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether or not EZ-Start is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variable Breathing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

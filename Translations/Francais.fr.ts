@@ -148,10 +148,6 @@
         <translation>Petit</translation>
     </message>
     <message>
-        <source>Machine Settings Unavailable</source>
-        <translation>Réglages de l&apos;appareil indisponibles</translation>
-    </message>
-    <message>
         <source>Journal</source>
         <translation>Journal</translation>
     </message>
@@ -406,10 +402,6 @@
     <message>
         <source>%1h %2m %3s</source>
         <translation>%1h %2m %3s</translation>
-    </message>
-    <message>
-        <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
-        <translation>Un ou plusieurs enregistrement de cette session a des données corrompues. Certains points des graphiques peuvent ne pas coïncider correctement.</translation>
     </message>
     <message>
         <source>PAP Mode: %1</source>
@@ -3904,26 +3896,6 @@ p, li { white-space: pre-wrap; }
         <translation>oz</translation>
     </message>
     <message>
-        <source>x1</source>
-        <translation>x1</translation>
-    </message>
-    <message>
-        <source>x2</source>
-        <translation>x2</translation>
-    </message>
-    <message>
-        <source>x3</source>
-        <translation>x3</translation>
-    </message>
-    <message>
-        <source>x4</source>
-        <translation>x4</translation>
-    </message>
-    <message>
-        <source>x5</source>
-        <translation>x5</translation>
-    </message>
-    <message>
         <source>&amp;No</source>
         <translation>&amp;Non</translation>
     </message>
@@ -4436,10 +4408,6 @@ p, li { white-space: pre-wrap; }
         <translation>Période du sommeil</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Status</source>
-        <translation>État de la résistance Sys1</translation>
-    </message>
-    <message>
         <source>Minute Vent.</source>
         <translation>Vent. minute</translation>
     </message>
@@ -4520,10 +4488,6 @@ p, li { white-space: pre-wrap; }
         <translation>Niveau de SmartFlex</translation>
     </message>
     <message>
-        <source>System One Resistance Status</source>
-        <translation>État résistance System One</translation>
-    </message>
-    <message>
         <source>Journal Data</source>
         <translation>Données du journal</translation>
     </message>
@@ -4574,10 +4538,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>1cmH2O</source>
         <translation>1cmH2O</translation>
-    </message>
-    <message>
-        <source>Whether System One resistance settings are available to you.</source>
-        <translation>Selon disponibilité des réglages de résistance System One.</translation>
     </message>
     <message>
         <source>Mask On</source>
@@ -4727,10 +4687,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>AB Filter</source>
         <translation>Filtre AB</translation>
-    </message>
-    <message>
-        <source>Sys1 Resist. Lock</source>
-        <translation>Verrou résist. Sys1</translation>
     </message>
     <message>
         <source>%1
@@ -4889,10 +4845,6 @@ Merci de reconstruire les données de PPC</translation>
     <message>
         <source>Orientation</source>
         <translation>Orientation</translation>
-    </message>
-    <message>
-        <source>Whether or not machine shows AHI via LCD panel.</source>
-        <translation>Selon que l&apos;appareil affiche ou pas l&apos;IAH sur l&apos;affichage LCD.</translation>
     </message>
     <message>
         <source>Smart Start</source>
@@ -5095,10 +5047,6 @@ Début : %2
         <translation>Respirations par minute</translation>
     </message>
     <message>
-        <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>Une fois mis à jour, &lt;font size=+1&gt; vous ne pourrez plus&lt;/font&gt; utiliser ce profil avec l&apos;ancienne version.</translation>
-    </message>
-    <message>
         <source>Usage Statistics</source>
         <translation>Statistiques d&apos;utilisation</translation>
     </message>
@@ -5201,10 +5149,6 @@ TTIA : %1</translation>
         <translation>ASV (EPAP variable)</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Set</source>
-        <translation>Réglage résist. Sys1</translation>
-    </message>
-    <message>
         <source>Exhale Pressure Relief Level</source>
         <translation>Niveau de dépression d&apos;expiration</translation>
     </message>
@@ -5231,10 +5175,6 @@ TTIA : %1</translation>
     <message>
         <source>Rise Time</source>
         <translation>Montée temporisée</translation>
-    </message>
-    <message>
-        <source>System One Resistance Lock</source>
-        <translation>Verrou de résistance System One</translation>
     </message>
     <message>
         <source>Cheyne Stokes Respiration</source>
@@ -5445,10 +5385,6 @@ TTIA : %1</translation>
         <translation>Question</translation>
     </message>
     <message>
-        <source>System One Mask Resistance Setting</source>
-        <translation>Réglage de résistance du masque System One</translation>
-    </message>
-    <message>
         <source>Waketime: %1</source>
         <translation>Réveil : %1</translation>
     </message>
@@ -5611,10 +5547,6 @@ Heures : %1</translation>
     <message>
         <source>Min Pressure</source>
         <translation>Pression min</translation>
-    </message>
-    <message>
-        <source>System One Resistance Setting</source>
-        <translation>Réglage de la résistance System One</translation>
     </message>
     <message>
         <source>Total Leak Rate</source>
@@ -6441,26 +6373,6 @@ Corporelle</translation>
         <translation>Temp. tube</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation>1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation>2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation>3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation>4</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation>5</translation>
-    </message>
-    <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>Réglage de l&apos;humidificateur PRS1</translation>
     </message>
@@ -6471,14 +6383,6 @@ Corporelle</translation>
     <message>
         <source>12mm</source>
         <translation>12mm</translation>
-    </message>
-    <message>
-        <source>PRS1 Unknown</source>
-        <translation>PRS1 inconnu</translation>
-    </message>
-    <message>
-        <source>Unknown PRS1 span 0x0E</source>
-        <translation>Intervalle 0x0E inconnu du  PRS1</translation>
     </message>
     <message>
         <source>Parsing STR.edf records...</source>
@@ -6563,6 +6467,194 @@ Corporelle</translation>
     <message>
         <source>Test #2</source>
         <translation>Test n°2</translation>
+    </message>
+    <message>
+        <source>EPAP %1 IPAP %2-%3 (%4)</source>
+        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+    </message>
+    <message>
+        <source>CPAP-Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoCPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoBiLevel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S/T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S/T - AVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PC - AVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flex Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether Flex settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether Rise Time settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resistance Setting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hose Diam.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tubing Type Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether tubing type settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tube Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Resistance Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether mask resistance settings are available to you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask Res. Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether or not machine shows AHI via built-in display.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ramp Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type of ramp curve to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SmartRamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Breath Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breath Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Backup Breath BPM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breath BPM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed Inspiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed Insp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Trial Dur.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EZ-Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whether or not EZ-Start is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variable Breathing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -161,10 +161,6 @@
         <translation>PAP Modus: %1</translation>
     </message>
     <message>
-        <source>Machine Settings Unavailable</source>
-        <translation>Geräteeinstellungen nicht verfügbar</translation>
-    </message>
-    <message>
         <source>I&apos;m feeling ...</source>
         <translation>Ich fühle mich ...</translation>
     </message>
@@ -383,10 +379,6 @@
     <message>
         <source>No %1 events are recorded this day</source>
         <translation>Keine %1 Ereignisse werden an diesem Tag aufgezeichnet</translation>
-    </message>
-    <message>
-        <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
-        <translation>Ein oder mehrere Waveform-Datensätze für diese Sitzung hatten fehlerhafte Quelldaten. Einige Überlagerungspunkte für Wellenformen stimmen möglicherweise nicht richtig überein.</translation>
     </message>
     <message>
         <source>BRICK! :(</source>
@@ -3929,26 +3921,6 @@ p, li { white-space: pre-wrap; }
         <translation>oz</translation>
     </message>
     <message>
-        <source>x1</source>
-        <translation>x1</translation>
-    </message>
-    <message>
-        <source>x2</source>
-        <translation>x2</translation>
-    </message>
-    <message>
-        <source>x3</source>
-        <translation>x3</translation>
-    </message>
-    <message>
-        <source>x4</source>
-        <translation>x4</translation>
-    </message>
-    <message>
-        <source>x5</source>
-        <translation>x5</translation>
-    </message>
-    <message>
         <source> cm</source>
         <translation> cm</translation>
     </message>
@@ -4533,10 +4505,6 @@ p, li { white-space: pre-wrap; }
         <translation>Schlafstadium</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Status</source>
-        <translation>Sys1 Resistenzstatus</translation>
-    </message>
-    <message>
         <source>Minute Vent.</source>
         <translation>Minuten Vent.</translation>
     </message>
@@ -4629,10 +4597,6 @@ p, li { white-space: pre-wrap; }
         <translation>Smartflex Ebene</translation>
     </message>
     <message>
-        <source>System One Resistance Status</source>
-        <translation>System One Resistenzstatus</translation>
-    </message>
-    <message>
         <source>Journal Data</source>
         <translation>Journal Daten</translation>
     </message>
@@ -4687,10 +4651,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>1cmH2O</source>
         <translation>1cmH2O</translation>
-    </message>
-    <message>
-        <source>Whether System One resistance settings are available to you.</source>
-        <translation>Die Widerstandseinstellungen von System One sind für Sie da.</translation>
     </message>
     <message>
         <source>Mask On</source>
@@ -4873,10 +4833,6 @@ p, li { white-space: pre-wrap; }
         <translation>AB Filter</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Lock</source>
-        <translation>Sys1 Widerst. Sperre</translation>
-    </message>
-    <message>
         <source>%1
 Line %2, column %3</source>
         <translation>%1
@@ -5045,10 +5001,6 @@ Bitte die Wiederherstellung Ihrer CPAP Daten laden</translation>
     <message>
         <source>Orientation</source>
         <translation>Orientierung</translation>
-    </message>
-    <message>
-        <source>Whether or not machine shows AHI via LCD panel.</source>
-        <translation>Gerät zeigt AHI über LCD-Panel an.</translation>
     </message>
     <message>
         <source>Smart Start</source>
@@ -5307,10 +5259,6 @@ Start: %2
         <translation>Bewerten der Atemzüge pro Minute</translation>
     </message>
     <message>
-        <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>Wenn Sie ein Upgrade beauftragen, können Sie dieses Profil&lt;font size=+1&gt; nicht &lt;/ font&gt;mehr mit der vorherigen Version verwenden.</translation>
-    </message>
-    <message>
         <source>Are you ready to upgrade, so you can run the new version of OSCAR?</source>
         <translation>Sind Sie bereit für ein Upgrade, damit Sie die neue Version von OSCAR ausführen können?</translation>
     </message>
@@ -5425,10 +5373,6 @@ TTIA: %1</translation>
         <translation>ASV (Variabel EPAP)</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Set</source>
-        <translation>Sys1 Resist. Einst</translation>
-    </message>
-    <message>
         <source>Exhale Pressure Relief Level</source>
         <translation>Ausatem Druckentlastungsebene</translation>
     </message>
@@ -5459,10 +5403,6 @@ TTIA: %1</translation>
     <message>
         <source>Rise Time</source>
         <translation>Anstiegszeit</translation>
-    </message>
-    <message>
-        <source>System One Resistance Lock</source>
-        <translation>System One Widerstandssperre</translation>
     </message>
     <message>
         <source>Cheyne Stokes Respiration</source>
@@ -5729,10 +5669,6 @@ TTIA: %1</translation>
         <translation>Frage</translation>
     </message>
     <message>
-        <source>System One Mask Resistance Setting</source>
-        <translation>System One Masken Resistenzeinstellungen</translation>
-    </message>
-    <message>
         <source>Time spent in light sleep</source>
         <translation>Zeit in der Leichtschlafphase</translation>
     </message>
@@ -5943,10 +5879,6 @@ Stunden: %1</translation>
     <message>
         <source>Min Pressure</source>
         <translation>Mindestdruck</translation>
-    </message>
-    <message>
-        <source>System One Resistance Setting</source>
-        <translation>System One Resistenzeinstellungen</translation>
     </message>
     <message>
         <source>Total Leak Rate</source>
@@ -6443,26 +6375,6 @@ Stunden: %1</translation>
         <translation>Schlauch-Temp.</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation>1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation>2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation>3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation>4</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation>5</translation>
-    </message>
-    <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1-Luftbefeuchter-Einstellung</translation>
     </message>
@@ -6473,14 +6385,6 @@ Stunden: %1</translation>
     <message>
         <source>12mm</source>
         <translation>12mm</translation>
-    </message>
-    <message>
-        <source>PRS1 Unknown</source>
-        <translation>PRS1 Unbekannt</translation>
-    </message>
-    <message>
-        <source>Unknown PRS1 span 0x0E</source>
-        <translation>Unbekannter PRS1-Bereich 0x0E</translation>
     </message>
     <message>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
@@ -6565,6 +6469,194 @@ Stunden: %1</translation>
     <message>
         <source>Test #2</source>
         <translation>Test #2</translation>
+    </message>
+    <message>
+        <source>EPAP %1 IPAP %2-%3 (%4)</source>
+        <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
+    </message>
+    <message>
+        <source>CPAP-Check</source>
+        <translation>CPAP-Check</translation>
+    </message>
+    <message>
+        <source>AutoCPAP</source>
+        <translation>AutoCPAP</translation>
+    </message>
+    <message>
+        <source>Auto-Trial</source>
+        <translation>Auto-Versuch</translation>
+    </message>
+    <message>
+        <source>AutoBiLevel</source>
+        <translation>AutoBiLevel</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S/T</source>
+        <translation>S/T</translation>
+    </message>
+    <message>
+        <source>S/T - AVAPS</source>
+        <translation>S/T - AVAPS</translation>
+    </message>
+    <message>
+        <source>PC - AVAPS</source>
+        <translation>PC - AVAPS</translation>
+    </message>
+    <message>
+        <source>Flex Lock</source>
+        <translation>Flex-Verschluss</translation>
+    </message>
+    <message>
+        <source>Whether Flex settings are available to you.</source>
+        <translation>Ob Ihnen Flex-Einstellungen zur Verfügung stehen.</translation>
+    </message>
+    <message>
+        <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
+        <translation>Zeitaufwand für den Übergang von EPAP zu IPAP, je höher die Zahl, desto langsamer der Übergang</translation>
+    </message>
+    <message>
+        <source>Rise Time Lock</source>
+        <translation>Zeitschloss für den Aufstieg</translation>
+    </message>
+    <message>
+        <source>Whether Rise Time settings are available to you.</source>
+        <translation>Ob Ihnen die Einstellungen der Anstiegszeit zur Verfügung stehen.</translation>
+    </message>
+    <message>
+        <source>Rise Lock</source>
+        <translation>Aufstiegshilfe</translation>
+    </message>
+    <message>
+        <source>Mask Resistance Setting</source>
+        <translation>Einstellung des Maskenwiderstands</translation>
+    </message>
+    <message>
+        <source>Mask Resist.</source>
+        <translation>Maske Widerstand.</translation>
+    </message>
+    <message>
+        <source>Hose Diam.</source>
+        <translation>Schlauch Diam.</translation>
+    </message>
+    <message>
+        <source>Tubing Type Lock</source>
+        <translation>Schlauchtyp-Sperre</translation>
+    </message>
+    <message>
+        <source>Whether tubing type settings are available to you.</source>
+        <translation>Ob Ihnen die Einstellungen für den Schlauchtyp zur Verfügung stehen.</translation>
+    </message>
+    <message>
+        <source>Tube Lock</source>
+        <translation>Rohrschloss</translation>
+    </message>
+    <message>
+        <source>Mask Resistance Lock</source>
+        <translation>Masken-Widerstandsschloss</translation>
+    </message>
+    <message>
+        <source>Whether mask resistance settings are available to you.</source>
+        <translation>Ob Ihnen Maskenwiderstandseinstellungen zur Verfügung stehen.</translation>
+    </message>
+    <message>
+        <source>Mask Res. Lock</source>
+        <translation>Maske Res. Sperre</translation>
+    </message>
+    <message>
+        <source>Whether or not machine shows AHI via built-in display.</source>
+        <translation>Ob der Geräte AHI über das eingebaute Display anzeigt werden soll oder nicht.</translation>
+    </message>
+    <message>
+        <source>Ramp Type</source>
+        <translation>Rampentyp</translation>
+    </message>
+    <message>
+        <source>Type of ramp curve to use.</source>
+        <translation>Art der zu verwendenden Rampenkurve.</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation>Linear</translation>
+    </message>
+    <message>
+        <source>SmartRamp</source>
+        <translation>Intelligente Rampe</translation>
+    </message>
+    <message>
+        <source>Backup Breath Mode</source>
+        <translation>Sicherungs-Atemmodus</translation>
+    </message>
+    <message>
+        <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
+        <translation>Die Art der verwendeten Backup-Atemfrequenz: keine (ausgeschaltet), automatisch oder fest</translation>
+    </message>
+    <message>
+        <source>Breath Rate</source>
+        <translation>Atemfrequenz</translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation>Festgelegt</translation>
+    </message>
+    <message>
+        <source>Fixed Backup Breath BPM</source>
+        <translation>Festgelegte Sicherung des BPM-Atems</translation>
+    </message>
+    <message>
+        <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
+        <translation>Minimale Atemzüge pro Minute (BPM), unterhalb derer ein zeitgesteuerter Atemzug eingeleitet wird</translation>
+    </message>
+    <message>
+        <source>Breath BPM</source>
+        <translation>Atmung BPM</translation>
+    </message>
+    <message>
+        <source>Timed Inspiration</source>
+        <translation>Zeitliche Inspiration</translation>
+    </message>
+    <message>
+        <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
+        <translation>Die Zeit, die ein zeitgesteuerter Atemzug IPAP vor dem Übergang zu EPAP liefert</translation>
+    </message>
+    <message>
+        <source>Timed Insp.</source>
+        <translation>Zeitgesteuerte Insp.</translation>
+    </message>
+    <message>
+        <source>Auto-Trial Duration</source>
+        <translation>Dauer der automatischen Prüfung</translation>
+    </message>
+    <message>
+        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
+        <translation>Die Anzahl der Tage in der Auto-CPAP-Testperiode, nach denen das Gerät wieder zu CPAP zurückkehrt</translation>
+    </message>
+    <message>
+        <source>Auto-Trial Dur.</source>
+        <translation>Auto-Versuch Dur.</translation>
+    </message>
+    <message>
+        <source>EZ-Start</source>
+        <translation>EZ-Start</translation>
+    </message>
+    <message>
+        <source>Whether or not EZ-Start is enabled</source>
+        <translation>Ob EZ-Start aktiviert ist oder nicht</translation>
+    </message>
+    <message>
+        <source>Variable Breathing</source>
+        <translation>Variable Atmung</translation>
+    </message>
+    <message>
+        <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
+        <translation>UNBESTÄTIGT: Möglicherweise variable Atmung, d.h. Perioden mit hoher Abweichung vom Spitzenwert des inspiratorischen Flusses</translation>
+    </message>
+    <message>
+        <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation>Sobald Sie ein Upgrade durchführen, können Sie &lt;font size=+1&gt;kann nicht&lt;/font&gt; dieses Profil nicht mehr mit der vorherigen Version verwenden.</translation>
     </message>
 </context>
 <context>
