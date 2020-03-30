@@ -829,9 +829,18 @@ void ImportDialogScan::cancelbutton()
 
 QList<ImportPath> MainWindow::detectCPAPCards()
 {
-    const int timeout = 20000;
+    const int timeout = 20000;  // twenty seconds
 
     QList<ImportPath> detectedCards;
+    importScanCancelled = false;
+#if defined (Q_OS_LINUX)
+    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
+    if (detectedCards.size() == 0) {
+        qDebug() << "Skipping card detection on Linux";
+        return detectedCards;
+    }
+#endif
+
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
     QTime time;
@@ -860,18 +869,19 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     progress.setValue(0);
     progress.setMaximum(timeout);
     progress.setVisible(true);
-    importScanCancelled = false;
+//    importScanCancelled = false;
     popup.show();
     QApplication::processEvents();
-    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
+//    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
 
     do {
         // Rescan in case card inserted
         QStringList AutoScannerPaths = getDriveList();
-        //AutoScannerPaths.push_back(lastpath);
+//      AutoScannerPaths.push_back(lastpath);
+        qDebug() << "Drive list size:" << AutoScannerPaths.size();
 
-        if (!AutoScannerPaths.contains(lastpath)) {
-            AutoScannerPaths.append(lastpath);
+        if ( (lastpath.size()>0) && ( ! AutoScannerPaths.contains(lastpath))) {
+            AutoScannerPaths.insert(0, lastpath);
         }
 
         Q_FOREACH(const QString &path, AutoScannerPaths) {
@@ -887,10 +897,12 @@ QList<ImportPath> MainWindow::detectCPAPCards()
         }
         int el=time.elapsed();
         progress.setValue(el);
-        if (el > timeout) break;
-        if (!popup.isVisible()) break;
+        if (el > timeout)
+            break;
+        if ( ! popup.isVisible())
+            break;
         // needs a slight delay here
-        for (int i=0; i<5; ++i) {
+        for (int i=0; i<20; ++i) {
             QThread::msleep(50);
             QApplication::processEvents();
         }
