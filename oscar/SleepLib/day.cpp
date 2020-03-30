@@ -810,10 +810,12 @@ ChannelID Day::getPressureChannelID() {
     // Determined the preferred pressure channel (CPAP_IPAP or CPAP_Pressure)
     CPAPMode cpapmode = (CPAPMode)(int)settings_max(CPAP_Mode);
 
-    // TODO: This is also an awful hack. Why would CPAP/APAP have IPAP channels but not Pressure channels?
+    // TODO: PRS1 ventilators in CPAP mode report IPAP rather than pressure...but their pressure setting channel is CPAP_Pressure,
+    // so this currently gets fixed in the welcome screen manually.
     // And why would ASV or AVAPS have Pressure channels?
     QList<ChannelID> preferredIDs = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet };
-    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS) {
+    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS ||
+        cpapmode == MODE_BILEVEL_FIXED || cpapmode == MODE_BILEVEL_AUTO_FIXED_PS || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
         preferredIDs = { CPAP_IPAP, CPAP_IPAPSet, CPAP_Pressure, CPAP_PressureSet };
     }
 
