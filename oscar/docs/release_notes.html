@@ -1,10 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
 <body>
-<p>
-<b>OSCAR is based on SleepyHead v1.1.0-unstable-0</b>
-Which was written and copyright 2011-2018 &copy; Mark Watkins
-</p>
 
 <p>
 <b>Changes and fixes in OSCAR v1.1.0-BETA?</b>
@@ -24,9 +20,24 @@ Which was written and copyright 2011-2018 &copy; Mark Watkins
 <ul>
 <li>Portions of OSCAR are &copy; 2019-2020 by The OSCAR Team</li>
 <li>[new] Add preliminary support for Viatom/Wellue pulse oximeters</li>
+<li>[new] Add support for Dreem hypnograms</li>
+<li>[new] Extensive re-organization of the ResMed loader to facilitate understanding and future improvements</li>
+<li>[new] Additional Philips Respironics machines tested and fully supported:
+  <ul>
+  <li>DreamStation Auto CPAP (500X130)</li>
+  </ul></li>
+<li>[new] Add a menu option to create a zip from an SD card</li>
 <li>[new] Ask where to save screenshots</li>
+<li>[new] Alert users when unexpected Philips Respironics data is encountered during import</li>
+<li>[fix] Add support for CPAP mode on DreamStation BiPAP S/T and AVAPS</li>
+<li>[fix] Pinch-to-zoom now works as expected</li>
+<li>[fix] The Philips Respironics loader now respects the "ignore old sessions" preference</li>
+<li>[fix] Improved handling of discontinuous Philips Respironics data</li>
 <li>[fix] Improved import of Philips Respironics flex and humidification settings</li>
-<li>[new]Extensive re-organization of the ResMed loader to facilitate understanding and future improvements</li>
+<li>[fix] Fix incorrect display of tube diameter on some Philips Respironics machines</li>
+<li>[fix] Fix missing "Bi-Flex" label for bi-level DreamStations</li>
+<li>[fix] Fix crashes in ZEO loader</li>
+<li>[fix] Fix several memory leaks</li>
 </ul>
 
 <p>
@@ -251,7 +262,13 @@ Which was written and copyright 2011-2018 &copy; Mark Watkins
 <li>Small fixes to build and debug problems</li>
 </ul>
 </p>
-<br />
 
+<p>
+<b>SleepyHead v1.1.0-unstable-0</b>
+<ul>
+<li>Released under the GNU General Public License</li>
+<li>Copyright &copy; 2011-2018 Mark Watkins<li>
+</ul>
+</p>
 </body>
 </html>

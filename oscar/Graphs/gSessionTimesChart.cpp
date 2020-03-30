@@ -669,7 +669,7 @@ void gUsageChart::populate(Day *day, int idx)
 {
     QVector<SummaryChartSlice> & slices = cache[idx];
 
-    float hours = day->hours();
+    float hours = day->hours(m_machtype);
 
     QColor cpapcolor = day->summaryOnly() ? QColor(128,128,128) : calcitems[0].color;
     bool haveoxi = day->hasMachine(MT_OXIMETER);
@@ -1264,7 +1264,7 @@ void gAHIChart::populate(Day *day, int idx)
 {
     QVector<SummaryChartSlice> & slices = cache[idx];
 
-    float hours = day->hours();
+    float hours = day->hours(m_machtype);
 
     for (auto & calc : calcitems) {
         ChannelID code = calc.code;

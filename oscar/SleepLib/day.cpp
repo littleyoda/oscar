@@ -809,19 +809,23 @@ ChannelID Day::getPressureChannelID() {
     // See the comment in getCPAPModeStr().
     // Determined the preferred pressure channel (CPAP_IPAP or CPAP_Pressure)
     CPAPMode cpapmode = (CPAPMode)(int)settings_max(CPAP_Mode);
-    ChannelID preferredID = CPAP_Pressure;
-    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS)
-        preferredID = CPAP_IPAP;
 
-    // If preferred channel has data, return it
-    if (channelHasData(preferredID))
-        return preferredID;
+    // TODO: This is also an awful hack. Why would CPAP/APAP have IPAP channels but not Pressure channels?
+    // And why would ASV or AVAPS have Pressure channels?
+    QList<ChannelID> preferredIDs = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet };
+    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS) {
+        preferredIDs = { CPAP_IPAP, CPAP_IPAPSet, CPAP_Pressure, CPAP_PressureSet };
+    }
 
-    // Otherwise return the other pressure channel
-    if (preferredID == CPAP_IPAP)
-        return CPAP_Pressure;
-    else
-        return CPAP_IPAP;
+    for (auto & preferredID : preferredIDs) {
+        // If preferred channel has data, return it
+        if (channelHasData(preferredID)) {
+            //qDebug() << QString("Found pressure channel 0x%1").arg(preferredID, 4, 16, QChar('0'));
+            return preferredID;
+        }
+    }
+    
+    return NoChannel;
 }
 
 bool Day::hasEnabledSessions()
