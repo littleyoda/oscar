@@ -54,6 +54,8 @@ void usage() {
     qDebug() << "\t-g ### First signal";
     qDebug() << "\t-m ### Last signal";
     qDebug() << "\t-s Signal list only";
+    qDebug() << "\t-H Don't print the header";
+    qDebug() << "\t-S Don't print signals list";
     qDebug() << "\t-h or -? This help message";
 }
 
@@ -77,6 +79,7 @@ int main(int argc, char *argv[]) {
 	
     QString filename = args[args.size()-1];
     bool showall = false, brief = false;
+    bool skipHeader = false, skipSignals = false;
 
     for (int i = 1; i < args.size()-1; i++) {
         if (args[i] == "-f")
@@ -91,6 +94,10 @@ int main(int argc, char *argv[]) {
             showall = true;
         else if (args[i] == "-s")
             brief = true;
+        else if (args[i] == "-H")
+            skipHeader = true;
+        else if (args[i] == "-S")
+            skipSignals = true;
         else if ((args[i] == "-?") || (args[i] == "-h")) {
             usage();
             exit(0);
@@ -124,9 +131,10 @@ int main(int argc, char *argv[]) {
         exit(0);
     }
 
-	dumpHeader( (str.edfHdr) );
-	
-	dumpSignals( (str.edfsignals) );
+    if ( ! skipHeader)
+        dumpHeader( (str.edfHdr) );
+    if ( ! skipSignals )
+        dumpSignals( (str.edfsignals) );
 
     if ( brief )
         exit(0);
@@ -142,7 +150,7 @@ int main(int argc, char *argv[]) {
     if (lastSig == 0 )
         lastSig = str.GetNumSignals();
 
-    if (((first > 0)&&(last == 0)) || last > size)
+    if ((last == 0) || (last > size))
         last = size;
 
     date = date.addDays(first);
