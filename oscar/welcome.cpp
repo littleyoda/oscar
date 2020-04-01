@@ -241,11 +241,18 @@ QString Welcome::GenerateCPAPHTML()
                 pressSettingChanID = pressChanID;
             }
 
+            ChannelID epapDataChanID = CPAP_EPAP;
+            if (day->channelHasData(CPAP_EPAPSet)) {
+                epapDataChanID = CPAP_EPAPSet;
+            }
+
             if (pressChanID == NoChannel) {
                 qWarning() << "Unable to find pressure channel for welcome summary!";
             }
             if (cpapmode == MODE_CPAP) {
+                pressSettingChanID = CPAP_Pressure;  // DreamStation ventilators report EPAP/IPAP data, but the setting is Pressure
                 EventDataType pressure = day->settings_max(pressSettingChanID);
+                qDebug() << pressSettingChanID << pressure;
                 html += tr("Your CPAP machine used a constant %1 %2 of air").arg(pressure).arg(schema::channel[pressChanID].units());
             } else if (cpapmode == MODE_APAP) {
                 EventDataType pressure = day->percentile(pressChanID, perc/100.0);
@@ -256,19 +263,18 @@ QString Welcome::GenerateCPAPHTML()
                 html += tr("Your machine used a constant %1-%2 %3 of air.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units());
             } else if (cpapmode == MODE_BILEVEL_AUTO_FIXED_PS) {
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
-                EventDataType epap = day->percentile(CPAP_EPAP, perc/100.0);
+                EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
                 html += tr("Your machine was under %1-%2 %3 for %4% of the time.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
             } else if (cpapmode == MODE_ASV || cpapmode == MODE_AVAPS){
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
                 EventDataType epap = qRound(day->settings_wavg(CPAP_EPAP));
-
-                html += tr("Your EPAP pressure fixed at %1 %2.").arg(epap).arg(schema::channel[CPAP_EPAP].units())+"<br/>";
+                html += tr("Your EPAP pressure fixed at %1 %2.").arg(epap).arg(schema::channel[epapDataChanID].units())+"<br/>";
                 html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
-            } else if (cpapmode == MODE_ASV_VARIABLE_EPAP){
+            } else if (cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS){
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
-                EventDataType epap = day->percentile(CPAP_EPAP, perc/100.0);
+                EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
 
-                html += tr("Your EPAP pressure was under %1 %2 for %3% of the time.").arg(epap).arg(schema::channel[CPAP_EPAP].units()).arg(perc)+"<br/>";
+                html += tr("Your EPAP pressure was under %1 %2 for %3% of the time.").arg(epap).arg(schema::channel[epapDataChanID].units()).arg(perc)+"<br/>";
                 html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
             }
             html += "<br/>";
