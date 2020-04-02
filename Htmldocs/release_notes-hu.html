@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="hu">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <title>release_notes_hu</title>
+    <meta content="Arie Klerk" name="author" />
+    <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" />
+  </head>
+  <body>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.1.0-BETA-?</span>
+  <br />
+  <ul>
+    <li>[fix] Az AHI és a felhasználási sávok az áttekintő grafikonokban most megmutatják a helyes magasságot, ha az oximetriafelhasználás jelentősen meghaladja a CPAP használatát.</li>
+    <li>[javítás] A Philips Respironics beállításainak jobb importálása. Különösen:</li>
+    <li style="list-style: none; display: inline">
+      <ul>
+        <li>A PC, S és S/T üzemmódok beállításai most jól jelennek meg.</li>
+        <li>Az AVAPS beállításai most helyesen jelennek meg, beleértve az árapály célértékét.</li>
+        <li>A mentési levegő beállításait most importálják és megjelenítik.</li>
+        <li>A CPAP-Check és az Auto-Trial mód beállításai most már helyesen jelennek meg.</li>
+      </ul>
+    </li>
+    <li>[fix] Javítsa a regressziót az üdvözlőlap nyomáskijelzőjén</li>
+    <li>[javítás] Több összeomlás javításra került.</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.1.0-beta-2-ben</span>
+  <br />Az OSCAR egyes részeit az 
+  <span style="font-style: italic;">OSCAR csapata</span> © 2019-2020-ra állítja
+  <br />
+  <ul>
+    <li>[új] Előzetes támogatás hozzáadása a Viatom / Wellue impulzus-oximéterekhez</li>
+    <li>[új] Támogatás hozzáadása a Dreem hipnogramjaihoz</li>
+    <li>[új] A ResMed betöltő kiterjedt átszervezése a megértés és a jövőbeli fejlesztések megkönnyítése érdekében</li>
+    <li>[új] További Philips Respironics eszközök tesztelt és teljes mértékben támogatottak:</li>
+    <li style="list-style: none; display: inline">
+      <ul>
+        <li>DreamStation Auto CPAP (500X130)</li>
+      </ul>
+    </li>
+    <li>[új] Menüpont hozzáadása az ZIP-kártyáról történő ZIP-fájl létrehozásához</li>
+    <li>[új] Kérdezd meg, hol lehet képernyőképeket menteni</li>
+    <li>[új] Figyelmezteti a felhasználókat, ha váratlan Philips Respironics adatok találkoznak az importálás során</li>
+    <li>[javítás] A CPAP mód támogatásának hozzáadása a DreamStation BiPAP S/T és AVAPS rendszerekhez</li>
+    <li>[javítás] A nagyítás a nagyításhoz a várt módon működik</li>
+    <li>[javítás] A Philips Respironics betöltője tiszteletben tartja a &quot;régi munkamenetek figyelmen kívül hagyása&quot; preferenciát</li>
+    <li>[javítás] A Philips Respironics szakaszos adatainak jobb kezelése</li>
+    <li>[javítás] A Philips Respironics rugalmas és párásító beállítások jobb importálása</li>
+    <li>[javítás] Javítsa ki a csőátmérő helytelen megjelenítését néhány Philips Respironics eszközön</li>
+    <li>[javítás] Javítsa ki a hiányzó &quot;Bi-Flex&quot; címkét a kétszintű DreamStation-ekhez</li>
+    <li>[javítás] Javítások a ZEO betöltőben</li>
+    <li>[javítás] Több memóriaszivárgás javítása</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.1.0-beta-1-ben</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>[új] A Philips Respironics System átfogó javítása Egy importőr, megoldva az összes korábban jelentett problémát.</li>
+    <li>[új] A következő Philips Respironics készülékeket most tesztelték és teljes mértékben támogatják:</li>
+    <li style="list-style: none; display: inline">
+      <ul>
+        <li>REMstar Plus (System One) (251P),</li>
+        <li>REMstar Pro (System One) (450P, 451P),</li>
+        <li>REMstar Auto (System One) (550P, 551P),</li>
+        <li>BiPAP Auto (System One) (750P),</li>
+        <li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
+        <li>REMstar Pro (System One 60 sorozat) (460P, 461P),</li>
+        <li>REMstar Auto (System One 60 sorozat) (560P, 561P, 562P, 560PBT),</li>
+        <li>BiPAP Pro (System One 60 sorozat) (660P),</li>
+        <li>BiPAP Auto (System One 60 sorozat) (760P),</li>
+        <li>BiPAP autoSV Advanced (System One 60 sorozat) (960P, 961P),</li>
+        <li>BiPAP autoSV Advanced 30 (System One 60 sorozat) (960T),</li>
+        <li>BiPAP S/T 30 (System One 60 sorozat) (1061T),</li>
+        <li>BiPAP AVAPS 30 (System One 60 sorozat) (1160P),</li>
+        <li>A DreamStation CPAP (200X110),</li>
+        <li>A DreamStation CPAP Pro (400X110, 400X150),</li>
+        <li>A DreamStation Go (400G110),</li>
+        <li>A DreamStation Auto CPAP (500X110, 500X150),</li>
+        <li>A DreamStation Go Auto (500G110, 502G150),</li>
+        <li>A DreamStation BiPAP Pro (600X110),</li>
+        <li>A DreamStation Auto BiPAP (700X110),</li>
+        <li>A DreamStation BiPAP autoSV (900X110, 900X120),</li>
+        <li>A DreamStation BiPAP S/T 30 (1030X110),</li>
+        <li>A DreamStation BiPAP S/T 30 AAM-tal (1030X150),</li>
+        <li>A DreamStation BiPAP AVAPS 30 (1130X110),</li>
+        <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
+        <li style="font-style: italic;">Megjegyzés: A PC, S és S/T mód beállításai továbbra is helytelenül jelennek meg.</li>
+      </ul>
+    </li>
+    <li>[új] Frissítse a fordítási fájlokat, és adjon hozzá új nyelveket</li>
+    <li>[új] Hagyja, hogy a felhasználó a Napi oldalon lévő grafikon sorrendet alapértelmezettre (CPAP és APAP) vagy haladó rendre (ASV és AVAPS módokra) állítsa vissza.</li>
+    <li>[új] Adjon hozzá preferenciabeállítást, hogy a sorozatszámot felvegye az eszközbeállítási listába</li>
+    <li>[fix] Helyezze a dátumot, az időt és az Oscar-verziót a jelentés láblécében</li>
+    <li>[javítás] A ResMed S9 eszközök azonosítójának frissítése az üdvözlő oldalon</li>
+    <li>[javítás] Az eseményszám helyes formázása a Napi események lapon</li>
+    <li>[fix] Helyes időzóna-eltolás a SomnoPose behozatalához</li>
+    <li>[javítás] Mutasson az előrehaladási sávot, ha az Áttekintés tartományt számos napra állítja</li>
+    <li>[javítás] A jobb szín használatával tisztábbá tegye a Napi oldal munkamenet-sávjait</li>
+    <li>[javítás] Javítsa az eszközök listáját a Statisztika oldalon</li>
+    <li>[fix] Jelentési nyomás, ha hiányzik az IPAP-adat</li>
+    <li>[javítás] A Frissítés gomb végrehajtása a profiloldalon</li>
+  </ul>
+  <span style="font-weight: bold;">Változtatások és javítások az OSCAR v1.1.0-testing-4 verzióban</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>[új] A Windows telepítői támogatják az Oscar, a 32 bites Oscar, az Oscar (teszt) és az Oscar 32-bites (teszt)</li>
+    <li>[javítás] A kiadásépítés az OSCAR Beállítások gombjával, a Tesztkészítés OSCAR-teszttel, az Ágazatkészítés az OSCAR-ág használatával történik. Az alapértelmezett adatkönyvtárakat hasonlóan nevezzük.</li>
+    <li>[fix] Az áttekintő diagram problémái, amikor mind a CPAP, mind az oximetria adatok szerepelnek</li>
+    <li>[javítás] A fordításokat minden nyelvre frissítettük. Spanyol (mexikói) és norvég nyelv került hozzáadásra</li>
+    <li>[javítás] Az összes nyelv elérhető a Mac-en</li>
+    <li>[javítás] A dátum sáv a napi grafikon alján, most a helyi idő szerint, amikor nem jelenik meg a sor kurzor, és a formázás javult</li>
+    <li>[fix] A 100% -os zoom most az áttekintés oldalon működik</li>
+    <li>[javítás] A Grafikonok megtekintése / visszaállítása most lehetővé teszi az összes grafikon és minden eseményjelző használatát</li>
+    <li>[fix] A naptári dátum most nemzeti beállítások szerint formázva</li>
+    <li>[javítás] Váltás a Napi oldal munkamenetlistáján és az események és diagramok lenyomása gombjai jelölőnégyzetekre változnak</li>
+  </ul>
+  <span style="font-weight: bold;">Változtatások és javítások az OSCAR v1.1.0-testing-3-ban</span>
+  <br />
+  <span style="font-style: italic;">MEGJEGYZÉS: A fordításokat még nem frissítették ezekre a változásokra</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>[új] A DreamStation BiPAP S/T és AVAPS ventilátorok (1030X és 1130X) most már támogatottak. A beállítások még nem jelennek meg helyesen, de a terápiás eseményeknek és a grafikonoknak helyesen kell megjelenniük.</li>
+    <li>[új] A Grafikonok megtekintése / visszaállítása a grafikonokat az eredeti sorrendben rendezi</li>
+    <li>[fix] A nemzeti régió formátumának dátumai az operációs rendszer szerint</li>
+    <li>[javítás] Javítsa a statisztikai gyorsítótár frissítésének folyamatjelző sorát</li>
+    <li>[javítás] A hét napos AHI és a szivárgási sebesség helyes kiszámítása az üdvözlő oldalon</li>
+    <li>[javítás] Az AHI és az óra címkék tisztázása a jobb oldali sáv Records fülén</li>
+    <li>[javítás] Helyes import hiba, érvénytelen eltelt időkkel és lehetetlen magas AHI értékekkel</li>
+  </ul>
+  <span style="font-weight: bold;">Változtatások és javítások az OSCAR v1.1.0-testing-2-ben</span>
+  <br />
+  <span style="font-style: italic;">MEGJEGYZÉS: A fordításokat még nem frissítették ezekre a változásokra</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>[új] Mutassa az előrehaladási sávot, ha a Statisztika oldalnak több mint 180 napos gyorsítótárral kell frissítenie</li>
+    <li>[új] a román nyelv támogatott</li>
+    <li>[javítás] Az elkötelezettség azonosítójának megjelenítése a címsorban a tesztelés és a bétaverzió készítéséhez</li>
+    <li>[fix] Csak akkor mutassa meg a BMI címkét és a kiszámított értéket, ha a súly és a magasság sem nulla</li>
+    <li>[javítás] Javítsa a BMI megjelenítését a Daily / Notes alkalmazásban</li>
+    <li>[fix] A helyes profil párbeszédpanel a magasság megjelenítéséhez centiméterben, nem méterben mérve, ha az egységrendszer metrikus</li>
+    <li>[javítás] Mindig jelenítse meg az eseményindexeket a Napi oldalon, még akkor is, ha egyes eseményjelzők ki vannak kapcsolva</li>
+  </ul>
+  <span style="font-weight: bold;">Változtatások és javítások az OSCAR v1.1.0-testing-1 verzióban</span>
+  <br />
+  <span style="font-style: italic;">MEGJEGYZÉS: A fordításokat még nem frissítették ezekre a változásokra</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>[új] Áttelepítést kínál, ha nem alapértelmezett könyvtárat választ ki az első használatkor</li>
+    <li>[új] Tartsa lenyomva a SHIFT gombot az OSCAR indításakor a Software Graphics Engine használatához</li>
+    <li>[új] A DreamStation BiPAP autoSV (900X) támogatásának most teljesnek kell lennie</li>
+    <li>[új] Továbbfejlesztett DreamStation támogatás</li>
+    <li>[új] Javítani kell a CM550D + oximéter-importját</li>
+    <li>[új] A sötét üzemmód letiltása Mac rendszeren</li>
+    <li>[új] Mutasson órákat / napot a megfelelés szempontjából a Statisztika oldalon</li>
+    <li>[új] Jobb grafikonok a Napi oldalon az újonnan létrehozott profilokhoz</li>
+    <li>[új] Súgó / Rendszerinformáció az OSCAR-ról, az operációs rendszerről és az adatok helyéről ad információt</li>
+    <li>[új] A tortadiagram áthelyezése a Preferences párbeszédpanelen a View menübe</li>
+    <li>[új] A tortadiagram elrejtése a képernyő rögzítésekor</li>
+    <li>[új] A --datadir opció lehetővé teszi a teljes képzettségű név használatát a Windows rendszeren</li>
+    <li>[javítás] Javítson ki néhány oximéter importálási problémát</li>
+    <li>[fix] Az oximéter importálásakor a helyi időt használja az UTC helyett</li>
+    <li>[javítás] Javítja a képernyőképet Mac rendszeren</li>
+    <li>[javítás] A CPAP-adatok újjáépítésében bekövetkező összeomlások javítása, az eszköz megtisztítása</li>
+    <li>[javítás] Az összeomlás megakadályozása, ha a profil megnyitása előtt képernyőképeket készít</li>
+    <li>[javítás] Növelje a maszk légtelenítő tartományát</li>
+    <li>[javítás] Helyes munkamenet-sáv, ha nincs jelen munkamenet</li>
+    <li>[javítás] A statisztikák oldal havi nézetében megjelenő helyes hónapok</li>
+    <li>[javítás] Számítsa ki a megfelelést a Statisztika oldalon az összes nap alapján, nem pedig a felhasznált napok alapján</li>
+    <li>[fix] Paginálja a statisztikai jelentést nyomtatás közben</li>
+    <li>[javítás] Javítsák ki a &quot;fantom dátumot&quot; (1969.12.31.) néhány ResMed behozatalra</li>
+    <li>[javítás] Az alapértelmezett betűkészlet helyébe lép, ha egy megadott betűkészlet nem érvényes</li>
+    <li>[javítás] Változtassa meg a Preferences mértékegységeket metrikus vagy angol értékre</li>
+    <li>[javítás] Javítsa a cmH2O számok megjelenítését</li>
+    <li>[javítás] A grafikus motor helyes megjelenítése a címsorban</li>
+    <li>[fix] Állítsa be a Preferences párbeszédpanel méretét, hogy illeszkedjen a kisebb képernyőkhöz</li>
+    <li>[javítás] Címkézze fel a klímaberendezést kézi vagy automatikus módon az ResMed importáláskor</li>
+    <li>[javítás] A kevésbé hasznos információk áthelyezése a címsorból a Súgó / Rendszerinformációk menübe</li>
+    <li>[javítás] Változtassa meg a &quot;Vényköteles beállításokat&quot; &quot;Gépbeállítások&quot; üzenetre</li>
+    <li>[javítás] Javítsa az ikonokat, különös tekintettel a kisebbekre</li>
+    <li>[javítás] A Mac menü hibái</li>
+    <li>[javítás] Javítsa az üzeneteket a hibakeresési panelen</li>
+    <li>[javítás] Szervezze újra az építkezési utasításokat és az egyéb tisztításokat</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.1-r-1 verzióban</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>Kapcsolja ki a multitasking szolgáltatást, hogy elkerülje az összeomlás előzetes betöltése során történő összeomlást</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-9-ben</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>Felvette a legújabb fordítási fájlokat</li>
+    <li>Megváltoztatta a logót nagy O-val szövegesen</li>
+    <li>Tisztítsuk meg az esélyeket és a végeket</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-8-ban</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>Felvette a legújabb fordítási fájlokat</li>
+    <li>Rögzített fájlnév létrehozása az OSCAR dokumentumokról</li>
+    <li>Eltávolítva az I: E arány megjelenítése a Napi oldalon</li>
+    <li>Megváltozott néhány Mac összeállítási paraméter</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-7-ben</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>A gomb szövegéhez használja a Qt nyelvű fájlokat</li>
+    <li>Használja a &quot;Teljes méret&quot; (kerettel és menüvel) helyett a &quot;Teljes képernyő&quot;</li>
+    <li>Változtassa a Mac célplatformot OS-X 10.12 Sierra-ra</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-6-ban</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>Hozzáadott egy folyamatjelző sávot a fájláttelepítés során</li>
+    <li>Nyissa fel a főablakot</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-5 verzióban</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>A Súgó indexét a felhasználó által írható helyre helyezte</li>
+    <li>Világosított mappaválasztás és áttelepítési üzenetek</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-4-ben</span>
+  <br />Az OSCAR egyes részei © 2019, az 
+  <span style="font-style: italic;">OSCAR csapata</span>
+  <br />
+  <ul>
+    <li>Hozzáadott kód egy régi adatkönyvtár áthelyezéséhez egy új adatkönyvtárba</li>
+    <li>Eltávolította a &quot;-d&quot; indítási opciót és a &quot;Címtár módosítása&quot; fájlt.</li>
+    <li>&nbsp;Az &quot;--datadir mappanév&quot; indítási opcióval hozhatja létre vagy módosíthatja az adatkönyvtárat.</li>
+    <li>A fül és a gomb láthatóságának különféle javításai, a profil és az eszköz adatainak jelenlététől függően.</li>
+  </ul>
+  <span style="font-weight: bold;">Változások és javítások az OSCAR v1.0.0-beta-3-ban</span>
+  <br />Az OSCAR egyes részeit az 
+  <span style="font-style: italic;">OSCAR csapata</span> és az apnea közösség tagjai képezik © 2019
+  <br />
+  <ul>
+    <li>Az adományozási és frissítési szolgáltatások eltávolítva</li>
+    <li>A Szószedet, a GYIK és a Wiki funkciókat még nem hajtották végre</li>
+    <li>A Napi oldal bal oldali paneljének átméretezése kisebb lesz.</li>
+    <li>Az oximéter importálja a fájlhibákat az üzenet mezőbe</li>
+    <li>Rögzített dátum- és időproblémák az oximéter importálásával kapcsolatban</li>
+    <li>Támogatás hozzáadva az új CMS50D + firmware 4.6 verzióhoz</li>
+    <li>A „Nincs adat” képernyő újraformázása a Statisztika oldalon</li>
+    <li>Működött a Súgó-böngésző - most már csak csütörtök</li>
+    <li>Kis javítások a problémák felépítéséhez és hibakereséséhez</li>
+  </ul>
+  <span style="font-weight: bold;">SleepyHead v1.1.0-instabil-0</span>
+  <br />
+  <ul>
+    <li>Megjelent a GNU General Public License alatt</li>
+    <li>Szerzői jog © 2011-2018 Mark Watkins</li>
+  </ul></body>
+</html>
