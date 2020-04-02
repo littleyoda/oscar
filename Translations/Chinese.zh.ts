@@ -3733,10 +3733,6 @@ p, li { white-space: pre-wrap; }
         <translation>压力</translation>
     </message>
     <message>
-        <source>??</source>
-        <translation>??</translation>
-    </message>
-    <message>
         <source>AI</source>
         <translation>呼吸暂停指数</translation>
     </message>
@@ -5223,22 +5219,6 @@ Please Rebuild CPAP Data</source>
         <translation>呼气压力释放水平</translation>
     </message>
     <message>
-        <source>0cmH2O</source>
-        <translation>0cmH2O</translation>
-    </message>
-    <message>
-        <source>1cmH2O</source>
-        <translation>1cmH2O</translation>
-    </message>
-    <message>
-        <source>2cmH2O</source>
-        <translation>2cmH2O</translation>
-    </message>
-    <message>
-        <source>3cmH2O</source>
-        <translation>3cmH2O</translation>
-    </message>
-    <message>
         <source>EPR: </source>
         <translation>呼气压力释放: </translation>
     </message>
@@ -5559,10 +5539,6 @@ TTIA: %1</source>
     <message>
         <source>ASVAuto</source>
         <translation>ASV全自动</translation>
-    </message>
-    <message>
-        <source>???</source>
-        <translation>???</translation>
     </message>
     <message>
         <source>Auto for Her</source>
@@ -6625,6 +6601,18 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?5?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?10?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

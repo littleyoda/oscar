@@ -3789,10 +3789,6 @@ p, li { white-space: pre-wrap; }
         <translation>%1</translation>
     </message>
     <message>
-        <source>??</source>
-        <translation>??</translation>
-    </message>
-    <message>
         <source>AI</source>
         <translation>AI</translation>
     </message>
@@ -3931,10 +3927,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>90%</source>
         <translation>90%</translation>
-    </message>
-    <message>
-        <source>???</source>
-        <translation>???</translation>
     </message>
     <message>
         <source>AHI</source>
@@ -4633,10 +4625,6 @@ p, li { white-space: pre-wrap; }
         <translation>Gerät wird nicht unterstützt</translation>
     </message>
     <message>
-        <source>0cmH2O</source>
-        <translation>0cmH2O</translation>
-    </message>
-    <message>
         <source>SOMNOsoft2</source>
         <translation>SOMNOsoft2</translation>
     </message>
@@ -4649,16 +4637,8 @@ p, li { white-space: pre-wrap; }
         <translation>Gerät</translation>
     </message>
     <message>
-        <source>1cmH2O</source>
-        <translation>1cmH2O</translation>
-    </message>
-    <message>
         <source>Mask On</source>
         <translation>Maske auf</translation>
-    </message>
-    <message>
-        <source>2cmH2O</source>
-        <translation>2cmH2O</translation>
     </message>
     <message>
         <source>Max: %1</source>
@@ -4667,10 +4647,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Sorry, the purge operation failed, which means this version of OSCAR can&apos;t start.</source>
         <translation>Die Bereinigungsoperation ist fehlgeschlagen, was bedeutet, dass diese Version von OSCAR nicht gestartet werden kann.</translation>
-    </message>
-    <message>
-        <source>3cmH2O</source>
-        <translation>3cmH2O</translation>
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
@@ -6657,6 +6633,18 @@ Stunden: %1</translation>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
         <translation>Sobald Sie ein Upgrade durchführen, können Sie &lt;font size=+1&gt;kann nicht&lt;/font&gt; dieses Profil nicht mehr mit der vorherigen Version verwenden.</translation>
+    </message>
+    <message>
+        <source>?5?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?10?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

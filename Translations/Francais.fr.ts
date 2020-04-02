@@ -3768,10 +3768,6 @@ p, li { white-space: pre-wrap; }
         <translation>%1</translation>
     </message>
     <message>
-        <source>??</source>
-        <translation>??</translation>
-    </message>
-    <message>
         <source>AI</source>
         <translation>AI</translation>
     </message>
@@ -3902,10 +3898,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>90%</source>
         <translation>90%</translation>
-    </message>
-    <message>
-        <source>???</source>
-        <translation>???</translation>
     </message>
     <message>
         <source>AHI</source>
@@ -4520,10 +4512,6 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil non supporté</translation>
     </message>
     <message>
-        <source>0cmH2O</source>
-        <translation>0cmH2O</translation>
-    </message>
-    <message>
         <source>SOMNOsoft2</source>
         <translation>SOMNOsoft2</translation>
     </message>
@@ -4536,24 +4524,12 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil</translation>
     </message>
     <message>
-        <source>1cmH2O</source>
-        <translation>1cmH2O</translation>
-    </message>
-    <message>
         <source>Mask On</source>
         <translation>Masque enlevé</translation>
     </message>
     <message>
-        <source>2cmH2O</source>
-        <translation>2cmH2O</translation>
-    </message>
-    <message>
         <source>Max: %1</source>
         <translation>Max : %1</translation>
-    </message>
-    <message>
-        <source>3cmH2O</source>
-        <translation>3cmH2O</translation>
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
@@ -6654,6 +6630,18 @@ Corporelle</translation>
     </message>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?5?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?10?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

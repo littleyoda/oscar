@@ -6436,223 +6436,223 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Backing Up Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisywanie kopii zapasowej plików...</translation>
     </message>
     <message>
         <source>Mask Pressure (High frequency)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciśnienie w masce (Wysoka częstotliwość)</translation>
     </message>
     <message>
         <source>A ResMed data item: Trigger Cycle Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Element danych ResMed: zdarzenie wyzwalania  cyklu</translation>
     </message>
     <message>
         <source>Debugging channel #1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanał debugowania #1</translation>
     </message>
     <message>
         <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Supertajne czego widzieć nie masz ;)</translation>
     </message>
     <message>
         <source>Test #1</source>
-        <translation type="unfinished"></translation>
+        <translation>Test #1</translation>
     </message>
     <message>
         <source>Debugging channel #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Debugowanie kanał #2</translation>
     </message>
     <message>
         <source>Test #2</source>
-        <translation type="unfinished"></translation>
+        <translation>Test #2</translation>
     </message>
     <message>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
     </message>
     <message>
         <source>CPAP-Check</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP-Check</translation>
     </message>
     <message>
         <source>AutoCPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoCPAP</translation>
     </message>
     <message>
         <source>Auto-Trial</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Trial</translation>
     </message>
     <message>
         <source>AutoBiLevel</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoBiLevel</translation>
     </message>
     <message>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <source>S/T</source>
-        <translation type="unfinished"></translation>
+        <translation>S/T</translation>
     </message>
     <message>
         <source>S/T - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>S/T - AVAPS</translation>
     </message>
     <message>
         <source>PC - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>PC - AVAPS</translation>
     </message>
     <message>
         <source>Flex Lock</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Whether Flex settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy są dostępne ustawienia Flex.</translation>
     </message>
     <message>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilość czasu zmiany EPAP do IPAP, im wyższy tym wolniejsza zmiana</translation>
     </message>
     <message>
         <source>Rise Time Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada czasu podwyższania</translation>
     </message>
     <message>
         <source>Whether Rise Time settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy ustawienia czasu wzrostu są dostępne.</translation>
     </message>
     <message>
         <source>Rise Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada podwyższania</translation>
     </message>
     <message>
         <source>Mask Resistance Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienie oporu maski</translation>
     </message>
     <message>
         <source>Mask Resist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opór maski.</translation>
     </message>
     <message>
         <source>Hose Diam.</source>
-        <translation type="unfinished"></translation>
+        <translation>Średnica węża.</translation>
     </message>
     <message>
         <source>Tubing Type Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada typu rury</translation>
     </message>
     <message>
         <source>Whether tubing type settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy są dostępne ustawienia rodzaju rury.</translation>
     </message>
     <message>
         <source>Tube Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada rury</translation>
     </message>
     <message>
         <source>Mask Resistance Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada oporu maski</translation>
     </message>
     <message>
         <source>Whether mask resistance settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy są dostępne ustawienia oporu maski.</translation>
     </message>
     <message>
         <source>Mask Res. Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokada oporu maski</translation>
     </message>
     <message>
         <source>Whether or not machine shows AHI via built-in display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy aparat pokazuje AHI.</translation>
     </message>
     <message>
         <source>Ramp Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ rampy</translation>
     </message>
     <message>
         <source>Type of ramp curve to use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj krzywej ramp do użycia.</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SmartRamp</source>
-        <translation type="unfinished"></translation>
+        <translation>SmartRamp</translation>
     </message>
     <message>
         <source>Backup Breath Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb oddechu zastępczego</translation>
     </message>
     <message>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj oddechu zastępczego w użyciu żaden (off) automatyczny, ustalony</translation>
     </message>
     <message>
         <source>Breath Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Częstość oddechów</translation>
     </message>
     <message>
         <source>Fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustalone</translation>
     </message>
     <message>
         <source>Fixed Backup Breath BPM</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustalony oddech zastępczy BPM</translation>
     </message>
     <message>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimalne oddechy na minutę (BPM) poniżej których inicjowany jest oddech</translation>
     </message>
     <message>
         <source>Breath BPM</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddechy BPM</translation>
     </message>
     <message>
         <source>Timed Inspiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Czasowy wdech</translation>
     </message>
     <message>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas gdy ustalony wdech będzie dostarczał IPAP przed przejściem w EPAP</translation>
     </message>
     <message>
         <source>Timed Insp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czasowy wdech.</translation>
     </message>
     <message>
         <source>Auto-Trial Duration</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilość dni okresu próbnego Auto-CPAP, po którym aparat wraca do trybu CPAP</translation>
     </message>
     <message>
         <source>Auto-Trial Dur.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas trwania Auto-Trial.</translation>
     </message>
     <message>
         <source>EZ-Start</source>
-        <translation type="unfinished"></translation>
+        <translation>EZ-Start</translation>
     </message>
     <message>
         <source>Whether or not EZ-Start is enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy jest włączony tryb EZ-Start</translation>
     </message>
     <message>
         <source>Variable Breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddychanie zmienne</translation>
     </message>
     <message>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
-        <translation type="unfinished"></translation>
+        <translation>NIEPOTWIERDZONE: Prawdopodobnie zmienne oddychanie, z okresami o wysokim odchyleniu od szczytowego trendu wdechowego</translation>
     </message>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jak już zaktualizujesz &lt;font size=+1&gt;nie możesz&lt;/font&gt; już używać tego profilu z poprzednią wersją.</translation>
     </message>
 </context>
 <context>
