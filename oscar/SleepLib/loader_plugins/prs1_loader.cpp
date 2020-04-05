@@ -6629,7 +6629,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         }
     } else if (family == 5) {
         if (tubepresent) {
-            if (tubetemp != 0 && tubetemp > 3) UNEXPECTED_VALUE(tubetemp, "<= 3");
+            if (tubetemp != 0 && tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "<= 4");
         }
         CHECK_VALUE(humidfixed, false);
     } else if (family == 3) {
@@ -7319,6 +7319,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
     int max_ps   = 0;
     int min_epap = 0;
     int max_epap = 0;
+    int rise_time;
     int breath_rate;
     int timed_inspiration;
 
@@ -7393,8 +7394,8 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    CHECK_VALUE(breath_rate, 10);
-                    CHECK_VALUE(timed_inspiration, 24);
+                    if (breath_rate < 4 || breath_rate > 10) UNEXPECTED_VALUE(breath_rate, "4-10");
+                    if (timed_inspiration < 12 || timed_inspiration > 24) UNEXPECTED_VALUE(timed_inspiration, "12-24");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -7435,8 +7436,9 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                     break;
                 case 0x20:  // Rise Time
                     // [0x20, 0x03] for no flex, rise time setting = 3, no rise lock
-                    CHECK_VALUE(data[pos+1], 3);
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos+1]));
+                    rise_time = data[pos+1];
+                    if (rise_time < 1 || rise_time > 6) UNEXPECTED_VALUE(rise_time, "1-6");
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, rise_time));
                     break;
                 default:
                     CHECK_VALUES(data[pos], 0, 0x20);
