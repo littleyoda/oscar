@@ -272,6 +272,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "400X110", 0, 6, "DreamStation CPAP Pro" },
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
+    { "500X120", 0, 6, "DreamStation Auto CPAP" },
     { "500X130", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
@@ -4973,7 +4974,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 // That's represented by a mask-off event 19129 seconds after the mask-on, then a time-elapsed
                 // event after 65535 seconds, then an equipment off event after another 616 seconds.
                 tt += data[pos] | (data[pos+1] << 8);
-                // TODO: see if this event exists in other versions
+                // TODO: see if this event exists in earlier versions
                 break;
             case 5:  // Clock adjustment?
                 CHECK_VALUE(pos, 1);  // Always first
@@ -6113,10 +6114,10 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
                 if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
                 break;
-            case 7:  // ???
+            case 7:  // Time Elapsed?
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 break;
-            case 8:  // ???
+            case 8:  // Time Elapsed? How is this different from 7?
                 tt += data[pos] | (data[pos+1] << 8);  // This also adds to the total duration (otherwise it won't match report)
                 break;
             case 9:  // Humidifier setting change
@@ -7074,6 +7075,9 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                     //CHECK_VALUES(data[pos+2], 8, 65);
                     //CHECK_VALUE(data[pos+3], 0);
                 }
+                break;
+            case 0x09:  // Time Elapsed (event 4 in F0V4)
+                tt += data[pos] | (data[pos+1] << 8);
                 break;
             case 0x0a:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)

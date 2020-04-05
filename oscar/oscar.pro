@@ -432,9 +432,6 @@ OTHER_FILES += \
     docs/schema.xml \
     docs/graphs.xml \
     docs/channels.xml \
-    docs/release_notes.html \
-    docs/about.html \
-    docs/credits.html \
     docs/startup_tips.txt \
     docs/countries.txt \
     docs/tz.txt \
