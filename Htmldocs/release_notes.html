@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"en">
+<html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
     <title>release_notes</title>
     <meta content="The OSCAR Team" name="author" />
   </head>
-<<<<<<< HEAD
   <body>
     <p>
     <b>Changes and fixes in OSCAR v1.1.0-rc-1</b>
@@ -14,7 +14,7 @@
     <ul>
       <li>[fix] AHI and Usage bars in overview graphs now show the correct height when oximetry usage is significantly longer than CPAP usage.</li>
       <li>[fix] Improved import of Philips Respironics settings. In particular:</li>
-      <li style="list-style: none; display: inline">
+      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;">
         <ul>
           <li>The settings for PC, S, and S/T modes are now displayed correctly.</li>
           <li>AVAPS settings are now displayed correctly, including target tidal volume.</li>
@@ -24,7 +24,7 @@
       </li>
       <li>[fix] Fix the reported duration for extremely long sessions on DreamStation CPAP and BiPAP devices</li>
       <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
-      <li style="list-style: none; display: inline">
+      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;">
         <ul>
           <li>DreamStation Auto CPAP (500X120)</li>
         </ul>
@@ -41,7 +41,7 @@
       <li>[new] Add support for Dreem hypnograms</li>
       <li>[new] Extensive reorganization of the ResMed loader to facilitate understanding and future improvements</li>
       <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
-      <li style="list-style: none; display: inline">
+      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;">
         <ul>
           <li>DreamStation Auto CPAP (500X130)</li>
         </ul>
@@ -66,7 +66,7 @@
     <ul>
       <li>[new] Extensive overhaul of the Philips Respironics System One importer, resolving all previously reported issues.</li>
       <li>[new] The following Philips Respironics devices are now tested and fully supported:</li>
-      <li style="list-style: none; display: inline">
+      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;">
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -281,288 +281,4 @@
       <li>Copyright © 2011-2018 Mark Watkins</li>
     </ul>
   </body>
-=======
-<body style="font-family: Helvetica,Arial,sans-serif;">
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-rc-1</b>
-<ul>
-  <li>Portions of OSCAR are &copy; 2019-2020 by The OSCAR Team</li>
-  <li>[fix] AHI and Usage bars in overview graphs now show the correct height when oximetry usage is significantly longer than CPAP usage.</li>
-  <li>[fix] Improved import of Philips Respironics settings. In particular:
-    <ul>
-      <li>The settings for PC, S, and S/T modes are now displayed correctly.</li>
-       <li>AVAPS settings are now displayed correctly, including target tidal volume.</li>
-       <li>Backup breath settings are now imported and displayed.</li>
-       <li>The settings for CPAP-Check and Auto-Trial modes are now displayed correctly.</li>
-    </ul>
-  </li>
-  <li>[fix] Fix the reported duration for extremely long sessions on DreamStation CPAP and BiPAP devices</li>
-  <li>[new] Additional Philips Respironics devices tested and fully supported:
-    <ul>
-      <li>DreamStation Auto CPAP (500X120)</li>
-    </ul>
-  </li>
-  <li>[fix] Fix regression in Welcome page pressure display</li>
-  <li>[fix] Several crashes have been fixed.</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-beta-2</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019-2020 by The OSCAR Team</li>
-<li>[new] Add preliminary support for Viatom/Wellue pulse oximeters</li>
-<li>[new] Add support for Dreem hypnograms</li>
-<li>[new] Extensive reorganization of the ResMed loader to facilitate understanding and future improvements</li>
-<li>[new] Additional Philips Respironics devices tested and fully supported:
-  <ul>
-  <li>DreamStation Auto CPAP (500X130)</li>
-  </ul></li>
-<li>[new] Add a menu option to create a zip from an SD card</li>
-<li>[new] Ask where to save screenshots</li>
-<li>[new] Alert users when unexpected Philips Respironics data is encountered during import</li>
-<li>[fix] Add support for CPAP mode on DreamStation BiPAP S/T and AVAPS</li>
-<li>[fix] Pinch-to-zoom now works as expected</li>
-<li>[fix] The Philips Respironics loader now respects the "ignore old sessions" preference</li>
-<li>[fix] Improved handling of discontinuous Philips Respironics data</li>
-<li>[fix] Improved import of Philips Respironics flex and humidification settings</li>
-<li>[fix] Fix incorrect display of tube diameter on some Philips Respironics devices</li>
-<li>[fix] Fix missing "Bi-Flex" label for bi-level DreamStations</li>
-<li>[fix] Fix crashes in ZEO loader</li>
-<li>[fix] Fix several memory leaks</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-beta-1</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>[new] Extensive overhaul of the Philips Respironics System One importer, resolving all previously reported issues.</li>
-<li>[new] The following Philips Respironics devices are now tested and fully supported:
-<ul>
-<li>REMstar Plus (System One) (251P),</li>
-<li>REMstar Pro (System One) (450P, 451P),</li>
-<li>REMstar Auto (System One) (550P, 551P),</li>
-<li>BiPAP Auto (System One) (750P),</li>
-<li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
-<li>REMstar Pro (System One 60 Series) (460P, 461P),</li>
-<li>REMstar Auto (System One 60 Series) (560P, 561P, 562P, 560PBT),</li>
-<li>BiPAP Pro (System One 60 Series) (660P),</li>
-<li>BiPAP Auto (System One 60 Series) (760P),</li>
-<li>BiPAP autoSV Advanced (System One 60 Series) (960P, 961P),</li>
-<li>BiPAP autoSV Advanced 30 (System One 60 Series) (960T),</li>
-<li>BiPAP S/T 30 (System One 60 Series) (1061T),</li>
-<li>BiPAP AVAPS 30 (System One 60 Series) (1160P),</li>
-<li>DreamStation CPAP (200X110),</li>
-<li>DreamStation CPAP Pro (400X110, 400X150),</li>
-<li>DreamStation Go (400G110),</li>
-<li>DreamStation Auto CPAP (500X110, 500X150),</li>
-<li>DreamStation Go Auto (500G110, 502G150),</li>
-<li>DreamStation BiPAP Pro (600X110),</li>
-<li>DreamStation Auto BiPAP (700X110),</li>
-<li>DreamStation BiPAP autoSV (900X110, 900X120),</li>
-<li>DreamStation BiPAP S/T 30 (1030X110),</li>
-<li>DreamStation BiPAP S/T 30 with AAM (1030X150),</li>
-<li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
-<li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
-<li><i>Note: The settings for PC, S, and S/T modes are still displayed incorrectly.</i></li>
-</ul></li>
-<li>[new] Update translation files and add new languages</li>
-<li>[new] Allow user to reset graph order on the Daily page to Standard (for CPAP and APAP) or Advanced order (for ASV and AVAPS modes)</li>
-<li>[new] Add preference setting to include the serial number on machine settings list</li>
-<li>[fix] Place date, time, and Oscar version information in report footers</li>
-<li>[fix] Update identification of ResMed S9 devices on the Welcome page</li>
-<li>[fix] Correct formatting of event number in the Daily Events tab</li>
-<li>[fix] Correct timezone offset for SomnoPose imports</li>
-<li>[fix] Show a progress bar when setting the Overview range to a large number of days</li>
-<li>[fix] Make session bars on the Daily page clearer by using a better color</li>
-<li>[fix] Improve list of devices on the Statistics page</li>
-<li>[fix] Report Pressure when IPAP data is missing</li>
-<li>[fix] Implement Refresh button on the Profile page</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-testing-4</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>[new] Windows installers support Oscar, Oscar 32-bit, Oscar (test) and Oscar 32-bit (test)</li>
-<li>[fix] Release builds use a Settings key of OSCAR, Test builds use OSCAR-test, and Branch builds use OSCAR-branch.  Default data directories are similarly named.</li>
-<li>[fix] Overview chart problems when both CPAP and Oximetry data were included fixed</li>
-<li>[fix] Translations updated for all languages.  Spanish (Mexico) and Norwegian languages added</li>
-<li>[fix] All languages now available on Mac</li>
-<li>[fix] Date bar on the bottom of the Daily graph now in the local time when no line cursor displayed, and formatting improved</li>
-<li>[fix] 100% zoom now works on the Overview page</li>
-<li>[fix] View/Reset Graphs now enables all graphs and all event flags</li>
-<li>[fix] Calendar date now formatted per national settings</li>
-<li>[fix] Toggle buttons on the Daily page's session list and event and chart pulldowns changed to checkboxes</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-testing-3</b>
-<i>NOTE: Translations have NOT yet been updated for these changes</i>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>[new] DreamStation BiPAP S/T and AVAPS ventilators (1030X and 1130X) are now supported. The settings aren't yet displayed correctly, but therapy events and graphs should now display properly.</li>
-<li>[new] View/Reset Graphs organizes graphs in their original order</li>
-<li>[fix] Format dates for the national region as reported by the operating system</li>
-<li>[fix] Improve progress bar for the Statistics cache update</li>
-<li>[fix] Correct calculations of seven-day AHI and leak rate on the Welcome page</li>
-<li>[fix] Clarify AHI and hours labels on Records tab of the right sidebar</li>
-<li>[fix] Correct import error resulting in invalid elapsed times and impossibly high AHI values</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-testing-2</b>
-<i>NOTE: Translations have NOT yet been updated for these changes</i>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>[new] Show progress bar when the Statistics page has to refresh the cache with more than 180 days in it</li>
-<li>[new] Romanian language is supported</li>
-<li>[fix] Show commit id in the title bar for testing and beta builds</li>
-<li>[fix] Show BMI label and calculated value only when both weight and height are non-zero</li>
-<li>[fix] Improve BMI display in Daily/Notes</li>
-<li>[fix] Correct profile dialog to show height is measured in cm, not meters, when units system is metric</li>
-<li>[fix] Always show event indices on the Daily page even when some event flags are turned off</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.1.0-testing-1</b>
-<i>NOTE: Translations have NOT yet been updated for these changes</i>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>[new] Offer migration if a non-default directory is selected on first use</li>
-<li>[new] Hold the SHIFT key down when starting OSCAR to use Software Graphics Engine</li>
-<li>[new] Support for DreamStation BiPAP autoSV (900X) should now be complete</li>
-<li>[new] Improved DreamStation support</li>
-<li>[new] Improve oximeter import for CM550D+</li>
-<li>[new] Disable Dark Mode on Mac</li>
-<li>[new] Show hours/day constituting compliance on the Statistics page</li>
-<li>[new] Better order of graphs on the Daily page for newly created profiles</li>
-<li>[new] Help/System Information shows info about OSCAR, OS, and data location</li>
-<li>[new] Move pie chart option from Preferences dialog to View menu</li>
-<li>[new] Hide pie chart when capturing screen</li>
-<li>[new] The --datadir option now allows fully qualified name on Windows</li>
-<li>[fix] Fix some oximeter import issues</li>
-<li>[fix] Use local time rather than UTC in oximeter import</li>
-<li>[fix] Improve screen capture on Mac</li>
-<li>[fix] Fix crashes in CPAP data rebuild, purging of a machine</li>
-<li>[fix] Prevent crash if taking a screenshot before a profile is opened</li>
-<li>[fix] Increase mask vent ranges</li>
-<li>[fix] Correct session bar if no sessions are present</li>
-<li>[fix] Correct months shown on the Statistics page monthly view</li>
-<li>[fix] Compute compliance on the Statistics page based on total days, not days used</li>
-<li>[fix] Paginate the Statistics report when printing</li>
-<li>[fix] Fix "phantom date" (12/31/1969) on some ResMed imports</li>
-<li>[fix] Default font substituted when a specified font is not valid</li>
-<li>[fix] Change Preferences measurement units choice to Metric or English</li>
-<li>[fix] Improve display of cmH2O numbers</li>
-<li>[fix] Show graphics engine in title bar correctly</li>
-<li>[fix] Adjust the size of the Preferences dialog to fit smaller screens</li>
-<li>[fix] Label climate control as manual or auto correctly on ResMed import</li>
-<li>[fix] Move less useful information from title bar to Help/System Information</li>
-<li>[fix] Change "Prescription Settings" to "Machine Settings" message</li>
-<li>[fix] Improve icons, especially smaller ones</li>
-<li>[fix] Correct Mac menu issues</li>
-<li>[fix] Improve messages in debug pane</li>
-<li>[fix] Re-organize build instructions and other cleanup</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.1-r-1</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Disable multitasking to avoid a crash during pre-loading of summaries</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-9</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Picked up the latest translation files</li>
-<li>Changed logo to big O with text</li>
-<li>Clean up odds and ends</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-8</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Picked up the latest translation files</li>
-<li>Fixed filename creation for about OSCAR docs</li>
-<li>Removed display of I:E ratio from the Daily page</li>
-<li>Changed some Mac build parameters</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-7</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Use the Qt language files for button text</li>
-<li>Use "Maximize" (with frame & menu) instead of "FullScreen"</li>
-<li>Change Mac target platform to OS-X 10.12 Sierra</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-6</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Added a progress bar during file migration</li>
-<li>Raise the main window upon opening it</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-5</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Moved the Help Index to a user-writable location</li>
-<li>Clarified folder selection and Migration messages</li>
-</ul>
-</p>
-
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-4</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team</li>
-<li>Added code to migrate an old data directory to a new data directory</li>
-<li>Removed "-d" startup option and "Change directory" file menu item. Use the
-"--datadir foldername" startup option to create or change the data directory.</li>
-<li>Various fixes to tab and button visibility depending on profile and machine data presence.</li>
-</ul>
-</p>
-<p>
-<b>Changes and fixes in OSCAR v1.0.0-beta-3</b>
-<ul>
-<li>Portions of OSCAR are &copy; 2019 by The OSCAR Team and members of the apnea community</li>
-<li>The Donation and Update features have been removed</li>
-<li>The Glossary, FAQ, and Wiki features are not yet implemented</li>
-<li>The Daily page left panel will resize to a smaller size.</li>
-<li>Oximeter import reports file errors in a message box</li>
-<li>Fixed date and time problems with Oximeter import</li>
-<li>Added support for new CMS50D+ firmware version 4.6</li>
-<li>Reformatted the 'No Data' display on the Statistics page</li>
-<li>Got the Help browser working - just stubs for now</li>
-<li>Small fixes to build and debug problems</li>
-</ul>
-</p>
-
-<p>
-<b>SleepyHead v1.1.0-unstable-0</b>
-<ul>
-<li>Released under the GNU General Public License version 3</li>
-<li>Copyright &copy; 2011-2018 Mark Watkins</li>
-</ul>
-</p>
-</body>
->>>>>>> master
 </html>
