@@ -2328,6 +2328,8 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
             Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "ZEO sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2357,6 +2359,8 @@ void MainWindow::on_actionImport_Dreem_Data_triggered()
             Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "Dreem sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2451,6 +2455,8 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
 
         Notify(tr("Somnopause Data Import complete"));
         PopulatePurgeMenu();
+        if (overview) overview->ReloadGraphs();
+        if (welcome) welcome->refreshPage();
         daily->LoadDate(daily->getDate());
     }
 
@@ -2477,6 +2483,8 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
         if (c > 0) {
             Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
