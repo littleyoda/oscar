@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="it">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
@@ -8,268 +8,281 @@
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" />
   </head>
   <body>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-rc-1</span>
-  <br />
-  <ul>
-    <li>[correzione] Le barre AHI e Uso nei grafici di panoramica ora mostrano l&#39;altezza corretta quando l&#39;utilizzo dell&#39;ossimetria è significativamente più lungo dell&#39;uso CPAP.</li>
-    <li>[correzione] Importazione migliorata delle impostazioni di Philips Respironics. In particolare:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>Le impostazioni per le modalità PC, S e S/T sono ora visualizzate correttamente.</li>
-        <li>Le impostazioni AVAPS ora vengono visualizzate correttamente, incluso il volume corrente target.</li>
-        <li>Le impostazioni del respiro di backup sono ora importate e visualizzate.</li>
-        <li>Le impostazioni per le modalità CPAP-Check e Auto-Trial sono ora visualizzate correttamente.</li>
-      </ul>
-    </li>
-    <li>[correzione] Correzione della regressione nella visualizzazione della pressione della pagina di benvenuto</li>
-    <li>[correzione] Sono stati corretti diversi arresti anomali.</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-beta-2</span>
-  <br />Parti di OSCAR sono © 2019-2020 da 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[nuovo] Aggiungi supporto preliminare per pulsossimetri Viatom / Wellue</li>
-    <li>[nuovo] Aggiungi il supporto per gli ipnogrammi di Dreem</li>
-    <li>[novità] Ampia riorganizzazione del caricatore ResMed per facilitare la comprensione e i miglioramenti futuri</li>
-    <li>[novità] Dispositivi aggiuntivi Philips Respironics testati e pienamente supportati:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>DreamStation Auto CPAP (500X130)</li>
-      </ul>
-    </li>
-    <li>[nuovo] Aggiungi un&#39;opzione di menu per creare uno zip da una scheda SD</li>
-    <li>[nuovo] Chiedi dove salvare gli screenshot</li>
-    <li>[nuovo] Avvisa gli utenti quando vengono rilevati dati imprevisti di Philips Respironics durante l&#39;importazione</li>
-    <li>[correzione] Aggiungi il supporto per la modalità CPAP su DreamStation BiPAP S/T e AVAPS</li>
-    <li>[correzione] Pinch-to-zoom ora funziona come previsto</li>
-    <li>[correzione] Il caricatore Philips Respironics ora rispetta la preferenza &quot;ignora le vecchie sessioni&quot;</li>
-    <li>[correzione] Migliore gestione dei dati discontinui di Philips Respironics</li>
-    <li>[correzione] Miglioramento dell&#39;importazione delle impostazioni di flessibilità e umidificazione di Philips Respironics</li>
-    <li>[correzione] Correzione della visualizzazione errata del diametro del tubo su alcuni dispositivi Philips Respironics</li>
-    <li>[correzione] Correzione dell&#39;etichetta &quot;Bi-Flex&quot; mancante per DreamStation a due livelli</li>
-    <li>[correzione] Risolvi gli arresti anomali nel caricatore ZEO</li>
-    <li>[correzione] Risolve diverse perdite di memoria</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-beta-1</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[novità] Revisione approfondita dell&#39;importatore Philips Respironics System One, che risolve tutti i problemi precedentemente segnalati.</li>
-    <li>[novità] I seguenti dispositivi Philips Respironics sono ora testati e pienamente supportati:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>REMstar Plus (System One) (251P),</li>
-        <li>REMstar Pro (System One) (450P, 451P),</li>
-        <li>REMstar Auto (System One) (550P, 551P),</li>
-        <li>BiPAP Auto (System One) (750P),</li>
-        <li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
-        <li>REMstar Pro (System One 60 Series) (460P, 461P),</li>
-        <li>REMstar Auto (System One 60 Series) (560P, 561P, 562P, 560PBT),</li>
-        <li>BiPAP Pro (System One 60 Series) (660P),</li>
-        <li>BiPAP Auto (System One 60 Series) (760P),</li>
-        <li>BiPAP autoSV Advanced (System One 60 Series) (960P, 961P),</li>
-        <li>BiPAP autoSV Advanced 30 (System One 60 Series) (960T),</li>
-        <li>BiPAP S/T 30 (System One 60 Series) (1061T),</li>
-        <li>BiPAP AVAPS 30 (System One 60 Series) (1160P),</li>
-        <li>DreamStation CPAP (200X110),</li>
-        <li>DreamStation CPAP Pro (400X110, 400X150),</li>
-        <li>DreamStation Go (400G110),</li>
-        <li>DreamStation Auto CPAP (500X110, 500X150),</li>
-        <li>DreamStation Go Auto (500G110, 502G150),</li>
-        <li>DreamStation BiPAP Pro (600X110),</li>
-        <li>DreamStation Auto BiPAP (700X110),</li>
-        <li>DreamStation BiPAP autoSV (900X110, 900X120),</li>
-        <li>DreamStation BiPAP S/T 30 (1030X110),</li>
-        <li>DreamStation BiPAP S/T 30 con AAM (1030X150),</li>
-        <li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
-        <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
-        <li style="font-style: italic;">Nota: le impostazioni per le modalità PC, S e S/T sono ancora visualizzate in modo errato.</li>
-      </ul>
-    </li>
-    <li>[nuovo] Aggiorna i file di traduzione e aggiungi nuove lingue</li>
-    <li>[novità] Consenti all&#39;utente di ripristinare l&#39;ordine dei grafici nella pagina giornaliera su Standard (per CPAP e APAP) o Ordine avanzato (per le modalità ASV e AVAPS)</li>
-    <li>[nuovo] Aggiungi impostazione di preferenza per includere il numero seriale nell&#39;elenco delle impostazioni del dispositivo</li>
-    <li>[correzione] Inserisci la data, l&#39;ora e le informazioni sulla versione di Oscar nei piè di pagina del rapporto</li>
-    <li>[correzione] Aggiorna l&#39;identificazione dei dispositivi ResMed S9 nella pagina di benvenuto</li>
-    <li>[correzione] Correzione corretta del numero di evento nella scheda Eventi giornalieri</li>
-    <li>[correzione] Correzione del fuso orario corretto per le importazioni SomnoPose</li>
-    <li>[correzione] Mostra una barra di avanzamento quando si imposta l&#39;intervallo Panoramica su un numero elevato di giorni</li>
-    <li>[correzione] Rendi più chiare le barre della sessione nella pagina giornaliera usando un colore migliore</li>
-    <li>[correzione] Migliora l&#39;elenco dei dispositivi nella pagina Statistiche</li>
-    <li>[correzione] Segnala pressione quando mancano dati IPAP</li>
-    <li>[correzione] Implementa il pulsante Aggiorna nella pagina Profilo</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-testing-4</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[novità] Gli installer di Windows supportano Oscar, Oscar 32-bit, Oscar (test) e Oscar 32-bit (test)</li>
-    <li>[correzione] Le build di rilascio utilizzano un tasto Impostazioni di OSCAR, le build di test utilizzano il test OSCAR e le build di Branch utilizzano il ramo OSCAR. Le directory di dati predefinite hanno un nome simile.</li>
-    <li>[correzione] Problemi del grafico generale quando venivano inclusi sia i dati CPAP che quelli per ossimetria</li>
-    <li>[correzione] Traduzioni aggiornate per tutte le lingue. Aggiunte le lingue spagnolo (Messico) e norvegese</li>
-    <li>[correzione] Tutte le lingue ora disponibili su Mac</li>
-    <li>[correzione] Barra della data nella parte inferiore del grafico giornaliero ora nell&#39;ora locale quando non viene visualizzato alcun cursore di linea e la formattazione migliorata</li>
-    <li>[correzione] Lo zoom al 100% ora funziona sulla pagina Panoramica</li>
-    <li>[correzione] Visualizza / Ripristina grafici ora abilita tutti i grafici e tutti i flag di evento</li>
-    <li>[correzione] La data del calendario è ora formattata in base alle impostazioni nazionali</li>
-    <li>[correzione] Attiva / disattiva i pulsanti nell&#39;elenco delle sessioni della pagina giornaliera e i menu a discesa degli eventi e dei grafici modificati in caselle di controllo</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-testing-3</span>
-  <br />
-  <span style="font-style: italic;">NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[nuovo] I ventilatori DreamStation BiPAP S/T e AVAPS (1030X e 1130X) sono ora supportati. Le impostazioni non sono ancora visualizzate correttamente, ma gli eventi ei grafici della terapia dovrebbero ora essere visualizzati correttamente.</li>
-    <li>[nuovo] Visualizza / Ripristina grafici organizza i grafici nel loro ordine originale</li>
-    <li>[correzione] Formatta le date per la regione nazionale come riportato dal sistema operativo</li>
-    <li>[correzione] Migliora la barra di avanzamento per l&#39;aggiornamento della cache delle statistiche</li>
-    <li>[correzione] Calcoli corretti di AHI di sette giorni e tasso di perdita nella pagina di benvenuto</li>
-    <li>[correzione] Chiarisci le etichette AHI e ore nella scheda Record della barra laterale destra</li>
-    <li>[correzione] Errore di importazione corretto con conseguente tempo trascorso non valido e valori AHI incredibilmente alti</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-testing-2</span>
-  <br />
-  <span style="font-style: italic;">NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[nuovo] Mostra la barra di avanzamento quando la pagina Statistiche deve aggiornare la cache con più di 180 giorni al suo interno</li>
-    <li>[nuova] lingua rumena è supportata</li>
-    <li>[correzione] Mostra ID commit nella barra del titolo per test e build beta</li>
-    <li>[correzione] Mostra l&#39;etichetta BMI e il valore calcolato solo quando sia il peso che l&#39;altezza sono diversi da zero</li>
-    <li>[correzione] Migliora la visualizzazione dell&#39;IMC in Giornaliero / Note</li>
-    <li>[correzione] La finestra di dialogo del profilo corretto per mostrare l&#39;altezza viene misurata in cm, non in metri quando il sistema di unità è metrico</li>
-    <li>[correzione] Mostra sempre gli indici degli eventi nella pagina giornaliera anche quando alcuni flag di evento sono disattivati</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.1.0-testing-1</span>
-  <br />
-  <span style="font-style: italic;">NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>[nuovo] Offri migrazione se viene selezionata una directory non predefinita al primo utilizzo</li>
-    <li>[nuovo] Tenere premuto il tasto MAIUSC quando si avvia OSCAR per utilizzare Software Graphics Engine</li>
-    <li>[nuovo] Il supporto per DreamStation BiPAP autoSV (900X) ora dovrebbe essere completo</li>
-    <li>[nuovo] Supporto DreamStation migliorato</li>
-    <li>[novità] Migliora l&#39;importazione dell&#39;ossimetro per CM550D +</li>
-    <li>[novità] Disabilita la modalità oscura su Mac</li>
-    <li>[nuovo] Mostra ore / giorno che costituiscono conformità nella pagina Statistiche</li>
-    <li>[nuovo] Migliore ordine dei grafici nella pagina giornaliera per i profili appena creati</li>
-    <li>[nuovo] Guida / Informazioni di sistema mostra informazioni su OSCAR, sistema operativo e posizione dei dati</li>
-    <li>[nuovo] Sposta l&#39;opzione del grafico a torta dalla finestra di dialogo Preferenze al menu Visualizza</li>
-    <li>[nuovo] Nascondi il grafico a torta durante l&#39;acquisizione dello schermo</li>
-    <li>[nuovo] L&#39;opzione --datadir ora consente il nome completo su Windows</li>
-    <li>[correzione] Risolve alcuni problemi di importazione dell&#39;ossimetro</li>
-    <li>[correzione] Utilizzare l&#39;ora locale anziché UTC nell&#39;importazione dell&#39;ossimetro</li>
-    <li>[correzione] Migliora l&#39;acquisizione dello schermo su Mac</li>
-    <li>[correzione] Correzione di arresti anomali nella ricostruzione dei dati CPAP, eliminazione di un dispositivo</li>
-    <li>[correzione] Prevenire l&#39;arresto anomalo se si acquisisce uno screenshot prima dell&#39;apertura di un profilo</li>
-    <li>[correzione] Aumenta i campi di sfiato della maschera</li>
-    <li>[correzione] Barra delle sessioni corretta se non sono presenti sessioni</li>
-    <li>[correzione] Mesi corretti visualizzati nella vista mensile della pagina Statistiche</li>
-    <li>[correzione] Calcola la conformità nella pagina Statistiche in base ai giorni totali, non ai giorni utilizzati</li>
-    <li>[correzione] Impagina il rapporto Statistiche durante la stampa</li>
-    <li>[correzione] Correzione della &quot;data fantasma&quot; (31/12/1969) su alcune importazioni ResMed</li>
-    <li>[correzione] Carattere predefinito sostituito quando un carattere specificato non è valido</li>
-    <li>[correzione] Cambia la scelta delle unità di misura delle preferenze in Metrico o Inglese</li>
-    <li>[correzione] Migliora la visualizzazione dei numeri cmH2O</li>
-    <li>[correzione] Mostra correttamente il motore grafico nella barra del titolo</li>
-    <li>[correzione] Regola le dimensioni della finestra di dialogo Preferenze per adattarle a schermi più piccoli</li>
-    <li>[correzione] Etichetta climatizzatore come manuale o auto correttamente sull&#39;importazione ResMed</li>
-    <li>[correzione] Sposta le informazioni meno utili dalla barra del titolo in Guida / Informazioni di sistema</li>
-    <li>[correzione] Cambia &quot;Impostazioni prescrizione&quot; nel messaggio &quot;Impostazioni macchina&quot;</li>
-    <li>[correzione] Migliora le icone, specialmente quelle più piccole</li>
-    <li>[correzione] Problemi di menu Mac corretti</li>
-    <li>[correzione] Migliora i messaggi nel riquadro di debug</li>
-    <li>[correzione] Riorganizza le istruzioni per la compilazione e altre pulizie</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.1-r-1</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Disabilita il multitasking per evitare un arresto anomalo durante il pre-caricamento dei riepiloghi</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-9</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Ho preso gli ultimi file di traduzione</li>
-    <li>Logo modificato in O grande con testo</li>
-    <li>Ripulisci le probabilità e le estremità</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-8</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Ho preso gli ultimi file di traduzione</li>
-    <li>Correzione della creazione del nome file per i documenti OSCAR</li>
-    <li>Rimossa la visualizzazione del rapporto I: E dalla pagina giornaliera</li>
-    <li>Modificati alcuni parametri di build del Mac</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-7</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Utilizzare i file della lingua Qt per il testo del pulsante</li>
-    <li>Usa &quot;Ingrandisci&quot; (con cornice e menu) invece di &quot;Schermo intero&quot;</li>
-    <li>Cambia la piattaforma di destinazione Mac in OS-X 10.12 Sierra</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-6</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Aggiunta una barra di avanzamento durante la migrazione dei file</li>
-    <li>Sollevare la finestra principale all&#39;apertura</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-5</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Spostato l&#39;indice della guida in una posizione scrivibile dall&#39;utente</li>
-    <li>Selezione delle cartelle e messaggi di migrazione chiariti</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-4</span>
-  <br />Parti di OSCAR sono © 2019 di 
-  <span style="font-style: italic;">The OSCAR Team</span>
-  <br />
-  <ul>
-    <li>Aggiunto codice per migrare una vecchia directory di dati in una nuova directory di dati</li>
-    <li>Rimossa l&#39;opzione di avvio &quot;-d&quot; e la voce di menu del file &quot;Cambia directory&quot;.</li>
-    <li>&nbsp;Utilizzare l&#39;opzione di avvio &quot;--datadir foldername&quot; per creare o modificare la directory dei dati.</li>
-    <li>Varie correzioni alla visibilità delle schede e dei pulsanti a seconda del profilo e della presenza dei dati del dispositivo.</li>
-  </ul>
-  <span style="font-weight: bold;">Modifiche e correzioni in OSCAR v1.0.0-beta-3</span>
-  <br />Parti di OSCAR sono © 2019 da 
-  <span style="font-style: italic;">The OSCAR Team</span> e membri della comunità di apnea
-  <br />
-  <ul>
-    <li>Le funzionalità di donazione e aggiornamento sono state rimosse</li>
-    <li>Le funzioni Glossario, FAQ e Wiki non sono ancora implementate</li>
-    <li>Il riquadro sinistro della pagina giornaliera verrà ridimensionato a dimensioni inferiori.</li>
-    <li>L&#39;importazione dell&#39;ossimetro riporta gli errori dei file in una finestra di messaggio</li>
-    <li>Risolti i problemi di data e ora con l&#39;importazione dell&#39;ossimetro</li>
-    <li>Aggiunto supporto per la nuova versione CMS50D + firmware 4.6</li>
-    <li>Riformattato il display &quot;Nessun dato&quot; nella pagina Statistiche</li>
-    <li>Il browser della Guida è funzionato, per ora solo stub</li>
-    <li>Piccole correzioni per compilare e debug problemi</li>
-  </ul>
-  <span style="font-weight: bold;">SleepyHead v1.1.0-unstable-0</span>
-  <br />
-  <ul>
-    <li>Rilasciato sotto la GNU General Public License</li>
-    <li>Copyright © 2011-2018 Mark Watkins</li>
-  </ul></body>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-rc-1</b>
+    <br />Parti di OSCAR sono © 2019-2020 da 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[correzione] Le barre AHI e Uso nei grafici di panoramica ora mostrano l&#39;altezza corretta quando l&#39;utilizzo dell&#39;ossimetria è significativamente più lungo dell&#39;uso CPAP.</li>
+      <li>[correzione] Importazione migliorata delle impostazioni di Philips Respironics. In particolare:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>Le impostazioni per le modalità PC, S e S/T sono ora visualizzate correttamente.</li>
+          <li>Le impostazioni AVAPS ora vengono visualizzate correttamente, incluso il volume corrente target.</li>
+          <li>Le impostazioni del respiro di backup sono ora importate e visualizzate.</li>
+          <li>Le impostazioni per le modalità CPAP-Check e Auto-Trial sono ora visualizzate correttamente.</li>
+        </ul>
+      </li>
+      <li>[correzione] Correggi la durata segnalata per sessioni estremamente lunghe su dispositivi CPAP e BiPAP DreamStation</li>
+      <li>[novità] Dispositivi aggiuntivi Philips Respironics testati e pienamente supportati:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation Auto CPAP (500X120)</li>
+        </ul>
+      </li>
+      <li>[correzione] Correzione della regressione nella visualizzazione della pressione della pagina di benvenuto</li>
+      <li>[correzione] Sono stati corretti diversi arresti anomali.</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-beta-2</b>
+    <br />Parti di OSCAR sono © 2019-2020 da 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[nuovo] Aggiungi supporto preliminare per pulsossimetri Viatom / Wellue</li>
+      <li>[nuovo] Aggiungi il supporto per gli ipnogrammi di Dreem</li>
+      <li>[novità] Ampia riorganizzazione del caricatore ResMed per facilitare la comprensione e i miglioramenti futuri</li>
+      <li>[novità] Dispositivi aggiuntivi Philips Respironics testati e pienamente supportati:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation Auto CPAP (500X130)</li>
+        </ul>
+      </li>
+      <li>[nuovo] Aggiungi un&#39;opzione di menu per creare uno zip da una scheda SD</li>
+      <li>[nuovo] Chiedi dove salvare gli screenshot</li>
+      <li>[nuovo] Avvisa gli utenti quando vengono rilevati dati imprevisti di Philips Respironics durante l&#39;importazione</li>
+      <li>[correzione] Aggiungi il supporto per la modalità CPAP su DreamStation BiPAP S/T e AVAPS</li>
+      <li>[correzione] Pinch-to-zoom ora funziona come previsto</li>
+      <li>[correzione] Il caricatore Philips Respironics ora rispetta la preferenza &quot;ignora le vecchie sessioni&quot;</li>
+      <li>[correzione] Migliore gestione dei dati discontinui di Philips Respironics</li>
+      <li>[correzione] Miglioramento dell&#39;importazione delle impostazioni di flessibilità e umidificazione di Philips Respironics</li>
+      <li>[correzione] Correzione della visualizzazione errata del diametro del tubo su alcuni dispositivi Philips Respironics</li>
+      <li>[correzione] Correzione dell&#39;etichetta &quot;Bi-Flex&quot; mancante per DreamStation a due livelli</li>
+      <li>[correzione] Risolvi gli arresti anomali nel caricatore ZEO</li>
+      <li>[correzione] Risolve diverse perdite di memoria</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-beta-1</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[novità] Revisione approfondita dell&#39;importatore Philips Respironics System One, che risolve tutti i problemi precedentemente segnalati.</li>
+      <li>[novità] I seguenti dispositivi Philips Respironics sono ora testati e pienamente supportati:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>REMstar Plus (System One) (251P),</li>
+          <li>REMstar Pro (System One) (450P, 451P),</li>
+          <li>REMstar Auto (System One) (550P, 551P),</li>
+          <li>BiPAP Auto (System One) (750P),</li>
+          <li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
+          <li>REMstar Pro (System One 60 Series) (460P, 461P),</li>
+          <li>REMstar Auto (System One 60 Series) (560P, 561P, 562P, 560PBT),</li>
+          <li>BiPAP Pro (System One 60 Series) (660P),</li>
+          <li>BiPAP Auto (System One 60 Series) (760P),</li>
+          <li>BiPAP autoSV Advanced (System One 60 Series) (960P, 961P),</li>
+          <li>BiPAP autoSV Advanced 30 (System One 60 Series) (960T),</li>
+          <li>BiPAP S/T 30 (System One 60 Series) (1061T),</li>
+          <li>BiPAP AVAPS 30 (System One 60 Series) (1160P),</li>
+          <li>DreamStation CPAP (200X110),</li>
+          <li>DreamStation CPAP Pro (400X110, 400X150),</li>
+          <li>DreamStation Go (400G110),</li>
+          <li>DreamStation Auto CPAP (500X110, 500X150),</li>
+          <li>DreamStation Go Auto (500G110, 502G150),</li>
+          <li>DreamStation BiPAP Pro (600X110),</li>
+          <li>DreamStation Auto BiPAP (700X110),</li>
+          <li>DreamStation BiPAP autoSV (900X110, 900X120),</li>
+          <li>DreamStation BiPAP S/T 30 (1030X110),</li>
+          <li>DreamStation BiPAP S/T 30 con AAM (1030X150),</li>
+          <li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
+          <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
+          <li>
+            <i>Nota: le impostazioni per le modalità PC, S e S/T sono ancora visualizzate in modo errato.</i>
+          </li>
+        </ul>
+      </li>
+      <li>[nuovo] Aggiorna i file di traduzione e aggiungi nuove lingue</li>
+      <li>[novità] Consenti all&#39;utente di ripristinare l&#39;ordine dei grafici nella pagina giornaliera su Standard (per CPAP e APAP) o Ordine avanzato (per le modalità ASV e AVAPS)</li>
+      <li>[nuovo] Aggiungi impostazione di preferenza per includere il numero seriale nell&#39;elenco delle impostazioni del dispositivo</li>
+      <li>[correzione] Inserisci la data, l&#39;ora e le informazioni sulla versione di Oscar nei piè di pagina del rapporto</li>
+      <li>[correzione] Aggiorna l&#39;identificazione dei dispositivi ResMed S9 nella pagina di benvenuto</li>
+      <li>[correzione] Correzione corretta del numero di evento nella scheda Eventi giornalieri</li>
+      <li>[correzione] Correzione del fuso orario corretto per le importazioni SomnoPose</li>
+      <li>[correzione] Mostra una barra di avanzamento quando si imposta l&#39;intervallo Panoramica su un numero elevato di giorni</li>
+      <li>[correzione] Rendi più chiare le barre della sessione nella pagina giornaliera usando un colore migliore</li>
+      <li>[correzione] Migliora l&#39;elenco dei dispositivi nella pagina Statistiche</li>
+      <li>[correzione] Segnala pressione quando mancano dati IPAP</li>
+      <li>[correzione] Implementa il pulsante Aggiorna nella pagina Profilo</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-testing-4</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[novità] Gli installer di Windows supportano Oscar, Oscar 32-bit, Oscar (test) e Oscar 32-bit (test)</li>
+      <li>[correzione] Le build di rilascio utilizzano un tasto Impostazioni di OSCAR, le build di test utilizzano il test OSCAR e le build di Branch utilizzano il ramo OSCAR. Le directory di dati predefinite hanno un nome simile.</li>
+      <li>[correzione] Problemi del grafico generale quando venivano inclusi sia i dati CPAP che quelli per ossimetria</li>
+      <li>[correzione] Traduzioni aggiornate per tutte le lingue. Aggiunte le lingue spagnolo (Messico) e norvegese</li>
+      <li>[correzione] Tutte le lingue ora disponibili su Mac</li>
+      <li>[correzione] Barra della data nella parte inferiore del grafico giornaliero ora nell&#39;ora locale quando non viene visualizzato alcun cursore di linea e la formattazione migliorata</li>
+      <li>[correzione] Lo zoom al 100% ora funziona sulla pagina Panoramica</li>
+      <li>[correzione] Visualizza / Ripristina grafici ora abilita tutti i grafici e tutti i flag di evento</li>
+      <li>[correzione] La data del calendario è ora formattata in base alle impostazioni nazionali</li>
+      <li>[correzione] Attiva / disattiva i pulsanti nell&#39;elenco delle sessioni della pagina giornaliera e i menu a discesa degli eventi e dei grafici modificati in caselle di controllo</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-testing-3</b>
+    <br />
+    <i>NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</i>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[nuovo] I ventilatori DreamStation BiPAP S/T e AVAPS (1030X e 1130X) sono ora supportati. Le impostazioni non sono ancora visualizzate correttamente, ma gli eventi ei grafici della terapia dovrebbero ora essere visualizzati correttamente.</li>
+      <li>[nuovo] Visualizza / Ripristina grafici organizza i grafici nel loro ordine originale</li>
+      <li>[correzione] Formatta le date per la regione nazionale come riportato dal sistema operativo</li>
+      <li>[correzione] Migliora la barra di avanzamento per l&#39;aggiornamento della cache delle statistiche</li>
+      <li>[correzione] Calcoli corretti di AHI di sette giorni e tasso di perdita nella pagina di benvenuto</li>
+      <li>[correzione] Chiarisci le etichette AHI e ore nella scheda Record della barra laterale destra</li>
+      <li>[correzione] Errore di importazione corretto con conseguente tempo trascorso non valido e valori AHI incredibilmente alti</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-testing-2</b>
+    <br />
+    <i>NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</i>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[nuovo] Mostra la barra di avanzamento quando la pagina Statistiche deve aggiornare la cache con più di 180 giorni al suo interno</li>
+      <li>[nuova] lingua rumena è supportata</li>
+      <li>[correzione] Mostra ID commit nella barra del titolo per test e build beta</li>
+      <li>[correzione] Mostra l&#39;etichetta BMI e il valore calcolato solo quando sia il peso che l&#39;altezza sono diversi da zero</li>
+      <li>[correzione] Migliora la visualizzazione dell&#39;IMC in Giornaliero / Note</li>
+      <li>[correzione] La finestra di dialogo del profilo corretto per mostrare l&#39;altezza viene misurata in cm, non in metri quando il sistema di unità è metrico</li>
+      <li>[correzione] Mostra sempre gli indici degli eventi nella pagina giornaliera anche quando alcuni flag di evento sono disattivati</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.1.0-testing-1</b>
+    <br />
+    <i>NOTA: le traduzioni NON sono state ancora aggiornate per queste modifiche</i>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[nuovo] Offri migrazione se viene selezionata una directory non predefinita al primo utilizzo</li>
+      <li>[nuovo] Tenere premuto il tasto MAIUSC quando si avvia OSCAR per utilizzare Software Graphics Engine</li>
+      <li>[nuovo] Il supporto per DreamStation BiPAP autoSV (900X) ora dovrebbe essere completo</li>
+      <li>[nuovo] Supporto DreamStation migliorato</li>
+      <li>[novità] Migliora l&#39;importazione dell&#39;ossimetro per CM550D +</li>
+      <li>[novità] Disabilita la modalità oscura su Mac</li>
+      <li>[nuovo] Mostra ore / giorno che costituiscono conformità nella pagina Statistiche</li>
+      <li>[nuovo] Migliore ordine dei grafici nella pagina giornaliera per i profili appena creati</li>
+      <li>[nuovo] Guida / Informazioni di sistema mostra informazioni su OSCAR, sistema operativo e posizione dei dati</li>
+      <li>[nuovo] Sposta l&#39;opzione del grafico a torta dalla finestra di dialogo Preferenze al menu Visualizza</li>
+      <li>[nuovo] Nascondi il grafico a torta durante l&#39;acquisizione dello schermo</li>
+      <li>[nuovo] L&#39;opzione --datadir ora consente il nome completo su Windows</li>
+      <li>[correzione] Risolve alcuni problemi di importazione dell&#39;ossimetro</li>
+      <li>[correzione] Utilizzare l&#39;ora locale anziché UTC nell&#39;importazione dell&#39;ossimetro</li>
+      <li>[correzione] Migliora l&#39;acquisizione dello schermo su Mac</li>
+      <li>[correzione] Correzione di arresti anomali nella ricostruzione dei dati CPAP, eliminazione di un dispositivo</li>
+      <li>[correzione] Prevenire l&#39;arresto anomalo se si acquisisce uno screenshot prima dell&#39;apertura di un profilo</li>
+      <li>[correzione] Aumenta i campi di sfiato della maschera</li>
+      <li>[correzione] Barra delle sessioni corretta se non sono presenti sessioni</li>
+      <li>[correzione] Mesi corretti visualizzati nella vista mensile della pagina Statistiche</li>
+      <li>[correzione] Calcola la conformità nella pagina Statistiche in base ai giorni totali, non ai giorni utilizzati</li>
+      <li>[correzione] Impagina il rapporto Statistiche durante la stampa</li>
+      <li>[correzione] Correzione della &quot;data fantasma&quot; (31/12/1969) su alcune importazioni ResMed</li>
+      <li>[correzione] Carattere predefinito sostituito quando un carattere specificato non è valido</li>
+      <li>[correzione] Cambia la scelta delle unità di misura delle preferenze in Metrico o Inglese</li>
+      <li>[correzione] Migliora la visualizzazione dei numeri cmH2O</li>
+      <li>[correzione] Mostra correttamente il motore grafico nella barra del titolo</li>
+      <li>[correzione] Regola le dimensioni della finestra di dialogo Preferenze per adattarle a schermi più piccoli</li>
+      <li>[correzione] Etichetta climatizzatore come manuale o auto correttamente sull&#39;importazione ResMed</li>
+      <li>[correzione] Sposta le informazioni meno utili dalla barra del titolo in Guida / Informazioni di sistema</li>
+      <li>[correzione] Cambia &quot;Impostazioni prescrizione&quot; nel messaggio &quot;Impostazioni macchina&quot;</li>
+      <li>[correzione] Migliora le icone, specialmente quelle più piccole</li>
+      <li>[correzione] Problemi di menu Mac corretti</li>
+      <li>[correzione] Migliora i messaggi nel riquadro di debug</li>
+      <li>[correzione] Riorganizza le istruzioni per la compilazione e altre pulizie</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.1-r-1</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Disabilita il multitasking per evitare un arresto anomalo durante il pre-caricamento dei riepiloghi</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-9</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Ho preso gli ultimi file di traduzione</li>
+      <li>Logo modificato in O grande con testo</li>
+      <li>Ripulisci le probabilità e le estremità</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-8</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Ho preso gli ultimi file di traduzione</li>
+      <li>Correzione della creazione del nome file per i documenti OSCAR</li>
+      <li>Rimossa la visualizzazione del rapporto I: E dalla pagina giornaliera</li>
+      <li>Modificati alcuni parametri di build del Mac</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-7</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Utilizzare i file della lingua Qt per il testo del pulsante</li>
+      <li>Usa &quot;Ingrandisci&quot; (con cornice e menu) invece di &quot;Schermo intero&quot;</li>
+      <li>Cambia la piattaforma di destinazione Mac in OS-X 10.12 Sierra</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-6</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Aggiunta una barra di avanzamento durante la migrazione dei file</li>
+      <li>Sollevare la finestra principale all&#39;apertura</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-5</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Spostato l&#39;indice della guida in una posizione scrivibile dall&#39;utente</li>
+      <li>Selezione delle cartelle e messaggi di migrazione chiariti</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-4</b>
+    <br />Parti di OSCAR sono © 2019 di 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>Aggiunto codice per migrare una vecchia directory di dati in una nuova directory di dati</li>
+      <li>Rimossa l&#39;opzione di avvio &quot;-d&quot; e la voce di menu del file &quot;Cambia directory&quot;.</li>
+      <li>&nbsp;Utilizzare l&#39;opzione di avvio &quot;--datadir foldername&quot; per creare o modificare la directory dei dati.</li>
+      <li>Varie correzioni alla visibilità delle schede e dei pulsanti a seconda del profilo e della presenza dei dati del dispositivo.</li>
+    </ul>
+    <p>
+    <b>Modifiche e correzioni in OSCAR v1.0.0-beta-3</b>
+    <br />Parti di OSCAR sono © 2019 da 
+    <i>The OSCAR Team</i> e membri della comunità di apnea</p>
+    <ul>
+      <li>Le funzionalità di donazione e aggiornamento sono state rimosse</li>
+      <li>Le funzioni Glossario, FAQ e Wiki non sono ancora implementate</li>
+      <li>Il riquadro sinistro della pagina giornaliera verrà ridimensionato a dimensioni inferiori.</li>
+      <li>L&#39;importazione dell&#39;ossimetro riporta gli errori dei file in una finestra di messaggio</li>
+      <li>Risolti i problemi di data e ora con l&#39;importazione dell&#39;ossimetro</li>
+      <li>Aggiunto supporto per la nuova versione CMS50D + firmware 4.6</li>
+      <li>Riformattato il display &quot;Nessun dato&quot; nella pagina Statistiche</li>
+      <li>Il browser della Guida è funzionato, per ora solo stub</li>
+      <li>Piccole correzioni per compilare e debug problemi</li>
+    </ul>
+    <p>
+      <b>SleepyHead v1.1.0-unstable-0</b>
+    </p>
+    <ul>
+      <li>Rilasciato sotto la GNU General Public License</li>
+      <li>Copyright © 2011-2018 Mark Watkins</li>
+    </ul>
+  </body>
 </html>

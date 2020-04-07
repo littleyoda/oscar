@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
@@ -8,254 +8,265 @@
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" />
   </head>
   <body>
-  <span style="font-weight: bold;">OSCAR v1.1.0-rc-1中的更改和修复</span>
-  <br />
-  <ul>
-    <li>[修复]当血氧测定法的使用时间明显长于CPAP的使用时，概览图中的AHI和使用情况栏现在显示正确的高度。</li>
-    <li>[修复]改进了Philips Respironics设置的导入。特别是：</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>PC，S和S/T模式的设置现在可以正确显示。</li>
-        <li>现在可以正确显示AVAPS设置，包括目标潮气量。</li>
-        <li>备用呼吸设置现在已导入并显示。</li>
-        <li>现在可以正确显示CPAP检查和自动试用模式的设置。</li>
-      </ul>
-    </li>
-    <li>[修复]修复了欢迎页面压力显示中的回归</li>
-    <li>[修复]已修复多个崩溃。</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-beta-2中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019-2020
-  <br />
-  <ul>
-    <li>[新]添加对Viatom / Wellue脉搏血氧仪的初步支持</li>
-    <li>[新]添加了对Dreem催眠图的支持</li>
-    <li>[新] ResMed装载机的广泛重组，以促进理解和将来的改进</li>
-    <li>[new]已测试并完全支持的其他Philips Respironics设备：</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>DreamStation自动CPAP（500X130）</li>
-      </ul>
-    </li>
-    <li>[new]添加菜单选项以从SD卡创建zip</li>
-    <li>[新]询问将屏幕快照保存在哪里</li>
-    <li>[新]在导入过程中遇到意外的Philips Respironics数据时提醒用户</li>
-    <li>[修复]在DreamStation BiPAP S/T和AVAPS上添加对CPAP模式的支持</li>
-    <li>[修复]缩小缩放现在可以正常工作</li>
-    <li>[修复]飞利浦Respironics装载机现在尊重“忽略旧会话”首选项</li>
-    <li>[修复]改进了对不连续的Philips Respironics数据的处理</li>
-    <li>[修复]改进了Philips Respironics柔韧性和加湿设置的导入</li>
-    <li>[修复]修复了某些Philips Respironics设备上的管径显示错误</li>
-    <li>[修复]修复了双层​​DreamStation缺少的“ Bi-Flex”标签</li>
-    <li>[修复]修复了ZEO加载程序中的崩溃</li>
-    <li>[修复]修复了几次内存泄漏</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-beta-1中的更改​​和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>[新]飞利浦Respironics System One进口商的全面检修，解决了以前报告的所有问题。</li>
-    <li>[new]现在已测试并完全支持以下Philips Respironics设备：</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>REMstar Plus（系统一）（251P），</li>
-        <li>REMstar Pro（系统一）（450P，451P），</li>
-        <li>REMstar Auto（系统一）（550P，551P），</li>
-        <li>BiPAP Auto（系统一）（750P），</li>
-        <li>BiPAP AutoSV Advanced System One（950P，951P），</li>
-        <li>REMstar Pro（System One 60系列）（460P，461P），</li>
-        <li>REMstar Auto（System One 60系列）（560P，561P，562P，560PBT），</li>
-        <li>BiPAP Pro（System One 60系列）（660P），</li>
-        <li>BiPAP Auto（系统一系60系列）（760P），</li>
-        <li>BiPAP autoSV Advanced（System One 60系列）（960P，961P），</li>
-        <li>BiPAP autoSV Advanced 30（System One 60系列）（960T），</li>
-        <li>BiPAP S/T 30（System One 60系列）（1061T），</li>
-        <li>BiPAP AVAPS 30（系统一60系列）（1160P），</li>
-        <li>DreamStation CPAP（200X110），</li>
-        <li>DreamStation CPAP Pro（400X110、400X150），</li>
-        <li>DreamStation Go（400G110），</li>
-        <li>DreamStation自动CPAP（500X110、500X150），</li>
-        <li>DreamStation Go Auto（500G110、502G150），</li>
-        <li>DreamStation BiPAP Pro（600X110），</li>
-        <li>DreamStation自动BiPAP（700X110），</li>
-        <li>DreamStation BiPAP autoSV（900X110、900X120），</li>
-        <li>DreamStation BiPAP S/T 30（1030X110），</li>
-        <li>带AAM的DreamStation BiPAP S/T 30（1030X150），</li>
-        <li>DreamStation BiPAP AVAPS 30（1130X110），</li>
-        <li>DreamStation BiPAP AVAPS 30 AE（1131X150）</li>
-        <li style="font-style: italic;">注意：PC，S和S/T模式的设置仍然显示不正确。</li>
-      </ul>
-    </li>
-    <li>[new]更新翻译文件并添加新语言</li>
-    <li>[new]允许用户将“每日”页面上的图形顺序重置为“标准”（对于CPAP和APAP）或“高级”顺序（对于ASV和AVAPS模式）</li>
-    <li>[new]添加首选项设置以将序列号包括在设备设置列表中</li>
-    <li>[修复]在报告页脚中放置日期，时间和Oscar版本信息</li>
-    <li>[修复]在“欢迎”页面上更新ResMed S9设备的标识</li>
-    <li>[修复]在“每日事件”选项卡中正确设置事件编号的格式</li>
-    <li>[修复]正确的SomnoPose导入时区偏移</li>
-    <li>[修复]将“概述”范围设置为大量天数时显示进度条</li>
-    <li>[修复]使用更好的颜色使“每日”页面上的会话栏更加清晰</li>
-    <li>[修复]改进“统计”页面上的设备列表</li>
-    <li>[修复]当IPAP数据丢失时报告压力</li>
-    <li>[修复]在“个人资料”页面上实施“刷新”按钮</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-testing-4中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>[新] Windows安装程序支持Oscar，Oscar 32位，Oscar（测试）和Oscar 32位（测试）</li>
-    <li>[fix]发布版本使用OSCAR的“设置”键，测试版本使用OSCAR-test，分支版本使用OSCAR-branch。默认数据目录的 名称与此类似。</li>
-    <li>[fix]修正了同时包含CPAP和血氧饱和度数据的总览图问题</li>
-    <li>[修复]已更新所有语言的翻译。添加了西班牙语（墨西哥）和挪威语</li>
-    <li>[修复] Mac上现在提供所有语言</li>
-    <li>[修复]现在在本地时间，当没有行光标显示时，“每日”图底部的日期栏现在已显示，并且格式已改进</li>
-    <li>[修复] 100％缩放现在可在“概述”页面上使用</li>
-    <li>[修复]视图/重置图现在启用所有图和所有事件标志</li>
-    <li>[修复]现在可以根据国家/地区设置格式化日历日期</li>
-    <li>[修复]每日页面的会话列表上的切换按钮以及事件和图表下拉菜单已更改为复选框</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-testing-3中的更改和修复</span>
-  <br />
-  <span style="font-style: italic;">注意：这些更改的翻译尚未更新</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>[新]现在支持DreamStation BiPAP S/T和AVAPS呼吸机（1030X和1130X）。设置尚未正确显示，但是治疗事件和图表现在应该正确显示。</li>
-    <li>[new]查看/重置图以原始顺序组织图</li>
-    <li>[修复]操作系统报告的国家区域格式日期</li>
-    <li>[修复]改进了统计信息缓存更新的进度条</li>
-    <li>[修复]在“欢迎”页面上正确计算7天AHI和泄漏率</li>
-    <li>[修复]澄清右侧栏的“记录”选项卡上的AHI和小时标签</li>
-    <li>[修复]正确的导入错误，导致无效的经过时间和不必要的高AHI值</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-testing-2中的更改和修复</span>
-  <br />
-  <span style="font-style: italic;">注意：这些更改的翻译尚未更新</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>[new]当“统计信息”页面必须刷新其中包含180天以上的缓存时，显示进度栏</li>
-    <li>[新]支持罗马尼亚语</li>
-    <li>[修复]在标题栏中显示提交ID以进行测试和Beta版构建</li>
-    <li>[fix]仅当体重和身高都不为零时才显示BMI标签和计算值</li>
-    <li>[修复]改善每日/笔记中的BMI显示</li>
-    <li>[fix]正确的配置文件对话框，以厘米为单位显示高度，而不是米，单位制为米</li>
-    <li>[修复]即使关闭了某些事件标志，也始终在“每日”页面上显示事件索引</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.1.0-testing-1中的更改​​和修复</span>
-  <br />
-  <span style="font-style: italic;">注意：这些更改的翻译尚未更新</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>[new]如果首次使用时选择了非默认目录，则提供迁移</li>
-    <li>[new]启动OSCAR以使用Software Graphics Engine时，请按住SHIFT键</li>
-    <li>[new]现在应该完成对DreamStation BiPAP autoSV（900X）的支持</li>
-    <li>[新]改进的DreamStation支持</li>
-    <li>[新]改进了CM550D +的血氧仪进口</li>
-    <li>[new]在Mac上禁用黑暗模式</li>
-    <li>[new]在“统计信息”页面上显示构成合规性的小时/天</li>
-    <li>[new]在“每日”页面上，新创建的配置文件的图形顺序更好</li>
-    <li>[新]帮助/系统信息显示有关OSCAR，OS和数据位置的信息</li>
-    <li>[new]将饼图选项从“首选项”对话框移至“查看”菜单</li>
-    <li>[新]捕获屏幕时隐藏饼图</li>
-    <li>[new] --datadir选项现在允许在Windows上使用完全限定名称</li>
-    <li>[修复]修复了一些血氧仪的导入问题</li>
-    <li>[修复]在测定仪导入中使用本地时间而不是UTC</li>
-    <li>[修复]改善Mac上的屏幕捕获</li>
-    <li>[修复]修复了CPAP数据重建，设备清除中的崩溃</li>
-    <li>[修复]如果在打开个人资料之前拍摄屏幕快照，可以防止崩溃</li>
-    <li>[修复]增加面罩通风口范围</li>
-    <li>[修复]如果没有会话，请更正会话栏</li>
-    <li>[修复]统计页面每月视图中显示的正确月份</li>
-    <li>[fix]根据总天数（而非使用天数）计算“统计信息”页面上的合规性</li>
-    <li>[修复]打印时分页统计报告</li>
-    <li>[fix]修复了某些ResMed导入中的“幻影日期”（1969年12月31日）</li>
-    <li>[修复]当指定字体无效时替换默认字体</li>
-    <li>[修复]将“首选项”度量单位选择更改为“公制”或“英语”</li>
-    <li>[修复]改进了cmH2O编号的显示</li>
-    <li>[修复]在标题栏中正确显示图形引擎</li>
-    <li>[修复]调整“首选项”对话框的大小以适合较小的屏幕</li>
-    <li>[修复]在ResMed导入中将气候控制标签正确设置为手动或自动</li>
-    <li>[修复]将不太有用的信息从标题栏移至“帮助/系统信息”</li>
-    <li>[修复]将“处方设置”更改为“机器设置”消息</li>
-    <li>[修复]改进图标，尤其是较小的图标</li>
-    <li>[修复]纠正了Mac菜单问题</li>
-    <li>[修复]改进调试窗格中的消息</li>
-    <li>[修复]重新组织构建说明和其他清理</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.1-r-1中的更改​​和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>禁用多任务以避免在预加载摘要期间崩溃</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-9中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>挑选最新的翻译文件</li>
-    <li>将徽标更改为带有文本的大O</li>
-    <li>清理零头</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-8中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>挑选最新的翻译文件</li>
-    <li>修复了关于About OSCAR文档的文件名创建问题</li>
-    <li>从“每日”页面中删除了I：E比率的显示</li>
-    <li>更改了一些Mac构建参数</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-7中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>将Qt语言文件用于按钮文本</li>
-    <li>使用“最大化”（带有框架和菜单）而不是“全屏”</li>
-    <li>将Mac目标平台更改为OS-X 10.12 Sierra</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-6中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>在文件迁移期间添加了进度条</li>
-    <li>打开主窗口时将其升起</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-5中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>将帮助索引移至用户可写的位置</li>
-    <li>澄清了文件夹选择和迁移消息</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-4中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队©2019
-  <br />
-  <ul>
-    <li>添加了将旧数据目录迁移到新数据目录的代码</li>
-    <li>删除了“ -d”启动选项和“更改目录”文件菜单项。</li>
-    <li>&nbsp;使用“ --datadir foldername”启动选项来创建或更改数据目录。</li>
-    <li>选项卡和按钮可见性的各种修复，具体取决于配置文件和设备数据的存在。</li>
-  </ul>
-  <span style="font-weight: bold;">OSCAR v1.0.0-beta-3中的更改和修复</span>
-  <br />OSCAR的部分内容归OSCAR团队和呼吸暂停社区成员©2019
-  <br />
-  <ul>
-    <li>捐赠和更新功能已被删除</li>
-    <li>词汇表，常见问题解答和Wiki功能尚未实现</li>
-    <li>每日页面左侧面板将调整为较小的尺寸。</li>
-    <li>血氧仪导入在消息框中报告文件错误</li>
-    <li>修正了血氧仪导入的日期和时间问题</li>
-    <li>增加了对新CMS50D +固件版本4.6的支持</li>
-    <li>重新格式化“统计”页面上的“无数据”显示</li>
-    <li>使帮助浏览器正常工作-现在仅存根</li>
-    <li>修补程序，用于构建和调试问题</li>
-  </ul>
-  <span style="font-weight: bold;">SleepyHead v1.1.0-不稳定-0</span>
-  <br />
-  <ul>
-    <li>根据GNU通用公共许可证发行</li>
-    <li>版权所有©2011-2018 Mark Watkins</li>
-  </ul></body>
+    <p>
+    <b>OSCAR v1.1.0-rc-1中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019-2020</p>
+    <ul>
+      <li>[修复]当血氧测定法的使用时间明显长于CPAP的使用时，概览图中的AHI和使用情况栏现在显示正确的高度。</li>
+      <li>[修复]改进了Philips Respironics设置的导入。 特别是：</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>PC，S和S/T模式的设置现在可以正确显示。</li>
+          <li>现在可以正确显示AVAPS设置，包括目标潮气量。</li>
+          <li>备用呼吸设置现在已导入并显示。</li>
+          <li>现在可以正确显示CPAP检查和自动试用模式的设置。</li>
+        </ul>
+      </li>
+      <li>[修复]修复了DreamStation CPAP和BiPAP设备上极长会话的报告持续时间</li>
+      <li>[新]已测试并完全支持的其他Philips Respironics设备：</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation自动CPAP（500X120）</li>
+        </ul>
+      </li>
+      <li>[修复]修复了欢迎页面压力显示中的回归</li>
+    </ul>
+    <p>[修复]已修复多个崩溃。 
+    <b>OSCAR v1.1.0-beta-2中的更改和修复
+    <br /></b> OSCAR的部分内容归OSCAR团队©2019-2020</p>
+    <ul>
+      <li>[新]添加对Viatom / Wellue脉搏血氧仪的初步支持</li>
+      <li>[新]添加了对Dreem催眠图的支持</li>
+      <li>[新] ResMed装载机的广泛重组，以促进理解和将来的改进</li>
+      <li>[新]已测试并完全支持的其他Philips Respironics设备：</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation自动CPAP（500X130）</li>
+        </ul>
+      </li>
+      <li>[新]添加菜单选项以从SD卡创建zip</li>
+      <li>[新]询问将屏幕快照保存在哪里</li>
+      <li>[新]在导入过程中遇到意外的Philips Respironics数据时提醒用户</li>
+      <li>[修复]在DreamStation BiPAP S/T和AVAPS上添加对CPAP模式的支持</li>
+      <li>[修复]缩小缩放现在可以正常工作</li>
+      <li>[修复]飞利浦Respironics装载机现在尊重“忽略旧会话”首选项</li>
+      <li>[修复]改进了对不连续的Philips Respironics数据的处理</li>
+      <li>[修复]改进了Philips Respironics柔韧性和加湿设置的导入</li>
+      <li>[修复]修复了某些Philips Respironics设备上的管径显示错误</li>
+      <li>[修复]修复了双层​​DreamStation缺少的“ Bi-Flex”标签</li>
+      <li>[修复]修复了ZEO加载程序中的崩溃</li>
+      <li>[修复]修复了几次内存泄漏</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.1.0-beta-1中的更改​​和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>[新]飞利浦Respironics System One进口商的全面检修，解决了以前报告的所有问题。</li>
+      <li>[新]现在已测试并完全支持以下Philips Respironics设备：</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>REMstar Plus（系统一）（251P），</li>
+          <li>REMstar Pro（系统一）（450P，451P），</li>
+          <li>REMstar Auto（系统一）（550P，551P），</li>
+          <li>BiPAP Auto（系统一）（750P），</li>
+          <li>BiPAP AutoSV Advanced System One（950P，951P），</li>
+          <li>REMstar Pro（System One 60系列）（460P，461P），</li>
+          <li>REMstar Auto（System One 60系列）（560P，561P，562P，560PBT），</li>
+          <li>BiPAP Pro（System One 60系列）（660P），</li>
+          <li>BiPAP Auto（系统一系60系列）（760P），</li>
+          <li>BiPAP autoSV Advanced（System One 60系列）（960P，961P），</li>
+          <li>BiPAP autoSV Advanced 30（System One 60系列）（960T），</li>
+          <li>BiPAP S/T 30（System One 60系列）（1061T），</li>
+          <li>BiPAP AVAPS 30（系统一60系列）（1160P），</li>
+          <li>DreamStation CPAP（200X110），</li>
+          <li>DreamStation CPAP Pro（400X110、400X150），</li>
+          <li>DreamStation Go（400G110），</li>
+          <li>DreamStation自动CPAP（500X110、500X150），</li>
+          <li>DreamStation Go Auto（500G110、502G150），</li>
+          <li>DreamStation BiPAP Pro（600X110），</li>
+          <li>DreamStation自动BiPAP（700X110），</li>
+          <li>DreamStation BiPAP autoSV（900X110、900X120），</li>
+          <li>DreamStation BiPAP S/T 30（1030X110），</li>
+          <li>带AAM的DreamStation BiPAP S/T 30（1030X150），</li>
+          <li>DreamStation BiPAP AVAPS 30（1130X110），</li>
+          <li>DreamStation BiPAP AVAPS 30 AE（1131X150）</li>
+          <li>
+            <i>注意：PC，S和S/T模式的设置仍然显示不正确。</i>
+          </li>
+        </ul>
+      </li>
+      <li>[新]更新翻译文件并添加新语言</li>
+      <li>[新]允许用户将“每日”页面上的图形顺序重置为“标准”（对于CPAP和APAP）或“高级”顺序（对于ASV和AVAPS模式）</li>
+      <li>[新]添加首选项设置以将序列号包括在设备设置列表中</li>
+      <li>[修复]在报告页脚中放置日期，时间和Oscar版本信息</li>
+      <li>[修复]在“欢迎”页面上更新ResMed S9设备的标识</li>
+      <li>[修复]在“每日事件”选项卡中正确设置事件编号的格式</li>
+      <li>[修复]正确的SomnoPose导入时区偏移</li>
+      <li>[修复]将“概述”范围设置为大量天数时显示进度条</li>
+      <li>[修复]使用更好的颜色使“每日”页面上的会话栏更加清晰</li>
+      <li>[修复]改进“统计”页面上的设备列表</li>
+      <li>[修复]当IPAP数据丢失时报告压力</li>
+      <li>[修复]在“个人资料”页面上实施“刷新”按钮</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.1.0-testing-4中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>[新] Windows安装程序支持Oscar，Oscar 32位，Oscar（测试）和Oscar 32位（测试）</li>
+      <li>[修复]发布版本使用OSCAR的“设置”键，测试版本使用OSCAR-test，分支版本使用OSCAR-branch。默认数据目录的 名称与此类似。</li>
+      <li>[修复]修正了同时包含CPAP和血氧饱和度数据的总览图问题</li>
+      <li>[修复]已更新所有语言的翻译。添加了西班牙语（墨西哥）和挪威语</li>
+      <li>[修复] Mac上现在提供所有语言</li>
+      <li>[修复]现在在本地时间，当没有行光标显示时，“每日”图底部的日期栏现在已显示，并且格式已改进</li>
+      <li>[修复] 100％缩放现在可在“概述”页面上使用</li>
+      <li>[修复]视图/重置图现在启用所有图和所有事件标志</li>
+      <li>[修复]现在可以根据国家/地区设置格式化日历日期</li>
+      <li>[修复]每日页面的会话列表上的切换按钮以及事件和图表下拉菜单已更改为复选框</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.1.0-testing-3中的更改和修复</b>
+    <br />
+    <i>注意：这些更改的翻译尚未更新</i>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>[新]现在支持DreamStation BiPAP S/T和AVAPS呼吸机（1030X和1130X）。设置尚未正确显示，但是治疗事件和图表现在应该正确显示。</li>
+      <li>[新]查看/重置图以原始顺序组织图</li>
+      <li>[修复]操作系统报告的国家区域格式日期</li>
+      <li>[修复]改进了统计信息缓存更新的进度条</li>
+      <li>[修复]在“欢迎”页面上正确计算7天AHI和泄漏率</li>
+      <li>[修复]澄清右侧栏的“记录”选项卡上的AHI和小时标签</li>
+      <li>[修复]正确的导入错误，导致无效的经过时间和不必要的高AHI值</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.1.0-testing-2中的更改和修复</b>
+    <br />
+    <i>注意：这些更改的翻译尚未更新</i>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>[new]当“统计信息”页面必须刷新其中包含180天以上的缓存时，显示进度栏</li>
+      <li>[新]支持罗马尼亚语</li>
+      <li>[修复]在标题栏中显示提交ID以进行测试和Beta版构建</li>
+      <li>[修复]仅当体重和身高都不为零时才显示BMI标签和计算值</li>
+      <li>[修复]改善每日/笔记中的BMI显示</li>
+      <li>[修复]正确的配置文件对话框，以厘米为单位显示高度，而不是米，单位制为米</li>
+      <li>[修复]即使关闭了某些事件标志，也始终在“每日”页面上显示事件索引</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.1.0-testing-1中的更改​​和修复</b>
+    <br />
+    <i>注意：这些更改的翻译尚未更新</i>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>[新]如果首次使用时选择了非默认目录，则提供迁移</li>
+      <li>[新]启动OSCAR以使用Software Graphics Engine时，请按住SHIFT键</li>
+      <li>[新]现在应该完成对DreamStation BiPAP autoSV（900X）的支持</li>
+      <li>[新]改进的DreamStation支持</li>
+      <li>[新]改进了CM550D +的血氧仪进口</li>
+      <li>[新]在Mac上禁用黑暗模式</li>
+      <li>[新]在“统计信息”页面上显示构成合规性的小时/天</li>
+      <li>[新]在“每日”页面上，新创建的配置文件的图形顺序更好</li>
+      <li>[新]帮助/系统信息显示有关OSCAR，OS和数据位置的信息</li>
+      <li>[新]将饼图选项从“首选项”对话框移至“查看”菜单</li>
+      <li>[新]捕获屏幕时隐藏饼图</li>
+      <li>[新] --datadir选项现在允许在Windows上使用完全限定名称</li>
+      <li>[修复]修复了一些血氧仪的导入问题</li>
+      <li>[修复]在测定仪导入中使用本地时间而不是UTC</li>
+      <li>[修复]改善Mac上的屏幕捕获</li>
+      <li>[修复]修复了CPAP数据重建，设备清除中的崩溃</li>
+      <li>[修复]如果在打开个人资料之前拍摄屏幕快照，可以防止崩溃</li>
+      <li>[修复]增加面罩通风口范围</li>
+      <li>[修复]如果没有会话，请更正会话栏</li>
+      <li>[修复]统计页面每月视图中显示的正确月份</li>
+      <li>[修复]根据总天数（而非使用天数）计算“统计信息”页面上的合规性</li>
+      <li>[修复]打印时分页统计报告</li>
+      <li>[修复]修复了某些ResMed导入中的“幻影日期”（1969年12月31日）</li>
+      <li>[修复]当指定字体无效时替换默认字体</li>
+      <li>[修复]将“首选项”度量单位选择更改为“公制”或“英语”</li>
+      <li>[修复]改进了cmH2O编号的显示</li>
+      <li>[修复]在标题栏中正确显示图形引擎</li>
+      <li>[修复]调整“首选项”对话框的大小以适合较小的屏幕</li>
+      <li>[修复]在ResMed导入中将气候控制标签正确设置为手动或自动</li>
+      <li>[修复]将不太有用的信息从标题栏移至“帮助/系统信息”</li>
+      <li>[修复]将“处方设置”更改为“机器设置”消息</li>
+      <li>[修复]改进图标，尤其是较小的图标</li>
+      <li>[修复]纠正了Mac菜单问题</li>
+      <li>[修复]改进调试窗格中的消息</li>
+      <li>[修复]重新组织构建说明和其他清理</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.1-r-1中的更改​​和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>禁用多任务以避免在预加载摘要期间崩溃</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-9中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>挑选最新的翻译文件</li>
+      <li>将徽标更改为带有文本的大O</li>
+      <li>清理零头</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-8中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>挑选最新的翻译文件</li>
+      <li>修复了关于About OSCAR文档的文件名创建问题</li>
+      <li>从“每日”页面中删除了I：E比率的显示</li>
+      <li>更改了一些Mac构建参数</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-7中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>将Qt语言文件用于按钮文本</li>
+      <li>使用“最大化”（带有框架和菜单）而不是“全屏”</li>
+      <li>将Mac目标平台更改为OS-X 10.12 Sierra</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-6中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>在文件迁移期间添加了进度条</li>
+      <li>打开主窗口时将其升起</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-5中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>将帮助索引移至用户可写的位置</li>
+      <li>澄清了文件夹选择和迁移消息</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-4中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队©2019</p>
+    <ul>
+      <li>添加了将旧数据目录迁移到新数据目录的代码</li>
+      <li>删除了“ -d”启动选项和“更改目录”文件菜单项。</li>
+      <li>使用“ --datadir foldername”启动选项来创建或更改数据目录。</li>
+      <li>选项卡和按钮可见性的各种修复，具体取决于配置文件和设备数据的存在。</li>
+    </ul>
+    <p>
+    <b>OSCAR v1.0.0-beta-3中的更改和修复</b>
+    <br />OSCAR的部分内容归OSCAR团队和呼吸暂停社区成员©2019</p>
+    <ul>
+      <li>捐赠和更新功能已被删除</li>
+      <li>词汇表，常见问题解答和Wiki功能尚未实现</li>
+      <li>每日页面左侧面板将调整为较小的尺寸。</li>
+      <li>血氧仪导入在消息框中报告文件错误</li>
+      <li>修正了血氧仪导入的日期和时间问题</li>
+      <li>增加了对新CMS50D +固件版本4.6的支持</li>
+      <li>重新格式化“统计”页面上的“无数据”显示</li>
+      <li>使帮助浏览器正常工作-现在仅存根</li>
+      <li>修补程序，用于构建和调试问题</li>
+    </ul>
+    <p>
+      <b>SleepyHead v1.1.0-不稳定-0</b>
+    </p>
+    <ul>
+      <li>根据GNU通用公共许可证发行</li>
+      <li>版权所有©2011-2018 Mark Watkins</li>
+    </ul>
+  </body>
 </html>

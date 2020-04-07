@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fi">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
@@ -8,268 +8,279 @@
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" />
   </head>
   <body>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-rc-1</span>
-  <br />
-  <ul>
-    <li>[korjaa] AHI- ja käyttöpalkit yleiskaaviokuvissa osoittavat nyt oikean korkeuden, kun oksimetrian käyttö on huomattavasti pidempi kuin CPAP-käyttö.</li>
-    <li>[korjaa] Parannettu Philips Respironics -asetusten tuontia. Erityisesti:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>PC-, S- ja S/T-tilan asetukset näkyvät nyt oikein.</li>
-        <li>AVAPS-asetukset näytetään nyt oikein, mukaan lukien vuorovedenvoimakkuus.</li>
-        <li>Varmuuskopioinnin asetukset on nyt tuotu ja näytetty.</li>
-        <li>CPAP-Check- ja Auto-Trial-tilojen asetukset näkyvät nyt oikein.</li>
-      </ul>
-    </li>
-    <li>[korjaa] Korjaa regressio tervetulosivun painenäytössä</li>
-    <li>[korjaus] Useita kaatumisia on korjattu.</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-beeta-2: ssa</span>
-  <br />Osia OSCAR: sta on 
-  <span style="font-style: italic;">OSCAR-tiimin</span> laatima © 2019-2020
-  <br />
-  <ul>
-    <li>[uusi] Lisää alustava tuki Viatom / Wellue-pulssioksimereille</li>
-    <li>[uusi] Lisää tuki Dreem-hypnogrammeille</li>
-    <li>[uusi] ResMed-kuormaajan laaja uudelleenjärjestely ymmärtämisen ja tulevien parannusten helpottamiseksi</li>
-    <li>[uusi] Muita Philips Respironics -laitteita, testattuja ja täysin tuettuja:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>DreamStation Auto CPAP (500X130)</li>
-      </ul>
-    </li>
-    <li>[uusi] Lisää valikkokohta luodaksesi zip SD-kortille</li>
-    <li>[uusi] Kysy mihin kuvakaappaukset tallennetaan</li>
-    <li>[uusi] Hälyttää käyttäjiä, kun tuonnin aikana tapahtuu odottamattomia Philips Respironics -tietoja</li>
-    <li>[korjaa] Lisää tuki CPAP-moodille DreamStation BiPAP S/T- ja AVAPS-laitteissa</li>
-    <li>[korjata] Zoomauksen purkaminen toimii nyt odotetusti</li>
-    <li>[korjaa] Philips Respironics -lataaja kunnioittaa nyt &quot;ohita vanhat istunnot&quot; -asetusta</li>
-    <li>[korjaa] Philips Respironicsin epäjatkuvien tietojen parempi käsittely</li>
-    <li>[korjaa] Philips Respironicsin joustavuus- ja kostutusasetusten parannettu tuonti</li>
-    <li>[korjaa] Korjaa putken halkaisijan virheellinen näyttö joissakin Philips Respironics -laitteissa</li>
-    <li>[korjaa] Korjaa puuttuva &quot;Bi-Flex&quot; -tarra kaksitasoisille DreamStationille</li>
-    <li>[korjaa] Korjaa kaatumiset ZEO-laturissa</li>
-    <li>[korjaa] Korjaa useita muistivuotoja</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-beeta-1: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>[uusi] Philips Respironics System One -tuen laajamittainen kunnostus, joka ratkaisee kaikki aiemmin ilmoitetut ongelmat.</li>
-    <li>[uusi] Seuraavat Philips Respironics -laitteet on nyt testattu ja täysin tuettu:</li>
-    <li style="list-style: none; display: inline">
-      <ul>
-        <li>REMstar Plus (System One) (251P),</li>
-        <li>REMstar Pro (System One) (450P, 451P),</li>
-        <li>REMstar Auto (System One) (550P, 551P),</li>
-        <li>BiPAP Auto (System One) (750P),</li>
-        <li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
-        <li>REMstar Pro (System One 60 -sarja) (460P, 461P),</li>
-        <li>REMstar Auto (System One 60 -sarja) (560P, 561P, 562P, 560PBT),</li>
-        <li>BiPAP Pro (System One 60 -sarja) (660P),</li>
-        <li>BiPAP Auto (System One 60 -sarja) (760P),</li>
-        <li>BiPAP autoSV Advanced (System One 60 -sarja) (960P, 961P),</li>
-        <li>BiPAP autoSV Advanced 30 (System One 60 -sarja) (960T),</li>
-        <li>BiPAP S/T 30 (System One 60 -sarja) (1061T),</li>
-        <li>BiPAP AVAPS 30 (System One 60 -sarja) (1160P),</li>
-        <li>DreamStation CPAP (200X110),</li>
-        <li>DreamStation CPAP Pro (400X110, 400X150),</li>
-        <li>DreamStation Go (400G110),</li>
-        <li>DreamStation Auto CPAP (500X110, 500X150),</li>
-        <li>DreamStation Go Auto (500G110, 502G150),</li>
-        <li>DreamStation BiPAP Pro (600X110),</li>
-        <li>DreamStation Auto BiPAP (700X110),</li>
-        <li>DreamStation BiPAP autoSV (900X110, 900X120),</li>
-        <li>DreamStation BiPAP S/T 30 (1030X110),</li>
-        <li>DreamStation BiPAP S/T 30 ja AAM (1030X150),</li>
-        <li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
-        <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
-        <li>Huomaa: PC-, S- ja S/T-tilien asetukset näkyvät edelleen väärin.</li>
-      </ul>
-    </li>
-    <li>[uusi] Päivitä käännöstiedostot ja lisää uusia kieliä</li>
-    <li>[uusi] Salli käyttäjän palauttaa Päivittäin-sivun kuvaajajärjestys vakiona (CPAP- ja APAP) tai Advanced-tilaan (ASV- ja AVAPS-tiloissa).</li>
-    <li>[uusi] Lisää asetusasetus sisällyttääksesi sarjanumeron laitteen asetusluetteloon</li>
-    <li>[korjaa] Paikkapäivämäärä, aika ja Oscar-version tiedot raportin alareunassa</li>
-    <li>[korjaa] Päivitä ResMed S9 -laitteiden tunnistetiedot aloitussivulla</li>
-    <li>[korjaa] Tapahtuman numeron oikea muotoilu Päivittäiset tapahtumat -välilehdessä</li>
-    <li>[korjaa] Oikea aikavyöhykesiirto SomnoPose-tuonnissa</li>
-    <li>[korjaa] Näytä edistymispalkki, kun asetat yleiskatsauksen alueelle useita päiviä</li>
-    <li>[korjaa] Tee päivitys-sivun istuntopalkit selkeämmiksi käyttämällä parempia värejä</li>
-    <li>[korjaa] Paranna laiteluetteloa tilastosivulla</li>
-    <li>[korjaa] Raportin paine, kun IPAP-tietoja puuttuu</li>
-    <li>[korjaa] Ota käyttöön Päivitä-painike profiilisivulla</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-testing-4: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>[uusi] Windows-asennusohjelmat tukevat Oscaria, Oscar 32-bittisiä, Oscar (testi) ja Oscar 32-bittisiä (testi)</li>
-    <li>[korjaus] Vapautusrakenteet käyttävät OSCAR-asetusnäppäintä, Testirakenteet käyttävät OSCAR-testiä ja Haararakenteet käyttävät OSCAR-haaraa. Oletustietohakemistot on nimetty samoin.</li>
-    <li>[korjaus] Yleiskatsausongelmat, kun sekä CPAP- että oksimetriatiedot sisällytettiin korjattuina</li>
-    <li>[korjaa] Käännökset päivitettiin kaikille kielille. Espanjan (Meksiko) ja norjan kielet lisätty</li>
-    <li>[korjaa] Kaikki kielet ovat nyt saatavana Macilla</li>
-    <li>[korjaa] Päiväkaavion alaosassa oleva päivämääräpalkki nyt paikallista aikaa, kun rivikohdistinta ei näytetty, ja muotoilua parannettu</li>
-    <li>[korjaa] 100-prosenttinen zoom toimii nyt Yleiskatsaus-sivulla</li>
-    <li>[korjaa] Näytä / Palauta kuvaajat mahdollistaa nyt kaikki kuvaajat ja kaikki tapahtumaliput</li>
-    <li>[korjaa] Kalenteripäivä on nyt muotoiltu kansallisten asetusten mukaan</li>
-    <li>[korjaa] Vaihda painikkeet Päivittäisen sivun istuntoluettelossa ja tapahtumien ja kaavioiden pudotusvalinnat muutettiin valintaruutuihin</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-testing-3: ssa</span>
-  <br />
-  <span style="font-style: italic;">HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>[uusi] DreamStation BiPAP S/T- ja AVAPS-tuulettimia (1030X ja 1130X) tuetaan nyt. Asetuksia ei vielä näytetä oikein, mutta terapiatapahtumien ja kaavioiden pitäisi nyt näkyä oikein.</li>
-    <li>[uusi] Näytä / Nollaa kuvaajat järjestää kuvaajat alkuperäisessä järjestyksessä</li>
-    <li>[korjaa] Alusta päivämäärät kansalliselle alueelle käyttöjärjestelmän ilmoittamalla tavalla</li>
-    <li>[korjaa] Paranna Tilastot-välimuistin päivityksen edistymispalkkia</li>
-    <li>[korjaa] Oikeat laskelmat seitsemän päivän AHI: stä ja vuodonopeudesta tervetulosivulla</li>
-    <li>[korjaa] Selvitä AHI- ja tuntimerkinnät oikean sivupalkin Tietueet-välilehdellä</li>
-    <li>[korjaa] Oikea tuontivirhe, joka johtaa virheellisiin kuluneisiin aikoihin ja mahdottomasti korkeisiin AHI-arvoihin</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-testing-2: ssa</span>
-  <br />
-  <span style="font-style: italic;">HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>[uusi] Näytä edistymispalkki, kun tilastosivun on päivitettävä välimuisti, kun siinä on yli 180 päivää</li>
-    <li>[uutta] romanian kieltä tuetaan</li>
-    <li>[korjaa] Näytä sitoutumistunnus otsikkopalkissa testausta ja beetaversioita varten</li>
-    <li>[korjaa] Näytä BMI-etiketti ja laskettu arvo vain, kun sekä paino että korkeus eivät ole nollia</li>
-    <li>[korjaa] Paranna BMI-näyttöä Daily / Notes -sovelluksissa</li>
-    <li>[korjaa] Oikea profiilivalintaikkuna korkeuden näyttämiseksi mitataan senttimetreinä, ei metreinä, kun yksikköjärjestelmä on metrinen</li>
-    <li>[korjaa] Näytä aina tapahtumaindeksit Päivittäin-sivulla, vaikka jotkut tapahtuman liput olisivat pois päältä</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.1.0-testing-1: ssä</span>
-  <br />
-  <span style="font-style: italic;">HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>[uusi] Tarjoa siirto, jos ei-oletushakemisto on valittu ensimmäisessä käytössä</li>
-    <li>[uusi] Pidä SHIFT-näppäintä painettuna, kun käynnistät OSCAR-ohjelmiston, jotta voit käyttää Software Graphics Engine -sovellusta</li>
-    <li>[uusi] DreamStation BiPAP autoSV (900X) -tuen pitäisi olla nyt valmis</li>
-    <li>[uusi] Parannettu DreamStation-tuki</li>
-    <li>[uusi] Paranna oksimetrien tuontia CM550D +: lle</li>
-    <li>[uusi] Poista tumma tila käytöstä Macilla</li>
-    <li>[uusi] Näytä tilastosivulla tunnit / päivä, jotka muodostavat vaatimustenmukaisuuden</li>
-    <li>[uusi] Parempi kaaviojärjestys päivittäin -sivulla uusille profiileille</li>
-    <li>[uusi] Ohje / Järjestelmätiedot näyttää tietoja OSCAR: sta, käyttöjärjestelmästä ja datan sijainnista</li>
-    <li>[uusi] Siirrä piirakkakaaviota Asetukset-valintaikkunassa Näytä-valikkoon</li>
-    <li>[uusi] piilota ympyräkaavio näytön sieppaamisen yhteydessä</li>
-    <li>[uusi] --datadir-vaihtoehto sallii nyt täysin pätevän nimen Windowsissa</li>
-    <li>[korjaa] Korjaa joitain oksimetrien tuontiasioita</li>
-    <li>[korjaa] Käytä paikallista aikaa UTC: n sijasta oksimetrien tuonnissa</li>
-    <li>[korjaa] Paranna näytön kaappausta Macissa</li>
-    <li>[korjaa] Korjaa kaatumiset CPAP-tietojen uudelleenrakennuksessa, laitteen puhdistaminen</li>
-    <li>[korjaa] Estää kaatumisen, jos otat kuvakaappauksen ennen profiilin avaamista</li>
-    <li>[korjaa] Lisää maskin tuuletusaukoja</li>
-    <li>[korjaa] Oikea istuntopalkki, jos istuntoja ei ole läsnä</li>
-    <li>[korjaa] Tilastosivun kuukausinäkymässä näkyvät oikeat kuukaudet</li>
-    <li>[korjaa] Laske vaatimustenmukaisuus tilastosivulla päivien kokonaismäärän, ei käytettyjen päivien perusteella</li>
-    <li>[korjaa] Paginoi tilastoraportti tulostettaessa</li>
-    <li>[korjaa] Korjaa &quot;fantomipäivä&quot; (31.12.1969) joihinkin ResMed-tuontiin</li>
-    <li>[korjaus] Oletusfontti korvataan, kun määritetty fontti ei ole kelvollinen</li>
-    <li>[korjaa] Muuta Preferences-mittausyksiköiden valinta metriseksi tai englanniksi</li>
-    <li>[korjaa] Paranna cmH2O-numeroiden näyttöä</li>
-    <li>[korjaa] Näytä näytönohjain otsikkopalkissa oikein</li>
-    <li>[korjaa] Säädä Preferences-valintaikkunan koko sopimaan pienemmille näytöille</li>
-    <li>[korjaa] Merkitse ilmastointi manuaalisesti tai automaattisesti oikein ResMed-tuonnissa</li>
-    <li>[korjaa] Siirrä vähemmän hyödyllisiä tietoja otsikkopalkista Ohje / Järjestelmätiedot</li>
-    <li>[korjaa] Muuta &quot;Prescription Settings&quot; -kohtaan &quot;Machine Settings&quot; -viesti</li>
-    <li>[korjaa] Paranna kuvakkeita, etenkin pienempiä</li>
-    <li>[korjaa] Oikeat Mac-valikkoongelmat</li>
-    <li>[korjaa] Paranna virheilmoitusviestejä</li>
-    <li>[korjaa] Järjestä rakennusohjeet ja muut puhdistukset uudelleen</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.1-r-1: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Poista multitasking käytöstä, jotta vältetään kaatuminen yhteenvetojen esikatselun aikana</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-9: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Nyt viimeisimmät käännöstiedostot</li>
-    <li>Vaihdettu logo isoksi O: ksi tekstillä</li>
-    <li>Siivota kertoimet ja päät</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-8: ssa</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Nyt viimeisimmät käännöstiedostot</li>
-    <li>Kiinteän tiedostonimen luominen Tietoja OSCAR-tiedostoista</li>
-    <li>I: E-suhteen näyttö poistettu Päivittäis-sivulta</li>
-    <li>Muutos joitain Mac-rakennusparametreja</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-7: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Käytä painiketekstin Qt-kielitiedostoja</li>
-    <li>Käytä &quot;Suurenna&quot; (kehyksen ja valikon kanssa) &quot;Koko näyttö&quot; -kohdan sijasta</li>
-    <li>Vaihda Mac-kohdealustaksi OS-X 10.12 Sierra</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-6: ssa</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Lisätty edistymispalkki tiedostojen siirron aikana</li>
-    <li>Nosta pääikkunaa avautuessasi</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-5: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Siirtää ohjehakemiston käyttäjän kirjoittamaan sijaintiin</li>
-    <li>Selkeytetty kansion valinta ja siirtoilmoitukset</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-4: ssä</span>
-  <br />Osia OSCAR: sta on © 2019, 
-  <span style="font-style: italic;">OSCAR-tiimi</span>
-  <br />
-  <ul>
-    <li>Lisätty koodi siirtääksesi vanhan tietohakemiston uuteen tietohakemistoon</li>
-    <li>Poistettu &quot;-d&quot; käynnistysvaihtoehto ja &quot;Vaihda hakemisto&quot; -valikkokohta.</li>
-    <li>&nbsp;Luo tai muuta tietohakemistoa käynnistysvaihtoehdon &quot;--datadir kansion nimi&quot; avulla.</li>
-    <li>Eri välilehden ja painikkeiden näkyvyyden korjaukset profiilin ja laitteen tietojen olosuhteista riippuen.</li>
-  </ul>
-  <span style="font-weight: bold;">Muutokset ja korjaukset OSCAR v1.0.0-beeta-3: ssa</span>
-  <br />Osia OSCAR: sta ovat © 2019, 
-  <span style="font-style: italic;">OSCAR-ryhmä</span> ja apneayhteisön jäsenet
-  <br />
-  <ul>
-    <li>Lahjoitus- ja päivitysominaisuudet on poistettu</li>
-    <li>Sanastoa, UKK: ta ja Wiki-ominaisuuksia ei ole vielä toteutettu</li>
-    <li>Päivittäisen sivun vasemman paneelin koko pienenee.</li>
-    <li>Oksimetri tuo raporttitiedostovirheet viestiruutuun</li>
-    <li>Kiinteät päivämäärä- ja aikaongelmat oksimetrin tuonnissa</li>
-    <li>Lisätty tuki uudelle CMS50D + -laiteohjelmistoversiolle 4.6</li>
-    <li>Alustanut &#39;Ei tietoja&#39; -näytön uudelleen Tilastosivulla</li>
-    <li>Sai Ohje-selaimen toimimaan - on vain toistaiseksi</li>
-    <li>Pienet korjaukset rakennus- ja virheenkorjausongelmiin</li>
-  </ul>
-  <span style="font-weight: bold;">SleepyHead v1.1.0-epävakaa-0</span>
-  <br />
-  <ul>
-    <li>Julkaistu GNU General Public License -lisenssillä</li>
-    <li>Tekijänoikeudet © 2011-2018 Mark Watkins</li>
-  </ul></body>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-rc-1: ssä</b>
+    <br />Osia OSCAR: sta on 
+    <i>OSCAR-tiimin</i> laatima © 2019-2020</p>
+    <ul>
+      <li>[korjaa] AHI- ja käyttöpalkit yleiskaaviokuvissa osoittavat nyt oikean korkeuden, kun oksimetrian käyttö on huomattavasti pidempi kuin CPAP-käyttö.</li>
+      <li>[korjaa] Parannettu Philips Respironics -asetusten tuontia. Erityisesti:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>PC-, S- ja S/T-tilan asetukset näkyvät nyt oikein.</li>
+          <li>AVAPS-asetukset näytetään nyt oikein, mukaan lukien vuorovedenvoimakkuus.</li>
+          <li>Varmuuskopioinnin asetukset on nyt tuotu ja näytetty.</li>
+          <li>CPAP-Check- ja Auto-Trial-tilojen asetukset näkyvät nyt oikein.</li>
+        </ul>
+      </li>
+      <li>[korjaa] Korjaa ilmoitettu kesto erittäin pitkille istunnoille DreamStation CPAP- ja BiPAP-laitteilla</li>
+      <li>[uusi] Muita Philips Respironics -laitteita, testattuja ja täysin tuettuja:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation Auto CPAP (500X120)</li>
+        </ul>
+      </li>
+      <li>[korjaa] Korjaa regressio tervetulosivun painenäytössä</li>
+      <li>[korjaus] Useita kaatumisia on korjattu.</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-beeta-2: ssa</b>
+    <br />Osia OSCAR: sta on 
+    <i>OSCAR-tiimin</i> laatima © 2019-2020</p>
+    <ul>
+      <li>[uusi] Lisää alustava tuki Viatom / Wellue-pulssioksimereille</li>
+      <li>[uusi] Lisää tuki Dreem-hypnogrammeille</li>
+      <li>[uusi] ResMed-kuormaajan laaja uudelleenjärjestely ymmärtämisen ja tulevien parannusten helpottamiseksi</li>
+      <li>[uusi] Muita Philips Respironics -laitteita, testattuja ja täysin tuettuja:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>DreamStation Auto CPAP (500X130)</li>
+        </ul>
+      </li>
+      <li>[uusi] Lisää valikkokohta luodaksesi zip SD-kortille</li>
+      <li>[uusi] Kysy mihin kuvakaappaukset tallennetaan</li>
+      <li>[uusi] Hälyttää käyttäjiä, kun tuonnin aikana tapahtuu odottamattomia Philips Respironics -tietoja</li>
+      <li>[korjaa] Lisää tuki CPAP-moodille DreamStation BiPAP S/T- ja AVAPS-laitteissa</li>
+      <li>[korjata] Zoomauksen purkaminen toimii nyt odotetusti</li>
+      <li>[korjaa] Philips Respironics -lataaja kunnioittaa nyt &quot;ohita vanhat istunnot&quot; -asetusta</li>
+      <li>[korjaa] Philips Respironicsin epäjatkuvien tietojen parempi käsittely</li>
+      <li>[korjaa] Philips Respironicsin joustavuus- ja kostutusasetusten parannettu tuonti</li>
+      <li>[korjaa] Korjaa putken halkaisijan virheellinen näyttö joissakin Philips Respironics -laitteissa</li>
+      <li>[korjaa] Korjaa puuttuva &quot;Bi-Flex&quot; -tarra kaksitasoisille DreamStationille</li>
+      <li>[korjaa] Korjaa kaatumiset ZEO-laturissa</li>
+      <li>[korjaa] Korjaa useita muistivuotoja</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-beeta-1: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>[uusi] Philips Respironics System One -tuen laajamittainen kunnostus, joka ratkaisee kaikki aiemmin ilmoitetut ongelmat.</li>
+      <li>[uusi] Seuraavat Philips Respironics -laitteet on nyt testattu ja täysin tuettu:</li>
+      <li style="list-style: none; display: inline">
+        <ul>
+          <li>REMstar Plus (System One) (251P),</li>
+          <li>REMstar Pro (System One) (450P, 451P),</li>
+          <li>REMstar Auto (System One) (550P, 551P),</li>
+          <li>BiPAP Auto (System One) (750P),</li>
+          <li>BiPAP AutoSV Advanced System One (950P, 951P),</li>
+          <li>REMstar Pro (System One 60 -sarja) (460P, 461P),</li>
+          <li>REMstar Auto (System One 60 -sarja) (560P, 561P, 562P, 560PBT),</li>
+          <li>BiPAP Pro (System One 60 -sarja) (660P),</li>
+          <li>BiPAP Auto (System One 60 -sarja) (760P),</li>
+          <li>BiPAP autoSV Advanced (System One 60 -sarja) (960P, 961P),</li>
+          <li>BiPAP autoSV Advanced 30 (System One 60 -sarja) (960T),</li>
+          <li>BiPAP S/T 30 (System One 60 -sarja) (1061T),</li>
+          <li>BiPAP AVAPS 30 (System One 60 -sarja) (1160P),</li>
+          <li>DreamStation CPAP (200X110),</li>
+          <li>DreamStation CPAP Pro (400X110, 400X150),</li>
+          <li>DreamStation Go (400G110),</li>
+          <li>DreamStation Auto CPAP (500X110, 500X150),</li>
+          <li>DreamStation Go Auto (500G110, 502G150),</li>
+          <li>DreamStation BiPAP Pro (600X110),</li>
+          <li>DreamStation Auto BiPAP (700X110),</li>
+          <li>DreamStation BiPAP autoSV (900X110, 900X120),</li>
+          <li>DreamStation BiPAP S/T 30 (1030X110),</li>
+          <li>DreamStation BiPAP S/T 30 ja AAM (1030X150),</li>
+          <li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
+          <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
+          <li>Huomaa: PC-, S- ja S/T-tilien asetukset näkyvät edelleen väärin.</li>
+        </ul>
+      </li>
+      <li>[uusi] Päivitä käännöstiedostot ja lisää uusia kieliä</li>
+      <li>[uusi] Salli käyttäjän palauttaa Päivittäin-sivun kuvaajajärjestys vakiona (CPAP- ja APAP) tai Advanced-tilaan (ASV- ja AVAPS-tiloissa).</li>
+      <li>[uusi] Lisää asetusasetus sisällyttääksesi sarjanumeron laitteen asetusluetteloon</li>
+      <li>[korjaa] Paikkapäivämäärä, aika ja Oscar-version tiedot raportin alareunassa</li>
+      <li>[korjaa] Päivitä ResMed S9 -laitteiden tunnistetiedot aloitussivulla</li>
+      <li>[korjaa] Tapahtuman numeron oikea muotoilu Päivittäiset tapahtumat -välilehdessä</li>
+      <li>[korjaa] Oikea aikavyöhykesiirto SomnoPose-tuonnissa</li>
+      <li>[korjaa] Näytä edistymispalkki, kun asetat yleiskatsauksen alueelle useita päiviä</li>
+      <li>[korjaa] Tee päivitys-sivun istuntopalkit selkeämmiksi käyttämällä parempia värejä</li>
+      <li>[korjaa] Paranna laiteluetteloa tilastosivulla</li>
+      <li>[korjaa] Raportin paine, kun IPAP-tietoja puuttuu</li>
+      <li>[korjaa] Ota käyttöön Päivitä-painike profiilisivulla</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-testing-4: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>[uusi] Windows-asennusohjelmat tukevat Oscaria, Oscar 32-bittisiä, Oscar (testi) ja Oscar 32-bittisiä (testi)</li>
+      <li>[korjaus] Vapautusrakenteet käyttävät OSCAR-asetusnäppäintä, Testirakenteet käyttävät OSCAR-testiä ja Haararakenteet käyttävät OSCAR-haaraa. Oletustietohakemistot on nimetty samoin.</li>
+      <li>[korjaus] Yleiskatsausongelmat, kun sekä CPAP- että oksimetriatiedot sisällytettiin korjattuina</li>
+      <li>[korjaa] Käännökset päivitettiin kaikille kielille. Espanjan (Meksiko) ja norjan kielet lisätty</li>
+      <li>[korjaa] Kaikki kielet ovat nyt saatavana Macilla</li>
+      <li>[korjaa] Päiväkaavion alaosassa oleva päivämääräpalkki nyt paikallista aikaa, kun rivikohdistinta ei näytetty, ja muotoilua parannettu</li>
+      <li>[korjaa] 100-prosenttinen zoom toimii nyt Yleiskatsaus-sivulla</li>
+      <li>[korjaa] Näytä / Palauta kuvaajat mahdollistaa nyt kaikki kuvaajat ja kaikki tapahtumaliput</li>
+      <li>[korjaa] Kalenteripäivä on nyt muotoiltu kansallisten asetusten mukaan</li>
+      <li>[korjaa] Vaihda painikkeet Päivittäisen sivun istuntoluettelossa ja tapahtumien ja kaavioiden pudotusvalinnat muutettiin valintaruutuihin</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-testing-3: ssa</b>
+    <br />
+    <i>HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</i>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>[uusi] DreamStation BiPAP S/T- ja AVAPS-tuulettimia (1030X ja 1130X) tuetaan nyt. Asetuksia ei vielä näytetä oikein, mutta terapiatapahtumien ja kaavioiden pitäisi nyt näkyä oikein.</li>
+      <li>[uusi] Näytä / Nollaa kuvaajat järjestää kuvaajat alkuperäisessä järjestyksessä</li>
+      <li>[korjaa] Alusta päivämäärät kansalliselle alueelle käyttöjärjestelmän ilmoittamalla tavalla</li>
+      <li>[korjaa] Paranna Tilastot-välimuistin päivityksen edistymispalkkia</li>
+      <li>[korjaa] Oikeat laskelmat seitsemän päivän AHI: stä ja vuodonopeudesta tervetulosivulla</li>
+      <li>[korjaa] Selvitä AHI- ja tuntimerkinnät oikean sivupalkin Tietueet-välilehdellä</li>
+      <li>[korjaa] Oikea tuontivirhe, joka johtaa virheellisiin kuluneisiin aikoihin ja mahdottomasti korkeisiin AHI-arvoihin</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-testing-2: ssa</b>
+    <br />
+    <i>HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</i>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>[uusi] Näytä edistymispalkki, kun tilastosivun on päivitettävä välimuisti, kun siinä on yli 180 päivää</li>
+      <li>[uutta] romanian kieltä tuetaan</li>
+      <li>[korjaa] Näytä sitoutumistunnus otsikkopalkissa testausta ja beetaversioita varten</li>
+      <li>[korjaa] Näytä BMI-etiketti ja laskettu arvo vain, kun sekä paino että korkeus eivät ole nollia</li>
+      <li>[korjaa] Paranna BMI-näyttöä Daily / Notes -sovelluksissa</li>
+      <li>[korjaa] Oikea profiilivalintaikkuna korkeuden näyttämiseksi mitataan senttimetreinä, ei metreinä, kun yksikköjärjestelmä on metrinen</li>
+      <li>[korjaa] Näytä aina tapahtumaindeksit Päivittäin-sivulla, vaikka jotkut tapahtuman liput olisivat pois päältä</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.1.0-testing-1: ssä</b>
+    <br />
+    <i>HUOMAUTUS: Käännöksiä EI ole vielä päivitetty näitä muutoksia varten</i>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>[uusi] Tarjoa siirto, jos ei-oletushakemisto on valittu ensimmäisessä käytössä</li>
+      <li>[uusi] Pidä SHIFT-näppäintä painettuna, kun käynnistät OSCAR-ohjelmiston, jotta voit käyttää Software Graphics Engine -sovellusta</li>
+      <li>[uusi] DreamStation BiPAP autoSV (900X) -tuen pitäisi olla nyt valmis</li>
+      <li>[uusi] Parannettu DreamStation-tuki</li>
+      <li>[uusi] Paranna oksimetrien tuontia CM550D +: lle</li>
+      <li>[uusi] Poista tumma tila käytöstä Macilla</li>
+      <li>[uusi] Näytä tilastosivulla tunnit / päivä, jotka muodostavat vaatimustenmukaisuuden</li>
+      <li>[uusi] Parempi kaaviojärjestys päivittäin -sivulla uusille profiileille</li>
+      <li>[uusi] Ohje / Järjestelmätiedot näyttää tietoja OSCAR: sta, käyttöjärjestelmästä ja datan sijainnista</li>
+      <li>[uusi] Siirrä piirakkakaaviota Asetukset-valintaikkunassa Näytä-valikkoon</li>
+      <li>[uusi] piilota ympyräkaavio näytön sieppaamisen yhteydessä</li>
+      <li>[uusi] --datadir-vaihtoehto sallii nyt täysin pätevän nimen Windowsissa</li>
+      <li>[korjaa] Korjaa joitain oksimetrien tuontiasioita</li>
+      <li>[korjaa] Käytä paikallista aikaa UTC: n sijasta oksimetrien tuonnissa</li>
+      <li>[korjaa] Paranna näytön kaappausta Macissa</li>
+      <li>[korjaa] Korjaa kaatumiset CPAP-tietojen uudelleenrakennuksessa, laitteen puhdistaminen</li>
+      <li>[korjaa] Estää kaatumisen, jos otat kuvakaappauksen ennen profiilin avaamista</li>
+      <li>[korjaa] Lisää maskin tuuletusaukoja</li>
+      <li>[korjaa] Oikea istuntopalkki, jos istuntoja ei ole läsnä</li>
+      <li>[korjaa] Tilastosivun kuukausinäkymässä näkyvät oikeat kuukaudet</li>
+      <li>[korjaa] Laske vaatimustenmukaisuus tilastosivulla päivien kokonaismäärän, ei käytettyjen päivien perusteella</li>
+      <li>[korjaa] Paginoi tilastoraportti tulostettaessa</li>
+      <li>[korjaa] Korjaa &quot;fantomipäivä&quot; (31.12.1969) joihinkin ResMed-tuontiin</li>
+      <li>[korjaus] Oletusfontti korvataan, kun määritetty fontti ei ole kelvollinen</li>
+      <li>[korjaa] Muuta Preferences-mittausyksiköiden valinta metriseksi tai englanniksi</li>
+      <li>[korjaa] Paranna cmH2O-numeroiden näyttöä</li>
+      <li>[korjaa] Näytä näytönohjain otsikkopalkissa oikein</li>
+      <li>[korjaa] Säädä Preferences-valintaikkunan koko sopimaan pienemmille näytöille</li>
+      <li>[korjaa] Merkitse ilmastointi manuaalisesti tai automaattisesti oikein ResMed-tuonnissa</li>
+      <li>[korjaa] Siirrä vähemmän hyödyllisiä tietoja otsikkopalkista Ohje / Järjestelmätiedot</li>
+      <li>[korjaa] Muuta &quot;Prescription Settings&quot; -kohtaan &quot;Machine Settings&quot; -viesti</li>
+      <li>[korjaa] Paranna kuvakkeita, etenkin pienempiä</li>
+      <li>[korjaa] Oikeat Mac-valikkoongelmat</li>
+      <li>[korjaa] Paranna virheilmoitusviestejä</li>
+      <li>[korjaa] Järjestä rakennusohjeet ja muut puhdistukset uudelleen</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.1-r-1: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Poista multitasking käytöstä, jotta vältetään kaatuminen yhteenvetojen esikatselun aikana</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-9: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Nyt viimeisimmät käännöstiedostot</li>
+      <li>Vaihdettu logo isoksi O: ksi tekstillä</li>
+      <li>Siivota kertoimet ja päät</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-8: ssa</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Nyt viimeisimmät käännöstiedostot</li>
+      <li>Kiinteän tiedostonimen luominen Tietoja OSCAR-tiedostoista</li>
+      <li>I: E-suhteen näyttö poistettu Päivittäis-sivulta</li>
+      <li>Muutos joitain Mac-rakennusparametreja</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-7: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Käytä painiketekstin Qt-kielitiedostoja</li>
+      <li>Käytä &quot;Suurenna&quot; (kehyksen ja valikon kanssa) &quot;Koko näyttö&quot; -kohdan sijasta</li>
+      <li>Vaihda Mac-kohdealustaksi OS-X 10.12 Sierra</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-6: ssa</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Lisätty edistymispalkki tiedostojen siirron aikana</li>
+      <li>Nosta pääikkunaa avautuessasi</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-5: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, 
+    <i>OSCAR-tiimi</i></p>
+    <ul>
+      <li>Siirtää ohjehakemiston käyttäjän kirjoittamaan sijaintiin</li>
+      <li>Selkeytetty kansion valinta ja siirtoilmoitukset</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-4: ssä</b>
+    <br />Osia OSCAR: sta on © 2019, O 
+    <i>SCAR-tiimi</i></p>
+    <ul>
+      <li>Lisätty koodi siirtääksesi vanhan tietohakemiston uuteen tietohakemistoon</li>
+      <li>Poistettu &quot;-d&quot; käynnistysvaihtoehto ja &quot;Vaihda hakemisto&quot; -valikkokohta.</li>
+      <li>&nbsp;Luo tai muuta tietohakemistoa käynnistysvaihtoehdon &quot;--datadir kansion nimi&quot; avulla.</li>
+      <li>Eri välilehden ja painikkeiden näkyvyyden korjaukset profiilin ja laitteen tietojen olosuhteista riippuen.</li>
+    </ul>
+    <p>
+    <b>Muutokset ja korjaukset OSCAR v1.0.0-beeta-3: ssa</b>
+    <br />Osia OSCAR: sta ovat © 2019, 
+    <i>OSCAR-ryhmä</i> ja apneayhteisön jäsenet</p>
+    <ul>
+      <li>Lahjoitus- ja päivitysominaisuudet on poistettu</li>
+      <li>Sanastoa, UKK: ta ja Wiki-ominaisuuksia ei ole vielä toteutettu</li>
+      <li>Päivittäisen sivun vasemman paneelin koko pienenee.</li>
+      <li>Oksimetri tuo raporttitiedostovirheet viestiruutuun</li>
+      <li>Kiinteät päivämäärä- ja aikaongelmat oksimetrin tuonnissa</li>
+      <li>Lisätty tuki uudelle CMS50D + -laiteohjelmistoversiolle 4.6</li>
+      <li>Alustanut &#39;Ei tietoja&#39; -näytön uudelleen Tilastosivulla</li>
+      <li>Sai Ohje-selaimen toimimaan - on vain toistaiseksi</li>
+      <li>Pienet korjaukset rakennus- ja virheenkorjausongelmiin</li>
+    </ul>
+    <p>
+      <b>SleepyHead v1.1.0-epävakaa-0</b>
+    </p>
+    <ul>
+      <li>Julkaistu GNU General Public License -lisenssillä</li>
+      <li>Tekijänoikeudet © 2011-2018 Mark Watkins</li>
+    </ul>
+  </body>
 </html>
