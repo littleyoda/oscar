@@ -50,23 +50,23 @@ void MinutesAtPressure::SetDay(Day *day)
     Machine * cpap = nullptr;
     if (day) cpap = day->machine(MT_CPAP);
     if (cpap) {
-        EventDataType minpressure = 20;
+        EventDataType minpressure = 30;
         EventDataType maxpressure = 0;
 
-        // look at overall pressure ranges and find the max
+        // look at overall pressure ranges across all days for this machine and find the min and max
+        QList<ChannelID> channels = { CPAP_Pressure, CPAP_EPAP, CPAP_IPAP, CPAP_PressureSet, CPAP_EPAPSet, CPAP_IPAPSet };
         for (const auto d : cpap->day) {
             for (const auto sess : d->sessions) {
-                if (sess->channelExists(CPAP_Pressure)) {
-                    minpressure = qMin(sess->Min(CPAP_Pressure), minpressure);
-                    maxpressure = qMax(sess->Max(CPAP_Pressure), maxpressure);
-                }
-                if (sess->channelExists(CPAP_EPAP)) {
-                    minpressure = qMin(sess->Min(CPAP_EPAP), minpressure);
-                    maxpressure = qMax(sess->Max(CPAP_EPAP), maxpressure);
-                }
-                if (sess->channelExists(CPAP_IPAP)) {
-                    minpressure = qMin(sess->Min(CPAP_IPAP), minpressure);
-                    maxpressure = qMax(sess->Max(CPAP_IPAP), maxpressure);
+                //qDebug() << sess->session();
+                for (auto ch : channels) {
+                    if (sess->channelExists(ch)) {
+                        // Filter out 0 pressures.
+                        if (sess->Min(ch) > 0) {
+                            minpressure = qMin(sess->Min(ch), minpressure);
+                        }
+                        maxpressure = qMax(sess->Max(ch), maxpressure);
+                        //qDebug() << ch << sess->Min(ch) << sess->Max(ch);
+                    }
                 }
             }
         }
@@ -96,7 +96,7 @@ void MinutesAtPressure::SetDay(Day *day)
     m_recalculating = false;
     m_lastminx = 0;
     m_lastmaxx = 0;
-    m_empty = !m_day || !(m_day->channelExists(CPAP_Pressure) || m_day->channelExists(CPAP_EPAP));
+    m_empty = !m_day || !(m_day->channelExists(CPAP_Pressure) || m_day->channelExists(CPAP_EPAP) || m_day->channelExists(CPAP_PressureSet) || m_day->channelExists(CPAP_EPAPSet));
 }
 
  int MinutesAtPressure::minimumHeight()
@@ -312,7 +312,7 @@ void MinutesAtPressure::paint(QPainter &painter, gGraph &graph, const QRegion &r
         label = QObject::tr("Peak %1").arg(qMax(ipap.peaktime, epap.peaktime)/60.0);
         graph.renderText(label, left,  top+5 );
 
-        xstep /= 5.0;
+        xstep /= 5.0;  // each iteration below increments xp 5 times.
         painter.setPen(QPen(ichan.defaultColor(), lineThickness));
 
 
@@ -1043,8 +1043,22 @@ void RecalcMAP::run()
 //        qDebug() << chan.fullname();
 //    }
 
-    ChannelID ipapcode = (day->channelExists(CPAP_IPAP)) ? CPAP_IPAP : CPAP_Pressure;
-    ChannelID epapcode = (day->channelExists(CPAP_EPAP)) ? CPAP_EPAP : 0;
+    QList<ChannelID> ipapChannels = { CPAP_IPAPSet, CPAP_IPAP, CPAP_PressureSet };  // preferred, if present
+    ChannelID ipapcode = CPAP_Pressure;  // default
+    for (auto & ch : ipapChannels) {
+        if (day->channelExists(ch)) {
+            ipapcode = ch;
+            break;
+        }
+    }
+    QList<ChannelID> epapChannels = { CPAP_EPAPSet, CPAP_EPAP };  // preferred, if present
+    ChannelID epapcode = NoChannel;  // default
+    for (auto & ch : epapChannels) {
+        if (day->channelExists(ch)) {
+            epapcode = ch;
+            break;
+        }
+    }
 
     qint64 minx, maxx;
     map->m_graph->graphView()->GetXBounds(minx, maxx);
