@@ -222,7 +222,7 @@ enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
-enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube };
+enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube, HUMID_Passover, HUMID_Error };
 
 ChannelID PRS1_Mode = 0;
 ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
@@ -275,6 +275,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "500X120", 0, 6, "DreamStation Auto CPAP" },
     { "500X130", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
+    { "500X180", 0, 6, "DreamStation Auto CPAP" },
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
@@ -6555,9 +6556,12 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
 
 void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting)
 {
+    bool humidifier_present = true;
     bool humidfixed = false;  // formerly called "Classic"
     bool humidadaptive = false;  // formerly called "System One"
     bool tubepresent = false;
+    bool passover = false;
+    bool error = false;
 
     // Byte 1: 0x90 (no humidifier data), 0x50 (15ht, tube 4/5, humid 4), 0x54 (15ht, tube 5, humid 5) 0x4c (15ht, tube temp 3, humidifier 3)
     // 0x0c (15, tube 3, humid 3, fixed)
@@ -6565,6 +6569,8 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
     // 0b0101 0000 tube 4 and 5, humidifier 4
     // 0b0101 0100 15ht, tube 5, humidifier 5
     // 0b0100 1100 15ht, tube 3, humidifier 3
+    // 0b1011 0000 15, tube 3, humidifier 3, "Error" on humidification chart with asterisk at 4
+    // 0b0111 0000 15, tube 3, humidifier 3, "Passover" on humidification chart with notch at 4
     //   842       = humidifier status
     //      1 84   = humidifier setting
     //          ??
@@ -6574,12 +6580,13 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
     case 0: humidfixed = true; break;  // fixed, ignores tubetemp bits and reports tubetemp=3
     case 1: humidadaptive = true; break;  // adaptive, ignores tubetemp bits and reports tubetemp=3
     case 2: tubepresent = true; break;  // heated tube
-    case 4: break;  // no humidifier, possibly a bit flag rather than integer value, reports tubetemp=3 and humidlevel=3
+    case 3: passover = true; break;  // passover mode (only visible in chart)
+    case 4: humidifier_present = false; break;  // no humidifier, reports tubetemp=3 and humidlevel=3
+    case 5: error = true; break;  // "Error" in humidification chart, reports tubetemp=3 and humidlevel=3 in settings
     default:
         UNEXPECTED_VALUE(humid, "known value");
         break;
     }
-    bool humidifier_present = ((byte1 & 0x80) == 0);
     int humidlevel = (byte1 >> 2) & 7;
 
     // Byte 2: 0xB4 (15ht, tube 5, humid 5), 0xB0 (15ht, tube 5, humid 4), 0x90 (tube 4, humid 4), 0x6C (15ht, tube temp 3, humidifier 3)
@@ -6602,11 +6609,16 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         }
     }
 
+    // TODO: move this up into the switch statement above, given how many modes there now are.
     HumidMode humidmode = HUMID_Fixed;
     if (tubepresent) {
         humidmode = HUMID_HeatedTube;
     } else if (humidadaptive) {
         humidmode = HUMID_Adaptive;
+    } else if (passover) {
+        humidmode = HUMID_Passover;
+    } else if (error) {
+        humidmode = HUMID_Error;
     }
 
     if (add_setting) {
@@ -8813,9 +8825,11 @@ void PRS1Loader::initChannels()
         QObject::tr("PRS1 Humidification Mode"),
         QObject::tr("Humid. Mode"),
         "", LOOKUP, Qt::green));
-    chan->addOption(0, QObject::tr("Fixed (Classic)"));
-    chan->addOption(1, QObject::tr("Adaptive (System One)"));
-    chan->addOption(2, QObject::tr("Heated Tube"));
+    chan->addOption(HUMID_Fixed, QObject::tr("Fixed (Classic)"));
+    chan->addOption(HUMID_Adaptive, QObject::tr("Adaptive (System One)"));
+    chan->addOption(HUMID_HeatedTube, QObject::tr("Heated Tube"));
+    chan->addOption(HUMID_Passover, QObject::tr("Passover"));
+    chan->addOption(HUMID_Error, QObject::tr("Error"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_TubeTemp = 0xe10f, SETTING, MT_CPAP,  SESSION,
         "PRS1TubeTemp",
