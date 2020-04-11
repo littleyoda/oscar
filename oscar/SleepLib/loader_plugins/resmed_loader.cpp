@@ -110,10 +110,10 @@ void ResmedLoader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(RMS9_EPRLevel = 0xe202, SETTING,  MT_CPAP,  SESSION,
         "EPRLevel", QObject::tr("EPR Level"), QObject::tr("Exhale Pressure Relief Level"), QObject::tr("EPR Level"), STR_UNIT_CMH2O, LOOKUP, Qt::blue));
 
-    chan->addOption(0, QObject::tr("Off"));
-//  chan->addOption(1, QObject::tr("1cmH2O"));
-//  chan->addOption(2, QObject::tr("2cmH2O"));
-//  chan->addOption(3, QObject::tr("3cmH2O"));
+    chan->addOption(0, QObject::tr("0cmH20"));
+    chan->addOption(1, QObject::tr("1cmH2O"));
+    chan->addOption(2, QObject::tr("2cmH2O"));
+    chan->addOption(3, QObject::tr("3cmH2O"));
 
 //    RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
 //             RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
