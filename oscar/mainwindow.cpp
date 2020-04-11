@@ -2204,7 +2204,7 @@ void MainWindow::doRecompressEvents()
 {
     if (!p_profile) return;
     ProgressDialog progress(this);
-    progress.setMessage("Recompressing Session Files");
+    progress.setMessage(QObject::tr("Recompressing Session Files"));
     progress.setProgressMax(p_profile->daylist.size());
     QPixmap icon = QPixmap(":/icons/logo-md.png").scaled(64,64);
     progress.setPixmap(icon);
