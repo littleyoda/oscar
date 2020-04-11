@@ -299,7 +299,7 @@ int ResmedLoader::Open(const QString & dirpath)
         return -1;
  
     qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
-#ifdef DEBUG_IDENT
+#ifdef IDENT_DEBUG
     qDebug() << "IdMap size:" << idmap.size();
     foreach ( QString st , idmap.keys() ) {
         qDebug() << "Key" << st << "Value" << idmap[st];
@@ -619,7 +619,9 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                 if (sess->machine() != mach)
                     continue;
 
+#ifdef STR_DEBUG
                 qDebug() << "Adding STR.edf information to session" << sess->session();
+#endif
                 StoreSettings(sess, resday.str);
                 sess->setNoSettings(false);
                 sess->SetChanged(true);
