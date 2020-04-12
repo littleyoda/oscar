@@ -14,6 +14,9 @@ if [[ ${VERSION} == *-* ]]; then
     # Use ~ for prerelease information so that it sorts correctly compared to release
     # versions. See https://www.debian.org/doc/debian-policy/ch-controlfields.html#version
     IFS="-" read -r VERSION PRERELEASE <<< ${VERSION}
+    if [[ ${PRERELEASE} == *rc* ]]; then
+        RC=1
+    fi
     VERSION="${VERSION}~${PRERELEASE}"
 fi
 GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
@@ -26,7 +29,7 @@ pre_rem="rm_usrbin.sh"
 post_rem="clean_rm.sh"
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
-if [ -n ${PRERELEASE} ]; then
+if [ -n ${PRERELEASE} ] && [ ${RC} ] ; then
     appli_name=${appli_name}-test
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
