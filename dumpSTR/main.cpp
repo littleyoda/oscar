@@ -116,9 +116,10 @@ int main(int argc, char *argv[]) {
 
 
     QDate date = str.edfHdr.startdate_orig.date(); // each STR.edf record starts at 12 noon
+    int numDays = str.GetNumDataRecords();
 
-    qDebug() << str.filename << " starts at " << date << " for " << str.GetNumDataRecords() 
-                << " days, with " << str.GetNumSignals() << " signals";
+    qDebug() << str.filename << " starts at " << date << " for " << numDays
+                << " days, ending at " << date.addDays(numDays) << " with " << str.GetNumSignals() << " signals";
 
     if (args.size() == 2) {
         exit(0);
