@@ -20,6 +20,7 @@ if [[ ${VERSION} == *-* ]]; then
     VERSION="${VERSION}~${PRERELEASE}"
 fi
 GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
+echo Version: ${VERSION}
 
 # application name
 appli_name="OSCAR"
@@ -29,7 +30,7 @@ pre_rem="rm_usrbin.sh"
 post_rem="clean_rm.sh"
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
-if [ -n ${PRERELEASE} ] && [ ${RC} ] ; then
+if [[ -n ${PRERELEASE}  &&  ${RC} ]] ; then
     appli_name=${appli_name}-test
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
