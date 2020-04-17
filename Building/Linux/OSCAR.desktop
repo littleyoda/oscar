@@ -10,6 +10,6 @@ Type=Application
 Categories=Education;Science;
 StartupNotify=true
 X-GNOME-UsesNotifications=true
-Name[en_CA]=OSCAR-test
+Name[en_CA]=OSCAR
 
 
