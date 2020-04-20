@@ -12,8 +12,14 @@ SleepyHead was copyright (C) 2011-2018 by Mark Watkins <mark@jedimark.net>
 
 Portions of OSCAR are copyright (c) 2019 by Nightowl Software <michaelnightowl99@gmail.com>
 
-Requirements: (Linux package names are given, Windows and Mac should be similar)
--------------
+Windows Building: See Building\Windows\BUILD-WIN.md
+-----------------
+
+MacOS Building: See Building\Windows\BUILD-mac.md
+---------------
+
+Linux Requirements: 
+-------------------
 Qt5.9 SDK with help (Qt5.9 from http://qt.io/download-open-source recommended)
 The help modules are libqt5help5, qttools5-dev and qttools5-dev-tools
 
@@ -28,8 +34,8 @@ OSX needs Xcode and commandline tools from AppStore,
 
 Windows needs MinGW (in Qt5 SDK) or VC++2015 Community, and a matching set of Qt libraries.
 
-Building:
---------
+Linux Building:
+---------------
 
 Recommend shadow building to not cruft up the source code folder:
 
