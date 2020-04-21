@@ -15,7 +15,7 @@ The following programs and files are required to create Windows installers:
     
 -   Gawk is required. You can use the version included with Git for Windows or install Gawk for Windows from <http://gnuwin32.sourceforge.net/packages/gawk.htm>. The deployment batch file will use the Git for Windows version if gawk.exe is not in your PATH.
     
--   QT Open Source edition from <https://www.qt.io/download>. I use version 5.12.5. More recent versions in the 5.12 series should also work.
+-   QT Open Source edition from <https://www.qt.io/download>. I use the latest patch version in the 5.12 LTS series -- version 5.12.8 at the date this was last updated. More recent versions in the 5.12 series should also work.
 
 **Installing Inno Setup 6**
 
@@ -61,21 +61,19 @@ Go to QT at <https://www.qt.io/download> and download the Open Source edition of
     
 -   Select components:
 
-    -   In QT 5.12.5:
+    -   In QT 5.12.*x*:
 
         -   MinGW 7.3.0 32-bit
-
-        -   MinGW 7.3.0 64-bit
+-   MinGW 7.3.0 64-bit
+        -	Sources
+		-	QT Debug Information Files
 		
-		-	Sources
-
-    -   In Developer and Designer Tools:
-
-        -   QT Creator 4.10.0 CDB Debug
-
-        -   MinGW 7.3.0 32-bit
-
-        -   MinGW 7.3.0 64-bit
+-   In Developer and Designer Tools:
+    
+    -   QT Creator 4.11.2 CDB Debug
+    -   Debugging Tools for Windows
+    -   MinGW 7.3.0 32-bit
+    -   MinGW 7.3.0 64-bit
 
 And complete the installation (this also takes a while).
 
