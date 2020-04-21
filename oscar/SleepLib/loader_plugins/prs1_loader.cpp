@@ -4433,8 +4433,14 @@ bool PRS1DataChunk::ParseSummaryF0V23()
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
                 CHECK_VALUES(data[pos] & 0xF0, 0x60, 0x70);  // TODO: what are these?
-                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
-                    CHECK_VALUES(data[pos] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
+                switch (data[pos] & 0x0F) {
+                    case 0:  // TODO: What is this? It seems to be related to errors.
+                    case 1:  // This is the most frequent value.
+                    case 3:  // TODO: What is this?
+                    case 4:  // This seems to be related to an automatic transition from CPAP to AutoCPAP.
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos] & 0x0F, "[0,1,3,4]");
                 }
             // F0V23 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
                 ok = ParseSettingsF0V23(data, 0x0e);
@@ -4462,12 +4468,17 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
 
-                // seems to be trailing 01 [01 or 02] 83 after equipment off?
-                if (data[pos+2] != 1) {  // This is the usual value.
-                    CHECK_VALUES(data[pos+2], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                switch (data[pos+2]) {
+                    case 0:  // TODO: What is this? It seems to be related to errors.
+                    case 1:  // This is the usual value.
+                    case 3:  // TODO: What is this? This has been seen after 90 sec large leak before turning off.
+                    case 4:  // TODO: What is this? We've seen it once.
+                    case 5:  // This seems to be related to an automatic transition from CPAP to AutoCPAP.
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos+2], "[0,1,3,4,5]");
                 }
                 //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
-                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
                 ParseHumidifierSetting50Series(data[pos+4]);
                 break;
             /*
@@ -4533,7 +4544,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
 
     if (cpapmode == PRS1_MODE_CPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, min_pressure));
-        CHECK_VALUE(max_pressure, 0);
+        //CHECK_VALUE(max_pressure, 0);  // occasionally nonzero, usually seems to be when the next session is AutoCPAP with this max
         CHECK_VALUE(ps, 0);
     } else if (cpapmode == PRS1_MODE_AUTOCPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
@@ -6187,7 +6198,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
     int flexlevel = flex & 0x03;
     if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
     if (this->familyVersion == 2) {
-        CHECK_VALUE(lock, false);  // haven't observed this yet
+        //CHECK_VALUE(lock, false);  // We've seen this set on F0V2, but it doesn't appear on the reports.
     }
 
     if (enabled) {
@@ -6344,7 +6355,7 @@ void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 
     // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
-    if (!humidifier_present) CHECK_VALUE(humidlevel, 0);
+    if (!humidifier_present) CHECK_VALUES(humidlevel, 0, 1);  // maybe nonzero means the humidifier is present but broken?
 }
 
 
