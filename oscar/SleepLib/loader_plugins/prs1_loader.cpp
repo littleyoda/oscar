@@ -280,7 +280,9 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
+    { "600X150", 0, 6, "DreamStation BiPAP Pro" },
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
@@ -6861,6 +6863,18 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                         break;
                     }
                     break;
+                case 0xA0:  // Rise Time
+                    flexmode = FLEX_RiseTime;
+                    switch (cpapmode) {
+                        //case PRS1_MODE_BILEVEL:  probably this too, but we haven't seen it in practice
+                        case PRS1_MODE_AUTOBILEVEL:
+                            break;
+                        default:
+                            HEX(flexmode);
+                            UNEXPECTED_VALUE(cpapmode, "autobilevel");
+                            break;
+                    }
+                    break;
                 case 0xB0:  // P-Flex
                     flexmode = FLEX_PFlex;
                     switch (cpapmode) {
@@ -6888,6 +6902,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 if (flexmode == FLEX_PFlex) {
                     CHECK_VALUE(data[pos], 4);  // No number appears on reports.
+                }
+                if (flexmode == FLEX_RiseTime) {
+                    if (data[pos] < 1 || data[pos] > 3) UNEXPECTED_VALUE(data[pos], "1-3");
                 }
                 break;
             case 0x35:  // Humidifier setting
@@ -7054,8 +7071,8 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 //CHECK_VALUE(data[pos+0xf], 0x00);
                 //CHECK_VALUES(data[pos+0x10], 0x21, 5);  // probably 16-bit value, maybe H count?
                 CHECK_VALUE(data[pos+0x11], 0x00);
-                //CHECK_VALUES(data[pos+0x12], 0x13, 0);  // probably 16-bit value
-                CHECK_VALUE(data[pos+0x13], 0x00);
+                //CHECK_VALUES(data[pos+0x12], 0x13, 0);  // 16-bit value, not sure what
+                //CHECK_VALUE(data[pos+0x13], 0x00);
                 //CHECK_VALUES(data[pos+0x14], 0x05, 0);  // probably 16-bit value, maybe RE count?
                 CHECK_VALUE(data[pos+0x15], 0x00);
                 //CHECK_VALUE(data[pos+0x16], 0x00, 4);  // probably a 16-bit value, PB or FL count?
@@ -8493,7 +8510,11 @@ bool PRS1DataChunk::ReadHeader(QFile & f)
             break;
         }
         if (this->fileVersion < 2 || this->fileVersion > 3) {
-            qWarning() << this->m_path << "@" << hex << this->m_filepos << "Never seen PRS1 header version < 2 or > 3 before";
+            if (this->m_filepos > 0) {
+                qWarning() << this->m_path << "@" << hex << this->m_filepos << "corrupt PRS1 header, skipping remainder of file";
+            } else {
+                qWarning() << this->m_path << "unsupported PRS1 header version" << this->fileVersion;
+            }
             break;
         }
         if (this->htype != PRS1_HTYPE_NORMAL && this->htype != PRS1_HTYPE_INTERVAL) {
