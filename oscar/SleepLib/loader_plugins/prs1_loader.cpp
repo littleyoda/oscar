@@ -8297,9 +8297,9 @@ void PRS1Import::ParseWaveforms()
 
         if (num > 1) {
             float pressure_gain = 0.1F;  // standard pressure gain
-            if ((waveform->family == 5 && waveform->familyVersion == 3) ||
+            if ((waveform->family == 5 && (waveform->familyVersion == 2 || waveform->familyVersion == 3)) ||
                 (waveform->family == 3 && waveform->familyVersion == 6)){
-                // F5V3 and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+                // F5V2, F5V3, and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
                 pressure_gain = 0.125F;  // TODO: this should be parameterized somewhere better, once we have a clear idea of which machines use this
             }
             
