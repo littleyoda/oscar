@@ -4610,8 +4610,10 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x06];
     int ramp_pressure = data[0x07];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
     quint8 flex = data[0x08];
     this->ParseFlexSettingF0V234(flex, cpapmode);
@@ -4721,8 +4723,10 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x08];
     int ramp_pressure = data[0x09];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
     quint8 flex = data[0x0a];
     this->ParseFlexSettingF0V234(flex, cpapmode);
@@ -5383,8 +5387,10 @@ bool PRS1DataChunk::ParseSettingsF3V03(const unsigned char* data, int /*size*/)
     CHECK_VALUE(data[0x14], 0);  // the ramp pressure is probably a 16-bit value like the ones above are
     int ramp_time = data[0x12];
     int ramp_pressure = data[0x13];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
     int pos;
     if (this->familyVersion == 0) {
@@ -6028,8 +6034,11 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x0a];
     int ramp_pressure = data[0x0b];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
+    if (ramp_time > 0) {
+        if (this->familyVersion == 0) UNEXPECTED_VALUE(ramp_time, ">0");  // not yet observed
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
+    }
 
     quint8 flex = data[0x0c];
     this->ParseFlexSettingF5V012(flex, cpapmode);
