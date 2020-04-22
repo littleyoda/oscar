@@ -6036,9 +6036,10 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     int ramp_time = data[0x0a];
     int ramp_pressure = data[0x0b];
     if (ramp_time > 0) {
-        if (this->familyVersion == 0) UNEXPECTED_VALUE(ramp_time, ">0");  // not yet observed
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
+    } else {
+        if (this->familyVersion == 0) UNEXPECTED_VALUE(ramp_time, ">0");  // not yet observed
     }
 
     quint8 flex = data[0x0c];
