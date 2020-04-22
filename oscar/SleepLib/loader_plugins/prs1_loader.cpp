@@ -229,6 +229,7 @@ ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
 ChannelID PRS1_BackupBreathMode = 0, PRS1_BackupBreathRate = 0, PRS1_BackupBreathTi = 0;
 ChannelID PRS1_AutoTrial = 0, PRS1_EZStart = 0, PRS1_RiseTime = 0, PRS1_RiseTimeLock = 0;
+ChannelID PRS1_PeakFlow = 0;
 ChannelID PRS1_VariableBreathing = 0;  // TODO: UNCONFIRMED, but seems to match sample data
 
 QString PRS1Loader::PresReliefLabel() { return QObject::tr(""); }
@@ -1645,7 +1646,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1MinuteVentilationEvent::TYPE, { &CPAP_MinuteVent } },
     { PRS1PatientTriggeredBreathsEvent::TYPE, { &CPAP_PTB } },
     { PRS1TimedBreathEvent::TYPE,       { &PRS1_TimedBreath } },
-    { PRS1FlowRateEvent::TYPE,          { &CPAP_FlowRate } },  // Only reported by F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
+    { PRS1FlowRateEvent::TYPE,          { &PRS1_PeakFlow } },  // Only reported by F3V0 and F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
 
     { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
@@ -9159,6 +9160,15 @@ void PRS1Loader::initChannels()
         QObject::tr("TB"),
         STR_UNIT_Seconds,
         DEFAULT,    QColor("black")));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_PeakFlow = 0x115a, WAVEFORM, MT_CPAP, SESSION,
+        "PRS1PeakFlow",
+        QObject::tr("Peak Flow"),
+        QObject::tr("Peak flow during a 2-minute interval"),
+        QObject::tr("Peak Flow"),
+        STR_UNIT_LPM,
+        DEFAULT,    QColor("red")));
+    chan->setShowInOverview(true);
 }
 
 void PRS1Loader::Register()
