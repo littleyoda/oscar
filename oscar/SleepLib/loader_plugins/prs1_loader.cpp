@@ -394,7 +394,7 @@ const char* PRS1ModelInfo::Name(const QString & model) const
 QMap<const char*,const char*> s_PRS1Series = {
     { "System One 60 Series", ":/icons/prs1_60s.png" },  // needs to come before following substring
     { "System One",           ":/icons/prs1.png" },
-    { "C Series",             ":/icons/prs1.png" },  // TODO
+    { "C Series",             ":/icons/prs1vent.png" },
     { "DreamStation",         ":/icons/dreamstation.png" },
 };
 
