@@ -7954,33 +7954,45 @@ bool PRS1Import::ImportEvents()
         // Then go through each required channel and make sure each eventlist is within
         // the bounds of the corresponding slice, warn if not.
         if (maskOn.count() > 0 && m_event_chunks.count() > 0) {
-            int offset = 0;
-            // F3V3 sometimes omits the (empty) first event chunk if the first slice is
-            // shorter than 2 minutes.
-            // TODO: Revisit for F3V0. F3V0 has been seen to omit other brief chunks, not just the first.
-            // This results in lots of "has events outside of mask-on slice" messages on import, possibly spurious.
+            QVector<SessionSlice> maskOnWithEvents = maskOn;
             if (m_event_chunks.first()->family == 3 && m_event_chunks.first()->familyVersion <= 3) {
-                offset = maskOn.count() - m_event_chunks.count();
-                if (offset < 0) {
-                    qCritical() << sessionid << "has more event chunks than mask-on slices!";
-                    offset = 0;  // avoid out-of-bounds references below
+                // F3V0 and F3V3 sometimes omit (empty) event chunks if the mask-on slice is shorter than 2 minutes.
+                // Specifically, 1061401 and 1061T always do, but 1160P usually doesn't. Sometimes 1160P will omit
+                // just the first event chunk if the first mask-on slice is shorter than 2 minutes.
+                int empty = maskOn.count() - m_event_chunks.count();
+                if (empty > 0) {
+                    // If there are fewer event chunks than mask-on slices, filter the list to have just the
+                    // mask-on slices that we expect to have events.
+                    int skipped = 0;
+                    maskOnWithEvents.clear();
+                    for (auto & slice : maskOn) {
+                        if (skipped < empty && slice.end - slice.start < 120 * 1000L) {
+                            skipped++;
+                            continue;
+                        }
+                        maskOnWithEvents.append(slice);
+                    }
                 }
+            }
+            if (maskOnWithEvents.count() < m_event_chunks.count()) {
+                qWarning() << sessionid << "has more event chunks than mask-on slices!";
             }
             const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(m_event_chunks.first());
             for (auto & e : supported) {
                 if (!PRS1OnDemandChannels.contains(e) && !PRS1NonSliceChannels.contains(e)) {
                     for (auto & pChannelID : PRS1ImportChannelMap[e]) {
                         auto & eventlists = session->eventlist[*pChannelID];
-                        if (eventlists.count() + offset != maskOn.count()) {
-                            qWarning() << sessionid << "has" << maskOn.count() << "mask-on slices, channel"
+                        if (eventlists.count() != maskOnWithEvents.count()) {
+                            qWarning() << sessionid << "has" << maskOnWithEvents.count() << "mask-on slices, channel"
                                 << *pChannelID << "has" << eventlists.count() << "eventlists";
                             continue;
                         }
                         for (int i = 0; i < eventlists.count(); i++) {
                             if (eventlists[i]->count() == 0) continue;  // no first/last timestamp
-                            int j = i + offset;
-                            if (eventlists[i]->first() < maskOn[j].start || eventlists[i]->first() > maskOn[j].end ||
-                                eventlists[i]->last() < maskOn[j].start || eventlists[i]->last() > maskOn[j].end) {
+                            auto & list = eventlists[i];
+                            auto & slice = maskOnWithEvents[i];
+                            if (list->first() < slice.start || list->first() > slice.end ||
+                                list->last() < slice.start || list->last() > slice.end) {
                                 qWarning() << sessionid << "channel" << *pChannelID << "has events outside of mask-on slice" << i;
                             }
                         }
@@ -7988,6 +8000,8 @@ bool PRS1Import::ImportEvents()
                 }
             }
         }
+        // The above is just sanity-checking the results of our import process, that discontinuous
+        // data is fully contained within mask-on slices.
     
         session->m_cnt.clear();
         session->m_cph.clear();
