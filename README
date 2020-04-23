@@ -1,6 +1,6 @@
 OpenSource CPAP Analysis Reporter - OSCAR
 
-OSCAR is a derivative of SleepyHead version 1.1.0,created when that was abandoned by Mark Watkins.
+OSCAR is a derivative of SleepyHead version 1.1.0, created when that was abandoned by Mark Watkins.
 
 SleepyHead was a cross platform, opensource sleep tracking program for reviewing CPAP and Oximetry data,
 which are devices used in the treatment of Sleep Disorders like Obstructive Sleep Apnea. It was released
@@ -10,58 +10,36 @@ SleepyHead was written by Mark Watkins (aka Jedimark), an Australian software de
 
 SleepyHead was copyright (C) 2011-2018 by Mark Watkins <mark@jedimark.net>
 
-Portions of OSCAR are copyright (c) 2019 by Nightowl Software <michaelnightowl99@gmail.com>
+Portions of OSCAR are copyright (c) 2019, 2020 by The OSCAR Team <oscar@oscar-team.org>
 
-Windows Building: See Building\Windows\BUILD-WIN.md
------------------
-
-MacOS Building: See Building\Windows\BUILD-mac.md
----------------
-
-Linux Requirements: 
+Minimum Requirements: 
 -------------------
-Qt5.9 SDK with help (Qt5.9 from http://qt.io/download-open-source recommended)
-The help modules are libqt5help5, qttools5-dev and qttools5-dev-tools
+All systems need either qtcreator or qttools5-dev-tools and a C++ compiler and linker
 
-Qt5.7 SDK without help is possible (for Debian Stretch)
+All systems need the packages qt5-default, libqt5serialport5, libqt5serailport5-dev and libqt5opengl5-dev
 
-All systems need qtcreator or qttools5-dev-tools
+Oscar can be built without the Help module with Qt5.7 SDK (for Debian Stretch, for example)
 
-All systems need qt5-default, libqt5serialport5, libqt5serailport5-dev and libqt5opengl5-dev
+The Help module (The Help texts are incomplete, and language support is incomplete) requires Qt5.9 SDK,
+additionally, the QT modules libqt5help5, qttools5-dev, and qttools5-dev-tools are required.
+
 Linux also needs libudev-dev and zlib1g-dev
+The current pre-built downloads use the distribution-supplied version of Qt.
 
-OSX needs Xcode and commandline tools from AppStore,
+OSX needs an Xcode version that supports the version of Qt to be used, and commandline tools from AppStore,
+The current pre-built downloads use Qt5.12.8.
 
 Windows needs MinGW (in Qt5 SDK) or VC++2015 Community, and a matching set of Qt libraries.
+The current pre-built downloads use Qt5.12.8.
 
-Linux Building:
+Windows Building: See Building/Windows/BUILD-WIN.md
+-----------------
+
+MacOS Building: See Building/Windows/BUILD-mac.md
 ---------------
 
-Recommend shadow building to not cruft up the source code folder:
-
-cd ..
-mkdir build
-cd build
-qmake ../OSCAR-code/OSCAR_QT.pro 
-make
-
-You may need to add a -spec option to qmake to suit your platform. 
-Adding -j4 speeds up the make command on a dual core or greater system.
-
-Building on OSX:
+Linux Building: See Building/Windows/BUILD-Linux-md
 ---------------
-Build as above. If qmake fails with the error:
-Project ERROR: Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild
-edit the file: 
-QT_INSTALL_DIR/5.9/clang_64/mkspecs/features/mac/default_pre.prf
-
-and replace
-/usr/bin/xcrun -find xcrun 2>/dev/null
-
-with
-/usr/bin/xcrun -find xcodebuild 2>/dev/null
-
-
 
 Software Licensing Information
 ------------------------------
