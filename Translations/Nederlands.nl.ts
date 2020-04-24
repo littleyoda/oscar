@@ -371,7 +371,7 @@ In verband met de koppeling met Bladwijzers, lijkt me &apos;Notities&apos; beter
         <translatorcomment>Arie: Als er niets uit komt is het echt fout
 Volgens mij zit er een foutje in deze string: dat eerste ( hoort er niet in dacht ik...
 Oh, dat is een smiley   ;-)</translatorcomment>
-        <translation>BAKSTEEN :(</translation>
+        <translation>BAKSTEEN  :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1707"/>
@@ -900,7 +900,7 @@ Het zit in de bestandsnaam, het streepje is een spatie</translatorcomment>
     <message>
         <location filename="../oscar/mainwindow.ui" line="996"/>
         <source>Report Mode</source>
-        <translation>Soort rapportage</translation>
+        <translation>Soort verslag</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1003"/>
@@ -1236,7 +1236,7 @@ AK: Waar staat dat Welkomst-/Startscherm???
     <message>
         <location filename="../oscar/mainwindow.ui" line="3054"/>
         <source>Print &amp;Report</source>
-        <translation>&amp;Rapport afdrukken</translation>
+        <translation>&amp;Verslag afdrukken</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3059"/>
@@ -1912,7 +1912,7 @@ Dit is GEEN ECHTE BEVEILIGING.</translation>
     <message>
         <location filename="../oscar/newprofile.ui" line="320"/>
         <source>Personal Information (for reports)</source>
-        <translation>Persoonlijke informatie (voor rapporten)</translation>
+        <translation>Persoonlijke informatie (voor verslagen)</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="344"/>
@@ -2110,7 +2110,7 @@ Dit is GEEN ECHTE BEVEILIGING.</translation>
     <message>
         <location filename="../oscar/newprofile.cpp" line="124"/>
         <source>Any reports generated are for PERSONAL USE ONLY, and NOT IN ANY WAY fit for compliance or medical diagnostic purposes.</source>
-        <translation>Alle rapportages zijn voor EIGEN GEBRUIK en kunnen ONDER GEEN VOORWAARDE worden toegepast voor medische diagnostiek.</translation>
+        <translation>Alle verslagen zijn voor EIGEN GEBRUIK en kunnen ONDER GEEN VOORWAARDE worden toegepast voor medische diagnostiek.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="131"/>
@@ -2120,7 +2120,7 @@ Dit is GEEN ECHTE BEVEILIGING.</translation>
     <message>
         <location filename="../oscar/newprofile.cpp" line="111"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>Welkom bij de Open Source CPAP Analysis Reporter</translation>
+        <translation>Welkom bij dè Open Source CPAP-Analyse Rapporteur</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>
@@ -2388,7 +2388,7 @@ Index
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1077"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option will erase the imported session from your oximeter after import has completed. &lt;/p&gt;&lt;p&gt;Use with caution,  because if something goes wrong before OSCAR saves your session, you can&apos;t get it back.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deze optie wist de geimporteerde sessie van uw oxymeter na importeren. &lt;/p&gt;&lt;p&gt;Wees voorzichtig, want als er iets fout gaat vóór opslaan kunt u het niet terugkrijgen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deze optie wist de geïmporteerde sessie van uw oxymeter na importeren. &lt;/p&gt;&lt;p&gt;Wees voorzichtig, want als er iets fout gaat vóór opslaan kunt u het niet terugkrijgen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1106"/>
@@ -3335,7 +3335,7 @@ Werkt vooral bij importeren.</translation>
         <location filename="../oscar/preferencesdialog.ui" line="1869"/>
         <location filename="../oscar/preferencesdialog.ui" line="1948"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Waarschuwing: &lt;/span&gt;Hoewel het  mogelijk is, betekent dit nog niet dat het een goede keuze is &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Waarschuwing: &lt;/span&gt;Hoewel het mogelijk is, betekent dit nog niet dat het een goede keuze is &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1352"/>
@@ -3513,10 +3513,10 @@ OSCAR can import from this compressed backup directory natively..
 To use it with ResScan will require the .gz files to be uncompressed first..</source>
         <translation>Comprimeer ResMed (EDF) back-ups om schijfruimte te besparen.
 Back-ups van EDF bestanden worden opgeslagen in het gz-formaat,
-dat veel gebruikt wordt op Mac &amp; Linux-systemen ..
+dat veel gebruikt wordt op Mac &amp; Linux-systemen.
 
 OSCAR kan hier rechtstreeks uit importeren,
-maar voor ResScan moeten de .gz-bestanden eerst uitgepakt worden..</translation>
+maar voor ResScan moeten de .gz-bestanden eerst uitgepakt worden.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="452"/>
@@ -3775,7 +3775,7 @@ p, li { white-space: pre-wrap; }
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
 
 If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation>Voor deze berekening zijn de gegevens van de totale lek nodig.(Van de Respironics, maar  ResMed  berekent dit zelf al)
+        <translation>Voor deze berekening zijn de gegevens van de totale lek nodig.(Van de Respironics, maar ResMed berekent dit zelf al).
 
 De berekening van de onbedoelde lekkage gebeurt lineair, niet volgens de masker-curve.
 
@@ -3939,7 +3939,7 @@ This also affects printed reports.
 Try it and see if you like it.</source>
         <translation>Anti-aliasing strijkt de grafieken glad.
 Sommige grafieken zien er dan mooier uit.
-Dit is ook van invloed op afgedrukte rapporten.
+Dit is ook van invloed op afgedrukte verslagen.
 
 Probeer het en kijk of U het leuk vindt.</translation>
     </message>
@@ -3951,7 +3951,7 @@ Probeer het en kijk of U het leuk vindt.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2701"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
-        <translation>Zorgt ervoor dat sommige grafieken  er hoekiger uitzien.</translation>
+        <translation>Zorgt ervoor dat sommige grafieken er hoekiger uitzien.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2704"/>
@@ -3981,7 +3981,7 @@ Probeer het en kijk of U het leuk vindt.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2751"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation>Of het serienummer van het apparaat moet worden opgenomen in het rapport met wijzigingen in de apparaat-instellingen</translation>
+        <translation>Of het serienummer van het apparaat moet worden opgenomen in het verslag met wijzigingen in de apparaat-instellingen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2754"/>
@@ -4031,7 +4031,7 @@ Probeer het en kijk of U het leuk vindt.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3080"/>
         <source>Big  Text</source>
-        <translation>Grote tekst</translation>
+        <translation>Grote  tekst</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3147"/>
@@ -5459,7 +5459,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="770"/>
         <source>Flow Limit</source>
-        <translation>Stroomlimiet</translation>
+        <translation>Stroombeperking</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="771"/>
@@ -5916,7 +5916,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="549"/>
         <source>Machine Database Changes</source>
-        <translation>Wijzigingen in de gegevens van het apparaat</translation>
+        <translation>Wijzigingen in de opslag van de apparaatgegevens</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="523"/>
@@ -6148,7 +6148,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="797"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation>De ontwikkelaars hebben een .zip kopie van de kaart nodig en bijbehorende .pdf van de rapportages uit Encore om dit met OSCAR  compatibel te maken.</translation>
+        <translation>De ontwikkelaars hebben een .zip kopie van de kaart nodig en bijbehorende .pdf van de rapportages uit Encore om dit met OSCAR compatibel te maken.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="819"/>
@@ -6163,7 +6163,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="821"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure it works with OSCAR.</source>
-        <translation>Hij likt veel op andere apparaten die wel werken, maar de ontwikkelaars hebben een .zip kopie van de kaart en bijbehorende .pdf van de rapportage uit Encore nodig om dit echt met OSCAR  compatibel te maken.</translation>
+        <translation>Hij likt veel op andere apparaten die wel werken, maar de ontwikkelaars hebben een .zip kopie van de kaart en bijbehorende .pdf van de rapportage uit Encore nodig om dit echt met OSCAR compatibel te maken.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="8735"/>
@@ -6260,7 +6260,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="8850"/>
         <source>Tubing Type Lock</source>
-        <translation>Slangtype  vergrendeling</translation>
+        <translation>Slangtype vergrendeling</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="8851"/>
@@ -6672,17 +6672,17 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/reports.cpp" line="55"/>
         <source>Would you like to show bookmarked areas in this report?</source>
-        <translation>Wilt U gebieden met bladwijzer in dit rapport tonen?</translation>
+        <translation>Wilt U gebieden met bladwijzer in dit verslag tonen?</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="99"/>
         <source>Printing %1 Report</source>
-        <translation>Rapport %1 afdrukken</translation>
+        <translation>Verslag %1 afdrukken</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="133"/>
         <source>%1 Report</source>
-        <translation>%1 Rapport</translation>
+        <translation>%1 Verslag</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="191"/>
@@ -6728,7 +6728,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/reports.cpp" line="357"/>
         <source>Reporting from %1 to %2</source>
-        <translation>Rapport van %1 tot %2</translation>
+        <translation>Verslag van %1 tot %2</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="429"/>
@@ -7551,12 +7551,12 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="221"/>
         <source>Amount of air displaced per breath</source>
-        <translation>Volume lucht ingeademd per ademhaling</translation>
+        <translation>Volume lucht dat per ademhaling wordt ingeademd</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Graph displaying snore volume</source>
-        <translation>Grafiek die de mate van snurken weergeeft</translation>
+        <translation>Grafiek die de luidheid van snurken weergeeft</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
@@ -7576,7 +7576,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Rate of breaths per minute</source>
-        <translation>Aantal ademhalingen</translation>
+        <translation>Aantal ademhalingen per minuut</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
@@ -7606,7 +7606,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="240"/>
         <source>I:E Ratio</source>
-        <translation>I:E verhouding</translation>
+        <translation>I/E verhoudeing</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="240"/>
@@ -7651,12 +7651,12 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
         <source>Flow Limit.</source>
-        <translation>Stroombeperk.</translation>
+        <translation>Stroombep.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Target Minute Ventilation</source>
-        <translation>Doelminuutventilatie</translation>
+        <translation>Doelminuutvolume</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
@@ -8872,7 +8872,7 @@ Regel %2, kolom %3</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="723"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
-        <translation>Dit rapport is opgesteld op %1 door OSCAR %2</translation>
+        <translation>Dit verslag is opgesteld op %1 door OSCAR %2</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="726"/>
@@ -8985,7 +8985,7 @@ Regel %2, kolom %3</translation>
     <message>
         <location filename="../oscar/UpdaterWindow.ui" line="374"/>
         <source>Downloading &amp; Installing Updates</source>
-        <translation>Bestanden worden gedownload &amp; geïnstalleerd</translation>
+        <translation>Bestanden worden gedownload en geïnstalleerd</translation>
     </message>
     <message>
         <location filename="../oscar/UpdaterWindow.ui" line="394"/>
@@ -9060,7 +9060,7 @@ Regel %2, kolom %3</translation>
     <message>
         <location filename="../oscar/welcome.ui" line="128"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>Welkom bij dè &quot;Open Source CPAP Analyse Rapporteur&quot;</translation>
+        <translation>Welkom bij dè &quot;Open Source CPAP-Analyse Rapporteur&quot;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="143"/>
