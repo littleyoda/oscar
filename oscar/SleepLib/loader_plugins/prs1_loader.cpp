@@ -6854,11 +6854,12 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    if (data[pos+1] != 0 && data[pos+1] != 0x80) {
+                    // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
+                    if (data[pos+1] != 0x80) {
+                        // 0x10 seen with EZ-Start enabled, Opti-Start off on 500X110
                         // 0x20 seen with Opti-Start enabled
                         // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
-                        // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
-                        CHECK_VALUES(data[pos+1], 0x20, 0x30);
+                        CHECK_VALUE(data[pos+1] & ~(0x10 | 0x20), 0);
                     }
                 }
                 break;
