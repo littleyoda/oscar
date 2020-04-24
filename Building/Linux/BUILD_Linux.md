@@ -1,3 +1,14 @@
+You will need either qtcreator or qttools5-dev-tools and a C++ compiler and linker
+
+Also, you need the packages qt5-default, libqt5serialport5, libqt5serailport5-dev and libqt5opengl5-dev
+
+Oscar can be built without its Help module with Qt5.7 SDK (for Debian Stretch, for example)
+
+The Help module (The Help texts are incomplete, and language support is incomplete) requires Qt5.9 SDK,
+additionally, the QT modules libqt5help5, qttools5-dev, and qttools5-dev-tools are required.
+
+Linux also needs libudev-dev and zlib1g-dev
+The current pre-built downloads use the distribution-supplied version of Qt.
 
 Shadow building is recommneded to avoid cluttering up the git source code folder.
 
