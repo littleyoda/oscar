@@ -2702,6 +2702,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
+        QString prefix;
         
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
         while (true) {
@@ -2715,6 +2716,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             } else {
                 infostr = datacard.loader->loaderName();
             }
+            prefix = infostr;
             folder += QDir::separator() + infostr + ".zip";
 
             filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
@@ -2747,7 +2749,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
             prog->setMessage(tr("Creating zip..."));
-            ok = z.AddDirectory(cardPath, prog);
+            ok = z.AddDirectory(cardPath, prefix, prog);
             z.Close();
         } else {
             qWarning() << "Unable to open" << filename;
@@ -2807,7 +2809,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
             if (ok) {
                 debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
                 debugLog.close();
-                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                QString debugLogName = oscarData.dirName() + "/" + QFileInfo(debugLog).fileName();
                 ok = z.AddFile(debugLog.fileName(), debugLogName);
                 if (!ok) {
                     qWarning() << "Unable to add debug log to zip!";
