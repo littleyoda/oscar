@@ -628,8 +628,38 @@ void MainWindow::CloseProfile()
 }
 
 
+#ifdef Q_OS_WIN
+void MainWindow::TestWindowsOpenGL()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5,4,0)) && !defined(BROKEN_OPENGL_BUILD)
+    // 1. Set OpenGLCompatibilityCheck=1 in registry.
+    QSettings settings;
+    settings.setValue("OpenGLCompatibilityCheck", true);
+
+    // 2. See if OpenGL crashes the application:
+    QOpenGLWidget* gl;
+    gl = new QOpenGLWidget(ui->tabWidget);
+    ui->tabWidget->insertTab(2, gl, "");
+    //qDebug() << __LINE__;
+    QCoreApplication::processEvents();  // this triggers the SIGSEGV
+    //qDebug() << __LINE__;
+    // If we get here, OpenGL won't crash the application.
+    ui->tabWidget->removeTab(2);
+    delete gl;
+
+    // 3. Remove OpenGLCompatibilityCheck from the registry upon success.
+    settings.remove("OpenGLCompatibilityCheck");
+#endif
+}
+#endif
+
+
 void MainWindow::Startup()
 {
+#ifdef Q_OS_WIN
+    TestWindowsOpenGL();
+#endif
+
     for (auto & loader : GetLoaders()) {
         loader->setParent(this);
     }

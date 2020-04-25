@@ -289,6 +289,18 @@ int main(int argc, char *argv[]) {
             forcedEngine = "Software Engine forced by --legacy command line switch";
         }
     }
+#ifdef Q_OS_WIN
+    bool oscarCrashed = false;
+    if (settings.value("OpenGLCompatibilityCheck").toBool()) {
+        oscarCrashed = true;
+    }
+    if (oscarCrashed) {
+        settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
+        forcedEngine = "Software Engine forced by previous crash";
+        settings.remove("OpenGLCompatibilityCheck");
+    }
+#endif
+
     GFXEngine gfxEngine = (GFXEngine)qMin((unsigned int)settings.value(GFXEngineSetting, (unsigned int)GFX_OpenGL).toUInt(), (unsigned int)MaxGFXEngine);
     switch (gfxEngine) {
     case 0:  // GFX_OpenGL
@@ -305,6 +317,15 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QStringList args = a.arguments();
 
+#ifdef Q_OS_WIN
+    // QMessageBox must come after the application is created. The graphics engine has to be selected before.
+    if (oscarCrashed) {
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                             QObject::tr("OSCAR crashed due to an incompatibility with your graphics hardware.") + "\n\n" +
+                             QObject::tr("To resolve this, OSCAR has reverted to a slower but more compatible method of drawing."),
+                             QMessageBox::Ok);
+    }
+#endif
 
     QString lastlanguage = settings.value(LangSetting, "").toString();
     if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'
