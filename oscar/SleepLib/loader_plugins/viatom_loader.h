@@ -44,12 +44,13 @@ class ViatomLoader : public MachineLoader
   //Machine *CreateMachine();
 
   protected:
-    Machine* OpenFile(const QString & filename);
+    bool OpenFile(const QString & filename);
     void SaveSessionToDatabase(Session* session);
 
     void AddEvent(ChannelID channel, qint64 t, EventDataType value);
     void EndEventList(ChannelID channel, qint64 t);
 
+    Machine* m_mach;
     Session* m_session;
     qint64 m_step;
     QHash<ChannelID, EventList*> m_importChannels;
