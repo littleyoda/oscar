@@ -385,7 +385,27 @@ int ResmedLoader::Open(const QString & dirpath)
 
     if ( ! importing_backups ) {
         BackupSTRfiles( strpath, path, strBackupPath, info, STRmap );
-    }       // end if not importing the backup files
+    } else {    // get the STR file that is in the BACKUP folder
+        ResMedEDFInfo * stredf = new ResMedEDFInfo();
+        if ( stredf->Open(strpath) ) {
+            if ( stredf->Parse()) {
+                if (stredf->serialnumber != info.serial) {
+                    qDebug() << "Identification.tgt Serial number doesn't match" << strpath;
+                    delete stredf;
+                } else {    // passed the tests, stuff it into the map
+                    QDate date = stredf->edfHdr.startdate_orig.date();
+                    long int days = stredf->GetNumDataRecords();
+                    STRmap[date] = STRFile(strpath, days, stredf);
+                }
+            } else {
+                qDebug() << "Faulty STR file" << strpath;
+                delete stredf;
+            }
+        } else {
+           qDebug() << "Failed to open" << strpath;
+           delete stredf;
+        }
+    } // end if not importing the backup files
 #ifdef STR_DEBUG
     qDebug() << "STRmap size is " << STRmap.size();
 #endif
@@ -396,6 +416,7 @@ int ResmedLoader::Open(const QString & dirpath)
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
     QFileInfoList flist = dir.entryInfoList();
     QDate date;
+    long int days;
 #ifdef STR_DEBUG
     qDebug() << "STR_Backup folder size is " << flist.size();
 #endif
@@ -407,11 +428,13 @@ int ResmedLoader::Open(const QString & dirpath)
             continue;
         if (!(filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
             continue;
-        QString datestr = filename.section("STR-",-1).section(".edf",0,0)+"01";
-        date = QDate().fromString(datestr,"yyyyMMdd");
-
-        if (STRmap.contains(date))
-            continue;
+//      QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
+//      date = QDate().fromString(datestr,"yyyyMMdd");
+//
+//      if (STRmap.contains(date)) {
+//          qDebug() << filename << "overlaps anothor STR file";
+//          continue;
+//      }
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(fi.canonicalFilePath() ) ) {
@@ -433,10 +456,18 @@ int ResmedLoader::Open(const QString & dirpath)
 
         // Don't trust the filename date, pick the one inside the STR...
         date = stredf->edfHdr.startdate_orig.date();
-        qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
-        date = QDate(date.year(), date.month(), 1);
+        days = stredf->GetNumDataRecords();
+        if (STRmap.contains(date)) {        // Keep the longer of the two STR files
+            qDebug() << filename << "overlaps" << STRmap[date].filename;
+            if (days <= STRmap[date].days) {
+                qDebug() << "Skipping" << filename;
+                continue;
+            }
+        }
+//      qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
+//      date = QDate(date.year(), date.month(), 1);
 
-        STRmap[date] = STRFile(fi.canonicalFilePath(), stredf);
+        STRmap[date] = STRFile(fi.canonicalFilePath(), days, stredf);
     }       // end for walking the STR_Backup directory
 #ifdef STR_DEBUG
     qDebug() << "STRmap size is now " << STRmap.size();
@@ -1462,13 +1493,17 @@ void BackupSTRfiles( const QString strpath, const QString path, const QString st
             continue;
         }
         QDate date = stredf->edfHdr.startdate_orig.date();
-        date = QDate(date.year(), date.month(), 1);
+        long int days = stredf->GetNumDataRecords();
+//      date = QDate(date.year(), date.month(), 1);
         if (STRmap.contains(date)) {
             qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd");
-            delete stredf;
-            continue;
+            if ( days <= STRmap[date].days ) {
+                qDebug() << "Skipping" << filename;
+                delete stredf;
+                continue;
+            }
         }
-        QString newname = "STR-"+date.toString("yyyyMM")+"."+STR_ext_EDF;
+        QString newname = "STR-"+date.toString("yyyyMMdd")+"."+STR_ext_EDF;
 
         QString backupfile = strBackupPath+"/"+newname;
 
@@ -1502,7 +1537,7 @@ void BackupSTRfiles( const QString strpath, const QString path, const QString st
         else
             QFile::exists(gzfile) && QFile::remove(gzfile);
 
-        STRmap[date] = STRFile(backupfile, stredf);
+        STRmap[date] = STRFile(backupfile, days, stredf);
     }   // end for walking the STR files list
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
