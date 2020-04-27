@@ -27,6 +27,14 @@ gPressureChart::gPressureChart()
     addCalc(CPAP_EPAP, ST_90P);
     addCalc(CPAP_IPAP, ST_MID);
     addCalc(CPAP_IPAP, ST_90P);
+
+    // PRS1 reports pressure adjustments instead of observed pressures on some machines
+    addCalc(CPAP_PressureSet, ST_MID);
+    addCalc(CPAP_PressureSet, ST_90P);
+    addCalc(CPAP_EPAPSet, ST_MID);
+    addCalc(CPAP_EPAPSet, ST_90P);
+    addCalc(CPAP_IPAPSet, ST_MID);
+    addCalc(CPAP_IPAPSet, ST_90P);
 }
 
 
@@ -60,27 +68,50 @@ void gPressureChart::afterDraw(QPainter &, gGraph &graph, QRectF rect)
     if (getCalc(CPAP_Pressure)->cnt > 0) {
         presstr.append(channelRange(CPAP_Pressure, STR_TR_CPAP));
     }
+
     if (getCalc(CPAP_PressureMin, ST_SETMIN)->cnt > 0) {
+        // TODO: If using machines from different manufacturers in an overview,
+        // the below may not accurately find the APAP pressure channel for all
+        // days; but it only affects the summary label at the top.
+        ChannelID pressure = CPAP_Pressure;
+        if (getCalc(CPAP_PressureSet, ST_MID)->cnt > 0) {
+            pressure = CPAP_PressureSet;
+        }
         presstr.append(QString("%1 %2/%3/%4/%5").
                 arg(STR_TR_APAP).
                 arg(getCalc(CPAP_PressureMin, ST_SETMIN)->min,0,'f',1).
-                arg(getCalc(CPAP_Pressure, ST_MID)->mid(), 0, 'f', 1).
-                arg(getCalc(CPAP_Pressure, ST_90P)->mid(),0,'f',1).
+                arg(getCalc(pressure, ST_MID)->mid(), 0, 'f', 1).
+                arg(getCalc(pressure, ST_90P)->mid(),0,'f',1).
                 arg(getCalc(CPAP_PressureMax, ST_SETMAX)->max, 0, 'f', 1));
 
     }
+
     if (getCalc(CPAP_EPAP)->cnt > 0) {
-        presstr.append(channelRange(CPAP_EPAP, STR_TR_EPAP));
+        // See CPAP_PressureSet note above.
+        ChannelID epap = CPAP_EPAP;
+        if (getCalc(CPAP_EPAPSet, ST_MID)->cnt > 0) {
+            epap = CPAP_EPAPSet;
+        }
+        presstr.append(channelRange(epap, STR_TR_EPAP));
     }
+
     if (getCalc(CPAP_IPAP)->cnt > 0) {
-        presstr.append(channelRange(CPAP_IPAP, STR_TR_IPAP));
+        // See CPAP_PressureSet note above.
+        ChannelID ipap = CPAP_IPAP;
+        if (getCalc(CPAP_IPAPSet, ST_MID)->cnt > 0) {
+            ipap = CPAP_IPAPSet;
+        }
+        presstr.append(channelRange(ipap, STR_TR_IPAP));
     }
+
     if (getCalc(CPAP_EPAPLo)->cnt > 0) {
         presstr.append(channelRange(CPAP_EPAPLo, STR_TR_EPAPLo));
     }
+
     if (getCalc(CPAP_IPAPHi)->cnt > 0) {
         presstr.append(channelRange(CPAP_IPAPHi, STR_TR_IPAPHi));
     }
+
     QString txt = presstr.join(" ");
     graph.renderText(txt, rect.left(), rect.top()-5*graph.printScaleY(), 0);
 
@@ -142,11 +173,17 @@ void gPressureChart::populate(Day * day, int idx)
 
     if (mode == MODE_CPAP) {
         addSlice(CPAP_Pressure);
+
     } else if (mode == MODE_APAP) {
         addSlice(CPAP_PressureMin, ST_SETMIN);
         if (!day->summaryOnly()) {
-            addSlice(CPAP_Pressure, ST_MID);
-            addSlice(CPAP_Pressure, ST_90P);
+            // Handle PRS1 pressure adjustments reported separately from average (EPAP) pressure
+            ChannelID pressure = CPAP_Pressure;
+            if (m_day->channelHasData(CPAP_PressureSet)) {
+                pressure = CPAP_PressureSet;
+            }
+            addSlice(pressure, ST_MID);
+            addSlice(pressure, ST_90P);
         }
         addSlice(CPAP_PressureMax, ST_SETMAX);
 
@@ -163,15 +200,26 @@ void gPressureChart::populate(Day * day, int idx)
             addSlice(CPAP_IPAP, ST_90P);
         }
         addSlice(CPAP_IPAPHi);
+
     } else if ((mode == MODE_BILEVEL_AUTO_VARIABLE_PS) || (mode == MODE_ASV_VARIABLE_EPAP)) {
         addSlice(CPAP_EPAPLo);
         if (!day->summaryOnly()) {
-            addSlice(CPAP_EPAP, ST_MID);
-            addSlice(CPAP_EPAP, ST_90P);
-            addSlice(CPAP_IPAP, ST_MID);
-            addSlice(CPAP_IPAP, ST_90P);
+            // Handle PRS1 pressure adjustments when reported instead of observed pressures
+            ChannelID epap = CPAP_EPAP;
+            if (m_day->channelHasData(CPAP_EPAPSet)) {
+                epap = CPAP_EPAPSet;
+            }
+            ChannelID ipap = CPAP_IPAP;
+            if (m_day->channelHasData(CPAP_IPAPSet)) {
+                ipap = CPAP_IPAPSet;
+            }
+            addSlice(epap, ST_MID);
+            addSlice(epap, ST_90P);
+            addSlice(ipap, ST_MID);
+            addSlice(ipap, ST_90P);
         }
         addSlice(CPAP_IPAPHi);
+
     } else if (mode == MODE_ASV) {
         addSlice(CPAP_EPAP);
         if (!day->summaryOnly()) {
@@ -179,5 +227,8 @@ void gPressureChart::populate(Day * day, int idx)
             addSlice(CPAP_IPAP, ST_90P);
         }
         addSlice(CPAP_IPAPHi);
+
+    } else if (mode == MODE_AVAPS) {
+        // TODO
     }
 }
