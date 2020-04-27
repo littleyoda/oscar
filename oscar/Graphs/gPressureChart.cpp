@@ -98,27 +98,35 @@ QString gPressureChart::channelRange(ChannelID code, const QString & label)
 }
 
 
-void gPressureChart::addSlice(float value, ChannelID code, SummaryType type)
+void gPressureChart::addSlice(ChannelID code, SummaryType type)
 {
-    SummaryCalcItem* calc = getCalc(code, type);
-    float height = value - m_height;
+    float value = 0;
     QString label;
 
     switch (type) {
     case ST_SETMIN:
+        value = m_day->settings_min(code);
+        label = schema::channel[code].label();
+        break;
     case ST_SETMAX:
+        value = m_day->settings_max(code);
         label = schema::channel[code].label();
         break;
     case ST_MID:
+        value = m_day->calcMiddle(code);
         label = m_day->calcMiddleLabel(code);
         break;
     case ST_90P:
+        value = m_day->calcPercentile(code);
         label = m_day->calcPercentileLabel(code);
         break;
     default:
         qWarning() << "Unsupported summary type in gPressureChart";
         break;
     }
+
+    SummaryCalcItem* calc = getCalc(code, type);
+    float height = value - m_height;
 
     m_slices->append(SummaryChartSlice(calc, value, height, label, calc->color));
     m_height += height;
@@ -133,80 +141,43 @@ void gPressureChart::populate(Day * day, int idx)
     m_height = 0;
 
     if (mode == MODE_CPAP) {
-        float pr = day->settings_max(CPAP_Pressure);
-        addSlice(pr, CPAP_Pressure);
+        addSlice(CPAP_Pressure);
     } else if (mode == MODE_APAP) {
-        float min = day->settings_min(CPAP_PressureMin);
-        float max = day->settings_max(CPAP_PressureMax);
-
-        addSlice(min, CPAP_PressureMin, ST_SETMIN);
+        addSlice(CPAP_PressureMin, ST_SETMIN);
         if (!day->summaryOnly()) {
-            float med = day->calcMiddle(CPAP_Pressure);
-            addSlice(med, CPAP_Pressure, ST_MID);
-
-            float p90 = day->calcPercentile(CPAP_Pressure);
-            addSlice(p90, CPAP_Pressure, ST_90P);
+            addSlice(CPAP_Pressure, ST_MID);
+            addSlice(CPAP_Pressure, ST_90P);
         }
-        addSlice(max, CPAP_PressureMax, ST_SETMAX);
+        addSlice(CPAP_PressureMax, ST_SETMAX);
 
     } else if (mode == MODE_BILEVEL_FIXED) {
-        float epap = day->settings_max(CPAP_EPAP);
-        float ipap = day->settings_max(CPAP_IPAP);
-
-        addSlice(epap, CPAP_EPAP);
-        addSlice(ipap, CPAP_IPAP);
+        addSlice(CPAP_EPAP);
+        addSlice(CPAP_IPAP);
 
     } else if (mode == MODE_BILEVEL_AUTO_FIXED_PS) {
-        float epap = day->settings_max(CPAP_EPAPLo);
-        float ipap = day->settings_max(CPAP_IPAPHi);
-
-        addSlice(epap, CPAP_EPAPLo);
+        addSlice(CPAP_EPAPLo);
         if (!day->summaryOnly()) {
-
-            float e50 = day->calcMiddle(CPAP_EPAP);
-            addSlice(e50, CPAP_EPAP, ST_MID);
-
-            float e90 = day->calcPercentile(CPAP_EPAP);
-            addSlice(e90, CPAP_EPAP, ST_90P);
-
-            float i50 = day->calcMiddle(CPAP_IPAP);
-            addSlice(i50, CPAP_IPAP, ST_MID);
-
-            float i90 = day->calcPercentile(CPAP_IPAP);
-            addSlice(i90, CPAP_IPAP, ST_90P);
+            addSlice(CPAP_EPAP, ST_MID);
+            addSlice(CPAP_EPAP, ST_90P);
+            addSlice(CPAP_IPAP, ST_MID);
+            addSlice(CPAP_IPAP, ST_90P);
         }
-        addSlice(ipap, CPAP_IPAPHi);
+        addSlice(CPAP_IPAPHi);
     } else if ((mode == MODE_BILEVEL_AUTO_VARIABLE_PS) || (mode == MODE_ASV_VARIABLE_EPAP)) {
-        float epap = day->settings_max(CPAP_EPAPLo);
-
-        addSlice(epap, CPAP_EPAPLo);
+        addSlice(CPAP_EPAPLo);
         if (!day->summaryOnly()) {
-            float e50 = day->calcMiddle(CPAP_EPAP);
-            addSlice(e50, CPAP_EPAP, ST_MID);
-
-            float e90 = day->calcPercentile(CPAP_EPAP);
-            addSlice(e90, CPAP_EPAP, ST_90P);
-
-            float i50 = day->calcMiddle(CPAP_IPAP);
-            addSlice(i50, CPAP_IPAP, ST_MID);
-
-            float i90 = day->calcPercentile(CPAP_IPAP);
-            addSlice(i90, CPAP_IPAP, ST_90P);
+            addSlice(CPAP_EPAP, ST_MID);
+            addSlice(CPAP_EPAP, ST_90P);
+            addSlice(CPAP_IPAP, ST_MID);
+            addSlice(CPAP_IPAP, ST_90P);
         }
-        float ipap = day->settings_max(CPAP_IPAPHi);
-        addSlice(ipap, CPAP_IPAPHi);
+        addSlice(CPAP_IPAPHi);
     } else if (mode == MODE_ASV) {
-        float epap = day->settings_max(CPAP_EPAP);
-
-        addSlice(epap, CPAP_EPAP);
+        addSlice(CPAP_EPAP);
         if (!day->summaryOnly()) {
-            float i50 = day->calcMiddle(CPAP_IPAP);
-            addSlice(i50, CPAP_IPAP, ST_MID);
-
-            float i90 = day->calcPercentile(CPAP_IPAP);
-            addSlice(i90, CPAP_IPAP, ST_90P);
+            addSlice(CPAP_IPAP, ST_MID);
+            addSlice(CPAP_IPAP, ST_90P);
         }
-        float ipap = day->settings_max(CPAP_IPAPHi);
-        addSlice(ipap, CPAP_IPAPHi);
+        addSlice(CPAP_IPAPHi);
     }
 }

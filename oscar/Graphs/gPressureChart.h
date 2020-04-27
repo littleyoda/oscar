@@ -48,7 +48,7 @@ public:
 protected:
     SummaryCalcItem* getCalc(ChannelID code, SummaryType type = ST_SETMAX);
     QString channelRange(ChannelID code, const QString & label);
-    void addSlice(float value, ChannelID code, SummaryType type = ST_SETMAX);
+    void addSlice(ChannelID code, SummaryType type = ST_SETMAX);
 
     QHash<ChannelID,QHash<SummaryType,int>> m_calcs;
 
