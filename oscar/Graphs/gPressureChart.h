@@ -44,6 +44,11 @@ public:
     }
 
     virtual int addCalc(ChannelID code, SummaryType type);
+
+protected:
+    SummaryCalcItem* getCalc(ChannelID code, SummaryType type = ST_SETMAX);
+
+    QHash<ChannelID,QHash<SummaryType,int>> m_calcs;
 };
 
 #endif // GPRESSURECHART_H
