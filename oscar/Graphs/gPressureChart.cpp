@@ -98,107 +98,115 @@ QString gPressureChart::channelRange(ChannelID code, const QString & label)
 }
 
 
+void gPressureChart::addSlice(float value, ChannelID code, SummaryType type)
+{
+    SummaryCalcItem* calc = getCalc(code, type);
+    float height = value - m_height;
+    QString label;
+
+    switch (type) {
+    case ST_SETMIN:
+    case ST_SETMAX:
+        label = schema::channel[code].label();
+        break;
+    case ST_MID:
+        label = m_day->calcMiddleLabel(code);
+        break;
+    case ST_90P:
+        label = m_day->calcPercentileLabel(code);
+        break;
+    default:
+        qWarning() << "Unsupported summary type in gPressureChart";
+        break;
+    }
+
+    m_slices->append(SummaryChartSlice(calc, value, height, label, calc->color));
+    m_height += height;
+}
+
+
 void gPressureChart::populate(Day * day, int idx)
 {
-    float tmp;
     CPAPMode mode =  (CPAPMode)(int)qRound(day->settings_wavg(CPAP_Mode));
-    QVector<SummaryChartSlice> & slices = cache[idx];
-    SummaryCalcItem* calc;
+    m_day = day;
+    m_slices = &cache[idx];
+    m_height = 0;
 
     if (mode == MODE_CPAP) {
-        calc = getCalc(CPAP_Pressure);
         float pr = day->settings_max(CPAP_Pressure);
-        slices.append(SummaryChartSlice(calc, pr, pr, schema::channel[CPAP_Pressure].label(), calc->color));
+        addSlice(pr, CPAP_Pressure);
     } else if (mode == MODE_APAP) {
         float min = day->settings_min(CPAP_PressureMin);
         float max = day->settings_max(CPAP_PressureMax);
 
-        tmp = min;
-
-        slices.append(SummaryChartSlice(getCalc(CPAP_PressureMin, ST_SETMIN), min, min, schema::channel[CPAP_PressureMin].label(), getCalc(CPAP_PressureMin, ST_SETMIN)->color));
+        addSlice(min, CPAP_PressureMin, ST_SETMIN);
         if (!day->summaryOnly()) {
             float med = day->calcMiddle(CPAP_Pressure);
-            slices.append(SummaryChartSlice(getCalc(CPAP_Pressure, ST_MID), med, med - tmp, day->calcMiddleLabel(CPAP_Pressure), getCalc(CPAP_Pressure, ST_MID)->color));
-            tmp += med - tmp;
+            addSlice(med, CPAP_Pressure, ST_MID);
 
             float p90 = day->calcPercentile(CPAP_Pressure);
-            slices.append(SummaryChartSlice(getCalc(CPAP_Pressure, ST_90P), p90, p90 - tmp, day->calcPercentileLabel(CPAP_Pressure), getCalc(CPAP_Pressure, ST_90P)->color));
-            tmp += p90 - tmp;
+            addSlice(p90, CPAP_Pressure, ST_90P);
         }
-        slices.append(SummaryChartSlice(getCalc(CPAP_PressureMax, ST_SETMAX), max, max - tmp, schema::channel[CPAP_PressureMax].label(), getCalc(CPAP_PressureMax, ST_SETMAX)->color));
+        addSlice(max, CPAP_PressureMax, ST_SETMAX);
 
     } else if (mode == MODE_BILEVEL_FIXED) {
         float epap = day->settings_max(CPAP_EPAP);
         float ipap = day->settings_max(CPAP_IPAP);
 
-        slices.append(SummaryChartSlice(getCalc(CPAP_EPAP), epap, epap, schema::channel[CPAP_EPAP].label(), getCalc(CPAP_EPAP)->color));
-        slices.append(SummaryChartSlice(getCalc(CPAP_IPAP), ipap, ipap - epap, schema::channel[CPAP_IPAP].label(), getCalc(CPAP_IPAP)->color));
+        addSlice(epap, CPAP_EPAP);
+        addSlice(ipap, CPAP_IPAP);
 
     } else if (mode == MODE_BILEVEL_AUTO_FIXED_PS) {
         float epap = day->settings_max(CPAP_EPAPLo);
-        tmp = epap;
         float ipap = day->settings_max(CPAP_IPAPHi);
 
-        slices.append(SummaryChartSlice(getCalc(CPAP_EPAPLo), epap, epap, schema::channel[CPAP_EPAPLo].label(), getCalc(CPAP_EPAPLo)->color));
+        addSlice(epap, CPAP_EPAPLo);
         if (!day->summaryOnly()) {
 
             float e50 = day->calcMiddle(CPAP_EPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_EPAP, ST_MID), e50, e50 - tmp, day->calcMiddleLabel(CPAP_EPAP), getCalc(CPAP_EPAP, ST_MID)->color));
-            tmp += e50 - tmp;
+            addSlice(e50, CPAP_EPAP, ST_MID);
 
             float e90 = day->calcPercentile(CPAP_EPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_EPAP, ST_90P), e90, e90 - tmp, day->calcPercentileLabel(CPAP_EPAP), getCalc(CPAP_EPAP, ST_90P)->color));
-            tmp += e90 - tmp;
+            addSlice(e90, CPAP_EPAP, ST_90P);
 
             float i50 = day->calcMiddle(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_MID), i50, i50 - tmp, day->calcMiddleLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_MID)->color));
-            tmp += i50 - tmp;
+            addSlice(i50, CPAP_IPAP, ST_MID);
 
             float i90 = day->calcPercentile(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_90P), i90, i90 - tmp, day->calcPercentileLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_90P)->color));
-            tmp += i90 - tmp;
+            addSlice(i90, CPAP_IPAP, ST_90P);
         }
-        slices.append(SummaryChartSlice(getCalc(CPAP_IPAPHi), ipap, ipap - tmp, schema::channel[CPAP_IPAPHi].label(), getCalc(CPAP_IPAPHi)->color));
+        addSlice(ipap, CPAP_IPAPHi);
     } else if ((mode == MODE_BILEVEL_AUTO_VARIABLE_PS) || (mode == MODE_ASV_VARIABLE_EPAP)) {
         float epap = day->settings_max(CPAP_EPAPLo);
-        tmp = epap;
 
-        slices.append(SummaryChartSlice(getCalc(CPAP_EPAPLo), epap, epap, schema::channel[CPAP_EPAPLo].label(), getCalc(CPAP_EPAPLo)->color));
+        addSlice(epap, CPAP_EPAPLo);
         if (!day->summaryOnly()) {
             float e50 = day->calcMiddle(CPAP_EPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_EPAP, ST_MID), e50, e50 - tmp, day->calcMiddleLabel(CPAP_EPAP), getCalc(CPAP_EPAP, ST_MID)->color));
-            tmp += e50 - tmp;
+            addSlice(e50, CPAP_EPAP, ST_MID);
 
             float e90 = day->calcPercentile(CPAP_EPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_EPAP, ST_90P), e90, e90 - tmp, day->calcPercentileLabel(CPAP_EPAP), getCalc(CPAP_EPAP, ST_90P)->color));
-            tmp += e90 - tmp;
+            addSlice(e90, CPAP_EPAP, ST_90P);
 
             float i50 = day->calcMiddle(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_MID), i50, i50 - tmp, day->calcMiddleLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_MID)->color));
-            tmp += i50 - tmp;
+            addSlice(i50, CPAP_IPAP, ST_MID);
 
             float i90 = day->calcPercentile(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_90P), i90, i90 - tmp, day->calcPercentileLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_90P)->color));
-            tmp += i90 - tmp;
+            addSlice(i90, CPAP_IPAP, ST_90P);
         }
         float ipap = day->settings_max(CPAP_IPAPHi);
-        slices.append(SummaryChartSlice(getCalc(CPAP_IPAPHi), ipap, ipap - tmp, schema::channel[CPAP_IPAPHi].label(), getCalc(CPAP_IPAPHi)->color));
+        addSlice(ipap, CPAP_IPAPHi);
     } else if (mode == MODE_ASV) {
         float epap = day->settings_max(CPAP_EPAP);
-        tmp = epap;
 
-        slices.append(SummaryChartSlice(getCalc(CPAP_EPAP), epap, epap, schema::channel[CPAP_EPAP].label(), getCalc(CPAP_EPAP)->color));
+        addSlice(epap, CPAP_EPAP);
         if (!day->summaryOnly()) {
             float i50 = day->calcMiddle(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_MID), i50, i50 - tmp, day->calcMiddleLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_MID)->color));
-            tmp += i50 - tmp;
+            addSlice(i50, CPAP_IPAP, ST_MID);
 
             float i90 = day->calcPercentile(CPAP_IPAP);
-            slices.append(SummaryChartSlice(getCalc(CPAP_IPAP, ST_90P), i90, i90 - tmp, day->calcPercentileLabel(CPAP_IPAP), getCalc(CPAP_IPAP, ST_90P)->color));
-            tmp += i90 - tmp;
+            addSlice(i90, CPAP_IPAP, ST_90P);
         }
         float ipap = day->settings_max(CPAP_IPAPHi);
-        slices.append(SummaryChartSlice(getCalc(CPAP_IPAPHi), ipap, ipap - tmp, schema::channel[CPAP_IPAPHi].label(), getCalc(CPAP_IPAPHi)->color));
+        addSlice(ipap, CPAP_IPAPHi);
     }
-
 }
