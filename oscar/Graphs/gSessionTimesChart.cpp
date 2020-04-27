@@ -102,6 +102,17 @@ void gSummaryChart::SetDay(Day *unused_day)
 //QMap<QDate, int> gSummaryChart::dayindex;
 //QList<Day *> gSummaryChart::daylist;
 
+int gSummaryChart::addCalc(ChannelID code, SummaryType type, QColor color)
+{
+    calcitems.append(SummaryCalcItem(code, type, color));
+    return calcitems.size() - 1;  // return the index of the newly appended calc
+}
+
+int gSummaryChart::addCalc(ChannelID code, SummaryType type)
+{
+    return addCalc(code, type, schema::channel[code].defaultColor());
+}
+
 
 bool gSummaryChart::keyPressEvent(QKeyEvent *event, gGraph *graph)
 {

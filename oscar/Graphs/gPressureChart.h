@@ -43,6 +43,7 @@ public:
         return day->getCPAPModeStr() + "\n" + day->getPressureSettings() + gSummaryChart::tooltipData(day, idx);
     }
 
+    virtual int addCalc(ChannelID code, SummaryType type);
 };
 
 #endif // GPRESSURECHART_H

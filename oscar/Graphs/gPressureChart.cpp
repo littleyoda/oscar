@@ -14,21 +14,30 @@ gPressureChart::gPressureChart()
 {
 
     // Do not reorder these!!! :P
-    addCalc(CPAP_Pressure, ST_SETMAX, schema::channel[CPAP_Pressure].defaultColor());    // 00
-    addCalc(CPAP_Pressure, ST_MID, schema::channel[CPAP_Pressure].defaultColor());       // 01
-    addCalc(CPAP_Pressure, ST_90P, brighten(schema::channel[CPAP_Pressure].defaultColor(), 1.33f)); // 02
-    addCalc(CPAP_PressureMin, ST_SETMIN, schema::channel[CPAP_PressureMin].defaultColor());  // 03
-    addCalc(CPAP_PressureMax, ST_SETMAX, schema::channel[CPAP_PressureMax].defaultColor());  // 04
+    addCalc(CPAP_Pressure, ST_SETMAX);     // 00
+    addCalc(CPAP_Pressure, ST_MID);        // 01
+    addCalc(CPAP_Pressure, ST_90P);        // 02
+    addCalc(CPAP_PressureMin, ST_SETMIN);  // 03
+    addCalc(CPAP_PressureMax, ST_SETMAX);  // 04
 
-    addCalc(CPAP_EPAP, ST_SETMAX, schema::channel[CPAP_EPAP].defaultColor());      // 05
-    addCalc(CPAP_IPAP, ST_SETMAX, schema::channel[CPAP_IPAP].defaultColor());      // 06
-    addCalc(CPAP_EPAPLo, ST_SETMAX, schema::channel[CPAP_EPAPLo].defaultColor());    // 07
-    addCalc(CPAP_IPAPHi, ST_SETMAX, schema::channel[CPAP_IPAPHi].defaultColor());    // 08
+    addCalc(CPAP_EPAP, ST_SETMAX);      // 05
+    addCalc(CPAP_IPAP, ST_SETMAX);      // 06
+    addCalc(CPAP_EPAPLo, ST_SETMAX);    // 07
+    addCalc(CPAP_IPAPHi, ST_SETMAX);    // 08
 
-    addCalc(CPAP_EPAP, ST_MID, schema::channel[CPAP_EPAP].defaultColor());         // 09
-    addCalc(CPAP_EPAP, ST_90P, brighten(schema::channel[CPAP_EPAP].defaultColor(),1.33f));         // 10
-    addCalc(CPAP_IPAP, ST_MID, schema::channel[CPAP_IPAP].defaultColor());         // 11
-    addCalc(CPAP_IPAP, ST_90P, brighten(schema::channel[CPAP_IPAP].defaultColor(),1.33f));         // 12
+    addCalc(CPAP_EPAP, ST_MID);         // 09
+    addCalc(CPAP_EPAP, ST_90P);         // 10
+    addCalc(CPAP_IPAP, ST_MID);         // 11
+    addCalc(CPAP_IPAP, ST_90P);         // 12
+}
+
+int gPressureChart::addCalc(ChannelID code, SummaryType type) {
+    QColor color = schema::channel[code].defaultColor();
+    if (type == ST_90P) {
+        color = brighten(color, 1.33f);
+    }
+    int index = gSummaryChart::addCalc(code, type, color);
+    return index;
 }
 
 void gPressureChart::afterDraw(QPainter &, gGraph &graph, QRectF rect)

@@ -189,13 +189,8 @@ public:
         cache.clear();
     }
 
-
-    void addCalc(ChannelID code, SummaryType type, QColor color) {
-        calcitems.append(SummaryCalcItem(code, type, color));
-    }
-    void addCalc(ChannelID code, SummaryType type) {
-        calcitems.append(SummaryCalcItem(code, type, schema::channel[code].defaultColor()));
-    }
+    virtual int addCalc(ChannelID code, SummaryType type, QColor color);
+    virtual int addCalc(ChannelID code, SummaryType type);
 
     virtual Layer * Clone() {
         gSummaryChart * sc = new gSummaryChart(m_label, m_machtype);
