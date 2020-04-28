@@ -194,6 +194,7 @@ class Session
                     t += slice.end - slice.start;
                 }
             }
+            t = t / 3600000.0;
         }
         return t;
     }
