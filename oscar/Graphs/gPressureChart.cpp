@@ -229,6 +229,11 @@ void gPressureChart::populate(Day * day, int idx)
         addSlice(CPAP_IPAPHi);
 
     } else if (mode == MODE_AVAPS) {
-        // TODO
+        addSlice(CPAP_EPAP);
+        if (!day->summaryOnly()) {
+            addSlice(CPAP_IPAP, ST_MID);
+            addSlice(CPAP_IPAP, ST_90P);
+        }
+        addSlice(CPAP_IPAPHi);
     }
 }
