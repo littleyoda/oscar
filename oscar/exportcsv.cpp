@@ -181,7 +181,7 @@ void ExportCSV::on_exportButton_clicked()
     countlist.append(CPAP_UserFlag2);
     countlist.append(CPAP_PressurePulse);
 
-    QVector<ChannelID> statChannels = { CPAP_Pressure, CPAP_IPAP, CPAP_EPAP, CPAP_FLG };
+    QVector<ChannelID> statChannels = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet, CPAP_EPAP, CPAP_EPAPSet, CPAP_FLG };
     for (auto & chan : statChannels) {
         avglist.append(chan);
         p90list.append(chan);
