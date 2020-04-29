@@ -313,10 +313,10 @@ public:
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
 
     //! \brief Takes the parsed list of Flow/MaskPressure waveform chunks and adds them to the database
-    void ParseWaveforms();
+    void ImportWaveforms();
 
     //! \brief Takes the parsed list of oximeter waveform chunks and adds them to the database.
-    void ParseOximetry();
+    void ImportOximetry();
 
     //! \brief Adds a single channel of continuous oximetry data to the database, splitting on any missing samples.
     void ImportOximetryChannel(ChannelID channel, QByteArray & data, quint64 ti, qint64 dur);

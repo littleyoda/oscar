@@ -8149,7 +8149,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
 }
 
 
-void PRS1Import::ParseOximetry()
+void PRS1Import::ImportOximetry()
 {
     int size = oximetry.size();
 
@@ -8205,10 +8205,10 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
     quint64 start_ti;
     int start_i;
     
-    // Split eventlist on invalid values (255)
+    // Split eventlist on invalid values (254-255)
     for (int i=0; i < data.size(); i++) {
         unsigned char value = raw[i];
-        bool valid = (value != 255);
+        bool valid = (value < 254);
 
         if (valid) {
             if (pending_samples == false) {
@@ -8218,7 +8218,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
             }
             
             if (channel == OXI_Pulse) {
-                if (value > 200) UNEXPECTED_VALUE(value, "<= 200 bpm");
+                if (value > 240) UNEXPECTED_VALUE(value, "<= 240 bpm");
             } else {
                 if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
             }
@@ -8242,7 +8242,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
 }
 
 
-void PRS1Import::ParseWaveforms()
+void PRS1Import::ImportWaveforms()
 {
     int size = waveforms.size();
     quint64 s1, s2;
@@ -8429,25 +8429,16 @@ bool PRS1Import::ParseSession(void)
             // Parse .005 Waveform files
             waveforms = ReadWaveformData(m_wavefiles, "Waveform");
 
-            if (session->eventlist.contains(CPAP_FlowRate)) {
-                if (waveforms.size() > 0) {
-                    // Delete anything called "Flow rate" picked up in the events file if high-resolution data is present
-                    // TODO: Is this still used anywhere?
-                    qWarning() << session->session() << "Deleting flow rate events due to flow rate waveform data";
-                    session->destroyEvent(CPAP_FlowRate);
-                }
-            }
-
-            // Extract raw data into channels.
-            ParseWaveforms();
+            // Extract and import raw data into channels.
+            ImportWaveforms();
         }
 
         if (!m_oxifiles.isEmpty()) {
             // Parse .006 Waveform files
             oximetry = ReadWaveformData(m_oxifiles, "Oximetry");
 
-            // Extract raw data into channels.
-            ParseOximetry();
+            // Extract and import raw data into channels.
+            ImportOximetry();
         }
 
         save = true;
