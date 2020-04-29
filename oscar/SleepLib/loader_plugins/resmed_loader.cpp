@@ -395,6 +395,7 @@ int ResmedLoader::Open(const QString & dirpath)
                 } else {    // passed the tests, stuff it into the map
                     QDate date = stredf->edfHdr.startdate_orig.date();
                     long int days = stredf->GetNumDataRecords();
+                    qDebug() << strpath << "starts at" << date << "for" << days;
                     STRmap[date] = STRFile(strpath, days, stredf);
                 }
             } else {
@@ -428,7 +429,7 @@ int ResmedLoader::Open(const QString & dirpath)
             continue;
         if (!(filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
             continue;
-//      QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
+        QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
 //      date = QDate().fromString(datestr,"yyyyMMdd");
 //
 //      if (STRmap.contains(date)) {
@@ -458,7 +459,7 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << filename << "overlaps" << STRmap[date].filename;
+            qDebug() << filename << "overlaps" << STRmap[date].filename << "for" << days;
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << filename;
                 continue;
@@ -467,6 +468,7 @@ int ResmedLoader::Open(const QString & dirpath)
 //      qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
 //      date = QDate(date.year(), date.month(), 1);
 
+        qDebug() << fi.canonicalFilePath() << "starts at" << date << "for" << days;
         STRmap[date] = STRFile(fi.canonicalFilePath(), days, stredf);
     }       // end for walking the STR_Backup directory
 #ifdef STR_DEBUG
@@ -484,9 +486,21 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
+        QString fullname = it.value().filename;
 #ifdef STR_DEBUG
-        qDebug() << "Deleting edf of" << it.value().filename;
+        qDebug() << "Deleting edf of" << fullname;
 #endif
+        QString datepart = fullname.section("STR-",-1).section(".edf",0,0);
+        if (datepart.size() == 6 ) {    // old style name, change to full date
+            QFile str(fullname);
+            QString newdate = it.key().toString("yyyyMMdd");
+            QString newName = fullname.replace(datepart, newdate);
+            qDebug() << "Renaming" << it.value().filename << "to" << newName;
+              if ( str.rename(newName) )
+                  qDebug() << "Success";
+              else 
+                  qDebug() << "Failed";
+        }
         delete it.value().edf;
     }
 #ifdef STR_DEBUG
@@ -562,6 +576,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
     sessionCount = 0;
     emit updateMessage(QObject::tr("Importing Sessions..."));
+
+    // Walk down the resDay list
     runTasks();
     int num_new_sessions = sessionCount;
 
@@ -714,7 +730,7 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
         filename = fi.fileName();
 
         int len = filename.length();
-        if (len == 4) {                    // when does this happen?
+        if (len == 4) {                    // This is a year folder in BackupDATALOG
             filename.toInt(&ok);
             if ( ! ok ) {
                 qDebug() << "Skipping directory - bad 4-letter name" << filename;
@@ -867,7 +883,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     yearstr.toInt(&ok, 10);
 
     if (!ok) {
-        qDebug() << "Invalid EDF filename given to ResMedLoader::backup()" << fullname;
+        qDebug() << "Invalid EDF filename given to ResMedLoader::Backup()" << fullname;
         return "";
     }
 
@@ -925,10 +941,11 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
         ResMedEDFInfo & str = *file.edf;
-        totalRecs += str.GetNumDataRecords();
+        int days = str.GetNumDataRecords();
+        totalRecs += days;
 #ifdef STR_DEBUG        
         qDebug() << "STR file is" << file.filename;
-        qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << totalRecs << "days";
+        qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << days << "days";
 #endif
     }
 
@@ -948,7 +965,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         QDate lastDay = date.addDays(size-1);
 
 #ifdef STR_DEBUG        
-        qDebug() << "Parsing" << strfile << date.toString() << size << str.GetNumSignals();
+        qDebug() << "Processing" << strfile << date.toString() << size << str.GetNumSignals();
         qDebug() << "Last day is" << lastDay;
 #endif
 
@@ -1414,6 +1431,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             qDebug() << "Finished" << date.toString();
 #endif
         }
+#ifdef STR_DEBUG
+        qDebug() << "Finished" << strfile;
+#endif
     }
 #ifdef STR_DEBUG
     qDebug() << "Finished ProcessSTR";
