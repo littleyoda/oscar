@@ -982,12 +982,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // All samples exhibiting this behavior are DreamStations.
                     task->m_wavefiles.append(fi.canonicalFilePath());
                 } else if (ext == 6) {
-                    if (!task->oxifile.isEmpty()) {
-                        qDebug() << sid << "already has oximetry file" << relativePath(task->oxifile)
-                            << "skipping" << relativePath(fi.canonicalFilePath());
-                        continue;
-                    }
-                    task->oxifile = fi.canonicalFilePath();
+                    // Oximetry data can also be split into multiple files, see waveform
+                    // comment above.
+                    task->m_oxifiles.append(fi.canonicalFilePath());
                 }
 
                 continue;
@@ -8413,7 +8410,7 @@ bool PRS1Import::ParseSession(void)
         
         // If are no mask-on slices, then there's not any meaningful event or waveform data for the session.
         // If there's no no event or waveform data, mark this session as a summary.
-        if (session->m_slices.count() == 0 || (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && oxifile.isEmpty())) {
+        if (session->m_slices.count() == 0 || (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && m_oxifiles.isEmpty())) {
             session->setSummaryOnly(true);
             save = true;
             break;  // and skip the occasional fragmentary event or waveform data
@@ -8430,13 +8427,26 @@ bool PRS1Import::ParseSession(void)
 
         if (!m_wavefiles.isEmpty()) {
             // Parse .005 Waveform files
-            ImportWaveforms();
+            waveforms = ReadWaveformData(m_wavefiles, "Waveform");
+
+            if (session->eventlist.contains(CPAP_FlowRate)) {
+                if (waveforms.size() > 0) {
+                    // Delete anything called "Flow rate" picked up in the events file if high-resolution data is present
+                    // TODO: Is this still used anywhere?
+                    qWarning() << session->session() << "Deleting flow rate events due to flow rate waveform data";
+                    session->destroyEvent(CPAP_FlowRate);
+                }
+            }
+
+            // Extract raw data into channels.
+            ParseWaveforms();
         }
 
-        if (!oxifile.isEmpty()) {
-            // Parse .006 Waveform file
-            oximetry = loader->ParseFile(oxifile);
-            oximetry = CoalesceWaveformChunks(oximetry);
+        if (!m_oxifiles.isEmpty()) {
+            // Parse .006 Waveform files
+            oximetry = ReadWaveformData(m_oxifiles, "Oximetry");
+
+            // Extract raw data into channels.
             ParseOximetry();
         }
 
@@ -8447,16 +8457,17 @@ bool PRS1Import::ParseSession(void)
 }
 
 
-void PRS1Import::ImportWaveforms()
+QList<PRS1DataChunk *> PRS1Import::ReadWaveformData(QList<QString> & files, const char* label)
 {
     QMap<qint64,PRS1DataChunk *> waveform_chunks;
+    QList<PRS1DataChunk *> result;
 
-    if (m_wavefiles.count() > 1) {
-        qDebug() << session->session() << "Waveform data split across multiple files";
+    if (files.count() > 1) {
+        qDebug() << session->session() << label << "data split across multiple files";
     }
     
-    for (auto & f : m_wavefiles) {
-        // Parse a single .005 Waveform file
+    for (auto & f : files) {
+        // Parse a single .005 or .006 waveform file
         QList<PRS1DataChunk *> file_chunks = loader->ParseFile(f);
         for (auto & chunk : file_chunks) {
             PRS1DataChunk* previous = waveform_chunks[chunk->timestamp];
@@ -8471,21 +8482,12 @@ void PRS1Import::ImportWaveforms()
     }
     
     // Get the list of pointers sorted by timestamp.
-    waveforms = waveform_chunks.values();
+    result = waveform_chunks.values();
 
     // Coalesce contiguous waveform chunks into larger chunks.
-    waveforms = CoalesceWaveformChunks(waveforms);
+    result = CoalesceWaveformChunks(result);
 
-    if (session->eventlist.contains(CPAP_FlowRate)) {
-        if (waveforms.size() > 0) {
-            // Delete anything called "Flow rate" picked up in the events file if real data is present
-            qWarning() << session->session() << "Deleting flow rate events due to flow rate waveform data";
-            session->destroyEvent(CPAP_FlowRate);
-        }
-    }
-
-    // Extract raw data into channels.
-    ParseWaveforms();
+    return result;
 }
 
 

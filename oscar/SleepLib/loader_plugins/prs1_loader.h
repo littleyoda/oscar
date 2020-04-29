@@ -295,7 +295,7 @@ public:
 
 
     QList<QString> m_wavefiles;
-    QString oxifile;
+    QList<QString> m_oxifiles;
 
     //! \brief Imports .000 files for bricks.
     bool ImportCompliance();
@@ -306,8 +306,8 @@ public:
     //! \brief Imports the .002 event file(s).
     bool ImportEvents();
 
-    //! \brief Imports the .005 event file(s).
-    void ImportWaveforms();
+    //! \brief Reads the .005 or .006 waveform file(s).
+    QList<PRS1DataChunk *> ReadWaveformData(QList<QString> & files, const char* label);
 
     //! \brief Coalesce contiguous .005 or .006 waveform chunks from the file into larger chunks for import.
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
