@@ -305,6 +305,7 @@ SOURCES += \
     SleepLib/serialoximeter.cpp \
     SleepLib/loader_plugins/md300w1_loader.cpp \
     Graphs/gSessionTimesChart.cpp \
+    Graphs/gPressureChart.cpp \
     logger.cpp \
     SleepLib/machine_common.cpp \
     SleepLib/loader_plugins/weinmann_loader.cpp \
@@ -383,6 +384,7 @@ HEADERS  += \
     SleepLib/serialoximeter.h \
     SleepLib/loader_plugins/md300w1_loader.h \
     Graphs/gSessionTimesChart.h \
+    Graphs/gPressureChart.h \
     logger.h \
     SleepLib/loader_plugins/weinmann_loader.h \
     Graphs/gdailysummary.h \
