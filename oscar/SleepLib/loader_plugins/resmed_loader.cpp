@@ -462,6 +462,7 @@ int ResmedLoader::Open(const QString & dirpath)
             qDebug() << filename << "overlaps" << STRmap[date].filename << "for" << days;
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << filename;
+                delete stredf;
                 continue;
             }
         }
