@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [Qt 5.12.5] (the current LTS release as of OSCAR 1.1.0)
+- [Qt 5.12.8] (the current LTS release as of OSCAR 1.1.0)
 - [macOS 10.12 Sierra] or higher for building (required by Qt 5.12)
 - Command-Line Tools for Xcode 9.2, and optionally [Xcode] itself
     - Xcode 9.2 is the last version that runs on macOS 10.12
@@ -38,15 +38,15 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
    need to pick the appropriate download for your version of macOS._
 
 4. Install Qt (as "build" user, if created), approx. 3GB:
-    1. Mount qt-opensource-mac-x64-5.12.5.dmg
-    2. Launch qt-opensource-mac-x64-5.12.5
+    1. Mount qt-opensource-mac-x64-5.12.8.dmg
+    2. Launch qt-opensource-mac-x64-5.12.8
     3. Next, Skip, Continue, (optionally change the installation directory), Continue
-        * Qt is entirely self-contained and can be installed anywhere. It defaults to ~/Qt5.12.5.
+        * Qt is entirely self-contained and can be installed anywhere. It defaults to ~/Qt5.12.8.
         * If you only have the command-line tools installed, the Qt installer will complain that "You need to install Xcode and set up Xcode command line tools." Simply click OK.
-    4. Expand Qt 5.12.5 and select "macOS", Continue
+    4. Expand Qt 5.12.8 and select "macOS", Continue
     5. Select "I have read and agree..." and Continue, Install
     6. Uncheck "Launch Qt Creator", Done
-    7. Eject qt-opensource-mac-x64-5.12.5
+    7. Eject qt-opensource-mac-x64-5.12.8
 
 ## Build
 
@@ -56,7 +56,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
         cd OSCAR-code
         mkdir build
         cd build
-        ~/Qt5.12.5/5.12.5/clang_64/bin/qmake ../oscar/oscar.pro
+        ~/Qt5.12.8/5.12.8/clang_64/bin/qmake ../oscar/oscar.pro
         make
 
    The application is in OSCAR.app.
@@ -69,7 +69,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
 
 ## (Optional) Using Qt Creator
 
-1. Launch Qt Creator where you installed Qt above, by default ~/Qt5.12.5/Qt Creator.app.
+1. Launch Qt Creator where you installed Qt above, by default ~/Qt5.12.8/Qt Creator.app.
 2. File > Open File or Project... and select ~/OSCAR-code/oscar/oscar.pro (or wherever you cloned it above), then click "Configure Project".
 3. Configure building:
     1. Click on "Projects" in the left panel.
@@ -85,7 +85,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
 6. To build OSCAR and package for distribution, select "Deploy" from the "oscar" button in the left panel. Then select Build > Build Project "oscar". The dmg is at OSCAR.dmg.
     * Progress in "Compile Output" will pause for several seconds while "Creating .dmg". This is normal.
 
-[Qt 5.12.5]: http://download.qt.io/archive/qt/5.12/5.12.5/qt-opensource-mac-x64-5.12.5.dmg
+[Qt 5.12.8]: http://download.qt.io/archive/qt/5.12/5.12.8/qt-opensource-mac-x64-5.12.8.dmg
 [macOS 10.14 Mojave]: https://apps.apple.com/us/app/macos-mojave/id1398502828?ls=1&mt=12
 [macOS 10.13 High Sierra]: https://apps.apple.com/us/app/macos-high-sierra/id1246284741?ls=1&mt=12
 [macOS 10.12 Sierra]: https://apps.apple.com/us/app/macos-sierra/id1127487414?ls=1&mt=12

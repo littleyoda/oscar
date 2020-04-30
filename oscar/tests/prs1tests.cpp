@@ -87,7 +87,10 @@ void parseAndEmitSessionYaml(const QString & path)
     sessionid_base = s_loader->FindSessionDirsAndProperties(path, paths, propertyfile);
 
     Machine *m = s_loader->CreateMachineFromProperties(propertyfile);
-    Q_ASSERT(m != nullptr);
+    if (m == nullptr) {
+        qWarning() << "*** Skipping unsupported machine!";
+        return;
+    }
 
     s_loader->ScanFiles(paths, sessionid_base, m);
     
@@ -252,7 +255,10 @@ void parseAndEmitChunkYaml(const QString & path)
     sessionid_base = s_loader->FindSessionDirsAndProperties(path, paths, propertyfile);
 
     Machine *m = s_loader->CreateMachineFromProperties(propertyfile);
-    Q_ASSERT(m != nullptr);
+    if (m == nullptr) {
+        qWarning() << "*** Skipping unsupported machine!";
+        return;
+    }
 
     // This mirrors the functional bits of PRS1Loader::ScanFiles.
     

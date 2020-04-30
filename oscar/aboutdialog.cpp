@@ -64,13 +64,13 @@ QString AboutDialog::getFilename(QString name)
 {
     QString filename;
     QString language = AppSetting->language();
+    QString docRoot = appResourcePath() + "/Html/";
     if (language == "en_US") {
-        filename = ":docs/"+name+".html";
+        filename = docRoot+name+".html";
     } else {
-        QString docRoot = appResourcePath() + "/Html/";
         filename = docRoot + name + "-" + language + ".html";
         if ( ! QFile::exists(filename) )
-            filename = ":docs/"+name+".html";
+            filename = docRoot+name+".html";
     }
     qDebug() << "Looking for " + filename;
     return filename;

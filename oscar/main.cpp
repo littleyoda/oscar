@@ -196,11 +196,11 @@ bool migrateFromSH(QString destDir) {
 
             if (!file.exists() || !dirP.exists()) {       // It doesn't have a Preferences.xml file or a Profiles directory in it
                 // Not a new directory.. nag the user.
-                if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                                         QObject::tr("The folder you chose does not contain valid SleepyHead data.") +
-                                         "\n\n"+QObject::tr("You cannot use this folder:")+" " + datadir ), QMessageBox::Ok) {
-                    continue;   // Nope, don't use it, go around the loop again
-                }
+                QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                                     QObject::tr("The folder you chose does not contain valid SleepyHead data.") +
+                                     "\n\n"+QObject::tr("You cannot use this folder:")+" " + datadir,
+                                     QMessageBox::Ok);
+                continue;   // Nope, don't use it, go around the loop again
             }
 
             qDebug() << "Migration folder is" << datadir;
@@ -289,6 +289,18 @@ int main(int argc, char *argv[]) {
             forcedEngine = "Software Engine forced by --legacy command line switch";
         }
     }
+#ifdef Q_OS_WIN
+    bool oscarCrashed = false;
+    if (settings.value("OpenGLCompatibilityCheck").toBool()) {
+        oscarCrashed = true;
+    }
+    if (oscarCrashed) {
+        settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
+        forcedEngine = "Software Engine forced by previous crash";
+        settings.remove("OpenGLCompatibilityCheck");
+    }
+#endif
+
     GFXEngine gfxEngine = (GFXEngine)qMin((unsigned int)settings.value(GFXEngineSetting, (unsigned int)GFX_OpenGL).toUInt(), (unsigned int)MaxGFXEngine);
     switch (gfxEngine) {
     case 0:  // GFX_OpenGL
@@ -305,6 +317,15 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QStringList args = a.arguments();
 
+#ifdef Q_OS_WIN
+    // QMessageBox must come after the application is created. The graphics engine has to be selected before.
+    if (oscarCrashed) {
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                             QObject::tr("OSCAR crashed due to an incompatibility with your graphics hardware.") + "\n\n" +
+                             QObject::tr("To resolve this, OSCAR has reverted to a slower but more compatible method of drawing."),
+                             QMessageBox::Ok);
+    }
+#endif
 
     QString lastlanguage = settings.value(LangSetting, "").toString();
     if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'

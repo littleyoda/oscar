@@ -24,6 +24,9 @@
     build = dict[status]
     print "#define MyBuildNumber \"" (build * 100) "\""
 
+    # strip any trailing quote (only happens for a release build)
+    sub("\"","",v[3])
+
     # v[1] already includes a leading quote mark
     print "#define MyVersionNumbers " v[1] "." v[2] "." v[3] "." (build * 100) "\""
 }

@@ -35,7 +35,7 @@ int
 ViatomLoader::Open(const QString & dirpath)
 {
     qDebug() << "ViatomLoader::Open(" << dirpath << ")";
-    Machine* mach = nullptr;
+    m_mach = nullptr;
     int imported = 0;
     int found = 0;
     s_unexpectedMessages.clear();
@@ -47,21 +47,26 @@ ViatomLoader::Open(const QString & dirpath)
         dir.setSorting(QDir::Name);
 
         for (auto & fi : dir.entryInfoList()) {
-            mach = OpenFile(fi.canonicalFilePath());
-            if (mach) imported++;
+            if (OpenFile(fi.canonicalFilePath())) {
+                imported++;
+            }
             found++;
         }
     }
     else {
         // This filename has already been filtered by QFileDialog.
-        mach = OpenFile(dirpath);
-        if (mach) imported++;
+        if (OpenFile(dirpath)) {
+            imported++;
+        }
         found++;
     }
 
     if (!found) {
         return -1;
     }
+
+    Machine* mach = m_mach;
+    if (imported && mach == nullptr) qWarning() << "No machine record created?";
     if (mach) {
         qDebug() << "Imported" << imported << "sessions";
         mach->Save();
@@ -87,7 +92,7 @@ ViatomLoader::Open(const QString & dirpath)
     return imported;
 }
 
-Machine* ViatomLoader::OpenFile(const QString & filename)
+bool ViatomLoader::OpenFile(const QString & filename)
 {
     Machine* mach = nullptr;
     
@@ -95,9 +100,10 @@ Machine* ViatomLoader::OpenFile(const QString & filename)
     if (sess) {
         SaveSessionToDatabase(sess);
         mach = sess->machine();
+        m_mach = mach;
     }
 
-    return mach;
+    return mach != nullptr;
 }
 
 Session* ViatomLoader::ParseFile(const QString & filename)

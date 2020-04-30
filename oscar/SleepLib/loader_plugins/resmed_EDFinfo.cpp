@@ -30,7 +30,11 @@ ResMedEDFInfo::~ResMedEDFInfo() { }
 
 bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
 {
-	EDFInfo::Parse(  );
+	if ( ! EDFInfo::Parse(  ) ) {
+        qWarning() << "EDFInfo::Parse failed!";
+        sleep(1);
+        return false;
+    }
 	
     // Now massage some stuff into OSCAR's layout
     int snp = edfHdr.recordingident.indexOf("SRN=");

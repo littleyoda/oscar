@@ -628,8 +628,38 @@ void MainWindow::CloseProfile()
 }
 
 
+#ifdef Q_OS_WIN
+void MainWindow::TestWindowsOpenGL()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5,4,0)) && !defined(BROKEN_OPENGL_BUILD)
+    // 1. Set OpenGLCompatibilityCheck=1 in registry.
+    QSettings settings;
+    settings.setValue("OpenGLCompatibilityCheck", true);
+
+    // 2. See if OpenGL crashes the application:
+    QOpenGLWidget* gl;
+    gl = new QOpenGLWidget(ui->tabWidget);
+    ui->tabWidget->insertTab(2, gl, "");
+    //qDebug() << __LINE__;
+    QCoreApplication::processEvents();  // this triggers the SIGSEGV
+    //qDebug() << __LINE__;
+    // If we get here, OpenGL won't crash the application.
+    ui->tabWidget->removeTab(2);
+    delete gl;
+
+    // 3. Remove OpenGLCompatibilityCheck from the registry upon success.
+    settings.remove("OpenGLCompatibilityCheck");
+#endif
+}
+#endif
+
+
 void MainWindow::Startup()
 {
+#ifdef Q_OS_WIN
+    TestWindowsOpenGL();
+#endif
+
     for (auto & loader : GetLoaders()) {
         loader->setParent(this);
     }
@@ -2204,7 +2234,7 @@ void MainWindow::doRecompressEvents()
 {
     if (!p_profile) return;
     ProgressDialog progress(this);
-    progress.setMessage("Recompressing Session Files");
+    progress.setMessage(QObject::tr("Recompressing Session Files"));
     progress.setProgressMax(p_profile->daylist.size());
     QPixmap icon = QPixmap(":/icons/logo-md.png").scaled(64,64);
     progress.setPixmap(icon);
@@ -2328,6 +2358,8 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
             Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "ZEO sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2357,6 +2389,8 @@ void MainWindow::on_actionImport_Dreem_Data_triggered()
             Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "Dreem sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2451,6 +2485,8 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
 
         Notify(tr("Somnopause Data Import complete"));
         PopulatePurgeMenu();
+        if (overview) overview->ReloadGraphs();
+        if (welcome) welcome->refreshPage();
         daily->LoadDate(daily->getDate());
     }
 
@@ -2477,6 +2513,8 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
         if (c > 0) {
             Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2694,6 +2732,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
+        QString prefix;
         
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
         while (true) {
@@ -2707,6 +2746,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             } else {
                 infostr = datacard.loader->loaderName();
             }
+            prefix = infostr;
             folder += QDir::separator() + infostr + ".zip";
 
             filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
@@ -2739,7 +2779,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
             prog->setMessage(tr("Creating zip..."));
-            ok = z.AddDirectory(cardPath, prog);
+            ok = z.AddDirectory(cardPath, prefix, prog);
             z.Close();
         } else {
             qWarning() << "Unable to open" << filename;
@@ -2799,7 +2839,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
             if (ok) {
                 debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
                 debugLog.close();
-                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                QString debugLogName = oscarData.dirName() + "/" + QFileInfo(debugLog).fileName();
                 ok = z.AddFile(debugLog.fileName(), debugLogName);
                 if (!ok) {
                     qWarning() << "Unable to add debug log to zip!";

@@ -44,15 +44,21 @@ QString lookupLanguageName(QString language)
 void initTranslations()
 {
     // Add any languages with special character set needs to this list
-    langNames["zh"] = "\xe6\xbc\xa2\xe8\xaa\x9e\xe7\xb9\x81\xe9\xab\x94\xe5\xad\x97";
+    langNames["ar"] = "\xd8\xb9\xd8\xb1\xd8\xa8\xd9\x8a";
+    langNames["bg"] = "\xd0\xb1\xd1\x8a\xd0\xbb\xd0\xb3\xd0\xb0\xd1\x80\xd1\x81\xd0\xba\xd0\xb8";
+    langNames["el"] = "\xce\x95\xce\xbb\xce\xbb\xce\xb7\xce\xbd\xce\xb9\xce\xba\xce\xac";
+    langNames["en_UK"] = "English (UK)";
     langNames["es"] = "Español";
     langNames["es_MX"] = "Español (Mexico)";
-    langNames["bg"] = "\xd0\xb1\xd1\x8a\xd0\xbb\xd0\xb3\xd0\xb0\xd1\x80\xd1\x81\xd0\xba\xd0\xb8";
-    langNames["fr"] = "Français";       // this just confuses Qt (WHY?  trying enabling it -- gts 8/18/2019)
-    langNames["en_UK"] = "English (UK)";
+    langNames["fi"] = "Suomen kieli";
+    langNames["fr"] = "Français";
+    langNames["he"] = "\xd7\xa2\xd7\x91\xd7\xa8\xd7\x99\xd7\xaa";
+    langNames["hu"] = "Magyar nyelv";
     langNames["nl"] = "Nederlands";
-    langNames["pt_BR"] = "Portugues (BR)";
+    langNames["pt"] = "Português";
+    langNames["pt_BR"] = "Português (Brazil)";
     langNames["ro"] = "Românește";
+    langNames["zh"] = "\xe6\xbc\xa2\xe8\xaa\x9e\xe7\xb9\x81\xe9\xab\x94\xe5\xad\x97";    
 
     langNames[DefaultLanguage]="English (US)";
 

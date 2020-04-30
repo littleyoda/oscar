@@ -1492,7 +1492,16 @@ QString Day::getPressureRelief()
         if (pr_level_chan != NoChannel && settingExists(pr_level_chan)) {
             pr_level = qRound(settings_wavg(pr_level_chan));
         }
-        if (pr_level >= 0) pr_str += QString(" %1").arg(schema::channel[pr_level_chan].option(pr_level));
+
+        if (pr_level >= 0) {
+            // TODO: Ideally the formatting of LOOKUP datatypes should be done in only one place.
+            schema::Channel & chan = schema::channel[pr_level_chan];
+            QString level = chan.option(pr_level);
+            if (level.isEmpty()) {
+                level = QString().number(pr_level) + " " + chan.units();;
+            }
+            pr_str += QString(" %1").arg(level);
+        }
     } else pr_str = STR_TR_None;
     return pr_str;
 }

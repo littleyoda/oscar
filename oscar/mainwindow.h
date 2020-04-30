@@ -204,6 +204,11 @@ class MainWindow : public QMainWindow
     //! \brief Display About Dialog
     void on_action_About_triggered();
 
+#ifdef Q_OS_WIN
+   //! \brief Called on Windows to see whether the current OpenGL driver will cause the application to crash
+    void TestWindowsOpenGL();
+#endif
+
     //! \brief Called after a timeout to initiate loading of all summary data for this profile
     void Startup();
 

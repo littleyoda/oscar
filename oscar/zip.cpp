@@ -136,7 +136,7 @@ bool ZipFile::AddFile(const QString & path, const QString & name)
     if (archive_name.isEmpty()) archive_name = fi.fileName();
 
     if (fi.isDir()) {
-        archive_name += QDir::separator();
+        archive_name += "/";
         m_progress += 1;
     } else {
         // Open and read file into memory.
@@ -184,7 +184,7 @@ bool FileQueue::AddDirectory(const QString & path, const QString & prefix)
 
     for (auto & fi : flist) {
         QString canonicalPath = fi.canonicalFilePath();
-        QString relative_path = base + QDir::separator() + fi.fileName();
+        QString relative_path = base + "/" + fi.fileName();
         if (fi.isSymLink()) {
             qWarning() << "skipping symlink" << canonicalPath << fi.symLinkTarget();
         } else if (fi.isDir()) {
