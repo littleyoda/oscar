@@ -87,22 +87,19 @@ QString resmedOutputPath(const QString & inpath, int session, const QString & su
 void iterateTestCards(const QString & root, void (*action)(const QString &))
 {
     QDir dir(root);
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs);
     dir.setSorting(QDir::Name);
     QFileInfoList flist = dir.entryInfoList();
 
     // Look through each folder in the given root
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
-        if (fi.isDir()) {
-            // If it contains a DATALOG folder, it's a ResMed SD card
-            QDir datalog(fi.canonicalFilePath() + QDir::separator() + "DATALOG");
-            if (datalog.exists()) {
-                // Confirm that it contains the file that the ResMed loader expects
-                QFileInfo idfile(fi.canonicalFilePath() + QDir::separator() + "Identification.tgt");
-                if (idfile.exists()) {
-                    action(fi.canonicalFilePath());
-                }
+    for (auto & fi : flist) {
+        // If it contains a DATALOG folder, it's a ResMed SD card
+        QDir datalog(fi.canonicalFilePath() + QDir::separator() + "DATALOG");
+        if (datalog.exists()) {
+            // Confirm that it contains the file that the ResMed loader expects
+            QFileInfo idfile(fi.canonicalFilePath() + QDir::separator() + "Identification.tgt");
+            if (idfile.exists()) {
+                action(fi.canonicalFilePath());
             }
         }
     }

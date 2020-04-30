@@ -153,8 +153,8 @@ public:
     //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 6 machine
     bool ParseSummaryF0V6(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 3) machine
-    bool ParseSummaryF3V3(void);
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 0 or 3) machine
+    bool ParseSummaryF3V03(void);
     
     //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6) machine
     bool ParseSummaryF3V6(void);
@@ -198,8 +198,8 @@ public:
     //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
     bool ParseEventsF0V6(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 3 machine
-    bool ParseEventsF3V3(void);
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 0 or 3 machine
+    bool ParseEventsF3V03(void);
     
     //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 6 machine
     bool ParseEventsF3V6(void);
@@ -250,7 +250,7 @@ protected:
     bool ParseSettingsF5V3(const unsigned char* data, int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF3V3(const unsigned char* data, int size);
+    bool ParseSettingsF3V03(const unsigned char* data, int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file
     bool ParseSettingsF3V6(const unsigned char* data, int size);
@@ -295,7 +295,7 @@ public:
 
 
     QList<QString> m_wavefiles;
-    QString oxifile;
+    QList<QString> m_oxifiles;
 
     //! \brief Imports .000 files for bricks.
     bool ImportCompliance();
@@ -306,17 +306,17 @@ public:
     //! \brief Imports the .002 event file(s).
     bool ImportEvents();
 
-    //! \brief Imports the .005 event file(s).
-    void ImportWaveforms();
+    //! \brief Reads the .005 or .006 waveform file(s).
+    QList<PRS1DataChunk *> ReadWaveformData(QList<QString> & files, const char* label);
 
     //! \brief Coalesce contiguous .005 or .006 waveform chunks from the file into larger chunks for import.
     QList<PRS1DataChunk *> CoalesceWaveformChunks(QList<PRS1DataChunk *> & allchunks);
 
     //! \brief Takes the parsed list of Flow/MaskPressure waveform chunks and adds them to the database
-    void ParseWaveforms();
+    void ImportWaveforms();
 
     //! \brief Takes the parsed list of oximeter waveform chunks and adds them to the database.
-    void ParseOximetry();
+    void ImportOximetry();
 
     //! \brief Adds a single channel of continuous oximetry data to the database, splitting on any missing samples.
     void ImportOximetryChannel(ChannelID channel, QByteArray & data, quint64 ti, qint64 dur);

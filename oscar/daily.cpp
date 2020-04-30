@@ -56,6 +56,7 @@ QString htmlLeftMachineSettings;
 QString htmlLeftSessionInfo;
 QString htmlLeftFooter;
 
+extern ChannelID PRS1_PeakFlow;
 
 // This was Sean Stangl's idea.. but I couldn't apply that patch.
 inline QString channelInfo(ChannelID code) {
@@ -238,7 +239,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     //============================================
     const ChannelID cpapcodes[] = {
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
-        CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
+        CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, PRS1_PeakFlow, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
         /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Movement, CPAP_Test1
     };
 
@@ -390,6 +391,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     graphlist[schema::channel[CPAP_Snore].code()]->AddLayer(new gLineChart(CPAP_Snore, true));
 
     graphlist[schema::channel[CPAP_PTB].code()]->AddLayer(new gLineChart(CPAP_PTB, square));
+    graphlist[schema::channel[PRS1_PeakFlow].code()]->AddLayer(new gLineChart(PRS1_PeakFlow, square));
     graphlist[schema::channel[CPAP_Test1].code()]->AddLayer(new gLineChart(CPAP_Test1, square));
     //graphlist[schema::channel[CPAP_Test2].code()]->AddLayer(new gLineChart(CPAP_Test2, square));
 
@@ -1290,6 +1292,7 @@ QString Daily::getStatisticsInfo(Day * day)
 
     ChannelID chans[]={
         CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
+        PRS1_PeakFlow,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  /*  CPAP_IE,   */  CPAP_Ti,CPAP_Te, CPAP_TgMV,
         CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement

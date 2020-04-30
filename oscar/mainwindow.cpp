@@ -628,8 +628,38 @@ void MainWindow::CloseProfile()
 }
 
 
+#ifdef Q_OS_WIN
+void MainWindow::TestWindowsOpenGL()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5,4,0)) && !defined(BROKEN_OPENGL_BUILD)
+    // 1. Set OpenGLCompatibilityCheck=1 in registry.
+    QSettings settings;
+    settings.setValue("OpenGLCompatibilityCheck", true);
+
+    // 2. See if OpenGL crashes the application:
+    QOpenGLWidget* gl;
+    gl = new QOpenGLWidget(ui->tabWidget);
+    ui->tabWidget->insertTab(2, gl, "");
+    //qDebug() << __LINE__;
+    QCoreApplication::processEvents();  // this triggers the SIGSEGV
+    //qDebug() << __LINE__;
+    // If we get here, OpenGL won't crash the application.
+    ui->tabWidget->removeTab(2);
+    delete gl;
+
+    // 3. Remove OpenGLCompatibilityCheck from the registry upon success.
+    settings.remove("OpenGLCompatibilityCheck");
+#endif
+}
+#endif
+
+
 void MainWindow::Startup()
 {
+#ifdef Q_OS_WIN
+    TestWindowsOpenGL();
+#endif
+
     for (auto & loader : GetLoaders()) {
         loader->setParent(this);
     }
@@ -2702,6 +2732,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
+        QString prefix;
         
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
         while (true) {
@@ -2715,6 +2746,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             } else {
                 infostr = datacard.loader->loaderName();
             }
+            prefix = infostr;
             folder += QDir::separator() + infostr + ".zip";
 
             filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
@@ -2747,7 +2779,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
             prog->setMessage(tr("Creating zip..."));
-            ok = z.AddDirectory(cardPath, prog);
+            ok = z.AddDirectory(cardPath, prefix, prog);
             z.Close();
         } else {
             qWarning() << "Unable to open" << filename;
@@ -2807,7 +2839,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
             if (ok) {
                 debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
                 debugLog.close();
-                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                QString debugLogName = oscarData.dirName() + "/" + QFileInfo(debugLog).fileName();
                 ok = z.AddFile(debugLog.fileName(), debugLogName);
                 if (!ok) {
                     qWarning() << "Unable to add debug log to zip!";

@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Important:</source>
-        <translation>Important:</translation>
+        <translation>Important :</translation>
     </message>
     <message>
         <source>To see if the license text is available in your language, see %1.</source>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Sorry, could not locate Release Notes.</source>
-        <translation>Désolé, je ne trouve pas le Journal des changements.</translation>
+        <translation>Désolé, je ne trouve pas le journal des changements.</translation>
     </message>
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>About OSCAR %1</source>
-        <translation>À propos de OSCAR %1</translation>
+        <translation>À Propos de OSCAR %1</translation>
     </message>
     <message>
         <source>OSCAR %1</source>
@@ -68,11 +68,11 @@
     <name>CMS50F37Loader</name>
     <message>
         <source>Could not find the oximeter file:</source>
-        <translation>Fichiers d&apos;oxymétrie introuvables:</translation>
+        <translation>Fichiers d&apos;oxymétrie introuvables :</translation>
     </message>
     <message>
         <source>Could not open the oximeter file:</source>
-        <translation>Impossible d&apos;ouvrir les fichiers d&apos;oxymétrie:</translation>
+        <translation>Impossible d&apos;ouvrir les fichiers d&apos;oxymétrie :</translation>
     </message>
 </context>
 <context>
@@ -87,29 +87,26 @@
     </message>
     <message>
         <source>Could not find the oximeter file:</source>
-        <translation>Fichiers d&apos;oxymétrie introuvables:</translation>
+        <translation>Fichiers d&apos;oxymétrie introuvables :</translation>
     </message>
     <message>
         <source>Could not open the oximeter file:</source>
-        <translation>Impossible d&apos;ouvrir les fichiers d&apos;oxymétrie:</translation>
+        <translation>Impossible d&apos;ouvrir les fichiers d&apos;oxymétrie :</translation>
     </message>
 </context>
 <context>
     <name>Daily</name>
     <message>
         <source>B</source>
-        <translatorcomment>Gras: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
-        <translation>G</translation>
+        <translation>Gras</translation>
     </message>
     <message>
         <source>u</source>
-        <translatorcomment>Souligné: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
-        <translation>s</translation>
+        <translation>Souligné</translation>
     </message>
     <message>
         <source> i </source>
-        <translatorcomment>Italique: Je préfère d&apos;utiliser un seul character ici</translatorcomment>
-        <translation> i </translation>
+        <translation>Italique</translation>
     </message>
     <message>
         <source>Big</source>
@@ -148,6 +145,10 @@
         <translation>Petit</translation>
     </message>
     <message>
+        <source>Machine Settings Unavailable</source>
+        <translation>Réglages de l&apos;appareil indisponibles</translation>
+    </message>
+    <message>
         <source>Journal</source>
         <translation>Journal</translation>
     </message>
@@ -157,7 +158,7 @@
     </message>
     <message>
         <source>Position Sensor Sessions</source>
-        <translation>Sessions des capteurs de position</translation>
+        <translation>Session des capteurs de position</translation>
     </message>
     <message>
         <source>Add Bookmark</source>
@@ -173,7 +174,7 @@
     </message>
     <message>
         <source>Complain to your Equipment Provider!</source>
-        <translation>Plaignez-vous à votre fournisseur d&apos;équipement!</translation>
+        <translation>Plaignez-vous à votre fournisseur d&apos;équipement !</translation>
     </message>
     <message>
         <source>Session Information</source>
@@ -181,7 +182,7 @@
     </message>
     <message>
         <source>Sessions all off!</source>
-        <translation>Toutes les sessions hors!</translation>
+        <translation>Toutes les sessions sont off !</translation>
     </message>
     <message>
         <source>%1 event</source>
@@ -265,7 +266,7 @@
     </message>
     <message>
         <source>&quot;Nothing&apos;s here!&quot;</source>
-        <translation>&quot;Rien ici !&quot;</translation>
+        <translation>Rien ici !</translation>
     </message>
     <message>
         <source>Awesome</source>
@@ -325,11 +326,11 @@
     </message>
     <message>
         <source>No %1 events are recorded this day</source>
-        <translation>Aucun évènement  %1 disponible pour ce jour</translation>
+        <translation>Aucun évènement %1 disponible pour ce jour</translation>
     </message>
     <message>
         <source>BRICK! :(</source>
-        <translation>PLANTAGE! :(</translation>
+        <translation>PLANTAGE ! :(</translation>
     </message>
     <message>
         <source>Show or hide the calender</source>
@@ -404,8 +405,12 @@
         <translation>%1h %2m %3s</translation>
     </message>
     <message>
+        <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
+        <translation>Un ou plusieurs enregistrement de cette session a des données corrompues. Certains points des graphiques peuvent ne pas coïncider correctement.</translation>
+    </message>
+    <message>
         <source>PAP Mode: %1</source>
-        <translation>Mode PAP: %1</translation>
+        <translation>Mode PAP : %1</translation>
     </message>
     <message>
         <source>Start</source>
@@ -437,7 +442,7 @@
     </message>
     <message>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation>Ce favori est actuellement en zone désactivée..</translation>
+        <translation>Ce favori est actuellement en zone désactivée...</translation>
     </message>
 </context>
 <context>
@@ -476,7 +481,7 @@
     </message>
     <message>
         <source>Last Fortnight</source>
-        <translation>Quinzaine dernière</translation>
+        <translation>Quatre derniers jours</translation>
     </message>
     <message>
         <source>Most Recent Day</source>
@@ -532,7 +537,7 @@
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>Derniers 6 mois</translation>
+        <translation>6 derniers mois</translation>
     </message>
     <message>
         <source>Total Time</source>
@@ -670,7 +675,7 @@
     </message>
     <message>
         <source>Please wait a bit.. Indexing still in progress</source>
-        <translation>Patientez... indexation en cours</translation>
+        <translation>Patientez, indexation en cours</translation>
     </message>
 </context>
 <context>
@@ -744,15 +749,15 @@
     </message>
     <message>
         <source>MSeries Import complete</source>
-        <translation>Import du fichier MSeries terminé</translation>
+        <translation>Import du fichier terminé</translation>
     </message>
     <message>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
-        <translation>Erreur en enregistrant la copie d&apos;écran dans le fichier &quot;%1&quot;</translation>
+        <translation>Erreur en enregistrant la copie d&apos;écran &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Choose a folder</source>
-        <translation>Choisissez un dossier</translation>
+        <translation>Choisissez un répertoire</translation>
     </message>
     <message>
         <source>A %1 file structure for a %2 was located at:</source>
@@ -848,7 +853,7 @@
     </message>
     <message>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
-        <translation>Voulez-vous importer vos propres sauvegardes maintenant? (vous n&apos;aurez pas de données visibles pour cet appareil jusqu&apos;à ce que vous le fassiez)</translation>
+        <translation>Voulez-vous importer vos propres sauvegardes maintenant ? (vous n&apos;aurez pas de données visibles pour cet appareil jusqu&apos;à ce que vous le fassiez)</translation>
     </message>
     <message>
         <source>Please wait, importing from backup folder(s)...</source>
@@ -1012,7 +1017,7 @@
     </message>
     <message>
         <source>Show Debug Pane</source>
-        <translation>Voir le volet de débogage</translation>
+        <translation>Voir le panneau de debug</translation>
     </message>
     <message>
         <source>&amp;Edit Profile</source>
@@ -1116,11 +1121,11 @@
     </message>
     <message>
         <source>Updates are not yet implemented</source>
-        <translation>Désolé, fonction mises à jour non encore implémentée</translation>
+        <translation>Désolé, fonction non encore implémentée</translation>
     </message>
     <message>
         <source>The FAQ is not yet implemented</source>
-        <translation>Désolé, fonction FAQ non encore implémentée</translation>
+        <translation>Désolé, fonction non encore implémentée</translation>
     </message>
     <message>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
@@ -1130,7 +1135,7 @@
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
-        <translation>Êtes-vous sûr de vouloir reconstruire toutes les données de PPC pour l&apos;appareil suivante :
+        <translation>Êtes-vous sûr de vouloir reconstruire toutes les données de PPC pour l&apos;appareil suivant :
 
 </translation>
     </message>
@@ -1140,7 +1145,7 @@
     </message>
     <message>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
-        <translation>Vous êtes sur le point de &lt;font size=+2&gt;détruire&lt;/font&gt; les données de OSCAR pour l&apos;appareil suivant:&lt;/p&gt;</translation>
+        <translation>Vous êtes sur le point de &lt;font size=+2&gt;détruire&lt;/font&gt; les données de OSCAR pour l&apos;appareil suivant :&lt;/p&gt;</translation>
     </message>
     <message>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
@@ -1152,11 +1157,11 @@
     </message>
     <message>
         <source>Export review is not yet implemented</source>
-        <translation>Désolé, fonction export non encore implémentée</translation>
+        <translation>Désolé, fonction non encore implémentée</translation>
     </message>
     <message>
         <source>Reporting issues is not yet implemented</source>
-        <translation>Désolé, fonction de rapporter non encore implémentée</translation>
+        <translation>Désolé, fonction non encore implémentée</translation>
     </message>
     <message>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
@@ -1192,7 +1197,7 @@
     </message>
     <message>
         <source>Show Right Sidebar</source>
-        <translation>Voir la barre latérale droite</translation>
+        <translation>voir la barre latérale droite</translation>
     </message>
     <message>
         <source>Show Statistics view</source>
@@ -1240,7 +1245,7 @@
     </message>
     <message>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation>Ordre standard des graphiques, adapté pour PPC, PPA, Bi-Level</translation>
+        <translation>Ordre standard des graphiques, adapté pour CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1248,7 +1253,7 @@
     </message>
     <message>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation>Ordre des graphs avancé, bon pour ASV, AVAPS</translation>
+        <translation>Ordre des graph avancé, bon pour ASV, AVAPS</translation>
     </message>
     <message>
         <source>Troubleshooting</source>
@@ -1264,19 +1269,19 @@
     </message>
     <message>
         <source>Import &amp;Dreem Data</source>
-        <translation>&amp;Importer des données de carte Dreem</translation>
+        <translation>Importer les données depuis &amp;Dreem</translation>
     </message>
     <message>
         <source>Import &amp;Viatom Data</source>
-        <translation>&amp;Importer des données de carte Viatom</translation>
+        <translation>Importer les données depuis &amp;Viatom</translation>
     </message>
     <message>
         <source>Create zip of CPAP data card</source>
-        <translation>Créer un zip de carte de données PPC</translation>
+        <translation>Créer un fichier zip des données de la carte SD</translation>
     </message>
     <message>
         <source>Create zip of all OSCAR data</source>
-        <translation>Créer un zip de tous les données dans OSCAR</translation>
+        <translation>Créer un fichier zip de toutes les données de OSCAR</translation>
     </message>
     <message>
         <source>F3</source>
@@ -1284,33 +1289,33 @@
     </message>
     <message>
         <source>%1 (Profile: %2)</source>
-        <translation>%1 (Profil: %2)</translation>
+        <translation>%1 (Profil : %2)</translation>
     </message>
     <message>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
-        <translation>N&apos;oubliez pas de sélectionner le dossier racine ou la lettre de lecteur de votre carte de données, et non un dossier à l&apos;intérieur.</translation>
+        <translation>Sélectionner le dossier racine ou la lettre de lecteur de votre carte de données, et non pas un dossier à l’intérieur.</translation>
     </message>
     <message>
         <source>Choose where to save screenshot</source>
-        <translation>Choisissez où enregistrer la capture d&apos;écran</translation>
+        <translation>Choisir l&apos;endroit où enregistrer la capture d’écran</translation>
     </message>
     <message>
         <source>Image files (*.png)</source>
-        <translation>Fichiers image (* .png)</translation>
+        <translation>Fichiers image (*.png)</translation>
     </message>
     <message>
         <source>OSCAR does not have any backups for this machine!</source>
-        <translation>OSCAR n&apos;a pas aucune sauvegarde pour cet appareil!</translation>
+        <translation>OSCAR n’a pas de sauvegarde pour cet appareil !</translation>
     </message>
     <message>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
-        <translation>À moins que vous n&apos;ayez effectué &lt;i&gt; vos &lt;b&gt; propres &lt;/b&gt; sauvegardes pour TOUTES vos données pour cet appareil&lt;/i&gt;, &lt;font size = + 2&gt; vous perdrez les données de cett appareil &lt;b&gt; de façon permanente &lt;/ b &gt;! &lt;/font&gt;</translation>
+        <translation>Si vous n&apos;avez pas effectué &lt;i&gt;vos &lt;b&gt;propres&lt;/b&gt; sauvegardes de TOUTES les données pour cet appareil&lt;/i&gt;, &lt;font size=+2&gt;vous allez les perdre de façon &lt;b&gt;définitive&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
         <source>Imported %1 ZEO session(s) from
 
 %2</source>
-        <translation>%1 session(s) ZEO importée(s) de
+        <translation>%1 session (s) ZEO importée (s) de
 
 %2</translation>
     </message>
@@ -1318,7 +1323,7 @@
         <source>Already up to date with ZEO data at
 
 %1</source>
-        <translation>Déjà à jour avec les données ZEO à: 
+        <translation>Les données ZEO sont déjà à jour sur
 
 %1</translation>
     </message>
@@ -1326,7 +1331,7 @@
         <source>Couldn&apos;t find any valid ZEO CSV data at
 
 %1</source>
-        <translation>Impossible de trouver des données de ZEO valides à
+        <translation>Impossible de trouver des données ZEO CSV valides sur
 
 %1</translation>
     </message>
@@ -1334,7 +1339,7 @@
         <source>Imported %1 Dreem session(s) from
 
 %2</source>
-        <translation>%1 session(s) Dreem importée(s) de
+        <translation>%1 session (s) Dreem importée (s) depuis
 
 %2</translation>
     </message>
@@ -1342,7 +1347,7 @@
         <source>Already up to date with Dreem data at
 
 %1</source>
-        <translation>Déjà à jour avec les données Dreem à: 
+        <translation>Les données Dreem dont déjà à jour sur
 
 %1</translation>
     </message>
@@ -1350,7 +1355,7 @@
         <source>Couldn&apos;t find any valid Dreem CSV data at
 
 %1</source>
-        <translation>Impossible de trouver des données CSV de Dreem valides à
+        <translation>Impossible de trouver des données Dreem CSV valides sur
 
 %1</translation>
     </message>
@@ -1358,7 +1363,7 @@
         <source>Imported %1 oximetry session(s) from
 
 %2</source>
-        <translation>%1 session(s) oximétrie importée(s) de
+        <translation>%1 session (s) d&apos;oxymétrie importées de
 
 %2</translation>
     </message>
@@ -1366,7 +1371,7 @@
         <source>Already up to date with oximetry data at
 
 %1</source>
-        <translation>Déjà à jour avec les données oximétrie à: 
+        <translation>Les données d&apos;oxymétrie sont déjà à jour sur
 
 %1</translation>
     </message>
@@ -1374,17 +1379,17 @@
         <source>Couldn&apos;t find any valid data at
 
 %1</source>
-        <translation>Impossible de trouver des données oximétrie valides à
+        <translation>Pas de données valides à
 
 %1</translation>
     </message>
     <message>
         <source>Would you like to zip this card?</source>
-        <translation>Souhaitez-vous compresser cette carte?</translation>
+        <translation>Souhaitez-vous compresser cette carte ?</translation>
     </message>
     <message>
         <source>Choose where to save zip</source>
-        <translation>Choisissez où sauvegarder le fichier zip</translation>
+        <translation>Choisissez où enregistrer le fichier compressé</translation>
     </message>
     <message>
         <source>ZIP files (*.zip)</source>
@@ -1392,34 +1397,34 @@
     </message>
     <message>
         <source>Creating zip...</source>
-        <translation>Création de zip ...</translation>
+        <translation>Création du fichier ZIP...</translation>
     </message>
     <message>
         <source>Calculating size...</source>
-        <translation>Calcul de la taille ...</translation>
+        <translation>Calcul de la taille...</translation>
     </message>
 </context>
 <context>
     <name>MinMaxWidget</name>
     <message>
         <source>Scaling Mode</source>
-        <translation>Mode de mise à l&apos;échelle</translation>
+        <translation>Type d&apos;échelle</translation>
     </message>
     <message>
         <source>The Maximum Y-Axis value.. Must be greater than Minimum to work.</source>
-        <translation>La valeur maximale de l&apos;axe Y... doit être supérieure à la valeur minimum.</translation>
+        <translation>Valeur Y maximum... doit être supérieure à la valeur minimum.</translation>
     </message>
     <message>
         <source>This button resets the Min and Max to match the Auto-Fit</source>
-        <translation>Bouton de remise aux valeurs automatiques</translation>
+        <translation>Bouton de remise à zéro aux valeurs automatiques</translation>
     </message>
     <message>
         <source>The Y-Axis scaling mode, &apos;Auto-Fit&apos; for automatic scaling, &apos;Defaults&apos; for settings according to manufacturer, and &apos;Override&apos; to choose your own.</source>
-        <translation>Échelle de l&apos;axis Y, á &apos;Automatique&apos; pour échelle automatique, &apos;Par défaut&apos; pour les réglages constructeur et &apos;Personnalisé&apos; pour choisir par vous-même.</translation>
+        <translation>Échelle des Y, &apos;Automatique&apos; pour échelle automatique, &apos;Par défaut&apos; pour les réglages constructeur et &apos;Personnalisé&apos; pour choisir par vous-même.</translation>
     </message>
     <message>
         <source>The Minimum Y-Axis value.. Note this can be a negative number if you wish.</source>
-        <translation>Valeur mini en axis Y... Les valeurs négatives sont possibles.</translation>
+        <translation>Valeur mini en Y... Les valeurs négatives sont possibles.</translation>
     </message>
     <message>
         <source>Defaults</source>
@@ -1474,11 +1479,11 @@
     </message>
     <message>
         <source>Any reports generated are for PERSONAL USE ONLY, and NOT IN ANY WAY fit for compliance or medical diagnostic purposes.</source>
-        <translation>Les rapports générés ne le sont que POUR UTILISER PERSONNEL et ne peuvent être utilisés pour aucun fin de diagnostic médical.</translation>
+        <translation>Les rapports générés ne le sont QUE pour usage PERSONNEL et ne peuvent être utilisés pour aucun diagnostic médical.</translation>
     </message>
     <message>
         <source>&amp;Close this window</source>
-        <translation>&amp;Fermer cette fenêtre</translation>
+        <translation>&amp;Fermer la fenêtre</translation>
     </message>
     <message>
         <source>Edit User Profile</source>
@@ -1542,7 +1547,7 @@
     </message>
     <message>
         <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation>Éloigner les enfant. Rien de plus. Ce n&apos;est pas non plus super-sécurité.</translation>
+        <translation>Éloigner les enfant. Rien de plus. Ce n&apos;est pas non plus super sensible.</translation>
     </message>
     <message>
         <source>Address</source>
@@ -1558,11 +1563,11 @@
     </message>
     <message>
         <source>about:blank</source>
-        <translation>about:blanc</translation>
+        <translation>au sujet : blanc</translation>
     </message>
     <message>
         <source>RX Pressure</source>
-        <translation>Pression prescrite</translation>
+        <translation>Pression RX</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1622,7 +1627,7 @@
     </message>
     <message>
         <source>...twice...</source>
-        <translation>...et encore un fois...</translation>
+        <translation>...et de deux...</translation>
     </message>
     <message>
         <source>Doctors Name</source>
@@ -1630,11 +1635,11 @@
     </message>
     <message>
         <source>Doctors / Clinic Information</source>
-        <translation>Informations sur le Docteur / la clinique</translation>
+        <translation>Docteur / Informations sur la clinique</translation>
     </message>
     <message>
         <source>Practice Name</source>
-        <translation>Nom de spécialité</translation>
+        <translation>Spécialité</translation>
     </message>
     <message>
         <source>Date Diagnosed</source>
@@ -1670,15 +1675,15 @@
     </message>
     <message>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
-        <translation>Les auteurs ne sont &lt;u&gt; en aucun cas &lt;/u&gt; responsable de l&apos; utilisation faite de ce logiciel.</translation>
+        <translation>L&apos;auteur n&apos;est &lt;u&gt; en aucun cas &lt;/u&gt; responsable de l&apos; utilisation faite de ce logiciel.</translation>
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation>OSCAR est copyright &amp;copy; 2011-2018 par Mark Watkins et partiellement &amp;copy; 2019 Nightowl Software</translation>
+        <translation>OSCAR copyright &amp;copy; 2011-2014 par Mark Watkins et partiellement &amp;copy; 2019 Nightowl Software</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>Bienvenue dans OSCAR (le Rapporteur &apos;Open Source&apos; d&apos;Analyse du PPC)</translation>
+        <translation>Bienvenue dans O.S.C.A.R. (Open Source CPAP Analysis Reporter)</translation>
     </message>
     <message>
         <source>Metric</source>
@@ -1712,12 +1717,12 @@
 Disturbance
 Index</source>
         <translation>Index des 
-Troubles 
-Respiratoires</translation>
+troubles 
+respiratoires</translation>
     </message>
     <message>
         <source>Show all graphs</source>
-        <translation>Afficher tous les graphiques</translation>
+        <translation>Afficher les graphiques</translation>
     </message>
     <message>
         <source>Reset view to selected date range</source>
@@ -1725,26 +1730,25 @@ Respiratoires</translation>
     </message>
     <message>
         <source>Total Time in Apnea</source>
-        <translation>Temps Total en Apnée</translation>
+        <translation>Temps total en apnée</translation>
     </message>
     <message>
         <source>Drop down to see list of graphs to switch on/off.</source>
-        <translation>Menu déroulant pour voir la liste des graphiques à (des)activer.</translation>
+        <translation>Dérouler pour voir la liste des graphiques à activer.</translation>
     </message>
     <message>
         <source>Usage
 (hours)</source>
-        <translation>Utilisation
-(heures)</translation>
+        <translation>Utilisation (heures)</translation>
     </message>
     <message>
         <source>Last Three Months</source>
-        <translation>Derniers trois mois</translation>
+        <translation>Derniers 3 mois</translation>
     </message>
     <message>
         <source>Total Time in Apnea
 (Minutes)</source>
-        <translation>Temps Total en Apnée 
+        <translation>Temps total en apnée 
 (minutes)</translation>
     </message>
     <message>
@@ -1777,29 +1781,27 @@ Respiratoires</translation>
         <source>Apnea
 Hypopnea
 Index</source>
-        <translation>Index des
-Apnées et 
-Hypopnées</translation>
+        <translation>Index des apnées et hypopnées</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>Derniers six mois</translation>
+        <translation>6 derniers mois</translation>
     </message>
     <message>
         <source>Body
 Mass
 Index</source>
-        <translation>Indice de 
-Masse
-Corporelle</translation>
+        <translation>Indice
+de masse
+corporelle</translation>
     </message>
     <message>
         <source>Session Times</source>
-        <translation>Durées sessions</translation>
+        <translation>Durée session</translation>
     </message>
     <message>
         <source>Last Two Weeks</source>
-        <translation>Dernières deux semaines</translation>
+        <translation>Dernières 2 semaines</translation>
     </message>
     <message>
         <source>Everything</source>
@@ -1815,7 +1817,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Toggle Graph Visibility</source>
-        <translation>(Des)activer les graphiques</translation>
+        <translation>Activer les graphiques</translation>
     </message>
     <message>
         <source>Hide all graphs</source>
@@ -1823,7 +1825,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Last Two Months</source>
-        <translation>Derniers deux mois</translation>
+        <translation>Derniers 2 mois</translation>
     </message>
 </context>
 <context>
@@ -1874,7 +1876,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Please note: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Make sure your correct oximeter type is selected otherwise import will fail.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Veuillez noter : &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Assurez-vous que le type d&apos;oxymètre sélectionné est correct, sinon l&apos;importation échouera.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Veuillez noter : &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Assurez-vous que le type d&apos;oxymètre sélectionné est correct sinon l&apos;importation échouera.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import from data files created by software that came with your Pulse Oximeter, such as SpO2Review.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1882,7 +1884,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Oximeter import completed..</source>
-        <translation>Import terminé..</translation>
+        <translation>Import terminé...</translation>
     </message>
     <message>
         <source>&amp;Retry</source>
@@ -1894,7 +1896,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>You may wish to note, other companies, such as Pulox, simply rebadge Contec CMS50&apos;s under new names, such as the Pulox PO-200, PO-300, PO-400. These should also work.</source>
-        <translation>Information : d&apos;autres entreprises, comme Pulox, rebadgent les Contec CMS50 sous les noms suivants : Pulox PO-200, PO-300, PO-400 qui devraient donc fonctionner.</translation>
+        <translation>Information : d&apos;autres entreprises comme Pulox rebadgent les Contec CMS50 sous les noms suivants : Pulox PO-200, PO-300, PO-400 qui devraient donc fonctionner.</translation>
     </message>
     <message>
         <source>%1 session(s) on %2, starting at %3</source>
@@ -2214,7 +2216,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>OSCAR gives you the ability to track Oximetry data alongside CPAP session data, which can give valuable insight into the effectiveness of CPAP treatment. It will also work standalone with your Pulse Oximeter, allowing you to store, track and review your recorded data.</source>
-        <translation>OSCAR vous permet de suivre la saturation en oxygène pendant l&apos;utilisation d&apos;un appareil à Pression Positive Continue, ce qui donne une visibilité sur l&apos;efficacité du traitement. Cela fonctionne aussi avec votre oxymètre seul et vous permet de stocker, suivre et revoir les données.</translation>
+        <translation>OSCAR vous permet de suivre la saturation en oxygène pendant l&apos;utilisation d&apos;une appareil à Pression Positive Continue, ce qui donne une visibilité sur l&apos;efficacité du traitement. Cela fonctionne aussi avec votre oxymètre seul et vous permet de stocker, suivre et revoir les données.</translation>
     </message>
     <message>
         <source>For OSCAR to be able to locate and read directly from your Oximeter device, you need to ensure the correct device drivers (eg. USB to Serial UART) have been installed on your computer. For more information about this, %1click here%2.</source>
@@ -2265,11 +2267,11 @@ Corporelle</translation>
     </message>
     <message>
         <source>Pulse</source>
-        <translation>Pouls</translation>
+        <translation>Pulsations</translation>
     </message>
     <message>
         <source>&amp;Open .spo/R File</source>
-        <translation>&amp;Ouvrir fiche .spo/R</translation>
+        <translation>&amp;Ouvrir Fic.spo/R</translation>
     </message>
     <message>
         <source>R&amp;eset</source>
@@ -2285,7 +2287,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>d/MM/yy h:mm:ss AP</source>
-        <translation>J/MM/aa h:mm:ss AP</translation>
+        <translation>d/MM/yy h:mm:ss AP</translation>
     </message>
     <message>
         <source>&amp;Start Live</source>
@@ -2428,11 +2430,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ignore Short Sessions</source>
-        <translation>Ignorer des sessions courtes</translation>
+        <translation>Ignorer les sessions plus courtes que</translation>
     </message>
     <message>
         <source>Sleep Stage Waveforms</source>
-        <translation>Courbe du période de sommeil</translation>
+        <translation>Courbe de période de sommeil</translation>
     </message>
     <message>
         <source>Percentage of restriction in airflow from the median value. 
@@ -2450,7 +2452,7 @@ Une valeur de 20% est adéquate pour détecter les apnées. </translation>
     </message>
     <message>
         <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
-        <translation>Affiche les marqueurs d&apos;évènements détectés par l&apos;appareil, mais pas encore identifiés.</translation>
+        <translation>Affiche les marqueurs d&apos;évènements détectés mais non identifiés.</translation>
     </message>
     <message>
         <source>Graph Titles</source>
@@ -2470,7 +2472,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Le marquage personnalisé est une méthode expérimentale de détection des évènements ratés par l&apos;appareil. Ils ne sont &lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;b&gt;pas&lt;/b&gt;&lt;/span&gt; pris en compte dans l&apos;IAH (Index des Apnées et Hypopnées).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Le marquage personnalisé est une méthode expérimentale de détection des évènements ratés par l&apos;appareil. Il ne sont &lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;b&gt;pas&lt;/b&gt;&lt;/span&gt; pris en compte dans l&apos;IAH (Index des apnées et hypopnées).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enable/disable experimental event flagging enhancements. 
@@ -2494,11 +2496,11 @@ Option à activer avant import, sinon une purge est nécessaire.</translation>
     </message>
     <message>
         <source>Overview Linecharts</source>
-        <translation>Graphiques à lignes résumées</translation>
+        <translation>Lignes Résumé</translation>
     </message>
     <message>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
-        <translation>Autoriser de changer l&apos;axe Y par double-cliquant sur l&apos;intitulé</translation>
+        <translation>Autoriser de changer l&apos;axe des y en double-cliquant sur l&apos;intitulé</translation>
     </message>
     <message>
         <source>Always Minor</source>
@@ -2534,7 +2536,7 @@ Option à activer avant import, sinon une purge est nécessaire.</translation>
     </message>
     <message>
         <source>Flag leaks over threshold</source>
-        <translation>Afficher les fuites supérieures</translation>
+        <translation>Afficher les fuites supérieures à</translation>
     </message>
     <message>
         <source>20 cmH2O</source>
@@ -2542,7 +2544,7 @@ Option à activer avant import, sinon une purge est nécessaire.</translation>
     </message>
     <message>
         <source> hours</source>
-        <translation> heures</translation>
+        <translation> Heures</translation>
     </message>
     <message>
         <source>Double click to change the descriptive name this channel.</source>
@@ -2578,7 +2580,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>99% Percentile</source>
-        <translation>99% percentile</translation>
+        <translation>99% pour cent</translation>
     </message>
     <message>
         <source>Memory and Startup Options</source>
@@ -2674,7 +2676,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median is recommended for ResMed users.</source>
-        <translation>Le médian est recommandé pour les appareils ResMed.</translation>
+        <translation>Moyenne est recommandé pour les appareils ResMed.</translation>
     </message>
     <message>
         <source>Oximeter Events</source>
@@ -2702,7 +2704,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median</source>
-        <translation>Médian</translation>
+        <translation>Moyenne</translation>
     </message>
     <message>
         <source>Flag rapid changes in oximetry stats</source>
@@ -2718,15 +2720,15 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Resync Machine Detected Events (Experimental)</source>
-        <translation>Resynchronisation des évènements détectés par l&apos;appareil (Expérimental)</translation>
+        <translation>Resynchronisation des évènements détectés par l&apos;appareil</translation>
     </message>
     <message>
         <source>Time Weighted average of Indice</source>
-        <translation>Moyenne pondérée dans le temps de l&apos;indice</translation>
+        <translation>Temps pondéré par moyenne de l&apos;indice</translation>
     </message>
     <message>
         <source>Middle Calculations</source>
-        <translation>Calculs intermédiaires</translation>
+        <translation>Calcul de la moyenne</translation>
     </message>
     <message>
         <source>Skip over Empty Days</source>
@@ -2744,7 +2746,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Upper Percentile</source>
-        <translation>Centile supérieur</translation>
+        <translation>Pourcentage haut</translation>
     </message>
     <message>
         <source>Restart Required</source>
@@ -2756,7 +2758,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>True Maximum</source>
-        <translation>Vrai maximum</translation>
+        <translation>Maximum réel</translation>
     </message>
     <message>
         <source>Minor Flag</source>
@@ -2765,7 +2767,7 @@ Cela affecte aussi les impressions
     <message>
         <source>For consistancy, ResMed users should use 95% here,
 as this is the only value available on summary-only days.</source>
-        <translation>Par soucis de cohérence, les utilisateurs de ResMed devraient utiliser 95% ici,
+        <translation>Par soucis de cohérence, les utilisateurs de ResMed devraient utiliser 95% ici pour une meilleure visualisation 
 car c&apos;est la seule valeur disponible dans ce cas.</translation>
     </message>
     <message>
@@ -2808,11 +2810,11 @@ Surtout pour l&apos;import.</translation>
     </message>
     <message>
         <source>dd MMMM yyyy</source>
-        <translation>jj MMMM aaaa</translation>
+        <translation>dd MMMM yyyy</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le vrai maximum est le maximum de l&apos;ensemble de données.&lt;/p&gt;&lt;p&gt;Le 99e centile filtre les valeurs aberrantes les plus rares. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le véritable maximum est le maximum de l&apos;ensemble de données.&lt;/p&gt;&lt;p&gt; 99% filtre les valeurs aberrantes les plus rares. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Flag Type</source>
@@ -2863,10 +2865,8 @@ The Unintentional Leak calculations used here are linear, they don&apos;t model 
 
 If you use a few different masks, pick average values instead. It should still be close enough.</source>
         <translation>Ce calcul nécessite que le total des fuites soit fourni par l&apos;appareil à PPC (i.e. PRS1 mais pas ResMed, qui les inclut déjà).
-
 Le calcul des fuites involontaires est linéaire, il ne modélise pas la courbure du masque.
-
-Si vous utilisez des masques différents, utilisez plutôt les valeurs moyennes, c&apos;est assez précis.</translation>
+Si vous utilisez des masques différents, utilisez plutôt la valeur moyenne, ce sera assez précis.</translation>
     </message>
     <message>
         <source>Session Splitting Settings</source>
@@ -2906,7 +2906,7 @@ Si vous utilisez des masques différents, utilisez plutôt les valeurs moyennes,
     </message>
     <message>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
-        <translation>Considérer les jours sous cette valeur comme non conformes. Quatre heures est considéré comme conforme.</translation>
+        <translation>Considérer les jours sous cette valeur comme non conformes. 4 heures est considéré comme conforme.</translation>
     </message>
     <message>
         <source>Do not import sessions older than:</source>
@@ -2984,7 +2984,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>The pixel thickness of line plots</source>
-        <translation>L&apos;épaisseur en pixels des tracés linéaires</translation>
+        <translation>Épaisseur de la ligne en pixel</translation>
     </message>
     <message>
         <source>Whether this flag has a dedicated overview chart.</source>
@@ -2996,11 +2996,11 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>Combine Close Sessions </source>
-        <translation>Combiner de sessions proches </translation>
+        <translation>Fermeture combinée de sessions </translation>
     </message>
     <message>
         <source>Custom CPAP User Event Flagging</source>
-        <translation>Signalisation d&apos;évènements personnalisés</translation>
+        <translation>Comptage d&apos;évènements personnalisés</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3024,7 +3024,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>Waveforms</source>
-        <translation>Courbes</translation>
+        <translation>Ondes</translation>
     </message>
     <message>
         <source>Maximum Calcs</source>
@@ -3044,7 +3044,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>General CPAP and Related Settings</source>
-        <translation>Réglages généraux de PPC, etc</translation>
+        <translation>Réglages généraux de PPC</translation>
     </message>
     <message>
         <source>Sourceforge hosts this project for free.. Please be considerate of their resources..</source>
@@ -3064,7 +3064,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>Percentage drop in oxygen saturation</source>
-        <translation>Baisse en pourcentage de la saturation en oxygène</translation>
+        <translation>% perdus lors de la saturation d&apos;oxygène</translation>
     </message>
     <message>
         <source>&amp;General</source>
@@ -3076,7 +3076,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     </message>
     <message>
         <source>Compress SD Card Backups (slower first import, but makes backups smaller)</source>
-        <translation>Comprimer la sauvegarde de la carte SD (première importation plus lente, mais réduit les sauvegardes)</translation>
+        <translation>Compression de la sauvegarde de la carte SD</translation>
     </message>
     <message>
         <source>Keep Waveform/Event data in memory</source>
@@ -3136,7 +3136,7 @@ Are you sure you want to make these changes?</source>
     </message>
     <message>
         <source>Square Wave Plots</source>
-        <translation>Courbes carrés</translation>
+        <translation>Points carrés</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -3164,7 +3164,7 @@ Are you sure you want to make these changes?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note : &lt;/span&gt;Les appareils ResMed ne prennent pas en compte ces réglages du fait de leur conception.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note : &lt;/span&gt;Les appareils ResMEd ne prennent pas en compte ces réglages du fait de leur conception.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Oximetry Settings</source>
@@ -3237,11 +3237,11 @@ which is common on Mac &amp; Linux platforms..
 
 OSCAR can import from this compressed backup directory natively.. 
 To use it with ResScan will require the .gz files to be uncompressed first..</source>
-        <translation>Compresse la sauvegarde des machines ResMed (fichiers EDF en format .gz).
+        <translation>Compresse la sauvegarde des appareils ResMed (fichiers EDF en .gz).
 Format courant sous Linux et Mac.
 
 OSCAR peut importer de ce répertoire de sauvegarde compressé en mode natif.
-Pour l&apos;utiliser avec ResScan, il faudra d&apos;abord décompresser les fichiers .gz.</translation>
+Pour l&apos;utiliser avec ResScan, il faudra d&apos;abord décompresser les fichiers *.gz...</translation>
     </message>
     <message>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
@@ -3267,9 +3267,9 @@ and graph data older than 30 days..
 OSCAR can keep a copy of this data if you ever need to reinstall. 
 (Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
         <translation>Garde un copie de la carte SD des appareils ResMed.
-Les machines ResMed effacent les données précises après 7 jours, et les graphiques de plus de 30 jours...
+Les appareils ResMed effacent les données précises après 7 jours, et les graphiques de plus de 30 jours...
 
-OSCAR peut garder ces données si vous devez réinstaller. (Hautement recommandé, à moins que vous n&apos;ayez pas de place disque ou que les graphiques ne vous intéressent pas)</translation>
+OSCAR peut garder ces données au cas vous devriez réinstaller (Hautement recommandé, à moins que vous n&apos;ayez pas de place disque ou que les graphiques ne vous intéressent pas).</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3329,7 +3329,7 @@ OSCAR peut garder ces données si vous devez réinstaller. (Hautement recommand�
     </message>
     <message>
         <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation>Inclure ou non le N° de série de l&apos;appareil sur le rapport des changements de réglage de la machine</translation>
+        <translation>Inclure ou non le N° de série de l&apos;appareil sur le rapport des changements de réglage de l&apos;appareil</translation>
     </message>
     <message>
         <source>Include Serial Number</source>
@@ -3337,19 +3337,19 @@ OSCAR peut garder ces données si vous devez réinstaller. (Hautement recommand�
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Fournit une alerte lors de l&apos;importation de données à partir de n&apos;importe quel modèle d&apos;appareil qui n&apos;a pas encore été testé par les développeurs OSCAR. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alerter lors de l’importation de données de tout modèle d&apos;appareil qui n’est pas encore été testé par les développeurs de OSCAR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Warn when importing data from an untested machine</source>
-        <translation>Avertir lors de l&apos;importation de données à partir d&apos;un appareil non testée</translation>
+        <translation>Avertir lors de l’importation de données à partir d’un appareil non testé</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Fournit une alerte lors de l&apos;importation de données qui est en quelque sorte différente de tout ce que les développeurs OSCAR ont déjà vu. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alerter lors de l’importation de données différente de tout ce qui a déjà été vu par les développeurs de OSCAR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Warn when previously unseen data is encountered</source>
-        <translation>Avertir lorsque des données précédemment pas vues sont rencontrées</translation>
+        <translation>Avertir lorsque des données inédites sont rencontrées</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3381,15 +3381,16 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Always save screenshots in the OSCAR Data folder</source>
-        <translation>Enregistrez toujours les captures d&apos;écran dans le dossier OSCAR Data</translation>
+        <translation>Enregistrez toujours les captures d’écran dans le dossier de données de OSCAR</translation>
     </message>
     <message>
         <source>No CPAP machines detected</source>
-        <translation>Aucun appareil PPC détectée</translation>
+        <translatorcomment>Pas d&apos;appareil PPC détecté</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Will you be using a ResMed brand machine?</source>
-        <translation>Allez-vous utiliser un appareil de marque ResMed?</translation>
+        <translation>Utiliserez-vous un appareil Resmed?</translation>
     </message>
 </context>
 <context>
@@ -3768,6 +3769,10 @@ p, li { white-space: pre-wrap; }
         <translation>%1</translation>
     </message>
     <message>
+        <source>??</source>
+        <translation>??</translation>
+    </message>
+    <message>
         <source>AI</source>
         <translation>AI</translation>
     </message>
@@ -3892,12 +3897,36 @@ p, li { white-space: pre-wrap; }
         <translation>oz</translation>
     </message>
     <message>
+        <source>x1</source>
+        <translation>x1</translation>
+    </message>
+    <message>
+        <source>x2</source>
+        <translation>x2</translation>
+    </message>
+    <message>
+        <source>x3</source>
+        <translation>x3</translation>
+    </message>
+    <message>
+        <source>x4</source>
+        <translation>x4</translation>
+    </message>
+    <message>
+        <source>x5</source>
+        <translation>x5</translation>
+    </message>
+    <message>
         <source>&amp;No</source>
         <translation>&amp;Non</translation>
     </message>
     <message>
         <source>90%</source>
         <translation>90%</translation>
+    </message>
+    <message>
+        <source>???</source>
+        <translation>???</translation>
     </message>
     <message>
         <source>AHI</source>
@@ -4089,7 +4118,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Min EPAP</source>
-        <translation>EPAP min</translation>
+        <translation>EPAP mini</translation>
     </message>
     <message>
         <source>EPAP</source>
@@ -4105,7 +4134,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Min IPAP</source>
-        <translation>IPAP min</translation>
+        <translation>IPAP mini</translation>
     </message>
     <message>
         <source>IPAP</source>
@@ -4161,7 +4190,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resp. Event</source>
-        <translation>Évè. resp.</translation>
+        <translation>Évènement respiratoire</translation>
     </message>
     <message>
         <source>Inclination</source>
@@ -4277,7 +4306,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>W-Avg</source>
-        <translation>Moy-pon</translation>
+        <translation>moyenne W</translation>
     </message>
     <message>
         <source>Snore</source>
@@ -4297,7 +4326,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>cmH2O</source>
-        <translation>cmH2O</translation>
+        <translation>cmH2Os</translation>
     </message>
     <message>
         <source>Pressure Support</source>
@@ -4309,7 +4338,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Hypopnea</source>
-        <translation>Hypopnée</translation>
+        <translation>Hypopnées</translation>
     </message>
     <message>
         <source>ratio</source>
@@ -4333,7 +4362,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Clear Airway</source>
-        <translation>Voie aérienne claire</translation>
+        <translation>apnées centrales</translation>
     </message>
     <message>
         <source>Respironics</source>
@@ -4361,7 +4390,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Mask On Time</source>
-        <translation>Temps de mettre du masque</translation>
+        <translation>Durée d&apos;utilisation du masque</translation>
     </message>
     <message>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
@@ -4398,6 +4427,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Sleep Stage</source>
         <translation>Période du sommeil</translation>
+    </message>
+    <message>
+        <source>Sys1 Resist. Status</source>
+        <translation>État de la résistance Sys1</translation>
     </message>
     <message>
         <source>Minute Vent.</source>
@@ -4453,7 +4486,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>A vibratory snore</source>
-        <translation>Une ronflement vibratoire</translation>
+        <translation>Ronflement vibratoire</translation>
     </message>
     <message>
         <source>Vibratory Snore</source>
@@ -4478,6 +4511,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>SmartFlex Level</source>
         <translation>Niveau de SmartFlex</translation>
+    </message>
+    <message>
+        <source>System One Resistance Status</source>
+        <translation>État résistance System One</translation>
     </message>
     <message>
         <source>Journal Data</source>
@@ -4512,6 +4549,10 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil non supporté</translation>
     </message>
     <message>
+        <source>0cmH2O</source>
+        <translation>0cmH2O</translation>
+    </message>
+    <message>
         <source>SOMNOsoft2</source>
         <translation>SOMNOsoft2</translation>
     </message>
@@ -4524,12 +4565,28 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil</translation>
     </message>
     <message>
+        <source>1cmH2O</source>
+        <translation>1cmH2O</translation>
+    </message>
+    <message>
+        <source>Whether System One resistance settings are available to you.</source>
+        <translation>Selon disponibilité des réglages de résistance System One.</translation>
+    </message>
+    <message>
         <source>Mask On</source>
-        <translation>Masque enlevé</translation>
+        <translation>Avec masque</translation>
+    </message>
+    <message>
+        <source>2cmH2O</source>
+        <translation>2cmH2O</translation>
     </message>
     <message>
         <source>Max: %1</source>
         <translation>Max : %1</translation>
+    </message>
+    <message>
+        <source>3cmH2O</source>
+        <translation>3CmH2O</translation>
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
@@ -4626,7 +4683,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Apnea Hypopnea Index</source>
-        <translation>Index Apnées Hypopnées</translation>
+        <translation>Index apnées hypopnées</translation>
     </message>
     <message>
         <source>Pt. Access</source>
@@ -4665,6 +4722,10 @@ p, li { white-space: pre-wrap; }
         <translation>Filtre AB</translation>
     </message>
     <message>
+        <source>Sys1 Resist. Lock</source>
+        <translation>Verrou résist. Sys1</translation>
+    </message>
+    <message>
         <source>%1
 Line %2, column %3</source>
         <translation>%1
@@ -4700,7 +4761,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Median</source>
-        <translation>Médian</translation>
+        <translation>Moyenne</translation>
     </message>
     <message>
         <source>Fixed %1 (%2)</source>
@@ -4732,7 +4793,7 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>PS Min</source>
-        <translation>PS min</translation>
+        <translation>PS mini</translation>
     </message>
     <message>
         <source>Database Outdated
@@ -4774,7 +4835,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>Pr. Relief</source>
-        <translation>Décharge de pression</translation>
+        <translation>Restants de pression</translation>
     </message>
     <message>
         <source>Graphs Switched Off</source>
@@ -4816,11 +4877,15 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>PRS1 pressure relief setting.</source>
-        <translation>Décharge de pression PRS1.</translation>
+        <translation>Réglage de dépression PRS1.</translation>
     </message>
     <message>
         <source>Orientation</source>
         <translation>Orientation</translation>
+    </message>
+    <message>
+        <source>Whether or not machine shows AHI via LCD panel.</source>
+        <translation>Selon que l&apos;appareil affiche ou pas l&apos;IAH sur l&apos;affichage LCD.</translation>
     </message>
     <message>
         <source>Smart Start</source>
@@ -4860,7 +4925,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>An apnea where the airway is open</source>
-        <translation>Apnée où le passage de l&apos;air est ouvert</translation>
+        <translation>Apnée avec passage de l&apos;air ouvert</translation>
     </message>
     <message>
         <source>Flow Limitation</source>
@@ -5023,6 +5088,10 @@ Début : %2
         <translation>Respirations par minute</translation>
     </message>
     <message>
+        <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation>Une fois mis à jour, vous &lt;font size=+1&gt;ne pourrez plus &lt;/font&gt;utiliser ce profil avec l&apos;ancienne version.</translation>
+    </message>
+    <message>
         <source>Usage Statistics</source>
         <translation>Statistiques d&apos;utilisation</translation>
     </message>
@@ -5036,7 +5105,7 @@ Début : %2
     </message>
     <message>
         <source>Mask Off</source>
-        <translation>Masque enlevé</translation>
+        <translation>Sans masque</translation>
     </message>
     <message>
         <source>Max EPAP</source>
@@ -5068,7 +5137,7 @@ Début : %2
     </message>
     <message>
         <source>Average</source>
-        <translation>Moyenne</translation>
+        <translation>Moyen</translation>
     </message>
     <message>
         <source>Target Minute Ventilation</source>
@@ -5102,7 +5171,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Unclassified Apnea</source>
-        <translation>Apnée non classifiée</translation>
+        <translation>Apnées non classifiées</translation>
     </message>
     <message>
         <source>Auto Bi-Level (Fixed PS)</source>
@@ -5123,6 +5192,10 @@ TTIA : %1</translation>
     <message>
         <source>ASV (Variable EPAP)</source>
         <translation>ASV (EPAP variable)</translation>
+    </message>
+    <message>
+        <source>Sys1 Resist. Set</source>
+        <translation>Réglages résist. Sys1</translation>
     </message>
     <message>
         <source>Exhale Pressure Relief Level</source>
@@ -5153,6 +5226,10 @@ TTIA : %1</translation>
         <translation>Montée temporisée</translation>
     </message>
     <message>
+        <source>System One Resistance Lock</source>
+        <translation>Verrou de résistance System One</translation>
+    </message>
+    <message>
         <source>Cheyne Stokes Respiration</source>
         <translation>Respiration de Cheyne-Stokes</translation>
     </message>
@@ -5162,11 +5239,11 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Graph showing running AHI for the past hour</source>
-        <translation>IAH pour l&apos;heure précédente</translation>
+        <translation>IAH pour les heures précédentes</translation>
     </message>
     <message>
         <source>Graph showing running RDI for the past hour</source>
-        <translation>Graphique des troubles respiratoires pour le dernière heure</translation>
+        <translation>Graphique des troubles respiratoires pour les dernières heures</translation>
     </message>
     <message>
         <source>Temperature Enable</source>
@@ -5178,7 +5255,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation>Désolé votre appareil Philips Respironics (Model %1) n&apos;est pas prise en charge pour le moment.</translation>
+        <translation>Désolé votre appareil Philips Respironics (Model %1) n&apos;est pas pris en charge pour le moment.</translation>
     </message>
     <message>
         <source>Seconds</source>
@@ -5198,7 +5275,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Your Philips Respironics CPAP machine (Model %1) is unfortunately not a data capable model.</source>
-        <translation>Votre appareil Philips Respironics (Model %1) n&apos;est malheureusement pas un modèle produisant des données.</translation>
+        <translation>Votre Philips Respironics (Model %1) n&apos;est malheureusement pas un modèle produisant des données.</translation>
     </message>
     <message>
         <source>Channel</source>
@@ -5218,7 +5295,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Pressure Min</source>
-        <translation>Pression min</translation>
+        <translation>Pression mini</translation>
     </message>
     <message>
         <source>(%2 day ago)</source>
@@ -5266,7 +5343,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
-        <translation>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
+        <translation>Mini EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
         <source>System One</source>
@@ -5314,19 +5391,19 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</source>
-        <translation>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</translation>
+        <translation>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%</translation>
     </message>
     <message>
         <source>Median rate of detected mask leakage</source>
-        <translation>Volume médian des fuites du masque</translation>
+        <translation>Volume moyen des fuites du masque</translation>
     </message>
     <message>
         <source>PAP Device Mode</source>
-        <translation>Mode de l&apos;appareil PAP</translation>
+        <translation>PAP mode matériel</translation>
     </message>
     <message>
         <source>Mask Pressure</source>
-        <translation>Pression au masque</translation>
+        <translation>Pression du masque</translation>
     </message>
     <message>
         <source>A vibratory snore as detcted by a System One machine</source>
@@ -5334,7 +5411,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
-        <translation>Désolé, votre appareil %1 %2 n&apos;est pas supportée.</translation>
+        <translation>Désolé, votre appareil %1 %2 n&apos;est pas supporté.</translation>
     </message>
     <message>
         <source>Respiratory Event</source>
@@ -5342,7 +5419,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
-        <translation>Période anormale de respiration périodique ou Cheyne-Stokes</translation>
+        <translation>Période anormale de respiration périodique/Cheyne-Stokes</translation>
     </message>
     <message>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
@@ -5359,6 +5436,10 @@ TTIA : %1</translation>
     <message>
         <source>Question</source>
         <translation>Question</translation>
+    </message>
+    <message>
+        <source>System One Mask Resistance Setting</source>
+        <translation>Réglage de résistance du masque System One</translation>
     </message>
     <message>
         <source>Waketime: %1</source>
@@ -5456,7 +5537,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Entire Day&apos;s Flow Waveform</source>
-        <translation>Courbe de flux du jour entier</translation>
+        <translation>Flux du jour entier</translation>
     </message>
     <message>
         <source>Exiting</source>
@@ -5523,6 +5604,10 @@ Heures : %1</translation>
     <message>
         <source>Min Pressure</source>
         <translation>Pression min</translation>
+    </message>
+    <message>
+        <source>System One Resistance Setting</source>
+        <translation>Réglage de la résistance System One</translation>
     </message>
     <message>
         <source>Total Leak Rate</source>
@@ -5598,7 +5683,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Blood-oxygen saturation percentage</source>
-        <translation>Pourcentage de saturation du sang en oxygène</translation>
+        <translation>% de saturation du sang en oxygène</translation>
     </message>
     <message>
         <source>Inspiratory Time</source>
@@ -5642,7 +5727,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>A sudden (user definable) change in heart rate</source>
-        <translation>Un changement soudain de pouls (définissable par l&apos;utilisateur)</translation>
+        <translation>Changement soudain de pouls (définissable par l&apos;utilisateur)</translation>
     </message>
     <message>
         <source>Oximetry</source>
@@ -5698,7 +5783,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all your waveform channel colors and settings to defaults?</source>
-        <translation>Êtes-vous sûr de vouloir remettre à défaut tous vos réglages ?</translation>
+        <translation>Êtes-vous sûr de vouloir remettre à zéro tous vos réglages ?</translation>
     </message>
     <message>
         <source>Pressure Pulse</source>
@@ -5757,6 +5842,10 @@ Heures : %1</translation>
         <translation>ms</translation>
     </message>
     <message>
+        <source>ÇSR</source>
+        <translation>RCS</translation>
+    </message>
+    <message>
         <source>Height</source>
         <translation>Taille</translation>
     </message>
@@ -5774,9 +5863,9 @@ Heures : %1</translation>
     </message>
     <message>
         <source>Body Mass Index</source>
-        <translation>Indice de 
-Masse
-Corporelle</translation>
+        <translation>Indice
+de masse
+corporelle</translation>
     </message>
     <message>
         <source>How you feel (0 = like crap, 10 = unstoppable)</source>
@@ -5804,7 +5893,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>1=Awake 2=REM 3=Light Sleep 4=Deep Sleep</source>
-        <translation>1=Éveil 2=Sommeil paradoxal 3=Sommeil léger 4=Sommeil lourd</translation>
+        <translation>1=Éveil 2=Endormissement 3=Sommeil léger 4=Sommeil lourd</translation>
     </message>
     <message>
         <source>Brain Wave</source>
@@ -5896,11 +5985,11 @@ Corporelle</translation>
     </message>
     <message>
         <source>Pop out Graph</source>
-        <translation>Graphique contextuel</translation>
+        <translation>Graphique</translation>
     </message>
     <message>
         <source>Popout %1 Graph</source>
-        <translation>Graphique contextuel %1</translation>
+        <translation>Graphique %1</translation>
     </message>
     <message>
         <source> m</source>
@@ -6056,7 +6145,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>&lt;b&gt;OSCAR maintains a backup of your devices data card that it uses for this purpose.&lt;/b&gt;</source>
-        <translation>&lt;b&gt;OSCAR maintient une copie de la carte qu&apos;il utilise dans cette optique&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;OSCAR maintien une copie de la carte qu&apos;il utilise dans cette optique&lt;/b&gt;</translation>
     </message>
     <message>
         <source>OSCAR does not yet have any automatic card backups stored for this device.</source>
@@ -6174,19 +6263,19 @@ Corporelle</translation>
     </message>
     <message>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation>Les développeurs ont besoin d&apos;une copie zippée de la carte SD de cette machine et d&apos;un rapport .pdf d&apos;Encore pour la faire fonctionner avec OSCAR.</translation>
+        <translation>Les développeurs ont besoin d&apos;une copie zippée de la carte SD de cet appareil et d&apos;un rapport de type Encore.pdf pour le faire fonctionner avec OSCAR.</translation>
     </message>
     <message>
         <source>Machine Untested</source>
-        <translation>Machine non testée</translation>
+        <translation>Appareil non testé</translation>
     </message>
     <message>
         <source>Your Philips Respironics CPAP machine (Model %1) has not been tested yet.</source>
-        <translation>Votre machine Philips Respironics (Model %1) n&apos;est pas été testée pour le moment.</translation>
+        <translation>Votre appareil Philips Respironics (Model %1) n&apos;est pas été testé pour le moment.</translation>
     </message>
     <message>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure it works with OSCAR.</source>
-        <translation>Cette machine semble assez similaire aux autres pour pouvoir fonctionner, mais les développeurs ont besoin d&apos;une copie zipée la carte SD de cette machine et d&apos;un rapport de type Encore.pdf pour la faire fonctionner avec OSCAR.</translation>
+        <translation>Cet appareil semble assez similaire aux autres pour pouvoir fonctionner, mais les développeurs ont besoin d&apos;une copie zipée la carte SD de cet appareil et d&apos;un rapport de type Encore.pdf pour le faire fonctionner avec OSCAR.</translation>
     </message>
     <message>
         <source>Migrating </source>
@@ -6210,7 +6299,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation>Si vous avez utilisié SleepyHead, OSCAR peut copier vos anciennes données dans ce répertoire plus tard.</translation>
+        <translation>Si vous utilisiez SleepyHead, OSCAR peut copier vos anciennes données dans ce répertoire plus tard.</translation>
     </message>
     <message>
         <source>We suggest you use this folder: </source>
@@ -6246,7 +6335,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>d MMM yyyy [ %1 - %2 ]</source>
-        <translation>j MMM aaaa [ %1 - %2 ]</translation>
+        <translation>d MMM yyyy [ %1 - %2 ]</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%4)</source>
@@ -6290,7 +6379,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>nd</translation>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>Dreem</source>
@@ -6306,7 +6395,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation>Les données importées peuvent ne pas être entièrement exactes, les développeurs souhaitent donc une copie .zip de la carte SD de cette machine et des rapports Encore .pdf correspondants pour s&apos;assurer qu&apos;OSCAR gère correctement les données.</translation>
+        <translation>Les données importées peuvent ne pas être entièrement exactes. Les développeurs souhaitent donc une copie .zip de la carte SD de cetappareil et des rapports Encore .pdf correspondants pour s&apos;assurer que OSCAR gère correctement ces données.</translation>
     </message>
     <message>
         <source>P-Flex</source>
@@ -6330,7 +6419,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Adaptive (System One)</source>
-        <translation>Adaptive (System One)</translation>
+        <translation>Adaptatif (System One)</translation>
     </message>
     <message>
         <source>Heated Tube</source>
@@ -6338,39 +6427,68 @@ Corporelle</translation>
     </message>
     <message>
         <source>Tube Temperature</source>
-        <translation>Température du tube</translation>
+        <translatorcomment>Température du tube</translatorcomment>
+        <translation>Tube Temperature</translation>
     </message>
     <message>
         <source>PRS1 Heated Tube Temperature</source>
-        <translation>Température du tube PRS1</translation>
+        <translation>Température du tube chauffé PRS1</translation>
     </message>
     <message>
         <source>Tube Temp.</source>
         <translation>Temp. tube</translation>
     </message>
     <message>
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation>2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation>3</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation>4</translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation>5</translation>
+    </message>
+    <message>
         <source>PRS1 Humidifier Setting</source>
-        <translation>Réglage de l&apos;humidificateur PRS1</translation>
+        <translation>Réglage de l’humidificateur PRS1</translation>
     </message>
     <message>
         <source>Humid. Lvl</source>
-        <translation>Reg. Humid.</translation>
+        <translation>Niv. humid.</translation>
     </message>
     <message>
         <source>12mm</source>
-        <translation>12mm</translation>
+        <translation>12 mm</translation>
+    </message>
+    <message>
+        <source>PRS1 Unknown</source>
+        <translation>PRS1 inconnu</translation>
+    </message>
+    <message>
+        <source>Unknown PRS1 span 0x0E</source>
+        <translation>Intervalle 0x0E PRS1 inconnu</translation>
     </message>
     <message>
         <source>Parsing STR.edf records...</source>
-        <translation>Analyse des enregistrements STR.edf ...</translation>
+        <translation>Analyse des enregistrements STR.edf...</translation>
     </message>
     <message>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
-        <translation>Votre appareil Viatom a généré des données que OSCAR n&apos;a jamais vues auparavant.</translation>
+        <translation>Votre appareil Viatom a généré des données que OSCAR n’a jamais vues auparavant.</translation>
     </message>
     <message>
         <source>The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.</source>
-        <translation>Les données importées peuvent ne pas être entièrement précises, les développeurs souhaitent donc une copie de vos fichiers Viatom pour vous assurer qu&apos;OSCAR gère correctement les données.</translation>
+        <translation>Les données importées peuvent ne pas être totalement précises. Les développeurs souhaitent donc une copie de vos fichiers Viatom pour que OSCAR gère correctement ces données.</translation>
     </message>
     <message>
         <source>Viatom</source>
@@ -6378,7 +6496,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Viatom Software</source>
-        <translation>Viatom Software</translation>
+        <translation>Logiciel Viatom</translation>
     </message>
     <message>
         <source>OSCAR %1 needs to upgrade its database for %2 %3 %4</source>
@@ -6390,7 +6508,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>A ResMed data item: Trigger Cycle Event</source>
-        <translation>Un élément de données ResMed: événement de cycle de déclenchement</translation>
+        <translation>Élément de données Resmed : événement du cycle de déclenchement</translation>
     </message>
     <message>
         <source>Movement</source>
@@ -6402,247 +6520,23 @@ Corporelle</translation>
     </message>
     <message>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
-        <translation>La version &quot;%1&quot; n&apos;est pas valide, ne peut pas continuer!</translation>
+        <translation>La version &quot;%1&quot; est invalide, impossible de continuer !</translation>
     </message>
     <message>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
-        <translation>La version d&apos;OSCAR que vous exécutez (%1) est PLUS ANCIENNE que celle utilisée pour créer ces données (%2).</translation>
+        <translation>La version de OSCAR que vous utilisez (%1) est PLUS ANCIENNE que celle utilisée pour créer ces données (%2).</translation>
     </message>
     <message>
         <source>Please select a location for your zip other than the data card itself!</source>
-        <translation>Veuillez sélectionner un emplacement pour votre zip autre que la carte de données elle-même!</translation>
+        <translation>Pour votre fichier zip, sélectionnez un emplacement différent de la carte de données !</translation>
     </message>
     <message>
         <source>Unable to create zip!</source>
-        <translation>Impossible de créer un zip!</translation>
+        <translation>Impossible de créer un fichier zip !</translation>
     </message>
     <message>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
-    </message>
-    <message>
-        <source>Backing Up Files...</source>
-        <translation>Sauvegarde de fichiers ...</translation>
-    </message>
-    <message>
-        <source>Debugging channel #1</source>
-        <translation>Canal de débogage #1</translation>
-    </message>
-    <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation>Des trucs internes top secrets que vous n&apos;êtes pas censés voir  ;)</translation>
-    </message>
-    <message>
-        <source>Test #1</source>
-        <translation>Test n°1</translation>
-    </message>
-    <message>
-        <source>Debugging channel #2</source>
-        <translation>Canal de débogage #2</translation>
-    </message>
-    <message>
-        <source>Test #2</source>
-        <translation>Test n°2</translation>
-    </message>
-    <message>
-        <source>EPAP %1 IPAP %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
-    </message>
-    <message>
-        <source>CPAP-Check</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AutoCPAP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-Trial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AutoBiLevel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S/T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S/T - AVAPS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PC - AVAPS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flex Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether Flex settings are available to you.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rise Time Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether Rise Time settings are available to you.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rise Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask Resistance Setting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask Resist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hose Diam.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tubing Type Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether tubing type settings are available to you.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tube Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask Resistance Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether mask resistance settings are available to you.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask Res. Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether or not machine shows AHI via built-in display.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ramp Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type of ramp curve to use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SmartRamp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup Breath Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breath Rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fixed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fixed Backup Breath BPM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breath BPM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Timed Inspiration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Timed Insp.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-Trial Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-Trial Dur.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EZ-Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Whether or not EZ-Start is enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Variable Breathing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?5?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?9?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?10?</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6653,7 +6547,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>about:blank</source>
-        <translation>about:blank</translation>
+        <translation>au sujet : blanc</translation>
     </message>
 </context>
 <context>
@@ -6719,11 +6613,11 @@ Corporelle</translation>
     </message>
     <message>
         <source>%1 Median</source>
-        <translation>%1 Médian</translation>
+        <translation>%1 Moyen</translation>
     </message>
     <message>
         <source>Min %1</source>
-        <translation>%1 min</translation>
+        <translation>%1 mini</translation>
     </message>
     <message>
         <source>Most Recent</source>
@@ -6739,7 +6633,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>Derniers 6 mois</translation>
+        <translation>6 Derniers mois</translation>
     </message>
     <message>
         <source>Average %1</source>
@@ -6939,7 +6833,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Changes to Machine Settings</source>
-        <translation>Changements de réglages machine</translation>
+        <translation>Changements de réglages de l&apos;appareil</translation>
     </message>
     <message>
         <source>No data found?!?</source>
@@ -6955,7 +6849,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>This report was prepared on %1 by OSCAR %2</source>
-        <translation>Ce rapport a été préparé le %1 par OSCAR %2</translation>
+        <translation>Ce rapport a été rédigé le %1 par OSCAR %2</translation>
     </message>
 </context>
 <context>
@@ -7105,7 +6999,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>The last time you used your %1...</source>
-        <translation>Dernière utilisation de la machine %1...</translation>
+        <translation>Dernière utilisation de l&apos;appareil %1  :</translation>
     </message>
     <message>
         <source>last night</source>
@@ -7129,7 +7023,7 @@ Corporelle</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
-        <translation>La machine a fonctionné pendant %1.</translation>
+        <translation>L&apos;appareil a fonctionné pendant %1.</translation>
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
@@ -7153,15 +7047,15 @@ Corporelle</translation>
     </message>
     <message>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation>Vous aviez un AHI de %1, qui est %2 votre %3 moyenne de %4.</translation>
+        <translation>IAH de %1 (%2 %4, moyenne des %3 jours précédents).</translation>
     </message>
     <message>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>Votre appareil était en dessous de %1-%2 %3 pendant %4% du temps.</translation>
+        <translation>L&apos;appreil était en dessous de %1-%2 %3 pendant %4% du temps.</translation>
     </message>
     <message>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation>Vos fuites moyennes étaient de %1 %2, ce qui correspond à %3 votre %4 moyenne de %5.</translation>
+        <translation>Fuites moyennes de %1 %2 (%3 %5, moyenne des %4 jours précédents).</translation>
     </message>
     <message>
         <source>No CPAP data has been imported yet.</source>
@@ -7177,11 +7071,11 @@ Corporelle</translation>
     </message>
     <message>
         <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation>Certaines préférences sont forcées avec les machines ResMed</translation>
+        <translation>Certaines préférences sont forcées avec les appareils ResMed</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>Bienvenue dans OSCAR (le Rapporteur &apos;Open Source&apos; d&apos;Analyse PPC)</translation>
+        <translation>Bienvenue dans O.S.C.A.R. (Open Source CPAP Analysis Reporter)</translation>
     </message>
     <message>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
@@ -7193,23 +7087,23 @@ Corporelle</translation>
     </message>
     <message>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation>L&apos;appareil a utilisé une pression d&apos;air constante de %1-%2 %3.</translation>
+        <translation>L&apos;appareil a utilisé une pression d&apos;air constante de %1 %2 %3.</translation>
     </message>
     <message>
         <source>Your EPAP pressure fixed at %1 %2.</source>
-        <translation>La pression EPAP s&apos;est fixée à %1 %2.</translation>
+        <translation>La pression EPAP s&apos;est fixée %1 %2.</translation>
     </message>
     <message>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Votre pression IPAP était en dessous de %1 %2 pendant %3% du temps.</translation>
+        <translation>Pression IPAP en dessous de %1 %2 pendant %3% du temps.</translation>
     </message>
     <message>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Votre pression EPAP était en dessous de %1 %2 pendant %3% du temps.</translation>
+        <translation>Pression EPAP en dessous de %1 %2 pendant %3% du temps.</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Attention: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;La carte SD de l&apos;appareil ResMed S9 doit être verrouillée &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;avant d&apos;être insérée dans votre ordinateur.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Certains systèmes d&apos;exploitation écrivent des fichiers sur la carte sans le demander et peuvent rendre la carte inutilisable par votre machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Attention: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;La carte SD de l&apos;appareil ResMed S9 doit être verrouillée &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;avant d&apos;être insérée dans votre ordinateur.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Certains systèmes d&apos;exploitation écrivent des fichiers sur la carte sans le demander et peuvent rendre la carte inutilisable par votre appareil.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7231,11 +7125,11 @@ Corporelle</translation>
     </message>
     <message>
         <source>Plots</source>
-        <translation>Graphiques</translation>
+        <translation>Points</translation>
     </message>
     <message>
         <source>Resets all graphs to a uniform height and default order.</source>
-        <translation>Rétablie les valeurs par défaut de la hauteur et de l&apos;ordre de tous les graphiques.</translation>
+        <translation>RAZ de la hauteur et de l&apos;ordre de tous les graphiques.</translation>
     </message>
     <message>
         <source>Remove Clone</source>
@@ -7269,11 +7163,11 @@ Cliquer et glisser pour réorganiser les graphiques</translation>
     </message>
     <message>
         <source>Restore X-axis zoom to 100% to view entire selected period.</source>
-        <translation>Rétablie du zoom des axis X à 100% pour afficher la période choisie.</translation>
+        <translation>RAZ du zoom des X à 100% pour afficher la période choisie.</translation>
     </message>
     <message>
         <source>Restore X-axis zoom to 100% to view entire day&apos;s data.</source>
-        <translation>Rétablie  du zoom des  axis X à 100% pour afficher une journée complète.</translation>
+        <translation>RAZ du zoom des X à 100% pour afficher une journée complète.</translation>
     </message>
 </context>
 </TS>

@@ -1,5 +1,6 @@
-﻿/* Overview GUI Implementation
+/* Overview GUI Implementation
  *
+ * Copyright (c) 2020 The Oscar Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -23,6 +24,7 @@
 #include "Graphs/gXAxis.h"
 #include "Graphs/gLineChart.h"
 #include "Graphs/gYAxis.h"
+#include "Graphs/gPressureChart.h"
 #include "cprogressbar.h"
 
 #include "mainwindow.h"

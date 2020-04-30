@@ -1457,7 +1457,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="556"/>
         <source>%1 (Profile: %2)</source>
-        <translation>٪1 (ملف تعريف: ٪2)</translation>
+        <translation>%1 (ملف تعريف: %2)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1001"/>
@@ -1526,7 +1526,7 @@
 %2</source>
         <translation>تم استيرا 1% جلسة (جلسات) ZEO من
 
-٪2</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2332"/>
@@ -1553,7 +1553,7 @@
 %2</source>
         <translation>تم استيرا 1% جلسة (جلسات) DREEM من
 
-٪2</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2361"/>
@@ -2579,7 +2579,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.cpp" line="220"/>
         <source>Could not detect any connected oximeter devices.</source>
-        <translation>المسح الضوئي لمقاييس التأكسج المتوافقة</translation>
+        <translation>المسح الضوئي لمقاييس التأكسج المتوافقة.</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.cpp" line="228"/>
@@ -2895,7 +2895,7 @@ Index</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="154"/>
         <source>Combine Close Sessions </source>
-        <translation>الجمع بين جلسات مغلقة</translation>
+        <translation>الجمع بين جلسات مغلقة </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="164"/>
@@ -2990,7 +2990,7 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
         <translation>النسبة المئوية للقيود المفروضة على تدفق الهواء من القيمة المتوسطة.
-قيمة 20 ٪ تعمل بشكل جيد للكشف عن انقطاع النفس.</translation>
+قيمة 20 ٪ تعمل بشكل جيد للكشف عن انقطاع النفس. </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1008"/>
@@ -3594,7 +3594,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2196"/>
         <source>Last Checked For Updates: </source>
-        <translation>آخر فحص للتحقق من وجود تحديثات:</translation>
+        <translation>آخر فحص للتحقق من وجود تحديثات: </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2209"/>
@@ -4712,7 +4712,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="381"/>
         <source>(% %1 in events)</source>
-        <translation>(٪%1 في الأحداث)</translation>
+        <translation>(٪ %1 في الأحداث)</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
@@ -4857,7 +4857,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="287"/>
         <source>%1 (%2 days): </source>
-        <translation>%1 (%2 يوما):</translation>
+        <translation>%1 (%2 يوما): </translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="289"/>
@@ -4867,7 +4867,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="347"/>
         <source>% in %1</source>
-        <translation>٪ في 1%</translation>
+        <translation>٪ في %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="353"/>
@@ -4879,13 +4879,14 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="359"/>
         <source>Min %1</source>
-        <translation>الحد الأدنى 1%</translation>
+        <translation>الحد الأدنى %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="665"/>
         <source>
 Hours: %1</source>
-        <translation>الساعات: %1</translation>
+        <translation>
+الساعات: %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="731"/>
@@ -4923,7 +4924,7 @@ Start: %2
         <source>%1
 Length: %3
 Start: %2</source>
-        <translation>1%
+        <translation>%1
 المدة:%3
 البداية:%2</translation>
     </message>
@@ -5593,7 +5594,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="191"/>
         <source>Built with Qt %1 on %2</source>
-        <translation>تم إنشاؤه باستخدام Qt٪1  على٪2</translation>
+        <translation>تم إنشاؤه باستخدام Qt %1 على %2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="194"/>
@@ -5978,7 +5979,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="723"/>
         <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
-        <translation>أنتج جهاز Philips Respironics٪ 1 (٪ 2) بيانات لم يشاهدها OSCAR من قبل.</translation>
+        <translation>أنتج جهاز Philips Respironics %1 (%2) بيانات لم يشاهدها OSCAR من قبل.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="724"/>
@@ -6395,7 +6396,8 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/preferences.cpp" line="200"/>
         <source>, found SleepyHead -
 </source>
-        <translation> ، وجدت SleepyHead -</translation>
+        <translation>، وجدت SleepyHead -
+</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/preferences.cpp" line="201"/>
@@ -6420,7 +6422,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="523"/>
         <source>OSCAR %1 needs to upgrade its database for %2 %3 %4</source>
-        <translation>يحتاج OSCAR٪ 1 إلى ترقية قاعدة بياناته لـ٪ 2٪ 3٪ 4</translation>
+        <translation>يحتاج OSCAR %1 إلى ترقية قاعدة بياناته لـ %2 %3 %4</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="536"/>
@@ -6621,7 +6623,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Vibratory Snore (VS2) </source>
-        <translation>الشخير الاهتزازي (VS2)</translation>
+        <translation>الشخير الاهتزازي (VS2) </translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
@@ -7403,7 +7405,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/main.cpp" line="216"/>
         <source>Migrating </source>
-        <translation>ترحيل</translation>
+        <translation>ترحيل </translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="216"/>
@@ -7478,12 +7480,12 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/main.cpp" line="575"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
-        <translation>الإصدار &quot;٪ 1&quot; غير صالح ، لا يمكن المتابعة!</translation>
+        <translation>الإصدار &quot;%1&quot; غير صالح ، لا يمكن المتابعة!</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="584"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
-        <translation>إصدار OSCAR الذي تقوم بتشغيله (٪ 1) هو أقدم من الإصدار المستخدم لإنشاء هذه البيانات (٪ 2).</translation>
+        <translation>إصدار OSCAR الذي تقوم بتشغيله (%1) هو أقدم من الإصدار المستخدم لإنشاء هذه البيانات (%2).</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="588"/>
@@ -7580,7 +7582,8 @@ TTIA: %1</source>
         <location filename="../oscar/reports.cpp" line="191"/>
         <source>: %1 hours, %2 minutes, %3 seconds
 </source>
-        <translation>:1% ساعات ، %2 دقيقة ، %3 ثواني</translation>
+        <translation>: %1 ساعات، %2 دقيقة، %3 ثواني
+</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="241"/>
@@ -7597,22 +7600,22 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/reports.cpp" line="276"/>
         <source>AI=%1 HI=%2 CAI=%3 </source>
-        <translation></translation>
+        <translation>AI=%1 HI=%2 CAI=%3 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="282"/>
         <source>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</source>
-        <translation></translation>
+        <translation>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="286"/>
         <source>UAI=%1 </source>
-        <translation></translation>
+        <translation>UAI=%1 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="288"/>
         <source>NRI=%1 LKI=%2 EPI=%3</source>
-        <translation></translation>
+        <translation>NRI=%1 LKI=%2 EPI=%3</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="357"/>
@@ -7737,7 +7740,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1523"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
-        <translation></translation>
+        <translation>EPAP %1 IPAP %2 (%3)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1525"/>
@@ -7748,7 +7751,7 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/day.cpp" line="1527"/>
         <location filename="../oscar/SleepLib/day.cpp" line="1536"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
-        <translation></translation>
+        <translation>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1532"/>
@@ -7993,7 +7996,7 @@ Please Rebuild CPAP Data</source>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="157"/>
         <source>Hours: %1h, %2m, %3s</source>
-        <translation>ساعات: 1h, %2m, %3s</translation>
+        <translation>ساعات العمل: %1 س ، %2 م ، %3 ث</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="260"/>
@@ -8013,7 +8016,7 @@ Please Rebuild CPAP Data</source>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="45"/>
         <source>OSCAR will not touch this folder, and will create a new one instead.</source>
-        <translation>لن تلمس الأداة OSCAR هذا المجلد ، وستقوم بإنشاء مجلد جديد بدلاً منه</translation>
+        <translation>لن تلمس الأداة OSCAR هذا المجلد ، وستقوم بإنشاء مجلد جديد بدلاً منه.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="46"/>
@@ -8569,7 +8572,7 @@ Line %2, column %3</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="723"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
-        <translation>تم تحضير هذا التقرير في٪ 1 بواسطة OSCAR٪ 2</translation>
+        <translation>تم تحضير هذا التقرير في %1 بواسطة OSCAR %2</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1355"/>
@@ -9047,7 +9050,7 @@ Line %2, column %3</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="182"/>
         <source>%2 days ago</source>
-        <translation>2% منذ أيام</translation>
+        <translation>%2 منذ أيام</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="184"/>

@@ -58,6 +58,7 @@ extern ChannelID PRS1_TimedBreath, PRS1_HumidMode, PRS1_TubeTemp;
 extern ChannelID PRS1_FlexLock, PRS1_TubeLock, PRS1_RampType;
 extern ChannelID PRS1_BackupBreathMode, PRS1_BackupBreathRate, PRS1_BackupBreathTi;
 extern ChannelID PRS1_AutoTrial, PRS1_EZStart, PRS1_RiseTime, PRS1_RiseTimeLock;
+extern ChannelID PRS1_PeakFlow;
 extern ChannelID PRS1_VariableBreathing;
 
 extern ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
@@ -159,6 +160,7 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_RespRate);
         CHANNELNAME(CPAP_PTB);
         CHANNELNAME(PRS1_TimedBreath);
+        CHANNELNAME(PRS1_PeakFlow);
         CHANNELNAME(CPAP_MinuteVent);
         CHANNELNAME(CPAP_TidalVolume);
         CHANNELNAME(CPAP_ClearAirway);

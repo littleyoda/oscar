@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US" sourcelanguage="en_US">
+<TS version="2.1" language="th_TH" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -1872,7 +1872,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="383"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Biological (birth) gender is sometimes needed to enhance the accuracy of a few calculations, feel free to leave this blank and skip any of them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Biological (birth) gender is sometimes needed to enhance the accuracy of a few calculations, feel free to leave this blank and skip any of them.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="386"/>
@@ -2294,27 +2294,27 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1004"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, OSCAR will automatically reset your CMS50&apos;s internal clock using your computers current time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>If enabled, OSCAR will automatically reset your CMS50&apos;s internal clock using your computers current time.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1036"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can enter a 7 character name for this oximeter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">Here you can enter a 7 character name for this oximeter.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1077"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option will erase the imported session from your oximeter after import has completed. &lt;/p&gt;&lt;p&gt;Use with caution,  because if something goes wrong before OSCAR saves your session, you can&apos;t get it back.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This option will erase the imported session from your oximeter after import has completed. Use with caution,  because if something goes wrong before OSCAR saves your session, you can&apos;t get it back.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import (via cable) from your oximeters internal recordings.&lt;/p&gt;&lt;p&gt;After selecting on this option, old Contec oximeters will require you to use the device&apos;s menu to initiate the upload.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This option allows you to import (via cable) from your oximeters internal recordings. After selecting on this option, old Contec oximeters will require you to use the device&apos;s menu to initiate the upload.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1148"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t mind a being attached to a running computer overnight, this option provide a useful plethysomogram graph, which gives an indication of heart rhythm, on top of the normal oximetry readings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>If you don&apos;t mind a being attached to a running computer overnight, this option provide a useful plethysomogram graph, which gives an indication of heart rhythm, on top of the normal oximetry readings.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1154"/>
@@ -2324,7 +2324,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1187"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import from data files created by software that came with your Pulse Oximeter, such as SpO2Review.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This option allows you to import from data files created by software that came with your Pulse Oximeter, such as SpO2Review.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1193"/>
@@ -2415,7 +2415,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1857"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: Syncing to CPAP session starting time will always be more accurate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Note: Syncing to CPAP session starting time will always be more accurate.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1878"/>
@@ -2451,7 +2451,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="823"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Please note: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Make sure your correct oximeter type is selected otherwise import will fail.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Please note: Make sure your correct oximeter type is selected otherwise import will fail.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="910"/>
@@ -2476,7 +2476,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1014"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check to enable updating the device identifier next import, which is useful for those who have multiple oximeters lying around.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Check to enable updating the device identifier next import, which is useful for those who have multiple oximeters lying around.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1017"/>
@@ -2496,9 +2496,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1237"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Reminder for CPAP users: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Did you remember to import your CPAP sessions first?&lt;br/&gt;&lt;/span&gt;If you forget, you won&apos;t have a valid time to sync this oximetry session to.&lt;br/&gt;To a ensure good sync between devices, always try to start both at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Reminder for CPAP users: Did you remember to import your CPAP sessions first?
-If you forget, you won&apos;t have a valid time to sync this oximetry session to.
-To a ensure good sync between devices, always try to start both at the same time.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1648"/>
@@ -2508,8 +2506,7 @@ To a ensure good sync between devices, always try to start both at the same time
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1825"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR needs a starting time to know where to save this oximetry session to.&lt;/p&gt;&lt;p&gt;Choose one of the following options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>OSCAR needs a starting time to know where to save this oximetry session to.
-Choose one of the following options:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="2135"/>
@@ -2893,7 +2890,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Sessions shorter in duration than this will not be displayed</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="310"/>
@@ -2963,7 +2960,7 @@ A value of 20% works well for detecting apneas. </source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Custom flagging is an experimental method of detecting events missed by the machine. They are not included in AHI.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1119"/>
@@ -3151,10 +3148,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="356"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This setting should be used with caution...&lt;/span&gt; Switching it off comes with consequences involving accuracy of summary only days, as certain calculations only work properly provided summary only sessions that came from individual day records are kept together. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ResMed users:&lt;/span&gt; Just because it seems natural to you and I that the 12 noon session restart should be in the previous day, does not mean ResMed&apos;s data agrees with us. The STF.edf summary index format has serious weaknesses that make doing this not a good idea.&lt;/p&gt;&lt;p&gt;This option exists to pacify those who don&apos;t care and want to see this &amp;quot;fixed&amp;quot; no matter the costs, but know it comes with a cost. If you keep your SD card in every night, and import at least once a week, you won&apos;t see problems with this very often.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This setting should be used with caution...
- Switching it off comes with consequences involving accuracy of summary only days, as certain calculations only work properly provided summary only sessions that came from individual day records are kept together.
- ResMed users: Just because it seems natural to you and I that the 12 noon session restart should be in the previous day, does not mean ResMed&apos;s data agrees with us. The STF.edf summary index format has serious weaknesses that make doing this not a good idea.
-This option exists to pacify those who don&apos;t care and want to see this fixed no matter the costs, but know it comes with a cost. If you keep your SD card in every night, and import at least once a week, you won&apos;t see problems with this very often.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="359"/>
@@ -3174,9 +3168,7 @@ This option exists to pacify those who don&apos;t care and want to see this fixe
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This setting keeps waveform and event data in memory after use to speed up revisiting days.
-This is not really a necessary option, as your operating system caches previously used files too.
-Recommendation is to leave it switched off, unless your computer has a ton of memory.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="600"/>
@@ -3186,7 +3178,7 @@ Recommendation is to leave it switched off, unless your computer has a ton of me
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="624"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Cuts down on any unimportant confirmation dialogs during import.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="627"/>
@@ -3262,7 +3254,7 @@ If you use a few different masks, pick average values instead. It should still b
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="732"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="779"/>
@@ -3350,8 +3342,7 @@ Mainly affects the importer.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1443"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>True maximum is the maximum of the data set.
-99th percentile filters out the rarest outliers.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1461"/>
@@ -3393,7 +3384,7 @@ Mainly affects the importer.</source>
         <location filename="../oscar/preferencesdialog.ui" line="1869"/>
         <location filename="../oscar/preferencesdialog.ui" line="1948"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Warning: Just because you can, does not mean it&apos;s good practice.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1882"/>
@@ -3471,9 +3462,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on.
-If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view everything in overview, all the summary data still has to be loaded anyway.
-Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="905"/>
@@ -3510,13 +3499,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Syncing Oximetry and CPAP Data
-CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does not have the correct timestamp needed to sync.
-
-Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.
-
-If you start your Oximeters recording mode at exactly the same time you start your CPAP machine, you can now also achieve sync. 
-The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2007"/>
@@ -3567,8 +3550,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If your interested in helping test new features and bugfixes early, click here.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;But please be warned this will sometimes mean breaky code..&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>If your interested in helping test new features and bugfixes early, click here.
-But please be warned this will sometimes mean breaky code.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2240"/>
@@ -3588,7 +3570,7 @@ But please be warned this will sometimes mean breaky code.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2309"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2567"/>
@@ -3613,8 +3595,7 @@ But please be warned this will sometimes mean breaky code.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads
-50ms is recommended value.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2501"/>
@@ -3680,7 +3661,7 @@ But please be warned this will sometimes mean breaky code.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="634"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="637"/>
@@ -3690,7 +3671,7 @@ But please be warned this will sometimes mean breaky code.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="644"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="647"/>
@@ -3710,7 +3691,7 @@ But please be warned this will sometimes mean breaky code.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1490"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Note: Due to summary design limitations, ResMed machines do not support changing these settings.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1543"/>
@@ -3823,7 +3804,7 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2721"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>These features have recently been pruned. They will come back later. </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2724"/>
@@ -8918,8 +8899,7 @@ Line %2, column %3</source>
     <message>
         <location filename="../oscar/welcome.ui" line="581"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Warning: ResMed S9 SDCards need to be locked before inserting into your computer.
-Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="160"/>

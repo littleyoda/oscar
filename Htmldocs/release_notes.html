@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
@@ -8,16 +8,39 @@
   </head>
   <body>
     <p>
-    <b>Changes and fixes in OSCAR v1.1.0-rc-2</b>
+    <b>Changes and fixes in OSCAR v1.1.1-alpha-0</b>
     <br>Portions of OSCAR are © 2019-2020 by
     <i>The OSCAR Team</i></p>
     <ul>
       <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
-      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;"></li>
+        <ul>
+          <li>BiPAP S/T (C Series) (1061401)</li>
+          <li>DreamStation BiPAP Pro (600X150)</li>
+          <li>DreamStation Auto BiPAP (700X150)</li>
+          <li><i>Note: Ventilator alarms are not currently imported.</i></li>
+        </ul>
+      <li>[new] Add the "peak flow" channel reported by pre-DreamStation ventilators.</li>
+      <li>[new] Automatically detect and resolve graphics-related crashes on Windows.</li>
+      <li>[new] Support AVAPS in the Overview pressure chart.</li>
+      <li>[fix] Fix missing bars in the Overview pressure chart for Philips Respironics devices.</li>
+      <li>[fix] Add missing Philips Respironics pressure channels to CSV export.</li>
+      <li>[fix] Fix zero Philips Respironics AHI in CSV session export.</li>
+      <li>[fix] Add support for the Bi-Flex lock setting on pre-DreamStation ventilators.</li>
+      <li>[fix] Fix the pressure waveform scale for the BiPAP autoSV Advanced 30 (960T)</li>
+      <li>[fix] Add support for rise time mode on DreamStation BiPAP devices (600X-700X).</li>
+      <li>[fix] Remove the ramp time and pressure settings when the ramp is disabled on pre-DreamStation devices.</li>
+      <li>[fix] Improve import of Philips Respironics oximetry data.</li>
+      <li>[fix] Fix occasional failure to save imported Viatom data.</li>
+    </ul>
+    <p>
+    <b>Changes and fixes in OSCAR v1.1.0</b>
+    <br>Portions of OSCAR are © 2019-2020 by 
+    <i>The OSCAR Team</i></p>
+    <ul>
+      <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
         <ul>
           <li>DreamStation Auto CPAP (500X180)</li>
         </ul>
-      <!-- /li -->
       <li>[new] Add support for DreamStation humidifier passover and error modes.</li>
       <li>[fix] Fix an rc-1 regression in pressure relief display on the Statistics page.</li>
       <li>[fix] Fix the minutes-at-pressure graph for Philips Respironics devices.</li>
@@ -29,21 +52,17 @@
     <ul>
       <li>[fix] AHI and Usage bars in overview graphs now show the correct height when oximetry usage is significantly longer than CPAP usage.</li>
       <li>[fix] Improved import of Philips Respironics settings. In particular:</li>
-      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;"></li>
         <ul>
           <li>The settings for PC, S, and S/T modes are now displayed correctly.</li>
           <li>AVAPS settings are now displayed correctly, including target tidal volume.</li>
           <li>Backup breath settings are now imported and displayed.</li>
           <li>The settings for CPAP-Check and Auto-Trial modes are now displayed correctly.</li>
         </ul>
-      <!-- /li -->
       <li>[fix] Fix the reported duration for extremely long sessions on DreamStation CPAP and BiPAP devices</li>
       <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
-      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;"></li>
         <ul>
           <li>DreamStation Auto CPAP (500X120)</li>
         </ul>
-      <!-- /li -->
       <li>[fix] Fix regression in Welcome page pressure display</li>
       <li>[fix] Several crashes have been fixed.</li>
     </ul>
@@ -56,11 +75,9 @@
       <li>[new] Add support for Dreem hypnograms</li>
       <li>[new] Extensive reorganization of the ResMed loader to facilitate understanding and future improvements</li>
       <li>[new] Additional Philips Respironics devices tested and fully supported:</li>
-      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;"></li>
         <ul>
           <li>DreamStation Auto CPAP (500X130)</li>
         </ul>
-      <!-- /li -->
       <li>[new] Add a menu option to create a zip from an SD card</li>
       <li>[new] Ask where to save screenshots</li>
       <li>[new] Alert users when unexpected Philips Respironics data is encountered during import</li>
@@ -81,7 +98,6 @@
     <ul>
       <li>[new] Extensive overhaul of the Philips Respironics System One importer, resolving all previously reported issues.</li>
       <li>[new] The following Philips Respironics devices are now tested and fully supported:</li>
-      <li style="list-style-type: none; list-style-image: none; list-style-position: outside; display: inline;"></li>
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -108,11 +124,8 @@
           <li>DreamStation BiPAP S/T 30 with AAM (1030X150),</li>
           <li>DreamStation BiPAP AVAPS 30 (1130X110),</li>
           <li>DreamStation BiPAP AVAPS 30 AE (1131X150)</li>
-          <li>
-            <i>Note: The settings for PC, S, and S/T modes are still displayed incorrectly.</i>
-          </li>
+          <li> <i>Note: The settings for PC, S, and S/T modes are still displayed incorrectly.</i> </li>
         </ul>
-      <!-- /li -->
       <li>[new] Update translation files and add new languages</li>
       <li>[new] Allow user to reset graph order on the Daily page to Standard (for CPAP and APAP) or Advanced order (for ASV and AVAPS modes)</li>
       <li>[new] Add preference setting to include the serial number on machine settings list</li>

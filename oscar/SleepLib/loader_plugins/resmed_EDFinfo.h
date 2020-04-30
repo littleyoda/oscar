@@ -229,14 +229,15 @@ class STRFile
 {
 public:
     STRFile() :
-        filename(QString()), edf(nullptr) {}
-    STRFile(QString name, ResMedEDFInfo *str) :
-        filename(name), edf(str) {}
+        filename(QString()), days(0), edf(nullptr) {}
+    STRFile(QString name, long int recCnt, ResMedEDFInfo *str) :
+        filename(name), days(recCnt), edf(str) {}
     STRFile(const STRFile & copy) = default;
 
     virtual ~STRFile() {}
 
-    QString filename;
+    QString         filename;
+    long int        days;
     ResMedEDFInfo * edf;
 };
 
