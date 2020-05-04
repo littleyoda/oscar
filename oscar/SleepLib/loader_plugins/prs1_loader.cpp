@@ -6851,12 +6851,16 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
-                    if (data[pos+1] != 0x80) {
-                        // 0x10 seen with EZ-Start enabled, Opti-Start off on 500X110
-                        // 0x20 seen with Opti-Start enabled
-                        // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
-                        CHECK_VALUE(data[pos+1] & ~(0x10 | 0x20), 0);
+                    switch (data[pos+1]) {
+                        case 0x00:  // 0x00 seen with EZ-Start disabled, no auto-trial, with CPAP-Check on 400X110
+                        case 0x10:  // 0x10 seen with EZ-Start enabled, Opti-Start off on 500X110
+                        case 0x20:  // 0x20 seen with Opti-Start enabled
+                        case 0x30:  // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
+                        case 0x40:  // 0x40 seen with Auto-Trial
+                        case 0x80:  // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
+                            break;
+                        default:
+                            UNEXPECTED_VALUE(data[pos+1], "[0,0x10,0x20,0x30,0x40,0x80]")
                     }
                 }
                 break;
@@ -6916,7 +6920,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // but curiously report the use of C-Flex+, even though Auto-CPAP uses A-Flex.
                 CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);
-                CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
+                if (data[pos] != 30) {
+                    CHECK_VALUES(data[pos], 5, 25);  // Auto-Trial Duration
+                }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
                 // If we want C-Flex+ to be reported as A-Flex, we can set cpapmode = PRS1_MODE_AUTOTRIAL here.
                 // (Note that the setting event has already been added above, which is why ImportSummary needs
@@ -7128,7 +7134,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
         qWarning() << this->sessionid << "summary data too short:" << chunk_size;
         return false;
     }
-    if (chunk_size < 60) UNEXPECTED_VALUE(chunk_size, ">= 60");
+    if (chunk_size < 59) UNEXPECTED_VALUE(chunk_size, ">= 59");
 
     bool ok = true;
     int pos = 0;
