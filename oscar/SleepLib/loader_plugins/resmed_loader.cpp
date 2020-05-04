@@ -284,14 +284,17 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // Check DATALOG folder exists and is readable
     if (!QDir().exists(datalogPath)) {
+        qDebug() << "Missing DATALOG in" << dirpath;
         return -1;
     }
 
     m_abort = false;
     MachineInfo info = newInfo();
 
-    if ( ! parseIdentTGT(path, & info, idmap) )
+    if ( ! parseIdentTGT(path, & info, idmap) ) {
+        qDebug() << "Failed to parse Identification.tgt";
         return -1;
+    }
  
     qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
 #ifdef IDENT_DEBUG
@@ -303,7 +306,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // Abort if no serial number
     if (info.serial.isEmpty()) {
-        qDebug() << "ResMed Data card has no valid serial number in Indentification.tgt";
+        qDebug() << "ResMed Data card is missing serial number in Indentification.tgt";
         return -1;
     }
 
@@ -382,6 +385,10 @@ int ResmedLoader::Open(const QString & dirpath)
     QDir dir;
     if ( ! dir.exists(strBackupPath))
         dir.mkpath(strBackupPath);
+
+    QString newpath = backup_path + "DATALOG";
+    if ( ! dir.exists(newpath) )
+        dir.mkpath(newpath);
 
     if ( ! importing_backups ) {
         BackupSTRfiles( strpath, path, strBackupPath, info, STRmap );
@@ -888,8 +895,9 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
         return "";
     }
 
-    QString newpath = backup_path + RMS9_STR_datalog + "/" + yearstr;
-    !dir.exists(newpath) && dir.mkpath(newpath);
+    QString newpath = backup_path + "DATALOG" + "/" + yearstr;
+    if ( ! dir.exists(newpath) )
+        dir.mkpath(newpath);
 
     newname = newpath+"/"+filename;
 
