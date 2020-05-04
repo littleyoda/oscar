@@ -1,6 +1,18 @@
 #! /bin/bash
 # First parameter is optional
 #
+function getPkg () {
+    unset PKGNAME
+    unset PKGVERS
+    while read stat pkg ver other ;
+        do 
+            if [[ ${stat} == "ii" ]] ; then
+                PKGNAME=`awk -F: '{print $1}' <<< ${pkg}`
+                PKGVERS=`awk -F. '{print $1 "." $2}' <<< ${ver}`
+                break
+            fi ;
+        done <<< $(dpkg -l | grep $1)
+}
 
 ITERATION=$1
 if [  -z ${ITERATION} ]; then
@@ -51,6 +63,15 @@ else
     archi="unknown"
 fi
 deb_file="${appli_name}_${VERSION}-${ITERATION}_$archi.deb"
+
+getPkg libqt5core
+qtver=$PKGVERS
+
+getPkg libdouble
+dblPkg=$PKGNAME
+
+echo "QT version " $qtver
+echo "DblConv package " $dblPkg
 
 # if deb file exists, fatal error
 if [ -f "./$deb_file" ]; then
@@ -136,10 +157,10 @@ fpm --input-type dir --output-type deb  \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
     --deb-no-default-config-files   \
-    --depends libdouble-conversion1 \
+    --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends 'libqt5core5a > 5.7.0'    \
+    --depends 'libqt5core5a > $qtver'   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \
