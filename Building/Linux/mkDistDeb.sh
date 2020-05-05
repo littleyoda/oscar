@@ -37,9 +37,6 @@ echo Version: ${VERSION}
 # application name
 appli_name="OSCAR"
 pre_inst="tst_user.sh"
-post_inst="ln_usrbin.sh"
-pre_rem="rm_usrbin.sh"
-post_rem="clean_rm.sh"
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
 if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
@@ -47,6 +44,10 @@ if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
     post_rem="clean_rm-test.sh"
+else
+    post_inst="ln_usrbin.sh"
+    pre_rem="rm_usrbin.sh"
+    post_rem="clean_rm.sh"
 fi
 
 # temporary folder (absolute path is better)
@@ -55,7 +56,7 @@ temp_folder="/home/$USER/tmp_deb_${appli_name}/"
 # destination folder in the .deb file
 dest_folder="/usr/"
 
-# the .deb file mustn't exist (or fpm must have -f parameter to force the creation)
+# the .deb file mustn't exist 
 archi_tmp=$(lscpu | grep -i architecture | awk -F: {'print $2'} | tr -d " ")
 if [ "$archi_tmp" = "x86_64" ];then
     archi="amd64"
@@ -64,6 +65,13 @@ else
 fi
 deb_file="${appli_name}_${VERSION}-${ITERATION}_$archi.deb"
 
+# if deb file exists, fatal error
+if [ -f "./$deb_file" ]; then
+    echo "destination file (./$deb_file) exists. fatal error"
+    exit 
+fi
+
+# retrieve packages version for the dependencies
 getPkg libqt5core
 qtver=$PKGVERS
 
@@ -72,12 +80,6 @@ dblPkg=$PKGNAME
 
 echo "QT version " $qtver
 echo "DblConv package " $dblPkg
-
-# if deb file exists, fatal error
-if [ -f "./$deb_file" ]; then
-    echo "destination file (./$deb_file) exists. fatal error"
-    exit 
-fi
 
 # clean folders need to create the package
 if [ -d "${temp_folder}" ]; then
