@@ -162,7 +162,7 @@ fpm --input-type dir --output-type deb  \
     --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends 'libqt5core5a > $qtver'   \
+    --depends "libqt5core5a > $qtver"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \
