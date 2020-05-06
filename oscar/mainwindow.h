@@ -164,6 +164,7 @@ class MainWindow : public QMainWindow
     void setStatsHTML(QString html);
 
     int importCPAP(ImportPath import, const QString &message);
+    void finishCPAPImport();
 
     void startImportDialog() { on_action_Import_Data_triggered(); }
 
@@ -365,7 +366,6 @@ class MainWindow : public QMainWindow
 private:
     QString getMainWindowTitle();
     void importCPAPBackups();
-    void finishCPAPImport();
     QList<ImportPath> detectCPAPCards();
     QList<ImportPath> selectCPAPDataCards(const QString & prompt);
     void importCPAPDataCards(const QList<ImportPath> & datacards);

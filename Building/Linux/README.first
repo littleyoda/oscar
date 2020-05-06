@@ -4,8 +4,10 @@ you have already compiled and linked OSCAR using qmake and make, or QtCreator.
 The packages, once built, can be installed using 'dpkg i' or 'gdebi' - with either su or sudo. If you use
 sudo, you will get a desktop icon installed, which must be double-clicked and trusted to see the actual icon.
 
-The packaged file cannot be installed using apt, apt-get, or aptitude, because those programs 
-install from the distribution repository, but not a plan package file.
+The packaged file cannot be installed using apt-get, or aptitude, because those programs 
+install from the distribution repository, but not a plain package file.
+
+The package can be installed with apt or apt -F if the file name is preceded by ./ to force filename recognition.
 
 The packaging scripts assume the following folder structure:
 
@@ -21,6 +23,9 @@ Read the installation notes there, installation is sort of convoluted, then once
 The code to put a desktop icon in the Desktop folder, regardless of language, was contributed by UnToutSeul05.
 
 Getting a menu item istalled is largely due to the efforts of CrimsonNape.
+
+The mkDebian9.sh and mkUbuntu.sh scripts have been consolidated into mkDistDeb.sh and are now depreciated and will be removed. mkDistDeb.sh
+has code to query which packages are available for certail libraries.
 
 Finally, the mkRedHat.sh script has not been tested.
 

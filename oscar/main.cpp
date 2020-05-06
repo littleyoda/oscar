@@ -196,11 +196,11 @@ bool migrateFromSH(QString destDir) {
 
             if (!file.exists() || !dirP.exists()) {       // It doesn't have a Preferences.xml file or a Profiles directory in it
                 // Not a new directory.. nag the user.
-                if (QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                                         QObject::tr("The folder you chose does not contain valid SleepyHead data.") +
-                                         "\n\n"+QObject::tr("You cannot use this folder:")+" " + datadir ), QMessageBox::Ok) {
-                    continue;   // Nope, don't use it, go around the loop again
-                }
+                QMessageBox::warning(nullptr, STR_MessageBox_Error,
+                                     QObject::tr("The folder you chose does not contain valid SleepyHead data.") +
+                                     "\n\n"+QObject::tr("You cannot use this folder:")+" " + datadir,
+                                     QMessageBox::Ok);
+                continue;   // Nope, don't use it, go around the loop again
             }
 
             qDebug() << "Migration folder is" << datadir;

@@ -134,7 +134,7 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
     }
     edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44).trimmed();
     edfHdr.num_data_records = QString::fromLatin1(hdrPtr->num_data_records, 8).toLong(&ok);
-    if (!ok) {
+    if ( (! ok) || (edfHdr.num_data_records < 1) ) {
         qWarning() << "EDFInfo::Parse() Bad data record count " << filename;
 //      sleep(1);
         fileData.clear();
@@ -148,7 +148,7 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
         return false;
     }
     edfHdr.num_signals = QString::fromLatin1(hdrPtr->num_signals, 4).toLong(&ok);
-    if (!ok) {
+    if ( (! ok) || (edfHdr.num_signals < 1) || (edfHdr.num_signals > 256) ) {
         qWarning() << "EDFInfo::Parse() Bad number of signals " << filename;
 //      sleep(1);
         fileData.clear();

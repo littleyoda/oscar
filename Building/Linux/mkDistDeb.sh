@@ -1,6 +1,18 @@
 #! /bin/bash
 # First parameter is optional
 #
+function getPkg () {
+    unset PKGNAME
+    unset PKGVERS
+    while read stat pkg ver other ;
+        do 
+            if [[ ${stat} == "ii" ]] ; then
+                PKGNAME=`awk -F: '{print $1}' <<< ${pkg}`
+                PKGVERS=`awk -F. '{print $1 "." $2}' <<< ${ver}`
+                break
+            fi ;
+        done <<< $(dpkg -l | grep $1)
+}
 
 ITERATION=$1
 if [  -z ${ITERATION} ]; then
@@ -25,9 +37,6 @@ echo Version: ${VERSION}
 # application name
 appli_name="OSCAR"
 pre_inst="tst_user.sh"
-post_inst="ln_usrbin.sh"
-pre_rem="rm_usrbin.sh"
-post_rem="clean_rm.sh"
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
 if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
@@ -35,6 +44,10 @@ if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
     post_rem="clean_rm-test.sh"
+else
+    post_inst="ln_usrbin.sh"
+    pre_rem="rm_usrbin.sh"
+    post_rem="clean_rm.sh"
 fi
 
 # temporary folder (absolute path is better)
@@ -43,7 +56,7 @@ temp_folder="/home/$USER/tmp_deb_${appli_name}/"
 # destination folder in the .deb file
 dest_folder="/usr/"
 
-# the .deb file mustn't exist (or fpm must have -f parameter to force the creation)
+# the .deb file mustn't exist 
 archi_tmp=$(lscpu | grep -i architecture | awk -F: {'print $2'} | tr -d " ")
 if [ "$archi_tmp" = "x86_64" ];then
     archi="amd64"
@@ -57,6 +70,16 @@ if [ -f "./$deb_file" ]; then
     echo "destination file (./$deb_file) exists. fatal error"
     exit 
 fi
+
+# retrieve packages version for the dependencies
+getPkg libqt5core
+qtver=$PKGVERS
+
+getPkg libdouble
+dblPkg=$PKGNAME
+
+echo "QT version " $qtver
+echo "DblConv package " $dblPkg
 
 # clean folders need to create the package
 if [ -d "${temp_folder}" ]; then
@@ -136,10 +159,10 @@ fpm --input-type dir --output-type deb  \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
     --deb-no-default-config-files   \
-    --depends libdouble-conversion1 \
+    --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends 'libqt5core5a > 5.7.0'    \
+    --depends "libqt5core5a > $qtver"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \

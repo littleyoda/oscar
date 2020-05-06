@@ -284,14 +284,17 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // Check DATALOG folder exists and is readable
     if (!QDir().exists(datalogPath)) {
+        qDebug() << "Missing DATALOG in" << dirpath;
         return -1;
     }
 
     m_abort = false;
     MachineInfo info = newInfo();
 
-    if ( ! parseIdentTGT(path, & info, idmap) )
+    if ( ! parseIdentTGT(path, & info, idmap) ) {
+        qDebug() << "Failed to parse Identification.tgt";
         return -1;
+    }
  
     qDebug() << "Info:" << info.series << info.model << info.modelnumber << info.serial;
 #ifdef IDENT_DEBUG
@@ -303,7 +306,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // Abort if no serial number
     if (info.serial.isEmpty()) {
-        qDebug() << "ResMed Data card has no valid serial number in Indentification.tgt";
+        qDebug() << "ResMed Data card is missing serial number in Indentification.tgt";
         return -1;
     }
 
@@ -383,9 +386,34 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( ! dir.exists(strBackupPath))
         dir.mkpath(strBackupPath);
 
+    QString newpath = backup_path + "DATALOG";
+    if ( ! dir.exists(newpath) )
+        dir.mkpath(newpath);
+
     if ( ! importing_backups ) {
         BackupSTRfiles( strpath, path, strBackupPath, info, STRmap );
-    }       // end if not importing the backup files
+    } else {    // get the STR file that is in the BACKUP folder
+        ResMedEDFInfo * stredf = new ResMedEDFInfo();
+        if ( stredf->Open(strpath) ) {
+            if ( stredf->Parse()) {
+                if (stredf->serialnumber != info.serial) {
+                    qDebug() << "Identification.tgt Serial number doesn't match" << strpath;
+                    delete stredf;
+                } else {    // passed the tests, stuff it into the map
+                    QDate date = stredf->edfHdr.startdate_orig.date();
+                    long int days = stredf->GetNumDataRecords();
+                    qDebug() << strpath << "starts at" << date << "for" << days;
+                    STRmap[date] = STRFile(strpath, days, stredf);
+                }
+            } else {
+                qDebug() << "Faulty STR file" << strpath;
+                delete stredf;
+            }
+        } else {
+           qDebug() << "Failed to open" << strpath;
+           delete stredf;
+        }
+    } // end if not importing the backup files
 #ifdef STR_DEBUG
     qDebug() << "STRmap size is " << STRmap.size();
 #endif
@@ -396,6 +424,7 @@ int ResmedLoader::Open(const QString & dirpath)
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
     QFileInfoList flist = dir.entryInfoList();
     QDate date;
+    long int days;
 #ifdef STR_DEBUG
     qDebug() << "STR_Backup folder size is " << flist.size();
 #endif
@@ -407,11 +436,13 @@ int ResmedLoader::Open(const QString & dirpath)
             continue;
         if (!(filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
             continue;
-        QString datestr = filename.section("STR-",-1).section(".edf",0,0)+"01";
-        date = QDate().fromString(datestr,"yyyyMMdd");
-
-        if (STRmap.contains(date))
-            continue;
+        QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
+//      date = QDate().fromString(datestr,"yyyyMMdd");
+//
+//      if (STRmap.contains(date)) {
+//          qDebug() << filename << "overlaps anothor STR file";
+//          continue;
+//      }
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(fi.canonicalFilePath() ) ) {
@@ -433,10 +464,20 @@ int ResmedLoader::Open(const QString & dirpath)
 
         // Don't trust the filename date, pick the one inside the STR...
         date = stredf->edfHdr.startdate_orig.date();
-        qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
-        date = QDate(date.year(), date.month(), 1);
+        days = stredf->GetNumDataRecords();
+        if (STRmap.contains(date)) {        // Keep the longer of the two STR files
+            qDebug() << filename << "overlaps" << STRmap[date].filename << "for" << days;
+            if (days <= STRmap[date].days) {
+                qDebug() << "Skipping" << filename;
+                delete stredf;
+                continue;
+            }
+        }
+//      qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
+//      date = QDate(date.year(), date.month(), 1);
 
-        STRmap[date] = STRFile(fi.canonicalFilePath(), stredf);
+        qDebug() << fi.canonicalFilePath() << "starts at" << date << "for" << days;
+        STRmap[date] = STRFile(fi.canonicalFilePath(), days, stredf);
     }       // end for walking the STR_Backup directory
 #ifdef STR_DEBUG
     qDebug() << "STRmap size is now " << STRmap.size();
@@ -453,9 +494,21 @@ int ResmedLoader::Open(const QString & dirpath)
 
     // We are done with the Parsed STR EDF objects, so delete them
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
+        QString fullname = it.value().filename;
 #ifdef STR_DEBUG
-        qDebug() << "Deleting edf of" << it.value().filename;
+        qDebug() << "Deleting edf of" << fullname;
 #endif
+        QString datepart = fullname.section("STR-",-1).section(".edf",0,0);
+        if (datepart.size() == 6 ) {    // old style name, change to full date
+            QFile str(fullname);
+            QString newdate = it.key().toString("yyyyMMdd");
+            QString newName = fullname.replace(datepart, newdate);
+            qDebug() << "Renaming" << it.value().filename << "to" << newName;
+              if ( str.rename(newName) )
+                  qDebug() << "Success";
+              else 
+                  qDebug() << "Failed";
+        }
         delete it.value().edf;
     }
 #ifdef STR_DEBUG
@@ -531,6 +584,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
     sessionCount = 0;
     emit updateMessage(QObject::tr("Importing Sessions..."));
+
+    // Walk down the resDay list
     runTasks();
     int num_new_sessions = sessionCount;
 
@@ -683,7 +738,7 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
         filename = fi.fileName();
 
         int len = filename.length();
-        if (len == 4) {                    // when does this happen?
+        if (len == 4) {                    // This is a year folder in BackupDATALOG
             filename.toInt(&ok);
             if ( ! ok ) {
                 qDebug() << "Skipping directory - bad 4-letter name" << filename;
@@ -836,12 +891,13 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     yearstr.toInt(&ok, 10);
 
     if (!ok) {
-        qDebug() << "Invalid EDF filename given to ResMedLoader::backup()" << fullname;
+        qDebug() << "Invalid EDF filename given to ResMedLoader::Backup()" << fullname;
         return "";
     }
 
-    QString newpath = backup_path + RMS9_STR_datalog + "/" + yearstr;
-    !dir.exists(newpath) && dir.mkpath(newpath);
+    QString newpath = backup_path + "DATALOG" + "/" + yearstr;
+    if ( ! dir.exists(newpath) )
+        dir.mkpath(newpath);
 
     newname = newpath+"/"+filename;
 
@@ -894,10 +950,11 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
         ResMedEDFInfo & str = *file.edf;
-        totalRecs += str.GetNumDataRecords();
+        int days = str.GetNumDataRecords();
+        totalRecs += days;
 #ifdef STR_DEBUG        
         qDebug() << "STR file is" << file.filename;
-        qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << totalRecs << "days";
+        qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << days << "days";
 #endif
     }
 
@@ -917,7 +974,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         QDate lastDay = date.addDays(size-1);
 
 #ifdef STR_DEBUG        
-        qDebug() << "Parsing" << strfile << date.toString() << size << str.GetNumSignals();
+        qDebug() << "Processing" << strfile << date.toString() << size << str.GetNumSignals();
         qDebug() << "Last day is" << lastDay;
 #endif
 
@@ -1383,6 +1440,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             qDebug() << "Finished" << date.toString();
 #endif
         }
+#ifdef STR_DEBUG
+        qDebug() << "Finished" << strfile;
+#endif
     }
 #ifdef STR_DEBUG
     qDebug() << "Finished ProcessSTR";
@@ -1462,13 +1522,17 @@ void BackupSTRfiles( const QString strpath, const QString path, const QString st
             continue;
         }
         QDate date = stredf->edfHdr.startdate_orig.date();
-        date = QDate(date.year(), date.month(), 1);
+        long int days = stredf->GetNumDataRecords();
+//      date = QDate(date.year(), date.month(), 1);
         if (STRmap.contains(date)) {
             qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd");
-            delete stredf;
-            continue;
+            if ( days <= STRmap[date].days ) {
+                qDebug() << "Skipping" << filename;
+                delete stredf;
+                continue;
+            }
         }
-        QString newname = "STR-"+date.toString("yyyyMM")+"."+STR_ext_EDF;
+        QString newname = "STR-"+date.toString("yyyyMMdd")+"."+STR_ext_EDF;
 
         QString backupfile = strBackupPath+"/"+newname;
 
@@ -1502,7 +1566,7 @@ void BackupSTRfiles( const QString strpath, const QString path, const QString st
         else
             QFile::exists(gzfile) && QFile::remove(gzfile);
 
-        STRmap[date] = STRFile(backupfile, stredf);
+        STRmap[date] = STRFile(backupfile, days, stredf);
     }   // end for walking the STR files list
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
