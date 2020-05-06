@@ -2504,10 +2504,17 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
 #if defined(Q_OS_WIN)
     // Windows can't handle this name filter.
     w.setOption(QFileDialog::DontUseNativeDialog, true);
+    // And since the non-native dialog can't select both directories and files,
+    // it needs the following to enable selecting multiple files.
+    w.setFileMode(QFileDialog::ExistingFiles);
 #endif
 
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
+        if (w.selectedFiles().size() > 1) {
+            // The user selected multiple files in a directory, so use the parent directory as the filename.
+            filename = QFileInfo(filename).absoluteDir().canonicalPath();
+        }
 
         int c = viatom.Open(filename);
         if (c > 0) {
