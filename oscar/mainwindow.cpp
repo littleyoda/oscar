@@ -743,7 +743,8 @@ void MainWindow::finishCPAPImport()
     GenerateStatistics();
     profileSelector->updateProfileList();
 
-    welcome->refreshPage();
+    if (welcome)
+        welcome->refreshPage();
 
     if (overview) { overview->ReloadGraphs(); }
     if (daily) {
