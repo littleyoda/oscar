@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="da">
+<TS version="2.1" language="th_TH" sourcelanguage="en">
 <context>
     <name>QShortcut</name>
     <message>
         <source>No</source>
-        <translation>Ingen</translation>
+        <translation>ไม่</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Ja</translation>
+        <translation>ใช่</translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation>Okay</translation>
+        <translation>ตกลง</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;Ingen</translation>
+        <translation>&amp;ไม่</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Ja</translation>
+        <translation>&amp;ใช่</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Hjælp</translation>
+        <translation>ช่วยด้วย</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Åben</translation>
+        <translation>เปิด</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Gemme</translation>
+        <translation>ไว้</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Abort</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Ansøge</translation>
+        <translation>ใช้</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tæt</translation>
+        <translation>ปิด</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Nulstil</translation>
+        <translation>ตั้งค่าใหม่</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation>Prøve igen</translation>
+        <translation>ลองใหม่</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation>Gendanne standardindstillingerne</translation>
+        <translation>คืนค่าเริ่มต้น</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Afbestille</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>Ignorere</translation>
+        <translation>ไม่สนใจ</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>&amp;Ingen for alle</translation>
+        <translation>&amp;ไม่ใช่ทั้งหมด</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation>Gem alle</translation>
+        <translation>บันทึกทั้งหมด</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Kassér</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>Ja til &amp;alle</translation>
+        <translation>&amp;ใช่ทั้งหมด</translation>
     </message>
 </context>
 </TS>

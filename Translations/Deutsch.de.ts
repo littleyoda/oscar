@@ -6636,15 +6636,39 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>?5?</source>
-        <translation type="unfinished"></translation>
+        <translation>?5?</translation>
     </message>
     <message>
         <source>?9?</source>
-        <translation type="unfinished"></translation>
+        <translation>?9?</translation>
     </message>
     <message>
         <source>?10?</source>
-        <translation type="unfinished"></translation>
+        <translation>?10?</translation>
+    </message>
+    <message>
+        <source>Passover</source>
+        <translation>Befeuchter, bei denen die Luft nur die Wasseroberfläche überströmt</translation>
+    </message>
+    <message>
+        <source>Peak Flow</source>
+        <translation>Spitzenfluss</translation>
+    </message>
+    <message>
+        <source>Peak flow during a 2-minute interval</source>
+        <translation>Spitzenfluss während eines 2-Minuten-Intervalls</translation>
+    </message>
+    <message>
+        <source>Recompressing Session Files</source>
+        <translation>Sitzungsdateien neu komprimieren</translation>
+    </message>
+    <message>
+        <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
+        <translation>OSCAR stürzte aufgrund einer Inkompatibilität mit Ihrer Grafikhardware ab.</translation>
+    </message>
+    <message>
+        <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
+        <translation>Um dieses Problem zu lösen, ist OSCAR zu einer langsameren, aber kompatibleren Zeichenmethode zurückgekehrt.</translation>
     </message>
 </context>
 <context>

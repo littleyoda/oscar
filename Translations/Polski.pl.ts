@@ -5920,7 +5920,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>??</source>
-        <translation>??</translation>
+        <translation type="vanished">??</translation>
     </message>
     <message>
         <source>VPAPauto</source>
@@ -5932,7 +5932,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>???</source>
-        <translation>???</translation>
+        <translation type="vanished">???</translation>
     </message>
     <message>
         <source>Auto for Her</source>
@@ -5960,19 +5960,19 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>0cmH2O</source>
-        <translation>0cmH2O</translation>
+        <translation type="vanished">0cmH2O</translation>
     </message>
     <message>
         <source>1cmH2O</source>
-        <translation>1cmH2O</translation>
+        <translation type="vanished">1cmH2O</translation>
     </message>
     <message>
         <source>2cmH2O</source>
-        <translation>2cmH2O</translation>
+        <translation type="vanished">2cmH2O</translation>
     </message>
     <message>
         <source>3cmH2O</source>
-        <translation>3cmH2O</translation>
+        <translation type="vanished">3cmH2O</translation>
     </message>
     <message>
         <source>SmartStart</source>
@@ -6653,6 +6653,42 @@ Wiersz %2, kolumna %3</translation>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
         <translation>Jak już zaktualizujesz &lt;font size=+1&gt;nie możesz&lt;/font&gt; już używać tego profilu z poprzednią wersją.</translation>
+    </message>
+    <message>
+        <source>Passover</source>
+        <translation type="unfinished">Przepuszczenie</translation>
+    </message>
+    <message>
+        <source>Peak Flow</source>
+        <translation>Szczytowy przepływ</translation>
+    </message>
+    <message>
+        <source>Peak flow during a 2-minute interval</source>
+        <translation>Przepływ szczytowy podczas 2-minutowego interwału</translation>
+    </message>
+    <message>
+        <source>?5?</source>
+        <translation>?5?</translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation>?9?</translation>
+    </message>
+    <message>
+        <source>?10?</source>
+        <translation>?10?</translation>
+    </message>
+    <message>
+        <source>Recompressing Session Files</source>
+        <translation>Rekompresja plików sesji</translation>
+    </message>
+    <message>
+        <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
+        <translation>OSCAR wysypał si e z powodu niekompatybilności z grafiką Twojego komputera.</translation>
+    </message>
+    <message>
+        <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
+        <translation>Aby to rozwiązać, OSCAR przeszedł na wolniejszą ale bardziej kompatybilną metodę rysowania.</translation>
     </message>
 </context>
 <context>

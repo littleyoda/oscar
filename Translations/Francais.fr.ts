@@ -106,7 +106,7 @@
     </message>
     <message>
         <source> i </source>
-        <translation>Italique</translation>
+        <translation type="unfinished">Italique</translation>
     </message>
     <message>
         <source>Big</source>
@@ -146,7 +146,7 @@
     </message>
     <message>
         <source>Machine Settings Unavailable</source>
-        <translation>Réglages de l&apos;appareil indisponibles</translation>
+        <translation type="vanished">Réglages de l&apos;appareil indisponibles</translation>
     </message>
     <message>
         <source>Journal</source>
@@ -406,7 +406,7 @@
     </message>
     <message>
         <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
-        <translation>Un ou plusieurs enregistrement de cette session a des données corrompues. Certains points des graphiques peuvent ne pas coïncider correctement.</translation>
+        <translation type="vanished">Un ou plusieurs enregistrement de cette session a des données corrompues. Certains points des graphiques peuvent ne pas coïncider correctement.</translation>
     </message>
     <message>
         <source>PAP Mode: %1</source>
@@ -3770,7 +3770,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>??</source>
-        <translation>??</translation>
+        <translation type="vanished">??</translation>
     </message>
     <message>
         <source>AI</source>
@@ -3898,23 +3898,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>x1</source>
-        <translation>x1</translation>
+        <translation type="vanished">x1</translation>
     </message>
     <message>
         <source>x2</source>
-        <translation>x2</translation>
+        <translation type="vanished">x2</translation>
     </message>
     <message>
         <source>x3</source>
-        <translation>x3</translation>
+        <translation type="vanished">x3</translation>
     </message>
     <message>
         <source>x4</source>
-        <translation>x4</translation>
+        <translation type="vanished">x4</translation>
     </message>
     <message>
         <source>x5</source>
-        <translation>x5</translation>
+        <translation type="vanished">x5</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -3926,7 +3926,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>???</source>
-        <translation>???</translation>
+        <translation type="vanished">???</translation>
     </message>
     <message>
         <source>AHI</source>
@@ -4430,7 +4430,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sys1 Resist. Status</source>
-        <translation>État de la résistance Sys1</translation>
+        <translation type="vanished">État de la résistance Sys1</translation>
     </message>
     <message>
         <source>Minute Vent.</source>
@@ -4514,7 +4514,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>System One Resistance Status</source>
-        <translation>État résistance System One</translation>
+        <translation type="vanished">État résistance System One</translation>
     </message>
     <message>
         <source>Journal Data</source>
@@ -4550,7 +4550,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>0cmH2O</source>
-        <translation>0cmH2O</translation>
+        <translation type="vanished">0cmH2O</translation>
     </message>
     <message>
         <source>SOMNOsoft2</source>
@@ -4566,11 +4566,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>1cmH2O</source>
-        <translation>1cmH2O</translation>
+        <translation type="vanished">1cmH2O</translation>
     </message>
     <message>
         <source>Whether System One resistance settings are available to you.</source>
-        <translation>Selon disponibilité des réglages de résistance System One.</translation>
+        <translation type="vanished">Selon disponibilité des réglages de résistance System One.</translation>
     </message>
     <message>
         <source>Mask On</source>
@@ -4578,7 +4578,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>2cmH2O</source>
-        <translation>2cmH2O</translation>
+        <translation type="vanished">2cmH2O</translation>
     </message>
     <message>
         <source>Max: %1</source>
@@ -4586,7 +4586,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>3cmH2O</source>
-        <translation>3CmH2O</translation>
+        <translation type="vanished">3CmH2O</translation>
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
@@ -4723,7 +4723,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sys1 Resist. Lock</source>
-        <translation>Verrou résist. Sys1</translation>
+        <translation type="vanished">Verrou résist. Sys1</translation>
     </message>
     <message>
         <source>%1
@@ -4885,7 +4885,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>Whether or not machine shows AHI via LCD panel.</source>
-        <translation>Selon que l&apos;appareil affiche ou pas l&apos;IAH sur l&apos;affichage LCD.</translation>
+        <translation type="vanished">Selon que l&apos;appareil affiche ou pas l&apos;IAH sur l&apos;affichage LCD.</translation>
     </message>
     <message>
         <source>Smart Start</source>
@@ -5089,7 +5089,7 @@ Début : %2
     </message>
     <message>
         <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>Une fois mis à jour, vous &lt;font size=+1&gt;ne pourrez plus &lt;/font&gt;utiliser ce profil avec l&apos;ancienne version.</translation>
+        <translation type="vanished">Une fois mis à jour, vous &lt;font size=+1&gt;ne pourrez plus &lt;/font&gt;utiliser ce profil avec l&apos;ancienne version.</translation>
     </message>
     <message>
         <source>Usage Statistics</source>
@@ -5195,7 +5195,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>Sys1 Resist. Set</source>
-        <translation>Réglages résist. Sys1</translation>
+        <translation type="vanished">Réglages résist. Sys1</translation>
     </message>
     <message>
         <source>Exhale Pressure Relief Level</source>
@@ -5227,7 +5227,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>System One Resistance Lock</source>
-        <translation>Verrou de résistance System One</translation>
+        <translation type="vanished">Verrou de résistance System One</translation>
     </message>
     <message>
         <source>Cheyne Stokes Respiration</source>
@@ -5439,7 +5439,7 @@ TTIA : %1</translation>
     </message>
     <message>
         <source>System One Mask Resistance Setting</source>
-        <translation>Réglage de résistance du masque System One</translation>
+        <translation type="vanished">Réglage de résistance du masque System One</translation>
     </message>
     <message>
         <source>Waketime: %1</source>
@@ -5607,7 +5607,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>System One Resistance Setting</source>
-        <translation>Réglage de la résistance System One</translation>
+        <translation type="vanished">Réglage de la résistance System One</translation>
     </message>
     <message>
         <source>Total Leak Rate</source>
@@ -5843,7 +5843,7 @@ Heures : %1</translation>
     </message>
     <message>
         <source>ÇSR</source>
-        <translation>RCS</translation>
+        <translation type="vanished">RCS</translation>
     </message>
     <message>
         <source>Height</source>
@@ -6423,40 +6423,40 @@ corporelle</translation>
     </message>
     <message>
         <source>Heated Tube</source>
-        <translation>Tube chauffé</translation>
+        <translation>Circuit chauffé</translation>
     </message>
     <message>
         <source>Tube Temperature</source>
         <translatorcomment>Température du tube</translatorcomment>
-        <translation>Tube Temperature</translation>
+        <translation>Temperature circuit</translation>
     </message>
     <message>
         <source>PRS1 Heated Tube Temperature</source>
-        <translation>Température du tube chauffé PRS1</translation>
+        <translation>Température circuit chauffé PRS1</translation>
     </message>
     <message>
         <source>Tube Temp.</source>
-        <translation>Temp. tube</translation>
+        <translation>Temp. circuit</translation>
     </message>
     <message>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="vanished">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="vanished">2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="vanished">3</translation>
     </message>
     <message>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="vanished">4</translation>
     </message>
     <message>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="vanished">5</translation>
     </message>
     <message>
         <source>PRS1 Humidifier Setting</source>
@@ -6472,11 +6472,11 @@ corporelle</translation>
     </message>
     <message>
         <source>PRS1 Unknown</source>
-        <translation>PRS1 inconnu</translation>
+        <translation type="vanished">PRS1 inconnu</translation>
     </message>
     <message>
         <source>Unknown PRS1 span 0x0E</source>
-        <translation>Intervalle 0x0E PRS1 inconnu</translation>
+        <translation type="vanished">Intervalle 0x0E PRS1 inconnu</translation>
     </message>
     <message>
         <source>Parsing STR.edf records...</source>
@@ -6537,6 +6537,265 @@ corporelle</translation>
     <message>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
+    </message>
+    <message>
+        <source>EPAP %1 IPAP %2-%3 (%4)</source>
+        <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
+    </message>
+    <message>
+        <source>Backing Up Files...</source>
+        <translation>Sauvegarde des fichiers...</translation>
+    </message>
+    <message>
+        <source>CPAP-Check</source>
+        <translatorcomment>Mode CPAP-Check des appareils System One de Philips Respironics</translatorcomment>
+        <translation>CPAP-Check</translation>
+    </message>
+    <message>
+        <source>AutoCPAP</source>
+        <translatorcomment>Mode AutoCPAP des appareils System One de Philips Respironics</translatorcomment>
+        <translation>AutoCPAP</translation>
+    </message>
+    <message>
+        <source>Auto-Trial</source>
+        <translatorcomment>Mode Auto-Trial des appareils System One de Philips Respironics</translatorcomment>
+        <translation>Auto-Trial</translation>
+    </message>
+    <message>
+        <source>AutoBiLevel</source>
+        <translatorcomment>Le système AutoBilevel modifie automatiquement la pression d’inspiration et d’expiration en fonction des besoins du patient</translatorcomment>
+        <translation>AutoBiLevel</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S/T</source>
+        <translation>S/T</translation>
+    </message>
+    <message>
+        <source>S/T - AVAPS</source>
+        <translatorcomment>mode ventilatoire</translatorcomment>
+        <translation>S/T - AVAPS</translation>
+    </message>
+    <message>
+        <source>PC - AVAPS</source>
+        <translatorcomment>fonction Philips Respironics</translatorcomment>
+        <translation>PC - AVAPS</translation>
+    </message>
+    <message>
+        <source>Flex Lock</source>
+        <translatorcomment>fonction Philips Respironics</translatorcomment>
+        <translation>Verrou Flex</translation>
+    </message>
+    <message>
+        <source>Whether Flex settings are available to you.</source>
+        <translation>Si les paramètres Flex sont disponibles.</translation>
+    </message>
+    <message>
+        <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
+        <translation>Temps nécessaire pour passer d&apos;EPAP à IPAP (plus le nombre est élevé, plus la transition est lente)</translation>
+    </message>
+    <message>
+        <source>Rise Time Lock</source>
+        <translatorcomment>Fonction Philips Respironics</translatorcomment>
+        <translation>Verrouillage Pente</translation>
+    </message>
+    <message>
+        <source>Whether Rise Time settings are available to you.</source>
+        <translation>Si les paramètres Rise Time sont disponibles.</translation>
+    </message>
+    <message>
+        <source>Rise Lock</source>
+        <translatorcomment>Fonction Philips Respironics</translatorcomment>
+        <translation>Rise Lock</translation>
+    </message>
+    <message>
+        <source>Passover</source>
+        <translatorcomment>Humidificateur Philips Respironics</translatorcomment>
+        <translation>Passover</translation>
+    </message>
+    <message>
+        <source>Mask Resistance Setting</source>
+        <translation>Réglage résistance Type de masque</translation>
+    </message>
+    <message>
+        <source>Mask Resist.</source>
+        <translation>Résist. masque</translation>
+    </message>
+    <message>
+        <source>Hose Diam.</source>
+        <translation>Diamètre tuyau.</translation>
+    </message>
+    <message>
+        <source>Tubing Type Lock</source>
+        <translation>Verrou type de circuit</translation>
+    </message>
+    <message>
+        <source>Whether tubing type settings are available to you.</source>
+        <translation>Si les paramètres Circuit sont disponibles.</translation>
+    </message>
+    <message>
+        <source>Tube Lock</source>
+        <translation>Verrouillage circuit</translation>
+    </message>
+    <message>
+        <source>Mask Resistance Lock</source>
+        <translation>Verrouillage résistance masque</translation>
+    </message>
+    <message>
+        <source>Whether mask resistance settings are available to you.</source>
+        <translation>Si les paramètres Résistance masque sont disponibles.</translation>
+    </message>
+    <message>
+        <source>Mask Res. Lock</source>
+        <translation>Verrou type de masque</translation>
+    </message>
+    <message>
+        <source>Whether or not machine shows AHI via built-in display.</source>
+        <translation>Selon que l&apos;écran de l&apos;appareil affiche ou non l&apos;IAH.</translation>
+    </message>
+    <message>
+        <source>Ramp Type</source>
+        <translation>Durée de rampe</translation>
+    </message>
+    <message>
+        <source>Type of ramp curve to use.</source>
+        <translation>Type de courbe de rampe à utiliser.</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation>Linéaire</translation>
+    </message>
+    <message>
+        <source>SmartRamp</source>
+        <translation>SmartRamp</translation>
+    </message>
+    <message>
+        <source>Backup Breath Mode</source>
+        <translation>Mode Fréquence respiratoire de secours</translation>
+    </message>
+    <message>
+        <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
+        <translation>Type de fréquence respiratoire de secours utilisée : aucun (arrêt), automatique ou fixe</translation>
+    </message>
+    <message>
+        <source>Breath Rate</source>
+        <translation>Fréquence respiratoire</translation>
+    </message>
+    <message>
+        <source>Fixed</source>
+        <translation>Fixe</translation>
+    </message>
+    <message>
+        <source>Fixed Backup Breath BPM</source>
+        <translation>Correction de la respiration de secours BPM</translation>
+    </message>
+    <message>
+        <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
+        <translation>Respiration minimale par minute (BPM) en dessous de laquelle une respiration chronométrée sera amorcée</translation>
+    </message>
+    <message>
+        <source>Breath BPM</source>
+        <translation>Respiration BPM</translation>
+    </message>
+    <message>
+        <source>Timed Inspiration</source>
+        <translation>Inspiration chronométrée</translation>
+    </message>
+    <message>
+        <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
+        <translation>Durée d’une respiration chronométrée IPAP avant la transition vers EPAP</translation>
+    </message>
+    <message>
+        <source>Timed Insp.</source>
+        <translation>Inspiration chronométrée</translation>
+    </message>
+    <message>
+        <source>Auto-Trial Duration</source>
+        <translation>Durée de l&apos;Auto-Trial</translation>
+    </message>
+    <message>
+        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
+        <translation>Nombre de jours dans la période d&apos;essai Auto-CPAP, après quoi la machine reviendra au CPAP</translation>
+    </message>
+    <message>
+        <source>Auto-Trial Dur.</source>
+        <translation>Durée Auto-Test</translation>
+    </message>
+    <message>
+        <source>EZ-Start</source>
+        <translatorcomment>fonction EZ-Start de Philips Respironics</translatorcomment>
+        <translation>EZ-Start</translation>
+    </message>
+    <message>
+        <source>Whether or not EZ-Start is enabled</source>
+        <translation>Si EZ-Start activé ou non</translation>
+    </message>
+    <message>
+        <source>Variable Breathing</source>
+        <translation>Respiration variable</translation>
+    </message>
+    <message>
+        <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
+        <translation>NON CONFIRMÉ : respiration peut-être variable, qui contient des écarts élevés par rapport à la tendance du débit inspiratoire de pointe</translation>
+    </message>
+    <message>
+        <source>Peak Flow</source>
+        <translation>Pic de débit</translation>
+    </message>
+    <message>
+        <source>Peak flow during a 2-minute interval</source>
+        <translation>Pic de débit pendant un intervalle de 2 minutes</translation>
+    </message>
+    <message>
+        <source>?5?</source>
+        <translation>?5?</translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation>?9?</translation>
+    </message>
+    <message>
+        <source>?10?</source>
+        <translation>?10?</translation>
+    </message>
+    <message>
+        <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
+        <translation>Une fois la mise à niveau effectuée, vous &lt;font size=+1&gt; ne pourrez plus&lt;/font&gt; utiliser ce profil avec la version précédente.</translation>
+    </message>
+    <message>
+        <source>Debugging channel #1</source>
+        <translation>Canal de débogage n° 1</translation>
+    </message>
+    <message>
+        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
+        <translation>Des trucs internes top secrets que vous n&apos;êtes pas censés voir ;)</translation>
+    </message>
+    <message>
+        <source>Test #1</source>
+        <translation>Test n ° 1</translation>
+    </message>
+    <message>
+        <source>Debugging channel #2</source>
+        <translation>Canal de débogage n° 2</translation>
+    </message>
+    <message>
+        <source>Test #2</source>
+        <translation>Test n ° 2</translation>
+    </message>
+    <message>
+        <source>Recompressing Session Files</source>
+        <translation>Recompression des fichiers de session</translation>
+    </message>
+    <message>
+        <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
+        <translation>Plantage de OSCAR en raison d&apos;incompatibilité avec votre matériel graphique.</translation>
+    </message>
+    <message>
+        <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
+        <translation>Pour résoudre ce problème, OSCAR est revenu à une méthode de dessin plus lente mais plus compatible.</translation>
     </message>
 </context>
 <context>

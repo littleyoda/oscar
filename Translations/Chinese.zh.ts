@@ -6615,6 +6615,30 @@ Line %2, column %3</source>
         <source>?10?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Passover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peak Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peak flow during a 2-minute interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recompressing Session Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
