@@ -1672,6 +1672,9 @@ void Daily::Load(QDate date)
                 if (chan.type() == schema::SPAN) {
                     val = (100.0 / hours)*(day->sum(code)/3600.0);
                     data = QString("%1%").arg(val,0,'f',2);
+                } else if (code == CPAP_VSnore2) {  // TODO: This should be generalized rather than special-casing a single channel here.
+                    val = day->sum(code) / hours;
+                    data = QString("%1").arg(val,0,'f',2);
                 } else {
                     val = day->count(code) / hours;
                     data = QString("%1").arg(val,0,'f',2);

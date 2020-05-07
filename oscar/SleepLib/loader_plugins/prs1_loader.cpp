@@ -3131,14 +3131,16 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
             // TODO: The numeric snore graph is the right way to present this information,
             // but it needs to be shifted left 2 minutes, since it's not a starting value
             // but a past statistic.
-            AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
+            AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count, continuous data
             if (e->m_value > 0) {
                 // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                 // since they don't have a precise timestamp. They should continue to be drawn
                 // on the flags overview. See the comment in ImportEventChunk regarding flags
                 // for numeric channels.
+                //
+                // We need to pass the count along so that the VS2 index will tabulate correctly.
                 VS2 = *channels.at(1);
-                AddEvent(VS2, t, 0, 1);
+                AddEvent(VS2, t, e->m_value, 1);
             }
             break;
         case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform

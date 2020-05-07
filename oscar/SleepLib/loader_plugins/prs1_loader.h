@@ -25,7 +25,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation
 // BEFORE making a release
-const int prs1_data_version = 18;
+const int prs1_data_version = 19;
 //
 //********************************************************************************************
 #if 0  // Apparently unused
