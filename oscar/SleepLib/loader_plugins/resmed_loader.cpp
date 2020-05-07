@@ -402,7 +402,7 @@ int ResmedLoader::Open(const QString & dirpath)
                 } else {    // passed the tests, stuff it into the map
                     QDate date = stredf->edfHdr.startdate_orig.date();
                     long int days = stredf->GetNumDataRecords();
-                    qDebug() << strpath << "starts at" << date << "for" << days;
+                    qDebug() << strpath.section("/",-2,-1) << "starts at" << date << "for" << days;
                     STRmap[date] = STRFile(strpath, days, stredf);
                 }
             } else {
@@ -466,7 +466,7 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << filename << "overlaps" << STRmap[date].filename << "for" << days;
+            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days;
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << filename;
                 delete stredf;
@@ -476,7 +476,7 @@ int ResmedLoader::Open(const QString & dirpath)
 //      qDebug() << "Resetting STR date from" << date.toString() << "to first of month ... WHY???";
 //      date = QDate(date.year(), date.month(), 1);
 
-        qDebug() << fi.canonicalFilePath() << "starts at" << date << "for" << days;
+        qDebug() << fi.canonicalFilePath().section("/", -2,-1) << "starts at" << date << "for" << days;
         STRmap[date] = STRFile(fi.canonicalFilePath(), days, stredf);
     }       // end for walking the STR_Backup directory
 #ifdef STR_DEBUG
@@ -1727,7 +1727,7 @@ EDFduration getEDFDuration(const QString & filename)
         d2.setDate(d2.year() + 100, d2.month(), d2.day());
         startDate.setDate(d2);
     }
-    if ( ! startDate.isValid() ) {
+    if ( (! startDate.isValid()) || ( startDate > QDateTime::currentDateTime()) ) {
         qDebug() << "Invalid date time retreieved parsing EDF duration for" << filename;
         qDebug() << "Time zone(Utc) is" << startDate.timeZone().abbreviation(QDateTime::currentDateTimeUtc());
         qDebug() << "Time zone is" << startDate.timeZone().abbreviation(QDateTime::currentDateTime());
@@ -1954,7 +1954,7 @@ struct OverlappingEDF {
 void ResDayTask::run()
 {
     if (resday->files.size() == 0) { // No EDF files???
-        if ( ! resday->str.date.isValid()) {
+        if (( ! resday->str.date.isValid()) || (resday->str.date > QDate::currentDate()) ) {
             // This condition should be impossible, but just in case something gets fudged up elsewhere later
             qDebug() << "No edf files in resday" << resday->date << "and the str date is inValid";
             return;
@@ -1967,6 +1967,11 @@ void ResDayTask::run()
         for (int i=0;i<resday->str.maskon.size();++i) {
             quint32 maskon = resday->str.maskon[i];
             quint32 maskoff = resday->str.maskoff[i];
+            if ( (maskon > QDateTime::currentDateTime().toTime_t()) ||
+                 (maskoff > QDateTime::currentDateTime().toTime_t()) ) {
+                qWarning() << "mask time in future" << resday->date;
+                continue;
+            }
             if (((maskon>0) && (maskoff>0)) && (maskon != maskoff)) {   //ignore very short sessions
                 Session * sess = new Session(mach, maskon);
                 sess->set_first(quint64(maskon) * 1000L);
@@ -2003,6 +2008,11 @@ void ResDayTask::run()
     if (resday->str.date.isValid()) {
         //First populate Overlaps with Mask ON/OFF events
         for (int i=0; i < maskOnSize; ++i) {
+            if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toTime_t()) ||
+                 (resday->str.maskoff[i] > QDateTime::currentDateTime().toTime_t()) ) {
+                qWarning() << "mask time in future" << resday->date;
+                continue;
+            }
             if (((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) 
                     && (resday->str.maskon[i] != resday->str.maskoff[i]) ) {
                 OverlappingEDF ov;
@@ -2045,6 +2055,11 @@ void ResDayTask::run()
         }
         if (!added) {    // Didn't get a hit, look at the EDF files duration and check for an overlap
             EDFduration dur = getEDFDuration(fullpath);
+            if ((dur.start > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ||
+                (dur.end > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ) {
+                qWarning() << "Future Date in" << fullpath;
+                continue;           // skip this file
+            }
             for (int i=overlaps.size()-1; i>=0; --i) {
                 OverlappingEDF & ovr = overlaps[i];
                 if ((ovr.start < dur.end) && (dur.start < ovr.end)) {
@@ -2072,7 +2087,7 @@ void ResDayTask::run()
                     ov.end = dur.end;
                     ov.filemap.insert(filetime_t, filename);
 #ifdef SESSION_DEBUG
-                    qDebug() << "Creating session for" << filename;
+                    qDebug() << "Creating overlap for" << filename;
                     qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
 #endif
                     overlaps.append(ov);
@@ -2172,13 +2187,14 @@ void ResDayTask::run()
             qDebug() << "Session" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "has zero duration";
+            qDebug() << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
         }
         if (sess->length() < 0) {
             // we want empty sessions even though they are crap
             qDebug() << "Session" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "has negative duration";
-            qDebug() << "Start:" << sess->realFirst() << "End:" << sess->realLast();
+            qDebug() << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
         }
 
         if (resday->str.date.isValid()) {
@@ -2195,11 +2211,10 @@ void ResDayTask::run()
     #endif
             StoreSettings(sess, R);
 
-        } else {
-            // No corresponding STR.edf record, but we have EDF files
-#ifdef SESSION_DEBUG
+        } else { // No corresponding STR.edf record, but we have EDF files
+   #ifdef STR_DEBUG     
             qDebug() << "EDF files without STR record" << resday->date.toString();
-#endif
+   #endif
             bool foundprev = false;
             loader->sessionMutex.lock();
 
@@ -2221,7 +2236,6 @@ void ResDayTask::run()
                     foundprev = true;
                     break;
                 }
-
             }
             loader->sessionMutex.unlock();
             sess->setNoSettings(true);
@@ -2233,19 +2247,25 @@ void ResDayTask::run()
                     GuessPAPMode(sess);
                 }
             }
-        }
+        }           // end else no STR record for these edf files
 
         sess->UpdateSummaries();
 #ifdef SESSION_DEBUG
         qDebug() << "Adding session" << sess->session()
-        << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
+            << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
 #endif
 
         // Save is not threadsafe? (meh... it seems to be)
        // loader->saveMutex.lock();
        // loader->saveMutex.unlock();
 
-        save(loader, sess);
+        if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
+             (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
+            qWarning() << "Skipping Future session:" << sess->session()
+                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "\noriginal date is" << resday->date.toString();
+        else    
+            save(loader, sess);
 
         // Free the memory used by this session
         sess->TrashEvents();
@@ -2272,9 +2292,10 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     time.start();
 #endif
 
+    QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadCSL failed to open" << path;
+        qDebug() << "LoadCSL failed to open" << filename;
         return false;
     }
 
@@ -2284,7 +2305,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadCSL failed to parse" << path;
+        qDebug() << "LoadCSL failed to parse" << filename;
         return false;
     }
 
@@ -2350,9 +2371,10 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
+    QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadEVE failed to open" << path;
+        qDebug() << "LoadEVE failed to open" << filename;
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2361,7 +2383,7 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadEVE failed to parse" << path;
+        qDebug() << "LoadEVE failed to parse" << filename;
         return false;
     }
 
@@ -2444,9 +2466,10 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
+    QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadBRP failed to open" << path;
+        qDebug() << "LoadBRP failed to open" << filename;
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2454,7 +2477,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     time.start();
 #endif
     if (!edf.Parse()) {
-        qDebug() << "LoadBRP failed to parse" << path;
+        qDebug() << "LoadBRP failed to parse" << filename;
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2545,9 +2568,10 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
     time.start();
 #endif
 
+    QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadSAD failed to  open" << path;
+        qDebug() << "LoadSAD failed to  open" << filename;
         return false;
     }
 
@@ -2557,7 +2581,7 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadSAD failed to parse" << path;
+        qDebug() << "LoadSAD failed to parse" << filename;
         return false;
     }
 
@@ -2619,9 +2643,10 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     QTime time;
     time.start();
 #endif
+    QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadPLD failed to open" << path;
+        qDebug() << "LoadPLD failed to open" << filename;
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2630,7 +2655,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadPLD failed to parse" << path;
+        qDebug() << "LoadPLD failed to parse" << filename;
         return false;
     }
 

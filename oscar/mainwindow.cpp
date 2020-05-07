@@ -1622,6 +1622,7 @@ void packEventList(EventList *el, EventDataType minval = 0)
             }
         }
 
+
         lastt = t;
     }
 
@@ -1862,12 +1863,15 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 void MainWindow::on_actionPurge_Current_Day_triggered()
 {
-    if (!daily) return;
+    if (!daily)
+        return;
     QDate date = daily->getDate();
+    qDebug() << "Purging CPAP data from" << date;
     daily->Unload(date);
     Day *day = p_profile->GetDay(date, MT_CPAP);
     Machine *cpap = nullptr;
-    if (day) cpap = day->machine(MT_CPAP);
+    if (day)
+        cpap = day->machine(MT_CPAP);
 
     if (cpap) {
         QList<Session *>::iterator s;
@@ -1876,6 +1880,9 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
         QList<SessionID> sidlist;
         for (s = day->begin(); s != day->end(); ++s) {
             list.push_back(*s);
+            qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+            qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
+            qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
             sidlist.push_back((*s)->session());
         }
 
@@ -1884,6 +1891,7 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
         QFile impfile(cpap->getDataPath()+"/imported_files.csv");
         if (impfile.exists()) {
+            qDebug() << "Obsolet file exists" << impfile.fileName();
             if (impfile.open(QFile::ReadOnly)) {
                 QTextStream impstream(&impfile);
                 QString serial;
@@ -1920,7 +1928,7 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
                 out.flush();
             }
             impfile.close();
-        }
+        }                   // end of obsolte file code
 
         QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
         rxcache.remove();
@@ -1942,6 +1950,11 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
     daily->clearLastDay();
     daily->LoadDate(date);
+    if (overview)
+        overview->ReloadGraphs();
+    if (welcome)
+        welcome->refreshPage();
+    GenerateStatistics();
 }
 
 void MainWindow::on_actionRebuildCPAP(QAction *action)
@@ -2002,13 +2015,15 @@ void MainWindow::on_actionRebuildCPAP(QAction *action)
         } else {
         }
     }
-    if (overview) overview->ReloadGraphs();
+    if (overview)
+        overview->ReloadGraphs();
     if (daily) {
         daily->Unload();
         daily->clearLastDay(); // otherwise Daily will crash
         daily->ReloadGraphs();
     }
-    if (welcome) welcome->refreshPage();
+    if (welcome)
+        welcome->refreshPage();
     PopulatePurgeMenu();
     GenerateStatistics();
     p_profile->StoreMachines();

@@ -31,8 +31,8 @@ ResMedEDFInfo::~ResMedEDFInfo() { }
 bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
 {
 	if ( ! EDFInfo::Parse(  ) ) {
-        qWarning() << "EDFInfo::Parse failed!";
-        sleep(1);
+//      qWarning() << "EDFInfo::Parse failed!";
+//      sleep(1);
         return false;
     }
 	
@@ -49,7 +49,7 @@ bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
 
     if (!edfHdr.startdate_orig.isValid()) {
         qDebug() << "Invalid date time retreieved parsing EDF File " << filename;
-        sleep(1);
+//      sleep(1);
         return false;
     }
 
@@ -57,7 +57,7 @@ bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
     //startdate-=timezoneOffset();
     if (startdate == 0) {
         qDebug() << "Invalid startdate = 0 in EDF File " << filename;
-        sleep(1);
+//      sleep(1);
         return false;
     }
 
