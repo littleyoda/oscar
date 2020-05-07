@@ -6767,14 +6767,16 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
 
     // Check for previously unseen data that we expect to be normal:
     if (family == 0) {
-        if (tubepresent) {
-            // All tube temperature and humidity levels seen.
-        }
+        // All variations seen.
     } else if (family == 5) {
         if (tubepresent) {
             if (tubetemp != 0 && tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "<= 4");
+            // All humidity levels seen.
+        } else if (humidadaptive) {
+            // All humidity levels seen.
+        } else if (humidfixed) {
+            CHECK_VALUE(humidlevel, 5);
         }
-        CHECK_VALUE(humidfixed, false);
     } else if (family == 3) {
         if (tubepresent) {
             // All tube temperature and humidity levels seen.
