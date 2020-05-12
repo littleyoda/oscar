@@ -261,6 +261,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
 
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
+    { "461CA",  0, 4, "REMstar Pro (System One 60 Series)" },
     { "560P",   0, 4, "REMstar Auto (System One 60 Series)" },
     { "560PBT", 0, 4, "REMstar Auto (System One 60 Series)" },
     { "561P",   0, 4, "REMstar Auto (System One 60 Series)" },
@@ -283,6 +284,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
     { "600X150", 0, 6, "DreamStation BiPAP Pro" },
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X120", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
@@ -7208,8 +7210,8 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 //CHECK_VALUE(data[pos+9], 0x00);
                 //CHECK_VALUES(data[pos+0xa], 0xbb, 0x00);  // 16-bit minutes in large leak
                 //CHECK_VALUE(data[pos+0xb], 0x00);
-                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // probably 16-bit value
-                CHECK_VALUE(data[pos+0xd], 0x00);
+                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // 16-bit minutes in PB
+                //CHECK_VALUE(data[pos+0xd], 0x00);
                 //CHECK_VALUES(data[pos+0xe], 0x01, 0x00);  // 16-bit VS count
                 //CHECK_VALUE(data[pos+0xf], 0x00);
                 //CHECK_VALUES(data[pos+0x10], 0x21, 5);  // probably 16-bit value, maybe H count?
