@@ -6938,7 +6938,10 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2a:  // EZ-Start
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                CHECK_VALUES(data[pos], 0x00, 0x80);  // both seem to mean enabled
+                // 0x80 is CPAP Mode - EZ-Start in pressure detail chart, 0x00 is just CPAP mode with no EZ-Start pressure
+                // TODO: How to represent which one is active in practice? Should this always be "true" since
+                // either value means that the setting is enabled?
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x42:  // EZ-Start enabled for Auto-CPAP?
