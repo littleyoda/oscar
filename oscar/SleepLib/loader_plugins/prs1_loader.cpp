@@ -261,6 +261,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
 
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
+    { "461CA",  0, 4, "REMstar Pro (System One 60 Series)" },
     { "560P",   0, 4, "REMstar Auto (System One 60 Series)" },
     { "560PBT", 0, 4, "REMstar Auto (System One 60 Series)" },
     { "561P",   0, 4, "REMstar Auto (System One 60 Series)" },
@@ -283,6 +284,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
     { "600X150", 0, 6, "DreamStation BiPAP Pro" },
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X120", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
@@ -6777,7 +6779,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         } else if (humidadaptive) {
             // All humidity levels seen.
         } else if (humidfixed) {
-            CHECK_VALUE(humidlevel, 5);
+            if (humidlevel < 3) UNEXPECTED_VALUE(humidlevel, "3-5");
         }
     } else if (family == 3) {
         if (tubepresent) {
@@ -6938,7 +6940,10 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2a:  // EZ-Start
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                CHECK_VALUES(data[pos], 0x00, 0x80);  // both seem to mean enabled
+                // 0x80 is CPAP Mode - EZ-Start in pressure detail chart, 0x00 is just CPAP mode with no EZ-Start pressure
+                // TODO: How to represent which one is active in practice? Should this always be "true" since
+                // either value means that the setting is enabled?
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x42:  // EZ-Start enabled for Auto-CPAP?
@@ -7205,8 +7210,8 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 //CHECK_VALUE(data[pos+9], 0x00);
                 //CHECK_VALUES(data[pos+0xa], 0xbb, 0x00);  // 16-bit minutes in large leak
                 //CHECK_VALUE(data[pos+0xb], 0x00);
-                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // probably 16-bit value
-                CHECK_VALUE(data[pos+0xd], 0x00);
+                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // 16-bit minutes in PB
+                //CHECK_VALUE(data[pos+0xd], 0x00);
                 //CHECK_VALUES(data[pos+0xe], 0x01, 0x00);  // 16-bit VS count
                 //CHECK_VALUE(data[pos+0xf], 0x00);
                 //CHECK_VALUES(data[pos+0x10], 0x21, 5);  // probably 16-bit value, maybe H count?
@@ -7368,6 +7373,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
             break;
         }
 
+        int alarm;
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first?
@@ -7386,10 +7392,20 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
                 CHECK_VALUE(data[pos+5], 0);
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
-                CHECK_VALUES(data[pos+8], 0, 1);  // 1 = patient disconnect alarm of 15 sec, not sure where time is encoded
-                if (data[pos+8] != 0) {
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, data[pos+8] * 15));
+
+                alarm = 0;
+                switch (data[pos+8]) {
+                    case 1: alarm = 15; break;  // 15 sec
+                    case 2: alarm = 60; break;  // 60 sec
+                    case 0: break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos+8], "0-2");
+                        break;
                 }
+                if (alarm) {
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, alarm));
+                }
+
                 CHECK_VALUE(size, 9);
                 break;
             case 3:  // Mask On
@@ -7563,7 +7579,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    if (breath_rate < 4 || breath_rate > 10) UNEXPECTED_VALUE(breath_rate, "4-10");
+                    if (breath_rate < 4 || breath_rate > 16) UNEXPECTED_VALUE(breath_rate, "4-16");
                     if (timed_inspiration < 12 || timed_inspiration > 24) UNEXPECTED_VALUE(timed_inspiration, "12-24");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
@@ -8228,7 +8244,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
             }
             
             if (channel == OXI_Pulse) {
-                if (value > 240) UNEXPECTED_VALUE(value, "<= 240 bpm");
+                // Values up through 253 are confirmed to be reported as valid on official reports.
             } else {
                 if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
             }
