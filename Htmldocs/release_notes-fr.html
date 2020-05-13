@@ -1,19 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"fr">
-<html>
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes_fr</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<p> <b> Modifications et correctifs dans OSCAR v1.1.1 </b>
+<br> Des portions d'OSCAR sont © 2019-2020 par <i> L'équipe OSCAR </i> </p>
+<ul>
+<li> [nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:
+<ul>
+<li> BiPAP S/T (série C) (1061401) </li>
+<li> DreamStation BiPAP Pro (600X150) </li>
+<li> DreamStation Auto BiPAP (700X150) </li>
+<li> <i> Remarque: les alarmes de ventilateur ne sont pas actuellement importées. </i> </li>
+</ul>
+<li> [nouveau] Ajoutez le canal "débit maximal" signalé par les ventilateurs pré-DreamStation. </li>
+<li> [nouveau] Détecte et résout automatiquement les plantages liés aux graphiques sous Windows. </li>
+<li> [nouveau] Prend en charge AVAPS dans le graphique de pression Aperçu. </li>
+<li> [correct] Corrigez les barres manquantes dans le tableau de pression Aperçu des appareils Philips Respironics. </li>
+<li> [correction] Ajoutez les canaux de pression Philips Respironics manquants à l'exportation CSV. </li>
+<li> [correction] Correction de zéro Philips Respironics AHI dans l'exportation de session CSV. </li>
+<li> [correction] Ajoutez la prise en charge du paramètre de verrouillage Bi-Flex sur les ventilateurs pré-DreamStation. </li>
+<li> [fix] Correction de l'échelle de la forme d'onde de pression pour le BiPAP autoSV Advanced 30 (960T) </li>
+<li> [correction] Ajout de la prise en charge du mode de temps de montée sur les appareils DreamStation BiPAP (600X-700X). </li>
+<li> [correction] Supprimez les paramètres de durée et de pression de la rampe lorsque la rampe est désactivée sur les appareils pré-DreamStation. </li>
+<li> [correction] Améliorez l'importation des données d'oxymétrie Philips Respironics. </li>
+<li> [correction] Correction de l'index VS2 affiché sur la page quotidienne des machines Philips Respironics. </li>
+<li> [fix] Correction d'un échec occasionnel de l'enregistrement des données Viatom importées. </li>
+<li> [fix] Correction d'une invite de mise à niveau de base de données récurrente. </li>
+<li> [fix] Correction d'un plantage occasionnel lors de l'importation de données Resmed. </li>
+</ul>
     <p>
     <b>Modifications et correctifs dans OSCAR v1.1.0</b>
     <br>Des portions d&#39;OSCAR sont © 2019-2020 par 
     <i>l&#39;équipe OSCAR</i></p>
     <ul>
-      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:</li>
+      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:
         <ul>
           <li>DreamStation Auto CPAP (500X180)</li>
         </ul>
@@ -27,7 +53,7 @@
     <i>l&#39;équipe OSCAR</i></p>
     <ul>
       <li>[correction] Les barres AHI et Utilisation dans les graphiques de présentation montrent maintenant la hauteur correcte lorsque l&#39;utilisation de l&#39;oxymétrie est considérablement plus longue que l&#39;utilisation PPC.</li>
-      <li>[correction] Amélioration de l&#39;importation des paramètres de Philips Respironics. En particulier:</li>
+      <li>[correction] Amélioration de l&#39;importation des paramètres de Philips Respironics. En particulier:
         <ul>
           <li>Les paramètres des modes PC, S et S/T s&#39;affichent désormais correctement.</li>
           <li>Les paramètres AVAPS s&#39;affichent désormais correctement, y compris le volume courant cible.</li>
@@ -35,7 +61,7 @@
           <li>Les paramètres des modes PPC-Check et Auto-Trial s&#39;affichent désormais correctement.</li>
         </ul>
       <li>[correction] Correction de la durée signalée pour les sessions extrêmement longues sur les appareils DreamStation CPAP et BiPAP</li>
-      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:</li>
+      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:
         <ul>
           <li>DreamStation Auto PPC (500X120)</li>
         </ul>
@@ -47,10 +73,10 @@
     <br>Des portions d&#39;OSCAR sont © 2019-2020 par 
     <i>l&#39;équipe OSCAR</i></p>
     <ul>
-      <li>[nouveau] Ajout d&#39;un support préliminaire pour les oxymètres de pouls Viatom / Wellue</li>
+      <li>[nouveau] Ajout d&#39;un support préliminaire pour les oxymètres de pouls Viatom/Wellue</li>
       <li>[nouveau] Ajout de la prise en charge des hypnogrammes Dreem</li>
       <li>[nouveau] Réorganisation complète du chargeur ResMed pour faciliter la compréhension et les améliorations futures</li>
-      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:</li>
+      <li>[nouveau] Périphériques Philips Respironics supplémentaires testés et entièrement pris en charge:
         <ul>
           <li>DreamStation Auto PPC (500X130)</li>
         </ul>
@@ -73,7 +99,7 @@
     <i>l&#39;équipe OSCAR</i></p>
     <ul>
       <li>[nouveau] Refonte complète de l&#39;importateur Philips Respironics System One, résolvant tous les problèmes précédemment signalés.</li>
-      <li>[nouveau] Les appareils Philips Respironics suivants sont désormais testés et entièrement pris en charge:</li>
+      <li>[nouveau] Les appareils Philips Respironics suivants sont désormais testés et entièrement pris en charge:
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -127,7 +153,7 @@
       <li>[correction] Toutes les langues maintenant disponibles sur Mac</li>
       <li>[Correction] La barre de date en bas du graphique quotidien est maintenant à l&#39;heure locale quand aucun curseur de ligne ne s&#39;affiche et le formatage est amélioré</li>
       <li>[correction] Le zoom à 100% fonctionne désormais sur la page Présentation</li>
-      <li>[fix] Afficher / Réinitialiser les graphiques active désormais tous les graphiques et tous les drapeaux d&#39;événements</li>
+      <li>[fix] Afficher/Réinitialiser les graphiques active désormais tous les graphiques et tous les drapeaux d&#39;événements</li>
       <li>[fix] La date du calendrier est désormais formatée selon les paramètres nationaux</li>
       <li>[Correction] Les boutons bascule de la liste des sessions de la page quotidienne et les listes déroulantes des événements et des graphiques ont été remplacés par des cases à cocher</li>
     </ul>
@@ -139,7 +165,7 @@
     <i>l&#39;équipe OSCAR</i></p>
     <ul>
       <li>[nouveau] Les ventilateurs DreamStation BiPAP S/T et AVAPS (1030X et 1130X) sont désormais pris en charge. Les paramètres ne sont pas encore affichés correctement, mais les événements de thérapie et les graphiques devraient maintenant s&#39;afficher correctement.</li>
-      <li>[nouveau] Afficher / réinitialiser les graphiques organise les graphiques dans leur ordre d&#39;origine</li>
+      <li>[nouveau] Afficher/réinitialiser les graphiques organise les graphiques dans leur ordre d&#39;origine</li>
       <li>[fix] Format des dates pour la région nationale telles que rapportées par le système d&#39;exploitation</li>
       <li>[correction] Amélioration de la barre de progression pour la mise à jour du cache des statistiques</li>
       <li>[correction] Calculs corrects de l&#39;IAH sur sept jours et du taux de fuite sur la page d&#39;accueil</li>
@@ -157,7 +183,7 @@
       <li>[nouveau] la langue roumaine est prise en charge</li>
       <li>[correction] Afficher l&#39;identifiant de validation dans la barre de titre pour les tests et les versions bêta</li>
       <li>[fix] Afficher l&#39;étiquette BMI et la valeur calculée uniquement lorsque le poids et la taille sont différents de zéro</li>
-      <li>[correction] Améliorer l&#39;affichage de l&#39;IMC dans Daily / Notes</li>
+      <li>[correction] Améliorer l&#39;affichage de l&#39;IMC dans Daily/Notes</li>
       <li>[Fix] Dialogue de profil correct pour afficher la hauteur est mesurée en cm, pas en mètres lorsque le système d&#39;unités est métrique</li>
       <li>[correction] Toujours afficher les index des événements sur la page Quotidienne même lorsque certains indicateurs d&#39;événement sont désactivés</li>
     </ul>
@@ -174,9 +200,9 @@
       <li>[nouveau] Prise en charge améliorée de DreamStation</li>
       <li>[nouveau] Amélioration de l&#39;importation d&#39;oxymètre pour CM550D +</li>
       <li>[nouveau] Désactiver le mode sombre sur Mac</li>
-      <li>[nouveau] Afficher les heures / jour constituant la conformité sur la page Statistiques</li>
+      <li>[nouveau] Afficher les heures/jour constituant la conformité sur la page Statistiques</li>
       <li>[nouveau] Meilleur ordre des graphiques sur la page Quotidienne pour les profils nouvellement créés</li>
-      <li>[nouveau] Aide / Informations système affiche des informations sur OSCAR, le système d&#39;exploitation et l&#39;emplacement des données</li>
+      <li>[nouveau] Aide/Informations système affiche des informations sur OSCAR, le système d&#39;exploitation et l&#39;emplacement des données</li>
       <li>[nouveau] Déplacer l&#39;option de graphique à secteurs de la boîte de dialogue Préférences vers le menu Affichage</li>
       <li>[nouveau] Masquer le graphique à secteurs lors de la capture d&#39;écran</li>
       <li>[nouveau] L&#39;option --datadir permet désormais un nom complet sous Windows</li>
@@ -197,7 +223,7 @@
       <li>[correction] Afficher correctement le moteur graphique dans la barre de titre</li>
       <li>[correction] Ajustez la taille de la boîte de dialogue Préférences pour s&#39;adapter à des écrans plus petits</li>
       <li>[correction] Étiquetez le contrôle climatique comme manuel ou automatique correctement lors de l&#39;importation ResMed</li>
-      <li>[correction] Déplacer des informations moins utiles de la barre de titre vers Aide / Informations système</li>
+      <li>[correction] Déplacer des informations moins utiles de la barre de titre vers Aide/Informations système</li>
       <li>[Correctif] Modifiez le message &quot;Paramètres de prescription&quot; en &quot;Paramètres de la machine&quot;</li>
       <li>[correction] Améliorez les icônes, en particulier les plus petites</li>
       <li>[Fix] Corriger les problèmes du menu Mac</li>

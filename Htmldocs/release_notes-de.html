@@ -5,16 +5,42 @@
     <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" >
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes-de</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<p> <b> Änderungen und Korrekturen in OSCAR v1.1.1 </b>
+<br> Teile von OSCAR sind © 2019-2020 von <i> The OSCAR Team </i> </p>
+<ul>
+<li> [neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:
+<ul>
+<li> BiPAP S/T (C-Serie) (1061401) </li>
+<li> DreamStation BiPAP Pro (600 x 150) </li>
+<li> DreamStation Auto BiPAP (700X150) </li>
+<li> <i> Hinweis: Beatmungsgeräte-Alarme werden derzeit nicht importiert. </i> </li>
+</ul>
+<li> [neu] Fügen Sie den von Peak-Beatmungsgeräten gemeldeten "Peak Flow" -Kanal hinzu. </li>
+<li> [neu] Grafikbedingte Abstürze unter Windows werden automatisch erkannt und behoben. </li>
+<li> [neu] Unterstützt AVAPS in der Übersicht Drucktabelle. </li>
+<li> [Fix] Fehlende Balken in der Übersicht Drucktabelle für Philips Respironics-Geräte korrigieren. </li>
+<li> [Fix] Fehlende Philips Respironics-Druckkanäle zum CSV-Export hinzufügen. </li>
+<li> [Fix] Null Philips Respironics AHI beim CSV-Sitzungsexport korrigieren. </li>
+<li> [Fix] Unterstützung für die Bi-Flex-Sperreinstellung bei Beatmungsgeräten vor DreamStation hinzufügen. </li>
+<li> [Fix] Korrigieren Sie die Druckwellenformskala für den BiPAP autoSV Advanced 30 (960T) </li>
+<li> [Fix] Unterstützung für den Anstiegszeitmodus auf DreamStation BiPAP-Geräten (600X-700X) hinzufügen. </li>
+<li> [Fix] Entfernen Sie die Einstellungen für Rampenzeit und -druck, wenn die Rampe auf Geräten vor DreamStation deaktiviert ist. </li>
+<li> [Fix] Verbessern Sie den Import von Philips Respironics-Oximetriedaten. </li>
+<li> [Fix] Korrigiert den VS2-Index, der auf der Seite "Täglich" für Philips Respironics-Geräte angezeigt wird. </li>
+<li> [Fix] Behebung eines gelegentlichen Fehlers beim Speichern importierter Viatom-Daten. </li>
+<li> [Fix] Behebung einer wiederkehrenden Eingabeaufforderung für ein Datenbank-Upgrade. </li>
+<li> [Fix] Behebung eines gelegentlichen Absturzes beim Importieren von Resmed-Daten. </li>
+</ul>
     <p>
     <b>Änderungen und Korrekturen in OSCAR v1.1.0</b>
     <br>Teile von OSCAR sind © 2019-2020 vom 
     <i>OSCAR-Team</i></p>
     <ul>
-      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:</li>
+      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:
         <ul>
           <li>DreamStation Auto CPAP (500 x 180)</li>
         </ul>
@@ -28,7 +54,7 @@
     <i>OSCAR-Team</i></p>
     <ul>
       <li>[Fix] AHI- und Verwendungsbalken in Übersichtsdiagrammen zeigen jetzt die richtige Höhe an, wenn die Oximetrie-Nutzung erheblich länger ist als die CPAP-Nutzung.</li>
-      <li>[Fix] Verbesserter Import von Philips Respironics-Einstellungen. Speziell:</li>
+      <li>[Fix] Verbesserter Import von Philips Respironics-Einstellungen. Speziell:
         <ul>
           <li>Die Einstellungen für die Modi PC, S und S/T werden jetzt korrekt angezeigt.</li>
           <li>Die AVAPS-Einstellungen werden jetzt korrekt angezeigt, einschließlich des Ziel-Atemzugvolumens.</li>
@@ -36,7 +62,7 @@
           <li>Die Einstellungen für den CPAP-Check- und den Auto-Trial-Modus werden jetzt korrekt angezeigt.</li>
         </ul>
       <li>[Fix] Korrigieren Sie die gemeldete Dauer für extrem lange Sitzungen auf DreamStation CPAP- und BiPAP-Geräten</li>
-      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:</li>
+      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:
         <ul>
           <li>DreamStation Auto CPAP (500 x 120)</li>
         </ul>
@@ -48,10 +74,10 @@
     <br>Teile von OSCAR sind © 2019-2020 vom 
     <i>OSCAR-Team</i></p>
     <ul>
-      <li>[neu] Vorläufige Unterstützung für Viatom / Wellue-Pulsoximeter hinzufügen</li>
+      <li>[neu] Vorläufige Unterstützung für Viatom/Wellue-Pulsoximeter hinzufügen</li>
       <li>[neu] Unterstützung für Dreem-Hypnogramme hinzufügen</li>
       <li>[neu] Umfassende Reorganisation des ResMed-Laders, um das Verständnis und zukünftige Verbesserungen zu erleichtern</li>
-      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:</li>
+      <li>[neu] Zusätzliche getestete und vollständig unterstützte Philips Respironics-Geräte:
         <ul>
           <li>DreamStation Auto CPAP (500 x 130)</li>
         </ul>
@@ -74,7 +100,7 @@
     <i>OSCAR-Team</i></p>
     <ul>
       <li>[neu] Umfassende Überarbeitung des Importeurs von Philips Respironics System One, um alle zuvor gemeldeten Probleme zu beheben.</li>
-      <li>[neu] Die folgenden Philips Respironics-Geräte werden jetzt getestet und vollständig unterstützt:</li>
+      <li>[neu] Die folgenden Philips Respironics-Geräte werden jetzt getestet und vollständig unterstützt:
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -128,7 +154,7 @@
       <li>[Fix] Alle Sprachen jetzt auf dem Mac verfügbar</li>
       <li>[fix] Datumsleiste am unteren Rand des Tagesdiagramms jetzt in der Ortszeit, wenn kein Liniencursor angezeigt wird und die Formatierung verbessert wurde</li>
       <li>[Fix] 100% Zoom funktioniert jetzt auf der Übersichtsseite</li>
-      <li>[fix] Diagramme anzeigen / zurücksetzen aktiviert jetzt alle Diagramme und alle Ereignisflags</li>
+      <li>[fix] Diagramme anzeigen/zurücksetzen aktiviert jetzt alle Diagramme und alle Ereignisflags</li>
       <li>[fix] Kalenderdatum jetzt gemäß den nationalen Einstellungen formatiert</li>
       <li>[Fix] Die Schaltflächen in der Sitzungsliste der täglichen Seite sowie die Pulldowns für Ereignisse und Diagramme wurden in Kontrollkästchen geändert</li>
     </ul>
@@ -140,7 +166,7 @@
     <i>OSCAR-Team</i></p>
     <ul>
       <li>[neu] DreamStation BiPAP S/T- und AVAPS-Beatmungsgeräte (1030X und 1130X) werden jetzt unterstützt. Die Einstellungen werden noch nicht korrekt angezeigt, aber Therapieereignisse und Diagramme sollten jetzt korrekt angezeigt werden.</li>
-      <li>[neu] Diagramme anzeigen / zurücksetzen organisiert Diagramme in ihrer ursprünglichen Reihenfolge</li>
+      <li>[neu] Diagramme anzeigen/zurücksetzen organisiert Diagramme in ihrer ursprünglichen Reihenfolge</li>
       <li>[fix] Formatierungsdaten für die nationale Region, wie vom Betriebssystem gemeldet</li>
       <li>[Fix] Verbessern Sie den Fortschrittsbalken für das Update des Statistik-Cache</li>
       <li>[Fix] Korrigieren Sie die Berechnungen des 7-Tage-AHI und der Leckrate auf der Begrüßungsseite</li>
@@ -158,7 +184,7 @@
       <li>[neu] Rumänische Sprache wird unterstützt</li>
       <li>[Fix] Commit-ID in der Titelleiste für Tests und Beta-Builds anzeigen</li>
       <li>[fix] BMI-Label und berechneten Wert nur anzeigen, wenn sowohl Gewicht als auch Größe ungleich Null sind</li>
-      <li>[Fix] Verbessern Sie die BMI-Anzeige in Daily / Notes</li>
+      <li>[Fix] Verbessern Sie die BMI-Anzeige in Daily/Notes</li>
       <li>[Fix] Der korrekte Profildialog zur Anzeige der Höhe wird in cm und nicht in Metern gemessen, wenn das Einheitensystem metrisch ist</li>
       <li>[fix] Zeigt Ereignisindizes immer auf der Seite &quot;Täglich&quot; an, auch wenn einige Ereignisflags deaktiviert sind</li>
     </ul>
@@ -175,9 +201,9 @@
       <li>[neu] Verbesserte DreamStation-Unterstützung</li>
       <li>[neu] Verbessern Sie den Oximeterimport für CM550D +</li>
       <li>[neu] Deaktiviere den Dunkelmodus auf dem Mac</li>
-      <li>[neu] Zeigen Sie auf der Statistikseite Stunden / Tag an, die die Konformität darstellen</li>
+      <li>[neu] Zeigen Sie auf der Statistikseite Stunden/Tag an, die die Konformität darstellen</li>
       <li>[neu] Bessere Reihenfolge der Grafiken auf der Seite &quot;Täglich&quot; für neu erstellte Profile</li>
-      <li>[neu] Hilfe- / Systeminformationen zeigen Informationen zu OSCAR, Betriebssystem und Datenspeicherort an</li>
+      <li>[neu] Hilfe-/Systeminformationen zeigen Informationen zu OSCAR, Betriebssystem und Datenspeicherort an</li>
       <li>[neu] Verschieben Sie die Kreisdiagrammoption aus dem Dialogfeld &quot;Einstellungen&quot; in das Menü &quot;Ansicht&quot;</li>
       <li>[neu] Kreisdiagramm beim Erfassen des Bildschirms ausblenden</li>
       <li>[neu] Die Option --datadir ermöglicht jetzt unter Windows einen vollständig qualifizierten Namen</li>
@@ -198,7 +224,7 @@
       <li>[Fix] Grafik-Engine in der Titelleiste korrekt anzeigen</li>
       <li>[Fix] Passen Sie die Größe des Dialogfelds &quot;Einstellungen&quot; an kleinere Bildschirme an</li>
       <li>[Fix] Beschriften Sie die Klimaregelung beim ResMed-Import als manuell oder automatisch korrekt</li>
-      <li>[Fix] Verschieben Sie weniger nützliche Informationen aus der Titelleiste in die Hilfe- / Systeminformationen</li>
+      <li>[Fix] Verschieben Sie weniger nützliche Informationen aus der Titelleiste in die Hilfe-/Systeminformationen</li>
       <li>[Fix] Ändern Sie &quot;Verschreibungseinstellungen&quot; in &quot;Maschineneinstellungen&quot;</li>
       <li>[Fix] Verbessere Symbole, insbesondere kleinere</li>
       <li>[Fix] Korrigieren Sie Probleme mit dem Mac-Menü</li>

@@ -1,19 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"sv">
-<html>
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="sv">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes-sv</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<P>
+<b> Ändrar och fixar i OSCAR v1.1.1</b>
+<br> Delar av OSCAR är © 2019-2020 av
+<i> OSCAR-teamet </i> </p>
+<Ul>
+<li> [nya] Ytterligare Philips Respironics-enheter testade och stöds helt:
+<Ul>
+<li> BiPAP S/T (C-serien) (1061401) </li>
+<li> DreamStation BiPAP Pro (600X150) </li>
+<li> DreamStation Auto BiPAP (700X150) </li>
+<li> <i> Obs: Ventilatoralarm importeras för närvarande inte. </i> </li>
+</Ul>
+<li> [ny] Lägg till kanalen "toppflöde" som rapporterats av pre-DreamStation-ventilatorer. </li>
+<li> [new] Upptäck och lösa automatiskt grafikrelaterade kraschar på Windows. </li>
+<li> [ny] Stöd AVAPS i översiktstryckkarta. </li>
+<li> [fix] Fixa saknade staplar i översiktstryckdiagrammet för Philips Respironics-enheter. </li>
+<li> [fix] Lägg till saknade Philips Respironics-tryckkanaler för CSV-export. </li>
+<li> [fix] Fix noll Philips Respironics AHI i CSV-sessionsexport. </li>
+<li> [fix] Lägg till stöd för Bi-Flex-låsinställningen på pre-DreamStation-ventilatorer. </li>
+<li> [fix] Fixa vågformsskala för BiPAP autoSV Advanced 30 (960T) </li>
+<li> [fix] Lägg till stöd för stigningsläge på DreamStation BiPAP-enheter (600X-700X). </li>
+<li> [fix] Ta bort ramptid och tryckinställningar när rampen är inaktiverad på pre-DreamStation-enheter. </li>
+<li> [fix] Förbättra importen av Philips Respironics oximetri-data. </li>
+<li> [fix] Fix VS2-index som visas på Daily-sidan för Philips Respironics-maskiner. </li>
+<li> [fix] Fixa enstaka misslyckande med att spara importerad Viatom-data. </li>
+<li> [fix] Fixa en återkommande uppdatering av databasuppdatering. </li>
+<li> [fix] Fixa en tillfällig krasch när du importerar Resmed-data. </li>
+</Ul>
     <p>
     <b>Ändrar och fixar i OSCAR v1.1.0</b>
     <br>Delar av OSCAR är © 2019-2020 av 
     <i>OSCAR Team</i></p>
     <ul>
-      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:</li>
+      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:
         <ul>
           <li>DreamStation Auto CPAP (500X180)</li>
         </ul>
@@ -27,7 +55,7 @@
     <i>OSCAR Team</i></p>
     <ul>
       <li>[fix] AHI- och användningsfält i översiktsgrafer visar nu rätt höjd när oximetryanvändningen är betydligt längre än CPAP-användning.</li>
-      <li>[fix] Förbättrad import av Philips Respironics-inställningar. Särskilt:</li>
+      <li>[fix] Förbättrad import av Philips Respironics-inställningar. Särskilt:
         <ul>
           <li>Inställningarna för PC-, S- och S/T-lägen visas nu korrekt.</li>
           <li>AVAPS-inställningarna visas nu korrekt, inklusive måltidvattenvolym.</li>
@@ -35,7 +63,7 @@
           <li>Inställningarna för CPAP-Check och Auto-Trial-lägen visas nu korrekt.</li>
         </ul>
       <li>[fix] Fixa den rapporterade varaktigheten för extremt långa sessioner på DreamStation CPAP- och BiPAP-enheter</li>
-      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:</li>
+      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:
         <ul>
           <li>DreamStation Auto CPAP (500X120)</li>
         </ul>
@@ -47,10 +75,10 @@
     <br>Delar av OSCAR är © 2019-2020 av 
     <i>OSCAR Team</i></p>
     <ul>
-      <li>[nytt] Lägg till preliminärt stöd för Viatom / Wellue-pulsoximeter</li>
+      <li>[nytt] Lägg till preliminärt stöd för Viatom /Wellue-pulsoximeter</li>
       <li>[nytt] Lägg till stöd för Dreem-hypnogram</li>
       <li>[ny] Omfattande omorganisation av ResMed-laddaren för att underlätta förståelse och framtida förbättringar</li>
-      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:</li>
+      <li>[ny] Ytterligare Philips Respironics-enheter testade och stöds helt:
         <ul>
           <li>DreamStation Auto CPAP (500X130)</li>
         </ul>
@@ -73,7 +101,7 @@
     <i>OSCAR Team</i></p>
     <ul>
       <li>[ny] Omfattande översyn av importören av Philips Respironics System One, som löser alla tidigare rapporterade problem.</li>
-      <li>[ny] Följande Philips Respironics-enheter testas nu och stöds fullt ut:</li>
+      <li>[ny] Följande Philips Respironics-enheter testas nu och stöds fullt ut:
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -127,7 +155,7 @@
       <li>[fix] Alla språk nu tillgängliga på Mac</li>
       <li>[fix] Datumfält längst ner på diagrammet nu i lokal tid då ingen radmarkör visas och formatering förbättrades</li>
       <li>[fix] 100% zoom fungerar nu på översiktssidan</li>
-      <li>[fix] Visa / återställ diagram möjliggör nu alla grafer och alla händelseflaggor</li>
+      <li>[fix] Visa /återställ diagram möjliggör nu alla grafer och alla händelseflaggor</li>
       <li>[fix] Kalenderdatum formaterat per nationella inställningar</li>
       <li>[fix] Växla knapparna på Daily sida session lista och händelse och diagram pulldowns ändras till kryssrutor</li>
     </ul>
@@ -139,7 +167,7 @@
     <i>OSCAR Team</i></p>
     <ul>
       <li>[ny] DreamStation BiPAP S/T- och AVAPS-ventilatorer (1030X och 1130X) stöds nu. Inställningarna visas ännu inte korrekt, men terapihändelser och diagram bör nu visas korrekt.</li>
-      <li>[ny] Visa / återställ grafer organiserar grafer i sin ursprungliga ordning</li>
+      <li>[ny] Visa /återställ grafer organiserar grafer i sin ursprungliga ordning</li>
       <li>[fix] Formatera datum för den nationella regionen som rapporterats av operativsystemet</li>
       <li>[fix] Förbättra framstegsfältet för cache-uppdateringen för Statistik</li>
       <li>[fix] Rätt beräkningar av AHI på sju dagar och läckage på välkomstsidan</li>
@@ -157,7 +185,7 @@
       <li>[nytt] rumänskt språk stöds</li>
       <li>[fix] Visa engagemangs-ID i titelraden för testning och beta-build</li>
       <li>[fix] Visa BMI-etikett och beräknat värde endast när både vikt och höjd är icke-noll</li>
-      <li>[fix] Förbättra BMI-display i Daily / Notes</li>
+      <li>[fix] Förbättra BMI-display i Daily /Notes</li>
       <li>[fix] Korrekt profildialog för att visa höjd mäts i cm, inte meter när enhetssystemet är metriskt</li>
       <li>[fix] Visa alltid händelsesindex på sidan Daily även om vissa händelseflaggor är avstängda</li>
     </ul>
@@ -174,9 +202,9 @@
       <li>[nytt] Förbättrad DreamStation-stöd</li>
       <li>[ny] Förbättra importen av oximeter för CM550D +</li>
       <li>[ny] Inaktivera Dark Mode på Mac</li>
-      <li>[ny] Visa timmar / dag som utgör överensstämmelse på sidan Statistik</li>
+      <li>[ny] Visa timmar /dag som utgör överensstämmelse på sidan Statistik</li>
       <li>[ny] Bättre ordning på grafer på sidan Daily för nyskapade profiler</li>
-      <li>[ny] Hjälp / systeminformation visar information om OSCAR, OS och dataläge</li>
+      <li>[ny] Hjälp /systeminformation visar information om OSCAR, OS och dataläge</li>
       <li>[nytt] Flytta alternativ för cirkeldiagram från Inställningsdialogrutan till Visa-menyn</li>
       <li>[nytt] Dölj cirkeldiagram vid skärmbilden</li>
       <li>[nytt] Alternativet - datadir tillåter nu fullt kvalificerat namn på Windows</li>
@@ -197,7 +225,7 @@
       <li>[fix] Visa grafikmotorn i titelraden korrekt</li>
       <li>[fix] Justera storleken på dialogrutan Inställningar så att de passar mindre skärmar</li>
       <li>[fix] Märk klimatkontroll som manuell eller auto korrekt vid ResMed-import</li>
-      <li>[fix] Flytta mindre användbar information från titelraden till Hjälp / Systeminformation</li>
+      <li>[fix] Flytta mindre användbar information från titelraden till Hjälp /Systeminformation</li>
       <li>[fix] Ändra &quot;Receptinställningar&quot; till &quot;Maskininställningar&quot; -meddelande</li>
       <li>[fix] Förbättra ikoner, särskilt mindre</li>
       <li>[fix] Korrigera Mac-menyproblem</li>

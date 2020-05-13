@@ -1,19 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"zh">
-<html>
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes-zh</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<p>
+<b> OSCAR v1.1.1中的更改和修复</b>
+<br> OSCAR的部分©2019-2020 by
+<i> OSCAR团队</i> </p>
+<ul>
+<li> [新]经过测试并完全支持的其他Philips Respironics设备：
+<ul>
+<li> BiPAP S/T（C系列）（1061401）</li>
+<li> DreamStation BiPAP Pro（600X150）</li>
+<li> DreamStation自动BiPAP（700X150）</li>
+<li> <i>注意：呼吸机警报当前未导入。</i> </li>
+</ul>
+<li> [new]添加Pre-DreamStation呼吸机报告的“峰值流量”通道。</li>
+<li> [new]在Windows上自动检测和解决与图形相关的崩溃。</li>
+<li> [new]在“概述”压力图中支持AVAPS。</li>
+<li> [修复]修复了Philips Respironics设备总览压力图中的缺失条。</li>
+<li> [修复]将缺少的Philips Respironics压力通道添加到CSV导出。</li>
+<li> [修复]在CSV会话导出中修复了零个Philips Respironics AHI。</li>
+<li> [fix]添加对Pre-DreamStation呼吸机上的Bi-Flex锁定设置的支持。</li>
+<li> [fix]修复BiPAP autoSV Advanced 30（960T）的压力波形比例</li>
+<li> [修复]在DreamStation BiPAP设备（600X-700X）上增加了对上升时间模式的支持。</li>
+<li> [fix]在preDreamStation设备上禁用斜坡时，请删除斜坡时间和压力设置。</li>
+<li> [fix]改进了Philips Respironics血氧饱和度测定数据的导入。</li>
+<li> [修复]修复飞利浦Respironics机器的“每日”页面上显示的VS2索引。</li>
+<li> [fix]修复了偶尔无法保存导入的Viatom数据的情况。</li>
+<li> [fix]修复了重复出现的数据库升级提示。</li>
+<li> [fix]修复了导入Resmed数据时偶尔崩溃的情况。</li>
+</ul>
     <p>
     <b>OSCAR v1.1.0中的更改和修复</b>
     <br>OSCAR的部分内容归
     <i>OSCAR团</i>队©2019-2020</p>
     <ul>
-      <li>[new]已测试并完全支持的其他Philips Respironics设备：</li>
+      <li>[new]已测试并完全支持的其他Philips Respironics设备：
         <ul>
           <li>DreamStation自动CPAP（500X180）</li>
         </ul>
@@ -26,7 +54,7 @@
     <br>OSCAR的部分内容归OSCAR团队©2019-2020</p>
     <ul>
       <li>[修复]当血氧测定法的使用时间明显长于CPAP的使用时，概览图中的AHI和使用情况栏现在显示正确的高度。</li>
-      <li>[修复]改进了Philips Respironics设置的导入。 特别是：</li>
+      <li>[修复]改进了Philips Respironics设置的导入。 特别是：
         <ul>
           <li>PC，S和S/T模式的设置现在可以正确显示。</li>
           <li>现在可以正确显示AVAPS设置，包括目标潮气量。</li>
@@ -34,7 +62,7 @@
           <li>现在可以正确显示CPAP检查和自动试用模式的设置。</li>
         </ul>
       <li>[修复]修复了DreamStation CPAP和BiPAP设备上极长会话的报告持续时间</li>
-      <li>[新]已测试并完全支持的其他Philips Respironics设备：</li>
+      <li>[新]已测试并完全支持的其他Philips Respironics设备：
         <ul>
           <li>DreamStation自动CPAP（500X120）</li>
         </ul>
@@ -44,10 +72,10 @@
     <b>OSCAR v1.1.0-beta-2中的更改和修复
     <br></b> OSCAR的部分内容归OSCAR团队©2019-2020</p>
     <ul>
-      <li>[新]添加对Viatom / Wellue脉搏血氧仪的初步支持</li>
+      <li>[新]添加对Viatom/Wellue脉搏血氧仪的初步支持</li>
       <li>[新]添加了对Dreem催眠图的支持</li>
       <li>[新] ResMed装载机的广泛重组，以促进理解和将来的改进</li>
-      <li>[新]已测试并完全支持的其他Philips Respironics设备：</li>
+      <li>[新]已测试并完全支持的其他Philips Respironics设备：
         <ul>
           <li>DreamStation自动CPAP（500X130）</li>
         </ul>
@@ -69,7 +97,7 @@
     <br>OSCAR的部分内容归OSCAR团队©2019</p>
     <ul>
       <li>[新]飞利浦Respironics System One进口商的全面检修，解决了以前报告的所有问题。</li>
-      <li>[新]现在已测试并完全支持以下Philips Respironics设备：</li>
+      <li>[新]现在已测试并完全支持以下Philips Respironics设备：
         <ul>
           <li>REMstar Plus（系统一）（251P），</li>
           <li>REMstar Pro（系统一）（450P，451P），</li>

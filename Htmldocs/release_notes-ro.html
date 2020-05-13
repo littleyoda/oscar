@@ -1,19 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"ro">
-<html>
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ro">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes-ro</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<P>
+<b> Modificări și remedieri în OSCAR v1.1.1</b>
+<br> Porțiuni de OSCAR sunt © 2019-2020 de
+<i> Echipa OSCAR </i> </p>
+<Ul>
+<li> [nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:
+<Ul>
+<li> BiPAP S/T (Seria C) (1061401) </li>
+<li> DreamStation BiPAP Pro (600X150) </li>
+<li> DreamStation Auto BiPAP (700X150) </li>
+<li> <i> Notă: Alarmele de ventilație nu sunt importate în prezent. </i> </li>
+</Ul>
+<li> [nou] Adăugați canalul „pic de curgere” raportat de ventilatoarele pre-DreamStation. </li>
+<li> [nou] Detectează și rezolvă automat blocările legate de grafică pe Windows. </li>
+<li> [nou] Asistați AVAPS în graficul de presiune Prezentare generală. </li>
+<li> [Fix] Remediați barele lipsă în graficul de presiune de ansamblu pentru dispozitivele Philips Respironics. </li>
+<li> [Fix] Adăugați canale de presiune Philips Respironics lipsă la exportul CSV. </li>
+<li> [Fix] Fix zero Philips Respironics AHI în exportul sesiunii CSV. </li>
+<li> [Fix] Adăugați suport pentru setarea de blocare Bi-Flex pe ventilatoarele pre-DreamStation. </li>
+<li> [fix] Fixează scala de undă de presiune pentru BiPAP autoSV Advanced 30 (960T) </li>
+<li> [Fix] Adăugați suport pentru modul de creștere a timpului pe dispozitivele DreamStation BiPAP (600X-700X). </li>
+<li> [repara] Eliminați setările timpului și presiunii rampei atunci când rampa este dezactivată pe dispozitivele pre-DreamStation. </li>
+<li> [repara] Îmbunătățirea importului de date de oximetrie Philips Respironics. </li>
+<li> [Fix] Remediază indicele VS2 afișat în pagina de zi cu zi pentru mașinile Philips Respironics. </li>
+<li> [reparați] Remediați eșecul ocazional la salvarea datelor Viatom importate. </li>
+<li> [reparați] Remediați o solicitare de actualizare a bazei de date recurente. </li>
+<li> [repara] Remediați un accident ocazional la importul de date Resmed. </li>
+</Ul>
   <p>
   <b>Modificări și remedieri în OSCAR v1.1.0</b>
   <br>O parte din OSCAR sunt © 2019-2020 de către 
   <i>echipa OSCAR</i></p>
   <ul>
-    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:</li>
+    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:
       <ul>
         <li>CPAP DreamStation Auto (500X180)</li>
       </ul>
@@ -26,15 +54,15 @@
   <br>O parte din OSCAR sunt © 2019-2020 de către echipa OSCAR</p>
   <ul>
     <li>[fix] AHI și barele de utilizare din graficele de prezentare arată acum înălțimea corectă când utilizarea oximetriei este semnificativ mai lungă decât utilizarea CPAP.</li>
-    <li>[repara] Import îmbunătățit al setărilor Philips Respironics. În special:</li>
+    <li>[repara] Import îmbunătățit al setărilor Philips Respironics. În special:
       <ul>
-        <li>Setările pentru modurile PC, S și S / T sunt acum afișate corect.</li>
+        <li>Setările pentru modurile PC, S și S/T sunt acum afișate corect.</li>
         <li>Setările AVAPS sunt acum afișate corect, inclusiv volumul de maree țintă.</li>
         <li>Setările de respirație de rezervă sunt acum importate și afișate.</li>
         <li>Setările pentru modurile CPAP-Check și Auto-Trial sunt acum afișate corect.</li>
       </ul>
     <li>[fix] Fixează durata raportată pentru sesiuni extrem de lungi pe dispozitivele DreamStation CPAP și BiPAP</li>
-    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:</li>
+    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:
       <ul>
         <li>CPAP Auto DreamStation (500X120)</li>
       </ul>
@@ -46,10 +74,10 @@
   <br>O parte din OSCAR sunt © 2019-2020 de către 
   <i>echipa OSCAR</i></p>
   <ul>
-    <li>[nou] Adăugați suport preliminar pentru oximetrele cu puls Viatom / Wellue</li>
+    <li>[nou] Adăugați suport preliminar pentru oximetrele cu puls Viatom/Wellue</li>
     <li>[nou] Adăugați asistență pentru hipnogramele Dreem</li>
     <li>[nou] Reorganizare extinsă a încărcătorului ResMed pentru a facilita înțelegerea și îmbunătățirile viitoare</li>
-    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:</li>
+    <li>[nou] Dispozitive suplimentare Philips Respironics testate și acceptate complet:
       <ul>
         <li>CPAP Auto DreamStation (500X130)</li>
       </ul>
@@ -72,7 +100,7 @@
   <br>
   <ul>
     <li>[nou] Revizuire extinsă a importatorului Philips Respironics System One, soluționând toate problemele raportate anterior.</li>
-    <li>[nou] Următoarele dispozitive Philips Respironics sunt acum testate și complet acceptate:</li>
+    <li>[nou] Următoarele dispozitive Philips Respironics sunt acum testate și complet acceptate:
       <ul>
         <li>REMstar Plus (System One) (251P),</li>
         <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -125,7 +153,7 @@
     <li>[Fix] Toate limbile disponibile acum pe Mac</li>
     <li>[fix] Bara de date din partea de jos a graficului zilnic acum în ora locală când nu a fost afișat niciun cursor de linie și formatarea îmbunătățită</li>
     <li>[Fix] Zoom 100% funcționează acum pe pagina Prezentare generală</li>
-    <li>[Fix] Vizualizare / Resetare Grafică permite acum toate graficele și toate steagurile evenimentului</li>
+    <li>[Fix] Vizualizare/Resetare Grafică permite acum toate graficele și toate steagurile evenimentului</li>
     <li>[fix] Data calendarului este acum formatată pe setări naționale</li>
     <li>[Fix] Butoanele de comutare din lista de sesiuni a paginii zilnice și întârzierile de evenimente și diagramă au fost modificate în casete de selectare</li>
   </ul>
@@ -137,7 +165,7 @@
   <br>
   <ul>
     <li>[nou] Ventilatoarele DreamStation BiPAP S/T și AVAPS (1030X și 1130X) sunt acum acceptate. Setările nu sunt încă afișate corect, dar evenimentele terapeutice și graficele ar trebui să fie afișate corect.</li>
-    <li>[nou] View / Reset Graphs organizează grafice în ordinea lor originală</li>
+    <li>[nou] View/Reset Graphs organizează grafice în ordinea lor originală</li>
     <li>[fix] Formatarea datelor pentru regiunea națională, așa cum este raportat de sistemul de operare</li>
     <li>[fix] Îmbunătățirea barei de progres pentru actualizarea cache-ului Statistici</li>
     <li>[Fix] Calcule corecte ale AHI și șapte zile de scurgere pe pagina de bun venit</li>
@@ -154,7 +182,7 @@
     <li>[nou] Limba română este acceptată</li>
     <li>[fix] Afișează codul de comitere în bara de titlu pentru testare și compilări beta</li>
     <li>[fix] Afișează eticheta IMC și valoarea calculată numai atunci când atât greutatea cât și înălțimea sunt nule</li>
-    <li>[Fix] Îmbunătățiți afișarea IMC în Daily / Notes</li>
+    <li>[Fix] Îmbunătățiți afișarea IMC în Daily/Notes</li>
     <li>[fix] Dialogul profilului corect pentru a arăta că înălțimea este măsurată în cm, nu în metri atunci când sistemul de unități este metric</li>
     <li>[Fix] Afișați întotdeauna indicii de eveniment pe pagina Daily, chiar și atunci când unele steaguri de eveniment sunt dezactivate</li>
   </ul>
@@ -171,9 +199,9 @@
     <li>[nou] Asistență îmbunătățită DreamStation</li>
     <li>[nou] Îmbunătățiți importul oximetrului pentru CM550D +</li>
     <li>[nou] Dezactivează modul Dark pe Mac</li>
-    <li>[nou] Arată ore / zi care constituie conformitatea pe pagina Statistici</li>
+    <li>[nou] Arată ore/zi care constituie conformitatea pe pagina Statistici</li>
     <li>[nou] O mai bună ordine a graficelor în pagina de zi cu zi pentru profilurile nou create</li>
-    <li>[nou] Ajutor / Informații despre sistem arată informații despre OSCAR, sistem de operare și locația datelor</li>
+    <li>[nou] Ajutor/Informații despre sistem arată informații despre OSCAR, sistem de operare și locația datelor</li>
     <li>[nou] Deplasați opțiunea grafică de plăcintă din dialogul Preferințe în meniul Vizualizare</li>
     <li>[nou] Ascundeți diagrama plăcută atunci când capturați ecranul</li>
     <li>[nou] Opțiunea --datadir permite acum un nume complet calificat pe Windows</li>
@@ -194,7 +222,7 @@
     <li>[Fix] Afișați corect motorul grafic în bara de titlu</li>
     <li>[fix] Ajustați dimensiunea dialogului Preferințe pentru a se potrivi pe ecrane mai mici</li>
     <li>[reparați] Etichetați controlul climatic ca manual sau automat corect la importul ResMed</li>
-    <li>[fix] Mutați informații mai puțin utile din bara de titlu în Ajutor / Informații despre sistem</li>
+    <li>[fix] Mutați informații mai puțin utile din bara de titlu în Ajutor/Informații despre sistem</li>
     <li>[reparați] Modificați „Setările prescripției” în mesajul „Setări aparat”</li>
     <li>[fix] Îmbunătățiți pictogramele, în special cele mai mici</li>
     <li>[Fix] Corectează problemele din meniul Mac</li>

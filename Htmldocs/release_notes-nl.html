@@ -1,19 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"nl">
-<html>
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="nl">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes-nl</title>
-    <meta content="Arie Klerk" name="author" >
+    <meta content="The OSCAR Team" name="author" >
     <meta content="Translation copyright © 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
+<p> <b> Wijzigingen en oplossingen in OSCAR v1.1.1 </b>
+<br> Delen van OSCAR zijn © 2019-2020 door <i> The OSCAR Team </i> </p>
+<ul>
+<li> [nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:
+<ul>
+<li> BiPAP S /T (C-serie) (1061401) </li>
+<li> DreamStation BiPAP Pro (600X150) </li>
+<li> DreamStation Auto BiPAP (700X150) </li>
+<li> <i> Opmerking: Ventilatoralarmen worden momenteel niet geïmporteerd. </i> </li>
+</ul>
+<li> [nieuw] Voeg het "piekstroom" -kanaal toe dat is gerapporteerd door pre-DreamStation-ventilatoren. </li>
+<li> [nieuw] Detecteert en lost automatisch grafische crashes op Windows op. </li>
+<li> [nieuw] Ondersteuning van AVAPS in de overzichtstabel. </li>
+<li> [repareren] Ontbrekende balken in de overzichtstabel voor Philips Respironics-apparaten corrigeren. </li>
+<li> [fix] Voeg ontbrekende Philips Respironics-drukkanalen toe aan CSV-export. </li>
+<li> [fix] Nul Philips Respironics AHI repareren bij het exporteren van CSV-sessies. </li>
+<li> [fix] Ondersteuning toevoegen voor de Bi-Flex-vergrendelingsinstelling op pre-DreamStation-ventilatoren. </li>
+<li> [fix] De drukgolfvormschaal voor de BiPAP autoSV Advanced 30 (960T) corrigeren </li>
+<li> [fix] Ondersteuning toevoegen voor stijgtijdmodus op DreamStation BiPAP-apparaten (600X-700X). </li>
+<li> [fix] Verwijder de ramp-tijd en drukinstellingen wanneer de ramp is uitgeschakeld op pre-DreamStation-apparaten. </li>
+<li> [repareren] Importeren van oxymetriegegevens van Philips Respironics verbeteren. </li>
+<li> [fix] Fix VS2-index weergegeven op de dagelijkse pagina voor Philips Respironics-machines. </li>
+<li> [repareren] Herstel af en toe het niet importeren van geïmporteerde Viatom-gegevens. </li>
+<li> [fix] Corrigeer een terugkerende prompt voor database-upgrade. </li>
+<li> [fix] Los een incidentele crash op bij het importeren van Resmed-gegevens. </li>
+</ul>
     <p>
     <b>Wijzigingen en oplossingen in OSCAR v1.1.0</b>
     <br>Delen van OSCAR zijn © 2019-2020 door 
     <i>The OSCAR Team</i></p>
     <ul>
-      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:</li>
+      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:
         <ul>
           <li>DreamStation Auto CPAP (500X180)</li>
         </ul>
@@ -27,7 +53,7 @@
     <i>The OSCAR Team</i></p>
     <ul>
       <li>[fix] AHI en gebruiksbalken in overzichtsgrafieken tonen nu de juiste hoogte wanneer het oximetriegebruik aanzienlijk langer is dan het CPAP-gebruik.</li>
-      <li>[fix] Verbeterde import van Philips Respironics-instellingen. Vooral:</li>
+      <li>[fix] Verbeterde import van Philips Respironics-instellingen. Vooral:
         <ul>
           <li>De instellingen voor de modi PC, S en S/T worden nu correct weergegeven.</li>
           <li>AVAPS-instellingen worden nu correct weergegeven, inclusief het doelgetijdevolume.</li>
@@ -35,7 +61,7 @@
           <li>De instellingen voor CPAP-Check en Auto-Trial-modi worden nu correct weergegeven.</li>
         </ul>
       <li>[fix] Corrigeer de gerapporteerde duur voor extreem lange sessies op DreamStation CPAP- en BiPAP-apparaten</li>
-      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:</li>
+      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:
         <ul>
           <li>DreamStation Auto CPAP (500X120)</li>
         </ul>
@@ -47,10 +73,10 @@
     <br>Delen van OSCAR zijn © 2019-2020 door 
     <i>The OSCAR Team</i></p>
     <ul>
-      <li>[nieuw] Voeg voorlopige ondersteuning toe voor Viatom / Wellue-pulsoximeters</li>
+      <li>[nieuw] Voeg voorlopige ondersteuning toe voor Viatom/Wellue-pulsoximeters</li>
       <li>[nieuw] Ondersteuning toevoegen voor Dreem-hypnogrammen</li>
       <li>[nieuw] Uitgebreide reorganisatie van de ResMed-lader om begrip en toekomstige verbeteringen te vergemakkelijken</li>
-      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:</li>
+      <li>[nieuw] Extra Philips Respironics-apparaten getest en volledig ondersteund:
         <ul>
           <li>DreamStation Auto CPAP (500X130)</li>
         </ul>
@@ -73,7 +99,7 @@
     <i>The OSCAR Team</i></p>
     <ul>
       <li>[nieuw] Uitgebreide revisie van de Philips Respironics System One-importeur, waarmee alle eerder gemelde problemen zijn opgelost.</li>
-      <li>[nieuw] De volgende Philips Respironics-apparaten zijn nu getest en volledig ondersteund:</li>
+      <li>[nieuw] De volgende Philips Respironics-apparaten zijn nu getest en volledig ondersteund:
         <ul>
           <li>REMstar Plus (System One) (251P),</li>
           <li>REMstar Pro (System One) (450P, 451P),</li>
@@ -127,7 +153,7 @@
       <li>[fix] Alle talen nu beschikbaar op Mac</li>
       <li>[repareren] Datumbalk onderaan de dagelijkse grafiek nu in de lokale tijd wanneer er geen lijncursor wordt weergegeven en de opmaak is verbeterd</li>
       <li>[repareren] 100% zoom werkt nu op de overzichtspagina</li>
-      <li>[repareren] Grafieken weergeven / resetten schakelt nu alle grafieken en alle gebeurtenisvlaggen in</li>
+      <li>[repareren] Grafieken weergeven/resetten schakelt nu alle grafieken en alle gebeurtenisvlaggen in</li>
       <li>[fix] Kalenderdatum nu opgemaakt volgens nationale instellingen</li>
       <li>[fix] Schakelknoppen op de sessielijst van de Daily-pagina en de pulldowns van gebeurtenissen en grafieken zijn gewijzigd in selectievakjes</li>
     </ul>
@@ -139,7 +165,7 @@
     <i>The OSCAR Team</i></p>
     <ul>
       <li>[nieuw] DreamStation BiPAP S/T- en AVAPS-ventilatoren (1030X en 1130X) worden nu ondersteund. De instellingen worden nog niet correct weergegeven, maar therapiegebeurtenissen en grafieken zouden nu correct moeten worden weergegeven.</li>
-      <li>[nieuw] Grafieken weergeven / resetten organiseert grafieken in hun oorspronkelijke volgorde</li>
+      <li>[nieuw] Grafieken weergeven/resetten organiseert grafieken in hun oorspronkelijke volgorde</li>
       <li>[fix] Formatteer datums voor de nationale regio zoals gerapporteerd door het besturingssysteem</li>
       <li>[fix] Verbeter de voortgangsbalk voor de update van de statistiekencache</li>
       <li>[fix] Correcte berekeningen van zevendaagse AHI en lekpercentage op de welkomstpagina</li>
@@ -157,7 +183,7 @@
       <li>[nieuw] Roemeense taal wordt ondersteund</li>
       <li>[fix] Show commit id in de titelbalk voor testen en beta builds</li>
       <li>[fix] BMI-label en berekende waarde alleen weergeven als zowel gewicht als lengte niet nul zijn</li>
-      <li>[fix] BMI-weergave verbeteren in Daily / Notes</li>
+      <li>[fix] BMI-weergave verbeteren in Daily/Notes</li>
       <li>[repareren] Correct profieldialoogvenster om aan te geven dat de hoogte wordt gemeten in cm, niet in meters wanneer het systeem metrisch is</li>
       <li>[fix] Toon evenementindexen altijd op de dagelijkse pagina, zelfs als sommige evenementvlaggen zijn uitgeschakeld</li>
     </ul>
@@ -174,9 +200,9 @@
       <li>[nieuw] Verbeterde DreamStation-ondersteuning</li>
       <li>[nieuw] Verbeterde invoer van oxymeters voor CM550D +</li>
       <li>[nieuw] Schakel de donkere modus op Mac uit</li>
-      <li>[nieuw] Toon uren / dag die conformiteit vertegenwoordigen op de Statistieken-pagina</li>
+      <li>[nieuw] Toon uren/dag die conformiteit vertegenwoordigen op de Statistieken-pagina</li>
       <li>[nieuw] Betere volgorde van grafieken op de Dagpagina voor nieuw aangemaakte profielen</li>
-      <li>[nieuw] Help / systeeminformatie toont informatie over OSCAR, OS en gegevenslocatie</li>
+      <li>[nieuw] Help/systeeminformatie toont informatie over OSCAR, OS en gegevenslocatie</li>
       <li>[nieuw] Verplaats de cirkeldiagramoptie van het dialoogvenster Voorkeuren naar het menu Beeld</li>
       <li>[nieuw] Verberg cirkeldiagram bij vastleggen scherm</li>
       <li>[nieuw] De --datadir optie staat nu een volledig gekwalificeerde naam toe op Windows</li>
@@ -197,7 +223,7 @@
       <li>[fix] Toon grafische engine correct in titelbalk</li>
       <li>[repareren] Pas de grootte van het dialoogvenster Voorkeuren aan zodat ze op kleinere schermen passen</li>
       <li>[repareren] Label klimaatregeling als handmatig of automatisch correct bij ResMed-import</li>
-      <li>[fix] Verplaats minder nuttige informatie van de titelbalk naar Help / Systeeminformatie</li>
+      <li>[fix] Verplaats minder nuttige informatie van de titelbalk naar Help/Systeeminformatie</li>
       <li>[fix] Verander &quot;Prescription Settings&quot; naar &quot;Machine Settings&quot; bericht</li>
       <li>[repareren] Pictogrammen verbeteren, vooral kleinere</li>
       <li>[fix] Problemen met het Mac-menu corrigeren</li>
