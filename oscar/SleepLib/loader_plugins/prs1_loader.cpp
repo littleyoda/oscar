@@ -6779,7 +6779,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         } else if (humidadaptive) {
             // All humidity levels seen.
         } else if (humidfixed) {
-            CHECK_VALUE(humidlevel, 5);
+            if (humidlevel < 3) UNEXPECTED_VALUE(humidlevel, "3-5");
         }
     } else if (family == 3) {
         if (tubepresent) {
@@ -7373,6 +7373,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
             break;
         }
 
+        int alarm;
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first?
@@ -7391,10 +7392,20 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
                 CHECK_VALUE(data[pos+5], 0);
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
-                CHECK_VALUES(data[pos+8], 0, 1);  // 1 = patient disconnect alarm of 15 sec, not sure where time is encoded
-                if (data[pos+8] != 0) {
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, data[pos+8] * 15));
+
+                alarm = 0;
+                switch (data[pos+8]) {
+                    case 1: alarm = 15; break;  // 15 sec
+                    case 2: alarm = 60; break;  // 60 sec
+                    case 0: break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos+8], "0-2");
+                        break;
                 }
+                if (alarm) {
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, alarm));
+                }
+
                 CHECK_VALUE(size, 9);
                 break;
             case 3:  // Mask On
@@ -7568,7 +7579,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    if (breath_rate < 4 || breath_rate > 10) UNEXPECTED_VALUE(breath_rate, "4-10");
+                    if (breath_rate < 4 || breath_rate > 16) UNEXPECTED_VALUE(breath_rate, "4-16");
                     if (timed_inspiration < 12 || timed_inspiration > 24) UNEXPECTED_VALUE(timed_inspiration, "12-24");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
@@ -8233,7 +8244,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
             }
             
             if (channel == OXI_Pulse) {
-                if (value > 240) UNEXPECTED_VALUE(value, "<= 240 bpm");
+                // Values up through 253 are confirmed to be reported as valid on official reports.
             } else {
                 if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
             }
