@@ -246,7 +246,7 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
 long event_cnt = 0;
 
 bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap );    // forward
-void BackupSTRfiles( const QString strpath, const QString path, const QString strBackupPath,
+void BackupSTRfiles( const QString strpath, const QString path, const QString backupPath,
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 
 int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)                       // alternate for unit testing
@@ -391,7 +391,7 @@ int ResmedLoader::Open(const QString & dirpath)
         dir.mkpath(newpath);
 
     if ( ! importing_backups ) {
-        BackupSTRfiles( strpath, path, strBackupPath, info, STRmap );
+        BackupSTRfiles( strpath, path, backup_path, info, STRmap );
     } else {    // get the STR file that is in the BACKUP folder
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( stredf->Open(strpath) ) {
@@ -505,9 +505,9 @@ int ResmedLoader::Open(const QString & dirpath)
             QString newName = fullname.replace(datepart, newdate);
             qDebug() << "Renaming" << it.value().filename << "to" << newName;
               if ( str.rename(newName) )
-                  qDebug() << "Success";
+                  qDebug() << "Rename Success";
               else 
-                  qDebug() << "Failed";
+                  qDebug() << "Rename Failed";
         }
         delete it.value().edf;
     }
@@ -1477,16 +1477,38 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
     return true;
 }
 
-void BackupSTRfiles( const QString strpath, const QString path, const QString strBackupPath, 
+void BackupSTRfiles( const QString strpath, const QString importPath, const QString backupPath, 
                     MachineInfo & info, QMap<QDate, STRFile> & STRmap )
 {
+    // copy the STR.edf file into Backup folder, safely
+    QString strBackupFile(backupPath+"STR.edf");
+    if (QFile::exists(strBackupFile) ) {
+        qDebug() << "Renaming existing STR.edf file";
+        if ( ! QFile::rename(strBackupFile, strBackupFile+"~") )
+            qWarning() << "Failed to rename" << strBackupFile;
+    }
+    qDebug() << "Copy inported STR.edf into Backup";
+    if ( ! QFile::copy(strpath, strBackupFile) ) {
+        qWarning() << "Failed to copy STR.edf to Backup folder";
+        qDebug() << "Undoing rename of existing STR.edf file";
+        if ( ! QFile::rename(strBackupFile+"~", strBackupFile) ) {
+            qWarning() << "Failed to rename" << strBackupFile << "+~";
+        }
+    }
+    else {  // copy was successful, remove the old, renamed copy
+        qDebug() << "Remove the renamed STR.edf file";
+        if ( ! QFile::remove(strBackupFile+"~") ) 
+            qWarning() << "Failed to remove" << strBackupFile << "+~";
+    }
+
+    QDir dir;
     QStringList strfiles;
-    // add primary STR.edf
+    // add primary STR.edf - make sure it ends up in the STRmap
     strfiles.push_back(strpath);
 
-    // Just in case we are importing into a new folder, process OSCAR backup structures
-    QDir dir;
-    dir.setPath(path + "STR_Backup");
+    // Just in case we are importing from a Backup folder, process OSCAR backup structures
+    QString strBackupPath(importPath + "STR_Backup");
+    dir.setPath(strBackupPath);
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::Readable);
     QFileInfoList flist = dir.entryInfoList();
 
@@ -1507,27 +1529,26 @@ void BackupSTRfiles( const QString strpath, const QString path, const QString st
     for (auto & filename : strfiles) {
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(filename) ) {
-            qDebug() << "Failed to open" << filename;
+            qDebug() << "Failed to open" << filename.section("/", -2, -1);
             delete stredf;
             continue;
         }
         if ( ! stredf->Parse()) {
-            qDebug() << "Faulty STR file" << filename;
+            qDebug() << "Faulty STR file" << filename.section("/", -2, -1);
             delete stredf;
             continue;
         }
         if (stredf->serialnumber != info.serial) {
-            qDebug() << "Identification.tgt Serial number doesn't match" << filename;
+            qDebug() << "Identification.tgt Serial number doesn't match" << filename.section("/", -2, -1);
             delete stredf;
             continue;
         }
         QDate date = stredf->edfHdr.startdate_orig.date();
         long int days = stredf->GetNumDataRecords();
-//      date = QDate(date.year(), date.month(), 1);
         if (STRmap.contains(date)) {
-            qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd");
+            qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd") << "for" << days << "ending" << date.addDays(days-1);
             if ( days <= STRmap[date].days ) {
-                qDebug() << "Skipping" << filename;
+                qDebug() << "Skipping" << filename.section("/",-2,-1);
                 delete stredf;
                 continue;
             }
@@ -2469,7 +2490,7 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadBRP failed to open" << filename;
+        qDebug() << "LoadBRP failed to open" << filename.section("/", -2, -1);
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2477,7 +2498,9 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     time.start();
 #endif
     if (!edf.Parse()) {
-        qDebug() << "LoadBRP failed to parse" << filename;
+#ifdef EDF_DEBUG        
+        qDebug() << "LoadBRP failed to parse" << filename.section("/", -2, -1);
+#endif        
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2571,7 +2594,7 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
     QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadSAD failed to  open" << filename;
+        qDebug() << "LoadSAD failed to  open" << filename.section("/", -2, -1);
         return false;
     }
 
@@ -2581,7 +2604,9 @@ bool ResmedLoader::LoadSAD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadSAD failed to parse" << filename;
+#ifdef EDF_DEBUG        
+        qDebug() << "LoadSAD failed to parse" << filename.section("/", -2, -1);
+#endif        
         return false;
     }
 
@@ -2646,7 +2671,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     QString filename = path.section(-2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
-        qDebug() << "LoadPLD failed to open" << filename;
+        qDebug() << "LoadPLD failed to open" << filename.section("/", -2, -1);
         return false;
     }
 #ifdef DEBUG_EFFICIENCY
@@ -2655,7 +2680,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 #endif
 
     if (!edf.Parse()) {
-        qDebug() << "LoadPLD failed to parse" << filename;
+#ifdef EDF_DEBUG        
+        qDebug() << "LoadPLD failed to parse" << filename.section("/", -2, -1);
+#endif
         return false;
     }
 
