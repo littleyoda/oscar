@@ -402,7 +402,7 @@ int ResmedLoader::Open(const QString & dirpath)
                 } else {    // passed the tests, stuff it into the map
                     QDate date = stredf->edfHdr.startdate_orig.date();
                     long int days = stredf->GetNumDataRecords();
-                    qDebug() << strpath.section("/",-2,-1) << "starts at" << date << "for" << days;
+                    qDebug() << strpath.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
                     STRmap[date] = STRFile(strpath, days, stredf);
                 }
             } else {
@@ -466,7 +466,7 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days;
+            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days << "ends" << date.addDays(days-1);
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << filename;
                 delete stredf;
