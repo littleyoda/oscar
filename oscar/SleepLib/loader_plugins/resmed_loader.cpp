@@ -471,12 +471,6 @@ int ResmedLoader::Open(const QString & dirpath)
         if (!(filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
             continue;
         QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
-//      date = QDate().fromString(datestr,"yyyyMMdd");
-//
-//      if (STRmap.contains(date)) {
-//          qDebug() << filename << "overlaps anothor STR file";
-//          continue;
-//      }
 
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(fi.canonicalFilePath() ) ) {
@@ -963,7 +957,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         int days = str.GetNumDataRecords();
         totalRecs += days;
 #ifdef STR_DEBUG        
-        qDebug() << "STR file is" << file.filename;
+        qDebug() << "STR file is" << file.filename.section("/", -3, -1);
         qDebug() << "First day" << QDateTime::fromMSecsSinceEpoch(str.startdate, EDFInfo::localNoDST).date().toString() << "for" << days << "days";
 #endif
     }
@@ -984,12 +978,12 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         QDate lastDay = date.addDays(size-1);
 
 #ifdef STR_DEBUG        
-        qDebug() << "Processing" << strfile << date.toString() << size << str.GetNumSignals();
+        qDebug() << "Processing" << strfile.section("/", -3, -1) << date.toString() << size << str.GetNumSignals();
         qDebug() << "Last day is" << lastDay;
 #endif
 
         if ( lastDay < firstImport ) {
-            qDebug() << "LastDay before firstImport, skipping" << strfile;
+            qDebug() << "LastDay before firstImport, skipping" << strfile.section("/", -3, -1);
             continue;
         }
 
@@ -1561,9 +1555,9 @@ void BackupSTRfiles( const QString strpath, const QString importPath, const QStr
         QDate date = stredf->edfHdr.startdate_orig.date();
         long int days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {
-            qDebug() << "STRmap already contains" << date.toString("YYYY-MM-dd") << "for" << days << "ending" << date.addDays(days-1);
+            qDebug() << "STRmap already contains" << date.toString("yyyy-MM-dd") << "for" << days << "ending" << date.addDays(days-1);
             if ( days <= STRmap[date].days ) {
-                qDebug() << "Skipping" << filename.section("/",-2,-1);
+                qDebug() << "Skipping" << filename.section("/",-2,-1) << "Keeping" << STRmap[date].filename.section("/",-2,-1);
                 delete stredf;
                 continue;
             }
