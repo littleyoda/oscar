@@ -1539,7 +1539,8 @@ void BackupSTRfiles( const QString strpath, const QString importPath, const QStr
     qDebug() << "STR file list size is" << strfiles.size();
 #endif
 
-    // Now place any of these files in the Backup folder sorted by the file date
+    // Now copy any of these files to the Backup folder adding the file date to the file name
+    // and put it into the STRmap structure
     for (auto & filename : strfiles) {
         ResMedEDFInfo * stredf = new ResMedEDFInfo();
         if ( ! stredf->Open(filename) ) {
@@ -1567,8 +1568,8 @@ void BackupSTRfiles( const QString strpath, const QString importPath, const QStr
                 continue;
             }
         }
-        QString newname = "STR-"+date.toString("yyyyMMdd")+"."+STR_ext_EDF;
 
+        QString newname = "STR-"+date.toString("yyyyMMdd")+"."+STR_ext_EDF;
         QString backupfile = strBackupPath+"/"+newname;
 
         QString gzfile = backupfile + STR_ext_gz;
@@ -1576,6 +1577,8 @@ void BackupSTRfiles( const QString strpath, const QString importPath, const QStr
 
         bool compress_backups = p_profile->session->compressBackupData();
         backupfile = compress_backups ? gzfile : nongzfile;
+
+        STRmap[date] = STRFile(backupfile, days, stredf);
 
         if ( ! QFile::exists(backupfile)) {
 #ifdef STR_DEBUG
@@ -1595,13 +1598,12 @@ void BackupSTRfiles( const QString strpath, const QString importPath, const QStr
                 }
             }
         }
+
         // Remove any duplicate compressed/uncompressed backup file
         if (compress_backups)
             QFile::exists(nongzfile) && QFile::remove(nongzfile);
         else
             QFile::exists(gzfile) && QFile::remove(gzfile);
-
-        STRmap[date] = STRFile(backupfile, days, stredf);
     }   // end for walking the STR files list
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
