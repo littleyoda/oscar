@@ -402,7 +402,7 @@ int ResmedLoader::Open(const QString & dirpath)
                 } else {    // passed the tests, stuff it into the map
                     QDate date = stredf->edfHdr.startdate_orig.date();
                     long int days = stredf->GetNumDataRecords();
-                    qDebug() << strpath.section("/",-2,-1) << "starts at" << date << "for" << days;
+                    qDebug() << strpath.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
                     STRmap[date] = STRFile(strpath, days, stredf);
                 }
             } else {
@@ -466,7 +466,7 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days;
+            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days << "ends" << date.addDays(days-1);
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << filename;
                 delete stredf;
@@ -2541,8 +2541,8 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
             if (max > es.physical_maximum)
                 max = es.physical_maximum;
 
-            sess->setMin(code, min);
-            sess->setMax(code, max);
+            sess->updateMin(code, min);
+            sess->updateMax(code, max);
             sess->setPhysMin(code, es.physical_minimum);
             sess->setPhysMax(code, es.physical_maximum);
         }
@@ -2800,8 +2800,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         }
 
         if (a) {
-            sess->setMin(code, a->Min());
-            sess->setMax(code, a->Max());
+            sess->updateMin(code, a->Min());
+            sess->updateMax(code, a->Max());
             sess->setPhysMin(code, es.physical_minimum);
             sess->setPhysMax(code, es.physical_maximum);
             a->setDimension(es.physical_dimension);
@@ -2900,8 +2900,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         if ((tmp >= t_min) && (tmp <= t_max))
             el->AddEvent(tt, c);
 
-        sess->setMin(code, min);
-        sess->setMax(code, max);
+        sess->updateMin(code, min);
+        sess->updateMax(code, max);
         sess->setPhysMin(code, es.physical_minimum);
         sess->setPhysMax(code, es.physical_maximum);
         sess->updateLast(tt);

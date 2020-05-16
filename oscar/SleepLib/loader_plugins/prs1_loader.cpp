@@ -4906,7 +4906,7 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
     } else if (this->familyVersion == 1) {
         // F5V1
         if (tubepresent) {
-            if (tubetemp == 4) UNEXPECTED_VALUE(tubetemp, "!= 4");
+            // all tube temperatures seen
             if (tubetemp) {
                 if (tubehumidlevel == 0 || tubehumidlevel > 3) UNEXPECTED_VALUE(tubehumidlevel, "1-3");
             }
@@ -7108,9 +7108,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0xFF);
                 break;
-            case 0x45:  // new to 400G, only in last session?
+            case 0x45:  // new to 400G and 500G, appears right after 0x35 (humidifier setting)
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 1);
+                CHECK_VALUES(data[pos], 0, 1);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");

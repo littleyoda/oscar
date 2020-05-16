@@ -43,7 +43,9 @@ EDFInfo::~EDFInfo()
 {
 //    if ( fileData ) {
 	if (fileData.size() > 0) {
+#ifdef EDF_DEBUG
 	    qDebug() << "EDFInfo destructor clearing fileData";
+#endif
 	    fileData.clear();
 	}
 //    }
@@ -108,8 +110,10 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
 
     edfHdr.version = QString::fromLatin1(hdrPtr->version, 8).toLong(&ok);
     if (!ok) {
+#ifdef EDF_DEBUG
         qWarning() << "EDFInfo::Parse() Bad Version " << filename;
 //      sleep(1);
+#endif
         fileData.clear();
         return false;
     }
@@ -127,30 +131,38 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
 
     edfHdr.num_header_bytes = QString::fromLatin1(hdrPtr->num_header_bytes, 8).toLong(&ok);
     if (!ok) {
+#ifdef EDF_DEBUG
         qWarning() << "EDFInfo::Parse() Bad header byte count " << filename;
 //      sleep(1);
+#endif
         fileData.clear();
         return false;
     }
     edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44).trimmed();
     edfHdr.num_data_records = QString::fromLatin1(hdrPtr->num_data_records, 8).toLong(&ok);
     if ( (! ok) || (edfHdr.num_data_records < 1) ) {
+#ifdef EDF_DEBUG
         qWarning() << "EDFInfo::Parse() Bad data record count " << filename;
 //      sleep(1);
+#endif
         fileData.clear();
         return false;
     }
     edfHdr.duration_Seconds = QString::fromLatin1(hdrPtr->dur_data_records, 8).toDouble(&ok);
     if (!ok) {
+#ifdef EDF_DEBUG
         qWarning() << "EDFInfo::Parse() Bad duration " << filename;
 //      sleep(1);
+#endif
         fileData.clear();
         return false;
     }
     edfHdr.num_signals = QString::fromLatin1(hdrPtr->num_signals, 4).toLong(&ok);
     if ( (! ok) || (edfHdr.num_signals < 1) || (edfHdr.num_signals > 256) ) {
+#ifdef EDF_DEBUG
         qWarning() << "EDFInfo::Parse() Bad number of signals " << filename;
 //      sleep(1);
+#endif
         fileData.clear();
         return false;
     }
@@ -189,7 +201,7 @@ bool EDFInfo::Parse() {
         signalList[sig.label].push_back(&sig);
         if (eof) {
             qWarning() << "EDFInfo::Parse() Early end of file " << filename;
-            sleep(1);
+//          sleep(1);
             fileData.clear();
             return false;
         }
@@ -280,7 +292,7 @@ EDFHeaderQT * EDFInfo::GetHeader( const QString & name)
     QFile fi(name);
     if (!fi.open(QFile::ReadOnly)) {
         qDebug() << "EDFInfo::Open() Couldn't open file " << name;
-        sleep(1);
+//      sleep(1);
         return nullptr;
     }
 //    fileData = new QByteArray();
@@ -335,8 +347,10 @@ QVector<Annotation> EDFInfo::ReadAnnotations(const char * data, int charLen)
 
         offset = text.toDouble(&ok);
         if (!ok) {
+#ifdef EDF_DEBUG
             qDebug() << "Faulty offset in  annotation record ";
         //  sleep(1);
+#endif
             break;
         }
 
@@ -356,8 +370,10 @@ QVector<Annotation> EDFInfo::ReadAnnotations(const char * data, int charLen)
 
             duration = text.toDouble(&ok);
             if (!ok) {
+#ifdef EDF_DEBUG
                 qDebug() << "Faulty duration in  annotation record ";
         //      sleep(1);
+#endif
                 break;
             }
         }
@@ -379,8 +395,10 @@ QVector<Annotation> EDFInfo::ReadAnnotations(const char * data, int charLen)
             text = QString::fromUtf8(textStart, textLen);
             annoVec.push_back( Annotation( offset, duration, text) );
             if (pos >= charLen) {
+#ifdef EDF_DEBUG
                 qDebug() << "Short EDF Annotations record";
         //      sleep(1);
+#endif
                 break;
             }
         }

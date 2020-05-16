@@ -125,7 +125,7 @@ bool Session::OpenEvents()
 //        qWarning() << "Error Loading Events" << filename;
         return false;
     }
-    qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
+//  qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
 
     return s_events_loaded = true;
 }
