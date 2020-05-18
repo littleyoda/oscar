@@ -410,25 +410,47 @@ int ResmedLoader::Open(const QString & dirpath)
     QMap<QDate, STRFile> STRmap;
 
     if ( ( ! rebuild_from_backups) /* && create_backups */ ) {
-        // first we copy any STR_yyyymmdd.edf files and the Backup/STR.edf into STR_Backup
+        // first we copy any STR_yyyymmdd.edf files and the Backup/STR.edf into STR_Backup and the STRmap
         backupSTRfiles( strpath, importPath, backup_path, info, STRmap );
-        //Then we copy the new imported STR.edf into Backup/STR.edf
+        //Then we copy the new imported STR.edf into Backup/STR.edf and add it to the STRmap
         QString importFile(importPath+"STR.edf");
         QString backupFile(backup_path + "STR.edf");
-        if ( compress_backups ) {
-            backupFile += ".gz";
-            if ( QFile::exists( backupFile ) )
-                QFile::remove( backupFile );
-            compressFile(importFile, backupFile);
+        ResMedEDFInfo * stredf = fetchSTRandVerify( importFile, info.serial );
+        if ( stredf != nullptr ) {
+            bool addToSTRmap = true;
+            QDate date = stredf->edfHdr.startdate_orig.date();
+            long int days = stredf->GetNumDataRecords();
+            qDebug() << importPath.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
+            if (STRmap.contains(date)) {        // Keep the longer of the two STR files
+                qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
+                if (days > STRmap[date].days) {
+                    qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days;
+                    STRmap.remove(date);
+                } else {
+                    qDebug() << "Skipping" << importFile.section("/",-3,-1);
+                    qWarning() << "New import is shorter than exisiting files - should never happen";
+                    delete stredf;
+                    addToSTRmap = false;
+                }
+            }
+            if ( addToSTRmap ) {
+                if ( compress_backups ) {
+                    backupFile += ".gz";
+                    if ( QFile::exists( backupFile ) )
+                        QFile::remove( backupFile );
+                    compressFile(importFile, backupFile);
+                }
+                else {
+                    if ( QFile::exists( backupFile ) )
+                        QFile::remove( backupFile );
+                    if ( ! QFile::copy(importFile, backupFile) )
+                        qWarning() << "Failed to copy" << importFile << "to" << backupFile;
+                }
+                STRmap[date] = STRFile(backupFile, days, stredf);
+                // Meh.. these can be calculated if ever needed for ResScan SDcard export
+                QFile::copy(importPath + "STR.crc", backup_path + "STR.crc");
+            }
         }
-        else {
-            if ( QFile::exists( backupFile ) )
-                QFile::remove( backupFile );
-            if ( ! QFile::copy(importFile, backupFile) )
-                qWarning() << "Failed to copy" << importFile << "to" << backupFile;
-        }
-        // Meh.. these can be calculated if ever needed for ResScan SDcard export
-        QFile::copy(importPath + "STR.crc", backup_path + "STR.crc");
     } else {    // get the STR file that is in the BACKUP folder that we are rebuilding from
         ResMedEDFInfo * stredf = fetchSTRandVerify( strpath, info.serial );
         if ( stredf != nullptr ) {
@@ -455,6 +477,7 @@ int ResmedLoader::Open(const QString & dirpath)
     qDebug() << "STR_Backup folder size is " << flist.size();
 #endif
 
+    qDebug() << "Add files in STR_Backup to STRmap (unless they are already there)";
     // Add any STR_Backup versions to the file list
     for (auto & fi : flist) {
         QString filename = fi.fileName();
@@ -472,13 +495,13 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << filename << "overlaps" << STRmap[date].filename.section("/",-2,-1) << "for" << days << "ends" << date.addDays(days-1);
+            qDebug() << fi.canonicalFilePath().section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
             if (days <= STRmap[date].days) {
-                qDebug() << "Skipping" << filename;
+                qDebug() << "Skipping" << fi.canonicalFilePath().section("/",-3,-1);
                 delete stredf;
                 continue;
             } else {
-                qDebug() << "Removing" << STRmap[date].filename;
+                qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1);
                 STRmap.remove(date);
             }
         }
@@ -1485,11 +1508,13 @@ bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & 
 void backupSTRfiles( const QString strpath, const QString importPath, const QString backupPath, 
                     MachineInfo & info, QMap<QDate, STRFile> & STRmap )
 {
+    Q_UNUSED(strpath);
+    qDebug() << "Entering backupSTRfiles during new IMPORT";
     QDir dir;
 //  Qstring strBackupPath(backupPath+"STR_Backup");
     QStringList strfiles;
-    // add primary STR.edf - make sure it ends up in the STRmap
-    strfiles.push_back(strpath);
+    // add Backup/STR.edf - make sure it ends up in the STRmap
+    strfiles.push_back(backupPath+"STR.edf");
 
     // Just in case we are importing from a Backup folder in a different Profile, process OSCAR backup structures
     QString strBackupPath(importPath + "STR_Backup");
@@ -1544,14 +1569,14 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
         backupfile = compress_backups ? gzfile : nongzfile;
 
         STRmap[date] = STRFile(backupfile, days, stredf);
-        qDebug() << "Adding" << filename.section("/",-2,-1) << "as" << backupfile.section("/", -3, -1) << "to STRMAP";
+        qDebug() << "Adding" << filename.section("/",-2,-1) << "with" << days << "days as" << backupfile.section("/", -3, -1) << "to STRmap";
 
         if ( QFile::exists(backupfile)) {
             QFile::remove(backupfile);
         }
-#ifdef STR_DEBUG
+// #ifdef STR_DEBUG
         qDebug() << "Copying" << filename << "to" << backupfile;
-#endif
+// #endif
         if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
             if (compress_backups) {                 // fine, copy it to backup folder
                 QFile::copy(filename, backupfile);
@@ -1575,6 +1600,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
 #endif
+    qDebug() << "Leaving backupSTRfiles during nre IMPORT";
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
