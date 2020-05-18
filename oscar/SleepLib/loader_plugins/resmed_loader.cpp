@@ -627,7 +627,7 @@ int ResmedLoader::Open(const QString & dirpath)
     return num_new_sessions;
 }   // end Open()
 
-ResMedEDFInfo * fetchSTRandverify( QString filename, QString serialNumber)
+ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber)
 {
     ResMedEDFInfo * stredf = new ResMedEDFInfo();
     if ( ! stredf->Open(filename ) ) {
