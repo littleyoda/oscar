@@ -29,16 +29,12 @@ Run the installer, accepting options to install inno script studio (for possible
 Go to <https://gitforwindows.org/> and click on the Download button. Run the installer, which presents lots of options:
 
 -   Select whichever editor you desire.
-
 -   Select “Use Git from the command line and also from 3rd-party software.” 
-    
 -   Select “Use the OpenSSL library.”
-
 -   Select “Checkout Windows-style, commit Unix-style line endings.”
-
+-   Select "Enable symbolic links"
 -   Select “Use Windows’ default console window.” I find the Windows default console to be satisfactory on Windows 10.
-    
--   Leave extra options as they default (enable file system caching, enable Git credential manager, but not symbolic links).
+-   Leave extra options as they default (enable file system caching, enable Git credential manager).
 
 GIT for Windows adds itself to your path.
 
