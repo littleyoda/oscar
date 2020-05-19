@@ -420,7 +420,7 @@ int ResmedLoader::Open(const QString & dirpath)
             bool addToSTRmap = true;
             QDate date = stredf->edfHdr.startdate_orig.date();
             long int days = stredf->GetNumDataRecords();
-            qDebug() << importPath.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
+            qDebug() << importFile.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
             if (STRmap.contains(date)) {        // Keep the longer of the two STR files
                 qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
                 if (days > STRmap[date].days) {
@@ -1569,13 +1569,13 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
         backupfile = compress_backups ? gzfile : nongzfile;
 
         STRmap[date] = STRFile(backupfile, days, stredf);
-        qDebug() << "Adding" << filename.section("/",-2,-1) << "with" << days << "days as" << backupfile.section("/", -3, -1) << "to STRmap";
+        qDebug() << "Adding" << filename.section("/",-3,-1) << "with" << days << "days as" << backupfile.section("/", -3, -1) << "to STRmap";
 
         if ( QFile::exists(backupfile)) {
             QFile::remove(backupfile);
         }
 // #ifdef STR_DEBUG
-        qDebug() << "Copying" << filename << "to" << backupfile;
+        qDebug() << "Copying" << filename.section("/",-3,1) << "to" << backupfile.section("/",-3,-1);
 // #endif
         if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
             if (compress_backups) {                 // fine, copy it to backup folder
@@ -1600,7 +1600,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
 #endif
-    qDebug() << "Leaving backupSTRfiles during nre IMPORT";
+    qDebug() << "Leaving backupSTRfiles during new IMPORT";
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
