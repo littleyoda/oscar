@@ -32,9 +32,9 @@ Go to <https://gitforwindows.org/> and click on the Download button. Run the ins
 -   Select “Use Git from the command line and also from 3rd-party software.” 
 -   Select “Use the OpenSSL library.”
 -   Select “Checkout Windows-style, commit Unix-style line endings.”
--   Select "Enable symbolic links"
 -   Select “Use Windows’ default console window.” I find the Windows default console to be satisfactory on Windows 10.
--   Leave extra options as they default (enable file system caching, enable Git credential manager).
+-   Select "Enable symbolic links"
+-   Leave other extra options as they default (enable file system caching, enable Git credential manager).
 
 GIT for Windows adds itself to your path.
 
