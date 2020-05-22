@@ -16,6 +16,11 @@
 #include <QDir>
 #include <QMessageBox>
 
+#define NEWXML
+#ifdef NEWXML
+#include <QXmlStreamWriter>
+#endif
+
 const int journal_data_version = 1;
 
 JournalEntry::JournalEntry(QDate date)
@@ -205,7 +210,101 @@ void JournalEntry::delBookmark(qint64 start, qint64 end)
     // if I wanted to be nice above, I could add the note string to the search as well..
     // (some users might be suprised to see the lot go with the same start and end index)
 }
+#ifdef NEWXML
+void BackupJournal(QString filename)
+{
+    QString outBuf;
+    QXmlStreamWriter stream(&outBuf);
+    stream.setAutoFormatting(true);
+    stream.setAutoFormattingIndent(2);
 
+    stream.writeStartDocument();
+    stream.writeStartElement("OSCAR");
+    stream.writeStartElement("Journal");
+    stream.writeAttribute("username", p_profile->user->userName());
+
+    QDate first = p_profile->FirstDay(MT_JOURNAL);
+    QDate last = p_profile->LastDay(MT_JOURNAL);
+
+    QDate date = first.addDays(-1);
+    do {
+        date = date.addDays(1);
+
+        Day * journal = p_profile->GetDay(date, MT_JOURNAL);
+        if (!journal) continue;
+
+        Session * sess = journal->firstSession(MT_JOURNAL);
+        if (!sess) continue;
+
+        if (   !journal->settingExists(Journal_Notes)
+            && !journal->settingExists(Journal_Weight)
+            && !journal->settingExists(Journal_ZombieMeter)
+            && !journal->settingExists(LastUpdated)
+            && !journal->settingExists(Bookmark_Start)) {
+            continue;
+        }
+
+        stream.writeStartElement("day");
+        stream.writeAttribute("date", date.toString());
+
+        if (journal->settingExists(Journal_Weight)) {
+            QString weight = sess->settings[Journal_Weight].toString();
+            stream.writeAttribute("weight", weight);
+        }
+
+        if (journal->settingExists(Journal_ZombieMeter)) {
+            QString zombie = sess->settings[Journal_ZombieMeter].toString();
+            stream.writeAttribute("zombie", zombie);
+        }
+
+        if (journal->settingExists(LastUpdated)) {
+            QDateTime dt = sess->settings[LastUpdated].toDateTime();
+            qint64 dtx = dt.toSecsSinceEpoch();
+            QString dts = QString::number(dtx);
+            stream.writeAttribute("lastupdated", dts);
+        }
+
+        if (journal->settingExists(Journal_Notes)) {
+            stream.writeStartElement("note");
+            stream.writeTextElement("text", sess->settings[Journal_Notes].toString());
+            stream.writeEndElement(); // notes
+        }
+
+        if (journal->settingExists(Bookmark_Start)) {
+            QVariantList start=sess->settings[Bookmark_Start].toList();
+            QVariantList end=sess->settings[Bookmark_End].toList();
+            QStringList notes=sess->settings[Bookmark_Notes].toStringList();
+            stream.writeStartElement("bookmarks");
+            int size = start.size();
+            for (int i=0; i< size; i++) {
+                stream.writeStartElement("bookmark");
+                stream.writeAttribute("notes",notes.at(i));
+                stream.writeAttribute("start",start.at(i).toString());
+                stream.writeAttribute("end",end.at(i).toString());
+                stream.writeEndElement(); // bookmark
+            }
+            stream.writeEndElement(); // bookmarks
+        }
+
+        stream.writeEndElement(); // day
+
+    } while (date <= last);
+
+    stream.writeEndElement(); // Journal
+    stream.writeEndElement(); // OSCAR
+    stream.writeEndDocument();
+
+    QFile file(filename);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        return;
+    }
+
+    QTextStream ts(&file);
+    ts << outBuf;
+    file.close();
+}
+#else
 void BackupJournal(QString filename)
 {
     QDomDocument doc("OSCAR Journal");
@@ -281,6 +380,7 @@ void BackupJournal(QString filename)
     ts << doc.toString();
     file.close();
 }
+#endif
 
 DayController::DayController()
 {
