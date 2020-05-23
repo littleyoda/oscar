@@ -43,7 +43,7 @@ class Update
   */
 struct Release {
     Release() {}
-    Release(const Release &copy) = default;
+    Release(const Release & /*copy*/) = default;
 
     Release(QString ver, QString code, UpdateStatus stat) { version = ver; codename = code; status = stat; }
     QString version;
@@ -87,7 +87,7 @@ class UpdateParser: public QXmlDefaultHandler
 class PackageUpdate {
 public:
     PackageUpdate() {}
-    PackageUpdate(const PackageUpdate & copy) = default;
+    PackageUpdate(const PackageUpdate & /*copy*/) = default;
 
     QString name;
     QString displayName;
