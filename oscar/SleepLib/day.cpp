@@ -304,7 +304,7 @@ EventDataType Day::settings_wavg(ChannelID code)
     double s0 = 0, s1 = 0, s2 = 0, tmp;
 
     for (auto & sess : sessions) {
-        if (sess->enabled()) {
+        if (sess->enabled() && sess->type() == MT_CPAP) {
             auto set = sess->settings.find(code);
 
             if (set != sess->settings.end()) {
