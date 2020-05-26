@@ -259,7 +259,11 @@ void BackupJournal(QString filename)
 
         if (journal->settingExists(LastUpdated)) {
             QDateTime dt = sess->settings[LastUpdated].toDateTime();
+#if QT_VERSION < QT_VERSION_CHECK(5,8,0)
+            qint64 dtx = dt.toMSecsSinceEpoch()/1000L;
+#elif
             qint64 dtx = dt.toSecsSinceEpoch();
+#endif
             QString dts = QString::number(dtx);
             stream.writeAttribute("lastupdated", dts);
         }
