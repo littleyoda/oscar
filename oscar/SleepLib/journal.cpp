@@ -261,7 +261,7 @@ void BackupJournal(QString filename)
             QDateTime dt = sess->settings[LastUpdated].toDateTime();
 #if QT_VERSION < QT_VERSION_CHECK(5,8,0)
             qint64 dtx = dt.toMSecsSinceEpoch()/1000L;
-#elif
+#else
             qint64 dtx = dt.toSecsSinceEpoch();
 #endif
             QString dts = QString::number(dtx);
