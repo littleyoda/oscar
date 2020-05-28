@@ -155,7 +155,7 @@ void UpdaterWindow::updateFinished(QNetworkReply *reply)
     if (reply->error() != QNetworkReply::NoError) {
         qDebug() << "Update Check Error: "+reply->errorString();
         disconnect(netmanager, SIGNAL(finished(QNetworkReply *)), this, SLOT(updateFinished(QNetworkReply *)));
-        mainwin->Notify(tr("OSCAR Updates are currently unvailable for this platform"),tr("OSCAR Updates"));
+        mainwin->Notify(tr("OSCAR Updates are currently unavailable for this platform"),tr("OSCAR Updates"));
     } else {
         QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
 
