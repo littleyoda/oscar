@@ -145,7 +145,7 @@ public:
         date=QDate();
     }
     
-    STRRecord(const STRRecord & copy) = default;
+    STRRecord(const STRRecord & /*copy*/) = default;
 
 // All the data members
 
@@ -232,7 +232,7 @@ public:
         filename(QString()), days(0), edf(nullptr) {}
     STRFile(QString name, long int recCnt, ResMedEDFInfo *str) :
         filename(name), days(recCnt), edf(str) {}
-    STRFile(const STRFile & copy) = default;
+    STRFile(const STRFile & /*copy*/) = default;
 
     virtual ~STRFile() {}
 

@@ -106,7 +106,7 @@
     </message>
     <message>
         <source> i </source>
-        <translation type="unfinished">Italique</translation>
+        <translation> Italique </translation>
     </message>
     <message>
         <source>Big</source>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>&quot;Nothing&apos;s here!&quot;</source>
-        <translation>Rien ici !</translation>
+        <translation>&quot;Rien ici !&quot;</translation>
     </message>
     <message>
         <source>Awesome</source>
@@ -442,7 +442,7 @@
     </message>
     <message>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation>Ce favori est actuellement en zone désactivée...</translation>
+        <translation>Ce favori est actuellement en zone désactivée..</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     </message>
     <message>
         <source>Last Month</source>
-        <translation>Dernier mois</translation>
+        <translation>Mois dernier</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
@@ -1507,7 +1507,7 @@
     </message>
     <message>
         <source>D.O.B.</source>
-        <translation>Né le</translation>
+        <translation>Né le.</translation>
     </message>
     <message>
         <source>Female</source>
@@ -1743,7 +1743,7 @@ respiratoires</translation>
     </message>
     <message>
         <source>Last Three Months</source>
-        <translation>Derniers 3 mois</translation>
+        <translation>3 derniers mois</translation>
     </message>
     <message>
         <source>Total Time in Apnea
@@ -1775,7 +1775,7 @@ respiratoires</translation>
     </message>
     <message>
         <source>Last Month</source>
-        <translation>Dernier mois</translation>
+        <translation>Mois dernier</translation>
     </message>
     <message>
         <source>Apnea
@@ -1801,7 +1801,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last Two Weeks</source>
-        <translation>Dernières 2 semaines</translation>
+        <translation>2 dernières semaines</translation>
     </message>
     <message>
         <source>Everything</source>
@@ -1813,7 +1813,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last Year</source>
-        <translation>Dernière année</translation>
+        <translation>Année dernière</translation>
     </message>
     <message>
         <source>Toggle Graph Visibility</source>
@@ -1825,7 +1825,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last Two Months</source>
-        <translation>Derniers 2 mois</translation>
+        <translation>2 derniers mois</translation>
     </message>
 </context>
 <context>
@@ -1884,7 +1884,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Oximeter import completed..</source>
-        <translation>Import terminé...</translation>
+        <translation>Import terminé..</translation>
     </message>
     <message>
         <source>&amp;Retry</source>
@@ -3241,7 +3241,7 @@ To use it with ResScan will require the .gz files to be uncompressed first..</so
 Format courant sous Linux et Mac.
 
 OSCAR peut importer de ce répertoire de sauvegarde compressé en mode natif.
-Pour l&apos;utiliser avec ResScan, il faudra d&apos;abord décompresser les fichiers *.gz...</translation>
+Pour l&apos;utiliser avec ResScan, il faudra d&apos;abord décompresser les fichiers *.gz..</translation>
     </message>
     <message>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
@@ -3269,7 +3269,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
         <translation>Garde un copie de la carte SD des appareils ResMed.
 Les appareils ResMed effacent les données précises après 7 jours, et les graphiques de plus de 30 jours...
 
-OSCAR peut garder ces données au cas vous devriez réinstaller (Hautement recommandé, à moins que vous n&apos;ayez pas de place disque ou que les graphiques ne vous intéressent pas).</translation>
+OSCAR peut garder ces données au cas vous devriez réinstaller (Hautement recommandé, à moins que vous n&apos;ayez pas de place disque ou que les graphiques ne vous intéressent pas)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3814,7 +3814,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Kg</source>
-        <translation> Kg</translation>
+        <translation>Kg</translation>
     </message>
     <message>
         <source>O2</source>
@@ -6844,7 +6844,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last 30 Days</source>
-        <translation>Dernier mois</translation>
+        <translation>Mois dernier</translation>
     </message>
     <message>
         <source>%1 Index</source>
@@ -6892,7 +6892,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>6 Derniers mois</translation>
+        <translation>6 derniers mois</translation>
     </message>
     <message>
         <source>Average %1</source>
@@ -6924,7 +6924,7 @@ corporelle</translation>
     </message>
     <message>
         <source>Last Year</source>
-        <translation>Dernière année</translation>
+        <translation>Année dernière</translation>
     </message>
     <message>
         <source>Details</source>

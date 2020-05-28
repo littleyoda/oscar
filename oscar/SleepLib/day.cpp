@@ -308,6 +308,13 @@ EventDataType Day::settings_wavg(ChannelID code)
             auto set = sess->settings.find(code);
 
             if (set != sess->settings.end()) {
+                if (code == CPAP_Mode && sess->type() != MT_CPAP) {
+                    // There used to be a bug in gLineChart::SetDay that inserted a CPAP_Mode
+                    // setting in any session that didn't already have one. That shouldn't
+                    // happen any more, but leave this diagnostic message here in case it does.
+                    qWarning() << sess->session() << "non-CPAP session with CPAP mode setting";
+                    continue;
+                }
                 s0 = sess->hours();
                 tmp = set.value().toDouble();
                 s1 += tmp * s0;

@@ -233,7 +233,7 @@ void ExportCSV::on_exportButton_clicked()
         ui->progressBar->setValue(ui->progressBar->value() + 1);
         QApplication::processEvents();
 
-        Day *day = p_profile->GetDay(date, MT_CPAP);
+        Day *day = p_profile->GetDay(date, MT_CPAP);  // Only export days with CPAP data.
 
         if (day) {
             QString data;
@@ -280,6 +280,9 @@ void ExportCSV::on_exportButton_clicked()
             } else if (ui->rb1_Sessions->isChecked()) {
                 for (int i = 0; i < day->size(); i++) {
                     Session *sess = (*day)[i];
+                    if (sess->type() != MT_CPAP) {
+                        continue;  // Not every session in a day with CPAP data will be a CPAP session.
+                    }
                     QDateTime start = QDateTime::fromTime_t(sess->first() / 1000L);
                     QDateTime end = QDateTime::fromTime_t(sess->last() / 1000L);
 
