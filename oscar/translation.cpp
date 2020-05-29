@@ -58,7 +58,8 @@ void initTranslations()
     langNames["pt"] = "Português";
     langNames["pt_BR"] = "Português (Brazil)";
     langNames["ro"] = "Românește";
-    langNames["zh"] = "\xe6\xbc\xa2\xe8\xaa\x9e\xe7\xb9\x81\xe9\xab\x94\xe5\xad\x97";    
+    langNames["tr"] = "Türkçe";
+    langNames["zh"] = "\xe6\xbc\xa2\xe8\xaa\x9e\xe7\xb9\x81\xe9\xab\x94\xe5\xad\x97";
 
     langNames[DefaultLanguage]="English (US)";
 
