@@ -145,10 +145,6 @@
         <translation>Petit</translation>
     </message>
     <message>
-        <source>Machine Settings Unavailable</source>
-        <translation type="vanished">Réglages de l&apos;appareil indisponibles</translation>
-    </message>
-    <message>
         <source>Journal</source>
         <translation>Journal</translation>
     </message>
@@ -403,10 +399,6 @@
     <message>
         <source>%1h %2m %3s</source>
         <translation>%1h %2m %3s</translation>
-    </message>
-    <message>
-        <source>One or more waveform record(s) for this session had faulty source data. Some waveform overlay points may not match up correctly.</source>
-        <translation type="vanished">Un ou plusieurs enregistrement de cette session a des données corrompues. Certains points des graphiques peuvent ne pas coïncider correctement.</translation>
     </message>
     <message>
         <source>PAP Mode: %1</source>
@@ -3769,10 +3761,6 @@ p, li { white-space: pre-wrap; }
         <translation>%1</translation>
     </message>
     <message>
-        <source>??</source>
-        <translation type="vanished">??</translation>
-    </message>
-    <message>
         <source>AI</source>
         <translation>AI</translation>
     </message>
@@ -3897,36 +3885,12 @@ p, li { white-space: pre-wrap; }
         <translation>oz</translation>
     </message>
     <message>
-        <source>x1</source>
-        <translation type="vanished">x1</translation>
-    </message>
-    <message>
-        <source>x2</source>
-        <translation type="vanished">x2</translation>
-    </message>
-    <message>
-        <source>x3</source>
-        <translation type="vanished">x3</translation>
-    </message>
-    <message>
-        <source>x4</source>
-        <translation type="vanished">x4</translation>
-    </message>
-    <message>
-        <source>x5</source>
-        <translation type="vanished">x5</translation>
-    </message>
-    <message>
         <source>&amp;No</source>
         <translation>&amp;Non</translation>
     </message>
     <message>
         <source>90%</source>
         <translation>90%</translation>
-    </message>
-    <message>
-        <source>???</source>
-        <translation type="vanished">???</translation>
     </message>
     <message>
         <source>AHI</source>
@@ -4429,10 +4393,6 @@ p, li { white-space: pre-wrap; }
         <translation>Période du sommeil</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Status</source>
-        <translation type="vanished">État de la résistance Sys1</translation>
-    </message>
-    <message>
         <source>Minute Vent.</source>
         <translation>Vent. minute</translation>
     </message>
@@ -4513,10 +4473,6 @@ p, li { white-space: pre-wrap; }
         <translation>Niveau de SmartFlex</translation>
     </message>
     <message>
-        <source>System One Resistance Status</source>
-        <translation type="vanished">État résistance System One</translation>
-    </message>
-    <message>
         <source>Journal Data</source>
         <translation>Données du journal</translation>
     </message>
@@ -4549,10 +4505,6 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil non supporté</translation>
     </message>
     <message>
-        <source>0cmH2O</source>
-        <translation type="vanished">0cmH2O</translation>
-    </message>
-    <message>
         <source>SOMNOsoft2</source>
         <translation>SOMNOsoft2</translation>
     </message>
@@ -4565,28 +4517,12 @@ p, li { white-space: pre-wrap; }
         <translation>Appareil</translation>
     </message>
     <message>
-        <source>1cmH2O</source>
-        <translation type="vanished">1cmH2O</translation>
-    </message>
-    <message>
-        <source>Whether System One resistance settings are available to you.</source>
-        <translation type="vanished">Selon disponibilité des réglages de résistance System One.</translation>
-    </message>
-    <message>
         <source>Mask On</source>
         <translation>Avec masque</translation>
     </message>
     <message>
-        <source>2cmH2O</source>
-        <translation type="vanished">2cmH2O</translation>
-    </message>
-    <message>
         <source>Max: %1</source>
         <translation>Max : %1</translation>
-    </message>
-    <message>
-        <source>3cmH2O</source>
-        <translation type="vanished">3CmH2O</translation>
     </message>
     <message>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
@@ -4720,10 +4656,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>AB Filter</source>
         <translation>Filtre AB</translation>
-    </message>
-    <message>
-        <source>Sys1 Resist. Lock</source>
-        <translation type="vanished">Verrou résist. Sys1</translation>
     </message>
     <message>
         <source>%1
@@ -4882,10 +4814,6 @@ Merci de reconstruire les données de PPC</translation>
     <message>
         <source>Orientation</source>
         <translation>Orientation</translation>
-    </message>
-    <message>
-        <source>Whether or not machine shows AHI via LCD panel.</source>
-        <translation type="vanished">Selon que l&apos;appareil affiche ou pas l&apos;IAH sur l&apos;affichage LCD.</translation>
     </message>
     <message>
         <source>Smart Start</source>
@@ -5088,10 +5016,6 @@ Début : %2
         <translation>Respirations par minute</translation>
     </message>
     <message>
-        <source>Once you upgrade, you &lt;font size=+1&gt;can not&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation type="vanished">Une fois mis à jour, vous &lt;font size=+1&gt;ne pourrez plus &lt;/font&gt;utiliser ce profil avec l&apos;ancienne version.</translation>
-    </message>
-    <message>
         <source>Usage Statistics</source>
         <translation>Statistiques d&apos;utilisation</translation>
     </message>
@@ -5194,10 +5118,6 @@ TTIA : %1</translation>
         <translation>ASV (EPAP variable)</translation>
     </message>
     <message>
-        <source>Sys1 Resist. Set</source>
-        <translation type="vanished">Réglages résist. Sys1</translation>
-    </message>
-    <message>
         <source>Exhale Pressure Relief Level</source>
         <translation>Niveau de dépression d&apos;expiration</translation>
     </message>
@@ -5224,10 +5144,6 @@ TTIA : %1</translation>
     <message>
         <source>Rise Time</source>
         <translation>Montée temporisée</translation>
-    </message>
-    <message>
-        <source>System One Resistance Lock</source>
-        <translation type="vanished">Verrou de résistance System One</translation>
     </message>
     <message>
         <source>Cheyne Stokes Respiration</source>
@@ -5438,10 +5354,6 @@ TTIA : %1</translation>
         <translation>Question</translation>
     </message>
     <message>
-        <source>System One Mask Resistance Setting</source>
-        <translation type="vanished">Réglage de résistance du masque System One</translation>
-    </message>
-    <message>
         <source>Waketime: %1</source>
         <translation>Réveil : %1</translation>
     </message>
@@ -5604,10 +5516,6 @@ Heures : %1</translation>
     <message>
         <source>Min Pressure</source>
         <translation>Pression min</translation>
-    </message>
-    <message>
-        <source>System One Resistance Setting</source>
-        <translation type="vanished">Réglage de la résistance System One</translation>
     </message>
     <message>
         <source>Total Leak Rate</source>
@@ -5840,10 +5748,6 @@ Heures : %1</translation>
     <message>
         <source>ms</source>
         <translation>ms</translation>
-    </message>
-    <message>
-        <source>ÇSR</source>
-        <translation type="vanished">RCS</translation>
     </message>
     <message>
         <source>Height</source>
@@ -6439,26 +6343,6 @@ corporelle</translation>
         <translation>Temp. circuit</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="vanished">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="vanished">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="vanished">3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="vanished">4</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="vanished">5</translation>
-    </message>
-    <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>Réglage de l’humidificateur PRS1</translation>
     </message>
@@ -6469,14 +6353,6 @@ corporelle</translation>
     <message>
         <source>12mm</source>
         <translation>12 mm</translation>
-    </message>
-    <message>
-        <source>PRS1 Unknown</source>
-        <translation type="vanished">PRS1 inconnu</translation>
-    </message>
-    <message>
-        <source>Unknown PRS1 span 0x0E</source>
-        <translation type="vanished">Intervalle 0x0E PRS1 inconnu</translation>
     </message>
     <message>
         <source>Parsing STR.edf records...</source>
@@ -7206,10 +7082,6 @@ corporelle</translation>
         <translation>Vérification de disponibilité de mise à jour</translation>
     </message>
     <message>
-        <source>OSCAR Updates are currently unvailable for this platform</source>
-        <translation>Pas de mise à jour disponible pour cette plateforme</translation>
-    </message>
-    <message>
         <source>OSCAR Updates</source>
         <translation>Mise à jour de OSCAR</translation>
     </message>
@@ -7220,6 +7092,10 @@ corporelle</translation>
     <message>
         <source>New OSCAR Updates are avilable:</source>
         <translation>Une mise à jour de OSCAR est disponible :</translation>
+    </message>
+    <message>
+        <source>OSCAR Updates are currently unavailable for this platform</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

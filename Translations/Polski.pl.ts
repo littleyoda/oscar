@@ -5919,20 +5919,12 @@ Proszę przebuduj dane CPAP</translation>
         <translation>VPAP-S/T</translation>
     </message>
     <message>
-        <source>??</source>
-        <translation type="vanished">??</translation>
-    </message>
-    <message>
         <source>VPAPauto</source>
         <translation>VPAPauto</translation>
     </message>
     <message>
         <source>ASVAuto</source>
         <translation>ASVAuto</translation>
-    </message>
-    <message>
-        <source>???</source>
-        <translation type="vanished">???</translation>
     </message>
     <message>
         <source>Auto for Her</source>
@@ -5957,22 +5949,6 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <source>Exhale Pressure Relief Level</source>
         <translation>Poziom ulgi wydechowej</translation>
-    </message>
-    <message>
-        <source>0cmH2O</source>
-        <translation type="vanished">0cmH2O</translation>
-    </message>
-    <message>
-        <source>1cmH2O</source>
-        <translation type="vanished">1cmH2O</translation>
-    </message>
-    <message>
-        <source>2cmH2O</source>
-        <translation type="vanished">2cmH2O</translation>
-    </message>
-    <message>
-        <source>3cmH2O</source>
-        <translation type="vanished">3cmH2O</translation>
     </message>
     <message>
         <source>SmartStart</source>
@@ -7083,10 +7059,6 @@ Wiersz %2, kolumna %3</translation>
         <translation>Sprawdzanie uaktualnień OSCAR</translation>
     </message>
     <message>
-        <source>OSCAR Updates are currently unvailable for this platform</source>
-        <translation>Uaktualnienie OSCAR dla tej platformy jest obecnie niedostępne</translation>
-    </message>
-    <message>
         <source>OSCAR Updates</source>
         <translation>Uaktualnienia OSCAR</translation>
     </message>
@@ -7113,6 +7085,10 @@ Wiersz %2, kolumna %3</translation>
     <message>
         <source>New OSCAR Updates are avilable:</source>
         <translation>Są dostępne aktualizacje:</translation>
+    </message>
+    <message>
+        <source>OSCAR Updates are currently unavailable for this platform</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

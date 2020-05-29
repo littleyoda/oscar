@@ -7048,10 +7048,6 @@ Line %2, column %3</source>
         <translation>检查OSCAR更新</translation>
     </message>
     <message>
-        <source>OSCAR Updates are currently unvailable for this platform</source>
-        <translation>OSCAR更新目前不适用于此平台</translation>
-    </message>
-    <message>
         <source>OSCAR Updates</source>
         <translation>OSCAR更新</translation>
     </message>
@@ -7062,6 +7058,10 @@ Line %2, column %3</source>
     <message>
         <source>New OSCAR Updates are avilable:</source>
         <translation>新的OSCAR更新可用：</translation>
+    </message>
+    <message>
+        <source>OSCAR Updates are currently unavailable for this platform</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

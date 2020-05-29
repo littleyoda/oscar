@@ -6999,10 +6999,6 @@ Stunden: %1</translation>
         <translation>&amp;Fertig</translation>
     </message>
     <message>
-        <source>OSCAR Updates are currently unvailable for this platform</source>
-        <translation>OSCAR-Updates sind derzeit für diese Plattform nicht verfügbar</translation>
-    </message>
-    <message>
         <source>Please wait while updates are downloaded and installed...</source>
         <translation>Bitte warten Sie solange, bis die Updates heruntergeladen und installiert wurden...</translation>
     </message>
@@ -7093,6 +7089,10 @@ Stunden: %1</translation>
     <message>
         <source>New OSCAR Updates are avilable:</source>
         <translation>Neue OSCAR-Updates sind verfügbar:</translation>
+    </message>
+    <message>
+        <source>OSCAR Updates are currently unavailable for this platform</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
