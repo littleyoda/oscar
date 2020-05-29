@@ -5278,7 +5278,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="793"/>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="30"/>
         <source>OSCAR</source>
         <translation>OSCAR</translation>
     </message>
@@ -5788,7 +5788,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="715"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="586"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="592"/>
         <source>Importing Sessions...</source>
         <translation>Importacion  de Sesiones...</translation>
     </message>
@@ -6791,18 +6791,18 @@ TTIA: %1</translation>
         <translation>Dic</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="366"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="369"/>
         <source>Events</source>
         <translation>Eventos</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="364"/>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="367"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="370"/>
         <source>Duration</source>
         <translation>Duración</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="381"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="384"/>
         <source>(% %1 in events)</source>
         <translation>(%-%1 en eventos)</translation>
     </message>
@@ -7777,50 +7777,50 @@ TTIA: %1</translation>
         <translation>Bi-nivel automático (PS variable)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1489"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1496"/>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1511"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1518"/>
         <source>n/a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1528"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1535"/>
         <source>Fixed %1 (%2)</source>
         <translation>%1 Fijo (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1530"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1537"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>Mín %1 Máx %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1532"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1539"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1541"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translatorcomment>ps??</translatorcomment>
         <translation>PS %1 sobre %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1536"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1545"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1543"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translatorcomment>ps??</translatorcomment>
         <translation>EPAP mín %1 IPAP máx %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1541"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1559"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7959,22 +7959,22 @@ TTIA: %1</translation>
         <translation>Consejero de sueño personal</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="376"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="405"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Localización archivos STR.edf....</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="552"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="557"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Catalogación de archivos EDF....</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="570"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="576"/>
         <source>Queueing Import Tasks...</source>
         <translation>Cola de tareas de importación....</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="597"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="603"/>
         <source>Finishing Up...</source>
         <translation>Terminando...</translation>
     </message>
@@ -8144,7 +8144,7 @@ TTIA: %1</translation>
         <translation>Manual</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="961"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="989"/>
         <source>Parsing STR.edf records...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8262,17 +8262,17 @@ Por favor recompile datos del CPAP</translation>
         <translation>Fijar gráfico %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1040"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1042"/>
         <source>Plots Disabled</source>
         <translation>Gráficos deshabilitados</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1114"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1116"/>
         <source>Duration %1:%2:%3</source>
         <translation>Duración %1:%2:%3</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1115"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1117"/>
         <source>AHI %1</source>
         <translation>IAH %1</translation>
     </message>
@@ -8297,27 +8297,27 @@ Por favor recompile datos del CPAP</translation>
         <translation>Información de la máquina</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="30"/>
         <source>Journal Data</source>
         <translation>Datos de diario</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="43"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="48"/>
         <source>OSCAR found an old Journal folder, but it looks like it&apos;s been renamed:</source>
         <translation>OSCAR encontró una vieja carpeta de Diario, pero parece que ha sido renombrada:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="45"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="50"/>
         <source>OSCAR will not touch this folder, and will create a new one instead.</source>
         <translation>Esta carpeta no será tocada por OSCAR y se creará una nueva.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="46"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="51"/>
         <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
         <translation>Por favor, tenga cuidado al jugar en las carpetas de perfil de OSCAR :-P</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="53"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="58"/>
         <source>For some reason, OSCAR couldn&apos;t find a journal object record in your profile, but did find multiple Journal data folders.
 
 </source>
@@ -8326,7 +8326,7 @@ Por favor recompile datos del CPAP</translation>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="54"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="59"/>
         <source>OSCAR picked only the first one of these, and will use it in future:
 
 </source>
@@ -8335,7 +8335,7 @@ Por favor recompile datos del CPAP</translation>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="56"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="61"/>
         <source>If your old data is missing, copy the contents of all the other Journal_XXXXXXX folders to this one manually.</source>
         <translation>Si
 Sí faltan los datos antiguos, copie manualmente el contenido de todas las demás carpetas del Diario_XXXXXXXXX a éste.</translation>

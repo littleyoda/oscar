@@ -5490,7 +5490,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="793"/>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="30"/>
         <source>OSCAR</source>
         <translation>OSCAR</translation>
     </message>
@@ -5816,7 +5816,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="715"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="586"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="592"/>
         <source>Importing Sessions...</source>
         <translation>Importerar inspelningar ...</translation>
     </message>
@@ -6750,18 +6750,18 @@ TTIA: %1</translation>
         <translation>Sida %1 av %2</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="366"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="369"/>
         <source>Events</source>
         <translation>Händelser</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="364"/>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="367"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="370"/>
         <source>Duration</source>
         <translation>Varaktighet</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="381"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="384"/>
         <source>(% %1 in events)</source>
         <translation>(% %1 i händelser)</translation>
     </message>
@@ -7802,17 +7802,17 @@ Vänligen återskapa CPAP-data</translation>
         <translation>Pin %1 graf</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1040"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1042"/>
         <source>Plots Disabled</source>
         <translation>Diagram ej aktiverat</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1114"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1116"/>
         <source>Duration %1:%2:%3</source>
         <translation>Varaktighet %1:%2:%3</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1115"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1117"/>
         <source>AHI %1</source>
         <translation>AHI %1</translation>
     </message>
@@ -7870,73 +7870,73 @@ Vänligen återskapa CPAP-data</translation>
         <translation>Auto Bi-Level (Variabel PS)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1489"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1496"/>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1511"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1518"/>
         <source>n/a</source>
         <translation>Ej tillämplig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1528"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1535"/>
         <source>Fixed %1 (%2)</source>
         <translation>Fast %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1530"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1537"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>Min %1 Max %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1532"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1539"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation>EPAP %1 IPAP %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1541"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translation>PS %1 över %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1536"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1545"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1543"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translation>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1541"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1559"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="30"/>
         <source>Journal Data</source>
         <translation>Journaldata</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="43"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="48"/>
         <source>OSCAR found an old Journal folder, but it looks like it&apos;s been renamed:</source>
         <translation>OSCAR hittade en gammal journalmapp, men den ser ut att ha bytt namn:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="45"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="50"/>
         <source>OSCAR will not touch this folder, and will create a new one instead.</source>
         <translation>OSCAR kommer inte att röra den här mappen utan kommer istället att skapa en ny.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="46"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="51"/>
         <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
         <translation>Var försiktig när du ändrar nåt i OSCARs profilmappar :-P</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="53"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="58"/>
         <source>For some reason, OSCAR couldn&apos;t find a journal object record in your profile, but did find multiple Journal data folders.
 
 </source>
@@ -7945,7 +7945,7 @@ Vänligen återskapa CPAP-data</translation>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="54"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="59"/>
         <source>OSCAR picked only the first one of these, and will use it in future:
 
 </source>
@@ -7954,7 +7954,7 @@ Vänligen återskapa CPAP-data</translation>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="56"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="61"/>
         <source>If your old data is missing, copy the contents of all the other Journal_XXXXXXX folders to this one manually.</source>
         <translation>Om dina gamla data saknas, kopiera innehållet i alla andra Journal_XXXXXXX mappar till denna manuellt.</translation>
     </message>
@@ -8069,22 +8069,22 @@ Vänligen återskapa CPAP-data</translation>
         <translation>System One</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="376"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="405"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Söker STR.edf fil(er)...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="552"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="557"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Katalogisering av EDF-filer...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="570"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="576"/>
         <source>Queueing Import Tasks...</source>
         <translation>Köar importen...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="597"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="603"/>
         <source>Finishing Up...</source>
         <translation>Avslutar...</translation>
     </message>
@@ -8254,7 +8254,7 @@ Vänligen återskapa CPAP-data</translation>
         <translation>Manuell</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="961"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="989"/>
         <source>Parsing STR.edf records...</source>
         <translation>Analyserar STR.edf poster...</translation>
     </message>
