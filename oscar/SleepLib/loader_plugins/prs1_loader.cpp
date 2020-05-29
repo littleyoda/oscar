@@ -272,6 +272,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "200X110", 0, 6, "DreamStation CPAP" },  // (brick)
     { "400G110", 0, 6, "DreamStation Go" },
     { "400X110", 0, 6, "DreamStation CPAP Pro" },
+    { "400X130", 0, 6, "DreamStation CPAP Pro" },
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
     { "500X120", 0, 6, "DreamStation Auto CPAP" },
