@@ -8942,7 +8942,7 @@ Satır %2, kolon %3</translation>
     <message>
         <location filename="../oscar/UpdaterWindow.cpp" line="158"/>
         <source>OSCAR Updates are currently unavailable for this platform</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR Güncellemeleri henüz bu platform için mevcut değildir</translation>
     </message>
     <message>
         <location filename="../oscar/UpdaterWindow.cpp" line="318"/>
