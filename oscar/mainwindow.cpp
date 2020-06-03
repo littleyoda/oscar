@@ -1827,7 +1827,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
     if (QProcess::startDetached("/usr/bin/open", args)) {
         QApplication::instance()->exit();
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
@@ -1854,7 +1854,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 //        ::exit(0);
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr,  STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
