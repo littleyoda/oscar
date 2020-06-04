@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <source>Sorry, could not locate About file.</source>
-        <translation>Leider konnte die About-Datei nicht gefunden werden.</translation>
+        <translation>Leider konnte die Über OSCAR-Datei nicht gefunden werden.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Schließen</translation>
+        <translation>&amp;Über</translation>
     </message>
     <message>
         <source>GPL License</source>
@@ -789,7 +789,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Schließen</translation>
+        <translation>&amp;Über</translation>
     </message>
     <message>
         <source>View &amp;Daily</source>
@@ -7092,7 +7092,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>OSCAR Updates are currently unavailable for this platform</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR-Updates sind derzeit für diese Plattform nicht verfügbar</translation>
     </message>
 </context>
 <context>

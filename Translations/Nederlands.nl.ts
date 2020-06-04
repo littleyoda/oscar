@@ -3135,7 +3135,7 @@ anders is het geen AHI/uur meer.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1227"/>
         <source> minutes</source>
-        <translation type="unfinished"> min</translation>
+        <translation> min</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1266"/>
@@ -5012,12 +5012,12 @@ TTiA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="650"/>
         <source>Minutes</source>
-        <translation type="unfinished">min</translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="651"/>
         <source>Seconds</source>
-        <translation type="unfinished">sec</translation>
+        <translation>sec</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="656"/>
@@ -5309,7 +5309,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
         <location filename="../oscar/SleepLib/common.cpp" line="737"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>RERA</source>
-        <translation type="unfinished">RERA (RE)</translation>
+        <translation>RERA (RE)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="738"/>
@@ -5372,7 +5372,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="749"/>
         <source>PS</source>
-        <translation type="unfinished">Ondersteuningsdruk</translation>
+        <translation>Ondersteuningsdruk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="750"/>
@@ -5500,7 +5500,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
         <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Resp. Rate</source>
-        <translation type="unfinished">Ademfrequentie</translation>
+        <translation>Ademfrequentie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="778"/>
@@ -6924,7 +6924,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="131"/>
         <source>PS Min</source>
-        <translation type="unfinished">Min. ondersteuningsdruk</translation>
+        <translation>Min. ondersteuningsdruk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="131"/>
@@ -6934,7 +6934,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="132"/>
         <source>PS Max</source>
-        <translation type="unfinished">Max. ondersteuningsdruk</translation>
+        <translation>Max. ondersteuningsdruk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="132"/>
@@ -7015,12 +7015,12 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Clear Airway</source>
-        <translation type="unfinished">Open luchtweg of Centrale Apneu (CA)</translation>
+        <translation>Open luchtweg of Centrale Apneu (CA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>Obstructive</source>
-        <translation type="unfinished">Obstructieve Apneu (OA)</translation>
+        <translation>Obstructieve Apneu (OA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
@@ -7415,7 +7415,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
         <source>Hypopnea</source>
-        <translation type="unfinished">Hypopneu (H)</translation>
+        <translation>Hypopneu (H)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
@@ -7425,7 +7425,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
         <source>Unclassified Apnea</source>
-        <translation type="unfinished">Onbekende Apneu (UA)</translation>
+        <translation>Onbekende Apneu (UA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
@@ -7840,12 +7840,12 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="296"/>
         <source>Auto Bi-Level (Fixed PS)</source>
-        <translation type="unfinished">Auto Bi-level (met vaste ondersteuningsdruk)</translation>
+        <translation>Auto Bi-level (met vaste ondersteuningsdruk)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="297"/>
         <source>Auto Bi-Level (Variable PS)</source>
-        <translation type="unfinished">Auto Bi-level (met variabele ondersteuningsdruk)</translation>
+        <translation>Auto Bi-level (met variabele ondersteuningsdruk)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1496"/>
@@ -7875,18 +7875,18 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1541"/>
         <source>PS %1 over %2-%3 (%4)</source>
-        <translation type="unfinished">Ondersteuningsdruk: %1 gedurende %2-%3 (%4)</translation>
+        <translation>Ondersteuningsdruk: %1 gedurende %2-%3 (%4)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1543"/>
         <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
-        <translation type="unfinished">Min EPAP: %1 Max IPAP: %2 Ondersteuningsdruk: %3-%4 (%5)</translation>
+        <translation>Min EPAP: %1 Max IPAP: %2 Ondersteuningsdruk: %3-%4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP: %1 Ondersteuningsdruk %2-%3 (%4)</translation>
+        <translation>EPAP: %1 Ondersteuningsdruk %2-%3 (%4)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1559"/>
@@ -9099,7 +9099,7 @@ Regel %2, kolom %3</translation>
     <message>
         <location filename="../oscar/welcome.ui" line="143"/>
         <source>What would you like to do?</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;Uitleg nodig? Klik op &lt;b&gt;Help / Online Gebruiksaanwijzing&lt;/b&gt;. Kies op die pagina bovenaan je eigen taal!&lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Uitleg nodig? Klik op &lt;b&gt;Help / Online Gebruiksaanwijzing&lt;/b&gt;. Kies op die pagina bovenaan je eigen taal.&lt;br&gt;
 Of ga naar het &lt;a href=&quot;https://forum.apneuvereniging.nl/&quot;&gt;ApneuForum&lt;/a&gt; of de &lt;a href=&quot;https://www.facebook.com/groups/apneuvereniging/&quot; target=&quot;_blank&quot;&gt;ApneuVereniging Facebook-groep&lt;/a&gt; (Rechts klikken om de link te kopieren!)&lt;br&gt;
 &lt;/body&gt;&lt;/html&gt;
 Wat wilt U gaan doen?</translation>
@@ -9142,7 +9142,7 @@ Wat wilt U gaan doen?</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
-        <translation>want enkele opties zijn van invloed zijn op importeren, zoals comprimeren en backup maken.</translation>
+        <translation>want enkele instellingen kunnen van invloed zijn op het importeren, zoals comprimeren en backup maken.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
