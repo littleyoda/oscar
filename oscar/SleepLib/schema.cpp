@@ -108,7 +108,7 @@ void init()
     // Note: Old channel names stored in channels.xml are not translatable.. they need to be moved to be defined AFTER here instead
     if (!schema::channel.Load(":/docs/channels.xml")) {
         QMessageBox::critical(0, STR_MessageBox_Error,
-                              QObject::tr("Couldn't parse Channels.xml, OSCAR cannot continue and is termating."),
+                              QObject::tr("Couldn't parse Channels.xml, OSCAR cannot continue and is exiting."),
                               QMessageBox::Ok);
         QApplication::exit(-1);
     }
