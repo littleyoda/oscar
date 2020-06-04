@@ -3039,8 +3039,12 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         if (session->last() == 0) {
             qWarning() << sessionid << "End time not set by summary?";
         } else if (t > session->last()) {
-            // This has only been seen once, with corrupted data, in which the summary and event
-            // files each contained multiple conflicting sessions (all brief) with the same ID.
+            // This has only been seen in two instances:
+            // 1. Once with corrupted data, in which the summary and event files each contained
+            //    multiple conflicting sessions (all brief) with the same ID.
+            // 2. On one 500G110, multiple PRS1PressureSetEvents appear after the end of the session,
+            //    across roughtly two dozen sessions. These seem to be discarded on official reports,
+            //    see ImportEvent() below.
             qWarning() << sessionid << "Events continue after summary?";
         }
         // Events can end before the session if the mask was off before the equipment turned off.
@@ -3071,6 +3075,10 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
     
     switch (e->m_type) {
         case PRS1PressureSetEvent::TYPE:  // currentPressure is used to calculate unintentional leak, not just PS
+            // TODO: These have sometimes been observed with t > session->last() on a 500G110.
+            // Official reports seem to discard such events, OSCAR currently doesn't.
+            // Test this more thoroughly before changing behavior here.
+            // fall through
         case PRS1IPAPSetEvent::TYPE:
         case PRS1IPAPAverageEvent::TYPE:
             AddEvent(channel, t, e->m_value, e->m_gain);
@@ -7258,10 +7266,15 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSettingV3(data[pos+2], data[pos+3]);
                 break;
+            case 0x0d:  // ???
+                // seen on one 500G multiple times
+                //CHECK_VALUE(data[pos], 0);  // 16-bit value
+                //CHECK_VALUE(data[pos+1], 0);
+                break;
             case 0x0e:
                 // only seen once on 400G, many times on 500G
-                CHECK_VALUES(data[pos], 0, 6);
-                CHECK_VALUE(data[pos+1], 0);
+                //CHECK_VALUES(data[pos], 0, 6);  // 16-bit value
+                //CHECK_VALUE(data[pos+1], 0);
                 //CHECK_VALUES(data[pos+2], 7, 9);
                 //CHECK_VALUES(data[pos+3], 7, 15);
                 //CHECK_VALUES(data[pos+4], 7, 12);
