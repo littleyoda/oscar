@@ -1,12 +1,11 @@
 /* SleepLib Machine Loader Class Implementation
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
-
-#include <QtSerialPort/QSerialPortInfo>
 
 #include "serialoximeter.h"
 
@@ -31,11 +30,11 @@ bool SerialOximeter::scanDevice(QString keyword, quint16 vendor_id, quint16 prod
     QStringList ports;
 
     qDebug() << "seroxi - Scanning for USB Serial devices";
-    QList<QSerialPortInfo> list=QSerialPortInfo::availablePorts();
+    QList<SerialPortInfo> list=SerialPortInfo::availablePorts();
 
     // How does the mac detect this as a SPO2 device?
     for (int i=0;i<list.size();i++) {
-        const QSerialPortInfo * info = &list.at(i);
+        const SerialPortInfo * info = &list.at(i);
         QString name = info->portName();
         QString desc = info->description();
 

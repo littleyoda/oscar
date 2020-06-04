@@ -1,6 +1,7 @@
-﻿/* SleepLib MachineLoader Base Class Header
+/* SleepLib MachineLoader Base Class Header
  *
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -10,7 +11,7 @@
 #define SERIALOXIMETER_H
 
 #include <QTimer>
-#include <QtSerialPort/QSerialPort>
+#include "SleepLib/deviceconnection.h"
 
 #include "SleepLib/machine_loader.h"
 
@@ -126,7 +127,7 @@ protected:
     virtual void requestData() {}
 
     QString port;
-    QSerialPort serial;
+    SerialPort serial;
 
     QTimer startTimer;
     QTimer resetTimer;
