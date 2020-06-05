@@ -538,6 +538,7 @@ test {
         tests/sessiontests.cpp \
         tests/versiontests.cpp \
         tests/viatomtests.cpp \
+        tests/deviceconnectiontests.cpp \
         tests/dreemtests.cpp \
         tests/zeotests.cpp
 
@@ -548,6 +549,7 @@ test {
         tests/sessiontests.h \
         tests/versiontests.h \
         tests/viatomtests.h \
+        tests/deviceconnectiontests.h \
         tests/dreemtests.h \
         tests/zeotests.h
 }

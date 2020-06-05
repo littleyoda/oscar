@@ -13,7 +13,10 @@
 // connections to devices. For now it just supports serial ports.
 
 #include <QtSerialPort/QSerialPort>
-#include <QtSerialPort/QSerialPortInfo>
+#include <QHash>
+#include <QVariant>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 // TODO: This class may eventually be internal to a DeviceConnection class,
 // but for now it is used to provide support for recording and playback of
@@ -25,14 +28,34 @@ class SerialPort : public QSerialPort
 // TODO: This class's functionality will eventually be internal to a
 // DeviceConnection class, but for now it is needed to support recording
 // and playback of serial port scanning before refactoring.
-class SerialPortInfo : public QSerialPortInfo
+class SerialPortInfo
 {
 public:
     static QList<SerialPortInfo> availablePorts();
     SerialPortInfo(const SerialPortInfo & other);
+    SerialPortInfo(const QString & data);
+
+    inline QString portName() const { return m_info["portName"].toString(); }
+    inline QString systemLocation() const { return m_info["systemLocation"].toString(); }
+    inline QString description() const { return m_info["description"].toString(); }
+    inline QString manufacturer() const { return m_info["manufacturer"].toString(); }
+    inline QString serialNumber() const { return m_info["serialNumber"].toString(); }
+
+    inline quint16 vendorIdentifier() const { return m_info["vendorIdentifier"].toInt(); }
+    inline quint16 productIdentifier() const { return m_info["productIdentifier"].toInt(); }
+
+    inline bool hasVendorIdentifier() const { return m_info.contains("vendorIdentifier"); }
+    inline bool hasProductIdentifier() const { return m_info.contains("productIdentifier"); }
+
+    inline bool isNull() const { return m_info.isEmpty(); }
+
+    operator QString() const;
+    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info);
+    friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, SerialPortInfo & info);
 
 protected:
-    SerialPortInfo(const QSerialPortInfo & other);
+    SerialPortInfo(const class QSerialPortInfo & other);
+    QHash<QString,QVariant> m_info;
 };
 
 #endif // DEVICECONNECTION_H
