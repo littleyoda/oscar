@@ -141,7 +141,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
     int maxy = 0;
 
-    if (!p_profile->user->firstName().isEmpty()) {
+    if (AppSetting->showPersonalData() && !p_profile->user->firstName().isEmpty()) {
         QString userinfo = STR_TR_Name + QString(":\t %1, %2\n").
                 arg(p_profile->user->lastName()).
                 arg(p_profile->user->firstName());

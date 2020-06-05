@@ -226,6 +226,8 @@ void MainWindow::SetupGUI()
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
 
+    ui->actionShowPersonalData->setChecked(AppSetting->showPersonalData());
+
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());
 
     ui->actionDaily_Calendar->setChecked(AppSetting->calendarVisible());
@@ -2708,6 +2710,14 @@ void MainWindow::on_actionLeft_Daily_Sidebar_toggled(bool visible)
 void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
 {
     if (daily) daily->setCalendarVisible(visible);
+}
+
+void MainWindow::on_actionShowPersonalData_toggled(bool visible)
+{
+    AppSetting->setShowPersonalData(visible);
+    if (ui->tabWidget->currentWidget() == ui->statisticsTab) {
+        GenerateStatistics();
+    }
 }
 
 #include "SleepLib/journal.h"

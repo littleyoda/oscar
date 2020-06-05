@@ -620,6 +620,10 @@ Statistics::Statistics(QObject *parent) :
 
 // Get the user information block for displaying at top of page
 QString Statistics::getUserInfo () {
+    bool test = AppSetting->showPersonalData();
+    if (!test)
+        return "";
+
     QString address = p_profile->user->address();
     address.replace("\n", "<br/>");
 

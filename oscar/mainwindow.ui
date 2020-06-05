@@ -2851,6 +2851,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionLeft_Daily_Sidebar"/>
     <addaction name="actionDaily_Calendar"/>
     <addaction name="action_Sidebar_Toggle"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowPersonalData"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -3284,6 +3286,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Advanced graph order, good for ASV, AVAPS</string>
+   </property>
+  </action>
+  <action name="actionShowPersonalData">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Personal Data</string>
    </property>
   </action>
  </widget>
