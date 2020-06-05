@@ -2715,9 +2715,7 @@ void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
 void MainWindow::on_actionShowPersonalData_toggled(bool visible)
 {
     AppSetting->setShowPersonalData(visible);
-    if (ui->tabWidget->currentWidget() == ui->statisticsTab) {
-        GenerateStatistics();
-    }
+    GenerateStatistics();
 }
 
 #include "SleepLib/journal.h"
