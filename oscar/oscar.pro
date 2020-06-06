@@ -302,6 +302,7 @@ SOURCES += \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
+    SleepLib/deviceconnection.cpp \
     SleepLib/serialoximeter.cpp \
     SleepLib/loader_plugins/md300w1_loader.cpp \
     Graphs/gSessionTimesChart.cpp \
@@ -381,6 +382,7 @@ HEADERS  += \
     translation.h \
     statistics.h \
     oximeterimport.h \
+    SleepLib/deviceconnection.h \
     SleepLib/serialoximeter.h \
     SleepLib/loader_plugins/md300w1_loader.h \
     Graphs/gSessionTimesChart.h \
