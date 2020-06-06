@@ -13,5 +13,6 @@ class DeviceConnectionTests : public QObject
     Q_OBJECT
 private slots:
     void testSerialPortInfoSerialization();
+    void testSerialPortScanning();
 };
 DECLARE_TEST(DeviceConnectionTests)

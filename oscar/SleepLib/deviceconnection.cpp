@@ -8,6 +8,7 @@
 
 #include "deviceconnection.h"
 #include <QtSerialPort/QSerialPortInfo>
+#include <QDateTime>
 #include <QDebug>
 
 
@@ -16,6 +17,76 @@ static QString hex(int i)
     return QString("0x") + QString::number(i, 16).toUpper();
 }
 
+
+// MARK: -
+
+inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
+{
+    static DeviceConnectionManager instance;
+    return instance;
+}
+
+DeviceConnectionManager::DeviceConnectionManager()
+    : m_record(nullptr), m_replay(nullptr)
+{
+}
+
+void DeviceConnectionManager::Record(QXmlStreamWriter* stream)
+{
+    getInstance().m_record = stream;
+}
+
+void DeviceConnectionManager::Replay(QXmlStreamReader* stream)
+{
+    getInstance().m_replay = stream;
+}
+
+void DeviceConnectionManager::startEvent(const QString & event)
+{
+    if (m_record) {
+        QDateTime now = QDateTime::currentDateTime();
+        now = now.toOffsetFromUtc(now.offsetFromUtc());  // force display of UTC offset
+#if QT_VERSION < QT_VERSION_CHECK(5,9,0)
+        // TODO: Can we please deprecate support for Qt older than 5.9?
+        QString timestamp = now.toString(Qt::ISODate);
+#else
+        QString timestamp = now.toString(Qt::ISODateWithMs);
+#endif
+        m_record->writeStartElement(event);
+        m_record->writeAttribute("time", timestamp);
+    }
+}
+
+#define RECORD(x) if (m_record) { *m_record << (x); }
+
+void DeviceConnectionManager::endEvent()
+{
+    if (m_record) {
+        m_record->writeEndElement();
+    }
+}
+
+QList<SerialPortInfo> DeviceConnectionManager::getAvailablePorts()
+{
+    QList<SerialPortInfo> out;
+
+    startEvent("getAvailablePorts");
+
+    if (m_replay) {
+        // TODO
+    } else {
+        for (auto & info : QSerialPortInfo::availablePorts()) {
+            out.append(SerialPortInfo(info));
+        }
+    }
+
+    for (auto & portInfo : out) {
+        //qDebug().noquote() << portInfo;
+        RECORD(portInfo);
+    }
+    endEvent();
+    return out;
+}
 
 // MARK: -
 
@@ -48,17 +119,10 @@ SerialPortInfo::SerialPortInfo(const QString & data)
     xml >> *this;
 }
 
+// TODO: This is a temporary wrapper until we begin refactoring.
 QList<SerialPortInfo> SerialPortInfo::availablePorts()
 {
-    // TODO: internal state when in record or playback mode
-
-    QList<SerialPortInfo> out;
-    for (auto & info : QSerialPortInfo::availablePorts()) {
-        SerialPortInfo portInfo(info);
-        qDebug().noquote() << portInfo;
-        out.append(portInfo);
-    }
-    return out;
+    return DeviceConnectionManager::getInstance().getAvailablePorts();
 }
 
 QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info)

@@ -18,6 +18,29 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+class DeviceConnectionManager : public QObject
+{
+    Q_OBJECT
+
+private:
+    DeviceConnectionManager();
+    QXmlStreamWriter* m_record;
+    QXmlStreamReader* m_replay;
+    void startEvent(const QString & event);
+    void endEvent();
+
+public:
+    static DeviceConnectionManager & getInstance();
+
+    QList<class SerialPortInfo> getAvailablePorts();
+    // TODO: method to start a polling thread that maintains the list of ports
+    // TODO: emit signal when new port is detected
+
+    static void Record(QXmlStreamWriter* stream);
+    static void Replay(QXmlStreamReader* stream);
+
+};
+
 // TODO: This class may eventually be internal to a DeviceConnection class,
 // but for now it is used to provide support for recording and playback of
 // serial port connections before refactoring.
@@ -56,6 +79,8 @@ public:
 protected:
     SerialPortInfo(const class QSerialPortInfo & other);
     QHash<QString,QVariant> m_info;
+
+    friend class DeviceConnectionManager;
 };
 
 #endif // DEVICECONNECTION_H

@@ -50,3 +50,17 @@ void DeviceConnectionTests::testSerialPortInfoSerialization()
     serialized = info3;
     Q_ASSERT(serialized == tag3);
 }
+
+void DeviceConnectionTests::testSerialPortScanning()
+{
+    QString string;
+    QXmlStreamWriter xml(&string);
+    xml.setAutoFormatting(true);
+
+    DeviceConnectionManager::Record(&xml);
+    SerialPortInfo::availablePorts();
+    SerialPortInfo::availablePorts();
+    DeviceConnectionManager::Record(nullptr);
+
+    qDebug().noquote() << string;
+}
