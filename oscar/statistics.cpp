@@ -620,8 +620,7 @@ Statistics::Statistics(QObject *parent) :
 
 // Get the user information block for displaying at top of page
 QString Statistics::getUserInfo () {
-    bool test = AppSetting->showPersonalData();
-    if (!test)
+    if (!AppSetting->showPersonalData())
         return "";
 
     QString address = p_profile->user->address();
@@ -651,7 +650,7 @@ QString Statistics::getUserInfo () {
     return userinfo;
 }
 
-const QString table_width = "width=99%";
+const QString table_width = "width=100%";
 
 // Create the page header in HTML.  Includes everything from <head> through <body>
 QString Statistics::generateHeader(bool onScreen)
@@ -958,7 +957,7 @@ QString Statistics::GenerateRXChanges()
 
 
     QString html = "<div align=center><br/>";
-    html += QString("<table class=curved style=\"page-break-before:always;\" "+table_width+" width=100%>");
+    html += QString("<table class=curved style=\"page-break-before:always;\" "+table_width+">");
     html += "<thead>";
     html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size=+2>" + tr("Changes to Machine Settings") + "</font></th></tr>";
 
@@ -1240,15 +1239,18 @@ QString Statistics::GenerateCPAPUsage()
             name = calcnames[row.calc].arg(schema::channel[id].fullname());
         }
         QString line;
-        line += QString("<tr class=datarow><td width=24%>%1</td>").arg(name);
+        line += QString("<tr class=datarow><td width=22%>%1</td>").arg(name);
         int np = periods.size();
         int width;
         for (int j=0; j < np; j++) {
+/***
             if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
-                width = j < np-1 ? 6 : 100 - (24 + 6*(np-1));
+                width = j < np-1 ? 6 : 100 - (22 + 6*(np-1));
             } else {
-                width = 76/np;
+                width = 78/np;
             }
+***/
+            width = 78/np;
 
             line += QString("<td width=%1%>").arg(width);
             if (!periods.at(j).header.isEmpty()) {
@@ -1317,15 +1319,23 @@ void Statistics::printReport(QWidget * parent) {
     if (pdlg.exec() == QPrintDialog::Accepted) {
 
         QTextDocument doc;
-        QSizeF printArea = printer.pageRect().size();
-        doc.setPageSize(printArea);  // Set document to print area, removing default 2cm margins
-    qDebug() << "print area" << printArea;
+        QSizeF printArea = printer.pageRect(QPrinter::Point).size();
+        doc.setPageSize(printArea);  // Set document to print area, in pixels, removing default 2cm margins
 
-//        QFont font = doc.defaultFont();
+        qDebug() << "print area (in points)" << printArea;
+        qDebug() << "page area (in points)" << printer.paperRect(QPrinter::Point).size();
+
+        // Determine appropriate font and font size
         QFont font = QFont("Helvetica");
-        font.setPointSize(10 * (printArea.width()/1200.0)); // Scale the font
+        float fontScalar = 11.5;
+        float printWidth = printArea.width();
+        if (printWidth > 600)
+            printWidth = 600 + (printWidth - 600) * 0.90;       // Increase font for wide paper (landscape), but not linearly
+        float pointSize = roundf(printWidth / fontScalar) / 10.0;
+        font.setPointSizeF(pointSize); // Scale the font
         doc.setDefaultFont(font);
-    qDebug() << "Printer font set to" << font << "and printer default font is now" << doc.defaultFont();
+
+        qDebug() << "Printer font set to" << font << "and printer default font is now" << doc.defaultFont();
 
         doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter);
 
