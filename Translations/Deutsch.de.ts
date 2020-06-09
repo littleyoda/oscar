@@ -692,10 +692,6 @@
         <translation>Beenden</translation>
     </message>
     <message>
-        <source>Gah!</source>
-        <translation>Bah!</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -1394,6 +1390,10 @@
     <message>
         <source>Calculating size...</source>
         <translation>Größe berechnen...</translation>
+    </message>
+    <message>
+        <source>Show Personal Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5469,10 +5469,6 @@ TTIA: %1</translation>
         <translation>Mindestdruck</translation>
     </message>
     <message>
-        <source>(%2 day ago)</source>
-        <translation>(%2 Vortag)</translation>
-    </message>
-    <message>
         <source>Diameter of primary CPAP hose</source>
         <translation>Durchmesser des Primär CPAP Schlauch</translation>
     </message>
@@ -5551,10 +5547,6 @@ TTIA: %1</translation>
     <message>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
         <translation>Es ist ein bereits für dieses Profil vorhanden Sperrdatei &apos;%1&apos;, behauptete auf &apos;%2&apos;.</translation>
-    </message>
-    <message>
-        <source>(yesterday)</source>
-        <translation>(gestern)</translation>
     </message>
     <message>
         <source>User Flag #1</source>
@@ -5939,10 +5931,6 @@ Stunden: %1</translation>
     <message>
         <source>%1 (%2 day): </source>
         <translation>%1 (%2 Tag): </translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t parse Channels.xml, this build is seriously borked, no choice but to abort!!</source>
-        <translation>Konnte die Kanäle.xml nicht analysieren. Bitte beenden Sie den Vorgang!!</translation>
     </message>
     <message>
         <source>Current Selection</source>
@@ -6670,6 +6658,18 @@ Stunden: %1</translation>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Um dieses Problem zu lösen, ist OSCAR zu einer langsameren, aber kompatibleren Zeichenmethode zurückgekehrt.</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(1 day ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%2 days ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -7170,10 +7170,6 @@ Stunden: %1</translation>
         <translation>vor %2 Tagen</translation>
     </message>
     <message>
-        <source>yesterday</source>
-        <translation>gestern</translation>
-    </message>
-    <message>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
@@ -7236,6 +7232,10 @@ Stunden: %1</translation>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Achtung: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards müssen gesperrt werden &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;vor dem Einsetzen in Ihren Computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Einige Betriebssysteme schreiben ungefragt Indexdateien auf die Karte, was Ihre Karte für Ihren Rechner unlesbar machen kann.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

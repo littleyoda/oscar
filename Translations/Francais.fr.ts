@@ -692,10 +692,6 @@
         <translation>Quitter</translation>
     </message>
     <message>
-        <source>Gah!</source>
-        <translation>Zut !</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
@@ -1394,6 +1390,10 @@
     <message>
         <source>Calculating size...</source>
         <translation>Calcul de la taille...</translation>
+    </message>
+    <message>
+        <source>Show Personal Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5214,10 +5214,6 @@ TTIA : %1</translation>
         <translation>Pression mini</translation>
     </message>
     <message>
-        <source>(%2 day ago)</source>
-        <translation>(il y a %2 jours)</translation>
-    </message>
-    <message>
         <source>Diameter of primary CPAP hose</source>
         <translation>Diamètre du tuyau principal de PPC</translation>
     </message>
@@ -5288,10 +5284,6 @@ TTIA : %1</translation>
     <message>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
         <translation>Il y a un fichier de verrouillage déjà présent pour ce profil &apos;%1&apos;, demandé sur &apos;%2&apos;.</translation>
-    </message>
-    <message>
-        <source>(yesterday)</source>
-        <translation>(hier)</translation>
     </message>
     <message>
         <source>User Flag #1</source>
@@ -5580,10 +5572,6 @@ Heures : %1</translation>
     <message>
         <source>%1 (%2 day): </source>
         <translation>%1 (%2 jour) : </translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t parse Channels.xml, this build is seriously borked, no choice but to abort!!</source>
-        <translation>Impossible de traiter le fichier channels.xml, cette version est sévèrement endommagée, pas d&apos;autre choix que de quitter !!</translation>
     </message>
     <message>
         <source>Current Selection</source>
@@ -6673,6 +6661,18 @@ corporelle</translation>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Pour résoudre ce problème, OSCAR est revenu à une méthode de dessin plus lente mais plus compatible.</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(1 day ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%2 days ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -7141,10 +7141,6 @@ corporelle</translation>
         <translation>la nuit dernière</translation>
     </message>
     <message>
-        <source>yesterday</source>
-        <translation>hier</translation>
-    </message>
-    <message>
         <source>%2 days ago</source>
         <translation>il y a %2 jours</translation>
     </message>
@@ -7239,6 +7235,10 @@ corporelle</translation>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Attention: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;La carte SD de l&apos;appareil ResMed S9 doit être verrouillée &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;avant d&apos;être insérée dans votre ordinateur.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Certains systèmes d&apos;exploitation écrivent des fichiers sur la carte sans le demander et peuvent rendre la carte inutilisable par votre appareil.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
