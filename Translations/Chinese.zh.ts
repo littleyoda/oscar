@@ -688,10 +688,6 @@
         <translation>-</translation>
     </message>
     <message>
-        <source>Gah!</source>
-        <translation>Gah!</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
@@ -1375,6 +1371,10 @@
     </message>
     <message>
         <source>Calculating size...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Personal Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4667,10 +4667,6 @@ p, li { white-space: pre-wrap; }
         <translation>最大治疗压力</translation>
     </message>
     <message>
-        <source>Couldn&apos;t parse Channels.xml, this build is seriously borked, no choice but to abort!!</source>
-        <translation>无法解析 Channels.xml,已损坏,退出!</translation>
-    </message>
-    <message>
         <source>Current Selection</source>
         <translation>当前选择</translation>
     </message>
@@ -4927,14 +4923,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>(last night)</source>
         <translation>(昨晚）</translation>
-    </message>
-    <message>
-        <source>(yesterday)</source>
-        <translation>(昨天)</translation>
-    </message>
-    <message>
-        <source>(%2 day ago)</source>
-        <translation>(%2 天以前)</translation>
     </message>
     <message>
         <source>Contec</source>
@@ -6639,6 +6627,18 @@ Line %2, column %3</source>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(1 day ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%2 days ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -7107,10 +7107,6 @@ Line %2, column %3</source>
         <translation>上一晚</translation>
     </message>
     <message>
-        <source>yesterday</source>
-        <translation>昨天</translation>
-    </message>
-    <message>
         <source>%2 days ago</source>
         <translation>%2 天以前</translation>
     </message>
@@ -7204,6 +7200,10 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

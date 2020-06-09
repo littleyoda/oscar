@@ -1139,10 +1139,6 @@
         <translation>Zrzut ekranu zapisany do pliku &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Gah!</source>
-        <translation>Gah!</translation>
-    </message>
-    <message>
         <source>There was a problem opening MSeries block File: </source>
         <translation>Problem z otwarciem pliku blokującego MSeries: </translation>
     </message>
@@ -1395,6 +1391,10 @@
     <message>
         <source>Calculating size...</source>
         <translation>Obliczanie rozmiaru...</translation>
+    </message>
+    <message>
+        <source>Show Personal Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4806,10 +4806,6 @@ TTIA: %1</translation>
         <translation>Odbudowa z kopii zapasowej %1</translation>
     </message>
     <message>
-        <source>Couldn&apos;t parse Channels.xml, this build is seriously borked, no choice but to abort!!</source>
-        <translation>Nie mogę zanalizować Channels.xml, ta wersja jest poważnie uszkodzona, nic tylko spadać!!!</translation>
-    </message>
-    <message>
         <source>Therapy Pressure</source>
         <translation>Ciśnienie lecznicze</translation>
     </message>
@@ -5647,14 +5643,6 @@ TTIA: %1</translation>
     <message>
         <source>(last night)</source>
         <translation>(ostatnia noc)</translation>
-    </message>
-    <message>
-        <source>(yesterday)</source>
-        <translation>(wczoraj)</translation>
-    </message>
-    <message>
-        <source>(%2 day ago)</source>
-        <translation>(%2 dni temu)</translation>
     </message>
     <message>
         <source>No oximetry data has been imported yet.</source>
@@ -6666,6 +6654,18 @@ Wiersz %2, kolumna %3</translation>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Aby to rozwiązać, OSCAR przeszedł na wolniejszą ale bardziej kompatybilną metodę rysowania.</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(1 day ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%2 days ago)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -7146,10 +7146,6 @@ Wiersz %2, kolumna %3</translation>
         <translation>ostatniej nocy</translation>
     </message>
     <message>
-        <source>yesterday</source>
-        <translation>wczoraj</translation>
-    </message>
-    <message>
         <source>%2 days ago</source>
         <translation>%2 dni temu</translation>
     </message>
@@ -7232,6 +7228,10 @@ Wiersz %2, kolumna %3</translation>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;UWAGA: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Karty SD z aparatów ResMed S9 muszą być zablokowane &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;przed włożeniem do komputera.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Niektóre systemy operacyjne dopisują pliki indeksu na karcie bez pytania, co może uczynić kartę nieczytelną dla aparatu CPAP.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
