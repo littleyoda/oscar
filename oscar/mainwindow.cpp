@@ -31,6 +31,7 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <QScreen>
+#include <QStorageInfo>
 #include <cmath>
 
 #include "common_gui.h"
@@ -799,7 +800,28 @@ QStringList getDriveList()
 {
     QStringList drivelist;
 
-#if defined(Q_OS_MAC) || defined(Q_OS_BSD4)
+#if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
+#if defined(Q_OS_LINUX)
+    #define VFAT "vfat"
+#elif defined(Q_OS_WIN
+    #define VFAT "FAT32"
+#elif defined(Q_OS_MAC)
+    #define VFAT "FAT32"
+#endif    
+    foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
+        if (storage.isValid() && storage.isReady()) {
+            qDebug() << "Device:" << storage.device();
+            qDebug() << "    Path:" << storage.rootPath();
+            qDebug() << "    Name:" << storage.name();     // ...
+            qDebug() << "    FS Type:" << storage.fileSystemType();
+            if (storage.fileSystemType() == VFAT) {
+                qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
+                drivelist.push_back(storage.rootPath());
+            }
+        }
+    }
+
+#elif defined(Q_OS_MAC) || defined(Q_OS_BSD4)
     struct statfs *mounts;
     int num_mounts = getmntinfo(&mounts, MNT_WAIT);
     if (num_mounts >= 0) {
