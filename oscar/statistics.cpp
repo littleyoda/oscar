@@ -1320,6 +1320,8 @@ void Statistics::printReport(QWidget * parent) {
 
         QTextDocument doc;
         QSizeF printArea = printer.pageRect(QPrinter::Point).size();
+        printArea.setWidth(printArea.width()*2);  // scale up for better font appearance
+        printArea.setHeight(printArea.height()*2);
         doc.setPageSize(printArea);  // Set document to print area, in pixels, removing default 2cm margins
 
         qDebug() << "print area (in points)" << printArea;
@@ -1327,12 +1329,12 @@ void Statistics::printReport(QWidget * parent) {
 
         // Determine appropriate font and font size
         QFont font = QFont("Helvetica");
-        float fontScalar = 11.5;
+        float fontScalar = 12;
         float printWidth = printArea.width();
-        if (printWidth > 600)
-            printWidth = 600 + (printWidth - 600) * 0.90;       // Increase font for wide paper (landscape), but not linearly
-        float pointSize = roundf(printWidth / fontScalar) / 10.0;
-        font.setPointSizeF(pointSize); // Scale the font
+        if (printWidth > 1000)
+            printWidth = 1000 + (printWidth - 1000) * 0.90;       // Increase font for wide paper (landscape), but not linearly
+        float pointSize = (printWidth / fontScalar) / 10.0;
+        font.setPointSize(round(pointSize)); // Scale the font
         doc.setDefaultFont(font);
 
         qDebug() << "Printer font set to" << font << "and printer default font is now" << doc.defaultFont();
