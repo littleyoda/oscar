@@ -1344,8 +1344,8 @@ void Statistics::printReport(QWidget * parent) {
         doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter);
 
         // Debug HTML
-        QString html = htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter;
-        qDebug() << "Html:" << html;
+//        QString html = htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter;
+//        qDebug() << "Html:" << html;
 
         doc.print(&printer);
     }
