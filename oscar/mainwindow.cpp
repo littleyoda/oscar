@@ -803,7 +803,7 @@ QStringList getDriveList()
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
 #if defined(Q_OS_LINUX)
     #define VFAT "vfat"
-#elif defined(Q_OS_WIN
+#elif defined(Q_OS_WIN)
     #define VFAT "FAT32"
 #elif defined(Q_OS_MAC)
     #define VFAT "msdos"
