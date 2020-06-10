@@ -806,14 +806,16 @@ QStringList getDriveList()
 #elif defined(Q_OS_WIN
     #define VFAT "FAT32"
 #elif defined(Q_OS_MAC)
-    #define VFAT "FAT32"
+    #define VFAT "msdos"
 #endif    
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
-            qDebug() << "Device:" << storage.device();
-            qDebug() << "    Path:" << storage.rootPath();
-            qDebug() << "    Name:" << storage.name();     // ...
-            qDebug() << "    FS Type:" << storage.fileSystemType();
+            if (storage.fileSystemType() != "tmpfs") {      // Don't show all the Linux tmpfs mount points!
+                qDebug() << "Device:" << storage.device();
+                qDebug() << "    Path:" << storage.rootPath();
+                qDebug() << "    Name:" << storage.name();     // ...
+                qDebug() << "    FS Type:" << storage.fileSystemType();
+            }
             if (storage.fileSystemType() == VFAT) {
                 qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
                 drivelist.push_back(storage.rootPath());
