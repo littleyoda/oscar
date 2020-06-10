@@ -39,7 +39,7 @@ QString resizeHTMLPixmap(QPixmap &pixmap, int width, int height) {
     QBuffer buffer(&byteArray); // use buffer to store pixmap into byteArray
     buffer.open(QIODevice::WriteOnly);
     pixmap.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation).save(&buffer, "PNG");
-    return QString("<img src=\"data:image/png;base64,"+byteArray.toBase64()+"\">");
+    return QString("<img src='data:image/png;base64,"+byteArray.toBase64()+"' ALT='logo'>");
 }
 
 QString formatTime(float time)
@@ -624,44 +624,46 @@ QString Statistics::getUserInfo () {
         return "";
 
     QString address = p_profile->user->address();
-    address.replace("\n", "<br/>");
+    address.replace("\n", "<br>");
 
     QString userinfo = "";
 
     if (!p_profile->user->firstName().isEmpty()) {
-        userinfo = tr("Name: %1, %2").arg(p_profile->user->lastName()).arg(p_profile->user->firstName()) + "<br/>";
+        userinfo = tr("Name: %1, %2").arg(p_profile->user->lastName()).arg(p_profile->user->firstName()) + "<br>";
         if (!p_profile->user->DOB().isNull()) {
-            userinfo += tr("DOB: %1").arg(p_profile->user->DOB().toString(MedDateFormat)) + "<br/>";
+            userinfo += tr("DOB: %1").arg(p_profile->user->DOB().toString(MedDateFormat)) + "<br>";
         }
         if (!p_profile->user->phone().isEmpty()) {
-            userinfo += tr("Phone: %1").arg(p_profile->user->phone()) + "<br/>";
+            userinfo += tr("Phone: %1").arg(p_profile->user->phone()) + "<br>";
         }
         if (!p_profile->user->email().isEmpty()) {
-            userinfo += tr("Email: %1").arg(p_profile->user->email()) + "<br/><br/>";
+            userinfo += tr("Email: %1").arg(p_profile->user->email()) + "<br><br>";
         }
         if (!p_profile->user->address().isEmpty()) {
-            userinfo +=  tr("Address:")+"<br/>"+address;
+            userinfo +=  tr("Address:")+"<br>"+address;
         }
     }
 
-    while (userinfo.length() > 0 && userinfo.endsWith("<br/>"))  // Strip trailing newlines
+    while (userinfo.length() > 0 && userinfo.endsWith("<br>"))  // Strip trailing newlines
         userinfo = userinfo.mid(0, userinfo.length()-5);
 
     return userinfo;
 }
 
-const QString table_width = "width=100%";
+const QString table_width = "width='100%'";
 
 // Create the page header in HTML.  Includes everything from <head> through <body>
 QString Statistics::generateHeader(bool onScreen)
 {
-    QString html = QString("<html><head>")+
-            "<style type='text/css'>";
+    QString html = QString("<html><head>");
+    html += "<title>Oscar Statistics Report</title>";
+    html += "<style type='text/css'>";
+
     if (onScreen) {
         html += "p,a,td,body { font-family: '" + QApplication::font().family() + "'; }"
                 "p,a,td,body { font-size: " + QString::number(QApplication::font().pointSize() + 2) + "px; }";
     } else {
-        html += "p,a,td,body { font-family: 'Helvetica'; }";
+        html += "p,a,td,body { font-family: 'Arial'; }";
 //                "p,a,td,body { font-size: 10px; }";
     }
 //    qDebug() << "generateHeader font" << html;
@@ -685,7 +687,7 @@ QString Statistics::generateHeader(bool onScreen)
 
             "</style>"
 
-            "<link rel='stylesheet' type='text/css' href='qrc:/docs/tooltips.css' />"
+            "<link rel='stylesheet' type='text/css' href='qrc:/docs/tooltips.css' >"
 
             "<script type='text/javascript'>"
             "function ChangeColor(tableRow, highLight)"
@@ -695,18 +697,19 @@ QString Statistics::generateHeader(bool onScreen)
 
     "</head>"
 
-    "<body leftmargin=0 topmargin=5 rightmargin=0>";
+    "<body>"; //leftmargin=0 topmargin=5 rightmargin=0>";
 
     QPixmap logoPixmap(":/icons/logo-lg.png");
 
-        html += "<div align=center><table class=curved width='100%'>"
+ //       html += "<div align=center><table class=curved width='100%'>"
+    html += "<div align=center><table class=curved " + table_width + ">"
             "<tr>"
                 "<td align='left' valign='middle'>" + getUserInfo() + "</td>"
                 "<td align='right' valign='middle' width='200'>"
-                    "<font size='+2'>" + STR_TR_OSCAR + "&nbsp;&nbsp;&nbsp;</font><br/>"
+                    "<font size='+2'>" + STR_TR_OSCAR + "&nbsp;&nbsp;&nbsp;</font><br>"
                     "<font size='+1'>" + QObject::tr("Usage Statistics") + "&nbsp;&nbsp;&nbsp;</font>"
                 "</td>"
-                "<td align='right' valign='middle' width='110'>" + resizeHTMLPixmap(logoPixmap,80,80)+"&nbsp;&nbsp;&nbsp;<br/>"
+                "<td align='right' valign='middle' width='110'>" + resizeHTMLPixmap(logoPixmap,80,80)+"&nbsp;&nbsp;&nbsp;<br>"
                 "</td>"
             "</tr>"
             "</table>"
@@ -725,7 +728,7 @@ QString Statistics::generateFooter(bool showinfo)
         QDateTime timestamp = QDateTime::currentDateTime();
         html += tr("This report was prepared on %1 by OSCAR %2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
                                                                      .arg(getVersion())
-                + "<br/>"
+                + "<br>"
                 + tr("OSCAR is free open-source CPAP report software");
         html += "</i></font></div>";
     }
@@ -895,12 +898,12 @@ QString Statistics::GenerateMachineList()
 
     QString html;
     if (mach.size() > 0) {
-        html += "<div align=center><br/>";
+        html += "<div align=center><br>";
 
-        html += QString("<table class=curved style=\"page-break-before:auto;\" "+table_width+">");
+        html += QString("<table class=curved style='page-break-before:auto' "+table_width+">");
 
         html += "<thead>";
-        html += "<tr bgcolor='"+heading_color+"'><th colspan=7 align=center><font size=+2>" + tr("Machine Information") + "</font></th></tr>";
+        html += "<tr bgcolor='"+heading_color+"'><th colspan=7 align=center><font size='+2'>" + tr("Machine Information") + "</font></th></tr>";
 
         html += QString("<tr><td><b>%1</b></td><td><b>%2</b></td><td><b>%3</b></td><td><b>%4</b></td><td><b>%5</b></td></tr>")
                 .arg(STR_TR_Brand)
@@ -956,10 +959,10 @@ QString Statistics::GenerateRXChanges()
     }
 
 
-    QString html = "<div align=center><br/>";
-    html += QString("<table class=curved style=\"page-break-before:always;\" "+table_width+">");
+    QString html = "<div align=center><br>";
+    html += QString("<table class=curved style='page-break-before:always' " + table_width+">");
     html += "<thead>";
-    html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size=+2>" + tr("Changes to Machine Settings") + "</font></th></tr>";
+    html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size='+2'>" + tr("Changes to Machine Settings") + "</font></th></tr>";
 
 //    QString extratxt;
 
@@ -975,17 +978,17 @@ QString Statistics::GenerateRXChanges()
     hdrlist.push_back(STR_TR_Mode);
     hdrlist.push_back(tr("Pressure Settings"));
 
-    html+="<tr>\n";
+    html+="<tr>";
     for (int i=0; i < hdrlist.size(); ++i) {
-        html+=QString(" <th align=left><b>%1</b></th>\n").arg(hdrlist.at(i));
+        html+=QString(" <th align=left><b>%1</b></th>").arg(hdrlist.at(i));
     }
-    html+="</tr>\n";
+    html+="</tr>";
     html += "</thead>";
 //    html += "<tfoot>";
 //    html += "<tr><td colspan=10 align=center>";
 //    html += QString("<i>") +
 //            tr("Efficacy highlighting ignores prescription settings with less than %1 days of recorded data.").
-//            arg(rxthresh) + QString("</i><br/>");
+//            arg(rxthresh) + QString("</i><br>");
 //    html += "</td></tr>";
 //    html += "</tfoot>";
 
@@ -1045,8 +1048,8 @@ QString Statistics::GenerateRXChanges()
 QString Statistics::htmlNoData()
 {
             QString html = "<div align=center>";
-            html += QString( "<p><font size=\"+3\"><br />" + tr("No data found?!?") + "</font></p>"+
-                    "<p><img src='qrc:/icons/logo-lm.png' width=\"100\" height=\"100\"></p>"
+            html += QString( "<p><font size=\"+3\"><br>" + tr("No data found?!?") + "</font></p>"+
+                    "<p><img src='qrc:/icons/logo-lm.png' alt='logo' width='100' height='100'></p>"
                     "<p><i>"+tr("Oscar has no data to report :(")+"</i></p>");
             return html;
 }
@@ -1107,7 +1110,7 @@ QString Statistics::GenerateCPAPUsage()
 
     // Prepare top of table
     html += "<div align=center>";
-    html += "<table class=curved width="+table_width+">";
+    html += "<table class=curved "+table_width+">";
 
     // Compute number of monthly periods for a monthly rather than standard time distribution
     int number_periods = 0;
@@ -1179,7 +1182,7 @@ QString Statistics::GenerateCPAPUsage()
             int days = p_profile->countDays(row.type, first, last);
             skipsection = (days == 0);
             if (days > 0) {
-                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size=+2>%3</font></th></tr>\n").
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+2'>%3</font></th></tr>").
                         arg(heading_color).arg(periods.size()+1).arg(row.src);
             }
             continue;
@@ -1195,11 +1198,11 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_COMPLIANCE) {
             name = QString(row.src).arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_COLUMNHEADERS) {
-            html += QString("<tr><td><b>%1</b></td>\n").arg(tr("Details"));
+            html += QString("<tr><td><b>%1</b></td>").arg(tr("Details"));
             for (int j=0; j < periods.size(); j++) {
-                html += QString("<td onmouseover='ChangeColor(this, \"#eeeeee\");' onmouseout='ChangeColor(this, \"#ffffff\");' onclick='alert(\"overview=%1,%2\");'><b>%3</b></td>\n").arg(periods.at(j).start.toString(Qt::ISODate)).arg(periods.at(j).end.toString(Qt::ISODate)).arg(periods.at(j).header);
+                html += QString("<td onmouseover='ChangeColor(this, \"#eeeeee\");' onmouseout='ChangeColor(this, \"#ffffff\");' onclick='alert(\"overview=%1,%2\");'><b>%3</b></td>").arg(periods.at(j).start.toString(Qt::ISODate)).arg(periods.at(j).end.toString(Qt::ISODate)).arg(periods.at(j).header);
             }
-            html += "</tr>\n";
+            html += "</tr>";
             continue;
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
@@ -1208,16 +1211,16 @@ QString Statistics::GenerateCPAPUsage()
             int value=p_profile->countDays(row.type, first, last);
 
             if (value == 0) {
-                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>\n").arg(periods.size()+1).
+                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
                         arg(tr("No %1 data available.").arg(machine));
             } else if (value == 1) {
-                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>\n").arg(periods.size()+1).
+                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
                         arg(tr("%1 day of %2 Data on %3")
                             .arg(value)
                             .arg(machine)
                             .arg(last.toString(MedDateFormat)));
             } else {
-                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>\n").arg(periods.size()+1).
+                html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
                         arg(tr("%1 days of %2 Data, between %3 and %4")
                             .arg(value)
                             .arg(machine)
@@ -1226,7 +1229,7 @@ QString Statistics::GenerateCPAPUsage()
             }
             continue;
         } else if (row.calc == SC_SUBHEADING) {  // subheading..
-            html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><b>%3</b></td></tr>\n").
+            html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><b>%3</b></td></tr>").
                     arg(subheading_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else if (row.calc == SC_UNDEFINED) {
@@ -1239,20 +1242,18 @@ QString Statistics::GenerateCPAPUsage()
             name = calcnames[row.calc].arg(schema::channel[id].fullname());
         }
         QString line;
-        line += QString("<tr class=datarow><td width=22%>%1</td>").arg(name);
         int np = periods.size();
         int width;
+        int dataWidth = 14;
+        int headerWidth = 30;
+        if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
+            dataWidth = 6;
+            headerWidth = 22;
+        }
+        line += QString("<tr class=datarow><td width='%1%'>%2</td>").arg(headerWidth).arg(name);
         for (int j=0; j < np; j++) {
-/***
-            if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
-                width = j < np-1 ? 6 : 100 - (22 + 6*(np-1));
-            } else {
-                width = 78/np;
-            }
-***/
-            width = 78/np;
-
-            line += QString("<td width=%1%>").arg(width);
+            width = j < np-1 ? dataWidth : 100 - (headerWidth + dataWidth*(np-1));
+            line += QString("<td width='%1%'>").arg(width);
             if (!periods.at(j).header.isEmpty()) {
                 line += row.value(periods.at(j).start, periods.at(j).end);
             } else {
@@ -1261,7 +1262,7 @@ QString Statistics::GenerateCPAPUsage()
             line += "</td>";
         }
         html += line;
-        html += "</tr>\n";
+        html += "</tr>";
     }
 
     html += "</table>";
@@ -1320,15 +1321,16 @@ void Statistics::printReport(QWidget * parent) {
 
         QTextDocument doc;
         QSizeF printArea = printer.pageRect(QPrinter::Point).size();
+        qDebug() << "Original print area (in points)" << printArea;
         printArea.setWidth(printArea.width()*2);  // scale up for better font appearance
         printArea.setHeight(printArea.height()*2);
         doc.setPageSize(printArea);  // Set document to print area, in pixels, removing default 2cm margins
 
-        qDebug() << "print area (in points)" << printArea;
-        qDebug() << "page area (in points)" << printer.paperRect(QPrinter::Point).size();
+        qDebug() << "working print area (in points)" << printArea;
+        qDebug() << "paper size (in points)" << printer.paperRect(QPrinter::Point).size();
 
         // Determine appropriate font and font size
-        QFont font = QFont("Helvetica");
+        QFont font = QFont("Arial");
         float fontScalar = 12;
         float printWidth = printArea.width();
         if (printWidth > 1000)
@@ -1341,6 +1343,10 @@ void Statistics::printReport(QWidget * parent) {
 
         doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter);
 
+        // Debug HTML
+        QString html = htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter;
+        qDebug() << "Html:" << html;
+
         doc.print(&printer);
     }
 }
@@ -1352,7 +1358,9 @@ QString Statistics::UpdateRecordsBox()
                      "p,a,td,body { font-size: " + QString::number(QApplication::font().pointSize() + 2) + "px; }"
                      "a:link,a:visited { color: inherit; text-decoration: none; }" //font-weight: normal;
                      "a:hover { background-color: inherit; color: white; text-decoration:none; font-weight: bold; }"
-                     "</style></head><body>";
+                     "</style>"
+                     "<title>Machine Statistics Panel</title>"
+                     "</head><body>";
 
     Machine * cpap = p_profile->GetMachine(MT_CPAP);
     if (cpap) {
@@ -1367,10 +1375,10 @@ QString Statistics::UpdateRecordsBox()
 
         float comperc = (100.0 / float(totaldays)) * float(compliant);
 
-        html += "<b>"+tr("CPAP Usage")+"</b><br/>";
-        html += tr("Days Used: %1").arg(totaldays) + "<br/>";
-        html += tr("Low Use Days: %1").arg(totaldays - compliant) + "<br/>";
-        html += tr("Compliance: %1%").arg(comperc, 0, 'f', 1)  + "<br/>";
+        html += "<b>"+tr("CPAP Usage")+"</b><br>";
+        html += tr("Days Used: %1").arg(totaldays) + "<br>";
+        html += tr("Low Use Days: %1").arg(totaldays - compliant) + "<br>";
+        html += tr("Compliance: %1%").arg(comperc, 0, 'f', 1)  + "<br>";
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// AHI Records
@@ -1394,34 +1402,34 @@ QString Statistics::UpdateRecordsBox()
                 }
                 ahilist.insert(ahi, date);
             }
-            html += tr("Days AHI of 5 or greater: %1").arg(baddays) + "<br/><br/>";
+            html += tr("Days AHI of 5 or greater: %1").arg(baddays) + "<br><br>";
 
 
             if (ahilist.size() > (show_records * 2)) {
                 it = ahilist.begin();
                 it_end = ahilist.end();
 
-                html += "<b>"+tr("Best AHI")+"</b><br/>";
+                html += "<b>"+tr("Best AHI")+"</b><br>";
 
                 for (int i=0; (i<show_records) && (it != it_end); ++i, ++it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                            +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
-                html += "<br/>";
+                html += "<br>";
 
-                html += "<b>"+tr("Worst AHI")+"</b><br/>";
+                html += "<b>"+tr("Worst AHI")+"</b><br>";
 
                 it = ahilist.end() - 1;
                 it_end = ahilist.begin();
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                        +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                        +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
-                html += "<br/>";
+                html += "<br>";
             }
 
             /////////////////////////////////////////////////////////////////////////////////////
@@ -1448,32 +1456,32 @@ QString Statistics::UpdateRecordsBox()
                 it = ahilist.begin();
                 it_end = ahilist.end();
 
-                html += "<b>"+tr("Best Flow Limitation")+"</b><br/>";
+                html += "<b>"+tr("Best Flow Limitation")+"</b><br>";
 
                 for (int i=0; (i<show_records) && (it != it_end); ++i, ++it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                        +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                        +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
-                html += "<br/>";
+                html += "<br>";
 
-                html += "<b>"+tr("Worst Flow Limtation")+"</b><br/>";
+                html += "<b>"+tr("Worst Flow Limtation")+"</b><br>";
 
                 it = ahilist.end() - 1;
                 it_end = ahilist.begin();
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     if (it.key() > 0) {
                         html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                            +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
                         cnt++;
                     }
                 }
                 if (cnt == 0) {
-                    html+= "<i>"+tr("No Flow Limitation on record")+"</i><br/>";
+                    html+= "<i>"+tr("No Flow Limitation on record")+"</i><br>";
                 }
 
-                html += "<br/>";
+                html += "<br>";
             }
 
             /////////////////////////////////////////////////////////////////////////////////////
@@ -1491,7 +1499,7 @@ QString Statistics::UpdateRecordsBox()
 
             cnt = 0;
             if (ahilist.size() > (show_records * 2)) {
-                html += "<b>"+tr("Worst Large Leaks")+"</b><br/>";
+                html += "<b>"+tr("Worst Large Leaks")+"</b><br>";
 
                 it = ahilist.end() - 1;
                 it_end = ahilist.begin();
@@ -1499,16 +1507,16 @@ QString Statistics::UpdateRecordsBox()
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     if (it.key() > 0) {
                         html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 Leak: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                            +tr("Date: %1 Leak: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
                         cnt++;
                     }
 
                 }
                 if (cnt == 0) {
-                    html+= "<i>"+tr("No Large Leaks on record")+"</i><br/>";
+                    html+= "<i>"+tr("No Large Leaks on record")+"</i><br>";
                 }
 
-                html += "<br/>";
+                html += "<br>";
             }
 
 
@@ -1528,7 +1536,7 @@ QString Statistics::UpdateRecordsBox()
                 }
 
                 if (ahilist.size() > (show_records * 2)) {
-                    html += "<b>"+tr("Worst CSR")+"</b><br/>";
+                    html += "<b>"+tr("Worst CSR")+"</b><br>";
 
                     it = ahilist.end() - 1;
                     it_end = ahilist.begin();
@@ -1536,15 +1544,15 @@ QString Statistics::UpdateRecordsBox()
 
                         if (it.key() > 0) {
                             html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                                +tr("Date: %1 CSR: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                                +tr("Date: %1 CSR: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
                             cnt++;
                         }
                     }
                     if (cnt == 0) {
-                        html+= "<i>"+tr("No CSR on record")+"</i><br/>";
+                        html+= "<i>"+tr("No CSR on record")+"</i><br>";
                     }
 
-                    html += "<br/>";
+                    html += "<br>";
                 }
             }
             if (p_profile->hasChannel(CPAP_PB)) {
@@ -1558,7 +1566,7 @@ QString Statistics::UpdateRecordsBox()
                 }
 
                 if (ahilist.size() > (show_records * 2)) {
-                    html += "<b>"+tr("Worst PB")+"</b><br/>";
+                    html += "<b>"+tr("Worst PB")+"</b><br>";
 
                     it = ahilist.end() - 1;
                     it_end = ahilist.begin();
@@ -1566,22 +1574,22 @@ QString Statistics::UpdateRecordsBox()
 
                         if (it.key() > 0) {
                             html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                                +tr("Date: %1 PB: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br/>";
+                                +tr("Date: %1 PB: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
                             cnt++;
                         }
                     }
                     if (cnt == 0) {
-                        html+= "<i>"+tr("No PB on record")+"</i><br/>";
+                        html+= "<i>"+tr("No PB on record")+"</i><br>";
                     }
 
-                    html += "<br/>";
+                    html += "<br>";
                 }
             }
 
         } else {
-            html += "<br/><b>"+tr("Want more information?")+"</b><br/>";
-            html += "<i>"+tr("OSCAR needs all summary data loaded to calculate best/worst data for individual days.")+"</i><br/><br/>";
-            html += "<i>"+tr("Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.")+"</i><br/><br/>";
+            html += "<br><b>"+tr("Want more information?")+"</b><br>";
+            html += "<i>"+tr("OSCAR needs all summary data loaded to calculate best/worst data for individual days.")+"</i><br><br>";
+            html += "<i>"+tr("Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.")+"</i><br><br>";
         }
 
 
@@ -1601,29 +1609,29 @@ QString Statistics::UpdateRecordsBox()
 
 
         if (list.size() >= 2) {
-            html += "<b>"+tr("Best RX Setting")+"</b><br/>";
+            html += "<b>"+tr("Best RX Setting")+"</b><br>";
             const RXItem & rxbest = *list.at(0);
             html += QString("<a href='overview=%1,%2'>").arg(rxbest.start.toString(Qt::ISODate)).arg(rxbest.end.toString(Qt::ISODate)) +
-                tr("Date: %1 - %2").arg(rxbest.start.toString(Qt::SystemLocaleShortDate)).arg(rxbest.end.toString(Qt::SystemLocaleShortDate)) + "</a><br/>";
-            html += QString("%1").arg(rxbest.machine->model()) + "<br/>";
-            html += QString("Serial: %1").arg(rxbest.machine->serial()) + "<br/>";
-            html += tr("AHI: %1").arg(double(rxbest.ahi) / rxbest.hours, 0, 'f', 2) + "<br/>";
-            html += tr("Total Hours: %1").arg(rxbest.hours, 0, 'f', 2) + "<br/>";
-            html += QString("%1").arg(rxbest.pressure) + "<br/>";
-            html += QString("%1").arg(formatRelief(rxbest.relief)) + "<br/>";
-            html += "<br/>";
+                tr("Date: %1 - %2").arg(rxbest.start.toString(Qt::SystemLocaleShortDate)).arg(rxbest.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
+            html += QString("%1").arg(rxbest.machine->model()) + "<br>";
+            html += QString("Serial: %1").arg(rxbest.machine->serial()) + "<br>";
+            html += tr("AHI: %1").arg(double(rxbest.ahi) / rxbest.hours, 0, 'f', 2) + "<br>";
+            html += tr("Total Hours: %1").arg(rxbest.hours, 0, 'f', 2) + "<br>";
+            html += QString("%1").arg(rxbest.pressure) + "<br>";
+            html += QString("%1").arg(formatRelief(rxbest.relief)) + "<br>";
+            html += "<br>";
 
-            html += "<b>"+tr("Worst RX Setting")+"</b><br/>";
+            html += "<b>"+tr("Worst RX Setting")+"</b><br>";
             const RXItem & rxworst = *list.at(list.size() -1);
             html += QString("<a href='overview=%1,%2'>").arg(rxworst.start.toString(Qt::ISODate)).arg(rxworst.end.toString(Qt::ISODate)) +
-                    tr("Date: %1 - %2").arg(rxworst.start.toString(Qt::SystemLocaleShortDate)).arg(rxworst.end.toString(Qt::SystemLocaleShortDate)) + "</a><br/>";
-            html += QString("%1").arg(rxworst.machine->model()) + "<br/>";
-            html += QString("Serial: %1").arg(rxworst.machine->serial()) + "<br/>";
-            html += tr("AHI: %1").arg(double(rxworst.ahi) / rxworst.hours, 0, 'f', 2) + "<br/>";
-            html += tr("Total Hours: %1").arg(rxworst.hours, 0, 'f', 2) + "<br/>";
+                    tr("Date: %1 - %2").arg(rxworst.start.toString(Qt::SystemLocaleShortDate)).arg(rxworst.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
+            html += QString("%1").arg(rxworst.machine->model()) + "<br>";
+            html += QString("Serial: %1").arg(rxworst.machine->serial()) + "<br>";
+            html += tr("AHI: %1").arg(double(rxworst.ahi) / rxworst.hours, 0, 'f', 2) + "<br>";
+            html += tr("Total Hours: %1").arg(rxworst.hours, 0, 'f', 2) + "<br>";
 
-            html += QString("%1").arg(rxworst.pressure) + "<br/>";
-            html += QString("%1").arg(formatRelief(rxworst.relief)) + "<br/>";
+            html += QString("%1").arg(rxworst.pressure) + "<br>";
+            html += QString("%1").arg(formatRelief(rxworst.relief)) + "<br>";
         }
     }
 
