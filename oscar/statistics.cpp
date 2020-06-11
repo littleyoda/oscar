@@ -645,7 +645,7 @@ QString Statistics::getUserInfo () {
     }
 
     while (userinfo.length() > 0 && userinfo.endsWith("<br>"))  // Strip trailing newlines
-        userinfo = userinfo.mid(0, userinfo.length()-5);
+        userinfo = userinfo.mid(0, userinfo.length()-4);
 
     return userinfo;
 }
@@ -663,7 +663,7 @@ QString Statistics::generateHeader(bool onScreen)
         html += "p,a,td,body { font-family: '" + QApplication::font().family() + "'; }"
                 "p,a,td,body { font-size: " + QString::number(QApplication::font().pointSize() + 2) + "px; }";
     } else {
-        html += "p,a,td,body { font-family: 'Arial'; }";
+        html += "p,a,td,body { font-family: 'Helvetica'; }";
 //                "p,a,td,body { font-size: 10px; }";
     }
 //    qDebug() << "generateHeader font" << html;
@@ -1312,7 +1312,11 @@ void Statistics::printReport(QWidget * parent) {
     printer.setOrientation(QPrinter::Portrait);
     printer.setFullPage(false);     // Print only on printable area of page and not in non-printable margins
     printer.setNumCopies(1);
-    printer.setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+
+    QMarginsF minMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
+    printer.setPageMargins(fmax(10,minMargins.left()), fmax(10,minMargins.top()), fmax(10,minMargins.right()), fmax(12,minMargins.bottom()), QPrinter::Millimeter);
+    QMarginsF setMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
+    qDebug () << "Min margins" << minMargins << "Set margins" << setMargins << "millimeters";
 
     // Show print dialog to user and allow them to change settings as desired
     QPrintDialog pdlg(&printer, parent);
@@ -1321,16 +1325,15 @@ void Statistics::printReport(QWidget * parent) {
 
         QTextDocument doc;
         QSizeF printArea = printer.pageRect(QPrinter::Point).size();
-        qDebug() << "Original print area (in points)" << printArea;
+        QSizeF originalPrintArea = printArea;
         printArea.setWidth(printArea.width()*2);  // scale up for better font appearance
         printArea.setHeight(printArea.height()*2);
         doc.setPageSize(printArea);  // Set document to print area, in pixels, removing default 2cm margins
 
-        qDebug() << "working print area (in points)" << printArea;
-        qDebug() << "paper size (in points)" << printer.paperRect(QPrinter::Point).size();
+        qDebug() << "print area (points)" << originalPrintArea << "Enlarged print area" << printArea << "paper size" << printer.paperRect(QPrinter::Point).size();
 
         // Determine appropriate font and font size
-        QFont font = QFont("Arial");
+        QFont font = QFont("Helvetica");
         float fontScalar = 12;
         float printWidth = printArea.width();
         if (printWidth > 1000)
@@ -1339,11 +1342,11 @@ void Statistics::printReport(QWidget * parent) {
         font.setPointSize(round(pointSize)); // Scale the font
         doc.setDefaultFont(font);
 
-        qDebug() << "Printer font set to" << font << "and printer default font is now" << doc.defaultFont();
+        qDebug() << "Enlarged printer font" << font << "printer default font set" << doc.defaultFont();
 
         doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter);
 
-        // Debug HTML
+        // Dump HTML for use with HTML4 validator
 //        QString html = htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter;
 //        qDebug() << "Html:" << html;
 
