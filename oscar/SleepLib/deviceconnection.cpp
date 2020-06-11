@@ -21,19 +21,7 @@ static QString hex(int i)
 
 
 // MARK: -
-
-inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
-{
-    static DeviceConnectionManager instance;
-    return instance;
-}
-
-DeviceConnectionManager::DeviceConnectionManager()
-    : m_record(nullptr), m_replay(nullptr)
-{
-}
-
-// MARK: -
+// MARK: XML record/playback base classes
 
 class XmlRecord
 {
@@ -210,6 +198,7 @@ T* XmlReplay::getNextEvent()
 
 
 // MARK: -
+// MARK: XML record/playback event base class
 
 XmlReplayEvent::XmlReplayEvent()
     : m_time(QDateTime::currentDateTime())
@@ -325,6 +314,18 @@ template<> const bool XmlReplayBase<type>::registered = XmlReplayEvent::register
 
 
 // MARK: -
+// MARK: Device connection manager
+
+inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
+{
+    static DeviceConnectionManager instance;
+    return instance;
+}
+
+DeviceConnectionManager::DeviceConnectionManager()
+    : m_record(nullptr), m_replay(nullptr)
+{
+}
 
 void DeviceConnectionManager::record(QFile* stream)
 {
@@ -373,6 +374,7 @@ void DeviceConnectionManager::replay(QFile* file)
 
 
 // MARK: -
+// MARK: Device manager events
 
 class GetAvailablePortsEvent : public XmlReplayBase<GetAvailablePortsEvent>
 {
@@ -421,6 +423,7 @@ QList<SerialPortInfo> DeviceConnectionManager::getAvailablePorts()
 
 
 // MARK: -
+// MARK: Serial port info
 
 SerialPortInfo::SerialPortInfo(const QSerialPortInfo & other)
 {
@@ -518,3 +521,10 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 {
     return m_info == other.m_info;
 }
+
+
+// MARK: -
+// MARK: Serial port connection
+
+// TODO
+
