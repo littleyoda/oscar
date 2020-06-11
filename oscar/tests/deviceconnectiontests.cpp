@@ -9,6 +9,8 @@
 #include "deviceconnectiontests.h"
 #include "SleepLib/deviceconnection.h"
 
+#include <QTemporaryFile>
+
 void DeviceConnectionTests::testSerialPortInfoSerialization()
 {
     QString serialized;
@@ -54,13 +56,35 @@ void DeviceConnectionTests::testSerialPortInfoSerialization()
 void DeviceConnectionTests::testSerialPortScanning()
 {
     QString string;
-    QXmlStreamWriter xml(&string);
-    xml.setAutoFormatting(true);
 
-    DeviceConnectionManager::Record(&xml);
-    SerialPortInfo::availablePorts();
-    SerialPortInfo::availablePorts();
-    DeviceConnectionManager::Record(nullptr);
-
+    DeviceConnectionManager & devices = DeviceConnectionManager::getInstance();
+    devices.record(string);
+    auto list1 = SerialPortInfo::availablePorts();
+    auto list2 = SerialPortInfo::availablePorts();
+    devices.record(nullptr);
+    // string now contains the recorded XML.
     qDebug().noquote() << string;
+
+    devices.replay(string);
+    Q_ASSERT(list1 == SerialPortInfo::availablePorts());
+    Q_ASSERT(list2 == SerialPortInfo::availablePorts());
+    Q_ASSERT(list2 == SerialPortInfo::availablePorts());  // replaying past the recording should return the final state
+    devices.replay(nullptr);  // turn off replay
+    auto list3 = SerialPortInfo::availablePorts();
+
+    // Test file-based recording/playback
+    QTemporaryFile recording;
+    Q_ASSERT(recording.open());
+    devices.record(&recording);
+    list1 = SerialPortInfo::availablePorts();
+    list2 = SerialPortInfo::availablePorts();
+    devices.record(nullptr);
+
+    recording.seek(0);
+    devices.replay(&recording);
+    Q_ASSERT(list1 == SerialPortInfo::availablePorts());
+    Q_ASSERT(list2 == SerialPortInfo::availablePorts());
+    Q_ASSERT(list2 == SerialPortInfo::availablePorts());  // replaying past the recording should return the final state
+    devices.replay(nullptr);  // turn off replay
+    list3 = SerialPortInfo::availablePorts();
 }

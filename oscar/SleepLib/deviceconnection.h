@@ -15,6 +15,7 @@
 #include <QtSerialPort/QSerialPort>
 #include <QHash>
 #include <QVariant>
+#include <QDateTime>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -24,10 +25,15 @@ class DeviceConnectionManager : public QObject
 
 private:
     DeviceConnectionManager();
-    QXmlStreamWriter* m_record;
-    QXmlStreamReader* m_replay;
-    void startEvent(const QString & event);
-    void endEvent();
+    
+    class XmlRecord* m_record;
+    class XmlReplay* m_replay;
+
+    QList<class SerialPortInfo> replayAvailablePorts();
+    QList<SerialPortInfo> m_serialPorts;
+    void reset() {  // clear state
+        m_serialPorts.clear();
+    }
 
 public:
     static DeviceConnectionManager & getInstance();
@@ -36,8 +42,10 @@ public:
     // TODO: method to start a polling thread that maintains the list of ports
     // TODO: emit signal when new port is detected
 
-    static void Record(QXmlStreamWriter* stream);
-    static void Replay(QXmlStreamReader* stream);
+    void record(class QFile* stream);
+    void record(QString & string);
+    void replay(class QFile* stream);
+    void replay(const QString & string);
 
 };
 
@@ -57,6 +65,7 @@ public:
     static QList<SerialPortInfo> availablePorts();
     SerialPortInfo(const SerialPortInfo & other);
     SerialPortInfo(const QString & data);
+    SerialPortInfo();
 
     inline QString portName() const { return m_info["portName"].toString(); }
     inline QString systemLocation() const { return m_info["systemLocation"].toString(); }
@@ -75,6 +84,7 @@ public:
     operator QString() const;
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info);
     friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, SerialPortInfo & info);
+    bool operator==(const SerialPortInfo & other) const;
 
 protected:
     SerialPortInfo(const class QSerialPortInfo & other);
