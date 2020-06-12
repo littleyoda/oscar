@@ -58,6 +58,7 @@ class SerialPort : public QObject
 
 private:
     QSerialPort m_port;
+    QString m_portName;
 
 private slots:
     void onReadyRead();

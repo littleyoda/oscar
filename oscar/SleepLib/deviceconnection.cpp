@@ -418,10 +418,6 @@ QList<SerialPortInfo> DeviceConnectionManager::getAvailablePorts()
 }
 
 
-// TODO: Once we start recording/replaying connections, we'll need to include a version number, so that
-// if we ever have to change the download code, the older replays will still work as expected.
-
-
 // MARK: -
 // MARK: Serial port info
 
@@ -526,30 +522,63 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 // MARK: -
 // MARK: Serial port connection
 
-// TODO: log these to XML
+// TODO: log these to XML stream
 
-class SetValueEvent
+class SerialPortEvent
 {
 public:
-    SetValueEvent(const QString & name, int value)
+    SerialPortEvent(const QString & tag)
+        : m_tag(tag)
     {
-        set(name, value);
     }
-    void set(const QString & name, int value)
+    void set(const QString & name, const QString & value)
     {
         m_values[name] = value;
         m_keys.append(name);
+    }
+    void set(const QString & name, qint64 value)
+    {
+        set(name, QString::number(value));
+    }
+    void checkResult(bool ok, QSerialPort::SerialPortError error)
+    {
+        if (ok && error == QSerialPort::NoError) return;
+        set("error", error);
+        if (ok) set("ok", ok);  // we don't expect to see this, but we should know if it happens
+    }
+    void checkResult(qint64 len, QSerialPort::SerialPortError error)
+    {
+        if (len < 0 || error != QSerialPort::NoError) {
+            set("error", error);
+        }
+    }
+    void checkError(QSerialPort::SerialPortError error) {
+        if (error != QSerialPort::NoError) {
+            set("error", error);
+        }
     }
     inline bool ok() const { return m_values.contains("error") == false; }
     operator QString() const;
 
 protected:
-    QHash<QString,int> m_values;
+    const QString m_tag;
+    QHash<QString,QString> m_values;
     QList<QString> m_keys;
-    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SetValueEvent & event);
+    QString m_data;
+    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortEvent & event);
 };
 
-SetValueEvent::operator QString() const
+class SetValueEvent : public SerialPortEvent
+{
+public:
+    SetValueEvent(const QString & name, int value)
+        : SerialPortEvent("set")
+    {
+        set(name, value);
+    }
+};
+
+SerialPortEvent::operator QString() const
 {
     QString out;
     QXmlStreamWriter xml(&out);
@@ -557,15 +586,35 @@ SetValueEvent::operator QString() const
     return out;
 }
 
-QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SetValueEvent & event)
+QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortEvent & event)
 {
-    xml.writeStartElement("set");
+    xml.writeStartElement(event.m_tag);
     for (auto key : event.m_keys) {
-        xml.writeAttribute(key, QString::number(event.m_values[key]));
+        xml.writeAttribute(key, event.m_values[key]);
+    }
+    if (!event.m_data.isEmpty()) {
+        xml.writeCharacters(event.m_data);
     }
     xml.writeEndElement();
     return xml;
 }
+
+class DataTransferEvent : public SerialPortEvent
+{
+public:
+    DataTransferEvent(const QString & tag)
+        : SerialPortEvent(tag)
+    {
+    }
+    void setData(const char* data, qint64 length)
+    {
+        QStringList bytes;
+        for (qint64 i = 0; i < length; i++) {
+            bytes.append(QString("%1").arg((unsigned char) data[i], 2, 16, QChar('0')).toUpper());
+        }
+        m_data = bytes.join(QChar(' '));
+    }
+};
 
 
 SerialPort::SerialPort()
@@ -580,14 +629,23 @@ SerialPort::~SerialPort()
 
 void SerialPort::setPortName(const QString &name)
 {
-    qDebug() << "<setPortName>";
-    return m_port.setPortName(name);
+    Q_ASSERT(m_portName.isEmpty());
+    m_portName = name;
 }
 
+// TODO: This will eventually be open(), the constructor will be given the name, and the mode will always be ReadWrite
 bool SerialPort::open(QIODevice::OpenMode mode)
 {
-    qDebug() << "<open>";
-    return m_port.open(mode);
+    Q_ASSERT(mode == QSerialPort::ReadWrite);
+    SerialPortEvent event("openConnection");
+    event.set("type", "serial");
+    event.set("port", m_portName);
+
+    m_port.setPortName(m_portName);
+    event.checkResult(m_port.open(mode), m_port.error());
+    qDebug().noquote() << event;
+
+    return event.ok();
 }
 
 bool SerialPort::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
@@ -595,26 +653,17 @@ bool SerialPort::setBaudRate(qint32 baudRate, QSerialPort::Directions directions
     SetValueEvent event("baudRate", baudRate);
     event.set("directions", directions);
 
-    bool ok = m_port.setBaudRate(baudRate, directions);
-    if (!ok) {
-        QSerialPort::SerialPortError error = m_port.error();
-        event.set("error", error);
-    }
+    event.checkResult(m_port.setBaudRate(baudRate, directions), m_port.error());
     qDebug().noquote() << event;
 
     return event.ok();
 }
-// TODO: <set time="FOO" name="baudrate" value="19200"/>
 
 bool SerialPort::setDataBits(QSerialPort::DataBits dataBits)
 {
     SetValueEvent event("setDataBits", dataBits);
 
-    bool ok = m_port.setDataBits(dataBits);
-    if (!ok) {
-        QSerialPort::SerialPortError error = m_port.error();
-        event.set("error", error);
-    }
+    event.checkResult(m_port.setDataBits(dataBits), m_port.error());
     qDebug().noquote() << event;
 
     return event.ok();
@@ -624,11 +673,7 @@ bool SerialPort::setParity(QSerialPort::Parity parity)
 {
     SetValueEvent event("setParity", parity);
 
-    bool ok = m_port.setParity(parity);
-    if (!ok) {
-        QSerialPort::SerialPortError error = m_port.error();
-        event.set("error", error);
-    }
+    event.checkResult(m_port.setParity(parity), m_port.error());
     qDebug().noquote() << event;
 
     return event.ok();
@@ -638,11 +683,7 @@ bool SerialPort::setStopBits(QSerialPort::StopBits stopBits)
 {
     SetValueEvent event("setStopBits", stopBits);
 
-    bool ok = m_port.setStopBits(stopBits);
-    if (!ok) {
-        QSerialPort::SerialPortError error = m_port.error();
-        event.set("error", error);
-    }
+    event.checkResult(m_port.setStopBits(stopBits), m_port.error());
     qDebug().noquote() << event;
 
     return event.ok();
@@ -652,11 +693,7 @@ bool SerialPort::setFlowControl(QSerialPort::FlowControl flowControl)
 {
     SetValueEvent event("setFlowControl", flowControl);
 
-    bool ok = m_port.setFlowControl(flowControl);
-    if (!ok) {
-        QSerialPort::SerialPortError error = m_port.error();
-        event.set("error", error);
-    }
+    event.checkResult(m_port.setFlowControl(flowControl), m_port.error());
     qDebug().noquote() << event;
 
     return event.ok();
@@ -664,43 +701,96 @@ bool SerialPort::setFlowControl(QSerialPort::FlowControl flowControl)
 
 bool SerialPort::clear(QSerialPort::Directions directions)
 {
-    qDebug() << "<clear>";
-    return m_port.clear(directions);
+    SerialPortEvent event("clear");
+    event.set("directions", directions);
+
+    event.checkResult(m_port.clear(directions), m_port.error());
+    qDebug().noquote() << event;
+
+    return event.ok();
 }
 
 qint64 SerialPort::bytesAvailable() const
 {
-    qDebug() << "<bytesAvailable>";
-    return m_port.bytesAvailable();
+    SerialPortEvent event("get");
+    
+    qint64 result = m_port.bytesAvailable();
+    event.set("bytesAvailable", result);
+    event.checkResult(result, m_port.error());
+    qDebug().noquote() << event;
+
+    return result;
 }
 
 qint64 SerialPort::read(char *data, qint64 maxSize)
 {
-    qDebug() << "<rx>";
-    return m_port.read(data, maxSize);
+    DataTransferEvent event("rx");
+
+    qint64 len = m_port.read(data, maxSize);
+    if (len > 0) {
+        event.setData(data, len);
+    }
+    event.set("len", len);
+    if (len != maxSize) {
+        event.set("req", maxSize);
+    }
+    event.checkResult(len, m_port.error());
+    qDebug().noquote() << event;
+
+    return len;
 }
 
 qint64 SerialPort::write(const char *data, qint64 maxSize)
 {
-    qDebug() << "<tx>";
-    return m_port.write(data, maxSize);
+    DataTransferEvent event("tx");
+    
+    event.setData(data, maxSize);
+    qint64 len = m_port.write(data, maxSize);
+    event.set("len", len);
+    if (len != maxSize) {
+        event.set("req", maxSize);
+    }
+    event.checkResult(len, m_port.error());
+    qDebug().noquote() << event;
+
+    return len;
 }
 
 bool SerialPort::flush()
 {
-    qDebug() << "<flush>";
-    return m_port.flush();
+    SerialPortEvent event("flush");
+
+    event.checkResult(m_port.flush(), m_port.error());
+    qDebug().noquote() << event;
+
+    return event.ok();
 }
 
 void SerialPort::close()
 {
-    qDebug() << "<close>";
-    return m_port.close();
+    SerialPortEvent event("closeConnection");
+    event.set("type", "serial");
+    event.set("port", m_portName);
+
+    // TODO: the separate connection stream will have an enclosing "connection" tag with these
+    // attributes. The main device connection manager stream will log this openConnection/
+    // closeConnection pair. We'll also need to include a loader ID and stream version number
+    // in the "connection" tag, so that if we ever have to change a loader's download code,
+    // the older replays will still work as expected.
+
+    m_port.close();
+    event.checkError(m_port.error());
+
+    qDebug().noquote() << event;
 }
 
 void SerialPort::onReadyRead()
 {
-    qDebug() << "<readyRead>";
+    SerialPortEvent event("readyRead");
+
+    // TODO: Most of the playback API reponds to the caller. How do we replay port-driven events?
+    qDebug().noquote() << event;
+
     emit readyRead();
 }
 
