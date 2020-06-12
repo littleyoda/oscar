@@ -52,8 +52,37 @@ public:
 // TODO: This class may eventually be internal to a DeviceConnection class,
 // but for now it is used to provide support for recording and playback of
 // serial port connections before refactoring.
-class SerialPort : public QSerialPort
+class SerialPort : public QObject
 {
+    Q_OBJECT
+
+private:
+    QSerialPort m_port;
+
+private slots:
+    void onReadyRead();
+
+signals:
+    void readyRead();
+
+public:
+    SerialPort();
+    virtual ~SerialPort();
+    
+    void setPortName(const QString &name);
+    bool open(QIODevice::OpenMode mode);
+    bool setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
+    bool setDataBits(QSerialPort::DataBits dataBits);
+    bool setParity(QSerialPort::Parity parity);
+    bool setStopBits(QSerialPort::StopBits stopBits);
+    bool setFlowControl(QSerialPort::FlowControl flowControl);
+    bool clear(QSerialPort::Directions directions = QSerialPort::AllDirections);
+    qint64 bytesAvailable() const;
+    qint64 read(char *data, qint64 maxSize);
+    qint64 write(const char *data, qint64 maxSize);
+    bool flush();
+    void close();
+
 };
 
 // TODO: This class's functionality will eventually be internal to a

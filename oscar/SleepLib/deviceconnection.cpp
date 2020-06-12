@@ -526,5 +526,181 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 // MARK: -
 // MARK: Serial port connection
 
-// TODO
+// TODO: log these to XML
+
+class SetValueEvent
+{
+public:
+    SetValueEvent(const QString & name, int value)
+    {
+        set(name, value);
+    }
+    void set(const QString & name, int value)
+    {
+        m_values[name] = value;
+        m_keys.append(name);
+    }
+    inline bool ok() const { return m_values.contains("error") == false; }
+    operator QString() const;
+
+protected:
+    QHash<QString,int> m_values;
+    QList<QString> m_keys;
+    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SetValueEvent & event);
+};
+
+SetValueEvent::operator QString() const
+{
+    QString out;
+    QXmlStreamWriter xml(&out);
+    xml << *this;
+    return out;
+}
+
+QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SetValueEvent & event)
+{
+    xml.writeStartElement("set");
+    for (auto key : event.m_keys) {
+        xml.writeAttribute(key, QString::number(event.m_values[key]));
+    }
+    xml.writeEndElement();
+    return xml;
+}
+
+
+SerialPort::SerialPort()
+{
+    connect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+}
+
+SerialPort::~SerialPort()
+{
+    disconnect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+}
+
+void SerialPort::setPortName(const QString &name)
+{
+    qDebug() << "<setPortName>";
+    return m_port.setPortName(name);
+}
+
+bool SerialPort::open(QIODevice::OpenMode mode)
+{
+    qDebug() << "<open>";
+    return m_port.open(mode);
+}
+
+bool SerialPort::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
+{
+    SetValueEvent event("baudRate", baudRate);
+    event.set("directions", directions);
+
+    bool ok = m_port.setBaudRate(baudRate, directions);
+    if (!ok) {
+        QSerialPort::SerialPortError error = m_port.error();
+        event.set("error", error);
+    }
+    qDebug().noquote() << event;
+
+    return event.ok();
+}
+// TODO: <set time="FOO" name="baudrate" value="19200"/>
+
+bool SerialPort::setDataBits(QSerialPort::DataBits dataBits)
+{
+    SetValueEvent event("setDataBits", dataBits);
+
+    bool ok = m_port.setDataBits(dataBits);
+    if (!ok) {
+        QSerialPort::SerialPortError error = m_port.error();
+        event.set("error", error);
+    }
+    qDebug().noquote() << event;
+
+    return event.ok();
+}
+
+bool SerialPort::setParity(QSerialPort::Parity parity)
+{
+    SetValueEvent event("setParity", parity);
+
+    bool ok = m_port.setParity(parity);
+    if (!ok) {
+        QSerialPort::SerialPortError error = m_port.error();
+        event.set("error", error);
+    }
+    qDebug().noquote() << event;
+
+    return event.ok();
+}
+
+bool SerialPort::setStopBits(QSerialPort::StopBits stopBits)
+{
+    SetValueEvent event("setStopBits", stopBits);
+
+    bool ok = m_port.setStopBits(stopBits);
+    if (!ok) {
+        QSerialPort::SerialPortError error = m_port.error();
+        event.set("error", error);
+    }
+    qDebug().noquote() << event;
+
+    return event.ok();
+}
+
+bool SerialPort::setFlowControl(QSerialPort::FlowControl flowControl)
+{
+    SetValueEvent event("setFlowControl", flowControl);
+
+    bool ok = m_port.setFlowControl(flowControl);
+    if (!ok) {
+        QSerialPort::SerialPortError error = m_port.error();
+        event.set("error", error);
+    }
+    qDebug().noquote() << event;
+
+    return event.ok();
+}
+
+bool SerialPort::clear(QSerialPort::Directions directions)
+{
+    qDebug() << "<clear>";
+    return m_port.clear(directions);
+}
+
+qint64 SerialPort::bytesAvailable() const
+{
+    qDebug() << "<bytesAvailable>";
+    return m_port.bytesAvailable();
+}
+
+qint64 SerialPort::read(char *data, qint64 maxSize)
+{
+    qDebug() << "<rx>";
+    return m_port.read(data, maxSize);
+}
+
+qint64 SerialPort::write(const char *data, qint64 maxSize)
+{
+    qDebug() << "<tx>";
+    return m_port.write(data, maxSize);
+}
+
+bool SerialPort::flush()
+{
+    qDebug() << "<flush>";
+    return m_port.flush();
+}
+
+void SerialPort::close()
+{
+    qDebug() << "<close>";
+    return m_port.close();
+}
+
+void SerialPort::onReadyRead()
+{
+    qDebug() << "<readyRead>";
+    emit readyRead();
+}
 
