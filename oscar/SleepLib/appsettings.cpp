@@ -39,6 +39,7 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     initPref(STR_AS_RightSidebarVisible, false);
     initPref(STR_CS_UserEventPieChart, false);
     initPref(STR_US_ShowSerialNumbers, false);
+    initPref(STR_US_ShowPersonalData, true);
     initPref(STR_US_OpenTabAtStart, 1);
     initPref(STR_US_OpenTabAfterImport, 0);
     initPref(STR_US_AutoLaunchImport, false);

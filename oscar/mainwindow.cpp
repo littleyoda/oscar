@@ -226,6 +226,8 @@ void MainWindow::SetupGUI()
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
 
+    ui->actionShowPersonalData->setChecked(AppSetting->showPersonalData());
+
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());
 
     ui->actionDaily_Calendar->setChecked(AppSetting->calendarVisible());
@@ -1827,7 +1829,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
     if (QProcess::startDetached("/usr/bin/open", args)) {
         QApplication::instance()->exit();
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
@@ -1854,7 +1856,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 //        ::exit(0);
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr,  STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
@@ -2708,6 +2710,13 @@ void MainWindow::on_actionLeft_Daily_Sidebar_toggled(bool visible)
 void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
 {
     if (daily) daily->setCalendarVisible(visible);
+}
+
+void MainWindow::on_actionShowPersonalData_toggled(bool visible)
+{
+    AppSetting->setShowPersonalData(visible);
+    if (!setupRunning)
+        GenerateStatistics();
 }
 
 #include "SleepLib/journal.h"

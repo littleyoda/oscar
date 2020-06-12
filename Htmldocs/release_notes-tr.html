@@ -1,47 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="tr">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" >
     <title>release_notes</title>
     <meta content="The OSCAR Team" name="author" >
+    <meta content="Translation copyright 2020 by The OSCAR Translation Team" name="description" >
   </head>
   <body>
     <p>
-    <b>Changes and fixes in OSCAR v1.1.1</b>
-    <br>Portions of OSCAR are © 2019-2020 by
-    <i>The OSCAR Team</i></p>
+    <b>OSCAR v1.1.1 içindeki değişiklikler ve düzeltmeler</b>
+    <br>OSCAR'ın bazı kısımları telifi © 2019-2020 
+    <i>OSCAR Takımı</i></p>
     <ul>
-      <li>[new] Additional Philips Respironics devices tested and fully supported:
+      <li>[yeni] Ek Philips Respironics cihazları test edildi ve tümüyle desteklendi:
         <ul>
           <li>BiPAP S/T (C Series) (1061401)</li>
           <li>REMstar Pro (System One 60 Series) (461CA)</li>
-          <li>DreamStation CPAP Pro (400X130)</li>
           <li>DreamStation BiPAP Pro (600X150)</li>
           <li>DreamStation Auto BiPAP (700X120, 700X150)</li>
-          <li><i>Note: Ventilator alarms are not currently imported.</i></li>
+          <li><i>Not: Ventilatör alarmları şu an için içe alınmamakatdır.</i></li>
         </ul>
-      <li>[new] Add the "peak flow" channel reported by pre-DreamStation ventilators.</li>
-      <li>[new] Automatically detect and resolve graphics-related crashes on Windows.</li>
-      <li>[new] Support AVAPS in the Overview pressure chart.</li>
-      <li>[new] Added Italian and Turkish translations.</li>
-      <li>[fix] Fix missing bars in the Overview pressure chart for Philips Respironics devices.</li>
-      <li>[fix] Add missing Philips Respironics pressure channels to CSV export.</li>
-      <li>[fix] Fix zero Philips Respironics AHI in CSV session export.</li>
-      <li>[fix] Add support for the Bi-Flex lock setting on pre-DreamStation ventilators.</li>
-      <li>[fix] Fix the pressure waveform scale for the BiPAP autoSV Advanced 30 (960T)</li>
-      <li>[fix] Add support for rise time mode on DreamStation BiPAP devices (600X-700X).</li>
-      <li>[fix] Remove the ramp time and pressure settings when the ramp is disabled on pre-DreamStation devices.</li>
-      <li>[fix] Improve import of Philips Respironics oximetry data.</li>
-      <li>[fix] Fix VS2 index shown on the Daily page for Philips Respironics machines.</li>
-      <li>[fix] Fix occasional failure to save imported Viatom data.</li>
-      <li>[fix] Fix a recurring database upgrade prompt.</li>
-      <li>[fix] Fix an occasional crash when importing Resmed data.</li>
-      <li>[fix] Add bounds error checking to Resmed input processing.</li>
-      <li>[fix] Fix STR.edf file backup to avoid loss of settings data.</li>
-      <li>[fix] Fix Backup Journal to format XML properly.</li>
-      <li>[fix] In flow rate graph, don't show duration for events with no duration.</li>
-      <li>[fix] Fix pressure settings in Overview graph reported as a huge negative number.</li>
+      <li>[yeni] DreamStation öncesi ventilatörlerin bildirdikleri "tepe akım" kanalı eklendi.</li>
+      <li>[yeni] Windows'ta meydana gelen grafiklere bağlı çökmelerin otomatik olarak tespit ve düzeltilmesi.</li>
+      <li>[yeni] Genel Bakış basınç tablosunda AVAPS desteklendi.</li>
+      <li>[yeni] Philips Respironics cihazları için Genel Bakış basınç tablosunda eksik olan barlar düzeltildi.</li>
+      <li>[düzeltme] CSV dışa aktarımına eksik olan Philips Respironics basıç kanalları eklendi.</li>
+      <li>[düzeltme] CSV seans dışa aktarımında Philips Respironics sıfır AHI'si düzeltildi.</li>
+      <li>[düzeltme] DreamStation öncesi ventilatörlerde mevcut olan Bi-Flex kilit seçenekleri için destek eklendi.</li>
+      <li>[düzeltme] autoSV Advanced 30 (960T) BiPAP için basınç dalga formu skalası düzeltildi</li>
+      <li>[düzeltme] DreamStation BiPAP cihazları için (600X-700X) yükseliş zamanı modu (rise time mode) desteği eklendi.</li>
+      <li>[düzeltme] DreamStation öncesi cihazlarda rampa iptal edildiğinde rampa zamanı ve basınç ayarları kaldırıldı.</li>
+      <li>[düzeltme] Philips Respironics oksimetri verisinin içer aktarımı iyileştirildi.</li>
+      <li>[düzeltme] Philips Respironics cihazları için Günlük sayfasında gösterilen VS2 endeksi düzeltildi.</li>
+      <li>[düzeltme] İçe aktarılan Viatom verisinin bazen kaydedilememesi durumu düzeltildi.</li>
+      <li>[düzeltme] Tekrarlayan bir veri tabanı yükseltme önermesi düzeltildi.</li>
+      <li>[düzeltme] Bazen Resmed verisi içe aktarılırken meydana gelebilen bir çökme düzeltildi.</li>
+      <li>[düzeltme] Resmed giriş prosesine sınır hata kontrolü eklendi.</li>
+      <li>[düzeltme] Ayar verisi kaybını önlemek için STR.edf dosya yedeklemesi düzeltildi.</li>
     </ul>
     <p>
     <b>Changes and fixes in OSCAR v1.1.0</b>

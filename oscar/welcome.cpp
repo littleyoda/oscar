@@ -178,7 +178,7 @@ QString Welcome::GenerateCPAPHTML()
             int daysto = date.daysTo(QDate::currentDate());
             QString daystring;
             if (daysto == 1) daystring += tr("last night");
-            else if (daysto == 2) daystring += tr("yesterday");
+            else if (daysto == 2) daystring += tr("1 day ago");
             else daystring += tr("%2 days ago").arg(date.daysTo(QDate::currentDate()));
 
             html += tr("was %1 (on %2)").arg(daystring).arg(date.toString(Qt::SystemLocaleLongDate)) + "<br/>";
@@ -339,8 +339,8 @@ QString Welcome::GenerateOxiHTML()
 
         html += "<p>"+QObject::tr("Most recent Oximetry data: <a onclick='alert(\"daily=%2\");'>%1</a> ").arg(oxidate.toString(Qt::SystemLocaleLongDate)).arg(oxidate.toString(Qt::ISODate));
         if (daysto == 1) html += QObject::tr("(last night)");
-        else if (daysto == 2) html += QObject::tr("(yesterday)");
-        else html += QObject::tr("(%2 day ago)").arg(oxidate.daysTo(QDate::currentDate()));
+        else if (daysto == 2) html += QObject::tr("(1 day ago)");
+        else html += QObject::tr("(%2 days ago)").arg(oxidate.daysTo(QDate::currentDate()));
         html+="</p>";
         ui->oxiIcon->setVisible(true);
         ui->oxiInfo->setVisible(true);
