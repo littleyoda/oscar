@@ -23,12 +23,12 @@ static QString hex(int i)
 // MARK: -
 // MARK: XML record/playback base classes
 
-class XmlRecord
+class XmlRecorder
 {
 public:
-    XmlRecord(class QFile * file);
-    XmlRecord(QString & string);
-    ~XmlRecord();
+    XmlRecorder(class QFile * file);
+    XmlRecorder(QString & string);
+    ~XmlRecorder();
     inline QXmlStreamWriter & xml() { return *m_xml; }
 protected:
     QFile* m_file;  // nullptr for non-file recordings
@@ -65,7 +65,7 @@ public:
     virtual ~XmlReplayEvent() = default;
     virtual const QString & tag() const = 0;
 
-    void record(XmlRecord* xml);
+    void record(XmlRecorder* xml);
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
     friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
 
@@ -84,25 +84,25 @@ protected:
 QHash<QString,XmlReplayEvent::FactoryMethod> XmlReplayEvent::s_factories;
 
 
-XmlRecord::XmlRecord(QFile* stream)
+XmlRecorder::XmlRecorder(QFile* stream)
     : m_file(stream), m_xml(new QXmlStreamWriter(stream))
 {
     prologue();
 }
 
-XmlRecord::XmlRecord(QString & string)
+XmlRecorder::XmlRecorder(QString & string)
     : m_file(nullptr), m_xml(new QXmlStreamWriter(&string))
 {
     prologue();
 }
 
-XmlRecord::~XmlRecord()
+XmlRecorder::~XmlRecorder()
 {
     epilogue();
     delete m_xml;
 }
 
-void XmlRecord::prologue()
+void XmlRecorder::prologue()
 {
     Q_ASSERT(m_xml);
     m_xml->setAutoFormatting(true);
@@ -112,7 +112,7 @@ void XmlRecord::prologue()
     m_xml->writeStartElement("events");
 }
 
-void XmlRecord::epilogue()
+void XmlRecorder::epilogue()
 {
     Q_ASSERT(m_xml);
     m_xml->writeEndElement();  // close events
@@ -205,7 +205,7 @@ XmlReplayEvent::XmlReplayEvent()
 {
 }
 
-void XmlReplayEvent::record(XmlRecord* writer)
+void XmlReplayEvent::record(XmlRecorder* writer)
 {
     // Do nothing if we're not recording.
     if (writer != nullptr) {
@@ -333,7 +333,7 @@ void DeviceConnectionManager::record(QFile* stream)
         delete m_record;
     }
     if (stream) {
-        m_record = new XmlRecord(stream);
+        m_record = new XmlRecorder(stream);
     } else {
         // nullptr turns off recording
         m_record = nullptr;
@@ -345,7 +345,7 @@ void DeviceConnectionManager::record(QString & string)
     if (m_record) {
         delete m_record;
     }
-    m_record = new XmlRecord(string);
+    m_record = new XmlRecorder(string);
 }
 
 void DeviceConnectionManager::replay(const QString & string)
@@ -524,10 +524,10 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 
 // TODO: log these to XML stream
 
-class SerialPortEvent
+class ConnectionEvent
 {
 public:
-    SerialPortEvent(const QString & tag)
+    ConnectionEvent(const QString & tag)
         : m_tag(tag)
     {
     }
@@ -540,22 +540,13 @@ public:
     {
         set(name, QString::number(value));
     }
-    void checkResult(bool ok, QSerialPort::SerialPortError error)
+    void setData(const char* data, qint64 length)
     {
-        if (ok && error == QSerialPort::NoError) return;
-        set("error", error);
-        if (ok) set("ok", ok);  // we don't expect to see this, but we should know if it happens
-    }
-    void checkResult(qint64 len, QSerialPort::SerialPortError error)
-    {
-        if (len < 0 || error != QSerialPort::NoError) {
-            set("error", error);
+        QStringList bytes;
+        for (qint64 i = 0; i < length; i++) {
+            bytes.append(QString("%1").arg((unsigned char) data[i], 2, 16, QChar('0')).toUpper());
         }
-    }
-    void checkError(QSerialPort::SerialPortError error) {
-        if (error != QSerialPort::NoError) {
-            set("error", error);
-        }
+        m_data = bytes.join(QChar(' '));
     }
     inline bool ok() const { return m_values.contains("error") == false; }
     operator QString() const;
@@ -565,20 +556,20 @@ protected:
     QHash<QString,QString> m_values;
     QList<QString> m_keys;
     QString m_data;
-    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortEvent & event);
+    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const ConnectionEvent & event);
 };
 
-class SetValueEvent : public SerialPortEvent
+class SetValueEvent : public ConnectionEvent
 {
 public:
     SetValueEvent(const QString & name, int value)
-        : SerialPortEvent("set")
+        : ConnectionEvent("set")
     {
         set(name, value);
     }
 };
 
-SerialPortEvent::operator QString() const
+ConnectionEvent::operator QString() const
 {
     QString out;
     QXmlStreamWriter xml(&out);
@@ -586,7 +577,7 @@ SerialPortEvent::operator QString() const
     return out;
 }
 
-QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortEvent & event)
+QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const ConnectionEvent & event)
 {
     xml.writeStartElement(event.m_tag);
     for (auto key : event.m_keys) {
@@ -599,132 +590,125 @@ QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortEvent & ev
     return xml;
 }
 
-class DataTransferEvent : public SerialPortEvent
-{
-public:
-    DataTransferEvent(const QString & tag)
-        : SerialPortEvent(tag)
-    {
-    }
-    void setData(const char* data, qint64 length)
-    {
-        QStringList bytes;
-        for (qint64 i = 0; i < length; i++) {
-            bytes.append(QString("%1").arg((unsigned char) data[i], 2, 16, QChar('0')).toUpper());
-        }
-        m_data = bytes.join(QChar(' '));
-    }
-};
 
-
-SerialPort::SerialPort()
+SerialPortConnection::SerialPortConnection(const QString & name)
+    : m_portName(name)
 {
     connect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 }
 
-SerialPort::~SerialPort()
+// TODO: temporary method for legacy compatibility
+SerialPortConnection::SerialPortConnection()
+{
+    connect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+}
+
+SerialPortConnection::~SerialPortConnection()
 {
     disconnect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 }
 
-void SerialPort::setPortName(const QString &name)
+// TODO: temporary method for legacy compatibility
+void SerialPortConnection::setPortName(const QString &name)
 {
     Q_ASSERT(m_portName.isEmpty());
     m_portName = name;
 }
 
 // TODO: This will eventually be open(), the constructor will be given the name, and the mode will always be ReadWrite
-bool SerialPort::open(QIODevice::OpenMode mode)
+bool SerialPortConnection::open(QIODevice::OpenMode mode)
 {
     Q_ASSERT(mode == QSerialPort::ReadWrite);
-    SerialPortEvent event("openConnection");
+    ConnectionEvent event("openConnection");
     event.set("type", "serial");
     event.set("port", m_portName);
 
     m_port.setPortName(m_portName);
-    event.checkResult(m_port.open(mode), m_port.error());
+    checkResult(m_port.open(mode), event);
+
+    // TODO: send this event back to manager to log
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
+bool SerialPortConnection::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
 {
     SetValueEvent event("baudRate", baudRate);
     event.set("directions", directions);
 
-    event.checkResult(m_port.setBaudRate(baudRate, directions), m_port.error());
+    checkResult(m_port.setBaudRate(baudRate, directions), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::setDataBits(QSerialPort::DataBits dataBits)
+bool SerialPortConnection::setDataBits(QSerialPort::DataBits dataBits)
 {
     SetValueEvent event("setDataBits", dataBits);
 
-    event.checkResult(m_port.setDataBits(dataBits), m_port.error());
+    checkResult(m_port.setDataBits(dataBits), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::setParity(QSerialPort::Parity parity)
+bool SerialPortConnection::setParity(QSerialPort::Parity parity)
 {
     SetValueEvent event("setParity", parity);
 
-    event.checkResult(m_port.setParity(parity), m_port.error());
+    checkResult(m_port.setParity(parity), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::setStopBits(QSerialPort::StopBits stopBits)
+bool SerialPortConnection::setStopBits(QSerialPort::StopBits stopBits)
 {
     SetValueEvent event("setStopBits", stopBits);
 
-    event.checkResult(m_port.setStopBits(stopBits), m_port.error());
+    checkResult(m_port.setStopBits(stopBits), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::setFlowControl(QSerialPort::FlowControl flowControl)
+bool SerialPortConnection::setFlowControl(QSerialPort::FlowControl flowControl)
 {
     SetValueEvent event("setFlowControl", flowControl);
 
-    event.checkResult(m_port.setFlowControl(flowControl), m_port.error());
+    checkResult(m_port.setFlowControl(flowControl), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-bool SerialPort::clear(QSerialPort::Directions directions)
+bool SerialPortConnection::clear(QSerialPort::Directions directions)
 {
-    SerialPortEvent event("clear");
+    ConnectionEvent event("clear");
     event.set("directions", directions);
 
-    event.checkResult(m_port.clear(directions), m_port.error());
+    checkResult(m_port.clear(directions), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-qint64 SerialPort::bytesAvailable() const
+qint64 SerialPortConnection::bytesAvailable() const
 {
-    SerialPortEvent event("get");
+    ConnectionEvent event("get");
     
     qint64 result = m_port.bytesAvailable();
     event.set("bytesAvailable", result);
-    event.checkResult(result, m_port.error());
+    checkResult(result, event);
     qDebug().noquote() << event;
 
     return result;
 }
 
-qint64 SerialPort::read(char *data, qint64 maxSize)
+qint64 SerialPortConnection::read(char *data, qint64 maxSize)
 {
-    DataTransferEvent event("rx");
+    ConnectionEvent event("rx");
 
     qint64 len = m_port.read(data, maxSize);
     if (len > 0) {
@@ -734,15 +718,15 @@ qint64 SerialPort::read(char *data, qint64 maxSize)
     if (len != maxSize) {
         event.set("req", maxSize);
     }
-    event.checkResult(len, m_port.error());
+    checkResult(len, event);
     qDebug().noquote() << event;
 
     return len;
 }
 
-qint64 SerialPort::write(const char *data, qint64 maxSize)
+qint64 SerialPortConnection::write(const char *data, qint64 maxSize)
 {
-    DataTransferEvent event("tx");
+    ConnectionEvent event("tx");
     
     event.setData(data, maxSize);
     qint64 len = m_port.write(data, maxSize);
@@ -750,25 +734,25 @@ qint64 SerialPort::write(const char *data, qint64 maxSize)
     if (len != maxSize) {
         event.set("req", maxSize);
     }
-    event.checkResult(len, m_port.error());
+    checkResult(len, event);
     qDebug().noquote() << event;
 
     return len;
 }
 
-bool SerialPort::flush()
+bool SerialPortConnection::flush()
 {
-    SerialPortEvent event("flush");
+    ConnectionEvent event("flush");
 
-    event.checkResult(m_port.flush(), m_port.error());
+    checkResult(m_port.flush(), event);
     qDebug().noquote() << event;
 
     return event.ok();
 }
 
-void SerialPort::close()
+void SerialPortConnection::close()
 {
-    SerialPortEvent event("closeConnection");
+    ConnectionEvent event("closeConnection");
     event.set("type", "serial");
     event.set("port", m_portName);
 
@@ -779,14 +763,14 @@ void SerialPort::close()
     // the older replays will still work as expected.
 
     m_port.close();
-    event.checkError(m_port.error());
+    checkError(event);
 
     qDebug().noquote() << event;
 }
 
-void SerialPort::onReadyRead()
+void SerialPortConnection::onReadyRead()
 {
-    SerialPortEvent event("readyRead");
+    ConnectionEvent event("readyRead");
 
     // TODO: Most of the playback API reponds to the caller. How do we replay port-driven events?
     qDebug().noquote() << event;
@@ -794,3 +778,26 @@ void SerialPort::onReadyRead()
     emit readyRead();
 }
 
+void SerialPortConnection::checkResult(bool ok, ConnectionEvent & event) const
+{
+    QSerialPort::SerialPortError error = m_port.error();
+    if (ok && error == QSerialPort::NoError) return;
+    event.set("error", error);
+    if (ok) event.set("ok", ok);  // we don't expect to see this, but we should know if it happens
+}
+
+void SerialPortConnection::checkResult(qint64 len, ConnectionEvent & event) const
+{
+    QSerialPort::SerialPortError error = m_port.error();
+    if (len < 0 || error != QSerialPort::NoError) {
+        event.set("error", error);
+    }
+}
+
+void SerialPortConnection::checkError(ConnectionEvent & event) const
+{
+    QSerialPort::SerialPortError error = m_port.error();
+    if (error != QSerialPort::NoError) {
+        event.set("error", error);
+    }
+}

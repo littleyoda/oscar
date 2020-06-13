@@ -26,7 +26,7 @@ class DeviceConnectionManager : public QObject
 private:
     DeviceConnectionManager();
     
-    class XmlRecord* m_record;
+    class XmlRecorder* m_record;
     class XmlReplay* m_replay;
 
     QList<class SerialPortInfo> replayAvailablePorts();
@@ -49,16 +49,24 @@ public:
 
 };
 
+class DeviceConnection : public QObject
+{
+    Q_OBJECT
+};
+
 // TODO: This class may eventually be internal to a DeviceConnection class,
 // but for now it is used to provide support for recording and playback of
 // serial port connections before refactoring.
-class SerialPort : public QObject
+class SerialPortConnection : public DeviceConnection
 {
     Q_OBJECT
 
 private:
     QSerialPort m_port;
     QString m_portName;
+    void checkResult(bool ok, class ConnectionEvent & event) const;
+    void checkResult(qint64 len, class ConnectionEvent & event) const;
+    void checkError(class ConnectionEvent & event) const;
 
 private slots:
     void onReadyRead();
@@ -67,10 +75,13 @@ signals:
     void readyRead();
 
 public:
-    SerialPort();
-    virtual ~SerialPort();
-    
+    // TODO: temporary methods for legacy compatibility
+    SerialPortConnection();
     void setPortName(const QString &name);
+
+    SerialPortConnection(const QString &name);
+    virtual ~SerialPortConnection();
+    
     bool open(QIODevice::OpenMode mode);
     bool setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
     bool setDataBits(QSerialPort::DataBits dataBits);
@@ -84,6 +95,11 @@ public:
     bool flush();
     void close();
 
+};
+
+// TODO: temporary class for legacy compatibility
+class SerialPort : public SerialPortConnection
+{
 };
 
 // TODO: This class's functionality will eventually be internal to a
