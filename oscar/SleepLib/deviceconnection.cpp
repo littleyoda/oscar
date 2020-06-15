@@ -293,6 +293,7 @@ template<typename T> QXmlStreamReader & operator>>(QXmlStreamReader & xml, QList
     return xml;
 }
 
+// We use this extra CRTP templating so that concrete event subclasses require as little code as possible.
 template <typename Derived>
 class XmlReplayBase : public XmlReplayEvent
 {
@@ -372,6 +373,75 @@ void DeviceConnectionManager::replay(QFile* file)
     }
 }
 
+DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, const QString & name)
+{
+    if (!s_factories.contains(type)) {
+        qWarning() << "Unknown device connection type:" << type;
+        return nullptr;
+    }
+    if (m_connections[type].contains(name)) {
+        qWarning() << type << "connection to" << name << "already open";
+        return nullptr;
+    }
+
+    DeviceConnection* conn = s_factories[type](name, m_record, m_replay);
+    if (conn) {
+        if (conn->open()) {
+            m_connections[type][name] = conn;
+        } else {
+            qWarning().noquote() << "unable to open" << type << "connection to" << name;
+            delete conn;
+            conn = nullptr;
+        }
+    } else {
+        qWarning() << "unable to create" << type << "connection to" << name;
+    }
+    // TODO: record event
+    return conn;
+}
+
+void DeviceConnectionManager::connectionClosed(DeviceConnection* conn)
+{
+    Q_ASSERT(conn);
+    const QString & type = conn->type();
+    const QString & name = conn->name();
+
+    Q_ASSERT(s_factories.contains(type));
+    if (m_connections[type].contains(name)) {
+        if (m_connections[type][name] == conn) {
+            m_connections[type].remove(name);
+        } else {
+            qWarning() << type << "connection to" << name << "not created by openConnection!";
+        }
+    } else {
+        qWarning() << type << "connection to" << name << "missing";
+    }
+    // TODO: record event
+}
+
+// Temporary convenience function for code that still supports only serial ports.
+SerialPortConnection* DeviceConnectionManager::openSerialPortConnection(const QString & portName)
+{
+    return dynamic_cast<SerialPortConnection*>(getInstance().openConnection(SerialPortConnection::TYPE, portName));
+}
+
+
+QHash<QString,DeviceConnection::FactoryMethod> DeviceConnectionManager::s_factories;
+
+bool DeviceConnectionManager::registerClass(const QString & type, DeviceConnection::FactoryMethod factory)
+{
+    if (s_factories.contains(type)) {
+        qWarning() << "Connection class already registered for type" << type;
+        return false;
+    }
+    s_factories[type] = factory;
+    return true;
+}
+
+#define REGISTER_DEVICECONNECTION(type, T) \
+const QString T::TYPE = type; \
+const bool T::registered = DeviceConnectionManager::registerClass(T::TYPE, T::createInstance); \
+DeviceConnection* T::createInstance(const QString & name, XmlRecorder* record, XmlReplay* replay) { return static_cast<DeviceConnection*>(new T(name, record, replay)); }
 
 // MARK: -
 // MARK: Device manager events
@@ -520,7 +590,17 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 
 
 // MARK: -
-// MARK: Serial port connection
+// MARK: Device connection base class
+
+DeviceConnection::DeviceConnection(const QString & name, XmlRecorder* record, XmlReplay* replay)
+    : m_name(name), m_record(record), m_replay(replay), m_opened(false)
+{
+}
+
+DeviceConnection::~DeviceConnection()
+{
+}
+
 
 // TODO: log these to XML stream
 
@@ -591,44 +671,43 @@ QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const ConnectionEvent & ev
 }
 
 
-SerialPortConnection::SerialPortConnection(const QString & name)
-    : m_portName(name)
-{
-    connect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-}
+// MARK: -
+// MARK: Serial port connection
 
-// TODO: temporary method for legacy compatibility
-SerialPortConnection::SerialPortConnection()
+REGISTER_DEVICECONNECTION("serial", SerialPortConnection);
+
+SerialPortConnection::SerialPortConnection(const QString & name, XmlRecorder* record, XmlReplay* replay)
+    : DeviceConnection(name, record, replay)
 {
     connect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 }
 
 SerialPortConnection::~SerialPortConnection()
 {
+    if (m_opened) {
+        close();
+        DeviceConnectionManager::getInstance().connectionClosed(this);
+    }
     disconnect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 }
 
-// TODO: temporary method for legacy compatibility
-void SerialPortConnection::setPortName(const QString &name)
+bool SerialPortConnection::open()
 {
-    Q_ASSERT(m_portName.isEmpty());
-    m_portName = name;
-}
-
-// TODO: This will eventually be open(), the constructor will be given the name, and the mode will always be ReadWrite
-bool SerialPortConnection::open(QIODevice::OpenMode mode)
-{
-    Q_ASSERT(mode == QSerialPort::ReadWrite);
+    if (m_opened) {
+        qWarning() << "serial connection to" << m_name << "already opened";
+        return false;
+    }
     ConnectionEvent event("openConnection");
     event.set("type", "serial");
-    event.set("port", m_portName);
+    event.set("name", m_name);
 
-    m_port.setPortName(m_portName);
-    checkResult(m_port.open(mode), event);
+    m_port.setPortName(m_name);
+    checkResult(m_port.open(QSerialPort::ReadWrite), event);
 
     // TODO: send this event back to manager to log
     qDebug().noquote() << event;
 
+    m_opened = event.ok();
     return event.ok();
 }
 
@@ -754,7 +833,7 @@ void SerialPortConnection::close()
 {
     ConnectionEvent event("closeConnection");
     event.set("type", "serial");
-    event.set("port", m_portName);
+    event.set("name", m_name);
 
     // TODO: the separate connection stream will have an enclosing "connection" tag with these
     // attributes. The main device connection manager stream will log this openConnection/
@@ -773,6 +852,9 @@ void SerialPortConnection::onReadyRead()
     ConnectionEvent event("readyRead");
 
     // TODO: Most of the playback API reponds to the caller. How do we replay port-driven events?
+    // Probably add an ordered linked list of events, a peekNextEvent, getNextEvent(void),
+    // and event->replay() method that calls the appropriate method. (May as well have the
+    // destructor walk the links list rather than the per-type lists.)
     qDebug().noquote() << event;
 
     emit readyRead();
@@ -800,4 +882,108 @@ void SerialPortConnection::checkError(ConnectionEvent & event) const
     if (error != QSerialPort::NoError) {
         event.set("error", error);
     }
+}
+
+
+// MARK: -
+// MARK: SerialPort legacy class
+
+SerialPort::SerialPort()
+{
+}
+
+SerialPort::~SerialPort()
+{
+    if (m_conn) {
+        close();
+    }
+}
+
+void SerialPort::setPortName(const QString &name)
+{
+    m_portName = name;
+}
+
+bool SerialPort::open(QIODevice::OpenMode mode)
+{
+    Q_ASSERT(!m_conn);
+    Q_ASSERT(mode == QSerialPort::ReadWrite);
+    m_conn = DeviceConnectionManager::openSerialPortConnection(m_portName);
+    if (m_conn) {
+        connect(m_conn, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    }
+    return m_conn != nullptr;
+}
+
+bool SerialPort::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->setBaudRate(baudRate, directions);
+}
+
+bool SerialPort::setDataBits(QSerialPort::DataBits dataBits)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->setDataBits(dataBits);
+}
+
+bool SerialPort::setParity(QSerialPort::Parity parity)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->setParity(parity);
+}
+
+bool SerialPort::setStopBits(QSerialPort::StopBits stopBits)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->setStopBits(stopBits);
+}
+
+bool SerialPort::setFlowControl(QSerialPort::FlowControl flowControl)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->setFlowControl(flowControl);
+}
+
+bool SerialPort::clear(QSerialPort::Directions directions)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->clear(directions);
+}
+
+qint64 SerialPort::bytesAvailable() const
+{
+    Q_ASSERT(m_conn);
+    return m_conn->bytesAvailable();
+}
+
+qint64 SerialPort::read(char *data, qint64 maxSize)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->read(data, maxSize);
+}
+
+qint64 SerialPort::write(const char *data, qint64 maxSize)
+{
+    Q_ASSERT(m_conn);
+    return m_conn->write(data, maxSize);
+}
+
+bool SerialPort::flush()
+{
+    Q_ASSERT(m_conn);
+    return m_conn->flush();
+}
+
+void SerialPort::close()
+{
+    Q_ASSERT(m_conn);
+    disconnect(m_conn, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    delete m_conn;  // this will close the connection
+    m_conn = nullptr;
+}
+
+void SerialPort::onReadyRead()
+{
+    emit readyRead();
 }

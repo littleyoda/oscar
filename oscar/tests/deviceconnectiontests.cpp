@@ -9,6 +9,9 @@
 #include "deviceconnectiontests.h"
 #include "SleepLib/deviceconnection.h"
 
+// TODO: eventually this should move to serialoximeter.h
+#include "SleepLib/loader_plugins/cms50f37_loader.h"
+
 #include <QTemporaryFile>
 
 void DeviceConnectionTests::testSerialPortInfoSerialization()
@@ -87,4 +90,44 @@ void DeviceConnectionTests::testSerialPortScanning()
     Q_ASSERT(list2 == SerialPortInfo::availablePorts());  // replaying past the recording should return the final state
     devices.replay(nullptr);  // turn off replay
     list3 = SerialPortInfo::availablePorts();
+}
+
+
+void DeviceConnectionTests::testOximeterConnection()
+{
+    CMS50F37Loader::Register();
+
+    // Initialize main event loop to initialize threads and enable signals and slots.
+    int argc = 1;
+    const char* argv = "test";
+    QCoreApplication app(argc, (char**) &argv);
+    
+    QString string;
+    DeviceConnectionManager & devices = DeviceConnectionManager::getInstance();
+    devices.record(string);
+
+    // new API
+    QString portName = "cu.SLAB_USBtoUART";
+    {
+        QScopedPointer<DeviceConnection> conn(devices.openConnection("serial", portName));
+        Q_ASSERT(conn);
+        Q_ASSERT(devices.openConnection("serial", portName) == nullptr);
+    }
+    {
+        QScopedPointer<SerialPortConnection> conn(devices.openSerialPortConnection(portName));
+        Q_ASSERT(conn);
+        Q_ASSERT(devices.openSerialPortConnection(portName) == nullptr);
+    }
+    // legacy API
+    SerialPort port;
+    port.setPortName(portName);
+    if (port.open(QSerialPort::ReadWrite)) {
+        qDebug() << "port opened";
+        port.close();
+    }
+
+    devices.record(nullptr);
+    
+    qDebug().noquote() << string;
+    
 }

@@ -19,6 +19,34 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+class XmlRecorder;
+class XmlReplay;
+
+class DeviceConnection : public QObject
+{
+    Q_OBJECT
+
+protected:
+    DeviceConnection(const QString & name, XmlRecorder* record, XmlReplay* replay);
+
+    const QString & m_name;
+    XmlRecorder* m_record;
+    XmlReplay* m_replay;
+    bool m_opened;
+
+    virtual bool open() = 0;
+    friend class DeviceConnectionManager;
+
+public:
+    // See DeviceConnectionManager::openConnection() to create connections.
+    virtual ~DeviceConnection();
+    virtual const QString & type() const = 0;
+    const QString & name() const { return m_name; }
+
+    typedef DeviceConnection* (*FactoryMethod)(const QString & name, XmlRecorder* record, XmlReplay* replay);
+};
+
+
 class DeviceConnectionManager : public QObject
 {
     Q_OBJECT
@@ -26,8 +54,8 @@ class DeviceConnectionManager : public QObject
 private:
     DeviceConnectionManager();
     
-    class XmlRecorder* m_record;
-    class XmlReplay* m_replay;
+    XmlRecorder* m_record;
+    XmlReplay* m_replay;
 
     QList<class SerialPortInfo> replayAvailablePorts();
     QList<SerialPortInfo> m_serialPorts;
@@ -35,8 +63,12 @@ private:
         m_serialPorts.clear();
     }
 
+    QHash<QString,QHash<QString,DeviceConnection*>> m_connections;
+
 public:
     static DeviceConnectionManager & getInstance();
+    class DeviceConnection* openConnection(const QString & type, const QString & name);
+    static class SerialPortConnection* openSerialPortConnection(const QString & portName);  // temporary
 
     QList<class SerialPortInfo> getAvailablePorts();
     // TODO: method to start a polling thread that maintains the list of ports
@@ -47,11 +79,14 @@ public:
     void replay(class QFile* stream);
     void replay(const QString & string);
 
-};
+    // DeviceConnection subclasses registration
+protected:
+    static QHash<QString,DeviceConnection::FactoryMethod> s_factories;
+public:
+    static bool registerClass(const QString & type, DeviceConnection::FactoryMethod factory);
+    static class DeviceConnection* createInstance(const QString & type);
 
-class DeviceConnection : public QObject
-{
-    Q_OBJECT
+    void connectionClosed(DeviceConnection* conn);
 };
 
 // TODO: This class may eventually be internal to a DeviceConnection class,
@@ -63,10 +98,52 @@ class SerialPortConnection : public DeviceConnection
 
 private:
     QSerialPort m_port;
-    QString m_portName;
     void checkResult(bool ok, class ConnectionEvent & event) const;
     void checkResult(qint64 len, class ConnectionEvent & event) const;
     void checkError(class ConnectionEvent & event) const;
+    void close();
+
+private slots:
+    void onReadyRead();
+
+signals:
+    void readyRead();
+
+protected:
+    SerialPortConnection(const QString & name, XmlRecorder* record, XmlReplay* replay);
+    virtual bool open();
+
+public:
+    // See DeviceConnectionManager::openConnection() to create connections.
+    virtual ~SerialPortConnection();
+    
+    bool setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
+    bool setDataBits(QSerialPort::DataBits dataBits);
+    bool setParity(QSerialPort::Parity parity);
+    bool setStopBits(QSerialPort::StopBits stopBits);
+    bool setFlowControl(QSerialPort::FlowControl flowControl);
+    bool clear(QSerialPort::Directions directions = QSerialPort::AllDirections);
+    qint64 bytesAvailable() const;
+    qint64 read(char *data, qint64 maxSize);
+    qint64 write(const char *data, qint64 maxSize);
+    bool flush();
+
+    // Subclass registration with DeviceConnectionManager
+public:
+    static DeviceConnection* createInstance(const QString & name, XmlRecorder* record, XmlReplay* replay);
+    static const QString TYPE;
+    static const bool registered;
+    virtual const QString & type() const { return TYPE; }
+};
+
+// TODO: temporary class for legacy compatibility
+class SerialPort : public QObject
+{
+    Q_OBJECT
+    
+private:
+    SerialPortConnection* m_conn;
+    QString m_portName;
 
 private slots:
     void onReadyRead();
@@ -75,13 +152,10 @@ signals:
     void readyRead();
 
 public:
-    // TODO: temporary methods for legacy compatibility
-    SerialPortConnection();
-    void setPortName(const QString &name);
+    SerialPort();
+    virtual ~SerialPort();
 
-    SerialPortConnection(const QString &name);
-    virtual ~SerialPortConnection();
-    
+    void setPortName(const QString &name);
     bool open(QIODevice::OpenMode mode);
     bool setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
     bool setDataBits(QSerialPort::DataBits dataBits);
@@ -94,12 +168,6 @@ public:
     qint64 write(const char *data, qint64 maxSize);
     bool flush();
     void close();
-
-};
-
-// TODO: temporary class for legacy compatibility
-class SerialPort : public SerialPortConnection
-{
 };
 
 // TODO: This class's functionality will eventually be internal to a
