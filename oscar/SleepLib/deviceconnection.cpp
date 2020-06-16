@@ -30,9 +30,12 @@ public:
     XmlRecorder(QString & string);
     ~XmlRecorder();
     inline QXmlStreamWriter & xml() { return *m_xml; }
+    inline void lock() { m_mutex.lock(); }
+    inline void unlock() { m_mutex.unlock(); }
 protected:
     QFile* m_file;  // nullptr for non-file recordings
     QXmlStreamWriter* m_xml;
+    QMutex m_mutex;
     
     void prologue();
     void epilogue();
@@ -222,7 +225,9 @@ void XmlReplayEvent::record(XmlRecorder* writer)
 {
     // Do nothing if we're not recording.
     if (writer != nullptr) {
+        writer->lock();
         writer->xml() << *this;
+        writer->unlock();
     }
 }
 
