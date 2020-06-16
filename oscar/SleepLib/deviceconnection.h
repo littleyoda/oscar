@@ -63,14 +63,14 @@ private:
         m_serialPorts.clear();
     }
 
-    QHash<QString,QHash<QString,DeviceConnection*>> m_connections;
+    QHash<QString,DeviceConnection*> m_connections;
 
 public:
     static DeviceConnectionManager & getInstance();
     class DeviceConnection* openConnection(const QString & type, const QString & name);
     static class SerialPortConnection* openSerialPortConnection(const QString & portName);  // temporary
 
-    QList<class SerialPortInfo> getAvailablePorts();
+    QList<class SerialPortInfo> getAvailableSerialPorts();
     // TODO: method to start a polling thread that maintains the list of ports
     // TODO: emit signal when new port is detected
 

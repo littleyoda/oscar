@@ -379,15 +379,15 @@ DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, 
         qWarning() << "Unknown device connection type:" << type;
         return nullptr;
     }
-    if (m_connections[type].contains(name)) {
-        qWarning() << type << "connection to" << name << "already open";
+    if (m_connections.contains(name)) {
+        qWarning() << "connection to" << name << "already open";
         return nullptr;
     }
 
     DeviceConnection* conn = s_factories[type](name, m_record, m_replay);
     if (conn) {
         if (conn->open()) {
-            m_connections[type][name] = conn;
+            m_connections[name] = conn;
         } else {
             qWarning().noquote() << "unable to open" << type << "connection to" << name;
             delete conn;
@@ -406,12 +406,11 @@ void DeviceConnectionManager::connectionClosed(DeviceConnection* conn)
     const QString & type = conn->type();
     const QString & name = conn->name();
 
-    Q_ASSERT(s_factories.contains(type));
-    if (m_connections[type].contains(name)) {
-        if (m_connections[type][name] == conn) {
-            m_connections[type].remove(name);
+    if (m_connections.contains(name)) {
+        if (m_connections[name] == conn) {
+            m_connections.remove(name);
         } else {
-            qWarning() << type << "connection to" << name << "not created by openConnection!";
+            qWarning() << "connection to" << name << "not created by openConnection!";
         }
     } else {
         qWarning() << type << "connection to" << name << "missing";
@@ -446,7 +445,7 @@ DeviceConnection* T::createInstance(const QString & name, XmlRecorder* record, X
 // MARK: -
 // MARK: Device manager events
 
-class GetAvailablePortsEvent : public XmlReplayBase<GetAvailablePortsEvent>
+class GetAvailableSerialPortsEvent : public XmlReplayBase<GetAvailableSerialPortsEvent>
 {
 public:
     QList<SerialPortInfo> m_ports;
@@ -461,19 +460,19 @@ protected:
         xml >> m_ports;
     }
 };
-REGISTER_XMLREPLAYEVENT("getAvailablePorts", GetAvailablePortsEvent);
+REGISTER_XMLREPLAYEVENT("getAvailableSerialPorts", GetAvailableSerialPortsEvent);
 
 
-QList<SerialPortInfo> DeviceConnectionManager::getAvailablePorts()
+QList<SerialPortInfo> DeviceConnectionManager::getAvailableSerialPorts()
 {
-    GetAvailablePortsEvent event;
+    GetAvailableSerialPortsEvent event;
 
     if (!m_replay) {
         for (auto & info : QSerialPortInfo::availablePorts()) {
             event.m_ports.append(SerialPortInfo(info));
         }
     } else {
-        auto replayEvent = m_replay->getNextEvent<GetAvailablePortsEvent>();
+        auto replayEvent = m_replay->getNextEvent<GetAvailableSerialPortsEvent>();
         if (replayEvent) {
             event.m_ports = replayEvent->m_ports;
         } else {
@@ -527,7 +526,7 @@ SerialPortInfo::SerialPortInfo()
 // TODO: This is a temporary wrapper until we begin refactoring.
 QList<SerialPortInfo> SerialPortInfo::availablePorts()
 {
-    return DeviceConnectionManager::getInstance().getAvailablePorts();
+    return DeviceConnectionManager::getInstance().getAvailableSerialPorts();
 }
 
 QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info)
