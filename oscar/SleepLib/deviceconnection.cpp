@@ -38,24 +38,24 @@ protected:
     void epilogue();
 };
 
+class XmlReplayEvent;
+
 class XmlReplay
 {
 public:
     XmlReplay(class QFile * file);
     XmlReplay(QXmlStreamReader & xml);
     ~XmlReplay();
-    template<class T> inline T* getNextEvent();
+    template<class T> inline T* getNextEvent(const QString & id = "");
 
 protected:
     void deserialize(QXmlStreamReader & xml);
     void deserializeEvents(QXmlStreamReader & xml);
 
-    // TODO: maybe the QList should be a QHash on the timestamp?
-    // Then indices would be iterators over a sorted list of keys.
-    QHash<QString,QList<class XmlReplayEvent*>> m_events;
-    QHash<QString,int> m_indices;
+    QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;
+    QList<XmlReplayEvent*> m_events;
 
-    class XmlReplayEvent* getNextEvent(const QString & type);
+    XmlReplayEvent* getNextEvent(const QString & type, const QString & id = "");
 };
 
 class XmlReplayEvent
@@ -64,6 +64,7 @@ public:
     XmlReplayEvent();
     virtual ~XmlReplayEvent() = default;
     virtual const QString & tag() const = 0;
+    virtual const QString & id() const { static const QString none(""); return none; };
 
     void record(XmlRecorder* xml);
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
@@ -77,9 +78,12 @@ protected:
     static QHash<QString,FactoryMethod> s_factories;
 
     QDateTime m_time;
+    XmlReplayEvent* m_next;
 
     virtual void write(QXmlStreamWriter & /*xml*/) const {}
     virtual void read(QXmlStreamReader & /*xml*/) {}
+    
+    friend class XmlReplay;
 };
 QHash<QString,XmlReplayEvent::FactoryMethod> XmlReplayEvent::s_factories;
 
@@ -133,10 +137,8 @@ XmlReplay::XmlReplay(QXmlStreamReader & xml)
 
 XmlReplay::~XmlReplay()
 {
-    for (auto list : m_events.values()) {
-        for (auto event : list) {
-            delete event;
-        }
+    for (auto event : m_events) {
+        delete event;
     }
 }
 
@@ -160,11 +162,20 @@ void XmlReplay::deserialize(QXmlStreamReader & xml)
 void XmlReplay::deserializeEvents(QXmlStreamReader & xml)
 {
     while (xml.readNextStartElement()) {
-        QString name = xml.name().toString();
-        XmlReplayEvent* event = XmlReplayEvent::createInstance(name);
+        QString type = xml.name().toString();
+        XmlReplayEvent* event = XmlReplayEvent::createInstance(type);
         if (event) {
             xml >> *event;
-            auto & events = m_events[name];
+
+            // Add to list
+            if (m_events.isEmpty() == false) {
+                m_events.last()->m_next = event;
+            }
+            m_events.append(event);
+
+            // Add to index
+            const QString & id = event->id();
+            auto & events = m_eventIndex[type][id];
             events.append(event);
         } else {
             xml.skipCurrentElement();
@@ -172,27 +183,29 @@ void XmlReplay::deserializeEvents(QXmlStreamReader & xml)
     }
 }
 
-XmlReplayEvent* XmlReplay::getNextEvent(const QString & type)
+XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id)
 {
     XmlReplayEvent* event = nullptr;
     
-    if (m_events.contains(type)) {
-        auto & events = m_events[type];
-        int i = m_indices[type];
-        if (i < events.size()) {
-            event = events[i];
-            // TODO: if we're simulating the original timing, return nullptr if we haven't reached this event's time yet;
-            // otherwise:
-            m_indices[type] = i + 1;
+    if (m_eventIndex.contains(type)) {
+        auto & ids = m_eventIndex[type];
+        if (ids.contains(id)) {
+            auto & events = ids[id];
+            if (events.isEmpty() == false) {
+                event = events.first();
+                // TODO: if we're simulating the original timing, return nullptr if we haven't reached this event's time yet;
+                // otherwise:
+                events.removeFirst();
+            }
         }
     }
     return event;
 }
 
 template<class T>
-T* XmlReplay::getNextEvent()
+T* XmlReplay::getNextEvent(const QString & id)
 {
-    T* event = dynamic_cast<T*>(getNextEvent(T::TAG));
+    T* event = dynamic_cast<T*>(getNextEvent(T::TAG, id));
     return event;
 }
 
@@ -201,7 +214,7 @@ T* XmlReplay::getNextEvent()
 // MARK: XML record/playback event base class
 
 XmlReplayEvent::XmlReplayEvent()
-    : m_time(QDateTime::currentDateTime())
+    : m_time(QDateTime::currentDateTime()), m_next(nullptr)
 {
 }
 
