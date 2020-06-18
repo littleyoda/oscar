@@ -21,6 +21,7 @@
 
 class XmlRecorder;
 class XmlReplay;
+class XmlReplayEvent;
 
 class DeviceConnection : public QObject
 {
@@ -98,9 +99,9 @@ class SerialPortConnection : public DeviceConnection
 
 private:
     QSerialPort m_port;
-    void checkResult(bool ok, class ConnectionEvent & event) const;
-    void checkResult(qint64 len, class ConnectionEvent & event) const;
-    void checkError(class ConnectionEvent & event) const;
+    void checkResult(bool ok, XmlReplayEvent & event) const;
+    void checkResult(qint64 len, XmlReplayEvent & event) const;
+    void checkError(XmlReplayEvent & event) const;
     void close();
 
 private slots:

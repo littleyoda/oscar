@@ -129,5 +129,31 @@ void DeviceConnectionTests::testOximeterConnection()
     devices.record(nullptr);
     
     qDebug().noquote() << string;
+    string = "";
     
+    devices.record(string);
+    SerialOximeter * oxi = qobject_cast<SerialOximeter*>(lookupLoader(cms50f37_class_name));
+    Q_ASSERT(oxi);
+    if (oxi->openDevice()) {
+        oxi->resetDevice();
+        int session_count = oxi->getSessionCount();
+        qDebug() << session_count;
+    }
+    oxi->closeDevice();
+    oxi->trashRecords();
+    devices.record(nullptr);
+    
+    qDebug().noquote() << string;
+    
+    devices.replay(string);
+    oxi = qobject_cast<SerialOximeter*>(lookupLoader(cms50f37_class_name));
+    Q_ASSERT(oxi);
+    if (oxi->openDevice()) {
+        oxi->resetDevice();
+        int session_count = oxi->getSessionCount();
+        qDebug() << session_count;
+    }
+    oxi->closeDevice();
+    oxi->trashRecords();
+    devices.replay(nullptr);
 }
