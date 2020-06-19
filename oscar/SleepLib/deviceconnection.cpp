@@ -59,6 +59,13 @@ protected:
     QList<XmlReplayEvent*> m_events;
 
     XmlReplayEvent* getNextEvent(const QString & type, const QString & id = "");
+
+    XmlReplayEvent* m_pendingSignal;
+    QMutex m_lock;
+    inline void lock() { m_lock.lock(); }
+    inline void unlock() { m_lock.unlock(); }
+    void processPendingSignals(const QObject* target);
+    friend class XmlReplayLock;
 };
 
 class XmlReplayEvent
@@ -79,8 +86,10 @@ public:
 
     void set(const QString & name, const QString & value)
     {
+        if (!m_values.contains(name)) {
+            m_keys.append(name);
+        }
         m_values[name] = value;
-        m_keys.append(name);
     }
     void set(const QString & name, qint64 value)
     {
@@ -89,11 +98,8 @@ public:
     void setData(const char* data, qint64 length)
     {
         Q_ASSERT(usesData() == true);
-        QStringList bytes;
-        for (qint64 i = 0; i < length; i++) {
-            bytes.append(QString("%1").arg((unsigned char) data[i], 2, 16, QChar('0')).toUpper());
-        }
-        m_data = bytes.join(QChar(' '));
+        QByteArray bytes = QByteArray::fromRawData(data, length);
+        m_data = bytes.toHex(' ').toUpper();
     }
     inline QString get(const QString & name) const
     {
@@ -105,17 +111,7 @@ public:
     QByteArray getData() const
     {
         Q_ASSERT(usesData() == true);
-        QByteArray data;
-        QStringList bytes = m_data.split(" ");
-        data.reserve(bytes.size());
-        for (auto & b : bytes) {
-            bool ok;
-            data.append((char) b.toShort(&ok, 16));
-            if (!ok) {
-                qWarning() << "xml tag" << tag() << "has invalid data:" << b;
-            }
-        }
-        return data;
+        return QByteArray::fromHex(m_data.toUtf8());
     }
     inline bool ok() const { return m_values.contains("error") == false; }
     operator QString() const
@@ -143,6 +139,13 @@ protected:
 
     QDateTime m_time;
     XmlReplayEvent* m_next;
+
+    const char* m_signal;
+    inline bool isSignal() const { return m_signal != nullptr; }
+    virtual void signal(QObject* target)
+    {
+        QMetaObject::invokeMethod(target, m_signal, Qt::QueuedConnection);
+    }
 
     QHash<QString,QString> m_values;
     QList<QString> m_keys;
@@ -178,6 +181,28 @@ protected:
 };
 QHash<QString,XmlReplayEvent::FactoryMethod> XmlReplayEvent::s_factories;
 
+class XmlReplayLock
+{
+public:
+    XmlReplayLock(const QObject* obj, XmlReplay* replay)
+        : m_target(obj), m_replay(replay)
+    {
+        if (m_replay) {
+            m_replay->lock();
+        }
+    }
+    ~XmlReplayLock()
+    {
+        if (m_replay) {
+            m_replay->processPendingSignals(m_target);
+            m_replay->unlock();
+        }
+    }
+
+protected:
+    const QObject* m_target;
+    XmlReplay* m_replay;
+};
 
 XmlRecorder::XmlRecorder(QFile* stream)
     : m_file(stream), m_xml(new QXmlStreamWriter(stream))
@@ -216,12 +241,14 @@ void XmlRecorder::epilogue()
 }
 
 XmlReplay::XmlReplay(QFile* file)
+    : m_pendingSignal(nullptr)
 {
     QXmlStreamReader xml(file);
     deserialize(xml);
 }
 
 XmlReplay::XmlReplay(QXmlStreamReader & xml)
+    : m_pendingSignal(nullptr)
 {
     deserialize(xml);
 }
@@ -274,10 +301,34 @@ void XmlReplay::deserializeEvents(QXmlStreamReader & xml)
     }
 }
 
+void XmlReplay::processPendingSignals(const QObject* target)
+{
+    if (m_pendingSignal) {
+        // It is safe to re-cast this as non-const because signals are deferred
+        // and cannot alter the underlying target until the const method holding
+        // the lock releases it at function exit.
+        m_pendingSignal->signal(const_cast<QObject*>(target));
+
+        XmlReplayEvent* next = m_pendingSignal->m_next;
+        if (next && next->isSignal() == false) {
+            next = nullptr;
+        }
+        if (next) {
+            qDebug() << "UNTESTED: multiple signal events in a row:" << m_pendingSignal->tag() << next->tag();
+        }
+        m_pendingSignal = next;
+    }
+}
+
 XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id)
 {
     XmlReplayEvent* event = nullptr;
     
+    if (m_lock.tryLock()) {
+        qWarning() << "XML replay" << type << "object not locked by event handler!";
+        m_lock.unlock();
+    }
+
     if (m_eventIndex.contains(type)) {
         auto & ids = m_eventIndex[type];
         if (ids.contains(id)) {
@@ -290,6 +341,12 @@ XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id
             }
         }
     }
+    
+    if (event && event->m_next && event->m_next->isSignal()) {
+        Q_ASSERT(m_pendingSignal == nullptr);  // if this ever fails, we may need m_pendingSignal to be a list
+        m_pendingSignal = event->m_next;
+    }
+
     return event;
 }
 
@@ -305,7 +362,7 @@ T* XmlReplay::getNextEvent(const QString & id)
 // MARK: XML record/playback event base class
 
 XmlReplayEvent::XmlReplayEvent()
-    : m_time(QDateTime::currentDateTime()), m_next(nullptr)
+    : m_time(QDateTime::currentDateTime()), m_next(nullptr), m_signal(nullptr)
 {
 }
 
@@ -571,6 +628,7 @@ REGISTER_XMLREPLAYEVENT("getAvailableSerialPorts", GetAvailableSerialPortsEvent)
 
 QList<SerialPortInfo> DeviceConnectionManager::getAvailableSerialPorts()
 {
+    XmlReplayLock lock(this, m_replay);
     GetAvailableSerialPortsEvent event;
 
     if (!m_replay) {
@@ -741,20 +799,6 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("set", SetValueEvent);
 
-/*
-ConnectionEvent::operator QString() const
-{
-}
-
-QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const ConnectionEvent & event)
-{
-    for (auto key : event.m_keys) {
-    }
-    if (!event.m_data.isEmpty()) {
-    }
-}
-*/
-
 class GetValueEvent : public XmlReplayBase<GetValueEvent>
 {
 public:
@@ -833,6 +877,13 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("tx", TransmitDataEvent);
 
+class ReadyReadEvent : public XmlReplayBase<ReadyReadEvent>
+{
+public:
+    ReadyReadEvent() { m_signal = "onReadyRead"; }
+};
+REGISTER_XMLREPLAYEVENT("readyRead", ReadyReadEvent);
+
 
 // MARK: -
 // MARK: Serial port connection
@@ -860,6 +911,7 @@ bool SerialPortConnection::open()
         qWarning() << "serial connection to" << m_name << "already opened";
         return false;
     }
+    XmlReplayLock lock(this, m_replay);
     OpenConnectionEvent event("serial", m_name);
 
     if (!m_replay) {
@@ -884,6 +936,7 @@ bool SerialPortConnection::open()
 
 bool SerialPortConnection::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
 {
+    XmlReplayLock lock(this, m_replay);
     SetValueEvent event("baudRate", baudRate);
     event.set("directions", directions);
 
@@ -900,6 +953,7 @@ bool SerialPortConnection::setBaudRate(qint32 baudRate, QSerialPort::Directions 
 
 bool SerialPortConnection::setDataBits(QSerialPort::DataBits dataBits)
 {
+    XmlReplayLock lock(this, m_replay);
     SetValueEvent event("setDataBits", dataBits);
 
     if (!m_replay) {
@@ -915,6 +969,7 @@ bool SerialPortConnection::setDataBits(QSerialPort::DataBits dataBits)
 
 bool SerialPortConnection::setParity(QSerialPort::Parity parity)
 {
+    XmlReplayLock lock(this, m_replay);
     SetValueEvent event("setParity", parity);
 
     if (!m_replay) {
@@ -930,6 +985,7 @@ bool SerialPortConnection::setParity(QSerialPort::Parity parity)
 
 bool SerialPortConnection::setStopBits(QSerialPort::StopBits stopBits)
 {
+    XmlReplayLock lock(this, m_replay);
     SetValueEvent event("setStopBits", stopBits);
 
     if (!m_replay) {
@@ -945,6 +1001,7 @@ bool SerialPortConnection::setStopBits(QSerialPort::StopBits stopBits)
 
 bool SerialPortConnection::setFlowControl(QSerialPort::FlowControl flowControl)
 {
+    XmlReplayLock lock(this, m_replay);
     SetValueEvent event("setFlowControl", flowControl);
 
     if (!m_replay) {
@@ -960,6 +1017,7 @@ bool SerialPortConnection::setFlowControl(QSerialPort::FlowControl flowControl)
 
 bool SerialPortConnection::clear(QSerialPort::Directions directions)
 {
+    XmlReplayLock lock(this, m_replay);
     ClearConnectionEvent event;
     event.set("directions", directions);
 
@@ -976,6 +1034,7 @@ bool SerialPortConnection::clear(QSerialPort::Directions directions)
 
 qint64 SerialPortConnection::bytesAvailable() const
 {
+    XmlReplayLock lock(this, m_replay);
     GetValueEvent event("bytesAvailable");
     qint64 result;
     
@@ -1000,6 +1059,7 @@ qint64 SerialPortConnection::bytesAvailable() const
 
 qint64 SerialPortConnection::read(char *data, qint64 maxSize)
 {
+    XmlReplayLock lock(this, m_replay);
     qint64 len;
     ReceiveDataEvent event;
 
@@ -1015,7 +1075,7 @@ qint64 SerialPortConnection::read(char *data, qint64 maxSize)
         checkResult(len, event);
     } else {
         // TODO: this should chain off the most recent write's and readyRead's m_next
-        auto replayEvent = m_replay->getNextEvent<ReceiveDataEvent>(event.id());
+        auto replayEvent = m_replay->getNextEvent<ReceiveDataEvent>();
         event.copyIf(replayEvent);
         if (!replayEvent) {
             qWarning() << "reading data past replay";
@@ -1025,11 +1085,23 @@ qint64 SerialPortConnection::read(char *data, qint64 maxSize)
 
         bool ok;
         len = event.get("len").toLong(&ok);
-        if (!ok) {
+        if (ok) {
+            if (event.ok()) {
+                if (len != maxSize) {
+                    qWarning() << "replay of" << len << "bytes but" << maxSize << "requested";
+                }
+                if (len > maxSize) {
+                    len = maxSize;
+                }
+                QByteArray replayData = event.getData();
+                memcpy(data, replayData, len);
+            }
+        } else {
             qWarning() << event << "has bad len";
             len = -1;
         }
     }
+    event.record(m_record);
     qDebug().noquote() << event;
 
     return len;
@@ -1037,6 +1109,7 @@ qint64 SerialPortConnection::read(char *data, qint64 maxSize)
 
 qint64 SerialPortConnection::write(const char *data, qint64 maxSize)
 {
+    XmlReplayLock lock(this, m_replay);
     qint64 len;
     TransmitDataEvent event;
     event.setData(data, maxSize);
@@ -1071,6 +1144,7 @@ qint64 SerialPortConnection::write(const char *data, qint64 maxSize)
 
 bool SerialPortConnection::flush()
 {
+    XmlReplayLock lock(this, m_replay);
     FlushConnectionEvent event;
 
     if (!m_replay) {
@@ -1086,6 +1160,7 @@ bool SerialPortConnection::flush()
 
 void SerialPortConnection::close()
 {
+    XmlReplayLock lock(this, m_replay);
     CloseConnectionEvent event("serial", m_name);
 
     // TODO: the separate connection stream will have an enclosing "connection" tag with these
@@ -1113,14 +1188,22 @@ void SerialPortConnection::close()
 
 void SerialPortConnection::onReadyRead()
 {
-    ConnectionEvent event("readyRead");
+    {
+        // Wait until the replay signaler (if any) has released its lock.
+        XmlReplayLock lock(this, m_replay);
+    
+        // This needs to be recorded before the signal below, since the slot may trigger more events.
+        ReadyReadEvent event;
+        event.record(m_record);
+        qDebug().noquote() << event;
+    }
 
-    // TODO: Most of the playback API reponds to the caller. How do we replay port-driven events?
-    // Probably add an ordered linked list of events, a peekNextEvent, getNextEvent(void),
-    // and event->replay() method that calls the appropriate method. (May as well have the
-    // destructor walk the links list rather than the per-type lists.)
-    qDebug().noquote() << event;
+    // Because clients typically leave this as Qt::AutoConnection, the below emit may
+    // execute immediately in this thread, so we have to release the lock before sending
+    // the signal.
 
+    // Unlike client-called events, We don't need to handle replay differently here,
+    // because the replay will signal this slot just like the serial port.
     emit readyRead();
 }
 

@@ -106,6 +106,7 @@ void DeviceConnectionTests::testOximeterConnection()
     DeviceConnectionManager & devices = DeviceConnectionManager::getInstance();
     devices.record(string);
 
+    /*
     // new API
     QString portName = "cu.SLAB_USBtoUART";
     {
@@ -129,25 +130,30 @@ void DeviceConnectionTests::testOximeterConnection()
     devices.record(nullptr);
     
     qDebug().noquote() << string;
-    string = "";
-    
-    devices.record(string);
+    */
+
     SerialOximeter * oxi = qobject_cast<SerialOximeter*>(lookupLoader(cms50f37_class_name));
     Q_ASSERT(oxi);
-    if (oxi->openDevice()) {
-        oxi->resetDevice();
-        int session_count = oxi->getSessionCount();
-        qDebug() << session_count;
+    
+    QFile file("cms50f37.xml");
+    if (!file.exists()) {
+        qDebug() << "Recording oximeter connection";
+        Q_ASSERT(file.open(QFile::ReadWrite));
+        devices.record(&file);
+        if (oxi->openDevice()) {
+            oxi->resetDevice();
+            int session_count = oxi->getSessionCount();
+            qDebug() << session_count;
+        }
+        oxi->closeDevice();
+        oxi->trashRecords();
+        devices.record(nullptr);
+        file.close();
     }
-    oxi->closeDevice();
-    oxi->trashRecords();
-    devices.record(nullptr);
-    
-    qDebug().noquote() << string;
-    
-    devices.replay(string);
-    oxi = qobject_cast<SerialOximeter*>(lookupLoader(cms50f37_class_name));
-    Q_ASSERT(oxi);
+
+    qDebug() << "Replaying oximeter connection";
+    Q_ASSERT(file.open(QFile::ReadOnly));
+    devices.replay(&file);
     if (oxi->openDevice()) {
         oxi->resetDevice();
         int session_count = oxi->getSessionCount();
@@ -156,4 +162,5 @@ void DeviceConnectionTests::testOximeterConnection()
     oxi->closeDevice();
     oxi->trashRecords();
     devices.replay(nullptr);
+    file.close();
 }
