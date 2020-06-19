@@ -93,6 +93,36 @@ void DeviceConnectionTests::testSerialPortScanning()
 }
 
 
+static void testDownload(const QString & loaderName)
+{
+    SerialOximeter * oxi = qobject_cast<SerialOximeter*>(lookupLoader(loaderName));
+    Q_ASSERT(oxi);
+
+    if (oxi->openDevice()) {
+        oxi->resetDevice();
+        int session_count = oxi->getSessionCount();
+        qDebug() << session_count << "sessions";
+        for (int i = 0; i < session_count; i++) {
+            qDebug() << i+1 << oxi->getDateTime(i) << oxi->getDuration(i);
+            oxi->Open("import");
+            if (oxi->commandDriven()) {
+                oxi->getSessionData(i);
+                while (!oxi->isImporting() && !oxi->isAborted()) {
+                    //QThread::msleep(10);
+                    QCoreApplication::processEvents();
+                }
+                while (oxi->isImporting() && !oxi->isAborted()) {
+                    //QThread::msleep(10);
+                    QCoreApplication::processEvents();
+                }
+            }
+            oxi->openDevice();  // annoyingly import currently closes the device, so reopen it
+        }
+    }
+    oxi->closeDevice();
+    oxi->trashRecords();
+}
+
 void DeviceConnectionTests::testOximeterConnection()
 {
     CMS50F37Loader::Register();
@@ -131,22 +161,13 @@ void DeviceConnectionTests::testOximeterConnection()
     
     qDebug().noquote() << string;
     */
-
-    SerialOximeter * oxi = qobject_cast<SerialOximeter*>(lookupLoader(cms50f37_class_name));
-    Q_ASSERT(oxi);
     
     QFile file("cms50f37.xml");
     if (!file.exists()) {
         qDebug() << "Recording oximeter connection";
         Q_ASSERT(file.open(QFile::ReadWrite));
         devices.record(&file);
-        if (oxi->openDevice()) {
-            oxi->resetDevice();
-            int session_count = oxi->getSessionCount();
-            qDebug() << session_count;
-        }
-        oxi->closeDevice();
-        oxi->trashRecords();
+        testDownload(cms50f37_class_name);
         devices.record(nullptr);
         file.close();
     }
@@ -154,13 +175,7 @@ void DeviceConnectionTests::testOximeterConnection()
     qDebug() << "Replaying oximeter connection";
     Q_ASSERT(file.open(QFile::ReadOnly));
     devices.replay(&file);
-    if (oxi->openDevice()) {
-        oxi->resetDevice();
-        int session_count = oxi->getSessionCount();
-        qDebug() << session_count;
-    }
-    oxi->closeDevice();
-    oxi->trashRecords();
+    testDownload(cms50f37_class_name);
     devices.replay(nullptr);
     file.close();
 }

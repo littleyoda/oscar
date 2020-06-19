@@ -114,6 +114,11 @@ public:
     QByteArray getData() const
     {
         Q_ASSERT(usesData() == true);
+        if (m_data.isEmpty()) {
+            qWarning().noquote() << "replaying event with missing data" << *this;
+            QByteArray empty;
+            return empty;  // toUtf8() below crashes with an empty string.
+        }
         return QByteArray::fromHex(m_data.toUtf8());
     }
     inline bool ok() const { return m_values.contains("error") == false; }
@@ -320,17 +325,6 @@ void XmlReplay::processPendingSignals(const QObject* target)
         // and cannot alter the underlying target until the const method holding
         // the lock releases it at function exit.
         pending->signal(const_cast<QObject*>(target));
-
-        /*
-        XmlReplayEvent* next = m_pendingSignal->m_next;
-        if (next && next->isSignal() == false) {
-            next = nullptr;
-        }
-        if (next) {
-            qDebug() << "UNTESTED: multiple signal events in a row:" << m_pendingSignal->tag() << next->tag();
-        }
-        m_pendingSignal = next;
-        */
     }
 }
 
