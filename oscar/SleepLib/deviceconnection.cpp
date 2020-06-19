@@ -56,9 +56,11 @@ protected:
     void deserializeEvents(QXmlStreamReader & xml);
 
     QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;
+    QHash<QString,QHash<QString,int>> m_indexPosition;
     QList<XmlReplayEvent*> m_events;
 
     XmlReplayEvent* getNextEvent(const QString & type, const QString & id = "");
+    void seekToTime(const QDateTime & time);
 
     XmlReplayEvent* m_pendingSignal;
     QMutex m_lock;
@@ -75,6 +77,7 @@ public:
     virtual ~XmlReplayEvent() = default;
     virtual const QString & tag() const = 0;
     virtual const QString id() const { static const QString none(""); return none; }
+    virtual bool randomAccess() const { return false; }
 
     void record(XmlRecorder* xml);
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
@@ -304,11 +307,21 @@ void XmlReplay::deserializeEvents(QXmlStreamReader & xml)
 void XmlReplay::processPendingSignals(const QObject* target)
 {
     if (m_pendingSignal) {
+        XmlReplayEvent* pending = m_pendingSignal;
+        m_pendingSignal = nullptr;
+
+        // Dequeue the signal from the index; this may update m_pendingSignal.
+        XmlReplayEvent* dequeued = getNextEvent(pending->tag(), pending->id());
+        if (dequeued != pending) {
+            qWarning() << "triggered signal doesn't match dequeued signal!" << pending << dequeued;
+        }
+        
         // It is safe to re-cast this as non-const because signals are deferred
         // and cannot alter the underlying target until the const method holding
         // the lock releases it at function exit.
-        m_pendingSignal->signal(const_cast<QObject*>(target));
+        pending->signal(const_cast<QObject*>(target));
 
+        /*
         XmlReplayEvent* next = m_pendingSignal->m_next;
         if (next && next->isSignal() == false) {
             next = nullptr;
@@ -317,6 +330,27 @@ void XmlReplay::processPendingSignals(const QObject* target)
             qDebug() << "UNTESTED: multiple signal events in a row:" << m_pendingSignal->tag() << next->tag();
         }
         m_pendingSignal = next;
+        */
+    }
+}
+
+void XmlReplay::seekToTime(const QDateTime & time)
+{
+    for (auto & type : m_eventIndex.keys()) {
+        for (auto & key : m_eventIndex[type].keys()) {
+            auto & events = m_eventIndex[type][key];
+            int pos;
+            for (pos = 0; pos < events.size(); pos++) {
+                auto & event = events.at(pos);
+                // Random-access events should always start searching from position 0.
+                if (event->randomAccess() || event->m_time >= time) {
+                    break;
+                }
+            }
+            // If pos == events.size(), that means there are no more events of this type
+            // after the given time.
+            m_indexPosition[type][key] = pos;
+        }
     }
 }
 
@@ -333,15 +367,22 @@ XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id
         auto & ids = m_eventIndex[type];
         if (ids.contains(id)) {
             auto & events = ids[id];
-            if (events.isEmpty() == false) {
-                event = events.first();
+
+            // Start at the position identified by the previous random-access event.
+            int pos = m_indexPosition[type][id];
+            if (pos < events.size()) {
+                event = events.at(pos);
                 // TODO: if we're simulating the original timing, return nullptr if we haven't reached this event's time yet;
                 // otherwise:
-                events.removeFirst();
+                events.removeAt(pos);
             }
         }
     }
     
+    if (event && event->randomAccess()) {
+        seekToTime(event->m_time);
+    }
+
     if (event && event->m_next && event->m_next->isSignal()) {
         Q_ASSERT(m_pendingSignal == nullptr);  // if this ever fails, we may need m_pendingSignal to be a list
         m_pendingSignal = event->m_next;
@@ -432,6 +473,7 @@ QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event)
         qWarning() << "Missing timestamp in" << xml.name() << "tag, using current time";
         time = QDateTime::currentDateTime();
     }
+    event.m_time = time;
     
     event.read(xml);
     return xml;
@@ -764,29 +806,6 @@ DeviceConnection::~DeviceConnection()
 {
 }
 
-// TODO: remove after implementing readyRead
-class ConnectionEvent : public XmlReplayBase<ConnectionEvent>
-{
-public:
-    ConnectionEvent() {}
-    ConnectionEvent(const QString & tag)
-        : m_tag(tag)
-    {
-    }
-    /*
-    void set(const QString & name, const QString & value)
-    {
-    }
-    void set(const QString & name, qint64 value)
-    {
-    }
-    */
-
-protected:
-    const QString m_tag;
-};
-REGISTER_XMLREPLAYEVENT("TBD", ConnectionEvent);
-
 class SetValueEvent : public XmlReplayBase<SetValueEvent>
 {
 public:
@@ -874,6 +893,7 @@ class TransmitDataEvent : public XmlReplayBase<TransmitDataEvent>
     virtual bool usesData() const { return true; }
 public:
     virtual const QString id() const { return m_data; }
+    virtual bool randomAccess() const { return true; }
 };
 REGISTER_XMLREPLAYEVENT("tx", TransmitDataEvent);
 
@@ -1074,7 +1094,6 @@ qint64 SerialPortConnection::read(char *data, qint64 maxSize)
         }
         checkResult(len, event);
     } else {
-        // TODO: this should chain off the most recent write's and readyRead's m_next
         auto replayEvent = m_replay->getNextEvent<ReceiveDataEvent>();
         event.copyIf(replayEvent);
         if (!replayEvent) {
@@ -1102,7 +1121,6 @@ qint64 SerialPortConnection::read(char *data, qint64 maxSize)
         }
     }
     event.record(m_record);
-    qDebug().noquote() << event;
 
     return len;
 }
@@ -1195,7 +1213,8 @@ void SerialPortConnection::onReadyRead()
         // This needs to be recorded before the signal below, since the slot may trigger more events.
         ReadyReadEvent event;
         event.record(m_record);
-        qDebug().noquote() << event;
+        
+        // Unlocking will queue any subsequent signals.
     }
 
     // Because clients typically leave this as Qt::AutoConnection, the below emit may
