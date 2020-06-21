@@ -1,6 +1,7 @@
-﻿/* SleepLib Weinmann SOMNOsoft/Balance Loader Implementation
+/* SleepLib Weinmann SOMNOsoft/Balance Loader Implementation
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -179,6 +180,12 @@ int WeinmannLoader::Open(const QString & dirpath)
 
     int comp_end = index[FlowOffset];
     int comp_size = comp_end - comp_start;
+    // TODO: This entire loader needs significant work. For now just
+    // hard-code values here to make sure we don't crash in the loop below.
+    if (comp_size < 5 * 0xd6) {
+        qWarning() << "Weinmann loader comp_size too short:" << comp_size;
+        return -1;
+    }
 
     quint8 * comp = new quint8 [comp_size];
     memset((char *)comp, 0, comp_size);

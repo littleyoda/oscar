@@ -222,13 +222,14 @@ enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
-enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube };
+enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube, HUMID_Passover, HUMID_Error };
 
 ChannelID PRS1_Mode = 0;
 ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
 ChannelID PRS1_BackupBreathMode = 0, PRS1_BackupBreathRate = 0, PRS1_BackupBreathTi = 0;
 ChannelID PRS1_AutoTrial = 0, PRS1_EZStart = 0, PRS1_RiseTime = 0, PRS1_RiseTimeLock = 0;
+ChannelID PRS1_PeakFlow = 0;
 ChannelID PRS1_VariableBreathing = 0;  // TODO: UNCONFIRMED, but seems to match sample data
 
 QString PRS1Loader::PresReliefLabel() { return QObject::tr(""); }
@@ -260,6 +261,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
 
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
+    { "461CA",  0, 4, "REMstar Pro (System One 60 Series)" },
     { "560P",   0, 4, "REMstar Auto (System One 60 Series)" },
     { "560PBT", 0, 4, "REMstar Auto (System One 60 Series)" },
     { "561P",   0, 4, "REMstar Auto (System One 60 Series)" },
@@ -270,15 +272,21 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "200X110", 0, 6, "DreamStation CPAP" },  // (brick)
     { "400G110", 0, 6, "DreamStation Go" },
     { "400X110", 0, 6, "DreamStation CPAP Pro" },
+    { "400X130", 0, 6, "DreamStation CPAP Pro" },
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
+    { "500X120", 0, 6, "DreamStation Auto CPAP" },
     { "500X130", 0, 6, "DreamStation Auto CPAP" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
+    { "500X180", 0, 6, "DreamStation Auto CPAP" },
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
+    { "600X150", 0, 6, "DreamStation BiPAP Pro" },
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X120", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
@@ -288,6 +296,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "900X110", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X120", 5, 3, "DreamStation BiPAP autoSV" },
     
+    { "1061401",  3, 0, "BiPAP S/T (C Series)" },
     { "1061T",    3, 3, "BiPAP S/T 30 (System One 60 Series)" },
     { "1160P",    3, 3, "BiPAP AVAPS 30 (System One 60 Series)" },
     { "1030X110", 3, 6, "DreamStation BiPAP S/T 30" },
@@ -389,6 +398,7 @@ const char* PRS1ModelInfo::Name(const QString & model) const
 QMap<const char*,const char*> s_PRS1Series = {
     { "System One 60 Series", ":/icons/prs1_60s.png" },  // needs to come before following substring
     { "System One",           ":/icons/prs1.png" },
+    { "C Series",             ":/icons/prs1vent.png" },
     { "DreamStation",         ":/icons/dreamstation.png" },
 };
 
@@ -563,6 +573,8 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         if (pair[0] == "Family") {
             if (pair[1] == "xPAP") {
                 pair[1] = "0";
+            } else if (pair[1] == "Ventilator") {
+                pair[1] = "3";
             }
         }
         props[pair[0]] = pair[1];
@@ -973,12 +985,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // All samples exhibiting this behavior are DreamStations.
                     task->m_wavefiles.append(fi.canonicalFilePath());
                 } else if (ext == 6) {
-                    if (!task->oxifile.isEmpty()) {
-                        qDebug() << sid << "already has oximetry file" << relativePath(task->oxifile)
-                            << "skipping" << relativePath(fi.canonicalFilePath());
-                        continue;
-                    }
-                    task->oxifile = fi.canonicalFilePath();
+                    // Oximetry data can also be split into multiple files, see waveform
+                    // comment above.
+                    task->m_oxifiles.append(fi.canonicalFilePath());
                 }
 
                 continue;
@@ -1073,8 +1082,8 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 case 2:
                     if (task->m_event_chunks.count() > 0) {
                         PRS1DataChunk* previous;
-                        if (chunk->family == 3 && chunk->familyVersion == 3) {
-                            // F3V3 events are formatted as waveforms, with one chunk per mask-on slice,
+                        if (chunk->family == 3 && chunk->familyVersion <= 3) {
+                            // F3V0 and F3V3 events are formatted as waveforms, with one chunk per mask-on slice,
                             // and thus multiple chunks per session.
                             previous = task->m_event_chunks[chunk->timestamp];
                             if (previous != nullptr) {
@@ -1637,7 +1646,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
     { PRS1MinuteVentilationEvent::TYPE, { &CPAP_MinuteVent } },
     { PRS1PatientTriggeredBreathsEvent::TYPE, { &CPAP_PTB } },
     { PRS1TimedBreathEvent::TYPE,       { &PRS1_TimedBreath } },
-    { PRS1FlowRateEvent::TYPE,          { &CPAP_FlowRate } },  // Only reported by F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
+    { PRS1FlowRateEvent::TYPE,          { &PRS1_PeakFlow } },  // Only reported by F3V0 and F3V3  // TODO: should this stat be calculated from flow waveforms on other models?
 
     { PRS1PressureSetEvent::TYPE,       { &CPAP_PressureSet } },
     { PRS1IPAPSetEvent::TYPE,           { &CPAP_IPAPSet, &CPAP_PS } },  // PS is calculated from IPAPset and EPAPset when both are supported (F0) TODO: Should this be a separate channel since it's not a 2-minute average?
@@ -2922,8 +2931,8 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
             // Deal with statistics that are reported at the end of an interval, but which need to be imported
             // at the start of the interval.
 
-            if (event->family == 3 && event->familyVersion == 3) {
-                // In F3V3, each slice has its own chunk, so the initial call to UpdateCurrentSlice()
+            if (event->family == 3 && event->familyVersion <= 3) {
+                // In F3V0 and F3V3, each slice has its own chunk, so the initial call to UpdateCurrentSlice()
                 // for this chunk is all that's needed.
                 //
                 // We can't just call it again here for simplicity, since the timestamps of F3V3 stat events
@@ -3021,17 +3030,21 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
         return false;
     }
 
-    // TODO: This needs to be special-cased for F3V3 due to its weird interval-based event format
+    // TODO: This needs to be special-cased for F3V0 and F3V3 due to their weird interval-based event format
     // until there's a way for its parser to correctly set the timestamps for truncated
     // intervals in sessions that don't end on a 2-minute boundary.
-    if (!(event->family == 3 && event->familyVersion == 3)) {
+    if (!(event->family == 3 && event->familyVersion <= 3)) {
         // If the last event has a non-zero duration, t will not reflect the full duration of the chunk, so update it.
         t = qint64(event->timestamp + event->duration) * 1000L;
         if (session->last() == 0) {
             qWarning() << sessionid << "End time not set by summary?";
         } else if (t > session->last()) {
-            // This has only been seen once, with corrupted data, in which the summary and event
-            // files each contained multiple conflicting sessions (all brief) with the same ID.
+            // This has only been seen in two instances:
+            // 1. Once with corrupted data, in which the summary and event files each contained
+            //    multiple conflicting sessions (all brief) with the same ID.
+            // 2. On one 500G110, multiple PRS1PressureSetEvents appear after the end of the session,
+            //    across roughtly two dozen sessions. These seem to be discarded on official reports,
+            //    see ImportEvent() below.
             qWarning() << sessionid << "Events continue after summary?";
         }
         // Events can end before the session if the mask was off before the equipment turned off.
@@ -3062,6 +3075,10 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
     
     switch (e->m_type) {
         case PRS1PressureSetEvent::TYPE:  // currentPressure is used to calculate unintentional leak, not just PS
+            // TODO: These have sometimes been observed with t > session->last() on a 500G110.
+            // Official reports seem to discard such events, OSCAR currently doesn't.
+            // Test this more thoroughly before changing behavior here.
+            // fall through
         case PRS1IPAPSetEvent::TYPE:
         case PRS1IPAPAverageEvent::TYPE:
             AddEvent(channel, t, e->m_value, e->m_gain);
@@ -3125,14 +3142,16 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
             // TODO: The numeric snore graph is the right way to present this information,
             // but it needs to be shifted left 2 minutes, since it's not a starting value
             // but a past statistic.
-            AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count
+            AddEvent(channel, t, e->m_value, e->m_gain);  // Snore count, continuous data
             if (e->m_value > 0) {
                 // TODO: currently these get drawn on our waveforms, but they probably shouldn't,
                 // since they don't have a precise timestamp. They should continue to be drawn
                 // on the flags overview. See the comment in ImportEventChunk regarding flags
                 // for numeric channels.
+                //
+                // We need to pass the count along so that the VS2 index will tabulate correctly.
                 VS2 = *channels.at(1);
-                AddEvent(VS2, t, 0, 1);
+                AddEvent(VS2, t, e->m_value, 1);
             }
             break;
         case PRS1VibratorySnoreEvent::TYPE:  // real VS marker on waveform
@@ -3333,6 +3352,23 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
 }
 
 
+static const QVector<PRS1ParsedEventType> ParsedEventsF3V0 = {
+    PRS1IPAPAverageEvent::TYPE,
+    PRS1EPAPAverageEvent::TYPE,
+    PRS1TotalLeakEvent::TYPE,
+    PRS1TidalVolumeEvent::TYPE,
+    PRS1FlowRateEvent::TYPE,
+    PRS1PatientTriggeredBreathsEvent::TYPE,
+    PRS1RespiratoryRateEvent::TYPE,
+    PRS1MinuteVentilationEvent::TYPE,
+    // No LEAK, unlike F3V3
+    PRS1HypopneaCount::TYPE,
+    PRS1ClearAirwayCount::TYPE,  // TODO
+    PRS1ObstructiveApneaCount::TYPE,  // TODO
+    // No PP, FL, VS, RERA, PB, LL
+    // No TB
+};
+
 static const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
     PRS1IPAPAverageEvent::TYPE,
     PRS1EPAPAverageEvent::TYPE,
@@ -3350,14 +3386,14 @@ static const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
     // No TB
 };
 
-// 1061T, 1160P series
-bool PRS1DataChunk::ParseEventsF3V3(void)
+// 1061, 1061T, 1160P series
+bool PRS1DataChunk::ParseEventsF3V03(void)
 {
     // NOTE: Older ventilators (BiPAP S/T and AVAPS) machines don't use timestamped events like everything else.
     // Instead, they use a fixed interval format like waveforms do (see PRS1_HTYPE_INTERVAL).
 
-    if (this->family != 3 || this->familyVersion != 3) {
-        qWarning() << "ParseEventsF3V3 called with family" << this->family << "familyVersion" << this->familyVersion;
+    if (this->family != 3 || (this->familyVersion != 0 && this->familyVersion != 3)) {
+        qWarning() << "ParseEventsF3V03 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
     if (this->fileVersion == 3) {
@@ -3400,13 +3436,34 @@ bool PRS1DataChunk::ParseEventsF3V3(void)
         this->AddEvent(new PRS1FlowRateEvent(t, h[6]));
         this->AddEvent(new PRS1PatientTriggeredBreathsEvent(t, h[7]));
         this->AddEvent(new PRS1RespiratoryRateEvent(t, h[8]));
-        if (h[9] < 13 || h[9] > 84) UNEXPECTED_VALUE(h[9], "13-84");  // not sure what this is.. encore doesn't graph it.
-        CHECK_VALUES(h[10], 0, 8);  // 8 shows as a Low Pressure (LP) alarm
+        if (this->familyVersion == 0) {
+            if (h[9] < 4 || h[9] > 65) UNEXPECTED_VALUE(h[9], "4-65");
+        } else {
+            if (h[9] < 13 || h[9] > 84) UNEXPECTED_VALUE(h[9], "13-84");  // not sure what this is.. encore doesn't graph it.
+        }
+        if (this->familyVersion == 0) {
+            // 1 shows as Apnea (AP) alarm
+            // 2 shows as a Patient Disconnect (PD) alarm
+            // 4 shows as a Low Minute Vent (LMV) alarm
+            // 8 shows as a Low Pressure (LP) alarm
+            // 10 shows as PD + LP in the same interval
+            if (h[10] & ~(0x01 | 0x02 | 0x04 | 0x08)) UNEXPECTED_VALUE(h[10], "known bits");
+        } else {
+            // This is probably the same as F3V0, but we don't yet have the sample data to confirm.
+            CHECK_VALUES(h[10], 0, 8);  // 8 shows as a Low Pressure (LP) alarm
+        }
         this->AddEvent(new PRS1MinuteVentilationEvent(t, h[11]));
-        this->AddEvent(new PRS1HypopneaCount(t, h[12]));          // count of hypopnea events
-        this->AddEvent(new PRS1ClearAirwayCount(t, h[13]));       // count of clear airway events
-        this->AddEvent(new PRS1ObstructiveApneaCount(t, h[14]));  // count of obstructive events
-        this->AddEvent(new PRS1LeakEvent(t, h[15]));
+        if (this->familyVersion == 0) {
+            CHECK_VALUE(h[12], 0);
+            this->AddEvent(new PRS1HypopneaCount(t, h[13]));          // count of hypopnea events
+            this->AddEvent(new PRS1ClearAirwayCount(t, h[14]));       // count of clear airway events
+            this->AddEvent(new PRS1ObstructiveApneaCount(t, h[15]));  // count of obstructive events
+        } else {
+            this->AddEvent(new PRS1HypopneaCount(t, h[12]));          // count of hypopnea events
+            this->AddEvent(new PRS1ClearAirwayCount(t, h[13]));       // count of clear airway events
+            this->AddEvent(new PRS1ObstructiveApneaCount(t, h[14]));  // count of obstructive events
+            this->AddEvent(new PRS1LeakEvent(t, h[15]));
+        }
         this->AddEvent(new PRS1IntervalBoundaryEvent(t));
 
         h += record_size;
@@ -4140,6 +4197,7 @@ const QVector<PRS1ParsedEventType> & GetSupportedEvents(const PRS1DataChunk* chu
             break;
         case 3:
             switch (chunk->familyVersion) {
+                case 0: return ParsedEventsF3V0; break;
                 case 3: return ParsedEventsF3V3; break;
                 case 6: return ParsedEventsF3V6; break;
             }
@@ -4429,8 +4487,14 @@ bool PRS1DataChunk::ParseSummaryF0V23()
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
                 CHECK_VALUES(data[pos] & 0xF0, 0x60, 0x70);  // TODO: what are these?
-                if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
-                    CHECK_VALUES(data[pos] & 0x0F, 3, 0);  // TODO: what are these? 0 seems to be related to errors.
+                switch (data[pos] & 0x0F) {
+                    case 0:  // TODO: What is this? It seems to be related to errors.
+                    case 1:  // This is the most frequent value.
+                    case 3:  // TODO: What is this?
+                    case 4:  // This seems to be related to an automatic transition from CPAP to AutoCPAP.
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos] & 0x0F, "[0,1,3,4]");
                 }
             // F0V23 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
                 ok = ParseSettingsF0V23(data, 0x0e);
@@ -4458,12 +4522,17 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
 
-                // seems to be trailing 01 [01 or 02] 83 after equipment off?
-                if (data[pos+2] != 1) {  // This is the usual value.
-                    CHECK_VALUES(data[pos+2], 0, 3);  // 0 seems to be related to errors, 3 seen after 90 sec large leak before turning off?
+                switch (data[pos+2]) {
+                    case 0:  // TODO: What is this? It seems to be related to errors.
+                    case 1:  // This is the usual value.
+                    case 3:  // TODO: What is this? This has been seen after 90 sec large leak before turning off.
+                    case 4:  // TODO: What is this? We've seen it once.
+                    case 5:  // This seems to be related to an automatic transition from CPAP to AutoCPAP.
+                        break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos+2], "[0,1,3,4,5]");
                 }
                 //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
-                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
                 ParseHumidifierSetting50Series(data[pos+4]);
                 break;
             /*
@@ -4529,7 +4598,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
 
     if (cpapmode == PRS1_MODE_CPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE, min_pressure));
-        CHECK_VALUE(max_pressure, 0);
+        //CHECK_VALUE(max_pressure, 0);  // occasionally nonzero, usually seems to be when the next session is AutoCPAP with this max
         CHECK_VALUE(ps, 0);
     } else if (cpapmode == PRS1_MODE_AUTOCPAP) {
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PRESSURE_MIN, min_pressure));
@@ -4552,8 +4621,10 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x06];
     int ramp_pressure = data[0x07];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
     quint8 flex = data[0x08];
     this->ParseFlexSettingF0V234(flex, cpapmode);
@@ -4663,8 +4734,10 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x08];
     int ramp_pressure = data[0x09];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
     quint8 flex = data[0x0a];
     this->ParseFlexSettingF0V234(flex, cpapmode);
@@ -4842,7 +4915,7 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
     } else if (this->familyVersion == 1) {
         // F5V1
         if (tubepresent) {
-            if (tubetemp == 4) UNEXPECTED_VALUE(tubetemp, "!= 4");
+            // all tube temperatures seen
             if (tubetemp) {
                 if (tubehumidlevel == 0 || tubehumidlevel > 3) UNEXPECTED_VALUE(tubehumidlevel, "1-3");
             }
@@ -4973,7 +5046,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 // That's represented by a mask-off event 19129 seconds after the mask-on, then a time-elapsed
                 // event after 65535 seconds, then an equipment off event after another 616 seconds.
                 tt += data[pos] | (data[pos+1] << 8);
-                // TODO: see if this event exists in other versions
+                // TODO: see if this event exists in earlier versions
                 break;
             case 5:  // Clock adjustment?
                 CHECK_VALUE(pos, 1);  // Always first
@@ -5148,12 +5221,15 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
 }
 
 
-// Support for 1061T, 1160P
+// Support for 1061, 1061T, 1160P
 // logic largely borrowed from ParseSettingsF3V6, values based on sample data
-bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
+bool PRS1DataChunk::ParseSettingsF3V03(const unsigned char* data, int /*size*/)
 {
     PRS1Mode cpapmode = PRS1_MODE_UNKNOWN;
     FlexMode flexmode = FLEX_Unknown;
+
+    // data[0] is the event code
+    // data[1] is checked in the calling function
 
     switch (data[2]) {
         case 0: cpapmode = PRS1_MODE_CPAP; break;  // "CPAP" mode
@@ -5194,6 +5270,18 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             UNEXPECTED_VALUE(data[3], "known flex mode");
             break;
     }
+    if (this->familyVersion == 0) {
+        // Confirm F3V0 setting encoding
+        switch (cpapmode) {
+        case PRS1_MODE_CPAP: break;  // CPAP has been confirmed
+        case PRS1_MODE_S: break;     // S bi-flex and rise time have been confirmed
+        case PRS1_MODE_ST:
+            CHECK_VALUE(flexmode, FLEX_RiseTime);  // only rise time has been confirmed
+            break;
+        default:
+            UNEXPECTED_VALUE(cpapmode, "tested modes");
+        }
+    }
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_MODE, (int) flexmode));
 
@@ -5231,22 +5319,24 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
         CHECK_VALUE(data[0xa], 0);
         CHECK_VALUE(data[0xb], 0);
         CHECK_VALUE(data[0xc], 0);
+        CHECK_VALUE(data[0xd], 0);
     }
     if (flexmode == FLEX_RiseTime) {
         int rise_time = data[0xa];  // 1 = Rise Time Setting 1, 2 = Rise Time Setting 2, 3 = Rise Time Setting 3
         if (rise_time < 1 || rise_time > 6) UNEXPECTED_VALUE(rise_time, "1-6");  // TODO: what is 0?
         CHECK_VALUES(data[0xb], 0, 1);  // 1 = Rise Time Lock (in "None" and AVAPS flex mode)
         CHECK_VALUE(data[0xc], 0);
+        CHECK_VALUES(data[0xd], 0, 1);  // TODO: What is this? It's usually 0.
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, rise_time));
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, data[0xb] == 1));
     } else if (flexmode == FLEX_BiFlex) {
-        CHECK_VALUE(data[0xa], 3);  // TODO: May also be Bi-Flex 3? But how is this different from [0xc] below?
-        CHECK_VALUE(data[0xb], 0);
-        CHECK_VALUE(data[0xc], 3);
+        CHECK_VALUES(data[0xa], 2, 3);  // TODO: May also be Bi-Flex level? But how is this different from [0xc] below?
+        CHECK_VALUES(data[0xb], 0, 1);  // TODO: What is this? It doesn't always match [0xd].
+        CHECK_VALUES(data[0xc], 2, 3);
         CHECK_VALUE(data[0x0a], data[0xc]);
-        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[0xc]));  // 3 = Bi-Flex 3 (in bi-flex mode)
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[0xc]));  // 3 = Bi-Flex 3, 2 = Bi-Flex 2 (in bi-flex mode)
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[0xd] == 1));
     }
-    CHECK_VALUE(data[0xd], 0);
 
     if (flexmode == FLEX_None) CHECK_VALUE(data[0xe], 0);
     if (cpapmode == PRS1_MODE_ST_AVAPS || cpapmode == PRS1_MODE_PC_AVAPS) {
@@ -5262,9 +5352,17 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     bool backup = false;
     switch (cpapmode) {
         case PRS1_MODE_CPAP:
-        case PRS1_MODE_S:
             CHECK_VALUE(breath_rate, 0);
             CHECK_VALUE(timed_inspiration, 0);
+            break;
+        case PRS1_MODE_S:
+            if (this->familyVersion == 0) {
+                CHECK_VALUE(breath_rate, 10);
+                CHECK_VALUE(timed_inspiration, 10);
+            } else {
+                CHECK_VALUE(breath_rate, 0);
+                CHECK_VALUE(timed_inspiration, 0);
+            }
             break;
         case PRS1_MODE_PC_AVAPS:
             CHECK_VALUE(breath_rate, 0);  // only ever seen 0 on reports so far
@@ -5279,8 +5377,8 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
             backup = true;
             break;
         case PRS1_MODE_ST:
-            CHECK_VALUES(breath_rate, 0x0C, 0x0A);  // 0xC = Breath Rate 12, 0xA = Breath Rate 10, can this be 0?
-            CHECK_VALUES(timed_inspiration, 10, 20);  // 0xA = Timed Inspiration 1, 0x14 = Time Inspiration 2
+            if (breath_rate < 10 || breath_rate > 18) UNEXPECTED_VALUE(breath_rate, "10-18");  // can this be 0?
+            if (timed_inspiration < 10 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "10-20");  // 16 = 1.6s
             backup = true;
             break;
         default:
@@ -5300,38 +5398,60 @@ bool PRS1DataChunk::ParseSettingsF3V3(const unsigned char* data, int /*size*/)
     CHECK_VALUE(data[0x14], 0);  // the ramp pressure is probably a 16-bit value like the ones above are
     int ramp_time = data[0x12];
     int ramp_pressure = data[0x13];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure));
+    }
 
-    this->ParseHumidifierSettingF3V3(data[0x15], data[0x16], true);
+    int pos;
+    if (this->familyVersion == 0) {
+        ParseHumidifierSetting50Series(data[0x15], true);
+        pos = 0x16;
+    } else {
+        this->ParseHumidifierSettingF3V3(data[0x15], data[0x16], true);
 
-    // Menu options?
-    CHECK_VALUES(data[0x17], 0x10, 0x90);  // 0x10 = resist 1; 0x90 = resist 1, resist lock
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x17] & 0x80) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, 1));  // only value seen so far, CHECK_VALUES above will flag any others
-    
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[0x18] & 0x80) != 0));
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x18] & 0x7f)));
-    CHECK_VALUES(data[0x18] & 0x7f, 22, 15);  // 0x16 = tubing 22; 0x0F = tubing 15, 0x96 = tubing 22 with lock
+        // Menu options?
+        CHECK_VALUES(data[0x17], 0x10, 0x90);  // 0x10 = resist 1; 0x90 = resist 1, resist lock
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x17] & 0x80) != 0));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, 1));  // only value seen so far, CHECK_VALUES above will flag any others
+        
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_TUBING_LOCK, (data[0x18] & 0x80) != 0));
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x18] & 0x7f)));
+        CHECK_VALUES(data[0x18] & 0x7f, 22, 15);  // 0x16 = tubing 22; 0x0F = tubing 15, 0x96 = tubing 22 with lock
+        pos = 0x19;
+    }
     
     // Alarms?
-    CHECK_VALUE(data[0x19], 0);
-    CHECK_VALUE(data[0x1a], 0);
-    CHECK_VALUE(data[0x1b], 0);
+    if (this->familyVersion == 0) {
+        if (data[pos] != 0) {
+            CHECK_VALUES(data[pos], 10, 30);  // Apnea alarm on F3V0
+        }
+        CHECK_VALUES(data[pos+1], 0, 15);  // Disconnect alarm on F3V0
+        CHECK_VALUES(data[pos+2], 0, 17);  // Low MV alarm on F3V0
+    } else {
+        CHECK_VALUE(data[pos], 0);
+        CHECK_VALUE(data[pos+1], 0);
+        CHECK_VALUE(data[pos+2], 0);
+    }
     return true;
 }
 
 
 // borrowed largely from ParseSummaryF5V012
-bool PRS1DataChunk::ParseSummaryF3V3(void)
+bool PRS1DataChunk::ParseSummaryF3V03(void)
 {
     if (this->family != 3 || (this->familyVersion > 3)) {
-        qWarning() << "ParseSummaryF3V3 called with family" << this->family << "familyVersion" << this->familyVersion;
+        qWarning() << "ParseSummaryF3V03 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    QVector<int> minimum_sizes = { 0x1b, 3, 5, 9 };
+    QVector<int> minimum_sizes;
+    if (this->familyVersion == 0) {
+        minimum_sizes = { 0x19, 3, 3, 9 };
+    } else {
+        minimum_sizes = { 0x1b, 3, 5, 9 };
+    }
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
 
     bool ok = true;
@@ -5355,10 +5475,16 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
         // NOTE: F3V3 doesn't use 16-bit time deltas in its summary events, it uses absolute timestamps!
         // It's possible that these are 24-bit, but haven't yet seen a timestamp that large.
         
+        const unsigned char * ondata = data;
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
-                CHECK_VALUE(data[pos], 0);
+                if (this->familyVersion == 0) {
+                    // F3V0 inserts an extra byte in front
+                    CHECK_VALUE(data[pos], 1);
+                    ondata = ondata + 1;
+                }
+                CHECK_VALUE(ondata[pos], 0);
                 /*
                 CHECK_VALUE(data[pos] & 0xF0, 0);  // TODO: what are these?
                 if ((data[pos] & 0x0F) != 1) {  // This is the most frequent value.
@@ -5366,20 +5492,26 @@ bool PRS1DataChunk::ParseSummaryF3V3(void)
                 }
                 */
             // F3V3 doesn't have a separate settings record like F3V6 does, the settings just follow the EquipmentOn data.
-                ok = this->ParseSettingsF3V3(data, size);
+                ok = this->ParseSettingsF3V03(ondata, size);
                 break;
             case 2:  // Mask On
                 tt = data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
                 CHECK_VALUE(data[pos+2], 0);  // may be high byte of timestamp
-                this->ParseHumidifierSettingF3V3(data[pos+3], data[pos+4]);
+                if (size > 3) {  // F3V3 records the humidifier setting at each mask-on, F3V0 only records the initial setting.
+                    this->ParseHumidifierSettingF3V3(data[pos+3], data[pos+4]);
+                }
                 break;
             case 3:  // Mask Off
                 tt = data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
             // F3V3 doesn't have a separate stats record like F3V6 does, the stats just follow the MaskOff data.
                 CHECK_VALUE(data[pos+0x2], 0);  // may be high byte of timestamp
-                CHECK_VALUE(data[pos+0x3], 0);  // probably OA count, but the only sample data is missing .002 files, so we can't yet verify
+                if (this->familyVersion == 0) {
+                    //CHECK_VALUES(data[pos+0x3], 0, 1);  // OA count
+                } else {
+                    CHECK_VALUE(data[pos+0x3], 0);  // probably OA count, but the only F3V3 sample data is missing .002 files, so we can't yet verify
+                }
                 CHECK_VALUE(data[pos+0x4], 0);
                 //CHECK_VALUE(data[pos+0x5], 0);  // CA count, probably 16-bit
                 CHECK_VALUE(data[pos+0x6], 0);
@@ -5913,8 +6045,12 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
 
     int ramp_time = data[0x0a];
     int ramp_pressure = data[0x0b];
-    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
+    if (ramp_time > 0) {
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
+        this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
+    } else {
+        if (this->familyVersion == 0) UNEXPECTED_VALUE(ramp_time, ">0");  // not yet observed
+    }
 
     quint8 flex = data[0x0c];
     this->ParseFlexSettingF5V012(flex, cpapmode);
@@ -6113,10 +6249,10 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
                 CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
                 if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
                 break;
-            case 7:  // ???
+            case 7:  // Time Elapsed?
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 break;
-            case 8:  // ???
+            case 8:  // Time Elapsed? How is this different from 7?
                 tt += data[pos] | (data[pos+1] << 8);  // This also adds to the total duration (otherwise it won't match report)
                 break;
             case 9:  // Humidifier setting change
@@ -6183,7 +6319,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
     int flexlevel = flex & 0x03;
     if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
     if (this->familyVersion == 2) {
-        CHECK_VALUE(lock, false);  // haven't observed this yet
+        //CHECK_VALUE(lock, false);  // We've seen this set on F0V2, but it doesn't appear on the reports.
     }
 
     if (enabled) {
@@ -6313,6 +6449,16 @@ void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
 // 0x84 = 4
 // 0x85 = 5
 
+// Humid F3V0 confirmed
+// 0x03 = 3 (but no humidification shown on hours of usage chart)
+// 0x04 = 4 (but no humidification shown on hours of usage chart)
+// 0x80 = Off
+// 0x81 = 1
+// 0x82 = 2
+// 0x83 = 3
+// 0x84 = 4
+// 0x85 = 5
+
 // Humid F5V0 confirmed
 // 0x00 = Off (presumably no humidifier present)
 // 0x80 = Off
@@ -6340,7 +6486,7 @@ void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 
     // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
-    if (!humidifier_present) CHECK_VALUE(humidlevel, 0);
+    //if (!humidifier_present) CHECK_VALUES(humidlevel, 0, 1);  // Some machines appear to encode the humidlevel setting even when the humidifier is not present.
 }
 
 
@@ -6554,9 +6700,12 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
 
 void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting)
 {
+    bool humidifier_present = true;
     bool humidfixed = false;  // formerly called "Classic"
     bool humidadaptive = false;  // formerly called "System One"
     bool tubepresent = false;
+    bool passover = false;
+    bool error = false;
 
     // Byte 1: 0x90 (no humidifier data), 0x50 (15ht, tube 4/5, humid 4), 0x54 (15ht, tube 5, humid 5) 0x4c (15ht, tube temp 3, humidifier 3)
     // 0x0c (15, tube 3, humid 3, fixed)
@@ -6564,6 +6713,8 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
     // 0b0101 0000 tube 4 and 5, humidifier 4
     // 0b0101 0100 15ht, tube 5, humidifier 5
     // 0b0100 1100 15ht, tube 3, humidifier 3
+    // 0b1011 0000 15, tube 3, humidifier 3, "Error" on humidification chart with asterisk at 4
+    // 0b0111 0000 15, tube 3, humidifier 3, "Passover" on humidification chart with notch at 4
     //   842       = humidifier status
     //      1 84   = humidifier setting
     //          ??
@@ -6573,12 +6724,13 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
     case 0: humidfixed = true; break;  // fixed, ignores tubetemp bits and reports tubetemp=3
     case 1: humidadaptive = true; break;  // adaptive, ignores tubetemp bits and reports tubetemp=3
     case 2: tubepresent = true; break;  // heated tube
-    case 4: break;  // no humidifier, possibly a bit flag rather than integer value, reports tubetemp=3 and humidlevel=3
+    case 3: passover = true; break;  // passover mode (only visible in chart)
+    case 4: humidifier_present = false; break;  // no humidifier, reports tubetemp=3 and humidlevel=3
+    case 5: error = true; break;  // "Error" in humidification chart, reports tubetemp=3 and humidlevel=3 in settings
     default:
         UNEXPECTED_VALUE(humid, "known value");
         break;
     }
-    bool humidifier_present = ((byte1 & 0x80) == 0);
     int humidlevel = (byte1 >> 2) & 7;
 
     // Byte 2: 0xB4 (15ht, tube 5, humid 5), 0xB0 (15ht, tube 5, humid 4), 0x90 (tube 4, humid 4), 0x6C (15ht, tube temp 3, humidifier 3)
@@ -6601,11 +6753,16 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         }
     }
 
+    // TODO: move this up into the switch statement above, given how many modes there now are.
     HumidMode humidmode = HUMID_Fixed;
     if (tubepresent) {
         humidmode = HUMID_HeatedTube;
     } else if (humidadaptive) {
         humidmode = HUMID_Adaptive;
+    } else if (passover) {
+        humidmode = HUMID_Passover;
+    } else if (error) {
+        humidmode = HUMID_Error;
     }
 
     if (add_setting) {
@@ -6623,14 +6780,16 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
 
     // Check for previously unseen data that we expect to be normal:
     if (family == 0) {
-        if (tubepresent) {
-            // All tube temperature and humidity levels seen.
-        }
+        // All variations seen.
     } else if (family == 5) {
         if (tubepresent) {
-            if (tubetemp != 0 && tubetemp > 3) UNEXPECTED_VALUE(tubetemp, "<= 3");
+            if (tubetemp != 0 && tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "<= 4");
+            // All humidity levels seen.
+        } else if (humidadaptive) {
+            // All humidity levels seen.
+        } else if (humidfixed) {
+            if (humidlevel < 3) UNEXPECTED_VALUE(humidlevel, "3-5");
         }
-        CHECK_VALUE(humidfixed, false);
     } else if (family == 3) {
         if (tubepresent) {
             // All tube temperature and humidity levels seen.
@@ -6707,11 +6866,16 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                     CHECK_VALUES(data[pos], 1, 2);  // 1 when EZ-Start is enabled? 2 when Auto-Trial? 3 when Auto-Trial is off or Opti-Start isn't off?
                 }
                 if (len == 2) {  // 400G, 500G has extra byte
-                    if (data[pos+1] != 0 && data[pos+1] != 0x80) {
-                        // 0x20 seen with Opti-Start enabled
-                        // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
-                        // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
-                        CHECK_VALUES(data[pos+1], 0x20, 0x30);
+                    switch (data[pos+1]) {
+                        case 0x00:  // 0x00 seen with EZ-Start disabled, no auto-trial, with CPAP-Check on 400X110
+                        case 0x10:  // 0x10 seen with EZ-Start enabled, Opti-Start off on 500X110
+                        case 0x20:  // 0x20 seen with Opti-Start enabled
+                        case 0x30:  // 0x30 seen with both Opti-Start and EZ-Start enabled on 500X110
+                        case 0x40:  // 0x40 seen with Auto-Trial
+                        case 0x80:  // 0x80 seen with EZ-Start and CPAP-Check+ on 500X150
+                            break;
+                        default:
+                            UNEXPECTED_VALUE(data[pos+1], "[0,0x10,0x20,0x30,0x40,0x80]")
                     }
                 }
                 break;
@@ -6771,7 +6935,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // but curiously report the use of C-Flex+, even though Auto-CPAP uses A-Flex.
                 CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);
-                CHECK_VALUES(data[pos], 30, 5);  // Auto-Trial Duration
+                if (data[pos] != 30) {
+                    CHECK_VALUES(data[pos], 5, 25);  // Auto-Trial Duration
+                }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
                 // If we want C-Flex+ to be reported as A-Flex, we can set cpapmode = PRS1_MODE_AUTOTRIAL here.
                 // (Note that the setting event has already been added above, which is why ImportSummary needs
@@ -6783,7 +6949,10 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x2a:  // EZ-Start
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0x80);  // EZ-Start enabled
+                CHECK_VALUES(data[pos], 0x00, 0x80);  // both seem to mean enabled
+                // 0x80 is CPAP Mode - EZ-Start in pressure detail chart, 0x00 is just CPAP mode with no EZ-Start pressure
+                // TODO: How to represent which one is active in practice? Should this always be "true" since
+                // either value means that the setting is enabled?
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_EZ_START, data[pos] != 0));
                 break;
             case 0x42:  // EZ-Start enabled for Auto-CPAP?
@@ -6848,6 +7017,18 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                         break;
                     }
                     break;
+                case 0xA0:  // Rise Time
+                    flexmode = FLEX_RiseTime;
+                    switch (cpapmode) {
+                        //case PRS1_MODE_BILEVEL:  probably this too, but we haven't seen it in practice
+                        case PRS1_MODE_AUTOBILEVEL:
+                            break;
+                        default:
+                            HEX(flexmode);
+                            UNEXPECTED_VALUE(cpapmode, "autobilevel");
+                            break;
+                    }
+                    break;
                 case 0xB0:  // P-Flex
                     flexmode = FLEX_PFlex;
                     switch (cpapmode) {
@@ -6875,6 +7056,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LEVEL, data[pos]));
                 if (flexmode == FLEX_PFlex) {
                     CHECK_VALUE(data[pos], 4);  // No number appears on reports.
+                }
+                if (flexmode == FLEX_RiseTime) {
+                    if (data[pos] < 1 || data[pos] > 3) UNEXPECTED_VALUE(data[pos], "1-3");
                 }
                 break;
             case 0x35:  // Humidifier setting
@@ -6933,9 +7117,9 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0xFF);
                 break;
-            case 0x45:  // new to 400G, only in last session?
+            case 0x45:  // new to 400G and 500G, appears right after 0x35 (humidifier setting)
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 1);
+                CHECK_VALUES(data[pos], 0, 1);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");
@@ -6968,7 +7152,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
         qWarning() << this->sessionid << "summary data too short:" << chunk_size;
         return false;
     }
-    if (chunk_size < 60) UNEXPECTED_VALUE(chunk_size, ">= 60");
+    if (chunk_size < 59) UNEXPECTED_VALUE(chunk_size, ">= 59");
 
     bool ok = true;
     int pos = 0;
@@ -7035,14 +7219,14 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 //CHECK_VALUE(data[pos+9], 0x00);
                 //CHECK_VALUES(data[pos+0xa], 0xbb, 0x00);  // 16-bit minutes in large leak
                 //CHECK_VALUE(data[pos+0xb], 0x00);
-                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // probably 16-bit value
-                CHECK_VALUE(data[pos+0xd], 0x00);
+                //CHECK_VALUES(data[pos+0xc], 0x15, 0x02);  // 16-bit minutes in PB
+                //CHECK_VALUE(data[pos+0xd], 0x00);
                 //CHECK_VALUES(data[pos+0xe], 0x01, 0x00);  // 16-bit VS count
                 //CHECK_VALUE(data[pos+0xf], 0x00);
                 //CHECK_VALUES(data[pos+0x10], 0x21, 5);  // probably 16-bit value, maybe H count?
                 CHECK_VALUE(data[pos+0x11], 0x00);
-                //CHECK_VALUES(data[pos+0x12], 0x13, 0);  // probably 16-bit value
-                CHECK_VALUE(data[pos+0x13], 0x00);
+                //CHECK_VALUES(data[pos+0x12], 0x13, 0);  // 16-bit value, not sure what
+                //CHECK_VALUE(data[pos+0x13], 0x00);
                 //CHECK_VALUES(data[pos+0x14], 0x05, 0);  // probably 16-bit value, maybe RE count?
                 CHECK_VALUE(data[pos+0x15], 0x00);
                 //CHECK_VALUE(data[pos+0x16], 0x00, 4);  // probably a 16-bit value, PB or FL count?
@@ -7075,14 +7259,22 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                     //CHECK_VALUE(data[pos+3], 0);
                 }
                 break;
+            case 0x09:  // Time Elapsed (event 4 in F0V4)
+                tt += data[pos] | (data[pos+1] << 8);
+                break;
             case 0x0a:  // Humidifier setting change
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSettingV3(data[pos+2], data[pos+3]);
                 break;
+            case 0x0d:  // ???
+                // seen on one 500G multiple times
+                //CHECK_VALUE(data[pos], 0);  // 16-bit value
+                //CHECK_VALUE(data[pos+1], 0);
+                break;
             case 0x0e:
                 // only seen once on 400G, many times on 500G
-                CHECK_VALUES(data[pos], 0, 6);
-                CHECK_VALUE(data[pos+1], 0);
+                //CHECK_VALUES(data[pos], 0, 6);  // 16-bit value
+                //CHECK_VALUE(data[pos+1], 0);
                 //CHECK_VALUES(data[pos+2], 7, 9);
                 //CHECK_VALUES(data[pos+3], 7, 15);
                 //CHECK_VALUES(data[pos+4], 7, 12);
@@ -7195,6 +7387,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
             break;
         }
 
+        int alarm;
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first?
@@ -7213,10 +7406,20 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
                 CHECK_VALUE(data[pos+5], 0);
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
-                CHECK_VALUES(data[pos+8], 0, 1);  // 1 = patient disconnect alarm of 15 sec, not sure where time is encoded
-                if (data[pos+8] != 0) {
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, data[pos+8] * 15));
+
+                alarm = 0;
+                switch (data[pos+8]) {
+                    case 1: alarm = 15; break;  // 15 sec
+                    case 2: alarm = 60; break;  // 60 sec
+                    case 0: break;
+                    default:
+                        UNEXPECTED_VALUE(data[pos+8], "0-2");
+                        break;
                 }
+                if (alarm) {
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_DISCONNECT_ALARM, alarm));
+                }
+
                 CHECK_VALUE(size, 9);
                 break;
             case 3:  // Mask On
@@ -7315,6 +7518,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
     int max_ps   = 0;
     int min_epap = 0;
     int max_epap = 0;
+    int rise_time;
     int breath_rate;
     int timed_inspiration;
 
@@ -7389,8 +7593,8 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    CHECK_VALUE(breath_rate, 10);
-                    CHECK_VALUE(timed_inspiration, 24);
+                    if (breath_rate < 4 || breath_rate > 16) UNEXPECTED_VALUE(breath_rate, "4-16");
+                    if (timed_inspiration < 12 || timed_inspiration > 24) UNEXPECTED_VALUE(timed_inspiration, "12-24");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -7431,8 +7635,9 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                     break;
                 case 0x20:  // Rise Time
                     // [0x20, 0x03] for no flex, rise time setting = 3, no rise lock
-                    CHECK_VALUE(data[pos+1], 3);
-                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos+1]));
+                    rise_time = data[pos+1];
+                    if (rise_time < 1 || rise_time > 6) UNEXPECTED_VALUE(rise_time, "1-6");
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, rise_time));
                     break;
                 default:
                     CHECK_VALUES(data[pos], 0, 0x20);
@@ -7711,10 +7916,10 @@ bool PRS1DataChunk::ParseSummary()
             return this->ParseSummaryF0V23();
         }
     case 3:
-        if (this->familyVersion == 6) {
-            return this->ParseSummaryF3V6();
-        } else if (this->familyVersion == 3) {
-            return this->ParseSummaryF3V3();
+        switch (this->familyVersion) {
+            case 0: return this->ParseSummaryF3V03();
+            case 3: return this->ParseSummaryF3V03();
+            case 6: return this->ParseSummaryF3V6();
         }
         break;
     case 5:
@@ -7751,7 +7956,8 @@ bool PRS1DataChunk::ParseEvents()
             break;
         case 3:
             switch (this->familyVersion) {
-                case 3: ok = this->ParseEventsF3V3(); break;
+                case 0: ok = this->ParseEventsF3V03(); break;
+                case 3: ok = this->ParseEventsF3V03(); break;
                 case 6: ok = this->ParseEventsF3V6(); break;
             }
             break;
@@ -7797,31 +8003,45 @@ bool PRS1Import::ImportEvents()
         // Then go through each required channel and make sure each eventlist is within
         // the bounds of the corresponding slice, warn if not.
         if (maskOn.count() > 0 && m_event_chunks.count() > 0) {
-            int offset = 0;
-            // F3V3 sometimes omits the (empty) first event chunk if the first slice is
-            // shorter than 2 minutes.
-            if (m_event_chunks.first()->family == 3 && m_event_chunks.first()->familyVersion == 3) {
-                offset = maskOn.count() - m_event_chunks.count();
-                if (offset < 0) {
-                    qCritical() << sessionid << "has more event chunks than mask-on slices!";
-                    offset = 0;  // avoid out-of-bounds references below
+            QVector<SessionSlice> maskOnWithEvents = maskOn;
+            if (m_event_chunks.first()->family == 3 && m_event_chunks.first()->familyVersion <= 3) {
+                // F3V0 and F3V3 sometimes omit (empty) event chunks if the mask-on slice is shorter than 2 minutes.
+                // Specifically, 1061401 and 1061T always do, but 1160P usually doesn't. Sometimes 1160P will omit
+                // just the first event chunk if the first mask-on slice is shorter than 2 minutes.
+                int empty = maskOn.count() - m_event_chunks.count();
+                if (empty > 0) {
+                    // If there are fewer event chunks than mask-on slices, filter the list to have just the
+                    // mask-on slices that we expect to have events.
+                    int skipped = 0;
+                    maskOnWithEvents.clear();
+                    for (auto & slice : maskOn) {
+                        if (skipped < empty && slice.end - slice.start < 120 * 1000L) {
+                            skipped++;
+                            continue;
+                        }
+                        maskOnWithEvents.append(slice);
+                    }
                 }
+            }
+            if (maskOnWithEvents.count() < m_event_chunks.count()) {
+                qWarning() << sessionid << "has more event chunks than mask-on slices!";
             }
             const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(m_event_chunks.first());
             for (auto & e : supported) {
                 if (!PRS1OnDemandChannels.contains(e) && !PRS1NonSliceChannels.contains(e)) {
                     for (auto & pChannelID : PRS1ImportChannelMap[e]) {
                         auto & eventlists = session->eventlist[*pChannelID];
-                        if (eventlists.count() + offset != maskOn.count()) {
-                            qWarning() << sessionid << "has" << maskOn.count() << "mask-on slices, channel"
+                        if (eventlists.count() != maskOnWithEvents.count()) {
+                            qWarning() << sessionid << "has" << maskOnWithEvents.count() << "mask-on slices, channel"
                                 << *pChannelID << "has" << eventlists.count() << "eventlists";
                             continue;
                         }
                         for (int i = 0; i < eventlists.count(); i++) {
                             if (eventlists[i]->count() == 0) continue;  // no first/last timestamp
-                            int j = i + offset;
-                            if (eventlists[i]->first() < maskOn[j].start || eventlists[i]->first() > maskOn[j].end ||
-                                eventlists[i]->last() < maskOn[j].start || eventlists[i]->last() > maskOn[j].end) {
+                            auto & list = eventlists[i];
+                            auto & slice = maskOnWithEvents[i];
+                            if (list->first() < slice.start || list->first() > slice.end ||
+                                list->last() < slice.start || list->last() > slice.end) {
                                 qWarning() << sessionid << "channel" << *pChannelID << "has events outside of mask-on slice" << i;
                             }
                         }
@@ -7829,6 +8049,8 @@ bool PRS1Import::ImportEvents()
                 }
             }
         }
+        // The above is just sanity-checking the results of our import process, that discontinuous
+        // data is fully contained within mask-on slices.
     
         session->m_cnt.clear();
         session->m_cph.clear();
@@ -7967,7 +8189,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
 }
 
 
-void PRS1Import::ParseOximetry()
+void PRS1Import::ImportOximetry()
 {
     int size = oximetry.size();
 
@@ -8023,10 +8245,10 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
     quint64 start_ti;
     int start_i;
     
-    // Split eventlist on invalid values (255)
+    // Split eventlist on invalid values (254-255)
     for (int i=0; i < data.size(); i++) {
         unsigned char value = raw[i];
-        bool valid = (value != 255);
+        bool valid = (value < 254);
 
         if (valid) {
             if (pending_samples == false) {
@@ -8036,7 +8258,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
             }
             
             if (channel == OXI_Pulse) {
-                if (value > 200) UNEXPECTED_VALUE(value, "<= 200 bpm");
+                // Values up through 253 are confirmed to be reported as valid on official reports.
             } else {
                 if (value > 100) UNEXPECTED_VALUE(value, "<= 100%");
             }
@@ -8060,7 +8282,7 @@ void PRS1Import::ImportOximetryChannel(ChannelID channel, QByteArray & data, qui
 }
 
 
-void PRS1Import::ParseWaveforms()
+void PRS1Import::ImportWaveforms()
 {
     int size = waveforms.size();
     quint64 s1, s2;
@@ -8114,9 +8336,9 @@ void PRS1Import::ParseWaveforms()
 
         if (num > 1) {
             float pressure_gain = 0.1F;  // standard pressure gain
-            if ((waveform->family == 5 && waveform->familyVersion == 3) ||
+            if ((waveform->family == 5 && (waveform->familyVersion == 2 || waveform->familyVersion == 3)) ||
                 (waveform->family == 3 && waveform->familyVersion == 6)){
-                // F5V3 and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+                // F5V2, F5V3, and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
                 pressure_gain = 0.125F;  // TODO: this should be parameterized somewhere better, once we have a clear idea of which machines use this
             }
             
@@ -8228,7 +8450,7 @@ bool PRS1Import::ParseSession(void)
         
         // If are no mask-on slices, then there's not any meaningful event or waveform data for the session.
         // If there's no no event or waveform data, mark this session as a summary.
-        if (session->m_slices.count() == 0 || (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && oxifile.isEmpty())) {
+        if (session->m_slices.count() == 0 || (m_event_chunks.count() == 0 && m_wavefiles.isEmpty() && m_oxifiles.isEmpty())) {
             session->setSummaryOnly(true);
             save = true;
             break;  // and skip the occasional fragmentary event or waveform data
@@ -8245,14 +8467,18 @@ bool PRS1Import::ParseSession(void)
 
         if (!m_wavefiles.isEmpty()) {
             // Parse .005 Waveform files
+            waveforms = ReadWaveformData(m_wavefiles, "Waveform");
+
+            // Extract and import raw data into channels.
             ImportWaveforms();
         }
 
-        if (!oxifile.isEmpty()) {
-            // Parse .006 Waveform file
-            oximetry = loader->ParseFile(oxifile);
-            oximetry = CoalesceWaveformChunks(oximetry);
-            ParseOximetry();
+        if (!m_oxifiles.isEmpty()) {
+            // Parse .006 Waveform files
+            oximetry = ReadWaveformData(m_oxifiles, "Oximetry");
+
+            // Extract and import raw data into channels.
+            ImportOximetry();
         }
 
         save = true;
@@ -8262,16 +8488,17 @@ bool PRS1Import::ParseSession(void)
 }
 
 
-void PRS1Import::ImportWaveforms()
+QList<PRS1DataChunk *> PRS1Import::ReadWaveformData(QList<QString> & files, const char* label)
 {
     QMap<qint64,PRS1DataChunk *> waveform_chunks;
+    QList<PRS1DataChunk *> result;
 
-    if (m_wavefiles.count() > 1) {
-        qDebug() << session->session() << "Waveform data split across multiple files";
+    if (files.count() > 1) {
+        qDebug() << session->session() << label << "data split across multiple files";
     }
     
-    for (auto & f : m_wavefiles) {
-        // Parse a single .005 Waveform file
+    for (auto & f : files) {
+        // Parse a single .005 or .006 waveform file
         QList<PRS1DataChunk *> file_chunks = loader->ParseFile(f);
         for (auto & chunk : file_chunks) {
             PRS1DataChunk* previous = waveform_chunks[chunk->timestamp];
@@ -8286,21 +8513,12 @@ void PRS1Import::ImportWaveforms()
     }
     
     // Get the list of pointers sorted by timestamp.
-    waveforms = waveform_chunks.values();
+    result = waveform_chunks.values();
 
     // Coalesce contiguous waveform chunks into larger chunks.
-    waveforms = CoalesceWaveformChunks(waveforms);
+    result = CoalesceWaveformChunks(result);
 
-    if (session->eventlist.contains(CPAP_FlowRate)) {
-        if (waveforms.size() > 0) {
-            // Delete anything called "Flow rate" picked up in the events file if real data is present
-            qWarning() << session->session() << "Deleting flow rate events due to flow rate waveform data";
-            session->destroyEvent(CPAP_FlowRate);
-        }
-    }
-
-    // Extract raw data into channels.
-    ParseWaveforms();
+    return result;
 }
 
 
@@ -8475,7 +8693,11 @@ bool PRS1DataChunk::ReadHeader(QFile & f)
             break;
         }
         if (this->fileVersion < 2 || this->fileVersion > 3) {
-            qWarning() << this->m_path << "@" << hex << this->m_filepos << "Never seen PRS1 header version < 2 or > 3 before";
+            if (this->m_filepos > 0) {
+                qWarning() << this->m_path << "@" << hex << this->m_filepos << "corrupt PRS1 header, skipping remainder of file";
+            } else {
+                qWarning() << this->m_path << "unsupported PRS1 header version" << this->fileVersion;
+            }
             break;
         }
         if (this->htype != PRS1_HTYPE_NORMAL && this->htype != PRS1_HTYPE_INTERVAL) {
@@ -8807,9 +9029,11 @@ void PRS1Loader::initChannels()
         QObject::tr("PRS1 Humidification Mode"),
         QObject::tr("Humid. Mode"),
         "", LOOKUP, Qt::green));
-    chan->addOption(0, QObject::tr("Fixed (Classic)"));
-    chan->addOption(1, QObject::tr("Adaptive (System One)"));
-    chan->addOption(2, QObject::tr("Heated Tube"));
+    chan->addOption(HUMID_Fixed, QObject::tr("Fixed (Classic)"));
+    chan->addOption(HUMID_Adaptive, QObject::tr("Adaptive (System One)"));
+    chan->addOption(HUMID_HeatedTube, QObject::tr("Heated Tube"));
+    chan->addOption(HUMID_Passover, QObject::tr("Passover"));
+    chan->addOption(HUMID_Error, QObject::tr("Error"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_TubeTemp = 0xe10f, SETTING, MT_CPAP,  SESSION,
         "PRS1TubeTemp",
@@ -8971,6 +9195,15 @@ void PRS1Loader::initChannels()
         QObject::tr("TB"),
         STR_UNIT_Seconds,
         DEFAULT,    QColor("black")));
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_PeakFlow = 0x115a, WAVEFORM, MT_CPAP, SESSION,
+        "PRS1PeakFlow",
+        QObject::tr("Peak Flow"),
+        QObject::tr("Peak flow during a 2-minute interval"),
+        QObject::tr("Peak Flow"),
+        STR_UNIT_LPM,
+        DEFAULT,    QColor("red")));
+    chan->setShowInOverview(true);
 }
 
 void PRS1Loader::Register()

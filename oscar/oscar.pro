@@ -302,9 +302,11 @@ SOURCES += \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
+    SleepLib/deviceconnection.cpp \
     SleepLib/serialoximeter.cpp \
     SleepLib/loader_plugins/md300w1_loader.cpp \
     Graphs/gSessionTimesChart.cpp \
+    Graphs/gPressureChart.cpp \
     logger.cpp \
     SleepLib/machine_common.cpp \
     SleepLib/loader_plugins/weinmann_loader.cpp \
@@ -380,9 +382,11 @@ HEADERS  += \
     translation.h \
     statistics.h \
     oximeterimport.h \
+    SleepLib/deviceconnection.h \
     SleepLib/serialoximeter.h \
     SleepLib/loader_plugins/md300w1_loader.h \
     Graphs/gSessionTimesChart.h \
+    Graphs/gPressureChart.h \
     logger.h \
     SleepLib/loader_plugins/weinmann_loader.h \
     Graphs/gdailysummary.h \
@@ -432,9 +436,6 @@ OTHER_FILES += \
     docs/schema.xml \
     docs/graphs.xml \
     docs/channels.xml \
-    docs/release_notes.html \
-    docs/about.html \
-    docs/credits.html \
     docs/startup_tips.txt \
     docs/countries.txt \
     docs/tz.txt \

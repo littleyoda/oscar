@@ -1,5 +1,6 @@
-﻿/* ExportCSV module implementation
+/* ExportCSV module implementation
  *
+ * Copyright (c) 2020 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -180,23 +181,15 @@ void ExportCSV::on_exportButton_clicked()
     countlist.append(CPAP_UserFlag2);
     countlist.append(CPAP_PressurePulse);
 
-    avglist.append(CPAP_Pressure);
-    avglist.append(CPAP_IPAP);
-    avglist.append(CPAP_EPAP);
-    avglist.append(CPAP_FLG);        // Pholynyk, 25Aug2015, add ResMed Flow Limitation
+    QVector<ChannelID> statChannels = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet, CPAP_EPAP, CPAP_EPAPSet, CPAP_FLG };
+    for (auto & chan : statChannels) {
+        avglist.append(chan);
+        p90list.append(chan);
+        maxlist.append(chan);
+    }
 
-    p90list.append(CPAP_Pressure);
-    p90list.append(CPAP_IPAP);
-    p90list.append(CPAP_EPAP);
-    p90list.append(CPAP_FLG);
-       
     float percentile=p_profile->general->prefCalcPercentile()/100.0;                   // Pholynyk, 18Aug2015
     EventDataType percent = percentile;                                                // was 0.90F
-
-    maxlist.append(CPAP_Pressure);    // Pholynyk, 18Aug2015, add maximums
-    maxlist.append(CPAP_IPAP);
-    maxlist.append(CPAP_EPAP);
-    maxlist.append(CPAP_FLG);
 
     // Not sure this section should be translateable.. :-/
     if (ui->rb1_details->isChecked()) {
@@ -240,7 +233,7 @@ void ExportCSV::on_exportButton_clicked()
         ui->progressBar->setValue(ui->progressBar->value() + 1);
         QApplication::processEvents();
 
-        Day *day = p_profile->GetDay(date, MT_CPAP);
+        Day *day = p_profile->GetDay(date, MT_CPAP);  // Only export days with CPAP data.
 
         if (day) {
             QString data;
@@ -287,6 +280,9 @@ void ExportCSV::on_exportButton_clicked()
             } else if (ui->rb1_Sessions->isChecked()) {
                 for (int i = 0; i < day->size(); i++) {
                     Session *sess = (*day)[i];
+                    if (sess->type() != MT_CPAP) {
+                        continue;  // Not every session in a day with CPAP data will be a CPAP session.
+                    }
                     QDateTime start = QDateTime::fromTime_t(sess->first() / 1000L);
                     QDateTime end = QDateTime::fromTime_t(sess->last() / 1000L);
 

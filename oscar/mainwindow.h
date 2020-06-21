@@ -164,6 +164,7 @@ class MainWindow : public QMainWindow
     void setStatsHTML(QString html);
 
     int importCPAP(ImportPath import, const QString &message);
+    void finishCPAPImport();
 
     void startImportDialog() { on_action_Import_Data_triggered(); }
 
@@ -203,6 +204,11 @@ class MainWindow : public QMainWindow
 
     //! \brief Display About Dialog
     void on_action_About_triggered();
+
+#ifdef Q_OS_WIN
+   //! \brief Called on Windows to see whether the current OpenGL driver will cause the application to crash
+    void TestWindowsOpenGL();
+#endif
 
     //! \brief Called after a timeout to initiate loading of all summary data for this profile
     void Startup();
@@ -356,11 +362,12 @@ class MainWindow : public QMainWindow
 
     void on_statisticsView_anchorClicked(const QUrl &url);
 
+    void on_actionShowPersonalData_toggled(bool visible);
+
 
 private:
     QString getMainWindowTitle();
     void importCPAPBackups();
-    void finishCPAPImport();
     QList<ImportPath> detectCPAPCards();
     QList<ImportPath> selectCPAPDataCards(const QString & prompt);
     void importCPAPDataCards(const QList<ImportPath> & datacards);

@@ -1,6 +1,6 @@
 OpenSource CPAP Analysis Reporter - OSCAR
 
-OSCAR is a derivative of SleepyHead version 1.1.0,created when that was abandoned by Mark Watkins.
+OSCAR is a derivative of SleepyHead version 1.1.0, created when that was abandoned by Mark Watkins.
 
 SleepyHead was a cross platform, opensource sleep tracking program for reviewing CPAP and Oximetry data,
 which are devices used in the treatment of Sleep Disorders like Obstructive Sleep Apnea. It was released
@@ -10,61 +10,29 @@ SleepyHead was written by Mark Watkins (aka Jedimark), an Australian software de
 
 SleepyHead was copyright (C) 2011-2018 by Mark Watkins <mark@jedimark.net>
 
-Portions of OSCAR are copyright (c) 2019 by Nightowl Software <michaelnightowl99@gmail.com>
+Portions of OSCAR are copyright (c) 2019, 2020 by The OSCAR Team <oscar@oscar-team.org>
 
-Requirements: (Linux package names are given, Windows and Mac should be similar)
--------------
-Qt5.9 SDK with help (Qt5.9 from http://qt.io/download-open-source recommended)
-The help modules are libqt5help5, qttools5-dev and qttools5-dev-tools
+Minimum Requirements: 
+-------------------
+All systems need a C++ compiler and linker and the QT platform download.
 
-Qt5.7 SDK without help is possible (for Debian Stretch)
+Windows Building: See Building/Windows/BUILD-WIN.md
+-----------------
 
-All systems need qtcreator or qttools5-dev-tools
-
-All systems need qt5-default, libqt5serialport5, libqt5serailport5-dev and libqt5opengl5-dev
-Linux also needs libudev-dev and zlib1g-dev
-
-OSX needs Xcode and commandline tools from AppStore,
-
-Windows needs MinGW (in Qt5 SDK) or VC++2015 Community, and a matching set of Qt libraries.
-
-Building:
---------
-
-Recommend shadow building to not cruft up the source code folder:
-
-cd ..
-mkdir build
-cd build
-qmake ../OSCAR-code/OSCAR_QT.pro 
-make
-
-You may need to add a -spec option to qmake to suit your platform. 
-Adding -j4 speeds up the make command on a dual core or greater system.
-
-Building on OSX:
+MacOS Building: See Building/MacOS/BUILD-mac.md
 ---------------
-Build as above. If qmake fails with the error:
-Project ERROR: Xcode not set up properly. You may need to confirm the license agreement by running /usr/bin/xcodebuild
-edit the file: 
-QT_INSTALL_DIR/5.9/clang_64/mkspecs/features/mac/default_pre.prf
 
-and replace
-/usr/bin/xcrun -find xcrun 2>/dev/null
-
-with
-/usr/bin/xcrun -find xcodebuild 2>/dev/null
-
-
+Linux Building: See Building/Linux/BUILD-Linux.md
+---------------
 
 Software Licensing Information
 ------------------------------
 OSCAR is released under the GNU GPL v3 License. Please see below for a note on giving correct attribution
 in redistribution of derivatives.
 
-It is built using Qt SDK (Open Source Edition), available from http://qt.io.
+It is built using Qt SDK (Open Source Edition), available from https://qt.io.
 
-Redistribution of derivatives ( a note added by Mark Watins )
+Redistribution of derivatives ( a note added by Mark Watkins )
 -----------------------------
 Mark Watkins created this software to help lessen the exploitation of others. Seeing his work being used to exploit others
 is incredibly un-motivational, and incredibly disrespectful of all the work he put into this project.

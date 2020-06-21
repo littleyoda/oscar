@@ -116,7 +116,9 @@ void gLineChart::SetDay(Day *d)
             Session *sess = d->sessions[i];
             if (!sess->enabled()) continue;
 
-            CPAPMode mode = (CPAPMode)sess->settings[CPAP_Mode].toInt();
+            // Don't use operator[] here or else it will insert a default-constructed entry
+            // into sess->settings if it's not present.
+            CPAPMode mode = (CPAPMode)sess->settings.value(CPAP_Mode).toInt();
 
             if (mode >= MODE_BILEVEL_FIXED) {
                 m_enabled[CPAP_Pressure] = true;    // probably a confusion of Pressure and IPAP somewhere

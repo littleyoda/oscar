@@ -141,7 +141,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
     int maxy = 0;
 
-    if (!p_profile->user->firstName().isEmpty()) {
+    if (AppSetting->showPersonalData() && !p_profile->user->firstName().isEmpty()) {
         QString userinfo = STR_TR_Name + QString(":\t %1, %2\n").
                 arg(p_profile->user->lastName()).
                 arg(p_profile->user->firstName());
@@ -223,6 +223,9 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
             float cai = day->count(CPAP_ClearAirway) / hours;
             float rei = day->count(CPAP_RERA) / hours;
             float vsi = day->count(CPAP_VSnore) / hours;
+            if (day->channelHasData(CPAP_VSnore2)) {  // PRS1 puts its 2-minute VS count in a different channel rather than reporting each incident.
+                vsi = day->sum(CPAP_VSnore2) / hours;
+            }
             float fli = day->count(CPAP_FlowLimit) / hours;
 //            float sai = day->count(CPAP_SensAwake) / hours;
             float nri = day->count(CPAP_NRI) / hours;

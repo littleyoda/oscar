@@ -226,6 +226,8 @@ void MainWindow::SetupGUI()
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
 
+    ui->actionShowPersonalData->setChecked(AppSetting->showPersonalData());
+
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());
 
     ui->actionDaily_Calendar->setChecked(AppSetting->calendarVisible());
@@ -628,8 +630,38 @@ void MainWindow::CloseProfile()
 }
 
 
+#ifdef Q_OS_WIN
+void MainWindow::TestWindowsOpenGL()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5,4,0)) && !defined(BROKEN_OPENGL_BUILD)
+    // 1. Set OpenGLCompatibilityCheck=1 in registry.
+    QSettings settings;
+    settings.setValue("OpenGLCompatibilityCheck", true);
+
+    // 2. See if OpenGL crashes the application:
+    QOpenGLWidget* gl;
+    gl = new QOpenGLWidget(ui->tabWidget);
+    ui->tabWidget->insertTab(2, gl, "");
+    //qDebug() << __LINE__;
+    QCoreApplication::processEvents();  // this triggers the SIGSEGV
+    //qDebug() << __LINE__;
+    // If we get here, OpenGL won't crash the application.
+    ui->tabWidget->removeTab(2);
+    delete gl;
+
+    // 3. Remove OpenGLCompatibilityCheck from the registry upon success.
+    settings.remove("OpenGLCompatibilityCheck");
+#endif
+}
+#endif
+
+
 void MainWindow::Startup()
 {
+#ifdef Q_OS_WIN
+    TestWindowsOpenGL();
+#endif
+
     for (auto & loader : GetLoaders()) {
         loader->setParent(this);
     }
@@ -713,7 +745,8 @@ void MainWindow::finishCPAPImport()
     GenerateStatistics();
     profileSelector->updateProfileList();
 
-    welcome->refreshPage();
+    if (welcome)
+        welcome->refreshPage();
 
     if (overview) { overview->ReloadGraphs(); }
     if (daily) {
@@ -1603,6 +1636,7 @@ void packEventList(EventList *el, EventDataType minval = 0)
             }
         }
 
+
         lastt = t;
     }
 
@@ -1807,7 +1841,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
     if (QProcess::startDetached("/usr/bin/open", args)) {
         QApplication::instance()->exit();
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr, STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
@@ -1834,7 +1868,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 //        ::exit(0);
     } else { 
-        QMessageBox::warning(nullptr, tr("Gah!"), 
+        QMessageBox::warning(nullptr,  STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
 
@@ -1843,12 +1877,15 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 void MainWindow::on_actionPurge_Current_Day_triggered()
 {
-    if (!daily) return;
+    if (!daily)
+        return;
     QDate date = daily->getDate();
+    qDebug() << "Purging CPAP data from" << date;
     daily->Unload(date);
     Day *day = p_profile->GetDay(date, MT_CPAP);
     Machine *cpap = nullptr;
-    if (day) cpap = day->machine(MT_CPAP);
+    if (day)
+        cpap = day->machine(MT_CPAP);
 
     if (cpap) {
         QList<Session *>::iterator s;
@@ -1857,6 +1894,9 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
         QList<SessionID> sidlist;
         for (s = day->begin(); s != day->end(); ++s) {
             list.push_back(*s);
+            qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+            qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
+            qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
             sidlist.push_back((*s)->session());
         }
 
@@ -1865,6 +1905,7 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
         QFile impfile(cpap->getDataPath()+"/imported_files.csv");
         if (impfile.exists()) {
+            qDebug() << "Obsolet file exists" << impfile.fileName();
             if (impfile.open(QFile::ReadOnly)) {
                 QTextStream impstream(&impfile);
                 QString serial;
@@ -1901,7 +1942,7 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
                 out.flush();
             }
             impfile.close();
-        }
+        }                   // end of obsolte file code
 
         QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
         rxcache.remove();
@@ -1923,6 +1964,11 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
     daily->clearLastDay();
     daily->LoadDate(date);
+    if (overview)
+        overview->ReloadGraphs();
+    if (welcome)
+        welcome->refreshPage();
+    GenerateStatistics();
 }
 
 void MainWindow::on_actionRebuildCPAP(QAction *action)
@@ -1983,13 +2029,15 @@ void MainWindow::on_actionRebuildCPAP(QAction *action)
         } else {
         }
     }
-    if (overview) overview->ReloadGraphs();
+    if (overview)
+        overview->ReloadGraphs();
     if (daily) {
         daily->Unload();
         daily->clearLastDay(); // otherwise Daily will crash
         daily->ReloadGraphs();
     }
-    if (welcome) welcome->refreshPage();
+    if (welcome)
+        welcome->refreshPage();
     PopulatePurgeMenu();
     GenerateStatistics();
     p_profile->StoreMachines();
@@ -2216,7 +2264,7 @@ void MainWindow::doRecompressEvents()
 {
     if (!p_profile) return;
     ProgressDialog progress(this);
-    progress.setMessage("Recompressing Session Files");
+    progress.setMessage(QObject::tr("Recompressing Session Files"));
     progress.setProgressMax(p_profile->daylist.size());
     QPixmap icon = QPixmap(":/icons/logo-md.png").scaled(64,64);
     progress.setPixmap(icon);
@@ -2340,6 +2388,8 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
             Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "ZEO sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2369,6 +2419,8 @@ void MainWindow::on_actionImport_Dreem_Data_triggered()
             Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             qDebug() << "Imported" << c << "Dreem sessions";
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2463,6 +2515,8 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
 
         Notify(tr("Somnopause Data Import complete"));
         PopulatePurgeMenu();
+        if (overview) overview->ReloadGraphs();
+        if (welcome) welcome->refreshPage();
         daily->LoadDate(daily->getDate());
     }
 
@@ -2480,15 +2534,24 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
 #if defined(Q_OS_WIN)
     // Windows can't handle this name filter.
     w.setOption(QFileDialog::DontUseNativeDialog, true);
+    // And since the non-native dialog can't select both directories and files,
+    // it needs the following to enable selecting multiple files.
+    w.setFileMode(QFileDialog::ExistingFiles);
 #endif
 
     if (w.exec() == QFileDialog::Accepted) {
         QString filename = w.selectedFiles()[0];
+        if (w.selectedFiles().size() > 1) {
+            // The user selected multiple files in a directory, so use the parent directory as the filename.
+            filename = QFileInfo(filename).absoluteDir().canonicalPath();
+        }
 
         int c = viatom.Open(filename);
         if (c > 0) {
             Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
             PopulatePurgeMenu();
+            if (overview) overview->ReloadGraphs();
+            if (welcome) welcome->refreshPage();
         } else if (c == 0) {
             Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
         } else {
@@ -2661,6 +2724,13 @@ void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
     if (daily) daily->setCalendarVisible(visible);
 }
 
+void MainWindow::on_actionShowPersonalData_toggled(bool visible)
+{
+    AppSetting->setShowPersonalData(visible);
+    if (!setupRunning)
+        GenerateStatistics();
+}
+
 #include "SleepLib/journal.h"
 
 void MainWindow::on_actionExport_Journal_triggered()
@@ -2706,6 +2776,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
+        QString prefix;
         
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
         while (true) {
@@ -2719,6 +2790,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             } else {
                 infostr = datacard.loader->loaderName();
             }
+            prefix = infostr;
             folder += QDir::separator() + infostr + ".zip";
 
             filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
@@ -2751,7 +2823,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
             prog->setMessage(tr("Creating zip..."));
-            ok = z.AddDirectory(cardPath, prog);
+            ok = z.AddDirectory(cardPath, prefix, prog);
             z.Close();
         } else {
             qWarning() << "Unable to open" << filename;
@@ -2811,7 +2883,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
             if (ok) {
                 debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
                 debugLog.close();
-                QString debugLogName = oscarData.dirName() + QDir::separator() + QFileInfo(debugLog).fileName();
+                QString debugLogName = oscarData.dirName() + "/" + QFileInfo(debugLog).fileName();
                 ok = z.AddFile(debugLog.fileName(), debugLogName);
                 if (!ok) {
                     qWarning() << "Unable to add debug log to zip!";

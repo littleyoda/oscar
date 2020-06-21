@@ -308,6 +308,13 @@ EventDataType Day::settings_wavg(ChannelID code)
             auto set = sess->settings.find(code);
 
             if (set != sess->settings.end()) {
+                if (code == CPAP_Mode && sess->type() != MT_CPAP) {
+                    // There used to be a bug in gLineChart::SetDay that inserted a CPAP_Mode
+                    // setting in any session that didn't already have one. That shouldn't
+                    // happen any more, but leave this diagnostic message here in case it does.
+                    qWarning() << sess->session() << "non-CPAP session with CPAP mode setting";
+                    continue;
+                }
                 s0 = sess->hours();
                 tmp = set.value().toDouble();
                 s1 += tmp * s0;
@@ -809,19 +816,25 @@ ChannelID Day::getPressureChannelID() {
     // See the comment in getCPAPModeStr().
     // Determined the preferred pressure channel (CPAP_IPAP or CPAP_Pressure)
     CPAPMode cpapmode = (CPAPMode)(int)settings_max(CPAP_Mode);
-    ChannelID preferredID = CPAP_Pressure;
-    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS)
-        preferredID = CPAP_IPAP;
 
-    // If preferred channel has data, return it
-    if (channelHasData(preferredID))
-        return preferredID;
+    // TODO: PRS1 ventilators in CPAP mode report IPAP rather than pressure...but their pressure setting channel is CPAP_Pressure,
+    // so this currently gets fixed in the welcome screen manually.
+    // And why would ASV or AVAPS have Pressure channels?
+    QList<ChannelID> preferredIDs = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet };
+    if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS ||
+        cpapmode == MODE_BILEVEL_FIXED || cpapmode == MODE_BILEVEL_AUTO_FIXED_PS || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
+        preferredIDs = { CPAP_IPAP, CPAP_IPAPSet, CPAP_Pressure, CPAP_PressureSet };
+    }
 
-    // Otherwise return the other pressure channel
-    if (preferredID == CPAP_IPAP)
-        return CPAP_Pressure;
-    else
-        return CPAP_IPAP;
+    for (auto & preferredID : preferredIDs) {
+        // If preferred channel has data, return it
+        if (channelHasData(preferredID)) {
+            //qDebug() << QString("Found pressure channel 0x%1").arg(preferredID, 4, 16, QChar('0'));
+            return preferredID;
+        }
+    }
+    
+    return NoChannel;
 }
 
 bool Day::hasEnabledSessions()
@@ -1486,7 +1499,16 @@ QString Day::getPressureRelief()
         if (pr_level_chan != NoChannel && settingExists(pr_level_chan)) {
             pr_level = qRound(settings_wavg(pr_level_chan));
         }
-        if (pr_level >= 0) pr_str += QString(" %1").arg(schema::channel[pr_level_chan].option(pr_level));
+
+        if (pr_level >= 0) {
+            // TODO: Ideally the formatting of LOOKUP datatypes should be done in only one place.
+            schema::Channel & chan = schema::channel[pr_level_chan];
+            QString level = chan.option(pr_level);
+            if (level.isEmpty()) {
+                level = QString().number(pr_level) + " " + chan.units();;
+            }
+            pr_str += QString(" %1").arg(level);
+        }
     } else pr_str = STR_TR_None;
     return pr_str;
 }

@@ -13,9 +13,8 @@ The following programs and files are required to create Windows installers:
     
 -   GIT for windows, from <https://gitforwindows.org/>. GIT for Windows adds itself to your path.
     
--   Gawk is required. You can use the version included with Git for Windows or install Gawk for Windows from <http://gnuwin32.sourceforge.net/packages/gawk.htm>. The deployment batch file will use the Git for Windows version if gawk.exe is not in your PATH.
+-   QT Open Source edition from <https://www.qt.io/download>. I use the latest patch version in the 5.12 LTS series -- version 5.12.8 at the date this was last updated. More recent versions in the 5.12 series should also work.
     
--   QT Open Source edition from <https://www.qt.io/download>. I use version 5.12.5. More recent versions in the 5.12 series should also work.
 
 **Installing Inno Setup 6**
 
@@ -30,24 +29,16 @@ Run the installer, accepting options to install inno script studio (for possible
 Go to <https://gitforwindows.org/> and click on the Download button. Run the installer, which presents lots of options:
 
 -   Select whichever editor you desire.
-
--   Select “Use Git and optional Unix tools from the Command Prompt.” If you do this, rather than “Git from the command line and also from 3rd-party software,” you will not need to install Gawk separately, as it is included with Git for Windows.
-    
+-   Select “Use Git from the command line and also from 3rd-party software.” 
 -   Select “Use the OpenSSL library.”
-
 -   Select “Checkout Windows-style, commit Unix-style line endings.”
-
 -   Select “Use Windows’ default console window.” I find the Windows default console to be satisfactory on Windows 10.
-    
--   Leave extra options as they default (enable file system caching, enable Git credential manager, but not symbolic links).
+-   Select "Enable symbolic links"
+-   Leave other extra options as they default (enable file system caching, enable Git credential manager).
 
 GIT for Windows adds itself to your path.
 
 Create SSH key and upload to GitLab--See https://docs.gitlab.com/ce/ssh/README.html.
-
-**Installing Gawk (if Git for Windows’ gawk is not used)**
-
-From <http://gnuwin32.sourceforge.net/packages/gawk.htm>, download setup for “Complete package, except sources”. When downloaded, run the setup program. Accept default options and location. The deployment batch file assumes that gawk.exe is in your PATH, so either add c:\\Program Files (x86)\\gnuwin32\\bin to your PATH or copy the executables to some other directory already in your PATH.
 
 **Installing QT**
 
@@ -61,21 +52,19 @@ Go to QT at <https://www.qt.io/download> and download the Open Source edition of
     
 -   Select components:
 
-    -   In QT 5.12.5:
+    -   In QT 5.12.*x*:
 
         -   MinGW 7.3.0 32-bit
-
-        -   MinGW 7.3.0 64-bit
-		
-		-	Sources
-
-    -   In Developer and Designer Tools:
-
-        -   QT Creator 4.10.0 CDB Debug
-
-        -   MinGW 7.3.0 32-bit
-
-        -   MinGW 7.3.0 64-bit
+-   MinGW 7.3.0 64-bit
+        -	Sources
+		-	QT Debug Information Files
+	
+-   In Developer and Designer Tools:
+    
+    -   QT Creator 4.11.2 CDB Debug
+    -   Debugging Tools for Windows
+    -   MinGW 7.3.0 32-bit
+    -   MinGW 7.3.0 64-bit
 
 And complete the installation (this also takes a while).
 

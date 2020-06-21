@@ -178,7 +178,7 @@ QString Welcome::GenerateCPAPHTML()
             int daysto = date.daysTo(QDate::currentDate());
             QString daystring;
             if (daysto == 1) daystring += tr("last night");
-            else if (daysto == 2) daystring += tr("yesterday");
+            else if (daysto == 2) daystring += tr("1 day ago");
             else daystring += tr("%2 days ago").arg(date.daysTo(QDate::currentDate()));
 
             html += tr("was %1 (on %2)").arg(daystring).arg(date.toString(Qt::SystemLocaleLongDate)) + "<br/>";
@@ -230,31 +230,51 @@ QString Welcome::GenerateCPAPHTML()
             ChannelID pressChanID = day->getPressureChannelID();     // Get channel id for pressure that we should report
             double perc= p_profile->general->prefCalcPercentile();
 
+            // When CPAP_PressureSet and CPAP_IPAPSet have data (used for percentiles, etc.)
+            // CPAP_Pressure and CPAP_IPAP are their corresponding settings channels.
+            ChannelID pressSettingChanID;
+            if (pressChanID == CPAP_PressureSet) {
+                pressSettingChanID = CPAP_Pressure;
+            } else if (pressChanID == CPAP_IPAPSet) {
+                pressSettingChanID = CPAP_IPAP;
+            } else {
+                pressSettingChanID = pressChanID;
+            }
+
+            ChannelID epapDataChanID = CPAP_EPAP;
+            if (day->channelHasData(CPAP_EPAPSet)) {
+                epapDataChanID = CPAP_EPAPSet;
+            }
+
+            if (pressChanID == NoChannel) {
+                qWarning() << "Unable to find pressure channel for welcome summary!";
+            }
             if (cpapmode == MODE_CPAP) {
-                EventDataType pressure = day->settings_max(pressChanID);
+                pressSettingChanID = CPAP_Pressure;  // DreamStation ventilators report EPAP/IPAP data, but the setting is Pressure
+                EventDataType pressure = day->settings_max(pressSettingChanID);
+                qDebug() << pressSettingChanID << pressure;
                 html += tr("Your CPAP machine used a constant %1 %2 of air").arg(pressure).arg(schema::channel[pressChanID].units());
             } else if (cpapmode == MODE_APAP) {
                 EventDataType pressure = day->percentile(pressChanID, perc/100.0);
                 html += tr("Your pressure was under %1 %2 for %3% of the time.").arg(pressure).arg(schema::channel[pressChanID].units()).arg(perc);
             } else if (cpapmode == MODE_BILEVEL_FIXED) {
-                EventDataType ipap = day->settings_max(pressChanID);
+                EventDataType ipap = day->settings_max(pressSettingChanID);
                 EventDataType epap = day->settings_min(CPAP_EPAP);
                 html += tr("Your machine used a constant %1-%2 %3 of air.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units());
             } else if (cpapmode == MODE_BILEVEL_AUTO_FIXED_PS) {
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
-                EventDataType epap = day->percentile(CPAP_EPAP, perc/100.0);
+                EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
                 html += tr("Your machine was under %1-%2 %3 for %4% of the time.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
             } else if (cpapmode == MODE_ASV || cpapmode == MODE_AVAPS){
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
                 EventDataType epap = qRound(day->settings_wavg(CPAP_EPAP));
-
-                html += tr("Your EPAP pressure fixed at %1 %2.").arg(epap).arg(schema::channel[CPAP_EPAP].units())+"<br/>";
+                html += tr("Your EPAP pressure fixed at %1 %2.").arg(epap).arg(schema::channel[epapDataChanID].units())+"<br/>";
                 html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
-            } else if (cpapmode == MODE_ASV_VARIABLE_EPAP){
+            } else if (cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS){
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
-                EventDataType epap = day->percentile(CPAP_EPAP, perc/100.0);
+                EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
 
-                html += tr("Your EPAP pressure was under %1 %2 for %3% of the time.").arg(epap).arg(schema::channel[CPAP_EPAP].units()).arg(perc)+"<br/>";
+                html += tr("Your EPAP pressure was under %1 %2 for %3% of the time.").arg(epap).arg(schema::channel[epapDataChanID].units()).arg(perc)+"<br/>";
                 html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
             }
             html += "<br/>";
@@ -319,8 +339,8 @@ QString Welcome::GenerateOxiHTML()
 
         html += "<p>"+QObject::tr("Most recent Oximetry data: <a onclick='alert(\"daily=%2\");'>%1</a> ").arg(oxidate.toString(Qt::SystemLocaleLongDate)).arg(oxidate.toString(Qt::ISODate));
         if (daysto == 1) html += QObject::tr("(last night)");
-        else if (daysto == 2) html += QObject::tr("(yesterday)");
-        else html += QObject::tr("(%2 day ago)").arg(oxidate.daysTo(QDate::currentDate()));
+        else if (daysto == 2) html += QObject::tr("(1 day ago)");
+        else html += QObject::tr("(%2 days ago)").arg(oxidate.daysTo(QDate::currentDate()));
         html+="</p>";
         ui->oxiIcon->setVisible(true);
         ui->oxiInfo->setVisible(true);

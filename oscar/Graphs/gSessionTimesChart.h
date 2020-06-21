@@ -1,5 +1,6 @@
-﻿/* gSessionTimesChart Header
+/* gSessionTimesChart Header
  *
+ * Copyright (c) 2020 The Oscar Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -188,13 +189,8 @@ public:
         cache.clear();
     }
 
-
-    void addCalc(ChannelID code, SummaryType type, QColor color) {
-        calcitems.append(SummaryCalcItem(code, type, color));
-    }
-    void addCalc(ChannelID code, SummaryType type) {
-        calcitems.append(SummaryCalcItem(code, type, schema::channel[code].defaultColor()));
-    }
+    virtual int addCalc(ChannelID code, SummaryType type, QColor color);
+    virtual int addCalc(ChannelID code, SummaryType type);
 
     virtual Layer * Clone() {
         gSummaryChart * sc = new gSummaryChart(m_label, m_machtype);
@@ -428,38 +424,5 @@ public:
     QList<float> ahi_data;
 };
 
-
-class gPressureChart : public gSummaryChart
-{
-public:
-    gPressureChart();
-    virtual ~gPressureChart() {}
-
-    virtual Layer * Clone() {
-        gPressureChart * sc = new gPressureChart();
-        gSummaryChart::CloneInto(sc);
-        return sc;
-    }
-
-//    virtual void preCalc();
-    virtual void customCalc(Day *day, QVector<SummaryChartSlice> &slices) {
-        int size = slices.size();
-        float hour = day->hours(m_machtype);
-        for (int i=0; i < size; ++i) {
-            SummaryChartSlice & slice = slices[i];
-            SummaryCalcItem * calc = slices[i].calc;
-
-            calc->update(slice.value, hour);
-         }
-    }
-    virtual void afterDraw(QPainter &, gGraph &, QRectF);
-
-    virtual void populate(Day * day, int idx);
-
-    virtual QString tooltipData(Day * day, int idx) {
-        return day->getCPAPModeStr() + "\n" + day->getPressureSettings() + gSummaryChart::tooltipData(day, idx);
-    }
-
-};
 
 #endif // GSESSIONTIMESCHART_H
