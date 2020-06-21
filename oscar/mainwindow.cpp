@@ -866,13 +866,13 @@ QList<ImportPath> MainWindow::detectCPAPCards()
 
     QList<ImportPath> detectedCards;
     importScanCancelled = false;
-#if defined (Q_OS_LINUX)
     QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
-    if (detectedCards.size() == 0) {
-        qDebug() << "Skipping card detection on Linux";
-        return detectedCards;
-    }
-#endif
+// #if defined (Q_OS_LINUX)
+//     if (detectedCards.size() == 0) {
+//         qDebug() << "Skipping card detection on Linux";
+//         return detectedCards;
+//     }
+// #endif
 
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
