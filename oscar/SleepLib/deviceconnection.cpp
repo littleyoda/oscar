@@ -7,6 +7,7 @@
  * for more details. */
 
 #include "deviceconnection.h"
+#include "version.h"
 #include <QtSerialPort/QSerialPortInfo>
 #include <QFile>
 #include <QBuffer>
@@ -26,34 +27,40 @@ static QString hex(int i)
 class XmlRecorder
 {
 public:
-    XmlRecorder(class QFile * file);
-    XmlRecorder(QString & string);
-    ~XmlRecorder();
+    static const QString TAG;
+
+    XmlRecorder(class QFile * file, const QString & tag = XmlRecorder::TAG);
+    XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);
+    virtual ~XmlRecorder();
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
 protected:
+    const QString m_tag;
     QFile* m_file;  // nullptr for non-file recordings
     QXmlStreamWriter* m_xml;
     QMutex m_mutex;
     
-    void prologue();
-    void epilogue();
+    virtual void prologue();
+    virtual void epilogue();
 };
+const QString XmlRecorder::TAG = "xmlreplay";
 
 class XmlReplayEvent;
 
 class XmlReplay
 {
 public:
-    XmlReplay(class QFile * file);
-    XmlReplay(QXmlStreamReader & xml);
-    ~XmlReplay();
+    XmlReplay(class QFile * file, const QString & tag = XmlRecorder::TAG);
+    XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);
+    virtual ~XmlReplay();
     template<class T> inline T* getNextEvent(const QString & id = "");
+
 
 protected:
     void deserialize(QXmlStreamReader & xml);
     void deserializeEvents(QXmlStreamReader & xml);
+    const QString m_tag;
 
     QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;
     QHash<QString,QHash<QString,int>> m_indexPosition;
@@ -212,14 +219,14 @@ protected:
     XmlReplay* m_replay;
 };
 
-XmlRecorder::XmlRecorder(QFile* stream)
-    : m_file(stream), m_xml(new QXmlStreamWriter(stream))
+XmlRecorder::XmlRecorder(QFile* stream, const QString & tag)
+    : m_tag(tag), m_file(stream), m_xml(new QXmlStreamWriter(stream))
 {
     prologue();
 }
 
-XmlRecorder::XmlRecorder(QString & string)
-    : m_file(nullptr), m_xml(new QXmlStreamWriter(&string))
+XmlRecorder::XmlRecorder(QString & string, const QString & tag)
+    : m_tag(tag), m_file(nullptr), m_xml(new QXmlStreamWriter(&string))
 {
     prologue();
 }
@@ -235,28 +242,24 @@ void XmlRecorder::prologue()
     Q_ASSERT(m_xml);
     m_xml->setAutoFormatting(true);
     m_xml->setAutoFormattingIndent(2);
-    
-    m_xml->writeStartElement("xmlreplay");
-    m_xml->writeStartElement("events");
+    m_xml->writeStartElement(m_tag);
 }
 
 void XmlRecorder::epilogue()
 {
     Q_ASSERT(m_xml);
-    m_xml->writeEndElement();  // close events
-    // TODO: write out any inline connections
-    m_xml->writeEndElement();  // close xmlreplay
+    m_xml->writeEndElement();  // close enclosing tag
 }
 
-XmlReplay::XmlReplay(QFile* file)
-    : m_pendingSignal(nullptr)
+XmlReplay::XmlReplay(QFile* file, const QString & tag)
+    : m_tag(tag), m_pendingSignal(nullptr)
 {
     QXmlStreamReader xml(file);
     deserialize(xml);
 }
 
-XmlReplay::XmlReplay(QXmlStreamReader & xml)
-    : m_pendingSignal(nullptr)
+XmlReplay::XmlReplay(QXmlStreamReader & xml, const QString & tag)
+    : m_tag(tag), m_pendingSignal(nullptr)
 {
     deserialize(xml);
 }
@@ -271,16 +274,11 @@ XmlReplay::~XmlReplay()
 void XmlReplay::deserialize(QXmlStreamReader & xml)
 {
     if (xml.readNextStartElement()) {
-        if (xml.name() == "xmlreplay") {
-            while (xml.readNextStartElement()) {
-                if (xml.name() == "events") {
-                    deserializeEvents(xml);
-                // else TODO: inline connections
-                } else {
-                    qWarning() << "unexpected payload in replay XML:" << xml.name();
-                    xml.skipCurrentElement();
-                }
-            }
+        if (xml.name() == m_tag) {
+            deserializeEvents(xml);
+        } else {
+            qWarning() << "unexpected payload in replay XML:" << xml.name();
+            xml.skipCurrentElement();
         }
     }
 }
@@ -516,6 +514,29 @@ template<> const bool XmlReplayBase<type>::registered = XmlReplayEvent::register
 // MARK: -
 // MARK: Device connection manager
 
+class DeviceRecorder : public XmlRecorder
+{
+    virtual void prologue()
+    {
+        XmlRecorder::prologue();
+        m_xml->writeAttribute("oscar", getVersion().toString());
+    }
+public:
+    static const QString TAG;
+
+    DeviceRecorder(class QFile * file) : XmlRecorder(file, DeviceRecorder::TAG) {}
+    DeviceRecorder(QString & string) : XmlRecorder(string, DeviceRecorder::TAG) {}
+};
+const QString DeviceRecorder::TAG = "devicereplay";
+
+class DeviceReplay : public XmlReplay
+{
+public:
+    DeviceReplay(class QFile * file) : XmlReplay(file, DeviceRecorder::TAG) {}
+    DeviceReplay(QXmlStreamReader & xml) : XmlReplay(xml, DeviceRecorder::TAG) {}
+};
+
+
 inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
 {
     static DeviceConnectionManager instance;
@@ -533,7 +554,7 @@ void DeviceConnectionManager::record(QFile* stream)
         delete m_record;
     }
     if (stream) {
-        m_record = new XmlRecorder(stream);
+        m_record = new DeviceRecorder(stream);
     } else {
         // nullptr turns off recording
         m_record = nullptr;
@@ -545,7 +566,7 @@ void DeviceConnectionManager::record(QString & string)
     if (m_record) {
         delete m_record;
     }
-    m_record = new XmlRecorder(string);
+    m_record = new DeviceRecorder(string);
 }
 
 void DeviceConnectionManager::replay(const QString & string)
@@ -555,7 +576,7 @@ void DeviceConnectionManager::replay(const QString & string)
     if (m_replay) {
         delete m_replay;
     }
-    m_replay = new XmlReplay(xml);
+    m_replay = new DeviceReplay(xml);
 }
 
 void DeviceConnectionManager::replay(QFile* file)
@@ -565,7 +586,7 @@ void DeviceConnectionManager::replay(QFile* file)
         delete m_replay;
     }
     if (file) {
-        m_replay = new XmlReplay(file);
+        m_replay = new DeviceReplay(file);
     } else {
         // nullptr turns off replay
         m_replay = nullptr;
@@ -790,6 +811,24 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 
 // MARK: -
 // MARK: Device connection base class
+
+class ConnectionRecorder : public XmlRecorder
+{
+public:
+    static const QString TAG;
+
+    ConnectionRecorder(class QFile * file) : XmlRecorder(file, ConnectionRecorder::TAG) {}
+    ConnectionRecorder(QString & string) : XmlRecorder(string, ConnectionRecorder::TAG) {}
+};
+const QString ConnectionRecorder::TAG = "connection";
+
+class ConnectionReplay : public XmlReplay
+{
+public:
+    ConnectionReplay(class QFile * file) : XmlReplay(file, ConnectionRecorder::TAG) {}
+    ConnectionReplay(QXmlStreamReader & xml) : XmlReplay(xml, ConnectionRecorder::TAG) {}
+};
+
 
 DeviceConnection::DeviceConnection(const QString & name, XmlRecorder* record, XmlReplay* replay)
     : m_name(name), m_record(record), m_replay(replay), m_opened(false)
