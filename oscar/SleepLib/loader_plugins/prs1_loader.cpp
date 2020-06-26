@@ -295,6 +295,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "960T",    5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },  // omits "(System One 60 Series)" on official reports
     { "900X110", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X120", 5, 3, "DreamStation BiPAP autoSV" },
+    { "900X150", 5, 3, "DreamStation BiPAP autoSV" },
     
     { "1061401",  3, 0, "BiPAP S/T (C Series)" },
     { "1061T",    3, 3, "BiPAP S/T 30 (System One 60 Series)" },
@@ -3602,23 +3603,33 @@ bool PRS1DataChunk::ParseEventsF0V23()
             break;
         }
         startpos = pos;
-        if (code != 0x12) {  // This one event has no timestamp in F0V6
-            t += data[pos] | (data[pos+1] << 8);
+        if (code != 0x12 && code != 0x01) {  // This one event has no timestamp in F0V6
+            elapsed = data[pos] | (data[pos+1] << 8);
+            if (elapsed > 0x7FFF) UNEXPECTED_VALUE(elapsed, "<32768s");  // check whether this is generally unsigned, since 0x01 isn't
+            t += elapsed;
             pos += 2;
         }
 
         switch (code) {
-            case 0x00:  // ??? So far only seen on 451P and 551P occasionally, usually no more than once per session
-                // A nonzero delta corresponds to an N-second gap in data (value was 0x85, only seen once). Look for more.
-                if (sessionid != 122) CHECK_VALUE(data[startpos], 0);  // skip the onc occurrence already seen
-                CHECK_VALUE(data[startpos+1], 0);
-                if (data[pos] < 0x80 || data[pos] > 0x85) {
-                    UNEXPECTED_VALUE(data[pos], "0x80-0x85");
-                    DUMP_EVENT();
-                }
+            case 0x00:  // Humidifier setting change (logged in summary in 60 series)
+                ParseHumidifierSetting50Series(data[pos]);
                 if (this->familyVersion == 3) DUMP_EVENT();
                 break;
-            //case 0x01:  // never seen
+            case 0x01:  // Time elapsed?
+                // Only seen once, on a 550P.
+                // It looks almost like a time-elapsed event 4 found in F0V4 summaries, but
+                // 0xFFCC looks like it represents a time adjustment of -52 seconds,
+                // since the subsequent 0x11 statistics event has a time offset of 172 seconds,
+                // and counting this as -52 seconds results in a total session time that
+                // matches the summary and waveform data. Very weird.
+                CHECK_VALUE(data[pos], 0xCC);
+                CHECK_VALUE(data[pos+1], 0xFF);
+                elapsed = data[pos] | (data[pos+1] << 8);
+                if (elapsed & 0x8000) {
+                    elapsed = (~0xFFFF | elapsed);  // sign extend 16-bit number to native int
+                }
+                t += elapsed;
+                break;
             case 0x02:  // Pressure adjustment
                 // See notes in ParseEventsF0V6.
                 this->AddEvent(new PRS1PressureSetEvent(t, data[pos]));
@@ -5083,7 +5094,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
                 if (this->sessionid == 1) UNEXPECTED_VALUE(this->sessionid, ">1");
                 break;
-            case 7:  // Humidifier setting change
+            case 7:  // Humidifier setting change (logged in events in 50 series)
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSetting60Series(data[pos+2], data[pos+3]);
                 break;
@@ -6783,8 +6794,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         // All variations seen.
     } else if (family == 5) {
         if (tubepresent) {
-            if (tubetemp != 0 && tubetemp > 4) UNEXPECTED_VALUE(tubetemp, "<= 4");
-            // All humidity levels seen.
+            // All tube temperature and humidity levels seen.
         } else if (humidadaptive) {
             // All humidity levels seen.
         } else if (humidfixed) {
@@ -8689,7 +8699,7 @@ bool PRS1DataChunk::ReadHeader(QFile & f)
 
         // Do a few early sanity checks before any variable-length header data.
         if (this->blockSize == 0) {
-            qWarning() << this->m_path << "blocksize 0?";
+            qWarning() << this->m_path << "@" << hex << this->m_filepos << "blocksize 0, skipping remainder of file";
             break;
         }
         if (this->fileVersion < 2 || this->fileVersion > 3) {
