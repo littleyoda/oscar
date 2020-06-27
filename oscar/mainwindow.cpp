@@ -824,57 +824,6 @@ QStringList getDriveList()
             }
         }
     }
-
-#elif defined(Q_OS_MAC) || defined(Q_OS_BSD4)
-    struct statfs *mounts;
-    int num_mounts = getmntinfo(&mounts, MNT_WAIT);
-    if (num_mounts >= 0) {
-        for (int i = 0; i < num_mounts; i++) {
-            QString name = mounts[i].f_mntonname;
-
-            // Only interested in drives mounted under /Volumes
-            if (name.toLower().startsWith("/volumes/")) {
-                drivelist.push_back(name);
-//                qDebug() << QString("Disk type '%1' mounted at: %2").arg(mounts[i].f_fstypename).arg(mounts[i].f_mntonname);
-            }
-        }
-    }
-
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_HAIKU)
-    // Unix / Linux (except BSD)
-    FILE *mtab = setmntent("/etc/mtab", "r");
-    struct mntent *m;
-    struct mntent mnt;
-    char strings[4096];
-
-    // NOTE: getmntent_r is a GNU extension, requiring glibc.
-    while ((m = getmntent_r(mtab, &mnt, strings, sizeof(strings)))) {
-
-        struct statfs fs;
-        if ((mnt.mnt_dir != NULL) && (statfs(mnt.mnt_dir, &fs) == 0)) {
-            QString name = mnt.mnt_dir;
-            quint64 size = fs.f_blocks * fs.f_bsize;
-
-            if (size > 0) { // this should theoretically ignore /dev, /proc, /sys etc..
-                drivelist.push_back(name);
-            }
-//            quint64 free = fs.f_bfree * fs.f_bsize;
-//            quint64 avail = fs.f_bavail * fs.f_bsize;
-        }
-    }
-    endmntent(mtab);
-
-#elif defined(Q_OS_WIN) || defined(Q_OS_HAIKU)
-    QFileInfoList list = QDir::drives();
-
-    for (int i = 0; i < list.size(); ++i) {
-        QFileInfo fileInfo = list.at(i);
-        QString name = fileInfo.filePath();
-        if (name.at(0).toUpper() != QChar('C')) { // Ignore the C drive
-            drivelist.push_back(name);
-        }
-    }
-
 #endif
     return drivelist;
 }
