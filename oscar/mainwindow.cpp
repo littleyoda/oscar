@@ -914,7 +914,8 @@ QList<ImportPath> MainWindow::detectCPAPCards()
         qDebug() << "Drive list size:" << AutoScannerPaths.size();
 
         if ( (lastpath.size()>0) && ( ! AutoScannerPaths.contains(lastpath))) {
-            AutoScannerPaths.insert(0, lastpath);
+            if (QFile(lastpath).exists())
+                AutoScannerPaths.insert(0, lastpath);
         }
 
         Q_FOREACH(const QString &path, AutoScannerPaths) {
