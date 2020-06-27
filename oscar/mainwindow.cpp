@@ -31,6 +31,7 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <QScreen>
+#include <QStorageInfo>
 #include <cmath>
 
 #include "common_gui.h"
@@ -799,56 +800,30 @@ QStringList getDriveList()
 {
     QStringList drivelist;
 
-#if defined(Q_OS_MAC) || defined(Q_OS_BSD4)
-    struct statfs *mounts;
-    int num_mounts = getmntinfo(&mounts, MNT_WAIT);
-    if (num_mounts >= 0) {
-        for (int i = 0; i < num_mounts; i++) {
-            QString name = mounts[i].f_mntonname;
-
-            // Only interested in drives mounted under /Volumes
-            if (name.toLower().startsWith("/volumes/")) {
-                drivelist.push_back(name);
-//                qDebug() << QString("Disk type '%1' mounted at: %2").arg(mounts[i].f_fstypename).arg(mounts[i].f_mntonname);
+#if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
+#if defined(Q_OS_LINUX)
+    #define VFAT "vfat"
+#elif defined(Q_OS_WIN)
+    #define VFAT "FAT32"
+#elif defined(Q_OS_MAC)
+    #define VFAT "msdos"
+#endif    
+    foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
+        if (storage.isValid() && storage.isReady()) {
+#ifdef DEBUG_SDCARD            
+            if (storage.fileSystemType() != "tmpfs") {      // Don't show all the Linux tmpfs mount points!
+                qDebug() << "Device:" << storage.device();
+                qDebug() << "    Path:" << storage.rootPath();
+                qDebug() << "    Name:" << storage.name();     // ...
+                qDebug() << "    FS Type:" << storage.fileSystemType();
+            }
+#endif            
+            if (storage.fileSystemType() == VFAT) {
+                qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
+                drivelist.push_back(storage.rootPath());
             }
         }
     }
-
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_HAIKU)
-    // Unix / Linux (except BSD)
-    FILE *mtab = setmntent("/etc/mtab", "r");
-    struct mntent *m;
-    struct mntent mnt;
-    char strings[4096];
-
-    // NOTE: getmntent_r is a GNU extension, requiring glibc.
-    while ((m = getmntent_r(mtab, &mnt, strings, sizeof(strings)))) {
-
-        struct statfs fs;
-        if ((mnt.mnt_dir != NULL) && (statfs(mnt.mnt_dir, &fs) == 0)) {
-            QString name = mnt.mnt_dir;
-            quint64 size = fs.f_blocks * fs.f_bsize;
-
-            if (size > 0) { // this should theoretically ignore /dev, /proc, /sys etc..
-                drivelist.push_back(name);
-            }
-//            quint64 free = fs.f_bfree * fs.f_bsize;
-//            quint64 avail = fs.f_bavail * fs.f_bsize;
-        }
-    }
-    endmntent(mtab);
-
-#elif defined(Q_OS_WIN) || defined(Q_OS_HAIKU)
-    QFileInfoList list = QDir::drives();
-
-    for (int i = 0; i < list.size(); ++i) {
-        QFileInfo fileInfo = list.at(i);
-        QString name = fileInfo.filePath();
-        if (name.at(0).toUpper() != QChar('C')) { // Ignore the C drive
-            drivelist.push_back(name);
-        }
-    }
-
 #endif
     return drivelist;
 }
