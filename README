@@ -19,10 +19,10 @@ All systems need a C++ compiler and linker and the QT platform download.
 Windows Building: See Building/Windows/BUILD-WIN.md
 -----------------
 
-MacOS Building: See Building/Windows/BUILD-mac.md
+MacOS Building: See Building/MacOS/BUILD-mac.md
 ---------------
 
-Linux Building: See Building/Windows/BUILD-Linux-md
+Linux Building: See Building/Linux/BUILD-Linux.md
 ---------------
 
 Software Licensing Information
@@ -30,9 +30,9 @@ Software Licensing Information
 OSCAR is released under the GNU GPL v3 License. Please see below for a note on giving correct attribution
 in redistribution of derivatives.
 
-It is built using Qt SDK (Open Source Edition), available from http://qt.io.
+It is built using Qt SDK (Open Source Edition), available from https://qt.io.
 
-Redistribution of derivatives ( a note added by Mark Watins )
+Redistribution of derivatives ( a note added by Mark Watkins )
 -----------------------------
 Mark Watkins created this software to help lessen the exploitation of others. Seeing his work being used to exploit others
 is incredibly un-motivational, and incredibly disrespectful of all the work he put into this project.
