@@ -10,6 +10,8 @@
 #include "version.h"
 #include <QtSerialPort/QSerialPortInfo>
 #include <QFile>
+#include <QFileInfo>
+#include <QDir>
 #include <QBuffer>
 #include <QDateTime>
 #include <QDebug>
@@ -32,14 +34,18 @@ public:
     XmlRecorder(class QFile * file, const QString & tag = XmlRecorder::TAG);
     XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);
     virtual ~XmlRecorder();
+    XmlRecorder* close();
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
 protected:
+    XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag);
+    QXmlStreamWriter* addSubstream(XmlRecorder* child, const QString & id);
     const QString m_tag;
     QFile* m_file;  // nullptr for non-file recordings
     QXmlStreamWriter* m_xml;
     QMutex m_mutex;
+    XmlRecorder* m_parent;
     
     virtual void prologue();
     virtual void epilogue();
@@ -54,13 +60,18 @@ public:
     XmlReplay(class QFile * file, const QString & tag = XmlRecorder::TAG);
     XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);
     virtual ~XmlReplay();
+    XmlReplay* close();
     template<class T> inline T* getNextEvent(const QString & id = "");
 
 
 protected:
+    XmlReplay(XmlReplay* parent, const QString & id, const QString & tag = XmlRecorder::TAG);
+    QXmlStreamReader* findSubstream(XmlReplay* child, const QString & id);
+
     void deserialize(QXmlStreamReader & xml);
     void deserializeEvents(QXmlStreamReader & xml);
     const QString m_tag;
+    QFile* m_file;
 
     QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;
     QHash<QString,QHash<QString,int>> m_indexPosition;
@@ -75,6 +86,8 @@ protected:
     inline void unlock() { m_lock.unlock(); }
     void processPendingSignals(const QObject* target);
     friend class XmlReplayLock;
+
+    XmlReplay* m_parent;
 };
 
 class XmlReplayEvent
@@ -86,9 +99,10 @@ public:
     virtual const QString id() const { static const QString none(""); return none; }
     virtual bool randomAccess() const { return false; }
 
-    void record(XmlRecorder* xml);
+    void record(XmlRecorder* xml) const;
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
     friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
+    void writeTag(QXmlStreamWriter & xml) const;
 
     typedef XmlReplayEvent* (*FactoryMethod)();
     static bool registerClass(const QString & tag, FactoryMethod factory);
@@ -147,6 +161,12 @@ public:
         m_values = other->m_values;
         m_keys = other->m_keys;
         m_data = other->m_data;
+    }
+protected:
+    void copy(const XmlReplayEvent & other)
+    {
+        copyIf(&other);
+        m_time = other.m_time;
     }
 
 protected:
@@ -219,22 +239,83 @@ protected:
     XmlReplay* m_replay;
 };
 
+static QString substreamFilepath(QFile* parent, const QString & id)
+{
+    Q_ASSERT(parent);
+    QFileInfo info(*parent);
+    QString path = info.canonicalPath() + QDir::separator() + info.completeBaseName() + "-" + id + ".xml";
+    return path;
+}
+
+
 XmlRecorder::XmlRecorder(QFile* stream, const QString & tag)
-    : m_tag(tag), m_file(stream), m_xml(new QXmlStreamWriter(stream))
+    : m_tag(tag), m_file(stream), m_xml(new QXmlStreamWriter(stream)), m_parent(nullptr)
 {
     prologue();
 }
 
 XmlRecorder::XmlRecorder(QString & string, const QString & tag)
-    : m_tag(tag), m_file(nullptr), m_xml(new QXmlStreamWriter(&string))
+    : m_tag(tag), m_file(nullptr), m_xml(new QXmlStreamWriter(&string)), m_parent(nullptr)
 {
     prologue();
+}
+
+// Protected constructor for substreams.
+XmlRecorder::XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag)
+    : m_tag(tag), m_file(nullptr), m_xml(nullptr), m_parent(parent)
+{
+    Q_ASSERT(m_parent);
+    m_xml = m_parent->addSubstream(this, id);
+    if (m_xml == nullptr) {
+        qWarning() << "Not recording" << id;
+        static QString null;
+        m_xml = new QXmlStreamWriter(&null);
+    }
+
+    m_xml->setAutoFormatting(true);
+    m_xml->setAutoFormattingIndent(2);
+    // Substreams handle their own prologue.
+}
+
+QXmlStreamWriter* XmlRecorder::addSubstream(XmlRecorder* child, const QString & id)
+{
+    Q_ASSERT(child);
+    QXmlStreamWriter* xml = nullptr;
+
+    if (m_file) {
+        QString childPath = substreamFilepath(m_file, id);
+        child->m_file = new QFile(childPath);
+        if (child->m_file->open(QIODevice::WriteOnly | QIODevice::Append)) {
+            xml = new QXmlStreamWriter(child->m_file);
+            qDebug() << "Recording to" << childPath;
+        } else {
+            qWarning() << "Unable to open" << childPath << "for writing";
+        }
+    } else {
+        qWarning() << "String-based substreams are not supported";
+        // Maybe some day support string-based substreams:
+        // - parent passes string to child
+        // - on connectionClosed, parent asks recorder to flush string to stream
+    }
+    
+    return xml;
 }
 
 XmlRecorder::~XmlRecorder()
 {
     epilogue();
     delete m_xml;
+    // file substreams manage their own file
+    if (m_parent && m_file) {
+        delete m_file;
+    }
+}
+
+XmlRecorder* XmlRecorder::close()
+{
+    auto parent = m_parent;
+    delete this;
+    return parent;
 }
 
 void XmlRecorder::prologue()
@@ -252,16 +333,58 @@ void XmlRecorder::epilogue()
 }
 
 XmlReplay::XmlReplay(QFile* file, const QString & tag)
-    : m_tag(tag), m_pendingSignal(nullptr)
+    : m_tag(tag), m_file(file), m_pendingSignal(nullptr), m_parent(nullptr)
 {
+    Q_ASSERT(file);
+    QFileInfo info(*file);
+    qDebug() << "Replaying from" << info.canonicalFilePath();
+
     QXmlStreamReader xml(file);
     deserialize(xml);
 }
 
 XmlReplay::XmlReplay(QXmlStreamReader & xml, const QString & tag)
-    : m_tag(tag), m_pendingSignal(nullptr)
+    : m_tag(tag), m_file(nullptr), m_pendingSignal(nullptr), m_parent(nullptr)
 {
     deserialize(xml);
+}
+
+XmlReplay::XmlReplay(XmlReplay* parent, const QString & id, const QString & tag)
+    : m_tag(tag), m_file(nullptr), m_pendingSignal(nullptr), m_parent(parent)
+{
+    Q_ASSERT(m_parent);
+
+    auto xml = m_parent->findSubstream(this, id);
+    if (xml) {
+        deserialize(*xml);
+        delete xml;
+    } else {
+        qWarning() << "Not replaying" << id;
+    }
+}
+
+QXmlStreamReader* XmlReplay::findSubstream(XmlReplay* child, const QString & id)
+{
+    Q_ASSERT(child);
+    QXmlStreamReader* xml = nullptr;
+
+    if (m_file) {
+        QString childPath = substreamFilepath(m_file, id);
+        child->m_file = new QFile(childPath);
+        if (child->m_file->open(QIODevice::ReadOnly)) {
+            xml = new QXmlStreamReader(child->m_file);
+            qDebug() << "Replaying from" << childPath;
+        } else {
+            qWarning() << "Unable to open" << childPath << "for reading";
+        }
+    } else {
+        qWarning() << "String-based substreams are not supported";
+        // Maybe some day support string-based substreams:
+        // - when deserializing, use e.g. ConnectionEvents to cache the substream strings
+        // - then return a QXmlStreamReader here using that string
+    }
+ 
+    return xml;
 }
 
 XmlReplay::~XmlReplay()
@@ -269,6 +392,17 @@ XmlReplay::~XmlReplay()
     for (auto event : m_events) {
         delete event;
     }
+    // file substreams manage their own file
+    if (m_parent && m_file) {
+        delete m_file;
+    }
+}
+
+XmlReplay* XmlReplay::close()
+{
+    auto parent = m_parent;
+    delete this;
+    return parent;
 }
 
 void XmlReplay::deserialize(QXmlStreamReader & xml)
@@ -399,7 +533,7 @@ XmlReplayEvent::XmlReplayEvent()
 {
 }
 
-void XmlReplayEvent::record(XmlRecorder* writer)
+void XmlReplayEvent::record(XmlRecorder* writer) const
 {
     // Do nothing if we're not recording.
     if (writer != nullptr) {
@@ -431,20 +565,24 @@ XmlReplayEvent* XmlReplayEvent::createInstance(const QString & tag)
     return event;
 }
 
-QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event)
+void XmlReplayEvent::writeTag(QXmlStreamWriter & xml) const
 {
-    QDateTime time = event.m_time.toOffsetFromUtc(event.m_time.offsetFromUtc());  // force display of UTC offset
+    QDateTime time = m_time.toOffsetFromUtc(m_time.offsetFromUtc());  // force display of UTC offset
 #if QT_VERSION < QT_VERSION_CHECK(5,9,0)
     // TODO: Can we please deprecate support for Qt older than 5.9?
     QString timestamp = time.toString(Qt::ISODate);
 #else
     QString timestamp = time.toString(Qt::ISODateWithMs);
 #endif
-    xml.writeStartElement(event.tag());
+    xml.writeStartElement(tag());
     xml.writeAttribute("time", timestamp);
 
-    event.write(xml);
+    write(xml);
+}
 
+QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event)
+{
+    event.writeTag(xml);
     xml.writeEndElement();
     return xml;
 }
@@ -516,16 +654,11 @@ template<> const bool XmlReplayBase<type>::registered = XmlReplayEvent::register
 
 class DeviceRecorder : public XmlRecorder
 {
-    virtual void prologue()
-    {
-        XmlRecorder::prologue();
-        m_xml->writeAttribute("oscar", getVersion().toString());
-    }
 public:
     static const QString TAG;
 
-    DeviceRecorder(class QFile * file) : XmlRecorder(file, DeviceRecorder::TAG) {}
-    DeviceRecorder(QString & string) : XmlRecorder(string, DeviceRecorder::TAG) {}
+    DeviceRecorder(class QFile * file) : XmlRecorder(file, DeviceRecorder::TAG) { m_xml->writeAttribute("oscar", getVersion().toString()); }
+    DeviceRecorder(QString & string) : XmlRecorder(string, DeviceRecorder::TAG) { m_xml->writeAttribute("oscar", getVersion().toString()); }
 };
 const QString DeviceRecorder::TAG = "devicereplay";
 
@@ -616,7 +749,6 @@ DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, 
     } else {
         qWarning() << "unable to create" << type << "connection to" << name;
     }
-    // TODO: record event
     return conn;
 }
 
@@ -635,7 +767,6 @@ void DeviceConnectionManager::connectionClosed(DeviceConnection* conn)
     } else {
         qWarning() << type << "connection to" << name << "missing";
     }
-    // TODO: record event
 }
 
 // Temporary convenience function for code that still supports only serial ports.
@@ -809,24 +940,41 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 }
 
 
+// TODO: restrict constructor to OpenConnectionEvent
+class ConnectionEvent : public XmlReplayBase<ConnectionEvent>
+{
+public:
+    ConnectionEvent() { Q_ASSERT(false); }  // Implement if we ever support string-based substreams
+    ConnectionEvent(const XmlReplayEvent & trigger)
+    {
+        copy(trigger);
+    }
+    virtual const QString id() const
+    {
+        QString time = m_time.toString("yyyyMMdd.HHmmss.zzz");
+        return m_values["name"] + "-" + time;
+    }
+};
+REGISTER_XMLREPLAYEVENT("connection", ConnectionEvent);
+
 // MARK: -
 // MARK: Device connection base class
 
 class ConnectionRecorder : public XmlRecorder
 {
 public:
-    static const QString TAG;
-
-    ConnectionRecorder(class QFile * file) : XmlRecorder(file, ConnectionRecorder::TAG) {}
-    ConnectionRecorder(QString & string) : XmlRecorder(string, ConnectionRecorder::TAG) {}
+    ConnectionRecorder(XmlRecorder* parent, const ConnectionEvent& event) : XmlRecorder(parent, event.id(), event.tag())
+    {
+        Q_ASSERT(m_xml);
+        event.writeTag(*m_xml);
+        m_xml->writeAttribute("oscar", getVersion().toString());
+    }
 };
-const QString ConnectionRecorder::TAG = "connection";
 
 class ConnectionReplay : public XmlReplay
 {
 public:
-    ConnectionReplay(class QFile * file) : XmlReplay(file, ConnectionRecorder::TAG) {}
-    ConnectionReplay(QXmlStreamReader & xml) : XmlReplay(xml, ConnectionRecorder::TAG) {}
+    ConnectionReplay(XmlReplay* parent, const ConnectionEvent& event) : XmlReplay(parent, event.id(), event.tag()) {}
 };
 
 
@@ -965,13 +1113,16 @@ bool SerialPortConnection::open()
         return false;
     }
     XmlReplayLock lock(this, m_replay);
+    OpenConnectionEvent* replayEvent = nullptr;
     OpenConnectionEvent event("serial", m_name);
 
     if (!m_replay) {
+        // TODO: move this into SerialPortConnection::openDevice() and move everything
+        // else up to DeviceConnection::open().
         m_port.setPortName(m_name);
         checkResult(m_port.open(QSerialPort::ReadWrite), event);
     } else {
-        auto replayEvent = m_replay->getNextEvent<OpenConnectionEvent>(m_name);
+        replayEvent = m_replay->getNextEvent<OpenConnectionEvent>(event.id());
         if (replayEvent) {
             event.copyIf(replayEvent);
         } else {
@@ -981,8 +1132,19 @@ bool SerialPortConnection::open()
 
     event.record(m_record);
     m_opened = event.ok();
-    
-    // TODO: if OK, open a connection substream for connection events
+
+    if (m_opened) {
+        // open a connection substream for connection events
+        if (m_record) {
+            ConnectionEvent connEvent(event);
+            m_record = new ConnectionRecorder(m_record, connEvent);
+        }
+        if (m_replay) {
+            Q_ASSERT(replayEvent);
+            ConnectionEvent connEvent(*replayEvent);  // we need to use the replay's timestamp to find the referenced substream
+            m_replay = new ConnectionReplay(m_replay, connEvent);
+        }
+    }
 
     return event.ok();
 }
@@ -1211,22 +1373,30 @@ bool SerialPortConnection::flush()
 
 void SerialPortConnection::close()
 {
+    if (m_opened) {
+        // close event substream first
+        if (m_record) {
+            m_record = m_record->close();
+        }
+        if (m_replay) {
+            m_replay = m_replay->close();
+        }
+    }
+
     XmlReplayLock lock(this, m_replay);
     CloseConnectionEvent event("serial", m_name);
 
-    // TODO: the separate connection stream will have an enclosing "connection" tag with these
-    // attributes. The main device connection manager stream will log this openConnection/
-    // closeConnection pair. We'll also need to include a loader ID and stream version number
+    // TODO: We'll also need to include a loader ID and stream version number
     // in the "connection" tag, so that if we ever have to change a loader's download code,
     // the older replays will still work as expected.
 
-    // TODO: close event substream first
-
     if (!m_replay) {
+        // TODO: move this into SerialPortConnection::closeDevice() and move everything
+        // else up to DeviceConnection::close().
         m_port.close();
         checkError(event);
     } else {
-        auto replayEvent = m_replay->getNextEvent<CloseConnectionEvent>(m_name);
+        auto replayEvent = m_replay->getNextEvent<CloseConnectionEvent>(event.id());
         if (replayEvent) {
             event.copyIf(replayEvent);
         } else {

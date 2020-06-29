@@ -99,6 +99,7 @@ static void testDownload(const QString & loaderName)
     Q_ASSERT(oxi);
 
     if (oxi->openDevice()) {
+        bool open = true;
         oxi->resetDevice();
         int session_count = oxi->getSessionCount();
         qDebug() << session_count << "sessions";
@@ -116,10 +117,12 @@ static void testDownload(const QString & loaderName)
                     QCoreApplication::processEvents();
                 }
             }
-            oxi->openDevice();  // annoyingly import currently closes the device, so reopen it
+            open = oxi->openDevice();  // annoyingly import currently closes the device, so reopen it
+        }
+        if (open) {
+            oxi->closeDevice();
         }
     }
-    oxi->closeDevice();
     oxi->trashRecords();
 }
 
@@ -132,11 +135,11 @@ void DeviceConnectionTests::testOximeterConnection()
     const char* argv = "test";
     QCoreApplication app(argc, (char**) &argv);
     
-    QString string;
     DeviceConnectionManager & devices = DeviceConnectionManager::getInstance();
+    /*
+    QString string;
     devices.record(string);
 
-    /*
     // new API
     QString portName = "cu.SLAB_USBtoUART";
     {
