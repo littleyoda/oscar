@@ -14,6 +14,8 @@
 #include <QDir>
 #include <QBuffer>
 #include <QDateTime>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 #include <QDebug>
 
 
@@ -940,12 +942,27 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 }
 
 
-// TODO: restrict constructor to OpenConnectionEvent
+// MARK: -
+// MARK: Device connection base class
+
+class OpenConnectionEvent : public XmlReplayBase<OpenConnectionEvent>
+{
+public:
+    OpenConnectionEvent() {}
+    OpenConnectionEvent(const QString & type, const QString & name)
+    {
+        set("type", type);
+        set("name", name);
+    }
+    virtual const QString id() const { return m_values["name"]; }
+};
+REGISTER_XMLREPLAYEVENT("openConnection", OpenConnectionEvent);
+
 class ConnectionEvent : public XmlReplayBase<ConnectionEvent>
 {
 public:
     ConnectionEvent() { Q_ASSERT(false); }  // Implement if we ever support string-based substreams
-    ConnectionEvent(const XmlReplayEvent & trigger)
+    ConnectionEvent(const OpenConnectionEvent & trigger)
     {
         copy(trigger);
     }
@@ -956,9 +973,6 @@ public:
     }
 };
 REGISTER_XMLREPLAYEVENT("connection", ConnectionEvent);
-
-// MARK: -
-// MARK: Device connection base class
 
 class ConnectionRecorder : public XmlRecorder
 {
@@ -1026,19 +1040,6 @@ public:
     }
 };
 REGISTER_XMLREPLAYEVENT("get", GetValueEvent);
-
-class OpenConnectionEvent : public XmlReplayBase<OpenConnectionEvent>
-{
-public:
-    OpenConnectionEvent() {}
-    OpenConnectionEvent(const QString & type, const QString & name)
-    {
-        set("type", type);
-        set("name", name);
-    }
-    virtual const QString id() const { return m_values["name"]; }
-};
-REGISTER_XMLREPLAYEVENT("openConnection", OpenConnectionEvent);
 
 class CloseConnectionEvent : public XmlReplayBase<CloseConnectionEvent>
 {

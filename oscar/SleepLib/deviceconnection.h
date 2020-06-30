@@ -15,20 +15,13 @@
 #include <QtSerialPort/QSerialPort>
 #include <QHash>
 #include <QVariant>
-#include <QDateTime>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
-
-class XmlRecorder;
-class XmlReplay;
-class XmlReplayEvent;
 
 class DeviceConnection : public QObject
 {
     Q_OBJECT
 
 protected:
-    DeviceConnection(const QString & name, XmlRecorder* record, XmlReplay* replay);
+    DeviceConnection(const QString & name, class XmlRecorder* record, class XmlReplay* replay);
 
     const QString & m_name;
     XmlRecorder* m_record;
@@ -99,7 +92,7 @@ class SerialPortConnection : public DeviceConnection
 
 private:
     QSerialPort m_port;
-    void checkResult(bool ok, XmlReplayEvent & event) const;
+    void checkResult(bool ok, class XmlReplayEvent & event) const;
     void checkResult(qint64 len, XmlReplayEvent & event) const;
     void checkError(XmlReplayEvent & event) const;
     void close();
@@ -197,8 +190,8 @@ public:
     inline bool isNull() const { return m_info.isEmpty(); }
 
     operator QString() const;
-    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info);
-    friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, SerialPortInfo & info);
+    friend class QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info);
+    friend class QXmlStreamReader & operator>>(QXmlStreamReader & xml, SerialPortInfo & info);
     bool operator==(const SerialPortInfo & other) const;
 
 protected:
