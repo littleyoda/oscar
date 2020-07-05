@@ -22,7 +22,6 @@
 #include <QProcess>
 
 #include "checkupdates.h"
-#include "ui_UpdaterWindow.h"
 #include "version.h"
 #include "mainwindow.h"
 
