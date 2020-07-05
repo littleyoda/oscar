@@ -833,57 +833,6 @@ QStringList getDriveList()
             }
         }
     }
-
-#elif defined(Q_OS_MAC) || defined(Q_OS_BSD4)
-    struct statfs *mounts;
-    int num_mounts = getmntinfo(&mounts, MNT_WAIT);
-    if (num_mounts >= 0) {
-        for (int i = 0; i < num_mounts; i++) {
-            QString name = mounts[i].f_mntonname;
-
-            // Only interested in drives mounted under /Volumes
-            if (name.toLower().startsWith("/volumes/")) {
-                drivelist.push_back(name);
-//                qDebug() << QString("Disk type '%1' mounted at: %2").arg(mounts[i].f_fstypename).arg(mounts[i].f_mntonname);
-            }
-        }
-    }
-
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_HAIKU)
-    // Unix / Linux (except BSD)
-    FILE *mtab = setmntent("/etc/mtab", "r");
-    struct mntent *m;
-    struct mntent mnt;
-    char strings[4096];
-
-    // NOTE: getmntent_r is a GNU extension, requiring glibc.
-    while ((m = getmntent_r(mtab, &mnt, strings, sizeof(strings)))) {
-
-        struct statfs fs;
-        if ((mnt.mnt_dir != NULL) && (statfs(mnt.mnt_dir, &fs) == 0)) {
-            QString name = mnt.mnt_dir;
-            quint64 size = fs.f_blocks * fs.f_bsize;
-
-            if (size > 0) { // this should theoretically ignore /dev, /proc, /sys etc..
-                drivelist.push_back(name);
-            }
-//            quint64 free = fs.f_bfree * fs.f_bsize;
-//            quint64 avail = fs.f_bavail * fs.f_bsize;
-        }
-    }
-    endmntent(mtab);
-
-#elif defined(Q_OS_WIN) || defined(Q_OS_HAIKU)
-    QFileInfoList list = QDir::drives();
-
-    for (int i = 0; i < list.size(); ++i) {
-        QFileInfo fileInfo = list.at(i);
-        QString name = fileInfo.filePath();
-        if (name.at(0).toUpper() != QChar('C')) { // Ignore the C drive
-            drivelist.push_back(name);
-        }
-    }
-
 #endif
     return drivelist;
 }
@@ -897,9 +846,18 @@ void ImportDialogScan::cancelbutton()
 
 QList<ImportPath> MainWindow::detectCPAPCards()
 {
-    const int timeout = 20000;
+    const int timeout = 20000;  // twenty seconds
 
     QList<ImportPath> detectedCards;
+    importScanCancelled = false;
+    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
+// #if defined (Q_OS_LINUX)
+//     if (detectedCards.size() == 0) {
+//         qDebug() << "Skipping card detection on Linux";
+//         return detectedCards;
+//     }
+// #endif
+
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
     QTime time;
@@ -928,18 +886,20 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     progress.setValue(0);
     progress.setMaximum(timeout);
     progress.setVisible(true);
-    importScanCancelled = false;
+//    importScanCancelled = false;
     popup.show();
     QApplication::processEvents();
-    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
+//    QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
 
     do {
         // Rescan in case card inserted
         QStringList AutoScannerPaths = getDriveList();
-        //AutoScannerPaths.push_back(lastpath);
+//      AutoScannerPaths.push_back(lastpath);
+        qDebug() << "Drive list size:" << AutoScannerPaths.size();
 
-        if (!AutoScannerPaths.contains(lastpath)) {
-            AutoScannerPaths.append(lastpath);
+        if ( (lastpath.size()>0) && ( ! AutoScannerPaths.contains(lastpath))) {
+            if (QFile(lastpath).exists())
+                AutoScannerPaths.insert(0, lastpath);
         }
 
         Q_FOREACH(const QString &path, AutoScannerPaths) {
@@ -955,10 +915,12 @@ QList<ImportPath> MainWindow::detectCPAPCards()
         }
         int el=time.elapsed();
         progress.setValue(el);
-        if (el > timeout) break;
-        if (!popup.isVisible()) break;
+        if (el > timeout)
+            break;
+        if ( ! popup.isVisible())
+            break;
         // needs a slight delay here
-        for (int i=0; i<5; ++i) {
+        for (int i=0; i<20; ++i) {
             QThread::msleep(50);
             QApplication::processEvents();
         }
