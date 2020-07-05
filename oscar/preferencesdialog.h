@@ -52,7 +52,7 @@ class PreferencesDialog : public QDialog
     //! \brief Save the current preferences, called when Ok button is clicked on.
     bool Save();
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     //! \brief Updates the date text of the last time updates where checked
     void RefreshLastChecked();
 #endif
@@ -61,10 +61,6 @@ class PreferencesDialog : public QDialog
     void on_combineSlider_valueChanged(int value);
 
     void on_IgnoreSlider_valueChanged(int value);
-
-#ifndef NO_UPDATER
-    void on_checkForUpdatesButton_clicked();
-#endif
 
     //void on_genOpWidget_itemActivated(QListWidgetItem *item);
 

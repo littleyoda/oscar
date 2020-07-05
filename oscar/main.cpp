@@ -532,9 +532,9 @@ int main(int argc, char *argv[]) {
 
     QDir newDir(GetAppData());
 #if QT_VERSION < QT_VERSION_CHECK(5,9,0)
-    if ( ! newDir.exists() || newDir.count() == 0 ) {     // directoy doesn't exist yet or is empty, try to migrate old data
+    if ( ! newDir.exists() || newDir.count() == 0 ) {     // directory doesn't exist yet or is empty, try to migrate old data
 #else
-    if ( ! newDir.exists() || newDir.isEmpty() ) {        // directoy doesn't exist yet or is empty, try to migrate old data
+    if ( ! newDir.exists() || newDir.isEmpty() ) {        // directory doesn't exist yet or is empty, try to migrate old data
 #endif
         if (QMessageBox::question(nullptr, QObject::tr("Migrate SleepyHead Data?"),
                                   QObject::tr("On the next screen OSCAR will ask you to select a folder with SleepyHead data") +"\n" +
@@ -565,13 +565,20 @@ int main(int argc, char *argv[]) {
     p_pref->Erase(STR_AppName);
     p_pref->Erase(STR_GEN_SkipLogin);
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Check when last checked for updates..
     ////////////////////////////////////////////////////////////////////////////////////////////
     QDateTime lastchecked, today = QDateTime::currentDateTime();
 
     bool check_updates = false;
+
+    if (!getVersion().IsReleaseVersion()) {
+        // If test build, force update autocheck, no more than 7 day interval, show test versions
+        AppSetting->setUpdatesAutoCheck(true);
+        AppSetting->setUpdateCheckFrequency(min(AppSetting->updateCheckFrequency(), 7));
+        AppSetting->setAllowEarlyUpdates(true);
+    }
 
     if (AppSetting->updatesAutoCheck()) {
         int update_frequency = AppSetting->updateCheckFrequency();
@@ -583,7 +590,7 @@ int main(int argc, char *argv[]) {
             days /= 86400;
         }
 
-        if (days > update_frequency) {
+        if (days >= update_frequency) {
             check_updates = true;
         }
     }
@@ -637,9 +644,9 @@ int main(int argc, char *argv[]) {
     Q_UNUSED(changing_language)
     Q_UNUSED(dont_load_profile)
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     if (check_updates) {
-        mainwin->CheckForUpdates();
+        mainwin->CheckForUpdates(false);
     }
 #endif
 

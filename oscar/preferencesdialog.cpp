@@ -22,6 +22,7 @@
 #include <cmath>
 
 #include "preferencesdialog.h"
+#include "version.h"
 
 #include <Graphs/gGraphView.h>
 #include <mainwindow.h>
@@ -218,10 +219,26 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->includeSerial->setChecked(AppSetting->includeSerial());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
+    ui->test_invite->setVisible(false);
+    if (!getVersion().IsReleaseVersion()) {
+        // Test version
+        ui->automaticallyCheckUpdates->setVisible(false);
+        ui->allowEarlyUpdates->setVisible(false);
+        ui->updateCheckEvery->setMaximum(min(7,AppSetting->updateCheckFrequency()));
+    }
+    else {
+        // Release version
+        ui->updateCheckEvery->setMaximum(min(90,AppSetting->updateCheckFrequency()));
+        ui->always_look_for_updates->setVisible(false);
+        if (!AppSetting->allowEarlyUpdates()) {
+            ui->test_invite->setVisible(true);
+            ui->allowEarlyUpdates->setVisible(false);
+        }
+    }
     ui->allowEarlyUpdates->setChecked(AppSetting->allowEarlyUpdates());
 #else
-    ui->automaticallyCheckUpdates->setVisible(false);
+    ui->automaticallyCheckUpdates_GroupBox->setVisible(false);
 #endif
 
     int s = profile->cpap->clockDrift();
@@ -266,7 +283,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
 
     ui->graphHeight->setValue(AppSetting->graphHeight());
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     ui->automaticallyCheckUpdates->setChecked(AppSetting->updatesAutoCheck());
     ui->updateCheckEvery->setValue(AppSetting->updateCheckFrequency());
     if (AppSetting->updatesLastChecked().isValid()) {
@@ -901,7 +918,7 @@ bool PreferencesDialog::Save()
 
     AppSetting->setAutoLaunchImport(ui->autoLaunchImporter->isChecked());
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     AppSetting->setUpdatesAutoCheck(ui->automaticallyCheckUpdates->isChecked());
     AppSetting->setUpdateCheckFrequency(ui->updateCheckEvery->value());
     AppSetting->setAllowEarlyUpdates(ui->allowEarlyUpdates->isChecked());
@@ -1058,17 +1075,12 @@ void PreferencesDialog::on_IgnoreSlider_valueChanged(int position)
     } else { ui->IgnoreLCD->display(STR_TR_Off); }
 }
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
 #include "mainwindow.h"
 extern MainWindow *mainwin;
 void PreferencesDialog::RefreshLastChecked()
 {
     ui->updateLastChecked->setText(AppSetting->updatesLastChecked().toString(Qt::SystemLocaleLongDate));
-}
-
-void PreferencesDialog::on_checkForUpdatesButton_clicked()
-{
-    mainwin->CheckForUpdates();
 }
 #endif
 

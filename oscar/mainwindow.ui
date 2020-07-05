@@ -1211,8 +1211,8 @@ QToolBox::tab:selected  {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>174</width>
-          <height>687</height>
+          <width>178</width>
+          <height>685</height>
          </rect>
         </property>
         <property name="palette">
@@ -1669,8 +1669,8 @@ border: 2px solid #56789a; border-radius: 30px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>174</width>
-          <height>687</height>
+          <width>178</width>
+          <height>685</height>
          </rect>
         </property>
         <property name="palette">
@@ -2713,8 +2713,8 @@ border-radius: 10px;
             <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2728,8 +2728,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>174</width>
-          <height>687</height>
+          <width>178</width>
+          <height>685</height>
          </rect>
         </property>
         <property name="mouseTracking">
@@ -2770,8 +2770,8 @@ p, li { white-space: pre-wrap; }
             <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="openLinks">
             <bool>false</bool>
@@ -2791,7 +2791,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1023</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -2836,9 +2836,9 @@ p, li { white-space: pre-wrap; }
      <addaction name="action_Standard_Graph_Order"/>
      <addaction name="action_Advanced_Graph_Order"/>
     </widget>
-    <addaction name="actionView_Statistics"/>
     <addaction name="actionView_Daily"/>
     <addaction name="actionView_Overview"/>
+    <addaction name="actionView_Statistics"/>
     <addaction name="separator"/>
     <addaction name="action_Fullscreen"/>
     <addaction name="action_Screenshot"/>
@@ -2871,6 +2871,8 @@ p, li { white-space: pre-wrap; }
      <addaction name="separator"/>
      <addaction name="actionSystem_Information"/>
     </widget>
+    <addaction name="action_Check_for_Updates"/>
+    <addaction name="separator"/>
     <addaction name="actionOnline_Users_Guide"/>
     <addaction name="action_Frequently_Asked_Questions"/>
     <addaction name="actionSleep_Disorder_Terms_Glossary"/>
@@ -3297,6 +3299,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Show Personal Data</string>
+   </property>
+  </action>
+  <action name="action_Check_for_Updates">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Check For &amp;Updates</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

@@ -56,7 +56,7 @@
 #include "exportcsv.h"
 #include "SleepLib/schema.h"
 #include "Graphs/glcommon.h"
-#include "UpdaterWindow.h"
+#include "checkupdates.h"
 #include "SleepLib/calcs.h"
 #include "SleepLib/progressdialog.h"
 
@@ -67,6 +67,8 @@
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
 #include <QOpenGLFunctions>
 #endif
+
+CheckUpdates *updateChecker;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -149,6 +151,9 @@ void MainWindow::SetupGUI()
     profileSelector = nullptr;
     welcome = nullptr;
 
+#ifdef NO_CHECKUPDATES
+    ui->action_Check_for_Updates->setVisible(false);
+#endif
     ui->oximetryButton->setDisabled(true);
     ui->dailyButton->setDisabled(true);
     ui->overviewButton->setDisabled(true);
@@ -213,7 +218,7 @@ void MainWindow::SetupGUI()
     first_load = true;
 
     profileSelector = new ProfileSelector(ui->tabWidget);
-    ui->tabWidget->insertTab(0, profileSelector, STR_TR_Profile);
+    ui->tabWidget->insertTab(0, profileSelector,  STR_TR_Profile);
 
     // Profiles haven't been loaded here...
     profileSelector->updateProfileList();
@@ -600,11 +605,15 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     delete progress;
     qDebug() << "Finished opening Profile";
 
+    updateChecker->showMessage();
+
     return true;
 }
 
 void MainWindow::CloseProfile()
 {
+    updateChecker->showMessage();
+
     if (daily) {
         daily->Unload();
         daily->clearLastDay(); // otherwise Daily will crash
@@ -1179,101 +1188,6 @@ void MainWindow::setStatsHTML(QString html)
 }
 
 
-/***
-QString MainWindow::getWelcomeHTML()
-{
-    // This is messy, but allows it to be translated easier
-    return "<html>\n<head>"
-           " <style type='text/css'>"
-           "  <!--h1,p,a,td,body { font-family: 'FreeSans', 'Sans Serif' } --/>"
-           "  p,a,td,body { font-size: 14px }"
-           "  a:link,a:visited { color: \"#000020\"; text-decoration: none; font-weight: bold;}"
-           "  a:hover { background-color: inherit; color: red; text-decoration:none; font-weight: bold; }"
-           " </style>\n"
-           "</head>"
-           "<body leftmargin=0 topmargin=0 rightmargin=0>"
-           "<table width=\"100%\" cellspacing=0 cellpadding=4 border=0 >"
-           "<tr><td bgcolor=\"#d0d0d0\" colspan=2 cellpadding=0 valign=center align=center><font color=\"black\" size=+1><b>"
-           + tr("Welcome to OSCAR") + "</b></font></td></tr>"
-           "<tr>"
-           "<td valign=\"top\" leftmargin=0 cellpadding=6>"
-           "<h3>" + tr("About OSCAR") + "</h3>"
-           "<p>" + tr("This software has been created to assist you in reviewing the data produced by CPAP Machines, used in the treatment of various Sleep Disorders.")
-           + "</p>"
-           "<p>" + tr("OSCAR has been designed by a software developer with personal experience with a sleep disorder, and shaped by the feedback of many other willing testers dealing with similar conditions.")
-           + "</p>"
-           "<p><i><b>" + tr("This is a beta release, some features may not yet behave as expected.") +
-           "</b></i><br/>" + tr("Please report any bugs you find to the OSCAR developer's group.") + "</p>"
-
-           "<h3>" + tr("Currenly supported machines:") + "</h3>"
-           "<b>" + tr("CPAP") + "</b>"
-           "<li>" + tr("Philips Respironics System One (CPAP Pro, Auto, BiPAP & ASV models)") + "</li>"
-           "<li>" + tr("ResMed S9 models (CPAP, Auto, VPAP)") + "</li>"
-           "<li>" + tr("DeVilbiss Intellipap (Auto)") + "</li>"
-           "<li>" + tr("Fisher & Paykel ICON (CPAP, Auto)") + "</li>"
-           "<b>" + tr("Oximetry") + "</b>"
-           "<li>" + tr("Contec CMS50D+, CMS50E and CMS50F (not 50FW) Oximeters") + "</li>"
-           "<li>" + tr("ResMed S9 Oximeter Attachment") + "</li>"
-           "<p><h3>" + tr("Online Help Resources") + "</h3></p>"
-           "<p><b>" + tr("Note:") + "</b>" +
-           tr("I don't recommend using this built in web browser to do any major surfing in, it will work, but it's mainly meant as a help browser.")
-           +
-           tr("(It doesn't support SSL encryption, so it's not a good idea to type your passwords or personal details anywhere.)")
-           + "</p>" +
-
-//         tr("OSCAR's Online <a href=\"http://sleepyhead.sourceforge.net/wiki/index.php?title=OSCAR_Users_Guide\">Users Guide</a><br/>")
-//         +
-//         tr("<a href=\"http://sleepyhead.sourceforge.net/wiki/index.php?title=Frequently_Asked_Questions\">Frequently Asked Questions</a><br/>")
-//         +
-//         tr("<a href=\"http://sleepyhead.sourceforge.net/wiki/index.php?title=Glossary\">Glossary of Sleep Disorder Terms</a><br/>")
-//         +
-//         tr("<a href=\"http://sleepyhead.sourceforge.net/wiki/index.php?title=Main_Page\">OSCAR Wiki</a><br/>")
-//         +
-//         tr("OSCAR's <a href='http://www.sourceforge.net/projects/sleepyhead'>Project Website</a> on SourceForge<br/>")
-//         +
-           "<p><h3>" + tr("Further Information") + "</h3></p>"
-           "<p>" +
-           tr("The release notes for this version can be found in the About OSCAR menu item.") +
-           "<br/>" +
-           tr("Plus a few <a href='qrc:/docs/usage.html'>usage notes</a>, and some important information for Mac users.")
-           + "<br/>" +
-           "<p>" + tr("About <a href='http://en.wikipedia.org/wiki/Sleep_apnea'>Sleep Apnea</a> on Wikipedia")
-           + "</p>"
-
-           "<p>" + tr("Friendly forums to talk and learn about Sleep Apnea:") + "<br/>" +
-           tr("<a href='http://www.cpaptalk.com'>CPAPTalk Forum</a>,") +
-           tr("<a href='http://www.apneaboard.com/forums/'>Apnea Board</a>") + "</p>"
-           "</td>"
-           "<td><image src='qrc:/icons/logo-lg.png' width=220 height=220><br/>"
-           "</td>"
-           "</tr>"
-           "<tr>"
-           "<td colspan=2>"
-           "<hr/>"
-           "<p><b>" + tr("Copyright:") + "</b> " + "&copy;2011-2018" +
-           " <a href=\"http://jedimark64.blogspot.com\">Mark Watkins</a> (jedimark) and portions &copy;2019 Nightowl Software</p>"
-           "<p><b>" + tr("License:") + "</b> " +
-           tr("This software is released freely under the <a href=\"qrc:/COPYING\">GNU Public License version 3</a>.") +
-           "</p>"
-           "<hr/>"
-           "<p><b>" + tr("DISCLAIMER:") + "</b></p>"
-           "<b><p>" +
-           tr("This is <font color='red'><u>NOT</u></font> medical software. This application is merely a data viewer, and no guarantee is made regarding accuracy or correctness of any calculations or data displayed.")
-           + "</p>"
-           "<p>" + tr("The authors will NOT be held liable by anyone who harms themselves or others by use or misuse of this software.")
-           + "</p>"
-           "<p>" + tr("Your doctor should always be your first and best source of guidance regarding the important matter of managing your health.")
-           + "</p>"
-           "<p>" + tr("*** <u>Use at your own risk</u> ***") + "</p></b>"
-           "<hr/>"
-           "</td></tr>"
-           "</table>"
-           "</body>"
-           "</html>"
-
-           ;
-}
-***/
 void MainWindow::updateFavourites()
 {
     QDate date = p_profile->LastDay(MT_JOURNAL);
@@ -1469,24 +1383,23 @@ void MainWindow::on_oximetryButton_clicked()
     }
 }
 
-void MainWindow::CheckForUpdates()
+// Called for automatic check for updates
+void MainWindow::CheckForUpdates(bool showWhenCurrent)
 {
-    qDebug() << "procedure <CheckForUpdates> called";
-#ifndef NO_UPDATER
-    on_actionCheck_for_Updates_triggered();
+    updateChecker = new CheckUpdates(this);
+#ifdef NO_CHECKUPDATES
+    if (showWhenCurrent)
+        QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Check for updates not implemented"));
 #else
-    QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Updates are not yet implemented"));
+    updateChecker->checkForUpdates(showWhenCurrent);
 #endif
 }
 
-#ifndef NO_UPDATER
-void MainWindow::on_actionCheck_for_Updates_triggered()
+// Called for manual check for updates
+void MainWindow::on_action_Check_for_Updates_triggered()
 {
-    qDebug() << "procedure <on_actionCheck_for_Updates_triggered> called";
-    UpdaterWindow *w = new UpdaterWindow(this);
-    w->checkForUpdates();
+    CheckForUpdates(true);
 }
-#endif
 
 bool toolbox_visible = false;
 void MainWindow::on_action_Screenshot_triggered()

@@ -59,11 +59,13 @@ const QString STR_GEN_AutoOpenLastUsed = "AutoOpenLastUsed";
 const QString STR_GEN_Language = "Language";
 const QString STR_PREF_VersionString = "VersionString";
 const QString STR_GEN_ShowAboutDialog = "ShowAboutDialog";
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
 const QString STR_GEN_UpdatesLastChecked = "UpdatesLastChecked";
 const QString STR_GEN_UpdatesAutoCheck = "Updates_AutoCheck";
 const QString STR_GEN_UpdateCheckFrequency = "Updates_CheckFrequency";
 const QString STR_PREF_AllowEarlyUpdates = "AllowEarlyUpdates";
+const QString STR_GEN_SkippedReleaseVersion = "SkippedReleaseVersion";
+const QString STR_GEN_SkippedTestVersion = "SkippedTestVersion";
 #endif
 
 
@@ -83,7 +85,7 @@ public:
   QString m_profileName, m_language;
 
   QString versionString() const { return getPref(STR_PREF_VersionString).toString(); }
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
   bool updatesAutoCheck() const { return getPref(STR_GEN_UpdatesAutoCheck).toBool(); }
   bool allowEarlyUpdates() const { return getPref(STR_PREF_AllowEarlyUpdates).toBool(); }
   QDateTime updatesLastChecked() const { return getPref(STR_GEN_UpdatesLastChecked).toDateTime(); }
@@ -196,7 +198,7 @@ public:
   void setShowPersonalData(bool b) { setPref(STR_US_ShowPersonalData, b); }
 
   void setVersionString(QString version) { setPref(STR_PREF_VersionString, version); }
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
   void setUpdatesAutoCheck(bool b) { setPref(STR_GEN_UpdatesAutoCheck, b); }
   void setAllowEarlyUpdates(bool b)  { setPref(STR_PREF_AllowEarlyUpdates, b); }
   void setUpdatesLastChecked(QDateTime datetime) { setPref(STR_GEN_UpdatesLastChecked, datetime); }

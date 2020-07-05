@@ -106,7 +106,7 @@ class MainWindow : public QMainWindow
     QMenu *CreateMenu(QString title);
 
     //! \brief Start the automatic update checker process
-    void CheckForUpdates();
+    void CheckForUpdates(bool showWhenCurrent);
 
     void EnableTabs(bool b);
 
@@ -234,10 +234,8 @@ class MainWindow : public QMainWindow
     //! \brief Opens and/or shows the Oximetry page
     void on_oximetryButton_clicked();
 
-    //! \brief Creates the UpdaterWindow object that actually does the real check for updates
-#ifndef NO_UPDATER
-    void on_actionCheck_for_Updates_triggered();
-#endif
+    //! \brief Creates the CheckUpdates object that actually does the real check for updates
+    void on_action_Check_for_Updates_triggered();
 
     //! \brief Attempts to do a screenshot of the application window
     void on_action_Screenshot_triggered();

@@ -49,9 +49,9 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     m_profileName = initPref(STR_GEN_Profile, "").toString();
     initPref(STR_GEN_AutoOpenLastUsed, true);
 
-#ifndef NO_UPDATER
+#ifndef NO_CHECKUPDATES
     initPref(STR_GEN_UpdatesAutoCheck, true);
-    initPref(STR_GEN_UpdateCheckFrequency, 7);
+    initPref(STR_GEN_UpdateCheckFrequency, 14);
     initPref(STR_PREF_AllowEarlyUpdates, false);
     initPref(STR_GEN_UpdatesLastChecked, QDateTime());
 #endif

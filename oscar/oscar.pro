@@ -23,7 +23,9 @@ contains(DEFINES, helpless) {
 }
 
 DEFINES += QT_DEPRECATED_WARNINGS
-DEFINES += NO_UPDATER
+
+# Enable this to turn off Check for Updates feature
+# DEFINES += NO_CHECKUPDATES
 
 #OSCAR requires OpenGL 2.0 support to run smoothly
 #On platforms where it's not available, it can still be built to work
@@ -246,6 +248,7 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 }
 
 SOURCES += \
+    checkupdates.cpp \
     common_gui.cpp \
     cprogressbar.cpp \
     daily.cpp \
@@ -258,8 +261,7 @@ SOURCES += \
     profileselect.cpp \
     reports.cpp \
     sessionbar.cpp \
-    updateparser.cpp \
-    UpdaterWindow.cpp \
+#    updateparser.cpp \
     version.cpp \
     Graphs/gFlagsLine.cpp \
     Graphs/gFooBar.cpp \
@@ -325,6 +327,7 @@ SOURCES += \
 }
 
 HEADERS  += \
+    checkupdates.h \
     common_gui.h \
     cprogressbar.h \
     daily.h \
@@ -336,8 +339,7 @@ HEADERS  += \
     profileselect.h \
     reports.h \
     sessionbar.h \
-    updateparser.h \
-    UpdaterWindow.h \
+#    updateparser.h \
     version.h \
     VERSION \
     Graphs/gFlagsLine.h \
@@ -414,7 +416,7 @@ FORMS += \
     profileselect.ui \
     newprofile.ui \
     exportcsv.ui \
-    UpdaterWindow.ui \
+#    UpdaterWindow.ui \
     oximeterimport.ui \
     profileselector.ui \
     aboutdialog.ui \
