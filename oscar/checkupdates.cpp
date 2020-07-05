@@ -191,8 +191,8 @@ void CheckUpdates::showMessage()
         return;
 
     if (showIfCurrent) {
-//        checkingBox->cancel();
-        checkingBox->reset();
+        if (checkingBox != nullptr)
+            checkingBox->reset();
     }
 
     QMessageBox msgBox;
@@ -207,15 +207,18 @@ void CheckUpdates::showMessage()
 void CheckUpdates::checkForUpdates(bool showWhenCurrent)
 {
     showIfCurrent = showWhenCurrent;
-/****
-    versionXML = readLocalVersions();
-    if (versionXML.length() <= 0) {
-        qDebug() << "Error reading local version control file - version check disabled";
-        QMessageBox::warning(nullptr, STR_MessageBox_Warning, QObject::tr("Unable to read version control file from disk"));
-        return;
+
+    // If running a test version of OSCAR, try reading versions.xml from OSCAR_Data directory
+    if (!getVersion().IsReleaseVersion()) {
+        versionXML = readLocalVersions();
+        if (versionXML.length() > 0) {
+            compareVersions();
+            elapsedTime = 0;
+            checkingBox = nullptr;
+            showMessage();
+            return;
+        }
     }
-    compareVersions();
-****/
 
     readTimer.start();
 
