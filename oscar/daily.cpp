@@ -1088,8 +1088,8 @@ QString Daily::getMachineSettings(Day * day) {
         html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>").arg(tr("Machine Settings"));
         html+="<tr><td colspan=5>&nbsp;</td></tr>";
 
-        if (day->noSettings(cpap)) {
-            html+="<tr><td colspan=5 align=center><i>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</i></td></tr>\n";
+/*        if (day->noSettings(cpap)) */{
+            html+="<tr><td colspan=5 align=center><i><font color='red'>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</font></i></td></tr>\n";
         /*
         } else if ((day->settingExists(CPAP_BrokenSummary))) {
             html+="<tr><td colspan=5 align=center><i>"+tr("Machine Settings Unavailable")+"</i></td></tr></table><hr/>\n";
@@ -1244,9 +1244,9 @@ QString Daily::getCPAPInformation(Day * day)
     html+=tr("PAP Mode: %1").arg(day->getCPAPModeStr())+"<br/>";
     html+= day->getPressureSettings();
     html+="</td></tr>\n";
-    if (day->noSettings(cpap)) {
-        html+=QString("<tr><td colspan=2 align=center><i>%1</i></td></tr>").arg(tr("(Mode/Pressure settings are guessed on this day.)"));
-    }
+//    if (day->noSettings(cpap)) {
+        html+=QString("<tr><td align=center><font color='red'><i>%1</i></font></td></tr>").arg(tr("(Mode/Pressure settings are guessed on this day.)"));
+//    }
 
     html+="</table>\n";
     html+="<hr/>\n";
