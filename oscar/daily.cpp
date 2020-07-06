@@ -1086,16 +1086,18 @@ QString Daily::getMachineSettings(Day * day) {
     if (cpap && day->hasEnabledSessions(MT_CPAP)) {
         html="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
         html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>").arg(tr("Machine Settings"));
-        html+="<tr><td colspan=5>&nbsp;</td></tr>";
 
-/*        if (day->noSettings(cpap)) */{
+        if (day->noSettings(cpap)) {
             html+="<tr><td colspan=5 align=center><i><font color='red'>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</font></i></td></tr>\n";
+        } else {
+            html+="<tr><td colspan=5>&nbsp;</td></tr>";
+        }
         /*
         } else if ((day->settingExists(CPAP_BrokenSummary))) {
             html+="<tr><td colspan=5 align=center><i>"+tr("Machine Settings Unavailable")+"</i></td></tr></table><hr/>\n";
             return html;
-        */
         }
+        */
 
         QMap<QString, QString> other;
         Session * sess = day->firstSession(MT_CPAP);
@@ -1244,9 +1246,9 @@ QString Daily::getCPAPInformation(Day * day)
     html+=tr("PAP Mode: %1").arg(day->getCPAPModeStr())+"<br/>";
     html+= day->getPressureSettings();
     html+="</td></tr>\n";
-//    if (day->noSettings(cpap)) {
-        html+=QString("<tr><td align=center><font color='red'><i>%1</i></font></td></tr>").arg(tr("(Mode/Pressure settings are guessed on this day.)"));
-//    }
+    if (day->noSettings(cpap)) {
+        html+=QString("<tr><td align=center><font color='red'><i>%1</i></font></td></tr>").arg(tr("(Mode and Pressure settings missing; yesterday's shown.)"));
+    }
 
     html+="</table>\n";
     html+="<hr/>\n";
@@ -1356,7 +1358,7 @@ QString Daily::getStatisticsInfo(Day * day)
 
     if (GraphView->isEmpty() && ((ccnt>0) || (cpap && day->summaryOnly()))) {
         html+="<tr><td colspan=5>&nbsp;</td></tr>\n";
-        html+=QString("<tr><td colspan=5 align=center><i>%1</i></td></tr>").arg("<b>"+STR_MessageBox_PleaseNote+"</b> "+ 
+        html+=QString("<tr><td colspan=5 align=center><i>%1</i></td></tr>").arg("<b>"+STR_MessageBox_PleaseNote+"</b> "+
                     tr("This day just contains summary data, only limited information is available."));
     } else if (cpap) {
         html+="<tr><td colspan=5>&nbsp;</td></tr>";
