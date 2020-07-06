@@ -220,23 +220,24 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
+    ui->updateCheckEvery->setValue(AppSetting->updateCheckFrequency());
+    ui->allowEarlyUpdates->setChecked(AppSetting->allowEarlyUpdates());
     ui->test_invite->setVisible(false);
     if (!getVersion().IsReleaseVersion()) {
         // Test version
         ui->automaticallyCheckUpdates->setVisible(false);
         ui->allowEarlyUpdates->setVisible(false);
-        ui->updateCheckEvery->setMaximum(min(7,AppSetting->updateCheckFrequency()));
+        ui->updateCheckEvery->setMaximum(7);
     }
     else {
         // Release version
-        ui->updateCheckEvery->setMaximum(min(90,AppSetting->updateCheckFrequency()));
+        ui->updateCheckEvery->setMaximum(90);
         ui->always_look_for_updates->setVisible(false);
         if (!AppSetting->allowEarlyUpdates()) {
             ui->test_invite->setVisible(true);
             ui->allowEarlyUpdates->setVisible(false);
         }
     }
-    ui->allowEarlyUpdates->setChecked(AppSetting->allowEarlyUpdates());
 #else
     ui->automaticallyCheckUpdates_GroupBox->setVisible(false);
 #endif

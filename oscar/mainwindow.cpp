@@ -605,14 +605,16 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     delete progress;
     qDebug() << "Finished opening Profile";
 
-    updateChecker->showMessage();
+    if (updateChecker != nullptr)
+        updateChecker->showMessage();
 
     return true;
 }
 
 void MainWindow::CloseProfile()
 {
-    updateChecker->showMessage();
+    if (updateChecker != nullptr)
+        updateChecker->showMessage();
 
     if (daily) {
         daily->Unload();
