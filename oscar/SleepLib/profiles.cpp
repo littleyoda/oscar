@@ -1868,7 +1868,7 @@ QDate Profile::FirstDay(MachineType mt)
     return m_last;
 }
 
-// Lookup last day record of the specified machine type, or return the first day overall if MT_UNKNOWN
+// Lookup last day record of the specified machine type, or return the last day overall if MT_UNKNOWN
 QDate Profile::LastDay(MachineType mt)
 {
     if ((mt == MT_UNKNOWN) || (!m_last.isValid()) || (!m_first.isValid())) {

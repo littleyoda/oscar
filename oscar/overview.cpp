@@ -467,7 +467,11 @@ void Overview::on_rangeCombo_activated(int index)
     ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
     ui->dateEnd->setMaximumDate(p_profile->LastDay());
 
-    QDate end = p_profile->LastDay();
+    // Exclude Journal in calculating the last day
+    QDate end = p_profile->LastDay(MT_CPAP);
+    end = max(end, p_profile->LastDay(MT_OXIMETER));
+    end = max(end, p_profile->LastDay(MT_POSITION));
+    end = max(end, p_profile->LastDay(MT_SLEEPSTAGE));
     QDate start;
 
     if (index == 8) { // Custom
