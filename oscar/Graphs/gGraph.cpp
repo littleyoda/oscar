@@ -717,7 +717,7 @@ double gGraph::screenToTime(int xpos)
 
 void gGraph::mouseMoveEvent(QMouseEvent *event)
 {
-    // qDebug() << m_title << "Move" << event->pos() << m_graphview->pointClicked();
+//    qDebug() << m_title << "Move" << event->pos() << m_graphview->pointClicked();
     if (m_rect.width() == 0) return;
     int y = event->y();
     int x = event->x();
@@ -874,6 +874,8 @@ void gGraph::mousePressEvent(QMouseEvent *event)
     int y = event->pos().y();
     int x = event->pos().x();
 
+//    qDebug() << m_title << "gGraph mousePressEvent, x=" << x << " y=" << y;
+
     for (const auto & layer : m_layers) {
         if (layer->m_rect.contains(x, y))
             if (layer->mousePressEvent(event, this)) {
@@ -899,6 +901,7 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
     int y = event->pos().y();
     int x = event->pos().x();
+//    qDebug() << m_title << "gGraph mouseReleaseEvent at x,y"  << x << y;
 
     for (const auto & layer : m_layers) {
         if (layer->m_rect.contains(x, y))
@@ -918,7 +921,8 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
     m_selDurString = QString();
 
-    //qDebug() << m_title << "Released" << min_x << max_x << x << y << x2 << y2 << left << right << top << bottom << m_width << m_height;
+//    qDebug() << m_title << "Released" << min_x << max_x << x << y << x2 << left << right << top << bottom << m_width << m_height;
+
     if (m_selecting_area) {
         m_selecting_area = false;
         m_selection.setWidth(0);
@@ -951,9 +955,13 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
                                         //if (a1<rmin_x) a1=rmin_x;
                 if (a2 > rmax_x) { a2 = rmax_x; }
 
+                if (a1 == a2)  // Don't zoom into a block if range is zero
+                    return;
+
                 if (a1 <= rmin_x && a2 <= rmin_x) {
                     //qDebug() << "Foo??";
                 } else {
+//                    qDebug() << m_title << "!m_blockzoom (960), a1, a2" << a1 << a2;
                     if (a2 - a1 < zoom_hard_limit) { a2 = a1 + zoom_hard_limit; }
 
                     m_graphview->SetXBounds(a1, a2, m_group);
@@ -972,6 +980,7 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
                 if (a1 <= rmin_x && a2 <= rmin_x) {
                     qDebug() << "Foo2??";
                 } else  {
+//                     qDebug() << m_title << "m_blockzoom (979), a1, a2" << a1 << a2;
                     if (a2 - a1 < zoom_hard_limit) { a2 = a1 + zoom_hard_limit; }
                     m_graphview->SetXBounds(a1, a2, m_group);
                 }
@@ -1057,7 +1066,7 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
 void gGraph::wheelEvent(QWheelEvent *event)
 {
-    //qDebug() << m_title << "Wheel" << event->x() << event->y() << event->delta();
+    qDebug() << m_title << "Wheel" << event->x() << event->y() << event->delta();
     //int y=event->pos().y();
     if (event->orientation() == Qt::Horizontal) {
 
@@ -1137,6 +1146,7 @@ void gGraph::keyReleaseEvent(QKeyEvent *event)
 void gGraph::ZoomX(double mult, int origin_px)
 {
 
+//    qDebug() << "gGraph::ZoomX width, left, right" << m_rect.width() << left << right;
     int width = m_rect.width() - left - right; //(m_marginleft+left+right+m_marginright);
 
     if (origin_px == 0) { origin_px = (width / 2); }
