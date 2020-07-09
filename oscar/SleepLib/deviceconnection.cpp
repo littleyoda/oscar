@@ -1,4 +1,4 @@
-/* Device Connection Class Implementation
+/* Device Connection Manager
  *
  * Copyright (c) 2020 The OSCAR Team
  *
@@ -28,26 +28,51 @@ static QString hex(int i)
 // MARK: -
 // MARK: XML record/playback base classes
 
+/*
+ * XML recording base class
+ *
+ * While this can be used on its own via the public constructors, it is
+ * typically used as a base class for a subclasses that handle specific
+ * events.
+ *
+ * A single instance of this class can write a linear sequence of events to
+ * XML, either to a string (for testing) or to a file (for production use).
+ *
+ * Sometimes, however, there is need for certain sequences to be treated as
+ * separate, either due to multithreading (such recording as multiple
+ * simultaneous connections), or in order to treat a certain excerpt (such
+ * as data download that we might wish to archive) separately.
+ *
+ * These sequences are handled as "substreams" of the parent stream. The
+ * parent stream will typically record a substream's open/close or start/
+ * stop along with its ID. The substream will be written to a separate XML
+ * stream identified by that ID. Substreams are implemented as subclasses of
+ * this base class.
+ *
+ * TODO: At the moment, only file-based substreams are supported. In theory
+ * it should be possible to cache string-based substreams and then insert
+ * them inline into the parent after the substream-close event is recorded.
+ */
 class XmlRecorder
 {
 public:
-    static const QString TAG;
+    static const QString TAG;  // default tag if no subclass
 
-    XmlRecorder(class QFile * file, const QString & tag = XmlRecorder::TAG);
-    XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);
-    virtual ~XmlRecorder();
-    XmlRecorder* close();
+    XmlRecorder(class QFile * file, const QString & tag = XmlRecorder::TAG);  // record XML to the given file
+    XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);    // record XML to the given string
+    virtual ~XmlRecorder();  // write the epilogue and close the recorder
+    XmlRecorder* close();    // convenience function to close out a substream and return its parent
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
 protected:
-    XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag);
-    QXmlStreamWriter* addSubstream(XmlRecorder* child, const QString & id);
-    const QString m_tag;
-    QFile* m_file;  // nullptr for non-file recordings
-    QXmlStreamWriter* m_xml;
-    QMutex m_mutex;
-    XmlRecorder* m_parent;
+    XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag);  // constructor used by substreams
+    QXmlStreamWriter* addSubstream(XmlRecorder* child, const QString & id);     // initialize a child substream, used by above constructor
+    const QString m_tag;      // opening/closing tag for this instance
+    QFile* m_file;            // nullptr for non-file recordings
+    QXmlStreamWriter* m_xml;  // XML output stream
+    QMutex m_mutex;           // force one thread at a time to write to m_xml
+    XmlRecorder* m_parent;    // parent instance of a substream
     
     virtual void prologue();
     virtual void epilogue();
@@ -56,60 +81,136 @@ const QString XmlRecorder::TAG = "xmlreplay";
 
 class XmlReplayEvent;
 
+/*
+ * XML replay base class
+ *
+ * A single instance of this class caches events from a previously recorded
+ * XML stream, either from a string (for testing) or from a file (for
+ * production use).
+ *
+ * Unlike recording, the replay need not be strictly linear. In fact, the
+ * implementation is designed to allow for limited reordering during replay,
+ * so that minor changes to code should result in sensible replay until a
+ * new recording can be made.
+ *
+ * There are two aspects to this reordering:
+ *
+ * First, events can be retrieved (and consumed) in any order, being
+ * retrieved by type and ID (and then in order within that type and ID).
+ *
+ * Second, events that are flagged as random-access (see randomAccess below)
+ * will cause the above retrieval to subsequently begin searching on or
+ * after the random-access event's timestamp (except for other random-access
+ * events, which are always searched from the beginning.)
+ *
+ * This allow non-stateful events to be replayed arbitrarily, and for
+ * stateful events (such as commands sent to a device) to be approximated
+ * (where subsequent data received matches the command sent).
+ *
+ * Furthermore, when events are triggered in the same order as they were
+ * during recordering, the above reordering will have no effect, and the
+ * original ordering will be replayed identically.
+ *
+ * See XmlRecorder above for a discussion of substreams.
+ */
 class XmlReplay
 {
 public:
-    XmlReplay(class QFile * file, const QString & tag = XmlRecorder::TAG);
-    XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);
+    XmlReplay(class QFile * file, const QString & tag = XmlRecorder::TAG);      // replay XML from the given file
+    XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);  // replay XML from the given stream
     virtual ~XmlReplay();
-    XmlReplay* close();
-    template<class T> inline T* getNextEvent(const QString & id = "");
+    XmlReplay* close();    // convenience function to close out a substream and return its parent
+    template<class T> inline T* getNextEvent(const QString & id = "");  // typesafe accessor to retrieve and consume the next matching event
 
 
 protected:
-    XmlReplay(XmlReplay* parent, const QString & id, const QString & tag = XmlRecorder::TAG);
-    QXmlStreamReader* findSubstream(XmlReplay* child, const QString & id);
+    XmlReplay(XmlReplay* parent, const QString & id, const QString & tag = XmlRecorder::TAG);  // constructor used by substreams
+    QXmlStreamReader* findSubstream(XmlReplay* child, const QString & id);                     // initialize a child substream, used by above constructor
 
     void deserialize(QXmlStreamReader & xml);
     void deserializeEvents(QXmlStreamReader & xml);
-    const QString m_tag;
-    QFile* m_file;
+    const QString m_tag;  // opening/closing tag for this instance
+    QFile* m_file;        // nullptr for non-file replay
 
-    QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;
-    QHash<QString,QHash<QString,int>> m_indexPosition;
-    QList<XmlReplayEvent*> m_events;
+    QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;  // type and ID-based index into the events, see discussion of reordering above
+    QHash<QString,QHash<QString,int>> m_indexPosition;                  // positions at which to begin searching the index, updated by random-access events
+    QList<XmlReplayEvent*> m_events;                                    // linear list of all events in their original order
 
     XmlReplayEvent* getNextEvent(const QString & type, const QString & id = "");
     void seekToTime(const QDateTime & time);
 
-    XmlReplayEvent* m_pendingSignal;
-    QMutex m_lock;
+    XmlReplayEvent* m_pendingSignal;  // the signal (if any) that should be replayed as soon as the current event has been processed
+    QMutex m_lock;                    // prevent signals from being dispatched while an event is being processed, see XmlReplayLock below
     inline void lock() { m_lock.lock(); }
     inline void unlock() { m_lock.unlock(); }
     void processPendingSignals(const QObject* target);
     friend class XmlReplayLock;
 
-    XmlReplay* m_parent;
+    XmlReplay* m_parent;  // parent instance of a substream
 };
 
+
+/*
+ * XML replay event base class
+ *
+ * This class is used to represent a replayable event. An event is created
+ * when performing any replayable action, and then recorded (via record())
+ * when appropriate. During replay, an event is retrieved from the XmlReplay
+ * instance and its previously recorded result should be returned instead of
+ * performing the original action.
+ *
+ * Subclasses are created as subclasses of the XmlReplayBase template (see
+ * below), which handles their factory method and tag registration.
+ *
+ * Subclasses that should be retrieved by ID as well as type will need to
+ * override id() to return the ID to use for indexing.
+ *
+ * Subclasses that represent signal events (rather than API calls) will need
+ * to set their m_signal string to the name of the signal to be emitted, and
+ * additionally override signal() if they need to pass parameters with the
+ * signal.
+ *
+ * Subclasses that represent random-access events (see discussion above)
+ * will need to override randomAccess() to return true.
+ *
+ * Subclasses whose XML contains raw hexadecimal data will need to override
+ * usesData() to return true. Subclasses whose XML contains other data
+ * (such as complex data types) will instead need to override read() and
+ * write().
+ */
 class XmlReplayEvent
 {
 public:
     XmlReplayEvent();
     virtual ~XmlReplayEvent() = default;
+    
+    //! \brief Return the XML tag used for this event. Automatically overridden for subclasses by template.
     virtual const QString & tag() const = 0;
+    
+    //! \brief Return the ID for this event, if applicable. Subclasses should override this if their events should be retrieved by ID.
     virtual const QString id() const { static const QString none(""); return none; }
+    
+    //! \brief True if this event represents a "random-access" event that should cause subsequent event searches to start after this event's timestamp. Subclasses that represent such a state change should override this method.
     virtual bool randomAccess() const { return false; }
 
+    //! \brief Record this event to the given XML recorder, doing nothing if the recorder is null.
     void record(XmlRecorder* xml) const;
+
+    // Serialize this event to an XML stream.
     friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
+
+    // Deserialize this event's contents from an XML stream. The instance is first created via createInstance() based on the tag.
     friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
+    
+    // Write the opening tag and its contents, but don't close it.
     void writeTag(QXmlStreamWriter & xml) const;
 
+    // Event subclass registration and instance creation
     typedef XmlReplayEvent* (*FactoryMethod)();
     static bool registerClass(const QString & tag, FactoryMethod factory);
     static XmlReplayEvent* createInstance(const QString & tag);
 
+    //! \brief Add the given key/value to the event. This will be written as an XML attribute in the order it added.
     void set(const QString & name, const QString & value)
     {
         if (!m_values.contains(name)) {
@@ -117,16 +218,19 @@ public:
         }
         m_values[name] = value;
     }
+    //! \brief Add the given key/integer to the event. This will be written as an XML attribute in the order it added.
     void set(const QString & name, qint64 value)
     {
         set(name, QString::number(value));
     }
+    //! \brief Add the raw data to the event. This will be written in hexadecimal as content of the event's XML tag.
     void setData(const char* data, qint64 length)
     {
         Q_ASSERT(usesData() == true);
         QByteArray bytes = QByteArray::fromRawData(data, length);
         m_data = bytes.toHex(' ').toUpper();
     }
+    //! \brief Get the value for the given key.
     inline QString get(const QString & name) const
     {
         if (!m_values.contains(name)) {
@@ -134,6 +238,7 @@ public:
         }
         return m_values[name];
     }
+    //! \brief Get the raw data for this event.
     QByteArray getData() const
     {
         Q_ASSERT(usesData() == true);
@@ -144,7 +249,9 @@ public:
         }
         return QByteArray::fromHex(m_data.toUtf8());
     }
+    //! \brief True if there are no errors in this event, or false if the "error" attribute is set.
     inline bool ok() const { return m_values.contains("error") == false; }
+    //! \brief Return a string of this event as an XML tag.
     operator QString() const
     {
         QString out;
@@ -153,6 +260,7 @@ public:
         return out;
     }
 
+    //! \brief Copy the result from the retrieved replay event (if any) into the current event.
     void copyIf(const XmlReplayEvent* other)
     {
         // Leave the proposed event alone if there was no replay event.
@@ -165,6 +273,7 @@ public:
         m_data = other->m_data;
     }
 protected:
+    //! \brief Copy the timestamp as well as the results. This is necessary for replaying substreams that use the timestamp as part of their ID.
     void copy(const XmlReplayEvent & other)
     {
         copyIf(&other);
@@ -172,25 +281,33 @@ protected:
     }
 
 protected:
-    static QHash<QString,FactoryMethod> s_factories;
+    static QHash<QString,FactoryMethod> s_factories;  // registered subclass factory methods, arranged by XML tag
 
-    QDateTime m_time;
-    XmlReplayEvent* m_next;
+    QDateTime m_time;        // timestamp of event
+    XmlReplayEvent* m_next;  // next recorded event, used during replay to trigger signals that automatically fire after an event is processed
 
-    const char* m_signal;
+    const char* m_signal;    // name of the signal to be emitted for this event, if any
     inline bool isSignal() const { return m_signal != nullptr; }
+
+    //! \brief Send a signal to the target object. Subclasses may override this to send signal arguments.
     virtual void signal(QObject* target)
     {
+        // Queue the signal so that it won't be processed before the current event returns to its caller.
+        // (See XmlReplayLock below.)
         QMetaObject::invokeMethod(target, m_signal, Qt::QueuedConnection);
     }
 
-    QHash<QString,QString> m_values;
-    QList<QString> m_keys;
-    QString m_data;
+    QHash<QString,QString> m_values;  // hash of key/value pairs for this event, written as attributes of the XML tag
+    QList<QString> m_keys;            // list of keys so that attributes will be written in the order they were set
+    QString m_data;                   // hexademical string representing this event's raw data, written as contents of the XML tag
 
+    //! \brief Returns whether this event contains raw data. Defaults to false, so subclasses that use raw data must override this.
     virtual bool usesData() const { return false; }
+
+    //! \brief Write any attributes or content needed specific to event. Subclasses may override this to support complex data types.
     virtual void write(QXmlStreamWriter & xml) const
     {
+        // Write key/value pairs as attributes in the order they were set.
         for (auto key : m_keys) {
             xml.writeAttribute(key, m_values[key]);
         }
@@ -199,11 +316,12 @@ protected:
             xml.writeCharacters(m_data);
         }
     }
+    //! \brief Read any attributes or content specific to this event. Subclasses may override this to support complex data types.
     virtual void read(QXmlStreamReader & xml)
     {
         QXmlStreamAttributes attribs = xml.attributes();
         for (auto & attrib : attribs) {
-            if (attrib.name() != "time") {    // skip outer timestamp
+            if (attrib.name() != "time") {    // skip outer timestamp, which is decoded by operator>>
                 set(attrib.name().toString(), attrib.value().toString());
             }
         }
@@ -218,13 +336,24 @@ protected:
 };
 QHash<QString,XmlReplayEvent::FactoryMethod> XmlReplayEvent::s_factories;
 
+/*
+ * XML replay lock class
+ *
+ * An instance of this class should be created on the stack during any replayable
+ * event. Exiting scope will release the lock, at which point any signals that
+ * need to be replayed will be queued.
+ *
+ * Has no effect if events are not being replayed.
+ */
 class XmlReplayLock
 {
 public:
+    //! \brief Temporarily lock the XML replay (if any) until exiting scope, at which point any pending signals will be sent to the specified object.
     XmlReplayLock(const QObject* obj, XmlReplay* replay)
         : m_target(obj), m_replay(replay)
     {
         if (m_replay) {
+            // Prevent any triggered signal events from processing until the triggering lock is released.
             m_replay->lock();
         }
     }
@@ -237,10 +366,11 @@ public:
     }
 
 protected:
-    const QObject* m_target;
-    XmlReplay* m_replay;
+    const QObject* m_target;  // target object to receive any pending signals
+    XmlReplay* m_replay;      // replay instance, or nullptr if not replaying
 };
 
+// Derive the filepath for the given substream ID relative to the parent stream.
 static QString substreamFilepath(QFile* parent, const QString & id)
 {
     Q_ASSERT(parent);
@@ -262,7 +392,7 @@ XmlRecorder::XmlRecorder(QString & string, const QString & tag)
     prologue();
 }
 
-// Protected constructor for substreams.
+// Protected constructor for substreams
 XmlRecorder::XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag)
     : m_tag(tag), m_file(nullptr), m_xml(nullptr), m_parent(parent)
 {
@@ -277,8 +407,10 @@ XmlRecorder::XmlRecorder(XmlRecorder* parent, const QString & id, const QString 
     m_xml->setAutoFormatting(true);
     m_xml->setAutoFormattingIndent(2);
     // Substreams handle their own prologue.
+    // TODO: move writeStartElement out of writeTag so that we can use the default prologue here.
 }
 
+// Initialize a child recording substream.
 QXmlStreamWriter* XmlRecorder::addSubstream(XmlRecorder* child, const QString & id)
 {
     Q_ASSERT(child);
@@ -307,12 +439,14 @@ XmlRecorder::~XmlRecorder()
 {
     epilogue();
     delete m_xml;
-    // file substreams manage their own file
+    // File substreams manage their own file.
     if (m_parent && m_file) {
         delete m_file;
     }
 }
 
+// Close out a substream and return its parent.
+// TODO: rename to closeSubstream for clarity
 XmlRecorder* XmlRecorder::close()
 {
     auto parent = m_parent;
@@ -334,6 +468,7 @@ void XmlRecorder::epilogue()
     m_xml->writeEndElement();  // close enclosing tag
 }
 
+
 XmlReplay::XmlReplay(QFile* file, const QString & tag)
     : m_tag(tag), m_file(file), m_pendingSignal(nullptr), m_parent(nullptr)
 {
@@ -351,6 +486,7 @@ XmlReplay::XmlReplay(QXmlStreamReader & xml, const QString & tag)
     deserialize(xml);
 }
 
+// Protected constructor for substreams
 XmlReplay::XmlReplay(XmlReplay* parent, const QString & id, const QString & tag)
     : m_tag(tag), m_file(nullptr), m_pendingSignal(nullptr), m_parent(parent)
 {
@@ -365,6 +501,7 @@ XmlReplay::XmlReplay(XmlReplay* parent, const QString & id, const QString & tag)
     }
 }
 
+// Initialize a child replay substream.
 QXmlStreamReader* XmlReplay::findSubstream(XmlReplay* child, const QString & id)
 {
     Q_ASSERT(child);
@@ -394,12 +531,14 @@ XmlReplay::~XmlReplay()
     for (auto event : m_events) {
         delete event;
     }
-    // file substreams manage their own file
+    // File substreams manage their own file.
     if (m_parent && m_file) {
         delete m_file;
     }
 }
 
+// Close out a substream and return its parent.
+// TODO: rename to closeSubstream for clarity
 XmlReplay* XmlReplay::close()
 {
     auto parent = m_parent;
@@ -443,6 +582,7 @@ void XmlReplay::deserializeEvents(QXmlStreamReader & xml)
     }
 }
 
+// Queue any pending signals when a replay lock is released.
 void XmlReplay::processPendingSignals(const QObject* target)
 {
     if (m_pendingSignal) {
@@ -462,10 +602,12 @@ void XmlReplay::processPendingSignals(const QObject* target)
     }
 }
 
+// Update the positions at which to begin searching the index, so that only events on or after the given time are returned by getNextEvent.
 void XmlReplay::seekToTime(const QDateTime & time)
 {
     for (auto & type : m_eventIndex.keys()) {
         for (auto & key : m_eventIndex[type].keys()) {
+            // Find the index of the first event on or after the given time.
             auto & events = m_eventIndex[type][key];
             int pos;
             for (pos = 0; pos < events.size(); pos++) {
@@ -482,15 +624,18 @@ void XmlReplay::seekToTime(const QDateTime & time)
     }
 }
 
+// Find and return the next event of the given type with the given ID, or nullptr if no more events match.
 XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id)
 {
     XmlReplayEvent* event = nullptr;
     
+    // Event handlers should always be wrapped in an XmlReplayLock, so warn if that's not the case.
     if (m_lock.tryLock()) {
         qWarning() << "XML replay" << type << "object not locked by event handler!";
         m_lock.unlock();
     }
 
+    // Search the index for the next matching event (if any).
     if (m_eventIndex.contains(type)) {
         auto & ids = m_eventIndex[type];
         if (ids.contains(id)) {
@@ -507,10 +652,13 @@ XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id
         }
     }
     
+    // If this is a random-access event, we need to update the index positions for all non-random-access events.
     if (event && event->randomAccess()) {
         seekToTime(event->m_time);
     }
 
+    // If the event following this one is a signal (that replay needs to trigger), save it as pending
+    // so that it can be emitted when the replay lock for this event is released.
     if (event && event->m_next && event->m_next->isSignal()) {
         Q_ASSERT(m_pendingSignal == nullptr);  // if this ever fails, we may need m_pendingSignal to be a list
         m_pendingSignal = event->m_next;
@@ -519,6 +667,7 @@ XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id
     return event;
 }
 
+// Public, typesafe wrapper for getNextEvent above.
 template<class T>
 T* XmlReplay::getNextEvent(const QString & id)
 {
@@ -579,6 +728,7 @@ void XmlReplayEvent::writeTag(QXmlStreamWriter & xml) const
     xml.writeStartElement(tag());
     xml.writeAttribute("time", timestamp);
 
+    // Call this event's overridable write method.
     write(xml);
 }
 
@@ -607,10 +757,12 @@ QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event)
     }
     event.m_time = time;
     
+    // Call this event's overridable read method.
     event.read(xml);
     return xml;
 }
 
+// Convenience template for serializing QLists to XML
 template<typename T> QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const QList<T> & list)
 {
     for (auto & item : list) {
@@ -619,6 +771,7 @@ template<typename T> QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const
     return xml;
 }
 
+// Convenience template for deserializing QLists from XML
 template<typename T> QXmlStreamReader & operator>>(QXmlStreamReader & xml, QList<T> & list)
 {
     list.clear();
@@ -630,7 +783,15 @@ template<typename T> QXmlStreamReader & operator>>(QXmlStreamReader & xml, QList
     return xml;
 }
 
-// We use this extra CRTP templating so that concrete event subclasses require as little code as possible.
+/*
+ * Intermediate parent class of concrete event subclasses.
+ *
+ * We use this extra CRTP templating so that concrete event subclasses
+ * require as little code as possible:
+ *
+ * The subclass's tag and factory method are automatically generated by this
+ * template.
+ */
 template <typename Derived>
 class XmlReplayBase : public XmlReplayEvent
 {
@@ -646,6 +807,10 @@ public:
     }
 };
 
+/*
+ * Macro to define an XmlReplayEvent subclass's tag and automatically
+ * register the subclass at global-initialization time, before main()
+ */
 #define REGISTER_XMLREPLAYEVENT(tag, type) \
 template<> const QString XmlReplayBase<type>::TAG = tag; \
 template<> const bool XmlReplayBase<type>::registered = XmlReplayEvent::registerClass(XmlReplayBase<type>::TAG, XmlReplayBase<type>::createInstance);
@@ -654,6 +819,12 @@ template<> const bool XmlReplayBase<type>::registered = XmlReplayEvent::register
 // MARK: -
 // MARK: Device connection manager
 
+/*
+ * DeviceRecorder/DeviceReplay subclasses of XmlRecorder/XmlReplay
+ *
+ * Used by DeviceConnectionManager to record its activity, such as
+ * port scanning and connection opening/closing.
+ */
 class DeviceRecorder : public XmlRecorder
 {
 public:
@@ -672,12 +843,14 @@ public:
 };
 
 
+// Return singleton instance of DeviceConnectionManager, creating it if necessary.
 inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
 {
     static DeviceConnectionManager instance;
     return instance;
 }
 
+// Protected constructor
 DeviceConnectionManager::DeviceConnectionManager()
     : m_record(nullptr), m_replay(nullptr)
 {
@@ -739,6 +912,7 @@ DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, 
         return nullptr;
     }
 
+    // Recording/replay (if any) is handled by the connection.
     DeviceConnection* conn = s_factories[type](name, m_record, m_replay);
     if (conn) {
         if (conn->open()) {
@@ -754,6 +928,7 @@ DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, 
     return conn;
 }
 
+// Called by connections to deregister themselves.
 void DeviceConnectionManager::connectionClosed(DeviceConnection* conn)
 {
     Q_ASSERT(conn);
@@ -790,6 +965,9 @@ bool DeviceConnectionManager::registerClass(const QString & type, DeviceConnecti
     return true;
 }
 
+// Since there are relatively few connection types, don't bother with a CRTP
+// parent class. Instead, this macro defines the factory method, and the
+// subclass will need to declare createInstance() and TYPE manually.
 #define REGISTER_DEVICECONNECTION(type, T) \
 const QString T::TYPE = type; \
 const bool T::registered = DeviceConnectionManager::registerClass(T::TYPE, T::createInstance); \
@@ -798,6 +976,7 @@ DeviceConnection* T::createInstance(const QString & name, XmlRecorder* record, X
 // MARK: -
 // MARK: Device manager events
 
+// See XmlReplayEvent discussion of complex data types above.
 class GetAvailableSerialPortsEvent : public XmlReplayBase<GetAvailableSerialPortsEvent>
 {
 public:
@@ -822,6 +1001,7 @@ QList<SerialPortInfo> DeviceConnectionManager::getAvailableSerialPorts()
     GetAvailableSerialPortsEvent event;
 
     if (!m_replay) {
+        // Query the actual hardware present.
         for (auto & info : QSerialPortInfo::availablePorts()) {
             event.m_ports.append(SerialPortInfo(info));
         }
@@ -843,6 +1023,11 @@ QList<SerialPortInfo> DeviceConnectionManager::getAvailableSerialPorts()
 
 // MARK: -
 // MARK: Serial port info
+
+/*
+ * This class is both a drop-in replacement for QSerialPortInfo and
+ * supports XML serialization for the GetAvailableSerialPortsEvent above.
+ */
 
 SerialPortInfo::SerialPortInfo(const QSerialPortInfo & other)
 {
@@ -877,7 +1062,7 @@ SerialPortInfo::SerialPortInfo()
 {
 }
 
-// TODO: This is a temporary wrapper until we begin refactoring.
+// TODO: This method is a temporary wrapper that mimics the QSerialPortInfo interface until we begin refactoring.
 QList<SerialPortInfo> SerialPortInfo::availablePorts()
 {
     return DeviceConnectionManager::getInstance().getAvailableSerialPorts();
@@ -945,6 +1130,11 @@ bool SerialPortInfo::operator==(const SerialPortInfo & other) const
 // MARK: -
 // MARK: Device connection base class
 
+/*
+ * Event recorded in the Device Connection Manager XML stream that indicates
+ * a connection was opened (or attempted). On success, a ConnectionEvent
+ * (see below) will begin the connection's substream.
+ */
 class OpenConnectionEvent : public XmlReplayBase<OpenConnectionEvent>
 {
 public:
@@ -958,6 +1148,10 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("openConnection", OpenConnectionEvent);
 
+/*
+ * Event created when a connection is successfully opened, used as the
+ * enclosing tag for the connection substream.
+ */
 class ConnectionEvent : public XmlReplayBase<ConnectionEvent>
 {
 public:
@@ -974,6 +1168,12 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("connection", ConnectionEvent);
 
+/*
+ * ConnectionRecorder/ConnectionReplay subclasses of XmlRecorder/XmlReplay
+ *
+ * Used by DeviceConnection subclasses to record their activity, such as
+ * configuration and data sent and received.
+ */
 class ConnectionRecorder : public XmlRecorder
 {
 public:
@@ -992,6 +1192,7 @@ public:
 };
 
 
+// Device connection base class
 DeviceConnection::DeviceConnection(const QString & name, XmlRecorder* record, XmlReplay* replay)
     : m_name(name), m_record(record), m_replay(replay), m_opened(false)
 {
@@ -1001,6 +1202,9 @@ DeviceConnection::~DeviceConnection()
 {
 }
 
+/*
+ * Generic get/set events
+ */
 class SetValueEvent : public XmlReplayBase<SetValueEvent>
 {
 public:
@@ -1041,6 +1245,12 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("get", GetValueEvent);
 
+/*
+ * Event recorded in the Device Connection Manager XML stream when a
+ * open connection is closed. This is the complement to a successful
+ * OpenConnectionEvent (see above), and does not appear when the connection
+ * failed to open.
+ */
 class CloseConnectionEvent : public XmlReplayBase<CloseConnectionEvent>
 {
 public:
@@ -1064,12 +1274,37 @@ class FlushConnectionEvent : public XmlReplayBase<FlushConnectionEvent>
 };
 REGISTER_XMLREPLAYEVENT("flush", FlushConnectionEvent);
 
+/*
+ * Event representing data received from a device
+ *
+ * The data is stored as hexadecimal data in the XML tag's contents.
+ */
 class ReceiveDataEvent : public XmlReplayBase<ReceiveDataEvent>
 {
     virtual bool usesData() const { return true; }
 };
 REGISTER_XMLREPLAYEVENT("rx", ReceiveDataEvent);
 
+/*
+ * Event representing data sent to a device
+ *
+ * The data is stored as hexadecimal data in the XML tag's contents.
+ *
+ * These events are random-access events (see discussion above), which cause
+ * subsequent event retrieval to begin searching after the transmission
+ * event.
+ *
+ * Since the data sent is used as the ID for these events, we can treat
+ * these like distinct "commands" that that elicit a deterministic response,
+ * which can be replayed independently of other events if desired.
+ *
+ * Of course, for any device that has more complex internal state (where
+ * responses to multiple transmissions of a particular "command" depend
+ * on some intervening event), this reordering will not be accurate.
+ *
+ * But the intent is that some small changes to client code should still
+ * work with existing recordings before requiring creation of new ones.
+ */
 class TransmitDataEvent : public XmlReplayBase<TransmitDataEvent>
 {
     virtual bool usesData() const { return true; }
@@ -1079,9 +1314,17 @@ public:
 };
 REGISTER_XMLREPLAYEVENT("tx", TransmitDataEvent);
 
+/*
+ * Event representing a "readyRead" signal emitted by a physical device.
+ *
+ * These events are marked as "signal" events (see discussion of m_signal
+ * above) so that connections will automatically send them to clients when
+ * the preceding event (API call) is processed.
+ */
 class ReadyReadEvent : public XmlReplayBase<ReadyReadEvent>
 {
 public:
+    // Use the connection's slot that receives readyRead signals.
     ReadyReadEvent() { m_signal = "onReadyRead"; }
 };
 REGISTER_XMLREPLAYEVENT("readyRead", ReadyReadEvent);
@@ -1089,6 +1332,17 @@ REGISTER_XMLREPLAYEVENT("readyRead", ReadyReadEvent);
 
 // MARK: -
 // MARK: Serial port connection
+
+/*
+ * Serial port connection class
+ *
+ * This class wraps calls to an underlying QSerialPort with the logic
+ * necessary to record and replay arbitrary serial port activity.
+ * (or, at least, the serial port functionality currently used by OSCAR).
+ *
+ * Clients obtain a connection instance via DeviceConnectionManager::openConnection()
+ * or openSerialPortConnection (for convenience, if they require a serial port).
+ */
 
 REGISTER_DEVICECONNECTION("serial", SerialPortConnection);
 
@@ -1100,6 +1354,7 @@ SerialPortConnection::SerialPortConnection(const QString & name, XmlRecorder* re
 
 SerialPortConnection::~SerialPortConnection()
 {
+    // This will only be false if the connection failed to open immediately after construction.
     if (m_opened) {
         close();
         DeviceConnectionManager::getInstance().connectionClosed(this);
@@ -1107,6 +1362,14 @@ SerialPortConnection::~SerialPortConnection()
     disconnect(&m_port, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 }
 
+/*
+ * Try to open the physical port (or replay a previous attempt), returning
+ * false if the port was not opened.
+ *
+ * DeviceConnectionManager::openConnection calls this immediately after
+ * creating a connection instance, and will only return open connections
+ * to clients.
+ */
 bool SerialPortConnection::open()
 {
     if (m_opened) {
@@ -1118,8 +1381,8 @@ bool SerialPortConnection::open()
     OpenConnectionEvent event("serial", m_name);
 
     if (!m_replay) {
-        // TODO: move this into SerialPortConnection::openDevice() and move everything
-        // else up to DeviceConnection::open().
+        // TODO: move this into SerialPortConnection::openDevice() and move
+        // the rest of the logic up to DeviceConnection::open().
         m_port.setPortName(m_name);
         checkResult(m_port.open(QSerialPort::ReadWrite), event);
     } else {
@@ -1346,6 +1609,7 @@ qint64 SerialPortConnection::write(const char *data, qint64 maxSize)
 
         bool ok;
         len = event.get("len").toLong(&ok);
+        // No need to copy any data, since the event already contains it.
         if (!ok) {
             qWarning() << event << "has bad len";
             len = -1;
@@ -1390,10 +1654,11 @@ void SerialPortConnection::close()
     // TODO: We'll also need to include a loader ID and stream version number
     // in the "connection" tag, so that if we ever have to change a loader's download code,
     // the older replays will still work as expected.
+    // NOTE: This may only be required for downloads rather than all connections.
 
     if (!m_replay) {
-        // TODO: move this into SerialPortConnection::closeDevice() and move everything
-        // else up to DeviceConnection::close().
+        // TODO: move this into SerialPortConnection::closeDevice() and move
+        // the remaining logic up to DeviceConnection::close().
         m_port.close();
         checkError(event);
     } else {
@@ -1430,6 +1695,7 @@ void SerialPortConnection::onReadyRead()
     emit readyRead();
 }
 
+// Check the boolean returned by a serial port call and the port's error status, and update the event accordingly.
 void SerialPortConnection::checkResult(bool ok, XmlReplayEvent & event) const
 {
     QSerialPort::SerialPortError error = m_port.error();
@@ -1438,6 +1704,7 @@ void SerialPortConnection::checkResult(bool ok, XmlReplayEvent & event) const
     if (ok) event.set("ok", ok);  // we don't expect to see this, but we should know if it happens
 }
 
+// Check the length returned by a serial port call and the port's error status, and update the event accordingly.
 void SerialPortConnection::checkResult(qint64 len, XmlReplayEvent & event) const
 {
     QSerialPort::SerialPortError error = m_port.error();
@@ -1446,6 +1713,7 @@ void SerialPortConnection::checkResult(qint64 len, XmlReplayEvent & event) const
     }
 }
 
+// Check the port's error status, and update the event accordingly.
 void SerialPortConnection::checkError(XmlReplayEvent & event) const
 {
     QSerialPort::SerialPortError error = m_port.error();
@@ -1457,6 +1725,14 @@ void SerialPortConnection::checkError(XmlReplayEvent & event) const
 
 // MARK: -
 // MARK: SerialPort legacy class
+
+/*
+ * SerialPort drop-in replacement for QSerialPort
+ *
+ * This class mimics the interface of QSerialPort for client code, while
+ * using DeviceConnectionManager to open the SerialPortConnection, allowing
+ * for transparent recording and replay.
+ */
 
 SerialPort::SerialPort()
     : m_conn(nullptr)
@@ -1481,6 +1757,7 @@ bool SerialPort::open(QIODevice::OpenMode mode)
     Q_ASSERT(mode == QSerialPort::ReadWrite);
     m_conn = DeviceConnectionManager::openSerialPortConnection(m_portName);
     if (m_conn) {
+        // Listen for readyRead events from the connection so that we can relay them to the client.
         connect(m_conn, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     }
     return m_conn != nullptr;
@@ -1556,5 +1833,6 @@ void SerialPort::close()
 
 void SerialPort::onReadyRead()
 {
+    // Relay readyRead events from the connection on to the client.
     emit readyRead();
 }
