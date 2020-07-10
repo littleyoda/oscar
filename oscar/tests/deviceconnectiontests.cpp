@@ -92,7 +92,9 @@ void DeviceConnectionTests::testSerialPortScanning()
     list3 = SerialPortInfo::availablePorts();
 }
 
+#define ENABLE 0
 
+#if ENABLE
 static void testDownload(const QString & loaderName)
 {
     SerialOximeter * oxi = qobject_cast<SerialOximeter*>(lookupLoader(loaderName));
@@ -125,6 +127,7 @@ static void testDownload(const QString & loaderName)
     }
     oxi->trashRecords();
 }
+#endif
 
 void DeviceConnectionTests::testOximeterConnection()
 {
@@ -135,6 +138,7 @@ void DeviceConnectionTests::testOximeterConnection()
     const char* argv = "test";
     QCoreApplication app(argc, (char**) &argv);
     
+#if ENABLE
     DeviceConnectionManager & devices = DeviceConnectionManager::getInstance();
     /*
     QString string;
@@ -165,6 +169,10 @@ void DeviceConnectionTests::testOximeterConnection()
     qDebug().noquote() << string;
     */
     
+    QFile out("test.xml");
+    Q_ASSERT(out.open(QFile::ReadWrite));
+    devices.record(&out);
+
     QFile file("cms50f37.xml");
     if (!file.exists()) {
         qDebug() << "Recording oximeter connection";
@@ -181,4 +189,5 @@ void DeviceConnectionTests::testOximeterConnection()
     testDownload(cms50f37_class_name);
     devices.replay(nullptr);
     file.close();
+#endif
 }
