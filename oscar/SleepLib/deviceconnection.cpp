@@ -62,9 +62,11 @@ public:
     XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);    // record XML to the given string
     virtual ~XmlRecorder();  // write the epilogue and close the recorder
     XmlRecorder* closeSubstream();  // convenience function to close out a substream and return its parent
+
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
+
 protected:
     XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag);  // constructor used by substreams
     QXmlStreamWriter* addSubstream(XmlRecorder* child, const QString & id);     // initialize a child substream, used by above constructor
@@ -74,8 +76,8 @@ protected:
     QMutex m_mutex;           // force one thread at a time to write to m_xml
     XmlRecorder* m_parent;    // parent instance of a substream
     
-    virtual void prologue();
-    virtual void epilogue();
+    void prologue();
+    void epilogue();
 };
 const QString XmlRecorder::TAG = "xmlreplay";
 
@@ -120,33 +122,37 @@ public:
     XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);  // replay XML from the given stream
     virtual ~XmlReplay();
     XmlReplay* closeSubstream();  // convenience function to close out a substream and return its parent
-    template<class T> inline T* getNextEvent(const QString & id = "");  // typesafe accessor to retrieve and consume the next matching event
 
+    //! \brief Retrieve next matching event of the given XmlReplayEvent subclass.
+    template<class T> inline T* getNextEvent(const QString & id = "")
+    {
+        T* event = dynamic_cast<T*>(getNextEvent(T::TAG, id));
+        return event;
+    }
 
 protected:
     XmlReplay(XmlReplay* parent, const QString & id, const QString & tag = XmlRecorder::TAG);  // constructor used by substreams
     QXmlStreamReader* findSubstream(XmlReplay* child, const QString & id);                     // initialize a child substream, used by above constructor
-
     void deserialize(QXmlStreamReader & xml);
     void deserializeEvents(QXmlStreamReader & xml);
-    const QString m_tag;  // opening/closing tag for this instance
-    QFile* m_file;        // nullptr for non-file replay
-
-    QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;  // type and ID-based index into the events, see discussion of reordering above
-    QHash<QString,QHash<QString,int>> m_indexPosition;                  // positions at which to begin searching the index, updated by random-access events
-    QList<XmlReplayEvent*> m_events;                                    // linear list of all events in their original order
 
     XmlReplayEvent* getNextEvent(const QString & type, const QString & id = "");
     void seekToTime(const QDateTime & time);
 
+    const QString m_tag;  // opening/closing tag for this instance
+    QFile* m_file;        // nullptr for non-file replay
+    QHash<QString,QHash<QString,QList<XmlReplayEvent*>>> m_eventIndex;  // type and ID-based index into the events, see discussion of reordering above
+    QHash<QString,QHash<QString,int>> m_indexPosition;                  // positions at which to begin searching the index, updated by random-access events
+    QList<XmlReplayEvent*> m_events;                                    // linear list of all events in their original order
     XmlReplayEvent* m_pendingSignal;  // the signal (if any) that should be replayed as soon as the current event has been processed
     QMutex m_lock;                    // prevent signals from being dispatched while an event is being processed, see XmlReplayLock below
+    XmlReplay* m_parent;  // parent instance of a substream
+
     inline void lock() { m_lock.lock(); }
     inline void unlock() { m_lock.unlock(); }
     void processPendingSignals(const QObject* target);
-    friend class XmlReplayLock;
 
-    XmlReplay* m_parent;  // parent instance of a substream
+    friend class XmlReplayLock;
 };
 
 
@@ -184,32 +190,6 @@ public:
     XmlReplayEvent();
     virtual ~XmlReplayEvent() = default;
     
-    //! \brief Return the XML tag used for this event. Automatically overridden for subclasses by template.
-    virtual const QString & tag() const = 0;
-    
-    //! \brief Return the ID for this event, if applicable. Subclasses should override this if their events should be retrieved by ID.
-    virtual const QString id() const { static const QString none(""); return none; }
-    
-    //! \brief True if this event represents a "random-access" event that should cause subsequent event searches to start after this event's timestamp. Subclasses that represent such a state change should override this method.
-    virtual bool randomAccess() const { return false; }
-
-    //! \brief Record this event to the given XML recorder, doing nothing if the recorder is null.
-    void record(XmlRecorder* xml) const;
-
-    // Serialize this event to an XML stream.
-    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
-
-    // Deserialize this event's contents from an XML stream. The instance is first created via createInstance() based on the tag.
-    friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
-    
-    // Write the tag's attributes and contents.
-    void writeTag(QXmlStreamWriter & xml) const;
-
-    // Event subclass registration and instance creation
-    typedef XmlReplayEvent* (*FactoryMethod)();
-    static bool registerClass(const QString & tag, FactoryMethod factory);
-    static XmlReplayEvent* createInstance(const QString & tag);
-
     //! \brief Add the given key/value to the event. This will be written as an XML attribute in the order it added.
     void set(const QString & name, const QString & value);
     //! \brief Add the given key/integer to the event. This will be written as an XML attribute in the order it added.
@@ -222,38 +202,58 @@ public:
     QByteArray getData() const;
     //! \brief True if there are no errors in this event, or false if the "error" attribute is set.
     inline bool ok() const { return m_values.contains("error") == false; }
-    //! \brief Return a string of this event as an XML tag.
-    operator QString() const;
 
     //! \brief Copy the result from the retrieved replay event (if any) into the current event.
     void copyIf(const XmlReplayEvent* other);
-protected:
-    //! \brief Copy the timestamp as well as the results. This is necessary for replaying substreams that use the timestamp as part of their ID.
-    void copy(const XmlReplayEvent & other);
+    //! \brief Record this event to the given XML recorder, doing nothing if the recorder is null.
+    void record(XmlRecorder* xml) const;
+
+    // Serialize this event to an XML stream.
+    friend QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event);
+    // Deserialize this event's contents from an XML stream. The instance is first created via createInstance() based on the tag.
+    friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
+    // Write the tag's attributes and contents.
+    void writeTag(QXmlStreamWriter & xml) const;
+    //! \brief Return a string of this event as an XML tag.
+    operator QString() const;
+
+    // Subclassing support
+
+    //! \brief Return the XML tag used for this event. Automatically generated for subclasses by template.
+    virtual const QString & tag() const = 0;
+    //! \brief Return the ID for this event, if applicable. Subclasses should override this if their events should be retrieved by ID.
+    virtual const QString id() const { static const QString none(""); return none; }
+    //! \brief True if this event represents a "random-access" event that should cause subsequent event searches to start after this event's timestamp. Subclasses that represent such a state change should override this method.
+    virtual bool randomAccess() const { return false; }
+
+    // Event subclass registration and instance creation
+    typedef XmlReplayEvent* (*FactoryMethod)();
+    static bool registerClass(const QString & tag, FactoryMethod factory);
+    static XmlReplayEvent* createInstance(const QString & tag);
 
 protected:
     static QHash<QString,FactoryMethod> s_factories;  // registered subclass factory methods, arranged by XML tag
 
-    QDateTime m_time;        // timestamp of event
-    XmlReplayEvent* m_next;  // next recorded event, used during replay to trigger signals that automatically fire after an event is processed
-
-    const char* m_signal;    // name of the signal to be emitted for this event, if any
+    //! \brief True this event contains raw data. Defaults to false, so subclasses that use raw data must override this.
+    virtual bool usesData() const { return false; }
+    //! \brief True if this event represents a signal event. Subclasses representing such events must set m_signal.
     inline bool isSignal() const { return m_signal != nullptr; }
-
     //! \brief Send a signal to the target object. Subclasses may override this to send signal arguments.
     virtual void signal(QObject* target);
-
-    QHash<QString,QString> m_values;  // hash of key/value pairs for this event, written as attributes of the XML tag
-    QList<QString> m_keys;            // list of keys so that attributes will be written in the order they were set
-    QString m_data;                   // hexademical string representing this event's raw data, written as contents of the XML tag
-
-    //! \brief Returns whether this event contains raw data. Defaults to false, so subclasses that use raw data must override this.
-    virtual bool usesData() const { return false; }
-
     //! \brief Write any attributes or content needed specific to event. Subclasses may override this to support complex data types.
     virtual void write(QXmlStreamWriter & xml) const;
     //! \brief Read any attributes or content specific to this event. Subclasses may override this to support complex data types.
     virtual void read(QXmlStreamReader & xml);
+
+    QDateTime m_time;        // timestamp of event
+    XmlReplayEvent* m_next;  // next recorded event, used during replay to trigger signals that automatically fire after an event is processed
+    const char* m_signal;    // name of the signal to be emitted for this event, if any
+    QHash<QString,QString> m_values;  // hash of key/value pairs for this event, written as attributes of the XML tag
+    QList<QString> m_keys;            // list of keys so that attributes will be written in the order they were set
+    QString m_data;                   // hexademical string representing this event's raw data, written as contents of the XML tag
+
+    // Copy the timestamp as well as the attributes. Used when creating substreams.
+    void copy(const XmlReplayEvent & other);
 
     friend class XmlReplay;
 };
@@ -688,14 +688,6 @@ XmlReplayEvent* XmlReplay::getNextEvent(const QString & type, const QString & id
         m_pendingSignal = event->m_next;
     }
 
-    return event;
-}
-
-// Public, typesafe wrapper for getNextEvent above.
-template<class T>
-T* XmlReplay::getNextEvent(const QString & id)
-{
-    T* event = dynamic_cast<T*>(getNextEvent(T::TAG, id));
     return event;
 }
 
