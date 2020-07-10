@@ -211,74 +211,25 @@ public:
     static XmlReplayEvent* createInstance(const QString & tag);
 
     //! \brief Add the given key/value to the event. This will be written as an XML attribute in the order it added.
-    void set(const QString & name, const QString & value)
-    {
-        if (!m_values.contains(name)) {
-            m_keys.append(name);
-        }
-        m_values[name] = value;
-    }
+    void set(const QString & name, const QString & value);
     //! \brief Add the given key/integer to the event. This will be written as an XML attribute in the order it added.
-    void set(const QString & name, qint64 value)
-    {
-        set(name, QString::number(value));
-    }
+    void set(const QString & name, qint64 value);
     //! \brief Add the raw data to the event. This will be written in hexadecimal as content of the event's XML tag.
-    void setData(const char* data, qint64 length)
-    {
-        Q_ASSERT(usesData() == true);
-        QByteArray bytes = QByteArray::fromRawData(data, length);
-        m_data = bytes.toHex(' ').toUpper();
-    }
+    void setData(const char* data, qint64 length);
     //! \brief Get the value for the given key.
-    inline QString get(const QString & name) const
-    {
-        if (!m_values.contains(name)) {
-            qWarning().noquote() << *this << "missing attribute:" << name;
-        }
-        return m_values[name];
-    }
+    QString get(const QString & name) const;
     //! \brief Get the raw data for this event.
-    QByteArray getData() const
-    {
-        Q_ASSERT(usesData() == true);
-        if (m_data.isEmpty()) {
-            qWarning().noquote() << "replaying event with missing data" << *this;
-            QByteArray empty;
-            return empty;  // toUtf8() below crashes with an empty string.
-        }
-        return QByteArray::fromHex(m_data.toUtf8());
-    }
+    QByteArray getData() const;
     //! \brief True if there are no errors in this event, or false if the "error" attribute is set.
     inline bool ok() const { return m_values.contains("error") == false; }
     //! \brief Return a string of this event as an XML tag.
-    operator QString() const
-    {
-        QString out;
-        QXmlStreamWriter xml(&out);
-        xml << *this;
-        return out;
-    }
+    operator QString() const;
 
     //! \brief Copy the result from the retrieved replay event (if any) into the current event.
-    void copyIf(const XmlReplayEvent* other)
-    {
-        // Leave the proposed event alone if there was no replay event.
-        if (other == nullptr) {
-            return;
-        }
-        // Do not copy timestamp.
-        m_values = other->m_values;
-        m_keys = other->m_keys;
-        m_data = other->m_data;
-    }
+    void copyIf(const XmlReplayEvent* other);
 protected:
     //! \brief Copy the timestamp as well as the results. This is necessary for replaying substreams that use the timestamp as part of their ID.
-    void copy(const XmlReplayEvent & other)
-    {
-        copyIf(&other);
-        m_time = other.m_time;
-    }
+    void copy(const XmlReplayEvent & other);
 
 protected:
     static QHash<QString,FactoryMethod> s_factories;  // registered subclass factory methods, arranged by XML tag
@@ -290,12 +241,7 @@ protected:
     inline bool isSignal() const { return m_signal != nullptr; }
 
     //! \brief Send a signal to the target object. Subclasses may override this to send signal arguments.
-    virtual void signal(QObject* target)
-    {
-        // Queue the signal so that it won't be processed before the current event returns to its caller.
-        // (See XmlReplayLock below.)
-        QMetaObject::invokeMethod(target, m_signal, Qt::QueuedConnection);
-    }
+    virtual void signal(QObject* target);
 
     QHash<QString,QString> m_values;  // hash of key/value pairs for this event, written as attributes of the XML tag
     QList<QString> m_keys;            // list of keys so that attributes will be written in the order they were set
@@ -305,36 +251,114 @@ protected:
     virtual bool usesData() const { return false; }
 
     //! \brief Write any attributes or content needed specific to event. Subclasses may override this to support complex data types.
-    virtual void write(QXmlStreamWriter & xml) const
-    {
-        // Write key/value pairs as attributes in the order they were set.
-        for (auto key : m_keys) {
-            xml.writeAttribute(key, m_values[key]);
-        }
-        if (!m_data.isEmpty()) {
-            Q_ASSERT(usesData() == true);
-            xml.writeCharacters(m_data);
-        }
-    }
+    virtual void write(QXmlStreamWriter & xml) const;
     //! \brief Read any attributes or content specific to this event. Subclasses may override this to support complex data types.
-    virtual void read(QXmlStreamReader & xml)
-    {
-        QXmlStreamAttributes attribs = xml.attributes();
-        for (auto & attrib : attribs) {
-            if (attrib.name() != "time") {    // skip outer timestamp, which is decoded by operator>>
-                set(attrib.name().toString(), attrib.value().toString());
-            }
-        }
-        if (usesData()) {
-            m_data = xml.readElementText();
-        } else {
-            xml.skipCurrentElement();
-        }
-    }
+    virtual void read(QXmlStreamReader & xml);
 
     friend class XmlReplay;
 };
 QHash<QString,XmlReplayEvent::FactoryMethod> XmlReplayEvent::s_factories;
+
+void XmlReplayEvent::set(const QString & name, const QString & value)
+{
+    if (!m_values.contains(name)) {
+        m_keys.append(name);
+    }
+    m_values[name] = value;
+}
+
+void XmlReplayEvent::set(const QString & name, qint64 value)
+{
+    set(name, QString::number(value));
+}
+
+void XmlReplayEvent::setData(const char* data, qint64 length)
+{
+    Q_ASSERT(usesData() == true);
+    QByteArray bytes = QByteArray::fromRawData(data, length);
+    m_data = bytes.toHex(' ').toUpper();
+}
+
+QString XmlReplayEvent::get(const QString & name) const
+{
+    if (!m_values.contains(name)) {
+        qWarning().noquote() << *this << "missing attribute:" << name;
+    }
+    return m_values[name];
+}
+
+QByteArray XmlReplayEvent::getData() const
+{
+    Q_ASSERT(usesData() == true);
+    if (m_data.isEmpty()) {
+        qWarning().noquote() << "replaying event with missing data" << *this;
+        QByteArray empty;
+        return empty;  // toUtf8() below crashes with an empty string.
+    }
+    return QByteArray::fromHex(m_data.toUtf8());
+}
+
+XmlReplayEvent::operator QString() const
+{
+    QString out;
+    QXmlStreamWriter xml(&out);
+    xml << *this;
+    return out;
+}
+
+void XmlReplayEvent::copyIf(const XmlReplayEvent* other)
+{
+    // Leave the proposed event alone if there was no replay event.
+    if (other == nullptr) {
+        return;
+    }
+    // Do not copy timestamp.
+    m_values = other->m_values;
+    m_keys = other->m_keys;
+    m_data = other->m_data;
+}
+
+void XmlReplayEvent::copy(const XmlReplayEvent & other)
+{
+    copyIf(&other);
+    // Copy the timestamp, as it is necessary for replaying substreams that use the timestamp as part of their ID.
+    m_time = other.m_time;
+}
+
+void XmlReplayEvent::signal(QObject* target)
+{
+    // Queue the signal so that it won't be processed before the current event returns to its caller.
+    // (See XmlReplayLock below.)
+    QMetaObject::invokeMethod(target, m_signal, Qt::QueuedConnection);
+}
+
+void XmlReplayEvent::write(QXmlStreamWriter & xml) const
+{
+    // Write key/value pairs as attributes in the order they were set.
+    for (auto key : m_keys) {
+        xml.writeAttribute(key, m_values[key]);
+    }
+    if (!m_data.isEmpty()) {
+        Q_ASSERT(usesData() == true);
+        xml.writeCharacters(m_data);
+    }
+}
+
+void XmlReplayEvent::read(QXmlStreamReader & xml)
+{
+    QXmlStreamAttributes attribs = xml.attributes();
+    for (auto & attrib : attribs) {
+        if (attrib.name() != "time") {    // skip outer timestamp, which is decoded by operator>>
+            set(attrib.name().toString(), attrib.value().toString());
+        }
+    }
+    if (usesData()) {
+        m_data = xml.readElementText();
+    } else {
+        xml.skipCurrentElement();
+    }
+}
+
 
 /*
  * XML replay lock class
@@ -349,26 +373,31 @@ class XmlReplayLock
 {
 public:
     //! \brief Temporarily lock the XML replay (if any) until exiting scope, at which point any pending signals will be sent to the specified object.
-    XmlReplayLock(const QObject* obj, XmlReplay* replay)
-        : m_target(obj), m_replay(replay)
-    {
-        if (m_replay) {
-            // Prevent any triggered signal events from processing until the triggering lock is released.
-            m_replay->lock();
-        }
-    }
-    ~XmlReplayLock()
-    {
-        if (m_replay) {
-            m_replay->processPendingSignals(m_target);
-            m_replay->unlock();
-        }
-    }
+    XmlReplayLock(const QObject* obj, XmlReplay* replay);
+    ~XmlReplayLock();
 
 protected:
     const QObject* m_target;  // target object to receive any pending signals
     XmlReplay* m_replay;      // replay instance, or nullptr if not replaying
 };
+
+XmlReplayLock::XmlReplayLock(const QObject* obj, XmlReplay* replay)
+    : m_target(obj), m_replay(replay)
+{
+    if (m_replay) {
+        // Prevent any triggered signal events from processing until the triggering lock is released.
+        m_replay->lock();
+    }
+}
+
+XmlReplayLock::~XmlReplayLock()
+{
+    if (m_replay) {
+        m_replay->processPendingSignals(m_target);
+        m_replay->unlock();
+    }
+}
+
 
 // Derive the filepath for the given substream ID relative to the parent stream.
 static QString substreamFilepath(QFile* parent, const QString & id)
@@ -837,20 +866,6 @@ public:
     DeviceReplay(QXmlStreamReader & xml) : XmlReplay(xml, DeviceRecorder::TAG) {}
 };
 
-
-// Return singleton instance of DeviceConnectionManager, creating it if necessary.
-inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
-{
-    static DeviceConnectionManager instance;
-    return instance;
-}
-
-// Protected constructor
-DeviceConnectionManager::DeviceConnectionManager()
-    : m_record(nullptr), m_replay(nullptr)
-{
-}
-
 void DeviceConnectionManager::record(QFile* stream)
 {
     if (m_record) {
@@ -894,6 +909,20 @@ void DeviceConnectionManager::replay(QFile* file)
         // nullptr turns off replay
         m_replay = nullptr;
     }
+}
+
+
+// Return singleton instance of DeviceConnectionManager, creating it if necessary.
+inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
+{
+    static DeviceConnectionManager instance;
+    return instance;
+}
+
+// Protected constructor
+DeviceConnectionManager::DeviceConnectionManager()
+    : m_record(nullptr), m_replay(nullptr)
+{
 }
 
 DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, const QString & name)
