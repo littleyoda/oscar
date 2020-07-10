@@ -13,6 +13,7 @@
 // connections to devices. For now it just supports serial ports.
 
 #include <QtSerialPort/QSerialPort>
+#include <QXmlStreamWriter>
 #include <QHash>
 #include <QVariant>
 
