@@ -106,7 +106,7 @@ DeviceConnectionManager::DeviceConnectionManager()
 
 DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, const QString & name)
 {
-    if (!s_factories.contains(type)) {
+    if (!factories().contains(type)) {
         qWarning() << "Unknown device connection type:" << type;
         return nullptr;
     }
@@ -116,7 +116,7 @@ DeviceConnection* DeviceConnectionManager::openConnection(const QString & type, 
     }
 
     // Recording/replay (if any) is handled by the connection.
-    DeviceConnection* conn = s_factories[type](name, m_record, m_replay);
+    DeviceConnection* conn = factories()[type](name, m_record, m_replay);
     if (conn) {
         if (conn->open()) {
             m_connections[name] = conn;
@@ -156,15 +156,19 @@ SerialPortConnection* DeviceConnectionManager::openSerialPortConnection(const QS
 }
 
 
-QHash<QString,DeviceConnection::FactoryMethod> DeviceConnectionManager::s_factories;
+QHash<QString,DeviceConnection::FactoryMethod> & DeviceConnectionManager::factories()
+{
+    static QHash<QString,DeviceConnection::FactoryMethod> s_factories;
+    return s_factories;
+}
 
 bool DeviceConnectionManager::registerClass(const QString & type, DeviceConnection::FactoryMethod factory)
 {
-    if (s_factories.contains(type)) {
+    if (factories().contains(type)) {
         qWarning() << "Connection class already registered for type" << type;
         return false;
     }
-    s_factories[type] = factory;
+    factories()[type] = factory;
     return true;
 }
 

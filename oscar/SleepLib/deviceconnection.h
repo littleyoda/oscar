@@ -127,7 +127,7 @@ public:
 
     // DeviceConnection subclasses registration, not intended for client use.
 protected:
-    static QHash<QString,DeviceConnection::FactoryMethod> s_factories;
+    static QHash<QString,DeviceConnection::FactoryMethod> & factories();
 public:
     static bool registerClass(const QString & type, DeviceConnection::FactoryMethod factory);
     static class DeviceConnection* createInstance(const QString & type);
