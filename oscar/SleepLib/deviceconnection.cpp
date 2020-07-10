@@ -61,7 +61,7 @@ public:
     XmlRecorder(class QFile * file, const QString & tag = XmlRecorder::TAG);  // record XML to the given file
     XmlRecorder(QString & string, const QString & tag = XmlRecorder::TAG);    // record XML to the given string
     virtual ~XmlRecorder();  // write the epilogue and close the recorder
-    XmlRecorder* close();    // convenience function to close out a substream and return its parent
+    XmlRecorder* closeSubstream();  // convenience function to close out a substream and return its parent
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
@@ -119,7 +119,7 @@ public:
     XmlReplay(class QFile * file, const QString & tag = XmlRecorder::TAG);      // replay XML from the given file
     XmlReplay(QXmlStreamReader & xml, const QString & tag = XmlRecorder::TAG);  // replay XML from the given stream
     virtual ~XmlReplay();
-    XmlReplay* close();    // convenience function to close out a substream and return its parent
+    XmlReplay* closeSubstream();  // convenience function to close out a substream and return its parent
     template<class T> inline T* getNextEvent(const QString & id = "");  // typesafe accessor to retrieve and consume the next matching event
 
 
@@ -202,7 +202,7 @@ public:
     // Deserialize this event's contents from an XML stream. The instance is first created via createInstance() based on the tag.
     friend QXmlStreamReader & operator>>(QXmlStreamReader & xml, XmlReplayEvent & event);
     
-    // Write the opening tag and its contents, but don't close it.
+    // Write the tag's attributes and contents.
     void writeTag(QXmlStreamWriter & xml) const;
 
     // Event subclass registration and instance creation
@@ -404,10 +404,7 @@ XmlRecorder::XmlRecorder(XmlRecorder* parent, const QString & id, const QString 
         m_xml = new QXmlStreamWriter(&null);
     }
 
-    m_xml->setAutoFormatting(true);
-    m_xml->setAutoFormattingIndent(2);
-    // Substreams handle their own prologue.
-    // TODO: move writeStartElement out of writeTag so that we can use the default prologue here.
+    prologue();
 }
 
 // Initialize a child recording substream.
@@ -446,8 +443,7 @@ XmlRecorder::~XmlRecorder()
 }
 
 // Close out a substream and return its parent.
-// TODO: rename to closeSubstream for clarity
-XmlRecorder* XmlRecorder::close()
+XmlRecorder* XmlRecorder::closeSubstream()
 {
     auto parent = m_parent;
     delete this;
@@ -459,7 +455,7 @@ void XmlRecorder::prologue()
     Q_ASSERT(m_xml);
     m_xml->setAutoFormatting(true);
     m_xml->setAutoFormattingIndent(2);
-    m_xml->writeStartElement(m_tag);
+    m_xml->writeStartElement(m_tag);  // open enclosing tag
 }
 
 void XmlRecorder::epilogue()
@@ -538,8 +534,7 @@ XmlReplay::~XmlReplay()
 }
 
 // Close out a substream and return its parent.
-// TODO: rename to closeSubstream for clarity
-XmlReplay* XmlReplay::close()
+XmlReplay* XmlReplay::closeSubstream()
 {
     auto parent = m_parent;
     delete this;
@@ -725,7 +720,6 @@ void XmlReplayEvent::writeTag(QXmlStreamWriter & xml) const
 #else
     QString timestamp = time.toString(Qt::ISODateWithMs);
 #endif
-    xml.writeStartElement(tag());
     xml.writeAttribute("time", timestamp);
 
     // Call this event's overridable write method.
@@ -734,6 +728,7 @@ void XmlReplayEvent::writeTag(QXmlStreamWriter & xml) const
 
 QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const XmlReplayEvent & event)
 {
+    xml.writeStartElement(event.tag());
     event.writeTag(xml);
     xml.writeEndElement();
     return xml;
@@ -1604,7 +1599,7 @@ qint64 SerialPortConnection::write(const char *data, qint64 maxSize)
         if (!replayEvent) {
             qWarning() << "writing data past replay";
             event.set("len", -1);
-            event.set("error", QSerialPort::ReadError);
+            event.set("error", QSerialPort::WriteError);
         }
 
         bool ok;
@@ -1641,10 +1636,10 @@ void SerialPortConnection::close()
     if (m_opened) {
         // close event substream first
         if (m_record) {
-            m_record = m_record->close();
+            m_record = m_record->closeSubstream();
         }
         if (m_replay) {
-            m_replay = m_replay->close();
+            m_replay = m_replay->closeSubstream();
         }
     }
 
