@@ -37,6 +37,7 @@ const QString STR_AS_OverviewLinechartMode = "OverviewLinechartMode";
 const QString STR_AS_UsePixmapCaching = "UsePixmapCaching";
 const QString STR_AS_AllowYAxisScaling = "AllowYAxisScaling";
 const QString STR_AS_IncludeSerial = "IncludeSerial";
+const QString STR_AS_MonochromePrinting = "PrintBW";
 const QString STR_AS_GraphTooltips = "GraphTooltips";
 const QString STR_AS_LineThickness = "LineThickness";
 const QString STR_AS_LineCursorMode = "LineCursorMode";
@@ -124,6 +125,8 @@ public:
   bool allowYAxisScaling() const { return getPref(STR_AS_AllowYAxisScaling).toBool(); }
   //! \brief Whether to include serial number in machine settings changes report
   bool includeSerial() const { return getPref(STR_AS_IncludeSerial).toBool(); }
+  //! \brief Whether to print reports in black and white, which can be more legible on non-color printers
+  bool monochromePrinting() const { return getPref(STR_AS_MonochromePrinting).toBool(); }
   //! \brief Whether to show graph tooltips
   inline bool graphTooltips() const { return m_graphTooltips; }
   //! \brief Pen width of line plots
@@ -179,6 +182,8 @@ public:
   void setAllowYAxisScaling(bool b) { setPref(STR_AS_AllowYAxisScaling, b); }
   //! \brief Sets whether to include machine serial number on machine settings report
   void setIncludeSerial(bool b) { setPref(STR_AS_IncludeSerial, b); }
+  //! \brief Sets whether to print reports in black and white, which can be more legible on non-color printers
+  void setMonochromePrinting(bool b) { setPref(STR_AS_MonochromePrinting, b); }
   //! \brief Sets whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   void setGraphTooltips(bool b) { setPref(STR_AS_GraphTooltips, m_graphTooltips=b); }
   //! \brief Sets the type of overlay flags (which are displayed over the Flow Waveform)

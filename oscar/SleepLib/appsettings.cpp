@@ -26,6 +26,7 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     m_antiAliasing=initPref(STR_AS_AntiAliasing, true).toBool();
 //    initPref(STR_AS_GraphSnapshots, true);
     initPref(STR_AS_IncludeSerial, false);
+    initPref(STR_AS_MonochromePrinting, false);
     initPref(STR_AS_ShowPieChart, false);
     m_animations = initPref(STR_AS_Animations, true).toBool();
     m_squareWavePlots = initPref(STR_AS_SquareWave, false).toBool();

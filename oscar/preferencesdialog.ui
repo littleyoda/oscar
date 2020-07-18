@@ -2742,6 +2742,16 @@ Try it and see if you like it.</string>
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="monochromePrinting">
+                 <property name="toolTip">
+                  <string>Print reports in black and white, which can be more legible on non-color printers</string>
+                 </property>
+                 <property name="text">
+                  <string>Print reports in black and white (monochrome)</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>

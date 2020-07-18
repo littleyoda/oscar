@@ -217,6 +217,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->graphTooltips->setChecked(AppSetting->graphTooltips());
     ui->allowYAxisScaling->setChecked(AppSetting->allowYAxisScaling());
     ui->includeSerial->setChecked(AppSetting->includeSerial());
+    ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -828,6 +829,7 @@ bool PreferencesDialog::Save()
 
     AppSetting->setAllowYAxisScaling(ui->allowYAxisScaling->isChecked());
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
+    AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());
