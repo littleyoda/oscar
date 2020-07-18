@@ -412,37 +412,26 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
                 if (!g->visible()) { continue; }
 
-                if (cpap && oxi) {
-                    st = qMin(day->first(MT_CPAP), day->first(MT_OXIMETER));
-                    et = qMax(day->last(MT_CPAP), day->last(MT_OXIMETER));
-                } else if (cpap) {
-                    st = day->first(MT_CPAP);
-                    et = day->last(MT_CPAP);
-                } else if (oxi) {
-                    st = day->first(MT_OXIMETER);
-                    et = day->last(MT_OXIMETER);
-                }
-
+                QString label = "";
                 if (!g->isSnapshot() && (g->name() == schema::channel[CPAP_FlowRate].code())) {
-                    if (!((qAbs(g->min_x - st) < 5000) && (qAbs(g->max_x - et) < 60000))) {
-                        qDebug() << "Current Selection difference" << (g->min_x - st) << " bleh " << (g->max_x - et);
+                    st = day->first();
+                    et = day->last();
+                    // If the current selection is more than a minute smaller than the whole night:
+                    if ((et - st) - (g->max_x - g->min_x) > 60000) {
+                        // First draw the flow waveform in the context of the entire day (matching the flags chart)
                         start.push_back(st);
                         end.push_back(et);
                         graphs.push_back(g);
                         labels.push_back(QObject::tr("Entire Day's Flow Waveform"));
+                        // And add a label to the selected flow graph below
+                        label = QObject::tr("Current Selection");
                     }
-
-                    start.push_back(g->min_x);
-                    end.push_back(g->max_x);
-                    graphs.push_back(g);
-                    labels.push_back(QObject::tr("Current Selection"));
-                } else {
-                    start.push_back(g->min_x);
-                    end.push_back(g->max_x);
-                    graphs.push_back(g);
-                    labels.push_back("");
                 }
 
+                start.push_back(g->min_x);
+                end.push_back(g->max_x);
+                graphs.push_back(g);
+                labels.push_back(label);
             }
         } else {
             const QString EntireDay = QObject::tr("Entire Day");
