@@ -1,6 +1,7 @@
-﻿/* gFlagsLine Implementation
+/* gFlagsLine Implementation
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -176,8 +177,14 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
 
     for (int i=0, end=visflags.size(); i < end; i++) {
         // Alternating box color
-        if (i & 1) { barcol = COLOR_ALT_BG1; }
-        else { barcol = COLOR_ALT_BG2; }
+        barcol = COLOR_ALT_BG2;
+        if (i & 1) {
+            if (g.printing() && AppSetting->monochromePrinting()) {
+                barcol = QColor(0xe4, 0xe4, 0xe4, 0xff);
+            } else {
+                barcol = COLOR_ALT_BG1;
+            }
+        }
 
         painter.fillRect(left, floor(linetop), width-1, ceil(m_barh), QBrush(barcol));
 
@@ -294,6 +301,9 @@ void gFlagsLine::paint(QPainter &painter, gGraph &w, const QRegion &region)
     QVector<QLine> vlines;
 
     QColor color=schema::channel[m_code].defaultColor();
+    if (w.printing() && AppSetting->monochromePrinting()) {
+        color = Qt::black;
+    }
     QBrush brush(color);
 
     int tooltipTimeout = AppSetting->tooltipTimeout();
@@ -415,7 +425,11 @@ void gFlagsLine::paint(QPainter &painter, gGraph &w, const QRegion &region)
         }
     }
 
-    painter.setPen(color);
+    if (w.printing() && AppSetting->monochromePrinting()) {
+        painter.setPen(QPen(Qt::black, 1.5));
+    } else {
+        painter.setPen(color);
+    }
     painter.drawLines(vlines);
 }
 

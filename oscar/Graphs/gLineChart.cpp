@@ -839,7 +839,11 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                         }
                     }
 
-                    painter.setPen(QPen(chan.defaultColor(), lineThickness));
+                    if (w.printing() && AppSetting->monochromePrinting()) {
+                        painter.setPen(QPen(Qt::black, lineThickness + 0.5));
+                    } else {
+                        painter.setPen(QPen(chan.defaultColor(), lineThickness));
+                    }
                     painter.drawLines(lines);
                     w.graphView()->lines_drawn_this_frame += lines.count();
                     lines.clear();
@@ -962,7 +966,11 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                             }
                         }
                     }
-                    painter.setPen(QPen(chan.defaultColor(), lineThickness));
+                    if (w.printing() && AppSetting->monochromePrinting()) {
+                        painter.setPen(QPen(Qt::black, lineThickness + 0.5));
+                    } else {
+                        painter.setPen(QPen(chan.defaultColor(), lineThickness));
+                    }
                     painter.drawLines(lines);
                     w.graphView()->lines_drawn_this_frame+=lines.count();
                     lines.clear();

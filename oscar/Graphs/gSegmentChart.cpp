@@ -1,6 +1,7 @@
-﻿/* gSegmentChart Implementation
+/* gSegmentChart Implementation
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -125,7 +126,10 @@ void gSegmentChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
         // Pie Chart
         /////////////////////////////////////////////////////////////////////////////////////
         if (m_graph_type == GST_Pie) {
-            const QColor col = schema::channel[m_codes[m]].defaultColor();
+            QColor col = schema::channel[m_codes[m]].defaultColor();
+            if (w.printing() && AppSetting->monochromePrinting()) {
+                col = Qt::white;
+            }
 
             // length of this segment in degrees
             float len = 360.0 / m_total * data;
