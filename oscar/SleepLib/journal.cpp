@@ -6,20 +6,15 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-
 #include "journal.h"
 #include "machine_common.h"
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
 #include <QTextStream>
+#include <QXmlStreamWriter>
 #include <QDir>
 #include <QMessageBox>
-
-#define NEWXML
-#ifdef NEWXML
-#include <QXmlStreamWriter>
-#endif
 
 const int journal_data_version = 1;
 
@@ -210,7 +205,7 @@ void JournalEntry::delBookmark(qint64 start, qint64 end)
     // if I wanted to be nice above, I could add the note string to the search as well..
     // (some users might be suprised to see the lot go with the same start and end index)
 }
-#ifdef NEWXML
+
 void BackupJournal(QString filename)
 {
     QString outBuf;
@@ -308,83 +303,6 @@ void BackupJournal(QString filename)
     ts << outBuf;
     file.close();
 }
-#else
-void BackupJournal(QString filename)
-{
-    QDomDocument doc("OSCAR Journal");
-
-    QDomElement droot = doc.createElement(STR_AppName);
-    doc.appendChild(droot);
-
-    QDomElement root = doc.createElement("Journal");
-    root.setAttribute("username", p_profile->user->userName());
-    droot.appendChild(root);
-
-
-    QDate first = p_profile->FirstDay(MT_JOURNAL);
-    QDate last = p_profile->LastDay(MT_JOURNAL);
-
-    QDate date = first.addDays(-1);
-    do {
-        date = date.addDays(1);
-
-        Day * journal = p_profile->GetDay(date, MT_JOURNAL);
-        if (!journal) continue;
-        Session * sess = journal->firstSession(MT_JOURNAL);
-        if (!sess) continue;
-        QDomElement day = doc.createElement("day");
-        day.setAttribute("date", date.toString());
-
-        //notes.setAttribute("date", date.toString());
-
-        if (journal->settingExists(Journal_Notes)) {
-            QString notedata = sess->settings[Journal_Notes].toString();
-            QDomElement notes = doc.createElement("note");
-            notes.appendChild(doc.createCDATASection(notedata));
-            day.appendChild(notes);
-        }
-        if (journal->settingExists(Journal_Weight)) {
-            EventDataType weight = sess->settings[Journal_Weight].toFloat();
-            day.setAttribute("weight", weight);
-        }
-        if (journal->settingExists(Journal_ZombieMeter)) {
-            int zombie = sess->settings[Journal_ZombieMeter].toInt();
-            day.setAttribute("zombie", zombie);
-        }
-        if (journal->settingExists(LastUpdated)) {
-            QDateTime dt = sess->settings[LastUpdated].toDateTime();
-            day.setAttribute("lastupdated", dt.toTime_t());
-        }
-        if (journal->settingExists(Bookmark_Start)) {
-            QVariantList start=sess->settings[Bookmark_Start].toList();
-            QVariantList end=sess->settings[Bookmark_End].toList();
-            QStringList notes=sess->settings[Bookmark_Notes].toStringList();
-            QDomElement bookmarks = doc.createElement("bookmarks");
-
-            int size = start.size();
-            for (int i=0; i< size; i++) {
-                QDomElement bookmark = doc.createElement("bookmark");
-                bookmark.setAttribute("start",start.at(i).toString());
-                bookmark.setAttribute("end",end.at(i).toString());
-                bookmark.setAttribute("notes",notes.at(i));
-                bookmarks.appendChild(bookmark);
-            }
-            day.appendChild(bookmarks);
-        }
-        root.appendChild(day);
-
-    } while (date <= last);
-    QFile file(filename);
-
-    if (!file.open(QIODevice::WriteOnly)) {
-        return;
-    }
-
-    QTextStream ts(&file);
-    ts << doc.toString();
-    file.close();
-}
-#endif
 
 DayController::DayController()
 {
