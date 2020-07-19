@@ -89,7 +89,7 @@ QString readLocalVersions() {
         qDebug() << "versionXML" << versionXML;
         return QString();
     }
-    return QString(qba);
+    return QString(qba).toLower();
 
 }
 
@@ -103,8 +103,8 @@ VersionInfo getVersionInfo (QString type, QString platform) {
     QXmlStreamReader reader(versionXML);
 
        if (reader.readNextStartElement()) {
-           if (reader.name() == "OSCAR"){
-                //qDebug() << "expecting OSCAR, read" << reader.name();
+           if (reader.name() == "oscar"){
+                //qDebug() << "expecting oscar, read" << reader.name();
                while(reader.readNextStartElement()){
                     //qDebug() << "expecting group, read" << reader.name() << "with id" << reader.attributes().value("id").toString();
                    if(reader.name() == "group" &&
@@ -118,7 +118,7 @@ VersionInfo getVersionInfo (QString type, QString platform) {
                                     QString plat=reader.attributes().value("id").toString();
                                     //qDebug() << "expecting platform, read " << reader.name()  << "with id" << reader.attributes().value("id").toString();
 
-                                    if ((plat == platform) || (plat == "All" && foundInfo.platform.length() == 0)) {
+                                    if ((plat == platform) || (plat == "all" && foundInfo.platform.length() == 0)) {
                                         foundInfo.platform = plat;
                                         while(reader.readNextStartElement()) {
                                             //qDebug() << "expecting version or notes, read" << reader.name();
@@ -255,7 +255,7 @@ void CheckUpdates::replyFinished(QNetworkReply *reply)
 //      qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 //      qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
 
-        versionXML = reply->readAll();
+        versionXML = reply->readAll().toLower();
         reply->deleteLater();
 
         // Only calculate elapsed time for Help/Check for Updates
