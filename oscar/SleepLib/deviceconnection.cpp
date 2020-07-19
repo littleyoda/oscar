@@ -92,7 +92,7 @@ void DeviceConnectionManager::replay(QFile* file)
 
 
 // Return singleton instance of DeviceConnectionManager, creating it if necessary.
-inline DeviceConnectionManager & DeviceConnectionManager::getInstance()
+DeviceConnectionManager & DeviceConnectionManager::getInstance()
 {
     static DeviceConnectionManager instance;
     return instance;

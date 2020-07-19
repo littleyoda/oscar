@@ -10,6 +10,10 @@
 void initializeLogger();
 void shutdownLogger();
 
+QString GetLogDir();
+void rotateLogs(const QString & filePath, int maxPrevious=-1);
+
+
 void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QString &msgtxt);
 
 class LogThread:public QObject, public QRunnable

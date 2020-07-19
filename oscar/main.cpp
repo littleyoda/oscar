@@ -28,6 +28,7 @@
 #include "SleepLib/profiles.h"
 #include "translation.h"
 #include "SleepLib/common.h"
+#include "SleepLib/deviceconnection.h"
 
 #include <ctime>
 #include <chrono>
@@ -636,6 +637,21 @@ int main(int argc, char *argv[]) {
     MD300W1Loader::Register();
     ViatomLoader::Register();
 
+    // Begin logging device connection activity.
+    QString connectionsLogDir = GetLogDir() + "/connections";
+    rotateLogs(connectionsLogDir);  // keep a limited set of previous logs
+    if (!QDir(connectionsLogDir).mkpath(".")) {
+        qWarning().noquote() << "Unable to create directory" << connectionsLogDir;
+    }
+
+    QFile deviceLog(connectionsLogDir + "/devices.xml");
+    if (deviceLog.open(QFile::ReadWrite)) {
+        qDebug().noquote() << "Logging device connections to" << deviceLog.fileName();
+        DeviceConnectionManager::getInstance().record(&deviceLog);
+    } else {
+        qWarning().noquote() << "Unable to start device connection logging to" << deviceLog.fileName();
+    }
+
     schema::setOrders(); // could be called in init...
 
     // Scan for user profiles
@@ -653,7 +669,11 @@ int main(int argc, char *argv[]) {
     mainwin->SetupGUI();
     mainwin->show();
 
-    return a.exec();
+    int result = a.exec();
+    
+    DeviceConnectionManager::getInstance().record(nullptr);
+    
+    return result;
 }
 
 #endif // !UNITTEST_MODE

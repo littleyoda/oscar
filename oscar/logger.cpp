@@ -8,6 +8,9 @@
  * for more details. */
 
 #include "logger.h"
+#include "SleepLib/preferences.h"
+#include "version.h"
+#include <QDir>
 
 #define ASSERTS_SUCK
 
@@ -147,3 +150,86 @@ void LogThread::run()
 }
 
 
+QString GetLogDir()
+{
+    static const QString LOG_DIR_NAME = "logs";
+
+    QDir oscarData(GetAppData());
+    Q_ASSERT(oscarData.exists());
+    if (!oscarData.exists(LOG_DIR_NAME)) {
+        oscarData.mkdir(LOG_DIR_NAME);
+    }
+    QDir logDir(oscarData.canonicalPath() + "/" + LOG_DIR_NAME);
+    if (!logDir.exists()) {
+        qWarning() << "Unable to create" << logDir.absolutePath() << "reverting to" << oscarData.canonicalPath();
+        logDir = oscarData;
+    }
+    Q_ASSERT(logDir.exists());
+
+    return logDir.canonicalPath();
+}
+
+void rotateLogs(const QString & filePath, int maxPrevious)
+{
+    if (maxPrevious < 0) {
+        if (getVersion().IsReleaseVersion()) {
+            maxPrevious = 1;
+        } else {
+            // keep more in testing builds
+            maxPrevious = 4;
+        }
+    }
+
+    // Build the list of rotated logs for this filePath.
+    QFileInfo info(filePath);
+    QString path = QDir(info.absolutePath()).canonicalPath();
+    QString base = info.baseName();
+    QString ext = info.completeSuffix();
+    if (!ext.isEmpty()) {
+        ext = "." + ext;
+    }
+    if (path.isEmpty()) {
+        qWarning() << "Skipping log rotation, directory does not exist:" << info.absoluteFilePath();
+        return;
+    }
+
+    QStringList logs;
+    logs.append(filePath);
+    for (int i = 0; i < maxPrevious; i++) {
+        logs.append(QString("%1/%2.%3%4").arg(path).arg(base).arg(i).arg(ext));
+    }
+
+    // Remove the expired log.
+    QFileInfo expired(logs[maxPrevious]);
+    if (expired.exists()) {
+        if (expired.isDir()) {
+            QDir dir(expired.canonicalFilePath());
+            //qDebug() << "Removing expired log directory" << dir.canonicalPath();
+            if (!dir.removeRecursively()) {
+                qWarning() << "Unable to delete expired log directory" << dir.canonicalPath();
+            }
+        } else {
+            QFile file(expired.canonicalFilePath());
+            //qDebug() << "Removing expired log file" << file.fileName();
+            if (!file.remove()) {
+                qWarning() << "Unable to delete expired log file" << file.fileName();
+            }
+        }
+    }
+
+    // Rotate the remaining logs.
+    for (int i = maxPrevious; i > 0; i--) {
+        QFileInfo from(logs[i-1]);
+        QFileInfo to(logs[i]);
+        if (from.exists()) {
+            if (to.exists()) {
+                qWarning() << "Unable to rotate log:" << to.absoluteFilePath() << "exists";
+                continue;
+            }
+            //qDebug() << "Renaming" << from.absoluteFilePath() << "to" << to.absoluteFilePath();
+            if (!QFile::rename(from.absoluteFilePath(), to.absoluteFilePath())) {
+                qWarning() << "Unable to rename" << from.absoluteFilePath() << "to" << to.absoluteFilePath();
+            }
+        }
+    }
+}
