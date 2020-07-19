@@ -12,8 +12,6 @@
 #include "version.h"
 #include <QDir>
 
-#define ASSERTS_SUCK
-
 QThreadPool * otherThreadPool = NULL;
 
 void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QString &msgtxt)
@@ -51,11 +49,7 @@ void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QS
     if (logger && logger->isRunning()) {
         logger->append(msg);
     }
-#ifdef ASSERTS_SUCK
-//    else {
-//        fprintf(stderr, "%s\n", msg.toLocal8Bit().data());
-//    }
-#endif
+    fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
 
     if (type == QtFatalMsg) {
         abort();
@@ -89,6 +83,25 @@ void LogThread::connectionReady()
     connected = true;
     strlock.unlock();
     qDebug() << "Logging UI initialized";
+}
+
+void LogThread::logToFile()
+{
+    QString debugLog = GetLogDir() + "/debug.txt";
+    rotateLogs(debugLog);  // keep a limited set of previous logs
+    
+    strlock.lock();
+    m_logFile = new QFile(debugLog);
+    Q_ASSERT(m_logFile);
+    if (m_logFile->open(QFile::ReadWrite | QFile::Text)) {
+        m_logStream = new QTextStream(m_logFile);
+    }
+    strlock.unlock();
+    if (m_logStream) {
+        qDebug().noquote() << "Logging to" << debugLog;
+    } else {
+        qWarning().noquote() << "Unable to open" << debugLog;
+    }
 }
 
 void shutdownLogger()
@@ -126,7 +139,16 @@ void LogThread::quit() {
     strlock.lock();
     while (!buffer.isEmpty()) {
         QString msg = buffer.takeFirst();
-        fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
+        if (m_logStream) {
+            *m_logStream << msg << endl;
+        }
+    }
+    if (m_logStream) {
+        delete m_logStream;
+        m_logStream = nullptr;
+        Q_ASSERT(m_logFile);
+        delete m_logFile;
+        m_logFile = nullptr;
     }
     strlock.unlock();
 }
@@ -139,10 +161,13 @@ void LogThread::run()
     do {
         strlock.lock();
         //int r = receivers(SIGNAL(outputLog(QString())));
-        while (connected && !buffer.isEmpty()) {
+        // Wait to flush the buffer until the UI is connected and the log file has been opened.
+        while (connected && m_logFile && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
-                fprintf(stderr, "%s\n", msg.toLocal8Bit().data());
-                emit outputLog(msg);
+            if (m_logStream) {
+                *m_logStream << msg << endl;
+            }
+            emit outputLog(msg);
         }
         strlock.unlock();
         QThread::msleep(1000);
@@ -154,6 +179,7 @@ QString GetLogDir()
 {
     static const QString LOG_DIR_NAME = "logs";
 
+    Q_ASSERT(!GetAppData().isEmpty());  // If GetLogDir gets called before GetAppData() is valid, this would point at root.
     QDir oscarData(GetAppData());
     Q_ASSERT(oscarData.exists());
     if (!oscarData.exists(LOG_DIR_NAME)) {

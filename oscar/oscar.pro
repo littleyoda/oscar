@@ -500,6 +500,7 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
 
 # Create a debug GUI build by adding "CONFIG+=memdebug" to your qmake command
 memdebug {
+    CONFIG += debug
     !win32 {  # add memory checking on Linux and macOS debug builds
         QMAKE_CFLAGS += -g -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
         lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {

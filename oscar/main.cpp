@@ -545,6 +545,16 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    // Make sure the data directory exists.
+    if (!newDir.mkpath(".")) {
+        QMessageBox::warning(nullptr, QObject::tr("Exiting"),
+                             QObject::tr("Unable to create the OSCAR data folder at")+"\n"+
+                             GetAppData());
+        return 0;
+    }
+
+    // Begin logging to file now that there's a data folder.
+    logger->logToFile();
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Initialize preferences system (Don't use p_pref before this point!)

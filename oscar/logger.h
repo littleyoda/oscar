@@ -20,7 +20,7 @@ class LogThread:public QObject, public QRunnable
 {
     Q_OBJECT
 public:
-    explicit LogThread() : QRunnable() { running = false; logtime.start(); connected = false; }
+    explicit LogThread() : QRunnable() { running = false; logtime.start(); connected = false; m_logFile = nullptr; m_logStream = nullptr; }
     virtual ~LogThread() {}
 
     void run();
@@ -28,6 +28,7 @@ public:
     void appendClean(QString msg);
     bool isRunning() { return running; }
     void connectionReady();
+    void logToFile();
 
     void quit();
 
@@ -40,6 +41,8 @@ protected:
     volatile bool running;
     QTime logtime;
     bool connected;
+    class QFile* m_logFile;
+    class QTextStream* m_logStream;
 };
 
 extern LogThread * logger;
