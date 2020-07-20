@@ -5,6 +5,7 @@
 #include <QRunnable>
 #include <QThreadPool>
 #include <QMutex>
+#include <QWaitCondition>
 #include <QTime>
 
 void initializeLogger();
@@ -29,6 +30,7 @@ public:
     bool isRunning() { return running; }
     void connectionReady();
     void logToFile();
+    QString logFileName();
 
     void quit();
 
@@ -43,6 +45,7 @@ protected:
     bool connected;
     class QFile* m_logFile;
     class QTextStream* m_logStream;
+    QWaitCondition logTrigger;
 };
 
 extern LogThread * logger;

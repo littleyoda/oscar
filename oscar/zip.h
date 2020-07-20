@@ -63,7 +63,7 @@ public:
     ~FileQueue() = default;
 
     //!brief Remove a file from the queue, return the number of instances removed.
-    int Remove(const QString & path);
+    int Remove(const QString & path, QString* outName=nullptr);
     
     //!brief Recursively add a directory and its contents to the queue along with the prefix to be used in an archive.
     bool AddDirectory(const QString & path, const QString & prefix="");

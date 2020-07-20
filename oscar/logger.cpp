@@ -48,8 +48,9 @@ void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QS
 
     if (logger && logger->isRunning()) {
         logger->append(msg);
+    } else {
+        fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
     }
-    fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
 
     if (type == QtFatalMsg) {
         abort();
@@ -81,12 +82,18 @@ void LogThread::connectionReady()
 {
     strlock.lock();
     connected = true;
+    logTrigger.wakeAll();
     strlock.unlock();
     qDebug() << "Logging UI initialized";
 }
 
 void LogThread::logToFile()
 {
+    if (m_logStream) {
+        qWarning().noquote() << "Already logging to" << m_logFile->fileName();
+        return;
+    }
+
     QString debugLog = GetLogDir() + "/debug.txt";
     rotateLogs(debugLog);  // keep a limited set of previous logs
     
@@ -96,12 +103,21 @@ void LogThread::logToFile()
     if (m_logFile->open(QFile::ReadWrite | QFile::Text)) {
         m_logStream = new QTextStream(m_logFile);
     }
+    logTrigger.wakeAll();
     strlock.unlock();
     if (m_logStream) {
         qDebug().noquote() << "Logging to" << debugLog;
     } else {
         qWarning().noquote() << "Unable to open" << debugLog;
     }
+}
+
+QString LogThread::logFileName()
+{
+    if (!m_logFile) {
+        return "";
+    }
+    return m_logFile->fileName();
 }
 
 void shutdownLogger()
@@ -119,16 +135,15 @@ LogThread * logger = NULL;
 void LogThread::append(QString msg)
 {
     QString tmp = QString("%1: %2").arg(logtime.elapsed(), 5, 10, QChar('0')).arg(msg);
-    //QStringList appears not to be threadsafe
-    strlock.lock();
-    buffer.append(tmp);
-    strlock.unlock();
+    appendClean(tmp);
 }
 
 void LogThread::appendClean(QString msg)
 {
+    fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
     strlock.lock();
     buffer.append(msg);
+    logTrigger.wakeAll();
     strlock.unlock();
 }
 
@@ -160,8 +175,7 @@ void LogThread::run()
     s_LoggerRunning.unlock();  // unlock as soon as the thread begins to run
     do {
         strlock.lock();
-        //int r = receivers(SIGNAL(outputLog(QString())));
-        // Wait to flush the buffer until the UI is connected and the log file has been opened.
+        logTrigger.wait(&strlock);
         while (connected && m_logFile && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
             if (m_logStream) {
@@ -170,7 +184,6 @@ void LogThread::run()
             emit outputLog(msg);
         }
         strlock.unlock();
-        QThread::msleep(1000);
     } while (running);
 }
 

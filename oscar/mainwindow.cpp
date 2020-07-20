@@ -2682,7 +2682,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
                 infostr = datacard.loader->loaderName();
             }
             prefix = infostr;
-            folder += QDir::separator() + infostr + ".zip";
+            folder += "/" + infostr + ".zip";
 
             filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
 
@@ -2734,7 +2734,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
     // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
     folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 
-    folder += QDir::separator() + STR_AppData + ".zip";
+    folder += "/" + STR_AppData + ".zip";
 
     QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save zip"), folder, tr("ZIP files (*.zip)"));
 
@@ -2749,7 +2749,6 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
     qDebug() << "Create zip of OSCAR data folder:" << filename;
 
     QDir oscarData(GetAppData());
-    QFile debugLog(oscarData.canonicalPath() + QDir::separator() + "debuglog.txt");
 
     ZipFile z;
     bool ok = z.Open(filename);
@@ -2759,29 +2758,22 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
         prog->setWindowModality(Qt::ApplicationModal);
         prog->open();
 
-        // Build the list of files and exclude any existing debug log.
+        // Build the list of files.
         FileQueue files;
         files.AddDirectory(oscarData.canonicalPath(), oscarData.dirName());
-        files.Remove(debugLog.fileName());
+
+        // Defer the current debug log to the end.
+        QString debugLog = logger->logFileName();
+        QString debugLogZipName;
+        int exists = files.Remove(debugLog, &debugLogZipName);
+        if (exists) {
+            files.AddFile(debugLog, debugLogZipName);
+        }
 
         prog->setMessage(tr("Creating zip..."));
 
         // Create the zip.
         ok = z.AddFiles(files, prog);
-        if (ok && z.aborted() == false) {
-            // Update the debug log and add it last.
-            ok = debugLog.open(QIODevice::WriteOnly);
-            if (ok) {
-                debugLog.write(ui->logText->toPlainText().toLocal8Bit().data());
-                debugLog.close();
-                QString debugLogName = oscarData.dirName() + "/" + QFileInfo(debugLog).fileName();
-                ok = z.AddFile(debugLog.fileName(), debugLogName);
-                if (!ok) {
-                    qWarning() << "Unable to add debug log to zip!";
-                }
-            }
-        }
-
         z.Close();
     } else {
         qWarning() << "Unable to open" << filename;
