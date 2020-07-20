@@ -22,7 +22,7 @@ class LogThread:public QObject, public QRunnable
     Q_OBJECT
 public:
     explicit LogThread() : QRunnable() { running = false; logtime.start(); connected = false; m_logFile = nullptr; m_logStream = nullptr; }
-    virtual ~LogThread() {}
+    virtual ~LogThread();
 
     void run();
     void append(QString msg);

@@ -105,10 +105,25 @@ void LogThread::logToFile()
     }
     logTrigger.wakeAll();
     strlock.unlock();
+
     if (m_logStream) {
         qDebug().noquote() << "Logging to" << debugLog;
     } else {
         qWarning().noquote() << "Unable to open" << debugLog;
+    }
+}
+
+LogThread::~LogThread()
+{
+    QMutexLocker lock(&strlock);
+    
+    Q_ASSERT(running == false);
+    if (m_logStream) {
+        delete m_logStream;
+        m_logStream = nullptr;
+        Q_ASSERT(m_logFile);
+        delete m_logFile;
+        m_logFile = nullptr;
     }
 }
 
@@ -124,7 +139,8 @@ void shutdownLogger()
 {
     if (logger) {
         logger->quit();
-        otherThreadPool->waitForDone(-1);
+        // The thread is automatically destroyed when its run() method exits.
+        otherThreadPool->waitForDone(-1);  // wait until that happens
         logger = NULL;
     }
     delete otherThreadPool;
@@ -150,32 +166,23 @@ void LogThread::appendClean(QString msg)
 
 void LogThread::quit() {
     qDebug() << "Shutting down logging thread";
-    running = false;
+    qInstallMessageHandler(0);  // Remove our logger.
+    
     strlock.lock();
-    while (!buffer.isEmpty()) {
-        QString msg = buffer.takeFirst();
-        if (m_logStream) {
-            *m_logStream << msg << endl;
-        }
-    }
-    if (m_logStream) {
-        delete m_logStream;
-        m_logStream = nullptr;
-        Q_ASSERT(m_logFile);
-        delete m_logFile;
-        m_logFile = nullptr;
-    }
-    strlock.unlock();
+    running = false;       // Force the thread to exit after its next iteration.
+    logTrigger.wakeAll();  // Trigger the final flush.
+    strlock.unlock();      // Release the lock so that the thread can complete.
 }
 
 
 void LogThread::run()
 {
+    QMutexLocker lock(&strlock);
+
     running = true;
     s_LoggerRunning.unlock();  // unlock as soon as the thread begins to run
     do {
-        strlock.lock();
-        logTrigger.wait(&strlock);
+        logTrigger.wait(&strlock);  // releases strlock while it waits
         while (connected && m_logFile && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
             if (m_logStream) {
@@ -183,8 +190,9 @@ void LogThread::run()
             }
             emit outputLog(msg);
         }
-        strlock.unlock();
     } while (running);
+
+    // strlock will be released when lock goes out of scope
 }
 
 
