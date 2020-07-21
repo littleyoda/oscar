@@ -344,6 +344,8 @@ class MainWindow : public QMainWindow
 
     void on_actionCreate_Card_zip_triggered();
 
+    void on_actionCreate_Log_zip_triggered();
+
     void on_actionCreate_OSCAR_Data_zip_triggered();
 
     void on_actionReport_a_Bug_triggered();

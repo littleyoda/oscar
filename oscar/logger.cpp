@@ -8,8 +8,9 @@
  * for more details. */
 
 #include "logger.h"
-
-#define ASSERTS_SUCK
+#include "SleepLib/preferences.h"
+#include "version.h"
+#include <QDir>
 
 QThreadPool * otherThreadPool = NULL;
 
@@ -47,12 +48,9 @@ void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QS
 
     if (logger && logger->isRunning()) {
         logger->append(msg);
+    } else {
+        fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
     }
-#ifdef ASSERTS_SUCK
-//    else {
-//        fprintf(stderr, "%s\n", msg.toLocal8Bit().data());
-//    }
-#endif
 
     if (type == QtFatalMsg) {
         abort();
@@ -84,15 +82,65 @@ void LogThread::connectionReady()
 {
     strlock.lock();
     connected = true;
+    logTrigger.wakeAll();
     strlock.unlock();
     qDebug() << "Logging UI initialized";
+}
+
+void LogThread::logToFile()
+{
+    if (m_logStream) {
+        qWarning().noquote() << "Already logging to" << m_logFile->fileName();
+        return;
+    }
+
+    QString debugLog = GetLogDir() + "/debug.txt";
+    rotateLogs(debugLog);  // keep a limited set of previous logs
+    
+    strlock.lock();
+    m_logFile = new QFile(debugLog);
+    Q_ASSERT(m_logFile);
+    if (m_logFile->open(QFile::ReadWrite | QFile::Text)) {
+        m_logStream = new QTextStream(m_logFile);
+    }
+    logTrigger.wakeAll();
+    strlock.unlock();
+
+    if (m_logStream) {
+        qDebug().noquote() << "Logging to" << debugLog;
+    } else {
+        qWarning().noquote() << "Unable to open" << debugLog;
+    }
+}
+
+LogThread::~LogThread()
+{
+    QMutexLocker lock(&strlock);
+    
+    Q_ASSERT(running == false);
+    if (m_logStream) {
+        delete m_logStream;
+        m_logStream = nullptr;
+        Q_ASSERT(m_logFile);
+        delete m_logFile;
+        m_logFile = nullptr;
+    }
+}
+
+QString LogThread::logFileName()
+{
+    if (!m_logFile) {
+        return "";
+    }
+    return m_logFile->fileName();
 }
 
 void shutdownLogger()
 {
     if (logger) {
         logger->quit();
-        otherThreadPool->waitForDone(-1);
+        // The thread is automatically destroyed when its run() method exits.
+        otherThreadPool->waitForDone(-1);  // wait until that happens
         logger = NULL;
     }
     delete otherThreadPool;
@@ -103,47 +151,132 @@ LogThread * logger = NULL;
 void LogThread::append(QString msg)
 {
     QString tmp = QString("%1: %2").arg(logtime.elapsed(), 5, 10, QChar('0')).arg(msg);
-    //QStringList appears not to be threadsafe
-    strlock.lock();
-    buffer.append(tmp);
-    strlock.unlock();
+    appendClean(tmp);
 }
 
 void LogThread::appendClean(QString msg)
 {
+    fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
     strlock.lock();
     buffer.append(msg);
+    logTrigger.wakeAll();
     strlock.unlock();
 }
 
 
 void LogThread::quit() {
     qDebug() << "Shutting down logging thread";
-    running = false;
+    qInstallMessageHandler(0);  // Remove our logger.
+    
     strlock.lock();
-    while (!buffer.isEmpty()) {
-        QString msg = buffer.takeFirst();
-        fprintf(stderr, "%s\n", msg.toLocal8Bit().constData());
-    }
-    strlock.unlock();
+    running = false;       // Force the thread to exit after its next iteration.
+    logTrigger.wakeAll();  // Trigger the final flush.
+    strlock.unlock();      // Release the lock so that the thread can complete.
 }
 
 
 void LogThread::run()
 {
+    QMutexLocker lock(&strlock);
+
     running = true;
     s_LoggerRunning.unlock();  // unlock as soon as the thread begins to run
     do {
-        strlock.lock();
-        //int r = receivers(SIGNAL(outputLog(QString())));
-        while (connected && !buffer.isEmpty()) {
+        logTrigger.wait(&strlock);  // releases strlock while it waits
+        while (connected && m_logFile && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
-                fprintf(stderr, "%s\n", msg.toLocal8Bit().data());
-                emit outputLog(msg);
+            if (m_logStream) {
+                *m_logStream << msg << endl;
+            }
+            emit outputLog(msg);
         }
-        strlock.unlock();
-        QThread::msleep(1000);
     } while (running);
+
+    // strlock will be released when lock goes out of scope
 }
 
 
+QString GetLogDir()
+{
+    static const QString LOG_DIR_NAME = "logs";
+
+    Q_ASSERT(!GetAppData().isEmpty());  // If GetLogDir gets called before GetAppData() is valid, this would point at root.
+    QDir oscarData(GetAppData());
+    Q_ASSERT(oscarData.exists());
+    if (!oscarData.exists(LOG_DIR_NAME)) {
+        oscarData.mkdir(LOG_DIR_NAME);
+    }
+    QDir logDir(oscarData.canonicalPath() + "/" + LOG_DIR_NAME);
+    if (!logDir.exists()) {
+        qWarning() << "Unable to create" << logDir.absolutePath() << "reverting to" << oscarData.canonicalPath();
+        logDir = oscarData;
+    }
+    Q_ASSERT(logDir.exists());
+
+    return logDir.canonicalPath();
+}
+
+void rotateLogs(const QString & filePath, int maxPrevious)
+{
+    if (maxPrevious < 0) {
+        if (getVersion().IsReleaseVersion()) {
+            maxPrevious = 1;
+        } else {
+            // keep more in testing builds
+            maxPrevious = 4;
+        }
+    }
+
+    // Build the list of rotated logs for this filePath.
+    QFileInfo info(filePath);
+    QString path = QDir(info.absolutePath()).canonicalPath();
+    QString base = info.baseName();
+    QString ext = info.completeSuffix();
+    if (!ext.isEmpty()) {
+        ext = "." + ext;
+    }
+    if (path.isEmpty()) {
+        qWarning() << "Skipping log rotation, directory does not exist:" << info.absoluteFilePath();
+        return;
+    }
+
+    QStringList logs;
+    logs.append(filePath);
+    for (int i = 0; i < maxPrevious; i++) {
+        logs.append(QString("%1/%2.%3%4").arg(path).arg(base).arg(i).arg(ext));
+    }
+
+    // Remove the expired log.
+    QFileInfo expired(logs[maxPrevious]);
+    if (expired.exists()) {
+        if (expired.isDir()) {
+            QDir dir(expired.canonicalFilePath());
+            //qDebug() << "Removing expired log directory" << dir.canonicalPath();
+            if (!dir.removeRecursively()) {
+                qWarning() << "Unable to delete expired log directory" << dir.canonicalPath();
+            }
+        } else {
+            QFile file(expired.canonicalFilePath());
+            //qDebug() << "Removing expired log file" << file.fileName();
+            if (!file.remove()) {
+                qWarning() << "Unable to delete expired log file" << file.fileName();
+            }
+        }
+    }
+
+    // Rotate the remaining logs.
+    for (int i = maxPrevious; i > 0; i--) {
+        QFileInfo from(logs[i-1]);
+        QFileInfo to(logs[i]);
+        if (from.exists()) {
+            if (to.exists()) {
+                qWarning() << "Unable to rotate log:" << to.absoluteFilePath() << "exists";
+                continue;
+            }
+            //qDebug() << "Renaming" << from.absoluteFilePath() << "to" << to.absoluteFilePath();
+            if (!QFile::rename(from.absoluteFilePath(), to.absoluteFilePath())) {
+                qWarning() << "Unable to rename" << from.absoluteFilePath() << "to" << to.absoluteFilePath();
+            }
+        }
+    }
+}

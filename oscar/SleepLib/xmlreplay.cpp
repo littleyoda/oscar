@@ -116,6 +116,14 @@ void XmlRecorder::epilogue()
     m_xml->writeEndElement();  // close enclosing tag
 }
 
+void XmlRecorder::flush()
+{
+    if (m_file) {
+        if (!m_file->flush()) {
+            qWarning().noquote() << "Unable to flush XML to" << m_file->fileName();
+        }
+    }
+}
 
 XmlReplay::XmlReplay(QFile* file, const QString & tag)
     : m_tag(tag), m_file(file), m_pendingSignal(nullptr), m_parent(nullptr)
@@ -416,6 +424,7 @@ void XmlReplayEvent::record(XmlRecorder* writer) const
     if (writer != nullptr) {
         writer->lock();
         writer->xml() << *this;
+        writer->flush();
         writer->unlock();
     }
 }

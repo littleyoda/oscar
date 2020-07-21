@@ -225,7 +225,7 @@ bool FileQueue::AddFile(const QString & path, const QString & prefix)
     return true;
 }
 
-int FileQueue::Remove(const QString & path)
+int FileQueue::Remove(const QString & path, QString* outName)
 {
     QFileInfo fi(path);
     QString canonicalPath = fi.canonicalFilePath();
@@ -235,6 +235,13 @@ int FileQueue::Remove(const QString & path)
     while (i.hasNext()) {
         Entry & entry = i.next();
         if (entry.path == canonicalPath) {
+            if (outName) {
+                // If the caller cares about the name, it will most likely be re-added later rather than skipped.
+                *outName = entry.name;
+            } else {
+                qDebug().noquote() << "skipping file:" << path;
+            }
+
             if (fi.isDir()) {
                 m_dir_count--;
             } else {
@@ -243,10 +250,12 @@ int FileQueue::Remove(const QString & path)
             }
             i.remove();
             removed++;
-            qDebug().noquote() << "skipping file:" << path;
         }
     }
     
+    if (removed > 1) {
+        qWarning().noquote() << removed << "copies found in zip queue:" << path;
+    }
     return removed;
 }
 
