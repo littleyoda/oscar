@@ -2866,6 +2866,7 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionShow_Performance_Counters"/>
      <addaction name="separator"/>
      <addaction name="actionCreate_Card_zip"/>
+     <addaction name="actionCreate_Log_zip"/>
      <addaction name="actionCreate_OSCAR_Data_zip"/>
      <addaction name="actionReport_a_Bug"/>
      <addaction name="separator"/>
@@ -3230,6 +3231,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionCreate_Card_zip">
    <property name="text">
     <string>Create zip of CPAP data card</string>
+   </property>
+  </action>
+  <action name="actionCreate_Log_zip">
+   <property name="text">
+    <string>Create zip of OSCAR diagnostic logs</string>
    </property>
   </action>
   <action name="actionCreate_OSCAR_Data_zip">

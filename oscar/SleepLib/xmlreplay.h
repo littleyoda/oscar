@@ -54,6 +54,7 @@ public:
     inline QXmlStreamWriter & xml() { return *m_xml; }
     inline void lock() { m_mutex.lock(); }
     inline void unlock() { m_mutex.unlock(); }
+    void flush();
 
 protected:
     XmlRecorder(XmlRecorder* parent, const QString & id, const QString & tag);  // constructor used by substreams
