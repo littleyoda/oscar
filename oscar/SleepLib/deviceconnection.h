@@ -13,7 +13,6 @@
 // connections to devices. For now it just supports serial ports.
 
 #include <QtSerialPort/QSerialPort>
-#include <QXmlStreamWriter>
 #include <QHash>
 #include <QVariant>
 
@@ -263,6 +262,9 @@ public:
  * supports Bluetooth and BLE as well as serial. Such a class might then be
  * used instead of port "name" between DeviceConnectionManager and clients.
  */
+class QXmlStreamWriter;
+class QXmlStreamReader;
+
 class SerialPortInfo
 {
 public:
