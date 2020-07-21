@@ -64,7 +64,6 @@ QString platformStr()
     return platform;
 }
 
-//static const QString OSCAR_Version_File = "http://www.guyscharf.com/VERSION/versions.xml";
 static const QString OSCAR_Version_File = "http://www.sleepfiles.com/OSCAR/versions/versions.xml";
 
 static QString versionXML;
@@ -90,7 +89,6 @@ QString readLocalVersions() {
         return QString();
     }
     return QString(qba).toLower();
-
 }
 
 /*! \fn GetVersionInfo
@@ -124,8 +122,13 @@ VersionInfo getVersionInfo (QString type, QString platform) {
                                             //qDebug() << "expecting version or notes, read" << reader.name();
                                             if (reader.name() == "version") {
                                                 QString fileVersion = reader.readElementText();
-                                                if (Version(fileVersion) > getVersion())
-                                                    foundInfo.version = fileVersion;  // We found a more recent version
+                                                Version fv(fileVersion);
+                                                if (!fv.IsValid()) {
+                                                    qWarning() << "Server file versions.xml contains an invalid version code" << fileVersion;
+                                                } else {
+                                                    if (fv > getVersion())
+                                                        foundInfo.version = fileVersion;  // We found a more recent version
+                                                }
                                             }
                                             else if (reader.name() == "notes") {
                                                 foundInfo.notes = reader.readElementText();
@@ -145,7 +148,7 @@ VersionInfo getVersionInfo (QString type, QString platform) {
                }
            }
            else {
-               qWarning() << "Versions file improperly formed --" << reader.errorString();
+               qWarning() << "Versions.xml file improperly formed --" << reader.errorString();
                reader.raiseError(QObject::tr("New versions file improperly formed"));
            }
        }
@@ -158,9 +161,12 @@ void CheckUpdates::compareVersions () {
     VersionInfo releaseVersion = getVersionInfo ("release", platformStr());
     VersionInfo testVersion = getVersionInfo ("test", platformStr());
 
-    if (testVersion.version.length() == 0 && releaseVersion.version.length() == 0 && showIfCurrent)
+    msg = "";
+
+    if (testVersion.version.length() == 0 && releaseVersion.version.length() == 0) {
+        if (showIfCurrent)
             msg = QObject::tr("You are running the latest release of OSCAR");
-    else {
+    } else {
         msg = QObject::tr("A more recent version of OSCAR is available");
         msg += "<p>" + QObject::tr("You are running version %1").arg(getVersion()) + "</p>";
         if (releaseVersion.version.length() > 0) {
