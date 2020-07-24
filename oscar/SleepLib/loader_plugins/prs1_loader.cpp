@@ -7030,7 +7030,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 case 0xA0:  // Rise Time
                     flexmode = FLEX_RiseTime;
                     switch (cpapmode) {
-                        //case PRS1_MODE_BILEVEL:  probably this too, but we haven't seen it in practice
+                        case PRS1_MODE_BILEVEL:
                         case PRS1_MODE_AUTOBILEVEL:
                             break;
                         default:
