@@ -1342,7 +1342,7 @@ EventDataType Profile::calcHours(MachineType mt, QDate start, QDate end)
         Day *day = GetGoodDay(date, mt);
 
         if (day) {
-            val += day->hours();
+            val += day->hours(mt);
         }
 
         date = date.addDays(1);

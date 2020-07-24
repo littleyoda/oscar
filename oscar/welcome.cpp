@@ -183,7 +183,7 @@ QString Welcome::GenerateCPAPHTML()
 
             html += tr("was %1 (on %2)").arg(daystring).arg(date.toString(Qt::SystemLocaleLongDate)) + "<br/>";
 
-            EventDataType hours = day->hours();
+            EventDataType hours = day->hours(MT_CPAP);
             html += "<br/>";
 
             int seconds = int(hours * 3600.0) % 60;

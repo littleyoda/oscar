@@ -1431,7 +1431,7 @@ QString Daily::getSleepTime(Day * day)
 
     html+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
     html+="<tr><td align='center'><b>"+STR_TR_Date+"</b></td><td align='center'><b>"+tr("Start")+"</b></td><td align='center'><b>"+tr("End")+"</b></td><td align='center'><b>"+STR_UNIT_Hours+"</b></td></tr>";
-    int tt=qint64(day->total_time())/1000L;
+    int tt=qint64(day->total_time(MT_CPAP))/1000L;
     QDateTime date=QDateTime::fromTime_t(day->first()/1000L);
     QDateTime date2=QDateTime::fromTime_t(day->last()/1000L);
 
