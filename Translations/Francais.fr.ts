@@ -95,6 +95,13 @@
     </message>
 </context>
 <context>
+    <name>CheckUpdates</name>
+    <message>
+        <source>Checking for newer OSCAR versions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Daily</name>
     <message>
         <source>B</source>
@@ -357,10 +364,6 @@
         <translation>Modèle %1 - %2</translation>
     </message>
     <message>
-        <source>(Mode/Pressure settings are guessed on this day.)</source>
-        <translation>(Les réglages de mode et de pression sont extrapolés pour ce jour)</translation>
-    </message>
-    <message>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Jour avec informations limitées, seulement le résumé.</translation>
     </message>
@@ -435,6 +438,10 @@
     <message>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Ce favori est actuellement en zone désactivée..</translation>
+    </message>
+    <message>
+        <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1108,10 +1115,6 @@
         <translation>Rapporter un problème</translation>
     </message>
     <message>
-        <source>Updates are not yet implemented</source>
-        <translation>Désolé, fonction non encore implémentée</translation>
-    </message>
-    <message>
         <source>The FAQ is not yet implemented</source>
         <translation>Désolé, fonction non encore implémentée</translation>
     </message>
@@ -1393,6 +1396,18 @@
     </message>
     <message>
         <source>Show Personal Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of OSCAR diagnostic logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check For &amp;Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates not implemented</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2543,22 +2558,6 @@ Option à activer avant import, sinon une purge est nécessaire.</translation>
         <translation>Double-cliquez pour changer la description de ce canal.</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If your interested in helping test new features and bugfixes early, click here.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;But please be warned this will sometimes mean breaky code..&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; Pour tester les nouveautés cliquez ici&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Attention ! Sans garantie de bon fonctionnement&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Sessions older than this date will not be imported</source>
         <translation>Les sessions antérieures à cette date ne seront pas importées</translation>
     </message>
@@ -2673,10 +2672,6 @@ Cela affecte aussi les impressions
     <message>
         <source>Oximeter Events</source>
         <translation>Évènements de l&apos;oxymètre</translation>
-    </message>
-    <message>
-        <source>&amp;Check for Updates now</source>
-        <translation>&amp;Vérifier les mises à jour</translation>
     </message>
     <message>
         <source>Italic</source>
@@ -2841,14 +2836,6 @@ Surtout pour l&apos;import.</translation>
     <message>
         <source>Bar Tops</source>
         <translation>Haut des barres</translation>
-    </message>
-    <message>
-        <source>Automatically Check For Updates</source>
-        <translation>Vérifier les mises à jour automatiquement</translation>
-    </message>
-    <message>
-        <source>I want to try experimental and test builds (Advanced users only please.)</source>
-        <translation>Je veux essayer les versions expérimentales (Utilisateurs confirmés seulement)</translation>
     </message>
     <message>
         <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
@@ -3037,10 +3024,6 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <source>General CPAP and Related Settings</source>
         <translation>Réglages généraux de PPC</translation>
-    </message>
-    <message>
-        <source>Sourceforge hosts this project for free.. Please be considerate of their resources..</source>
-        <translation>Sourceforge héberge gratuitement ce projet, soyez respectueux de leur bande passante.</translation>
     </message>
     <message>
         <source>Default display height of graphs in pixels</source>
@@ -3383,6 +3366,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Will you be using a ResMed brand machine?</source>
         <translation>Utiliserez-vous un appareil Resmed?</translation>
+    </message>
+    <message>
+        <source>Check For Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>How often OSCAR should check for updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you are interested in helping test new features and bugfixes early, click here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I want to try experimental and test builds. (Advanced users only please.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print reports in black and white, which can be more legible on non-color printers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print reports in black and white (monochrome)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4658,12 +4677,6 @@ p, li { white-space: pre-wrap; }
         <translation>Filtre AB</translation>
     </message>
     <message>
-        <source>%1
-Line %2, column %3</source>
-        <translation>%1
-Ligne %2, colonne %3</translation>
-    </message>
-    <message>
         <source>Ramp Enable</source>
         <translation>Rampe active</translation>
     </message>
@@ -5164,10 +5177,6 @@ TTIA : %1</translation>
     <message>
         <source>Temperature Enable</source>
         <translation>Niv. Temp. activé</translation>
-    </message>
-    <message>
-        <source>Could not parse Updates.xml file.</source>
-        <translation>Impossible de traiter le fichier Updates.xml.</translation>
     </message>
     <message>
         <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
@@ -6673,6 +6682,42 @@ corporelle</translation>
         <source>(%2 days ago)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New versions file improperly formed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are running the latest release of OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A more recent version of OSCAR is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are running version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Reading %1 took %2 seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for OSCAR Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create the OSCAR data folder at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -6985,117 +7030,6 @@ corporelle</translation>
     <message>
         <source>This report was prepared on %1 by OSCAR %2</source>
         <translation>Ce rapport a été rédigé le %1 par OSCAR %2</translation>
-    </message>
-</context>
-<context>
-    <name>UpdaterWindow</name>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Taille</translation>
-    </message>
-    <message>
-        <source>&amp;Finished</source>
-        <translation>&amp;Fin de mise à jour</translation>
-    </message>
-    <message>
-        <source>Please wait while updates are downloaded and installed...</source>
-        <translation>Merci d&apos;attendre. Téléchargement et installation en cours...</translation>
-    </message>
-    <message>
-        <source>Component</source>
-        <translation>Composant</translation>
-    </message>
-    <message>
-        <source>&amp;Upgrade Now</source>
-        <translation>&amp;Upgrader maintenant</translation>
-    </message>
-    <message>
-        <source>Version Information</source>
-        <translation>Informations de version</translation>
-    </message>
-    <message>
-        <source>Build Notes</source>
-        <translation>Note de compilation</translation>
-    </message>
-    <message>
-        <source>No updates were found for your platform.</source>
-        <translation>Aucune mise à jour disponible.</translation>
-    </message>
-    <message>
-        <source>Downloading &amp; Installing Updates</source>
-        <translation>Téléchargement et installation en cours</translation>
-    </message>
-    <message>
-        <source>Maybe &amp;Later</source>
-        <translation>&amp;Plus tard</translation>
-    </message>
-    <message>
-        <source>Progress</source>
-        <translation>Avancement</translation>
-    </message>
-    <message>
-        <source>%1 bytes received</source>
-        <translation>%1 octets reçus</translation>
-    </message>
-    <message>
-        <source>A new version of $APP is available</source>
-        <translation>Une nouvelle version de $APP est disponible</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translation>Mises à jour</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>Version</translation>
-    </message>
-    <message>
-        <source>Requesting </source>
-        <translation>Requête en cours </translation>
-    </message>
-    <message>
-        <source>Release Notes</source>
-        <translation>Notes de publication</translation>
-    </message>
-    <message>
-        <source>You are already running the latest version.</source>
-        <translation>C&apos;est la version la plus à jour.</translation>
-    </message>
-    <message>
-        <source>Would you like to download and install them now?</source>
-        <translation>Voulez-vous les télécharger et les installer maintenant ?</translation>
-    </message>
-    <message>
-        <source>OSCAR Updater</source>
-        <translation>Outil de mise à jour de OSCAR</translation>
-    </message>
-    <message>
-        <source>Updates are not yet implemented</source>
-        <translation>Désolé, fonction non encore implémentée</translation>
-    </message>
-    <message>
-        <source>Checking for OSCAR Updates</source>
-        <translation>Vérification de disponibilité de mise à jour</translation>
-    </message>
-    <message>
-        <source>OSCAR Updates</source>
-        <translation>Mise à jour de OSCAR</translation>
-    </message>
-    <message>
-        <source>Version %1 of OSCAR is available, opening link to download site.</source>
-        <translation>La version &lt;b&gt;v%1&lt;/b&gt; est disponible. Ouverture du lien vers le site de téléchargement.</translation>
-    </message>
-    <message>
-        <source>New OSCAR Updates are avilable:</source>
-        <translation>Une mise à jour de OSCAR est disponible :</translation>
-    </message>
-    <message>
-        <source>OSCAR Updates are currently unavailable for this platform</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
