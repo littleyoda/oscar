@@ -466,7 +466,7 @@ void gGraphView::popoutGraph()
         newDockWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         newDockWidget->setMouseTracking(true);
         int titleBarHeight = 30;
-        int newDockHeight = dock->height()+popout_graph->height()+titleBarHeight+2; // +2 for group box border
+        int newDockHeight = dock->height()+popout_graph->height()+titleBarHeight/*+2*/; // +2 for group box border
         qDebug() << "widget geometry" << newDockWidget->frameGeometry() << "title bar height" << titleBarHeight;
         if (newDockHeight > screenHeight) {
             QMessageBox::warning(nullptr, STR_MessageBox_Warning,
@@ -475,7 +475,7 @@ void gGraphView::popoutGraph()
         }
         qDebug() << "dock height" << dock->height() << "popout graph height" << popout_graph->height();
         dock->resize(dock->width(), newDockHeight);
-
+        newDockWidget->setMinimumHeight(popout_graph->height()+titleBarHeight);
         newDockWidget->resize(width(), popout_graph->height()+titleBarHeight);
         qDebug() << "dock height resized to" << dock->height() << "widget resized to" << newDockWidget->height();
         //////// End resize dock to hold new widget
@@ -487,7 +487,6 @@ void gGraphView::popoutGraph()
         dock->addDockWidget(Qt::BottomDockWidgetArea, newDockWidget, Qt::Vertical);
 
         /////// Fix some resize glitches ///////
-        // https://stackoverflow.com/questions/26286646/create-a-qdockwidget-that-resizes-to-its-contents?rq=1
         QDockWidget* dummy = new QDockWidget;
         dock->addDockWidget(Qt::BottomDockWidgetArea, dummy);
         dock->removeDockWidget(dummy);
