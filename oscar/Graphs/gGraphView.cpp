@@ -487,6 +487,7 @@ void gGraphView::popoutGraph()
         dock->addDockWidget(Qt::BottomDockWidgetArea, newDockWidget, Qt::Vertical);
 
         /////// Fix some resize glitches ///////
+        /********* Is this still needed?  -- gts 8/1/2020
         QDockWidget* dummy = new QDockWidget;
         dock->addDockWidget(Qt::BottomDockWidgetArea, dummy);
         dock->removeDockWidget(dummy);
@@ -497,6 +498,7 @@ void gGraphView::popoutGraph()
         QMouseEvent* grabSeparatorEvent =
             new QMouseEvent(QMouseEvent::MouseButtonPress,mousePos,Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
         qApp->postEvent(dock, grabSeparatorEvent);
+        *************/
         /////////////////////////////////////////
 
 //        dock->updateGeometry();
@@ -558,10 +560,13 @@ void gGraphView::popoutGraph()
 
         qDebug() << "newgraph height" << newgraph->height() << "gv height" << gv->height();
 
-//        gv->resetLayout();
         gv->timedRedraw(0);
-        //widget->setUpdatesEnabled(true);
-
+        // Force dock to redraw (and return focus to OSCAR)
+/*        dock->activateWindow();
+        dock->raise();
+        this->activateWindow();
+*/        this->raise();
+        dock->repaint();
     }
 }
 
