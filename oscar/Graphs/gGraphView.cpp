@@ -562,11 +562,10 @@ void gGraphView::popoutGraph()
 
         gv->timedRedraw(0);
         // Force dock to redraw (and return focus to OSCAR)
-/*        dock->activateWindow();
+        dock->activateWindow();
         dock->raise();
         this->activateWindow();
-*/        this->raise();
-        dock->repaint();
+        this->raise();
     }
 }
 
