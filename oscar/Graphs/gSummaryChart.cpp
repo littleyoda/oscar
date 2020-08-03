@@ -1045,26 +1045,26 @@ QString formatTime(EventDataType v, bool show_seconds = false, bool duration = f
 bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 {
     graph->timedRedraw(0);
-    int x = event->x();
-    int y = event->y();
+    int xposLeft = event->x();
+    int yPosTop = event->y();
 
-    if (!m_rect.contains(x, y)) {
+    if (!m_rect.contains(xposLeft, yPosTop)) {
         //    if ((x<0 || y<0 || x>l_width || y>l_height)) {
         hl_day = -1;
         //graph->timedRedraw(2000);
         return false;
     }
 
-    x -= m_rect.left();
-    y -= m_rect.top();
+    xposLeft -= m_rect.left();
+    yPosTop -= m_rect.top();
 
-    Q_UNUSED(y)
+    Q_UNUSED(yPosTop)
 
     double xx = l_maxx - l_minx;
 
     double xmult = xx / double(l_width + barw);
 
-    qint64 mx = ceil(xmult * double(x - offset));
+    qint64 mx = ceil(xmult * double(xposLeft - offset));
     mx += l_minx;
     mx = mx + l_offset; //-86400000L;
     int zd = mx / 86400000L;
@@ -1080,7 +1080,7 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 
         QMap<short, EventDataType> &valhash = d.value();
 
-        x += m_rect.left(); //gYAxis::Margin+gGraphView::titleWidth; //graph->m_marginleft+
+        xposLeft += m_rect.left(); //gYAxis::Margin+gGraphView::titleWidth; //graph->m_marginleft+
         int y = event->y() - m_rect.top() + rtop - 15;
         //QDateTime dt1=QDateTime::fromTime_t(hl_day*86400).toLocalTime();
         QDateTime dt2 = QDateTime::fromTime_t(hl_day * 86400).toUTC();
@@ -1094,7 +1094,7 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
         if ((d != m_values.end()) && (day != nullptr)) {
             bool summary_only = day->summaryOnly();
 
-            QString z = dt.toString(Qt::SystemLocaleShortDate);
+            QString strTooltip = dt.toString(Qt::SystemLocaleShortDate);
 
             // Day * day=m_days[hl_day];
             //EventDataType val;
@@ -1112,10 +1112,10 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     val = QString::number(d.value()[0], 'f', 2);
                 }
 
-                z += "\r\n" + m_label + ": " + val;
+                strTooltip += "\r\n" + m_label + ": " + val;
 
                 if (m_type[1] == ST_SESSIONS) {
-                    z += " "+QString(QObject::tr("(Sess: %1)")).arg(day->size(), 0);
+                    strTooltip += " "+QString(QObject::tr("(Sess: %1)")).arg(day->size(), 0);
                 }
 
                 EventDataType v = m_times[zd][0];
@@ -1123,9 +1123,9 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 
                 if (lastt < 0) { lastt = 0; }
 
-                z += "\r\n"+QString(QObject::tr("Bedtime: %1")).arg(formatTime(v, false, false, true));
+                strTooltip += "\r\n"+QString(QObject::tr("Bedtime: %1")).arg(formatTime(v, false, false, true));
                 v = m_times[zd][lastt] + m_values[zd][lastt];
-                z += "\r\n"+QString(QObject::tr("Waketime: %1")).arg(formatTime(v, false, false, true));
+                strTooltip += "\r\n"+QString(QObject::tr("Waketime: %1")).arg(formatTime(v, false, false, true));
 
             } else if (m_graphtype == GT_BAR) {
                 if (m_type[0] == ST_HOURS) {
@@ -1138,11 +1138,11 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     val = QString::number(d.value()[0], 'f', 2);
                 }
 
-                z += "\r\n" + m_label + ": " + val;
+                strTooltip += "\r\n" + m_label + ": " + val;
                 //z+="\r\nMode="+QString::number(day->settings_min("FlexSet"),'f',0);
 
             } else {
-                QString a;
+                QString strDataType;
 
                 for (int i = 0; i < m_type.size(); i++) {
                     if (!m_goodcodes[i]) {
@@ -1157,64 +1157,64 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 
                     switch (m_type[i]) {
                     case ST_WAVG:
-                        a = STR_TR_WAvg;
+                        strDataType = STR_TR_WAvg;
                         break;
 
                     case ST_AVG:
-                        a = STR_TR_Avg;
+                        strDataType = STR_TR_Avg;
                         break;
 
                     case ST_90P:
-                        a = QObject::tr("90%");
+                        strDataType = QObject::tr("90%");
                         break;
 
                     case ST_PERC:
-                        if (tval >= 0.99) { a = STR_TR_Max; }
-                        else if (tval == 0.5) { a = STR_TR_Med; }
-                        else { a = QString("%1%").arg(tval * 100.0, 0, 'f', 0); }
+                        if (tval >= 0.99) { strDataType = STR_TR_Max; }
+                        else if (tval == 0.5) { strDataType = STR_TR_Med; }
+                        else { strDataType = QString("%1%").arg(tval * 100.0, 0, 'f', 0); }
 
                         break;
 
                     case ST_MIN:
-                        a = STR_TR_Min;
+                        strDataType = STR_TR_Min;
                         break;
 
                     case ST_MAX:
-                        a = STR_TR_Max;
+                        strDataType = STR_TR_Max;
                         break;
 
                     case ST_CPH:
-                        a = "";
+                        strDataType = "";
                         break;
 
                     case ST_SPH:
-                        a = "%";
+                        strDataType = "%";
                         break;
 
                     case ST_HOURS:
-                        a = STR_UNIT_Hours;
+                        strDataType = STR_UNIT_Hours;
                         break;
 
                     case ST_SESSIONS:
-                        a = STR_TR_Sessions;
+                        strDataType = STR_TR_Sessions;
                         break;
 
                     case ST_SETMIN:
-                        a = STR_TR_Min;
+                        strDataType = STR_TR_Min;
                         break;
 
                     case ST_SETMAX:
-                        a = STR_TR_Max;
+                        strDataType = STR_TR_Max;
                         break;
 
                     default:
-                        a = "";
+                        strDataType = "";
                         break;
                     }
 
                     if (m_type[i] == ST_SESSIONS) {
                         val = QString::number(d.value()[i + 1], 'f', 0);
-                        z += "\r\n" + a + ": " + val;
+                        strTooltip += "\r\n" + strDataType + ": " + val;
                     } else {
                         //if (day && (day->channelExists(m_codes[i]) || day->settingExists(m_codes[i]))) {
                         schema::Channel &chan = schema::channel[m_codes[i]];
@@ -1230,26 +1230,24 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                             val = QString::number(v, 'f', 2);
                         }
 
-                        z += "\r\n" + chan.label() + " " + a + ": " + val;
+                        strTooltip += "\r\n" + chan.label() + " " + strDataType + ": " + val;
                         //}
                     }
                 }
 
             }
             if (summary_only) {
-                z += "\r\n"+QObject::tr("(Summary Only)");
+                strTooltip += "\r\n"+QObject::tr("(Summary Only)");
             }
 
-            graph->ToolTip(z, x, y - 15);
+            graph->ToolTip(strTooltip, xposLeft, y - 15);
             return false;
         } else {
             QString z = dt.toString(Qt::SystemLocaleShortDate) + "\r\n"+QObject::tr("No Data");
-            graph->ToolTip(z, x, y - 15);
+            graph->ToolTip(z, xposLeft, y - 15);
             return false;
         }
     }
-
-
     return false;
 }
 
