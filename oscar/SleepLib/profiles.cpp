@@ -630,7 +630,7 @@ void Profile::LoadMachineData(ProgressDialog *progress)
 
         if (loader) {
             if (mach->version() < loader->Version()) {
-                qDebug() << "LoadMachineData data format error, machine version" << mach->version() << "loader version" << loader->Version();
+                qDebug() << "LoadMachineData" << mach->loaderName() << "data format error, machine version" << mach->version() << "loader version" << loader->Version();
                 progress->hide();
                 DataFormatError(mach);
                 progress->show();
@@ -638,7 +638,7 @@ void Profile::LoadMachineData(ProgressDialog *progress)
                 try {
                     mach->Load(progress);
                 } catch (OldDBVersion& e) {
-                    qDebug() << "LoadMachineData mach->load failure, machine version" << mach->version() << "loader version" << loader->Version();
+                    qDebug() << "LoadMachineData" << mach->loaderName() << "load failure, machine version" << mach->version() << "loader version" << loader->Version();
                     Q_UNUSED(e)
                     progress->hide();
                     DataFormatError(mach);

@@ -439,7 +439,8 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     qDebug() << "Opening profile" << profileName;
 
     auto pit = Profiles::profiles.find(profileName);
-    if (pit == Profiles::profiles.end()) return false;
+    if (pit == Profiles::profiles.end())
+        return false;
 
     Profile * prof = pit.value();
     if (p_profile) {
@@ -853,13 +854,6 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     QList<ImportPath> detectedCards;
     importScanCancelled = false;
     QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
-// #if defined (Q_OS_LINUX)
-//     if (detectedCards.size() == 0) {
-//         qDebug() << "Skipping card detection on Linux";
-//         return detectedCards;
-//     }
-// #endif
-
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
     QTime time;
@@ -1782,58 +1776,60 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
         QList<Session *>::iterator s;
 
         QList<Session *> list;
-        QList<SessionID> sidlist;
+////    QList<SessionID> sidlist;       // obsolete, see below
         for (s = day->begin(); s != day->end(); ++s) {
-            list.push_back(*s);
+            list.append(*s);
             qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
             qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
             qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
-            sidlist.push_back((*s)->session());
+////        sidlist.append((*s)->session());
         }
 
-        QHash<QString, SessionID> skipfiles;
-        // Read the already imported file list
-
-        QFile impfile(cpap->getDataPath()+"/imported_files.csv");
-        if (impfile.exists()) {
-            qDebug() << "Obsolet file exists" << impfile.fileName();
-            if (impfile.open(QFile::ReadOnly)) {
-                QTextStream impstream(&impfile);
-                QString serial;
-                impstream >> serial;
-                if (cpap->serial() == serial) {
-                    QString line, file, str;
-                    SessionID sid;
-                    bool ok;
-                    do {
-                        line = impstream.readLine();
-                        file = line.section(',',0,0);
-                        str = line.section(',',1);
-                        sid = str.toInt(&ok);
-                        if (!sidlist.contains(sid)) {
-                            skipfiles[file] = sid;
-                        }
-                    } while (!impstream.atEnd());
-                }
-            }
-            impfile.close();
-            // Delete the file
-            impfile.remove();
-
-            // Rewrite the file without the sessions being removed.
-            if (impfile.open(QFile::WriteOnly)) {
-                QTextStream out(&impfile);
-                out << cpap->serial();
-                QHash<QString, SessionID>::iterator skit;
-                QHash<QString, SessionID>::iterator skit_end = skipfiles.end();
-                for (skit = skipfiles.begin(); skit != skit_end; ++skit) {
-                    QString a = QString("%1,%2\n").arg(skit.key()).arg(skit.value());;
-                    out << a;
-                }
-                out.flush();
-            }
-            impfile.close();
-        }                   // end of obsolte file code
+//////// The imported_files.csv has been removed from SH 1.1 //////////
+//        QHash<QString, SessionID> skipfiles;
+//        // Read the already imported file list
+//
+//        QFile impfile(cpap->getDataPath()+"/imported_files.csv");
+//        if (impfile.exists()) {
+//            qDebug() << "Obsolet file exists" << impfile.fileName();
+//            if (impfile.open(QFile::ReadOnly)) {
+//                QTextStream impstream(&impfile);
+//                QString serial;
+//                impstream >> serial;
+//                if (cpap->serial() == serial) {
+//                    QString line, file, str;
+//                    SessionID sid;
+//                    bool ok;
+//                    do {
+//                        line = impstream.readLine();
+//                        file = line.section(',',0,0);
+//                        str = line.section(',',1);
+//                        sid = str.toInt(&ok);
+//                        if (!sidlist.contains(sid)) {
+//                            skipfiles[file] = sid;
+//                        }
+//                    } while (!impstream.atEnd());
+//                }
+//            }
+//            impfile.close();
+//            // Delete the file
+//            impfile.remove();
+//
+//            // Rewrite the file without the sessions being removed.
+//            if (impfile.open(QFile::WriteOnly)) {
+//                QTextStream out(&impfile);
+//                out << cpap->serial();
+//                QHash<QString, SessionID>::iterator skit;
+//                QHash<QString, SessionID>::iterator skit_end = skipfiles.end();
+//                for (skit = skipfiles.begin(); skit != skit_end; ++skit) {
+//                    QString a = QString("%1,%2\n").arg(skit.key()).arg(skit.value());;
+//                    out << a;
+//                }
+//                out.flush();
+//            }
+//            impfile.close();
+//        }                   // end of obsolte file code
+///////////////////////////////////////////////////////////////////////////////////////
 
         QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
         rxcache.remove();
@@ -1845,7 +1841,7 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
         for (int i = 0; i < list.size(); i++) {
             Session *sess = list.at(i);
-            sess->Destroy();
+            sess->Destroy();    // remove the summary and event files
             delete sess;
         }
 
@@ -2001,7 +1997,7 @@ void MainWindow::purgeMachine(Machine * mach)
         delete mach;
         // remove the directory unless it's got unexpected crap in it..
         bool deleted = false;
-        if (!dir.rmdir(path)) {
+        if ( ! dir.rmdir(path)) {
 #ifdef Q_OS_WIN
             wchar_t* directoryPtr = (wchar_t*)path.utf16();
             SetFileAttributes(directoryPtr, GetFileAttributes(directoryPtr) & ~FILE_ATTRIBUTE_READONLY);
@@ -2017,13 +2013,13 @@ void MainWindow::purgeMachine(Machine * mach)
                deleted = true;
             }
 #else
-            qDebug() << "Couldn't remove directory" << path;
+            qWarning() << "Couldn't remove directory" << path;
 #endif
         } else {
             deleted = true;
         }
-        if (!deleted) {
-            qDebug() << "Leaving backup folder intact";
+        if ( ! deleted) {
+            qWarning() << "Leaving backup folder intact";
         }
 
         PopulatePurgeMenu();

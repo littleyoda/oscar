@@ -186,7 +186,7 @@ bool Machine::loadSessionInfo()
     QHash<SessionID, Session *>::iterator s;
     QFile file(getDataPath() + "Sessions.info");
 
-    if (!file.open(QFile::ReadOnly)) {
+    if ( ! file.open(QFile::ReadOnly)) {
         // No session.info file present, so let's create one...
 
         // But first check for legacy SESSION_ENABLED field in session settings
@@ -391,7 +391,7 @@ bool Machine::AddSession(Session *s)
         return true;
     }
 
-    if (!firstsession) {
+    if ( ! firstsession) {
         if (firstday > date) { firstday = date; }
 
         if (lastday < date) { lastday = date; }
@@ -687,7 +687,8 @@ bool Machine::Load(ProgressDialog *progress)
         mainwin->connect(loader(), SIGNAL(setProgressValue(int)), progress, SLOT(setProgressValue(int)));
     }
 
-    if (!LoadSummary(progress)) {
+    if ( ! LoadSummary(progress)) {
+        qDebug() << "Recreating the Summary index XML file";
         // No XML index file, so assume upgrading, or it simply just got screwed up or deleted...
         progress->setMessage(QObject::tr("Scanning Files"));
         progress->setProgressValue(0);
@@ -751,6 +752,7 @@ bool Machine::Load(ProgressDialog *progress)
         size = filelist.size();
 
         progress->setMessage("Reading summary files");
+        qDebug() << "Reading summary files (.000)";
         progress->setProgressValue(0);
         QApplication::processEvents();
 
@@ -787,6 +789,7 @@ bool Machine::Load(ProgressDialog *progress)
         progress->setProgressValue(size);
     }
     progress->setMessage("Loading Session Info");
+    qDebug() << "Loading Session Info";
     QApplication::processEvents();
 
     loadSessionInfo();
@@ -804,7 +807,9 @@ bool Machine::SaveSession(Session *sess)
 {
     QString path = getDataPath();
 
-    if (sess->IsChanged() && sess->first() != 0) { sess->Store(path); }
+    if (sess->IsChanged() && sess->first() != 0) {
+        sess->Store(path);
+    }
 
     return true;
 }
@@ -1004,7 +1009,7 @@ bool Machine::LoadSummary(ProgressDialog * progress)
 //      } 
 *****************************************************************/
         Session * sess = it.value();
-        if (!AddSession(sess)) {
+        if ( ! AddSession(sess)) {
             delete sess;
         } else {
             if (loadSummaries) {
@@ -1018,6 +1023,7 @@ bool Machine::LoadSummary(ProgressDialog * progress)
         }
     }
     progress->setMessage(QObject::tr("Loading Summary Data"));
+    qDebug() << "Loading Summary Data";
     QApplication::processEvents();
 
     if (loader()) {

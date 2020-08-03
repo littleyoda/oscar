@@ -119,13 +119,13 @@ bool Session::OpenEvents()
 
 
     QString filename = eventFile();
+    qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
     bool b = LoadEvents(filename);
 
-    if (!b) {
-//        qWarning() << "Error Loading Events" << filename;
+    if ( ! b) {
+        qWarning() << "Error Loading Events" << filename;
         return false;
     }
-//  qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
 
     return s_events_loaded = true;
 }
@@ -138,14 +138,14 @@ bool Session::Destroy()
 
     QString summaryfile = s_machine->getSummariesPath() + base + ".000";
     QString eventfile = s_machine->getEventsPath() + base + ".001";
-    if (!dir.remove(summaryfile)) {
-       // qDebug() << "Could not delete" << summaryfile;
+    if ( ! dir.remove(summaryfile)) {
+        qWarning() << "Could not delete" << summaryfile;
     }
-    if (!dir.remove(eventfile)) {
-      //  qDebug() << "Could not delete" << eventfile;
+    if ( ! dir.remove(eventfile)) {
+        qWarning() << "Could not delete" << eventfile;
     }
 
-    return s_machine->unlinkSession(this); //!dir.exists(base + ".000") && !dir.exists(base + ".001");
+    return s_machine->unlinkSession(this);
 }
 
 bool Session::Store(QString path)
@@ -154,7 +154,7 @@ bool Session::Store(QString path)
 {
     QDir dir(path);
 
-    if (!dir.exists(path)) {
+    if ( ! dir.exists(path)) {
         dir.mkpath(path);
     }
 
@@ -180,103 +180,104 @@ bool Session::Store(QString path)
 
     return a;
 }
-/*QDataStream & operator<<(QDataStream & out, const Session & session)
-{
-    session.StoreSummaryData(out);
-    return out;
-}
 
-void Session::StoreSummaryData(QDataStream & out) const
-{
-    out << summary_version;
-    out << (quint32)s_session;
-    out << s_first;  // Session Start Time
-    out << s_last;   // Duration of sesion in seconds.
-
-    out << settings;
-    out << m_cnt;
-    out << m_sum;
-    out << m_avg;
-    out << m_wavg;
-
-    out << m_min;
-    out << m_max;
-
-    out << m_physmin;
-    out << m_physmax;
-
-    out << m_cph;
-    out << m_sph;
-
-    out << m_firstchan;
-    out << m_lastchan;
-
-    out << m_valuesummary;
-    out << m_timesummary;
-
-    out << m_gain;
-
-    out << m_availableChannels;
-
-    out << m_timeAboveTheshold;
-    out << m_upperThreshold;
-    out << m_timeBelowTheshold;
-    out << m_lowerThreshold;
-
-    out << s_summaryOnly;
-}
-
-QDataStream & operator>>(QDataStream & in, Session & session)
-{
-    session.LoadSummaryData(in);
-    return in;
-}
-
-
-void Session::LoadSummaryData(QDataStream & in)
-{
-    quint16 version;
-    in >> version;
-
-    quint32 t32;
-    in >> t32;      // Sessionid;
-    s_session = t32;
-
-    in >> s_first;  // Start time
-    in >> s_last;   // Duration
-
-    in >> settings;
-    in >> m_cnt;
-    in >> m_sum;
-    in >> m_avg;
-    in >> m_wavg;
-
-    in >> m_min;
-    in >> m_max;
-
-    in >> m_physmin;
-    in >> m_physmax;
-
-    in >> m_cph;
-    in >> m_sph;
-    in >> m_firstchan;
-    in >> m_lastchan;
-
-    in >> m_valuesummary;
-    in >> m_timesummary;
-
-    in >> m_gain;
-
-    in >> m_availableChannels;
-    in >> m_timeAboveTheshold;
-    in >> m_upperThreshold;
-    in >> m_timeBelowTheshold;
-    in >> m_lowerThreshold;
-
-    in >> s_summaryOnly;
-
-    s_enabled = 1;
-} */
+//QDataStream & operator<<(QDataStream & out, const Session & session)
+//{
+//    session.StoreSummaryData(out);
+//    return out;
+//}
+//
+//void Session::StoreSummaryData(QDataStream & out) const
+//{
+//    out << summary_version;
+//    out << (quint32)s_session;
+//    out << s_first;  // Session Start Time
+//    out << s_last;   // Duration of sesion in seconds.
+//
+//    out << settings;
+//    out << m_cnt;
+//    out << m_sum;
+//    out << m_avg;
+//    out << m_wavg;
+//
+//    out << m_min;
+//    out << m_max;
+//
+//    out << m_physmin;
+//    out << m_physmax;
+//
+//    out << m_cph;
+//    out << m_sph;
+//
+//    out << m_firstchan;
+//    out << m_lastchan;
+//
+//    out << m_valuesummary;
+//    out << m_timesummary;
+//
+//    out << m_gain;
+//
+//    out << m_availableChannels;
+//
+//    out << m_timeAboveTheshold;
+//    out << m_upperThreshold;
+//    out << m_timeBelowTheshold;
+//    out << m_lowerThreshold;
+//
+//    out << s_summaryOnly;
+//}
+//
+//QDataStream & operator>>(QDataStream & in, Session & session)
+//{
+//    session.LoadSummaryData(in);
+//    return in;
+//}
+//
+//
+//void Session::LoadSummaryData(QDataStream & in)
+//{
+//    quint16 version;
+//    in >> version;
+//
+//    quint32 t32;
+//    in >> t32;      // Sessionid;
+//    s_session = t32;
+//
+//    in >> s_first;  // Start time
+//    in >> s_last;   // Duration
+//
+//    in >> settings;
+//    in >> m_cnt;
+//    in >> m_sum;
+//    in >> m_avg;
+//    in >> m_wavg;
+//
+//    in >> m_min;
+//    in >> m_max;
+//
+//    in >> m_physmin;
+//    in >> m_physmax;
+//
+//    in >> m_cph;
+//    in >> m_sph;
+//    in >> m_firstchan;
+//    in >> m_lastchan;
+//
+//    in >> m_valuesummary;
+//    in >> m_timesummary;
+//
+//    in >> m_gain;
+//
+//    in >> m_availableChannels;
+//    in >> m_timeAboveTheshold;
+//    in >> m_upperThreshold;
+//    in >> m_timeBelowTheshold;
+//    in >> m_lowerThreshold;
+//
+//    in >> s_summaryOnly;
+//
+//    s_enabled = 1;
+//} 
 
 QDataStream & operator>>(QDataStream & in, SessionSlice & slice)
 {
@@ -796,6 +797,7 @@ bool Session::StoreEvents()
     file.close();
     return true;
 }
+
 bool Session::LoadEvents(QString filename)
 {
     quint32 magicnum, machid, sessid;

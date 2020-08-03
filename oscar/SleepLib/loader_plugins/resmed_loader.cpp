@@ -335,8 +335,9 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
         mach->setInfo( info );                      // update info
-//      QDate lastDate = p_profile->LastDay(MT_CPAP);
-//      firstImportDay = lastDate.addDays(-1);
+        QDate lastDate = mach->LastDay();           // use the last day for this machine
+//      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
+        firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
@@ -421,9 +422,9 @@ int ResmedLoader::Open(const QString & dirpath)
             QDate date = stredf->edfHdr.startdate_orig.date();
             long int days = stredf->GetNumDataRecords();
             qDebug() << importFile.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
-            if (STRmap.contains(date)) {        // Keep the longer of the two STR files
+            if (STRmap.contains(date)) {        // Keep the longer of the two STR files - or newer if equal!
                 qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
-                if (days > STRmap[date].days) {
+                if (days >= STRmap[date].days) {
                     qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days;
                     STRmap.remove(date);
                 } else {
@@ -1021,7 +1022,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
              maskoff = str.lookupLabel("MaskOff");
         }
         EDFSignal *maskeventcount = str.lookupLabel("Mask Events");
-        if (!maskeventcount) {
+        if ( ! maskeventcount) {
              maskeventcount = str.lookupLabel("MaskEvents");
         }
         if ( !maskon || !maskoff || !maskeventcount ) {
@@ -1049,13 +1050,13 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if (rit != resdayList.end()) {
                 // Already seen this record.. should check if the data is the same, but meh.
                 // At least check the maskeventcount to see if it changed...
-//              if ( maskeventcount* != rit...maskevents ) {
-//                  qDebug() << "Maske events don't match, purge" << rit...date().toString;
+                if ( maskeventcount->dataArray[0] != rit.value().str.maskevents ) {
+                    qDebug() << "Maske events don't match, purge" << rit.value().date.toString();
 //                  purge...
-//              }
-#ifdef SESSION_DEBUG
+                }
+// #ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "Already saw this one";
-#endif
+// #endif
                 continue;
             }
 
