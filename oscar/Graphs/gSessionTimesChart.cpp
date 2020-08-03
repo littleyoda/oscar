@@ -317,9 +317,10 @@ QString gSummaryChart::tooltipData(Day *, int idx)
 {
     QString txt;
     const auto & slices = cache[idx];
-    for (const auto & slice : slices) {
-        txt += QString("\n%1: %2").arg(slice.name).arg(float(slice.value), 0, 'f', 2);
-
+    int i = slices.size();
+    while (i > 0) {
+        i--;
+        txt += QString("\n%1: %2").arg(slices[i].name).arg(float(slices[i].value), 0, 'f', 2);
     }
     return txt;
 }
@@ -1240,33 +1241,35 @@ void gAHIChart::afterDraw(QPainter & /*painter */, gGraph &graph, QRectF rect)
     QStringList txtlist;
     if (!skip) txtlist.append(QObject::tr("%1 %2 / %3 / %4").arg(STR_TR_AHI).arg(min_ahi, 0, 'f', 2).arg(med, 0, 'f', 2).arg(max_ahi, 0, 'f', 2));
 
-    for (auto & calc : calcitems) {
-        ChannelID code = calc.code;
+    int i = calcitems.size();
+    while (i > 0) {
+        i--;
+        ChannelID code = calcitems[i].code;
         schema::Channel & chan = schema::channel[code];
         float mid = 0;
         skip = true;
         switch (midcalc) {
         case 0:
-            if (calc.median_data.size() > 0) {
-                mid = median(calc.median_data.begin(), calc.median_data.end());
+            if (calcitems[i].median_data.size() > 0) {
+                mid = median(calcitems[i].median_data.begin(), calcitems[i].median_data.end());
                 skip = false;
             }
             break;
         case 1:
-            if (calc.divisor > 0) {
-                mid = calc.wavg_sum / calc.divisor;
+            if (calcitems[i].divisor > 0) {
+                mid = calcitems[i].wavg_sum / calcitems[i].divisor;
                 skip = false;
             }
             break;
         case 2:
-            if (calc.cnt > 0) {
-                mid = calc.avg_sum / calc.cnt;
+            if (calcitems[i].cnt > 0) {
+                mid = calcitems[i].avg_sum / calcitems[i].cnt;
                 skip = false;
             }
             break;
         }
 
-        if (!skip) txtlist.append(QString("%1 %2 / %3 / %4").arg(chan.label()).arg(calc.min, 0, 'f', 2).arg(mid, 0, 'f', 2).arg(calc.max, 0, 'f', 2));
+        if (!skip) txtlist.append(QString("%1 %2 / %3 / %4").arg(chan.label()).arg(calcitems[i].min, 0, 'f', 2).arg(mid, 0, 'f', 2).arg(calcitems[i].max, 0, 'f', 2));
     }
     QString txt = txtlist.join(", ");
     graph.renderText(txt, rect.left(), rect.top()-5*graph.printScaleY(), 0);
@@ -1294,9 +1297,11 @@ QString gAHIChart::tooltipData(Day *day, int idx)
     float total = 0;
     float hour = day->hours(m_machtype);
     QString txt;
-    for (const auto & slice : slices) {
-        total += slice.value;
-        txt += QString("\n%1: %2").arg(slice.name).arg(float(slice.value) / hour, 0, 'f', 2);
+    int i = slices.size();
+    while (i > 0) {
+        i--;
+        total += slices[i].value;
+        txt += QString("\n%1: %2").arg(slices[i].name).arg(float(slices[i].value) / hour, 0, 'f', 2);
     }
     return QString("\n%1: %2").arg(STR_TR_AHI).arg(float(total) / hour,0,'f',2)+txt;
 }

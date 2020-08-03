@@ -223,11 +223,11 @@ void gLineOverlayBar::paint(QPainter &painter, gGraph &w, const QRegion &region)
                             painter.drawRect(rect);
 
                             // Queue tooltip
-                            QString lab2 = QString("%1").arg(schema::channel[m_code].fullname());
+                            QString strEventTooltip = QString("%1").arg(schema::channel[m_code].fullname());
                             if (raw != 0)  // Hide duration when it is zero
-                                lab2 += QString(" (%1)").arg(raw);
+                                strEventTooltip += QString(" (%1)").arg(raw);
 
-                            w.ToolTip(lab2, x1 - 10, start_py + 24 + (3 * w.printScaleY()), TT_AlignRight, AppSetting->tooltipTimeout());
+                            w.ToolTip(strEventTooltip, x1 - 10, start_py + 24 + (3 * w.printScaleY()), TT_AlignRight, AppSetting->tooltipTimeout());
 
                             painter.setPen(QPen(col,3));
                         } else {
