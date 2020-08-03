@@ -20,7 +20,9 @@
 #include <QVBoxLayout>
 #include <QDockWidget>
 #include <QMainWindow>
-# include <QWindow>
+#include <QScreen>
+#include <QWindow>
+#include <QMessageBox>
 
 
 #ifdef DEBUG_EFFICIENCY
@@ -447,28 +449,45 @@ void MyDockWindow::closeEvent(QCloseEvent *event)
 MyDockWindow * gGraphView::dock = nullptr;
 void gGraphView::popoutGraph()
 {
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect  screenGeometry = screen->availableGeometry();
+    int screenHeight = screenGeometry.height();
+
     if (popout_graph) {
+        // Create new dock if we don't have one already
         if (dock == nullptr) {
             dock = new MyDockWindow(mainwin->getDaily(), Qt::Window);
             dock->resize(width(),0);
          //   QScrollArea
         }
-        QDockWidget * widget = new QDockWidget(dock);
-        widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        widget->setMouseTracking(true);
-        int h = dock->height()+popout_graph->height()+30;
-        if (h > height()) h = height();
-        dock->resize(dock->width(), h);
-        widget->resize(width(), popout_graph->height()+30);
 
-        gGraphView * gv = new gGraphView(widget, this);
-        widget->setWidget(gv);
+        //////// Create dock widget and resize dock to hold new widget
+        QDockWidget * newDockWidget = new QDockWidget(dock);
+        newDockWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        newDockWidget->setMouseTracking(true);
+        int titleBarHeight = 30;
+        int newDockHeight = dock->height()+popout_graph->height()+titleBarHeight/*+2*/; // +2 for group box border
+        qDebug() << "widget geometry" << newDockWidget->frameGeometry() << "title bar height" << titleBarHeight;
+        if (newDockHeight > screenHeight) {
+            QMessageBox::warning(nullptr, STR_MessageBox_Warning,
+                                QObject::tr("The popout window is full. You should capture the existing\npopout window, delete it, then pop out this graph again."));
+            return;
+        }
+        qDebug() << "dock height" << dock->height() << "popout graph height" << popout_graph->height();
+        dock->resize(dock->width(), newDockHeight);
+        newDockWidget->setMinimumHeight(popout_graph->height()+titleBarHeight);
+        newDockWidget->resize(width(), popout_graph->height()+titleBarHeight);
+        qDebug() << "dock height resized to" << dock->height() << "widget resized to" << newDockWidget->height();
+        //////// End resize dock to hold new widget
+
+        gGraphView * gv = new gGraphView(newDockWidget, this);
+        newDockWidget->setWidget(gv);
         gv->setMouseTracking(true);
         gv->setDay(this->day());
-        dock->addDockWidget(Qt::BottomDockWidgetArea, widget,Qt::Vertical);
+        dock->addDockWidget(Qt::BottomDockWidgetArea, newDockWidget, Qt::Vertical);
 
         /////// Fix some resize glitches ///////
-        // https://stackoverflow.com/questions/26286646/create-a-qdockwidget-that-resizes-to-its-contents?rq=1
+        /********* Is this still needed?  -- gts 8/1/2020
         QDockWidget* dummy = new QDockWidget;
         dock->addDockWidget(Qt::BottomDockWidgetArea, dummy);
         dock->removeDockWidget(dummy);
@@ -479,6 +498,7 @@ void gGraphView::popoutGraph()
         QMouseEvent* grabSeparatorEvent =
             new QMouseEvent(QMouseEvent::MouseButtonPress,mousePos,Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
         qApp->postEvent(dock, grabSeparatorEvent);
+        *************/
         /////////////////////////////////////////
 
 //        dock->updateGeometry();
@@ -486,6 +506,8 @@ void gGraphView::popoutGraph()
 
         gGraph * graph = popout_graph;
 
+        /////////////////////
+        // Construct name for this popout graph
         QString basename = graph->title()+" - ";
         if (graph->m_day) {
             // append the date of the graph's left edge to the snapshot name
@@ -494,14 +516,14 @@ void gGraphView::popoutGraph()
             QDateTime date = QDateTime::fromMSecsSinceEpoch(graph->min_x, Qt::LocalTime);
             basename += date.date().toString(Qt::SystemLocaleLongDate);
         }
-
         QString newname = basename;
-
         // Find a new name.. How many snapshots for each graph counts as stupid?
-
         QString newtitle = graph->title();
+        newDockWidget->setWindowTitle(newname);
+        // end name construction and setting title
+        /////////////////////
 
-        widget->setWindowTitle(newname);
+        qDebug() << "original graph height is" << graph->height();
         gGraph * newgraph = new gGraph(newname, nullptr, newtitle, graph->units(), graph->height(), graph->group());
         newgraph->setHeight(graph->height());
 
@@ -536,11 +558,14 @@ void gGraphView::popoutGraph()
         newgraph->setSnapshot(false);
         newgraph->setShowTitle(true);
 
+        qDebug() << "newgraph height" << newgraph->height() << "gv height" << gv->height();
 
-        gv->resetLayout();
         gv->timedRedraw(0);
-        //widget->setUpdatesEnabled(true);
-
+        // Force dock to redraw (and return focus to OSCAR)
+        dock->activateWindow();
+        dock->raise();
+        this->activateWindow();
+        this->raise();
     }
 }
 

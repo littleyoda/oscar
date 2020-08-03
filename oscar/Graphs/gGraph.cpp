@@ -927,6 +927,11 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
         m_selecting_area = false;
         m_selection.setWidth(0);
 
+        // Shift-drag only measures a range and should not zoom in.
+        if ((event->modifiers() & Qt::ShiftModifier) != 0) {
+            return;
+        }
+
         if (m_graphview->horizTravel() > mouse_movement_threshold) {
             x -= left; //+m_marginleft;
             //y -= top; //+m_margintop;

@@ -95,6 +95,13 @@
     </message>
 </context>
 <context>
+    <name>CheckUpdates</name>
+    <message>
+        <source>Checking for newer OSCAR versions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Daily</name>
     <message>
         <source>B</source>
@@ -357,10 +364,6 @@
         <translation>模式 %1 - %2</translation>
     </message>
     <message>
-        <source>(Mode/Pressure settings are guessed on this day.)</source>
-        <translation>(当前日期的模式/压力设置)</translation>
-    </message>
-    <message>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>此日仅有概要数据，仅含有少量可用信息。</translation>
     </message>
@@ -434,6 +437,10 @@
     </message>
     <message>
         <source>This bookmark is in a currently disabled area..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1108,10 +1115,6 @@
         <translation>报告问题</translation>
     </message>
     <message>
-        <source>Updates are not yet implemented</source>
-        <translation>尚未更新</translation>
-    </message>
-    <message>
         <source>The FAQ is not yet implemented</source>
         <translation>FAQ尚未实施</translation>
     </message>
@@ -1375,6 +1378,18 @@
     </message>
     <message>
         <source>Show Personal Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create zip of OSCAR diagnostic logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check For &amp;Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates not implemented</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2430,22 +2445,6 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <translation> 小时</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If your interested in helping test new features and bugfixes early, click here.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;But please be warned this will sometimes mean breaky code..&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果你愿意尝试新功能或者修正程序，请点击这里.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;但是请注意这将有可能破坏代码..&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Standard Bars</source>
         <translation>标准导航条</translation>
     </message>
@@ -2496,10 +2495,6 @@ Try it and see if you like it.</source>
     <message>
         <source>Median is recommended for ResMed users.</source>
         <translation>建议瑞斯迈用户选择中值。</translation>
-    </message>
-    <message>
-        <source>&amp;Check for Updates now</source>
-        <translation>&amp;即刻检查更新</translation>
     </message>
     <message>
         <source>Italic</source>
@@ -2598,14 +2593,6 @@ Mainly affects the importer.</source>
         <translation>任务条置顶</translation>
     </message>
     <message>
-        <source>Automatically Check For Updates</source>
-        <translation>自动检查更新</translation>
-    </message>
-    <message>
-        <source>I want to try experimental and test builds (Advanced users only please.)</source>
-        <translation>实验和测试版本（仅限高级用户）</translation>
-    </message>
-    <message>
         <source>Other Visual Settings</source>
         <translation>其他显示设置</translation>
     </message>
@@ -2702,10 +2689,6 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <source>Preferences</source>
         <translation>参数设置</translation>
-    </message>
-    <message>
-        <source>Sourceforge hosts this project for free.. Please be considerate of their resources..</source>
-        <translation>这个免费项目是由SourceForge开发的，请珍惜资源。</translation>
     </message>
     <message>
         <source>Default display height of graphs in pixels</source>
@@ -3362,6 +3345,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Will you be using a ResMed brand machine?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check For Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>How often OSCAR should check for updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you are interested in helping test new features and bugfixes early, click here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I want to try experimental and test builds. (Advanced users only please.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print reports in black and white, which can be more legible on non-color printers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print reports in black and white (monochrome)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5689,16 +5708,6 @@ TTIA: %1</source>
         <translation>斜坡升压启动</translation>
     </message>
     <message>
-        <source>%1
-Line %2, column %3</source>
-        <translation>%1
-行 %2, 列 %3</translation>
-    </message>
-    <message>
-        <source>Could not parse Updates.xml file.</source>
-        <translation>无法解析 Updates.xml.</translation>
-    </message>
-    <message>
         <source>h</source>
         <translation>小时</translation>
     </message>
@@ -6639,6 +6648,42 @@ Line %2, column %3</source>
         <source>(%2 days ago)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New versions file improperly formed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are running the latest release of OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A more recent version of OSCAR is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are running version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(Reading %1 took %2 seconds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for OSCAR Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create the OSCAR data folder at</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -6950,117 +6995,6 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>This report was prepared on %1 by OSCAR %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UpdaterWindow</name>
-    <message>
-        <source>Log</source>
-        <translation>登录</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>大小</translation>
-    </message>
-    <message>
-        <source>&amp;Finished</source>
-        <translation>&amp;完成</translation>
-    </message>
-    <message>
-        <source>Please wait while updates are downloaded and installed...</source>
-        <translation>请耐心等待下载安装结束...</translation>
-    </message>
-    <message>
-        <source>Component</source>
-        <translation>元件</translation>
-    </message>
-    <message>
-        <source>&amp;Upgrade Now</source>
-        <translation>&amp;现在升级</translation>
-    </message>
-    <message>
-        <source>Version Information</source>
-        <translation>版本信息</translation>
-    </message>
-    <message>
-        <source>Build Notes</source>
-        <translation>建档日期</translation>
-    </message>
-    <message>
-        <source>No updates were found for your platform.</source>
-        <translation>未发现新版本.</translation>
-    </message>
-    <message>
-        <source>Downloading &amp; Installing Updates</source>
-        <translation>正在下载 &amp; 安装升级文件</translation>
-    </message>
-    <message>
-        <source>Maybe &amp;Later</source>
-        <translation>可能 &amp;后来</translation>
-    </message>
-    <message>
-        <source>Progress</source>
-        <translation>进行中</translation>
-    </message>
-    <message>
-        <source>%1 bytes received</source>
-        <translation>已下载 %1 字节</translation>
-    </message>
-    <message>
-        <source>A new version of $APP is available</source>
-        <translation>新版本的$APP</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translation>升级文件</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>版本</translation>
-    </message>
-    <message>
-        <source>Requesting </source>
-        <translation>正在请求 </translation>
-    </message>
-    <message>
-        <source>Release Notes</source>
-        <translation>版本注释</translation>
-    </message>
-    <message>
-        <source>You are already running the latest version.</source>
-        <translation>已经在运行最新版本。</translation>
-    </message>
-    <message>
-        <source>Would you like to download and install them now?</source>
-        <translation>现在下载并安装？</translation>
-    </message>
-    <message>
-        <source>OSCAR Updater</source>
-        <translation>OSCAR更新程序</translation>
-    </message>
-    <message>
-        <source>Updates are not yet implemented</source>
-        <translation>更新尚未执行</translation>
-    </message>
-    <message>
-        <source>Checking for OSCAR Updates</source>
-        <translation>检查OSCAR更新</translation>
-    </message>
-    <message>
-        <source>OSCAR Updates</source>
-        <translation>OSCAR更新</translation>
-    </message>
-    <message>
-        <source>Version %1 of OSCAR is available, opening link to download site.</source>
-        <translation>OSCAR的版本%1可用，打开下载站点的链接。</translation>
-    </message>
-    <message>
-        <source>New OSCAR Updates are avilable:</source>
-        <translation>新的OSCAR更新可用：</translation>
-    </message>
-    <message>
-        <source>OSCAR Updates are currently unavailable for this platform</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
