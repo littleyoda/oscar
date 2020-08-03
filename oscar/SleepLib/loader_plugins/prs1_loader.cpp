@@ -261,6 +261,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
 
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
+    { "462P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461CA",  0, 4, "REMstar Pro (System One 60 Series)" },
     { "560P",   0, 4, "REMstar Auto (System One 60 Series)" },
     { "560PBT", 0, 4, "REMstar Auto (System One 60 Series)" },
@@ -272,6 +273,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "200X110", 0, 6, "DreamStation CPAP" },  // (brick)
     { "400G110", 0, 6, "DreamStation Go" },
     { "400X110", 0, 6, "DreamStation CPAP Pro" },
+    { "400X120", 0, 6, "DreamStation CPAP Pro" },
     { "400X130", 0, 6, "DreamStation CPAP Pro" },
     { "400X150", 0, 6, "DreamStation CPAP Pro" },
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
@@ -4755,8 +4757,7 @@ bool PRS1DataChunk::ParseSettingsF0V4(const unsigned char* data, int /*size*/)
 
     this->ParseHumidifierSetting60Series(data[0x0b], data[0x0c], true);
 
-    int resist_level = (data[0x0d] >> 3) & 7;  // 0x18 resist=3, 0x11 resist=2
-    CHECK_VALUE(data[0x0d] & 0x20, 0);  // never seen, but would clarify whether above mask is correct
+    int resist_level = (data[0x0d] >> 3) & 7;  // 0x18 resist=3, 0x11 resist=2, 0x28 resist=5
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, (data[0x0d] & 0x40) != 0));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_SETTING, resist_level));
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_HOSE_DIAMETER, (data[0x0d] & 0x01) ? 15 : 22));
