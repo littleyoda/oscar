@@ -4394,7 +4394,7 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
     int pos = 0;
     int code, size, delta;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         // There is no hblock prior to F0V6.
         size = 0;
@@ -4423,7 +4423,7 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
                 } else {
                     if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
                 }
-                tt += data[pos] | (data[pos+1] << 8);
+                tt += delta;
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
                 // no per-slice humidifer settings as in F0V6
                 break;
@@ -4438,11 +4438,8 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
 
                 // also seems to be a trailing 01 00 81 after the slices?
                 CHECK_VALUES(data[pos+2], 1, 0);  // usually 1, occasionally 0, no visible difference in report
-                //CHECK_VALUE(data[pos+3], 0);  // sometimes 1, 2, or 5, no visible difference in report
-                //CHECK_VALUES(data[pos+4], 0x81, 0x80);  // seems to be humidifier setting at end of session
-                if (data[pos+4] && (((data[pos+4] & 0x80) == 0) || (data[pos+4] & 0x07) > 5)) {
-                    UNEXPECTED_VALUE(data[pos+4], "valid humidifier setting");
-                }
+                //CHECK_VALUE(data[pos+3], 0);  // sometimes 1, 2, or 5, no visible difference in report, maybe ramp?
+                ParseHumidifierSetting50Series(data[pos+4]);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
@@ -4450,7 +4447,7 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     if (ok && pos != chunk_size) {
         qWarning() << this->sessionid << (this->size() - pos) << "trailing bytes";
@@ -4480,7 +4477,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     
     bool ok = true;
     int pos = 0;
-    int code, size;
+    int code, size, delta;
     int tt = 0;
     while (ok && pos < chunk_size) {
         code = data[pos++];
@@ -4520,7 +4517,15 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 //}
                 break;
             case 2:  // Mask On
-                tt += data[pos] | (data[pos+1] << 8);
+                delta = data[pos] | (data[pos+1] << 8);
+                if (tt == 0) {
+                    if (delta) {
+                        CHECK_VALUES(delta, 1, 59);  // we've seen the 550P start its first mask-on at these time deltas
+                    }
+                } else {
+                    if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
+                }
+                tt += delta;
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
                 // no per-slice humidifer settings as in F0V6
                 break;
@@ -6531,7 +6536,7 @@ bool PRS1DataChunk::ParseComplianceF0V6(void)
     int pos = 0;
     int code, size;
     int tt = 0;
-    do {
+    while (ok && pos < chunk_size) {
         code = data[pos++];
         if (!this->hblock.contains(code)) {
             qWarning() << this->sessionid << "missing hblock entry for" << code;
@@ -6605,7 +6610,7 @@ bool PRS1DataChunk::ParseComplianceF0V6(void)
                 break;
         }
         pos += size;
-    } while (ok && pos < chunk_size);
+    }
 
     this->duration = tt;
 
