@@ -138,6 +138,9 @@ public:
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a P25x brick
     bool ParseComplianceF0V23(void);
     
+    //! \brief Parse a single data chunk from a .000 file containing compliance data for a P256x brick
+    bool ParseComplianceF0V4(void);
+    
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a DreamStation 200X brick
     bool ParseComplianceF0V6(void);
     
