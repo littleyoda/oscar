@@ -843,8 +843,11 @@ void Machine::queTask(ImportTask * task)
 
 void Machine::runTasks()
 {
-    if (m_tasklist.isEmpty())
+    if (m_tasklist.isEmpty()) {
+        qDebug() << "No tasks in m_tasklist";
         return;
+    }
+    qDebug() << "m_tasklist size is" << m_tasklist.size();
 
     QThreadPool * threadpool = QThreadPool::globalInstance();
 /***********************************************************
@@ -853,7 +856,7 @@ void Machine::runTasks()
 //  if (loader())
 //      emit loader()->setProgressMax(m_totaltasks);
 ***********************************************************/
-    while (!m_tasklist.isEmpty()) {
+    while ( ! m_tasklist.isEmpty()) {
         if (threadpool->tryStart(m_tasklist.at(0))) {
             m_tasklist.pop_front();
 /************************************************************

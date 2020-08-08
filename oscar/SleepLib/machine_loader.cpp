@@ -92,7 +92,8 @@ void MachineLoader::queTask(ImportTask * task)
 void MachineLoader::runTasks(bool threaded)
 {
 
-    m_totalMLtasks=m_MLtasklist.size();
+    m_totalMLtasks = m_MLtasklist.size();
+    qDebug() << "MachineLoader::runTasks MLtasklist size is" << m_totalMLtasks;
     if (m_totalMLtasks == 0) 
         return;
     emit setProgressMax(m_totalMLtasks);
@@ -100,7 +101,7 @@ void MachineLoader::runTasks(bool threaded)
 
     threaded=AppSetting->multithreading();
 
-    if (!threaded) {
+    if ( ! threaded) {
         while (!m_MLtasklist.isEmpty() && !m_abort) {
             ImportTask * task = m_MLtasklist.takeFirst();
             task->run();

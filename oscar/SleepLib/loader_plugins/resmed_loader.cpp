@@ -261,6 +261,7 @@ int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)           
 
 int ResmedLoader::Open(const QString & dirpath)
 {
+    qDebug() << "Starting ResmedLoader::Open( with " << dirpath << ")";
     QString datalogPath;
     QHash<QString, QString> idmap;  // Temporary machine ID properties hash
 
@@ -337,7 +338,8 @@ int ResmedLoader::Open(const QString & dirpath)
         mach->setInfo( info );                      // update info
         QDate lastDate = mach->LastDay();           // use the last day for this machine
 //      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
-        firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
+        firstImportDay = lastDate;                  // re-import the last day, to  pick up partial days
+//      firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
@@ -346,7 +348,7 @@ int ResmedLoader::Open(const QString & dirpath)
     QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
     bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
-    if (ignoreOldSessions) 
+    if (ignoreOldSessions && (ignoreBefore.date() > firstImportDay))
         firstImportDay = ignoreBefore.date();
     qDebug() << "First day to import: " << firstImportDay.toString();
 
@@ -421,11 +423,11 @@ int ResmedLoader::Open(const QString & dirpath)
             bool addToSTRmap = true;
             QDate date = stredf->edfHdr.startdate_orig.date();
             long int days = stredf->GetNumDataRecords();
-            qDebug() << importFile.section("/",-2,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
+            qDebug() << importFile.section("/",-3,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
             if (STRmap.contains(date)) {        // Keep the longer of the two STR files - or newer if equal!
                 qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
                 if (days >= STRmap[date].days) {
-                    qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days;
+                    qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days << "from STRmap";
                     STRmap.remove(date);
                 } else {
                     qDebug() << "Skipping" << importFile.section("/",-3,-1);
@@ -448,11 +450,13 @@ int ResmedLoader::Open(const QString & dirpath)
                         qWarning() << "Failed to copy" << importFile << "to" << backupFile;
                 }
                 STRmap[date] = STRFile(backupFile, days, stredf);
+                qDebug() << "Adding" << importFile << "to STRmap as" << backupFile;
                 // Meh.. these can be calculated if ever needed for ResScan SDcard export
                 QFile::copy(importPath + "STR.crc", backup_path + "STR.crc");
             }
         }
     } else {    // get the STR file that is in the BACKUP folder that we are rebuilding from
+        qDebug() << "Rebuilding from BACKUP folder";
         ResMedEDFInfo * stredf = fetchSTRandVerify( strpath, info.serial );
         if ( stredf != nullptr ) {
             QDate date = stredf->edfHdr.startdate_orig.date();
@@ -482,9 +486,9 @@ int ResmedLoader::Open(const QString & dirpath)
     // Add any STR_Backup versions to the file list
     for (auto & fi : flist) {
         QString filename = fi.fileName();
-        if (!filename.startsWith("STR", Qt::CaseInsensitive))
+        if ( ! filename.startsWith("STR", Qt::CaseInsensitive))
             continue;
-        if (!(filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
+        if ( ! (filename.endsWith("edf.gz", Qt::CaseInsensitive) || filename.endsWith("edf", Qt::CaseInsensitive)))
             continue;
         QString datestr = filename.section("STR-",-1).section(".edf",0,0);  //  +"01";
 
@@ -502,16 +506,16 @@ int ResmedLoader::Open(const QString & dirpath)
                 delete stredf;
                 continue;
             } else {
-                qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1);
+                qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "from STRmap";
                 STRmap.remove(date);
             }
         }
 
-        qDebug() << "Adding" << fi.canonicalFilePath().section("/", -2,-1) << "starts at" << date << "for" << days;
+        qDebug() << "Adding" << fi.canonicalFilePath().section("/", -3,-1) << "starts at" << date << "for" << days << "to STRmap";
         STRmap[date] = STRFile(fi.canonicalFilePath(), days, stredf);
     }       // end for walking the STR_Backup directory
 #ifdef STR_DEBUG
-    qDebug() << "STRmap size is now " << STRmap.size();
+    qDebug() << "Finished STRmap size is now " << STRmap.size();
 #endif
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -593,7 +597,9 @@ int ResmedLoader::Open(const QString & dirpath)
     emit updateMessage(QObject::tr("Importing Sessions..."));
 
     // Walk down the resDay list
+    qDebug() << "About to call runTasks()";
     runTasks();
+    qDebug() << "Finshed runTasks() with" << sessionCount << "new sessions";
     int num_new_sessions = sessionCount;
 
 
@@ -604,7 +610,9 @@ int ResmedLoader::Open(const QString & dirpath)
     emit updateMessage(QObject::tr("Finishing Up..."));
     QApplication::processEvents();
 
+    qDebug() << "About to call fishAddingSessions()";
     finishAddingSessions();
+    qDebug() << "Finshed finishedAddinfSessions() with" << sessionCount << "new sessions";
 
 #ifdef DEBUG_EFFICIENCY
     {
@@ -678,14 +686,17 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 {
     Day * day = p_profile->FindDay(date, MT_CPAP);
     bool reimporting = false;
+    qDebug() << "Starting checkSummary for" << date.toString();
 
     if (day && day->hasMachine(mach)) {
         // Sessions found for this machine, check if only summary info
+        qDebug() << "Sessions already found for this date";
 
         if (day->summaryOnly(mach) && (resday.files.size()> 0)) {
             // Note: if this isn't an EDF file, there's really no point doing this here,
             // but the worst case scenario is this session is deleted and reimported.. this just slows things down a bit in that case
             // This day was first imported as a summary from STR.edf, so we now totally want to redo this day
+            qDebug() << "Summary sessions only - delete them";
             QList<Session *> sessions = day->getSessions(MT_CPAP);
             for (auto & sess : sessions) {
                 day->removeSession(sess);
@@ -694,10 +705,10 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
         } else if (day->noSettings(mach) && resday.str.date.isValid()) {
             // STR is present now, it wasn't before... we don't need to trash the files, but we do want the official settings.
             // Do it right here
+            qDebug() << "Date was missing settings, now we have them";
             for (auto & sess : day->sessions) {
                 if (sess->machine() != mach)
                     continue;
-
 #ifdef STR_DEBUG
                 qDebug() << "Adding STR.edf information to session" << sess->session();
 #endif
@@ -706,12 +717,25 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                 sess->SetChanged(true);
                 sess->StoreSummary();
             }
-        } else
-            return;
+        } else {
+            qDebug() << "Have summary and details for this date!";
+            if (day->size() == (resday.str.maskevents/2) ) {
+                qDebug() << "No new sessions -- skipping";
+                return;
+            }
+            qDebug() << "Maskevent count" << resday.str.maskevents << "is not twice the existing session count" << day->size(); 
+            qDebug() << "Clean the day and re-import it";
+            QList<Session *> sessions = day->getSessions(MT_CPAP);
+            for (auto & sess : sessions) {
+                day->removeSession(sess);
+                delete sess;
+            }
+        }
     }
 
     ResDayTask * rdt = new ResDayTask(this, mach, &resday, saveCallback);
     rdt->reimporting = reimporting;
+    qDebug() << "in checkSummary, Queue task for" << resday.date.toString();
     queTask(rdt);
 }
 
@@ -735,6 +759,7 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
     // Generate list of files for later processing
     ///////////////////////////////////////////////////////////////////////////////////////
     qDebug() << "Generating list of EDF files";
+    qDebug() << "First Import date is " << firstImport;
 
 #ifdef DEBUG_EFFICIENCY
     time.start();
@@ -742,7 +767,7 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
 
     QDir dir(datalog_path);
 
-    // First list any EDF files in DATALOG folder
+    // First list any EDF files in DATALOG folder - Series 9 machines
     QStringList filter;
     filter << "*.edf";
     dir.setNameFilters(filter);
@@ -857,8 +882,12 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
             date = date.addDays(-1);
         }
 
-        if (date < firstImport)
+        if (date < firstImport) {
+#ifdef SESSION_DEBUG
+            qDebug() << "Skipping file - ignore before " << filename;
+#endif
             continue;
+        }
 
         // Chop off the .gz component if it exists, it's not needed at this stage
         if (filename.endsWith(STR_ext_gz)) {
@@ -975,7 +1004,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 //  QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
 //  bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
 
-    int totalRecs = 0;
+    qDebug() << "Starting ProcessSTRfiles";
+
+    int totalRecs = 0;          // Count the STR days
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
         ResMedEDFInfo & str = *file.edf;
@@ -993,9 +1024,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
     int currentRec = 0;
 
+    // Walk through all the STR files in the STRmap
     for (auto it=STRmap.begin(), end=STRmap.end(); it != end; ++it) {
         STRFile & file = it.value();
-        QString & strfile = file.filename;
         ResMedEDFInfo & str = *file.edf;
 
         QDate date = str.edfHdr.startdate_orig.date(); // each STR.edf record starts at 12 noon
@@ -1003,12 +1034,15 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         QDate lastDay = date.addDays(size-1);
 
 #ifdef STR_DEBUG        
-        qDebug() << "Processing" << strfile.section("/", -3, -1) << date.toString() << size << str.GetNumSignals();
+        QString & strfile = file.filename;
+        qDebug() << "Processing" << strfile.section("/", -3, -1) << date.toString() << "for" << size << "days";
         qDebug() << "Last day is" << lastDay;
 #endif
 
         if ( lastDay < firstImport ) {
+#ifdef STR_DEBUG        
             qDebug() << "LastDay before firstImport, skipping" << strfile.section("/", -3, -1);
+#endif
             continue;
         }
 
@@ -1037,28 +1071,32 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             emit setProgressValue(++currentRec);
             QCoreApplication::processEvents();
 
-        //  if (ignoreOldSessions) {
-                if (date < firstImport) {
+            if (date < firstImport) {
 #ifdef SESSION_DEBUG
-                   qDebug() << "Skipping" << date.toString() << "Before" << firstImport.toString();
+                qDebug() << "Skipping" << date.toString() << "Before" << firstImport.toString();
 #endif
-                    continue;
-                }
-        //  }
-
-            auto rit = resdayList.find(date);
-            if (rit != resdayList.end()) {
-                // Already seen this record.. should check if the data is the same, but meh.
-                // At least check the maskeventcount to see if it changed...
-                if ( maskeventcount->dataArray[0] != rit.value().str.maskevents ) {
-                    qDebug() << "Maske events don't match, purge" << rit.value().date.toString();
-//                  purge...
-                }
-// #ifdef SESSION_DEBUG
-                qDebug() << "Skipping" << date.toString() << "Already saw this one";
-// #endif
                 continue;
             }
+
+//      This is not what we want to check, we must look at this day in the database files...
+//      Found the plce in checkSummaryDay to compare session count with maskevents divided by 2
+            qDebug() << "ResdayList size is" << resdayList.size();
+//             auto rit = resdayList.find(date);
+//             if (rit != resdayList.end()) {
+//                 // Already seen this record.. should check if the data is the same, but meh.
+//                 // At least check the maskeventcount to see if it changed...
+//                 if ( maskeventcount->dataArray[0] != rit.value().str.maskevents ) {
+//                     qDebug() << "Mask events don't match, purge" << rit.value().date.toString();
+// //                  purge...
+//                 }
+// // #ifdef SESSION_DEBUG
+//                 qDebug() << "Skipping" << date.toString() << "Already saw this one";
+// // #endif
+//                 continue;
+//             } // else {
+//     //          qWarning() << date.toString() << "is missing from resdayList - FIX THIS";
+//     //          continue;
+//     //      }
 
             int recstart = rec * maskon->sampleCnt;
 
@@ -1078,7 +1116,8 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 continue;
             }
 
-            rit = resdayList.insert(date, ResMedDay(date));
+            qDebug() << "Adding" << date.toString() << "to resdayLisyt b/c we have STR record";
+            auto rit = resdayList.insert(date, ResMedDay(date));
 
 #ifdef STR_DEBUG        
             qDebug() << "Setting up STRRecord for" << date.toString();
@@ -1473,9 +1512,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         qDebug() << "Finished" << strfile;
 #endif
     }
-#ifdef STR_DEBUG
     qDebug() << "Finished ProcessSTR";
-#endif
     return true;
 }
 
@@ -1510,7 +1547,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
                     MachineInfo & info, QMap<QDate, STRFile> & STRmap )
 {
     Q_UNUSED(strpath);
-    qDebug() << "Entering backupSTRfiles during new IMPORT";
+    qDebug() << "Starting backupSTRfiles during new IMPORT";
     QDir dir;
 //  Qstring strBackupPath(backupPath+"STR_Backup");
     QStringList strfiles;
@@ -1575,9 +1612,9 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
         if ( QFile::exists(backupfile)) {
             QFile::remove(backupfile);
         }
-// #ifdef STR_DEBUG
-        qDebug() << "Copying" << filename.section("/",-3,1) << "to" << backupfile.section("/",-3,-1);
-// #endif
+#ifdef STR_DEBUG
+        qDebug() << "Copying" << filename.section("/",-3,-1) << "to" << backupfile.section("/",-3,-1);
+#endif
         if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
             if (compress_backups) {                 // fine, copy it to backup folder
                 QFile::copy(filename, backupfile);
@@ -1601,7 +1638,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
 #ifdef STR_DEBUG
     qDebug() << "STRmap has" << STRmap.size() << "entries";
 #endif
-    qDebug() << "Leaving backupSTRfiles during new IMPORT";
+    qDebug() << "Finished backupSTRfiles during new IMPORT";
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info)
@@ -1984,6 +2021,9 @@ struct OverlappingEDF {
 
 void ResDayTask::run()
 {
+#ifdef SESSION_DEBUG
+    qDebug() << "Processing STR and edf files for" << resday->date;
+#endif
     if (resday->files.size() == 0) { // No EDF files???
         if (( ! resday->str.date.isValid()) || (resday->str.date > QDate::currentDate()) ) {
             // This condition should be impossible, but just in case something gets fudged up elsewhere later
@@ -2023,6 +2063,7 @@ void ResDayTask::run()
                 save(loader, sess);                     // This is aliased to SaveSession - unless testing
             }
         }
+        qDebug() << "Finished summary processing for" << resday->date;
         return;
     }
 
@@ -2054,6 +2095,7 @@ void ResDayTask::run()
             }
         }
     }
+    qDebug() << "Created" << overlaps.size() << "sessionGroups from STR record";
 
     QMap<quint32, QString> EVElist, CSLlist;
     for (auto f_itr=resday->files.begin(), fend=resday->files.end(); f_itr!=fend; ++f_itr) {
@@ -2084,7 +2126,7 @@ void ResDayTask::run()
                 break;
             }
         }
-        if (!added) {    // Didn't get a hit, look at the EDF files duration and check for an overlap
+        if ( ! added) {    // Didn't get a hit, look at the EDF files duration and check for an overlap
             EDFduration dur = getEDFDuration(fullpath);
             if ((dur.start > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ||
                 (dur.end > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ) {
@@ -2118,7 +2160,7 @@ void ResDayTask::run()
                     ov.end = dur.end;
                     ov.filemap.insert(filetime_t, filename);
 #ifdef SESSION_DEBUG
-                    qDebug() << "Creating overlap for" << filename;
+                    qDebug() << "Creating overlap for" << filename << "missing STR record";
                     qDebug() << "Starts:" << dur.start << "Ends:" << dur.end;
 #endif
                     overlaps.append(ov);
@@ -2152,8 +2194,10 @@ void ResDayTask::run()
 //         }
 //     }
 
-    if (overlaps.size()==0)
+    if (overlaps.size()==0) {
+        qDebug() << "No sessionGroups  for" << resday->date << "FINSIHED";
         return;
+    }
 
     // Now overlaps is populated with zero or more individual session groups of EDF files (zero because of sucky summary only days)
     for (auto & ovr : overlaps) {
@@ -2191,7 +2235,7 @@ void ResDayTask::run()
             default:
                 qWarning() << "Unrecognized file type for" << filename;
             }
-        }
+        }       // end for each edf file in the sessionGroup
 
         // Turns out there is only one or sometimes two EVE's per day, and they store data for the whole day
         // So we have to extract Annotations data and apply it for all sessions
@@ -2256,7 +2300,7 @@ void ResDayTask::run()
                 Day * day = it.value();
                 bool hasmachine = day && day->hasMachine(mach);
 
-                if (!hasmachine)
+                if ( ! hasmachine)
                     continue;
 
                 QList<Session *> sessions = day->getSessions(MT_CPAP);
@@ -2308,9 +2352,13 @@ void ResmedLoader::SaveSession(ResmedLoader* loader, Session* sess)
 {
     Machine* mach = sess->machine();
 
-    loader->sessionMutex.lock();
-    sess->Store(mach->getDataPath());
-    mach->AddSession(sess);  // AddSession definitely ain't threadsafe.
+    loader->sessionMutex.lock();         // AddSession definitely ain't threadsafe.
+    if ( ! sess->Store(mach->getDataPath()) ) {
+        qWarning() << "Failed to store session" << sess->session();
+    }
+    if ( ! mach->AddSession(sess) ) {
+        qWarning() << "Session" << sess->session() << "was not addded";
+    } 
     loader->sessionCount++;
     loader->sessionMutex.unlock();
 }
