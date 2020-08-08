@@ -6067,7 +6067,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
                     if (breath_rate < 9 || breath_rate > 12) UNEXPECTED_VALUE(breath_rate, "9-12");
-                    if (timed_inspiration < 10 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "10-20");
+                    if (timed_inspiration < 8 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "8-20");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
@@ -6120,7 +6120,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 break;
             case 0x36:  // Mask Resistance Lock
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 0);  // 0x80 = locked on F5V3, not yet observed on F3V6
+                CHECK_VALUES(data[pos], 0, 0x80);
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_MASK_RESIST_LOCK, data[pos] != 0));
                 break;
             case 0x38:  // Mask Resistance
