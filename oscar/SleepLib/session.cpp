@@ -317,7 +317,8 @@ bool Session::StoreSummary()
         dir.mkpath(s_machine->getSummariesPath());
 
         if (!file.open(QIODevice::WriteOnly)) {
-            qDebug() << "Summary open for writing failed";
+//            qWarning() << "Summary open for writing failed" << "error code" << file.error() << file.errorString();
+            qWarning() << "Could not open summary" << filename << "for writing, error code" << file.error() << file.errorString();
             return false;
         }
     }
@@ -395,7 +396,7 @@ bool Session::LoadSummary()
     QFile file(filename);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "Couldn't open summary file" << filename;
+        qWarning() << "Could not open summary file" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -669,7 +670,10 @@ bool Session::StoreEvents()
     QString filename = path+QString().sprintf("%08lx.001", s_session);
 
     QFile file(filename);
-    file.open(QIODevice::WriteOnly);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Could not open events file" << filename << "for writing, error code" << file.error() << file.errorString();
+        return false;
+    }
 
     QByteArray headerbytes;
     QDataStream header(&headerbytes, QIODevice::WriteOnly);
@@ -813,7 +817,8 @@ bool Session::LoadEvents(QString filename)
     QFile file(filename);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "No Event/Waveform data available for" << s_session;
+//        qDebug() << "No Event/Waveform data available for" << s_session;
+        qWarning() << "No Event/Waveform data available for" << s_session << "filename" << filename << "error code" << file.error() << file.errorString();
         return false;
     }
 

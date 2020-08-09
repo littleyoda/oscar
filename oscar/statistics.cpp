@@ -118,6 +118,7 @@ void Statistics::loadRXChanges()
     QString path = p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" );
     QFile file(path);
     if (!file.open(QFile::ReadOnly)) {
+        qWarning() << "Could not open" << path << "for reading, error code" << file.error() << file.errorString();
         return;
     }
     QDataStream in(&file);
@@ -143,6 +144,7 @@ void Statistics::saveRXChanges()
     QString path = p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" );
     QFile file(path);
     if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "Could not open" << path << "for writing, error code" << file.error() << file.errorString();
         return;
     }
     QDataStream out(&file);

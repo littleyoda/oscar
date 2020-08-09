@@ -169,7 +169,8 @@ bool Profile::OpenMachines()
     QString filename = p_path+"machines.xml";
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
-        qWarning() << "Could not open" << filename.toLocal8Bit().data();
+//        qWarning() << "Could not open" << filename.toLocal8Bit().data();
+        qWarning() << "Could not open" << filename.toLocal8Bit().data() << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
     QDomDocument doc("machines.xml");
@@ -318,6 +319,7 @@ bool Profile::StoreMachines()
     QString filename = p_path+"machines.xml";
     QFile file(filename);
     if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "Could not open" << filename << "for writing, error code" << file.error() << file.errorString();
         return false;
     }
     file.write(doc.toByteArray());
@@ -1068,7 +1070,10 @@ void saveProfileList()
     }
 
     QFile file(filename);
-    file.open(QFile::WriteOnly);
+    if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "Could not open" << filename << "for writing, error code" << file.error() << file.errorString();
+        return;
+    }
 
     file.write(doc.toByteArray());
 
