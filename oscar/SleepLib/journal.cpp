@@ -296,6 +296,7 @@ void BackupJournal(QString filename)
     QFile file(filename);
 
     if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Couldn't open journal file" << filename << "error code" << file.error() << file.errorString();
         return;
     }
 

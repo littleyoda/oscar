@@ -142,7 +142,8 @@ bool Machine::saveSessionInfo()
     QString filename = getDataPath() + "Sessions.info";
     QFile file(filename);
     if (!file.open(QFile::WriteOnly)) {
-        qDebug() << "Couldn't open" << filename << "for writing";
+//        qDebug() << "Couldn't open" << filename << "for writing";
+        qWarning() << "Couldn't open" << filename << "for writing, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -898,7 +899,8 @@ bool Machine::LoadSummary(ProgressDialog * progress)
     QApplication::processEvents();
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Could not open" << filename;
+//        qWarning() << "Could not open" << filename;
+        qWarning() << "Could not open" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -1113,7 +1115,9 @@ bool Machine::SaveSummaryCache()
 
     QFile file(filename + ".gz");
 
-    file.open(QFile::WriteOnly);
+    if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "Couldn't open summary cache" << filename << "for writing, error code" << file.error() << file.errorString();
+    }
     file.write(data);
 
     return true;

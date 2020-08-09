@@ -177,7 +177,8 @@ bool Preferences::Open(QString filename)
     qDebug() << "Opening " << p_filename.toLocal8Bit().data();
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Could not open" << p_filename.toLocal8Bit().data() << " Error: " << file.error();
+//        qWarning() << "Could not open" << p_filename.toLocal8Bit().data() << " Error: " << file.error();
+        qWarning() << "Could not open preferences file" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -315,9 +316,12 @@ bool Preferences::Open(QString filename)
 
         // Don't do anything if machines.xml already exists.. the user ran the old version!
         if (!file.exists()) {
-            file.open(QFile::WriteOnly);
-            file.write(doc.toByteArray());
-            file.close();
+            if (!file.open(QFile::WriteOnly)) {
+                qWarning() << "Could not open" << filename << "for writing, error code" << file.error() << file.errorString();
+            } else {
+                file.write(doc.toByteArray());
+                file.close();
+            }
         }
     }
     return true;
@@ -359,6 +363,7 @@ bool Preferences::Save(QString filename)
     QFile file(p_filename);
 
     if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Could not open" << p_filename << "for writing, error code" << file.error() << file.errorString();
         return false;
     }
 

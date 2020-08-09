@@ -298,7 +298,7 @@ void Overview::on_LineCursorUpdate(double time)
         // even though the generated string is displayed to the user
         // no time zone conversion is neccessary, so pass UTC
         // to prevent QT from automatically converting to local time
-        QDateTime dt = QDateTime::fromMSecsSinceEpoch(time/*, Qt::UTC*/);
+        QDateTime dt = QDateTime::fromMSecsSinceEpoch(time, Qt::LocalTime/*, Qt::UTC*/);
         QString txt = dt.toString("dd MMM yyyy (dddd)");
         dateLabel->setText(txt);
     } else dateLabel->setText(QString(GraphView->emptyText()));

@@ -145,7 +145,10 @@ void ExportCSV::on_quickRangeCombo_activated(const QString &arg1)
 void ExportCSV::on_exportButton_clicked()
 {
     QFile file(ui->filenameEdit->text());
-    file.open(QFile::WriteOnly);
+    if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "Could not open" << ui->filenameEdit->text() << "for writing, error code" << file.error() << file.errorString();
+        return;
+    }
     QString header;
     const QString sep = ",";
     const QString newline = "\n";

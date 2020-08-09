@@ -84,7 +84,8 @@ QString AboutDialog::getAbout()
     if (clfile.open(QIODevice::ReadOnly)) {
         text = clfile.readAll();
     } else
-        qDebug() << "Failed to open About file";
+        qWarning() << "Could not open" << aboutFile << "for reading, error code" << clfile.error() << clfile.errorString();
+//        qDebug() << "Failed to open About file";
 
     return text;
 }
@@ -96,6 +97,8 @@ QString AboutDialog::getCredits()
     QString text = tr("Sorry, could not locate Credits file.");
     if (clfile.open(QIODevice::ReadOnly)) {
         text = clfile.readAll();
+    } else {
+        qWarning() << "Could not open" << creditsFile << "for reading, error code" << clfile.error() << clfile.errorString();
     }
 
     return text;
@@ -111,6 +114,8 @@ QString AboutDialog::getRelnotes()
         //QTextStream ts(&clfile);
         changeLog = clfile.readAll();
     }
+    else
+        qWarning() << "Could not open" << relNotesFile << "for reading, error code" << clfile.error() << clfile.errorString();
 
     QString text = "<html>"
     "<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head>"

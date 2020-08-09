@@ -446,7 +446,8 @@ bool ChannelList::Load(QString filename)
     qDebug() << "Opening " << filename;
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Could not open" << filename;
+//        qWarning() << "Could not open" << filename;
+        qWarning() << "Could not open" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -715,6 +716,7 @@ bool ChannelList::Save(QString filename)
     QFile file(filename);
 
     if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Could not open" << filename << "for writing, error code" << file.error() << file.errorString();
         return false;
     }
 

@@ -298,7 +298,7 @@ void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
             if (fitmode == 0) {
                 d = (j / 1000);
-                QDateTime dt = QDateTime::fromTime_t(d).toUTC();
+                QDateTime dt = QDateTime::fromTime_t(d).toLocalTime();
                 QDate date = dt.date();
                 // SLOW SLOW SLOW!!! On Mac especially, this function is pathetically slow.
                 //dt.toString("MMM dd");
@@ -403,7 +403,7 @@ void gXAxisDay::paint(QPainter &painter, gGraph &graph, const QRegion &region)
     minx = graph.min_x;
     maxx = graph.max_x;
 
-    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(minx, Qt::UTC);
+    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(minx, Qt::LocalTime);
  //   QDateTime enddate2 = QDateTime::fromMSecsSinceEpoch(maxx, Qt::UTC);
 
     //qInfo() << "Drawing date axis from " << date2 << " to " << enddate2;

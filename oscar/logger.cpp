@@ -95,7 +95,7 @@ void LogThread::logToFile()
     }
 
     QString debugLog = GetLogDir() + "/debug.txt";
-    rotateLogs(debugLog);  // keep a limited set of previous logs
+    rotateLogs(debugLog, 4);  // keep a limited set of previous logs
     
     strlock.lock();
     m_logFile = new QFile(debugLog);

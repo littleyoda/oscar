@@ -39,7 +39,8 @@ bool ZipFile::Open(const QString & filepath)
     m_file.setFileName(filepath);
     bool ok = m_file.open(QIODevice::WriteOnly);
     if (!ok) {
-        qWarning() << "unable to open" << m_file.fileName();
+        qWarning() << "Could not open" << m_file.fileName() << "for writing, error code" << m_file.error() << m_file.errorString();
+//        qWarning() << "unable to open" << m_file.fileName();
         return false;
     }
     ok = zip_open(m_ctx, m_file);
