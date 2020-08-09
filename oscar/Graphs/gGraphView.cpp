@@ -717,7 +717,7 @@ void gGraphView::dumpInfo()
 
     Day * day = p_profile->GetGoodDay(date, MT_CPAP);
     if (day) {
-        QDateTime dt=QDateTime::fromMSecsSinceEpoch(day->first(), Qt::UTC);
+        QDateTime dt=QDateTime::fromMSecsSinceEpoch(day->first(), Qt::LocalTime);
 
         mainwin->log(QString("Available Channels for %1").arg(dt.toString("MMM dd yyyy")));
         QHash<schema::ChanType, QList<schema::Channel *> > list;
@@ -3189,7 +3189,7 @@ void gGraphView::keyPressEvent(QKeyEvent *event)
                 m_metaselect=false;
                 qint64 start,end;
                 getSelectionTimes(start,end);
-                QDateTime d1 = QDateTime::fromMSecsSinceEpoch(start, Qt::UTC);
+                QDateTime d1 = QDateTime::fromMSecsSinceEpoch(start, Qt::LocalTime);
 
                 mainwin->getDaily()->addBookmark(start, end, QString("Bookmark at %1").arg(d1.time().toString("HH:mm:ss")));
                 m_graphs[m_graph_index]->cancelSelection();

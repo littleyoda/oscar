@@ -1084,6 +1084,7 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
         int y = event->y() - m_rect.top() + rtop - 15;
         //QDateTime dt1=QDateTime::fromTime_t(hl_day*86400).toLocalTime();
         QDateTime dt2 = QDateTime::fromTime_t(hl_day * 86400).toUTC();
+//        QDateTime dt2 = QDateTime::fromTime_t(hl_day * 86400).toLocalTime();
 
         //QTime t1=dt1.time();
         //QTime t2=dt2.time();
@@ -1281,6 +1282,7 @@ bool SummaryChart::mouseReleaseEvent(QMouseEvent *event, gGraph *graph)
 
         if (hl_day > 0) {
             QDateTime d = QDateTime::fromTime_t(hl_day * 86400).toUTC();
+//            QDateTime d = QDateTime::fromTime_t(hl_day * 86400).toLocalTime();
             mainwin->getDaily()->LoadDate(d.date());
             mainwin->JumpDaily();
             //qDebug() << "Jump to daily view?" << d;

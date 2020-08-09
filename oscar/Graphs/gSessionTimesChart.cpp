@@ -89,8 +89,8 @@ void gSummaryChart::SetDay(Day *unused_day)
         date = date.addDays(1);
     } while (date <= lastday);
 
-    m_minx = QDateTime(firstday, QTime(0,0,0), Qt::UTC).toMSecsSinceEpoch();
-    m_maxx = QDateTime(lastday, QTime(23,59,59), Qt::UTC).toMSecsSinceEpoch();
+    m_minx = QDateTime(firstday, QTime(0,0,0), Qt::LocalTime).toMSecsSinceEpoch();
+    m_maxx = QDateTime(lastday, QTime(23,59,59), Qt::LocalTime).toMSecsSinceEpoch();
     m_miny = 0;
     m_maxy = 20;
 
@@ -148,7 +148,7 @@ bool gSummaryChart::mouseReleaseEvent(QMouseEvent *event, gGraph *graph)
 
     graph->roundY(miny, maxy);
 
-    QDate date = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::UTC).date();
+    QDate date = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::LocalTime).date();
 
     int days = ceil(double(m_maxx - m_minx) / 86400000.0);
 
@@ -415,8 +415,8 @@ void gSummaryChart::paint(QPainter &painter, gGraph &graph, const QRegion &regio
     m_minx = graph.min_x;
     m_maxx = graph.max_x;
 
-    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::UTC);
-    QDateTime enddate2 = QDateTime::fromMSecsSinceEpoch(m_maxx, Qt::UTC);
+    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::LocalTime);
+    QDateTime enddate2 = QDateTime::fromMSecsSinceEpoch(m_maxx, Qt::LocalTime);
 
     QDate date = date2.date();
     QDate enddate = enddate2.date();
@@ -839,8 +839,8 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
     m_minx = graph.min_x;
     m_maxx = graph.max_x;
 
-    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::UTC);
-    QDateTime enddate2 = QDateTime::fromMSecsSinceEpoch(m_maxx, Qt::UTC);
+    QDateTime date2 = QDateTime::fromMSecsSinceEpoch(m_minx, Qt::LocalTime);
+    QDateTime enddate2 = QDateTime::fromMSecsSinceEpoch(m_maxx, Qt::LocalTime);
 
     QDate date = date2.date();
     QDate enddate = enddate2.date();

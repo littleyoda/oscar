@@ -66,7 +66,7 @@ EventDataType EventList::data2(quint32 i)
 static QString ts(qint64 msecs)
 {
     // TODO: make this UTC so that tests don't vary by where they're run
-    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
+    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);  //FIXME? LocalTime?
 }
 
 void EventList::AddEvent(qint64 time, EventStoreType data)
