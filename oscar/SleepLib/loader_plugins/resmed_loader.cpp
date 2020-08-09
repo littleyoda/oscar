@@ -948,7 +948,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     yearstr = filename.left(4);
     yearstr.toInt(&ok, 10);
 
-    if (!ok) {
+    if ( ! ok) {
         qDebug() << "Invalid EDF filename given to ResMedLoader::Backup()" << fullname;
         return "";
     }
@@ -967,30 +967,41 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     newname = compress ? newnamegz : newnamenogz;
 
     // First make sure the correct backup exists in the right place
-    if (!QFile::exists(newname)) {
-        if (compress) {
-            // If input file is already compressed.. copy it to the right location, otherwise compress it
-            gz ? QFile::copy(fullname, newname) : compressFile(fullname, newname);
-        } else {
-            // If inputs a gz, uncompress it, otherwise copy is raw
-            gz ? uncompressFile(fullname, newname) : QFile::copy(fullname, newname);
-        }
-    } // else backup already exists... good.
+    // Allow for second import of newer version of EVE and CSL edf files
+    if (QFile::exists(newname)) //  backup already exists... remove it
+        QFile::remove(newname);
+    if (compress) {
+        // If input file is already compressed.. copy it to the right location, otherwise compress it
+        if (gz)
+            QFile::copy(fullname, newname);
+        else
+            compressFile(fullname, newname);
+    } else {
+        // If inputs a gz, uncompress it, otherwise copy is raw
+        if (gz)
+            uncompressFile(fullname, newname);
+        else
+            QFile::copy(fullname, newname);
+    }
 
-    // Now the correct backup is in place, we can trash any
+    // Now the correct backup is in place, we can trash any unneeded backup
     if (compress) {
         // Remove any uncompressed duplicate
-        QFile::exists(newnamenogz) && QFile::remove(newnamenogz);
+        if (QFile::exists(newnamenogz))
+            QFile::remove(newnamenogz);
     } else {
-        // Delete the non compressed copy and choose it instead.
-        QFile::exists(newnamegz) && QFile::remove(newnamegz);
+        // Delete the compressed copy
+        if (QFile::exists(newnamegz))
+            QFile::remove(newnamegz);
     }
 
     // Used to store it under Backup\Datalog
     // Remove any traces from old backup directory structure
     oldname = backup_path + RMS9_STR_datalog + "/" + filename;
-    QFile::exists(oldname) && QFile::remove(oldname);
-    QFile::exists(oldname + STR_ext_gz) && QFile::remove(oldname + STR_ext_gz);
+    if (QFile::exists(oldname))
+        QFile::remove(oldname);
+    if (QFile::exists(oldname + STR_ext_gz))
+        QFile::remove(oldname + STR_ext_gz);
 
     return newname;
 }
@@ -2405,7 +2416,7 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
 //      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
 //          qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
-            double tt = edf.startdate + qint64(anno->offset*1000.0);
+            qint64 tt = edf.startdate + qint64(anno->offset*1000L);
 
             if ( ! anno->text.isEmpty()) {
                 if (anno->text == "CSR Start") {
@@ -2420,10 +2431,10 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
                         }
                         csr_starts = 0;
                     } else {
-                        qDebug() << "Split csr event flag in " << edf.filename;
+                        qWarning() << "Split csr event flag in " << edf.filename;
                     }
                 } else if (anno->text != "Recording starts") {
-                    qDebug() << "Unobserved ResMed CSL annotation field: " << anno->text;
+                    qWarning() << "Unobserved ResMed CSL annotation field: " << anno->text;
                 }
             }
         }
@@ -2489,8 +2500,9 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
     for (auto annoVec = edf.annotations.begin(); annoVec != edf.annotations.end(); annoVec++ ) {
 //      qDebug() << "Vector " << vec++ << " has " << annoVec->size() << " annotations";
         for (auto anno = annoVec->begin(); anno != annoVec->end(); anno++ ) {
+            qint64 tt = edf.startdate + qint64(anno->offset*1000L);
 //          qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
-            double tt = edf.startdate + qint64(anno->offset*1000.0);
+//          qDebug() << "Time: " << (tt/1000L). << " Duration: " << anno->duration << " Text: " << anno->text;
 
             if ( ! anno->text.isEmpty()) {
                 if (matchSignal(CPAP_Obstructive, anno->text)) {
@@ -2504,18 +2516,14 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
                         UA->AddEvent(tt, anno->duration);
                 } else if (matchSignal(CPAP_RERA, anno->text)) {
                     // Not all machines have it, so only create it when necessary..
-                    if (!RE) {
-                        if (!(RE = sess->AddEventList(CPAP_RERA, EVL_Event)))
-                            return false;
-                    }
+                    if ( ! RE)
+                        RE = sess->AddEventList(CPAP_RERA, EVL_Event);
                     if (sess->checkInside(tt))
                         RE->AddEvent(tt, anno->duration);
                 } else if (matchSignal(CPAP_ClearAirway, anno->text)) {
                     // Not all machines have it, so only create it when necessary..
-                    if (!CA) {
-                        if (!(CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event)))
-                            return false;
-                    }
+                    if ( ! CA)
+                        CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
                     if (sess->checkInside(tt))
                         CA->AddEvent(tt, anno->duration);
                 } else {
