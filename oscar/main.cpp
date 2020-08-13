@@ -89,8 +89,10 @@ bool copyRecursively(QString sourceFolder, QString destFolder, QProgressDialog& 
             progress.setValue(numFilesCopied);
             QCoreApplication::processEvents();
         }
-        if(!success)
+        if(!success) {
+            qWarning() << "copyRecursively: Unable to copy" << srcName << "to" << destName;
             return false;
+        }
     }
 
     files.clear();

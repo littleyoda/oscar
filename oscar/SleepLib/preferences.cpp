@@ -178,7 +178,7 @@ bool Preferences::Open(QString filename)
 
     if (!file.open(QIODevice::ReadOnly)) {
 //        qWarning() << "Could not open" << p_filename.toLocal8Bit().data() << " Error: " << file.error();
-        qWarning() << "Could not open preferences file" << filename << "for reading, error code" << file.error() << file.errorString();
+        qWarning() << "Could not open preferences file for reading, error code" << file.error() << file.errorString();
         return false;
     }
 

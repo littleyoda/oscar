@@ -419,7 +419,7 @@ void copyPath(QString src, QString dst)
 
         if (!QFile::exists(destFile)) {
             if (!QFile::copy(srcFile, destFile)) {
-                qWarning() << "Could not copy" << srcFile << "to" << destFile;
+                qWarning() << "copyPath: could not copy" << srcFile << "to" << destFile;
             }
             // TODO: Since copyPath is only used by loaders, it should
             // build the list of files first, and then update the progress bar
