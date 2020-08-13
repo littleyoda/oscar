@@ -336,10 +336,12 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
         mach->setInfo( info );                      // update info
+/*** Remove optimization as it blocks updating prior days
         QDate lastDate = mach->LastDay();           // use the last day for this machine
 //      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
         firstImportDay = lastDate;                  // re-import the last day, to  pick up partial days
 //      firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
+***/
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
@@ -379,24 +381,34 @@ int ResmedLoader::Open(const QString & dirpath)
     if (create_backups) {
         if ( ! dir.exists(backup_path)) {
             if ( ! dir.mkpath(backup_path) ) {
-                qDebug() << "Could not create ResMed backup directory :-/";
+                qWarning() << "Could not create ResMed backup directory" << backup_path;
             }
         }
 
 	    // Create the STR_Backup folder if it doesn't exist
 	    QString strBackupPath = backup_path + "STR_Backup";
 	    if ( ! dir.exists(strBackupPath) )
-	        dir.mkpath(strBackupPath);
-	
+            if (!dir.mkpath(strBackupPath))
+                qWarning() << "Could not create ResMed STR backup directory" << strBackupPath;
+
 	    QString newpath = backup_path + "DATALOG";
 	    if ( ! dir.exists(newpath) )
-	        dir.mkpath(newpath);
-	
+            if (!dir.mkpath(newpath))
+                qWarning() << "Could not create ResMed DATALOG backup directory" << newpath;
+
 
         // Copy Identification files to backup folder
-        QFile::copy(importPath + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT);
-        QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC);
+        QFile backupFile(backup_path + RMS9_STR_idfile + STR_ext_TGT);
+        if (backupFile.exists())
+            backupFile.remove();
+        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT))
+            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_TGT << "to backup" << backupFile;
 
+        backupFile.setFileName(backup_path + RMS9_STR_idfile + STR_ext_CRC);
+        if (backupFile.exists())
+            backupFile.remove();
+        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC))
+            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_CRC << "to backup" << backup_path;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -425,13 +437,13 @@ int ResmedLoader::Open(const QString & dirpath)
             long int days = stredf->GetNumDataRecords();
             qDebug() << importFile.section("/",-3,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
             if (STRmap.contains(date)) {        // Keep the longer of the two STR files - or newer if equal!
-                qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
+                qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "days, ends" << date.addDays(days-1);
                 if (days >= STRmap[date].days) {
-                    qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days << "from STRmap";
+                    qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days << "days from STRmap";
                     STRmap.remove(date);
                 } else {
                     qDebug() << "Skipping" << importFile.section("/",-3,-1);
-                    qWarning() << "New import is shorter than exisiting files - should never happen";
+                    qWarning() << "New import str.edf file is shorter than exisiting files - should never happen";
                     delete stredf;
                     addToSTRmap = false;
                 }
@@ -451,8 +463,17 @@ int ResmedLoader::Open(const QString & dirpath)
                 }
                 STRmap[date] = STRFile(backupFile, days, stredf);
                 qDebug() << "Adding" << importFile << "to STRmap as" << backupFile;
+
                 // Meh.. these can be calculated if ever needed for ResScan SDcard export
-                QFile::copy(importPath + "STR.crc", backup_path + "STR.crc");
+                QFile sourcePath(importPath + "STR.crc");
+                if (sourcePath.exists()) {
+                    QFile backupFile(backup_path + "STR.crc");
+                    if (backupFile.exists())
+                        if (!backupFile.remove())
+                            qWarning() << "Failed to remove" << backupFile;
+                    if (!QFile::copy(importPath + "STR.crc", backup_path + "STR.crc"))
+                        qWarning() << "Failed to copy STR.crc from" << importPath << "to" << backup_path;
+                }
             }
         }
     } else {    // get the STR file that is in the BACKUP folder that we are rebuilding from
@@ -539,10 +560,8 @@ int ResmedLoader::Open(const QString & dirpath)
             QString newdate = it.key().toString("yyyyMMdd");
             QString newName = fullname.replace(datepart, newdate);
             qDebug() << "Renaming" << it.value().filename << "to" << newName;
-              if ( str.rename(newName) )
-                  qDebug() << "Rename Success";
-              else 
-                  qDebug() << "Rename Failed";
+              if ( ! str.rename(newName) )
+                  qWarning() << "Rename Failed";
         }
         delete it.value().edf;
     }
@@ -610,9 +629,9 @@ int ResmedLoader::Open(const QString & dirpath)
     emit updateMessage(QObject::tr("Finishing Up..."));
     QApplication::processEvents();
 
-    qDebug() << "About to call fishAddingSessions()";
+    qDebug() << "About to call finishAddingSessions()";
     finishAddingSessions();
-    qDebug() << "Finshed finishedAddinfSessions() with" << sessionCount << "new sessions";
+    qDebug() << "Finshed finishedAddingSessions() with" << sessionCount << "new sessions";
 
 #ifdef DEBUG_EFFICIENCY
     {
@@ -663,7 +682,7 @@ ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber)
 {
     ResMedEDFInfo * stredf = new ResMedEDFInfo();
     if ( ! stredf->Open(filename ) ) {
-        qDebug() << "Failed to open" << filename;
+        qWarning() << "Failed to open" << filename;
         delete stredf;
         return nullptr;
     }
@@ -686,17 +705,21 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 {
     Day * day = p_profile->FindDay(date, MT_CPAP);
     bool reimporting = false;
+#ifdef STR_DEBUG
     qDebug() << "Starting checkSummary for" << date.toString();
-
+#endif
     if (day && day->hasMachine(mach)) {
         // Sessions found for this machine, check if only summary info
+#ifdef STR_DEBUG
         qDebug() << "Sessions already found for this date";
-
+#endif
         if (day->summaryOnly(mach) && (resday.files.size()> 0)) {
             // Note: if this isn't an EDF file, there's really no point doing this here,
             // but the worst case scenario is this session is deleted and reimported.. this just slows things down a bit in that case
             // This day was first imported as a summary from STR.edf, so we now totally want to redo this day
+#ifdef STR_DEBUG
             qDebug() << "Summary sessions only - delete them";
+#endif
             QList<Session *> sessions = day->getSessions(MT_CPAP);
             for (auto & sess : sessions) {
                 day->removeSession(sess);
@@ -705,7 +728,9 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
         } else if (day->noSettings(mach) && resday.str.date.isValid()) {
             // STR is present now, it wasn't before... we don't need to trash the files, but we do want the official settings.
             // Do it right here
+#ifdef STR_DEBUG
             qDebug() << "Date was missing settings, now we have them";
+#endif
             for (auto & sess : day->sessions) {
                 if (sess->machine() != mach)
                     continue;
@@ -718,9 +743,16 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                 sess->StoreSummary();
             }
         } else {
+#ifdef STR_DEBUG
             qDebug() << "Have summary and details for this date!";
+#endif
+            int numPairs = 0;
+            for (int i = 0; i <resday.str.maskevents/2; i++)
+                if (resday.str.maskon[i] != resday.str.maskoff[i])
+                    numPairs++;
             QList<Session *> sessions = day->getSessions(MT_CPAP, true);
-            if (sessions.length() == (resday.str.maskevents/2) ) {
+            if (sessions.length() == numPairs ) {
+#ifdef STR_DEBUG
                 qDebug() << "No new sessions -- skipping.  Sessions now in day:";
                 qDebug() << " i  sessionID    s_first                   from  -  to";
                 for (int i=0; i < sessions.length(); i++) {
@@ -729,9 +761,10 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                              << QDateTime::fromMSecsSinceEpoch(sessions[i]->first()).toString(" hh:mm:ss")
                              << "-" << QDateTime::fromMSecsSinceEpoch(sessions[i]->last()).toString("hh:mm:ss");
                 }
+#endif
                 return;
             }
-            qDebug() << "Maskevent count" << resday.str.maskevents << "is not twice the existing session count" << day->size(); 
+            qDebug() << "Maskevent count/2 (modified)" << numPairs << "is not equal the existing MT_CPAP session count" << day->size();
             qDebug() << "Clean the day and re-import it";
             for (auto & sess : sessions) {
                 day->removeSession(sess);
@@ -742,7 +775,9 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 
     ResDayTask * rdt = new ResDayTask(this, mach, &resday, saveCallback);
     rdt->reimporting = reimporting;
+#ifdef STR_DEBUG
     qDebug() << "in checkSummary, Queue task for" << resday.date.toString();
+#endif
     queTask(rdt);
 }
 
@@ -979,16 +1014,20 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
         QFile::remove(newname);
     if (compress) {
         // If input file is already compressed.. copy it to the right location, otherwise compress it
-        if (gz)
-            QFile::copy(fullname, newname);
+        if (gz) {
+            if (!QFile::copy(fullname, newname))
+                qWarning() << "unable to copy" << fullname << "to" << newname;
+        }
         else
             compressFile(fullname, newname);
     } else {
         // If inputs a gz, uncompress it, otherwise copy is raw
         if (gz)
             uncompressFile(fullname, newname);
-        else
-            QFile::copy(fullname, newname);
+        else {
+            if (!QFile::copy(fullname, newname))
+                qWarning() << "unable to copy" << fullname << "to" << newname;
+        }
     }
 
     // Now the correct backup is in place, we can trash any unneeded backup
@@ -1098,7 +1137,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
 //      This is not what we want to check, we must look at this day in the database files...
 //      Found the plce in checkSummaryDay to compare session count with maskevents divided by 2
+#ifdef SESSION_DEBUG
             qDebug() << "ResdayList size is" << resdayList.size();
+#endif
 //             auto rit = resdayList.find(date);
 //             if (rit != resdayList.end()) {
 //                 // Already seen this record.. should check if the data is the same, but meh.
@@ -1134,7 +1175,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 continue;
             }
 
+#ifdef STR_DEBUG
             qDebug() << "Adding" << date.toString() << "to resdayLisyt b/c we have STR record";
+#endif
             auto rit = resdayList.insert(date, ResMedDay(date));
 
 #ifdef STR_DEBUG        
@@ -1635,7 +1678,8 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
 #endif
         if (filename.endsWith(STR_ext_gz,Qt::CaseInsensitive)) {    // we have a compressed file
             if (compress_backups) {                 // fine, copy it to backup folder
-                QFile::copy(filename, backupfile);
+                if (!QFile::copy(filename, backupfile))
+                    qWarning() << "Failed to copy" << filename << "to" << backupfile;
             } else {                                // oops, uncompress it to the backup folder
                 uncompressFile(filename, backupfile);
             }
@@ -1643,7 +1687,8 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
             if (compress_backups) {                 // so compress it into the backup folder
                 compressFile(filename, backupfile);
             } else {                                // and that's OK, just copy it over
-                QFile::copy(filename, backupfile);
+                if (!QFile::copy(filename, backupfile))
+                    qWarning() << "Failed to copy" << filename << "to" << backupfile;
             }
         }
 
