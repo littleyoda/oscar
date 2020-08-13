@@ -719,13 +719,20 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
             }
         } else {
             qDebug() << "Have summary and details for this date!";
-            if (day->size() == (resday.str.maskevents/2) ) {
-                qDebug() << "No new sessions -- skipping";
+            QList<Session *> sessions = day->getSessions(MT_CPAP, true);
+            if (sessions.length() == (resday.str.maskevents/2) ) {
+                qDebug() << "No new sessions -- skipping.  Sessions now in day:";
+                qDebug() << " i  sessionID    s_first                   from  -  to";
+                for (int i=0; i < sessions.length(); i++) {
+                    qDebug().noquote() << i << sessions[i]->session()
+                             << sessions[i]->first()
+                             << QDateTime::fromMSecsSinceEpoch(sessions[i]->first()).toString(" hh:mm:ss")
+                             << "-" << QDateTime::fromMSecsSinceEpoch(sessions[i]->last()).toString("hh:mm:ss");
+                }
                 return;
             }
             qDebug() << "Maskevent count" << resday.str.maskevents << "is not twice the existing session count" << day->size(); 
             qDebug() << "Clean the day and re-import it";
-            QList<Session *> sessions = day->getSessions(MT_CPAP);
             for (auto & sess : sessions) {
                 day->removeSession(sess);
                 delete sess;
