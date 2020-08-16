@@ -379,7 +379,7 @@ int main(int argc, char *argv[]) {
     initializeLogger();
     // After initializing the logger, any qDebug() messages will be queued but not written to console
     // until MainWindow is constructed below. In spite of that, we initialize the logger here so that
-    // the intervening messages to show up in the debug pane.
+    // the intervening messages show up in the debug pane.
     //
     // The only time this is really noticeable is when initTranslations() presents its language
     // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
@@ -555,8 +555,27 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
+    // Make sure we can write to the data directory
+    QFile testFile(GetAppData()+"/testfile.txt");
+    if (testFile.exists())
+        testFile.remove();
+    if (!testFile.open(QFile::ReadWrite)) {
+        QString errMsg = QObject::tr("Unable to write to OSCAR data directory") + "\n" +
+                         GetAppData() + "\n" +
+                         QObject::tr("Error code") + ": " + QString::number(testFile.error()) + " - " + testFile.errorString() + "\n\n" +
+                         QObject::tr("OSCAR cannot continue and is exiting.") + "\n";
+        qCritical() << errMsg;
+        QMessageBox::critical(nullptr, QObject::tr("Exiting"), errMsg);
+        return 0;
+    }
+    else
+        testFile.remove();
+
     // Begin logging to file now that there's a data folder.
-    logger->logToFile();
+    if (!logger->logToFile()) {
+        QMessageBox::warning(nullptr, STR_MessageBox_Warning,
+                             QObject::tr("Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk."));
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Initialize preferences system (Don't use p_pref before this point!)

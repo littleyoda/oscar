@@ -29,7 +29,7 @@ public:
     void appendClean(QString msg);
     bool isRunning() { return running; }
     void connectionReady();
-    void logToFile();
+    bool logToFile();
     QString logFileName();
 
     void quit();

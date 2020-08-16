@@ -87,11 +87,11 @@ void LogThread::connectionReady()
     qDebug() << "Logging UI initialized";
 }
 
-void LogThread::logToFile()
+bool LogThread::logToFile()
 {
     if (m_logStream) {
         qWarning().noquote() << "Already logging to" << m_logFile->fileName();
-        return;
+        return true;
     }
 
     QString debugLog = GetLogDir() + "/debug.txt";
@@ -109,8 +109,10 @@ void LogThread::logToFile()
     if (m_logStream) {
         qDebug().noquote() << "Logging to" << debugLog;
     } else {
-        qWarning().noquote() << "Unable to open" << debugLog;
+        qWarning().noquote() << "Could not open" << debugLog << "error code" << m_logFile->error() << m_logFile->errorString();
+        return false;
     }
+    return true;
 }
 
 LogThread::~LogThread()
