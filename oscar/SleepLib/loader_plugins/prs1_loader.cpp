@@ -254,9 +254,11 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "450P", 0, 3, "REMstar Pro (System One)" },
     { "451P", 0, 2, "REMstar Pro (System One)" },
     { "451P", 0, 3, "REMstar Pro (System One)" },
+    { "452P", 0, 3, "REMstar Pro (System One)" },
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
     { "551P", 0, 2, "REMstar Auto (System One)" },
+    { "650P", 0, 2, "BiPAP Pro (System One)" },
     { "750P", 0, 2, "BiPAP Auto (System One)" },
 
     { "261CA",  0, 4, "REMstar Plus (System One 60 Series)" },  // (brick)
@@ -3619,13 +3621,15 @@ bool PRS1DataChunk::ParseEventsF0V23()
                 if (this->familyVersion == 3) DUMP_EVENT();
                 break;
             case 0x01:  // Time elapsed?
-                // Only seen once, on a 550P.
+                // Only seen twice, on a 550P and 650P.
                 // It looks almost like a time-elapsed event 4 found in F0V4 summaries, but
                 // 0xFFCC looks like it represents a time adjustment of -52 seconds,
                 // since the subsequent 0x11 statistics event has a time offset of 172 seconds,
                 // and counting this as -52 seconds results in a total session time that
                 // matches the summary and waveform data. Very weird.
-                CHECK_VALUE(data[pos], 0xCC);
+                //
+                // Similarly 0xFFDC looks like it represents a time adjustment of -36 seconds.
+                CHECK_VALUES(data[pos], 0xDC, 0xCC);
                 CHECK_VALUE(data[pos+1], 0xFF);
                 elapsed = data[pos] | (data[pos+1] << 8);
                 if (elapsed & 0x8000) {
@@ -4475,7 +4479,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
     
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const int minimum_sizes[] = { 0xf, 5, 2, 0x21 };
+    static const int minimum_sizes[] = { 0xf, 5, 2, 0x21, 0, 4 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
@@ -4557,13 +4561,16 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                 //CHECK_VALUES(data[pos+3], 0, 1);  // TODO: may be related to ramp? 1-5 seems to have a ramp start or two
                 ParseHumidifierSetting50Series(data[pos+4]);
                 break;
-            /*
-            case 5:  // Unknown, but occasionally encountered
+            case 5:  // Clock adjustment? See ParseSummaryF0V4.
                 CHECK_VALUE(pos, 1);  // Always first
-                CHECK_VALUE(chunk_size, 1);  // and the only record in the session.
-                ok = false;
+                CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
+                if (false) {
+                    long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
+                    qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
+                                                << "to" << ts(this->timestamp * 1000L)
+                                                << "delta:" << (this->timestamp - value);
+                }
                 break;
-            */
             case 6:  // Cleared?
                 // Appears in the very first session when that session number is > 1.
                 // Presumably previous sessions were cleared out.
@@ -6498,7 +6505,7 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
         if (flexlevel < 1) UNEXPECTED_VALUE(flexlevel, "!= 0");
         if (risetime) {
             flexmode = FLEX_RiseTime;
-            CHECK_VALUE(cpapmode, PRS1_MODE_AUTOBILEVEL);
+            CHECK_VALUES(cpapmode, PRS1_MODE_BILEVEL, PRS1_MODE_AUTOBILEVEL);
             CHECK_VALUE(plusmode, 0);
         } else if (plusmode) {
             switch (cpapmode) {
