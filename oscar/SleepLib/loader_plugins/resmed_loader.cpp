@@ -336,12 +336,10 @@ int ResmedLoader::Open(const QString & dirpath)
     if ( mach ) {       // we have seen this machine
         qDebug() << "We have seen this machime";
         mach->setInfo( info );                      // update info
-/*** Remove optimization as it blocks updating prior days
         QDate lastDate = mach->LastDay();           // use the last day for this machine
 //      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
         firstImportDay = lastDate;                  // re-import the last day, to  pick up partial days
 //      firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
-***/
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
@@ -751,7 +749,10 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                 if (resday.str.maskon[i] != resday.str.maskoff[i])
                     numPairs++;
             QList<Session *> sessions = day->getSessions(MT_CPAP, true);
-            if (sessions.length() == numPairs ) {
+            // If we have more sessions that we found in the str file,
+            // or if the sessions are for a different machine,
+            // leave well enough alone and don't re-import the day
+            if (sessions.length() >= numPairs || sessions[0]->machine() != mach) {
 #ifdef STR_DEBUG
                 qDebug() << "No new sessions -- skipping.  Sessions now in day:";
                 qDebug() << " i  sessionID    s_first                   from  -  to";
@@ -764,8 +765,8 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 #endif
                 return;
             }
-            qDebug() << "Maskevent count/2 (modified)" << numPairs << "is not equal the existing MT_CPAP session count" << day->size();
-            qDebug() << "Clean the day and re-import it";
+            qDebug() << "Maskevent count/2 (modified)" << numPairs << "is greater than the existing MT_CPAP session count" << sessions.length();
+            qDebug().noquote() << "Purging and re-importing" << day->date().toString();
             for (auto & sess : sessions) {
                 day->removeSession(sess);
                 delete sess;
@@ -1010,23 +1011,26 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
 
     // First make sure the correct backup exists in the right place
     // Allow for second import of newer version of EVE and CSL edf files
-    if (QFile::exists(newname)) //  backup already exists... remove it
-        QFile::remove(newname);
-    if (compress) {
-        // If input file is already compressed.. copy it to the right location, otherwise compress it
-        if (gz) {
-            if (!QFile::copy(fullname, newname))
-                qWarning() << "unable to copy" << fullname << "to" << newname;
-        }
-        else
-            compressFile(fullname, newname);
-    } else {
-        // If inputs a gz, uncompress it, otherwise copy is raw
-        if (gz)
-            uncompressFile(fullname, newname);
-        else {
-            if (!QFile::copy(fullname, newname))
-                qWarning() << "unable to copy" << fullname << "to" << newname;
+    // But don't try to copy onto itself (as when rebuilding CPAP data from backup)
+    if (newname != fullname) {
+        if (QFile::exists(newname)) // remove existing backup
+            QFile::remove(newname);
+        if (compress) {
+            // If input file is already compressed.. copy it to the right location, otherwise compress it
+            if (gz) {
+                if (!QFile::copy(fullname, newname))
+                    qWarning() << "unable to copy" << fullname << "to" << newname;
+            }
+            else
+                compressFile(fullname, newname);
+        } else {
+            // If inputs a gz, uncompress it, otherwise copy is raw
+            if (gz)
+                uncompressFile(fullname, newname);
+            else {
+                if (!QFile::copy(fullname, newname))
+                    qWarning() << "unable to copy" << fullname << "to" << newname;
+            }
         }
     }
 
@@ -2158,7 +2162,8 @@ void ResDayTask::run()
             }
         }
     }
-    qDebug() << "Created" << overlaps.size() << "sessionGroups from STR record";
+    if (overlaps.size() > 0)
+        qDebug().noquote() << "Created" << overlaps.size() << "sessionGroups from STR record for" << resday->str.date.toString();
 
     QMap<quint32, QString> EVElist, CSLlist;
     for (auto f_itr=resday->files.begin(), fend=resday->files.end(); f_itr!=fend; ++f_itr) {
@@ -2324,8 +2329,7 @@ void ResDayTask::run()
             // we want empty sessions even though they are crap
             qDebug() << "Session" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
-                << "has zero duration";
-            qDebug() << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
+                << "has zero duration" << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
         }
         if (sess->length() < 0) {
             // we want empty sessions even though they are crap
@@ -2399,9 +2403,10 @@ void ResDayTask::run()
 
         if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
              (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
-            qWarning() << "Skipping Future session:" << sess->session()
+            qWarning() << "Skipping future or absent date session:" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
-                << "\noriginal date is" << resday->date.toString();
+                << "\noriginal date is" << resday->date.toString()
+                << "session realFirst" << sess->realFirst() << "realLast" << sess->realLast();
         else    
             save(loader, sess);
 
