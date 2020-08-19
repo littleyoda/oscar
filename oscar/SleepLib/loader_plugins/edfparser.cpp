@@ -66,7 +66,7 @@ bool EDFInfo::Open(const QString & name)
     }
     QFile fi(name);
     if (!fi.open(QFile::ReadOnly)) {
-        qDebug() << "EDFInfo::Open() Couldn't open file " << name;
+        qDebug() << "EDFInfo::Open() Couldn't open file" << name  << "error" << fi.error() << fi.errorString();
         return false;
     }
 //    fileData = new QByteArray();
@@ -291,7 +291,7 @@ EDFHeaderQT * EDFInfo::GetHeader( const QString & name)
 {
     QFile fi(name);
     if (!fi.open(QFile::ReadOnly)) {
-        qDebug() << "EDFInfo::Open() Couldn't open file " << name;
+        qDebug() << "EDFInfo::Open() Couldn't open file" << name << "error" << fi.error() << fi.errorString();
 //      sleep(1);
         return nullptr;
     }
