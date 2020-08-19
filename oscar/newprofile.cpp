@@ -131,7 +131,7 @@ QString NewProfile::getIntroHTML()
            "<p><b><font size=+1>" + tr("Use of this software is entirely at your own risk.") +
            "</font></b></p>"
 
-           "<p><i>" + tr("OSCAR is copyright &copy;2011-2018 Mark Watkins and portions &copy;2019 Nightowl Software") + "<i></p>"
+           "<p><i>" + tr("OSCAR is copyright &copy;2011-2018 Mark Watkins and portions &copy;2019-2020 The OSCAR Team") + "<i></p>"
            "</div>"
            "</body>"
            "</html>";
