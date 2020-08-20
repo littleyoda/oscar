@@ -435,7 +435,7 @@ int ResmedLoader::Open(const QString & dirpath)
             long int days = stredf->GetNumDataRecords();
             qDebug() << importFile.section("/",-3,-1) << "starts at" << date << "for" << days << "ends" << date.addDays(days-1);
             if (STRmap.contains(date)) {        // Keep the longer of the two STR files - or newer if equal!
-                qDebug() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "days, ends" << date.addDays(days-1);
+                qDebug().noquote() << importFile.section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "days, ends" << date.addDays(days-1);
                 if (days >= STRmap[date].days) {
                     qDebug() << "Removing" << STRmap[date].filename.section("/",-3,-1) << "with" << STRmap[date].days << "days from STRmap";
                     STRmap.remove(date);
@@ -519,7 +519,7 @@ int ResmedLoader::Open(const QString & dirpath)
         date = stredf->edfHdr.startdate_orig.date();
         days = stredf->GetNumDataRecords();
         if (STRmap.contains(date)) {        // Keep the longer of the two STR files
-            qDebug() << fi.canonicalFilePath().section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
+            qDebug().noquote() << fi.canonicalFilePath().section("/",-3,-1) << "overlaps" << STRmap[date].filename.section("/",-3,-1) << "for" << days << "ends" << date.addDays(days-1);
             if (days <= STRmap[date].days) {
                 qDebug() << "Skipping" << fi.canonicalFilePath().section("/",-3,-1);
                 delete stredf;
@@ -2162,8 +2162,10 @@ void ResDayTask::run()
             }
         }
     }
+#ifdef STR_DEBUG
     if (overlaps.size() > 0)
         qDebug().noquote() << "Created" << overlaps.size() << "sessionGroups from STR record for" << resday->str.date.toString();
+#endif
 
     QMap<quint32, QString> EVElist, CSLlist;
     for (auto f_itr=resday->files.begin(), fend=resday->files.end(); f_itr!=fend; ++f_itr) {
@@ -2403,7 +2405,7 @@ void ResDayTask::run()
 
         if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
              (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
-            qWarning() << "Skipping future or absent date session:" << sess->session()
+            qWarning().noquote() << "Skipping future or absent date session:" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "\noriginal date is" << resday->date.toString()
                 << "session realFirst" << sess->realFirst() << "realLast" << sess->realLast();
