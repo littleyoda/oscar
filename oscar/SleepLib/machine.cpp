@@ -678,8 +678,11 @@ bool Machine::Load(ProgressDialog *progress)
         return false;
     }
 
-    QPixmap image = getPixmap().scaled(64,64);
-    progress->setPixmap(image);
+    QPixmap image = getPixmap();
+    if (!image.isNull()) {
+        image = image.scaled(64,64);
+        progress->setPixmap(image);
+    }
     progress->setMessage(QObject::tr("Loading %1 data for %2...").arg(info.brand).arg(profile->user->userName()));
 
     if (loader()) {
