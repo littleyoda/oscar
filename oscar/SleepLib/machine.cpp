@@ -611,7 +611,10 @@ void Machine::setLoaderName(QString value)
 
 void Machine::setInfo(MachineInfo inf)
 {
-    info = inf;
+    MachineInfo merged = inf;
+    if (info.purgeDate.isValid()) merged.purgeDate = info.purgeDate;
+    if (info.lastimported.isValid()) merged.lastimported = info.lastimported;
+    info = merged;
     m_loader = GetLoader(inf.loadername);
 }
 

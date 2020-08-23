@@ -140,6 +140,7 @@ QString Profile::checkLock()
     return lockhost;
 }
 
+// Properties for machines.xml:
 const QString STR_PROP_Brand = "brand";
 const QString STR_PROP_Model = "model";
 const QString STR_PROP_Series = "series";
@@ -148,6 +149,7 @@ const QString STR_PROP_SubModel = "submodel";
 const QString STR_PROP_Serial = "serial";
 const QString STR_PROP_DataVersion = "dataversion";
 const QString STR_PROP_LastImported = "lastimported";
+const QString STR_PROP_PurgeDate = "purgedate";
 
 void Profile::addLock()
 {
@@ -169,10 +171,11 @@ bool Profile::OpenMachines()
     QString filename = p_path+"machines.xml";
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
-//        qWarning() << "Could not open" << filename.toLocal8Bit().data();
         qWarning() << "Could not open" << filename.toLocal8Bit().data() << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
+//    qDebug() << "OpenMachines opened" << filename.toLocal8Bit().data();
+
     QDomDocument doc("machines.xml");
 
     if (!doc.setContent(&file)) {
@@ -183,7 +186,7 @@ bool Profile::OpenMachines()
     QDomElement root = doc.firstChild().toElement();
 
     if (root.tagName().toLower() != "machines") {
-        qDebug() << "No Machines Tag in machines.xml";
+        qWarning() << "No Machines Tag in machines.xml";
         return false;
     }
 
@@ -233,6 +236,8 @@ bool Profile::OpenMachines()
                 info.version = e.text().toInt();
             } else if (key == STR_PROP_LastImported) {
                 info.lastimported = QDateTime::fromString(e.text(), Qt::ISODate);
+            } else if (key == STR_PROP_PurgeDate) {
+                info.purgeDate = QDate::fromString(e.text(), Qt::ISODate);
             } else if (key == "properties") {
                 QDomElement pe = e.firstChildElement();
                 for (; !pe.isNull(); pe = pe.nextSiblingElement()) {
@@ -311,6 +316,10 @@ bool Profile::StoreMachines()
         mp.appendChild(doc.createTextNode(m->lastImported().toString(Qt::ISODate)));
         me.appendChild(mp);
 
+        mp = doc.createElement(STR_PROP_PurgeDate);
+        mp.appendChild(doc.createTextNode(m->purgeDate().toString(Qt::ISODate)));
+        me.appendChild(mp);
+
         mach.appendChild(me);
     }
 
@@ -322,6 +331,7 @@ bool Profile::StoreMachines()
         qWarning() << "Could not open" << filename << "for writing, error code" << file.error() << file.errorString();
         return false;
     }
+
     file.write(doc.toByteArray());
     return true;
 }

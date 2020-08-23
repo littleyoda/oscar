@@ -337,8 +337,12 @@ int ResmedLoader::Open(const QString & dirpath)
         qDebug() << "We have seen this machime";
         mach->setInfo( info );                      // update info
         QDate lastDate = mach->LastDay();           // use the last day for this machine
-//      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
         firstImportDay = lastDate;                  // re-import the last day, to  pick up partial days
+        QDate purgeDate = mach->purgeDate();
+        if (purgeDate.isValid()) {
+            firstImportDay = min(firstImportDay, purgeDate);
+        }
+//      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
 //      firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
@@ -672,6 +676,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
     qDebug() << "Total Events " << event_cnt;
     qDebug() << "Total new Sessions " << num_new_sessions;
+
+    mach->clearPurgeDate();
 
     return num_new_sessions;
 }   // end Open()

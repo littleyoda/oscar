@@ -149,6 +149,7 @@ const QString STR_GEN_DataFolder = "DataFolder";
 
 const QString STR_PREF_ReimportBackup = "ReimportBackup";
 const QString STR_PREF_LastCPAPPath = "LastCPAPPath";
+const QString STR_PREF_LastOximetryPath = "LastOximetryPath";
 
 const QString STR_MACH_ResMed = "ResMed";
 const QString STR_MACH_PRS1 = "PRS1";

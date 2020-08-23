@@ -1776,60 +1776,12 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
         QList<Session *>::iterator s;
 
         QList<Session *> list;
-////    QList<SessionID> sidlist;       // obsolete, see below
         for (s = day->begin(); s != day->end(); ++s) {
             list.append(*s);
             qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
             qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
             qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
-////        sidlist.append((*s)->session());
         }
-
-//////// The imported_files.csv has been removed from SH 1.1 //////////
-//        QHash<QString, SessionID> skipfiles;
-//        // Read the already imported file list
-//
-//        QFile impfile(cpap->getDataPath()+"/imported_files.csv");
-//        if (impfile.exists()) {
-//            qDebug() << "Obsolet file exists" << impfile.fileName();
-//            if (impfile.open(QFile::ReadOnly)) {
-//                QTextStream impstream(&impfile);
-//                QString serial;
-//                impstream >> serial;
-//                if (cpap->serial() == serial) {
-//                    QString line, file, str;
-//                    SessionID sid;
-//                    bool ok;
-//                    do {
-//                        line = impstream.readLine();
-//                        file = line.section(',',0,0);
-//                        str = line.section(',',1);
-//                        sid = str.toInt(&ok);
-//                        if (!sidlist.contains(sid)) {
-//                            skipfiles[file] = sid;
-//                        }
-//                    } while (!impstream.atEnd());
-//                }
-//            }
-//            impfile.close();
-//            // Delete the file
-//            impfile.remove();
-//
-//            // Rewrite the file without the sessions being removed.
-//            if (impfile.open(QFile::WriteOnly)) {
-//                QTextStream out(&impfile);
-//                out << cpap->serial();
-//                QHash<QString, SessionID>::iterator skit;
-//                QHash<QString, SessionID>::iterator skit_end = skipfiles.end();
-//                for (skit = skipfiles.begin(); skit != skit_end; ++skit) {
-//                    QString a = QString("%1,%2\n").arg(skit.key()).arg(skit.value());;
-//                    out << a;
-//                }
-//                out.flush();
-//            }
-//            impfile.close();
-//        }                   // end of obsolte file code
-///////////////////////////////////////////////////////////////////////////////////////
 
         QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
         rxcache.remove();
@@ -1845,6 +1797,10 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
             delete sess;
         }
 
+        // save purge date where later import should start
+        QDate pd = cpap->purgeDate();
+        if (pd.isNull() || day->date() < pd)
+            cpap->setPurgeDate(day->date());
     }
     day = p_profile->GetDay(date, MT_CPAP);
     Q_UNUSED(day);

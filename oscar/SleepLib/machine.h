@@ -194,12 +194,15 @@ class Machine
 
     inline int version() const { return info.version; }
     inline QDateTime lastImported() const { return info.lastimported; }
+    inline QDate purgeDate() const { return info.purgeDate; }
 
     inline void setModel(QString value) { info.model = value; }
     inline void setBrand(QString value) { info.brand = value; }
     inline void setSerial(QString value) { info.serial = value; }
     inline void setType(MachineType type) { info.type = type; }
     inline void setCap(quint32 value) { info.cap = value; }
+    inline void setPurgeDate(QDate value) {info.purgeDate = value; }
+    inline void clearPurgeDate() {info.purgeDate = QDate(); }
 
     bool saveSessionInfo();
     bool loadSessionInfo();

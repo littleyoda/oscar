@@ -403,8 +403,9 @@ void OximeterImport::doUpdateProgress(int v, int t)
 
 void OximeterImport::on_fileImportButton_clicked()
 {
-
-    const QString documentsFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString documentsFolder = (*p_profile)[STR_PREF_LastOximetryPath].toString();
+    if (documentsFolder.isEmpty())
+        documentsFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 
 	qDebug() << "oximod - File Import button clicked";
 	
@@ -438,13 +439,16 @@ void OximeterImport::on_fileImportButton_clicked()
     ui->informationButton->setVisible(false);
     importMode = IM_FILE;
 
-
     if (oximodule->oxisessions.size() > 1) {
         chooseSession();
     } else {
     //	oximodule->setStartTime( ??? );  Nope, it was set in the loader module by the file import routime
         on_syncButton_clicked();
     }
+
+    QDir oxdir(filename.section("/",0,-1));
+    (*p_profile)[STR_PREF_LastOximetryPath] = oxdir.canonicalPath();
+
     qDebug() << "oximod - Finished file import: Oximodule startTime is " << oximodule->startTime().toString("yyyy-MMM-dd HH:mm:ss");
 }
 
