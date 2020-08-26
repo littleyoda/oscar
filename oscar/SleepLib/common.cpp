@@ -227,10 +227,13 @@ QString appResourcePath()
     QStringList paths;
     // This one will be used if the Html and Translations folders 
     // are in the same folder as  the OSCAR executable
-    paths.push_back( QCoreApplication::applicationDirPath() );
+    paths.append( QCoreApplication::applicationDirPath() );
 #ifdef Q_OS_LINUX    
-    paths.push_back( QString( "/usr/share/" ) + QCoreApplication::applicationName() );
-    paths.push_back( QString( "/usr/local/share/" ) + QCoreApplication::applicationName() );
+    QString appName = QCoreApplication::applicationName();
+    if (appName != QString("OSCAR"))
+        appName = QString("OSCAR-test");
+    paths.append( QString( "/usr/share/" ) + appName );
+    paths.append( QString( "/usr/local/share/" ) + appName );
 #endif    
     for (auto p = begin(paths); p != end(paths); ++p ) {
         QString fname = *p+QString("/Translations/oscar_qt_fr.qm");

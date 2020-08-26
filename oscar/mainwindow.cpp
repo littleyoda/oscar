@@ -832,11 +832,23 @@ QStringList getDriveList()
 #endif            
             if (storage.fileSystemType() == VFAT) {
                 qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
-                drivelist.push_back(storage.rootPath());
+                drivelist.append(storage.rootPath());
             }
         }
     }
 #endif
+#if defined(Q_OS_LINUX)
+    QString mntName("/mnt/chromeos/removeable");
+    QDir mnt(mntName);
+    if ( mnt.exists() ) {
+        qDebug() << "Checking Crostini removable folders";
+        QFileInfoList mntPts = mnt.entryInfoList();
+        foreach ( const auto dir, mntPts ) {
+            qDebug() << "Adding" << dir.filePath() << "to drivelist";
+            drivelist.append(dir.filePath() );
+        }
+    }
+#endif    
     return drivelist;
 }
 
