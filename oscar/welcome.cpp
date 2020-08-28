@@ -258,6 +258,9 @@ QString Welcome::GenerateCPAPHTML()
                 EventDataType pressure = day->percentile(pressChanID, perc/100.0);
                 html += tr("Your pressure was under %1 %2 for %3% of the time.").arg(pressure).arg(schema::channel[pressChanID].units()).arg(perc);
             } else if (cpapmode == MODE_BILEVEL_FIXED) {
+                if (pressSettingChanID == CPAP_Pressure && p_profile->GetMachine(MT_CPAP)->info.brand==QObject::tr("ResMed")) {
+                    pressSettingChanID = CPAP_IPAP;
+                }
                 EventDataType ipap = day->settings_max(pressSettingChanID);
                 EventDataType epap = day->settings_min(CPAP_EPAP);
                 html += tr("Your machine used a constant %1-%2 %3 of air.").arg(epap).arg(ipap).arg(schema::channel[pressChanID].units());
