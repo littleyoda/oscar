@@ -838,8 +838,9 @@ QStringList getDriveList()
     }
 #endif
 #if defined(Q_OS_LINUX)
-    QString mntName("/mnt/chromeos/removeable");
+    QString mntName("/mnt/chromeos/removable");
     QDir mnt(mntName);
+    qDebug() << "Checking for" << mntName;
     if ( mnt.exists() ) {
         qDebug() << "Checking Crostini removable folders";
         QFileInfoList mntPts = mnt.entryInfoList();
