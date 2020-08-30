@@ -1513,7 +1513,7 @@ QString Day::getPressureRelief()
     return pr_str;
 }
 
-QString validPressure(float pressure) {
+QString Day::validPressure(float pressure) {
     if (fabsf(pressure) == std::numeric_limits<EventDataType>::max())
         return QObject::tr("n/a");
     return QString("%1").arg(pressure, 0, 'f', 1);

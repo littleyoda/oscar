@@ -242,6 +242,7 @@ class Day
     QString getCPAPModeStr();
     QString getPressureRelief();
     QString getPressureSettings();
+    QString validPressure(float pressure);
 
     // Some more very much CPAP only related stuff
 
