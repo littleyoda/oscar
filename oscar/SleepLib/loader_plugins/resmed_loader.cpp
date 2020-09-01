@@ -158,10 +158,10 @@ void ResmedLoader::initChannels()
     chan->addOption(1, STR_TR_Yes);
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_PtAccess= 0xe20A, SETTING, MT_CPAP, SESSION,
-        "RMS9_PTAccess", QObject::tr("Pt. Access"), QObject::tr("Patient Access"), QObject::tr("Patient Access"), "", LOOKUP, Qt::black));
+        "RMS9_PTAccess", QObject::tr("Pt. Access"), QObject::tr("Essentials"), QObject::tr("Essentials"), "", LOOKUP, Qt::black));
 
-    chan->addOption(0, STR_TR_No);
-    chan->addOption(1, STR_TR_Yes);
+    chan->addOption(0, QObject::tr("Plus"));
+    chan->addOption(1, QObject::tr("On"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_ClimateControl= 0xe20B, SETTING, MT_CPAP, SESSION,
         "RMS9_ClimateControl", QObject::tr("Climate Control"), QObject::tr("Climate Control"), QObject::tr("Climate Control"), "", LOOKUP, Qt::black));
@@ -404,7 +404,7 @@ int ResmedLoader::Open(const QString & dirpath)
         if (backupFile.exists())
             backupFile.remove();
         if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT))
-            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_TGT << "to backup" << backupFile;
+            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_TGT << "to backup" << backupFile.fileName();
 
         backupFile.setFileName(backup_path + RMS9_STR_idfile + STR_ext_CRC);
         if (backupFile.exists())
@@ -472,7 +472,7 @@ int ResmedLoader::Open(const QString & dirpath)
                     QFile backupFile(backup_path + "STR.crc");
                     if (backupFile.exists())
                         if (!backupFile.remove())
-                            qWarning() << "Failed to remove" << backupFile;
+                            qWarning() << "Failed to remove" << backupFile.fileName();
                     if (!QFile::copy(importPath + "STR.crc", backup_path + "STR.crc"))
                         qWarning() << "Failed to copy STR.crc from" << importPath << "to" << backup_path;
                 }
