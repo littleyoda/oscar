@@ -2121,20 +2121,12 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
             break;
         }
         startpos = pos;
-        if (code != 0) {  // Does this code really not have a timestamp? See below where we check.
-            t += data[pos] | (data[pos+1] << 8);
-            pos += 2;
-        }
+        t += data[pos] | (data[pos+1] << 8);
+        pos += 2;
 
         switch (code) {
-            case 0x00:  // Unknown, only seen twice
-                //DUMP_EVENT();
-                // So far we've only seen 0 for the first 2 bytes. Look for nonzero to see if it's actually a timestamp. If so, fix above to read it.
-                CHECK_VALUE(data[pos], 0);
-                CHECK_VALUE(data[pos+1], 0);
-                if (data[pos+2] != 0x85) {
-                    CHECK_VALUES(data[pos+2], 0x81, 0x83);  // Only three values seen so far
-                }
+            case 0x00:  // Humidifier setting change (logged in summary in 60 series)
+                this->ParseHumidifierSetting50Series(data[pos]);
                 break;
             //case 0x01:  // never seen on F5V0
             case 0x02:  // Pressure adjustment
@@ -2168,16 +2160,12 @@ bool PRS1DataChunk::ParseEventsF5V0(void)
                 elapsed = data[pos];  // based on sample waveform, the hypopnea is over after this
                 this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
                 break;
-            case 0x08:  // Hypopnea? See F5V1
-                // This has similar structure fo the event 8 HY in F5V1, but it doesn't seem
-                // to be drawn on official reports. This has been seen only once, along with
-                // a simultaneous event 7 HY, and only one HY was drawn. (This would have
-                // started at 2:43:47, and the subsequent HY starts at 2:43:51.)
-                //
-                // The event length at least is confirmed, so we can keep parsing, but
-                // for now don't import and just alert us to any other examples of this event.
-                CHECK_VALUE(t, 9860);
-                CHECK_VALUE(sessionid, 484);
+            case 0x08:  // Hypopnea, note this is 0x7 in F5V3
+                // TODO: How is this hypopnea different from event 0x7?
+                // TODO: What is the first byte?
+                //data[pos+0];  // unknown first byte?
+                elapsed = data[pos+1];  // based on sample waveform, the hypopnea is over after this
+                this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
                 break;
             case 0x09:  // Flow Limitation, note this is 0x8 in F5V3
                 // TODO: We should revisit whether this is elapsed or duration once (if)
@@ -6227,15 +6215,12 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     if (ramp_time > 0) {
         this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RAMP_TIME, ramp_time));
         this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_RAMP_PRESSURE, ramp_pressure, GAIN));
-    } else {
-        if (this->familyVersion == 0) UNEXPECTED_VALUE(ramp_time, ">0");  // not yet observed
     }
 
     quint8 flex = data[0x0c];
     this->ParseFlexSettingF5V012(flex, cpapmode);
 
     if (this->familyVersion == 0) {  // TODO: either split this into two functions or use size to differentiate like FV3 parsers do
-        // TODO: Is there another flag for F5V0? Reports say "Bypass System One Humidification" as an option?
         this->ParseHumidifierSetting50Series(data[0x0d], true);
         pos = 0xe;
     } else {
@@ -6269,10 +6254,19 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_SHOW_AHI, (data[pos+1] & 1) != 0));
     CHECK_VALUE(data[pos+1] & ~(0x40|1), 0);
     
-    CHECK_VALUES(data[pos+2], 0, 1);  // 1 = apnea alarm 10
-    CHECK_VALUE(data[pos+3], 0);  // low MV alarm?
-    if (data[pos+4]) {
-        CHECK_VALUES(data[pos+4], 1, 2);  // 1 = disconnect alarm 15, 2 = disconnect alarm 60
+    int apnea_alarm = data[pos+2];
+    int low_mv_alarm = data[pos+3];
+    int disconnect_alarm = data[pos+4];
+    if (apnea_alarm) {
+        CHECK_VALUES(apnea_alarm, 1, 3);  // 1 = apnea alarm 10, 3 = apnea alarm 30
+    }
+    if (low_mv_alarm) {
+        if (low_mv_alarm < 20 || low_mv_alarm > 99) {
+            UNEXPECTED_VALUE(low_mv_alarm, "20-99");  // we've seen 20, 80 and 99, all of which correspond to the number on the report
+        }
+    }
+    if (disconnect_alarm) {
+        CHECK_VALUES(disconnect_alarm, 1, 2);  // 1 = disconnect alarm 15, 2 = disconnect alarm 60
     }
 
     return true;
@@ -6290,7 +6284,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
     int chunk_size = this->m_data.size();
     QVector<int> minimum_sizes;
     switch (this->familyVersion) {
-        case 0: minimum_sizes = { 0x12, 4, 3, 0x1f }; break;
+        case 0: minimum_sizes = { 0x12, 4, 3, 0x1f, 0, 4, 0, 2, 2 }; break;
         case 1: minimum_sizes = { 0x13, 7, 5, 0x20, 0, 4, 0, 2, 2, 4 }; break;
         case 2: minimum_sizes = { 0x13, 7, 5, 0x22, 0, 4, 0, 2, 2, 4 }; break;
     }
@@ -6308,7 +6302,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
             // make sure the handlers below don't go past the end of the buffer
             size = minimum_sizes[code];
         } else {
-            // We can't defer warning until later, because F5V0 doesn't have slice 4-9.
+            // We can't defer warning until later, because F5V0 doesn't have slice 9.
             UNEXPECTED_VALUE(code, "known slice code");
             ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
             break;
@@ -6434,7 +6428,7 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
             case 8:  // Time Elapsed? How is this different from 7?
                 tt += data[pos] | (data[pos+1] << 8);  // This also adds to the total duration (otherwise it won't match report)
                 break;
-            case 9:  // Humidifier setting change
+            case 9:  // Humidifier setting change, F5V1 and F5V2 only
                 tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
                 this->ParseHumidifierSetting60Series(data[pos+2], data[pos+3]);
                 break;
@@ -6646,10 +6640,18 @@ void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
 // 0x83 = 3, bypass = no
 // 0x84 = 4, bypass = no
 // 0x85 = 5, bypass = no
+// 0xA0 = Off, bypass = yes
 
 void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 {
-    if (humid & (0x40 | 0x20 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
+    if (humid & (0x40 | 0x10 | 0x08)) UNEXPECTED_VALUE(humid, "known bits");
+    if (humid & 0x20) {
+        if (this->family == 5) {
+            CHECK_VALUE(humid, 0xA0);  // only example of bypass set, unsure whether it can appear otherwise
+        } else {
+            CHECK_VALUE(humid & 0x20, 0);  // only ever seen on 950P, where "Bypass System One humidification" is "Yes"
+        }
+    }
     
     bool humidifier_present = ((humid & 0x80) != 0);  // humidifier connected
     int humidlevel = humid & 7;  // humidification level
