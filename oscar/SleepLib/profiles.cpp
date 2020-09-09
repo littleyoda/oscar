@@ -1724,69 +1724,70 @@ EventDataType Profile::calcPercentile(ChannelID code, EventDataType percent, Mac
 
     qint64 SN = 0;
     bool timeweight;
-    bool summaryOnly = false;
-
+    bool summaryOnly = true;
     do {
         Day *day = GetGoodDay(date, mt);
 
         if (day) {
             if (day->summaryOnly()) {
-                summaryOnly = true;
-                break;
+                date = date.addDays(1);
+                continue;
             }
+
+            summaryOnly = false;
 
             // why was this nested like this???
             //for (int i = 0; i < day->size(); i++) {
-                for (auto & sess : day->sessions) {
-                    if (!sess->enabled()) {
-                        continue;
-                    }
+            for (auto & sess : day->sessions) {
+                if (!sess->enabled()) {
+                    continue;
+                }
 
-                    gain = sess->m_gain[code];
+                gain = sess->m_gain[code];
 
-                    if (!gain) { gain = 1; }
+                if (!gain) { gain = 1; }
 
-                    vsi = sess->m_valuesummary.find(code);
+                vsi = sess->m_valuesummary.find(code);
 
-                    if (vsi == sess->m_valuesummary.end()) { continue; }
+                if (vsi == sess->m_valuesummary.end()) { continue; }
 
-                    tsi = sess->m_timesummary.find(code);
-                    timeweight = (tsi != sess->m_timesummary.end());
+                tsi = sess->m_timesummary.find(code);
+                timeweight = (tsi != sess->m_timesummary.end());
 
-                    QHash<EventStoreType, EventStoreType> &vsum = vsi.value();
-                    QHash<EventStoreType, quint32> &tsum = tsi.value();
+                QHash<EventStoreType, EventStoreType> &vsum = vsi.value();
+                QHash<EventStoreType, quint32> &tsum = tsi.value();
 
-                    if (timeweight) {
-                        for (auto k=tsum.begin(), tsumend=tsum.end(); k != tsumend; k++) {
-                            weight = k.value();
-                            value = EventDataType(k.key()) * gain;
+                if (timeweight) {
+                    for (auto k=tsum.begin(), tsumend=tsum.end(); k != tsumend; k++) {
+                        weight = k.value();
+                        value = EventDataType(k.key()) * gain;
 
-                            SN += weight;
-                            wmi = wmap.find(value);
+                        SN += weight;
+                        wmi = wmap.find(value);
 
-                            if (wmi == wmap.end()) {
-                                wmap[value] = weight;
-                            } else {
-                                wmi.value() += weight;
-                            }
+                        if (wmi == wmap.end()) {
+                            wmap[value] = weight;
+                        } else {
+                            wmi.value() += weight;
                         }
-                    } else {
-                        for (auto k=vsum.begin(), vsumend=vsum.end(); k!=vsumend; k++) {
-                            weight = k.value();
-                            value = EventDataType(k.key()) * gain;
+                    }
+                } else {
+                    for (auto k=vsum.begin(), vsumend=vsum.end(); k!=vsumend; k++) {
+                        weight = k.value();
+                        value = EventDataType(k.key()) * gain;
 
-                            SN += weight;
-                            wmi = wmap.find(value);
+                        SN += weight;
+                        wmi = wmap.find(value);
 
-                            if (wmi == wmap.end()) {
-                                wmap[value] = weight;
-                            } else {
-                                wmi.value() += weight;
-                            }
+                        if (wmi == wmap.end()) {
+                            wmap[value] = weight;
+                        } else {
+                            wmi.value() += weight;
                         }
                     }
                 }
-           // }
+            }
+            // }
         }
 
         date = date.addDays(1);
