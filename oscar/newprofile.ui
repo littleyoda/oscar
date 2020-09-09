@@ -40,7 +40,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="welcomePage">
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -149,7 +149,7 @@
            <item>
             <widget class="QGroupBox" name="passwordGroupBox">
              <property name="toolTip">
-              <string>Keep the kids out.. Nothing more.. This isn't meant to be uber security.</string>
+              <string>Very weak password protection and not recommended if security is required.</string>
              </property>
              <property name="title">
               <string>Password Protect Profile</string>
