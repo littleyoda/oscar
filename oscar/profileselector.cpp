@@ -353,6 +353,10 @@ void ProfileSelector::on_buttonDestroyProfile_clicked()
         QString name = proxy->data(proxy->index(ui->profileView->currentIndex().row(), 0, QModelIndex()), Qt::UserRole+2).toString();
         Profile * profile = Profiles::profiles[name];
         QString path = profile->Get(PrefMacro(STR_GEN_DataFolder));
+        if (path == (GetAppData() + "/Profiles/")) {
+            QMessageBox::warning(this, STR_MessageBox_Error, tr("The selected profile does not appear to contain any data and cannot be removed by OSCAR"), QMessageBox::Ok);
+            return;
+        }
 
         bool verified = true;
         if (profile->user->hasPassword()) {

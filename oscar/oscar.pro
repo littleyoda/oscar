@@ -258,7 +258,6 @@ SOURCES += \
     newprofile.cpp \
     overview.cpp \
     preferencesdialog.cpp \
-    profileselect.cpp \
     reports.cpp \
     sessionbar.cpp \
 #    updateparser.cpp \
@@ -337,7 +336,6 @@ HEADERS  += \
     newprofile.h \
     overview.h \
     preferencesdialog.h \
-    profileselect.h \
     reports.h \
     sessionbar.h \
 #    updateparser.h \
@@ -415,7 +413,6 @@ FORMS += \
     mainwindow.ui \
     oximetry.ui \
     preferencesdialog.ui \
-    profileselect.ui \
     newprofile.ui \
     exportcsv.ui \
 #    UpdaterWindow.ui \

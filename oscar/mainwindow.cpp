@@ -811,15 +811,18 @@ void MainWindow::importCPAPBackups()
 QStringList getDriveList()
 {
     QStringList drivelist;
+    bool crostini_detected = false;
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
 #if defined(Q_OS_LINUX)
     #define VFAT "vfat"
 #elif defined(Q_OS_WIN)
     #define VFAT "FAT32"
+    Q_UNUSED(crostini_detected)
 #elif defined(Q_OS_MAC)
     #define VFAT "msdos"
-#endif    
+    Q_UNUSED(crostini_detected)
+#endif
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
 #ifdef DEBUG_SDCARD            
@@ -833,20 +836,31 @@ QStringList getDriveList()
             if (storage.fileSystemType() == VFAT) {
                 qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
                 drivelist.append(storage.rootPath());
+            } else if (storage.fileSystemType() == "9p") {
+                qDebug() << "Crostini filesystem 9p found";
+                crostini_detected = true;
             }
         }
     }
 #endif
 #if defined(Q_OS_LINUX)
-    QString mntName("/mnt/chromeos/removable");
-    QDir mnt(mntName);
-    qDebug() << "Checking for" << mntName;
-    if ( mnt.exists() ) {
-        qDebug() << "Checking Crostini removable folders";
-        QFileInfoList mntPts = mnt.entryInfoList();
-        foreach ( const auto dir, mntPts ) {
-            qDebug() << "Adding" << dir.filePath() << "to drivelist";
-            drivelist.append(dir.filePath() );
+    if (crostini_detected) {
+	    QString mntName("/mnt/chromeos/removable");
+	    QDir mnt(mntName);
+	    qDebug() << "Checking for" << mntName;
+	    if ( mnt.exists() ) {
+	        qDebug() << "Checking Crostini removable folders";
+	        QFileInfoList mntPts = mnt.entryInfoList();
+	        foreach ( const auto dir, mntPts ) {
+	            qDebug() << "Adding" << dir.filePath() << "to drivelist";
+	            drivelist.append(dir.filePath() );
+	        }
+	    } else {
+            QMessageBox::warning(nullptr, STR_MessageBox_Warning,
+                QObject::tr("Chromebook file system detected, but no removable device found\n") +
+                QObject::tr("You must share your SD card with Linux using the ChromeOS Files program"));
+            drivelist.clear();
+            drivelist.append("CROSTINI");
         }
     }
 #endif    
@@ -903,6 +917,8 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     do {
         // Rescan in case card inserted
         QStringList AutoScannerPaths = getDriveList();
+        if (AutoScannerPaths.contains("CROSTINI"))    // no Crostini removable drives found!
+            break;                                    // break out of the 20 second wait loop
 //      AutoScannerPaths.push_back(lastpath);
         qDebug() << "Drive list size:" << AutoScannerPaths.size();
 
