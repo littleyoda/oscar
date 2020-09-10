@@ -1668,7 +1668,7 @@
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation>OSCAR版权归&amp;copy;2011-2018 Mark Watkins所有和部分版权归&amp;copy;2019 Nightowl 软件所有</translation>
+        <translation type="vanished">OSCAR版权归&amp;copy;2011-2018 Mark Watkins所有和部分版权归&amp;copy;2019 Nightowl 软件所有</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
@@ -1680,6 +1680,10 @@
     </message>
     <message>
         <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5669,7 +5673,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Patient Access</source>
-        <translation>患者通道</translation>
+        <translation type="vanished">患者通道</translation>
     </message>
     <message>
         <source>Climate Control</source>
@@ -6682,6 +6686,35 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Unable to create the OSCAR data folder at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The popout window is full. You should capture the existing
+popout window, delete it, then pop out this graph again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Essentials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to write to OSCAR data directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR cannot continue and is exiting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

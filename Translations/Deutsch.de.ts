@@ -98,7 +98,7 @@
     <name>CheckUpdates</name>
     <message>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfung auf neuere OSCAR-Versionen</translation>
     </message>
 </context>
 <context>
@@ -441,7 +441,7 @@
     </message>
     <message>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Modus- und Druckeinstellungen fehlen; die von gestern werden gezeigt.)</translation>
     </message>
 </context>
 <context>
@@ -1396,19 +1396,19 @@
     </message>
     <message>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Persönliche Daten anzeigen</translation>
     </message>
     <message>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Zip von OSCAR-Diagnoseprotokollen erstellen</translation>
     </message>
     <message>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach &amp;Updates suchen</translation>
     </message>
     <message>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfung auf nicht implementierte Updates</translation>
     </message>
 </context>
 <context>
@@ -1574,7 +1574,7 @@
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation>OSCAR ist urheberrechtlich geschützt &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nachteule Software</translation>
+        <translation type="vanished">OSCAR ist urheberrechtlich geschützt &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nachteule Software</translation>
     </message>
     <message>
         <source>Address</source>
@@ -1699,6 +1699,10 @@
     <message>
         <source>English</source>
         <translation>Englisch</translation>
+    </message>
+    <message>
+        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
+        <translation>OSCAR ist Copyright &amp;copy;2011-2018 Mark Watkins und Teile &amp;copy;2019-2020 Das OSCAR-Team</translation>
     </message>
 </context>
 <context>
@@ -3381,39 +3385,39 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Updates suchen</translation>
     </message>
     <message>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie verwenden eine Testversion von OSCAR. Testversionen suchen mindestens alle sieben Tage automatisch nach Updates.  Sie können das Intervall auf weniger als sieben Tage einstellen.</translation>
     </message>
     <message>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch nach Updates suchen</translation>
     </message>
     <message>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie oft OSCAR nach Aktualisierungen suchen sollte.</translation>
     </message>
     <message>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie daran interessiert sind, neue Funktionen und Fehlerbehebungen frühzeitig zu testen, klicken Sie hier.</translation>
     </message>
     <message>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich möchte experimentelle und Testaufbauten ausprobieren. (Bitte nur fortgeschrittene Benutzer.)</translation>
     </message>
     <message>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie helfen möchten, frühe Versionen von OSCAR zu testen, lesen Sie bitte die Wiki-Seite über das Testen von OSCAR.  Wir heißen alle willkommen, die OSCAR testen, an der Entwicklung von OSCAR mitwirken und bei Übersetzungen in bestehende oder neue Sprachen helfen möchten. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Berichte in Schwarzweiß drucken, die auf Nicht-Farbdruckern besser lesbar sein können</translation>
     </message>
     <message>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Berichte in Schwarzweiß (monochrom) drucken</translation>
     </message>
 </context>
 <context>
@@ -5769,7 +5773,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Patient Access</source>
-        <translation>Patientenzugriff</translation>
+        <translation type="vanished">Patientenzugriff</translation>
     </message>
     <message>
         <source>Entire Day&apos;s Flow Waveform</source>
@@ -6669,51 +6673,81 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte Channels.xml nicht parsen, OSCAR kann nicht weitermachen und wird beendet.</translation>
     </message>
     <message>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(vor 1 Tag)</translation>
     </message>
     <message>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%2 Tage zuvor)</translation>
     </message>
     <message>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Versionen Datei unsachgemäß gebildet</translation>
     </message>
     <message>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie verwenden die neueste Version von OSCAR</translation>
     </message>
     <message>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine neuere Version von OSCAR ist verfügbar</translation>
     </message>
     <message>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie verwenden Version %1</translation>
     </message>
     <message>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 ist verfügbar &lt;a href=&apos;%2&apos;&gt;hier&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationen über die neuere Testversion %1 sind unter &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt; verfügbar</translation>
     </message>
     <message>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Das Lesen von %1 dauerte %2 Sekunden)</translation>
     </message>
     <message>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach OSCAR-Updates suchen</translation>
     </message>
     <message>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Der OSCAR-Datenordner konnte nicht erstellt werden unter</translation>
+    </message>
+    <message>
+        <source>The popout window is full. You should capture the existing
+popout window, delete it, then pop out this graph again.</source>
+        <translation>Das Popup-Fenster ist voll. Sie sollten die vorhandenen
+Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</translation>
+    </message>
+    <message>
+        <source>Essentials</source>
+        <translation>Grundlagen</translation>
+    </message>
+    <message>
+        <source>Plus</source>
+        <translation>Plus</translation>
+    </message>
+    <message>
+        <source>Unable to write to OSCAR data directory</source>
+        <translation>OSCAR-Datenverzeichnis kann nicht beschrieben werden</translation>
+    </message>
+    <message>
+        <source>Error code</source>
+        <translation>Fehlercode</translation>
+    </message>
+    <message>
+        <source>OSCAR cannot continue and is exiting.</source>
+        <translation>OSCAR kann nicht weitergeführt werden und wird geschlossen.</translation>
+    </message>
+    <message>
+        <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
+        <translation>Kann nicht in das Debug-Protokoll schreiben. Sie können immer noch das Debug-Fenster (Hilfe/Fehlerbehebung/Debug-Fenster anzeigen) verwenden, aber das Debug-Protokoll wird nicht auf die Festplatte geschrieben.</translation>
     </message>
 </context>
 <context>
@@ -7169,7 +7203,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>vor 1 Tag</translation>
     </message>
 </context>
 <context>

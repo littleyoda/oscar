@@ -98,7 +98,7 @@
     <name>CheckUpdates</name>
     <message>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de nouvelles version d&apos;OSCAR</translation>
     </message>
 </context>
 <context>
@@ -441,7 +441,7 @@
     </message>
     <message>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Les paramètres de mode et de pression sont introuvables; ceux affichés sont ceux d&apos;hier)</translation>
     </message>
 </context>
 <context>
@@ -1396,19 +1396,19 @@
     </message>
     <message>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Affchage des données personnelles</translation>
     </message>
     <message>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un zip contenant les logs de diagnostic d&apos;OSCAR</translation>
     </message>
     <message>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification de disponibilté de &amp;mise à jour</translation>
     </message>
     <message>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>La fonction de vérification de disponibilté de mise à jour  n&apos;est pas implémentée</translation>
     </message>
 </context>
 <context>
@@ -3369,39 +3369,39 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification de disponibilté de mise à jour</translation>
     </message>
     <message>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous utilisez une version de test d&apos;OSCAR. Les versions de test vérifient la disponibilité de mise à jour au moins 1 fois par semaine. You pouvez diminuez cette période.</translation>
     </message>
     <message>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification automatique de la disponibilté de mise à jour</translation>
     </message>
     <message>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Intervale de vérification de disponibilité de mise à jour.</translation>
     </message>
     <message>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si tester les nouvelles fonctionnalités vous interresse, cliquer ici.</translation>
     </message>
     <message>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Je veux tester les préversions (seulement pour les utilisateurs expérimentés)</translation>
     </message>
     <message>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vous voulez aider à tester les préversion d&apos;OSCAR, veillez consulter le wiki sur le sujet. Nous acceptons toutes les bonnes volontés : testeurs, développeur, traducteur que ce soit dans une langue déjà disponible ou dans une nouvelle langue. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer le rapport en noir et blanc. Ceci peut permettre un meuilleur rendu sur les imprimantes monochrome</translation>
     </message>
     <message>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer le rapport en noir et blanc (monochrome)</translation>
     </message>
 </context>
 <context>
@@ -6672,51 +6672,51 @@ corporelle</translation>
     </message>
     <message>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>ne peut pas interpréter Channels.xml. OSCAR ne peut continuer et va s&apos;arrêter.</translation>
     </message>
     <message>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(il y a 1 jour)</translation>
     </message>
     <message>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(il y a %2 jours)</translation>
     </message>
     <message>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier de description des nouvelles versions est invalide</translation>
     </message>
     <message>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous utilisez la dernière version d&apos;OSCAR</translation>
     </message>
     <message>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Une version plus récente d&apos;OSCAR est disponible</translation>
     </message>
     <message>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous utilisez la version %1</translation>
     </message>
     <message>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 est disponible &lt;a href=&apos;%2&apos;&gt;ici&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Des informations sur la préversion %1 sont disponibles ici : &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Lire %1 prend %2 secondes)</translation>
     </message>
     <message>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification de disponibilté de mise à jour</translation>
     </message>
     <message>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible  de créer le répertoire pour les données d&apos;OSCAR</translation>
     </message>
 </context>
 <context>
@@ -7172,7 +7172,7 @@ corporelle</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a 1 jour</translation>
     </message>
 </context>
 <context>
