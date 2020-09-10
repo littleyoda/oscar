@@ -36,11 +36,13 @@ echo Version: ${VERSION}
 
 # application name
 appli_name="OSCAR"
+package_name="oscar"
 pre_inst="tst_user.sh"
 # build folder (absolute path is better)
 build_folder="/home/$USER/OSCAR/build"
 if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
     appli_name=${appli_name}-test
+    package_name=${package_name}-test
     post_inst="ln_usrbin-test.sh"
     pre_rem="rm_usrbin-test.sh"
     post_rem="clean_rm-test.sh"
@@ -98,7 +100,7 @@ mkdir ${temp_folder}/bin
 mkdir ${temp_folder}/share
 mkdir ${temp_folder}/share/${appli_name}
 mkdir ${temp_folder}/share/doc
-share_doc_folder="${temp_folder}/share/doc/${appli_name}"
+share_doc_folder="${temp_folder}/share/doc/${package_name}"
 mkdir ${share_doc_folder}
 mkdir ${temp_folder}/share/icons
 mkdir ${temp_folder}/share/icons/hicolor
@@ -121,22 +123,29 @@ cp ./${appli_name}.png ${temp_folder}/share/icons/hicolor/48x48/apps/${appli_nam
 cp ./${appli_name}.svg ${temp_folder}/share/icons/hicolor/scalable/apps/${appli_name}.svg
 cp ./${appli_name}.desktop ${temp_folder}/share/applications/${appli_name}.desktop
 
-echo "Copyright 2019-2020 oscar-team.org <oscar@oscar-team.org>" > $share_doc_folder/copyright
+#echo "Copyright 2019-2020 oscar-team.org <oscar@oscar-team.org>" > $share_doc_folder/copyright
+#echo "Licensed under /usr/share/common-licenses/GPL-3" >> $share_doc_folder/copyright
+cp ./copyright $share_doc_folder/copyright
 
-changelog_file="$share_doc_folder/changelog"
+changelog_file="./changelog"
 
 #automatic changelog as a bad name
 # need to generate one and say fpm to use it instead of create one
 # it seems that it needs both of them...
 
-# creation of the changelog.Debian.gz
+# creation of the Debian changelog
 echo "$appli_name (${VERSION}-${ITERATION}) whatever; urgency=medium" > $changelog_file
 echo "" >> $changelog_file
 echo "  * Package created with FPM." >> $changelog_file
 echo "" >> $changelog_file
-echo " -- oscar-team.org <oscar@oscar-team.org>" >> $changelog_file
-gzip --best $changelog_file
-description='Open Source CPAP Analysis Reporter\n<extended description needed to be filled with the right value>'
+echo "  * See the Release Notes under Help/About menu" >> $changelog_file
+echo "" >> $changelog_file
+echo -n " -- oscar-team.org <oscar@oscar-team.org> " >> $changelog_file
+date -Iminutes >> $changelog_file
+cp $changelog_file $share_doc_folder/changelog
+gzip --best $share_doc_folder/changelog
+
+description='Open Source CPAP Analysis Reporter\nProvides graphical and statistical display of the CPAP stored data'
 # trick for dummies : need to use echo -e to take care of \n (cariage return to slip description and extra one
 description=$(echo -e $description)
 
@@ -154,7 +163,6 @@ fpm --input-type dir --output-type deb  \
     --category misc               \
     --deb-priority optional \
     --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \
-    --license GPL-v3                \
     --vendor oscar-team.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
@@ -162,7 +170,7 @@ fpm --input-type dir --output-type deb  \
     --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends "libqt5core5a > $qtver"   \
+    --depends "libqt5core5a > 5.9"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \

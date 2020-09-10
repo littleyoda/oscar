@@ -90,6 +90,5 @@ if [ -f "$file" ]; then
     rm $file
 fi
 
-if [ -x /usr/bin/update-menus ]; then update-menus; fi
 
 
