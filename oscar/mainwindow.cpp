@@ -818,9 +818,11 @@ QStringList getDriveList()
     #define VFAT "vfat"
 #elif defined(Q_OS_WIN)
     #define VFAT "FAT32"
+    Q_UNUSED(crostini_detected)
 #elif defined(Q_OS_MAC)
     #define VFAT "msdos"
-#endif    
+    Q_UNUSED(crostini_detected)
+#endif
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
 #ifdef DEBUG_SDCARD            
