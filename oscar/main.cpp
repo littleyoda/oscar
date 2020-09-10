@@ -120,9 +120,12 @@ bool processPreferenceFile( QString path ) {
     tmp.open(QIODevice::WriteOnly);
     QTextStream instr(&fl);
     QTextStream outstr(&tmp);
+    bool isSleepyHead = false;
     while (instr.readLineInto(&line)) {
+        if (line.contains("<SleepyHead>"))  // Is this SleepyHead or OSCAR preferences file?
+            isSleepyHead = true;
         line.replace("SleepyHead","OSCAR");
-        if (line.contains("VersionString")) {
+        if (isSleepyHead && line.contains("VersionString")) {
             int rtAngle = line.indexOf(">", 0);
             int lfAngle = line.indexOf("<", rtAngle);
             line.replace(rtAngle+1, lfAngle-rtAngle-1, "1.0.0-beta");
@@ -185,7 +188,7 @@ bool migrateFromSH(QString destDir) {
 
     while (selectingFolder) {
         datadir = QFileDialog::getExistingDirectory(nullptr,
-                  QObject::tr("Choose the SleepyHead data folder to migrate")+" "+
+                  QObject::tr("Choose the SleepyHead or OSCAR data folder to migrate")+" "+
                   QObject::tr("or CANCEL to skip migration."),
                   homeDocs, QFileDialog::ShowDirsOnly);
         qDebug() << "Migration folder selected: " + datadir;
@@ -200,7 +203,7 @@ bool migrateFromSH(QString destDir) {
             if (!file.exists() || !dirP.exists()) {       // It doesn't have a Preferences.xml file or a Profiles directory in it
                 // Not a new directory.. nag the user.
                 QMessageBox::warning(nullptr, STR_MessageBox_Error,
-                                     QObject::tr("The folder you chose does not contain valid SleepyHead data.") +
+                                     QObject::tr("The folder you chose does not contain valid SleepyHead or OSCAR data.") +
                                      "\n\n"+QObject::tr("You cannot use this folder:")+" " + datadir,
                                      QMessageBox::Ok);
                 continue;   // Nope, don't use it, go around the loop again
@@ -486,7 +489,8 @@ int main(int argc, char *argv[]) {
         if ( ! force_data_dir ) {       // unless they explicitly selected it by --datadir param
             if (QMessageBox::question(nullptr, STR_MessageBox_Question,
                                       QObject::tr("OSCAR will set up a folder for your data.")+"\n"+
-                                      QObject::tr("If you have been using SleepyHead, OSCAR can copy your old data to this folder later.")+"\n"+
+                                      QObject::tr("If you have been using SleepyHead or an older version of OSCAR,") + "\n" +
+                                      QObject::tr("OSCAR can copy your old data to this folder later.")+"\n"+
                                       QObject::tr("We suggest you use this folder: ")+QDir::toNativeSeparators(GetAppData())+"\n"+
                                       QObject::tr("Click Ok to accept this, or No if you want to use a different folder."),
                                       QMessageBox::Ok | QMessageBox::No, QMessageBox::Ok) == QMessageBox::No) {
@@ -539,9 +543,9 @@ int main(int argc, char *argv[]) {
 #else
     if ( ! newDir.exists() || newDir.isEmpty() ) {        // directory doesn't exist yet or is empty, try to migrate old data
 #endif
-        if (QMessageBox::question(nullptr, QObject::tr("Migrate SleepyHead Data?"),
-                                  QObject::tr("On the next screen OSCAR will ask you to select a folder with SleepyHead data") +"\n" +
-                                  QObject::tr("Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data."),
+        if (QMessageBox::question(nullptr, QObject::tr("Migrate SleepyHead or OSCAR Data?"),
+                                  QObject::tr("On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data") +"\n" +
+                                  QObject::tr("Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data."),
                                   QMessageBox::Ok|QMessageBox::No, QMessageBox::Ok) == QMessageBox::Ok) {
             migrateFromSH( GetAppData() );              // doesn't matter if no migration
         }
