@@ -1147,6 +1147,9 @@ void Scan()
     // Iterate through subdirectories and load profiles..
     for (auto & fi : list) {
         QString npath = fi.canonicalFilePath();
+        QDir profilePath(npath);
+        if (profilePath.isEmpty())  // skip any empty folders
+            continue;
         Profile *prof = new Profile(npath);
         //prof->Open();
 
