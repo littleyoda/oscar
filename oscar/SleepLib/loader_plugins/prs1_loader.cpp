@@ -251,6 +251,7 @@ struct PRS1TestedModel
 static const PRS1TestedModel s_PRS1TestedModels[] = {
     // This first set says "(Philips Respironics)" intead of "(System One)" on official reports.
     { "251P", 0, 2, "REMstar Plus (System One)" },  // (brick)
+    { "450P", 0, 2, "REMstar Pro (System One)" },
     { "450P", 0, 3, "REMstar Pro (System One)" },
     { "451P", 0, 2, "REMstar Pro (System One)" },
     { "451P", 0, 3, "REMstar Pro (System One)" },
@@ -4519,7 +4520,13 @@ bool PRS1DataChunk::ParseSummaryF0V23()
                         CHECK_VALUES(delta, 1, 59);  // we've seen the 550P start its first mask-on at these time deltas
                     }
                 } else {
-                    if (delta % 60) UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
+                    if (delta % 60) {
+                        if (this->familyVersion == 2 && ((delta + 1) % 60) == 0) {
+                            // For some reason F0V2 frequently is frequently 1 second less than whole minute intervals.
+                        } else {
+                            UNEXPECTED_VALUE(delta, "even minutes");  // mask-off events seem to be whole minutes?
+                        }
+                    }
                 }
                 tt += delta;
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
@@ -4881,6 +4888,12 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
     bool no_data = (humid2 & 0x10) != 0;  // As described in chart, settings still show up
     int tubepresent = (humid2 & 0x08) != 0;
     bool humidsystemone = (humid2 & 0x04) != 0;  // Set on "System One" humidification mode reports when tubepresent is false
+    if (humidsystemone && tubepresent) {
+        // On a 560P, we've observed a spurious tubepresent bit being set during two sessions.
+        // Those sessions (and the ones that followed) used a 22mm hose.
+        CHECK_VALUE(add_setting, false);  // We've only seen this appear during a session, not in the initial settings.
+        tubepresent = false;
+    }
 
     // When no_data, reports always say "System One" with humidity level 3, regardless of humidlevel and humidsystemone
 
