@@ -277,6 +277,8 @@ struct SelectionHistoryItem {
     }
     quint64 minx;
     quint64 maxx;
+
+    SelectionHistoryItem& operator=(const SelectionHistoryItem& other) = default;
 };
 
 class MyDockWindow:public QMainWindow

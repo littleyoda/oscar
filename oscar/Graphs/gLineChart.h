@@ -53,6 +53,8 @@ public:
         return value;
     }
 
+    DottedLine& operator=(const DottedLine& other) = default;
+
     ChannelID code;
     ChannelCalcType type;
     EventDataType value;
