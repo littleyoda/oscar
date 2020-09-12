@@ -163,6 +163,7 @@ fpm --input-type dir --output-type deb  \
     --category misc               \
     --deb-priority optional \
     --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \
+    --license GPL3+
     --vendor oscar-team.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
@@ -170,7 +171,7 @@ fpm --input-type dir --output-type deb  \
     --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-    --depends "libqt5core5a > 5.9"   \
+    --depends "libqt5core5a >= 5.9"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \
