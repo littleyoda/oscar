@@ -121,7 +121,7 @@
     <message>
         <location filename="../oscar/checkupdates.cpp" line="240"/>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın yeni sürümü kontrol ediliyor</translation>
     </message>
 </context>
 <context>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1250"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Mod ve Basınç ayarları bulunamadı; dünkü ayarlar gösteriliyor.)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2295"/>
@@ -1052,7 +1052,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3238"/>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın teşhis günlüklerinin zip dosyasını oluştur</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3243"/>
@@ -1102,12 +1102,12 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3307"/>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişisel Verileri Göster</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3315"/>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2944"/>
@@ -1586,7 +1586,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1363"/>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncelleme kontrolü henüz eklenmedi</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1865"/>
@@ -2074,7 +2074,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın telif hakkı &amp;copy;2011-2018 Mark Watkins&apos;e ve bazı kısımları &amp;copy;2019-2020 OSCAR Takımı&apos;ına aittir</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>
@@ -3632,7 +3632,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2648"/>
         <source>Overview Linecharts</source>
-        <translation>Çigi Grafikleri Gözden Geçir</translation>
+        <translation>Çizgi Grafikleri Gözden Geçir</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2046"/>
@@ -3754,37 +3754,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2068"/>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2083"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın bir deneme sürümünü kullanmaktasınız. Deneme sürümleri otomatik olarak yedi günde bir güncelleme kontrolü yaparlar. Bu aralığı yedi günden daha kısa bir süreye ayarlayabilirsiniz.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2101"/>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeleri otomatik olarak kontrol et</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2123"/>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın hangi sıklıkta güncellemeleri kontrol edeceği.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2204"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer yeni özellikleri ve hata ayıklamalarını test etmek ilginizi çekiyorsa buraya klikleyin.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2207"/>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneysel sürümleri ve test sürümlerini denemek istiyorum. (Lütfen sadece ileri kullanıcılar.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2220"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer OSCAR&apos;ın erken deneme sürümlerinin test edilmesine yardımcı olmak istiyorsanız, OSCAR&apos;ı test etmekle ilgili Wiki sayfasına bakınız.  OSCAR&apos;ı test etmek isteyen, OSCAR&apos;ın geliştirilmesine yardımcı olmak ve mevcut veya yeni dillere çeviriler konusunda katkıda bulunmak isteyen herkesi aramıza davet ediyoruz.. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2285"/>
@@ -3926,12 +3926,12 @@ Deneyin ve beğenip beğenmediğinizi görün.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2747"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Raporları siyah beyaz yazdır, renkli olmayan yazıcılarda daha okunabilir olabilir</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2750"/>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Raporları siyah beyaz yazdır (monokrom)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2782"/>
@@ -4562,7 +4562,7 @@ Bunu şimdi yapmak ister misiniz?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="385"/>
         <source>If you&apos;re trying to delete because you forgot the password, you need to either reset it or delete the profile folder manually.</source>
-        <translation>Eğer şifreyi unuttuğunuz için silmeye çalışıyorsanız, ya sıfırlamanız, ya porfil klasörünü manüel olarak silmeniz gerekiyor.</translation>
+        <translation>Eğer şifreyi unuttuğunuz için silmeye çalışıyorsanız, ya sıfırlamanız, ya profil klasörünü manüel olarak silmeniz gerekiyor.</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="395"/>
@@ -4587,7 +4587,7 @@ Bunu şimdi yapmak ister misiniz?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="414"/>
         <source>Sorry</source>
-        <translation>Üzgünüm</translation>
+        <translation>Üzgünüz</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="414"/>
@@ -5557,7 +5557,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="791"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="212"/>
         <source>Flow Rate</source>
-        <translation>Akım Hızı</translation>
+        <translation>Akış Hızı</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="792"/>
@@ -7170,7 +7170,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="111"/>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Channels.xml çözümlenemedi, OSCAR devam edemeyecek ve kapanıyor.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="290"/>
@@ -7516,27 +7516,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="553"/>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu adreste OSCAR veri klasörü yaratılamadı</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="563"/>
         <source>Unable to write to OSCAR data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın veri klasörüne yazılamıyor</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="565"/>
         <source>Error code</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata kodu</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="566"/>
         <source>OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR devam edemiyor ve kapanacak.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="577"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata ayıklama günlüğüne yazılamıyor. Hata ayıklama bölmesini hala kullanabilirsiniz (Yardım / Sorun Giderme / Hata Ayıklama Bölmesini Göster) , ancak hata ayıklama günlüğü diske yazılmaz.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="635"/>
@@ -7855,12 +7855,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="360"/>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(1 gün önce)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="361"/>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%2 gün önce)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="366"/>
@@ -7994,7 +7994,8 @@ Lütfen CPAP Verisini Yeniden Oluşturun</translation>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="473"/>
         <source>The popout window is full. You should capture the existing
 popout window, delete it, then pop out this graph again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılır pencere dolu. Mevcut açılır pencereyi yakalamanız
+silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi gerekiyor.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1445"/>
@@ -8210,12 +8211,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="95"/>
         <source>VPAPauto</source>
-        <translation>VPAPoto</translation>
+        <translation>VPAPauto</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="97"/>
         <source>ASVAuto</source>
-        <translation>ASVOto</translation>
+        <translation>ASVAuto</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="100"/>
@@ -8340,12 +8341,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
         <source>Essentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Temeller</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus</translation>
     </message>
     <message>
         <source>Patient Access</source>
@@ -8485,7 +8486,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="85"/>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
-        <translation>Viatom chiazınız OSCAR&apos;ın daha önce hiç görmediği bir veri üretti.</translation>
+        <translation>Viatom cihazınız OSCAR&apos;ın daha önce hiç görmediği bir veri üretti.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="86"/>
@@ -8505,42 +8506,42 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="152"/>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni sürümler dosyası uygun olmayan bir biçimde şekillendirilmiş</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="168"/>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın en son sürümünü kullanmaktasınız</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR&apos;ın daha güncel bir sürümü mevcut</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullandığınız versiyon %1</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="173"/>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 &lt;a href=&apos;%2&apos;&gt;burada&lt;/a&gt; mevcut.</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha yeni deneme sürümü olan %1 hakkında bilgi a href=&apos;%2&apos;&gt;%2&lt;/a&gt; adresinde mevcuttur</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="183"/>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1 i okumak %2 saniye sürdü)</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="204"/>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR Güncellemelerini Kontrol Et</translation>
     </message>
 </context>
 <context>
@@ -9105,7 +9106,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 gün önce</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="316"/>

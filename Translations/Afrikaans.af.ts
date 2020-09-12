@@ -121,7 +121,7 @@
     <message>
         <location filename="../oscar/checkupdates.cpp" line="240"/>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Besig om te soek vir nuwer OSCAR weergawes</translation>
     </message>
 </context>
 <context>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1250"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Mode en Druk instellings nie teenwoordig nie; vorige dag se waardes vertoon.)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1736"/>
@@ -1040,7 +1040,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3238"/>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Skep zip van OSCAR disgnostiese lyste</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3243"/>
@@ -1090,12 +1090,12 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3307"/>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertoon Persoonlike Data</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3315"/>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Soek Vir &amp;Opdaterings</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2913"/>
@@ -1480,7 +1480,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1363"/>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Soek vir opdaterings wat nie implementeer is nie</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1412"/>
@@ -2094,7 +2094,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR is kopiereg &amp;copy;2011-2018 Mark Watkins en gedeeltes &amp;copy;2019-2020 Die OSCAR Span</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="111"/>
@@ -3778,37 +3778,37 @@ As u &apos;n paar verskillende maskers gebruik, kies eerder gemiddelde waardes. 
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2068"/>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Soek vir Opdaterings</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2083"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>U gebruik &apos;n toetsweergawe van OSCAR. Toetsweergawes soek outomaties vir opdaterings ten minste elke sewe dae. U kan hierdie tyd korter stel as sewe dae.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2101"/>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Soek outomaties vir opdaterings</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2123"/>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoe gereeld OSCAR moet soek vir opdaterings</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2204"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Indien u belangstel om nuwe funksies en foutregstellings te help toets, kliek hier.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2207"/>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ek wil eksperimentele en toetsweergawes probeer (Gevorderde gebruikers alleenlik, asseblief).</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2220"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Indien u wil help om vroeë weergawes van OSCAR te help toets, sien asseblief die Wiki blasy oor toetsing van OSCAR. Ons verwelkom almal wat OSCAR wil help toets, ontwikkel, en wil help met vertalings van bestaande of nuwe tale.  https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2285"/>
@@ -3955,12 +3955,12 @@ Probeer dit en kyk of u daarvan hou.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2747"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Druk verslae in swart en wit, wat meer leesbaar kan wees op nie-kleur drukkers</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2750"/>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Druk verslae in swart en wit (monochroom)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2782"/>
@@ -5979,94 +5979,94 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9137"/>
         <source>CPAP-Check</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP-Toets</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9139"/>
         <source>AutoCPAP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9140"/>
         <source>Auto-Trial</source>
-        <translation type="unfinished"></translation>
+        <translation>Outo-Nagaan</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9142"/>
         <source>AutoBiLevel</source>
-        <translation type="unfinished"></translation>
+        <translation>OutoBiLevel</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9144"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9145"/>
         <source>S/T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9147"/>
         <source>S/T - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>S/T - AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9148"/>
         <source>PC - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>PC - AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9174"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9176"/>
         <source>Flex Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Flex Sluit</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9175"/>
         <source>Whether Flex settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Of Flex instellings beskikbaar is vir u.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9184"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyd wat dit neem om oor te gaan van EPAP na IPAP, hoe hoër die syfer hoe stadiger die oorgang</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9190"/>
         <source>Rise Time Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Stygtyd Sluit</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9191"/>
         <source>Whether Rise Time settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Of Stygtyd instellings beskikbaar is vir u.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9192"/>
         <source>Rise Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Styg Sluit</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9215"/>
         <source>Passover</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdamping</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9236"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9237"/>
         <source>Mask Resistance Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Masker Weestand Instelling</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9238"/>
         <source>Mask Resist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Masker Weest.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9246"/>
         <source>Hose Diam.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pyp Dia.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9249"/>
@@ -6076,155 +6076,155 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9254"/>
         <source>Tubing Type Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Pyptipe Sluiting</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9255"/>
         <source>Whether tubing type settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Of pyp tipe instellings beskikbaar is vir u.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9256"/>
         <source>Tube Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Pyp Sluit</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9263"/>
         <source>Mask Resistance Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Masker Weerstand Sluit</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9264"/>
         <source>Whether mask resistance settings are available to you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Of masker weerstand instellings beskikbaar is vir u.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9265"/>
         <source>Mask Res. Lock</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9300"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Of u masjien AHI vertoon op die ingeboude skerm.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9308"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9310"/>
         <source>Ramp Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Helling Tipe</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9309"/>
         <source>Type of ramp curve to use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipe helling kurwe om te gebruik</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9312"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineêr</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9313"/>
         <source>SmartRamp</source>
-        <translation type="unfinished"></translation>
+        <translation>SlimHelling</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9317"/>
         <source>Backup Breath Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Rugsteun Asem Mode</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9318"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Die tipe rugsteun asemtempo in gebruik: (geen (af), outomaties of vas</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9319"/>
         <source>Breath Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Asem Tempo</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9323"/>
         <source>Fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaste</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9327"/>
         <source>Fixed Backup Breath BPM</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaste Rugsteun Asem BPM</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9328"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum Asem per minuut (BPM) waaronder &apos;n gemete asemingestel sal word</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9329"/>
         <source>Breath BPM</source>
-        <translation type="unfinished"></translation>
+        <translation>Asem BPM</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9334"/>
         <source>Timed Inspiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemete Inspirasie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9335"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Die tyd wat &apos;n gemete asem sal IPAP verskaf voor oorskakeling na EPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9336"/>
         <source>Timed Insp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemete Insp.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9341"/>
         <source>Auto-Trial Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Outo Toets Tydperk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9342"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Die aantal dae in die Outo CPAP toets periode, waarna die masjien sal terugkeer na CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9343"/>
         <source>Auto-Trial Dur.</source>
-        <translation type="unfinished"></translation>
+        <translation>Outo-Toets Tyd.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9348"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9350"/>
         <source>EZ-Start</source>
-        <translation type="unfinished"></translation>
+        <translation>EZ-Begin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9349"/>
         <source>Whether or not EZ-Start is enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>OF EZ-Begin geaktiveer is</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9357"/>
         <source>Variable Breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Veranderlike Asemhaling</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9358"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
-        <translation type="unfinished"></translation>
+        <translation>ONBEVESTIG: Moontlike veranderende asemhaling, wat periodes van hoë afwyking is van die piek inspirasie vloei tendens</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9381"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9383"/>
         <source>Peak Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Piek Vloei</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9382"/>
         <source>Peak flow during a 2-minute interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Piek vloei gedurende a&apos;n 2 minute interval</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9248"/>
@@ -6555,7 +6555,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wanneer u opgradeer, &lt;font size=+1&gt;KAN U NIE&lt;/font&gt; meer hierdie profiel gebruik met die vorige weergawe nie.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="573"/>
@@ -7212,7 +7212,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="111"/>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon nie Channels.xml verwerk nie, OSCAR kan nie voortgaan nie en stop nou.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="290"/>
@@ -7493,12 +7493,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="327"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR het gestop na &apos;n versoenbaarheidsprobleem met u grafiese hardeware.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="328"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om hierdie op te los, skakel OSCAR oor na &apos;n statiger maar meer aanpasbare metode van vertoon.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="488"/>
@@ -7558,27 +7558,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="553"/>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan nie die datalêer skep nie by</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="563"/>
         <source>Unable to write to OSCAR data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan nie skry nie na die OSCAR data lêer</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="565"/>
         <source>Error code</source>
-        <translation type="unfinished"></translation>
+        <translation>Foutkode</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="566"/>
         <source>OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR kan nie voorgaan nie</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="577"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan nie die ontfoutingslys opdateer nie. U kan steeds die ontfoutingsblad gebruik (Help/Troubleshooting/Show Debug Pane) maar die ontvoutingslys sal nie na die skr=yf geskryf word nie.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="635"/>
@@ -7645,7 +7645,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2123"/>
         <source>Recompressing Session Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pers Sessie Lêers Saam</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2662"/>
@@ -7874,7 +7874,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1559"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="166"/>
@@ -7897,12 +7897,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="360"/>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(1 dag gelede)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="361"/>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%2 dae gelede)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="366"/>
@@ -8036,7 +8036,8 @@ Herbou Asseblief Die CPAP Data</translation>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="473"/>
         <source>The popout window is full. You should capture the existing
 popout window, delete it, then pop out this graph again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die opspring venster is vol. U moet die bestaande opspring venster weer
+vang, uitvee en dan hierdie grafiek weer laat opspring.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1445"/>
@@ -8293,17 +8294,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="94"/>
         <source>?5?</source>
-        <translation type="unfinished"></translation>
+        <translation>?5?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="98"/>
         <source>?9?</source>
-        <translation type="unfinished"></translation>
+        <translation>?9?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>?10?</source>
-        <translation type="unfinished"></translation>
+        <translation>?10?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
@@ -8383,12 +8384,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
         <source>Essentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Noodsaaklikhede</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus</translation>
     </message>
     <message>
         <source>Patient Access</source>
@@ -8549,42 +8550,42 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="152"/>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuwe weergawe se lêer onsuksesvol gevorm</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="168"/>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>U gebruik die nuutste weergawe van OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;n Nuwer weergawe van OSCAR is beskikbaar</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>U gebruik weergawe %1</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="173"/>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 is beskikbaar &lt;a href=&apos;%2&apos;&gt;hier&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Informasie aangaande &apos;n nuwer toets weergawe %1 is beskikbaar by &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="183"/>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Lees van %1 het %2 sekondes geneem)</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="204"/>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyk vir OSCAR Opdaterings</translation>
     </message>
 </context>
 <context>
@@ -9150,7 +9151,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag gelede</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="316"/>

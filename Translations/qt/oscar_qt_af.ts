@@ -1443,10 +1443,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Password Protect Profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1672,6 +1668,10 @@
     </message>
     <message>
         <source>&amp;Close this window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very weak password protection and not recommended if security is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3321,137 +3321,6 @@ Would you like do this now?</source>
     </message>
 </context>
 <context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProfileSelector</name>
     <message>
         <source>Form</source>
@@ -3655,6 +3524,10 @@ Would you like do this now?</source>
     </message>
     <message>
         <source>Profile: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6290,10 +6163,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Test #1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6350,15 +6219,7 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>or CANCEL to skip migration.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6391,10 +6252,6 @@ TTIA: %1</source>
     </message>
     <message>
         <source>OSCAR will set up a folder for your data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6431,18 +6288,6 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Data directory:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6626,6 +6471,47 @@ TTIA: %1</source>
     </message>
     <message>
         <source>No oximetry data has been imported yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For internal use only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have been using SleepyHead or an older version of OSCAR,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR can copy your old data to this folder later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Migrate SleepyHead or OSCAR Data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chromebook file system detected, but no removable device found
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

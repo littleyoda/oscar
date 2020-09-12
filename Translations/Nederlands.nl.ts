@@ -73,7 +73,7 @@
         <location filename="../oscar/aboutdialog.cpp" line="127"/>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
         <translation>Dit is nog geen uiteindelijke versie, dus maak een backup van de map OSCAR-Data voordat U verder gaat. Dan kunt U terugvallen op een vorige versie.
-U vindt de vertaling van onderstaande lijst in de wiki van OSCAR, hier: http://www.apneaboard.com/wiki/index.php/OSCAR_Release_Notes</translation>
+&lt;b&gt;U vindt de vertaling van onderstaande lijst in de wiki van OSCAR, zie hieronder.&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="139"/>
