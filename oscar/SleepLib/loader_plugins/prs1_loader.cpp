@@ -3331,7 +3331,10 @@ bool PRS1DataChunk::ParseEventsF3V6(void)
                 // no additional data
                 this->AddEvent(new PRS1ApneaAlarmEvent(t, 0));
                 break;
-            // case 0x0d?
+            case 0x0d:  // Low MV Alarm
+                // no additional data
+                this->AddEvent(new PRS1LowMinuteVentilationAlarmEvent(t, 0));
+                break;
             // case 0x0e?
             // case 0x0f?
             default:
@@ -5963,7 +5966,7 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
                 }
                 CHECK_VALUE(data[pos+3], 1);
                 CHECK_VALUE(data[pos+4], 1);
-                CHECK_VALUE(data[pos+5], 0);
+                CHECK_VALUES(data[pos+5], 0, 1);  // 1 = Low Minute Ventilation Alarm set to 1
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
                 CHECK_VALUE(data[pos+8], 0);  // 1 = patient disconnect alarm of 15 sec on F5V3, not sure where time is encoded
@@ -7139,7 +7142,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         if (tubepresent) {
             // All tube temperature and humidity levels seen.
         } else if (humidadaptive) {
-            if (humidlevel == 1) UNEXPECTED_VALUE(humidlevel, "[0,2-5]");
+            // All humidity levels seen.
         } else if (humidfixed) {
             if (humidlevel == 0) UNEXPECTED_VALUE(humidlevel, "1-5");
         }
@@ -8341,8 +8344,12 @@ bool PRS1Import::ImportEvents()
         // First make a list of the mask-on slices that will be imported (nonzero duration)
         QVector<SessionSlice> maskOn;
         for (auto & slice : m_slices) {
-            if (slice.status == MaskOn && slice.end > slice.start) {
-                maskOn.append(slice);
+            if (slice.status == MaskOn) {
+                if (slice.end > slice.start) {
+                    maskOn.append(slice);
+                } else {
+                    qWarning() << this->sessionid << "Dropping empty mask-on slice:" << ts(slice.start);
+                }
             }
         }
         // Then go through each required channel and make sure each eventlist is within
