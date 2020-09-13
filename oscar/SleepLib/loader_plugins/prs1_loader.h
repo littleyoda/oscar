@@ -25,7 +25,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation
 // BEFORE making a release
-const int prs1_data_version = 19;
+const int prs1_data_version = 20;
 //
 //********************************************************************************************
 #if 0  // Apparently unused
@@ -172,7 +172,7 @@ public:
     bool ParseSummaryF5V3(void);
 
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for CPAP/APAP family versions 2, 3, 4, or 5
-    void ParseFlexSettingF0V234(quint8 flex, int prs1mode);
+    void ParseFlexSettingF0V2345(quint8 flex, int prs1mode);
     
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for ASV family versions 0, 1, or 2
     void ParseFlexSettingF5V012(quint8 flex, int prs1mode);

@@ -218,7 +218,7 @@ void PRS1Loader::LogUnexpectedMessage(const QString & message)
 }
 
 
-enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_PFlex, FLEX_Unknown  };
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_PFlex, FLEX_Flex, FLEX_Unknown = -1  };
 
 enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 
@@ -4275,6 +4275,12 @@ bool PRS1Import::ImportCompliance()
             case PRS1_SETTING_PRESSURE:
                 session->settings[CPAP_Pressure] = e->value();
                 break;
+            case PRS1_SETTING_PRESSURE_MIN:
+                session->settings[CPAP_PressureMin] = e->value();
+                break;
+            case PRS1_SETTING_PRESSURE_MAX:
+                session->settings[CPAP_PressureMax] = e->value();
+                break;
             case PRS1_SETTING_FLEX_MODE:
                 session->settings[PRS1_FlexMode] = e->m_value;
                 break;
@@ -4655,7 +4661,7 @@ bool PRS1DataChunk::ParseSettingsF0V23(const unsigned char* data, int /*size*/)
     }
 
     quint8 flex = data[0x08];
-    this->ParseFlexSettingF0V234(flex, cpapmode);
+    this->ParseFlexSettingF0V2345(flex, cpapmode);
 
     int humid = data[0x09];
     this->ParseHumidifierSetting50Series(humid, true);
@@ -4772,12 +4778,11 @@ bool PRS1DataChunk::ParseSettingsF0V45(const unsigned char* data, int size)
     }
 
     quint8 flex = data[0x0a];
-    if (this->familyVersion == 5) CHECK_VALUE(flex, 0xE1);
-    this->ParseFlexSettingF0V234(flex, cpapmode);
+    if (this->familyVersion == 5) { if (flex != 0xE1) CHECK_VALUES(flex, 0xA1, 0xA2); }
+    this->ParseFlexSettingF0V2345(flex, cpapmode);
 
     if (this->familyVersion == 5) {
-        CHECK_VALUES(data[0x0b], 0x00, 0x02);
-        CHECK_VALUE(data[0x0c], 0x60);
+        CHECK_VALUES(data[0x0c], 0x60, 0x70);
     }
     this->ParseHumidifierSetting60Series(data[0x0b], data[0x0c], true);
 
@@ -4851,6 +4856,8 @@ bool PRS1DataChunk::ParseSettingsF0V45(const unsigned char* data, int size)
 // F0V5 confirmed:
 // 00 60 =       H=Off, Classic
 // 02 60 =       H=2, Classic
+// 05 60 =       H=5, Classic
+// 00 70 =       H=Off, no data in chart
 
 // F5V1 confirmed:
 // A0 4A = HT=5, H=2, HT
@@ -4994,7 +5001,7 @@ bool PRS1DataChunk::ParseComplianceF0V5(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const int minimum_sizes[] = { 0xf, 7, 4, 0xf };
+    static const int minimum_sizes[] = { 0xf, 7, 4, 0xf, 0, 4, 0, 4 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: These are fixed sizes, but are called minimum to more closely match the F0V6 parser.
     
@@ -5019,18 +5026,17 @@ bool PRS1DataChunk::ParseComplianceF0V5(void)
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first
-                CHECK_VALUE(data[pos], 0x31);
+                //CHECK_VALUES(data[pos], 0x73, 0x31);  // 0x71
             // F0V5 doesn't have a separate settings record like F0V6 does, the settings just follow the EquipmentOn data.
                 ok = ParseSettingsF0V45(data, 0x0d);
                 CHECK_VALUE(data[pos+0xd], 0);
                 CHECK_VALUE(data[pos+0xe], 0);
-                CHECK_VALUE(data[pos+0xf], 0);
+                CHECK_VALUES(data[pos+0xf], 0, 2);
                 break;
             case 2:  // Mask On
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOn));
-                CHECK_VALUES(data[pos+2], 0, 2);
-                CHECK_VALUE(data[pos+3], 0x60);
+                CHECK_VALUES(data[pos+3], 0x60, 0x70);
                 this->ParseHumidifierSetting60Series(data[pos+2], data[pos+3]);
                 break;
             case 3:  // Mask Off
@@ -5038,32 +5044,41 @@ bool PRS1DataChunk::ParseComplianceF0V5(void)
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
                 // F0V5 compliance has MaskOff stats unlike all other compliance.
                 // This is presumably because the 501V is an Auto-CPAP, so it needs to record titration data.
-                // 51s, 13940s, 13348s
-                CHECK_VALUES(data[pos+2], 40, 50);     // min pressure
-                CHECK_VALUES(data[pos+3], 40, 150);    // maybe max pressure?
-                //CHECK_VALUES(data[pos+4], 40, 150);  // Average Device Pressure <= 90% of Time (report is time-weighted per slice)
-                //CHECK_VALUES(data[pos+5], 40, 108);  // Auto CPAP Mean Pressure (report is time-weighted per slice)
-                                                       // (not sure how "Peak Average Pressure" on report differs, maybe that's over all sessions or days?)
-                //CHECK_VALUES(data[pos+6], 0, 5);  // Apnea or Hypopnea count (probably 16-bit), contributes to AHI
+                //CHECK_VALUES(data[pos+2], 40, 50);   // min pressure
+                //CHECK_VALUES(data[pos+3], 40, 150);  // max pressure
+                //CHECK_VALUES(data[pos+4], 40, 150);  // Average Device Pressure <= 90% of Time (report is time-weighted per slice, for all sessions)
+                //CHECK_VALUES(data[pos+5], 40, 108);  // Auto CPAP Mean Pressure (report is time-weighted per slice, for all sessions)
+                                                       // Peak Average Pressure is the maximum "mean pressure" reported in any session.
+                //CHECK_VALUES(data[pos+6], 0, 5);     // Apnea or Hypopnea count (probably 16-bit), contributes to AHI
                 CHECK_VALUE(data[pos+7],  0);
-                //CHECK_VALUES(data[pos+8], 0, 6);  // Apnea or Hypopnea count (probably 16-bit), contributes to AHI
+                //CHECK_VALUES(data[pos+8], 0, 6);     // Apnea or Hypopnea count (probably 16-bit), contributes to AHI
                 CHECK_VALUE(data[pos+9],  0);
-                CHECK_VALUES(data[pos+10], 0, 2);  // Average Large Leak minutes? (Maybe average only if there's more than one day?)
+                //CHECK_VALUES(data[pos+10], 0, 2);    // Average Large Leak minutes (probably 16-bit, report show sum of all slices)
                 CHECK_VALUE(data[pos+11], 0);
-                //CHECK_VALUES(data[pos+12], 179, 50);    // Average 90% Leak (report is time-weighted per slice)
-                //CHECK_VALUES(data[pos+13], 178, 32);    // Average Total Leak (report is time-weighted per slice)
-                //CHECK_VALUES(data[pos+14], 180, 36);    // Max leak (report shows max for all slices)
+                //CHECK_VALUES(data[pos+12], 179, 50);  // Average 90% Leak (report is time-weighted per slice)
+                //CHECK_VALUES(data[pos+13], 178, 32);  // Average Total Leak (report is time-weighted per slice)
+                //CHECK_VALUES(data[pos+14], 180, 36);  // Max leak (report shows max for all slices)
                 break;
             case 1:  // Equipment Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
-                CHECK_VALUE(data[pos+2], 1);
-                CHECK_VALUES(data[pos+3], 0x16, 0x13);  // 22, 19
-                CHECK_VALUE(data[pos+4], 0);
-                CHECK_VALUES(data[pos+5], 0x2F, 0x26);  // 47, 38
-                CHECK_VALUE(data[pos+6], 1);
+                CHECK_VALUE(data[pos+2] & ~(0x40|0x02|0x01), 0);
+                //CHECK_VALUES(data[pos+3], 0x16, 0x13);  // 22, 19
+                if (data[pos+4] < 0 || data[pos+4] > 3) UNEXPECTED_VALUE(data[pos+4], "0-3");
+                //CHECK_VALUES(data[pos+5], 0x2F, 0x26);  // 47, 38
+                if (data[pos+6] < 0 || data[pos+6] > 7) UNEXPECTED_VALUE(data[pos+6], "0-7");
                 break;
-            /* See ParseComplianceF0V4 if we encounter slices 4-8 */
+            //case 4:  // Time Elapsed?  See ParseComplianceF0V4 if we encounter this.
+            case 5:  // Clock adjustment?
+                CHECK_VALUE(pos, 1);  // Always first
+                CHECK_VALUE(chunk_size, 5);  // and the only record in the session.
+                // This looks like it's minor adjustments to the clock, see ParseComplianceF0V4 for details.
+                break;
+            //case 6:  // Cleared?  See ParseComplianceF0V4 if we encounter this.
+            case 7:  // Humidifier setting change (logged in events in 50 series)
+                tt += data[pos] | (data[pos+1] << 8);  // This adds to the total duration (otherwise it won't match report)
+                this->ParseHumidifierSetting60Series(data[pos+2], data[pos+3]);
+                break;
             default:
                 UNEXPECTED_VALUE(code, "known slice code");
                 ok = false;  // unlike F0V6, we don't know the size of unknown slices, so we can't recover
@@ -6610,22 +6625,26 @@ bool PRS1DataChunk::ParseSummaryF5V012(void)
 
 // Flex F0V5 confirmed
 // 0xE1 = Flex (AutoCPAP mode)
+// 0xA1 = Flex (AutoCPAP mode)
+// 0xA2 = Flex (AutoCPAP mode)
 
 //   8  = enabled
 //   4  = lock
+//   2  = Flex (only seen on Dorma series)
 //   1  = rise time
 //    8 = C-Flex+ / A-Flex (depending on mode)
 //    3 = level
 
-void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
+void PRS1DataChunk::ParseFlexSettingF0V2345(quint8 flex, int cpapmode)
 {
     FlexMode flexmode = FLEX_None;
     bool enabled  = (flex & 0x80) != 0;
     bool lock     = (flex & 0x40) != 0;
+    bool plain_flex = (flex & 0x20) != 0;  // "Flex", seen on Dorma series
     bool risetime = (flex & 0x10) != 0;
     bool plusmode = (flex & 0x08) != 0;
     int flexlevel = flex & 0x03;
-    if (flex & (0x20 | 0x04)) UNEXPECTED_VALUE(flex, "known bits");
+    if (flex & 0x04) UNEXPECTED_VALUE(flex, "known bits");
     if (this->familyVersion == 2) {
         //CHECK_VALUE(lock, false);  // We've seen this set on F0V2, but it doesn't appear on the reports.
     }
@@ -6649,6 +6668,17 @@ void PRS1DataChunk::ParseFlexSettingF0V234(quint8 flex, int cpapmode)
                 default:
                     HEX(flex);
                     UNEXPECTED_VALUE(cpapmode, "expected C-Flex+/A-Flex mode");
+                    break;
+            }
+        } else if (plain_flex) {
+            CHECK_VALUE(this->familyVersion, 5);  // so far only seen with F0V5
+            switch (cpapmode) {
+                case PRS1_MODE_AUTOCPAP:
+                    flexmode = FLEX_Flex;  // unknown whether this is equivalent to C-Flex, C-Flex+, or A-Flex
+                    break;
+                default:
+                    UNEXPECTED_VALUE(cpapmode, "expected mode");
+                    flexmode = FLEX_Flex;  // probably the same for CPAP mode as well, but we haven't tested that yet
                     break;
             }
         } else {
@@ -9295,6 +9325,7 @@ void PRS1Loader::initChannels()
     chan->addOption(FLEX_RiseTime, QObject::tr("Rise Time"));
     chan->addOption(FLEX_BiFlex, QObject::tr("Bi-Flex"));
     //chan->addOption(FLEX_AVAPS, QObject::tr("AVAPS"));  // Converted into AVAPS PRS1_Mode with FLEX_RiseTime
+    chan->addOption(FLEX_Flex, QObject::tr("Flex"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_FlexLevel = 0xe106, SETTING, MT_CPAP,   SESSION,
         "PRS1FlexSet",
