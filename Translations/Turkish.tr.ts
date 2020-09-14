@@ -1326,7 +1326,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="544"/>
-        <location filename="../oscar/mainwindow.cpp" line="2211"/>
+        <location filename="../oscar/mainwindow.cpp" line="2227"/>
         <source>Welcome</source>
         <translation>Karşılama</translation>
     </message>
@@ -1337,71 +1337,71 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="787"/>
-        <location filename="../oscar/mainwindow.cpp" line="1878"/>
+        <location filename="../oscar/mainwindow.cpp" line="1894"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>Lütfen bekleyin, yedekleme klasör(ler)&apos;inden içe aktarılıyor...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="731"/>
-        <location filename="../oscar/mainwindow.cpp" line="2252"/>
-        <location filename="../oscar/mainwindow.cpp" line="2283"/>
-        <location filename="../oscar/mainwindow.cpp" line="2414"/>
+        <location filename="../oscar/mainwindow.cpp" line="2268"/>
+        <location filename="../oscar/mainwindow.cpp" line="2299"/>
+        <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>Import Problem</source>
         <translation>İçe Aktarma Sorunu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="877"/>
+        <location filename="../oscar/mainwindow.cpp" line="891"/>
         <source>Please insert your CPAP data card...</source>
         <translation>Lütfen CPAP veri kartınızı yerleştirin...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="954"/>
+        <location filename="../oscar/mainwindow.cpp" line="970"/>
         <source>Access to Import has been blocked while recalculations are in progress.</source>
         <translation>Yeniden hesaplama sürmekte iken Yükle&apos;ye ulaşım bloke edilmiştir.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1006"/>
+        <location filename="../oscar/mainwindow.cpp" line="1022"/>
         <source>CPAP Data Located</source>
         <translation>CPAP Verisi Bulundu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1041"/>
+        <location filename="../oscar/mainwindow.cpp" line="1057"/>
         <source>Import Reminder</source>
         <translation>İçe Aktarma Hatırlatıcısı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1114"/>
+        <location filename="../oscar/mainwindow.cpp" line="1130"/>
         <source>Importing Data</source>
         <translation>Veri İçe Aktarılıyor</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1412"/>
+        <location filename="../oscar/mainwindow.cpp" line="1428"/>
         <source>Choose where to save screenshot</source>
         <translation>Ekran görüntüsünün nereye kaydedileceğini seç</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1412"/>
+        <location filename="../oscar/mainwindow.cpp" line="1428"/>
         <source>Image files (*.png)</source>
         <translation>Resim dosyaları(*.png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1486"/>
+        <location filename="../oscar/mainwindow.cpp" line="1502"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>Kullanım Kılavuzu varsayılan tarayıcınızda açılacaktır</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1494"/>
+        <location filename="../oscar/mainwindow.cpp" line="1510"/>
         <source>The FAQ is not yet implemented</source>
         <translation>SSS henüz hazırlanmamıştır</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1743"/>
-        <location filename="../oscar/mainwindow.cpp" line="1770"/>
+        <location filename="../oscar/mainwindow.cpp" line="1759"/>
+        <location filename="../oscar/mainwindow.cpp" line="1786"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>Eğer bunu okuyorsanız yeniden başlatma komutu çalışmamış demektir. Manüel olarak kendinizin yapması gerkecek.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1853"/>
+        <location filename="../oscar/mainwindow.cpp" line="1869"/>
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
@@ -1410,156 +1410,156 @@
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1863"/>
+        <location filename="../oscar/mainwindow.cpp" line="1879"/>
         <source>For some reason, OSCAR does not have any backups for the following machine:</source>
         <translation>Bir sebepten ötürü OSCAR&apos;ın şu cihazlar için alınmış herhangi bir yedeklemesi mevcut değildir:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1933"/>
+        <location filename="../oscar/mainwindow.cpp" line="1949"/>
         <source>OSCAR does not have any backups for this machine!</source>
         <translation>OSCAR&apos;ın bu cihaz için herhangi bir yedeklemesi yok!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1934"/>
+        <location filename="../oscar/mainwindow.cpp" line="1950"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>&lt;i&gt;Bu cihazdaki verileriniz için &lt;b&gt;kendi&lt;/b&gt; yedeklemelerinizi&lt;/i&gt; yapmadıysanız &lt;font size=+2&gt; bu cihazın verisini &lt;b&gt;kalıcı olarak&lt;/b!&gt; kaybedeceksiniz!&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1940"/>
+        <location filename="../oscar/mainwindow.cpp" line="1956"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
         <translation>OSCAR&apos;ın bu cihaz için olan veri tabanını &lt;font size=+2&gt; yok etmek&lt;/font&gt; üzeresiniz:&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1998"/>
+        <location filename="../oscar/mainwindow.cpp" line="2014"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>Bir dosya izni hatası temizleme işleminin başarısızlıkla sonlanmasına neden oldu; bu klasörü manüel olarak silmeniz gerekecek:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2048"/>
+        <location filename="../oscar/mainwindow.cpp" line="2064"/>
         <source>No help is available.</source>
         <translation>Yardım mevcut değil.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2244"/>
+        <location filename="../oscar/mainwindow.cpp" line="2260"/>
         <source>Imported %1 ZEO session(s) from
 
 %2</source>
         <translation>%2&apos;den %1 ZEO seansı içe aktarıldı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2250"/>
+        <location filename="../oscar/mainwindow.cpp" line="2266"/>
         <source>Already up to date with ZEO data at
 
 %1</source>
         <translation>%1&apos;deki ZEO verisi zaten güncel</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2252"/>
+        <location filename="../oscar/mainwindow.cpp" line="2268"/>
         <source>Couldn&apos;t find any valid ZEO CSV data at
 
 %1</source>
         <translation>%1&apos;de herhangi bir geçerli ZEO CSV verisi bulunamadı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2275"/>
+        <location filename="../oscar/mainwindow.cpp" line="2291"/>
         <source>Imported %1 Dreem session(s) from
 
 %2</source>
         <translation>%2&apos;den %1 Dreem seansı içe aktarıldı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2281"/>
+        <location filename="../oscar/mainwindow.cpp" line="2297"/>
         <source>Already up to date with Dreem data at
 
 %1</source>
         <translation>%1&apos;deki Dreem verisi zaten güncel</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2283"/>
+        <location filename="../oscar/mainwindow.cpp" line="2299"/>
         <source>Couldn&apos;t find any valid Dreem CSV data at
 
 %1</source>
         <translation>%1&apos;de herhangi bir geçerli Dreem CSV verisi bulunamadı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2407"/>
+        <location filename="../oscar/mainwindow.cpp" line="2423"/>
         <source>Imported %1 oximetry session(s) from
 
 %2</source>
         <translation>%2&apos;den %1 oksimetri seansı içe aktarıldı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2412"/>
+        <location filename="../oscar/mainwindow.cpp" line="2428"/>
         <source>Already up to date with oximetry data at
 
 %1</source>
         <translation>%1&apos;deki oksimetri verisi zaten güncel</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2414"/>
+        <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>Couldn&apos;t find any valid data at
 
 %1</source>
         <translation>%1&apos;de herhangi bir geçerli veri bulunamadı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2598"/>
+        <location filename="../oscar/mainwindow.cpp" line="2614"/>
         <source>%1&apos;s Journal</source>
         <translation>%1&apos;in Günlüğü</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2600"/>
+        <location filename="../oscar/mainwindow.cpp" line="2616"/>
         <source>Choose where to save journal</source>
         <translation>Günlüğün nereye kaydedileceğini seç</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2600"/>
+        <location filename="../oscar/mainwindow.cpp" line="2616"/>
         <source>XML Files (*.xml)</source>
         <translation>XML Dosyaları (*.xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2620"/>
+        <location filename="../oscar/mainwindow.cpp" line="2636"/>
         <source>Export review is not yet implemented</source>
         <translation>Dışa aktarım için gözden geçirme henüz uygulamaya alınmamıştır</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2630"/>
+        <location filename="../oscar/mainwindow.cpp" line="2646"/>
         <source>Would you like to zip this card?</source>
         <translation>Bu kartı sıkıştırmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2652"/>
-        <location filename="../oscar/mainwindow.cpp" line="2703"/>
-        <location filename="../oscar/mainwindow.cpp" line="2754"/>
+        <location filename="../oscar/mainwindow.cpp" line="2668"/>
+        <location filename="../oscar/mainwindow.cpp" line="2719"/>
+        <location filename="../oscar/mainwindow.cpp" line="2770"/>
         <source>Choose where to save zip</source>
         <translation>Zip dosyasının nereye kaydedileceğini seç</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2652"/>
-        <location filename="../oscar/mainwindow.cpp" line="2703"/>
-        <location filename="../oscar/mainwindow.cpp" line="2754"/>
+        <location filename="../oscar/mainwindow.cpp" line="2668"/>
+        <location filename="../oscar/mainwindow.cpp" line="2719"/>
+        <location filename="../oscar/mainwindow.cpp" line="2770"/>
         <source>ZIP files (*.zip)</source>
         <translation>ZIP dosyaları (*.zip)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2681"/>
-        <location filename="../oscar/mainwindow.cpp" line="2717"/>
-        <location filename="../oscar/mainwindow.cpp" line="2788"/>
+        <location filename="../oscar/mainwindow.cpp" line="2697"/>
+        <location filename="../oscar/mainwindow.cpp" line="2733"/>
+        <location filename="../oscar/mainwindow.cpp" line="2804"/>
         <source>Creating zip...</source>
         <translation>Zip yaratılıyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2772"/>
+        <location filename="../oscar/mainwindow.cpp" line="2788"/>
         <source>Calculating size...</source>
         <translation>Boyut hesaplanıyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2810"/>
+        <location filename="../oscar/mainwindow.cpp" line="2826"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>Sorun bildirimi henüz uygulamaya geçmemiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2819"/>
+        <location filename="../oscar/mainwindow.cpp" line="2835"/>
         <source>OSCAR Information</source>
         <translation>OSCAR Bilgisi</translation>
     </message>
@@ -1574,67 +1574,67 @@
         <translation>%1 (Profil: %2)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1040"/>
+        <location filename="../oscar/mainwindow.cpp" line="1056"/>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
         <translation>Lütfen veri kartınızın içindeki bir klasörü değil, kök dizinini veya sürücü harfini seçin.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1301"/>
+        <location filename="../oscar/mainwindow.cpp" line="1317"/>
         <source>Please open a profile first.</source>
         <translation>Lütfen öncelikle bir profil açın.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1363"/>
+        <location filename="../oscar/mainwindow.cpp" line="1379"/>
         <source>Check for updates not implemented</source>
         <translation>Güncelleme kontrolü henüz eklenmedi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1865"/>
+        <location filename="../oscar/mainwindow.cpp" line="1881"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>&lt;i&gt;TÜM CPAP veriniz için &lt;b&gt;kendi&lt;/b&gt; yedeklemelerinizi&lt;/i&gt; yaptıysanız bu işlemi hala tamamlayabilirsiniz, ancak manüel olarak kendi yedeklemelerinizden geri yükleme yapmanız gerekecektir.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1866"/>
+        <location filename="../oscar/mainwindow.cpp" line="1882"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Bunu yapmak istediğinizden gerçekten emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1881"/>
+        <location filename="../oscar/mainwindow.cpp" line="1897"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>Dahili yedekleme mevcut olmadığından, kendi yedeklemenizden geri yüklemeniz gerekecektir.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1882"/>
+        <location filename="../oscar/mainwindow.cpp" line="1898"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
         <translation>Kendi yedeklemelerinizden  şimdi içe aktarma yapmak ister misiniz? (aktarım yapana kadar bu cihaz için görülebilir veriniz olmayacaktır)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1931"/>
+        <location filename="../oscar/mainwindow.cpp" line="1947"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Önlem olarak, yedekleme klasörü yerinde bırakılacaktır.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1943"/>
+        <location filename="../oscar/mainwindow.cpp" line="1959"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>Devam etmek istediğinizden &lt;b&gt;kesinlikle emin&lt;/b&gt; misiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2320"/>
+        <location filename="../oscar/mainwindow.cpp" line="2336"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Sözlük varsayılan tarayıcınızda açılacaktır</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2513"/>
+        <location filename="../oscar/mainwindow.cpp" line="2529"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>%1 için oksimetri verisini silmek istediğinize emin misiniz</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2515"/>
+        <location filename="../oscar/mainwindow.cpp" line="2531"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;Lütfen dikkat, bu işlem geri alınamaz!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2544"/>
+        <location filename="../oscar/mainwindow.cpp" line="2560"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>Öncelikle günlük görünümden geçerli oksimetri verisi olan günü seçiniz.</translation>
     </message>
@@ -1652,9 +1652,9 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="727"/>
-        <location filename="../oscar/mainwindow.cpp" line="2244"/>
-        <location filename="../oscar/mainwindow.cpp" line="2275"/>
-        <location filename="../oscar/mainwindow.cpp" line="2407"/>
+        <location filename="../oscar/mainwindow.cpp" line="2260"/>
+        <location filename="../oscar/mainwindow.cpp" line="2291"/>
+        <location filename="../oscar/mainwindow.cpp" line="2423"/>
         <source>Import Success</source>
         <translation>İçe Aktarma Başarılı</translation>
     </message>
@@ -1667,9 +1667,9 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="729"/>
-        <location filename="../oscar/mainwindow.cpp" line="2250"/>
-        <location filename="../oscar/mainwindow.cpp" line="2281"/>
-        <location filename="../oscar/mainwindow.cpp" line="2412"/>
+        <location filename="../oscar/mainwindow.cpp" line="2266"/>
+        <location filename="../oscar/mainwindow.cpp" line="2297"/>
+        <location filename="../oscar/mainwindow.cpp" line="2428"/>
         <source>Up to date</source>
         <translation>Güncel</translation>
     </message>
@@ -1681,77 +1681,77 @@
         <translation>%1&apos;de herhangi bir geçerli Cihaz Verisi bulunamadı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="884"/>
+        <location filename="../oscar/mainwindow.cpp" line="898"/>
         <source>Choose a folder</source>
         <translation>Bir klasör seç</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="950"/>
+        <location filename="../oscar/mainwindow.cpp" line="966"/>
         <source>No profile has been selected for Import.</source>
         <translation>İçe Aktarım için bir profil seçilmedi.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="958"/>
+        <location filename="../oscar/mainwindow.cpp" line="974"/>
         <source>Import is already running in the background.</source>
         <translation>İçe aktarma zaten arka planda çalışıyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="999"/>
+        <location filename="../oscar/mainwindow.cpp" line="1015"/>
         <source>A %1 file structure for a %2 was located at:</source>
         <translation>%2 ile uyumlu bir %1 dosya yapısı şu konumda tespit edildi:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1001"/>
+        <location filename="../oscar/mainwindow.cpp" line="1017"/>
         <source>A %1 file structure was located at:</source>
         <translation>Şurada %1&apos;e uyan bir dosya yapısı tespit edildi:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="966"/>
+        <location filename="../oscar/mainwindow.cpp" line="982"/>
         <source>Would you like to import from this location?</source>
         <translation>Bu konumdan içe aktarma yapmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1010"/>
+        <location filename="../oscar/mainwindow.cpp" line="1026"/>
         <source>Specify</source>
         <translation>Belirt</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1306"/>
+        <location filename="../oscar/mainwindow.cpp" line="1322"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>Yeniden hesaplama sonlanana kadar Seçenekler&apos;e ulaşım bloke edilmiştir.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1422"/>
+        <location filename="../oscar/mainwindow.cpp" line="1438"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>Ekran görüntüsü &quot;%1&quot; dosyasına kaydedilirken bir hata oluştu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1424"/>
+        <location filename="../oscar/mainwindow.cpp" line="1440"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Ekran görüntüsü &quot;%1&quot; dosyasına kaydedildi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1856"/>
+        <location filename="../oscar/mainwindow.cpp" line="1872"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>OSCAR&apos;ın yedeklemeleri devre dışı bırakılmış ise bunun veri kaybına neden olabileceğine lütfen dikkat edin.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2305"/>
+        <location filename="../oscar/mainwindow.cpp" line="2321"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>MSeries blok dosyası açılırken bir sorun meydana geldi: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2309"/>
+        <location filename="../oscar/mainwindow.cpp" line="2325"/>
         <source>MSeries Import complete</source>
         <translation>MSeries İçe Aktarması tamamlandı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2368"/>
+        <location filename="../oscar/mainwindow.cpp" line="2384"/>
         <source>There was a problem opening Somnopose Data File: </source>
         <translation>Somnopose Veri Dosyası açılırken bir sorun meydana geldi: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2372"/>
+        <location filename="../oscar/mainwindow.cpp" line="2388"/>
         <source>Somnopause Data Import complete</source>
         <translation>Somnopause Veri İçe Aktarımı tamamlandı</translation>
     </message>
@@ -1822,9 +1822,8 @@
         <translation>Kullanıcı Adı</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="152"/>
         <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation>Çocukları uzak tutun.. Başka şeye gerek yok..  İleri derecede güvenli olması gerekmiyor.</translation>
+        <translation type="vanished">Çocukları uzak tutun.. Başka şeye gerek yok..  İleri derecede güvenli olması gerekmiyor.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
@@ -1860,6 +1859,11 @@
         <location filename="../oscar/newprofile.ui" line="54"/>
         <source>about:blank</source>
         <translation>hakkında:boş</translation>
+    </message>
+    <message>
+        <location filename="../oscar/newprofile.ui" line="152"/>
+        <source>Very weak password protection and not recommended if security is required.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="240"/>
@@ -4267,166 +4271,132 @@ Bunu şimdi yapmak ister misiniz?</translation>
 <context>
     <name>ProfileSelect</name>
     <message>
-        <location filename="../oscar/profileselect.ui" line="14"/>
         <source>Select Profile</source>
-        <translation>Profil Seç</translation>
+        <translation type="vanished">Profil Seç</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="115"/>
         <source>Search:</source>
-        <translation>Ara:</translation>
+        <translation type="vanished">Ara:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="191"/>
         <source>Start with the selected user profile.</source>
-        <translation>Seçili kullanıcı profili ile başla.</translation>
+        <translation type="vanished">Seçili kullanıcı profili ile başla.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="194"/>
         <source>&amp;Select User</source>
-        <translation>&amp;Kullanıcı Seç</translation>
+        <translation type="vanished">&amp;Kullanıcı Seç</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="215"/>
         <source>Create a new user profile.</source>
-        <translation>Yeni bir kullanıcı profili yarat.</translation>
+        <translation type="vanished">Yeni bir kullanıcı profili yarat.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="218"/>
         <source>New Profile</source>
-        <translation>Yeni Profil</translation>
+        <translation type="vanished">Yeni Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="235"/>
         <source>Choose a different OSCAR data folder.</source>
-        <translation>Farklı bir OSCAR veri klasörü seç.</translation>
+        <translation type="vanished">Farklı bir OSCAR veri klasörü seç.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="274"/>
         <source>OSCAR</source>
-        <translation>OSCAR</translation>
+        <translation type="vanished">OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="310"/>
         <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation>OSCAR&apos;ı başlatmak istemiyorsanız buraya tıklayın.</translation>
+        <translation type="vanished">OSCAR&apos;ı başlatmak istemiyorsanız buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="383"/>
         <source>The current location of OSCAR data store.</source>
-        <translation>OSCAR&apos;ın güncel olarak veri kaydettiği konum.</translation>
+        <translation type="vanished">OSCAR&apos;ın güncel olarak veri kaydettiği konum.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="241"/>
         <source>&amp;Different Folder</source>
-        <translation>&amp;Farklı Klasör</translation>
+        <translation type="vanished">&amp;Farklı Klasör</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="287"/>
         <source>[version]</source>
-        <translation>[versiyon]</translation>
+        <translation type="vanished">[versiyon]</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="313"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Çıkış</translation>
+        <translation type="vanished">&amp;Çıkış</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="370"/>
         <source>Folder:</source>
-        <translation>Klasör:</translation>
+        <translation type="vanished">Klasör:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="389"/>
         <source>[data directory]</source>
-        <translation>[veri klasörü]</translation>
+        <translation type="vanished">[veri klasörü]</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="92"/>
         <source>Open Profile</source>
-        <translation>Profili Aç</translation>
+        <translation type="vanished">Profili Aç</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="93"/>
         <source>Edit Profile</source>
-        <translation>Profili Düzenle</translation>
+        <translation type="vanished">Profili Düzenle</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="95"/>
         <source>Delete Profile</source>
-        <translation>Profili Sil</translation>
+        <translation type="vanished">Profili Sil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="139"/>
-        <location filename="../oscar/profileselect.cpp" line="220"/>
         <source>Enter Password for %1</source>
-        <translation>%1 için Şifre Giriniz</translation>
+        <translation type="vanished">%1 için Şifre Giriniz</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="158"/>
-        <location filename="../oscar/profileselect.cpp" line="342"/>
         <source>Incorrect Password</source>
-        <translation>Şifre Yanlış</translation>
+        <translation type="vanished">Şifre Yanlış</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="160"/>
         <source>You entered the password wrong too many times.</source>
-        <translation>Şifreyi çok fazla kere yanlış olarak girdiniz.</translation>
+        <translation type="vanished">Şifreyi çok fazla kere yanlış olarak girdiniz.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="182"/>
         <source>Enter the word DELETE below to confirm.</source>
-        <translation>Onaylamak için aşağıya SİL kelimesini yazınız.</translation>
+        <translation type="vanished">Onaylamak için aşağıya SİL kelimesini yazınız.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="182"/>
         <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation>Profil &apos;%1&apos; i yok etmek üzeresiniz.</translation>
+        <translation type="vanished">Profil &apos;%1&apos; i yok etmek üzeresiniz.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="201"/>
         <source>Sorry</source>
-        <translation>Üzgünüz</translation>
+        <translation type="vanished">Üzgünüz</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="201"/>
         <source>You need to enter DELETE in capital letters.</source>
-        <translation>SİL&apos;i büyük harfle yazmanız gerekiyor.</translation>
+        <translation type="vanished">SİL&apos;i büyük harfle yazmanız gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="239"/>
         <source>You entered an incorrect password</source>
-        <translation>Yanlış bir şifre girdiniz</translation>
+        <translation type="vanished">Yanlış bir şifre girdiniz</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="242"/>
         <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation>Eğer şifreyi unuttuğunuz için silmeye çalışıyorsanız, manüel olarak silmeniz gerekiyor.</translation>
+        <translation type="vanished">Eğer şifreyi unuttuğunuz için silmeye çalışıyorsanız, manüel olarak silmeniz gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="255"/>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation>Profil klasörü silinirken bir hata oluştu, manüel olarak kaldırmanız gerekiyor.</translation>
+        <translation type="vanished">Profil klasörü silinirken bir hata oluştu, manüel olarak kaldırmanız gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="259"/>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation>Profil &apos;%1&apos; başarılı bir şekilde silindi</translation>
+        <translation type="vanished">Profil &apos;%1&apos; başarılı bir şekilde silindi</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="289"/>
         <source>Create new profile</source>
-        <translation>Yeni profil oluştur</translation>
+        <translation type="vanished">Yeni profil oluştur</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="326"/>
         <source>Enter Password</source>
-        <translation>Şifreyi Girin</translation>
+        <translation type="vanished">Şifreyi Girin</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="345"/>
         <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation>Şifreyi çok fazla kere yanlış olarak girdiniz. Programdan çıkılıyor!</translation>
+        <translation type="vanished">Şifreyi çok fazla kere yanlış olarak girdiniz. Programdan çıkılıyor!</translation>
     </message>
 </context>
 <context>
@@ -4534,13 +4504,13 @@ Bunu şimdi yapmak ister misiniz?</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="233"/>
-        <location filename="../oscar/profileselector.cpp" line="363"/>
+        <location filename="../oscar/profileselector.cpp" line="367"/>
         <source>Enter Password for %1</source>
         <translation>%1 için Şifre Giriniz</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="249"/>
-        <location filename="../oscar/profileselector.cpp" line="382"/>
+        <location filename="../oscar/profileselector.cpp" line="386"/>
         <source>You entered an incorrect password</source>
         <translation>Hatalı bir şifre girdiniz</translation>
     </message>
@@ -4560,133 +4530,138 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <translation>Öncelikle bir profil seçin</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="385"/>
+        <location filename="../oscar/profileselector.cpp" line="357"/>
+        <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/profileselector.cpp" line="389"/>
         <source>If you&apos;re trying to delete because you forgot the password, you need to either reset it or delete the profile folder manually.</source>
         <translation>Eğer şifreyi unuttuğunuz için silmeye çalışıyorsanız, ya sıfırlamanız, ya profil klasörünü manüel olarak silmeniz gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>You are about to destroy profile &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</source>
         <translation>Profil &apos;&lt;b&gt;%1&lt;/b&gt;&apos;yi yok etmek üzeresiniz.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>Think carefully, as this will irretrievably delete the profile along with all &lt;b&gt;backup data&lt;/b&gt; stored under&lt;br/&gt;%2.</source>
         <translation>Bu profili ve &lt;br/&gt;%2 altında saklanan tüm &lt;b&gt;yedekleme verisini&lt;/b&gt; geri alınamayacak şekilde sileceğinden dikkatli bir şekilde düşünün.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>Enter the word &lt;b&gt;DELETE&lt;/b&gt; below (exactly as shown) to confirm.</source>
         <translation>Onaylamak için aşağıya &lt;b&gt;SİL&lt;/b&gt; kelimesini (aynen gösterildiği gibi) yazın.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="413"/>
+        <location filename="../oscar/profileselector.cpp" line="417"/>
         <source>DELETE</source>
         <translation>SİL</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="414"/>
+        <location filename="../oscar/profileselector.cpp" line="418"/>
         <source>Sorry</source>
         <translation>Üzgünüz</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="414"/>
+        <location filename="../oscar/profileselector.cpp" line="418"/>
         <source>You need to enter DELETE in capital letters.</source>
         <translation>SİL kelimesini büyük harflerle yazmanız gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="427"/>
+        <location filename="../oscar/profileselector.cpp" line="431"/>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
         <translation>Profil klasörü silinirken bir hata oluştu, manüel olarak kaldırmanız gerekiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="431"/>
+        <location filename="../oscar/profileselector.cpp" line="435"/>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
         <translation>Profil &apos;%1&apos; başarılı bir şekilde silindi</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>Bytes</source>
         <translation>Bayt</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>KB</source>
         <translation>KB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>MB</source>
         <translation>MB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>GB</source>
         <translation>GB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>PB</source>
         <translation>PB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="461"/>
+        <location filename="../oscar/profileselector.cpp" line="465"/>
         <source>Summaries:</source>
         <translation>Özetler:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="462"/>
+        <location filename="../oscar/profileselector.cpp" line="466"/>
         <source>Events:</source>
         <translation>Olaylar:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="463"/>
+        <location filename="../oscar/profileselector.cpp" line="467"/>
         <source>Backups:</source>
         <translation>Yedeklemeler:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="475"/>
-        <location filename="../oscar/profileselector.cpp" line="515"/>
+        <location filename="../oscar/profileselector.cpp" line="479"/>
+        <location filename="../oscar/profileselector.cpp" line="519"/>
         <source>Hide disk usage information</source>
         <translation>Disk kullanım bilgisini gizle</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="478"/>
+        <location filename="../oscar/profileselector.cpp" line="482"/>
         <source>Show disk usage information</source>
         <translation>Disk kullanım bilgisini göster</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="496"/>
+        <location filename="../oscar/profileselector.cpp" line="500"/>
         <source>Name: %1, %2</source>
         <translation>İsim: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="499"/>
+        <location filename="../oscar/profileselector.cpp" line="503"/>
         <source>Phone: %1</source>
         <translation>Telefon: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="502"/>
+        <location filename="../oscar/profileselector.cpp" line="506"/>
         <source>Email: &lt;a href=&apos;mailto:%1&apos;&gt;%1&lt;/a&gt;</source>
         <translation>E-posta: &lt;a href=&apos;mailto:%1&apos;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="505"/>
+        <location filename="../oscar/profileselector.cpp" line="509"/>
         <source>Address:</source>
         <translation>Adres:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="508"/>
+        <location filename="../oscar/profileselector.cpp" line="512"/>
         <source>No profile information given</source>
         <translation>Profil bilgisi verilmedi</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="511"/>
+        <location filename="../oscar/profileselector.cpp" line="515"/>
         <source>Profile: %1</source>
         <translation>Profil: %1</translation>
     </message>
@@ -7368,15 +7343,19 @@ TTIA: %1</translation>
         <translation>Hata ayıklama kanalı #1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation>Görmemeniz gereken çok gizli dahili şeyler;)</translation>
+        <translation type="vanished">Görmemeniz gereken çok gizli dahili şeyler;)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Test #1</source>
         <translation>Test #1</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <source>For internal use only</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
@@ -7404,152 +7383,181 @@ TTIA: %1</translation>
         <translation>Alt Eşik</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="501"/>
+        <location filename="../oscar/main.cpp" line="505"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>Herhangi bir veri klasörü seçmediğiniz için OSCAR kapanacak.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="188"/>
         <source>Choose the SleepyHead data folder to migrate</source>
-        <translation>Taşımak istediğiniz SleepyHead veri klasörünü seçin</translation>
+        <translation type="vanished">Taşımak istediğiniz SleepyHead veri klasörünü seçin</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="189"/>
+        <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>veya İPTAL&apos;i seçip taşımayı atlayın.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="203"/>
         <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation>Seçtiğiniz klasörde geçerli SleepyHead verisi bulunmuyor.</translation>
+        <translation type="vanished">Seçtiğiniz klasörde geçerli SleepyHead verisi bulunmuyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="204"/>
+        <location filename="../oscar/main.cpp" line="191"/>
+        <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="206"/>
+        <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="207"/>
         <source>You cannot use this folder:</source>
         <translation>Bu klasörü kullanamazsınız:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="219"/>
+        <location filename="../oscar/main.cpp" line="222"/>
         <source>Migrating </source>
         <translation>Taşınıyor </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="219"/>
+        <location filename="../oscar/main.cpp" line="222"/>
         <source> files</source>
         <translation> dosyalar</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="220"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source>from </source>
         <translation>dan </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="220"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source>to </source>
         <translation>ye </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="327"/>
+        <location filename="../oscar/main.cpp" line="330"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
         <translation>OSCAR grafik donanımınız ile olan bir uyuşmazlık sebebiyle çöktü.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="328"/>
+        <location filename="../oscar/main.cpp" line="331"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Bu durumu çözmek için, OSCAR daha yavaş ancak daha yüksek uyumluluğu olan bir çizim yöntemine döndü.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="488"/>
+        <location filename="../oscar/main.cpp" line="491"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>OSCAR veriniz için bir klasör oluşturacak.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="489"/>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation>Eğer SleepyHead&apos;i kullanıyorduysanız, daha sonra OSCAR eski verinizi bu klasöre kopyalayabilir.</translation>
+        <location filename="../oscar/main.cpp" line="492"/>
+        <source>If you have been using SleepyHead or an older version of OSCAR,</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="490"/>
+        <location filename="../oscar/main.cpp" line="493"/>
+        <source>OSCAR can copy your old data to this folder later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="546"/>
+        <source>Migrate SleepyHead or OSCAR Data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="547"/>
+        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="548"/>
+        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
+        <translation type="vanished">Eğer SleepyHead&apos;i kullanıyorduysanız, daha sonra OSCAR eski verinizi bu klasöre kopyalayabilir.</translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="494"/>
         <source>We suggest you use this folder: </source>
         <translation>Şu klasörü kullanmanızı öneririz: </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="491"/>
+        <location filename="../oscar/main.cpp" line="495"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation>Kabul etmek için Tamam&apos;a basın, veya farklı bir klasör kullanmak istiyorsanız Hayır&apos;ı seçin.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="497"/>
+        <location filename="../oscar/main.cpp" line="501"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>OSCAR verisi için bir klasör seçin veya yeni bir klasör yaratın</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="502"/>
+        <location filename="../oscar/main.cpp" line="506"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>OSCAR&apos;ı bir sonraki çalıştırmanızda bu soru tekrar sorulacak.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="513"/>
+        <location filename="../oscar/main.cpp" line="517"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation>Seçtiğiniz klasör boş değil, veya içerisinde geçerli OSCAR verisi yok.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="534"/>
+        <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>Veri klasörü:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="542"/>
         <source>Migrate SleepyHead Data?</source>
-        <translation>SleepyHead Verisi Taşınsın Mı?</translation>
+        <translation type="vanished">SleepyHead Verisi Taşınsın Mı?</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="543"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation>Bir sonraki ekranda OSCAR SleepyHead verisi içeren bir klasör seçmenizi isteyecek</translation>
+        <translation type="vanished">Bir sonraki ekranda OSCAR SleepyHead verisi içeren bir klasör seçmenizi isteyecek</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="544"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation>Bir sonraki ekrana geçmek için [Tamam] düğmesine basın veya SleepyHead verisi kullanmak istemiyorsanız [Hayır] düğmesini seçin.</translation>
+        <translation type="vanished">Bir sonraki ekrana geçmek için [Tamam] düğmesine basın veya SleepyHead verisi kullanmak istemiyorsanız [Hayır] düğmesini seçin.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="553"/>
+        <location filename="../oscar/main.cpp" line="557"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation>Bu adreste OSCAR veri klasörü yaratılamadı</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="563"/>
+        <location filename="../oscar/main.cpp" line="567"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation>OSCAR&apos;ın veri klasörüne yazılamıyor</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="565"/>
+        <location filename="../oscar/main.cpp" line="569"/>
         <source>Error code</source>
         <translation>Hata kodu</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="566"/>
+        <location filename="../oscar/main.cpp" line="570"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation>OSCAR devam edemiyor ve kapanacak.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="577"/>
+        <location filename="../oscar/main.cpp" line="581"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation>Hata ayıklama günlüğüne yazılamıyor. Hata ayıklama bölmesini hala kullanabilirsiniz (Yardım / Sorun Giderme / Hata Ayıklama Bölmesini Göster) , ancak hata ayıklama günlüğü diske yazılmaz.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="635"/>
+        <location filename="../oscar/main.cpp" line="639"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation>Versiyon &quot;%1&quot; geçersiz, devam edilemiyor!</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="644"/>
+        <location filename="../oscar/main.cpp" line="648"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation>Çalıştırmakta olduğunuz OSCAR sürümü (%1) bu veriyi yaratmak için kullanılan sürümden (%2) daha ESKİ.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="648"/>
+        <location filename="../oscar/main.cpp" line="652"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>Bunu yapmanız muhtemelen veri bozulmasına yol açacaktır, yapmak istediğinize emin misiniz?</translation>
     </message>
@@ -7559,14 +7567,14 @@ TTIA: %1</translation>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="500"/>
-        <location filename="../oscar/main.cpp" line="552"/>
-        <location filename="../oscar/main.cpp" line="568"/>
+        <location filename="../oscar/main.cpp" line="504"/>
+        <location filename="../oscar/main.cpp" line="556"/>
+        <location filename="../oscar/main.cpp" line="572"/>
         <source>Exiting</source>
         <translation>Çıkılıyor</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="514"/>
+        <location filename="../oscar/main.cpp" line="518"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>Bu klasörü kullanmak istediğinize emin misiniz?</translation>
     </message>
@@ -7596,24 +7604,35 @@ TTIA: %1</translation>
         <translation>Profil &quot;%1&quot; yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2116"/>
+        <location filename="../oscar/mainwindow.cpp" line="860"/>
+        <source>Chromebook file system detected, but no removable device found
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="861"/>
+        <source>You must share your SD card with Linux using the ChromeOS Files program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2132"/>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
         <translation>Üzgünüz, %1 %2 cihazınız henüz desteklenmiyor.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2123"/>
+        <location filename="../oscar/mainwindow.cpp" line="2139"/>
         <source>Recompressing Session Files</source>
         <translation>Seans Dosyaları Tekrar Sıkıştırılıyor</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2662"/>
+        <location filename="../oscar/mainwindow.cpp" line="2678"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation>Lütfen zip dosyanız için veri kartının dışında bir konum seçin!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2689"/>
-        <location filename="../oscar/mainwindow.cpp" line="2739"/>
-        <location filename="../oscar/mainwindow.cpp" line="2798"/>
+        <location filename="../oscar/mainwindow.cpp" line="2705"/>
+        <location filename="../oscar/mainwindow.cpp" line="2755"/>
+        <location filename="../oscar/mainwindow.cpp" line="2814"/>
         <source>Unable to create zip!</source>
         <translation>Zip dosyası yaratılamadı!</translation>
     </message>

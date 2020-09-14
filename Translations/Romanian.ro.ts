@@ -1330,7 +1330,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="544"/>
-        <location filename="../oscar/mainwindow.cpp" line="2211"/>
+        <location filename="../oscar/mainwindow.cpp" line="2227"/>
         <source>Welcome</source>
         <translation>Bun venit</translation>
     </message>
@@ -1341,61 +1341,61 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="787"/>
-        <location filename="../oscar/mainwindow.cpp" line="1878"/>
+        <location filename="../oscar/mainwindow.cpp" line="1894"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>Va rog asteptati, import date din backup...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="731"/>
-        <location filename="../oscar/mainwindow.cpp" line="2252"/>
-        <location filename="../oscar/mainwindow.cpp" line="2283"/>
-        <location filename="../oscar/mainwindow.cpp" line="2414"/>
+        <location filename="../oscar/mainwindow.cpp" line="2268"/>
+        <location filename="../oscar/mainwindow.cpp" line="2299"/>
+        <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>Import Problem</source>
         <translation>Problema la importare</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="877"/>
+        <location filename="../oscar/mainwindow.cpp" line="891"/>
         <source>Please insert your CPAP data card...</source>
         <translation>Introduceti cardul cu datele dvs CPAP (vedeti sa fie blocat: Read-Only!)...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="954"/>
+        <location filename="../oscar/mainwindow.cpp" line="970"/>
         <source>Access to Import has been blocked while recalculations are in progress.</source>
         <translation>Importul a fost dezactivat cat timp are loc reanaliza datelor.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1006"/>
+        <location filename="../oscar/mainwindow.cpp" line="1022"/>
         <source>CPAP Data Located</source>
         <translation>Date CPAP localizate</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1041"/>
+        <location filename="../oscar/mainwindow.cpp" line="1057"/>
         <source>Import Reminder</source>
         <translation>Reamintire Importare</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1114"/>
+        <location filename="../oscar/mainwindow.cpp" line="1130"/>
         <source>Importing Data</source>
         <translation>Importez Datele</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1486"/>
+        <location filename="../oscar/mainwindow.cpp" line="1502"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>Ghidul de utilizare se va deschide in browser-ul dvs de internet</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1494"/>
+        <location filename="../oscar/mainwindow.cpp" line="1510"/>
         <source>The FAQ is not yet implemented</source>
         <translation>Sectiune Intrebari frecvente nu este inca implementata</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1743"/>
-        <location filename="../oscar/mainwindow.cpp" line="1770"/>
+        <location filename="../oscar/mainwindow.cpp" line="1759"/>
+        <location filename="../oscar/mainwindow.cpp" line="1786"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>Daca puteti citi asta, inseamna ca nu a functionat repornirea. Va trebui sa reporniti manual.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1853"/>
+        <location filename="../oscar/mainwindow.cpp" line="1869"/>
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
@@ -1404,78 +1404,78 @@
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1863"/>
+        <location filename="../oscar/mainwindow.cpp" line="1879"/>
         <source>For some reason, OSCAR does not have any backups for the following machine:</source>
         <translation>Dintr-un oarecare motiv OSCAR nu are un backup pentru aparatul:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1940"/>
+        <location filename="../oscar/mainwindow.cpp" line="1956"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
         <translation>Sunteti pe cale sa &lt;font size=+2&gt;eliminati&lt;/font&gt; baza de date a OSCAR pentru acest aparat CPAP:&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1998"/>
+        <location filename="../oscar/mainwindow.cpp" line="2014"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>O eroare de permisiuni ale fisierelor a sabotat procesul de curatire; va trebui sa stergeti manual acest dosar:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2048"/>
+        <location filename="../oscar/mainwindow.cpp" line="2064"/>
         <source>No help is available.</source>
         <translation>Nu exista Help (Ajutor) disponibil.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2598"/>
+        <location filename="../oscar/mainwindow.cpp" line="2614"/>
         <source>%1&apos;s Journal</source>
         <translation>Jurnalul lui %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2600"/>
+        <location filename="../oscar/mainwindow.cpp" line="2616"/>
         <source>Choose where to save journal</source>
         <translation>Alegeti unde salvez jurnalul</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2600"/>
+        <location filename="../oscar/mainwindow.cpp" line="2616"/>
         <source>XML Files (*.xml)</source>
         <translation>XML Files (*.xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2620"/>
+        <location filename="../oscar/mainwindow.cpp" line="2636"/>
         <source>Export review is not yet implemented</source>
         <translation>Exportul sumarului nu este inca implementat</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2630"/>
+        <location filename="../oscar/mainwindow.cpp" line="2646"/>
         <source>Would you like to zip this card?</source>
         <translation>Doriți să arhivați acest card într-o arhivă ZIP?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2652"/>
-        <location filename="../oscar/mainwindow.cpp" line="2703"/>
-        <location filename="../oscar/mainwindow.cpp" line="2754"/>
+        <location filename="../oscar/mainwindow.cpp" line="2668"/>
+        <location filename="../oscar/mainwindow.cpp" line="2719"/>
+        <location filename="../oscar/mainwindow.cpp" line="2770"/>
         <source>Choose where to save zip</source>
         <translation>Unde să salvez arhiva ZIP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2652"/>
-        <location filename="../oscar/mainwindow.cpp" line="2703"/>
-        <location filename="../oscar/mainwindow.cpp" line="2754"/>
+        <location filename="../oscar/mainwindow.cpp" line="2668"/>
+        <location filename="../oscar/mainwindow.cpp" line="2719"/>
+        <location filename="../oscar/mainwindow.cpp" line="2770"/>
         <source>ZIP files (*.zip)</source>
         <translation>Fișier arhivă ZIP (*.zip)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2681"/>
-        <location filename="../oscar/mainwindow.cpp" line="2717"/>
-        <location filename="../oscar/mainwindow.cpp" line="2788"/>
+        <location filename="../oscar/mainwindow.cpp" line="2697"/>
+        <location filename="../oscar/mainwindow.cpp" line="2733"/>
+        <location filename="../oscar/mainwindow.cpp" line="2804"/>
         <source>Creating zip...</source>
         <translation>Crează arhiva ZIP...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2772"/>
+        <location filename="../oscar/mainwindow.cpp" line="2788"/>
         <source>Calculating size...</source>
         <translation>Calculez dimensiunea...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2810"/>
+        <location filename="../oscar/mainwindow.cpp" line="2826"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>Raportarea problemelor online nu este inca implementata</translation>
     </message>
@@ -1485,67 +1485,67 @@
         <translation>Vizualizare Help (Ajutor)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1301"/>
+        <location filename="../oscar/mainwindow.cpp" line="1317"/>
         <source>Please open a profile first.</source>
         <translation>Va rugam deschideti mai intai un Profil.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1363"/>
+        <location filename="../oscar/mainwindow.cpp" line="1379"/>
         <source>Check for updates not implemented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1412"/>
+        <location filename="../oscar/mainwindow.cpp" line="1428"/>
         <source>Choose where to save screenshot</source>
         <translation>Unde să salvez captura ecranului</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1412"/>
+        <location filename="../oscar/mainwindow.cpp" line="1428"/>
         <source>Image files (*.png)</source>
         <translation>Fisier Imagine (*.png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1865"/>
+        <location filename="../oscar/mainwindow.cpp" line="1881"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>Daca v-ati facut &lt;i&gt;propriile &lt;b&gt;backup-uri&lt;/b&gt; la toate datele CPAP&lt;/i&gt;, puteti finaliza aceasta operatiune, dar va trebui sa le restaurati la nevoie din backup manual.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1866"/>
+        <location filename="../oscar/mainwindow.cpp" line="1882"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Sunteti sigur ca doriti ca asta doriti sa faceti?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1881"/>
+        <location filename="../oscar/mainwindow.cpp" line="1897"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>Deoarece nu exista backup-uri interne pentru a reface datele, va trebui sa faceti restaurarea manuala a lor.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1882"/>
+        <location filename="../oscar/mainwindow.cpp" line="1898"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
         <translation>Doriti sa importati din backup-ul dvs? (nu sunt Date pentru acest aparat CPAP pana nu faceti acest lucru)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1931"/>
+        <location filename="../oscar/mainwindow.cpp" line="1947"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Nota: Ca precautie, dosarul de backup va fi lasat la locul lui.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1933"/>
+        <location filename="../oscar/mainwindow.cpp" line="1949"/>
         <source>OSCAR does not have any backups for this machine!</source>
         <translation>OSCAR nu are backup-uri pentru acest aparat!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1934"/>
+        <location filename="../oscar/mainwindow.cpp" line="1950"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Cu excepția cazului în care ai făcut &lt;i&gt; &lt;b&gt; propriile tale copii de rezervă&lt;/b&gt; pentru toate-TOATE datele tale pentru acast aparat &lt;/i&gt;, &lt;font size = + 2&gt; vei pierde datele acestui aparat &lt;b&gt; permanent &lt;/b&gt; &gt;! &lt;/ font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1943"/>
+        <location filename="../oscar/mainwindow.cpp" line="1959"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>Sunteti &lt;b&gt;absolut sigur&lt;/b&gt; ca doriti ca continuati?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2244"/>
+        <location filename="../oscar/mainwindow.cpp" line="2260"/>
         <source>Imported %1 ZEO session(s) from
 
 %2</source>
@@ -1554,7 +1554,7 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2250"/>
+        <location filename="../oscar/mainwindow.cpp" line="2266"/>
         <source>Already up to date with ZEO data at
 
 %1</source>
@@ -1563,7 +1563,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2252"/>
+        <location filename="../oscar/mainwindow.cpp" line="2268"/>
         <source>Couldn&apos;t find any valid ZEO CSV data at
 
 %1</source>
@@ -1572,7 +1572,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2275"/>
+        <location filename="../oscar/mainwindow.cpp" line="2291"/>
         <source>Imported %1 Dreem session(s) from
 
 %2</source>
@@ -1581,7 +1581,7 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2281"/>
+        <location filename="../oscar/mainwindow.cpp" line="2297"/>
         <source>Already up to date with Dreem data at
 
 %1</source>
@@ -1590,7 +1590,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2283"/>
+        <location filename="../oscar/mainwindow.cpp" line="2299"/>
         <source>Couldn&apos;t find any valid Dreem CSV data at
 
 %1</source>
@@ -1599,12 +1599,12 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2320"/>
+        <location filename="../oscar/mainwindow.cpp" line="2336"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Glosarul de termeni se va deschide in browser-ul dvs de internet</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2407"/>
+        <location filename="../oscar/mainwindow.cpp" line="2423"/>
         <source>Imported %1 oximetry session(s) from
 
 %2</source>
@@ -1613,7 +1613,7 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2412"/>
+        <location filename="../oscar/mainwindow.cpp" line="2428"/>
         <source>Already up to date with oximetry data at
 
 %1</source>
@@ -1622,7 +1622,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2414"/>
+        <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>Couldn&apos;t find any valid data at
 
 %1</source>
@@ -1631,22 +1631,22 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2513"/>
+        <location filename="../oscar/mainwindow.cpp" line="2529"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>Sunteti sigur ca vreti sa stergeti datele pulsoximetriei pentru %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2515"/>
+        <location filename="../oscar/mainwindow.cpp" line="2531"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;Atentie, nu veti mai putea reveni asupra acestei operatiuni !!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2544"/>
+        <location filename="../oscar/mainwindow.cpp" line="2560"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>Selectati mai intai ziua cu Date valide de Pulsoximetrie in Fereasta de vizualizare a zilei.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2819"/>
+        <location filename="../oscar/mainwindow.cpp" line="2835"/>
         <source>OSCAR Information</source>
         <translation>Infoemații OSCAR</translation>
     </message>
@@ -1671,9 +1671,9 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="727"/>
-        <location filename="../oscar/mainwindow.cpp" line="2244"/>
-        <location filename="../oscar/mainwindow.cpp" line="2275"/>
-        <location filename="../oscar/mainwindow.cpp" line="2407"/>
+        <location filename="../oscar/mainwindow.cpp" line="2260"/>
+        <location filename="../oscar/mainwindow.cpp" line="2291"/>
+        <location filename="../oscar/mainwindow.cpp" line="2423"/>
         <source>Import Success</source>
         <translation>Importul s-a finalizat cu succes</translation>
     </message>
@@ -1688,9 +1688,9 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="729"/>
-        <location filename="../oscar/mainwindow.cpp" line="2250"/>
-        <location filename="../oscar/mainwindow.cpp" line="2281"/>
-        <location filename="../oscar/mainwindow.cpp" line="2412"/>
+        <location filename="../oscar/mainwindow.cpp" line="2266"/>
+        <location filename="../oscar/mainwindow.cpp" line="2297"/>
+        <location filename="../oscar/mainwindow.cpp" line="2428"/>
         <source>Up to date</source>
         <translation>La zi</translation>
     </message>
@@ -1704,82 +1704,82 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="884"/>
+        <location filename="../oscar/mainwindow.cpp" line="898"/>
         <source>Choose a folder</source>
         <translation>Alegeti un dosar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="950"/>
+        <location filename="../oscar/mainwindow.cpp" line="966"/>
         <source>No profile has been selected for Import.</source>
         <translation>Nu a fost selectat niciun Profil pentru Import.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="958"/>
+        <location filename="../oscar/mainwindow.cpp" line="974"/>
         <source>Import is already running in the background.</source>
         <translation>Importarea ruleaza inca in fundal.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="999"/>
+        <location filename="../oscar/mainwindow.cpp" line="1015"/>
         <source>A %1 file structure for a %2 was located at:</source>
         <translation>O structura %1 a fisierului pentru %2 a fost localizata la:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1001"/>
+        <location filename="../oscar/mainwindow.cpp" line="1017"/>
         <source>A %1 file structure was located at:</source>
         <translation>Un fisier %1 a fost localizat la:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1040"/>
+        <location filename="../oscar/mainwindow.cpp" line="1056"/>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
         <translation>Alegeți corect sursa, dosarul rădăcină al cardului (sau litera de ex E:\) și NU un alt dosar din card.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="966"/>
+        <location filename="../oscar/mainwindow.cpp" line="982"/>
         <source>Would you like to import from this location?</source>
         <translation>Doriti sa importati din aceasta locatie?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1010"/>
+        <location filename="../oscar/mainwindow.cpp" line="1026"/>
         <source>Specify</source>
         <translation>Specificati</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1306"/>
+        <location filename="../oscar/mainwindow.cpp" line="1322"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>Preferintele au fost dezactivate cat timp are loc reanaliza datelor.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1422"/>
+        <location filename="../oscar/mainwindow.cpp" line="1438"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>A aparut o problema la salvarea capturii in fisierul &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1424"/>
+        <location filename="../oscar/mainwindow.cpp" line="1440"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Captura ecran salvata in fisierul &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1856"/>
+        <location filename="../oscar/mainwindow.cpp" line="1872"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>Atentie, puteti pierde datele daca backup-ul OSCAR a fost dezactivat.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2305"/>
+        <location filename="../oscar/mainwindow.cpp" line="2321"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>A aparut o problema la deschiderea fisierului din aparatul MSeries: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2309"/>
+        <location filename="../oscar/mainwindow.cpp" line="2325"/>
         <source>MSeries Import complete</source>
         <translation>Importul finalizat din aparatul MSeries</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2368"/>
+        <location filename="../oscar/mainwindow.cpp" line="2384"/>
         <source>There was a problem opening Somnopose Data File: </source>
         <translation>A aparut o problema la deschiderea fisierului din aparatul Somnopose: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2372"/>
+        <location filename="../oscar/mainwindow.cpp" line="2388"/>
         <source>Somnopause Data Import complete</source>
         <translation>Datele Somnopause au fost importate</translation>
     </message>
@@ -1850,9 +1850,8 @@
         <translation>Numele utilizatorului</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="152"/>
         <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation>Nu lasati a indemana copiilor.. Nimic altceva.. Programul nu e super-securizat si puteti avea probleme MARI.</translation>
+        <translation type="vanished">Nu lasati a indemana copiilor.. Nimic altceva.. Programul nu e super-securizat si puteti avea probleme MARI.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
@@ -1888,6 +1887,11 @@
         <location filename="../oscar/newprofile.ui" line="54"/>
         <source>about:blank</source>
         <translation>about:blank</translation>
+    </message>
+    <message>
+        <location filename="../oscar/newprofile.ui" line="152"/>
+        <source>Very weak password protection and not recommended if security is required.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="240"/>
@@ -4299,166 +4303,132 @@ Vreti să faceti asta acum?</translation>
 <context>
     <name>ProfileSelect</name>
     <message>
-        <location filename="../oscar/profileselect.ui" line="14"/>
         <source>Select Profile</source>
-        <translation>Alegeti Profil</translation>
+        <translation type="vanished">Alegeti Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="115"/>
         <source>Search:</source>
-        <translation>Cautare:</translation>
+        <translation type="vanished">Cautare:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="191"/>
         <source>Start with the selected user profile.</source>
-        <translation>Incepe cu utilizatorul de Profil selectat.</translation>
+        <translation type="vanished">Incepe cu utilizatorul de Profil selectat.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="194"/>
         <source>&amp;Select User</source>
-        <translation>&amp;Alegeti utilizator</translation>
+        <translation type="vanished">&amp;Alegeti utilizator</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="215"/>
         <source>Create a new user profile.</source>
-        <translation>Creati un nou utilizator de Profil.</translation>
+        <translation type="vanished">Creati un nou utilizator de Profil.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="218"/>
         <source>New Profile</source>
-        <translation>Profil nou</translation>
+        <translation type="vanished">Profil nou</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="235"/>
         <source>Choose a different OSCAR data folder.</source>
-        <translation>Alegeti un alt dosar de date pentru OSCAR.</translation>
+        <translation type="vanished">Alegeti un alt dosar de date pentru OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="274"/>
         <source>OSCAR</source>
-        <translation>OSCAR</translation>
+        <translation type="vanished">OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="310"/>
         <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation>Click aici daca nu ati dorit sa porniti OSCAR.</translation>
+        <translation type="vanished">Click aici daca nu ati dorit sa porniti OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="383"/>
         <source>The current location of OSCAR data store.</source>
-        <translation>Locatia curenta a bazei de date OSCAR.</translation>
+        <translation type="vanished">Locatia curenta a bazei de date OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="241"/>
         <source>&amp;Different Folder</source>
-        <translation>Alt &amp;Dosar</translation>
+        <translation type="vanished">Alt &amp;Dosar</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="287"/>
         <source>[version]</source>
-        <translation>[version]</translation>
+        <translation type="vanished">[version]</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="313"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Inchideti aplicatia</translation>
+        <translation type="vanished">&amp;Inchideti aplicatia</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="370"/>
         <source>Folder:</source>
-        <translation>Dosar:</translation>
+        <translation type="vanished">Dosar:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.ui" line="389"/>
         <source>[data directory]</source>
-        <translation>[data directory]</translation>
+        <translation type="vanished">[data directory]</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="92"/>
         <source>Open Profile</source>
-        <translation>Deschide Profil</translation>
+        <translation type="vanished">Deschide Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="93"/>
         <source>Edit Profile</source>
-        <translation>Editeaza profil OSCAR</translation>
+        <translation type="vanished">Editeaza profil OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="95"/>
         <source>Delete Profile</source>
-        <translation>Stergeti un Profil OSCAR</translation>
+        <translation type="vanished">Stergeti un Profil OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="139"/>
-        <location filename="../oscar/profileselect.cpp" line="220"/>
         <source>Enter Password for %1</source>
-        <translation>Introduceti Parola pentru %1</translation>
+        <translation type="vanished">Introduceti Parola pentru %1</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="158"/>
-        <location filename="../oscar/profileselect.cpp" line="342"/>
         <source>Incorrect Password</source>
-        <translation>Parola incorecta</translation>
+        <translation type="vanished">Parola incorecta</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="160"/>
         <source>You entered the password wrong too many times.</source>
-        <translation>Ati introdus o parola gresita de prea multe ori.</translation>
+        <translation type="vanished">Ati introdus o parola gresita de prea multe ori.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="182"/>
         <source>Enter the word DELETE below to confirm.</source>
-        <translation>Introduceti cuvantul DELETE dedesubt pentru a confirma stergerea.</translation>
+        <translation type="vanished">Introduceti cuvantul DELETE dedesubt pentru a confirma stergerea.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="182"/>
         <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation>Sunteti pe cale sa eliminati Profilul &apos;%1&apos;.</translation>
+        <translation type="vanished">Sunteti pe cale sa eliminati Profilul &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="201"/>
         <source>Sorry</source>
-        <translation>Imi pare rau</translation>
+        <translation type="vanished">Imi pare rau</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="201"/>
         <source>You need to enter DELETE in capital letters.</source>
-        <translation>Trebuie sa introduceti cuvantul DELELE cu litere MARI.</translation>
+        <translation type="vanished">Trebuie sa introduceti cuvantul DELELE cu litere MARI.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="239"/>
         <source>You entered an incorrect password</source>
-        <translation>Ati introdus o parola gresita</translation>
+        <translation type="vanished">Ati introdus o parola gresita</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="242"/>
         <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation>Daca incercati stergerea pentru ca ati uitat parola, trebuie sa-l stergeti manual.</translation>
+        <translation type="vanished">Daca incercati stergerea pentru ca ati uitat parola, trebuie sa-l stergeti manual.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="255"/>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation>A aparut o eroare la stergerea dosarului Profilului, o sa trebuiasca sa-l stergeti manual.</translation>
+        <translation type="vanished">A aparut o eroare la stergerea dosarului Profilului, o sa trebuiasca sa-l stergeti manual.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="259"/>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation>Profilul &apos;%1&apos; a fost sters</translation>
+        <translation type="vanished">Profilul &apos;%1&apos; a fost sters</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="289"/>
         <source>Create new profile</source>
-        <translation>Creati un nou Profil OSCAR</translation>
+        <translation type="vanished">Creati un nou Profil OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="326"/>
         <source>Enter Password</source>
-        <translation>Introduceti Parola</translation>
+        <translation type="vanished">Introduceti Parola</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselect.cpp" line="345"/>
         <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation>Ati introdus o parola gresita de prea multe ori. Aici ne oprim!</translation>
+        <translation type="vanished">Ati introdus o parola gresita de prea multe ori. Aici ne oprim!</translation>
     </message>
 </context>
 <context>
@@ -4566,13 +4536,13 @@ Vreti să faceti asta acum?</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="233"/>
-        <location filename="../oscar/profileselector.cpp" line="363"/>
+        <location filename="../oscar/profileselector.cpp" line="367"/>
         <source>Enter Password for %1</source>
         <translation>Introduceti parola pentru %1</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="249"/>
-        <location filename="../oscar/profileselector.cpp" line="382"/>
+        <location filename="../oscar/profileselector.cpp" line="386"/>
         <source>You entered an incorrect password</source>
         <translation>Ati introdus o parola gresita</translation>
     </message>
@@ -4592,133 +4562,138 @@ Vreti să faceti asta acum?</translation>
         <translation>Selectati intai un Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="385"/>
+        <location filename="../oscar/profileselector.cpp" line="357"/>
+        <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/profileselector.cpp" line="389"/>
         <source>If you&apos;re trying to delete because you forgot the password, you need to either reset it or delete the profile folder manually.</source>
         <translation>Daca incercati sa stergeti profilul pentru ca ati uitat parola, mai bine o resetati, sau daca nu, trebuie sa stergeti manual dosarul.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>You are about to destroy profile &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</source>
         <translation>Sunteti pe cale sa eliminati Profilul &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>Think carefully, as this will irretrievably delete the profile along with all &lt;b&gt;backup data&lt;/b&gt; stored under&lt;br/&gt;%2.</source>
         <translation>Ganditi-va bine, asta va sterge iremediabil Profilul impreuna cu toate&lt;b&gt;backup-urile&lt;/b&gt; salvate in el&lt;br/&gt;%2.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="395"/>
+        <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>Enter the word &lt;b&gt;DELETE&lt;/b&gt; below (exactly as shown) to confirm.</source>
         <translation>Introducet cuvantul&lt;b&gt;DELETE&lt;/b&gt; mai jos (exact asa cum se vede) pentru a confirma.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="413"/>
+        <location filename="../oscar/profileselector.cpp" line="417"/>
         <source>DELETE</source>
         <translation>DELETE</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="414"/>
+        <location filename="../oscar/profileselector.cpp" line="418"/>
         <source>Sorry</source>
         <translation>Imi pare rau</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="414"/>
+        <location filename="../oscar/profileselector.cpp" line="418"/>
         <source>You need to enter DELETE in capital letters.</source>
         <translation>Introducet cuvantul&lt;b&gt;DELETE&lt;/b&gt; cu litere MARI.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="427"/>
+        <location filename="../oscar/profileselector.cpp" line="431"/>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
         <translation>A aparut o eroare la stergerea Profilului, trebuie sa stergeti manual dosarul acestuia.</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="431"/>
+        <location filename="../oscar/profileselector.cpp" line="435"/>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
         <translation>Profilul &apos;%1&apos; a fost sters</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>Bytes</source>
         <translation>Bytes</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>KB</source>
         <translation>KB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>MB</source>
         <translation>MB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>GB</source>
         <translation>GB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="441"/>
+        <location filename="../oscar/profileselector.cpp" line="445"/>
         <source>PB</source>
         <translation>RP</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="461"/>
+        <location filename="../oscar/profileselector.cpp" line="465"/>
         <source>Summaries:</source>
         <translation>Rezumate:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="462"/>
+        <location filename="../oscar/profileselector.cpp" line="466"/>
         <source>Events:</source>
         <translation>Evenimente:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="463"/>
+        <location filename="../oscar/profileselector.cpp" line="467"/>
         <source>Backups:</source>
         <translation>Backup-uri:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="475"/>
-        <location filename="../oscar/profileselector.cpp" line="515"/>
+        <location filename="../oscar/profileselector.cpp" line="479"/>
+        <location filename="../oscar/profileselector.cpp" line="519"/>
         <source>Hide disk usage information</source>
         <translation>Ascunde utilizare disk</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="478"/>
+        <location filename="../oscar/profileselector.cpp" line="482"/>
         <source>Show disk usage information</source>
         <translation>Arata utilizare disk</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="496"/>
+        <location filename="../oscar/profileselector.cpp" line="500"/>
         <source>Name: %1, %2</source>
         <translation>Nume: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="499"/>
+        <location filename="../oscar/profileselector.cpp" line="503"/>
         <source>Phone: %1</source>
         <translation>Telefon: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="502"/>
+        <location filename="../oscar/profileselector.cpp" line="506"/>
         <source>Email: &lt;a href=&apos;mailto:%1&apos;&gt;%1&lt;/a&gt;</source>
         <translation>Email: &lt;a href=&apos;mailto:%1&apos;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="505"/>
+        <location filename="../oscar/profileselector.cpp" line="509"/>
         <source>Address:</source>
         <translation>Adresa:</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="508"/>
+        <location filename="../oscar/profileselector.cpp" line="512"/>
         <source>No profile information given</source>
         <translation>Nu au fost furnizate informatii de Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.cpp" line="511"/>
+        <location filename="../oscar/profileselector.cpp" line="515"/>
         <source>Profile: %1</source>
         <translation>Profil: %1</translation>
     </message>
@@ -7428,15 +7403,19 @@ TTIA: %1</translation>
         <translation>Depanare channel #1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation>Chestii top-secret pe care nu ar trebui să le vezi ;)</translation>
+        <translation type="vanished">Chestii top-secret pe care nu ar trebui să le vezi ;)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Test #1</source>
         <translation>Test #1</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <source>For internal use only</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
@@ -7464,152 +7443,181 @@ TTIA: %1</translation>
         <translation>Prag scazut</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="501"/>
+        <location filename="../oscar/main.cpp" line="505"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>Deoarece nu ati ales un dosar, OSCAR se va opri.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="188"/>
         <source>Choose the SleepyHead data folder to migrate</source>
-        <translation>Alegeti dosarul din care doriti importarea datelor programului mai vechi SleepyHead</translation>
+        <translation type="vanished">Alegeti dosarul din care doriti importarea datelor programului mai vechi SleepyHead</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="189"/>
+        <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>sau ANULATI pentru a opri migrarea.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="203"/>
         <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation>Dosarul pe care l-ati ales nu contine date SleepyHead valide.</translation>
+        <translation type="vanished">Dosarul pe care l-ati ales nu contine date SleepyHead valide.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="204"/>
+        <location filename="../oscar/main.cpp" line="191"/>
+        <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="206"/>
+        <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="207"/>
         <source>You cannot use this folder:</source>
         <translation>Nu puteti utiliza acest dosar:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="219"/>
+        <location filename="../oscar/main.cpp" line="222"/>
         <source>Migrating </source>
         <translation>Transfer </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="219"/>
+        <location filename="../oscar/main.cpp" line="222"/>
         <source> files</source>
         <translation> fisiere</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="220"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source>from </source>
         <translation>de la </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="220"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source>to </source>
         <translation>la </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="327"/>
+        <location filename="../oscar/main.cpp" line="330"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
         <translation>OSCAR s-a blocat din cauza unei incompatibilități cu placa dvs grafică.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="328"/>
+        <location filename="../oscar/main.cpp" line="331"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Pentru a ocoli problema OSCAR a trecut la un mod grafic mai lent dar mai compatibil.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="488"/>
+        <location filename="../oscar/main.cpp" line="491"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>OSCAR va stabili dosarul pentru date.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="489"/>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation>Daca ati utilizat vechea versiune SleepyHead, OSCAR poate copia vechile date in acest dosar mai tarziu.</translation>
+        <location filename="../oscar/main.cpp" line="492"/>
+        <source>If you have been using SleepyHead or an older version of OSCAR,</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="490"/>
+        <location filename="../oscar/main.cpp" line="493"/>
+        <source>OSCAR can copy your old data to this folder later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="546"/>
+        <source>Migrate SleepyHead or OSCAR Data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="547"/>
+        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="548"/>
+        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
+        <translation type="vanished">Daca ati utilizat vechea versiune SleepyHead, OSCAR poate copia vechile date in acest dosar mai tarziu.</translation>
+    </message>
+    <message>
+        <location filename="../oscar/main.cpp" line="494"/>
         <source>We suggest you use this folder: </source>
         <translation>Sugerez sa folositi acest dosar: </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="491"/>
+        <location filename="../oscar/main.cpp" line="495"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation>Click OK pentru a accepta, sau NO daca doriti sa utilizati un alt dosar.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="497"/>
+        <location filename="../oscar/main.cpp" line="501"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>Alegeti sau creati un nou dosar de date pentru OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="502"/>
+        <location filename="../oscar/main.cpp" line="506"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>Data viitoare cand porniti OSCAR va intreba din nou.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="513"/>
+        <location filename="../oscar/main.cpp" line="517"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation>Dosarul pe care l-ati ales nu este gol, dar nici nu contine date OSCAR valide.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="534"/>
+        <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>Dosarul Data:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="542"/>
         <source>Migrate SleepyHead Data?</source>
-        <translation>Importa datele SleepyHead?</translation>
+        <translation type="vanished">Importa datele SleepyHead?</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="543"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation>In fereastra urmatoare alegeti dosarul cu datele SleepyHead pe care doriti sa le importe OSCAR</translation>
+        <translation type="vanished">In fereastra urmatoare alegeti dosarul cu datele SleepyHead pe care doriti sa le importe OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="544"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation>Click [OK] pentru a merge mai departe sau [No] daca nu doriti importarea datelor SleepyHead.</translation>
+        <translation type="vanished">Click [OK] pentru a merge mai departe sau [No] daca nu doriti importarea datelor SleepyHead.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="553"/>
+        <location filename="../oscar/main.cpp" line="557"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="563"/>
+        <location filename="../oscar/main.cpp" line="567"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="565"/>
+        <location filename="../oscar/main.cpp" line="569"/>
         <source>Error code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="566"/>
+        <location filename="../oscar/main.cpp" line="570"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="577"/>
+        <location filename="../oscar/main.cpp" line="581"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="635"/>
+        <location filename="../oscar/main.cpp" line="639"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation>Versiunea &quot;%1&quot; este invalidă, nu pot continua!</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="644"/>
+        <location filename="../oscar/main.cpp" line="648"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation>Versiunea OSCAR pe care o executați (%1) este mai veche decât cea utilizată pentru a crea aceste date (%2).</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="648"/>
+        <location filename="../oscar/main.cpp" line="652"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>Probabil daca faceti asta datele vor fi corupte, sigur doriti asta?</translation>
     </message>
@@ -7619,14 +7627,14 @@ TTIA: %1</translation>
         <translation>Intrebare</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="500"/>
-        <location filename="../oscar/main.cpp" line="552"/>
-        <location filename="../oscar/main.cpp" line="568"/>
+        <location filename="../oscar/main.cpp" line="504"/>
+        <location filename="../oscar/main.cpp" line="556"/>
+        <location filename="../oscar/main.cpp" line="572"/>
         <source>Exiting</source>
         <translation>Oprire</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="514"/>
+        <location filename="../oscar/main.cpp" line="518"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>Sunteti sigur ca doriti sa utilizati acest dosar?</translation>
     </message>
@@ -7656,24 +7664,35 @@ TTIA: %1</translation>
         <translation>Incarc Profilul &quot;%1&quot;...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2116"/>
+        <location filename="../oscar/mainwindow.cpp" line="860"/>
+        <source>Chromebook file system detected, but no removable device found
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="861"/>
+        <source>You must share your SD card with Linux using the ChromeOS Files program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2132"/>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
         <translation>Imi pare rau, aparatul dvs %1 %2 nu este compatibil momentan cu OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2123"/>
+        <location filename="../oscar/mainwindow.cpp" line="2139"/>
         <source>Recompressing Session Files</source>
         <translation>Recomprim fișierele sesiunii</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2662"/>
+        <location filename="../oscar/mainwindow.cpp" line="2678"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation>Vă rog selectați o altă locație pentru arhiva zip., în afară de cardul de date în sine!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2689"/>
-        <location filename="../oscar/mainwindow.cpp" line="2739"/>
-        <location filename="../oscar/mainwindow.cpp" line="2798"/>
+        <location filename="../oscar/mainwindow.cpp" line="2705"/>
+        <location filename="../oscar/mainwindow.cpp" line="2755"/>
+        <location filename="../oscar/mainwindow.cpp" line="2814"/>
         <source>Unable to create zip!</source>
         <translation>Nu pot crea zip!</translation>
     </message>

@@ -1570,7 +1570,7 @@
     </message>
     <message>
         <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation>Die Software ist nichts für Kinder.</translation>
+        <translation type="vanished">Die Software ist nichts für Kinder.</translation>
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
@@ -1703,6 +1703,10 @@
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
         <translation>OSCAR ist Copyright &amp;copy;2011-2018 Mark Watkins und Teile &amp;copy;2019-2020 Das OSCAR-Team</translation>
+    </message>
+    <message>
+        <source>Very weak password protection and not recommended if security is required.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3424,131 +3428,131 @@ p, li { white-space: pre-wrap; }
     <name>ProfileSelect</name>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Beenden</translation>
+        <translation type="vanished">&amp;Beenden</translation>
     </message>
     <message>
         <source>Create a new user profile.</source>
-        <translation>Erstellen Sie ein neues Benutzerprofil.</translation>
+        <translation type="vanished">Erstellen Sie ein neues Benutzerprofil.</translation>
     </message>
     <message>
         <source>OSCAR</source>
-        <translation>OSCAR</translation>
+        <translation type="vanished">OSCAR</translation>
     </message>
     <message>
         <source>Sorry</source>
-        <translation>Entschuldigung</translation>
+        <translation type="vanished">Entschuldigung</translation>
     </message>
     <message>
         <source>[data directory]</source>
-        <translation>[Datenverzeichnis]</translation>
+        <translation type="vanished">[Datenverzeichnis]</translation>
     </message>
     <message>
         <source>Open Profile</source>
-        <translation>Profil öffnen</translation>
+        <translation type="vanished">Profil öffnen</translation>
     </message>
     <message>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation>Profil &apos;%1&apos; wurde erfolgreich gelöscht</translation>
+        <translation type="vanished">Profil &apos;%1&apos; wurde erfolgreich gelöscht</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation>Profil bearbeiten</translation>
+        <translation type="vanished">Profil bearbeiten</translation>
     </message>
     <message>
         <source>Enter the word DELETE below to confirm.</source>
-        <translation>Um fortzufahren bestätigen Sie unten das Wort DELETE.</translation>
+        <translation type="vanished">Um fortzufahren bestätigen Sie unten das Wort DELETE.</translation>
     </message>
     <message>
         <source>The current location of OSCAR data store.</source>
-        <translation>Der aktuelle Speicherort des OSCAR-Datenspeichers.</translation>
+        <translation type="vanished">Der aktuelle Speicherort des OSCAR-Datenspeichers.</translation>
     </message>
     <message>
         <source>Choose a different OSCAR data folder.</source>
-        <translation>Wählen Sie einen anderen OSCAR-Datenordner.</translation>
+        <translation type="vanished">Wählen Sie einen anderen OSCAR-Datenordner.</translation>
     </message>
     <message>
         <source>Create new profile</source>
-        <translation>Neues Profil erstellen</translation>
+        <translation type="vanished">Neues Profil erstellen</translation>
     </message>
     <message>
         <source>Incorrect Password</source>
-        <translation>Inkorrektes Passwort</translation>
+        <translation type="vanished">Inkorrektes Passwort</translation>
     </message>
     <message>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation>Es gab einen Fehler beim Löschen des Profil-Verzeichnisses. Sie müssen es manuell entfernen.</translation>
+        <translation type="vanished">Es gab einen Fehler beim Löschen des Profil-Verzeichnisses. Sie müssen es manuell entfernen.</translation>
     </message>
     <message>
         <source>Enter Password for %1</source>
-        <translation>Passwort eingeben für %1</translation>
+        <translation type="vanished">Passwort eingeben für %1</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation>Neues Profil</translation>
+        <translation type="vanished">Neues Profil</translation>
     </message>
     <message>
         <source>&amp;Different Folder</source>
-        <translation>&amp;Anderen Ordner</translation>
+        <translation type="vanished">&amp;Anderen Ordner</translation>
     </message>
     <message>
         <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation>Klicken Sie hier, wenn Sie OSCAR nicht starten möchten.</translation>
+        <translation type="vanished">Klicken Sie hier, wenn Sie OSCAR nicht starten möchten.</translation>
     </message>
     <message>
         <source>&amp;Select User</source>
-        <translation>&amp;Zum ausgewählten Benutzer</translation>
+        <translation type="vanished">&amp;Zum ausgewählten Benutzer</translation>
     </message>
     <message>
         <source>You entered an incorrect password</source>
-        <translation>Sie haben ein falsches Passwort eingegeben</translation>
+        <translation type="vanished">Sie haben ein falsches Passwort eingegeben</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>Suche:</translation>
+        <translation type="vanished">Suche:</translation>
     </message>
     <message>
         <source>Start with the selected user profile.</source>
-        <translation>Beginnen Sie mit dem ausgewählten Benutzerprofil.</translation>
+        <translation type="vanished">Beginnen Sie mit dem ausgewählten Benutzerprofil.</translation>
     </message>
     <message>
         <source>Delete Profile</source>
-        <translation>Profil löschen</translation>
+        <translation type="vanished">Profil löschen</translation>
     </message>
     <message>
         <source>Select Profile</source>
-        <translation>Wählen Sie ein Profil aus</translation>
+        <translation type="vanished">Wählen Sie ein Profil aus</translation>
     </message>
     <message>
         <source>[version]</source>
-        <translation>(Version)</translation>
+        <translation type="vanished">(Version)</translation>
     </message>
     <message>
         <source>You entered the password wrong too many times.</source>
-        <translation>Sie haben zu oft das falsche Kennwort eingegeben.</translation>
+        <translation type="vanished">Sie haben zu oft das falsche Kennwort eingegeben.</translation>
     </message>
     <message>
         <source>Enter Password</source>
-        <translation>Passwort eingeben</translation>
+        <translation type="vanished">Passwort eingeben</translation>
     </message>
     <message>
         <source>Folder:</source>
-        <translation>Ordner:</translation>
+        <translation type="vanished">Ordner:</translation>
     </message>
     <message>
         <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation>Sie sind dabei, das Profil zu zerstören &apos;%1&apos;.</translation>
+        <translation type="vanished">Sie sind dabei, das Profil zu zerstören &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation>Wenn Sie versuchen das Profil zu löschen, weil Sie Ihr Passwort vergessen haben, müssen Sie es manuell löschen.</translation>
+        <translation type="vanished">Wenn Sie versuchen das Profil zu löschen, weil Sie Ihr Passwort vergessen haben, müssen Sie es manuell löschen.</translation>
     </message>
     <message>
         <source>You need to enter DELETE in capital letters.</source>
-        <translation>Sie müssen DELETE in Großbuchstaben eingeben.</translation>
+        <translation type="vanished">Sie müssen DELETE in Großbuchstaben eingeben.</translation>
     </message>
     <message>
         <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation>Sie haben zu oft ein falsches Passwort eingegeben. Verlassen!</translation>
+        <translation type="vanished">Sie haben zu oft ein falsches Passwort eingegeben. Verlassen!</translation>
     </message>
 </context>
 <context>
@@ -3756,6 +3760,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Reset filter to see all profiles</source>
         <translation>Filter zurücksetzen, um alle Profile zu sehen</translation>
+    </message>
+    <message>
+        <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6137,7 +6145,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Choose the SleepyHead data folder to migrate</source>
-        <translation>Wählen Sie den Datenordner SleepyHead für die Migration aus</translation>
+        <translation type="vanished">Wählen Sie den Datenordner SleepyHead für die Migration aus</translation>
     </message>
     <message>
         <source>or CANCEL to skip migration.</source>
@@ -6145,7 +6153,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation>Der von Ihnen gewählte Ordner enthält keine gültigen SleepyHead-Daten.</translation>
+        <translation type="vanished">Der von Ihnen gewählte Ordner enthält keine gültigen SleepyHead-Daten.</translation>
     </message>
     <message>
         <source>You cannot use this folder:</source>
@@ -6177,7 +6185,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation>Wenn Sie SleepyHead verwendet haben, kann OSCAR Ihre alten Daten später in diesen Ordner kopieren.</translation>
+        <translation type="vanished">Wenn Sie SleepyHead verwendet haben, kann OSCAR Ihre alten Daten später in diesen Ordner kopieren.</translation>
     </message>
     <message>
         <source>We suggest you use this folder: </source>
@@ -6193,15 +6201,15 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Migrate SleepyHead Data?</source>
-        <translation>SleepyHead Daten migrieren?</translation>
+        <translation type="vanished">SleepyHead Daten migrieren?</translation>
     </message>
     <message>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation>Auf dem nächsten Bildschirm fordert OSCAR Sie auf, einen Ordner mit SleepyHead-Daten auszuwählen</translation>
+        <translation type="vanished">Auf dem nächsten Bildschirm fordert OSCAR Sie auf, einen Ordner mit SleepyHead-Daten auszuwählen</translation>
     </message>
     <message>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation>Klicken Sie auf [OK], um zum nächsten Bildschirm zu gelangen, oder auf[Nein], wenn Sie keine SleepyHead-Daten verwenden möchten.</translation>
+        <translation type="vanished">Klicken Sie auf [OK], um zum nächsten Bildschirm zu gelangen, oder auf[Nein], wenn Sie keine SleepyHead-Daten verwenden möchten.</translation>
     </message>
     <message>
         <source>App key:</source>
@@ -6433,7 +6441,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation>Streng geheimes internes Zeug, das man nicht sehen soll ;)</translation>
+        <translation type="vanished">Streng geheimes internes Zeug, das man nicht sehen soll ;)</translation>
     </message>
     <message>
         <source>Test #1</source>
@@ -6748,6 +6756,47 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     <message>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation>Kann nicht in das Debug-Protokoll schreiben. Sie können immer noch das Debug-Fenster (Hilfe/Fehlerbehebung/Debug-Fenster anzeigen) verwenden, aber das Debug-Protokoll wird nicht auf die Festplatte geschrieben.</translation>
+    </message>
+    <message>
+        <source>For internal use only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have been using SleepyHead or an older version of OSCAR,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR can copy your old data to this folder later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Migrate SleepyHead or OSCAR Data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chromebook file system detected, but no removable device found
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must share your SD card with Linux using the ChromeOS Files program</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

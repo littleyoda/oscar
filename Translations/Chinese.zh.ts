@@ -1532,7 +1532,7 @@
     </message>
     <message>
         <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation>让孩子远离此软件，该软件并非绝对安全。</translation>
+        <translation type="vanished">让孩子远离此软件，该软件并非绝对安全。</translation>
     </message>
     <message>
         <source>Address</source>
@@ -1684,6 +1684,10 @@
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very weak password protection and not recommended if security is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3392,131 +3396,119 @@ p, li { white-space: pre-wrap; }
     <name>ProfileSelect</name>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;退出</translation>
+        <translation type="vanished">&amp;退出</translation>
     </message>
     <message>
         <source>Create a new user profile.</source>
-        <translation>创建新用户.</translation>
+        <translation type="vanished">创建新用户.</translation>
     </message>
     <message>
         <source>[data directory]</source>
-        <translation>[数据目录]</translation>
+        <translation type="vanished">[数据目录]</translation>
     </message>
     <message>
         <source>Open Profile</source>
-        <translation>打开配置文件</translation>
+        <translation type="vanished">打开配置文件</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation>编辑配置文件</translation>
+        <translation type="vanished">编辑配置文件</translation>
     </message>
     <message>
         <source>Incorrect Password</source>
-        <translation>错误密码</translation>
+        <translation type="vanished">错误密码</translation>
     </message>
     <message>
         <source>Enter Password for %1</source>
-        <translation>键入密码 %1</translation>
+        <translation type="vanished">键入密码 %1</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation>新配置文件</translation>
+        <translation type="vanished">新配置文件</translation>
     </message>
     <message>
         <source>&amp;Different Folder</source>
-        <translation>&amp;其他文件夹</translation>
+        <translation type="vanished">&amp;其他文件夹</translation>
     </message>
     <message>
         <source>&amp;Select User</source>
-        <translation>&amp;选择用户</translation>
+        <translation type="vanished">&amp;选择用户</translation>
     </message>
     <message>
         <source>Start with the selected user profile.</source>
-        <translation>用所选的用户设置启动软件.</translation>
+        <translation type="vanished">用所选的用户设置启动软件.</translation>
     </message>
     <message>
         <source>Delete Profile</source>
-        <translation>删除配置文件</translation>
+        <translation type="vanished">删除配置文件</translation>
     </message>
     <message>
         <source>Select Profile</source>
-        <translation>选择配置文件</translation>
+        <translation type="vanished">选择配置文件</translation>
     </message>
     <message>
         <source>[version]</source>
-        <translation>[版本]</translation>
+        <translation type="vanished">[版本]</translation>
     </message>
     <message>
         <source>You entered the password wrong too many times.</source>
-        <translation>键入密码错误次数过多.</translation>
+        <translation type="vanished">键入密码错误次数过多.</translation>
     </message>
     <message>
         <source>Enter Password</source>
-        <translation>键入密码</translation>
+        <translation type="vanished">键入密码</translation>
     </message>
     <message>
         <source>Folder:</source>
-        <translation>文件夹:</translation>
+        <translation type="vanished">文件夹:</translation>
     </message>
     <message>
         <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation>输入密码错误次数过多，退出!</translation>
+        <translation type="vanished">输入密码错误次数过多，退出!</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>查找:</translation>
+        <translation type="vanished">查找:</translation>
     </message>
     <message>
         <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation>您将要清除&apos;%1&apos;.</translation>
+        <translation type="vanished">您将要清除&apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Enter the word DELETE below to confirm.</source>
-        <translation>在下面敲入 DELETE 以确认.</translation>
+        <translation type="vanished">在下面敲入 DELETE 以确认.</translation>
     </message>
     <message>
         <source>Sorry</source>
-        <translation>抱歉</translation>
+        <translation type="vanished">抱歉</translation>
     </message>
     <message>
         <source>You need to enter DELETE in capital letters.</source>
-        <translation>需要键入全大写字母 DELETE.</translation>
+        <translation type="vanished">需要键入全大写字母 DELETE.</translation>
     </message>
     <message>
         <source>You entered an incorrect password</source>
-        <translation>密码不正确</translation>
+        <translation type="vanished">密码不正确</translation>
     </message>
     <message>
         <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation>如果因为忘记密码而删除,请手动操作.</translation>
+        <translation type="vanished">如果因为忘记密码而删除,请手动操作.</translation>
     </message>
     <message>
         <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation>配置文件目录出错,请手动移除.</translation>
+        <translation type="vanished">配置文件目录出错,请手动移除.</translation>
     </message>
     <message>
         <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation>配置文件 &apos;%1&apos;已成功删除</translation>
+        <translation type="vanished">配置文件 &apos;%1&apos;已成功删除</translation>
     </message>
     <message>
         <source>Create new profile</source>
-        <translation>创建一个新的配置文件</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">创建一个新的配置文件</translation>
     </message>
     <message>
         <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">OSCAR</translation>
     </message>
 </context>
 <context>
@@ -3723,6 +3715,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset filter to see all profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6105,15 +6101,7 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>or CANCEL to skip migration.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6141,10 +6129,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>We suggest you use this folder: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6158,18 +6142,6 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Next time you run OSCAR, you will be asked again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6398,10 +6370,6 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Debugging channel #1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6715,6 +6683,47 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For internal use only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have been using SleepyHead or an older version of OSCAR,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OSCAR can copy your old data to this folder later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Migrate SleepyHead or OSCAR Data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chromebook file system detected, but no removable device found
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
