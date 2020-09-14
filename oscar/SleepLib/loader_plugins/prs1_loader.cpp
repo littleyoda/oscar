@@ -5067,9 +5067,9 @@ bool PRS1DataChunk::ParseComplianceF0V5(void)
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
                 CHECK_VALUE(data[pos+2] & ~(0x40|0x02|0x01), 0);
                 //CHECK_VALUES(data[pos+3], 0x16, 0x13);  // 22, 19
-                if (data[pos+4] < 0 || data[pos+4] > 3) UNEXPECTED_VALUE(data[pos+4], "0-3");
+                if (data[pos+4] > 3) UNEXPECTED_VALUE(data[pos+4], "0-3");
                 //CHECK_VALUES(data[pos+5], 0x2F, 0x26);  // 47, 38
-                if (data[pos+6] < 0 || data[pos+6] > 7) UNEXPECTED_VALUE(data[pos+6], "0-7");
+                if (data[pos+6] > 7) UNEXPECTED_VALUE(data[pos+6], "0-7");
                 break;
             //case 4:  // Time Elapsed?  See ParseComplianceF0V4 if we encounter this.
             case 5:  // Clock adjustment?
