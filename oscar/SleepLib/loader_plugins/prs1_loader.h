@@ -25,7 +25,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation
 // BEFORE making a release
-const int prs1_data_version = 19;
+const int prs1_data_version = 20;
 //
 //********************************************************************************************
 #if 0  // Apparently unused
@@ -141,6 +141,9 @@ public:
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a P256x brick
     bool ParseComplianceF0V4(void);
     
+    //! \brief Parse a single data chunk from a .000 file containing compliance data for a x00V brick
+    bool ParseComplianceF0V5(void);
+    
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a DreamStation 200X brick
     bool ParseComplianceF0V6(void);
     
@@ -168,8 +171,8 @@ public:
     //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 3 machine
     bool ParseSummaryF5V3(void);
 
-    //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for CPAP/APAP family versions 2, 3, or 4
-    void ParseFlexSettingF0V234(quint8 flex, int prs1mode);
+    //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for CPAP/APAP family versions 2, 3, 4, or 5
+    void ParseFlexSettingF0V2345(quint8 flex, int prs1mode);
     
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for ASV family versions 0, 1, or 2
     void ParseFlexSettingF5V012(quint8 flex, int prs1mode);
@@ -241,7 +244,7 @@ protected:
     bool ParseSettingsF0V23(const unsigned char* data, int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF0V4(const unsigned char* data, int size);
+    bool ParseSettingsF0V45(const unsigned char* data, int size);
 
     //! \brief Parse a settings slice from a .000 and .001 file
     bool ParseSettingsF0V6(const unsigned char* data, int size);

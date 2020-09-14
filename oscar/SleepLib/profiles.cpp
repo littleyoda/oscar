@@ -941,7 +941,14 @@ Machine *Profile::GetMachine(MachineType t)
         return nullptr;
     }
 
-    return vec[0];
+    // Find most recently imported machine
+    int idx = 0;
+
+    for (int i=1; i < vec.size(); i++) {
+        if (vec[i]->lastImported() > vec[idx]->lastImported())
+            idx = i;
+    }
+    return vec[idx];
 }
 
 //bool Profile::trashMachine(Machine * mach)

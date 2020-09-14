@@ -63,7 +63,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="importTab">
          <attribute name="title">
@@ -510,6 +510,12 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
                </item>
                <item>
                 <widget class="QDateEdit" name="ignoreOlderSessionsDate">
+                 <property name="minimumSize">
+                  <size>
+                   <width>165</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="toolTip">
                   <string>Sessions older than this date will not be imported</string>
                  </property>

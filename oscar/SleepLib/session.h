@@ -42,6 +42,7 @@ public:
         end = copy.end;
         status = copy.status;
     }
+    SessionSlice& operator=(const SessionSlice& other) = default;
     SessionSlice(qint64 start, qint64 end, SliceStatus status):start(start), end(end), status(status) {}
 
     qint64 start;
