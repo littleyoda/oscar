@@ -253,7 +253,10 @@ void CheckUpdates::checkForUpdates(bool showWhenCurrent)
 void CheckUpdates::replyFinished(QNetworkReply *reply)
 {
     if (reply->error() != QNetworkReply::NoError) {
-        qWarning() << "Update Check Error: "+reply->errorString();
+        qWarning() << "Update Check Error:" << reply->errorString();
+        msg = QObject::tr("Unable to check for updates. Please try again later.");
+//        msg += "<br><br>" + reply->errorString();
+        msgIsReady = true;
     } else {
 //      qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
 //      qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime().toString();
@@ -272,9 +275,9 @@ void CheckUpdates::replyFinished(QNetworkReply *reply)
         }
         else
             elapsedTime = 0;
-    }
 
-    compareVersions();
+        compareVersions();
+    }
 
     if (showIfCurrent)
         showMessage();
