@@ -99,7 +99,7 @@
     <name>CheckUpdates</name>
     <message>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdzanie nowszych wersji OSCARa</translation>
     </message>
 </context>
 <context>
@@ -442,7 +442,7 @@
     </message>
     <message>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Brak ustawień trybu i ciśnienia - pokazuję wczorajsze.)</translation>
     </message>
 </context>
 <context>
@@ -1397,19 +1397,19 @@
     </message>
     <message>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż dane osobiste</translation>
     </message>
     <message>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz zip logów diagnostycznych OSCARa</translation>
     </message>
     <message>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdź &amp;Uaktualnienia</translation>
     </message>
     <message>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdzanie uaktualnień nie wprowadzone</translation>
     </message>
 </context>
 <context>
@@ -1703,11 +1703,11 @@
     </message>
     <message>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</translation>
     </message>
     <message>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bardzo słaba ochrona hasłem, nie rekomendowana jeżeli wymagane jest bezpieczeństwo.</translation>
     </message>
 </context>
 <context>
@@ -3384,39 +3384,39 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdź uaktualnienia</translation>
     </message>
     <message>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>Używasz testowej wersji OSCARa. Wersje testowe sprawdzają aktualizacje co najmniej co siedem dni. Możesz ustawić częściej.</translation>
     </message>
     <message>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie sprawdzaj aktualizacje</translation>
     </message>
     <message>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jak często OSCAR ma sprawdzać aktuallizacje.</translation>
     </message>
     <message>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli chcesz pomóc w testowaniu nowych funkcji i poprawek, kliknij tu.</translation>
     </message>
     <message>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcę wypróbować wersje testowe i eksperymentalne. (Zapraszamy tylko zaawansowanych użytkowników.)</translation>
     </message>
     <message>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli chcesz pomóc w testowaniu wczesnych wersji OSCARa, odwiedź stronę Wiki o testowaniu OSCAR. Zapraszamy wszystkich, którzy chcieliby przetestować OSCARa, pomóc w rozwoju OSCARa i pomóc w tłumaczeniach na istniejące lub nowe języki. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj raporty w czerni i bieli, co może być bardziej czytelne na drukarkach innych niż kolorowe</translation>
     </message>
     <message>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj raporty w czerni i bieli (monochromatycznie)</translation>
     </message>
 </context>
 <context>
@@ -3758,7 +3758,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Wydaje się, że wybrany profil nie zawiera żadnych danych i nie może zostać usunięty przez OSCAR</translation>
     </message>
 </context>
 <context>
@@ -6641,7 +6641,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>Passover</source>
-        <translation type="unfinished">Przepuszczenie</translation>
+        <translation>Przepuszczenie</translation>
     </message>
     <message>
         <source>Peak Flow</source>
@@ -6677,121 +6677,123 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(1 dzień wczeniej)</translation>
     </message>
     <message>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%2 dni wcześniej)</translation>
     </message>
     <message>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik nowej wersji jest nieprawidłowo utworzony</translation>
     </message>
     <message>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Korzystasz z najnowszej wersji OSCAR</translation>
     </message>
     <message>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Dostępna jest nowsza wersja OSCAR</translation>
     </message>
     <message>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzywasz wersji %1</translation>
     </message>
     <message>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 jest dostępny &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Informacje o nowszej wersji testowej %1 są dostępne pod adresem &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(odczytanie %1 zajęło %2 sekund)</translation>
     </message>
     <message>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprawdzanie uaktualnień OSCAR</translation>
     </message>
     <message>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można utworzyć folderu danych OSCARa w</translation>
     </message>
     <message>
         <source>The popout window is full. You should capture the existing
 popout window, delete it, then pop out this graph again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Okno wyskakujące jest pełne. Powinieneś uchwycić istniejące
+wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</translation>
     </message>
     <message>
         <source>Essentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Elementy zasadnicze</translation>
     </message>
     <message>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus</translation>
     </message>
     <message>
         <source>Unable to write to OSCAR data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać w folderze danych OSCARa</translation>
     </message>
     <message>
         <source>Error code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod błędu</translation>
     </message>
     <message>
         <source>OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR nie może kontynuować, wyłącza się.</translation>
     </message>
     <message>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać w dzienniku debugowania. Nadal można używać okienka debugowania (Pomoc / Rozwiązywanie problemów / Pokaż okienko debugowania), ale dziennik debugowania nie zostanie zapisany na dysku.</translation>
     </message>
     <message>
         <source>For internal use only</source>
-        <translation type="unfinished"></translation>
+        <translation>Tylko do użytku wewnętrznego</translation>
     </message>
     <message>
         <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz folder danych SleepyHead lub OSCAR do migracji</translation>
     </message>
     <message>
         <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybrany folder nie zawiera prawidłowych danych SleepyHead ani OSCAR.</translation>
     </message>
     <message>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli używasz SleepyHead lub starszej wersji OSCAR,</translation>
     </message>
     <message>
         <source>OSCAR can copy your old data to this folder later.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR może później skopiować stare dane do tego folderu.</translation>
     </message>
     <message>
         <source>Migrate SleepyHead or OSCAR Data?</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrować dane SleepyHead lub OSCAR?</translation>
     </message>
     <message>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
-        <translation type="unfinished"></translation>
+        <translation>Na następnym ekranie OSCAR poprosi Cię o wybranie folderu z danymi SleepyHead lub OSCAR</translation>
     </message>
     <message>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknij [OK], aby przejść do następnego ekranu lub [Nie], jeśli nie chcesz używać żadnych danych SleepyHead lub OSCAR.</translation>
     </message>
     <message>
         <source>Chromebook file system detected, but no removable device found
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Wykryto system plików Chromebooka, ale nie znaleziono urządzenia wymiennego
+</translation>
     </message>
     <message>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz udostępnić swoją kartę SD Linuksowi za pomocą programu Pliki systemu operacyjnego ChromeOS</translation>
     </message>
 </context>
 <context>
@@ -7247,7 +7249,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dzień wcześniej</translation>
     </message>
 </context>
 <context>

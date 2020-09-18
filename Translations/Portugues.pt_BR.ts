@@ -1887,7 +1887,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="152"/>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Protecção muito fraca da senha e não recomendada se for necessária segurança.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="240"/>
@@ -4561,7 +4561,7 @@ Você gostaria de fazer isso agora?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="357"/>
         <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>O perfil seleccionado não parece conter quaisquer dados e não pode ser removido pelo OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="389"/>
@@ -6555,17 +6555,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="546"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrar dados do SleepyHead ou do OSCAR?</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="547"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
-        <translation type="unfinished"></translation>
+        <translation>Na próxima tela o OSCAR lhe pedirá para selecionar uma pasta com os dados do SleepyHead ou do OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="548"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clique [OK] para ir para a próxima tela ou [Não] se você não quiser usar nenhum dado do SleepyHead ou do OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="557"/>
@@ -6610,22 +6610,22 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="191"/>
         <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha a pasta de dados do SleepyHead ou do OSCAR para migrar</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="206"/>
         <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>A pasta selecionada não contém dados válidos de SleepyHead ou OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="492"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
-        <translation type="unfinished"></translation>
+        <translation>Se você tem usado o SleepyHead ou uma versão mais antiga do OSCAR,</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="493"/>
         <source>OSCAR can copy your old data to this folder later.</source>
-        <translation type="unfinished"></translation>
+        <translation>O OSCAR pode copiar seus dados antigos para esta pasta mais tarde.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="505"/>
@@ -6705,12 +6705,13 @@ TTIA: %1</translation>
         <location filename="../oscar/mainwindow.cpp" line="860"/>
         <source>Chromebook file system detected, but no removable device found
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema de arquivo Chromebook detectado, mas nenhum dispositivo removível encontrado
+</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="861"/>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
-        <translation type="unfinished"></translation>
+        <translation>Você deve compartilhar seu cartão SD com o Linux usando o programa ChromeOS Files</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2132"/>
@@ -7781,7 +7782,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>For internal use only</source>
-        <translation type="unfinished"></translation>
+        <translation>Apenas para uso interno</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
