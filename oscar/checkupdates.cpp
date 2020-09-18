@@ -252,10 +252,18 @@ void CheckUpdates::checkForUpdates(bool showWhenCurrent)
 
 void CheckUpdates::replyFinished(QNetworkReply *reply)
 {
+    if (showIfCurrent) {
+        if (checkingBox != nullptr)
+            checkingBox->reset();
+    }
+
     if (reply->error() != QNetworkReply::NoError) {
         qWarning() << "Update Check Error:" << reply->errorString();
+        reply->deleteLater();
+        if (!showIfCurrent) {  // for automatic checks, don't show anything
+            return;
+        }
         msg = QObject::tr("Unable to check for updates. Please try again later.");
-//        msg += "<br><br>" + reply->errorString();
         msgIsReady = true;
     } else {
 //      qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
