@@ -163,7 +163,7 @@ fpm --input-type dir --output-type deb  \
     --category misc               \
     --deb-priority optional \
     --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \
-    --license GPL3+
+    --license GPL3+             \
     --vendor oscar-team.org    \
     --description "$description" \
     --url https://sleepfiles.com/OSCAR  \
