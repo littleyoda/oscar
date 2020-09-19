@@ -1706,7 +1706,7 @@
     </message>
     <message>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr schwacher Passwortschutz und nicht empfehlenswert, wenn Sicherheit erforderlich ist.</translation>
     </message>
 </context>
 <context>
@@ -3763,7 +3763,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Das ausgewählte Profil scheint keine Daten zu enthalten und kann von OSCAR nicht entfernt werden</translation>
     </message>
 </context>
 <context>
@@ -6759,44 +6759,53 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     </message>
     <message>
         <source>For internal use only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur für den internen Gebrauch</translation>
     </message>
     <message>
         <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie den zu migrierenden SleepyHead- oder OSCAR-Datenordner</translation>
     </message>
     <message>
         <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der von Ihnen gewählte Ordner enthält keine gültigen SleepyHead- oder OSCAR-Daten.</translation>
     </message>
     <message>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie SleepyHead oder eine ältere Version von OSCAR verwendet haben,</translation>
     </message>
     <message>
         <source>OSCAR can copy your old data to this folder later.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR kann Ihre alten Daten später in diesen Ordner kopieren.</translation>
     </message>
     <message>
         <source>Migrate SleepyHead or OSCAR Data?</source>
-        <translation type="unfinished"></translation>
+        <translation>SleepyHead- oder OSCAR-Daten migrieren?</translation>
     </message>
     <message>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf dem nächsten Bildschirm werden Sie von OSCAR aufgefordert, einen Ordner mit SleepyHead- oder OSCAR-Daten auszuwählen</translation>
     </message>
     <message>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf [OK], um zum nächsten Bildschirm zu gelangen, oder auf [Nein], wenn Sie keine SleepyHead- oder OSCAR-Daten verwenden möchten.</translation>
     </message>
     <message>
         <source>Chromebook file system detected, but no removable device found
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Chromebook-Dateisystem erkannt, aber kein Wechseldatenträger gefunden
+</translation>
     </message>
     <message>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen Ihre SD-Karte unter Linux mit dem Programm ChromeOS Files freigeben</translation>
+    </message>
+    <message>
+        <source>Flex</source>
+        <translation>Flex</translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
+        <translation>Suche nach Updates nicht möglich. Bitte versuchen Sie es später noch einmal.</translation>
     </message>
 </context>
 <context>

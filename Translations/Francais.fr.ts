@@ -2454,7 +2454,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
-        <translation>% de restriction de flux à partir de la valeur moyenne.
+        <translation>% de restriction de flux à partir de la valeur median.
 Une valeur de 20% est adéquate pour détecter les apnées. </translation>
     </message>
     <message>
@@ -2675,7 +2675,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median is recommended for ResMed users.</source>
-        <translation>Moyenne est recommandé pour les appareils ResMed.</translation>
+        <translation>Median est recommandé pour les appareils ResMed.</translation>
     </message>
     <message>
         <source>Oximeter Events</source>
@@ -2699,7 +2699,7 @@ Cela affecte aussi les impressions
     </message>
     <message>
         <source>Median</source>
-        <translation>Moyenne</translation>
+        <translation>Médiane</translation>
     </message>
     <message>
         <source>Flag rapid changes in oximetry stats</source>
@@ -4301,7 +4301,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>W-Avg</source>
-        <translation>moyenne W</translation>
+        <translation>moy. ponderée</translation>
     </message>
     <message>
         <source>Snore</source>
@@ -4718,7 +4718,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Median</source>
-        <translation>Moyenne</translation>
+        <translation>Median</translation>
     </message>
     <message>
         <source>Fixed %1 (%2)</source>
@@ -4780,7 +4780,7 @@ Merci de reconstruire les données de PPC</translation>
     </message>
     <message>
         <source>Median Leaks</source>
-        <translation>Fuites moyennes</translation>
+        <translation>Fuites mediaux</translation>
     </message>
     <message>
         <source>%1 Report</source>
@@ -6272,7 +6272,7 @@ corporelle</translation>
     </message>
     <message>
         <source>EPAP Set</source>
-        <translation>Activer EPAP</translation>
+        <translation>EPAP Config.</translation>
     </message>
     <message>
         <source>EPAP Setting</source>
@@ -6795,11 +6795,20 @@ contextuelle actuelle, supprimez-la, puis affichez à nouveau ce graphique.</tra
     <message>
         <source>Chromebook file system detected, but no removable device found
 </source>
-        <translation>Système de fichiers Chromebook détecté, mais aucun appareil amovible n&apos;a été trouvé</translation>
+        <translation>Système de fichiers Chromebook détecté, mais aucun appareil amovible n&apos;a été trouvé
+</translation>
     </message>
     <message>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation>Vous devez partager votre carte SD avec Linux à l&apos;aide du programme ChromeOS Files</translation>
+    </message>
+    <message>
+        <source>Flex</source>
+        <translation>Flex</translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
+        <translation>Impossible de vérifier les mises à jour. Veuillez réessayer plus tard.</translation>
     </message>
 </context>
 <context>
@@ -7175,7 +7184,7 @@ contextuelle actuelle, supprimez-la, puis affichez à nouveau ce graphique.</tra
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
-        <translation>&lt;font color = red&gt; Vous n&apos;avez porté le masque que %1.&lt;/font&gt;</translation>
+        <translation>&lt;font color = red&gt;Vous n&apos;avez porté le masque que %1.&lt;/font&gt;</translation>
     </message>
     <message>
         <source>under</source>

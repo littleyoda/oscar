@@ -2911,41 +2911,41 @@ Index</source>
 <context>
     <name>PreferencesDialog</name>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="23"/>
+        <location filename="../oscar/preferencesdialog.ui" line="29"/>
         <source>Preferences</source>
         <translation>تفضيلات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="64"/>
+        <location filename="../oscar/preferencesdialog.ui" line="70"/>
         <source>&amp;Import</source>
         <translation>استيراد</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="154"/>
+        <location filename="../oscar/preferencesdialog.ui" line="160"/>
         <source>Combine Close Sessions </source>
         <translation>الجمع بين جلسات مغلقة </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="164"/>
-        <location filename="../oscar/preferencesdialog.ui" line="249"/>
-        <location filename="../oscar/preferencesdialog.ui" line="752"/>
+        <location filename="../oscar/preferencesdialog.ui" line="170"/>
+        <location filename="../oscar/preferencesdialog.ui" line="255"/>
+        <location filename="../oscar/preferencesdialog.ui" line="758"/>
         <source>Minutes</source>
         <translation>الدقائق</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="184"/>
+        <location filename="../oscar/preferencesdialog.ui" line="190"/>
         <source>Multiple sessions closer together than this value will be kept on the same day.
 </source>
         <translation>سيتم الاحتفاظ بجلسات متعددة أقرب من هذه القيمة في نفس اليوم.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="239"/>
+        <location filename="../oscar/preferencesdialog.ui" line="245"/>
         <source>Ignore Short Sessions</source>
         <translation>تجاهل الجلسات القصيرة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="266"/>
+        <location filename="../oscar/preferencesdialog.ui" line="272"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2960,47 +2960,47 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="310"/>
+        <location filename="../oscar/preferencesdialog.ui" line="316"/>
         <source>Day Split Time</source>
         <translation>يوم سبليت الوقت</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="320"/>
+        <location filename="../oscar/preferencesdialog.ui" line="326"/>
         <source>Sessions starting before this time will go to the previous calendar day.</source>
         <translation>ستذهب الجلسات التي تبدأ قبل هذا الوقت إلى اليوم الميلادي السابق.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="393"/>
+        <location filename="../oscar/preferencesdialog.ui" line="399"/>
         <source>Session Storage Options</source>
         <translation>خيارات تخزين الجلسة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="422"/>
+        <location filename="../oscar/preferencesdialog.ui" line="428"/>
         <source>Changing SD Backup compression options doesn&apos;t automatically recompress backup data.</source>
         <translation>لا يؤدي تغيير خيارات ضغط نسخ احتياطي SD إلى إعادة ضغط بيانات النسخ الاحتياطي تلقائيًا.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="440"/>
+        <location filename="../oscar/preferencesdialog.ui" line="446"/>
         <source>Compress SD Card Backups (slower first import, but makes backups smaller)</source>
         <translation>ضغط النسخ الاحتياطي لبطاقة SD (الاستيراد الأول أبطأ ، ولكن يجعل النسخ الاحتياطية أصغر)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="658"/>
+        <location filename="../oscar/preferencesdialog.ui" line="664"/>
         <source>&amp;CPAP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1301"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1307"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
         <translation>تعتبر الأيام مع تحت هذا الاستخدام بأنها &quot;غير مكتملة&quot;. عادة ما تعتبر 4 ساعات متوافقة.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1304"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1310"/>
         <source> hours</source>
         <translation> ساعات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="966"/>
+        <location filename="../oscar/preferencesdialog.ui" line="972"/>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the machine missed.
 This option must be enabled before import, otherwise a purge is required.</source>
@@ -3009,27 +3009,27 @@ This option must be enabled before import, otherwise a purge is required.</sourc
 يجب تمكين هذا الخيار قبل الاستيراد ، وإلا فالتطهير مطلوب.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1057"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1063"/>
         <source>Flow Restriction</source>
         <translation>تقييد التدفق</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1098"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1104"/>
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
         <translation>النسبة المئوية للقيود المفروضة على تدفق الهواء من القيمة المتوسطة.
 قيمة 20 ٪ تعمل بشكل جيد للكشف عن انقطاع النفس. </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1008"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1102"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1579"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1739"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1014"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1108"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1585"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1745"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1075"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1081"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3042,460 +3042,460 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;وضع علامة مخصصة هي طريقة تجريبية للكشف عن الأحداث التي فاتتها الآلة. هم انهم&lt;span style=&quot; text-decoration: underline;&quot;&gt;ليس&lt;/span&gt; المدرجة في AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1119"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1125"/>
         <source>Duration of airflow restriction</source>
         <translation>مدة تقييد تدفق الهواء</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="998"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1122"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1596"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1684"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1713"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1004"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1128"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1602"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1690"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1719"/>
         <source>s</source>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1158"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1164"/>
         <source>Event Duration</source>
         <translation>مدة الحدث</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1145"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1151"/>
         <source>Allow duplicates near machine events.</source>
         <translation>السماح بالتكرارات بالقرب من أحداث الجهاز.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1223"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1229"/>
         <source>Adjusts the amount of data considered for each point in the AHI/Hour graph.
 Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation>يضبط مقدار البيانات التي تم النظر فيها لكل نقطة في الرسم البياني AHI / Hour.
 الافتراضات إلى 60 دقيقة .. نوصي بشدة تركها عند هذه القيمة.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1227"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1233"/>
         <source> minutes</source>
         <translation> الدقائق</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1266"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1272"/>
         <source>Reset the counter to zero at beginning of each (time) window.</source>
         <translation>إعادة تعيين العداد إلى صفر في بداية كل نافذة (الوقت).</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1269"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1275"/>
         <source>Zero Reset</source>
         <translation>إعادة تعيين صفر</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="705"/>
+        <location filename="../oscar/preferencesdialog.ui" line="711"/>
         <source>CPAP Clock Drift</source>
         <translation>الانجراف CPAP على مدار الساعة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="501"/>
+        <location filename="../oscar/preferencesdialog.ui" line="507"/>
         <source>Do not import sessions older than:</source>
         <translation>لا تستورد جلسات أقدم من:</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="508"/>
+        <location filename="../oscar/preferencesdialog.ui" line="514"/>
         <source>Sessions older than this date will not be imported</source>
         <translation>لن يتم استيراد الجلسات الأقدم من هذا التاريخ</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="534"/>
+        <location filename="../oscar/preferencesdialog.ui" line="540"/>
         <source>dd MMMM yyyy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1282"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1288"/>
         <source>User definable threshold considered large leak</source>
         <translation>عتبة تعريف المستخدم تعتبر تسرب كبير</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1285"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1291"/>
         <source> L/min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1249"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1255"/>
         <source>Whether to show the leak redline in the leak graph</source>
         <translation>سواء لإظهار الخط الأحمر للتسرب في الرسم البياني للتسرب</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1826"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1905"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1832"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1911"/>
         <source>Search</source>
         <translation>بحث</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1522"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1528"/>
         <source>&amp;Oximetry</source>
         <translation>التأكسج</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1112"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1118"/>
         <source>Show in Event Breakdown Piechart</source>
         <translation>تظهر في مخطط انهيار مخطط الأحداث</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1135"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1141"/>
         <source>#1</source>
         <translation>#1</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1041"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1047"/>
         <source>#2</source>
         <translation>#2</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1021"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1027"/>
         <source>Resync Machine Detected Events (Experimental)</source>
         <translation>الأحداث التي تم اكتشافها في آلة إعادة المزامنة (تجريبية)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1674"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1680"/>
         <source>SPO2</source>
         <translation>SpO2</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1736"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1742"/>
         <source>Percentage drop in oxygen saturation</source>
         <translation>انخفاض النسبة المئوية في تشبع الأكسجين</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1729"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1735"/>
         <source>Pulse</source>
         <translation>نبض</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1694"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1700"/>
         <source>Sudden change in Pulse Rate of at least this amount</source>
         <translation>التغيير المفاجئ في معدل النبض لا يقل عن هذا المبلغ</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1586"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1616"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1697"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1592"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1622"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1703"/>
         <source> bpm</source>
         <translation> نبضة في الدقيقة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1681"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1687"/>
         <source>Minimum duration of drop in oxygen saturation</source>
         <translation>الحد الأدنى لمدة انخفاض في تشبع الأكسجين</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1710"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1716"/>
         <source>Minimum duration of pulse change event.</source>
         <translation>الحد الأدنى لمدة الحدث تغيير النبض.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1593"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1599"/>
         <source>Small chunks of oximetry data under this amount will be discarded.</source>
         <translation>سيتم تجاهل أجزاء صغيرة من بيانات قياس التأكسج تحت هذا المبلغ.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1961"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1967"/>
         <source>&amp;General</source>
         <translation>جنرال لواء</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1349"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1355"/>
         <source>Changes to the following settings needs a restart, but not a recalc.</source>
         <translation>التغييرات في الإعدادات التالية تحتاج إلى إعادة تشغيل ، ولكن ليس إعادة حساب.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1352"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1358"/>
         <source>Preferred Calculation Methods</source>
         <translation>طرق الحساب المفضلة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1381"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1387"/>
         <source>Middle Calculations</source>
         <translation>الحسابات الوسطى</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1395"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1401"/>
         <source>Upper Percentile</source>
         <translation>النسبة المئوية العليا</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="91"/>
+        <location filename="../oscar/preferencesdialog.ui" line="97"/>
         <source>Session Splitting Settings</source>
         <translation>إعدادات تقسيم الجلسة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="356"/>
+        <location filename="../oscar/preferencesdialog.ui" line="362"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This setting should be used with caution...&lt;/span&gt; Switching it off comes with consequences involving accuracy of summary only days, as certain calculations only work properly provided summary only sessions that came from individual day records are kept together. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ResMed users:&lt;/span&gt; Just because it seems natural to you and I that the 12 noon session restart should be in the previous day, does not mean ResMed&apos;s data agrees with us. The STF.edf summary index format has serious weaknesses that make doing this not a good idea.&lt;/p&gt;&lt;p&gt;This option exists to pacify those who don&apos;t care and want to see this &amp;quot;fixed&amp;quot; no matter the costs, but know it comes with a cost. If you keep your SD card in every night, and import at least once a week, you won&apos;t see problems with this very often.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;يجب استخدام هذا الإعداد بحذر ...&lt;/span&gt;يأتي إيقاف تشغيله مع عواقب تتضمن دقة ملخص أيام فقط ، حيث تعمل بعض الحسابات فقط بشكل صحيح بشرط أن يتم الاحتفاظ فقط بجلسات الملخص التي جاءت من سجلات اليوم الفردية.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;المستخدمين ResMed:&lt;/span&gt;لمجرد أنه يبدو من الطبيعي لك ولأنه يجب أن تتم إعادة تشغيل جلسة 12 ظهراً في اليوم السابق ، فهذا لا يعني أن بيانات ResMed تتفق معنا. يحتوي تنسيق فهرس الملخص STF.edf على نقاط ضعف خطيرة تجعل القيام بذلك ليس فكرة جيدة.&lt;/p&gt;&lt;p&gt;يوجد هذا الخيار لتهدئة أولئك الذين لا يهتمون ويريدون رؤية هذا &quot;ثابت&quot; بغض النظر عن التكاليف ، ولكن معرفة أنه يأتي مع تكلفة. إذا احتفظت ببطاقة SD الخاصة بك في كل ليلة ، وقمت بالاستيراد مرة واحدة على الأقل في الأسبوع ، فلن تظهر لك مشاكل في كثير من الأحيان.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="359"/>
+        <location filename="../oscar/preferencesdialog.ui" line="365"/>
         <source>Don&apos;t Split Summary Days (Warning: read the tooltip!)</source>
         <translation>لا تنقسم أيام الملخص (تحذير: اقرأ تلميح الأدوات!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="568"/>
+        <location filename="../oscar/preferencesdialog.ui" line="574"/>
         <source>Memory and Startup Options</source>
         <translation>خيارات الذاكرة وبدء التشغيل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="610"/>
+        <location filename="../oscar/preferencesdialog.ui" line="616"/>
         <source>Pre-Load all summary data at startup</source>
         <translation>قبل تحميل جميع البيانات الموجزة عند بدء التشغيل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="597"/>
+        <location filename="../oscar/preferencesdialog.ui" line="603"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;يحتفظ هذا الإعداد ببيانات الطول الموجي والحدث في الذاكرة بعد استخدامها لتسريع أيام الزيارة. هذا ليس حقًا خيارًا ضروريًا ، لأن نظام التشغيل الخاص بك يقوم بتخزين الملفات المستخدمة مسبقًا أيضًا. التوصية هي إيقاف تشغيله ، ما لم يكن الكمبيوتر يحتوي على طن من الذاكرة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="600"/>
+        <location filename="../oscar/preferencesdialog.ui" line="606"/>
         <source>Keep Waveform/Event data in memory</source>
         <translation>الحفاظ على بيانات الموجي / الحدث في الذاكرة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="624"/>
+        <location filename="../oscar/preferencesdialog.ui" line="630"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;يخفض من أي مربعات حوار تأكيد غير مهم أثناء الاستيراد.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="627"/>
+        <location filename="../oscar/preferencesdialog.ui" line="633"/>
         <source>Import without asking for confirmation</source>
         <translation>استيراد دون طلب التأكيد</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1187"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1193"/>
         <source>General CPAP and Related Settings</source>
         <translation>CPAP العامة والإعدادات ذات الصلة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1196"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1202"/>
         <source>Enable Unknown Events Channels</source>
         <translation>تمكين قنوات أحداث غير معروفة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1327"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1333"/>
         <source>AHI</source>
         <extracomment>Apnea Hypopnea Index</extracomment>
         <translation>AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1332"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1338"/>
         <source>RDI</source>
         <extracomment>Respiratory Disturbance Index</extracomment>
         <translation>RDI</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1203"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1209"/>
         <source>AHI/Hour Graph Time Window</source>
         <translation>AHI / ساعة الرسم البياني الوقت النافذة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1259"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1265"/>
         <source>Preferred major event index</source>
         <translation>مؤشر الحدث الرئيسي المفضل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1210"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1216"/>
         <source>Compliance defined as</source>
         <translation>الامتثال كما هو محدد</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1252"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1258"/>
         <source>Flag leaks over threshold</source>
         <translation>تسرب العلم فوق العتبة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="786"/>
+        <location filename="../oscar/preferencesdialog.ui" line="792"/>
         <source>Seconds</source>
         <translation>ثواني</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="732"/>
+        <location filename="../oscar/preferencesdialog.ui" line="738"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ملاحظة: هذا غير مخصص للتصحيحات الزمنية! تأكد من ضبط ساعة ونظام التشغيل الخاصين بك بشكل صحيح.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="779"/>
+        <location filename="../oscar/preferencesdialog.ui" line="785"/>
         <source>Hours</source>
         <translation>ساعات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="818"/>
+        <location filename="../oscar/preferencesdialog.ui" line="824"/>
         <source>Your masks vent rate at 20 cmH2O pressure</source>
         <translation>معدل تنفيس الأقنعة عند ضغط 20 cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="874"/>
+        <location filename="../oscar/preferencesdialog.ui" line="880"/>
         <source>Your masks vent rate at 4 cmH2O pressure</source>
         <translation>تنفيس الأقنعة الخاصة بك عند ضغط 4 cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1358"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1364"/>
         <source>For consistancy, ResMed users should use 95% here,
 as this is the only value available on summary-only days.</source>
         <translation>للتناسق ، يجب على مستخدمي ResMed استخدام 95 ٪ هنا ،
 لأن هذه هي القيمة الوحيدة المتاحة في الأيام الموجزة فقط.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1409"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1415"/>
         <source>Median is recommended for ResMed users.</source>
         <translation>ينصح الوسيط لمستخدمي ResMed.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1413"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1476"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1419"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1482"/>
         <source>Median</source>
         <translation>الوسيط</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1418"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1424"/>
         <source>Weighted Average</source>
         <translation>متوسط الوزن</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1423"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1429"/>
         <source>Normal Average</source>
         <translation>متوسط عادي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1447"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1453"/>
         <source>True Maximum</source>
         <translation>الحد الأقصى الحقيقي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1452"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1458"/>
         <source>99% Percentile</source>
         <translation>99 ٪ في المئة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1388"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1394"/>
         <source>Maximum Calcs</source>
         <translation>الحسابات القصوى</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1975"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1981"/>
         <source>General Settings</source>
         <translation>الاعدادات العامة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2717"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2723"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
         <translation>ستتخطى أزرار التنقل في العرض اليومي على مدار أيام بدون سجلات بيانات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2720"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2726"/>
         <source>Skip over Empty Days</source>
         <translation>تخطي أيام فارغة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1996"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2002"/>
         <source>Allow use of multiple CPU cores where available to improve performance. 
 Mainly affects the importer.</source>
         <translation>السماح باستخدام نوى وحدة المعالجة المركزية المتعددة حيثما كان ذلك متاحًا لتحسين الأداء.
 يؤثر بشكل رئيسي على المستورد.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2000"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2006"/>
         <source>Enable Multithreading</source>
         <translation>تمكين تعدد العمليات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="574"/>
+        <location filename="../oscar/preferencesdialog.ui" line="580"/>
         <source>Bypass the login screen and load the most recent User Profile</source>
         <translation>تجاوز شاشة تسجيل الدخول وتحميل أحدث ملف تعريف المستخدم</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="483"/>
+        <location filename="../oscar/preferencesdialog.ui" line="489"/>
         <source>Create SD Card Backups during Import (Turn this off at your own peril!)</source>
         <translation>إنشاء نسخ احتياطية لبطاقة SD أثناء الاستيراد (قم بإيقاف تشغيل هذا على مسؤوليتك الخاصة!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1443"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1449"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;الحد الأقصى الحقيقي هو الحد الأقصى لمجموعة البيانات. 99 في المئة مرشحات خارج أندر القيم المتطرفة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1461"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1467"/>
         <source>Combined Count divided by Total Hours</source>
         <translation>الجمع بين عدد مقسوما على إجمالي ساعات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1466"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1472"/>
         <source>Time Weighted average of Indice</source>
         <translation>متوسط الوقت المرجح للمؤشر</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1471"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1477"/>
         <source>Standard average of indice</source>
         <translation>متوسط قياسي من indice</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1402"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1408"/>
         <source>Culminative Indices</source>
         <translation>مؤشرات الذروة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="971"/>
+        <location filename="../oscar/preferencesdialog.ui" line="977"/>
         <source>Custom CPAP User Event Flagging</source>
         <translation>عرف حدث المستخدم CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1803"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1809"/>
         <source>Events</source>
         <translation>أحداث</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1856"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1935"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1862"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1941"/>
         <source>Reset &amp;Defaults</source>
         <translation>إعادة تعيين الإعدادات الافتراضية</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1869"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1948"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1875"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1954"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;تحذير:&lt;/span&gt;فقط لأنك تستطيع ، لا يعني أنها ممارسة جيدة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1882"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1888"/>
         <source>Waveforms</source>
         <translation>الطول الموجي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1662"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1668"/>
         <source>Flag rapid changes in oximetry stats</source>
         <translation>علم التغيرات السريعة في احصائيات قياس التأكسج</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1573"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1579"/>
         <source>Other oximetry options</source>
         <translation>خيارات قياس التأكسج الأخرى</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1623"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1629"/>
         <source>Flag SPO2 Desaturations Below</source>
         <translation>علم التشبع SPO2 أدناه</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1606"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1612"/>
         <source>Discard segments under</source>
         <translation>تجاهل شرائح تحت</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1643"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1649"/>
         <source>Flag Pulse Rate Above</source>
         <translation>علم معدل النبض أعلاه</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1633"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1639"/>
         <source>Flag Pulse Rate Below</source>
         <translation>معدل نبض العلم أدناه</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="432"/>
+        <location filename="../oscar/preferencesdialog.ui" line="438"/>
         <source>Compress ResMed (EDF) backups to save disk space.
 Backed up EDF files are stored in the .gz format, 
 which is common on Mac &amp; Linux platforms.. 
@@ -3510,12 +3510,12 @@ To use it with ResScan will require the .gz files to be uncompressed first..</so
 لاستخدامه مع ResScan سيتطلب ملفات .gz أن تكون غير مضغوطة أولاً ..</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="452"/>
+        <location filename="../oscar/preferencesdialog.ui" line="458"/>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
         <translation>تؤثر الخيارات التالية على مقدار مساحة القرص التي يستخدمها OSCAR ، ويكون لها تأثير على المدة التي يستغرقها الاستيراد.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="462"/>
+        <location filename="../oscar/preferencesdialog.ui" line="468"/>
         <source>This makes OSCAR&apos;s data take around half as much space.
 But it makes import and day changing take longer.. 
 If you&apos;ve got a new computer with a small solid state disk, this is a good option.</source>
@@ -3524,12 +3524,12 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
 إذا كنت تمتلك كمبيوترًا جديدًا به قرص صلب صغير ، فهذا خيار جيد.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="467"/>
+        <location filename="../oscar/preferencesdialog.ui" line="473"/>
         <source>Compress Session Data (makes OSCAR data smaller, but day changing slower.)</source>
         <translation>ضغط بيانات الجلسة (يجعل بيانات OSCAR أصغر ، لكن تغيير اليوم يكون أبطأ.)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="474"/>
+        <location filename="../oscar/preferencesdialog.ui" line="480"/>
         <source>This maintains a backup of SD-card data for ResMed machines, 
 
 ResMed S9 series machines delete high resolution data older than 7 days, 
@@ -3546,22 +3546,22 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
 (موصى به للغاية ، إلا إذا كانت لديك مساحة قصيرة على القرص أو لا تهتم ببيانات الرسم البياني)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="607"/>
+        <location filename="../oscar/preferencesdialog.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;يجعل تشغيل OSCAR أبطأ قليلاً ، عن طريق التحميل المسبق لجميع بيانات الملخص مقدمًا ، مما يسرع من استعراض النظرة العامة وبعض الحسابات الأخرى لاحقًا. إذا كان لديك كمية كبيرة من البيانات ، فقد يكون من المفيد إيقاف تشغيل هذا الخيار ، ولكن إذا كنت ترغب عادةً في العرض&lt;span style=&quot; font-style:italic;&quot;&gt;كل شىء&lt;/span&gt;في نظرة عامة ، لا يزال يتعين تحميل جميع البيانات الموجزة على أي حال. &lt;/p&gt; &lt;p&gt; لاحظ أن هذا الإعداد لا يؤثر على شكل الموجة وبيانات الأحداث ، والتي يتم تحميلها دائمًا حسب الحاجة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1018"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1024"/>
         <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
         <translation>يحاول هذا الخيار التجريبي استخدام نظام الإبلاغ عن الأحداث الخاص بـ OSCAR لتحسين وضع الحدث الذي تم اكتشافه بواسطة الجهاز.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1193"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1199"/>
         <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
         <translation>إظهار علامات الأحداث التي تم اكتشافها بواسطة الجهاز والتي لم يتم تحديدها بعد.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1783"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1789"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3590,149 +3590,149 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;تأخذ عملية الاستيراد التسلسلية وقت البدء من أول جلسة CPAP. (تذكر أن تستورد بيانات CPAP أولاً!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {2&apos;?} {7.84158p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {600;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {2R?} {10p?} {600;?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {50 ?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {10p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {10p?}</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2007"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2013"/>
         <source>Show Remove Card reminder notification on OSCAR shutdown</source>
         <translation>إظهار إزالة إشعار تذكير البطاقة عند إيقاف تشغيل OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2116"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2122"/>
         <source>Check for new version every</source>
         <translation>تحقق من وجود نسخة جديدة كل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2139"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2145"/>
         <source>days.</source>
         <translation>أيام.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2169"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2175"/>
         <source>Last Checked For Updates: </source>
         <translation>آخر فحص للتحقق من وجود تحديثات: </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2182"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2188"/>
         <source>TextLabel</source>
         <translation>تسمية النص</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2250"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2256"/>
         <source>&amp;Appearance</source>
         <translation>مظهر خارجي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2279"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2285"/>
         <source>Graph Settings</source>
         <translation>إعدادات الرسم البياني</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2295"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;أي علامة تبويب لفتح على تحميل ملف التعريف. (ملاحظة: سيتم التعيين على ملف التعريف إذا تم ضبط OSCAR على عدم فتح ملف تعريف عند بدء التشغيل)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2553"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2559"/>
         <source>Bar Tops</source>
         <translation>شريط بلايز</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2558"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2564"/>
         <source>Line Chart</source>
         <translation>خط الرسم البياني</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2648"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2654"/>
         <source>Overview Linecharts</source>
         <translation>نظرة عامة على المخططات الخطية</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2046"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2052"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
         <translation>حاول تغيير هذا من الإعداد الافتراضي (Desktop OpenGL) إذا كنت تواجه مشاكل في تقديم الرسوم البيانية الخاصة بـ OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2593"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;هذا يجعل التمرير عند التكبير أسهل على لوحات اللمس الحساسة ثنائية الاتجاه. ينصح 50ms القيمة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2487"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2493"/>
         <source>How long you want the tooltips to stay visible.</source>
         <translation>إلى متى تريد أن تظل تلميحات الأدوات مرئية.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2475"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2481"/>
         <source>Scroll Dampening</source>
         <translation>التمرير الملطف</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2465"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2471"/>
         <source>Tooltip Timeout</source>
         <translation>تلميح الأدوات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2572"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2578"/>
         <source>Default display height of graphs in pixels</source>
         <translation>الارتفاع الافتراضي لعرض الرسوم البيانية بالبكسل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2545"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2551"/>
         <source>Graph Tooltips</source>
         <translation>الرسم البياني تلميحات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2421"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2427"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
         <translation>الطريقة البصرية لعرض أعلام تراكب الموجي.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2426"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2432"/>
         <source>Standard Bars</source>
         <translation>أشرطة القياسية</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2431"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2437"/>
         <source>Top Markers</source>
         <translation>أعلى علامات</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2379"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2385"/>
         <source>Graph Height</source>
         <translation>الرسم البياني الارتفاع</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="577"/>
+        <location filename="../oscar/preferencesdialog.ui" line="583"/>
         <source>Auto-Launch CPAP Importer after opening profile</source>
         <translation>التشغيل التلقائي للمستورد CPAP بعد فتح ملف التعريف</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="617"/>
+        <location filename="../oscar/preferencesdialog.ui" line="623"/>
         <source>Automatically load last used profile on start-up</source>
         <translation>تحميل آخر ملف تعريف مستخدم تلقائيًا عند بدء التشغيل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="634"/>
+        <location filename="../oscar/preferencesdialog.ui" line="640"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;قم بتوفير تنبيه عند استيراد البيانات من أي طراز آلة لم يتم اختباره من قبل مطوري OSCAR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="637"/>
+        <location filename="../oscar/preferencesdialog.ui" line="643"/>
         <source>Warn when importing data from an untested machine</source>
         <translation>التحذير عند استيراد البيانات من جهاز لم يتم اختباره</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="644"/>
+        <location filename="../oscar/preferencesdialog.ui" line="650"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;قدم تنبيهًا عند استيراد البيانات التي تختلف بطريقة أو بأخرى عن أي شيء سبق لمطوري OSCAR رؤيته.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="647"/>
+        <location filename="../oscar/preferencesdialog.ui" line="653"/>
         <source>Warn when previously unseen data is encountered</source>
         <translation>التحذير عند مواجهة بيانات لم يتم رؤيتها من قبل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="802"/>
+        <location filename="../oscar/preferencesdialog.ui" line="808"/>
         <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
 
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
@@ -3745,141 +3745,141 @@ If you use a few different masks, pick average values instead. It should still b
 إذا كنت تستخدم بعض الأقنعة المختلفة ، فاختر متوسط القيم بدلاً من ذلك. يجب أن تظل قريبة بما فيه الكفاية.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="809"/>
+        <location filename="../oscar/preferencesdialog.ui" line="815"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
         <translation>حساب التسريبات غير المقصودة عندما لا تكون موجودة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="905"/>
+        <location filename="../oscar/preferencesdialog.ui" line="911"/>
         <source>4 cmH2O</source>
         <translation>4 cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="915"/>
+        <location filename="../oscar/preferencesdialog.ui" line="921"/>
         <source>20 cmH2O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="947"/>
+        <location filename="../oscar/preferencesdialog.ui" line="953"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
         <translation>ملاحظة: يتم استخدام طريقة الحساب الخطي. يتطلب تغيير هذه القيم إعادة حساب.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1490"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1496"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ملحوظة:&lt;/span&gt;نظرًا لقيود التصميم الموجزة ، لا تدعم أجهزة ResMed تغيير هذه الإعدادات.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1543"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1549"/>
         <source>Oximetry Settings</source>
         <translation>إعدادات قياس التأكسج</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2014"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2020"/>
         <source>Always save screenshots in the OSCAR Data folder</source>
         <translation>احفظ لقطات الشاشة دائمًا في مجلد بيانات OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2068"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2074"/>
         <source>Check For Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2083"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2089"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2101"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2107"/>
         <source>Automatically check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2123"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2129"/>
         <source>How often OSCAR should check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2204"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2210"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2207"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2220"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2226"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2285"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2291"/>
         <source>On Opening</source>
         <translation>في الافتتاح</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2298"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2302"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2304"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2308"/>
         <source>Profile</source>
         <translation>الملف الشخصي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2307"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2346"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2313"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2352"/>
         <source>Welcome</source>
         <translation>أهلا بك</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2312"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2351"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2318"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2357"/>
         <source>Daily</source>
         <translation>اليومي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2322"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2361"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2328"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2367"/>
         <source>Statistics</source>
         <translation>الإحصاء</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2330"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2336"/>
         <source>Switch Tabs</source>
         <translation>تبديل علامات التبويب</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2341"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2347"/>
         <source>No change</source>
         <translation>لا تغيير</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2369"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2375"/>
         <source>After Import</source>
         <translation>بعد الاستيراد</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2395"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2401"/>
         <source>Overlay Flags</source>
         <translation>تراكب الأعلام</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2405"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2411"/>
         <source>Line Thickness</source>
         <translation>سمك الخط</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2441"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2447"/>
         <source>The pixel thickness of line plots</source>
         <translation>سماكة البيكسل للخط</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2667"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2673"/>
         <source>Other Visual Settings</source>
         <translation>الإعدادات البصرية الأخرى</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2673"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2679"/>
         <source>Anti-Aliasing applies smoothing to graph plots.. 
 Certain plots look more attractive with this on. 
 This also affects printed reports.
@@ -3892,134 +3892,134 @@ Try it and see if you like it.</source>
 جرب هذا وانظر إذا ما كان يعجبك.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2680"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2686"/>
         <source>Use Anti-Aliasing</source>
         <translation>استخدام مكافحة التعرج</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2687"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2693"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
         <translation>يجعل بعض المؤامرات تبدو أكثر &quot;لوح مربع&quot;.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2690"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2696"/>
         <source>Square Wave Plots</source>
         <translation>مؤامرات موجة مربعة</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2697"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2703"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
         <translation>Pixmap التخزين المؤقت هو تقنية تسريع الرسومات. قد يسبب مشاكل في رسم الخطوط في منطقة عرض الرسم البياني على النظام الأساسي الخاص بك.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2700"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2706"/>
         <source>Use Pixmap Caching</source>
         <translation>استخدام Pixmap التخزين المؤقت</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2707"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2713"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;هذه الميزات تم تشذيبها مؤخرًا. سوف يعودون لاحقا. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2710"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2716"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
         <translation>الرسوم المتحركة والأشياء الهوى</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2727"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2733"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
         <translation>ما إذا كنت تريد تغيير مقاييس yAxis بالنقر المزدوج على تسميات المحور y</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2730"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2736"/>
         <source>Allow YAxis Scaling</source>
         <translation>السماح لتوسيع نطاق المحور ص</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2737"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2743"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
         <translation>سواء لتضمين الرقم التسلسلي للجهاز في تقرير تغييرات إعدادات الجهاز</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2740"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2746"/>
         <source>Include Serial Number</source>
         <translation>تشمل الرقم التسلسلي</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2040"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2046"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation>محرك الرسومات (يتطلب إعادة التشغيل)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2747"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2753"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2750"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2756"/>
         <source>Print reports in black and white (monochrome)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2782"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2788"/>
         <source>Fonts (Application wide settings)</source>
         <translation>الخطوط (إعدادات التطبيق الواسعة)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2817"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2823"/>
         <source>Font</source>
         <translation>الخط</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2836"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2842"/>
         <source>Size</source>
         <translation>بحجم</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2855"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2861"/>
         <source>Bold  </source>
         <translation>بالخط العريض  </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2877"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2883"/>
         <source>Italic</source>
         <translation>مائل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2890"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2896"/>
         <source>Application</source>
         <translation>تطبيق</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2954"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2960"/>
         <source>Graph Text</source>
         <translation>نص الرسم البياني</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3015"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3021"/>
         <source>Graph Titles</source>
         <translation>عناوين الرسم البياني</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3076"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3082"/>
         <source>Big  Text</source>
         <translation>نص كبير</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3143"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3149"/>
         <location filename="../oscar/preferencesdialog.cpp" line="466"/>
         <location filename="../oscar/preferencesdialog.cpp" line="598"/>
         <source>Details</source>
         <translation>تفاصيل</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3175"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3181"/>
         <source>&amp;Cancel</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3182"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3188"/>
         <source>&amp;Ok</source>
         <translation>حسنا</translation>
     </message>
@@ -4083,8 +4083,8 @@ Try it and see if you like it.</source>
         <translation>انقر مرتين لتغيير اللون الافتراضي لهذه القناة مؤامرة / العلم / البيانات.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2317"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2356"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2323"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2362"/>
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
@@ -5024,7 +5024,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="675"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9216"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9389"/>
         <source>Error</source>
         <translation>خطأ</translation>
     </message>
@@ -5171,7 +5171,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="715"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9138"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9310"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="89"/>
         <source>CPAP</source>
         <translation></translation>
@@ -5183,7 +5183,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="717"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9141"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9313"/>
         <source>Bi-Level</source>
         <translation>Bi-Level</translation>
     </message>
@@ -5225,7 +5225,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9143"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9315"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="96"/>
         <source>ASV</source>
         <translation>ASV</translation>
@@ -5243,8 +5243,8 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="729"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9201"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9228"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9374"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9401"/>
         <source>Humidifier</source>
         <translation>المرطب</translation>
     </message>
@@ -5314,7 +5314,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="743"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9129"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9301"/>
         <source>PP</source>
         <translation>PP</translation>
     </message>
@@ -5347,7 +5347,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="749"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9146"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9318"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
         <source>PC</source>
         <translation>PC</translation>
@@ -5642,8 +5642,8 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="801"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9133"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9135"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9305"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9307"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="85"/>
         <source>Mode</source>
         <translation>الوضع</translation>
@@ -5847,558 +5847,563 @@ TTIA: %1</source>
         <translation>متوسط الوزن</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="803"/>
         <source>Non Data Capable Machine</source>
         <translation>آلة غير قادرة على البيانات</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="801"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="804"/>
         <source>Your Philips Respironics CPAP machine (Model %1) is unfortunately not a data capable model.</source>
         <translation>إن جهاز Philips Respironics CPAP (الطراز %1) للأسف ليس نموذجًا قادرًا على البيانات.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="690"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="693"/>
         <source>Getting Ready...</source>
         <translation>يستعد...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="816"/>
         <source>Machine Unsupported</source>
         <translation>الجهاز غير مدعوم</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="814"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="817"/>
         <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
         <translation>عذرًا ، جهاز Philips Respironics CPAP (الطراز %1) غير مدعوم حتى الآن.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="805"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>نأسف للإبلاغ بأن OSCAR يمكنه فقط تتبع ساعات الاستخدام والإعدادات الأساسية جدًا لهذا الجهاز.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="714"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="717"/>
         <source>Scanning Files...</source>
         <translation>جارٍ فحص الملفات ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="722"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
         <source>Importing Sessions...</source>
         <translation>استيراد الجلسات ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="727"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="730"/>
         <source>Finishing up...</source>
         <translation>الانتهاء من ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="815"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="818"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
         <translation>يحتاج المطورون إلى نسخة بتنسيق zip من بطاقة SD لهذا الجهاز ومطابقة تقارير Encore .pdf لجعلها تعمل مع OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="837"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="840"/>
         <source>Machine Untested</source>
         <translation>آلة لم تختبر</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="838"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="841"/>
         <source>Your Philips Respironics CPAP machine (Model %1) has not been tested yet.</source>
         <translation>لم يتم اختبار جهاز Philips Respironics CPAP (الطراز %1) حتى الآن.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="839"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="842"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure it works with OSCAR.</source>
         <translation>يبدو مشابهاً بما فيه الكفاية مع الأجهزة الأخرى التي قد تعمل ، لكن المطورين يرغبون في الحصول على نسخة بتنسيق zip. من بطاقة SD لهذا الجهاز ومطابقة تقارير Encore .pdf للتأكد من أنها تعمل مع OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9174"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9176"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9347"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9349"/>
         <source>Flex Lock</source>
         <translation>فليكس لوك</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9175"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9348"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>ما إذا كانت إعدادات Flex متاحة لك.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9184"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9357"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>مقدار الوقت المستغرق للانتقال من EPAP إلى IPAP ، كلما زاد الرقم كلما كان الانتقال أبطأ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9190"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9363"/>
         <source>Rise Time Lock</source>
         <translation>ارتفاع قفل الوقت</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9191"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9364"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>ما إذا كانت إعدادات &quot;وقت الارتفاع&quot; متاحة لك.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9192"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9365"/>
         <source>Rise Lock</source>
         <translation>Rise Lock</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9236"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9237"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9409"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9410"/>
         <source>Mask Resistance Setting</source>
         <translation>إعداد مقاومة القناع</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9238"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9411"/>
         <source>Mask Resist.</source>
         <translation>Mask Resist.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9246"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9419"/>
         <source>Hose Diam.</source>
         <translation>Hose Diam.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9249"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9422"/>
         <source>15mm</source>
         <translation>15 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9248"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9421"/>
         <source>22mm</source>
         <translation>22 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="705"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="708"/>
         <source>Backing Up Files...</source>
         <translation>النسخ الاحتياطي للملفات ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="743"/>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="84"/>
         <source>Untested Data</source>
         <translation>البيانات غير المختبرة</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="741"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="744"/>
         <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
         <translation>أنتج جهاز Philips Respironics %1 (%2) بيانات لم يشاهدها OSCAR من قبل.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="742"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="745"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
         <translation>قد لا تكون البيانات المستوردة دقيقة تمامًا ، لذلك يرغب المطورون في الحصول على نسخة بتنسيق .zip من بطاقة SD الخاصة بهذا الجهاز وتقارير Encore .pdf المطابقة للتأكد من أن OSCAR يتعامل مع البيانات بشكل صحيح.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9137"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9309"/>
         <source>CPAP-Check</source>
         <translation>تحقق CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9139"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9311"/>
         <source>AutoCPAP</source>
         <translation>AutoCPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9140"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9312"/>
         <source>Auto-Trial</source>
         <translation>Auto-Trial</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9142"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9314"/>
         <source>AutoBiLevel</source>
         <translation>AutoBiLevel</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9144"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9316"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9145"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9317"/>
         <source>S/T</source>
         <translation>S/T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9147"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9319"/>
         <source>S/T - AVAPS</source>
         <translation>S/T - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9148"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9320"/>
         <source>PC - AVAPS</source>
         <translation>PC - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9151"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9153"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9323"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9325"/>
         <source>Flex Mode</source>
         <translation>وضع فليكس</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9152"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9324"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>وضع تخفيف الضغط PRS1.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9156"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9328"/>
         <source>C-Flex</source>
         <translation>C-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9157"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9329"/>
         <source>C-Flex+</source>
         <translation>C-Flex+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9158"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9330"/>
         <source>A-Flex</source>
         <translation>A-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9159"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9331"/>
         <source>P-Flex</source>
         <translation>P-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9160"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9183"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9185"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9332"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9356"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9358"/>
         <source>Rise Time</source>
         <translation>وقت الشروق</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9333"/>
         <source>Bi-Flex</source>
         <translation>Bi-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9166"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9168"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9335"/>
+        <source>Flex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9339"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9341"/>
         <source>Flex Level</source>
         <translation>فليكس المستوى</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9167"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9340"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>إعداد تخفيف الضغط PRS1.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9215"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9388"/>
         <source>Passover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9254"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9427"/>
         <source>Tubing Type Lock</source>
         <translation>قفل نوع الأنابيب</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9255"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9428"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>ما إذا كانت إعدادات نوع الأنابيب متاحة لك.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9256"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9429"/>
         <source>Tube Lock</source>
         <translation>قفل الأنبوب</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9263"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9436"/>
         <source>Mask Resistance Lock</source>
         <translation>قفل قناع المقاومة</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9264"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9437"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>ما إذا كانت إعدادات مقاومة القناع متاحة لك.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9265"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9438"/>
         <source>Mask Res. Lock</source>
         <translation>Mask Res. Lock</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9300"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9473"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
         <translation>ما إذا كان الجهاز يعرض AHI أم لا عبر شاشة مدمجة.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9308"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9310"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9481"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9483"/>
         <source>Ramp Type</source>
         <translation>نوع المنحدر</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9309"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9482"/>
         <source>Type of ramp curve to use.</source>
         <translation>نوع منحنى المنحدر للاستخدام.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9312"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9485"/>
         <source>Linear</source>
         <translation>خطي</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9313"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9486"/>
         <source>SmartRamp</source>
         <translation>SmartRamp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9317"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9490"/>
         <source>Backup Breath Mode</source>
         <translation>وضع التنفس الاحتياطي</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9318"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9491"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>نوع معدل التنفس الاحتياطي المستخدم: بلا (إيقاف) أو تلقائي أو ثابت</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9319"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9492"/>
         <source>Breath Rate</source>
         <translation>معدل التنفس</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9323"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9496"/>
         <source>Fixed</source>
         <translation>ثابت</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9327"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9500"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>التنفس الاحتياطي الثابت BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9328"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9501"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>الحد الأدنى من الأنفاس في الدقيقة (BPM) التي سيتم بعدها بدء التنفس الموقوت</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9329"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9502"/>
         <source>Breath BPM</source>
         <translation>التنفس BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9334"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9507"/>
         <source>Timed Inspiration</source>
         <translation>إلهام موقوت</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9335"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9508"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>الوقت الذي يوفر فيه التنفس الموقوت IPAP قبل الانتقال إلى EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9336"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9509"/>
         <source>Timed Insp.</source>
         <translation>Timed Insp.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9341"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9514"/>
         <source>Auto-Trial Duration</source>
         <translation>مدة المحاكمة التلقائية</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9342"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9515"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
         <translation>عدد الأيام في الفترة التجريبية Auto-CPAP ، وبعدها يعود الجهاز إلى CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9343"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9516"/>
         <source>Auto-Trial Dur.</source>
         <translation>Auto-Trial Dur.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9348"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9350"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9521"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9523"/>
         <source>EZ-Start</source>
         <translation>EZ-Start</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9349"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9522"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>سواء تم تمكين EZ-Start أم لا</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9357"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9530"/>
         <source>Variable Breathing</source>
         <translation>تنفس متغير</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9358"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9531"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>غير مؤكد: تنفس متغير محتمل ، وهي فترات انحراف كبير عن ذروة اتجاه التدفق الشهيق</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9381"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9383"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9554"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9556"/>
         <source>Peak Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9382"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9555"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9199"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9372"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
         <source>Humidifier Status</source>
         <translation>حالة المرطب</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9200"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9373"/>
         <source>PRS1 humidifier connected?</source>
         <translation>PRS1 المرطب متصلة؟</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9203"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9376"/>
         <source>Disconnected</source>
         <translation>انقطع الاتصال</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9204"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9377"/>
         <source>Connected</source>
         <translation>متصل</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9208"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9381"/>
         <source>Humidification Mode</source>
         <translation>وضع الترطيب</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9209"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9382"/>
         <source>PRS1 Humidification Mode</source>
         <translation>وضع الترطيب PRS1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9210"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9383"/>
         <source>Humid. Mode</source>
         <translation>Humid. Mode</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9212"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9385"/>
         <source>Fixed (Classic)</source>
         <translation>ثابت (كلاسيكي)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9213"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9386"/>
         <source>Adaptive (System One)</source>
         <translation>التكيف (النظام الأول)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9214"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9387"/>
         <source>Heated Tube</source>
         <translation>أنبوب ساخن</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9220"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9393"/>
         <source>Tube Temperature</source>
         <translation>درجة حرارة الأنبوب</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9221"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9394"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>PRS1 درجة حرارة الأنبوب المسخن</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9222"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9395"/>
         <source>Tube Temp.</source>
         <translation>Tube Temp.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9229"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9402"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>إعداد مرطب PRS1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9230"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9403"/>
         <source>Humid. Lvl</source>
         <translation>Humid. Lvl</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9244"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9417"/>
         <source>Hose Diameter</source>
         <translation>قطر خرطوم</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9245"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9418"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>قطر أو خرطوم CPAP الأساسي</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9250"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9423"/>
         <source>12mm</source>
         <translation>12mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9272"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9274"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9445"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9447"/>
         <source>Auto On</source>
         <translation>تشغيل تلقائي</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9273"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9446"/>
         <source>A few breaths automatically starts machine</source>
         <translation>وهناك عدد قليل من الأنفاس يبدأ الجهاز تلقائيا</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9281"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9283"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9454"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9456"/>
         <source>Auto Off</source>
         <translation>إيقاف السيارات</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9282"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9455"/>
         <source>Machine automatically switches off</source>
         <translation>الجهاز يغلق تلقائيا</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9290"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9292"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9463"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9465"/>
         <source>Mask Alert</source>
         <translation>تنبيه قناع</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9291"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9464"/>
         <source>Whether or not machine allows Mask checking.</source>
         <translation>أم لا يسمح الجهاز فحص القناع.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9299"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9301"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9472"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9474"/>
         <source>Show AHI</source>
         <translation>عرض AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9366"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9539"/>
         <source>Breathing Not Detected</source>
         <translation>التنفس لم يتم كشفه</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9367"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9540"/>
         <source>A period during a session where the machine could not detect flow.</source>
         <translation>فترة خلال الجلسة حيث لم يتمكن الجهاز من اكتشاف التدفق.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9368"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9541"/>
         <source>BND</source>
         <translation>BND</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9373"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9546"/>
         <source>Timed Breath</source>
         <translation>توقيت التنفس</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9374"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9547"/>
         <source>Machine Initiated Breath</source>
         <translation>آلة بدأت التنفس</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9375"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9548"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
@@ -6711,12 +6716,12 @@ TTIA: %1</source>
         <translation>شخير اهتزازي كما تم اكتشافه بواسطة جهاز System One</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9127"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9299"/>
         <source>Pressure Pulse</source>
         <translation>نبض الضغط</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9128"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9300"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>نبضة ضغط &quot;تتعرض لضغوط&quot; لاكتشاف مجرى الهواء المغلق.</translation>
     </message>
@@ -7156,7 +7161,7 @@ TTIA: %1</source>
         <translation>تحتوي جلسة CPAP على ملخص البيانات فقط</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9134"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9306"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="290"/>
         <source>PAP Mode</source>
         <translation>وضع PAP</translation>
@@ -7960,12 +7965,12 @@ TTIA: %1</source>
         <translation>M-Series</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="425"/>
         <source>Philips Respironics</source>
         <translation>Philips Respironics</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="425"/>
         <source>System One</source>
         <translation>System One</translation>
     </message>
@@ -8403,7 +8408,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>جارٍ تحليل سجلات STR.edf ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9322"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9495"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="169"/>
         <source>Auto</source>
         <translation>تلقاءي</translation>
@@ -8464,27 +8469,27 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>CMS50E/F</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="689"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="688"/>
         <source>Loading %1 data for %2...</source>
         <translation>جارٍ تحميل بيانات %1 لـ %2 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="700"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="699"/>
         <source>Scanning Files</source>
         <translation>مسح الملفات</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="734"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="733"/>
         <source>Migrating Summary File Location</source>
         <translation>ترحيل ملف ملخص الموقع</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="904"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="903"/>
         <source>Loading Summaries.xml.gz</source>
         <translation>تحميل Summaries.xml.gz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="1036"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="1035"/>
         <source>Loading Summary Data</source>
         <translation>تحميل ملخص البيانات</translation>
     </message>
@@ -8576,6 +8581,11 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="204"/>
         <source>Check for OSCAR Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/checkupdates.cpp" line="266"/>
+        <source>Unable to check for updates. Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

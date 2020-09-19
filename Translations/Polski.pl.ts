@@ -6795,6 +6795,14 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation>Musisz udostępnić swoją kartę SD Linuksowi za pomocą programu Pliki systemu operacyjnego ChromeOS</translation>
     </message>
+    <message>
+        <source>Flex</source>
+        <translation>Flex</translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
+        <translation>Nie można sprawdzać aktualizacji. Proszę spróbować ponownie później.</translation>
+    </message>
 </context>
 <context>
     <name>Report</name>

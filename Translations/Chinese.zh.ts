@@ -6726,6 +6726,14 @@ popout window, delete it, then pop out this graph again.</source>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Flex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
