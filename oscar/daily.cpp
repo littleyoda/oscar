@@ -1345,6 +1345,10 @@ QString Daily::getStatisticsInfo(Day * day)
             }
         }
 
+//        QString oldtip = tooltip;
+        tooltip.replace("'", "&apos;");
+//        qDebug() << schema::channel[code].label() << "old tooltip" << oldtip << "tooltip" << tooltip ;
+
         html+=QString("<tr><td align=left title='%6'>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
             .arg(schema::channel[code].label())
             .arg(mn,0,'f',2)
