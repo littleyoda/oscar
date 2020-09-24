@@ -344,7 +344,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>هذه الإشارة المرجعية موجودة في منطقة معطلة حاليًا ..</translation>
     </message>
@@ -389,47 +389,47 @@
         <translation>وضع PAP: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>هذا اليوم يحتوي فقط على بيانات موجزة ، تتوفر معلومات محدودة فقط.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>إجمالي الوقت المنحدر</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>الوقت خارج المنحدر</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>بداية</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>النهاية</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>غير قادر على عرض مخطط دائري على هذا النظام</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>عذرًا ، لا يوفر هذا الجهاز سوى بيانات التوافق.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;لا يوجد شيء هنا!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>لا توجد بيانات متاحة لهذا اليوم.</translation>
     </message>
@@ -494,62 +494,62 @@
         <translation>الإحصاء</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>الوقت الإجمالي في انقطاع النفس</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation>الوقت على تسرب الخط الأحمر</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>قالب طوب! :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>انهيار الحدث</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>جلسات جميع قبالة!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>توجد جلسات لهذا اليوم ولكن تم إيقافها.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>جلسة قصيرة مستحيلة</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>ساعات الصفر؟</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>قالب طوب :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>شكوى إلى مزود المعدات الخاص بك!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>اختيار اللون</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>إشارة مرجعية في %1</translation>
     </message>
@@ -1844,10 +1844,6 @@
         <translation>اسم المستخدم</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">أبقِ الأطفال خارجًا .. لا شيء أكثر .. هذا ليس المقصود منه أن يكون هناك إجراءات أمنية مشددة.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>كلمة السر حماية الملف الشخصي</translation>
@@ -2116,10 +2112,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>لن يتحمل المؤلفون مسؤولية &lt;u&gt; أي شيء &lt;/ u&gt; يتعلق باستخدام أو سوء استخدام هذا البرنامج.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR هي حقوق الطبع والنشر 2011-2018 مارك واتكينز وأجزاء 2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4290,133 +4282,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation>تقوم أجهزة ResMed S9 بحذف بيانات معينة بشكل روتيني من بطاقة SD الخاصة بك التي تزيد مدتها عن 7 و 30 يومًا (حسب الدقة).</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">اختر صفحة شخصية</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">بحث:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">ابدأ بملف تعريف المستخدم المحدد.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">اختر المستخدم</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">إنشاء ملف تعريف مستخدم جديد.</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">الملف الشخصي الجديد</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">اختر مجلد بيانات OSCAR مختلفًا.</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">انقر هنا إذا كنت لا تريد بدء تشغيل OSCAR.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">الموقع الحالي لمتجر بيانات OSCAR.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">مجلد مختلف</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[الإصدار]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">استقال</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">مجلد:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[دليل البيانات]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">فتح الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">تعديل الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">حذف الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">أدخل كلمة المرور لـ %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">كلمة سر خاطئة</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">لقد أدخلت كلمة المرور خطأ مرات عديدة.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">أدخل الكلمة DELETE أدناه للتأكيد.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">أنت على وشك تدمير الملف الشخصي &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">آسف</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">تحتاج إلى إدخال DELETE بحروف كبيرة.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">لقد أدخلت كلمة مرور غير صحيحة</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">إذا كنت تحاول الحذف لأنك نسيت كلمة المرور ، فعليك حذفها يدويًا.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">حدث خطأ أثناء حذف دليل ملف التعريف ، تحتاج إلى إزالته يدويًا.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">تم حذف الملف الشخصي %1&apos; بنجاح</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">إنشاء ملف تعريف جديد</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">أدخل كلمة المرور</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">لقد أدخلت كلمة مرور غير صحيحة عدة مرات. الخروج!</translation>
     </message>
 </context>
 <context>
@@ -7367,10 +7232,6 @@ TTIA: %1</source>
         <translation>قناة التصحيح # 1</translation>
     </message>
     <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="vanished">أشياء داخلية سرية للغاية لا يفترض أن تراها ؛)</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Test #1</source>
         <translation>اختبار # 1</translation>
@@ -7412,17 +7273,9 @@ TTIA: %1</source>
         <translation>نظرًا لأنك لم تحدد مجلد بيانات ، فسيتم إنهاء OSCAR.</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">اختر مجلد بيانات SleepyHead لترحيله</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>أو إلغاء لتخطي الهجرة.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">المجلد الذي اخترته لا يحتوي على بيانات SleepyHead صالحة.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="191"/>
@@ -7500,10 +7353,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">إذا كنت تستخدم SleepyHead ، فيمكن لـ OSCAR نسخ بياناتك القديمة إلى هذا المجلد لاحقًا.</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="494"/>
         <source>We suggest you use this folder: </source>
         <translation>نقترح عليك استخدام هذا المجلد: </translation>
@@ -7532,18 +7381,6 @@ TTIA: %1</source>
         <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>دليل البيانات:</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">ترحيل بيانات SleepyHead؟</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">في الشاشة التالية ، سيطلب منك OSCAR تحديد مجلد يحتوي على بيانات SleepyHead</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">انقر فوق [OK] للانتقال إلى الشاشة التالية أو [No] إذا كنت لا ترغب في استخدام أي من بيانات SleepyHead.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="557"/>
@@ -8387,10 +8224,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Patient Access</source>
-        <translation type="vanished">وصول المريض</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="167"/>

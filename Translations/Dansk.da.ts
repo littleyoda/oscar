@@ -344,7 +344,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -384,47 +384,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -494,62 +494,62 @@
         <translation type="unfinished">Στατιστικά</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation type="unfinished"></translation>
     </message>

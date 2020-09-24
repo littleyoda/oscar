@@ -345,7 +345,7 @@
         <translation>(Moodi ja paineen asetuksia ei ole; näytetään eiliset arvot.)</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Tämä kirjanmerkki on tällä hetkellä kielletyllä alueella..</translation>
     </message>
@@ -385,47 +385,47 @@
         <translation>PAP toimintatapa: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Tarjolla on vain rajoitettu määrä tietoa. Tämä päivä sisältää vain yhteenvetotiedot.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Viiveen kokonaisaika</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Viiveen ulkopuolinen aika</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Alku</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>Loppu</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Piirakkakaaviota ei voi näyttää tässä järjestelmässä</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Valitettavasti tämä laite tuottaa vain sopivaa tietoa.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Täällä ei ole mitään!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>Tälle päivälle ei löydy tietoja.</translation>
     </message>
@@ -495,62 +495,62 @@
         <translation>Tilastot</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Apnean kokonaisaika</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation>Ohivuodon aika</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>Tiiliskivi! :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Tapahtumaerittely</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>Käyttöjaksot poissa!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Tänä päivänä on käyttöjaksoja, mutta ne on kytketty pois.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Mahdottoman lyhyt käyttöjakso</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>Nollatunteja??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>TIILI :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Reklamoi laitteesi edustajalle!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Valitse väri</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Kirjanmerkki paikassa %1</translation>
     </message>
@@ -1847,10 +1847,6 @@
         <translation>Käyttäjänimi</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Pidä lapset loitolla.. - ei muuta. Tämä ei ole mitään erittäin salaista.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>Salasanasuojattu profiili</translation>
@@ -2119,10 +2115,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Ohjelman tekijät eivät ole vastuussa &lt;u&gt;mistään&lt;/u&gt; tämän ohjelmiston käytöstä tai väärinkäytöstä.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">Oscarin tekijänoikeudet ovat &amp;copy;2011-2018 Mark Watkins ja osat &amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4291,137 +4283,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation>ResMed S9 laitteet poistavat rutiinilla yli 7 päivää vanhoja ja yli 30 päivää vanhoja tietoja SD-kortilta riippuen resoluutiosta).</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Valitse profiili</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Etsi:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Aloita valitulla käyttäjäprofiililla.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Valitse käyttäjä</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Luo uusi käyttäjäprofiili.</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Uusi profiili</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Valitse toinen Oscar tietojen kansio.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Napsauta tätä, jos et halua käynnistää Oscaria.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Nykyinen Oscar tietojen lähde.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Eri kansio</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[versio]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Poistu</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Tietojen kansio:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[tietojen kansio]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Avaa profiili</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Muokkaa profiilia</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Poista profiili</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Anna salasana kohteelle %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Epäkelpo salasana</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Annoit salasanan väärin liian monta kertaa.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">Kirjoita sana DELETE alle varmistaaksesi toiminnon.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Olet tuhoamassa profiilia &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Anteeksi</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Sinun tulee kirjoittaa DELETE isoilla kirjaimilla.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Annoit väärän salasanan</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Jos aiot poistaa profiilin, koska unohdit salasanan, sinun tulee poistaa profiili käsin.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Profiilin poistossa tapahtui virhe. Sinun tulee poistaa profiili käsin.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">Profiili &apos;%1&apos; poistettiin onnistuneesti</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Luo uusi profiili</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Anna salasana</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Annoit väärän salasanan liian monta kertaa. Poistutaan!</translation>
     </message>
 </context>
 <context>
@@ -7374,10 +7235,6 @@ TTIA: %1</translation>
         <translation>Debug kanava #1</translation>
     </message>
     <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="vanished">Erittäin salaista sisäistä tietoa, jota et saa nähdä ;)</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Test #1</source>
         <translation>Testi #1</translation>
@@ -7414,17 +7271,9 @@ TTIA: %1</translation>
         <translation>Alaraja</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">Valitse SleepyHeadin tietojen kansio (hakemisto) yhdistämiseen</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>tai KESKEYTÄ ohittaaksesi yhdistämisen.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">Valitussa kansiossa ei ole oikeanmuotoisia SleepyHead-tietoja.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="207"/>
@@ -7465,10 +7314,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="491"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>Oscar luo kansion tiedoillesi.</translation>
-    </message>
-    <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Jos olet käyttänyt SleepyHeadia, Oscar voi kopioida vanhat tiedot tähän kansioon myöhemmin.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="494"/>
@@ -7574,18 +7419,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>Tietojen kansio:</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">Haluatko yhdistää SleepyHead tiedot?</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">Seuraavassa ikkunassa Oscar kysyy valintaasi SleepyHead-tietojen kansiosta</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Napsauta [OK] mennäksesi seuraavaan ruutuun tai [Ei], jos et halua käyttää yhtään SleepyHeadin tietoja.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="652"/>
@@ -8398,10 +8231,6 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
         <translation>Plus</translation>
-    </message>
-    <message>
-        <source>Patient Access</source>
-        <translation type="vanished">Käyttäjällä pääsy</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="167"/>

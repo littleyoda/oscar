@@ -345,7 +345,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -385,47 +385,47 @@
         <translation>PAP Mode:%1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Ang data sa araw na ito ay limitado.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Total Ramp Time</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Oras sa labas ng Ramp</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>End</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Hindi ma display ang Pie Chart sa system nato</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Paumanhin, ang aparato na to ay nagpapakita lang ng compliance data.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Walang nandito!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>Walang makukuhang data sa araw na ito.</translation>
     </message>
@@ -495,62 +495,62 @@
         <translation>Statistics</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Kabuuang oras sa Apnea</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation>Oras na lumagpas sa leak redline</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>BRICK! (Ang aparato mo ay hindi nagbibigay ng data) :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Event Breakdown</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>Naka off ang Sessions!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Merong  Sessions sa araw na to pero naka off.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Imposible ng pagka ikli ng sessions</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>Sero na oras??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>BRICK (Ang aparato mo ay hindi nagbibigay ng data) :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Magreklamo sa nagbenta sayo ng aparato!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Pumili ng Kulay</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Bookmark sa %1</translation>
     </message>
@@ -1829,10 +1829,6 @@
         <translation>User Name</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Palabasin ang mga bata...eto ay para sa iyong seguridad.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>Password Protect Profile</translation>
@@ -2101,10 +2097,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Ang mga gumawa nito ay walang pananagutan sa &lt;u&gt;kahit anumang bagay&lt;/u&gt; kaugnay sa paggamit or maling paggamit nito.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4208,13 +4200,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
     </message>
 </context>
 <context>

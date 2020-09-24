@@ -309,42 +309,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>סיווג האירועים</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>כל השימושים מכובים!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>קיימים שימושים ליום זה אבל הם כובו.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>שימוש קצר מדי</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>אפס שעות??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>לבנה:(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>התלונן לספק הציוד שלך!</translation>
     </message>
@@ -454,7 +454,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,52 +474,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>התחלה</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>סוף</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -539,17 +539,17 @@
         <translation>שימושי שלב שינה</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>בחר צבע</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>סימניה ב %1</translation>
     </message>
@@ -1818,10 +1818,6 @@
         <location filename="../oscar/newprofile.ui" line="137"/>
         <source>User Name</source>
         <translation>שם משתמש</translation>
-    </message>
-    <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">הגנת ילדים.. לא יותר.. לא אבטחה אמיתית.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
@@ -4202,57 +4198,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">בחר פרופיל</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;צא</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">פרופיל חדש</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;בחר משתמש</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">פתח פרופיל</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">ערוך פרופיל</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">מחק פרופיל</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">הזן סיסמה עבור %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">סיסמה שגויה</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">הזנת סיסמה שגויה יותר מדי פעמים.</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">הזן סיסמה</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">הזנת סיסמה שגויה יותר מדי פעמים. יוצא!</translation>
     </message>
 </context>
 <context>

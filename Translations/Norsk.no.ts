@@ -346,7 +346,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Dette bokmerket er foreløpig i et deaktivert område..</translation>
     </message>
@@ -386,47 +386,47 @@
         <translation>PAP-modus: %1%1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Denne dagen inneholder oppsummeringsdata, kun begrenset informasjon er tilgjengelig.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Total rampetid</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Tid utenfor rampe</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>Slutt</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Kan ikke vise kakediagram på dette systemet</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Beklager, denne maskinen tilbyr kun complicance data.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Ingenting her!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>Ingen data tilgjengelig for denne dagen.</translation>
     </message>
@@ -496,62 +496,62 @@
         <translation>Statistikk</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Total tid i apne</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation>Tid over lekasjegrense</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>ØDELAGT :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Hendelseroppsummering</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>Alle økter av!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Sessjoner eksisterer for denne dagen, men er skrudd av.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Umulig kort sessjon</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>Null timer??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>ØDELAGT :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Klag til din fabrikant av ustyret!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Velg en farge</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Bokmerke på %1</translation>
     </message>
@@ -1828,10 +1828,6 @@
         <translation>Brukernavn</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Hold ungene ute..Ingenting mer..Dette er ikke ment å være høysikkerhet.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>Passordbeskyttet profil</translation>
@@ -2100,10 +2096,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Forfatterne vil ikke bli holdt ansvarlig for &lt;u&gt; noe &lt;/u&gt; relatert til bruk eller misbruk av denne programvaren.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4207,137 +4199,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Velg profil</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Søk:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Start med den valgte brukerprofilen.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Velg bruker</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Opprett en ny brukerprofil.</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Ny profil</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Velg en annen OSCAR-datamappe.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Klikk her hvis du ikke vil starte OSCAR.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Den nåværende plasseringen til OSCAR-datalager.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Annen mappe</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[version]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Quit</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Mappe:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[datakatalog]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Åpen profil</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Rediger profil</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Slett profil</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Skriv inn passord for%1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Feil passord</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Du skrev inn passordet galt for mange ganger.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">Skriv inn order SLETT under for å bekrefte.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Du er i ferd med å ødelegge profilen &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Beklager</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Du må skrive SLETT med store bokstaver.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Du skrev inn feil passord</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Hvis du prøver å slette fordi du har glemt passordet, må du slette det manuelt.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Det oppsto en feil ved sletting av profilkatalogen. Du må fjerne den manuelt.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">Profilen &apos;%1&apos; ble slettet</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Lag ny profil</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Oppgi passord</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Du skrev inn et feil passord for mange ganger. Spennende!</translation>
     </message>
 </context>
 <context>
@@ -7404,10 +7265,6 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Hvis du har bruk SleepyHead, så kan OSCAR kopiere dine gamle data til denne mappen senere.</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="494"/>
         <source>We suggest you use this folder: </source>
         <translation>Vi foreslår at du bruker denne mappen: </translation>
@@ -7436,18 +7293,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>Datamappe:</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">Migrere SleepyHead Data?</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">På neste bilde så vil OSCAR be deg om å velge en mappe med SleepyHead data</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Klikk [OK] for å gå til neste bilde, eller [Nei] om du ikke ønsker å bruke noe SleepyHead data.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="557"/>

@@ -348,58 +348,58 @@
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translatorcomment>mmm</translatorcomment>
         <translation>Límite de tiempo sobre fuga</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>Ladrillo :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Desglose de eventos</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>¡Todas las sesionos deshabilitadas!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Existen sesiones para este día pero fueron deshabilitadas.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Sesión imposiblemente corta</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>¿Cero horas?</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>Ladrillo :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>¡Quéjesete con el proveedor de su equipo!</translation>
     </message>
@@ -474,17 +474,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Inicio</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>Fin</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -524,42 +524,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Tiempo total en apnea</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Tiempo total en rampa</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Tiempo fuera de la dampa</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;¡Aquí no hay nada!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Escoja un color</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Marcador en %1</translation>
     </message>
@@ -1838,10 +1838,6 @@
         <location filename="../oscar/newprofile.ui" line="137"/>
         <source>User Name</source>
         <translation>Nombre de Usuario</translation>
-    </message>
-    <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Mantenga a los niños lejos nada más. Esto no se supone que sea máxima seguridad.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
@@ -4258,126 +4254,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation>Las máquinas ResMed S9 rutinariamente eliminan ciertos datos de la tarjeta SD si son anteriores a 7 y 30 días (depende de la resolución).</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Seleccione perfil de usuario</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Buscar:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Iniciar con el perfil de usuario seleccionado.</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Crear un nuevo perfil de usuario.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Directorio distinto</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[versión]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Salir</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Directorio:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[directorio de datos]</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Nuevo perfil</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Seleccionar Usuario</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Abrir perfil</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Editar perfil</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Eliminar perfil</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Ingrese contraseña para %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Ha ingresado una contraseña equivocada demasiadas veces.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translatorcomment>I don know if changing here changes the string comparison also, so let DELETE as it is</translatorcomment>
-        <translation type="vanished">Escriba DELETE debajo para confirmar.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Está a punto de destruir el perfil &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Lo sentimos</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Necesita escribir DELETE en mayúsculas.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Ha ingresado una contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Si está tratando de eliminarlo porque olvidó la contraseña, tendrá que hacerlo manualmente.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Hubo un error al eliminar el directorio con el perfil, necesitará removerlo manualmente.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">El perfil &apos;%1&apos; fue eliminado con éxito</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Crear nuevo perfil</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Ingrese contraseña</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Ha ingresado una contraseña incorrecta demasiadas veces. ¡Saliendo!</translation>
     </message>
 </context>
 <context>

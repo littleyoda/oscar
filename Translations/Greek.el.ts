@@ -344,7 +344,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Αυτός ο σελιδοδείκτης βρίσκεται σε μια περιοχή με ειδικές ανάγκες.</translation>
     </message>
@@ -384,47 +384,47 @@
         <translation>Λειτουργία PAP: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Αυτή η μέρα περιέχει μόνο σύνοψη δεδομένων, υπάρχουν μόνο περιορισμένες πληροφορίες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Συνολικός χρόνος ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Χρόνος εκτός ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Αρχή</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>Τέλος</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Δεν είναι δυνατή η εμφάνιση του Πίνακα πίτας σε αυτό το σύστημα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Λυπούμαστε, αυτό το μηχάνημα παρέχει μόνο δεδομένα συμμόρφωσης.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Τίποτα δεν είναι εδώ!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την ημέρα.</translation>
     </message>
@@ -494,62 +494,62 @@
         <translation>Στατιστικά</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Συνολικός χρόνος άπνοιας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translation>Χρόνο πάνω από διαρροή κόκκινη υπογράμμιση</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>ΤΟΎΒΛΟ! :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Κατανομή εκδήλωσης</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>Συνεδρίες όλοι σβηστοί!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Υπάρχουν συνεδρίες για αυτήν την ημέρα, αλλά είναι απενεργοποιημένες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Ανέφικτα σύντομη συνεδρίαση</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>Μηδέν ώρες ??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>ΤΟΥΒΛΟΥ :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Παραπονεθείτε στον Πάροχο του εξοπλισμό σας!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Διαλέξτε χρώμα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Αποθηκεύετε με σελιδοδείκτη στο %1</translation>
     </message>
@@ -1846,10 +1846,6 @@
         <translation>Ονομα χρήστη</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Κρατήστε τα παιδιά έξω .. Τίποτα περισσότερο .. Αυτό δεν σημαίνει να είναι uber ασφάλεια.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>Προστασία με προφίλ με κωδικό πρόσβασης</translation>
@@ -2118,10 +2114,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Οι συγγραφείς δεν θα θεωρηθούν υπεύθυνοι για &lt;u&gt; τίποτα &lt;/u&gt; που σχετίζονται με τη χρήση ή την κακή χρήση αυτού του λογισμικού.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">Το OSCAR είναι πνευματικά δικαιώματα &amp;copy;2011-2018 Mark Watkins και μερίδες &amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4292,133 +4284,6 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation>Οι μηχανές ResMed S9 διαγράφουν συστηματικά ορισμένα δεδομένα από την κάρτα SD παλαιότερα των 7 και 30 ημερών (ανάλογα με την ανάλυση).</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Επιλέξτε Προφίλ</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Αναζήτηση:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Ξεκινήστε με το επιλεγμένο προφίλ χρήστη.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Επιλέξτε Χρήστη</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Δημιουργήστε ένα νέο προφίλ χρήστη.</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Νέο προφίλ</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Επιλέξτε διαφορετικό φάκελο δεδομένων OSCAR.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Κάντε κλικ εδώ αν δεν θέλετε να ξεκινήσετε το OSCAR.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Η τρέχουσα θέση αποθήκευσης δεδομένων OSCAR.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Διαφορετικός φάκελος</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[εκδοχή]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Εγκαταλείπω</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Ντοσιέ:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[κατάλογος δεδομένων]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Ανοίξτε το προφίλ</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Επεξεργασία προφίλ</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Διαγραφή προφίλ</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Εισαγάγετε τον κωδικό πρόσβασης για %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Λάθος κωδικός</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">Εισαγάγατε τον κωδικό λάθος πάρα πολλές φορές.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Πρόκειται να καταστρέψετε το προφίλ &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Συγνώμη</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Πρέπει να εισάγετε DELETE με κεφαλαία γράμματα.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Εισαγάγετε έναν εσφαλμένο κωδικό πρόσβασης</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Αν προσπαθείτε να διαγράψετε επειδή ξεχάσατε τον κωδικό πρόσβασης, πρέπει να το διαγράψετε με μη αυτόματο τρόπο.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Παρουσιάστηκε σφάλμα κατά τη διαγραφή του καταλόγου προφίλ, πρέπει να το καταργήσετε με μη αυτόματο τρόπο.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">Το προφίλ &apos;%1&apos; διαγράφηκε με επιτυχία</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Δημιουργία νέου προφίλ</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Εισάγετε τον κωδικό πρόσβασης</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Έχετε εισαγάγει έναν εσφαλμένο κωδικό πρόσβασης πάρα πολλές φορές. Έξοδος!</translation>
     </message>
 </context>
 <context>
@@ -7370,10 +7235,6 @@ TTIA: %1</translation>
         <translation>Κανάλι εντοπισμού σφαλμάτων # 1</translation>
     </message>
     <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="vanished">Αρκετά μυστικά εσωτερικά πράγματα που δεν πρέπει να δείτε.)</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Test #1</source>
         <translation>Δοκιμή # 1</translation>
@@ -7415,17 +7276,9 @@ TTIA: %1</translation>
         <translation>Καθώς δεν επιλέξατε φάκελο δεδομένων, το OSCAR θα εξέλθει.</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">Επιλέξτε το φάκελο δεδομένων SleepyHead για να μετεγκαταστήσετε</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>ή ΑΚΥΡΩΣΗ για να παρακάμψετε τη μετάβαση.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">Ο φάκελος που επιλέξατε δεν περιέχει έγκυρα δεδομένα SleepyHead.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="191"/>
@@ -7503,10 +7356,6 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Εάν χρησιμοποιείτε το SleepyHead, το OSCAR μπορεί να αντιγράψει αργότερα τα παλιά σας δεδομένα σε αυτόν τον φάκελο.</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="494"/>
         <source>We suggest you use this folder: </source>
         <translation>Προτείνουμε να χρησιμοποιήσετε αυτόν το φάκελο: </translation>
@@ -7535,18 +7384,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation>Κατάλογος δεδομένων:</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">Μετεγκατάσταση δεδομένων SleepyHead;</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">Στην επόμενη οθόνη, το OSCAR θα σας ζητήσει να επιλέξετε ένα φάκελο με δεδομένα SleepyHead</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Κάντε κλικ στο [OK] για να μεταβείτε στην επόμενη οθόνη ή [Όχι] αν δεν θέλετε να χρησιμοποιήσετε οποιαδήποτε δεδομένα SleepyHead.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="557"/>
@@ -8392,10 +8229,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Patient Access</source>
-        <translation type="vanished">Πρόσβαση ασθενούς</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="167"/>

@@ -1569,14 +1569,6 @@
         <translation>Unbehandelter AHI</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Die Software ist nichts für Kinder.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR ist urheberrechtlich geschützt &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nachteule Software</translation>
-    </message>
-    <message>
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
@@ -2485,7 +2477,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Percentage of restriction in airflow from the median value. 
 A value of 20% works well for detecting apneas. </source>
-        <translation>Prozentualer Anteil der Einschränkung des Luftstroms aus dem Mittelwert.
+        <translation>Prozentualer Anteil der Einschränkung des Luftstroms aus dem Medianwert.
 Ein Wert von 20% eignet sich gut zum Nachweis von Apnoen. </translation>
     </message>
     <message>
@@ -2745,7 +2737,7 @@ werden Sie sehen, dass es nicht sehr oft zu Problemen kommt.&lt;/p&gt;&lt;/body&
     </message>
     <message>
         <source>Median is recommended for ResMed users.</source>
-        <translation>Mittlere ist für ResMed Benutzer empfohlen.</translation>
+        <translation>Medianwert ist für ResMed Benutzer empfohlen.</translation>
     </message>
     <message>
         <source>Oximeter Events</source>
@@ -2765,11 +2757,11 @@ werden Sie sehen, dass es nicht sehr oft zu Problemen kommt.&lt;/p&gt;&lt;/body&
     </message>
     <message>
         <source>Weighted Average</source>
-        <translation>gewichteter Durchschnitt</translation>
+        <translation>Gewichteter Durchschnitt</translation>
     </message>
     <message>
         <source>Median</source>
-        <translation>Mittlere</translation>
+        <translation>Medianwert</translation>
     </message>
     <message>
         <source>Flag rapid changes in oximetry stats</source>
@@ -3422,137 +3414,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Print reports in black and white (monochrome)</source>
         <translation>Berichte in Schwarzweiß (monochrom) drucken</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Beenden</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Erstellen Sie ein neues Benutzerprofil.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Entschuldigung</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[Datenverzeichnis]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Profil öffnen</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">Profil &apos;%1&apos; wurde erfolgreich gelöscht</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Profil bearbeiten</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">Um fortzufahren bestätigen Sie unten das Wort DELETE.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Der aktuelle Speicherort des OSCAR-Datenspeichers.</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Wählen Sie einen anderen OSCAR-Datenordner.</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Neues Profil erstellen</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Inkorrektes Passwort</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Es gab einen Fehler beim Löschen des Profil-Verzeichnisses. Sie müssen es manuell entfernen.</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Passwort eingeben für %1</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Neues Profil</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Anderen Ordner</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Klicken Sie hier, wenn Sie OSCAR nicht starten möchten.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Zum ausgewählten Benutzer</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Sie haben ein falsches Passwort eingegeben</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Suche:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Beginnen Sie mit dem ausgewählten Benutzerprofil.</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Profil löschen</translation>
-    </message>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Wählen Sie ein Profil aus</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">(Version)</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Sie haben zu oft das falsche Kennwort eingegeben.</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Passwort eingeben</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Ordner:</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Sie sind dabei, das Profil zu zerstören &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Wenn Sie versuchen das Profil zu löschen, weil Sie Ihr Passwort vergessen haben, müssen Sie es manuell löschen.</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Sie müssen DELETE in Großbuchstaben eingeben.</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Sie haben zu oft ein falsches Passwort eingegeben. Verlassen!</translation>
     </message>
 </context>
 <context>
@@ -4877,7 +4738,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Median</source>
-        <translation>Mittlere</translation>
+        <translation>Median</translation>
     </message>
     <message>
         <source>Fixed %1 (%2)</source>
@@ -4939,7 +4800,7 @@ Bitte die Wiederherstellung Ihrer CPAP Daten laden</translation>
     </message>
     <message>
         <source>Median Leaks</source>
-        <translation>Mittlere Lecks</translation>
+        <translation>Median Lecks</translation>
     </message>
     <message>
         <source>%1 Report</source>
@@ -5249,7 +5110,7 @@ Start: %2
     </message>
     <message>
         <source>Median Leak Rate</source>
-        <translation>Mittlere Leckrate</translation>
+        <translation>Median Leckrate</translation>
     </message>
     <message>
         <source> (%3 sec)</source>
@@ -5591,7 +5452,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <source>Median rate of detected mask leakage</source>
-        <translation>Mittlere Rate der bemerkten Masken Lecks</translation>
+        <translation>Median Rate der bemerkten Masken Lecks</translation>
     </message>
     <message>
         <source>Bookmark Notes</source>
@@ -5778,10 +5639,6 @@ Stunden: %1</translation>
     <message>
         <source>Temperature</source>
         <translation>Temperatur</translation>
-    </message>
-    <message>
-        <source>Patient Access</source>
-        <translation type="vanished">Patientenzugriff</translation>
     </message>
     <message>
         <source>Entire Day&apos;s Flow Waveform</source>
@@ -6144,16 +6001,8 @@ Stunden: %1</translation>
         <translation>Eine Einschränkung der Atmung aus dem Normalzustand, die zu einer Verflachung der Strömungswellenform führt.</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">Wählen Sie den Datenordner SleepyHead für die Migration aus</translation>
-    </message>
-    <message>
         <source>or CANCEL to skip migration.</source>
         <translation>oder CANCEL, um die Migration zu überspringen.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">Der von Ihnen gewählte Ordner enthält keine gültigen SleepyHead-Daten.</translation>
     </message>
     <message>
         <source>You cannot use this folder:</source>
@@ -6184,10 +6033,6 @@ Stunden: %1</translation>
         <translation>OSCAR richtet einen Ordner für Ihre Daten ein.</translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Wenn Sie SleepyHead verwendet haben, kann OSCAR Ihre alten Daten später in diesen Ordner kopieren.</translation>
-    </message>
-    <message>
         <source>We suggest you use this folder: </source>
         <translation>Wir empfehlen Ihnen, diesen Ordner zu verwenden: </translation>
     </message>
@@ -6198,18 +6043,6 @@ Stunden: %1</translation>
     <message>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>Wenn Sie OSCAR das nächste Mal ausführen, werden Sie erneut gefragt.</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">SleepyHead Daten migrieren?</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">Auf dem nächsten Bildschirm fordert OSCAR Sie auf, einen Ordner mit SleepyHead-Daten auszuwählen</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Klicken Sie auf [OK], um zum nächsten Bildschirm zu gelangen, oder auf[Nein], wenn Sie keine SleepyHead-Daten verwenden möchten.</translation>
     </message>
     <message>
         <source>App key:</source>
@@ -6438,10 +6271,6 @@ Stunden: %1</translation>
     <message>
         <source>Debugging channel #1</source>
         <translation>Debugging-Kanal #1</translation>
-    </message>
-    <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="vanished">Streng geheimes internes Zeug, das man nicht sehen soll ;)</translation>
     </message>
     <message>
         <source>Test #1</source>
@@ -6922,7 +6751,7 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     </message>
     <message>
         <source>%1 Median</source>
-        <translation>%1 Mittlere</translation>
+        <translation>%1 Medianwert</translation>
     </message>
     <message>
         <source>Min %1</source>

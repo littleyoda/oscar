@@ -345,58 +345,58 @@
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1382"/>
+        <location filename="../oscar/daily.cpp" line="1386"/>
         <source>Time over leak redline</source>
         <translatorcomment>mmm</translatorcomment>
         <translation>Tiempo de fuga sobre la línea roja</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1649"/>
+        <location filename="../oscar/daily.cpp" line="1653"/>
         <source>BRICK! :(</source>
         <translation>Ladrillo :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1457"/>
+        <location filename="../oscar/daily.cpp" line="1461"/>
         <source>Event Breakdown</source>
         <translation>Desglose de eventos</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1470"/>
+        <location filename="../oscar/daily.cpp" line="1474"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>No se puede mostrar el Gráfico Tarta en este sistema</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1704"/>
+        <location filename="../oscar/daily.cpp" line="1708"/>
         <source>Sessions all off!</source>
         <translation>¡Todas las sesiones deshabilitadas!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1706"/>
+        <location filename="../oscar/daily.cpp" line="1710"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Existen sesiones para este día pero fueron deshabilitadas.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1709"/>
+        <location filename="../oscar/daily.cpp" line="1713"/>
         <source>Impossibly short session</source>
         <translation>Una sesión demasiado corta</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1710"/>
+        <location filename="../oscar/daily.cpp" line="1714"/>
         <source>Zero hours??</source>
         <translation>¿Cero horas?</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1713"/>
+        <location filename="../oscar/daily.cpp" line="1717"/>
         <source>BRICK :(</source>
         <translation>Ladrillo :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1714"/>
+        <location filename="../oscar/daily.cpp" line="1718"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Lo sentimos, esta máquina sólo proporciona datos de cumplimiento.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1715"/>
+        <location filename="../oscar/daily.cpp" line="1719"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>¡Quejese al Proveedor de su Equipo!</translation>
     </message>
@@ -471,17 +471,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>Start</source>
         <translation>Inicio</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1433"/>
+        <location filename="../oscar/daily.cpp" line="1437"/>
         <source>End</source>
         <translation>Final</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2295"/>
+        <location filename="../oscar/daily.cpp" line="2299"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -521,42 +521,42 @@
         <translation>Modo PAP: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1362"/>
+        <location filename="../oscar/daily.cpp" line="1366"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Éste día sólo contiene datos resumidos, sólo se dispone de información limitada.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1372"/>
+        <location filename="../oscar/daily.cpp" line="1376"/>
         <source>Total time in apnea</source>
         <translation>Tiempo total en apnea</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1388"/>
+        <location filename="../oscar/daily.cpp" line="1392"/>
         <source>Total ramp time</source>
         <translation>Tiempo total en rampa</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1392"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>Time outside of ramp</source>
         <translation>Tiempo fuera de rampa</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1733"/>
+        <location filename="../oscar/daily.cpp" line="1737"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;¡Aquí no hay nada!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1736"/>
+        <location filename="../oscar/daily.cpp" line="1740"/>
         <source>No data is available for this day.</source>
         <translation>No hay datos disponibles para éste día.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2031"/>
+        <location filename="../oscar/daily.cpp" line="2035"/>
         <source>Pick a Colour</source>
         <translation>Escoja un color</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2338"/>
+        <location filename="../oscar/daily.cpp" line="2342"/>
         <source>Bookmark at %1</source>
         <translation>Marcador en %1</translation>
     </message>
@@ -1842,10 +1842,6 @@
         <translation>Nombre de Usuario</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Mantenga a los niños fuera.. Nada más... Esto no se supone que sea seguridad total.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
         <translation>Perfil Protegido por Contraseña</translation>
@@ -2114,10 +2110,6 @@
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Los autores no serán responsables de &lt;u&gt;cualquier cosa &lt;/u&gt; relacionada con el uso o mal uso de este software.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR es copyright &amp;copy;2011-2018 Mark Watkins y porciones &amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -4306,138 +4298,6 @@ Would you like do this now?</source>
     </message>
 </context>
 <context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Seleccione perfil de usuario</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Buscar:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Iniciar con el perfil de usuario seleccionado.</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Crear un nuevo perfil de usuario.</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Elija una carpeta de datos OSCAR diferente.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Haga clic aquí si no desea iniciar OSCAR.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Ubicación actual del almacén datos de OSCAR.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Directorio distinto</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[versión]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Salir</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Directorio:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[directorio de datos]</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Nuevo perfil</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Seleccionar Usuario</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Abrir perfil</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Editar perfil</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Eliminar perfil</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Ingrese contraseña para %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Ha ingresado una contraseña equivocada demasiadas veces.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translatorcomment>I don know if changing here changes the string comparison also, so let DELETE as it is</translatorcomment>
-        <translation type="vanished">Escriba DELETE debajo para confirmar.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Está a punto de destruir el perfil &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Lo sentimos</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Necesita escribir DELETE en mayúsculas.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Ha ingresado una contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Si está tratando de eliminarlo porque olvidó la contraseña, tendrá que hacerlo manualmente.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Hubo un error al eliminar el directorio con el perfil, necesitará removerlo manualmente.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">El perfil &apos;%1&apos; fue eliminado con éxito</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Crear nuevo perfil</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Ingrese contraseña</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Ha ingresado una contraseña incorrecta demasiadas veces. ¡Saliendo!</translation>
-    </message>
-</context>
-<context>
     <name>ProfileSelector</name>
     <message>
         <location filename="../oscar/profileselector.ui" line="14"/>
@@ -6444,17 +6304,9 @@ TTIA: %1</translation>
         <translation>Reconstruyendo desde el respaldo de %1</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">Elija la carpeta de datos de SleepyHead para migrar</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="192"/>
         <source>or CANCEL to skip migration.</source>
         <translation>o CANCELE para saltar la migración.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">La carpeta que ha elegido no contiene datos válidos de SleepyHead.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="207"/>
@@ -6496,10 +6348,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="491"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>OSCAR creará una carpeta para sus datos.</translation>
-    </message>
-    <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Si ha estado utilizando SleepyHead, OSCAR puede copiar sus datos antiguos a esta carpeta más tarde.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="494"/>
@@ -6605,18 +6453,6 @@ TTIA: %1</translation>
         <location filename="../oscar/main.cpp" line="538"/>
         <source>Data directory:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">¿Migración de datos de SleepyHead?</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">En la siguiente pantalla OSCAR le pedirá que seleccione una carpeta con los datos de SleepyHead</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Haga clic en[OK] para ir a la siguiente pantalla o en[No] si no desea utilizar ningún dato de SleepyHead.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="652"/>
@@ -8218,10 +8054,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Patient Access</source>
-        <translation type="vanished">Acceso para pacientes</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="167"/>
