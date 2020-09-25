@@ -1466,10 +1466,6 @@
         <translation>Nazwa użytkownika</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">Trzymaj dzieci z daleka..Nic więcej.. To nie oznacza super bezpieczeństwa.</translation>
-    </message>
-    <message>
         <source>Password Protect Profile</source>
         <translation>Profil chroniony hasłem</translation>
     </message>
@@ -1660,10 +1656,6 @@
     <message>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>Autorzy nie ponoszą odpowiedzialności za cokolwiek mającego związek z używaniem oprogramowania.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">Prawa autorskie: &amp;copy;2011-2018 Mark Watkins, częściowo :&amp;copy;2019 Nightowl Software</translation>
     </message>
     <message>
         <source>Please provide a username for this profile</source>
@@ -3417,137 +3409,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Print reports in black and white (monochrome)</source>
         <translation>Drukuj raporty w czerni i bieli (monochromatycznie)</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">Wybierz profil</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">Szukaj:</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">Rozpocznij z wybranym profilem użytkownika.</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;Wybierz użyszkodnika</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">Utwórz nowy profil.</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">Nowy Profil</translation>
-    </message>
-    <message>
-        <source>Choose a different OSCAR data folder.</source>
-        <translation type="vanished">Wybierz inny folder danych dla OSCAR.</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
-        <source>Click here if you didn&apos;t want to start OSCAR.</source>
-        <translation type="vanished">Kliknij jeżeli nie chcesz uruchamiać programu OSCAR.</translation>
-    </message>
-    <message>
-        <source>The current location of OSCAR data store.</source>
-        <translation type="vanished">Obecna lokalizacja danych OSCAR.</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;Inny folder</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[wersja]</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Zakończ</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">Folder:</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[lokalizacja danych]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">Otwórz profil</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">Edytuj profil</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">Usuń profil</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">Wprowadź hasło dla %1</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">Nieprawidłowe hasło</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">Wprowadziłeś nieprawidłowe hasło zbyt wiele razy.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">Wprowadź słowo DELETE poniżej dla potwierdzenia.</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">Zamierzasz zniszczyć profil &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">Przepraszam</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">Słowo DELETE ma być wpisane WIELKIMI literami.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">Wprowadziłeś nieprawidłowe hasło</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">Jeśli chcesz usunąć, bo zapomniałes hasła, musisz usunąć ręcznie.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">Wystąpił błąd usuwania katalogu profilu, musisz usunąć go ręcznie.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">Profil &apos;%1&apos; pomyślnie usunięto</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">Utwórz nowy profil</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">Wprowadź hasło</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">Wprowadziłeś błędne hasło zbyt wiele razy. Wyłączam się!</translation>
     </message>
 </context>
 <context>
@@ -6030,10 +5891,6 @@ Proszę przebuduj dane CPAP</translation>
         <translation>Dostęp Pt</translation>
     </message>
     <message>
-        <source>Patient Access</source>
-        <translation type="vanished">Dostęp pacjenta</translation>
-    </message>
-    <message>
         <source>Climate Control</source>
         <translation>Kontrola klimatu</translation>
     </message>
@@ -6140,16 +5997,8 @@ Proszę przebuduj dane CPAP</translation>
         <translation>Ograniczenie oddechu, powodujące spłaszczenie wykresu przepływu.</translation>
     </message>
     <message>
-        <source>Choose the SleepyHead data folder to migrate</source>
-        <translation type="vanished">Wybierz folder danych Sleepyhead dop przeniesienia</translation>
-    </message>
-    <message>
         <source>or CANCEL to skip migration.</source>
         <translation>lub Skasuj aby pominąć przenoszenie.</translation>
-    </message>
-    <message>
-        <source>The folder you chose does not contain valid SleepyHead data.</source>
-        <translation type="vanished">Wybrany folder nie zawiera danych Sleepyhead.</translation>
     </message>
     <message>
         <source>You cannot use this folder:</source>
@@ -6180,10 +6029,6 @@ Proszę przebuduj dane CPAP</translation>
         <translation>OSCAR przygotuje folder na Twoje dane.</translation>
     </message>
     <message>
-        <source>If you have been using SleepyHead, OSCAR can copy your old data to this folder later.</source>
-        <translation type="vanished">Jeśli używałeś SleepyHead, OSCAR może później skopiować twoje stare dane do tego folderu.</translation>
-    </message>
-    <message>
         <source>We suggest you use this folder: </source>
         <translation>Proponujemy użycie tego folderu: </translation>
     </message>
@@ -6194,18 +6039,6 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>NGdy następny raz uruchomisz OSCARa, będziesz zapytany ponownie.</translation>
-    </message>
-    <message>
-        <source>Migrate SleepyHead Data?</source>
-        <translation type="vanished">Przenieść dane SleepyHead?</translation>
-    </message>
-    <message>
-        <source>On the next screen OSCAR will ask you to select a folder with SleepyHead data</source>
-        <translation type="vanished">Na następnym ekranie OSCAR poprosi o wybór folderu z danymi SleepyHead</translation>
-    </message>
-    <message>
-        <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead data.</source>
-        <translation type="vanished">Kliknij [OK] aby przejść do kolejnego ekranu lub [NIE] jeśli nie chcesz używać danych ze SleepyHead.</translation>
     </message>
     <message>
         <source>App key:</source>
@@ -6434,10 +6267,6 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <source>Debugging channel #1</source>
         <translation>Kanał debugowania #1</translation>
-    </message>
-    <message>
-        <source>Top secret internal stuff you&apos;re not supposed to see ;)</source>
-        <translation type="vanished">Supertajne czego widzieć nie masz ;)</translation>
     </message>
     <message>
         <source>Test #1</source>
@@ -6794,6 +6623,14 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation>Musisz udostępnić swoją kartę SD Linuksowi za pomocą programu Pliki systemu operacyjnego ChromeOS</translation>
+    </message>
+    <message>
+        <source>Flex</source>
+        <translation>Flex</translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
+        <translation>Nie można sprawdzać aktualizacji. Proszę spróbować ponownie później.</translation>
     </message>
 </context>
 <context>

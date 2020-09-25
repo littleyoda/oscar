@@ -1531,10 +1531,6 @@
         <translation>未治疗时的AHI</translation>
     </message>
     <message>
-        <source>Keep the kids out.. Nothing more.. This isn&apos;t meant to be uber security.</source>
-        <translation type="vanished">让孩子远离此软件，该软件并非绝对安全。</translation>
-    </message>
-    <message>
         <source>Address</source>
         <translation>地址</translation>
     </message>
@@ -1665,10 +1661,6 @@
     <message>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
         <translation>该软件作者对&lt;u&gt;任何人&lt;/u&gt; 使用或误用本软件不承担任何责任。</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019 Nightowl Software</source>
-        <translation type="vanished">OSCAR版权归&amp;copy;2011-2018 Mark Watkins所有和部分版权归&amp;copy;2019 Nightowl 软件所有</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
@@ -3390,125 +3382,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Print reports in black and white (monochrome)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProfileSelect</name>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="vanished">&amp;退出</translation>
-    </message>
-    <message>
-        <source>Create a new user profile.</source>
-        <translation type="vanished">创建新用户.</translation>
-    </message>
-    <message>
-        <source>[data directory]</source>
-        <translation type="vanished">[数据目录]</translation>
-    </message>
-    <message>
-        <source>Open Profile</source>
-        <translation type="vanished">打开配置文件</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="vanished">编辑配置文件</translation>
-    </message>
-    <message>
-        <source>Incorrect Password</source>
-        <translation type="vanished">错误密码</translation>
-    </message>
-    <message>
-        <source>Enter Password for %1</source>
-        <translation type="vanished">键入密码 %1</translation>
-    </message>
-    <message>
-        <source>New Profile</source>
-        <translation type="vanished">新配置文件</translation>
-    </message>
-    <message>
-        <source>&amp;Different Folder</source>
-        <translation type="vanished">&amp;其他文件夹</translation>
-    </message>
-    <message>
-        <source>&amp;Select User</source>
-        <translation type="vanished">&amp;选择用户</translation>
-    </message>
-    <message>
-        <source>Start with the selected user profile.</source>
-        <translation type="vanished">用所选的用户设置启动软件.</translation>
-    </message>
-    <message>
-        <source>Delete Profile</source>
-        <translation type="vanished">删除配置文件</translation>
-    </message>
-    <message>
-        <source>Select Profile</source>
-        <translation type="vanished">选择配置文件</translation>
-    </message>
-    <message>
-        <source>[version]</source>
-        <translation type="vanished">[版本]</translation>
-    </message>
-    <message>
-        <source>You entered the password wrong too many times.</source>
-        <translation type="vanished">键入密码错误次数过多.</translation>
-    </message>
-    <message>
-        <source>Enter Password</source>
-        <translation type="vanished">键入密码</translation>
-    </message>
-    <message>
-        <source>Folder:</source>
-        <translation type="vanished">文件夹:</translation>
-    </message>
-    <message>
-        <source>You entered an Incorrect Password too many times. Exiting!</source>
-        <translation type="vanished">输入密码错误次数过多，退出!</translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation type="vanished">查找:</translation>
-    </message>
-    <message>
-        <source>You are about to destroy profile &apos;%1&apos;.</source>
-        <translation type="vanished">您将要清除&apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Enter the word DELETE below to confirm.</source>
-        <translation type="vanished">在下面敲入 DELETE 以确认.</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation type="vanished">抱歉</translation>
-    </message>
-    <message>
-        <source>You need to enter DELETE in capital letters.</source>
-        <translation type="vanished">需要键入全大写字母 DELETE.</translation>
-    </message>
-    <message>
-        <source>You entered an incorrect password</source>
-        <translation type="vanished">密码不正确</translation>
-    </message>
-    <message>
-        <source>If you&apos;re trying to delete because you forgot the password, you need to delete it manually.</source>
-        <translation type="vanished">如果因为忘记密码而删除,请手动操作.</translation>
-    </message>
-    <message>
-        <source>There was an error deleting the profile directory, you need to manually remove it.</source>
-        <translation type="vanished">配置文件目录出错,请手动移除.</translation>
-    </message>
-    <message>
-        <source>Profile &apos;%1&apos; was succesfully deleted</source>
-        <translation type="vanished">配置文件 &apos;%1&apos;已成功删除</translation>
-    </message>
-    <message>
-        <source>Create new profile</source>
-        <translation type="vanished">创建一个新的配置文件</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
     </message>
 </context>
 <context>
@@ -5668,10 +5541,6 @@ TTIA: %1</source>
         <translation>患者通道</translation>
     </message>
     <message>
-        <source>Patient Access</source>
-        <translation type="vanished">患者通道</translation>
-    </message>
-    <message>
         <source>Climate Control</source>
         <translation>恒温控制</translation>
     </message>
@@ -6724,6 +6593,14 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to check for updates. Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
