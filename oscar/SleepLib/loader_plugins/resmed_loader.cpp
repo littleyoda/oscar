@@ -312,11 +312,25 @@ int ResmedLoader::Open(const QString & dirpath)
         return -1;
     }
 
+    bool compress_backups = p_profile->session->compressBackupData();
+
     // Early check for STR.edf file, so we can early exit before creating faulty machine record.
     QString strpath = importPath + "STR.edf"; // STR.edf file
     QFile f(strpath);
 
-    if (!f.exists()) { // No STR.edf.. Do we have a STR.edf.gz?
+    if (compress_backups) {
+        QString gzstrpath = strpath + STR_ext_gz;
+        f.setFileName(gzstrpath);
+        if (f.exists())
+            strpath += STR_ext_gz;
+        else
+            f.setFileName(strpath);
+        if (!f.exists()) {
+            qDebug() << "Missing STR.edf file";
+            return -1;
+        }
+    }
+    else if (!f.exists()) { // No STR.edf.. Do we have a STR.edf.gz?
         strpath += STR_ext_gz;
         f.setFileName(strpath);
 
@@ -358,11 +372,13 @@ int ResmedLoader::Open(const QString & dirpath)
 
     bool rebuild_from_backups = false;
     bool create_backups = p_profile->session->backupCardData();
-    bool compress_backups = p_profile->session->compressBackupData();
 
     QString backup_path = mach->getBackupPath();
 
-    if (importPath == backup_path) {
+    QDir ipath(importPath);
+    QDir bpath(backup_path);
+
+    if (ipath == bpath) {
         // Don't create backups if importing from backup folder
         rebuild_from_backups = true;
         create_backups = false;
@@ -1018,7 +1034,15 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     // First make sure the correct backup exists in the right place
     // Allow for second import of newer version of EVE and CSL edf files
     // But don't try to copy onto itself (as when rebuilding CPAP data from backup)
-    if (newname != fullname) {
+
+    QFile nf(newname);
+    QFile of(fullname);
+    QFileInfo nfi(nf);
+    QFileInfo ofi(of);
+    QDir nfdir = nfi.dir();
+    QDir ofdir = ofi.dir();
+
+    if (nfdir != ofdir) {
         if (QFile::exists(newname)) // remove existing backup
             QFile::remove(newname);
         if (compress) {
@@ -1053,12 +1077,13 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
 
     // Used to store it under Backup\Datalog
     // Remove any traces from old backup directory structure
-    oldname = backup_path + RMS9_STR_datalog + "/" + filename;
-    if (QFile::exists(oldname))
-        QFile::remove(oldname);
-    if (QFile::exists(oldname + STR_ext_gz))
-        QFile::remove(oldname + STR_ext_gz);
-
+    if (nfdir != ofdir) {
+        oldname = backup_path + RMS9_STR_datalog + "/" + filename;
+        if (QFile::exists(oldname))
+            QFile::remove(oldname);
+        if (QFile::exists(oldname + STR_ext_gz))
+            QFile::remove(oldname + STR_ext_gz);
+    }
     return newname;
 }
 
