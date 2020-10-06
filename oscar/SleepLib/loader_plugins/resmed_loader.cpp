@@ -375,6 +375,8 @@ int ResmedLoader::Open(const QString & dirpath)
 
     QString backup_path = mach->getBackupPath();
 
+    // Compare QDirs rather than QStrings because separators may be different, especially on Windows.
+    // We want to check whether import and backup paths are the same, regardless of variations in the string representations.
     QDir ipath(importPath);
     QDir bpath(backup_path);
 
@@ -1034,6 +1036,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
     // First make sure the correct backup exists in the right place
     // Allow for second import of newer version of EVE and CSL edf files
     // But don't try to copy onto itself (as when rebuilding CPAP data from backup)
+    // Compare QDirs rather than QStrings to handle variations in separators, etc.
 
     QFile nf(newname);
     QFile of(fullname);
