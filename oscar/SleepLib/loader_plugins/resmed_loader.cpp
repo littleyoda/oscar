@@ -315,25 +315,26 @@ int ResmedLoader::Open(const QString & dirpath)
     bool compress_backups = p_profile->session->compressBackupData();
 
     // Early check for STR.edf file, so we can early exit before creating faulty machine record.
-    QString strpath = importPath + "STR.edf"; // STR.edf file
-    QFile f(strpath);
+    // str.edf is the first (primary) file to check, str.edf.gz is the secondary
+    QString pripath = importPath + "STR.edf"; // STR.edf file
+    QString secpath = pripath + STR_ext_gz;   // STR.edf.gz file
+    QString strpath;
 
+    // If compression is enabled, swap primary and secondary paths
     if (compress_backups) {
-        QString gzstrpath = strpath + STR_ext_gz;
-        f.setFileName(gzstrpath);
-        if (f.exists())
-            strpath += STR_ext_gz;
-        else
-            f.setFileName(strpath);
-        if (!f.exists()) {
-            qDebug() << "Missing STR.edf file";
-            return -1;
-        }
+        strpath = pripath;
+        pripath = secpath;
+        secpath = strpath;
     }
-    else if (!f.exists()) { // No STR.edf.. Do we have a STR.edf.gz?
-        strpath += STR_ext_gz;
-        f.setFileName(strpath);
 
+    // Check if primary path exists
+    QFile f(pripath);
+    if (f.exists()) {
+        strpath = pripath;
+    // If no primary file, check for secondary
+    } else {
+        f.setFileName(secpath);
+        strpath = secpath;
         if (!f.exists()) {
             qDebug() << "Missing STR.edf file";
             return -1;
