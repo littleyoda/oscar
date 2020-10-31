@@ -300,8 +300,8 @@ QString Welcome::GenerateCPAPHTML()
             //EventDataType lat = day->timeAboveThreshold(CPAP_Leak, p_profile->cpap->leakRedline())/ 60.0;
             //EventDataType leaks = 1.0/hours * lat;
 
-            EventDataType leak = day->avg(CPAP_Leak);
-            EventDataType leakdays = p_profile->calcAvg(CPAP_Leak, MT_CPAP, starttime, endtime);
+            EventDataType leak = day->wavg(CPAP_Leak);
+            EventDataType leakdays = p_profile->calcWavg(CPAP_Leak, MT_CPAP, starttime, endtime);
 
             if ((leak < leakdays) && ((leakdays - leak) >= 0.1)) {
                 comp = under;
