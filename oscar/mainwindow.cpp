@@ -1197,38 +1197,40 @@ void MainWindow::updateFavourites()
         if (journal) {
             if (journal->size() > 0) {
                 Session *sess = journal->firstSession(MT_JOURNAL);
-                QString tmp;
-                bool filtered = !bookmarkFilter.isEmpty();
-                bool found = !filtered;
+                if (sess) {
+                    QString tmp;
+                    bool filtered = !bookmarkFilter.isEmpty();
+                    bool found = !filtered;
 
-                if (sess->settings.contains(Bookmark_Start)) {
-                    //QVariantList start=sess->settings[Bookmark_Start].toList();
-                    //QVariantList end=sess->settings[Bookmark_End].toList();
-                    QStringList notes = sess->settings[Bookmark_Notes].toStringList();
+                    if (sess->settings.contains(Bookmark_Start)) {
+                        //QVariantList start=sess->settings[Bookmark_Start].toList();
+                        //QVariantList end=sess->settings[Bookmark_End].toList();
+                        QStringList notes = sess->settings[Bookmark_Notes].toStringList();
 
-                    if (notes.size() > 0) {
-                        tmp += QString("<tr><td><b><a href='daily=%1'>%2</a></b><br/>")
-                               .arg(date.toString(Qt::ISODate))
-                               .arg(date.toString(MedDateFormat));
+                        if (notes.size() > 0) {
+                            tmp += QString("<tr><td><b><a href='daily=%1'>%2</a></b><br/>")
+                                    .arg(date.toString(Qt::ISODate))
+                                    .arg(date.toString(MedDateFormat));
 
-                        tmp += "<list>";
+                            tmp += "<list>";
 
-                        for (int i = 0; i < notes.size(); i++) {
-                            //QDate d=start[i].toDate();
-                            QString note = notes[i];
+                            for (int i = 0; i < notes.size(); i++) {
+                                //QDate d=start[i].toDate();
+                                QString note = notes[i];
 
-                            if (filtered && note.contains(bookmarkFilter, Qt::CaseInsensitive)) {
-                                found = true;
+                                if (filtered && note.contains(bookmarkFilter, Qt::CaseInsensitive)) {
+                                    found = true;
+                                }
+
+                                tmp += "<li>" + note + "</li>";
                             }
 
-                            tmp += "<li>" + note + "</li>";
+                            tmp += "</list></td>";
                         }
-
-                        tmp += "</list></td>";
                     }
-                }
 
-                if (found) { html += tmp; }
+                    if (found) { html += tmp; }
+                }
             }
         }
 
