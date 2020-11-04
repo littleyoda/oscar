@@ -1197,7 +1197,9 @@ void MainWindow::updateFavourites()
         if (journal) {
             if (journal->size() > 0) {
                 Session *sess = journal->firstSession(MT_JOURNAL);
-                if (sess) {
+                if (!sess) {
+                    qWarning() << "null session for MT_JOURNAL first session";
+                } else {
                     QString tmp;
                     bool filtered = !bookmarkFilter.isEmpty();
                     bool found = !filtered;
