@@ -202,6 +202,8 @@ class Day
 
     Session *find(SessionID sessid);
 
+    Session *find(SessionID sessid, MachineType mt);
+
     //! \brief Returns the number of Sessions in this day record
     int size() { return sessions.size(); }
 

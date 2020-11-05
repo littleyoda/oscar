@@ -560,7 +560,7 @@ void Daily::Link_clicked(const QUrl &url)
     if (code=="togglecpapsession") { // Enable/Disable CPAP session
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (!day) return;
-        Session *sess=day->find(sid);
+        Session *sess=day->find(sid, MT_CPAP);
         if (!sess)
             return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
@@ -571,7 +571,7 @@ void Daily::Link_clicked(const QUrl &url)
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="toggleoxisession") { // Enable/Disable Oximetry session
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
-        Session *sess=day->find(sid);
+        Session *sess=day->find(sid, MT_OXIMETER);
         if (!sess)
             return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
