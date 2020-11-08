@@ -5725,7 +5725,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="637"/>
         <source>Importing Sessions...</source>
         <translation>Seanslar İçe Aktarılıyor...</translation>
     </message>
@@ -8027,22 +8027,22 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>Intellipap basınç tahliyesi seviyesi.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>STR.edf Dosya(lar)sının Yeri Tespit Ediliyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="583"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
         <source>Cataloguing EDF Files...</source>
         <translation>EDF Dosyaları Kataloglanıyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="621"/>
         <source>Queueing Import Tasks...</source>
         <translation>İçe Aktarma Görevleri Sıraya Alınıyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="631"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="650"/>
         <source>Finishing Up...</source>
         <translation>Bitiriliyor...</translation>
     </message>
@@ -8217,7 +8217,7 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>Manüel</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1088"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1117"/>
         <source>Parsing STR.edf records...</source>
         <translation>STR.edf kayıtları çözümleniyor...</translation>
     </message>

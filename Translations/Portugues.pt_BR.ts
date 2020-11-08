@@ -5691,7 +5691,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="637"/>
         <source>Importing Sessions...</source>
         <translation>Importando Sessões...</translation>
     </message>
@@ -8120,22 +8120,22 @@ existente, exclua-a e, em seguida, abra este gráfico novamente</translation>
         <translation>Nível de alívio de pressão Intellipap.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Localizando arquivo(s) STR.edf...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="583"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Catalogando arquivos EDF...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="621"/>
         <source>Queueing Import Tasks...</source>
         <translation>Ordenando Tarefas Importantes...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="631"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="650"/>
         <source>Finishing Up...</source>
         <translation>Terminando...</translation>
     </message>
@@ -8312,7 +8312,7 @@ existente, exclua-a e, em seguida, abra este gráfico novamente</translation>
         <translation>Manual</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1088"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1117"/>
         <source>Parsing STR.edf records...</source>
         <translation>Analisando registros STR.edf...</translation>
     </message>

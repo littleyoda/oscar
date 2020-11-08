@@ -5751,7 +5751,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="637"/>
         <source>Importing Sessions...</source>
         <translation>Εισαγωγή περιόδων σύνδεσης ...</translation>
     </message>
@@ -8051,22 +8051,22 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Επίπεδο ανακούφισης πίεσης Intellipap.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Εντοπισμός αρχείων STR.edf ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="583"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Καταλογογράφηση αρχείων EDF ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="621"/>
         <source>Queueing Import Tasks...</source>
         <translation>Εργασίες εισαγωγής ουράς ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="631"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="650"/>
         <source>Finishing Up...</source>
         <translation>Τελειώνω...</translation>
     </message>
@@ -8241,7 +8241,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Εγχειρίδιο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1088"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1117"/>
         <source>Parsing STR.edf records...</source>
         <translation>Ανάλυση αρχείων STR.edf ...</translation>
     </message>

@@ -6029,7 +6029,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="637"/>
         <source>Importing Sessions...</source>
         <translation>Sessies importeren...</translation>
     </message>
@@ -7995,22 +7995,22 @@ Gaarne gegevens opnieuw inlezen</translation>
         <translation>IntelliPap drukhulp instelling.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Lokaliseren STR.edf bestand (en) ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="583"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
         <source>Cataloguing EDF Files...</source>
         <translation>EDF-bestanden catalogiseren ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="621"/>
         <source>Queueing Import Tasks...</source>
         <translation>Importtaken in de wachtrij zetten ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="631"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="650"/>
         <source>Finishing Up...</source>
         <translation>Afronden...</translation>
     </message>
@@ -8189,7 +8189,7 @@ Gaarne gegevens opnieuw inlezen</translation>
         <translation>Handmatig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1088"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1117"/>
         <source>Parsing STR.edf records...</source>
         <translation>Interpreteren STR.edf bestanden...</translation>
     </message>

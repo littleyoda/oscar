@@ -5750,7 +5750,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="725"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="618"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="637"/>
         <source>Importing Sessions...</source>
         <translation>Tuo käyttötietoja...</translation>
     </message>
@@ -8053,22 +8053,22 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <translation>Intellipap paineenalennuksen taso.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="422"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Etsii STR.edf tiedosto(j)a...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="583"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Järjestelee EDF-tiedostoja...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="602"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="621"/>
         <source>Queueing Import Tasks...</source>
         <translation>Jonottaa tiedon tuontitehtäviä...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="631"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="650"/>
         <source>Finishing Up...</source>
         <translation>Lopettelee...</translation>
     </message>
@@ -8243,7 +8243,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <translation>Manuaalinen</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1088"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1117"/>
         <source>Parsing STR.edf records...</source>
         <translation>Parsii STR.edf tietueita...</translation>
     </message>
