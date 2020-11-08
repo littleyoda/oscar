@@ -335,6 +335,9 @@ bool Preferences::Save(QString filename)
 
     QDomDocument doc(p_name);
 
+    QDomProcessingInstruction pi = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
+    doc.appendChild(pi);
+
     QDomElement droot = doc.createElement(STR_AppName);
     doc.appendChild(droot);
 
@@ -368,6 +371,8 @@ bool Preferences::Save(QString filename)
     }
 
     QTextStream ts(&file);
+    ts.setCodec("UTF-8");
+    ts.setGenerateByteOrderMark(true);
     ts << doc.toString();
     file.close();
 

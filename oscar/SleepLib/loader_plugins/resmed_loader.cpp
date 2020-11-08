@@ -2142,7 +2142,7 @@ void ResDayTask::run()
             quint32 maskoff = resday->str.maskoff[i];
             if ( (maskon > QDateTime::currentDateTime().toTime_t()) ||
                  (maskoff > QDateTime::currentDateTime().toTime_t()) ) {
-                qWarning() << "mask time in future" << resday->date;
+                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << maskon << "maskoff" << maskoff;
                 continue;
             }
             if (((maskon>0) && (maskoff>0)) && (maskon != maskoff)) {   //ignore very short sessions
@@ -2184,7 +2184,7 @@ void ResDayTask::run()
         for (int i=0; i < maskOnSize; ++i) {
             if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toTime_t()) ||
                  (resday->str.maskoff[i] > QDateTime::currentDateTime().toTime_t()) ) {
-                qWarning() << "mask time in future" << resday->date;
+                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
                 continue;
             }
             if (((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) 
@@ -2235,7 +2235,7 @@ void ResDayTask::run()
             EDFduration dur = getEDFDuration(fullpath);
             if ((dur.start > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ||
                 (dur.end > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ) {
-                qWarning() << "Future Date in" << fullpath;
+                qWarning() << "Future Date in" << fullpath << "now" << QDateTime::currentDateTime().toSecsSinceEpoch() << "maskon" << dur.start << "maskoff" << dur.end;
                 continue;           // skip this file
             }
             for (int i=overlaps.size()-1; i>=0; --i) {

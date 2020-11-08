@@ -98,6 +98,16 @@ Session *Day::find(SessionID sessid)
     return nullptr;
 }
 
+Session *Day::find(SessionID sessid, MachineType mt)
+{
+    for (auto & sess : sessions) {
+        if ((sess->session() == sessid) && (sess->s_machtype == mt)) {
+            return sess;
+        }
+    }
+    return nullptr;
+}
+
 void Day::addSession(Session *s)
 {
     if (s == nullptr) {
