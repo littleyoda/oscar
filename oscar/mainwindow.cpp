@@ -856,9 +856,6 @@ QStringList getDriveList()
 	            drivelist.append(dir.filePath() );
 	        }
 	    } else {
-            QMessageBox::warning(nullptr, STR_MessageBox_Warning,
-                QObject::tr("Chromebook file system detected, but no removable device found\n") +
-                QObject::tr("You must share your SD card with Linux using the ChromeOS Files program"));
             drivelist.clear();
             drivelist.append("CROSTINI");
         }
@@ -917,8 +914,19 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     do {
         // Rescan in case card inserted
         QStringList AutoScannerPaths = getDriveList();
-        if (AutoScannerPaths.contains("CROSTINI"))    // no Crostini removable drives found!
-            break;                                    // break out of the 20 second wait loop
+        if (AutoScannerPaths.contains("CROSTINI")) {  // no Crostini removable drives found!
+            if (( lastpath.size() > 0) && ( ! AutoScannerPaths.contains(lastpath))) {
+                if (QFile(lastpath).exists() ) {
+                    AutoScannerPaths.insert(0, lastpath);
+                }
+            }
+            else {
+                QMessageBox::warning(nullptr, STR_MessageBox_Warning,
+                    QObject::tr("Chromebook file system detected, but no removable device found\n") +
+                    QObject::tr("You must share your SD card with Linux using the ChromeOS Files program"));
+                break;                                    // break out of the 20 second wait loop
+            }
+        }
 //      AutoScannerPaths.push_back(lastpath);
         qDebug() << "Drive list size:" << AutoScannerPaths.size();
 
