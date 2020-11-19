@@ -1203,8 +1203,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 qint32 on = maskon->dataArray[recstart + s];
                 qint32 off = maskoff->dataArray[recstart + s];
 
-                if (((on >= 0) && (off >= 0)) && (on != off)) // ignore very short on-off times
-                    validday=true;
+                if (((on >= 0) && (off >= 0)) && (on != off)) {// ignore very short on-off times
+                        validday=true;
+                }
             }
             if ( ! validday) {
                 // There are no mask on/off events, so this STR day is useless.
@@ -1239,6 +1240,10 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             for (int s = 0; s < maskon->sampleCnt; ++s) {
                 qint32 on = maskon->dataArray[recstart + s];    // these on/off times are minutes since noon
                 qint32 off = maskoff->dataArray[recstart + s];
+                if ( (on > 24*60) || (off > 24*60) ) {
+                    qWarning().noquote() << "Mask times are out of range. Possible SDcard corruption" << "date" << date << "on" << on << "off" <<off;
+                    continue;
+                }
                 if ( on > 0 ) {       // convert them to seconds since midnight
                     lastOn = s;
                     R.maskon[s] = (noonstamp + (on * 60));
@@ -1620,6 +1625,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
     // Parse Identification.tgt file (containing serial number and machine information)
     ///////////////////////////////////////////////////////////////////////////////////
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info);	//forward
+
 bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
     QString filename = path + RMS9_STR_idfile + STR_ext_TGT;
     QFile f(filename);
@@ -2140,11 +2146,16 @@ void ResDayTask::run()
         for (int i=0;i<resday->str.maskon.size();++i) {
             quint32 maskon = resday->str.maskon[i];
             quint32 maskoff = resday->str.maskoff[i];
-            if ( (maskon > QDateTime::currentDateTime().toTime_t()) ||
-                 (maskoff > QDateTime::currentDateTime().toTime_t()) ) {
-                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << maskon << "maskoff" << maskoff;
+/**
+            QTime noon(12,00,00);
+            QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+            if ( (maskon > dayend) ||
+                 (maskoff > dayend) ) {
+                qWarning() << "mask time in future" << resday->date << daybegin << dayend << "maskon" << maskon << "maskoff" << maskoff;
                 continue;
             }
+**/
             if (((maskon>0) && (maskoff>0)) && (maskon != maskoff)) {   //ignore very short sessions
                 Session * sess = new Session(mach, maskon);
                 sess->set_first(quint64(maskon) * 1000L);
@@ -2182,12 +2193,22 @@ void ResDayTask::run()
     if (resday->str.date.isValid()) {
         //First populate Overlaps with Mask ON/OFF events
         for (int i=0; i < maskOnSize; ++i) {
-            if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toTime_t()) ||
-                 (resday->str.maskoff[i] > QDateTime::currentDateTime().toTime_t()) ) {
-                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
+//            if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toTime_t()) ||
+//                 (resday->str.maskoff[i] > QDateTime::currentDateTime().toTime_t()) ) {
+//                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
+//                continue;
+//            }
+/*
+            QTime noon(12,00,00);
+            QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+            if ( (resday->str.maskon[i] > dayend) ||
+                 (resday->str.maskoff[i] > dayend) ) {
+                qWarning() << "mask time in future" << resday->date << "daybegin:" << daybegin << "dayend:" << dayend << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
                 continue;
             }
-            if (((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0)) 
+*/
+            if (((resday->str.maskon[i]>0) || (resday->str.maskoff[i]>0))
                     && (resday->str.maskon[i] != resday->str.maskoff[i]) ) {
                 OverlappingEDF ov;
                 ov.start = resday->str.maskon[i];
@@ -2233,11 +2254,16 @@ void ResDayTask::run()
         }
         if ( ! added) {    // Didn't get a hit, look at the EDF files duration and check for an overlap
             EDFduration dur = getEDFDuration(fullpath);
-            if ((dur.start > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ||
-                (dur.end > (QDateTime::currentDateTime().toMSecsSinceEpoch()/1000L)) ) {
-                qWarning() << "Future Date in" << fullpath << "now" << QDateTime::currentDateTime().toSecsSinceEpoch() << "maskon" << dur.start << "maskoff" << dur.end;
-                continue;           // skip this file
+/**
+            QTime noon(12,00,00);
+            QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+              if ((dur.start > (dayend)) ||
+                  (dur.end > (dayend)) ) {
+                  qWarning() << "Future Date in" << fullpath << "dayend" << dayend << "dur.start" << dur.start << "dur.end" << dur.end;
+                  continue;           // skip this file
             }
+**/
             for (int i=overlaps.size()-1; i>=0; --i) {
                 OverlappingEDF & ovr = overlaps[i];
                 if ((ovr.start < dur.end) && (dur.start < ovr.end)) {
@@ -2438,8 +2464,8 @@ void ResDayTask::run()
        // loader->saveMutex.lock();
        // loader->saveMutex.unlock();
 
-        if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
-             (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
+//        if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
+        if ( (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
             qWarning().noquote() << "Skipping future or absent date session:" << sess->session()
                 << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "\noriginal date is" << resday->date.toString()
