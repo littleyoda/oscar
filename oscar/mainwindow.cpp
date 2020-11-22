@@ -748,6 +748,9 @@ int MainWindow::importCPAP(ImportPath import, const QString &message)
 
 void MainWindow::finishCPAPImport()
 {
+    if (daily)
+        daily->Unload(daily->getDate());
+
     p_profile->StoreMachines();
     QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
     for (Machine * mach : machines) {
@@ -1818,10 +1821,13 @@ void MainWindow::on_actionPurge_Current_Day_triggered()
 
         QList<Session *> list;
         for (s = day->begin(); s != day->end(); ++s) {
-            list.append(*s);
-            qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
-            qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
-            qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
+            Session *sess = *s;
+            if (sess->type() == MT_CPAP) {
+                list.append(*s);
+                qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+                qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
+                qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
+            }
         }
 
         QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
@@ -2562,6 +2568,7 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
 
 
         if (daily) {
+            daily->Unload(date);
             daily->clearLastDay(); // otherwise Daily will crash
             daily->ReloadGraphs();
         }
