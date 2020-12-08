@@ -1,0 +1,21 @@
+#
+# Makefile for Most Packages
+#
+
+AUTO_TARBALL=1
+
+include generic-rpm.make
+
+
+# Build a copy of the Git repository so it can be built into a tarball
+
+TOP := $(shell git rev-parse --show-toplevel)
+WHEREAMI = $(shell cd $(PWD) && pwd)
+EXCLUDE := $(echo "$(WHEREAMI)" | sed -e 's|^$(TOP)/||')
+GIT_DIR := $(notdir $(TOP))
+
+$(GIT_DIR):
+	mkdir -p "$@"
+	(cd $(TOP) && tar cf - --exclude Building/Linux/rpm  .) \
+		| (cd "$@" && tar xpf -)
+TO_CLEAN += $(GIT_DIR)

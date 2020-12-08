@@ -1,0 +1,102 @@
+#
+# RPM Spec for OSCAR
+#
+
+%define short OSCAR
+%define long  %{short}-code
+
+Name:		OSCAR
+Version:	__VERSION__
+Release:	1%{?dist}
+
+Summary:	Open-Source CPAP Analyser and Reporter
+BuildArch:	%(uname -m)
+License:	GNU GPL v3
+Vendor:		Phil Olynyk
+Group:		Unspecified
+
+Source0:	%{long}-%{version}.tar.gz
+
+Provides:	%{name} = %{version}-%{release}
+
+
+# RPM requires definitions be at least three characters.  Go figure.
+%define q_t qt5
+%define qmake qmake-%{q_t}
+
+%define icons %{_datadir}/icons/hicolor
+
+
+Requires:	%{q_t}
+
+BuildRequires:	dnf-utils
+BuildRequires:	%{q_t}-devel
+
+
+%description
+OSCAR is a cross-platform, open-source sleep tracking program for
+reviewing CPAP and oximetry data, which are devices used in the
+treatment of Sleep Disorders like Obstructive Sleep Apnea.
+
+
+
+# Don't build a debug package.
+%define debug_package %{nil}
+
+
+%prep
+%setup -q -n %{long}-%{version}
+
+
+%build
+%{qmake} OSCAR_QT.pro
+make -j
+
+
+
+%install
+# Binary
+install -D -m 555 ./oscar/%{short} "${RPM_BUILD_ROOT}/%{_bindir}/%{short}"
+
+# Icons
+for SIZE in 32 48 64 128 256 512 1024
+do
+    echo "SIZE $SIZE"
+    install -D -m 555 \
+        "./Building/Icons/Full-${SIZE}.png" \
+	"${RPM_BUILD_ROOT}/%{icons}/${SIZE}x${SIZE}/apps/%{name}.png"
+done
+
+# Desktop
+install -D -m 555 "Building/Linux/%{short}.desktop" \
+	"${RPM_BUILD_ROOT}/%{_datadir}/applications/%{short}.desktop"
+
+
+
+%post
+touch --no-create %{icons} &>/dev/null || true
+update-desktop-database &> /dev/null || true
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{icons} &>/dev/null
+      gtk-update-icon-cache %{icons} &>/dev/null || true
+fi
+
+
+%postun
+update-desktop-database &> /dev/null || true
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{icons} &>/dev/null
+    gtk-update-icon-cache %{icons} &>/dev/null || true
+fi
+
+
+%posttrans
+gtk-update-icon-cache %{icons} &>/dev/null || true
+
+
+%files
+%defattr(-,root,root,-)
+%license COPYING
+%{_bindir}/*
+%{icons}/*/apps/*
+%{_datadir}/applications/*

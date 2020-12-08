@@ -1,0 +1,9 @@
+#
+# Common Makefile values
+#
+
+NAME := OSCAR
+
+TOP := $(shell git rev-parse --show-toplevel)
+WHEREAMI := $(shell cd $(PWD) && pwd)
+EXCLUDE := $(echo "$(WHEREAMI)" | sed -e 's|^$(TOP)/||')

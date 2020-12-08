@@ -1,0 +1,6 @@
+.ccache
+
+# This is ignored in a parent directory
+!Makefile*
+
+*~
