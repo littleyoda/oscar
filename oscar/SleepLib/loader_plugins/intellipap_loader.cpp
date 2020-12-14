@@ -785,7 +785,7 @@ int IntellipapLoader::OpenDV6(const QString & path)
         //data[0x11]; // Start of data block
         //data[0x12]; // Record count
         // First record is block header
-        for (int r=1; r<records-1; r++) {
+        for (int r=1; r<records; r++) {
             data += DV6_S_RecLength; // just so happen the headers the same length, though we probably should parse it to get it's version
             DV6_S_Record R;
 
