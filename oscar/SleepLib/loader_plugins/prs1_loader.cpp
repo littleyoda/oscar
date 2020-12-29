@@ -285,10 +285,12 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "500X110", 0, 6, "DreamStation Auto CPAP" },
     { "500X120", 0, 6, "DreamStation Auto CPAP" },
     { "500X130", 0, 6, "DreamStation Auto CPAP" },
+    { "500X140", 0, 6, "DreamStation Auto CPAP with A-Flex" },
     { "500X150", 0, 6, "DreamStation Auto CPAP" },
     { "500X180", 0, 6, "DreamStation Auto CPAP" },
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
+    { "500G120", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
     { "600X150", 0, 6, "DreamStation BiPAP Pro" },
@@ -3439,7 +3441,7 @@ bool PRS1DataChunk::ParseEventsF3V03(void)
         if (this->familyVersion == 0) {
             if (h[9] < 4 || h[9] > 65) UNEXPECTED_VALUE(h[9], "4-65");
         } else {
-            if (h[9] < 13 || h[9] > 84) UNEXPECTED_VALUE(h[9], "13-84");  // not sure what this is.. encore doesn't graph it.
+            if (h[9] < 4 || h[9] > 84) UNEXPECTED_VALUE(h[9], "5-84");  // not sure what this is.. encore doesn't graph it.
         }
         if (this->familyVersion == 0) {
             // 1 shows as Apnea (AP) alarm
@@ -5445,6 +5447,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 // 41 08 = system one 1
 // 40 08 = system one 0 (off)
 // 40 60 = system one 3, no data
+// 40 20 = system one 3, no data
 // 40 90 = heated tube, tube off, data=tube t=0,h=0
 // 45 80 = classic 5
 // 44 80 = classic 4
@@ -5461,7 +5464,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
 //     7 = tube temp
 //     8 = "System One" mode
 //    1  = tube present
-//    6  = no data, seems to show system one 3 in settings, only seen in session 1 briefly
+//    6  = no data, seems to show system one 3 in settings
 //    8  = (classic mode; also seen when heated tube present but off, possibly ignored in that case)
 //
 // Note that, while containing similar fields as ParseHumidifierSetting60Series, the bit arrangement is different for F3V3!
@@ -5481,10 +5484,12 @@ void PRS1DataChunk::ParseHumidifierSettingF3V3(unsigned char humid1, unsigned ch
     int tubetemp = humid2 & 7;
     if (tubetemp > 5) UNEXPECTED_VALUE(tubetemp, "<= 5");
 
-    if (this->sessionid != 1) CHECK_VALUE(humid2 & 0x60, 0);  // Only seen on 1-second session 1 of several machines, no humidifier data on chart.
+    if (humid2 & 0x60) {
+        CHECK_VALUES(humid2 & 0x60, 0x20, 0x60);  // no humidifier data on chart
+    }
     bool humidclassic = (humid2 & 0x80) != 0;  // Set on classic mode reports; evidently ignored (sometimes set!) when tube is present
     //bool no_tube? = (humid2 & 0x20) != 0;  // Something tube related: whenever it is set, tube is never present (inverse is not true)
-    bool no_data = (humid2 & 0x60) == 0x60;  // As described in chart, settings still show up
+    bool no_data = (humid2 & 0x60) != 0;  // As described in chart, settings still show up
     int tubepresent = (humid2 & 0x10) != 0;
     bool humidsystemone = (humid2 & 0x08) != 0;  // Set on "System One" humidification mode reports when tubepresent is false
 
@@ -5693,7 +5698,7 @@ bool PRS1DataChunk::ParseSettingsF3V03(const unsigned char* data, int /*size*/)
             backup = true;
             break;
         case PRS1_MODE_ST:
-            if (breath_rate < 10 || breath_rate > 18) UNEXPECTED_VALUE(breath_rate, "10-18");  // can this be 0?
+            if (breath_rate < 8 || breath_rate > 18) UNEXPECTED_VALUE(breath_rate, "8-18");  // can this be 0?
             if (timed_inspiration < 10 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "10-20");  // 16 = 1.6s
             backup = true;
             break;
@@ -5823,11 +5828,7 @@ bool PRS1DataChunk::ParseSummaryF3V03(void)
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
             // F3V3 doesn't have a separate stats record like F3V6 does, the stats just follow the MaskOff data.
                 CHECK_VALUE(data[pos+0x2], 0);  // may be high byte of timestamp
-                if (this->familyVersion == 0) {
-                    //CHECK_VALUES(data[pos+0x3], 0, 1);  // OA count
-                } else {
-                    CHECK_VALUE(data[pos+0x3], 0);  // probably OA count, but the only F3V3 sample data is missing .002 files, so we can't yet verify
-                }
+                //CHECK_VALUES(data[pos+0x3], 0, 1);  // OA count, probably 16-bit
                 CHECK_VALUE(data[pos+0x4], 0);
                 //CHECK_VALUE(data[pos+0x5], 0);  // CA count, probably 16-bit
                 CHECK_VALUE(data[pos+0x6], 0);
@@ -6210,7 +6211,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    if (breath_rate < 9 || breath_rate > 12) UNEXPECTED_VALUE(breath_rate, "9-12");
+                    if (breath_rate < 9 || breath_rate > 13) UNEXPECTED_VALUE(breath_rate, "9-13");
                     if (timed_inspiration < 8 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "8-20");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
@@ -7283,7 +7284,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // but curiously report the use of C-Flex+, even though Auto-CPAP uses A-Flex.
                 CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);
-                if (data[pos] != 30) {
+                if (data[pos] != 30 && data[pos] != 9) {
                     CHECK_VALUES(data[pos], 5, 25);  // Auto-Trial Duration
                 }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
@@ -7465,9 +7466,13 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 CHECK_VALUE(len, 1);
                 CHECK_VALUE(data[pos], 0xFF);
                 break;
-            case 0x45:  // new to 400G and 500G, appears right after 0x35 (humidifier setting)
+            case 0x45:  // Target Time, specific to DreamStation Go
                 CHECK_VALUE(len, 1);
-                CHECK_VALUES(data[pos], 0, 1);
+                // Not shown on reports when humidifier is in Fixed mode, unclear whether that means it's in use or not.
+                if (data[pos] < 40 || data[pos] > 100) {  // 4.0 through 10.0 hours in 0.5-hour increments
+                    CHECK_VALUES(data[pos], 0, 1);  // Off and Auto
+                }
+                // TODO: Add target time setting.
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");
