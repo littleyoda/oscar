@@ -1238,6 +1238,7 @@ enum PRS1ParsedSettingType
     PRS1_SETTING_LOW_TV_ALARM,
     PRS1_SETTING_MASK_ALERT,
     PRS1_SETTING_SHOW_AHI,
+    PRS1_SETTING_HUMID_TARGET_TIME,
 };
 
 
@@ -1781,6 +1782,7 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
         ENUMSTRING(PRS1_SETTING_HUMID_MODE);
         ENUMSTRING(PRS1_SETTING_HEATED_TUBE_TEMP);
         ENUMSTRING(PRS1_SETTING_HUMID_LEVEL);
+        ENUMSTRING(PRS1_SETTING_HUMID_TARGET_TIME);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_LOCK);
         ENUMSTRING(PRS1_SETTING_MASK_RESIST_SETTING);
         ENUMSTRING(PRS1_SETTING_HOSE_DIAMETER);
@@ -7468,11 +7470,12 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x45:  // Target Time, specific to DreamStation Go
                 CHECK_VALUE(len, 1);
-                // Not shown on reports when humidifier is in Fixed mode, unclear whether that means it's in use or not.
+                // Included in the data, but not shown on reports when humidifier is in Fixed mode.
+                // According to the FAQ, this setting is only available in Adaptive mode.
                 if (data[pos] < 40 || data[pos] > 100) {  // 4.0 through 10.0 hours in 0.5-hour increments
                     CHECK_VALUES(data[pos], 0, 1);  // Off and Auto
                 }
-                // TODO: Add target time setting.
+                this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_HUMID_TARGET_TIME, data[pos], 0.1));
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");
@@ -8092,6 +8095,7 @@ bool PRS1Import::ImportSummary()
     
     PRS1Mode nativemode = PRS1_MODE_UNKNOWN;
     CPAPMode cpapmode = MODE_UNKNOWN;
+    bool humidifierConnected = false;
     for (int i=0; i < summary->m_parsedData.count(); i++) {
         PRS1ParsedEvent* e = summary->m_parsedData.at(i);
         if (e->m_type == PRS1ParsedSliceEvent::TYPE) {
@@ -8162,7 +8166,8 @@ bool PRS1Import::ImportSummary()
                 session->settings[PRS1_RampType] = e->m_value;
                 break;
             case PRS1_SETTING_HUMID_STATUS:
-                session->settings[PRS1_HumidStatus] = (bool) e->m_value;
+                humidifierConnected = (bool) e->m_value;
+                session->settings[PRS1_HumidStatus] = humidifierConnected;
                 break;
             case PRS1_SETTING_HUMID_MODE:
                 session->settings[PRS1_HumidMode] = e->m_value;
@@ -8172,6 +8177,20 @@ bool PRS1Import::ImportSummary()
                 break;
             case PRS1_SETTING_HUMID_LEVEL:
                 session->settings[PRS1_HumidLevel] = e->m_value;
+                break;
+            case PRS1_SETTING_HUMID_TARGET_TIME:
+                // Only import this setting if there's a humidifier connected.
+                // (This setting appears in the data even when it's disconnected.)
+                // TODO: Consider moving this logic into the parser for target time.
+                if (humidifierConnected) {
+                    if (e->m_value > 1) {
+                        // use scaled numeric value
+                        session->settings[PRS1_HumidTargetTime] = e->value();
+                    } else {
+                        // use unscaled 0 or 1 for Off or Auto respectively
+                        session->settings[PRS1_HumidTargetTime] = e->m_value;
+                    }
+                }
                 break;
             case PRS1_SETTING_MASK_RESIST_LOCK:
                 session->settings[PRS1_MaskResistLock] = (bool) e->m_value;
@@ -9405,9 +9424,18 @@ void PRS1Loader::initChannels()
         "PRS1HumidLevel",
         QObject::tr("Humidifier"),  // label varies in reports, "Humidifier Setting" in 50-series, "Humidity Level" in 60-series, "Humidifier" in DreamStation
         QObject::tr("PRS1 Humidifier Setting"),
-        QObject::tr("Humid. Lvl"),
+        QObject::tr("Humid. Level"),
         "", LOOKUP, Qt::blue));
     chan->addOption(0, STR_TR_Off);
+
+    channel.add(GRP_CPAP, chan = new Channel(PRS1_HumidTargetTime = 0xe11b, SETTING, MT_CPAP, SESSION,
+        "PRS1HumidTargetTime",
+        QObject::tr("Target Time"),
+        QObject::tr("PRS1 Humidifier Target Time"),
+        QObject::tr("Hum. Tgt Time"),
+        STR_UNIT_Hours, DEFAULT, Qt::green));
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, QObject::tr("Auto"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskResistSet = 0xe104, SETTING, MT_CPAP,   SESSION,
         "MaskResistSet",

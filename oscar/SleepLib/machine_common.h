@@ -160,7 +160,8 @@ extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CP
 
 extern ChannelID RMS9_E01, RMS9_E02, RMS9_SetPressure, RMS9_MaskOnTime;
 extern ChannelID CPAP_LargeLeak, PRS1_BND,
-       PRS1_FlexMode, PRS1_FlexLevel, PRS1_HumidStatus, PRS1_HumidLevel, CPAP_HumidSetting, PRS1_MaskResistLock,
+       PRS1_FlexMode, PRS1_FlexLevel, PRS1_HumidStatus, PRS1_HumidLevel, PRS1_HumidTargetTime, PRS1_MaskResistLock,
+       CPAP_HumidSetting,
        PRS1_MaskResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
 
 extern ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2;

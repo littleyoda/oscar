@@ -1142,7 +1142,12 @@ QString Daily::getMachineSettings(Day * day) {
             } else if (chan.datatype() == schema::DOUBLE) {
                 data = QString().number(it.value().toDouble(),'f',2) + " "+chan.units();
             } else if (chan.datatype() == schema::DEFAULT) {
-                data = QString().number(it.value().toDouble(),'f',2) + " "+chan.units();
+                // Check for any options that override the default numeric display.
+                int value = it.value().toInt();
+                data = chan.option(value);
+                if (data.isEmpty()) {
+                    data = QString().number(it.value().toDouble(),'f',2) + " "+chan.units();
+                }
             } else {
 
                 data = it.value().toString() + " "+ chan.units();

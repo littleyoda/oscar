@@ -95,6 +95,7 @@ static QString settingChannel(ChannelID i)
         CHANNELNAME(PRS1_HumidMode);
         CHANNELNAME(PRS1_TubeTemp);
         CHANNELNAME(PRS1_HumidLevel);
+        CHANNELNAME(PRS1_HumidTargetTime);
         CHANNELNAME(PRS1_MaskResistLock);
         CHANNELNAME(PRS1_MaskResistSet);
         CHANNELNAME(PRS1_TimedBreath);
