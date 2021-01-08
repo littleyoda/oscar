@@ -8833,17 +8833,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.ui" line="128"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>Καλώς ήλθατε στον Αναλυτή ανάλυσης CPAP ανοιχτού κώδικα</translation>
+        <translation>Καλώς ήλθατε στον Αναλυτή Δεδομένων CPAP ανοιχτού κώδικα</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="143"/>
         <source>What would you like to do?</source>
-        <translation>Τι θα ήθελες να κάνεις?</translation>
+        <translation>Τι θα θέλατε να κάνετε;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="186"/>
         <source>CPAP Importer</source>
-        <translation>Εισαγωγέας CPAP</translation>
+        <translation>Εισαγωγή δεδομένων CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="224"/>
@@ -8858,7 +8858,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.ui" line="300"/>
         <source>Overview</source>
-        <translation>ΣΦΑΙΡΙΚΗ ΕΙΚΟΝΑ</translation>
+        <translation>Συνολική εικόνα</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="338"/>
@@ -8868,7 +8868,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.ui" line="581"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Προειδοποίηση: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Οι κάρτες SD ResMed S9 πρέπει να κλειδωθούν &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;πριν εισαγάγετε στον υπολογιστή σας.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Ορισμένα λειτουργικά συστήματα γράφουν αρχεία ευρετηρίου στην κάρτα χωρίς ερώτηση, το οποίο μπορεί να καταστήσει την κάρτα σας δυσανάγνωστη από το μηχάνημα cpap.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Προειδοποίηση: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Οι κάρτες SD ResMed S9 πρέπει να κλειδωθούν &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;πριν τις εισαγάγετε στον υπολογιστή σας.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Ορισμένα λειτουργικά συστήματα γράφουν αρχεία ευρετηρίου στην κάρτα χωρίς ερώτηση, το οποίο μπορεί να καταστήσει την κάρτα σας δυσανάγνωστη από το μηχάνημα cpap.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
@@ -8883,7 +8883,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
         <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation>Σημειώστε ότι ορισμένες προτιμήσεις αναγκάζονται όταν ανιχνεύεται ένα μηχάνημα ResMed</translation>
+        <translation>Σημειώστε ότι ορισμένες προτιμήσεις είναι προεπιλεγμένες όταν ανιχνεύεται ένα μηχάνημα ResMed</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="163"/>
@@ -8903,12 +8903,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="182"/>
         <source>%2 days ago</source>
-        <translation>Πρίν %2 μέρες</translation>
+        <translation>πριν %2 μέρες</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="184"/>
         <source>was %1 (on %2)</source>
-        <translation>ήταν %1 (σε %2)</translation>
+        <translation>ήταν %1 (την %2)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="192"/>
@@ -8923,47 +8923,47 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="196"/>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
-        <translation>&lt;font color = red&gt;Είχατε μόνο τη μάσκα για %1.&lt;/font&gt;</translation>
+        <translation>&lt;font color = red&gt;Φορέσατε τη μάσκα μόνο για %1.&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="208"/>
         <source>under</source>
-        <translation>υπό</translation>
+        <translation>κάτω από</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="209"/>
         <source>over</source>
-        <translation>πέρα</translation>
+        <translation>πάνω από</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="210"/>
         <source>reasonably close to</source>
-        <translation>λογικά κοντά</translation>
+        <translation>σχετικά κοντά</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="211"/>
         <source>equal to</source>
-        <translation>ίσο με</translation>
+        <translation>ίσος με</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="225"/>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation>Είχατε ένα AHI του %1, το οποίο είναι %2 ο μέσος όρος σας %3 ημερών %4.</translation>
+        <translation>Είχατε Δείκτη Απνοιών %1, ο οποίος είναι %2 τον μέσο όρο των %3 ημερών που είναι %4.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="256"/>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation>Η μηχανή CPAP χρησιμοποιούσε ένα σταθερό %1 %2 αέρα</translation>
+        <translation>Το μηχάνημα CPAP χρησιμοποίησε σταθερά %1 %2 αέρα</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="261"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Η πίεση σας ήταν κάτω από %1 %2 για %3% του χρόνου.</translation>
+        <translation>Η πίεσή σας ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="269"/>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation>Το μηχάνημά σας χρησιμοποίησε ένα σταθερό %1-%2 %3 αέρα.</translation>
+        <translation>Το μηχάνημά σας χρησιμοποίησε σταθερά %1-%2 %3 αέρα.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="284"/>
@@ -8974,27 +8974,27 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="287"/>
         <location filename="../oscar/welcome.cpp" line="296"/>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Η πίεση IPAP ήταν κάτω από %1 %2 για %3% του χρόνου.</translation>
+        <translation>Η πίεση IPAP ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="295"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Η πίεση σας EPAP ήταν κάτω από %1 %2 για %3% του χρόνου.</translation>
+        <translation>Η πίεση σας EPAP ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="276"/>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>Το μηχάνημά σας ήταν κάτω από %1-%2 %3 για %4% του χρόνου.</translation>
+        <translation>Το μηχάνημά σας ήταν κάτω από %1-%2 %3 για το %4% του χρόνου.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>χθες</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="316"/>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation>Οι μέσες διαρροές σας ήταν %1 %2, το οποίο είναι %3 ο μέσος όρος σας %4 ημερών %5.</translation>
+        <translation>Ο μέσος όρος της διαρροής αέρα ήταν %1 %2, ο οποίος είναι %3 τον μέσο όρο των %4 ημερών που είναι %5.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="322"/>
