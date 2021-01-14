@@ -349,6 +349,8 @@ void validateFont (QString which, int size, bool bold, bool italic) {
         if (testFont.length() > 0 && installedFontFamilies.indexOf(testFont) >= 0) {
             desiredFont = testFont;
             forceFont = false;
+        } else {
+            qDebug() << testFont << size << "not found, substituting" << desiredFont << size;
         }
     }
 
@@ -376,6 +378,7 @@ void setApplicationFont () {
     font.setItalic(((*p_pref)["Fonts_Application_Italic"]).toBool());
     QApplication::setFont(font);
     mainwin->menuBar()->setFont(font);
+    qDebug() << "Application font set to" << font << "system now says" << QFontDatabase::systemFont(QFontDatabase::GeneralFont).family();
 }
 
 bool removeDir(const QString &path)
