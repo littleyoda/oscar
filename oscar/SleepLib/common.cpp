@@ -378,7 +378,9 @@ void setApplicationFont () {
     font.setItalic(((*p_pref)["Fonts_Application_Italic"]).toBool());
     QApplication::setFont(font);
     mainwin->menuBar()->setFont(font);
-    qDebug() << "Application font set to" << font << "system now says" << QFontDatabase::systemFont(QFontDatabase::GeneralFont).family();
+    qDebug() << "Application font set to" << font;
+    qDebug() << "system font" << QFontDatabase::systemFont(QFontDatabase::GeneralFont).family();
+    qDebug() << "Application font" << QApplication::font();
 }
 
 bool removeDir(const QString &path)
