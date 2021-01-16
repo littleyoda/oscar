@@ -592,6 +592,7 @@ int main(int argc, char *argv[]) {
     AppSetting->setLanguage(language);
 
     // Set fonts from preferences file
+    qDebug() << "App font before Prefs setting" << QApplication::font();
     validateAllFonts();
     setApplicationFont();
 

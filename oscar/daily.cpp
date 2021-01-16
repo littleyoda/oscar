@@ -1529,6 +1529,11 @@ QVariant MyTextBrowser::loadResource(int type, const QUrl &url)
 
 void Daily::Load(QDate date)
 {
+	qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
+
+	qDebug() << "Setting App font in Daily::Load";
+	setApplicationFont();
+
     dateDisplay->setText("<i>"+date.toString(Qt::SystemLocaleLongDate)+"</i>");
     previous_date=date;
 
@@ -1643,6 +1648,10 @@ void Daily::Load(QDate date)
 
         if (hours>0) {
             htmlLeftAHI="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
+
+            QString appFont = QApplication::font().toString();
+            htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
+
             htmlLeftAHI+="<tr>";
             if (!isBrick) {
                 ChannelID ahichan=CPAP_AHI;
@@ -1651,10 +1660,10 @@ void Daily::Load(QDate date)
                     ahichan=CPAP_RDI;
                     ahiname=STR_TR_RDI;
                 }
-                htmlLeftAHI+=QString("<td colspan=4 bgcolor='%1' align=center><p title='%4'><font size=+4 color='%2'><b>%3</b></font></p> &nbsp; <font size=+4 color='%2'><b>%5</b></font></td>\n")
+                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><p title='%4'><font size=+2 color='%2'><b>%3</b></font></p> &nbsp; <font size=+4 color='%2'><b>%5</b></font></td>\n")
                         .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
             } else {
-                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+4 color='yellow'>%2</font></td>\n")
+                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+2 color='yellow'>%2</font></td>\n")
                         .arg("#F88017").arg(tr("BRICK! :("));
             }
             htmlLeftAHI+="</tr>\n";
