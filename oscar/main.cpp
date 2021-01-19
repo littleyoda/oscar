@@ -564,8 +564,7 @@ int main(int argc, char *argv[]) {
     if (testFile.exists())
         testFile.remove();
     if (!testFile.open(QFile::ReadWrite)) {
-        QString errMsg = QObject::tr("Unable to write to OSCAR data directory") + " " + GetAppData() + "\n" +
-                         GetAppData() + "\n" +
+        QString errMsg = QObject::tr("Unable to write to OSCAR data directory") + " " + GetAppData() + "\n\n" +
                          QObject::tr("Error code") + ": " + QString::number(testFile.error()) + " - " + testFile.errorString() + "\n\n" +
                          QObject::tr("OSCAR cannot continue and is exiting.") + "\n";
         qCritical() << errMsg;
