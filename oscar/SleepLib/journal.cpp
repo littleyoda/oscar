@@ -214,6 +214,7 @@ void BackupJournal(QString filename)
     stream.setAutoFormattingIndent(2);
 
     stream.writeStartDocument();
+//    stream.writeProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
     stream.writeStartElement("OSCAR");
     stream.writeStartElement("Journal");
     stream.writeAttribute("username", p_profile->user->userName());
@@ -301,6 +302,8 @@ void BackupJournal(QString filename)
     }
 
     QTextStream ts(&file);
+    ts.setCodec("UTF-8");
+    ts.setGenerateByteOrderMark(true);
     ts << outBuf;
     file.close();
 }
