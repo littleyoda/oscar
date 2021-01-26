@@ -3,6 +3,7 @@
  * Notes: Intellipap DV54 requires the SmartLink attachment to access this data.
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2020 The OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -11,6 +12,8 @@
 #include <QDir>
 
 #include "intellipap_loader.h"
+
+//#define DEBUG6
 
 ChannelID INTP_SmartFlexMode, INTP_SmartFlexLevel;
 
@@ -591,22 +594,82 @@ int IntellipapLoader::OpenDV5(const QString & path)
     return c;
 }
 
-struct DV6_S_Record
+////////////////////////////////////////////////////////////////////////////
+// Devilbiss DV64 Notes
+// 1)  High resolution data (flow and pressure) is kept on SD for only 100 hours
+// 1a) Flow graph for days without high resolution data is absent
+// 1b) Pressure graph is high resolution when high res data is available and
+//     only 1 per minute when using low resolution data.
+// 2)  Max and Average leak rates are as reported by DV64 machine but we're
+//     not sure how those measures relate to other machine's data. Leak rate
+//     seems to include the intentional mask leak.
+// 2a) Not sure how SmartLink calculates the pct of time of poor mask fit.
+//     May be same as what we call large leak time for other machines?
+////////////////////////////////////////////////////////////////////////////
+
+class RollingFile
 {
+public:
+    RollingFile () { }
+
+    ~RollingFile () {
+        if (data)
+            delete [] data;
+        data = nullptr;
+    }
+
+    bool open (QString fn); // Open the file
+    bool close();           // close the file
+    unsigned char * get();  // read the next record in the file
+
+    int numread () {return number_read;};   // Return number of records read
+    int recnum () {return record_number;};  // Return last-read record number
+
+private:
+    QString filename;
+    QFile file;
+    int record_length;
+    int wrap_record;
+    bool wrapping = false;
+
+    int number_read = 0;    // Number of records read
+
+    int record_number = 0;  // Number of record.  First record in the file  is #1. First record read is wrap_record;
+
+    unsigned char * data = nullptr;
+};
+
+struct DV6TestedModel
+{
+    QString model;
+    QString name;
+};
+
+static const DV6TestedModel testedModels[] = {
+    { "DV64D", "Blue StandardPlus" },
+    { "DV64E", "Blue AutoPlus" },
+    { "DV63E", "Blue (IntelliPAP 2) AutoPlus" },
+    { "", "unknown product" } // List stopper -- must be last entry
+};
+
+struct DV6_S_Data // Daily summary
+{
+/***    
     Session * sess;
     unsigned char u1;            //00 (position)
+***/    
     unsigned int start_time;     //01
     unsigned int stop_time;      //05
     unsigned int atpressure_time;//09
     EventDataType hours;         //13
-    EventDataType meh;           //14
+//    EventDataType unknown14;   //14
     EventDataType pressureAvg;   //15
     EventDataType pressureMax;   //16
     EventDataType pressure50;    //17 50th percentile
     EventDataType pressure90;    //18 90th percentile
     EventDataType pressure95;    //19 95th percentile
     EventDataType pressureStdDev;//20 std deviation
-    EventDataType u2;            //21
+//    EventDataType unknown_21;    //21
     EventDataType leakAvg;       //22
     EventDataType leakMax;       //23
     EventDataType leak50;        //24 50th percentile
@@ -615,8 +678,8 @@ struct DV6_S_Record
     EventDataType leakStdDev;    //27 std deviation
     EventDataType tidalVolume;   //28 & 0x29
     EventDataType avgBreathRate; //30
-    EventDataType u3;
-    EventDataType u4;            //32 snores / hypopnea per minute
+    EventDataType unknown_31;    //31
+    EventDataType snores;        //32 snores / hypopnea per minute
     EventDataType timeInExPuf;   //33 Time in Expiratory Puff
     EventDataType timeInFL;      //34 Time in Flow Limitation
     EventDataType timeInPB;      //35 Time in Periodic Breathing
@@ -624,13 +687,11 @@ struct DV6_S_Record
     EventDataType indexOA;       //37 Obstructive
     EventDataType indexCA;       //38 Central index
     EventDataType indexHyp;      //39 Hypopnea Index
-    EventDataType r0;            //40 Reserved?
-    EventDataType r1;            //41 Reserved?
+    EventDataType unknown_40;    //40 Reserved?
+    EventDataType unknown_41;    //40 Reserved?
                                  //42-48 unknown
     EventDataType pressureSetMin;   //49
     EventDataType pressureSetMax;   //50
-
-    bool hasMaskPressure;
 };
 
 #ifdef _MSC_VER
@@ -640,82 +701,484 @@ struct DV6_S_Record
 #endif
 
 
-PACK(struct SET_BIN_REC {
+// DV6_S_REC is the day structure in the S.BIN file
+PACK (struct DV6_S_REC{
+    unsigned char begin[4];         //0 Beginning of day
+    unsigned char end[4];           //4 End of day
+    unsigned char written[4];       //8 When this record was written??
+    unsigned char hours;            //12 Hours in session * 10
+    unsigned char unknown_13;       //13
+    unsigned char pressureAvg;      //14 All pressure settings are * 10
+    unsigned char pressureMax;      //15
+    unsigned char pressure50;       //16 50th percentile
+    unsigned char pressure90;       //17 90th percentile
+    unsigned char pressure95;       //18 95th percentile
+    unsigned char pressureStdDev;   //19 std deviation
+    unsigned char unknown_20;       //20
+    unsigned char leakAvg;          //21
+    unsigned char leakMax;          //22
+    unsigned char leak50;           //23 50th percentile
+    unsigned char leak90;           //24 90th percentile
+    unsigned char leak95;           //25 95th percentile
+    unsigned char leakStdDev;       //26 std deviation
+    unsigned char tv1;              //27 tidal volume = tv2 * 256 + tv1
+    unsigned char tv2;              //28
+    unsigned char avgBreathRate;    //29
+    unsigned char unknown_30;       //30
+    unsigned char snores;           //31 snores / hypopnea per minute
+    unsigned char timeInExPuf;      //32 % Time in Expiratory Puff * 2
+    unsigned char timeInFL;         //33 % Time in Flow Limitation * 2
+    unsigned char timeInPB;         //34 % Time in Periodic Breathing * 2
+    unsigned char maskFit;          //35 mask fit (or rather, not fit) percentage * 2
+    unsigned char indexOA;          //36 Obstructive index * 4
+    unsigned char indexCA;          //37 Central index * 4
+    unsigned char indexHyp;         //38 Hypopnea Index * 4
+    unsigned char unknown_39;       //39 Reserved?
+    unsigned char unknown_40;       //40 Reserved?
+    unsigned char unknown_41;       //41
+    unsigned char unknown_42;       //42
+    unsigned char unknown_43;       //43
+    unsigned char unknown_44;       //44 % time snoring *4
+    unsigned char unknown_45;       //45
+    unsigned char unknown_46;       //46
+    unsigned char unknown_47;       //47 (related to smartflex and flow rounding?)
+    unsigned char pressureSetMin;   //48
+    unsigned char pressureSetMax;   //49
+    unsigned char unknown_50;       //50
+    unsigned char unknown_51;       //51
+    unsigned char unknown_52;       //52
+    unsigned char unknown_53;       //53
+    unsigned char checksum;         //54
+});
+
+// DV6 SET.BIN - structure of the entire file
+PACK (struct SET_BIN_REC {
     char unknown_00;                        // assuming file version
     char serial[11];                        // null terminated
-    unsigned short cap_flags;               // capability flags
-    unsigned short cpap_pressure;
-    unsigned short max_pressure;
-    unsigned short min_pressure;
+    unsigned char language;
+    unsigned char capabilities;             // CPAP or APAP
+    unsigned char unknown_11;
+    unsigned char cpap_pressure;
+    unsigned char unknown_12;
+    unsigned char max_pressure;
+    unsigned char unknown_13;
+    unsigned char min_pressure;
     unsigned char alg_apnea_threshhold;     // always locked at 00
     unsigned char alg_apnea_duration;
     unsigned char alg_hypop_threshold;
     unsigned char alg_hypop_duration;
-    unsigned short ramp_pressure;
-    unsigned short ramp_duration;
-    unsigned char unknown_01[3];
-    unsigned char smartflex;
-    unsigned char unknown_02;
+    unsigned char ramp_pressure;
+    unsigned char unknown_01;
+    unsigned char ramp_duration;
+    unsigned char unknown_02[3];
+    unsigned char smartflex_setting;
+    unsigned char smartflex_when;
     unsigned char inspFlowRounding;
     unsigned char expFlowRounding;
     unsigned char complianceHours;
-    unsigned char unknown_03[9];
+    unsigned char unknown_03;
+    unsigned char tubing_diameter;
+    unsigned char autostart_setting;
+    unsigned char unknown_04;
+    unsigned char show_hide;
+    unsigned char unknown_05;
+    unsigned char lock_flags;
+    unsigned char unknown_06;
     unsigned char humidifier_setting;  // 0-5
-    unsigned char unused[83];
+    unsigned char unknown_7;
+    unsigned char possible_alg_apnea;
+    unsigned char unknown_8[7];
+    unsigned char bacteria_filter;
+    unsigned char unused[73];
     unsigned char checksum;
 }); // http://digitalvampire.org/blog/index.php/2006/07/31/why-you-shouldnt-use-__attribute__packed/
 
-int IntellipapLoader::OpenDV6(const QString & path)
-{
-    QString newpath = path + DV6_DIR;
+// Unless explicitly noted, all other DV6_x_REC are definitions for the repeating data structure that follows the header
+PACK (struct DV6_HEADER {
+    unsigned char unknown;          // 0 always zero
+    unsigned char filetype;         // 1 always "R"
+    unsigned char serial[11];       // 2 serial number
+    unsigned char numRecords[4];    // 13 Number of records in file (always 180,000)
+    unsigned char recordLength;     // 17 Length of data record (always 117)
+    unsigned char recordStart[4];   // 18 First record in wrap-around buffer
+    unsigned char unknown_22[21];   // 22 Unknown values
+    unsigned char unknown_43[12];   // 43 Seems always to be zero
+    unsigned char checksum;         // 55 Checksum
+});
 
-    // Prime the machine database's info field with stuff relevant to this machine
-    MachineInfo info = newInfo();
-    info.series = "DV6";
-    info.serial = "Unknown";
+// DV6 E.BIN - event data
+struct DV6_E_REC { // event log record
+    unsigned char begin[4];
+    unsigned char end[4];
+    unsigned char unknown_01;
+    unsigned char unknown_02;
+    unsigned char unknown_03;
+    unsigned char unknown_04;
+    unsigned char event_type;
+    unsigned char event_severity;
+    unsigned char value;
+    unsigned char reduction;
+    unsigned char duration;
+    unsigned char unknown[7];
+    unsigned char checksum;
+};
 
-    int vmin=0, vmaj=0;
-    EventDataType max_pressure=0, min_pressure=0; //, starting_pressure;
+// DV6 U.BIN - session start and stop times
+struct DV6_U_REC {
+    unsigned char begin[4];
+    unsigned char end[4];
+    unsigned char checksum;  // possible checksum? Not really sure
+};
 
-    QByteArray str, dataBA;
-    unsigned char *data = NULL;
-    /////////////////////////////////////////////////////////////////////////////////
-    // Parse SET.BIN settings file
-    /////////////////////////////////////////////////////////////////////////////////
-    QFile f(newpath+"/"+SET_BIN);
+// DV6 R.BIN - High resolution data (breath) and moderate resolution (pressure, flags)
+PACK (struct DV6_R_REC {
+    unsigned char timestamp[4];
+    qint16 breath[50];          // 50 breath flow records at 25 Hz
+    unsigned char pressure1;    // pressure in first second of frame
+    unsigned char pressure2;    // pressure in second second of frame
+    unsigned char unknown106;
+    unsigned char unknown107;
+    unsigned char flags1[4];    // flags for first second of frame
+    unsigned char flags2[4];    // flags for second second of frame
+    unsigned char checksum;
+});
+
+// DV6 L.BIN - Low resolution data
+PACK (struct DV6_L_REC {
+    unsigned char timestamp[4];     // 0 timestamp
+    unsigned char maxLeak;          // 4 lpm
+    unsigned char avgLeak;          // 5 lpm
+    unsigned char tidalVolume6;     // 6
+    unsigned char tidalVolume7;     // 7
+    unsigned char breathRate;       // 8 breaths per minute
+    unsigned char unknown9;         // 9
+    unsigned char avgPressure;      // 10 pressure * 10
+    unsigned char unknown11;        // 11 always zero?
+    unsigned char unknown12;        // 12
+    unsigned char pressureLimitLow; // 13 pressure * 10
+    unsigned char pressureLimitHigh;// 14 pressure * 10
+    unsigned char timeSnoring;      // 15
+    unsigned char snoringSeverity;  // 16
+    unsigned char timeEP;           // 17
+    unsigned char epSeverity;       // 18
+    unsigned char timeX1;           // 19 ??
+    unsigned char x1Severity;       // 20 ??
+    unsigned char timeX2;           // 21 ??
+    unsigned char x2Severity;       // 22 ??
+    unsigned char timeX3;           // 23 ??
+    unsigned char x3Severity;       // 24 ??
+    unsigned char apSeverity;       // 25
+    unsigned char TimeApnea;        // 26
+    unsigned char noaSeverity;      // 27
+    unsigned char timeNOA;          // 28
+    unsigned char ukSeverity;       // 29 ??
+    unsigned char timeUk;           // 30 ??
+    unsigned char unknown31;        // 31
+    unsigned char unknown32;        // 32
+    unsigned char unknown33;        // 33
+    unsigned char unknownFlag34;    // 34
+    unsigned char unknownTime35;    // 35
+    unsigned char unknownFlag36;    // 36
+    unsigned char unknown37;        // 37
+    unsigned char unknown38;        // 38
+    unsigned char unknown39;        // 39
+    unsigned char unknown40;        // 40
+    unsigned char unknown41;        // 41
+    unsigned char unknown42;        // 42
+    unsigned char unknown43;        // 43
+    unsigned char checksum;         // 44
+});
+
+// Our structure for managing sessions
+struct DV6_SessionInfo {
+    Session * sess;
+    DV6_S_Data *dailyData;
+    SET_BIN_REC * dv6Settings;
+
+    unsigned int begin;
+    unsigned int end;
+    unsigned int written;
+    bool haveHighResData;
+    CPAPMode mode = MODE_UNKNOWN;
+};
+
+unsigned int ep = 0;
+
+// Convert a 4-character number in DV6 data file to a standard int
+unsigned int convertNum (unsigned char num[]) {
+    return ((num[3] << 24) + (num[2] << 16) + (num[1] << 8) + num[0]);
+}
+
+// Convert a timestamp in DV6 data file to a standard Unix epoch timestamp as used in OSCAR
+unsigned int convertTime (unsigned char time[]) {
+    if (ep == 0) {
+        QDateTime epoch(QDate(2002, 1, 1), QTime(0, 0, 0), Qt::UTC); // Intellipap Epoch
+        ep = epoch.toTime_t();
+    }
+    return ((time[3] << 24) + (time[2] << 16) + (time[1] << 8) + time[0]) + ep; // Time as Unix epoch time
+}
+
+bool RollingFile::open(QString fn) {
+
+    filename = fn;
+    file.setFileName(filename);
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "DV6 RollingFile could not open" << filename << "for reading, error code" << file.error() << file.errorString();
+        return false;
+    }
+
+    QByteArray dataBA = file.read(sizeof(DV6_HEADER));
+    DV6_HEADER * hdr = (DV6_HEADER *) dataBA.data();
+    record_length = hdr->recordLength;
+    wrap_record = convertNum(hdr->recordStart);
+    record_number = wrap_record;
+    number_read = 0;
+    wrapping = false;
+
+    data = new unsigned char[record_length];
+
+    if (!file.seek(sizeof(DV6_HEADER) + wrap_record * record_length)) {
+        qWarning() << "DV6 RollingFile unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
+        file.close();
+        return false;
+    }
+
+    qDebug() << "RollingFile opening" << filename << "at wrap record" << wrap_record;
+    return true;
+}
+
+bool RollingFile::close() {
+    file.close();
+    if (data != nullptr)
+        delete [] data;
+    data = nullptr;
+    return true;
+}
+
+unsigned char * RollingFile::get() {
+
+    record_number++;
+
+    // If we have found the wrap record again, we are done
+    if (wrapping && (record_number == wrap_record))
+        return nullptr;
+
+    // Hare we reached end of file and need to wrap around to beginning?
+    if (file.atEnd()) {
+        if (wrapping) {
+            qDebug() << "DV6 RollingFile wrap - second time through";
+            return nullptr;
+        }
+        qDebug() << "DV6 RollingFile wrapping to beginning of data in" << filename << "record number is" << record_number-1 << "records read" << number_read;
+        record_number = 0;
+        wrapping = true;
+        if (!file.seek(sizeof(DV6_HEADER))) {
+            file.close();
+            qWarning() << "DV6 RollingFile unable to seek to first data record in file";
+            return nullptr;
+        }
+    }
+
+    QByteArray dataBA;
+    dataBA=file.read(record_length); // read next record
+    if (dataBA.size() != record_length) {
+        qWarning() << "DV6 RollingFile record" << record_number << "wrong length";
+        file.close();
+        return nullptr;
+    }
+
+    number_read++;
+
+//    qDebug() << "RollingFile read" << filename << "record number" << record_number << "of length" << record_length << "number read so far" << number_read;
+    memcpy (data, (unsigned char *) dataBA.data(), record_length);
+    return data;
+}
+
+MachineInfo info;
+Machine * mach = nullptr;
+
+bool rebuild_from_backups = false;
+
+QMap<SessionID, DV6_S_Data> DailySummaries;
+QMap<SessionID, DV6_SessionInfo> SessionData;
+SET_BIN_REC * settings;
+
+///////////////////////////////////////////////
+// U.BIN - Open and parse session list and create session data structures
+//         with session start and stop times.
+///////////////////////////////////////////////
+
+bool load6Sessions (const QString & path) {
+
+    RollingFile rf;
+    unsigned int ts1,ts2;
+
+    SessionData.clear();
+
+    qDebug() << "Parsing U.BIN";
+
+    if (!rf.open(path+"/U.BIN")) {
+        qWarning() << "Unable to open U.BIN";
+        return false;
+    }
+
+    do {
+        DV6_U_REC * rec = (DV6_U_REC *) rf.get();
+        if (rec == nullptr)
+            break;
+        DV6_SessionInfo sinfo;
+        // big endian
+        ts1 = convertTime(rec->begin); // session start time (this is also the session id)
+        ts2 = convertTime(rec->end); // session end time
+#ifdef DEBUG6
+        qDebug() << "U.BIN Session" << QDateTime::fromTime_t(ts1).toString("MM/dd/yyyy hh:mm:ss") << ts1 << "to" << QDateTime::fromTime_t(ts2).toString("MM/dd/yyyy hh:mm:ss") << ts2;
+#endif
+        sinfo.sess = nullptr;
+        sinfo.dailyData = nullptr;
+        sinfo.begin = ts1;
+        sinfo.end = ts2;
+        sinfo.written = 0;
+        sinfo.haveHighResData = false;
+
+        SessionData[ts1] = sinfo;
+    } while (true);
+
+    rf.close();
+    qDebug() << "DV6 U.BIN processed" << rf.numread() << "records";
+
+    return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Parse SET.BIN settings file
+/////////////////////////////////////////////////////////////////////////////////
+
+bool load6Settings (const QString & path) {
+
+    QByteArray dataBA;
+
+    QFile f(path+"/"+SET_BIN);
+
     if (f.open(QIODevice::ReadOnly)) {
         // Read and parse entire SET.BIN file
         dataBA = f.readAll();
         f.close();
 
-        SET_BIN_REC *setbin = (SET_BIN_REC *)dataBA.data();
-        info.serial = QString(setbin->serial);
-        max_pressure = setbin->max_pressure;
-        min_pressure = setbin->min_pressure;
+        settings = (SET_BIN_REC *)dataBA.data();
 
     } else { // if f.open settings file
         // Settings file open failed, return
-        return -1;
+        qWarning() << "Unable to open SET.BIN file";
+        return false;
+    }
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// S.BIN - Open and load day summary list
+////////////////////////////////////////////////////////////////////////////////////////
+
+bool load6DailySummaries (const QString & path) {
+    RollingFile rf;
+
+    DailySummaries.clear();
+
+    if (!rf.open(path+"/S.BIN")) {
+        qWarning() << "Unable to open S.BIN";
+        return false;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Parser VER.BIN for model number
-    ////////////////////////////////////////////////////////////////////////////////////////
-    f.setFileName(newpath+"/VER.BIN");
+    qDebug() << "Reading S.BIN summaries";
+
+    do {
+        DV6_S_REC * rec = (DV6_S_REC *) rf.get();
+        if (rec == nullptr)
+            break;
+
+        DV6_S_Data dailyData;
+
+        dailyData.start_time = convertTime(rec->begin);
+        dailyData.stop_time = convertTime(rec->end);
+        dailyData.atpressure_time = convertTime(rec->written);
+
+        dailyData.hours = float(rec->hours) / 10.0F;
+        dailyData.pressureSetMin = float(rec->pressureSetMin) / 10.0F;
+        dailyData.pressureSetMax = float(rec->pressureSetMax) / 10.0F;
+
+        // The following stuff is not necessary to decode, but can be used to verify we are on the right track
+        dailyData.pressureAvg = float(rec->pressureAvg) / 10.0F;
+        dailyData.pressureMax = float(rec->pressureMax) / 10.0F;
+        dailyData.pressure50 = float(rec->pressure50) / 10.0F;
+        dailyData.pressure90 = float(rec->pressure90) / 10.0F;
+        dailyData.pressure95 = float(rec->pressure95) / 10.0F;
+        dailyData.pressureStdDev = float(rec->pressureStdDev) / 10.0F;
+
+        dailyData.leakAvg = float(rec->leakAvg) / 10.0F;
+        dailyData.leakMax = float(rec->leakMax) / 10.0F;
+        dailyData.leak50= float(rec->leak50) / 10.0F;
+        dailyData.leak90 = float(rec->leak90) / 10.0F;
+        dailyData.leak95 = float(rec->leak95) / 10.0F;
+        dailyData.leakStdDev = float(rec->leakStdDev) / 10.0F;
+
+        dailyData.tidalVolume = float(rec->tv1 | rec->tv2 << 8);
+        dailyData.avgBreathRate = float(rec->avgBreathRate);
+
+        dailyData.snores = float(rec->snores);
+        dailyData.timeInExPuf = float(rec->timeInExPuf) / 2.0F;
+        dailyData.timeInFL = float(rec->timeInFL) / 2.0F;
+        dailyData.timeInPB = float(rec->timeInPB) / 2.0F;
+        dailyData.maskFit = float(rec->maskFit) / 2.0F;
+        dailyData.indexOA = float(rec->indexOA) / 4.0F;
+        dailyData.indexCA = float(rec->indexCA) / 4.0F;
+        dailyData.indexHyp = float(rec->indexHyp) / 4.0F;
+
+        DailySummaries[dailyData.start_time] = dailyData;
+
+    } while (true);
+
+    rf.close();
+    qDebug() << "DV6 S.BIN processed" << rf.numread() << "records";
+
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Parse VER.BIN for model number, serial, etc.
+////////////////////////////////////////////////////////////////////////////////////////
+
+bool load6VersionInfo(const QString & path) {
+
+    QByteArray dataBA;
+    QByteArray str;
+
+    QFile f(path+"/VER.BIN");
+    info.series = "DV6";
+    info.brand = "DeVilbiss";
+
     if (f.open(QIODevice::ReadOnly)) {
         dataBA = f.readAll();
         f.close();
 
         int cnt = 0;
-        data = (unsigned char *)dataBA.data();
         for (int i=0; i< dataBA.size(); ++i) { // deliberately going one further to catch end condition
             if ((dataBA.at(i) == 0) || (i >= dataBA.size()-1)) { // if null terminated or last byte
 
                 switch(cnt) {
                 case 1: // serial
+                    info.serial = str;
                     break;
-                case 2: // model
-                    info.model = str;
+                case 2: // modelnumber
+//                    info.model = str;
+                    info.modelnumber = str;
+                    info.modelnumber = info.modelnumber.trimmed();
+                    for (int i = 0; i < (int)sizeof(testedModels); i++) {
+                        if (   testedModels[i].model == info.modelnumber
+                            || testedModels[i].model.isEmpty()) {
+                            info.model = testedModels[i].name;
+                            break;
+                        }
+                    }
                     break;
                 case 7: // ??? V025RN20170
                     break;
@@ -740,193 +1203,235 @@ int IntellipapLoader::OpenDV6(const QString & path)
                 str.append(dataBA[i]);
             }
         }
+        return true;
 
     } else { // if (f.open(...)
         // VER.BIN open failed
-        return -1;
+        qWarning() << "Unable to open VER.BIN";
+        return false;
     }
 
+}
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Creates Machine database record if it doesn't exist already
-    ////////////////////////////////////////////////////////////////////////////////////////
-    Machine *mach = p_profile->CreateMachine(info);
-    if (mach == nullptr) {
-        return -1;
-    }
-    qDebug() << "Opening DV6 (" << info.serial << ")" << "v" << vmaj << "." << vmin << "Min:" << min_pressure << "Max:" << max_pressure;
+////////////////////////////////////////////////////////////////////////////////////////
+// Create DV6_SessionInfo structures for each session and store in SessionData qmap
+////////////////////////////////////////////////////////////////////////////////////////
+
+int create6Sessions() {
+    SessionID sid = 0;
+    Session * sess;
+    
+    for (auto sinfo=SessionData.begin(), end=SessionData.end(); sinfo != end; ++sinfo) {
+        sid = sinfo->begin;
+
+        if (mach->SessionExists(sid)) {
+            // skip already imported sessions..
+            qDebug() << "Session already exists" << QDateTime::fromTime_t(sid).toString("MM/dd/yyyy hh:mm:ss");
+
+        } else if (sinfo->sess == nullptr) {
+            // process new sessions
+            sess = new Session(mach, sid);
+#ifdef DEBUG6
+            qDebug() << "Creating session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "to" << QDateTime::fromTime_t(sinfo->end).toString("MM/dd/yyyy hh:mm:ss");
+#endif
+
+            sinfo->sess = sess;
+            sinfo->dailyData = nullptr;
+            sinfo->written = 0;
+            sinfo->haveHighResData = false;
+
+            sess->really_set_first(quint64(sinfo->begin) * 1000L);
+            sess->really_set_last(quint64(sinfo->end) * 1000L);
+
+//            rampstart[sid] = 0;
+//            rampend[sid] = 0;
+            sess->SetChanged(true);
+            
+            sess->AddEventList(INTELLIPAP_Unknown1, EVL_Event);
+            sess->AddEventList(INTELLIPAP_Unknown2, EVL_Event);
+
+            sess->AddEventList(CPAP_LeakTotal, EVL_Event);
+            sess->AddEventList(CPAP_MaxLeak, EVL_Event);
+            sess->AddEventList(CPAP_TidalVolume, EVL_Event);
+            sess->AddEventList(CPAP_MinuteVent, EVL_Event);
+            sess->AddEventList(CPAP_RespRate, EVL_Event);
+            sess->AddEventList(CPAP_Snore, EVL_Event);
+
+            sess->AddEventList(CPAP_Obstructive, EVL_Event);
+//            sess->AddEventList(CPAP_VSnore, EVL_Event);
+            sess->AddEventList(CPAP_Hypopnea, EVL_Event);
+            sess->AddEventList(CPAP_NRI, EVL_Event);
+//            sess->AddEventList(CPAP_LeakFlag, EVL_Event);
+            sess->AddEventList(CPAP_ExP, EVL_Event);
+            sess->AddEventList(CPAP_FlowLimit, EVL_Event);
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Open and parse session list and create a list of sessions to import
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-
-    const int DV6_L_RecLength = 45;
-    const int DV6_E_RecLength = 25;
-    const int DV6_S_RecLength = 55;
-    unsigned int ts1,ts2, lastts1;
-
-    QMap<quint32, DV6_S_Record> summaryList;  // QHash is faster, but QMap keeps order
-
-    QDateTime epoch(QDate(2002, 1, 1), QTime(0, 0, 0), Qt::UTC); // Intellipap Epoch
-    int ep = epoch.toTime_t();
-
-
-    f.setFileName(newpath+"/S.BIN");
-    if (f.open(QIODevice::ReadOnly)) {
-        dataBA = f.readAll();
-        f.close();
-
-        data = (unsigned char *)dataBA.data();
-
-        int records = dataBA.size() / DV6_S_RecLength;
-
-        //data[0x11]; // Start of data block
-        //data[0x12]; // Record count
-        // First record is block header
-        for (int r=1; r<records; r++) {
-            data += DV6_S_RecLength; // just so happen the headers the same length, though we probably should parse it to get it's version
-            DV6_S_Record R;
-
-            ts1 = ((data[4] << 24) | (data[3] << 16) | (data[2] << 8) | data[1])+ep; // session start time
-            ts2 = ((data[8] << 24) | (data[7] << 16) | (data[6] << 8) | data[5])+ep; // session end
-
-            if (!mach->sessionlist.contains(ts1)) { // Check if already imported
-                qDebug() << "Detected new Session" << ts1;
-                R.sess = new Session(mach, ts1);
-                R.sess->SetChanged(true);
-
-                R.sess->really_set_first(qint64(ts1) * 1000L);
-                R.sess->really_set_last(qint64(ts2) * 1000L);
-
-                R.start_time = ts1;
-                R.stop_time = ts2;
-
-                R.atpressure_time = ((data[12] << 24) | (data[11] << 16) | (data[10] << 8) | data[9])+ep;
-                R.hours = float(data[13]) / 10.0F;
-                R.pressureSetMin = float(data[49]) / 10.0F;
-                R.pressureSetMax = float(data[50]) / 10.0F;
-
-                // The following stuff is not necessary to decode, but can be used to verify we are on the right track
-                //data[14]... unknown
-                R.pressureAvg = float(data[15]) / 10.0F;
-                R.pressureMax = float(data[16]) / 10.0F;
-                R.pressure50 = float(data[17]) / 10.0F;
-                R.pressure90 = float(data[18]) / 10.0F;
-                R.pressure95 = float(data[19]) / 10.0F;
-                R.pressureStdDev = float(data[20]) / 10.0F;
-                //data[21]... unknown
-                R.leakAvg = float(data[22]) / 10.0F;
-                R.leakMax = float(data[23]) / 10.0F;
-                R.leak50= float(data[24]) / 10.0F;
-                R.leak90 = float(data[25]) / 10.0F;
-                R.leak95 = float(data[26]) / 10.0F;
-                R.leakStdDev = float(data[27]) / 10.0F;
-
-                R.tidalVolume = float(data[28] | data[29] << 8);
-                R.avgBreathRate = float(data[30] | data[31] << 8);
-
-                if (data[49] != data[50]) {
-                    R.sess->settings[CPAP_PressureMin] = R.pressureSetMin;
-                    R.sess->settings[CPAP_PressureMax] = R.pressureSetMax;
-                    R.sess->settings[CPAP_Mode] = MODE_APAP;
-                } else {
-                    R.sess->settings[CPAP_Mode] = MODE_CPAP;
-                    R.sess->settings[CPAP_Pressure] = R.pressureSetMin;
-                }
-                R.hasMaskPressure = false;
-                summaryList[ts1] = R;
-            }
+        } else {
+            // If there is a duplicate session, null out the earlier session
+            // otherwise there will be a crash on shutdown.
+//??            for (int z = 0; z < SessionStart.size(); z++) {
+//??                if (SessionStart[z] == sid) {
+//??                    SessionStart[z] = 0;
+//??                    SessionEnd[z] = 0;
+//??                    break;
+//??                }
+            qDebug() << sid << "has double ups" << QDateTime::fromTime_t(sid).toString("MM/dd/yyyy hh:mm:ss");
+            
+            /*Session *sess=Sessions[sid];
+            Sessions.erase(Sessions.find(sid));
+            delete sess;
+            SessionStart[i]=0;
+            SessionEnd[i]=0; */
         }
-
-    } else { // if (f.open(...)
-        // S.BIN open failed
-        return -1;
     }
 
+    qDebug() << "Created" << SessionData.size() << "sessions";
+    return SessionData.size();
+}
 
-    QMap<quint32, DV6_S_Record>::iterator SR;
-    const int DV6_R_RecLength = 117;
-    const int DV6_R_HeaderSize = 55;
-    f.setFileName(newpath+"/R.BIN");
-    int numRrecs = (f.size()-DV6_R_HeaderSize) / DV6_R_RecLength;
-    Session *sess = NULL;
-    if (f.open(QIODevice::ReadOnly)) {
-        // Let's not parse R all at once, it's huge
-        dataBA = f.read(DV6_R_HeaderSize);
-        if (dataBA.size() < DV6_R_HeaderSize) {
-            // bit mean aborting on corrupt R file... but oh well
-            return -1;
-        }
+////////////////////////////////////////////////////////////////////////////////////////
+// Parse R.BIN for high resolution flow data
+////////////////////////////////////////////////////////////////////////////////////////
 
-        sess = NULL;
-        EventList * flow = NULL;
-        EventList * pressure = NULL;
+bool load6HighResData (const QString & path) {
+
+    RollingFile rf;
+    Session *sess = nullptr;
+    unsigned int rec_ts1, previousRecBegin = 0;
+    bool inSession = false; // true if we are adding data to this session
+
+    if (!rf.open(path+"/R.BIN")) {
+        qWarning() << "DV6 Unable to open R.BIN";
+        return false;
+    }
+
+    qDebug() << "R.BIN starting at record" << rf.recnum();
+
+    sess = NULL;
+    EventList * flow = NULL;
+    EventList * pressure = NULL;
+    EventList * FLG = NULL;
+    EventList * snore = NULL;
 //        EventList * leak = NULL;
-        EventList * OA  = NULL;
-        EventList * HY  = NULL;
-        EventList * NOA = NULL;
-        EventList * EXP = NULL;
-        EventList * FL  = NULL;
-        EventList * PB  = NULL;
-        EventList * VS  = NULL;
-        EventList * LL  = NULL;
-        EventList * RE  = NULL;
-        bool inOA = false, inH = false, inCA = false, inExP = false, inVS = false, inFL = false, inPB = false, inRE = false, inLL = false;
-        qint64 OAstart = 0, OAend = 0;
-        qint64 Hstart = 0, Hend = 0;
-        qint64 CAstart = 0, CAend = 0;
-        qint64 ExPstart = 0, ExPend = 0;
-        qint64 VSstart = 0, VSend = 0;
-        qint64 FLstart = 0, FLend = 0;
-        qint64 PBstart = 0, PBend = 0;
-        qint64 REstart =0, REend = 0;
-        qint64 LLstart =0, LLend = 0;
-        lastts1 = 0;
+/***
+    EventList * OA  = NULL;
+    EventList * HY  = NULL;
+    EventList * NOA = NULL;
+    EventList * EXP = NULL;
+    EventList * FL  = NULL;
+    EventList * PB  = NULL;
+    EventList * VS  = NULL;
+    EventList * LL  = NULL;
+    EventList * RE  = NULL;
+    bool inOA = false, inH = false, inCA = false, inExP = false, inVS = false, inFL = false, inPB = false, inRE = false, inLL = false;
+    qint64 OAstart = 0, OAend = 0;
+    qint64 Hstart = 0, Hend = 0;
+    qint64 CAstart = 0, CAend = 0;
+    qint64 ExPstart = 0, ExPend = 0;
+    qint64 VSstart = 0, VSend = 0;
+    qint64 FLstart = 0, FLend = 0;
+    qint64 PBstart = 0, PBend = 0;
+    qint64 REstart =0, REend = 0;
+    qint64 LLstart =0, LLend = 0;
+//    lastts1 = 0;
+***/
 
-        SR = summaryList.begin();
-        for (int r=0; r<numRrecs; data += DV6_R_RecLength, ++r) {
-            dataBA=f.read(DV6_R_RecLength);
-            data = (unsigned char *)dataBA.data();
-            if (dataBA.size() < DV6_R_RecLength) {
-                break;
-            }
+    // sinfo is for walking through sessions when matching up with flow data records
+    QMap<SessionID, DV6_SessionInfo>::iterator sinfo;
+    sinfo = SessionData.begin();
 
-            DV6_S_Record *R = &SR.value();
+    do {
+        DV6_R_REC * R = (DV6_R_REC *) rf.get();
+        if (R == nullptr)
+            break;
 
-            ts1 = ((data[4] << 24) | (data[3] << 16) | (data[2] << 8) | data[1]) + ep;
+        sess = sinfo->sess;
 
-            if (flow && ((ts1 - lastts1) > 2)) {
+        // Get the timestamp from the record
+        rec_ts1 = convertTime(R->timestamp);
+
+        if (rec_ts1 < previousRecBegin) {
+            qWarning() << "R.BIN - Corruption/Out of sequence data found, skipping record" << rf.recnum() << ", prev"
+                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
+                       << "this"
+                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
+            continue;
+        }
+
+        // Look for a gap in DV6_R records.  They should be at two second intervals.
+        // If there is a gap, we are probably in a new session
+        if (inSession && ((rec_ts1 - previousRecBegin) > 2)) {
+            if (sess) {
                 sess->set_last(flow->last());
+                if (sess->first() == 0)
+                    qWarning() << "R.BIN first = 0 - 1320";
+                EventDataType min = flow->Min();
+                EventDataType max = flow->Max();
+                sess->setMin(CPAP_FlowRate, min);
+                sess->setMax(CPAP_FlowRate, max);
+                sess->setPhysMax(CPAP_FlowRate, min); // not sure :/
+                sess->setPhysMin(CPAP_FlowRate, max);
+//                sess->really_set_last(flow->last());
+            }
+            sess = nullptr;
+            flow = nullptr;
+            pressure = nullptr;
+            FLG = nullptr;
+            snore = nullptr;
+            inSession = false;
+        }
+
+        // Skip over sessions until we find one that this record is in
+        while (rec_ts1 > sinfo->end) {
+#ifdef DEBUG6
+            qDebug() << "R.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss")
+                     << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                     << "record" << rf.recnum();
+#endif
+            if (inSession && sess) {
+                // update min and max
+                // then add to machine
+                if (sess->first() == 0)
+                    qWarning() << "R.BIN first = 0 - 1284";
+                EventDataType min = flow->Min();
+                EventDataType max = flow->Max();
+                sess->setMin(CPAP_FlowRate, min);
+                sess->setMax(CPAP_FlowRate, max);
+                sess->setPhysMax(CPAP_FlowRate, min); // not sure :/
+                sess->setPhysMin(CPAP_FlowRate, max);
 
                 sess = nullptr;
                 flow = nullptr;
                 pressure = nullptr;
+                FLG = nullptr;
+                snore = nullptr;
+                inSession = false;
             }
-            lastts1=ts1;
-
-            while (ts1 > R->stop_time) {
-                if (flow && sess) {
-                    // update min and max
-                    // then add to machine
-                    sess = nullptr;
-                    flow = nullptr;
-                    pressure = nullptr;
-                }
-                SR++;
-                if (SR == summaryList.end()) break;
-                R = &SR.value();
-            }
-            if (SR == summaryList.end())
+            sinfo++;
+            if (sinfo == SessionData.end())
                 break;
+        }
 
-            if (ts1 >= R->start_time) {
-                if (!flow && R->sess) {
-                    flow = R->sess->AddEventList(CPAP_FlowRate, EVL_Waveform, 1.0f/60.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(50));
-                    pressure = R->sess->AddEventList(CPAP_Pressure, EVL_Waveform, 0.1f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
-                    R->hasMaskPressure = true;
-                    //leak = R->sess->AddEventList(CPAP_Leak, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, double(2000) / double(1));
+        previousRecBegin = rec_ts1;
+
+        // If we have data beyond last session, we are in trouble (for unknown reasons)
+        if (sinfo == SessionData.end()) {
+            qWarning() << "DV6 R.BIN import ran out of sessions to match flow data, record" << rf.recnum();
+            break;
+        }
+
+        // Check if record belongs in this session or a future session
+        if (!inSession && rec_ts1 <= sinfo->end) {
+            sess = sinfo->sess;         // this is the Session we want
+            if (!inSession && sess) {
+                inSession = true;
+                flow = sess->AddEventList(CPAP_FlowRate, EVL_Waveform, 0.01f, 0.0f, 0.0f, 0.0f, double(2000) / double(50));
+                pressure = sess->AddEventList(CPAP_Pressure, EVL_Waveform, 0.1f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+                FLG = sess->AddEventList(CPAP_FLG, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+                snore = sess->AddEventList(CPAP_Snore, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+                //                    sinfo->hasMaskPressure = true;
+                //                    leak = R->sess->AddEventList(CPAP_Leak, EVL_Waveform, 1.0, 0.0, 0.0, 0.0, double(2000) / double(1));
+                /***
                     OA = R->sess->AddEventList(CPAP_Obstructive, EVL_Event);
                     NOA = R->sess->AddEventList(CPAP_NRI, EVL_Event);
                     RE = R->sess->AddEventList(CPAP_RERA, EVL_Event);
@@ -936,318 +1441,334 @@ int IntellipapLoader::OpenDV6(const QString & path)
                     FL = R->sess->AddEventList(CPAP_FlowLimit, EVL_Event);
                     PB = R->sess->AddEventList(CPAP_PB, EVL_Event);
                     LL = R->sess->AddEventList(CPAP_LargeLeak, EVL_Event);
-                }
-                if (flow) {
-                    sess = R->sess;
-                    // starting at position 5 is 100 bytes, 16bit LE 25hz samples
-                    qint16 *wavedata = (qint16 *)(&data[5]);
-
-                    qint64 ti = qint64(ts1) * 1000;
-
-                    unsigned char d[2];
-                    d[0] = data[105];
-                    d[1] = data[106];
-                    flow->AddWaveform(ti+40000,wavedata,50,2000);
-                    pressure->AddWaveform(ti+40000, d, 2, 2000);
-                    // Fields data[107] && data[108] are bitfields default is 0x90, occasionally 0x98
-
-                    d[0] = data[107];
-                    d[1] = data[108];
-
-                    //leak->AddWaveform(ti+40000, d, 2, 2000);
-
-
-                    // Needs to track state to pull events out cleanly..
-
-                    //////////////////////////////////////////////////////////////////
-                    // High Leak
-                    //////////////////////////////////////////////////////////////////
-
-                    if (data[110] & 3) {  // LL state 1st second
-                        if (!inLL) {
-                            LLstart = ti;
-                            inLL = true;
-                        }
-                        LLend = ti+1000L;
-                    } else {
-                        if (inLL) {
-                            inLL = false;
-                            LL->AddEvent(LLstart,(LLend-LLstart) / 1000L);
-                            LLstart = 0;
-                        }
-                    }
-                    if (data[114] & 3) {
-                        if (!inLL) {
-                            LLstart = ti+1000L;
-                            inLL = true;
-                        }
-                        LLend = ti+2000L;
-
-                    } else {
-                        if (inLL) {
-                            inLL = false;
-                            LL->AddEvent(LLstart,(LLend-LLstart) / 1000L);
-                            LLstart = 0;
-                        }
-                    }
-
-
-                    //////////////////////////////////////////////////////////////////
-                    // Obstructive Apnea
-                    //////////////////////////////////////////////////////////////////
-
-                    if (data[110] & 12) {  // OA state 1st second
-                        if (!inOA) {
-                            OAstart = ti;
-                            inOA = true;
-                        }
-                        OAend = ti+1000L;
-                    } else {
-                        if (inOA) {
-                            inOA = false;
-                            OA->AddEvent(OAstart,(OAend-OAstart) / 1000L);
-                            OAstart = 0;
-                        }
-                    }
-                    if (data[114] & 12) {
-                        if (!inOA) {
-                            OAstart = ti+1000L;
-                            inOA = true;
-                        }
-                        OAend = ti+2000L;
-
-                    } else {
-                        if (inOA) {
-                            inOA = false;
-                            OA->AddEvent(OAstart,(OAend-OAstart) / 1000L);
-                            OAstart = 0;
-                        }
-                    }
-
-
-                    //////////////////////////////////////////////////////////////////
-                    // Hypopnea
-                    //////////////////////////////////////////////////////////////////
-
-                    if (data[110] & 192) {
-                        if (!inH) {
-                            Hstart = ti;
-                            inH = true;
-                        }
-                        Hend = ti + 1000L;
-                    } else {
-                        if (inH) {
-                            inH = false;
-                            HY->AddEvent(Hstart,(Hend-Hstart) / 1000L);
-                            Hstart = 0;
-                        }
-                    }
-
-                    if (data[114] & 192) {
-                        if (!inH) {
-                            Hstart = ti+1000L;
-                            inH = true;
-                        }
-                        Hend = ti + 2000L;
-                    } else {
-                        if (inH) {
-                            inH = false;
-                            HY->AddEvent(Hstart,(Hend-Hstart) / 1000L);
-                            Hstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // Non Responding Apnea Event (Are these CA's???)
-                    //////////////////////////////////////////////////////////////////
-                    if (data[110] & 48) {  // OA state 1st second
-                        if (!inCA) {
-                            CAstart = ti;
-                            inCA = true;
-                        }
-                        CAend = ti+1000L;
-                    } else {
-                        if (inCA) {
-                            inCA = false;
-                            NOA->AddEvent(CAstart,(CAend-CAstart) / 1000L);
-                            CAstart = 0;
-                        }
-                    }
-                    if (data[114] & 48) {
-                        if (!inCA) {
-                            CAstart = ti+1000L;
-                            inCA = true;
-                        }
-                        CAend = ti+2000L;
-
-                    } else {
-                        if (inCA) {
-                            inCA = false;
-                            NOA->AddEvent(CAstart,(CAend-CAstart) / 1000L);
-                            CAstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // VSnore Event
-                    //////////////////////////////////////////////////////////////////
-                    if (data[109] & 3) {  // OA state 1st second
-                        if (!inVS) {
-                            VSstart = ti;
-                            inVS = true;
-                        }
-                        VSend = ti+1000L;
-                    } else {
-                        if (inVS) {
-                            inVS = false;
-                            VS->AddEvent(VSstart,(VSend-VSstart) / 1000L);
-                            VSstart = 0;
-                        }
-                    }
-                    if (data[113] & 3) {
-                        if (!inVS) {
-                            VSstart = ti+1000L;
-                            inVS = true;
-                        }
-                        VSend = ti+2000L;
-
-                    } else {
-                        if (inVS) {
-                            inVS = false;
-                            VS->AddEvent(VSstart,(VSend-VSstart) / 1000L);
-                            VSstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // Expiratory puff Event
-                    //////////////////////////////////////////////////////////////////
-                    if (data[109] & 12) {  // OA state 1st second
-                        if (!inExP) {
-                            ExPstart = ti;
-                            inExP = true;
-                        }
-                        ExPend = ti+1000L;
-                    } else {
-                        if (inExP) {
-                            inExP = false;
-                            EXP->AddEvent(ExPstart,(ExPend-ExPstart) / 1000L);
-                            ExPstart = 0;
-                        }
-                    }
-                    if (data[113] & 12) {
-                        if (!inExP) {
-                            ExPstart = ti+1000L;
-                            inExP = true;
-                        }
-                        ExPend = ti+2000L;
-
-                    } else {
-                        if (inExP) {
-                            inExP = false;
-                            EXP->AddEvent(ExPstart,(ExPend-ExPstart) / 1000L);
-                            ExPstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // Flow Limitation Event
-                    //////////////////////////////////////////////////////////////////
-                    if (data[109] & 48) {  // OA state 1st second
-                        if (!inFL) {
-                            FLstart = ti;
-                            inFL = true;
-                        }
-                        FLend = ti+1000L;
-                    } else {
-                        if (inFL) {
-                            inFL = false;
-                            FL->AddEvent(FLstart,(FLend-FLstart) / 1000L);
-                            FLstart = 0;
-                        }
-                    }
-                    if (data[113] & 48) {
-                        if (!inFL) {
-                            FLstart = ti+1000L;
-                            inFL = true;
-                        }
-                        FLend = ti+2000L;
-
-                    } else {
-                        if (inFL) {
-                            inFL = false;
-                            FL->AddEvent(FLstart,(FLend-FLstart) / 1000L);
-                            FLstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // Periodic Breathing Event
-                    //////////////////////////////////////////////////////////////////
-                    if (data[109] & 192) {  // OA state 1st second
-                        if (!inPB) {
-                            PBstart = ti;
-                            inPB = true;
-                        }
-                        PBend = ti+1000L;
-                    } else {
-                        if (inPB) {
-                            inPB = false;
-                            PB->AddEvent(PBstart,(PBend-PBstart) / 1000L);
-                            PBstart = 0;
-                        }
-                    }
-                    if (data[113] & 192) {
-                        if (!inPB) {
-                            PBstart = ti+1000L;
-                            inPB = true;
-                        }
-                        PBend = ti+2000L;
-
-                    } else {
-                        if (inPB) {
-                            inPB = false;
-                            PB->AddEvent(PBstart,(PBend-PBstart) / 1000L);
-                            PBstart = 0;
-                        }
-                    }
-
-                    //////////////////////////////////////////////////////////////////
-                    // Respiratory Effort Related Arousal Event
-                    //////////////////////////////////////////////////////////////////
-                    if (data[111] & 48) {  // OA state 1st second
-                        if (!inRE) {
-                            REstart = ti;
-                            inRE = true;
-                        }
-                        REend = ti+1000L;
-                    } else {
-                        if (inRE) {
-                            inRE = false;
-                            RE->AddEvent(REstart,(REend-REstart) / 1000L);
-                            REstart = 0;
-                        }
-                    }
-                    if (data[115] & 48) {
-                        if (!inRE) {
-                            REstart = ti+1000L;
-                            inRE = true;
-                        }
-                        REend = ti+2000L;
-
-                    } else {
-                        if (inRE) {
-                            inRE = false;
-                            RE->AddEvent(REstart,(REend-REstart) / 1000L);
-                            REstart = 0;
-                        }
-                    }
-                }
+***/
             }
-
-
         }
-        if (flow && sess) {
+        if (inSession) {
+            // Record breath and pressure waveforms
+            qint64 ti = qint64(rec_ts1) * 1000;
+            flow->AddWaveform(ti,R->breath,50,2000);
+            pressure->AddWaveform(ti, &R->pressure1, 2, 2000);
+            sinfo->haveHighResData = true;
+            if (sess->first() == 0)
+                qWarning() << "first = 0 - 1442";
+
+            //////////////////////////////////////////////////////////////////
+            // Show Flow Limitation Events as a graph
+            //////////////////////////////////////////////////////////////////
+            qint16 severity = (R->flags1[0] >> 4) & 0x03;
+            FLG->AddWaveform(ti, &severity, 1, 1000);
+            severity = (R->flags2[0] >> 4) & 0x03;
+            FLG->AddWaveform(ti+1000, &severity, 1, 1000);
+
+            //////////////////////////////////////////////////////////////////
+            // Show Snore Events as a graph
+            //////////////////////////////////////////////////////////////////
+            severity = R->flags1[0] & 0x03;
+            snore->AddWaveform(ti, &severity, 1, 1000);
+            severity = R->flags2[0] & 0x03;
+            snore->AddWaveform(ti+1000, &severity, 1, 1000);
+
+            /****
+                // Fields data[107] && data[108] are bitfields default is 0x90, occasionally 0x98
+
+                d[0] = data[107];
+                d[1] = data[108];
+
+                //leak->AddWaveform(ti+40000, d, 2, 2000);
+
+                // Needs to track state to pull events out cleanly..
+
+                //////////////////////////////////////////////////////////////////
+                // High Leak
+                //////////////////////////////////////////////////////////////////
+
+                if (data[110] & 3) {  // LL state 1st second
+                    if (!inLL) {
+                        LLstart = ti;
+                        inLL = true;
+                    }
+                    LLend = ti+1000L;
+                } else {
+                    if (inLL) {
+                        inLL = false;
+                        LL->AddEvent(LLstart,(LLend-LLstart) / 1000L);
+                        LLstart = 0;
+                    }
+                }
+                if (data[114] & 3) {
+                    if (!inLL) {
+                        LLstart = ti+1000L;
+                        inLL = true;
+                    }
+                    LLend = ti+2000L;
+
+                } else {
+                    if (inLL) {
+                        inLL = false;
+                        LL->AddEvent(LLstart,(LLend-LLstart) / 1000L);
+                        LLstart = 0;
+                    }
+                }
+
+
+                //////////////////////////////////////////////////////////////////
+                // Obstructive Apnea
+                //////////////////////////////////////////////////////////////////
+
+                if (data[110] & 12) {  // OA state 1st second
+                    if (!inOA) {
+                        OAstart = ti;
+                        inOA = true;
+                    }
+                    OAend = ti+1000L;
+                } else {
+                    if (inOA) {
+                        inOA = false;
+                        OA->AddEvent(OAstart,(OAend-OAstart) / 1000L);
+                        OAstart = 0;
+                    }
+                }
+                if (data[114] & 12) {
+                    if (!inOA) {
+                        OAstart = ti+1000L;
+                        inOA = true;
+                    }
+                    OAend = ti+2000L;
+
+                } else {
+                    if (inOA) {
+                        inOA = false;
+                        OA->AddEvent(OAstart,(OAend-OAstart) / 1000L);
+                        OAstart = 0;
+                    }
+                }
+
+
+                //////////////////////////////////////////////////////////////////
+                // Hypopnea
+                //////////////////////////////////////////////////////////////////
+
+                if (data[110] & 192) {
+                    if (!inH) {
+                        Hstart = ti;
+                        inH = true;
+                    }
+                    Hend = ti + 1000L;
+                } else {
+                    if (inH) {
+                        inH = false;
+                        HY->AddEvent(Hstart,(Hend-Hstart) / 1000L);
+                        Hstart = 0;
+                    }
+                }
+
+                if (data[114] & 192) {
+                    if (!inH) {
+                        Hstart = ti+1000L;
+                        inH = true;
+                    }
+                    Hend = ti + 2000L;
+                } else {
+                    if (inH) {
+                        inH = false;
+                        HY->AddEvent(Hstart,(Hend-Hstart) / 1000L);
+                        Hstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // Non Responding Apnea Event (Are these CA's???)
+                //////////////////////////////////////////////////////////////////
+                if (data[110] & 48) {  // OA state 1st second
+                    if (!inCA) {
+                        CAstart = ti;
+                        inCA = true;
+                    }
+                    CAend = ti+1000L;
+                } else {
+                    if (inCA) {
+                        inCA = false;
+                        NOA->AddEvent(CAstart,(CAend-CAstart) / 1000L);
+                        CAstart = 0;
+                    }
+                }
+                if (data[114] & 48) {
+                    if (!inCA) {
+                        CAstart = ti+1000L;
+                        inCA = true;
+                    }
+                    CAend = ti+2000L;
+
+                } else {
+                    if (inCA) {
+                        inCA = false;
+                        NOA->AddEvent(CAstart,(CAend-CAstart) / 1000L);
+                        CAstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // VSnore Event
+                //////////////////////////////////////////////////////////////////
+                if (data[109] & 3) {  // OA state 1st second
+                    if (!inVS) {
+                        VSstart = ti;
+                        inVS = true;
+                    }
+                    VSend = ti+1000L;
+                } else {
+                    if (inVS) {
+                        inVS = false;
+                        VS->AddEvent(VSstart,(VSend-VSstart) / 1000L);
+                        VSstart = 0;
+                    }
+                }
+                if (data[113] & 3) {
+                    if (!inVS) {
+                        VSstart = ti+1000L;
+                        inVS = true;
+                    }
+                    VSend = ti+2000L;
+
+                } else {
+                    if (inVS) {
+                        inVS = false;
+                        VS->AddEvent(VSstart,(VSend-VSstart) / 1000L);
+                        VSstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // Expiratory puff Event
+                //////////////////////////////////////////////////////////////////
+                if (data[109] & 12) {  // OA state 1st second
+                    if (!inExP) {
+                        ExPstart = ti;
+                        inExP = true;
+                    }
+                    ExPend = ti+1000L;
+                } else {
+                    if (inExP) {
+                        inExP = false;
+                        EXP->AddEvent(ExPstart,(ExPend-ExPstart) / 1000L);
+                        ExPstart = 0;
+                    }
+                }
+                if (data[113] & 12) {
+                    if (!inExP) {
+                        ExPstart = ti+1000L;
+                        inExP = true;
+                    }
+                    ExPend = ti+2000L;
+
+                } else {
+                    if (inExP) {
+                        inExP = false;
+                        EXP->AddEvent(ExPstart,(ExPend-ExPstart) / 1000L);
+                        ExPstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // Flow Limitation Event
+                //////////////////////////////////////////////////////////////////
+                if (data[109] & 48) {  // OA state 1st second
+                    if (!inFL) {
+                        FLstart = ti;
+                        inFL = true;
+                    }
+                    FLend = ti+1000L;
+                } else {
+                    if (inFL) {
+                        inFL = false;
+                        FL->AddEvent(FLstart,(FLend-FLstart) / 1000L);
+                        FLstart = 0;
+                    }
+                }
+                if (data[113] & 48) {
+                    if (!inFL) {
+                        FLstart = ti+1000L;
+                        inFL = true;
+                    }
+                    FLend = ti+2000L;
+
+                } else {
+                    if (inFL) {
+                        inFL = false;
+                        FL->AddEvent(FLstart,(FLend-FLstart) / 1000L);
+                        FLstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // Periodic Breathing Event
+                //////////////////////////////////////////////////////////////////
+                if (data[109] & 192) {  // OA state 1st second
+                    if (!inPB) {
+                        PBstart = ti;
+                        inPB = true;
+                    }
+                    PBend = ti+1000L;
+                } else {
+                    if (inPB) {
+                        inPB = false;
+                        PB->AddEvent(PBstart,(PBend-PBstart) / 1000L);
+                        PBstart = 0;
+                    }
+                }
+                if (data[113] & 192) {
+                    if (!inPB) {
+                        PBstart = ti+1000L;
+                        inPB = true;
+                    }
+                    PBend = ti+2000L;
+
+                } else {
+                    if (inPB) {
+                        inPB = false;
+                        PB->AddEvent(PBstart,(PBend-PBstart) / 1000L);
+                        PBstart = 0;
+                    }
+                }
+
+                //////////////////////////////////////////////////////////////////
+                // Respiratory Effort Related Arousal Event
+                //////////////////////////////////////////////////////////////////
+                if (data[111] & 48) {  // OA state 1st second
+                    if (!inRE) {
+                        REstart = ti;
+                        inRE = true;
+                    }
+                    REend = ti+1000L;
+                } else {
+                    if (inRE) {
+                        inRE = false;
+                        RE->AddEvent(REstart,(REend-REstart) / 1000L);
+                        REstart = 0;
+                    }
+                }
+                if (data[115] & 48) {
+                    if (!inRE) {
+                        REstart = ti+1000L;
+                        inRE = true;
+                    }
+                    REend = ti+2000L;
+
+                } else {
+                    if (inRE) {
+                        inRE = false;
+                        RE->AddEvent(REstart,(REend-REstart) / 1000L);
+                        REstart = 0;
+                    }
+                }
+***/
+        }
+
+    } while (true);
+
+    if (inSession && sess) {
+        /***
             // Close event states if they are still open, and write event.
             if (inH) HY->AddEvent(Hstart,(Hend-Hstart) / 1000L);
             if (inOA) OA->AddEvent(OAstart,(OAend-OAstart) / 1000L);
@@ -1258,255 +1779,557 @@ int IntellipapLoader::OpenDV6(const QString & path)
             if (inFL) FL->AddEvent(FLstart,(FLend-FLstart) / 1000L);
             if (inPB) PB->AddEvent(PBstart,(PBend-PBstart) / 1000L);
             if (inPB) RE->AddEvent(REstart,(REend-REstart) / 1000L);
+***/
+        // update min and max
+        // then add to machine
+        if (sess->first() == 0)
+            qWarning() << "R.BIN first = 0 - 1665";
+        EventDataType min = flow->Min();
+        EventDataType max = flow->Max();
+        sess->setMin(CPAP_FlowRate, min);
+        sess->setMax(CPAP_FlowRate, max);
 
-            // update min and max
-            // then add to machine
-            EventDataType min = flow->Min();
-            EventDataType max = flow->Max();
-            sess->setMin(CPAP_FlowRate, min);
-            sess->setMax(CPAP_FlowRate, max);
+        sess->setPhysMax(CPAP_FlowRate, min); // TODO: not sure :/
+        sess->setPhysMin(CPAP_FlowRate, max);
+        sess->really_set_last(flow->last());
 
-            sess->setPhysMax(CPAP_FlowRate, min); // not sure :/
-            sess->setPhysMin(CPAP_FlowRate, max);
-            sess->really_set_last(flow->last());
-
-            sess = NULL;
-            flow = NULL;
-        }
-
-        f.close();
-        data = (unsigned char *)dataBA.data();
-    } else { // if (f.open(...)
-        // L.BIN open failed
-        return -1;
+        sess = nullptr;
+        inSession = false;
     }
 
+    rf.close();
+    qDebug() << "DV6 R.BIN processed" << rf.numread() << "records";
+    return true;
+}
 
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /// Parse L.BIN and extract per-minute data.
-    /////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+// Parse L.BIN for per minute data
+////////////////////////////////////////////////////////////////////////////////////////
 
-    EventList *leak = NULL;
-    EventList *maxleak = NULL;
+bool load6PerMinute (const QString & path) {
+
+    RollingFile rf;
+    Session *sess = nullptr;
+    unsigned int rec_ts1, previousRecBegin = 0;
+    bool inSession = false; // true if we are adding data to this session
+
+    if (!rf.open(path+"/L.BIN")) {
+        qWarning() << "DV6 Unable to open L.BIN";
+        return false;
+    }
+
+    qDebug() << "L.BIN Minute Data starting at record" << rf.recnum();
+
+    EventList * leak = NULL;
+    EventList * maxleak = NULL;
     EventList * RR  = NULL;
     EventList * Pressure  = NULL;
     EventList * TV  = NULL;
     EventList * MV = NULL;
 
+    QMap<SessionID, DV6_SessionInfo>::iterator sinfo;
+    sinfo = SessionData.begin();
 
-    sess = NULL;
-    const int DV6_L_HeaderSize = 55;
-    // Need to parse L.bin minute table to get graphs
-    f.setFileName(newpath+"/L.BIN");
-    if (f.open(QIODevice::ReadOnly)) {
-        dataBA = f.readAll();
-        if (dataBA.size() <= DV6_L_HeaderSize) {
-            return -1;
+    // Walk through all the records
+    do {
+        DV6_L_REC * rec = (DV6_L_REC *) rf.get();
+        if (rec == nullptr)
+            break;
+
+        sess = sinfo->sess;
+
+        // Get the timestamp from the record
+        rec_ts1 = convertTime(rec->timestamp);
+
+        if (rec_ts1 < previousRecBegin) {
+            qWarning() << "L.BIN - Corruption/Out of sequence data found, skipping record" << rf.recnum() << ", prev"
+                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
+                       << "this"
+                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
+            continue;
         }
 
-        f.close();
-        data = (unsigned char *)dataBA.data()+DV6_L_HeaderSize;
-        int numLrecs = (dataBA.size()-DV6_L_HeaderSize) / DV6_L_RecLength;
-
-        SR = summaryList.begin();
-
-        lastts1 = 0;
-
-
-        if (SR != summaryList.end()) for (int r=0; r<numLrecs; data += DV6_L_RecLength, ++r) {
-            ts1 = ((data[4] << 24) | (data[3] << 16) | (data[2] << 8) | data[1])+ep; // session start time
-            if (ts1 < lastts1) {
-                qDebug() << "Corruption/Out of sequence data found in L.bin, aborting";
-                break;
-            }
-            DV6_S_Record *R = &SR.value();
-            if (leak && ((ts1 - lastts1) > 60)) {
-                sess->set_last(maxleak->last());
-
-                sess = nullptr;
-                leak = nullptr;
-                maxleak = nullptr;
-                MV = TV = RR = nullptr;
-                Pressure = nullptr;
-            }
-            lastts1=ts1;
-            while (ts1 > R->stop_time) {
-                if (leak && sess) {
-                    // Close the open session and update the min and max
-                    sess->set_last(maxleak->last());
-
-                    sess = nullptr;
-                    leak = nullptr;
-                    maxleak = nullptr;
-                    MV = TV = RR = nullptr;
-                    Pressure = nullptr;
-                }
-                SR++;
-                if (SR == summaryList.end()) break;
-                R = &SR.value();
-            }
-            if (SR == summaryList.end())
-                break;
-
-            if (ts1 >= R->start_time) {
-                if (!leak && R->sess) {
-                    qDebug() << "Adding Leak data for session" << R->sess->session() << "starting at" << ts1;
-                    leak = R->sess->AddEventList(CPAP_Leak, EVL_Event); // , 1.0, 0.0, 0.0, 0.0, double(60000) / double(1));
-                    maxleak = R->sess->AddEventList(CPAP_MaxLeak, EVL_Event);// , 1.0, 0.0, 0.0, 0.0, double(60000) / double(1));
-                    RR = R->sess->AddEventList(CPAP_RespRate, EVL_Event);
-                    MV = R->sess->AddEventList(CPAP_MinuteVent, EVL_Event);
-                    TV = R->sess->AddEventList(CPAP_TidalVolume, EVL_Event);
-
-                    if (!R->hasMaskPressure) {
-                        // Don't use this pressure if we have higher resolution available
-                        Pressure = R->sess->AddEventList(CPAP_Pressure, EVL_Event);
-                    }
-                }
-                if (leak) {
-                    sess = R->sess;
-
-                    qint64 ti = qint64(ts1) * 1000L;
-
-                    maxleak->AddEvent(ti, data[5]);
-                    leak->AddEvent(ti, data[6]);
-                    RR->AddEvent(ti, data[9]);
-
-                    if (Pressure) Pressure->AddEvent(ti, data[11] / 10.0f);
-
-                    unsigned tv = data[7] | data[8] << 8;
-                    MV->AddEvent(ti, data[10] );
-                    TV->AddEvent(ti, tv);
-
-                    if (!sess->channelExists(CPAP_FlowRate)) {
-                        // No flow rate, so lets grab this data...
-                    }
-                }
-
-            }
-        } // for
-        if (sess && leak) {
+        // Look for a gap in DV6_L records.  They should be at one minute intervals.
+        // If there is a gap, we are probably in a new session
+        if (inSession && ((rec_ts1 - previousRecBegin) > 60)) {
+//            qDebug() << "L.BIN record gap, current" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+//                     << "previous" << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss");
             sess->set_last(maxleak->last());
+            sess = nullptr;
+            leak = maxleak = MV = TV = RR = Pressure = nullptr;
+            inSession = false;
         }
 
-    } else { // if (f.open(...)
-        // L.BIN open failed
-        return -1;
+        // Skip over sessions until we find one that this record is in
+        while (rec_ts1 > sinfo->end) {
+#ifdef DEBUG6
+            qDebug() << "L.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+#endif
+            if (inSession && sess) {
+                // Close the open session and update the min and max
+                sess->set_last(maxleak->last());
+                sess = nullptr;
+                leak = maxleak = MV = TV = RR = Pressure = nullptr;
+                inSession = false;
+            }
+            sinfo++;
+            if (sinfo == SessionData.end())
+                break;
+        }
+
+        previousRecBegin = rec_ts1;
+
+        // If we have data beyond last session, we are in trouble (for unknown reasons)
+        if (sinfo == SessionData.end()) {
+            qWarning() << "DV6 L.BIN import ran out of sessions to match flow data";
+            break;
+        }
+
+        if (rec_ts1 < previousRecBegin) {
+            qWarning() << "L.BIN - Corruption/Out of sequence data found, stopping import, prev"
+                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
+                       << "this"
+                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+            break;
+        }
+
+        // Check if record belongs in this session or a future session
+        if (!inSession && rec_ts1 <= sinfo->end) {
+            sess = sinfo->sess;         // this is the Session we want
+            if (!inSession && sess) {
+                leak = sess->AddEventList(CPAP_Leak, EVL_Event); // , 1.0, 0.0, 0.0, 0.0, double(60000) / double(1));
+                maxleak = sess->AddEventList(CPAP_LeakTotal, EVL_Event);// , 1.0, 0.0, 0.0, 0.0, double(60000) / double(1));
+                RR = sess->AddEventList(CPAP_RespRate, EVL_Event);
+                MV = sess->AddEventList(CPAP_MinuteVent, EVL_Event);
+                TV = sess->AddEventList(CPAP_TidalVolume, EVL_Event);
+
+                if (sess->last()/1000 > sinfo->end)
+                    sinfo->end = sess->last()/1000;
+
+                if (!sinfo->haveHighResData) {
+                    // Don't use this pressure if we already have higher resolution data
+                    Pressure = sess->AddEventList(CPAP_Pressure, EVL_Event);
+                }
+                if (sinfo->mode == MODE_UNKNOWN) {
+                    if (rec->pressureLimitLow != rec->pressureLimitHigh) {
+                        sess->settings[CPAP_PressureMin] = rec->pressureLimitLow / 10.0f;
+                        sess->settings[CPAP_PressureMax] = rec->pressureLimitHigh / 10.0f;
+// if available         sess->settings[CPAP_PS) = ....
+                        sess->settings[CPAP_Mode] = MODE_APAP;
+                        sinfo->mode = MODE_APAP;
+                    } else {
+                        sess->settings[CPAP_Mode] = MODE_CPAP;
+                        sess->settings[CPAP_Pressure] = rec->pressureLimitHigh / 10.0f;
+                        sinfo->mode = MODE_CPAP;
+                    }
+                    inSession = true;
+                }
+            }
+        }
+        if (inSession) {
+            // Record breath and pressure waveforms
+            qint64 ti = qint64(rec_ts1) * 1000;
+            maxleak->AddEvent(ti, rec->maxLeak);  //???
+            leak->AddEvent(ti, rec->avgLeak);     //???
+            RR->AddEvent(ti, rec->breathRate);
+
+            if (Pressure) Pressure->AddEvent(ti, rec->avgPressure / 10.0f);  // average pressure
+
+            unsigned tv = rec->tidalVolume6 + (rec->tidalVolume7 << 8);
+            MV->AddEvent(ti, rec->breathRate * tv / 1000.0 );
+            TV->AddEvent(ti, tv);
+
+            if (!sess->channelExists(CPAP_FlowRate)) {
+                // No flow rate, so lets grab this data...
+            }
+        }
+
+    } while (true);
+
+    if (sess && inSession) {
+        sess->set_last(maxleak->last());
     }
 
+    rf.close();
+    qDebug() << "DV6 L.BIN processed" << rf.numread() << "records";
 
-    // Now sessionList is populated with summary data, lets parse the Events list in E.BIN
+    return true;
+}
 
+////////////////////////////////////////////////////////////////////////////////////////
+// Parse E.BIN for event data
+////////////////////////////////////////////////////////////////////////////////////////
+
+bool load6EventData (const QString & path) {
+    RollingFile rf;
+
+    Session *sess = nullptr;
+    unsigned int rec_ts1, rec_ts2, previousRecBegin;
+    bool inSession = false; // true if we are adding data to this session
 
     EventList * OA = nullptr;
     EventList * CA = nullptr;
     EventList * H = nullptr;
     EventList * RE = nullptr;
-    f.setFileName(newpath+"/E.BIN");
-    const int DV6_E_HeaderSize = 55;
+    EventList * PB = nullptr;
+    EventList * LL = nullptr;
+    EventList * EP = nullptr;
+    EventList * SN = nullptr;
+    EventList * FL = nullptr;
 
-    if (f.open(QIODevice::ReadOnly)) {
-        dataBA = f.readAll();
-        if (dataBA.size() == 0) {
-            return -1;
-        }
-        f.close();
-        data = (unsigned char *)dataBA.data()+DV6_E_HeaderSize;
-        int numErecs = (dataBA.size()-DV6_E_HeaderSize) / DV6_E_RecLength;
+    if (!rf.open(path+"/E.BIN")) {
+        qWarning() << "DV6 Unable to open E.BIN";
+        return false;
+    }
 
-        SR = summaryList.begin();
+    qDebug() << "Processing E.BIN starting at record" << rf.recnum();
 
-        for (int r=0; r<numErecs; ++r, data += DV6_E_RecLength) {
-            ts1 = ((data[4] << 24) | (data[3] << 16) | (data[2] << 8) | data[1])+ep; // start time
-            ts2 = ((data[8] << 24) | (data[7] << 16) | (data[6] << 8) | data[5])+ep; // end
+    QMap<SessionID, DV6_SessionInfo>::iterator sinfo;
+    sinfo = SessionData.begin();
 
-            if (SR == summaryList.end())
-                break;
+    // Walk through all the records
+    do {
+        DV6_E_REC * rec = (DV6_E_REC *) rf.get();
+        if (rec == nullptr)
+            break;
+        sess = sinfo->sess;
 
-            DV6_S_Record *R = &SR.value();
-            while (ts1 > R->stop_time) {
-                if (OA && sess) {
-                    // Close the open session and update the min and max
+        // Get the timestamp from the record
+        rec_ts1 = convertTime(rec->begin);
+        rec_ts2 = convertTime(rec->end);
+
+        // Skip over sessions until we find one that this record is in
+        while (rec_ts1 > sinfo->end) {
+#ifdef DEBUG6
+            qDebug() << "E.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+#endif
+            if (inSession) {
+                // Close the open session and update the min and max
+                if (OA->last() > 0)
                     sess->set_last(OA->last());
+                if (CA->last() > 0)
                     sess->set_last(CA->last());
+                if (H->last() > 0)
                     sess->set_last(H->last());
+                if (RE->last() > 0)
                     sess->set_last(RE->last());
+                if (PB->last() > 0)
+                    sess->set_last(PB->last());
+                if (LL->last() > 0)
+                    sess->set_last(LL->last());
+                if (EP->last() > 0)
+                    sess->set_last(EP->last());
+                if (SN->last() > 0)
+                    sess->set_last(SN->last());
+                if (FL->last() > 0)
+                    sess->set_last(FL->last());
 
-                    sess = nullptr;
-                    H = CA = RE = OA = nullptr;
-                }
-                SR++;
-                if (SR == summaryList.end()) break;
-                R = &SR.value();
+                sess = nullptr;
+                H = CA = RE = OA = PB = LL = EP = SN = FL = nullptr;
+                inSession = false;
             }
-            if (SR == summaryList.end())
+            sinfo++;
+            if (sinfo == SessionData.end())
                 break;
-
-            if (ts1 >= R->start_time) {
-                if (!OA && R->sess) {
-                    qDebug() << "Adding Event data for session" << R->sess->session() << "starting at" << ts1;
-                    OA = R->sess->AddEventList(CPAP_Obstructive, EVL_Event);
-                    H = R->sess->AddEventList(CPAP_Hypopnea, EVL_Event);
-                    RE = R->sess->AddEventList(CPAP_RERA, EVL_Event);
-                    CA = R->sess->AddEventList(CPAP_ClearAirway, EVL_Event);
-                }
-                if (OA) {
-                    sess = R->sess;
-
-                    qint64 ti = qint64(ts1) * 1000L;
-                    int code = data[13];
-                    switch (code) {
-                    case 1:
-                        CA->AddEvent(ti, data[17]);
-                        break;
-                    case 2:
-                        OA->AddEvent(ti, data[17]);
-                        break;
-                    case 4:
-                        H->AddEvent(ti, data[17]);
-                        break;
-                    case 5:
-                        RE->AddEvent(ti, data[17]);
-                        break;
-                    default:
-                        break;
-                    }
-                }
-
-
-            } // for
         }
-        if (sess && OA) {
-            sess->set_last(OA->last());
-            sess->set_last(CA->last());
-            sess->set_last(H->last());
-            sess->set_last(RE->last());
 
+        previousRecBegin = rec_ts1;
+
+        // If we have data beyond last session, we are in trouble (for unknown reasons)
+        if (sinfo == SessionData.end()) {
+            qWarning() << "DV6 E.BIN import ran out of sessions to match flow data";
+            break;
         }
-    } else { // if (f.open(...)
-        // E.BIN open failed
+
+        if (rec_ts1 < previousRecBegin) {
+            qWarning() << "E.BIN - Corruption/Out of sequence data found, stopping import, prev"
+                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
+                       << "this"
+                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+            break;
+        }
+
+        // Check if record belongs in this session or a future session
+        if (!inSession && rec_ts1 <= sinfo->end) {
+            sess = sinfo->sess;         // this is the Session we want
+            if (!inSession && sess) {
+                OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
+                H  = sess->AddEventList(CPAP_Hypopnea, EVL_Event);
+                RE = sess->AddEventList(CPAP_RERA, EVL_Event);
+                CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
+                PB = sess->AddEventList(CPAP_PB, EVL_Event);
+                LL = sess->AddEventList(CPAP_LargeLeak, EVL_Event);
+                EP = sess->AddEventList(CPAP_ExP, EVL_Event);
+//                SN = sess->AddEventList(CPAP_VSnore, EVL_Event);
+                FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
+
+                SN = sess->AddEventList(CPAP_Snore, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+                inSession = true;
+            }
+        }
+        if (inSession) {
+            qint64 duration = rec_ts2 - rec_ts1;
+            // We make an ad hoc adjustment to the start time so that the event lines up better with the flow graph
+            // TODO: We don't know what is really going on here. Is it sloppiness on the part of the DV6 in recording time stamps?
+            qint64 ti = qint64(rec_ts1 - (duration/2)) * 1000L;
+            if (duration < 0) {
+                qDebug() << "E.BIN at" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                         << "reports duration of" << duration
+                         << "ending" <<  QDateTime::fromTime_t(rec_ts2).toString("MM/dd/yyyy hh:mm:ss");
+            }
+            int code = rec->event_type;
+            //////////////////////////////////////////////////////////////////
+            // Show Snore Events as a graph
+            //////////////////////////////////////////////////////////////////
+            if (code == 9) {
+                qint16 severity = rec->event_severity;
+                SN->AddWaveform(ti, &severity, 1, duration*1000);
+            }
+            if (rec->event_severity >= 3)
+                switch (code) {
+                case 1:
+                    CA->AddEvent(ti, duration);
+                    break;
+                case 2:
+                    OA->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - OA" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 4:
+                    H->AddEvent(ti, duration);
+                    break;
+                case 5:
+                    RE->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - RERA" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 8:     // snore
+                    SN->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - Snore" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 9:     // expiratory puff
+                    EP->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - exhale puff" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 10:    // flow limitation
+                    FL->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - flow limit" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 11:    // periodic breathing
+                    PB->AddEvent(ti, duration);
+                    break;
+                case 12:    // large leaks
+                    LL->AddEvent(ti, duration);
+//                    qDebug() << "E.BIN - large leak" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+                    break;
+                case 13:    // pressure change
+                    break;
+                case 14:    // start of session
+                    break;
+                default:
+                    break;
+                }
+        }
+    } while (true);
+
+    rf.close();
+    qDebug() << "DV6 E.BIN processed" << rf.numread() << "records";
+
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Finalize data and add to database
+////////////////////////////////////////////////////////////////////////////////////////
+
+int addSessions() {
+
+    for (auto si=SessionData.begin(), end=SessionData.end(); si != end; ++si) {
+        Session * sess = si.value().sess;
+
+        if (sess) {
+            if ( ! mach->AddSession(sess) ) {
+                qWarning() << "Session" << sess->session() << "was not addded";
+            }
+#ifdef DEBUG6
+            else
+                qDebug() << "Added session" << sess->session()  << QDateTime::fromTime_t(sess->session()).toString("MM/dd/yyyy hh:mm:ss");;
+#endif
+
+            // Update indexes, process waveform and perform flagging
+            sess->UpdateSummaries();
+
+            // Save is not threadsafe
+            sess->Store(mach->getDataPath());
+
+            // Unload them from memory
+            sess->TrashEvents();
+        } else
+            qWarning() << "addSessions: session pointer is null";
+    }
+
+    return SessionData.size();
+
+}
+
+// Returns empty QByteArray() on failure.
+QByteArray fileChecksum(const QString &fileName,
+                        QCryptographicHash::Algorithm hashAlgorithm)
+{
+    QFile f(fileName);
+    if (f.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(hashAlgorithm);
+        if (hash.addData(&f)) {
+            return hash.result();
+        }
+    }
+    return QByteArray();
+}
+
+/****
+// Return the OSCAR date that the last data was written.
+// This will be considered to be the last day for which we have any data.
+// Adjust to get the correct date for sessions starting after midnight.
+QDate getLastDate () {
+    return QDate();
+}
+
+// Return date used within OSCAR, assuming day ends at noon
+QDate getOscarDate (QDateTime dt) {
+    QDate d = dt.date();
+    QTime tm = dt.time();
+    if (tm.hour() < 11)
+        d = d.addDays(-1);
+    return d;
+}
+***/
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Create backup of input files
+// Create dated backup files when necesaary
+////////////////////////////////////////////////////////////////////////////////////////
+
+bool backup6 (const QString & path)  {
+
+    // Are backups enabled?
+    if (!p_profile->session->backupCardData())
+        return true;
+
+    QString backup_path = mach->getBackupPath();
+    QString history_path = backup_path + "/DV6/HISTORY";
+
+    // Compare QDirs rather than QStrings because separators may be different, especially on Windows.
+    // We want to check whether import and backup paths are the same, regardless of variations in the string representations.
+    QDir ipath(path);
+    QDir bpath(backup_path);
+
+    if (ipath == bpath) {
+        // Don't create backups if importing from backup folder
+        rebuild_from_backups = true;
+        return true;
+    }
+
+    if ( ! bpath.exists()) {
+        if ( ! bpath.mkpath(backup_path) ) {
+            qWarning() << "Could not create DV6 backup directory" << backup_path;
+            return false;
+        }
+    }
+
+    // Copy input data to backup location
+    copyPath(ipath.absolutePath(), bpath.absolutePath());
+
+    // Create history directory for dated backups
+    QDir hpath(history_path);
+    if ( ! hpath.exists())
+        if ( ! hpath.mkpath(history_path)) {
+            qWarning() << "Could not create DV6 archive directory" << history_path;
+            return false;
+        }
+
+    // Create archive of settings file if needed (SET.BIN)
+    bool backup_settings = true;
+
+    QStringList filters;
+    filters << "set_*.bin";
+    hpath.setNameFilters(filters);
+    hpath.setFilter(QDir::Files);
+    QDir::Name | QDir::Reversed;
+    QStringList fileNames = hpath.entryList(); // Get list of files
+    if (! fileNames.isEmpty()) {
+        QString lastFile = fileNames.first();
+        QString newFile = ipath.absolutePath() + "/set.bin";
+        qDebug() << "last settings file is" << lastFile << "new file is" << newFile;
+        QByteArray newMD5 = fileChecksum(newFile, QCryptographicHash::Md5);
+        QByteArray oldMD5 = fileChecksum(lastFile, QCryptographicHash::Md5);
+        if (newMD5 == oldMD5)
+            backup_settings = false;
+    }
+
+    if (backup_settings) {
+        QString newFile = hpath.absolutePath() + "/set-" + "1234" + ".bin";
+        qDebug() << "history filename is" << newFile;
+    }
+
+    // We're done!
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Open a DV6 SD card, parse everything, add to OSCAR database
+////////////////////////////////////////////////////////////////////////////////////////
+
+int IntellipapLoader::OpenDV6(const QString & path)
+{
+    QString newpath = path + DV6_DIR;
+
+    // Prime the machine database's info field with stuff relevant to this machine
+    info = newInfo();
+
+    // VER.BIN - Parse model number, serial, etc.
+    if (!load6VersionInfo(newpath))
+        return -1;
+
+    // Now, create Machine database record if it doesn't exist already
+    mach = p_profile->CreateMachine(info);
+    if (mach == nullptr) {
+        qWarning() << "Could not create Machine data structure";
         return -1;
     }
 
-    QMap<quint32, DV6_S_Record>::iterator it;
+    // SET.BIN - Parse settings file (which is only the latest settings)
+    if (!load6Settings(newpath))
+        return -1;
 
-    for (it=summaryList.begin(); it!= summaryList.end(); ++it) {
-        Session * sess = it.value().sess;
+    // S.BIN - Open and parse day summary list and create a list of days
+    if (!load6DailySummaries(newpath))
+        return -1;
 
-        mach->AddSession(sess);
+    // Back up data files (must do after parsing VER.BIN, S.BIN, and creating Machine)
+    if (!backup6(path))
+        return -1;
 
-        // Update indexes, process waveform and perform flagging
-        sess->UpdateSummaries();
+    // U.BIN - Open and parse session list and create a list of session times
+    // (S.BIN must already be loaded)
+    if (!load6Sessions(newpath))
+        return -1;
 
-        // Save is not threadsafe
-        sess->Store(mach->getDataPath());
+    // Create OSCAR session list from session times and summary data
+    if (create6Sessions() <= 0)
+        return -1;
 
-        // Unload them from memory
-        sess->TrashEvents();
+    // R.BIN - Open and parse flow data
+    if (!load6HighResData(newpath))
+        return -1;
 
-    }
+    // L.BIN - Open and parse per minute data
+    if (!load6PerMinute(newpath))
+        return -1;
 
+    // E.BIN - Open and parse event data
+    if (!load6EventData(newpath))
+        return -1;
 
-    return summaryList.size();
+    // Finalize input
+    return addSessions();
 }
 
 int IntellipapLoader::Open(const QString & dirpath)
@@ -1560,11 +2383,11 @@ void IntellipapLoader::initChannels()
 bool intellipap_initialized = false;
 void IntellipapLoader::Register()
 {
-    if (intellipap_initialized) { return; }
-
-    qDebug() << "Registering IntellipapLoader";
-    RegisterLoader(new IntellipapLoader());
-    //InitModelMap();
-    intellipap_initialized = true;
-
+    if (!intellipap_initialized) {
+        qDebug() << "Registering IntellipapLoader";
+        RegisterLoader(new IntellipapLoader());
+        //InitModelMap();
+        intellipap_initialized = true;
+    }
+    return;
 }
