@@ -831,7 +831,7 @@ struct DV6_U_REC {
 };
 
 // DV6 R.BIN - High resolution data (breath) and moderate resolution (pressure, flags)
-PACK (struct DV6_R_REC {
+struct DV6_R_REC {
     unsigned char timestamp[4];
     qint16 breath[50];          // 50 breath flow records at 25 Hz
     unsigned char pressure1;    // pressure in first second of frame
@@ -841,7 +841,7 @@ PACK (struct DV6_R_REC {
     unsigned char flags1[4];    // flags for first second of frame
     unsigned char flags2[4];    // flags for second second of frame
     unsigned char checksum;
-});
+};
 
 // DV6 L.BIN - Low resolution data
 PACK (struct DV6_L_REC {
