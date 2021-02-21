@@ -68,12 +68,24 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     // Read header line and determine order of fields
     QString hdr = ts.readLine();
     QStringList headers = hdr.split(",");
+    QString model = "";
+    QString serial = "";
 
-    int col_inclination = -1, col_orientation = -1, col_timestamp = -1;
+    int col_inclination = -1, col_orientation = -1, col_timestamp = -1, col_movement = -1;
 
     int hdr_size = headers.size();
 
     for (int i = 0; i < hdr_size; i++) {
+        // Optional header model=<model>
+        if (headers.at(i).startsWith("model=", Qt::CaseInsensitive)) {
+            model=headers.at(i).split("=")[1];
+        }
+
+        // Optional header serial=<serial>
+        if (headers.at(i).startsWith("serial=", Qt::CaseInsensitive)) {
+            serial=headers.at(i).split("=")[1];
+        }
+
         if (headers.at(i).compare("timestamp", Qt::CaseInsensitive) == 0) {
             col_timestamp = i;
         }
@@ -85,11 +97,20 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         if (headers.at(i).compare("orientation", Qt::CaseInsensitive) == 0) {
             col_orientation = i;
         }
+
+        if (headers.at(i).compare("movement", Qt::CaseInsensitive) == 0) {
+            col_movement = i;
+        }
     }
 
     // Check we have all fields available
-    if ((col_timestamp < 0) || (col_inclination < 0) || (col_orientation < 0)) {
-        qDebug() << "Header missing one of timestamp, inclination, or orientation";
+    if (col_timestamp < 0) {
+        qDebug() << "Header missing timestamp";
+        return 0;
+    }
+
+    if ((col_inclination < 0) && (col_orientation < 0) && (col_movement < 0)) {
+        qDebug() << "Header missing all of inclination, orientation, movement (at least one must be present)";
         return 0;
     }
 
@@ -97,18 +118,20 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time;
     qDebug() << "Epoch starts at" << epoch.toString();
 
-    double timestamp, orientation, inclination;
+    double timestamp, orientation=0, inclination=0, movement=0;
     QString data;
     QStringList fields;
-    bool ok;
+    bool ok, orientation_ok, inclination_ok, movement_ok;
 
     bool first = true;
     MachineInfo info = newInfo();
+    info.model = model;
+    info.serial = serial;
     Machine *mach = p_profile->CreateMachine(info);
     Session *sess = nullptr;
     SessionID sid;
 
-    EventList *ev_orientation = nullptr, *ev_inclination = nullptr;
+    EventList *ev_orientation = nullptr, *ev_inclination = nullptr, *ev_movement = nullptr;
 
     while (!(data = ts.readLine()).isEmpty()) {
         fields = data.split(",");
@@ -121,14 +144,21 @@ int SomnoposeLoader::OpenFile(const QString & filename)
 
         if (!ok) { continue; }
 
-        orientation = fields[col_orientation].toDouble(&ok);
+        if (col_orientation >= 0) {
+            orientation = fields[col_orientation].toDouble(&orientation_ok);
+        }
 
-        if (!ok) { continue; }
+        if (col_inclination >= 0) {
+            inclination = fields[col_inclination].toDouble(&inclination_ok);
+        }
 
-        inclination = fields[col_inclination].toDouble(&ok);
+        if (col_movement >= 0) {
+            movement = fields[col_movement].toDouble(&movement_ok);
+        }
 
-        if (!ok) { continue; }
-
+        if (!orientation_ok && !inclination_ok && !movement_ok) {
+            continue;
+        }
         // convert to milliseconds since epoch
         time = (timestamp * 1000.0) + ep;
 
@@ -137,35 +167,58 @@ int SomnoposeLoader::OpenFile(const QString & filename)
             qDebug() << "First timestamp is" << QDateTime::fromMSecsSinceEpoch(time).toString();
 
             if (mach->SessionExists(sid)) {
-                return 0; // Already imported
+                qDebug() << "File " << filename << " already loaded... skipping";
+                return -1; // Already imported
             }
 
             sess = new Session(mach, sid);
             sess->really_set_first(time);
-            ev_orientation = sess->AddEventList(POS_Orientation, EVL_Event, 1, 0, 0, 0);
-            ev_inclination = sess->AddEventList(POS_Inclination, EVL_Event, 1, 0, 0, 0);
+            if (col_orientation >= 0) {
+                ev_orientation = sess->AddEventList(POS_Orientation, EVL_Event, 1, 0, 0, 0);
+            }
+            if (col_inclination >= 0) {
+                ev_inclination = sess->AddEventList(POS_Inclination, EVL_Event, 1, 0, 0, 0);
+            }
+            if (col_movement >= 0) {
+                ev_movement = sess->AddEventList(POS_Movement, EVL_Event, 1, 0, 0, 0);
+            }
             first = false;
         }
 
         sess->set_last(time);
-        ev_orientation->AddEvent(time, orientation);
-        ev_inclination->AddEvent(time, inclination);
+        if (ev_orientation && orientation_ok) {
+            ev_orientation->AddEvent(time, orientation);
+        }
+        if (ev_inclination && inclination_ok) {
+            ev_inclination->AddEvent(time, inclination);
+        }
+        if (ev_movement && movement_ok) {
+            ev_movement->AddEvent(time, movement);
+        }
     }
 
     if (sess) {
-        if (ev_orientation && ev_inclination) {
+        if (ev_orientation) {
             sess->setMin(POS_Orientation, ev_orientation->Min());
             sess->setMax(POS_Orientation, ev_orientation->Max());
+        }
+        if (ev_inclination) {
             sess->setMin(POS_Inclination, ev_inclination->Min());
             sess->setMax(POS_Inclination, ev_inclination->Max());
         }
-
+        if (ev_movement) {
+            sess->setMin(POS_Movement, ev_movement->Min());
+            sess->setMax(POS_Movement, ev_movement->Max());
+        }
         sess->really_set_last(time);
         sess->SetChanged(true);
 
         mach->AddSession(sess);
 
         mach->Save();
+        // Adding these to hopefully make data persistent...
+        mach->SaveSummaryCache();
+        p_profile->StoreMachines();
     }
 
     return true;
