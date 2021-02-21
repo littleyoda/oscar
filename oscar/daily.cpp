@@ -1221,8 +1221,9 @@ QString Daily::getOximeterInformation(Day * day)
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
         html+="<tr><td colspan=5 align=center>"+oxi->brand()+" "+oxi->model()+"</td></tr>\n";
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
-        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%)</td></tr>").arg(tr("SpO2 Desaturations")).arg(day->count(OXI_SPO2Drop)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_SPO2Drop)/3600.0),0,'f',2);
-        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%)</td></tr>").arg(tr("Pulse Change events")).arg(day->count(OXI_PulseChange)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_PulseChange)/3600.0),0,'f',2);
+        // Include SpO2 and PC drops per hour of Oximetry data in case CPAP data is missing
+        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%) %4/h</td></tr>").arg(tr("SpO2 Desaturations")).arg(day->count(OXI_SPO2Drop)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_SPO2Drop)/3600.0),0,'f',2).arg((day->count(OXI_SPO2Drop)/day->hours(MT_OXIMETER)),0,'f',2);
+        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%) %4/h</td></tr>").arg(tr("Pulse Change events")).arg(day->count(OXI_PulseChange)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_PulseChange)/3600.0),0,'f',2).arg((day->count(OXI_PulseChange)/day->hours(MT_OXIMETER)),0,'f',2);
         html+=QString("<tr><td colspan=5 align=center>%1: %2%</td></tr>").arg(tr("SpO2 Baseline Used")).arg(day->settings_wavg(OXI_SPO2Drop),0,'f',2); // CHECKME: Should this value be wavg OXI_SPO2 isntead?
         html+="</table>\n";
         html+="<hr/>\n";
@@ -1649,8 +1650,9 @@ void Daily::Load(QDate date)
         if (hours>0) {
             htmlLeftAHI="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
 
-            QString appFont = QApplication::font().toString();
-            htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
+            // Is this debugging code left behind?
+            // QString appFont = QApplication::font().toString();
+            // htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
 
             htmlLeftAHI+="<tr>";
             if (!isBrick) {
@@ -1689,14 +1691,23 @@ void Daily::Load(QDate date)
                 schema::Channel & chan = schema::channel[code];
 //                if (!chan.enabled()) continue;
                 QString data;
+                float channelHours = hours;
+                if (chan.machtype() != MT_CPAP) {
+                    // Use machine type hours (if available) rather than CPAP hours, since
+                    // might have Oximetry (for example) longer or shorter than CPAP
+                    channelHours = day->hours(chan.machtype());
+                    if (channelHours <= 0) {
+                        channelHours = hours;
+                    }
+                }
                 if (chan.type() == schema::SPAN) {
-                    val = (100.0 / hours)*(day->sum(code)/3600.0);
+                    val = (100.0 / channelHours)*(day->sum(code)/3600.0);
                     data = QString("%1%").arg(val,0,'f',2);
                 } else if (code == CPAP_VSnore2) {  // TODO: This should be generalized rather than special-casing a single channel here.
-                    val = day->sum(code) / hours;
+                    val = day->sum(code) / channelHours;
                     data = QString("%1").arg(val,0,'f',2);
                 } else {
-                    val = day->count(code) / hours;
+                    val = day->count(code) / channelHours;
                     data = QString("%1").arg(val,0,'f',2);
                 }
                 // TODO: percentage would be another useful option here for things like
