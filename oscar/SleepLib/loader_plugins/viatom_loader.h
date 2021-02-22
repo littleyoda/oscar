@@ -2,6 +2,7 @@
  *
  * Copyright (c) 2019-2020 The OSCAR Team
  * (Initial importer written by dave madden <dhm@mersenne.com>)
+ * Modified 02/21/2021 to allow for CheckMe device data files by Crimson Nape <CrimsonNape@gmail.com>
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -13,7 +14,7 @@
 #include "SleepLib/machine_loader.h"
 
 const QString viatom_class_name = "Viatom";
-const int viatom_data_version = 2;
+const int viatom_data_version = 3; //CN increased from 2
 
 
 /*! \class ViatomLoader
@@ -38,7 +39,7 @@ class ViatomLoader : public MachineLoader
     virtual MachineInfo newInfo() {
         return MachineInfo(MT_OXIMETER, 0, viatom_class_name, QObject::tr("Viatom"), QString(), QString(), QString(), QObject::tr("Viatom Software"), QDateTime::currentDateTime(), viatom_data_version);
     }
-    
+
     QStringList getNameFilter();
 
   //Machine *CreateMachine();
