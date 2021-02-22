@@ -1296,7 +1296,7 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Min)
             .arg(midname)
             .arg(tr("%1%2").arg(percentile*100,0,'f',0).arg(STR_UNIT_Percentage))
-            .arg(STR_TR_Max);
+            .arg(ST_max == ST_MAX?STR_TR_Max:tr("99.5%"));
 
     ChannelID chans[]={
         CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
@@ -1650,7 +1650,7 @@ void Daily::Load(QDate date)
         if (hours>0) {
             htmlLeftAHI="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
 
-            // Is this debugging code left behind?
+            // Show application font, for debugging font issues
             // QString appFont = QApplication::font().toString();
             // htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
 
