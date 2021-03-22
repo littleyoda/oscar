@@ -14,7 +14,7 @@
 #include "SleepLib/machine_loader.h"
 
 const QString viatom_class_name = "Viatom";
-const int viatom_data_version = 3; //CN increased from 2
+const int viatom_data_version = 2;
 
 
 /*! \class ViatomLoader
