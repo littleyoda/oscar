@@ -7,10 +7,11 @@
  * for more details. */
 
 //********************************************************************************************
-// IMPORTANT!!!
-//********************************************************************************************
-// Please INCREMENT the dreem_data_version in dreem_loader.h when making changes to this loader
-// that change loader behaviour or modify channels.
+// Please only INCREMENT the dreem_data_version in dreem_loader.h when making changes
+// that change loader behaviour or modify channels in a manner that fixes old data imports.
+// Note that changing the data version will require a reimport of existing data for which OSCAR
+// does not keep a backup - so it should be avoided if possible.
+// i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
 #include <QDir>
