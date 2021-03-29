@@ -236,8 +236,20 @@ void Overview::CreateAllGraphs() {
     } // for chit
 
     WEIGHT = createGraph(STR_GRAPH_Weight, STR_TR_Weight, STR_TR_Weight, YT_Weight);
+    weight = new SummaryChart("Weight", GT_LINE);
+    weight->setMachineType(MT_JOURNAL);
+    weight->addSlice(Journal_Weight, QColor("black"), ST_SETAVG);
+    WEIGHT->AddLayer(weight);
     BMI = createGraph(STR_GRAPH_BMI, STR_TR_BMI, tr("Body\nMass\nIndex"));
+    bmi = new SummaryChart("BMI", GT_LINE);
+    bmi->setMachineType(MT_JOURNAL);
+    bmi->addSlice(Journal_BMI, QColor("black"), ST_SETAVG);
+    BMI->AddLayer(bmi);
     ZOMBIE = createGraph(STR_GRAPH_Zombie, STR_TR_Zombie, tr("How you felt\n(0-10)"));
+    zombie = new SummaryChart("Zombie", GT_LINE);
+    zombie->setMachineType(MT_JOURNAL);
+    zombie->addSlice(Journal_ZombieMeter, QColor("black"), ST_SETAVG);
+    ZOMBIE->AddLayer(zombie);
 }
 
 // Recalculates Overview chart info

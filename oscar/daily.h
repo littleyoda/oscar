@@ -304,6 +304,8 @@ private:
         */
     void UpdateEventsTree(QTreeWidget * tree,Day *day);
 
+    virtual bool eventFilter(QObject *object, QEvent *event) override;
+
     void updateCube();
 
 

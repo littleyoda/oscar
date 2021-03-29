@@ -355,7 +355,9 @@ quint32 convertFLWDate(quint32 timestamp) // Bit format: hhhhhmmmmmmssssssYYYYYY
     QDateTime dt = QDateTime(QDate(year, month, day), QTime(hour, minute, second), Qt::UTC);
 
     if(!dt.isValid()){
-        dt = QDateTime(QDate(2015,1,1), QTime(0,0,1));
+        // make this date too early, then change test later
+        // dt = QDateTime(QDate(2015,1,1), QTime(0,0,1));
+        dt = QDateTime(QDate(2010,1,1), QTime(0,0,0));
     }
 //    Q NO!!! _ASSERT(dt.isValid());
 //    if ((year == 2013) && (month == 9) && (day == 18)) {
@@ -483,7 +485,7 @@ bool FPIconLoader::OpenFLW(Machine *mach, const QString & filename)
 
     ts = convertFLWDate(t2);
 
-    if (ts > QDateTime(QDate(2015,1,1), QTime(0,0,0)).toTime_t()) {
+    if (ts < QDateTime(QDate(2010,1,1), QTime(0,1,0)).toTime_t()) {
         return false;
     }
 

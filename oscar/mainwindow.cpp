@@ -2394,16 +2394,46 @@ void MainWindow::on_actionImport_Somnopose_Data_triggered()
     w.setNameFilters(QStringList("Somnopause CSV File (*.csv)"));
 
     SomnoposeLoader somno;
+    // Display progress if we have more than 1 file to load...
+    ProgressDialog progress(this);
 
     if (w.exec() == QFileDialog::Accepted) {
-        QString filename = w.selectedFiles()[0];
+        int i, skipped = 0;
+        int size = w.selectedFiles().size();
+        if (size > 1) {
+            progress.setMessage(QObject::tr("Importing Sessions..."));
+            progress.setProgressMax(size);
+            progress.setProgressValue(0);
+            progress.setWindowModality(Qt::ApplicationModal);
+            progress.open();
+            QCoreApplication::processEvents();
+        }
+        for (i=0; i < size; i++) {
+            QString filename = w.selectedFiles()[i];
 
-        if (!somno.OpenFile(filename)) {
-            Notify(tr("There was a problem opening Somnopose Data File: ") + filename);
-            return;
+            int res = somno.OpenFile(filename);
+            if (!res) {
+                if (i == 0) {
+                    Notify(tr("There was a problem opening Somnopose Data File: ") + filename);
+                    return;
+                } else {
+                    Notify(tr("Somnopause Data Import of %1 file(s) complete").arg(i) + "\n\n" +
+                           tr("There was a problem opening Somnopose Data File: ") + filename,
+                           tr("Somnopose Import Partial Success"));
+                    break;
+                }
+            }
+            if (res < 0) {
+                // Should we report on skipped count?
+                skipped++;
+            }
+            progress.setProgressValue(i+1);
+            QCoreApplication::processEvents();
         }
 
-        Notify(tr("Somnopause Data Import complete"));
+        if (i == size) {
+            Notify(tr("Somnopause Data Import complete"));
+        }
         PopulatePurgeMenu();
         if (overview) overview->ReloadGraphs();
         if (welcome) welcome->refreshPage();

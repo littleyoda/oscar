@@ -332,8 +332,8 @@ void validateFont (QString which, int size, bool bold, bool italic) {
     QFontDatabase fontdatabase;
     if (installedFontFamilies.isEmpty()) {
         installedFontFamilies = fontdatabase.families();
-        qDebug() << "validateFont found" << installedFontFamilies.count() << "installed font families";
         }
+    qDebug() << "validateFont found" << installedFontFamilies.count() << "installed font families";
 
     QString prefPrefix = "Fonts_" + which + "_";
 
@@ -345,11 +345,19 @@ void validateFont (QString which, int size, bool bold, bool italic) {
     if (p_pref->contains(prefPrefix + "Name")) {
         // We already have a font, so it becomes desired font (if valid)
         QString testFont = (*p_pref)[prefPrefix + "Name"].toString();
+	int prefSize = (*p_pref)[prefPrefix+"Size"].toInt();
         // Is this a good font?
-        if (testFont.length() > 0 && installedFontFamilies.indexOf(testFont) >= 0) {
-            desiredFont = testFont;
-            forceFont = false;
-        }
+        if (testFont.length() > 0 ) {
+	    qDebug() << which << "Preferences font is" << testFont;
+    	    if ( installedFontFamilies.indexOf(testFont) >= 0) {
+                desiredFont = testFont;
+                forceFont = false;
+            } else {
+                qDebug() << testFont << prefSize << "not found, substituting" << desiredFont << size;
+                for (int i = 0; i< installedFontFamilies.size(); i++)
+                    qDebug() << installedFontFamilies.at(i);
+            }
+	}
     }
 
 #ifdef Q_OS_MAC
@@ -367,15 +375,20 @@ void validateFont (QString which, int size, bool bold, bool italic) {
         (*p_pref)[prefPrefix + "Bold"]   = bold;
         (*p_pref)[prefPrefix + "Italic"] = italic;
     }
+    qDebug() << which << "font set to" << desiredFont << "at size" << (*p_pref)[prefPrefix + "Size"];
 }
 
 void setApplicationFont () {
+    qDebug() << "Application font starts out as" << QApplication::font();
     QFont font = QFont(((*p_pref)["Fonts_Application_Name"]).toString());
     font.setPointSize(((*p_pref)["Fonts_Application_Size"]).toInt());
     font.setWeight(((*p_pref)["Fonts_Application_Bold"]).toBool() ? QFont::Bold : QFont::Normal);
     font.setItalic(((*p_pref)["Fonts_Application_Italic"]).toBool());
     QApplication::setFont(font);
     mainwin->menuBar()->setFont(font);
+    qDebug() << "Application font set to" << font;
+    qDebug() << "Application font reads back as" << QApplication::font();
+    qDebug() << "system font is" << QFontDatabase::systemFont(QFontDatabase::GeneralFont).family();
 }
 
 bool removeDir(const QString &path)

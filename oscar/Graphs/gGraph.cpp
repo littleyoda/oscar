@@ -275,7 +275,9 @@ void gGraph::setDay(Day *day)
     }
 
     rmin_y = rmax_y = 0;
-    ResetBounds();
+    // This resets weight and bmi overview graphs to full date range when they are changed.
+    // is it required ever?
+    // ResetBounds();
 }
 
 void gGraph::setZoomY(short zoom)

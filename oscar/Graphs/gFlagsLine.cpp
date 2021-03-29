@@ -366,23 +366,25 @@ void gFlagsLine::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
                     x1 = double(X - minx) * xmult + left;
                     x2 = double(X2 - minx) * xmult + left;
+                    int width = x1-x2;
+                    width = qMax(2,width);    // Insure Rectangle will be visable. Flag events are 2 pixels wide.
 
                     brush = QBrush(color);
-                    painter.fillRect(x2, bartop, x1-x2, bottom-bartop, brush);
-                    if (!w.selectingArea() && !hover && QRect(x2, bartop, x1-x2, bottom-bartop).contains(w.graphView()->currentMousePos())) {
+                    painter.fillRect(x2, bartop, width, bottom-bartop, brush);
+                    if (!w.selectingArea() && !hover && QRect(x2, bartop, width , bottom-bartop).contains(w.graphView()->currentMousePos())) {
                         hover = true;
                         painter.setPen(QPen(Qt::red,1));
 
-                        painter.drawRect(x2, bartop, x1-x2, bottom-bartop);
+                        painter.drawRect(x2, bartop, width, bottom-bartop);
                         int x,y;
-                        int s = *dptr;
-                        int m = s / 60;
-                        s %= 60;
+                        double s = *dptr;
+                        double m;
+                        s=60*modf(s/60,&m);
                         QString lab = QString("%1").arg(schema::channel[m_code].fullname());
                         if (m>0) {
                             lab += QObject::tr(" (%2 min, %3 sec)").arg(m).arg(s);
                         } else {
-                            lab += QObject::tr(" (%3 sec)").arg(m).arg(s);
+                            lab += QObject::tr(" (%3 sec)").arg(s);
                         }
                         GetTextExtent(lab, x, y);
                         w.ToolTip(lab, x2 - 10, bartop + (3 * w.printScaleY()), TT_AlignRight, tooltipTimeout);

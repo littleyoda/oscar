@@ -181,6 +181,7 @@ void ResmedLoader::initChannels()
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
+    chan->addOption(2, QObject::tr("Auto"));
 
     // Setup ResMeds signal name translation map
     setupResMedTranslationMap();

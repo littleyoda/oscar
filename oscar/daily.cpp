@@ -509,6 +509,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     connect(GraphView, SIGNAL(updateCurrentTime(double)), this, SLOT(on_LineCursorUpdate(double)));
     connect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     connect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
+
+    // Watch for focusOut events on the JournalNotes widget
+    ui->JournalNotes->installEventFilter(this);
 //    qDebug() << "Finished making new Daily object";
 //    sleep(3);
 }
@@ -521,9 +524,11 @@ Daily::~Daily()
 
     disconnect(sessionbar, SIGNAL(sessionClicked(Session*)), this, SLOT(doToggleSession(Session*)));
     disconnect(webView,SIGNAL(anchorClicked(QUrl)),this,SLOT(Link_clicked(QUrl)));
+    ui->JournalNotes->removeEventFilter(this);
 
-    if (previous_date.isValid())
+    if (previous_date.isValid()) {
         Unload(previous_date);
+    }
 
     // Save graph orders and pin status, etc...
     GraphView->SaveSettings("Daily");
@@ -1221,8 +1226,9 @@ QString Daily::getOximeterInformation(Day * day)
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
         html+="<tr><td colspan=5 align=center>"+oxi->brand()+" "+oxi->model()+"</td></tr>\n";
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
-        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%)</td></tr>").arg(tr("SpO2 Desaturations")).arg(day->count(OXI_SPO2Drop)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_SPO2Drop)/3600.0),0,'f',2);
-        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%)</td></tr>").arg(tr("Pulse Change events")).arg(day->count(OXI_PulseChange)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_PulseChange)/3600.0),0,'f',2);
+        // Include SpO2 and PC drops per hour of Oximetry data in case CPAP data is missing
+        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%) %4/h</td></tr>").arg(tr("SpO2 Desaturations")).arg(day->count(OXI_SPO2Drop)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_SPO2Drop)/3600.0),0,'f',2).arg((day->count(OXI_SPO2Drop)/day->hours(MT_OXIMETER)),0,'f',2);
+        html+=QString("<tr><td colspan=5 align=center>%1: %2 (%3%) %4/h</td></tr>").arg(tr("Pulse Change events")).arg(day->count(OXI_PulseChange)).arg((100.0/day->hours(MT_OXIMETER)) * (day->sum(OXI_PulseChange)/3600.0),0,'f',2).arg((day->count(OXI_PulseChange)/day->hours(MT_OXIMETER)),0,'f',2);
         html+=QString("<tr><td colspan=5 align=center>%1: %2%</td></tr>").arg(tr("SpO2 Baseline Used")).arg(day->settings_wavg(OXI_SPO2Drop),0,'f',2); // CHECKME: Should this value be wavg OXI_SPO2 isntead?
         html+="</table>\n";
         html+="<hr/>\n";
@@ -1295,7 +1301,7 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Min)
             .arg(midname)
             .arg(tr("%1%2").arg(percentile*100,0,'f',0).arg(STR_UNIT_Percentage))
-            .arg(STR_TR_Max);
+            .arg(ST_max == ST_MAX?STR_TR_Max:tr("99.5%"));
 
     ChannelID chans[]={
         CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
@@ -1529,6 +1535,11 @@ QVariant MyTextBrowser::loadResource(int type, const QUrl &url)
 
 void Daily::Load(QDate date)
 {
+	qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
+
+	qDebug() << "Setting App font in Daily::Load";
+	setApplicationFont();
+
     dateDisplay->setText("<i>"+date.toString(Qt::SystemLocaleLongDate)+"</i>");
     previous_date=date;
 
@@ -1643,6 +1654,11 @@ void Daily::Load(QDate date)
 
         if (hours>0) {
             htmlLeftAHI="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
+
+            // Show application font, for debugging font issues
+            // QString appFont = QApplication::font().toString();
+            // htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
+
             htmlLeftAHI+="<tr>";
             if (!isBrick) {
                 ChannelID ahichan=CPAP_AHI;
@@ -1651,10 +1667,10 @@ void Daily::Load(QDate date)
                     ahichan=CPAP_RDI;
                     ahiname=STR_TR_RDI;
                 }
-                htmlLeftAHI+=QString("<td colspan=4 bgcolor='%1' align=center><p title='%4'><font size=+4 color='%2'><b>%3</b></font></p> &nbsp; <font size=+4 color='%2'><b>%5</b></font></td>\n")
+                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><p title='%4'><font size=+3 color='%2'><b>%3</b></font></p> &nbsp; <font size=+3 color='%2'><b>%5</b></font></td>\n")
                         .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
             } else {
-                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+4 color='yellow'>%2</font></td>\n")
+                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'>%2</font></td>\n")
                         .arg("#F88017").arg(tr("BRICK! :("));
             }
             htmlLeftAHI+="</tr>\n";
@@ -1680,14 +1696,23 @@ void Daily::Load(QDate date)
                 schema::Channel & chan = schema::channel[code];
 //                if (!chan.enabled()) continue;
                 QString data;
+                float channelHours = hours;
+                if (chan.machtype() != MT_CPAP) {
+                    // Use machine type hours (if available) rather than CPAP hours, since
+                    // might have Oximetry (for example) longer or shorter than CPAP
+                    channelHours = day->hours(chan.machtype());
+                    if (channelHours <= 0) {
+                        channelHours = hours;
+                    }
+                }
                 if (chan.type() == schema::SPAN) {
-                    val = (100.0 / hours)*(day->sum(code)/3600.0);
+                    val = (100.0 / channelHours)*(day->sum(code)/3600.0);
                     data = QString("%1%").arg(val,0,'f',2);
                 } else if (code == CPAP_VSnore2) {  // TODO: This should be generalized rather than special-casing a single channel here.
-                    val = day->sum(code) / hours;
+                    val = day->sum(code) / channelHours;
                     data = QString("%1").arg(val,0,'f',2);
                 } else {
-                    val = day->count(code) / hours;
+                    val = day->count(code) / channelHours;
                     data = QString("%1").arg(val,0,'f',2);
                 }
                 // TODO: percentage would be another useful option here for things like
@@ -2186,6 +2211,9 @@ void Daily::on_JournalNotesUnderline_clicked()
 
 void Daily::on_prevDayButton_clicked()
 {
+    if (previous_date.isValid()) {
+         Unload(previous_date);
+    }
     if (!p_profile->ExistsAndTrue("SkipEmptyDays")) {
         LoadDate(previous_date.addDays(-1));
     } else {
@@ -2200,8 +2228,23 @@ void Daily::on_prevDayButton_clicked()
     }
 }
 
+bool Daily::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == ui->JournalNotes && event->type() == QEvent::FocusOut) {
+        // Trigger immediate save of journal when we focus out from it so we never
+        // lose any journal entry text...
+        if (previous_date.isValid()) {
+            Unload(previous_date);
+        }
+    }
+    return false;
+}
+
 void Daily::on_nextDayButton_clicked()
 {
+    if (previous_date.isValid()) {
+         Unload(previous_date);
+    }
     if (!p_profile->ExistsAndTrue("SkipEmptyDays")) {
         LoadDate(previous_date.addDays(1));
     } else {
@@ -2232,6 +2275,9 @@ void Daily::on_calButton_toggled(bool checked)
 
 void Daily::on_todayButton_clicked()
 {
+    if (previous_date.isValid()) {
+         Unload(previous_date);
+    }
 //    QDate d=QDate::currentDate();
 //    if (d > p_profile->LastDay()) {
         QDate lastcpap = p_profile->LastDay(MT_CPAP);
@@ -2404,21 +2450,10 @@ void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
 
 void Daily::on_weightSpinBox_valueChanged(double arg1)
 {
-    // Update the BMI display
-    double kg;
-    if (p_profile->general->unitSystem()==US_English) {
-         kg=((arg1*pound_convert) + (ui->ouncesSpinBox->value()*ounce_convert)) / 1000.0;
-    } else kg=arg1;
-    double height=p_profile->user->height()/100.0;
-    if ((height>0) && (kg>0)) {
-        double bmi=kg/(height * height);
-        ui->BMI->display(bmi);
-        ui->BMI->setVisible(true);
-        ui->BMIlabel->setVisible(true);
-    } else {
-        ui->BMI->setVisible(false);
-        ui->BMIlabel->setVisible(false);
-    }
+    // This is called if up/down arrows are used, in which case editingFinished is
+    // never called. So always call editingFinished instead
+    Q_UNUSED(arg1);
+    this->on_weightSpinBox_editingFinished();
 }
 
 void Daily::on_weightSpinBox_editingFinished()
@@ -2437,7 +2472,25 @@ void Daily::on_weightSpinBox_editingFinished()
     } else {
             kg=arg1;
     }
-    journal->settings[Journal_Weight]=kg;
+    if (journal->settings.contains(Journal_Weight)) {
+        QVariant old = journal->settings[Journal_Weight];
+        if (old == kg && kg > 0) {
+            // No change to weight - skip
+            return;
+        }
+    } else if (kg == 0) {
+        // Still zero - skip
+        return;
+    }
+    if (kg > 0) {
+        journal->settings[Journal_Weight]=kg;
+    } else {
+        // Weight now zero - remove from journal
+        auto jit = journal->settings.find(Journal_Weight);
+        if (jit != journal->settings.end()) {
+            journal->settings.erase(jit);
+        }
+    }
     gGraphView *gv=mainwin->getOverview()->graphView();
     gGraph *g;
     if (gv) {
@@ -2450,66 +2503,35 @@ void Daily::on_weightSpinBox_editingFinished()
         ui->BMI->setVisible(true);
         ui->BMIlabel->setVisible(true);
         journal->settings[Journal_BMI]=bmi;
-        if (gv) {
-            g=gv->findGraph(STR_GRAPH_BMI);
-            if (g) g->setDay(nullptr);
-        }
     } else {
+        // BMI now zero - remove it
+        auto jit = journal->settings.find(Journal_BMI);
+        if (jit != journal->settings.end()) {
+            journal->settings.erase(jit);
+        }
+        // And make it invisible
         ui->BMI->setVisible(false);
         ui->BMIlabel->setVisible(false);
+    }
+    if (gv) {
+        g=gv->findGraph(STR_GRAPH_BMI);
+        if (g) g->setDay(nullptr);
     }
     journal->SetChanged(true);
 }
 
 void Daily::on_ouncesSpinBox_valueChanged(int arg1)
 {
-    // just update for BMI display
-    double height=p_profile->user->height()/100.0;
-    double kg=((ui->weightSpinBox->value()*pound_convert) + (arg1*ounce_convert)) / 1000.0;
-    if ((height>0) && (kg>0)) {
-        double bmi=kg/(height * height);
-        ui->BMI->display(bmi);
-        ui->BMI->setVisible(true);
-        ui->BMIlabel->setVisible(true);
-    } else {
-        ui->BMI->setVisible(false);
-        ui->BMIlabel->setVisible(false);
-    }
+    // This is called if up/down arrows are used, in which case editingFinished is
+    // never called. So always call editingFinished instead
+    Q_UNUSED(arg1);
+    this->on_weightSpinBox_editingFinished();
 }
 
 void Daily::on_ouncesSpinBox_editingFinished()
 {
-    double arg1=ui->ouncesSpinBox->value();
-    Session *journal=GetJournalSession(previous_date);
-    if (!journal) {
-        journal=CreateJournalSession(previous_date);
-    }
-    double height=p_profile->user->height()/100.0;
-    double kg=((ui->weightSpinBox->value()*pound_convert) + (arg1*ounce_convert)) / 1000.0;
-    journal->settings[Journal_Weight]=kg;
-
-    gGraph *g;
-    if (mainwin->getOverview()) {
-        g=mainwin->getOverview()->graphView()->findGraph(STR_GRAPH_Weight);
-        if (g) g->setDay(nullptr);
-    }
-
-    if ((height>0) && (kg>0)) {
-        double bmi=kg/(height * height);
-        ui->BMI->display(bmi);
-        ui->BMI->setVisible(true);
-        ui->BMIlabel->setVisible(true);
-
-        journal->settings[Journal_BMI]=bmi;
-        if (mainwin->getOverview()) {
-            g=mainwin->getOverview()->graphView()->findGraph(STR_GRAPH_BMI);
-            if (g) g->setDay(nullptr);
-        }
-    } else {
-        ui->BMI->setVisible(false);
-        ui->BMIlabel->setVisible(false);
-    }
-    journal->SetChanged(true);
+    // This is functionally identical to the weightSpinBox_editingFinished, so just call that
+    this->on_weightSpinBox_editingFinished();
 }
 
 QString Daily::GetDetailsText()
