@@ -576,6 +576,7 @@ void Daily::Link_clicked(const QUrl &url)
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="toggleoxisession") { // Enable/Disable Oximetry session
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
+        if (!day) return;
         Session *sess=day->find(sid, MT_OXIMETER);
         if (!sess)
             return;
@@ -585,6 +586,20 @@ void Daily::Link_clicked(const QUrl &url)
         // Reload day
         LoadDate(previous_date);
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
+    } else  if (code=="togglestagesession") { // Enable/Disable Sleep Stage session
+        day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
+        if (!day) return;
+        Session *sess=day->find(sid, MT_SLEEPSTAGE);
+        if (!sess) return;
+        sess->setEnabled(!sess->enabled());
+        LoadDate(previous_date);
+    } else  if (code=="togglepositionsession") { // Enable/Disable Position session
+        day=p_profile->GetDay(previous_date,MT_POSITION);
+        if (!day) return;
+        Session *sess=day->find(sid, MT_POSITION);
+        if (!sess) return;
+        sess->setEnabled(!sess->enabled());
+        LoadDate(previous_date);
     } else if (code=="cpap")  {
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (day) {
@@ -1010,7 +1025,7 @@ QString Daily::getSessionInformation(Day * day)
             case MT_SLEEPSTAGE: type="stage";
                 html+=tr("Sleep Stage Sessions");
                 break;
-            case MT_POSITION: type="stage";
+            case MT_POSITION: type="position";
                 html+=tr("Position Sensor Sessions");
                 break;
 
@@ -1535,10 +1550,10 @@ QVariant MyTextBrowser::loadResource(int type, const QUrl &url)
 
 void Daily::Load(QDate date)
 {
-	qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
+    qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
 
-	qDebug() << "Setting App font in Daily::Load";
-	setApplicationFont();
+    qDebug() << "Setting App font in Daily::Load";
+    setApplicationFont();
 
     dateDisplay->setText("<i>"+date.toString(Qt::SystemLocaleLongDate)+"</i>");
     previous_date=date;
