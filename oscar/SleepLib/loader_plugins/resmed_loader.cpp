@@ -2856,6 +2856,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     time.start();
 #endif
     QString filename = path.section(-2, -1);
+    qDebug() << "LoadPLD opening" << filename.section("/", -2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
         qDebug() << "LoadPLD failed to open" << filename.section("/", -2, -1);
@@ -2895,6 +2896,10 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     bool found_Ti_code = false;
     bool found_Te_code = false;
 
+    QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+    bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+                        (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+
     for (auto & es : edf.edfsignals) {
         a = nullptr;
         recs = es.sampleCnt * edf.GetNumDataRecords();
@@ -2905,6 +2910,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         rate = double(duration) / double(recs);
 
         //qDebug() << "EVE:" << es.digital_maximum << es.digital_minimum << es.physical_maximum << es.physical_minimum << es.gain;
+        if (forceDebug) {
+            qDebug() << "Session" << sessionStartDT.toString() << filename.section("/", -2, -1) << "signal" << es.label;
+        }
         if (matchSignal(CPAP_Snore, es.label)) {
             code = CPAP_Snore;
             ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
@@ -3058,7 +3066,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
     int startpos = 0;
 
     if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
-        startpos = 20; // Shave the first 20 seconds of pressure data
+        startpos = 20; // Shave the first 40 seconds of pressure data
         tt += rate * startpos;
     }
 
@@ -3071,46 +3079,46 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
     EventList *el = nullptr;
 
     if (recs > startpos + 1) {
-
         // Prime last with a good starting value
         do {
             last = *sptr++;
             tmp = EventDataType(last) * es.gain;
-
             if ((tmp >= t_min) && (tmp <= t_max)) {
                 min = tmp;
                 max = tmp;
                 el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-
                 el->AddEvent(tt, last);
+                qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
                 tt += rate;
-
                 break;
             }
             tt += rate;
         } while (sptr < eptr);
 
-        if (!el)
+        if ( ! el) {
+            qWarning() << "No eventList for" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code (hex)"
+                            << QString::number(code, 16);
+#ifdef DEBUG_EFFICIENCY
+            timeMutex.lock();
+            timeInTimeDelta += time.elapsed();
+            timeMutex.unlock();
+#endif
             return;
+        }
 
         for (; sptr < eptr; sptr++) {
             c = *sptr;
-
             if (last != c) {
                 if (square) {
                     buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
                 }
-
                 buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
             }
-
             tt += rate;
-
             last = c;
         }
 
         tmp = EventDataType(c) * es.gain;
-
         if ((tmp >= t_min) && (tmp <= t_max))
             el->AddEvent(tt, c);
 
@@ -3119,6 +3127,10 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         sess->setPhysMin(code, es.physical_minimum);
         sess->setPhysMax(code, es.physical_maximum);
         sess->updateLast(tt);
+        qDebug() << "EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+    } else {
+        qDebug() << "not enough records for EventList" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
+                            << QString::number(code, 16);
     }
 
 #ifdef DEBUG_EFFICIENCY
