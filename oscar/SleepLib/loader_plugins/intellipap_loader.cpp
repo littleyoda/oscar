@@ -607,38 +607,6 @@ int IntellipapLoader::OpenDV5(const QString & path)
 //     May be same as what we call large leak time for other machines?
 ////////////////////////////////////////////////////////////////////////////
 
-class RollingFile
-{
-public:
-    RollingFile () { }
-
-    ~RollingFile () {
-        if (data)
-            delete [] data;
-        data = nullptr;
-    }
-
-    bool open (QString fn); // Open the file
-    bool close();           // close the file
-    unsigned char * get();  // read the next record in the file
-
-    int numread () {return number_read;};   // Return number of records read
-    int recnum () {return record_number;};  // Return last-read record number
-
-private:
-    QString filename;
-    QFile file;
-    int record_length;
-    int wrap_record;
-    bool wrapping = false;
-
-    int number_read = 0;    // Number of records read
-
-    int record_number = 0;  // Number of record.  First record in the file  is #1. First record read is wrap_record;
-
-    unsigned char * data = nullptr;
-};
-
 struct DV6TestedModel
 {
     QString model;
@@ -658,9 +626,9 @@ struct DV6_S_Data // Daily summary
     Session * sess;
     unsigned char u1;            //00 (position)
 ***/    
-    unsigned int start_time;     //01
-    unsigned int stop_time;      //05
-    unsigned int atpressure_time;//09
+    unsigned int start_time;     //01 Start time for date
+    unsigned int stop_time;      //05 End time
+    unsigned int written;        //09 timestamp when this record was written
     EventDataType hours;         //13
 //    EventDataType unknown14;   //14
     EventDataType pressureAvg;   //15
@@ -796,13 +764,14 @@ PACK (struct SET_BIN_REC {
 // Unless explicitly noted, all other DV6_x_REC are definitions for the repeating data structure that follows the header
 PACK (struct DV6_HEADER {
     unsigned char unknown;          // 0 always zero
-    unsigned char filetype;         // 1 always "R"
+    unsigned char filetype;         // 1 e.g. "R" for a R.BIN file
     unsigned char serial[11];       // 2 serial number
-    unsigned char numRecords[4];    // 13 Number of records in file (always 180,000)
+    unsigned char numRecords[4];    // 13 Number of records in file (always fixed, 180,000 for R.BIN)
     unsigned char recordLength;     // 17 Length of data record (always 117)
     unsigned char recordStart[4];   // 18 First record in wrap-around buffer
     unsigned char unknown_22[21];   // 22 Unknown values
-    unsigned char unknown_43[12];   // 43 Seems always to be zero
+    unsigned char unknown_43[8];    // 43 Seems always to be zero
+    unsigned char lasttime[4];      // 51 OSCAR only: Last timestamp, in history files only
     unsigned char checksum;         // 55 Checksum
 });
 
@@ -902,6 +871,20 @@ struct DV6_SessionInfo {
     CPAPMode mode = MODE_UNKNOWN;
 };
 
+QString card_path;
+QString backup_path;
+QString history_path;
+
+MachineInfo info;
+Machine * mach = nullptr;
+
+bool rebuild_from_backups = false;
+bool create_backups = false;
+
+QMap<SessionID, DV6_S_Data> DailySummaries;
+QMap<SessionID, DV6_SessionInfo> SessionData;
+SET_BIN_REC * settings;
+
 unsigned int ep = 0;
 
 // Convert a 4-character number in DV6 data file to a standard int
@@ -918,41 +901,199 @@ unsigned int convertTime (unsigned char time[]) {
     return ((time[3] << 24) + (time[2] << 16) + (time[1] << 8) + time[0]) + ep; // Time as Unix epoch time
 }
 
-bool RollingFile::open(QString fn) {
+class RollingBackup
+{
+public:
+    RollingBackup () {}
+    ~RollingBackup () {
+    }
 
-    filename = fn;
-    file.setFileName(filename);
+    bool open (const QString filetype, DV6_HEADER * newhdr); // Open the file
+    bool close();           // close the file
+    bool save(QByteArray dataBA);  // save the next record in the file
+
+private:
+    DV6_HEADER hdr;       // file header
+    QString filetype;
+    QFile hFile;
+
+    int record_length;      // Length of record block in incoming file
+    const int maxHistFileSize = 20*10e6;   // Maximum size of file before we create a new file
+
+    int numWritten;     // Number of records written
+    quint32 lastTimestamp;
+};
+
+bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {
+    if (!create_backups)
+        return true;
+
+    this->filetype = filetype;
+
+    QDir hpath(history_path);
+    QStringList filters;
+
+    numWritten = 0;
+
+    filters.append(filetype);
+    filters[0].insert(1, "_*");
+    hpath.setNameFilters(filters);
+    hpath.setFilter(QDir::Files);
+    hpath.setSorting(QDir::Name | QDir::Reversed);
+
+    QStringList fileNames = hpath.entryList(); // Get list of files
+    QFile histfile(fileNames.first());
+
+//    bool needNewFile = false;
+
+    // Handle first time a history file is being created
+    if (fileNames.isEmpty()) {
+        memcpy (&hdr, newhdr, sizeof(DV6_HEADER));
+        for (int i = 0; i < 4; i++) {
+            hdr.recordStart[i] = 0;
+            hdr.lasttime[i] = 0;
+        }
+        record_length = hdr.recordLength;
+    }
+
+    // We have an existing history record
+    if (! fileNames.isEmpty()) {
+        // See if this file is large enough that we want to create a new file
+        if (histfile.size() > maxHistFileSize) {
+            memcpy (&hdr, newhdr, sizeof(DV6_HEADER));
+            for (int i = 0; i < 4; i++)
+                hdr.recordStart[i] = 0;
+
+            if (!histfile.open(QIODevice::ReadOnly)) {
+                qWarning() << "DV6 RollingBackup could not open" << fileNames.first() << "for reading, error code" << histfile.error() << histfile.errorString();
+                return false;
+            }
+            record_length = hdr.recordLength;
+
+#ifdef ROLLBACKUP
+            wrap_record = convertNum(hdr.recordStart);
+            if (!histfile.seek(sizeof(DV6_HEADER) + (wrap_record-1) * record_length)) {
+                qWarning() << "DV6 RollingBackup unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
+                file.close();
+                return false;
+            }
+#endif
+
+        }
+    }
+
+    return true;
+}
+
+bool RollingBackup::close() {
+    if (!create_backups)
+        return true;
+    return true;
+}
+
+bool RollingBackup::save(QByteArray dataBA) {
+    Q_UNUSED(dataBA)
+    if (!create_backups)
+        return true;
+    return true;
+}
+
+class RollingFile
+{
+public:
+    RollingFile () { }
+
+    ~RollingFile () {
+        if (data)
+            delete [] data;
+        data = nullptr;
+        if (hdr)
+            delete hdr;
+        hdr = nullptr;
+    }
+
+    bool open (QString fn); // Open the file
+    bool close();           // close the file
+    unsigned char * get();  // read the next record in the file
+
+    int numread () {return number_read;};   // Return number of records read
+    int recnum () {return record_number;};  // Return last-read record number
+
+    RollingBackup rb;
+
+private:
+    QString filename;
+    QFile file;
+    int record_length;
+    int wrap_record;
+    bool wrapping = false;
+
+    int number_read = 0;    // Number of records read
+
+    int record_number = 0;  // Number of record.  First record in the file  is #1. First record read is wrap_record;
+
+    DV6_HEADER * hdr;       // file header
+
+    unsigned char * data = nullptr; // record pointer
+};
+
+bool RollingFile::open(QString filetype) {
+
+    filename = filetype;
+    file.setFileName(card_path + "/" +filetype);
 
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "DV6 RollingFile could not open" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
+    // Save header for use in making backups of data
+    hdr = new DV6_HEADER;
     QByteArray dataBA = file.read(sizeof(DV6_HEADER));
-    DV6_HEADER * hdr = (DV6_HEADER *) dataBA.data();
+    memcpy (hdr, dataBA.data(), sizeof(DV6_HEADER));
+
+    // Extract control information from header
     record_length = hdr->recordLength;
     wrap_record = convertNum(hdr->recordStart);
     record_number = wrap_record;
     number_read = 0;
     wrapping = false;
 
+    // Create buffer to hold each record as it is read
     data = new unsigned char[record_length];
 
+    // Seek to first data record in file
     if (!file.seek(sizeof(DV6_HEADER) + wrap_record * record_length)) {
         qWarning() << "DV6 RollingFile unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
         file.close();
         return false;
     }
+#ifdef ROLLBACKUP
+    if (!rb.open(filetype, hdr)) {
+        qWarning() << "DV6 RollingBackup failed";
+        file.close();
+        return false;
+    }
+#endif
 
-    qDebug() << "RollingFile opening" << filename << "at wrap record" << wrap_record;
+    qDebug() << "DV6 RollingFile opening" << filename << "at wrap record" << wrap_record;
     return true;
 }
 
 bool RollingFile::close() {
     file.close();
-    if (data != nullptr)
+
+#ifdef ROLLBACKUP
+    rb.close();
+#endif
+
+    if (data)
         delete [] data;
     data = nullptr;
+    if (hdr)
+        delete hdr;
+    hdr = nullptr;
+
     return true;
 }
 
@@ -987,6 +1128,11 @@ unsigned char * RollingFile::get() {
         file.close();
         return nullptr;
     }
+#ifdef ROLLBACKUP
+    if (!rb.save(dataBA)) {
+        qWarning() << "DV6 RollingBackup failed";
+    }
+#endif
 
     number_read++;
 
@@ -995,21 +1141,51 @@ unsigned char * RollingFile::get() {
     return data;
 }
 
-MachineInfo info;
-Machine * mach = nullptr;
+// Returns empty QByteArray() on failure.
+QByteArray fileChecksum(const QString &fileName,
+                        QCryptographicHash::Algorithm hashAlgorithm)
+{
+    QFile f(fileName);
+    if (f.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(hashAlgorithm);
+        bool res = hash.addData(&f);
+        f.close();
+        if (res) {
+            return hash.result();
+        }
+    }
+    return QByteArray();
+}
 
-bool rebuild_from_backups = false;
+/***
+// Return the OSCAR date that the last data was written.
+// This will be considered to be the last day for which we have any data.
+// Adjust to get the correct date for sessions starting after midnight.
+QDate getLastDate () {
+    return QDate();
+}
+***/
 
-QMap<SessionID, DV6_S_Data> DailySummaries;
-QMap<SessionID, DV6_SessionInfo> SessionData;
-SET_BIN_REC * settings;
+// Return date used within OSCAR, assuming day ends at split time in preferences (usually noon)
+QDate getNominalDate (QDateTime dt) {
+    QDate d = dt.date();
+    QTime tm = dt.time();
+    QTime daySplitTime = p_profile->session->getPref(STR_IS_DaySplitTime).toTime();
+    if (tm < daySplitTime)
+        d = d.addDays(-1);
+    return d;
+}
+QDate getNominalDate (unsigned int dt) {
+    QDateTime xdt = QDateTime::fromSecsSinceEpoch(dt);
+    return getNominalDate(xdt);
+}
 
 ///////////////////////////////////////////////
 // U.BIN - Open and parse session list and create session data structures
 //         with session start and stop times.
 ///////////////////////////////////////////////
 
-bool load6Sessions (const QString & path) {
+bool load6Sessions () {
 
     RollingFile rf;
     unsigned int ts1,ts2;
@@ -1018,7 +1194,7 @@ bool load6Sessions (const QString & path) {
 
     qDebug() << "Parsing U.BIN";
 
-    if (!rf.open(path+"/U.BIN")) {
+    if (!rf.open("U.BIN")) {
         qWarning() << "Unable to open U.BIN";
         return false;
     }
@@ -1079,12 +1255,12 @@ bool load6Settings (const QString & path) {
 // S.BIN - Open and load day summary list
 ////////////////////////////////////////////////////////////////////////////////////////
 
-bool load6DailySummaries (const QString & path) {
+bool load6DailySummaries () {
     RollingFile rf;
 
     DailySummaries.clear();
 
-    if (!rf.open(path+"/S.BIN")) {
+    if (!rf.open("S.BIN")) {
         qWarning() << "Unable to open S.BIN";
         return false;
     }
@@ -1100,7 +1276,13 @@ bool load6DailySummaries (const QString & path) {
 
         dailyData.start_time = convertTime(rec->begin);
         dailyData.stop_time = convertTime(rec->end);
-        dailyData.atpressure_time = convertTime(rec->written);
+        dailyData.written = convertTime(rec->written);
+
+#ifdef DEBUG6
+        qDebug() << "DV6 S.BIN start" << dailyData.start_time
+                 << "stop" << dailyData.stop_time
+                 << "at pressure?" << dailyData.atpressure_time;
+#endif
 
         dailyData.hours = float(rec->hours) / 10.0F;
         dailyData.pressureSetMin = float(rec->pressureSetMin) / 10.0F;
@@ -1134,6 +1316,26 @@ bool load6DailySummaries (const QString & path) {
         dailyData.indexHyp = float(rec->indexHyp) / 4.0F;
 
         DailySummaries[dailyData.start_time] = dailyData;
+
+/**** Previous loader did this:
+        if (!mach->sessionlist.contains(ts1)) { // Check if already imported
+            qDebug() << "Detected new Session" << ts1;
+            R.sess = new Session(mach, ts1);
+            R.sess->SetChanged(true);
+
+            R.sess->really_set_first(qint64(ts1) * 1000L);
+            R.sess->really_set_last(qint64(ts2) * 1000L);
+
+            if (data[49] != data[50]) {
+                R.sess->settings[CPAP_PressureMin] = R.pressureSetMin;
+                R.sess->settings[CPAP_PressureMax] = R.pressureSetMax;
+                R.sess->settings[CPAP_Mode] = MODE_APAP;
+            } else {
+                R.sess->settings[CPAP_Mode] = MODE_CPAP;
+                R.sess->settings[CPAP_Pressure] = R.pressureSetMin;
+            }
+            R.hasMaskPressure = false;
+***/
 
     } while (true);
 
@@ -1293,14 +1495,14 @@ int create6Sessions() {
 // Parse R.BIN for high resolution flow data
 ////////////////////////////////////////////////////////////////////////////////////////
 
-bool load6HighResData (const QString & path) {
+bool load6HighResData () {
 
     RollingFile rf;
     Session *sess = nullptr;
     unsigned int rec_ts1, previousRecBegin = 0;
     bool inSession = false; // true if we are adding data to this session
 
-    if (!rf.open(path+"/R.BIN")) {
+    if (!rf.open("R.BIN")) {
         qWarning() << "DV6 Unable to open R.BIN";
         return false;
     }
@@ -1806,14 +2008,14 @@ bool load6HighResData (const QString & path) {
 // Parse L.BIN for per minute data
 ////////////////////////////////////////////////////////////////////////////////////////
 
-bool load6PerMinute (const QString & path) {
+bool load6PerMinute () {
 
     RollingFile rf;
     Session *sess = nullptr;
     unsigned int rec_ts1, previousRecBegin = 0;
     bool inSession = false; // true if we are adding data to this session
 
-    if (!rf.open(path+"/L.BIN")) {
+    if (!rf.open("L.BIN")) {
         qWarning() << "DV6 Unable to open L.BIN";
         return false;
     }
@@ -1960,7 +2162,7 @@ bool load6PerMinute (const QString & path) {
 // Parse E.BIN for event data
 ////////////////////////////////////////////////////////////////////////////////////////
 
-bool load6EventData (const QString & path) {
+bool load6EventData () {
     RollingFile rf;
 
     Session *sess = nullptr;
@@ -1977,7 +2179,7 @@ bool load6EventData (const QString & path) {
     EventList * SN = nullptr;
     EventList * FL = nullptr;
 
-    if (!rf.open(path+"/E.BIN")) {
+    if (!rf.open("E.BIN")) {
         qWarning() << "DV6 Unable to open E.BIN";
         return false;
     }
@@ -2170,62 +2372,19 @@ int addSessions() {
 
 }
 
-// Returns empty QByteArray() on failure.
-QByteArray fileChecksum(const QString &fileName,
-                        QCryptographicHash::Algorithm hashAlgorithm)
-{
-    QFile f(fileName);
-    if (f.open(QFile::ReadOnly)) {
-        QCryptographicHash hash(hashAlgorithm);
-        if (hash.addData(&f)) {
-            return hash.result();
-        }
-    }
-    return QByteArray();
-}
-
-/****
-// Return the OSCAR date that the last data was written.
-// This will be considered to be the last day for which we have any data.
-// Adjust to get the correct date for sessions starting after midnight.
-QDate getLastDate () {
-    return QDate();
-}
-
-// Return date used within OSCAR, assuming day ends at noon
-QDate getOscarDate (QDateTime dt) {
-    QDate d = dt.date();
-    QTime tm = dt.time();
-    if (tm.hour() < 11)
-        d = d.addDays(-1);
-    return d;
-}
-***/
-
 ////////////////////////////////////////////////////////////////////////////////////////
 // Create backup of input files
-// Create dated backup files when necesaary
+// Create dated backup of settings file if changed
 ////////////////////////////////////////////////////////////////////////////////////////
 
 bool backup6 (const QString & path)  {
 
-    // Are backups enabled?
-    if (!p_profile->session->backupCardData())
+    if (rebuild_from_backups || !create_backups)
         return true;
 
-    QString backup_path = mach->getBackupPath();
-    QString history_path = backup_path + "/DV6/HISTORY";
-
-    // Compare QDirs rather than QStrings because separators may be different, especially on Windows.
-    // We want to check whether import and backup paths are the same, regardless of variations in the string representations.
     QDir ipath(path);
+    QDir cpath(card_path);
     QDir bpath(backup_path);
-
-    if (ipath == bpath) {
-        // Don't create backups if importing from backup folder
-        rebuild_from_backups = true;
-        return true;
-    }
 
     if ( ! bpath.exists()) {
         if ( ! bpath.mkpath(backup_path) ) {
@@ -2249,27 +2408,66 @@ bool backup6 (const QString & path)  {
     bool backup_settings = true;
 
     QStringList filters;
-    filters << "set_*.bin";
+
+    QFile settingsFile;
+    QString inputFile = cpath.absolutePath() + "/SET.BIN";
+    settingsFile.setFileName(inputFile);
+
+    filters << "SET_*.BIN";
     hpath.setNameFilters(filters);
     hpath.setFilter(QDir::Files);
-    QDir::Name | QDir::Reversed;
+    hpath.setSorting(QDir::Name | QDir::Reversed);
     QStringList fileNames = hpath.entryList(); // Get list of files
     if (! fileNames.isEmpty()) {
         QString lastFile = fileNames.first();
-        QString newFile = ipath.absolutePath() + "/set.bin";
-        qDebug() << "last settings file is" << lastFile << "new file is" << newFile;
-        QByteArray newMD5 = fileChecksum(newFile, QCryptographicHash::Md5);
-        QByteArray oldMD5 = fileChecksum(lastFile, QCryptographicHash::Md5);
+        qDebug() << "last settings file is" << lastFile << "new file is" << settingsFile;
+        QByteArray newMD5 = fileChecksum(settingsFile.fileName(), QCryptographicHash::Md5);
+        QByteArray oldMD5 = fileChecksum(hpath.absolutePath()+"/"+lastFile, QCryptographicHash::Md5);
         if (newMD5 == oldMD5)
             backup_settings = false;
     }
 
-    if (backup_settings) {
-        QString newFile = hpath.absolutePath() + "/set-" + "1234" + ".bin";
-        qDebug() << "history filename is" << newFile;
+    if (backup_settings && !DailySummaries.isEmpty()) {
+        DV6_S_Data ds = DailySummaries.last();
+        QString newFile = hpath.absolutePath() + "/SET_" + getNominalDate(ds.start_time).toString("yyyyMMdd") + ".BIN";
+        if (!settingsFile.copy(inputFile, newFile)) {
+            qWarning() << "DV6 backup could not copy" << inputFile << "to" << newFile << ", error code" << settingsFile.error() << settingsFile.errorString();
+        }
     }
 
     // We're done!
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Initialize DV6 environment
+////////////////////////////////////////////////////////////////////////////////////////
+
+bool init6Environment (const QString & path) {
+
+    // Create Machine database record if it doesn't exist already
+    mach = p_profile->CreateMachine(info);
+    if (mach == nullptr) {
+        qWarning() << "Could not create DV6 Machine data structure";
+        return false;
+    }
+
+    backup_path = mach->getBackupPath();
+    history_path = backup_path + "/HISTORY";
+
+    // Compare QDirs rather than QStrings because separators may be different, especially on Windows.
+    QDir ipath(path);
+    QDir bpath(backup_path);
+
+    if (ipath == bpath) {
+        // Don't create backups if importing from backup folder
+        rebuild_from_backups = true;
+        create_backups = false;
+    } else {
+        rebuild_from_backups = false;
+        create_backups = p_profile->session->backupCardData();
+    }
+
     return true;
 }
 
@@ -2279,37 +2477,34 @@ bool backup6 (const QString & path)  {
 
 int IntellipapLoader::OpenDV6(const QString & path)
 {
-    QString newpath = path + DV6_DIR;
+    card_path = path + DV6_DIR;
 
-    // Prime the machine database's info field with stuff relevant to this machine
+    // 1. Prime the machine database's info field with this machine
     info = newInfo();
 
-    // VER.BIN - Parse model number, serial, etc.
-    if (!load6VersionInfo(newpath))
+    // 2. VER.BIN - Parse model number, serial, etc. into info structure
+    if (!load6VersionInfo(card_path))
         return -1;
 
-    // Now, create Machine database record if it doesn't exist already
-    mach = p_profile->CreateMachine(info);
-    if (mach == nullptr) {
-        qWarning() << "Could not create Machine data structure";
-        return -1;
-    }
-
-    // SET.BIN - Parse settings file (which is only the latest settings)
-    if (!load6Settings(newpath))
+    // 3. Initialize rest of the DV6 loader environment
+    if (!init6Environment (path))
         return -1;
 
-    // S.BIN - Open and parse day summary list and create a list of days
-    if (!load6DailySummaries(newpath))
+    // 4. SET.BIN - Parse settings file (which is only the latest settings)
+    if (!load6Settings(card_path))
         return -1;
 
-    // Back up data files (must do after parsing VER.BIN, S.BIN, and creating Machine)
+    // 5. S.BIN - Open and parse day summary list and create a list of days
+    if (!load6DailySummaries())
+        return -1;
+
+    // 6. Back up data files (must do after parsing VER.BIN, S.BIN, and creating Machine)
     if (!backup6(path))
         return -1;
 
-    // U.BIN - Open and parse session list and create a list of session times
+    // 7. U.BIN - Open and parse session list and create a list of session times
     // (S.BIN must already be loaded)
-    if (!load6Sessions(newpath))
+    if (!load6Sessions())
         return -1;
 
     // Create OSCAR session list from session times and summary data
@@ -2317,15 +2512,15 @@ int IntellipapLoader::OpenDV6(const QString & path)
         return -1;
 
     // R.BIN - Open and parse flow data
-    if (!load6HighResData(newpath))
+    if (!load6HighResData())
         return -1;
 
     // L.BIN - Open and parse per minute data
-    if (!load6PerMinute(newpath))
+    if (!load6PerMinute())
         return -1;
 
     // E.BIN - Open and parse event data
-    if (!load6EventData(newpath))
+    if (!load6EventData())
         return -1;
 
     // Finalize input
