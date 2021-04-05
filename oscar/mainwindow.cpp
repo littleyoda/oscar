@@ -1806,50 +1806,100 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
 void MainWindow::on_actionPurge_Current_Day_triggered()
 {
+    this->purgeDay(MT_CPAP);
+}
+
+void MainWindow::on_actionPurgeCurrentDayOximetry_triggered()
+{
+    this->purgeDay(MT_OXIMETER);
+}
+
+void MainWindow::on_actionPurgeCurrentDaySleepStage_triggered()
+{
+    this->purgeDay(MT_SLEEPSTAGE);
+}
+
+void MainWindow::on_actionPurgeCurrentDayPosition_triggered()
+{
+    this->purgeDay(MT_POSITION);
+}
+
+void MainWindow::on_actionPurgeCurrentDayAllExceptNotes_triggered()
+{
+    this->purgeDay(MT_UNKNOWN);
+}
+
+void MainWindow::on_actionPurgeCurrentDayAll_triggered()
+{
+    this->purgeDay(MT_JOURNAL);
+}
+
+// Purge data for a given machine type.
+// Special handling: MT_JOURNAL == All data. MT_UNKNOWN == All except journal
+void MainWindow::purgeDay(MachineType type)
+{
     if (!daily)
         return;
     QDate date = daily->getDate();
-    qDebug() << "Purging CPAP data from" << date;
+    qDebug() << "Purging data from" << date;
     daily->Unload(date);
-    Day *day = p_profile->GetDay(date, MT_CPAP);
+    Day *day = p_profile->GetDay(date, MT_UNKNOWN);
     Machine *cpap = nullptr;
-    if (day)
-        cpap = day->machine(MT_CPAP);
+    if (!day)
+        return;
 
-    if (cpap) {
-        QList<Session *>::iterator s;
+    QList<Session *>::iterator s;
 
-        QList<Session *> list;
-        for (s = day->begin(); s != day->end(); ++s) {
-            Session *sess = *s;
+    QList<Session *> list;
+    for (s = day->begin(); s != day->end(); ++s) {
+        Session *sess = *s;
+        if (type == MT_JOURNAL || (type == MT_UNKNOWN && sess->type() != MT_JOURNAL) ||
+                sess->type() == type) {
+            list.append(*s);
+            qDebug() << "Purging session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+            qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
+            qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
             if (sess->type() == MT_CPAP) {
-                list.append(*s);
-                qDebug() << "Purging session ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
-                qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
-                qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
+                cpap = day->machine(MT_CPAP);
             }
+        } else {
+            qDebug() << "Skipping session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+        }
+    }
+
+    if (list.size() > 0) {
+        if (cpap) {
+            QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
+            rxcache.remove();
+
+            QFile sumfile(cpap->getDataPath()+"Summaries.xml.gz");
+            sumfile.remove();
         }
 
-        QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
-        rxcache.remove();
-
-        QFile sumfile(cpap->getDataPath()+"Summaries.xml.gz");
-        sumfile.remove();
-
 //        m->day.erase(m->day.find(date));
-
+        QSet<Machine *> machines;
         for (int i = 0; i < list.size(); i++) {
             Session *sess = list.at(i);
+            machines += sess->machine();
             sess->Destroy();    // remove the summary and event files
             delete sess;
         }
 
-        // save purge date where later import should start
-        QDate pd = cpap->purgeDate();
-        if (pd.isNull() || day->date() < pd)
-            cpap->setPurgeDate(day->date());
+        for (auto & mach : machines) {
+            mach->SaveSummaryCache();
+        }
+
+        if (cpap) {
+            // save purge date where later import should start
+            QDate pd = cpap->purgeDate();
+            if (pd.isNull() || day->date() < pd)
+                cpap->setPurgeDate(day->date());
+        }
+    } else {
+        // No data purged... could notify user?
+        return;
     }
-    day = p_profile->GetDay(date, MT_CPAP);
+    day = p_profile->GetDay(date, MT_UNKNOWN);
     Q_UNUSED(day);
 
     daily->clearLastDay();
