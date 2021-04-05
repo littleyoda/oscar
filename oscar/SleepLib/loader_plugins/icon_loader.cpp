@@ -66,6 +66,26 @@ bool FPIconLoader::Detect(const QString & givenpath)
         return false;
     }
 
+    // ICON serial numbers (directory names) are all digits (SleepStyle are mixed alpha and numeric)
+    QString serialDir(dir.path() + "/FPHCARE/ICON");
+    QDir iconDir(serialDir);
+
+    iconDir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    iconDir.setSorting(QDir::Name);
+    QFileInfoList flist = iconDir.entryInfoList();
+
+    bool ok;
+
+    for (int i = 0; i < flist.size(); i++) {
+        QFileInfo fi = flist.at(i);
+        QString filename = fi.fileName();
+
+        filename.toInt(&ok);
+
+        if (!ok) {
+            return false;
+        }
+    }
     return true;
 }
 
