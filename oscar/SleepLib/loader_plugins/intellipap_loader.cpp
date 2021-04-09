@@ -89,6 +89,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
     QString newpath = path + SL_DIR;
     QString filename;
 
+    qDebug() << "DV5 Loader started";
 
     //////////////////////////
     // Parse the Settings File
@@ -1281,7 +1282,7 @@ bool load6DailySummaries () {
 #ifdef DEBUG6
         qDebug() << "DV6 S.BIN start" << dailyData.start_time
                  << "stop" << dailyData.stop_time
-                 << "at pressure?" << dailyData.atpressure_time;
+                 << "written" << dailyData.written;
 #endif
 
         dailyData.hours = float(rec->hours) / 10.0F;
@@ -2050,18 +2051,18 @@ bool load6PerMinute () {
                        << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
             continue;
         }
-
+/****
         // Look for a gap in DV6_L records.  They should be at one minute intervals.
         // If there is a gap, we are probably in a new session
         if (inSession && ((rec_ts1 - previousRecBegin) > 60)) {
-//            qDebug() << "L.BIN record gap, current" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
-//                     << "previous" << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "L.BIN record gap, current" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                     << "previous" << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss");
             sess->set_last(maxleak->last());
             sess = nullptr;
             leak = maxleak = MV = TV = RR = Pressure = nullptr;
             inSession = false;
         }
-
+****/
         // Skip over sessions until we find one that this record is in
         while (rec_ts1 > sinfo->end) {
 #ifdef DEBUG6
@@ -2477,6 +2478,7 @@ bool init6Environment (const QString & path) {
 
 int IntellipapLoader::OpenDV6(const QString & path)
 {
+    qDebug() << "DV6 loader started";
     card_path = path + DV6_DIR;
 
     // 1. Prime the machine database's info field with this machine
