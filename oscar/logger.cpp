@@ -70,7 +70,9 @@ void initializeLogger()
         s_LoggerRunning.lock();  // wait until the thread begins running
         s_LoggerRunning.unlock();  // we no longer need the lock
     }
+#ifndef HARDLOG
     qInstallMessageHandler(MyOutputHandler);  // NOTE: comment this line out when debugging a crash, otherwise the deferred output will mislead you.
+#endif
     if (b) {
         qDebug() << "Started logging thread";
     } else {
