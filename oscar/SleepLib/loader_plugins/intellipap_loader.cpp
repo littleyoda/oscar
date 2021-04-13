@@ -923,12 +923,14 @@ private:
 
     int numWritten;     // Number of records written
     quint32 lastTimestamp;
+    unsigned int wrap_record;
 };
 
 bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {
     if (!create_backups)
         return true;
 
+#ifdef ROLLBACKUP
     this->filetype = filetype;
 
     QDir hpath(history_path);
@@ -971,17 +973,20 @@ bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {
             }
             record_length = hdr.recordLength;
 
-#ifdef ROLLBACKUP
             wrap_record = convertNum(hdr.recordStart);
             if (!histfile.seek(sizeof(DV6_HEADER) + (wrap_record-1) * record_length)) {
-                qWarning() << "DV6 RollingBackup unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
-                file.close();
+                qWarning() << "DV6 RollingBackup unable to make initial seek to record" << wrap_record
+                           << "in" + histfile.fileName() << histfile.error() << histfile.errorString();
+                histfile.close();
                 return false;
             }
-#endif
 
         }
     }
+#else
+    Q_UNUSED(filetype)
+    Q_UNUSED(newhdr)
+#endif
 
     return true;
 }
