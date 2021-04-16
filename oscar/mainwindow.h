@@ -268,6 +268,11 @@ class MainWindow : public QMainWindow
 
     //! \brief Destroy the CPAP data for the currently selected day, so it can be freshly imported again
     void on_actionPurge_Current_Day_triggered();
+    void on_actionPurgeCurrentDayOximetry_triggered();
+    void on_actionPurgeCurrentDaySleepStage_triggered();
+    void on_actionPurgeCurrentDayPosition_triggered();
+    void on_actionPurgeCurrentDayAllExceptNotes_triggered();
+    void on_actionPurgeCurrentDayAll_triggered();
 
     void on_action_Sidebar_Toggle_toggled(bool arg1);
 
@@ -372,6 +377,7 @@ private:
     QList<ImportPath> selectCPAPDataCards(const QString & prompt);
     void importCPAPDataCards(const QList<ImportPath> & datacards);
     void addMachineToMenu(Machine* mach, QMenu* menu);
+    void purgeDay(MachineType type);
 
 //    QString getWelcomeHTML();
     void FreeSessions();

@@ -2903,7 +2903,19 @@ p, li { white-space: pre-wrap; }
        <string>Purge ALL Machine Data</string>
       </property>
      </widget>
-     <addaction name="actionPurge_Current_Day"/>
+     <widget class="QMenu" name="menuPurge_Current_Selected_Day">
+      <property name="title">
+       <string>Purge &amp;Current Selected Day</string>
+      </property>
+      <addaction name="actionPurge_Current_Day"/>
+      <addaction name="actionPurgeCurrentDayOximetry"/>
+      <addaction name="actionPurgeCurrentDaySleepStage"/>
+      <addaction name="actionPurgeCurrentDayPosition"/>
+      <addaction name="separator"/>
+      <addaction name="actionPurgeCurrentDayAllExceptNotes"/>
+      <addaction name="actionPurgeCurrentDayAll"/>
+     </widget>
+     <addaction name="menuPurge_Current_Selected_Day"/>
      <addaction name="menuPurge_CPAP_Data"/>
      <addaction name="separator"/>
      <addaction name="menuPurge_Oximetry_Data"/>
@@ -3082,11 +3094,6 @@ p, li { white-space: pre-wrap; }
   <action name="actionChange_User">
    <property name="text">
     <string>Change &amp;User</string>
-   </property>
-  </action>
-  <action name="actionPurge_Current_Day">
-   <property name="text">
-    <string>Purge &amp;Current Selected Day</string>
    </property>
   </action>
   <action name="action_Sidebar_Toggle">
@@ -3316,6 +3323,41 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="visible">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionPurge_Current_Selected_Day">
+   <property name="text">
+    <string>Purge Current Selected Day</string>
+   </property>
+  </action>
+  <action name="actionPurge_Current_Day">
+   <property name="text">
+    <string>&amp;CPAP</string>
+   </property>
+  </action>
+  <action name="actionPurgeCurrentDayOximetry">
+   <property name="text">
+    <string>&amp;Oximetry</string>
+   </property>
+  </action>
+  <action name="actionPurgeCurrentDaySleepStage">
+   <property name="text">
+    <string>&amp;Sleep Stage</string>
+   </property>
+  </action>
+  <action name="actionPurgeCurrentDayPosition">
+   <property name="text">
+    <string>&amp;Position</string>
+   </property>
+  </action>
+  <action name="actionPurgeCurrentDayAllExceptNotes">
+   <property name="text">
+    <string>&amp;All except Notes</string>
+   </property>
+  </action>
+  <action name="actionPurgeCurrentDayAll">
+   <property name="text">
+    <string>All including &amp;Notes</string>
    </property>
   </action>
  </widget>
