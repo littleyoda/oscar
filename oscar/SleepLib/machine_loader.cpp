@@ -316,3 +316,26 @@ bool compressFile(QString infile, QString outfile)
     return true;
 }
 
+int MachineLoader::Open(const QStringList & paths)
+{
+    int i, skipped = 0;
+    int size = paths.size();
+    for (i=0; i < size; i++) {
+        if (isAborted()) {
+            break;
+        }
+        QString filename = paths[i];
+
+        int res = OpenFile(filename);
+        if (res < 0) {
+            break;
+        }
+        if (res == 0) {
+            // Should we report on skipped count?
+            skipped++;
+        }
+        emit setProgressValue(i+1);
+        QCoreApplication::processEvents();
+    }
+    return i;
+}

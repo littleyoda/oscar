@@ -56,8 +56,17 @@ class MachineLoader: public QObject
     //! \brief Override this to scan path and detect new machine data
     virtual int Open(const QString & path) = 0;
 
+    //! \brief Load all of the given files and update dialog with progress (for non-CPAP devices)
+    virtual int Open(const QStringList & paths);
+
+    //! \brief Load a specific (non-CPAP) file
+    virtual int OpenFile(const QString & path) { Q_UNUSED(path); return 0; }
+
     //! \brief Override to returns the Version number of this MachineLoader
     virtual int Version() = 0;
+
+    //! \brief Name filter for files for this loader
+    virtual QStringList getNameFilter() { return QStringList(""); }
 
     // !\\brief Used internally by loaders, override to return base MachineInfo record
     virtual MachineInfo newInfo() { return MachineInfo(); }

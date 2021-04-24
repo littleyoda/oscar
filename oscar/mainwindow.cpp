@@ -2311,64 +2311,14 @@ void MainWindow::doReprocessEvents()
 
 void MainWindow::on_actionImport_ZEO_Data_triggered()
 {
-    QFileDialog w;
-    w.setFileMode(QFileDialog::ExistingFiles);
-    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setNameFilters(QStringList("Zeo CSV File (*.csv)"));
-
     ZEOLoader zeo;
-
-    if (w.exec() == QFileDialog::Accepted) {
-        QString filename = w.selectedFiles()[0];
-
-        qDebug() << "Loading ZEO data from" << filename;
-        int c = zeo.OpenFile(filename);
-        if (c > 0) {
-            Notify(tr("Imported %1 ZEO session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
-            qDebug() << "Imported" << c << "ZEO sessions";
-            PopulatePurgeMenu();
-            if (overview) overview->ReloadGraphs();
-            if (welcome) welcome->refreshPage();
-        } else if (c == 0) {
-            Notify(tr("Already up to date with ZEO data at\n\n%1").arg(filename), tr("Up to date"));
-        } else {
-            Notify(tr("Couldn't find any valid ZEO CSV data at\n\n%1").arg(filename),tr("Import Problem"));
-        }
-
-        daily->LoadDate(daily->getDate());
-    }
+    importNonCPAP(zeo);
 }
 
 void MainWindow::on_actionImport_Dreem_Data_triggered()
 {
-    QFileDialog w;
-    w.setFileMode(QFileDialog::ExistingFiles);
-    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setNameFilters(QStringList("Dreem CSV File (*.csv)"));
-
     DreemLoader dreem;
-
-    if (w.exec() == QFileDialog::Accepted) {
-        QString filename = w.selectedFiles()[0];
-
-        qDebug() << "Loading Dreem data from" << filename;
-        int c = dreem.OpenFile(filename);
-        if (c > 0) {
-            Notify(tr("Imported %1 Dreem session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
-            qDebug() << "Imported" << c << "Dreem sessions";
-            PopulatePurgeMenu();
-            if (overview) overview->ReloadGraphs();
-            if (welcome) welcome->refreshPage();
-        } else if (c == 0) {
-            Notify(tr("Already up to date with Dreem data at\n\n%1").arg(filename), tr("Up to date"));
-        } else {
-            Notify(tr("Couldn't find any valid Dreem CSV data at\n\n%1").arg(filename),tr("Import Problem"));
-        }
-
-        daily->LoadDate(daily->getDate());
-    }
+    importNonCPAP(dreem);
 }
 
 void MainWindow::on_actionImport_RemStar_MSeries_Data_triggered()
@@ -2434,102 +2384,70 @@ void MainWindow::on_actionChange_Data_Folder_triggered()
     RestartApplication(false, "-d");
 }
 
-void MainWindow::on_actionImport_Somnopose_Data_triggered()
+void MainWindow::importNonCPAP(MachineLoader &loader)
 {
     QFileDialog w;
     w.setFileMode(QFileDialog::ExistingFiles);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
+#if defined(Q_OS_WIN)
+    // Windows can't handle Viatom name filter - use non-native for all non-CPAP loaders.
     w.setOption(QFileDialog::DontUseNativeDialog, true);
-    w.setNameFilters(QStringList("Somnopause CSV File (*.csv)"));
+#endif
+    w.setNameFilters(loader.getNameFilter());
 
-    SomnoposeLoader somno;
     // Display progress if we have more than 1 file to load...
     ProgressDialog progress(this);
 
     if (w.exec() == QFileDialog::Accepted) {
-        int i, skipped = 0;
-        int size = w.selectedFiles().size();
+        QStringList files = w.selectedFiles();
+        int size = files.size();
         if (size > 1) {
             progress.setMessage(QObject::tr("Importing Sessions..."));
             progress.setProgressMax(size);
             progress.setProgressValue(0);
+            progress.addAbortButton();
             progress.setWindowModality(Qt::ApplicationModal);
+            connect(&loader, SIGNAL(setProgressValue(int)), &progress, SLOT(setProgressValue(int)));
+            connect(&progress, SIGNAL(abortClicked()), &loader, SLOT(abortImport()));
             progress.open();
             QCoreApplication::processEvents();
         }
-        for (i=0; i < size; i++) {
-            QString filename = w.selectedFiles()[i];
-
-            int res = somno.OpenFile(filename);
-            if (!res) {
-                if (i == 0) {
-                    Notify(tr("There was a problem opening Somnopose Data File: ") + filename);
-                    return;
-                } else {
-                    Notify(tr("Somnopause Data Import of %1 file(s) complete").arg(i) + "\n\n" +
-                           tr("There was a problem opening Somnopose Data File: ") + filename,
-                           tr("Somnopose Import Partial Success"));
-                    break;
-                }
-            }
-            if (res < 0) {
-                // Should we report on skipped count?
-                skipped++;
-            }
-            progress.setProgressValue(i+1);
+        QString name = loader.loaderName();
+        int res = loader.Open(files);
+        if (size > 1) {
+            disconnect(&loader, SIGNAL(setProgressValue(int)), &progress, SLOT(setProgressValue(int)));
+            disconnect(&progress, SIGNAL(abortClicked()), &loader, SLOT(abortImport()));
+            progress.close();
             QCoreApplication::processEvents();
         }
-
-        if (i == size) {
-            Notify(tr("Somnopause Data Import complete"));
+        if (res == 0) {
+            Notify(tr("There was a problem opening %1 Data File: %2").arg(name, files[0]));
+            return;
+        } else if (res < size){
+            Notify(tr("%1 Data Import of %2 file(s) complete").arg(name).arg(res) + "\n\n" +
+                   tr("There was a problem opening %1 Data File: %2").arg(name, files[res]),
+                   tr("%1 Import Partial Success").arg(name));
+        } else {
+            Notify(tr("%1 Data Import complete").arg(name));
         }
         PopulatePurgeMenu();
         if (overview) overview->ReloadGraphs();
         if (welcome) welcome->refreshPage();
         daily->LoadDate(daily->getDate());
     }
+}
 
+void MainWindow::on_actionImport_Somnopose_Data_triggered()
+{
+    SomnoposeLoader somno;
+    importNonCPAP(somno);
 }
 
 void MainWindow::on_actionImport_Viatom_Data_triggered()
 {
     ViatomLoader viatom;
-
-    QFileDialog w;
-    w.setFileMode(QFileDialog::AnyFile);
-    w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    w.setOption(QFileDialog::ShowDirsOnly, false);
-    w.setNameFilters(viatom.getNameFilter());
-#if defined(Q_OS_WIN)
-    // Windows can't handle this name filter.
-    w.setOption(QFileDialog::DontUseNativeDialog, true);
-    // And since the non-native dialog can't select both directories and files,
-    // it needs the following to enable selecting multiple files.
-    w.setFileMode(QFileDialog::ExistingFiles);
-#endif
-
-    if (w.exec() == QFileDialog::Accepted) {
-        QString filename = w.selectedFiles()[0];
-        if (w.selectedFiles().size() > 1) {
-            // The user selected multiple files in a directory, so use the parent directory as the filename.
-            filename = QFileInfo(filename).absoluteDir().canonicalPath();
-        }
-
-        int c = viatom.Open(filename);
-        if (c > 0) {
-            Notify(tr("Imported %1 oximetry session(s) from\n\n%2").arg(c).arg(filename), tr("Import Success"));
-            PopulatePurgeMenu();
-            if (overview) overview->ReloadGraphs();
-            if (welcome) welcome->refreshPage();
-        } else if (c == 0) {
-            Notify(tr("Already up to date with oximetry data at\n\n%1").arg(filename), tr("Up to date"));
-        } else {
-            Notify(tr("Couldn't find any valid data at\n\n%1").arg(filename),tr("Import Problem"));
-        }
-
-        daily->LoadDate(daily->getDate());
-    }
+    importNonCPAP(viatom);
 }
 
 void MainWindow::GenerateStatistics()

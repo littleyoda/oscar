@@ -43,15 +43,6 @@ DreemLoader::Detect(const QString & path)
     return false;
 }
 
-int
-DreemLoader::Open(const QString & dirpath)
-{
-    qDebug() << "DreemLoader::Open(" << dirpath << ")";
-    // Dreem currently crams everything into a single file like Zeo did.
-    // See OpenFile.
-    return false;
-}
-
 int DreemLoader::OpenFile(const QString & filename)
 {
     if (!openCSV(filename)) {

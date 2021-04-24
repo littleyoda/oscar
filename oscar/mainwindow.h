@@ -378,6 +378,7 @@ private:
     void importCPAPDataCards(const QList<ImportPath> & datacards);
     void addMachineToMenu(Machine* mach, QMenu* menu);
     void purgeDay(MachineType type);
+    void importNonCPAP(MachineLoader &loader);
 
 //    QString getWelcomeHTML();
     void FreeSessions();
