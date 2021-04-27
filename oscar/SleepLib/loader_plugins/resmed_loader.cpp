@@ -3048,6 +3048,13 @@ void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_ma
 void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code,
                                long recs, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
 {
+    using namespace schema;
+    ChannelList channels;
+
+    QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+    bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+                        (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+
     if (t_min == t_max) {
         t_min = es.physical_minimum;
         t_max = es.physical_maximum;
@@ -3065,10 +3072,10 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 
     int startpos = 0;
 
-    if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
-        startpos = 20; // Shave the first 40 seconds of pressure data
-        tt += rate * startpos;
-    }
+//  if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
+//      startpos = 20; // Shave the first 40 seconds of pressure data
+//      tt += rate * startpos;
+//  }
 
     qint16 *sptr = es.dataArray;
     qint16 *eptr = sptr + recs;
@@ -3088,7 +3095,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
                 max = tmp;
                 el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
                 el->AddEvent(tt, last);
-                qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                if (forceDebug)
+                    qDebug() << "New EventList:" << channels[code].code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
                 tt += rate;
                 break;
             }
@@ -3096,8 +3104,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         } while (sptr < eptr);
 
         if ( ! el) {
-            qWarning() << "No eventList for" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code (hex)"
-                            << QString::number(code, 16);
+            qWarning() << "No eventList for" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
+                            << channels[code].code();
 #ifdef DEBUG_EFFICIENCY
             timeMutex.lock();
             timeInTimeDelta += time.elapsed();
@@ -3127,10 +3135,11 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         sess->setPhysMin(code, es.physical_minimum);
         sess->setPhysMax(code, es.physical_maximum);
         sess->updateLast(tt);
-        qDebug() << "EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+        if (forceDebug)
+            qDebug() << "EventList:" << channels[code].code() << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
     } else {
-        qDebug() << "not enough records for EventList" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
-                            << QString::number(code, 16);
+        qWarning() << "not enough records for EventList" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
+                            << channels[code].code();
     }
 
 #ifdef DEBUG_EFFICIENCY
