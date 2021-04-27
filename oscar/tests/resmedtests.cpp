@@ -57,7 +57,7 @@ static void parseAndEmitSessionYaml(const QString & path)
     // necessary for testing. Both are used for now in order to introduce the minimal
     // set of changes into the Resmed loader needed for testing.
     s_currentPath = path;
-    s_loader->Open(path, emitSessionYaml);
+    s_loader->OpenWithCallback(path, emitSessionYaml);
 }
 
 void ResmedTests::testSessionsToYaml()

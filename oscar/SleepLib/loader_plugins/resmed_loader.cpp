@@ -251,7 +251,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber );                    // forward
 
-int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)                       // alternate for unit testing
+int ResmedLoader::OpenWithCallback(const QString & dirpath, ResDaySaveCallback s)               // alternate for unit testing
 {
     ResDaySaveCallback origCallback = saveCallback;
     saveCallback = s;

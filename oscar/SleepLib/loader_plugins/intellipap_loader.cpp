@@ -914,16 +914,16 @@ public:
     bool save(QByteArray dataBA);  // save the next record in the file
 
 private:
-    DV6_HEADER hdr;       // file header
+    //DV6_HEADER hdr;       // file header
     QString filetype;
     QFile hFile;
 
-    int record_length;      // Length of record block in incoming file
-    const int maxHistFileSize = 20*10e6;   // Maximum size of file before we create a new file
+    //int record_length;      // Length of record block in incoming file
+    //const int maxHistFileSize = 20*10e6;   // Maximum size of file before we create a new file
 
-    int numWritten;     // Number of records written
-    quint32 lastTimestamp;
-    unsigned int wrap_record;
+    //int numWritten;     // Number of records written
+    //quint32 lastTimestamp;
+    //unsigned int wrap_record;
 };
 
 bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {

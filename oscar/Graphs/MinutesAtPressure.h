@@ -159,8 +159,8 @@ private:
     qint64 m_lastmaxx;
     QPoint last_mouse=QPoint(0,0);
 
-    EventDataType m_last_height=0;     // re-calculate only when needed.
-    int m_last_peaktime=0;      // re-calculate only when needed.
+    //EventDataType m_last_height=0;     // re-calculate only when needed.
+    //int m_last_peaktime=0;      // re-calculate only when needed.
 
     bool isEnabled(ChannelID id) ;
     QString topBarLabel;

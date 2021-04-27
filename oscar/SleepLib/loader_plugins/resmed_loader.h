@@ -134,7 +134,7 @@ class ResmedLoader : public CPAPLoader
     volatile int sessionCount;
     static void SaveSession(ResmedLoader* loader, Session* session);
     ResDaySaveCallback saveCallback;
-    int Open(const QString & dirpath, ResDaySaveCallback s);
+    int OpenWithCallback(const QString & dirpath, ResDaySaveCallback s);
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals
