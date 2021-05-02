@@ -251,7 +251,7 @@ void backupSTRfiles( const QString strpath, const QString importPath, const QStr
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber );                    // forward
 
-int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)                       // alternate for unit testing
+int ResmedLoader::OpenWithCallback(const QString & dirpath, ResDaySaveCallback s)               // alternate for unit testing
 {
     ResDaySaveCallback origCallback = saveCallback;
     saveCallback = s;
@@ -3076,6 +3076,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 
     int startpos = 0;
 
+//  There's no reason to skip the first 40 seconds of slow data
 //  if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
 //      startpos = 20; // Shave the first 40 seconds of pressure data
 //      tt += rate * startpos;

@@ -7,10 +7,11 @@
  * for more details. */
 
 //********************************************************************************************
-// IMPORTANT!!!
-//********************************************************************************************
-// Please INCREMENT the somnopose_data_version in somnopose_loader.h when making changes to this loader
-// that change loader behaviour or modify channels.
+// Please only INCREMENT the somnopose_data_version in somnopose_loader.h when making changes
+// that change loader behaviour or modify channels in a manner that fixes old data imports.
+// Note that changing the data version will require a reimport of existing data for which OSCAR
+// does not keep a backup - so it should be avoided if possible.
+// i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
 #include <QDir>
@@ -26,28 +27,6 @@ SomnoposeLoader::SomnoposeLoader()
 SomnoposeLoader::~SomnoposeLoader()
 {
 }
-int SomnoposeLoader::Open(const QString & dirpath)
-{
-    QString newpath;
-
-    QString dirtag = "somnopose";
-
-    QString path(dirpath);
-    path = path.replace("\\", "/");
-
-    if (path.toLower().endsWith("/" + dirtag)) {
-        return 0;
-        //newpath=path;
-    } else {
-        newpath = path + "/" + dirtag.toUpper();
-    }
-
-    //QString filename;
-
-    // Somnopose folder structure detection stuff here.
-
-    return 0; // number of machines affected
-}
 
 int SomnoposeLoader::OpenFile(const QString & filename)
 {
@@ -56,10 +35,10 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     if (filename.toLower().endsWith(".csv")) {
         if (!file.open(QFile::ReadOnly)) {
             qDebug() << "Couldn't open Somnopose data file" << filename;
-            return 0;
+            return -1;
         }
     } else {
-        return 0;
+        return -1;
     }
 
     qDebug() << "Opening file" << filename;
@@ -106,12 +85,12 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     // Check we have all fields available
     if (col_timestamp < 0) {
         qDebug() << "Header missing timestamp";
-        return 0;
+        return -1;
     }
 
     if ((col_inclination < 0) && (col_orientation < 0) && (col_movement < 0)) {
         qDebug() << "Header missing all of inclination, orientation, movement (at least one must be present)";
-        return 0;
+        return -1;
     }
 
     QDateTime epoch(QDate(2001, 1, 1));
@@ -168,7 +147,7 @@ int SomnoposeLoader::OpenFile(const QString & filename)
 
             if (mach->SessionExists(sid)) {
                 qDebug() << "File " << filename << " already loaded... skipping";
-                return -1; // Already imported
+                return 0; // Already imported
             }
 
             sess = new Session(mach, sid);
@@ -221,7 +200,7 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         p_profile->StoreMachines();
     }
 
-    return true;
+    return 1;
 }
 
 

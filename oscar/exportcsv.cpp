@@ -248,14 +248,13 @@ void ExportCSV::on_exportButton_clicked()
                 data += sep + QString::number(day->size(), 10);
                 data += sep + start.toString(Qt::ISODate);
                 data += sep + end.toString(Qt::ISODate);
-                int time = day->total_time() / 1000L;
+                // Given this is a CPAP specific report, just report CPAP hours
+                int time = int(day->hours(MT_CPAP) * 3600L);
                 int h = time / 3600;
                 int m = int(time / 60) % 60;
                 int s = int(time) % 60;
                 data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
-                float ahi = day->count(CPAP_Obstructive) + day->count(CPAP_Hypopnea) + day->count(
-                                CPAP_Apnea) + day->count(CPAP_ClearAirway);
-                ahi /= day->hours();
+                float ahi = day->calcAHI();
                 data += sep + QString::number(ahi, 'f', 3);
 
                 for (int i = 0; i < countlist.size(); i++) {

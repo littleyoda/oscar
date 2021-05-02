@@ -28,7 +28,6 @@ void gLineOverlayBar::paint(QPainter &painter, gGraph &w, const QRegion &region)
     if (!schema::channel[m_code].enabled())
         return;
 
-
     int left = region.boundingRect().left();
     int topp = region.boundingRect().top(); // FIXME: Misspelling intentional.
     double width = region.boundingRect().width();
@@ -42,10 +41,12 @@ void gLineOverlayBar::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
     double xx = w.max_x - w.min_x;
     //double yy = w.max_y - w.min_y;
+
+    if (xx <= 0) { return; }
+
     double jj = width / xx;
 
 
-    if (xx <= 0) { return; }
 
     double x1, x2;
 
@@ -138,12 +139,20 @@ void gLineOverlayBar::paint(QPainter &painter, gGraph &w, const QRegion &region)
                     x1 = jj * double(X - w.min_x);
                     x2 = jj * double(Y - w.min_x);
 
-                    x2 += (int(x1)==int(x2)) ? 1 : 0;
-
                     x2 = qMax(0.0, x2)+left;
                     x1 = qMin(width, x1)+left;
 
-                    painter.fillRect(QRect(x2, start_py, x1-x2, height), brush);
+                    // x2 represents the begining of a span in pixels
+                    // x1 represent the end of the span in pixels
+                    // BUG HERE
+                    //x2 += (int(x1)==int(x2)) ? 1 : 0;
+                    // Fixed BY 
+                    int duration = x1-x2;
+                    if (duration<2) duration=2;     // display minial span with 2 pixels.
+                    x2 =x1-duration;
+
+                    painter.fillRect(QRect(x2, start_py, duration, height), brush);
+
                 }
             }/* else if (m_flt == FT_Dot) {
                 ////////////////////////////////////////////////////////////////////////////

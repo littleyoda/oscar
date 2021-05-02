@@ -314,6 +314,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "1030X150", 3, 6, "DreamStation BiPAP S/T 30 with AAM" },
     { "1130X110", 3, 6, "DreamStation BiPAP AVAPS 30" },
     { "1131X150", 3, 6, "DreamStation BiPAP AVAPS 30 AE" },
+    { "1130X200", 3, 6, "DreamStation BiPAP AVAPS 30" },
     
     { "", 0, 0, "" },
 };
@@ -6213,7 +6214,7 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                 case 2:  // Breath Rate (fixed BPM)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
-                    if (breath_rate < 9 || breath_rate > 13) UNEXPECTED_VALUE(breath_rate, "9-13");
+                    if (breath_rate < 9 || breath_rate > 15) UNEXPECTED_VALUE(breath_rate, "9-15");
                     if (timed_inspiration < 8 || timed_inspiration > 20) UNEXPECTED_VALUE(timed_inspiration, "8-20");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));
@@ -6248,17 +6249,22 @@ bool PRS1DataChunk::ParseSettingsF3V6(const unsigned char* data, int size)
                     // Rise time
                     if (data[pos] < 1 || data[pos] > 6) UNEXPECTED_VALUE(data[pos], "1-6");  // 1-6 have been seen
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME, data[pos]));
+                } else {
+                    UNEXPECTED_VALUE(flexmode, "BiFlex or RiseTime");
                 }
                 // Timed inspiration specified in the backup breath rate.
                 break;
-            case 0x2f:  // Rise Time lock? (was flex lock on F0V6, 0x80 for locked)
+            case 0x2f:  // Flex / Rise Time lock
                 CHECK_VALUE(len, 1);
-                if (cpapmode == PRS1_MODE_S) {
+                if (flexmode == FLEX_BiFlex) {
+                    CHECK_VALUE(cpapmode, PRS1_MODE_S);
                     CHECK_VALUES(data[pos], 0, 0x80);  // Bi-Flex Lock
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_FLEX_LOCK, data[pos] != 0));
+                } else if (flexmode == FLEX_RiseTime) {
+                    CHECK_VALUES(data[pos], 0, 0x80);  // Rise Time Lock
+                    this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, data[pos] != 0));
                 } else {
-                    CHECK_VALUE(data[pos], 0);  // Rise Time Lock? not yet observed on F3V6
-                    //this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_RISE_TIME_LOCK, data[pos] != 0));
+                    UNEXPECTED_VALUE(flexmode, "BiFlex or RiseTime");
                 }
                 break;
             case 0x35:  // Humidifier setting
@@ -7147,7 +7153,7 @@ void PRS1DataChunk::ParseHumidifierSettingV3(unsigned char byte1, unsigned char 
         } else if (humidadaptive) {
             // All humidity levels seen.
         } else if (humidfixed) {
-            if (humidlevel == 0) UNEXPECTED_VALUE(humidlevel, "1-5");
+            // All humidity levels seen.
         }
     }
 }

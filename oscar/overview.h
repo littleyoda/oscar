@@ -50,7 +50,7 @@ class Overview : public QWidget
     void ResetFont();
 
     //! \brief Recalculates Overview chart info, but keeps the date set
-    void ResetGraphs();
+    //void ResetGraphs();
 
     //! \brief Reset graphs to uniform heights
     void ResetGraphLayout();
@@ -80,7 +80,7 @@ class Overview : public QWidget
     //! \brief List of SummaryCharts shown on the overview page
     QVector<SummaryChart *> OverviewCharts;
 
-    void ResetGraph(QString name);
+    //void ResetGraph(QString name);
 
     void RebuildGraphs(bool reset = true);
 
@@ -128,6 +128,7 @@ class Overview : public QWidget
     QIcon *icon_on;
     QIcon *icon_off;
     MyLabel *dateLabel;
+    bool customMode=false;
 
     //! \brief Updates the calendar highlighting for the calendar object for this date.
     void UpdateCalendarDay(QDateEdit *calendar, QDate date);

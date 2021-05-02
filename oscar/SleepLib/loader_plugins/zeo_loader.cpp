@@ -8,10 +8,11 @@
  * for more details. */
 
 //********************************************************************************************
-// IMPORTANT!!!
-//********************************************************************************************
-// Please INCREMENT the zeo_data_version in zel_loader.h when making changes to this loader
-// that change loader behaviour or modify channels.
+// Please only INCREMENT the zeo_data_version in zeo_loader.h when making changes
+// that change loader behaviour or modify channels in a manner that fixes old data imports.
+// Note that changing the data version will require a reimport of existing data for which OSCAR
+// does not keep a backup - so it should be avoided if possible.
+// i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
 #include <QDir>
@@ -29,31 +30,6 @@ ZEOLoader::ZEOLoader()
 ZEOLoader::~ZEOLoader()
 {
     closeCSV();
-}
-
-int ZEOLoader::Open(const QString & dirpath)
-{
-    QString newpath;
-
-    QString dirtag = "zeo";
-
-    // Could Scan the ZEO folder for a list of CSVs
-
-    QString path(dirpath);
-    path = path.replace("\\", "/");
-
-    if (path.toLower().endsWith("/" + dirtag)) {
-        return 0;
-        //newpath=path;
-    } else {
-        newpath = path + "/" + dirtag.toUpper();
-    }
-
-    //QString filename;
-
-    // ZEO folder structure detection stuff here.
-
-    return 0; // number of machines affected
 }
 
 /*15233: "Sleep Date"

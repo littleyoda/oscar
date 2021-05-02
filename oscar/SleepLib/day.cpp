@@ -182,7 +182,7 @@ QString Day::calcMiddleLabel(ChannelID code)
 }
 QString Day::calcMaxLabel(ChannelID code)
 {
-    return QObject::tr("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("Peak") : STR_TR_Max).arg(schema::channel[code].label());
+    return QObject::tr("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
 }
 QString Day::calcPercentileLabel(ChannelID code)
 {

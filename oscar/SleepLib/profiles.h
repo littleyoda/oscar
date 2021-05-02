@@ -369,6 +369,8 @@ const QString STR_US_PrefCalcMax = "PrefCalcMax";
 const QString STR_US_ShowUnknownFlags = "ShowUnknownFlags";
 const QString STR_US_StatReportMode = "StatReportMode";
 const QString STR_US_LastOverviewRange = "LastOverviewRange";
+const QString STR_US_CustomOverviewRangeStart = "CustomOverviewRangeStart";
+const QString STR_US_CustomOverviewRangeEnd = "CustomOverviewRangeEnd";
 
 // Values for StatReportMode
 const int STAT_MODE_STANDARD = 0;
@@ -742,6 +744,8 @@ class UserSettings : public PrefSettings
     int statReportMode() const { return getPref(STR_US_StatReportMode).toInt(); }
     inline bool showUnknownFlags() const { return m_showUnownFlags; }
     int lastOverviewRange() const { return getPref(STR_US_LastOverviewRange).toInt(); }
+    QDate customOverviewRangeStart () const { return getPref(STR_US_CustomOverviewRangeStart).toDate(); }
+    QDate customOverviewRangeEnd () const { return getPref(STR_US_CustomOverviewRangeEnd).toDate(); }
 
     void setUnitSystem(UnitSystem us) { setPref(STR_US_UnitSystem, (int)us); }
     void setEventWindowSize(double size) { setPref(STR_US_EventWindowSize, size); }
@@ -754,6 +758,8 @@ class UserSettings : public PrefSettings
     void setStatReportMode(int i) { setPref(STR_US_StatReportMode, i); }
     void setShowUnknownFlags(bool b) { setPref(STR_US_ShowUnknownFlags, m_showUnownFlags=b); }
     void setLastOverviewRange(int i) { setPref(STR_US_LastOverviewRange, i); }
+    void setCustomOverviewRangeStart(QDate i) { setPref(STR_US_CustomOverviewRangeStart, i); }
+    void setCustomOverviewRangeEnd(QDate i) { setPref(STR_US_CustomOverviewRangeEnd, i); }
 
     bool m_calculateRDI, m_showUnownFlags,  m_skipEmptyDays;
     int m_prefCalcMiddle, m_prefCalcMax;

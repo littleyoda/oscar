@@ -478,10 +478,6 @@ class PRS1Loader : public CPAPLoader
                       quint16 size, int family, int familyVersion);
 
 
-
-    //! \brief Open a PRS1 data file, and break into data chunks, delivering them to the correct parser.
-    bool OpenFile(Machine *mach, const QString & filename);
-
     QHash<SessionID, Session *> extra_session;
 
     //! \brief PRS1 Data files can store multiple sessions, so store them in this list for later processing.
