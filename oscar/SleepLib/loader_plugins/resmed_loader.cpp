@@ -2889,56 +2889,59 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     int emptycnt = 0;
     EventList *a = nullptr;
     double rate;
-    long recs;
+    long samples;
     ChannelID code;
+    bool square = AppSetting->squareWavePlots();
     // The following is a hack to skip the multiple uses of Ti and Te by Resmed for signal labels
     // It should be replaced when code in resmed_info class changes the labels to be unique
     bool found_Ti_code = false;
     bool found_Te_code = false;
 
     QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
-    bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
-                        (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
 
     for (auto & es : edf.edfsignals) {
         a = nullptr;
-        recs = es.sampleCnt * edf.GetNumDataRecords();
+        samples = es.sampleCnt * edf.GetNumDataRecords();
 
-        if (recs <= 0)
+        if (samples <= 0)
             continue;
 
-        rate = double(duration) / double(recs);
+        rate = double(duration) / double(samples);
 
         //qDebug() << "EVE:" << es.digital_maximum << es.digital_minimum << es.physical_maximum << es.physical_minimum << es.gain;
         if (forceDebug) {
             qDebug() << "Session" << sessionStartDT.toString() << filename.section("/", -2, -1) << "signal" << es.label;
+            qDebug() << "\tSecond/rec:" << edf.GetDurationMillis()/1000 << "Samples/rec:" << es.sampleCnt;
         }
         if (matchSignal(CPAP_Snore, es.label)) {
             code = CPAP_Snore;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_Pressure, es.label)) {
             code = CPAP_Pressure;
             es.physical_maximum = 25;
             es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IPAP, es.label)) {
             code = CPAP_IPAP;
             es.physical_maximum = 25;
             es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_EPAP, es.label)) { // Expiratory Pressure
             code = CPAP_EPAP;
             es.physical_maximum = 25;
             es.physical_minimum = 4;
 
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         }  else if (matchSignal(CPAP_MinuteVent,es.label)) {
             code = CPAP_MinuteVent;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_RespRate, es.label)) {
             code = CPAP_RespRate;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
         } else if (matchSignal(CPAP_TidalVolume, es.label)) {
             code = CPAP_TidalVolume;
             es.gain *= 1000.0;
@@ -2946,7 +2949,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             es.physical_minimum *= 1000.0;
 //          es.digital_maximum*=1000.0;
 //          es.digital_minimum*=1000.0;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_Leak, es.label)) {
             code = CPAP_Leak;
             es.gain *= 60.0;
@@ -2955,18 +2958,18 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          es.digital_maximum*=60.0;
 //          es.digital_minimum*=60.0;
             es.physical_dimension = "L/M";
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0, true);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, true);
             sess->setPhysMax(code, 120.0);
             sess->setPhysMin(code, 0);
         } else if (matchSignal(CPAP_FLG, es.label)) {
             code = CPAP_FLG;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_MaskPressure, es.label)) {
             code = CPAP_MaskPressure;
             es.physical_maximum = 25;
             es.physical_minimum = 4;
 
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IE, es.label)) { //I:E ratio
             code = CPAP_IE;
 //          es.gain /= 100.0;
@@ -2975,8 +2978,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          qDebug() << "IE Gain, Max, Min" << es.gain << es.physical_maximum << es.physical_minimum;
 //          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
             // There are TWO of these with the same label on 36037, 36039, 36377 and others
@@ -2985,8 +2988,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
                 continue;
             found_Ti_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Te, es.label)) {
             code = CPAP_Te;
             // There are TWO of these with the same label on my VPAP Adapt 36037
@@ -2994,23 +2997,23 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
                 continue;
             found_Te_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_TgMV, es.label)) {
             code = CPAP_TgMV;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (es.label == "Va") {  // Signal used in 36039... What to do with it???
             a = nullptr;                // We'll skip it for now
         } else if (es.label == "") { // What the hell resmed??
         // these empty lables should be changed in resmed_EDFInfo to something unique
             if (emptycnt == 0) {
                 code = RMS9_E01;
-//                ToTimeDelta(sess, edf, es, code, recs, duration);
+//                ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
             } else if (emptycnt == 1) {
                 code = RMS9_E02;
-//                ToTimeDelta(sess, edf, es, code, recs, duration);
+//                ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
             } else {
                 qDebug() << "Unobserved Empty Signal " << es.label;
             }
@@ -3043,17 +3046,18 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 }
 
 // Convert EDFSignal data to OSCAR's Time-Delta Event format
-void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
+EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
         EventDataType *min, EventDataType *max, double tt, EventList *el, Session * sess, ChannelID code );		// forward
 void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code,
-                               long recs, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
+                               long samples, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
 {
     using namespace schema;
-    ChannelList channels;
+    ChannelList channel;
 
-    QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
-    bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
-                        (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+//  QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
 
     if (t_min == t_max) {
         t_min = es.physical_minimum;
@@ -3065,7 +3069,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
     time.start();
 #endif
 
-    double rate = (duration / recs); // milliseconds per record
+    double rate = (duration / samples); // milliseconds per record
     double tt = edf.startdate;
 
     EventStoreType c=0, last;
@@ -3078,14 +3082,17 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 //  }
 
     qint16 *sptr = es.dataArray;
-    qint16 *eptr = sptr + recs;
+    qint16 *eptr = sptr + samples;
     sptr += startpos;
 
     EventDataType min = t_max, max = t_min, tmp;
 
     EventList *el = nullptr;
 
-    if (recs > startpos + 1) {
+    if (forceDebug)
+        qDebug() << "Code:" << QString::number(code, 16) << "Samples:" << samples;
+
+    if (samples > startpos + 1) {
         // Prime last with a good starting value
         do {
             last = *sptr++;
@@ -3094,9 +3101,12 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
                 min = tmp;
                 max = tmp;
                 el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-                el->AddEvent(tt, last);
                 if (forceDebug)
-                    qDebug() << "New EventList:" << channels[code].code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+//                  qDebug() << "New EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                    qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                el->AddEvent(tt, last);
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "First Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
                 tt += rate;
                 break;
             }
@@ -3105,7 +3115,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 
         if ( ! el) {
             qWarning() << "No eventList for" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
-                            << channels[code].code();
+//                          << channel.channels[code]->code();
+                            << QString::number(code, 16);
 #ifdef DEBUG_EFFICIENCY
             timeMutex.lock();
             timeInTimeDelta += time.elapsed();
@@ -3114,21 +3125,37 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
             return;
         }
 
+        if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+             qDebug() << "Before loop to buildEventList" << el->count() << "Last:" << last*es.gain << "Next:" << (*sptr)*es.gain << "Pos:" << sptr - es.dataArray <<
+                QDateTime::fromMSecsSinceEpoch(tt).toString();
         for (; sptr < eptr; sptr++) {
             c = *sptr;
             if (last != c) {
                 if (square) {
-                    buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                    if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                        qDebug() << "Before square call to buildEventList" << el->count();
+                    el = buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                    if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                        qDebug() << "After square call to buildEventList" << el->count();
                 }
-                buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "Before call to buildEventList" << el->count() << "Cur:" << c*es.gain << "Last:" << last*es.gain << "Pos:" << sptr - es.dataArray <<
+                        QDateTime::fromMSecsSinceEpoch(tt).toString();
+                el = buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "After call to buildEventList" << el->count();
             }
             tt += rate;
             last = c;
         }
 
         tmp = EventDataType(c) * es.gain;
-        if ((tmp >= t_min) && (tmp <= t_max))
+        if ((tmp >= t_min) && (tmp <= t_max)) {
             el->AddEvent(tt, c);
+            if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                qDebug() << "Last Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
+        } else
+            qDebug() << "Failed to add last event" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
 
         sess->updateMin(code, min);
         sess->updateMax(code, max);
@@ -3136,10 +3163,12 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         sess->setPhysMax(code, es.physical_maximum);
         sess->updateLast(tt);
         if (forceDebug)
-            qDebug() << "EventList:" << channels[code].code() << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+//          qDebug() << "EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+            qDebug() << "EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
     } else {
         qWarning() << "not enough records for EventList" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
-                            << channels[code].code();
+//                          << channel.channels[code]->code();
+                            << QString::number(code, 16);
     }
 
 #ifdef DEBUG_EFFICIENCY
@@ -3148,7 +3177,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         qint64 t = time.nsecsElapsed();
         int cnt = el->count();
         int bytes = cnt * (sizeof(EventStoreType) + sizeof(quint32));
-        int wvbytes = recs * (sizeof(EventStoreType));
+        int wvbytes = samples * (sizeof(EventStoreType));
         auto it = channel_efficiency.find(code);
 
         if (it == channel_efficiency.end()) {
@@ -3164,9 +3193,17 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 #endif
 }       // end ResMedLoader::ToTimeDelta
 
-void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
+EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
         EventDataType *min, EventDataType *max, double tt, EventList *el, Session * sess, ChannelID code )
 {
+    using namespace schema;
+    ChannelList channel;
+//  QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
+
+
     EventDataType tmp = EventDataType(est) * es.gain;
 
     if ((tmp >= t_min) && (tmp <= t_max)) {
@@ -3178,15 +3215,26 @@ void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_ma
 
         el->AddEvent(tt, est);
     } else {
+        qDebug() << "Value:" << tmp << "Out of range: t_min:" << t_min << "t_max:" << t_max << "EL count:" << el->count();
         // Out of bounds value, start a new eventlist
+        // But first drop a closing value that repeats the last one
+        el->AddEvent(tt, el->raw(el->count() - 1));
         if (el->count() > 1) {
             // that should be in session, not the eventlist.. handy for debugging though
             el->setDimension(es.physical_dimension);
 
             el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-        } else
+            if (forceDebug)
+//              qDebug() << "New EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+        } else {
             el->clear(); // reuse the object
+            if (forceDebug)
+//              qDebug() << "Clear EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                qDebug() << "Clear EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+        }
     }
+    return el;
 }
 
 // Check if given string matches any alternative signal names for this channel
