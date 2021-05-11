@@ -1912,17 +1912,18 @@ void Daily::Load(QDate date)
 
             ui->bookmarkTable->blockSignals(true);
 
-
+            // Careful with drift here - apply to the label but not the
+            // stored data (which will be saved if journal changes occur).
             qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
             Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
             drift=(dday!=nullptr) ? clockdrift : 0;
 
             bool ok;
             for (int i=0;i<start.size();i++) {
-                qint64 st=start.at(i).toLongLong(&ok)+drift;
-                qint64 et=end.at(i).toLongLong(&ok)+drift;
+                qint64 st=start.at(i).toLongLong(&ok);
+                qint64 et=end.at(i).toLongLong(&ok);
 
-                QDateTime d=QDateTime::fromTime_t(st/1000L);
+                QDateTime d=QDateTime::fromTime_t((st+drift)/1000L);
                 //int row=ui->bookmarkTable->rowCount();
                 ui->bookmarkTable->insertRow(i);
                 QTableWidgetItem *tw=new QTableWidgetItem(notes.at(i));
@@ -2335,14 +2336,16 @@ void Daily::on_bookmarkTable_itemClicked(QTableWidgetItem *item)
     int row=item->row();
     qint64 st,et;
 
-//    qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
-//    Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
-//    drift=(dday!=nullptr) ? clockdrift : 0;
+    qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
+    Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
+    drift=(dday!=nullptr) ? clockdrift : 0;
 
     QTableWidgetItem *it=ui->bookmarkTable->item(row,1);
     bool ok;
-    st=it->data(Qt::UserRole).toLongLong(&ok);
-    et=it->data(Qt::UserRole+1).toLongLong(&ok);
+
+    // Add drift back in (it was removed in addBookmark)
+    st=it->data(Qt::UserRole).toLongLong(&ok) + drift;
+    et=it->data(Qt::UserRole+1).toLongLong(&ok) + drift;
     qint64 st2=0,et2=0,st3,et3;
     Day * day=p_profile->GetGoodDay(previous_date,MT_CPAP);
     if (day) {
