@@ -502,6 +502,10 @@ QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
                         // Found a properties file, this is a machine folder
                         propertyfiles.append(mfi);
                     }
+                    if (QDir::match("PROP.BIN", mfi.fileName())) {
+                        // Found a DreamStation 2 properties file, this is a machine folder
+                        propertyfiles.append(mfi);
+                    }
                 }
             }
         }
@@ -648,7 +652,15 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
     MachineInfo info = newInfo();
     if (!PeekProperties(info, newpath+"/properties.txt")) {
         if (!PeekProperties(info, newpath+"/PROP.TXT")) {
-            qWarning() << "No properties file found in" << newpath;
+            // Detect (unsupported) DreamStation 2
+            QString filepath(newpath + "/PROP.BIN");
+            QFile f(filepath);
+            if (f.exists()) {
+                info.series = "DreamStation 2";
+                qWarning() << "DreamStation 2 not supported:" << filepath;
+            } else {
+                qWarning() << "No properties file found in" << newpath;
+            }
         }
     }
     return info;
@@ -784,6 +796,9 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
         } else if (filename.compare("PROP.TXT",Qt::CaseInsensitive) == 0) {
             sessionid_base = 16;
             propertyfile = fi.canonicalFilePath();
+        } else if (filename.compare("PROP.BIN", Qt::CaseInsensitive) == 0) {
+            sessionid_base = 16;
+            propertyfile = fi.canonicalFilePath();
         }
     }
     return sessionid_base;
@@ -792,6 +807,18 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 
 Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
+    if (propertyfile.endsWith("PROP.BIN")) {
+        qWarning() << "DreamStation 2 not supported:" << propertyfile;
+#ifndef UNITTEST_MODE
+        QMessageBox::information(QApplication::activeWindow(),
+                                 QObject::tr("Machine Unsupported"),
+                                 QObject::tr("Sorry, your Philips Respironics DreamStation 2 is not supported yet.") +"\n\n"+
+                                 QObject::tr("The developers needs a .zip copy of this machine's SD card and matching DreamMapper screenshots to make it work with OSCAR.")
+                                 ,QMessageBox::Ok);
+#endif
+        return nullptr;
+    }
+
     QHash<QString,QString> props;
     PeekProperties(propertyfile, props);
     
