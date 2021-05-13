@@ -296,6 +296,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "600X150", 0, 6, "DreamStation BiPAP Pro" },
     { "700X110", 0, 6, "DreamStation Auto BiPAP" },
     { "700X120", 0, 6, "DreamStation Auto BiPAP" },
+    { "700X130", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
