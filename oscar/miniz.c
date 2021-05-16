@@ -5329,7 +5329,8 @@ mz_bool mz_zip_validate_file(mz_zip_archive *pZip, mz_uint file_index, mz_uint f
             goto handle_failure;
         }
 
-        has_id = (MZ_READ_LE32(descriptor_buf) == MZ_ZIP_DATA_DESCRIPTOR_ID);
+        pSrc = descriptor_buf; // avoid g++ warning/error
+        has_id = (MZ_READ_LE32(pSrc) == MZ_ZIP_DATA_DESCRIPTOR_ID);
         pSrc = has_id ? (descriptor_buf + sizeof(mz_uint32)) : descriptor_buf;
 
         file_crc32 = MZ_READ_LE32(pSrc);

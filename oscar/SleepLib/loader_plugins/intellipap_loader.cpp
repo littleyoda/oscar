@@ -2426,7 +2426,7 @@ bool backup6 (const QString & path)  {
     QStringList fileNames = hpath.entryList(); // Get list of files
     if (! fileNames.isEmpty()) {
         QString lastFile = fileNames.first();
-        qDebug() << "last settings file is" << lastFile << "new file is" << settingsFile;
+        qDebug() << "last settings file is" << lastFile << "new file is" << settingsFile.fileName();
         QByteArray newMD5 = fileChecksum(settingsFile.fileName(), QCryptographicHash::Md5);
         QByteArray oldMD5 = fileChecksum(hpath.absolutePath()+"/"+lastFile, QCryptographicHash::Md5);
         if (newMD5 == oldMD5)
