@@ -407,7 +407,7 @@ void OximeterImport::on_fileImportButton_clicked()
     if (documentsFolder.isEmpty())
         documentsFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 
-	qDebug() << "oximod - File Import button clicked";
+    qDebug() << "oximod - File Import button clicked";
 	
     QString filename = QFileDialog::getOpenFileName(nullptr , tr("Select a valid oximetry data file"), documentsFolder, tr("Oximetry Files (*.spo *.spor *.spo2 *.SpO2 *.dat)"));
 

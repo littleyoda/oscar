@@ -493,18 +493,33 @@ DISTFILES += help/default.css \
 QMAKE_CFLAGS += -Werror
 QMAKE_CXXFLAGS += -Werror
 
+
 gcc | clang {
     COMPILER_VERSION = $$system($$QMAKE_CXX " -dumpversion")
-    COMPILER_MAJOR = $$str_member($$COMPILER_VERSION)
-    greaterThan(COMPILER_MAJOR, 9) : {
-        QMAKE_CFLAGS += -Wno-error=depreciated-copy
-        QMAKE_CXX_FLAGS += -Wno-error=depreciated-copy
-        message("Removing depreciated-copy error")
+    COMPILER_MAJOR = $$split(COMPILER_VERSION, ".")
+    COMPILER_MAJOR = $$first(COMPILER_MAJOR)
+
+    message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
+
+    greaterThan(COMPILER_MAJOR, 10) : {
+        QMAKE_CFLAGS += -Wno-error=stringop-overread
+        QMAKE_CXXFLAGS += -Wno-error=stringop-overread
+        message("Removing stringop-overread error")
     }
+    else {
+        greaterThan(COMPILER_MAJOR, 9) : {
+            QMAKE_CFLAGS += -Wno-error=depreciated-copy
+            QMAKE_CXXFLAGS += -Wno-error=depreciated-copy
+            message("Removing depreciated-copy error")
+        }
+    }
+
 }
+
 # Make deprecation warnings just warnings
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+
 lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
     QMAKE_CFLAGS += -Wno-error=strict-aliasing
     QMAKE_CXXFLAGS += -Wno-error=strict-aliasing
