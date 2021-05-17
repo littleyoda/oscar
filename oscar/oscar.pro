@@ -506,13 +506,6 @@ gcc | clang {
         QMAKE_CXXFLAGS += -Wno-error=stringop-overread
         message("Removing stringop-overread error")
     }
-    else {
-        greaterThan(COMPILER_MAJOR, 9) : {
-            QMAKE_CFLAGS += -Wno-error=depreciated-copy
-            QMAKE_CXXFLAGS += -Wno-error=depreciated-copy
-            message("Removing depreciated-copy error")
-        }
-    }
 
 }
 
