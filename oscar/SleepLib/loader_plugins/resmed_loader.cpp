@@ -3303,12 +3303,12 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_Apnea] = QStringList { "Apnea" };
     resmed_codes[CPAP_RERA] = QStringList { "Arousal" };
     resmed_codes[CPAP_ClearAirway] = QStringList { "Central apnea" };
-    resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F" };
-    resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press" };
+    resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F", "Mod" };
+    resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press", "Basıncı Ayarl" };
     resmed_codes[RMS9_EPR] = QStringList { "EPR", "\xE5\x91\xBC\xE6\xB0\x94\xE9\x87\x8A\xE5\x8E\x8B\x28\x45\x50" };
-    resmed_codes[RMS9_EPRLevel] = QStringList { "EPR Level", "EPR-Stufe", "EPR-niveau", "\x45\x50\x52\x20\xE6\xB0\xB4\xE5\xB9\xB3", "Niveau EPR", "EPR-nivå", "EPR-nivÃ¥", "S.EPR.Level" };
-    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress" };
-    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress" };
+    resmed_codes[RMS9_EPRLevel] = QStringList { "EPR Level", "EPR-Stufe", "EPR-niveau", "\x45\x50\x52\x20\xE6\xB0\xB4\xE5\xB9\xB3", "Niveau EPR", "EPR-nivå", "EPR-nivÃ¥", "S.EPR.Level", "EPR Düzeyi" };
+    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress", "Azami Basınç" };
+    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress", "Min Basınç" };
 
     //resmed_codes[RMS9_EPR].push_back("S.EPR.EPRType");
 }
