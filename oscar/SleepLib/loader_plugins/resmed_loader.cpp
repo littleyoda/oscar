@@ -3286,7 +3286,7 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_PS] = QStringList { "PS", "S.VA.PS" };
     resmed_codes[CPAP_PSMin] = QStringList { "Min PS" };
     resmed_codes[CPAP_PSMax] = QStringList { "Max PS" };
-    resmed_codes[CPAP_Leak] = QStringList { "Leak", "Leck", "Fuites", "Fuite", "Fuga", "\xE6\xBC\x8F\xE6\xB0\x94", "Lekk", "Läck","LÃ¤ck", "Leak.2s", "Sizinti" };
+    resmed_codes[CPAP_Leak] = QStringList { "Leak", "Leck", "Fuites", "Fuite", "Fuga", "\xE6\xBC\x8F\xE6\xB0\x94", "Lekk", "Läck","LÃ¤ck", "Leak.2s", "Sızıntı" };
     resmed_codes[CPAP_RespRate] = QStringList {  "RR", "AF", "FR", "RespRate.2s" };
     resmed_codes[CPAP_MinuteVent] = QStringList { "MV", "VM", "MinVent.2s" };
     resmed_codes[CPAP_TidalVolume] = QStringList { "Vt", "VC", "TidVol.2s" };
