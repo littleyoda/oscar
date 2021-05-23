@@ -13,15 +13,23 @@ class RawDataTests : public QObject
     Q_OBJECT
 private slots:
     void testQIODeviceInterface();
+};
+DECLARE_TEST(RawDataTests)
 
+class _RawDataTestSignalSink : public QObject
+{
+    Q_OBJECT
+    friend RawDataTests;
+  private slots:
     void onAboutToClose();
     void onChannelReadyRead(int);
     void onReadChannelFinished();
     void onReadyRead();
-private:
+  private:
+    _RawDataTestSignalSink();
     bool m_aboutToClose;
     int m_channelReadyRead;
     bool m_readChannelFinished;
     bool m_readyRead;
 };
-DECLARE_TEST(RawDataTests)
+// Do not declare this as a test to be executed.

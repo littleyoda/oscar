@@ -29,14 +29,11 @@ void RawDataTests::testQIODeviceInterface()
 
 
     // Connect signals for testing.
-    m_channelReadyRead = -1;
-    m_readyRead = false;
-    m_readChannelFinished = false;
-    m_aboutToClose = false;
-    connect(&raw, SIGNAL(channelReadyRead(int)), this, SLOT(onChannelReadyRead(int)));
-    connect(&raw, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-    connect(&raw, SIGNAL(readChannelFinished()), this, SLOT(onReadChannelFinished()));
-    connect(&raw, SIGNAL(aboutToClose()), this, SLOT(onAboutToClose()));
+    _RawDataTestSignalSink sink;
+    connect(&raw, SIGNAL(channelReadyRead(int)), &sink, SLOT(onChannelReadyRead(int)));
+    connect(&raw, SIGNAL(readyRead()), &sink, SLOT(onReadyRead()));
+    connect(&raw, SIGNAL(readChannelFinished()), &sink, SLOT(onReadChannelFinished()));
+    connect(&raw, SIGNAL(aboutToClose()), &sink, SLOT(onAboutToClose()));
 
 
     // Open
@@ -59,8 +56,8 @@ void RawDataTests::testQIODeviceInterface()
 
     // waitForReadyRead and ready signals
     Q_ASSERT(raw.waitForReadyRead(10000) == false);
-    //Q_ASSERT(m_channelReadyRead != -1);
-    //Q_ASSERT(m_readyRead == true);
+    //Q_ASSERT(sink.m_channelReadyRead != -1);
+    //Q_ASSERT(sink.m_readyRead == true);
 
 
     // Channels
@@ -190,8 +187,8 @@ void RawDataTests::testQIODeviceInterface()
     // Close
     raw.close();
     Q_ASSERT(raw.isOpen() == qio.isOpen());
-    Q_ASSERT(m_aboutToClose);
-    //Q_ASSERT(m_readChannelFinished);
+    Q_ASSERT(sink.m_aboutToClose);
+    //Q_ASSERT(sink.m_readChannelFinished);
 
 
     // Unimplemented/untested:
@@ -206,22 +203,29 @@ void RawDataTests::testQIODeviceInterface()
     // channelBytesWritten signal
 }
 
-void RawDataTests::onAboutToClose()
+_RawDataTestSignalSink::_RawDataTestSignalSink() : QObject() {
+    m_channelReadyRead = -1;
+    m_readyRead = false;
+    m_readChannelFinished = false;
+    m_aboutToClose = false;
+}
+
+void _RawDataTestSignalSink::onAboutToClose()
 {
     m_aboutToClose = true;
 }
 
-void RawDataTests::onChannelReadyRead(int channel)
+void _RawDataTestSignalSink::onChannelReadyRead(int channel)
 {
     m_channelReadyRead = channel;
 }
 
-void RawDataTests::onReadChannelFinished()
+void _RawDataTestSignalSink::onReadChannelFinished()
 {
     m_readChannelFinished = true;
 }
 
-void RawDataTests::onReadyRead()
+void _RawDataTestSignalSink::onReadyRead()
 {
     m_readyRead = true;
 }
