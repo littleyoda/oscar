@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Header
  *
- * Copyright (c) 2019-2020 The OSCAR Team
+ * Copyright (c) 2019-2021 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -78,7 +78,7 @@ public:
         m_index = -1;
     }
     */
-    PRS1DataChunk(class QFile & f, class PRS1Loader* loader);
+    PRS1DataChunk(class RawDataDevice & f, class PRS1Loader* loader);
     ~PRS1DataChunk();
     inline int size() const { return m_data.size(); }
 
@@ -124,13 +124,13 @@ public:
     inline quint64 hash(void) const { return ((((quint64) this->calcCrc) << 32) | this->timestamp); }
     
     //! \brief Parse and return the next chunk from a PRS1 file
-    static PRS1DataChunk* ParseNext(class QFile & f, class PRS1Loader* loader);
+    static PRS1DataChunk* ParseNext(class RawDataDevice & f, class PRS1Loader* loader);
 
     //! \brief Read and parse the next chunk header from a PRS1 file
-    bool ReadHeader(class QFile & f);
+    bool ReadHeader(class RawDataDevice & f);
 
     //! \brief Read the chunk's data from a PRS1 file and calculate its CRC, must be called after ReadHeader
-    bool ReadData(class QFile & f);
+    bool ReadData(class RawDataDevice & f);
     
     //! \brief Figures out which Compliance Parser to call, based on machine family/version and calls it.
     bool ParseCompliance(void);
@@ -229,13 +229,13 @@ protected:
     void AddEvent(class PRS1ParsedEvent* event);
 
     //! \brief Read and parse the non-waveform header data from a V2 PRS1 file
-    bool ReadNormalHeaderV2(class QFile & f);
+    bool ReadNormalHeaderV2(class RawDataDevice & f);
 
     //! \brief Read and parse the non-waveform header data from a V3 PRS1 file
-    bool ReadNormalHeaderV3(class QFile & f);
+    bool ReadNormalHeaderV3(class RawDataDevice & f);
 
     //! \brief Read and parse the waveform-specific header data from a PRS1 file
-    bool ReadWaveformHeader(class QFile & f);
+    bool ReadWaveformHeader(class RawDataDevice & f);
 
     //! \brief Extract the stored CRC from the end of the data of a PRS1 chunk
     bool ExtractStoredCrc(int size);

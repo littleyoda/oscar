@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Implementation
  *
- * Copyright (c) 2019-2020 The OSCAR Team
+ * Copyright (c) 2019-2021 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -21,6 +21,7 @@
 #include "prs1_loader.h"
 #include "SleepLib/session.h"
 #include "SleepLib/calcs.h"
+#include "rawdata.h"
 
 
 // Disable this to cut excess debug messages
@@ -408,6 +409,153 @@ const char* PRS1ModelInfo::Name(const QString & model) const
     return name;
 };
 
+
+//********************************************************************************************
+
+// Decoder for DreamStation 2 files, which encrypt the actual data after a header with the key.
+// The public read/seek/pos/etc. functions are all in terms of the decoded stream.
+class PRDS2File : public RawDataFile
+{
+  public:
+    PRDS2File(class QFile & file);
+    virtual ~PRDS2File() {};
+  private:
+    void parseDS2Header();
+    int read16();
+    QByteArray readBytes();
+  protected:
+    virtual qint64 readData(char *data, qint64 maxSize);
+    virtual bool seek(qint64 pos);
+    virtual qint64 pos() const;
+    virtual qint64 size() const;
+    
+    QByteArray m_guid;
+    static const int m_header_size = 0xCA;
+};
+
+PRDS2File::PRDS2File(class QFile & file)
+    : RawDataFile(file)
+{
+    parseDS2Header();
+}
+
+bool PRDS2File::seek(qint64 pos)
+{
+    QIODevice::seek(pos);
+    return RawDataFile::seek(pos + m_header_size);
+}
+
+qint64 PRDS2File::pos() const
+{
+    return RawDataFile::pos() - m_header_size;
+}
+
+qint64 PRDS2File::size() const
+{
+    return RawDataFile::size() - m_header_size;
+}
+
+qint64 PRDS2File::readData(char *data, qint64 maxSize)
+{
+    //qint64 pos = this->pos();
+    int result = RawDataFile::readData(data, maxSize);
+    
+    // TODO: calculate key stream for byte pos+i
+    /*
+    for (int i = 0; i < result; i++) {
+        data[i] ^= key[i];
+    }
+    */
+    return result;
+}
+
+void PRDS2File::parseDS2Header()
+{
+    int a = read16();
+    int b = read16();
+    int c = read16();
+    if (a != 0x0D || b != 1 || c != 1) {
+        qWarning() << "DS2 unexpected first bytes =" << a << b << c;
+        return;
+    }
+
+    m_guid = readBytes();
+    if (m_guid.size() != 36) {
+        qWarning() << "DS2 guid unexpected length" << m_guid.size();
+    } else {
+        qDebug() << "DS2 guid {" << m_guid << "}";
+    }
+
+    QByteArray d = readBytes();  // 96 bits, probably IV
+    QByteArray e = readBytes();  // 128 bits, probably key
+    if (d.size() != 12 || e.size() != 16) {
+        qWarning() << "DS2 d,e sizes =" << d.size() << e.size();
+    } else {
+        qDebug() << "DS2 key? =" << d.toHex() << e.toHex();
+    }
+    
+    int f = read16();
+    int g = read16();
+    if (f != 0 || g != 1) {
+        qWarning() << "DS2 unexpected middle bytes =" << f << g;
+    }
+    
+    QByteArray h = readBytes();  // same per d,e pair, varies per machine
+    QByteArray i = readBytes();  // same per d,e pair, varies per machine
+    if (h.size() != 32 || i.size() != 16) {
+        qWarning() << "DS2 h,i sizes =" << h.size() << i.size();
+    } else {
+        qDebug() << "DS2 h,i =" << h.toHex() << i.toHex();
+    }
+
+    QByteArray j = readBytes();  // same per d,e pair, does NOT vary per machine
+    QByteArray k = readBytes();  // same per d,e pair, does NOT vary per machine
+    if (j.size() != 32 || k.size() != 16) {
+        qWarning() << "DS2 j,k sizes =" << j.size() << k.size();
+    } else {
+        qDebug() << "DS2 j,k =" << j.toHex() << k.toHex();
+    }
+
+    QByteArray l = readBytes();  // differs for EVERY file, and machine, even with same values above
+    if (l.size() != 16) {
+        qWarning() << "DS2 l size =" << l.size();
+    } else {
+        qDebug() << "DS2 l =" << l.toHex();
+    }
+
+    if (RawDataFile::pos() != m_header_size) {
+        qWarning() << "DS2 header size !=" << m_header_size;
+    }
+}
+
+int PRDS2File::read16()
+{
+    unsigned char data[2];
+    int result;
+    
+    result = RawDataFile::read((char*) data, sizeof(data));
+    if (result == sizeof(data)) {
+        result = data[0] | (data[1] << 8);
+    } else {
+        result = 0;
+    }
+    return result;
+}
+
+QByteArray PRDS2File::readBytes()
+{
+    int length = read16();
+    QByteArray result = RawDataFile::read(length);
+    if (result.size() < length) {
+        result.clear();
+    }
+    return result;
+}
+
+
+//********************************************************************************************
+
+
 QMap<const char*,const char*> s_PRS1Series = {
     { "System One 60 Series", ":/icons/prs1_60s.png" },  // needs to come before following substring
     { "System One",           ":/icons/prs1.png" },
@@ -579,7 +727,18 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
     if (!f.open(QFile::ReadOnly)) {
         return false;
     }
-    QTextStream in(&f);
+
+    RawDataFile* src;
+    if (QFileInfo(f).suffix().toUpper() == "BIN") {
+        // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
+        src = new PRDS2File(f);
+    } else {
+        // Otherwise just use the file as input.
+        src = new RawDataFile(f);
+    }
+    
+    QTextStream in(src);
+
     do {
         QString line = in.readLine();
         QStringList pair = line.split("=");
@@ -597,6 +756,7 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         props[pair[0]] = pair[1];
     } while (!in.atEnd());
     
+    delete src;
     return true;
 }
 
@@ -654,11 +814,15 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
         if (!PeekProperties(info, newpath+"/PROP.TXT")) {
             // Detect (unsupported) DreamStation 2
             QString filepath(newpath + "/PROP.BIN");
+#ifdef TEST_DS2
+            if (!PeekProperties(info, filepath)) {
+#else
             QFile f(filepath);
             if (f.exists()) {
                 info.series = "DreamStation 2";
                 qWarning() << "DreamStation 2 not supported:" << filepath;
             } else {
+#endif
                 qWarning() << "No properties file found in" << newpath;
             }
         }
@@ -807,6 +971,7 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 
 Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
+#ifndef TEST_DS2
     if (propertyfile.endsWith("PROP.BIN")) {
         qWarning() << "DreamStation 2 not supported:" << propertyfile;
 #ifndef UNITTEST_MODE
@@ -818,6 +983,7 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 #endif
         return nullptr;
     }
+#endif
 
     QHash<QString,QString> props;
     PeekProperties(propertyfile, props);
@@ -8974,13 +9140,22 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
         qWarning() << path << "can't open";
         return CHUNKS;
     }
+    
+    RawDataFile* src;
+    if (QFileInfo(f).suffix().toUpper() == "BIN") {
+        // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
+        src = new PRDS2File(f);
+    } else {
+        // Otherwise just use the file as input.
+        src = new RawDataFile(f);
+    }
 
     PRS1DataChunk *chunk = nullptr, *lastchunk = nullptr;
 
     int cnt = 0;
 
     do {
-        chunk = PRS1DataChunk::ParseNext(f, this);
+        chunk = PRS1DataChunk::ParseNext(*src, this);
         if (chunk == nullptr) {
             break;
         }
@@ -9004,15 +9179,16 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
         CHUNKS.append(chunk);
         lastchunk = chunk;
         cnt++;
-    } while (!f.atEnd());
+    } while (!src->atEnd());
 
+    delete src;
     return CHUNKS;
 }
 
 
-PRS1DataChunk::PRS1DataChunk(QFile & f, PRS1Loader* in_loader) : loader(in_loader)
+PRS1DataChunk::PRS1DataChunk(RawDataDevice & f, PRS1Loader* in_loader) : loader(in_loader)
 {
-    m_path = QFileInfo(f).canonicalFilePath();
+    m_path = f.name();
 }
 
 PRS1DataChunk::~PRS1DataChunk()
@@ -9024,7 +9200,7 @@ PRS1DataChunk::~PRS1DataChunk()
 }
 
 
-PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f, PRS1Loader* loader)
+PRS1DataChunk* PRS1DataChunk::ParseNext(RawDataDevice & f, PRS1Loader* loader)
 {
     PRS1DataChunk* out_chunk = nullptr;
     PRS1DataChunk* chunk = new PRS1DataChunk(f, loader);
@@ -9071,7 +9247,7 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(QFile & f, PRS1Loader* loader)
 }
 
 
-bool PRS1DataChunk::ReadHeader(QFile & f)
+bool PRS1DataChunk::ReadHeader(RawDataDevice & f)
 {
     bool ok = false;
     do {
@@ -9165,14 +9341,14 @@ bool PRS1DataChunk::ReadHeader(QFile & f)
 }
 
 
-bool PRS1DataChunk::ReadNormalHeaderV2(QFile & /*f*/)
+bool PRS1DataChunk::ReadNormalHeaderV2(RawDataDevice & /*f*/)
 {
     this->m_headerblock = QByteArray();
     return true;  // always OK
 }
 
 
-bool PRS1DataChunk::ReadNormalHeaderV3(QFile & f)
+bool PRS1DataChunk::ReadNormalHeaderV3(RawDataDevice & f)
 {
     bool ok = false;
     unsigned char * header;
@@ -9216,7 +9392,7 @@ bool PRS1DataChunk::ReadNormalHeaderV3(QFile & f)
 }
 
 
-bool PRS1DataChunk::ReadWaveformHeader(QFile & f)
+bool PRS1DataChunk::ReadWaveformHeader(RawDataDevice & f)
 {
     bool ok = false;
     unsigned char * header;
@@ -9280,7 +9456,7 @@ bool PRS1DataChunk::ReadWaveformHeader(QFile & f)
 }
 
 
-bool PRS1DataChunk::ReadData(QFile & f)
+bool PRS1DataChunk::ReadData(RawDataDevice & f)
 {
     bool ok = false;
     do {
