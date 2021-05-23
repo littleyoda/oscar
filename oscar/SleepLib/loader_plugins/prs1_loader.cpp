@@ -358,28 +358,32 @@ bool PRS1ModelInfo::IsTested(const QString & model, int family, int familyVersio
     return false;
 };
 
-bool PRS1ModelInfo::IsSupported(const QHash<QString,QString> & props) const
+static bool getVersionFromProps(const QHash<QString,QString> & props, int & family, int & familyVersion)
 {
     bool ok;
-    int family = props["Family"].toInt(&ok, 10);
+    family = props["Family"].toInt(&ok, 10);
     if (ok) {
-        int familyVersion = props["FamilyVersion"].toInt(&ok, 10);
-        if (ok) {
-            ok = IsSupported(family, familyVersion);
-        }
+        familyVersion = props["FamilyVersion"].toInt(&ok, 10);
+    }
+    return ok;
+}
+
+bool PRS1ModelInfo::IsSupported(const QHash<QString,QString> & props) const
+{
+    int family, familyVersion;
+    bool ok = getVersionFromProps(props, family, familyVersion);
+    if (ok) {
+        ok = IsSupported(family, familyVersion);
     }
     return ok;
 }
 
 bool PRS1ModelInfo::IsTested(const QHash<QString,QString> & props) const
 {
-    bool ok;
-    int family = props["Family"].toInt(&ok, 10);
+    int family, familyVersion;
+    bool ok = getVersionFromProps(props, family, familyVersion);
     if (ok) {
-        int familyVersion = props["FamilyVersion"].toInt(&ok, 10);
-        if (ok) {
-            ok = IsTested(props["ModelNumber"], family, familyVersion);
-        }
+        ok = IsTested(props["ModelNumber"], family, familyVersion);
     }
     return ok;
 };
@@ -822,15 +826,7 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
         if (!PeekProperties(info, newpath+"/PROP.TXT")) {
             // Detect (unsupported) DreamStation 2
             QString filepath(newpath + "/PROP.BIN");
-#ifdef TEST_DS2
             if (!PeekProperties(info, filepath)) {
-#else
-            QFile f(filepath);
-            if (f.exists()) {
-                info.series = "DreamStation 2";
-                qWarning() << "DreamStation 2 not supported:" << filepath;
-            } else {
-#endif
                 qWarning() << "No properties file found in" << newpath;
             }
         }
@@ -979,23 +975,33 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 
 Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
-#ifndef TEST_DS2
-    if (propertyfile.endsWith("PROP.BIN")) {
-        qWarning() << "DreamStation 2 not supported:" << propertyfile;
+    QHash<QString,QString> props;
+    if (!PeekProperties(propertyfile, props) || !s_PRS1ModelInfo.IsSupported(props)) {
+        QString name;
+        if (props.contains("ModelNumber")) {
+            int family, familyVersion;
+            getVersionFromProps(props, family, familyVersion);
+            QString model_number = props["ModelNumber"];
+            qWarning().noquote() << "Model" << model_number << QString("(F%1V%2)").arg(family).arg(familyVersion) << "unsupported.";
+            name = QObject::tr("model %1").arg(model_number);
+        } else if (propertyfile.endsWith("PROP.BIN")) {
+            // TODO: Remove this once DS2 is supported.
+            qWarning() << "DreamStation 2 not supported:" << propertyfile;
+            name = QObject::tr("DreamStation 2");
+        } else {
+            qWarning() << "Unable to identify model or series!";
+            name = QObject::tr("unknown model");
+        }
 #ifndef UNITTEST_MODE
         QMessageBox::information(QApplication::activeWindow(),
                                  QObject::tr("Machine Unsupported"),
-                                 QObject::tr("Sorry, your Philips Respironics DreamStation 2 is not supported yet.") +"\n\n"+
-                                 QObject::tr("The developers needs a .zip copy of this machine's SD card and matching DreamMapper screenshots to make it work with OSCAR.")
+                                 QObject::tr("Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.").arg(name) +"\n\n"+
+                                 QObject::tr("The developers needs a .zip copy of this machine's SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.")
                                  ,QMessageBox::Ok);
 #endif
         return nullptr;
     }
-#endif
 
-    QHash<QString,QString> props;
-    PeekProperties(propertyfile, props);
-    
     MachineInfo info = newInfo();
     // Have a peek first to get the model number.
     PeekProperties(info, propertyfile);
@@ -1011,20 +1017,6 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
                                      arg(info.modelnumber),QMessageBox::Ok);
 #endif
             p_profile->cpap->setBrickWarning(false);
-
-        }
-
-        if (!s_PRS1ModelInfo.IsSupported(props)) {
-            qWarning() << info.modelnumber << "unsupported";
-#ifndef UNITTEST_MODE
-            QMessageBox::information(QApplication::activeWindow(),
-                                     QObject::tr("Machine Unsupported"),
-                                     QObject::tr("Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.").arg(info.modelnumber) +"\n\n"+
-                                     QObject::tr("The developers needs a .zip copy of this machine's SD card and matching Encore .pdf reports to make it work with OSCAR.")
-                                     ,QMessageBox::Ok);
-
-#endif
-            return nullptr;
         }
     }
 
