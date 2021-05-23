@@ -306,6 +306,7 @@ SOURCES += \
     zip.cpp \
     miniz.c \
     csv.cpp \
+    rawdata.cpp \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
@@ -386,6 +387,7 @@ HEADERS  += \
     zip.h \
     miniz.h \
     csv.h \
+    rawdata.h \
     translation.h \
     statistics.h \
     oximeterimport.h \
@@ -557,6 +559,7 @@ test {
 
     SOURCES += \
         tests/prs1tests.cpp \
+        tests/rawdatatests.cpp \
         tests/resmedtests.cpp \
         tests/sessiontests.cpp \
         tests/versiontests.cpp \
@@ -568,6 +571,7 @@ test {
     HEADERS += \
         tests/AutoTest.h \
         tests/prs1tests.h \
+        tests/rawdatatests.h \
         tests/resmedtests.h \
         tests/sessiontests.h \
         tests/versiontests.h \
