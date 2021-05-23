@@ -386,11 +386,11 @@ bool PRS1ModelInfo::IsTested(const QHash<QString,QString> & props) const
 
 bool PRS1ModelInfo::IsBrick(const QString & model) const
 {
-    bool is_brick;
+    bool is_brick = false;
     
     if (m_modelNames.contains(model)) {
         is_brick = m_bricks.contains(model);
-    } else {
+    } else if (model.length() > 0) {
         // If we haven't seen it before, assume any 2xx is a brick.
         is_brick = (model.at(0) == QChar('2'));
     }
@@ -737,11 +737,16 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         src = new RawDataFile(f);
     }
     
-    QTextStream in(src);
-
+    {
+    QTextStream in(src);  // Scope this here so that it's torn down before we delete src below.
+    
     do {
         QString line = in.readLine();
         QStringList pair = line.split("=");
+        if (pair.size() != 2) {
+            qWarning() << src->name() << "malformed line:" << line;
+            break;
+        }
 
         if (s_longFieldNames.contains(pair[0])) {
             pair[0] = s_longFieldNames[pair[0]];
@@ -756,8 +761,11 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         props[pair[0]] = pair[1];
     } while (!in.atEnd());
     
+    }
+
     delete src;
-    return true;
+
+    return props.size() > 0;
 }
 
 bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Machine * mach)
