@@ -95,12 +95,24 @@ void RawDataTests::testQIODeviceInterface()
     Q_ASSERT(ch == data[0]);
 
     Q_ASSERT(raw.size() == qio.size());
-    Q_ASSERT(raw.atEnd() == qio.atEnd());
-    Q_ASSERT(raw.bytesAvailable() == qio.bytesAvailable());
 
     Q_ASSERT(raw.seek(16) == true);
     Q_ASSERT(raw.pos() == 16);
     Q_ASSERT(raw.pos() == qio.pos());
+    Q_ASSERT(raw.atEnd() == qio.atEnd());
+    
+    
+    // Check boundary conditions at end of device.
+    Q_ASSERT(raw.seek(255) == true);
+    Q_ASSERT(raw.getChar(&ch) == true);
+    Q_ASSERT(raw.pos() == qio.pos());
+    Q_ASSERT(raw.atEnd() == true);
+    Q_ASSERT(raw.atEnd() == qio.atEnd());
+    Q_ASSERT(raw.bytesAvailable() == qio.bytesAvailable());
+    raw.ungetChar(ch);
+    Q_ASSERT(raw.atEnd() == false);
+    Q_ASSERT(raw.atEnd() != qio.atEnd());
+    Q_ASSERT(raw.bytesAvailable() == qio.bytesAvailable() + 1);
     
     Q_ASSERT(raw.reset() == true);
     Q_ASSERT(raw.pos() == 0);
@@ -109,6 +121,20 @@ void RawDataTests::testQIODeviceInterface()
     Q_ASSERT(all == data);
     Q_ASSERT(raw.atEnd() == qio.atEnd());
     Q_ASSERT(raw.bytesAvailable() == qio.bytesAvailable());
+
+
+    // canReadLine
+    Q_ASSERT(raw.canReadLine() == qio.canReadLine());
+    raw.seek(255 - 0x0A);
+    Q_ASSERT(raw.canReadLine() == true);
+    Q_ASSERT(raw.canReadLine() == qio.canReadLine());
+    Q_ASSERT(raw.getChar(&ch) == true);
+    Q_ASSERT(ch == 0x0A);
+    Q_ASSERT(raw.canReadLine() == false);
+    Q_ASSERT(raw.canReadLine() == qio.canReadLine());
+    raw.ungetChar(ch);
+    Q_ASSERT(raw.canReadLine() == true);
+    Q_ASSERT(raw.canReadLine() != qio.canReadLine());
 
 
     // readLine x2

@@ -30,8 +30,6 @@ class RawDataDevice : public QIODevice
     virtual qint64 size() const;
     virtual bool seek(qint64 pos);
 
-    virtual qint64 bytesAvailable() const;
-
     virtual bool canReadLine() const;
 
     virtual bool waitForReadyRead(int msecs);

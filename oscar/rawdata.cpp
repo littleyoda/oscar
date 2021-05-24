@@ -138,14 +138,9 @@ bool RawDataDevice::isSequential() const
     return is_sequential;
 }
 
-qint64 RawDataDevice::bytesAvailable() const
-{
-    return m_device.bytesAvailable();
-}
-
 bool RawDataDevice::canReadLine() const
 {
-    return m_device.canReadLine();
+    return m_device.canReadLine() || QIODevice::canReadLine();
 }
 
 qint64 RawDataDevice::size() const
