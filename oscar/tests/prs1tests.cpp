@@ -147,6 +147,23 @@ static QString byteList(QByteArray data, int limit=-1)
     if (limit == -1 || limit > count) limit = count;
     int first = limit / 2;
     int last = limit - first;
+#if 1
+    // Optimized after profiling regression tests.
+    QString s;
+    s.reserve(3 * limit + 4);  // "NN " for each byte + possible "... " in the middle
+    const unsigned char* b = (const unsigned char*) data.constData();
+    for (int i = 0; i < first; i++) {
+        s.append(QString::asprintf("%02X ", b[i]));
+    }
+    if (limit < count) {
+        s.append(QStringLiteral("... "));
+    }
+    for (int i = count - last; i < count; i++) {
+        s.append(QString::asprintf("%02X ", b[i]));
+    }
+    s.resize(s.size() - 1);  // remove trailing space
+#else
+    // Unoptimized original, slows down regression tests.
     QStringList l;
     for (int i = 0; i < first; i++) {
         l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
@@ -156,58 +173,59 @@ static QString byteList(QByteArray data, int limit=-1)
         l.push_back(QString( "%1" ).arg((int) data[i] & 0xFF, 2, 16, QChar('0') ).toUpper());
     }
     QString s = l.join(" ");
+#endif
     return s;
 }
 
 void ChunkToYaml(QTextStream & out, PRS1DataChunk* chunk, bool ok)
 {
     // chunk header
-    out << "chunk:" << endl;
-    out << "  at: " << hex << chunk->m_filepos << endl;
-    out << "  parsed: " << ok << endl;
-    out << "  version: " << dec << chunk->fileVersion << endl;
-    out << "  size: " << chunk->blockSize << endl;
-    out << "  htype: " << chunk->htype << endl;
-    out << "  family: " << chunk->family << endl;
-    out << "  familyVersion: " << chunk->familyVersion << endl;
-    out << "  ext: " << chunk->ext << endl;
-    out << "  session: " << chunk->sessionid << endl;
-    out << "  start: " << ts(chunk->timestamp * 1000L) << endl;
-    out << "  duration: " << dur(chunk->duration * 1000L) << endl;
+    out << "chunk:" << '\n';
+    out << "  at: " << hex << chunk->m_filepos << '\n';
+    out << "  parsed: " << ok << '\n';
+    out << "  version: " << dec << chunk->fileVersion << '\n';
+    out << "  size: " << chunk->blockSize << '\n';
+    out << "  htype: " << chunk->htype << '\n';
+    out << "  family: " << chunk->family << '\n';
+    out << "  familyVersion: " << chunk->familyVersion << '\n';
+    out << "  ext: " << chunk->ext << '\n';
+    out << "  session: " << chunk->sessionid << '\n';
+    out << "  start: " << ts(chunk->timestamp * 1000L) << '\n';
+    out << "  duration: " << dur(chunk->duration * 1000L) << '\n';
 
     // hblock for V3 non-waveform chunks
     if (chunk->fileVersion == 3 && chunk->htype == 0) {
-        out << "  hblock:" << endl;
+        out << "  hblock:" << '\n';
         QMapIterator<unsigned char, short> i(chunk->hblock);
         while (i.hasNext()) {
             i.next();
-            out << "    " << (int) i.key() << ": " << i.value() << endl;
+            out << "    " << (int) i.key() << ": " << i.value() << '\n';
         }
     }
 
     // waveform chunks
     if (chunk->htype == 1) {
-        out << "  intervals: " << chunk->interval_count << endl;
-        out << "  intervalSeconds: " << (int) chunk->interval_seconds << endl;
-        out << "  interleave:" << endl;
+        out << "  intervals: " << chunk->interval_count << '\n';
+        out << "  intervalSeconds: " << (int) chunk->interval_seconds << '\n';
+        out << "  interleave:" << '\n';
         for (int i=0; i < chunk->waveformInfo.size(); i++) {
             const PRS1Waveform & w = chunk->waveformInfo.at(i);
-            out << "    " << i << ": " << w.interleave << endl;
+            out << "    " << i << ": " << w.interleave << '\n';
         }
-        out << "  end: " << ts((chunk->timestamp + chunk->duration) * 1000L) << endl;
+        out << "  end: " << ts((chunk->timestamp + chunk->duration) * 1000L) << '\n';
     }
     
     // header checksum
-    out << "  checksum: " << hex << chunk->storedChecksum << endl;
+    out << "  checksum: " << hex << chunk->storedChecksum << '\n';
     if (chunk->storedChecksum != chunk->calcChecksum) {
-        out << "  calcChecksum: " << hex << chunk->calcChecksum << endl;
+        out << "  calcChecksum: " << hex << chunk->calcChecksum << '\n';
     }
     
     // data
     bool dump_data = true;
     if (chunk->m_parsedData.size() > 0) {
         dump_data = false;
-        out << "  events:" << endl;
+        out << "  events:" << '\n';
         for (auto & e : chunk->m_parsedData) {
             QString name = _PRS1ParsedEventName(e);
             if (name == "raw" || name == "unknown") {
@@ -215,32 +233,32 @@ void ChunkToYaml(QTextStream & out, PRS1DataChunk* chunk, bool ok)
             }
             QMap<QString,QString> contents = _PRS1ParsedEventContents(e);
             if (name == "setting" && contents.size() == 1) {
-                out << "  - set_" << contents.firstKey() << ": " << contents.first() << endl;
+                out << "  - set_" << contents.firstKey() << ": " << contents.first() << '\n';
             }
             else {
-                out << "  - " << name << ":" << endl;
+                out << "  - " << name << ":" << '\n';
                 
                 // Always emit start first if present
                 if (contents.contains("start")) {
-                    out << "      " << "start" << ": " << contents["start"] << endl;
+                    out << "      " << "start" << ": " << contents["start"] << '\n';
                 }
                 for (auto & key : contents.keys()) {
                     if (key == "start") continue;
-                    out << "      " << key << ": " << contents[key] << endl;
+                    out << "      " << key << ": " << contents[key] << '\n';
                 }
             }
         }
     }
     if (dump_data || !ok) {
-        out << "  data: " << byteList(chunk->m_data, 100) << endl;
+        out << "  data: " << byteList(chunk->m_data, 100) << '\n';
     }
     
     // data CRC
-    out << "  crc: " << hex << chunk->storedCrc << endl;
+    out << "  crc: " << hex << chunk->storedCrc << '\n';
     if (chunk->storedCrc != chunk->calcCrc) {
-        out << "  calcCrc: " << hex << chunk->calcCrc << endl;
+        out << "  calcCrc: " << hex << chunk->calcCrc << '\n';
     }
-    out << endl;
+    out << '\n';
 }
 
 void parseAndEmitChunkYaml(const QString & path)
@@ -328,7 +346,7 @@ void parseAndEmitChunkYaml(const QString & path)
                 // Only write unique chunks to the file.
                 if (written[outpath].contains(chunk->hash()) == false) {
                     if (first_chunk_from_file) {
-                        out << "file: " << relative << endl;
+                        out << "file: " << relative << '\n';
                         first_chunk_from_file = false;
                     }
                     bool ok = true;

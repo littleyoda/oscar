@@ -244,14 +244,14 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
     }
     QTextStream out(&file);
 
-    out << "session:" << endl;
-    out << "  id: " << session->session() << endl;
-    out << "  start: " << ts(session->first()) << endl;
-    out << "  end: " << ts(session->last()) << endl;
-    out << "  valid: " << ok << endl;
+    out << "session:" << '\n';
+    out << "  id: " << session->session() << '\n';
+    out << "  start: " << ts(session->first()) << '\n';
+    out << "  end: " << ts(session->last()) << '\n';
+    out << "  valid: " << ok << '\n';
     
     if (!session->m_slices.isEmpty()) {
-        out << "  slices:" << endl;
+        out << "  slices:" << '\n';
         for (auto & slice : session->m_slices) {
             QString s;
             switch (slice.status) {
@@ -260,9 +260,9 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
             case EquipmentOff: s = "equipment off"; break;
             default: s = "unknown"; break;
             }
-            out << "  - status: " << s << endl;
-            out << "    start: " << ts(slice.start) << endl;
-            out << "    end: " << ts(slice.end) << endl;
+            out << "  - status: " << s << '\n';
+            out << "    start: " << ts(slice.start) << '\n';
+            out << "    end: " << ts(slice.end) << '\n';
         }
     }
     qint64 total_time = 0;
@@ -272,9 +272,9 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
         total_time = day.total_time();
         day.removeSession(session);
     }
-    out << "  total_time: " << dur(total_time) << endl;
+    out << "  total_time: " << dur(total_time) << '\n';
 
-    out << "  settings:" << endl;
+    out << "  settings:" << '\n';
 
     // We can't get deterministic ordering from QHash iterators, so we need to create a list
     // of sorted ChannelIDs.
@@ -288,15 +288,15 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
         } else {
             s = value.toString();
         }
-        out << "    " << settingChannel(*key) << ": " << s << endl;
+        out << "    " << settingChannel(*key) << ": " << s << '\n';
     }
 
-    out << "  events:" << endl;
+    out << "  events:" << '\n';
 
     keys = session->eventlist.keys();
     std::sort(keys.begin(), keys.end());
     for (QList<ChannelID>::iterator key = keys.begin(); key != keys.end(); key++) {
-        out << "    " << eventChannel(*key) << ": " << endl;
+        out << "    " << eventChannel(*key) << ": " << '\n';
 
         // Note that this is a vector of lists
         QVector<EventList *> &ev = session->eventlist[*key];
@@ -316,30 +316,30 @@ void SessionToYaml(QString filepath, Session* session, bool ok)
 
         for (int j = 0; j < ev_size; j++) {
             e = *ev[j];
-            out << "    - count: "  << (qint32)e.count() << endl;
+            out << "    - count: "  << (qint32)e.count() << '\n';
             if (e.count() == 0)
                 continue;
-            out << "      first: " << ts(e.first()) << endl;
-            out << "      last: " << ts(e.last()) << endl;
-            out << "      type: " << eventListTypeName(e.type()) << endl;
-            out << "      rate: " << e.rate() << endl;
-            out << "      gain: " << e.gain() << endl;
-            out << "      offset: " << e.offset() << endl;
+            out << "      first: " << ts(e.first()) << '\n';
+            out << "      last: " << ts(e.last()) << '\n';
+            out << "      type: " << eventListTypeName(e.type()) << '\n';
+            out << "      rate: " << e.rate() << '\n';
+            out << "      gain: " << e.gain() << '\n';
+            out << "      offset: " << e.offset() << '\n';
             if (!e.dimension().isEmpty()) {
-                out << "      dimension: " << e.dimension() << endl;
+                out << "      dimension: " << e.dimension() << '\n';
             }
-            out << "      data:" << endl;
-            out << "        min: " << e.Min() << endl;
-            out << "        max: " << e.Max() << endl;
-            out << "        raw: " << intList((EventStoreType*) e.m_data.data(), e.count(), 100) << endl;
+            out << "      data:" << '\n';
+            out << "        min: " << e.Min() << '\n';
+            out << "        max: " << e.Max() << '\n';
+            out << "        raw: " << intList((EventStoreType*) e.m_data.data(), e.count(), 100) << '\n';
             if (e.type() != EVL_Waveform) {
-                out << "        delta: " << intList((quint32*) e.m_time.data(), e.count(), 100) << endl;
+                out << "        delta: " << intList((quint32*) e.m_time.data(), e.count(), 100) << '\n';
             }
             if (e.hasSecondField()) {
-                out << "      data2:" << endl;
-                out << "        min: " << e.min2() << endl;
-                out << "        max: " << e.max2() << endl;
-                out << "        raw: " << intList((EventStoreType*) e.m_data2.data(), e.count(), 100) << endl;
+                out << "      data2:" << '\n';
+                out << "        min: " << e.min2() << '\n';
+                out << "        max: " << e.max2() << '\n';
+                out << "        raw: " << intList((EventStoreType*) e.m_data2.data(), e.count(), 100) << '\n';
             }
         }
     }

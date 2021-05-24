@@ -1886,7 +1886,7 @@ static QString hex(int i)
     return QString("0x") + QString::number(i, 16).toUpper();
 }
 
-#define ENUMSTRING(ENUM) case ENUM: s = #ENUM; break
+#define ENUMSTRING(ENUM) case ENUM: s = QStringLiteral(#ENUM); break
 static QString parsedEventTypeName(PRS1ParsedEventType t)
 {
     QString s;
@@ -2028,7 +2028,13 @@ static QString timeStr(int t)
     int h = t / 3600;
     int m = (t - (h * 3600)) / 60;
     int s = t % 60;
+#if 1
+    // Optimized after profiling regression tests.
+    return QString::asprintf("%02d:%02d:%02d", h, m, s);
+#else
+    // Unoptimized original, slows down regression tests.
     return QString("%1:%2:%3").arg(h, 2, 10, QChar('0')).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+#endif
 }
 
 static QString byteList(QByteArray data, int limit)
