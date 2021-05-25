@@ -427,6 +427,9 @@ class PRDS2File : public RawDataFile
     void parseDS2Header();
     int read16();
     QByteArray readBytes();
+    void initializeKey();
+    QByteArray d, e, j, k;
+    QByteArray m_key;
   protected:
     virtual qint64 readData(char *data, qint64 maxSize);
     virtual bool seek(qint64 pos);
@@ -441,6 +444,7 @@ PRDS2File::PRDS2File(class QFile & file)
     : RawDataFile(file)
 {
     parseDS2Header();
+    initializeKey();
 }
 
 bool PRDS2File::seek(qint64 pos)
@@ -461,16 +465,58 @@ qint64 PRDS2File::size() const
 
 qint64 PRDS2File::readData(char *data, qint64 maxSize)
 {
-    //qint64 pos = this->pos();
-    int result = RawDataFile::readData(data, maxSize);
-    
-    // TODO: calculate key stream for byte pos+i
-    /*
-    for (int i = 0; i < result; i++) {
-        data[i] ^= key[i];
+    qint64 pos = this->pos();
+    if (pos < 0) {
+        qWarning() << "unexpected PRDS2 header read at real offset" << (m_header_size + pos) << "pos =" << pos;
+        return -1;
     }
-    */
+    int result = RawDataFile::readData(data, maxSize);
+
+    if (result > 0) {
+        qint64 bytesRead = result;
+        // TODO: Find and implement the actual algorithm.
+        // For now just use the known key stream fragment when appropriate.
+        qint64 key_size = m_key.size();
+        if (pos < key_size) {
+            qint64 limit = key_size - pos;
+            if (limit > bytesRead) limit = bytesRead;
+            for (qint64 i = 0; i < limit; i++) {
+                data[i] ^= m_key.at(pos+i);
+            }
+        }
+    }
+
     return result;
+}
+
+void PRDS2File::initializeKey()
+{
+    // TODO: Find and implement the actual algorithm and keying method.
+    // It may be that the algorithm is obfuscating h,i,j,k,l before reaching the data,
+    // but since we don't yet know what those represent, for now just start with a known
+    // key stream for the following known values.
+    //
+    // These test values show up on multiple machines, sometimes multiple times.
+    static const unsigned char knownD[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+    static const unsigned char knownE[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+    static const unsigned char knownJ[] = {
+        0x9a, 0x93, 0x15, 0xc8, 0xd4, 0x24, 0xef, 0x7f, 0xa6, 0xa7, 0x9f, 0xce, 0x82, 0xdd, 0x5d, 0xfe,
+        0xde, 0x8d, 0x4f, 0x9f, 0x15, 0x32, 0x4d, 0x2e, 0x6d, 0x1d, 0x6e, 0xc4, 0xcb, 0x5f, 0xce, 0x64
+    };
+    static const unsigned char knownK[] = {
+        0xc1, 0x70, 0x9e, 0xe9, 0xf0, 0xdf, 0x0a, 0xd4, 0x79, 0xd5, 0xaa, 0x07, 0x97, 0xd4, 0x5c, 0x33
+    };
+    if (d == QByteArray((const char*) knownD, sizeof(knownD)) && e == QByteArray((const char*) knownE, sizeof(knownE))) {
+        if (j == QByteArray((const char*) knownJ, sizeof(knownJ)) && k == QByteArray((const char*) knownK, sizeof(knownK))) {
+            static const unsigned char knownStream[] = {
+                0x07, 0x47, 0xc3, 0x34, 0x70, 0x65, 0xac, 0x7c, 0xc6, 0x0b, 0x56, 0x53, 0xe9, 0x57, 0xbe, 0x1a,
+                0xcb, 0xd8, 0x71, 0x66, 0x08, 0x86, 0xa6, 0xd8
+            };
+            m_key = QByteArray((const char*) knownStream, sizeof(knownStream));
+        } else {
+            qWarning() << "*** Unexpected j,k for key?";
+        }
+    }
 }
 
 void PRDS2File::parseDS2Header()
@@ -490,8 +536,8 @@ void PRDS2File::parseDS2Header()
         qDebug() << "DS2 guid {" << m_guid << "}";
     }
 
-    QByteArray d = readBytes();  // 96 bits, probably IV
-    QByteArray e = readBytes();  // 128 bits, probably key
+    d = readBytes();  // 96 bits, probably IV or key
+    e = readBytes();  // 128 bits, probably key or IV
     if (d.size() != 12 || e.size() != 16) {
         qWarning() << "DS2 d,e sizes =" << d.size() << e.size();
     } else {
@@ -512,8 +558,8 @@ void PRDS2File::parseDS2Header()
         qDebug() << "DS2 h,i =" << h.toHex() << i.toHex();
     }
 
-    QByteArray j = readBytes();  // same per d,e pair, does NOT vary per machine
-    QByteArray k = readBytes();  // same per d,e pair, does NOT vary per machine
+    j = readBytes();  // same per d,e pair, does NOT vary per machine; possibly key or IV
+    k = readBytes();  // same per d,e pair, does NOT vary per machine; possibly key or IV
     if (j.size() != 32 || k.size() != 16) {
         qWarning() << "DS2 j,k sizes =" << j.size() << k.size();
     } else {
@@ -527,9 +573,10 @@ void PRDS2File::parseDS2Header()
         qDebug() << "DS2 l =" << l.toHex();
     }
 
-    if (RawDataFile::pos() != m_header_size) {
+    if (m_device.pos() != m_header_size) {
         qWarning() << "DS2 header size !=" << m_header_size;
     }
+    seek(0);  // update internal position
 }
 
 int PRDS2File::read16()
@@ -537,7 +584,7 @@ int PRDS2File::read16()
     unsigned char data[2];
     int result;
     
-    result = RawDataFile::read((char*) data, sizeof(data));
+    result = m_device.read((char*) data, sizeof(data));  // access the underlying data for the header
     if (result == sizeof(data)) {
         result = data[0] | (data[1] << 8);
     } else {
@@ -549,7 +596,7 @@ int PRDS2File::read16()
 QByteArray PRDS2File::readBytes()
 {
     int length = read16();
-    QByteArray result = RawDataFile::read(length);
+    QByteArray result = m_device.read(length);  // access the underlying data for the header
     if (result.size() < length) {
         result.clear();
     }
@@ -749,6 +796,11 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         QStringList pair = line.split("=");
         if (pair.size() != 2) {
             qWarning() << src->name() << "malformed line:" << line;
+            QHashIterator<QString,QString> i(props);
+            while (i.hasNext()) {
+                i.next();
+                qDebug() << i.key() << ":" << i.value();
+            }
             break;
         }
 
