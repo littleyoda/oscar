@@ -143,7 +143,7 @@ class Machine
     Session *SessionExists(SessionID session);
 
     //! \brief Adds the session to this machine object, and the Master Profile list. (used during load)
-    bool AddSession(Session *s);
+    bool AddSession(Session *s, bool allowOldSessions=false);
 
     //! \brief Find the date this session belongs in, according to profile settings
     QDate pickDate(qint64 start);

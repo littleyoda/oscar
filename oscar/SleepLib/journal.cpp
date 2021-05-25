@@ -76,7 +76,7 @@ JournalEntry::JournalEntry(QDate date)
         session->set_last(et);
 
         // Let it live in memory...but not on disk unless data is changed...
-        jmach->AddSession(session);
+        jmach->AddSession(session, true);
 
         // and where does day get set??? does day actually need to be set??
         day = p_profile->GetDay(date, MT_JOURNAL);

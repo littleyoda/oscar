@@ -2126,7 +2126,7 @@ Session * Daily::CreateJournalSession(QDate date)
     sess->SetSessionID(st / 1000L);
     sess->set_first(st);
     sess->set_last(et);
-    m->AddSession(sess);
+    m->AddSession(sess, true);
     return sess;
 }
 Session * Daily::GetJournalSession(QDate date) // Get the first journal session
