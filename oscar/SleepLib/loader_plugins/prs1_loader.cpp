@@ -2288,6 +2288,22 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 }
 
 
+PRS1Import::~PRS1Import()
+{
+    delete compliance;
+    delete summary;
+    for (auto & e : m_event_chunks.values()) {
+        delete e;
+    }
+    for (int i=0;i < waveforms.size(); ++i) {
+        delete waveforms.at(i);
+    }
+    for (auto & c : oximetry) {
+        delete c;
+    }
+}
+
+
 void PRS1Import::CreateEventChannels(const PRS1DataChunk* chunk)
 {
     const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(chunk);

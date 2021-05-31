@@ -10,7 +10,6 @@
 #define PRS1TESTS_H
 
 #include "AutoTest.h"
-#include "../SleepLib/loader_plugins/prs1_loader.h"
 
 class PRS1Tests : public QObject
 {

@@ -61,8 +61,9 @@ static QString hex(int i)
 }
 
 #define ENUMSTRING(ENUM) case ENUM: s = QStringLiteral(#ENUM); break
-static QString parsedEventTypeName(PRS1ParsedEventType t)
+QString PRS1ParsedEvent::typeName() const
 {
+    PRS1ParsedEventType t = m_type;
     QString s;
     switch (t) {
         ENUMSTRING(EV_PRS1_RAW);
@@ -116,8 +117,9 @@ static QString parsedEventTypeName(PRS1ParsedEventType t)
     return s.mid(8).toLower();  // lop off initial EV_PRS1_
 }
 
-static QString parsedSettingTypeName(PRS1ParsedSettingType t)
+QString PRS1ParsedSettingEvent::settingName() const
 {
+    PRS1ParsedSettingType t = m_setting;
     QString s;
     switch (t) {
         ENUMSTRING(PRS1_SETTING_CPAP_MODE);
@@ -172,8 +174,9 @@ static QString parsedSettingTypeName(PRS1ParsedSettingType t)
     return s.mid(13).toLower();  // lop off initial PRS1_SETTING_
 }
 
-static QString parsedModeName(int m)
+QString PRS1ParsedSettingEvent::modeName() const
 {
+    int m = value();
     QString s;
     switch ((PRS1Mode) m) {
         ENUMSTRING(PRS1_MODE_UNKNOWN);  // TODO: Remove this when all the parsers are complete.
@@ -197,7 +200,7 @@ static QString parsedModeName(int m)
     return s.mid(10).toLower();  // lop off initial PRS1_MODE_
 }
 
-static QString timeStr(int t)
+QString PRS1ParsedEvent::timeStr(int t)
 {
     int h = t / 3600;
     int m = (t - (h * 3600)) / 60;
@@ -222,16 +225,6 @@ static QString byteList(QByteArray data, int limit=-1)
     if (limit < count) l.push_back("...");
     QString s = l.join(" ");
     return s;
-}
-
-QString _PRS1ParsedEventName(PRS1ParsedEvent* e)
-{
-    return parsedEventTypeName(e->m_type);
-}
-
-QMap<QString,QString> _PRS1ParsedEventContents(PRS1ParsedEvent* e)
-{
-    return e->contents();
 }
 
 
@@ -275,11 +268,11 @@ QMap<QString,QString> PRS1ParsedSettingEvent::contents(void)
     QMap<QString,QString> out;
     QString v;
     if (m_setting == PRS1_SETTING_CPAP_MODE) {
-        v = parsedModeName(value());
+        v = modeName();
     } else {
         v = QString::number(value());
     }
-    out[parsedSettingTypeName(m_setting)] = v;
+    out[settingName()] = v;
     return out;
 }
 
