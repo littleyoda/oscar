@@ -127,12 +127,6 @@ void PRS1Tests::testSessionsToYaml()
 
 // ====================================================================================================
 
-static QString ts(qint64 msecs)
-{
-    // TODO: make this UTC so that tests don't vary by where they're run
-    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
-}
-
 static QString dur(qint64 msecs)
 {
     qint64 s = msecs / 1000L;

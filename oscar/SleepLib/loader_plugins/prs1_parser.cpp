@@ -317,3 +317,31 @@ QMap<QString,QString> PRS1SnoresAtPressureEvent::contents(void)
     out["count"] = QString::number(m_count);
     return out;
 }
+
+
+// MARK: -
+
+QString PRS1DataChunk::DumpEvent(int t, int code, const unsigned char* data, int size)
+{
+    int s = t;
+    int h = s / 3600; s -= h * 3600;
+    int m = s / 60; s -= m * 60;
+    QString dump = QString("%1:%2:%3 ")
+        .arg(h, 2, 10, QChar('0'))
+        .arg(m, 2, 10, QChar('0'))
+        .arg(s, 2, 10, QChar('0'));
+    dump = dump + " " + hex(code) + ":";
+    for (int i = 0; i < size; i++) {
+        dump = dump + QString(" %1").arg(data[i]);
+    }
+    return dump;
+}
+
+
+void PRS1DataChunk::AddEvent(PRS1ParsedEvent* const event)
+{
+    m_parsedData.push_back(event);
+}
+
+
+

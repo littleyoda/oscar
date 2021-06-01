@@ -626,7 +626,37 @@ protected:
 
     //! \brief Parse a settings slice from a .000 and .001 file
     bool ParseSettingsF3V6(const unsigned char* data, int size);
+
+protected:
+    QString DumpEvent(int t, int code, const unsigned char* data, int size);
 };
+
+
+#define DUMP_EVENT() qWarning() << this->sessionid << DumpEvent(t, code, data + pos, size - (pos - startpos)) + "  @ " + QString("0x") + QString::number(startpos-1, 16).toUpper()
+
+// TODO: See the LogUnexpectedMessage TODO about generalizing this for other loaders.
+// Right now this macro assumes that it's called within a method that has a "loader" member
+// that points to the PRS1Loader* instance that's calling it.
+#define UNEXPECTED_VALUE(SRC, VALS) { \
+    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
+    qWarning() << this->sessionid << message; \
+    loader->LogUnexpectedMessage(message); \
+    }
+#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
+#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
+// for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
+#define HEX(SRC) { qWarning() << this->sessionid << QString("%1:%2: %3 = %4").arg(__func__).arg(__LINE__).arg(#SRC).arg((SRC & 0xFF), 2, 16, QChar('0')); }
+
+enum FlexMode { FLEX_None, FLEX_CFlex, FLEX_CFlexPlus, FLEX_AFlex, FLEX_RiseTime, FLEX_BiFlex, FLEX_PFlex, FLEX_Flex, FLEX_Unknown = -1  };
+
+enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
+
+enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube, HUMID_Passover, HUMID_Error };
+
+
+extern const QVector<PRS1ParsedEventType> ParsedEventsF0V23;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF0V4;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF0V6;
 
 
 #endif // PRS1PARSER_H

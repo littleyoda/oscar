@@ -44,6 +44,8 @@ const int max_load_buffer_size = 1024 * 1024;
 #endif
 const QString prs1_class_name = STR_MACH_PRS1;
 
+QString ts(qint64 msecs);
+
 /*! \struct PRS1Waveform
     \brief Used in PRS1 Waveform Parsing */
 struct PRS1Waveform {
