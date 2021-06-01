@@ -654,9 +654,16 @@ enum BackupBreathMode { PRS1Backup_Off, PRS1Backup_Auto, PRS1Backup_Fixed };
 enum HumidMode { HUMID_Fixed, HUMID_Adaptive, HUMID_HeatedTube, HUMID_Passover, HUMID_Error };
 
 
+const int PRS1_HTYPE_NORMAL=0;
+const int PRS1_HTYPE_INTERVAL=1;
+
+
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V23;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V4;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V6;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF3V0;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF3V3;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF3V6;
 
 
 #endif // PRS1PARSER_H
