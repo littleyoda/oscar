@@ -661,9 +661,14 @@ const int PRS1_HTYPE_INTERVAL=1;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V23;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V4;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF0V6;
+
 extern const QVector<PRS1ParsedEventType> ParsedEventsF3V0;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF3V3;
 extern const QVector<PRS1ParsedEventType> ParsedEventsF3V6;
 
+extern const QVector<PRS1ParsedEventType> ParsedEventsF5V0;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF5V1;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF5V2;
+extern const QVector<PRS1ParsedEventType> ParsedEventsF5V3;
 
 #endif // PRS1PARSER_H

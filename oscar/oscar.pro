@@ -301,6 +301,7 @@ SOURCES += \
     SleepLib/loader_plugins/prs1_parser.cpp \
     SleepLib/loader_plugins/prs1_parser_xpap.cpp \
     SleepLib/loader_plugins/prs1_parser_vent.cpp \
+    SleepLib/loader_plugins/prs1_parser_asv.cpp \
     SleepLib/loader_plugins/resmed_loader.cpp \
     SleepLib/loader_plugins/resmed_EDFinfo.cpp \
     SleepLib/loader_plugins/somnopose_loader.cpp \
