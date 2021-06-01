@@ -10,6 +10,9 @@
 #include "prs1_parser.h"
 #include "prs1_loader.h"
 
+//********************************************************************************************
+// MARK: 50 Series
+
 bool PRS1DataChunk::ParseComplianceF0V23(void)
 {
     if (this->family != 0 || (this->familyVersion != 2 && this->familyVersion != 3)) {
@@ -642,6 +645,10 @@ bool PRS1DataChunk::ParseEventsF0V23()
     return ok;
 }
 
+
+//********************************************************************************************
+// MARK: -
+// MARK: 60 Series
 
 bool PRS1DataChunk::ParseComplianceF0V4(void)
 {
@@ -1416,6 +1423,10 @@ bool PRS1DataChunk::ParseComplianceF0V5(void)
     return ok;
 }
 
+
+//********************************************************************************************
+// MARK: -
+// MARK: DreamStation
 
 // The below is based on fixing the fileVersion == 3 parsing in ParseSummary() based
 // on our understanding of slices from F0V23. The switch values come from sample files.

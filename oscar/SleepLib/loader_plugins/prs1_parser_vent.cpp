@@ -15,6 +15,10 @@ static QString hex(int i)
     return QString("0x") + QString::number(i, 16).toUpper();
 }
 
+//********************************************************************************************
+// MARK: -
+// MARK: 50 and 60 Series
+
 // borrowed largely from ParseSummaryF5V012
 bool PRS1DataChunk::ParseSummaryF3V03(void)
 {
@@ -594,6 +598,10 @@ bool PRS1DataChunk::ParseEventsF3V03(void)
     return true;
 }
 
+
+//********************************************************************************************
+// MARK: -
+// MARK: DreamStation
 
 // Originally based on ParseSummaryF5V3, with changes observed in ventilator sample data
 //

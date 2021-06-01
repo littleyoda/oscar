@@ -15,6 +15,9 @@ static QString hex(int i)
     return QString("0x") + QString::number(i, 16).toUpper();
 }
 
+//********************************************************************************************
+// MARK: -
+// MARK: 50 and 60 Series
 
 // borrowed largely from ParseSummaryF0V4
 bool PRS1DataChunk::ParseSummaryF5V012(void)
@@ -989,6 +992,10 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
     return ok;
 }
 
+
+//********************************************************************************************
+// MARK: -
+// MARK: DreamStation
 
 // Originally based on ParseSummaryF0V6, with changes observed in ASV sample data
 // based on size, slices 0-5 look similar, and it looks like F0V6 slides 8-B are equivalent to 6-9
