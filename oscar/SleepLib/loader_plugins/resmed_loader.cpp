@@ -451,16 +451,27 @@ int ResmedLoader::Open(const QString & dirpath)
 
 
         // Copy Identification files to backup folder
-        QFile backupFile(backup_path + RMS9_STR_idfile + STR_ext_TGT);
+        QString idfile_ext;
+        if (QFile(importPath+RMS9_STR_idfile+STR_ext_TGT).exists()) {
+            idfile_ext = STR_ext_TGT;
+        }
+        else if (QFile(importPath+RMS9_STR_idfile+STR_ext_JSON).exists()) {
+            idfile_ext = STR_ext_JSON;
+        }
+        else {
+            idfile_ext = "";       // should never happen...
+        }
+
+        QFile backupFile(backup_path + RMS9_STR_idfile + idfile_ext);
         if (backupFile.exists())
             backupFile.remove();
-        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT))
-            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_TGT << "to backup" << backupFile.fileName();
+        if ( ! QFile::copy(importPath + RMS9_STR_idfile + idfile_ext, backup_path + RMS9_STR_idfile + idfile_ext))
+            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + idfile_ext << "to backup" << backupFile.fileName();
 
         backupFile.setFileName(backup_path + RMS9_STR_idfile + STR_ext_CRC);
         if (backupFile.exists())
             backupFile.remove();
-        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC))
+        if ( ! QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC))
             qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_CRC << "to backup" << backup_path;
     }
 
