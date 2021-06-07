@@ -16,6 +16,8 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QStringList>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <cmath>
 
 #include "SleepLib/session.h"
@@ -194,6 +196,7 @@ ChannelID ResmedLoader::PresReliefLevel() { return RMS9_EPRLevel; }
 QHash<ChannelID, QStringList> resmed_codes;
 
 const QString STR_ext_TGT = "tgt";
+const QString STR_ext_JSON = "json";
 const QString STR_ext_CRC = "crc";
 
 const QString RMS9_STR_datalog = "DATALOG";
@@ -222,6 +225,7 @@ bool ResmedLoader::Detect(const QString & givenpath)
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info);    // forward
+void scanProductObject( const QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap );              // forward
 MachineInfo ResmedLoader::PeekInfo(const QString & path)
 {
     if (!Detect(path))
@@ -230,23 +234,50 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
     QFile f(path+"/"+RMS9_STR_idfile+"tgt");
 
     // Abort if this file is dodgy..
-    if (!f.exists() || !f.open(QIODevice::ReadOnly)) {
-        return MachineInfo();
-    }
-    MachineInfo info = newInfo();
+    if (f.exists() ) {
+        if ( !f.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        MachineInfo info = newInfo();
 
-    // Parse # entries into idmap.
-    while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
-        QHash<QString, QString> hash = parseIdentLine( line, & info );
-    }
+        // Parse # entries into idmap.
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            QHash<QString, QString> hash = parseIdentLine( line, & info );
+        }
 
-    return info;
+        return info;
+    }
+    QFile j(path+"/"+RMS9_STR_idfile+"json");
+    if (j.exists() ) {
+        if ( !j.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        QByteArray identData = j.readAll();
+        j.close();
+        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
+        QJsonObject  identObj = identDoc.object();
+        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
+            QJsonObject  flow = identObj["FlowGenerator"].toObject();
+            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
+                QJsonObject  profiles = flow["IdentificationProfiles"].toObject();
+                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
+                    QJsonObject  product = profiles["Product"].toObject();
+                    MachineInfo info = newInfo();
+                    scanProductObject( product, &info, nullptr);
+                    return info;
+                }
+            }
+        }
+
+    }
+    // neither filename exists, return empty info
+    return MachineInfo();
 }
 
 long event_cnt = 0;
 
-bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap );        // forward
+bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> & idmap );        // forward
 void backupSTRfiles( const QString strpath, const QString importPath, const QString backupPath,
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber );                    // forward
@@ -294,8 +325,8 @@ int ResmedLoader::Open(const QString & dirpath)
     m_abort = false;
     MachineInfo info = newInfo();
 
-    if ( ! parseIdentTGT(importPath, & info, idmap) ) {
-        qDebug() << "Failed to parse Identification.tgt";
+    if ( ! parseIdentFile(importPath, & info, idmap) ) {
+        qDebug() << "Failed to parse Identification file";
         return -1;
     }
  
@@ -1625,29 +1656,79 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
     ///////////////////////////////////////////////////////////////////////////////////
     // Parse Identification.tgt file (containing serial number and machine information)
     ///////////////////////////////////////////////////////////////////////////////////
-QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info);	//forward
-
-bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
+// QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info); // forward
+// void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap);                 // forward
+bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
     QString filename = path + RMS9_STR_idfile + STR_ext_TGT;
     QFile f(filename);
+    QFile j(path + RMS9_STR_idfile + STR_ext_JSON);
 
     // Abort if this file is dodgy..
-    if (!f.exists() || !f.open(QIODevice::ReadOnly)) {
-        return false;
-    }
-    qDebug() << "Parsing Identification File " << filename;
-//  emit updateMessage(QObject::tr("Parsing Identification File"));
-//  QApplication::processEvents();
+    if (f.exists() ) {
+        if ( !f.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+        qDebug() << "Parsing Identification File " << filename;
+    //  emit updateMessage(QObject::tr("Parsing Identification File"));
+    //  QApplication::processEvents();
 
-    // Parse # entries into idmap.
-    while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
-        QHash<QString, QString> hash = parseIdentLine( line, info );
-        idmap.unite(hash);
-    }
+        // Parse # entries into idmap.
+        while (!f.atEnd()) {
+           QString line = f.readLine().trimmed();
+           QHash<QString, QString> hash = parseIdentLine( line, info );
+           idmap.unite(hash);
+        }
 
-    f.close();
-    return true;
+        f.close();
+        return true;
+    }
+    if (j.exists() ) {
+        if ( !j.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+        QByteArray identData = j.readAll();
+        j.close();
+        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
+        QJsonObject identObj(identDoc.object());
+        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
+            QJsonObject flow = identObj["FlowGenerator"].toObject();
+            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
+                QJsonObject profiles = flow["IdentificationProfiles"].toObject();
+                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
+                    QJsonObject product = profiles["Product"].toObject();
+//                  MachineInfo info = newInfo();
+                    scanProductObject( product, info, &idmap);
+                    return true;
+                }
+            }
+        }
+
+    }
+    return false;
+}
+
+void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap) {
+    QHash<QString, QString> hash1, hash2, hash3;
+    if (product.contains("SerialNumber")) {
+        info->serial = product["SerialNumber"].toString();
+        hash1["SerialNumber"] = product["SerialNumber"].toString();
+        if (idmap)
+            idmap->unite(hash1);
+    }
+    if (product.contains("ProductCode")) {
+        info->modelnumber = product["ProductCode"].toString();
+        hash2["ProductCode"] = info->modelnumber;
+        if (idmap)
+            idmap->unite(hash2);
+    }
+    if (product.contains("ProductName")) {
+        info->model = product["ProductName"].toString();
+        hash3["ProductName"] = info->model;
+        if (idmap)
+            idmap->unite(hash3);
+        int idx = info->model.indexOf("11");
+        info->series = info->model.left(idx+2);
+    }
 }
 
 void backupSTRfiles( const QString strpath, const QString importPath, const QString backupPath, 
