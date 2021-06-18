@@ -164,7 +164,7 @@ extern ChannelID CPAP_LargeLeak, PRS1_BND,
        CPAP_HumidSetting,
        PRS1_MaskResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
 
-extern ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2;
+extern ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2, INTP_SnoreFlag;
 
 extern ChannelID OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_PulseChange, OXI_SPO2Drop, OXI_Plethy;
 

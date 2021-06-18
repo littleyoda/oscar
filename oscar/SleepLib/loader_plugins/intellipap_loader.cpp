@@ -10,6 +10,7 @@
  * for more details. */
 
 #include <QDir>
+#include <QCoreApplication>
 
 #include "intellipap_loader.h"
 
@@ -357,7 +358,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
             sess->AddEventList(CPAP_Snore, EVL_Event);
 
             sess->AddEventList(CPAP_Obstructive, EVL_Event);
-            sess->AddEventList(CPAP_VSnore, EVL_Event);
+            sess->AddEventList(INTP_SnoreFlag, EVL_Event);
             sess->AddEventList(CPAP_Hypopnea, EVL_Event);
             sess->AddEventList(CPAP_NRI, EVL_Event);
             sess->AddEventList(CPAP_LeakFlag, EVL_Event);
@@ -375,7 +376,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
                 }
             }
 
-            QDateTime d = QDateTime::fromTime_t(sid);
+            QDateTime d = QDateTime::fromSecsSinceEpoch(sid);
             qDebug() << sid << "has double ups" << d;
             /*Session *sess=Sessions[sid];
             Sessions.erase(Sessions.find(sid));
@@ -483,7 +484,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
                 sess->eventlist[CPAP_Snore][0]->AddEvent(time, m_buffer[pos + 0x4]); //4/5??
 
                 if (m_buffer[pos+0x4] > 0) {
-                    sess->eventlist[CPAP_VSnore][0]->AddEvent(time, m_buffer[pos + 0x5]);
+                    sess->eventlist[INTP_SnoreFlag][0]->AddEvent(time, m_buffer[pos + 0x5]);
                 }
 
                 // 0x0f == Leak Event
@@ -720,7 +721,7 @@ PACK (struct DV6_S_REC{
     unsigned char checksum;         //54
 });
 
-// DV6 SET.BIN - structure of the entire file
+// DV6 SET.BIN - structure of the entire settings file
 PACK (struct SET_BIN_REC {
     char unknown_00;                        // assuming file version
     char serial[11];                        // null terminated
@@ -868,19 +869,24 @@ struct DV6_SessionInfo {
     unsigned int begin;
     unsigned int end;
     unsigned int written;
-    bool haveHighResData;
+//    bool haveHighResData;
+    unsigned int firstHighRes;
+    unsigned int lastHighRes;
     CPAPMode mode = MODE_UNKNOWN;
 };
 
 QString card_path;
 QString backup_path;
 QString history_path;
+QString rebuild_path;
 
 MachineInfo info;
 Machine * mach = nullptr;
 
 bool rebuild_from_backups = false;
 bool create_backups = false;
+
+QStringList inputFilePaths;
 
 QMap<SessionID, DV6_S_Data> DailySummaries;
 QMap<SessionID, DV6_SessionInfo> SessionData;
@@ -909,84 +915,119 @@ public:
     ~RollingBackup () {
     }
 
-    bool open (const QString filetype, DV6_HEADER * newhdr); // Open the file
+    bool open (const QString filetype, DV6_HEADER * newhdr, QByteArray * startTime); // Open the file
     bool close();           // close the file
-    bool save(QByteArray dataBA);  // save the next record in the file
+    bool save(const QByteArray &dataBA);  // save the next record in the file
 
 private:
-    //DV6_HEADER hdr;       // file header
+    DV6_HEADER hdr;       // file header
     QString filetype;
-    QFile hFile;
+    QFile histfile;
 
-    //int record_length;      // Length of record block in incoming file
-    //const int maxHistFileSize = 20*10e6;   // Maximum size of file before we create a new file
+    const qint64 maxHistFileSize = 10000000;    // Maximum size of file before we create a new file, in MB (40 MB)
+                                                // (While 40e6 would be easier to understand, 40e6 is a double, not an int)
 
-    //int numWritten;     // Number of records written
-    //quint32 lastTimestamp;
-    //unsigned int wrap_record;
+    unsigned int lastTimeInFile;    // Timestamp of last data record in history file
+    int numWritten;     // Number of records written
 };
 
-bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {
+QStringList getHistoryFileNames (const QString filetype, bool reversed = false) {
+    QStringList filters;
+    QDir hpath(history_path);
+
+    filters.append(filetype);     // Assume one-letter file name like "S.BIN"
+    filters[0].insert(1, "_*");   // Add a wild card like "S_*.BIN"
+    hpath.setNameFilters(filters);
+    hpath.setFilter(QDir::Files);
+    hpath.setSorting(QDir::Name);
+    if (reversed) hpath.setSorting(QDir::Name | QDir::Reversed);
+
+    return hpath.entryList(); // Get list of files
+}
+
+QString getNewFileName (QString filetype, QByteArray * startTime, int offset=0) {
+    unsigned char startTimeChar[5];
+    for (int i = 0; i < 4; i++)
+        startTimeChar[i] = startTime->at(offset+i);
+    unsigned int ts = convertTime(startTimeChar);
+    QString newfile = filetype.left(1) + "_" + QDateTime::fromSecsSinceEpoch(ts).toString("yyyyMMdd") + ".BIN";
+    qDebug() << "DV6 getNewFileName returns" << newfile;
+    return newfile;
+}
+
+bool RollingBackup::open (const QString filetype, DV6_HEADER * inputhdr, QByteArray * startTimeOfBackup) {
     if (!create_backups)
         return true;
 
-#ifdef ROLLBACKUP
+    QDir hpath(history_path);
+    QString historypath = hpath.absolutePath() + "/";
+    int histfilesize = 0;
+
     this->filetype = filetype;
 
-    QDir hpath(history_path);
-    QStringList filters;
-
+    bool needNewFile = false;
+    memcpy (&hdr, inputhdr, sizeof(DV6_HEADER));
     numWritten = 0;
 
-    filters.append(filetype);
-    filters[0].insert(1, "_*");
-    hpath.setNameFilters(filters);
-    hpath.setFilter(QDir::Files);
-    hpath.setSorting(QDir::Name | QDir::Reversed);
-
-    QStringList fileNames = hpath.entryList(); // Get list of files
-    QFile histfile(fileNames.first());
-
-//    bool needNewFile = false;
+    QStringList fileNames = getHistoryFileNames(filetype, true);
 
     // Handle first time a history file is being created
     if (fileNames.isEmpty()) {
-        memcpy (&hdr, newhdr, sizeof(DV6_HEADER));
         for (int i = 0; i < 4; i++) {
             hdr.recordStart[i] = 0;
             hdr.lasttime[i] = 0;
         }
-        record_length = hdr.recordLength;
+        lastTimeInFile = 0;
+        histfile.setFileName(historypath + getNewFileName (filetype, startTimeOfBackup));
+        needNewFile= true;
     }
-
+    
     // We have an existing history record
     if (! fileNames.isEmpty()) {
+        histfile.setFileName(historypath + fileNames.first());      // File names are in reverse order, so latest is first
+
+        // Open and read history file header and save the header
+        if (!histfile.open(QIODevice::ReadWrite)) {
+            qWarning() << "DV6 rb(open) could not open" << fileNames.first() << "for readwrite, error code" << histfile.error() << histfile.errorString();
+            return false;
+        }
+        histfilesize = histfile.size();
+        QByteArray dataBA = histfile.read(sizeof(DV6_HEADER));
+        memcpy (&hdr, dataBA.data(), sizeof(DV6_HEADER));
+        lastTimeInFile = convertTime(hdr.lasttime);
+
         // See if this file is large enough that we want to create a new file
+        // If it is large, we'll start a new file.
         if (histfile.size() > maxHistFileSize) {
-            memcpy (&hdr, newhdr, sizeof(DV6_HEADER));
-            for (int i = 0; i < 4; i++)
-                hdr.recordStart[i] = 0;
+            QString nextFile = historypath + getNewFileName (filetype, &dataBA, 51);
+            QString hh = histfile.fileName();
 
-            if (!histfile.open(QIODevice::ReadOnly)) {
-                qWarning() << "DV6 RollingBackup could not open" << fileNames.first() << "for reading, error code" << histfile.error() << histfile.errorString();
-                return false;
-            }
-            record_length = hdr.recordLength;
-
-            wrap_record = convertNum(hdr.recordStart);
-            if (!histfile.seek(sizeof(DV6_HEADER) + (wrap_record-1) * record_length)) {
-                qWarning() << "DV6 RollingBackup unable to make initial seek to record" << wrap_record
-                           << "in" + histfile.fileName() << histfile.error() << histfile.errorString();
+            if (hh != nextFile) {
+                lastTimeInFile = convertTime(hdr.lasttime);
                 histfile.close();
-                return false;
+                // Update header saying we are starting at record 0
+                for (int i = 0; i < 4; i++)
+                    hdr.recordStart[i] = 0;
+                histfile.setFileName(nextFile);
+                needNewFile = true;
             }
-
         }
     }
-#else
-    Q_UNUSED(filetype)
-    Q_UNUSED(newhdr)
-#endif
+
+    if (needNewFile) {
+        if (!histfile.open(QIODevice::ReadWrite)) {
+            qWarning() << "DV6 rb(open) could not create new file" << histfile.fileName() << "for readwrite, error code" << histfile.error() << histfile.errorString();
+            return false;
+        }
+        if (histfile.write((char *)&hdr.unknown, sizeof(DV6_HEADER)) != sizeof(DV6_HEADER)) {
+            qWarning() << "DV6 rb(open) could not write header to new file" << histfile.fileName() << "for readwrite, error code" << histfile.error() << histfile.errorString();
+            histfile.close();
+            return false;
+        }
+    } else {
+//        qDebug() << "DV6 rb(open) history file size" << histfilesize;
+        histfile.seek(histfilesize);
+    }
 
     return true;
 }
@@ -994,13 +1035,62 @@ bool RollingBackup::open (const QString filetype, DV6_HEADER * newhdr) {
 bool RollingBackup::close() {
     if (!create_backups)
         return true;
+
+    qint32 size = histfile.size();
+
+    if (!histfile.seek(0)) {
+        qWarning() << "DV6 rb(close) unable to seek to file beginning" << histfile.error() << histfile.errorString();
+        histfile.close();
+        return false;
+    }
+
+    quint32 sizehdr = sizeof(DV6_HEADER);
+    quint32 reclen = hdr.recordLength;
+    quint32 wrap_point = (size - sizehdr) / reclen;
+
+    hdr.recordStart[0] = wrap_point & 0xff;
+    hdr.recordStart[1] = (wrap_point >> 8)  & 0xff;
+    hdr.recordStart[2] = (wrap_point >> 16) & 0xff;
+    hdr.recordStart[3] = (wrap_point >> 24) & 0xff;
+
+    if (histfile.write((char *)&hdr, sizeof(DV6_HEADER)) != sizeof(DV6_HEADER)) {
+        qWarning() << "DV6 rb(close) could not write header to file" << histfile.fileName() << "error code" << histfile.error() << histfile.errorString();
+        histfile.close();
+        return false;
+    }
+
+    histfile.close();
+    qDebug() << "DV6 rb(close) wrote" << numWritten << "records.";
     return true;
 }
 
-bool RollingBackup::save(QByteArray dataBA) {
-    Q_UNUSED(dataBA)
+bool RollingBackup::save(const QByteArray &dataBA) {
+
     if (!create_backups)
         return true;
+
+    unsigned char * data = (unsigned char *)dataBA.data();
+    unsigned int thisTimeStamp = convertTime(data);
+
+    if (thisTimeStamp > lastTimeInFile) {   // Is this data new to us?
+        // If so, save it to the history file.
+        if (histfile.write(dataBA) == -1) {
+            qWarning() << "DV6 rb(save) could not save record" << histfile.fileName() << "for readwrite, error code" << histfile.error() << histfile.errorString();
+            histfile.close();
+            return false;
+        }
+        memcpy(&hdr.lasttime, data, 4);
+//        if (!histfile.seek(histfile.pos() + dataBA.length()))
+//            qWarning() << "DV6 rb(save) failed respositioning" << histfile.fileName() << "for readwrite, error code" << histfile.error() << histfile.errorString();
+        numWritten++;
+    }
+/***
+    else {
+        qDebug() << "DV6 rb(save) skipping record" << numWritten << QDateTime::fromSecsSinceEpoch(thisTimeStamp).toString("MM/dd/yyyy hh:mm:ss")
+                 << "last in file" << QDateTime::fromSecsSinceEpoch(lastTimeInFile).toString("MM/dd/yyyy hh:mm:ss");
+    }
+***/
+
     return true;
 }
 
@@ -1018,7 +1108,7 @@ public:
         hdr = nullptr;
     }
 
-    bool open (QString fn); // Open the file
+    bool open (QString fn, bool getNext = false); // Open the file
     bool close();           // close the file
     unsigned char * get();  // read the next record in the file
 
@@ -1043,13 +1133,33 @@ private:
     unsigned char * data = nullptr; // record pointer
 };
 
-bool RollingFile::open(QString filetype) {
+bool RollingFile::open(QString filetype, bool getNext) {
 
     filename = filetype;
-    file.setFileName(card_path + "/" +filetype);
+
+    if (rebuild_from_backups) {
+        // Building from backup
+        if (!getNext) { // Initialize on first call
+            inputFilePaths.clear();
+            QStringList histFileNames = getHistoryFileNames(filetype);
+            qDebug() << "DV6 rf(open) History file names" << histFileNames;
+            for (int i=0; i < histFileNames.size(); i++) {
+                file.setFileName(history_path + "/" + histFileNames.at(i));
+                inputFilePaths.append(file.fileName());
+            }
+        }
+        if (inputFilePaths.empty())
+            return false;
+        file.setFileName(inputFilePaths.at(0));
+        inputFilePaths.removeAt(0);
+
+    } else {
+        file.setFileName(card_path + "/" +filetype);
+        inputFilePaths.clear();
+    }
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "DV6 RollingFile could not open" << filename << "for reading, error code" << file.error() << file.errorString();
+        qWarning() << "DV6 rf(open) could not open" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -1068,30 +1178,48 @@ bool RollingFile::open(QString filetype) {
     // Create buffer to hold each record as it is read
     data = new unsigned char[record_length];
 
-    // Seek to first data record in file
-    if (!file.seek(sizeof(DV6_HEADER) + wrap_record * record_length)) {
-        qWarning() << "DV6 RollingFile unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
+    // Seek to oldest data record in file, which is always at the wrap point
+    // wrap_record is the C offset where the next data record is to be written.
+    // Since C offsets begin with zero, it is also the number of records in the file.
+    int seekpos = sizeof(DV6_HEADER) + wrap_record * record_length;
+    if (!file.seek(seekpos)) {
+        qWarning() << "DV6 rf(open) unable to make initial seek to record" << wrap_record << "in" + filename << file.error() << file.errorString();
         file.close();
         return false;
     }
-#ifdef ROLLBACKUP
-    if (!rb.open(filetype, hdr)) {
-        qWarning() << "DV6 RollingBackup failed";
-        file.close();
-        return false;
-    }
-#endif
+    qDebug() << "DV6 rf(open)" << filetype << "positioning to oldest record at pos" << seekpos << "after seek" << file.pos();
 
-    qDebug() << "DV6 RollingFile opening" << filename << "at wrap record" << wrap_record;
+    if (file.atEnd()) {
+        file.seek(sizeof(DV6_HEADER));
+    }
+    dataBA = file.read(4);      // Read timestamp of newest data record
+    file.seek(seekpos);  // Reset read position before what we just read so we start reading data records here
+    if (!rb.open(filetype, hdr, &dataBA)) {
+        qWarning() << "DV6 rf(open) failed";
+        file.close();
+        return false;
+    }
+
+    qDebug() << "DV6 rf(open)" << filename << "at wrap record" << wrap_record << "now at pos" << file.pos();
     return true;
 }
 
 bool RollingFile::close() {
+
+/*** Works for backing up but prevents chart appearing for the last day
+    // Flush any additional input that has not been backed up
+    if (create_backups) {
+        do {
+            DV6_U_REC * rec = (DV6_U_REC *) get();
+            if (rec == nullptr)
+                break;
+        } while (true);
+    }
+***/
+
     file.close();
 
-#ifdef ROLLBACKUP
     rb.close();
-#endif
 
     if (data)
         delete [] data;
@@ -1105,44 +1233,54 @@ bool RollingFile::close() {
 
 unsigned char * RollingFile::get() {
 
+//    int readpos;
     record_number++;
 
     // If we have found the wrap record again, we are done
-    if (wrapping && (record_number == wrap_record))
-        return nullptr;
-
-    // Hare we reached end of file and need to wrap around to beginning?
-    if (file.atEnd()) {
-        if (wrapping) {
-            qDebug() << "DV6 RollingFile wrap - second time through";
+    if (wrapping && record_number == wrap_record) {
+        // Unless we are rebuilding from backup and may have more files
+        if (rebuild_from_backups && !inputFilePaths.empty()) {
+            qDebug() << "DV6 rf(get) closing" << file.fileName();
+            file.close();
+            open(inputFilePaths.at(0), true);
+        } else {
             return nullptr;
         }
-        qDebug() << "DV6 RollingFile wrapping to beginning of data in" << filename << "record number is" << record_number-1 << "records read" << number_read;
-        record_number = 0;
+    }
+
+    // Have we reached end of file and need to wrap around to beginning?
+    if (file.atEnd()) {
+        if (wrapping) {
+            qDebug() << "DV6 rf(get) wrap - second time through";
+            return nullptr;
+        }
+        qDebug() << "DV6 rf(get) wrapping to beginning of data in" << filename << "record number is" << record_number-1 << "records read" << number_read;
+        record_number = 1;
         wrapping = true;
         if (!file.seek(sizeof(DV6_HEADER))) {
             file.close();
-            qWarning() << "DV6 RollingFile unable to seek to first data record in file";
+            qWarning() << "DV6 rf(get) unable to seek to first data record in file";
             return nullptr;
         }
+        qDebug() << "DV6 rf(get) #" << record_number << "now at pos" << file.pos();
     }
 
     QByteArray dataBA;
+//    readpos = file.pos();
     dataBA=file.read(record_length); // read next record
     if (dataBA.size() != record_length) {
-        qWarning() << "DV6 RollingFile record" << record_number << "wrong length";
+        qWarning() << "DV6 rf(get) #" << record_number << "wrong length";
         file.close();
         return nullptr;
     }
-#ifdef ROLLBACKUP
+
     if (!rb.save(dataBA)) {
-        qWarning() << "DV6 RollingBackup failed";
+        qWarning() << "DV6 rf(get) failed";
     }
-#endif
 
     number_read++;
 
-//    qDebug() << "RollingFile read" << filename << "record number" << record_number << "of length" << record_length << "number read so far" << number_read;
+//    qDebug() << "DV6 rf(get)" << filename << "at start pos" << readpos << "end pos" << file.pos() << "record number" << record_number << "of length" << record_length << "number read so far" << number_read;
     memcpy (data, (unsigned char *) dataBA.data(), record_length);
     return data;
 }
@@ -1162,15 +1300,6 @@ QByteArray fileChecksum(const QString &fileName,
     }
     return QByteArray();
 }
-
-/***
-// Return the OSCAR date that the last data was written.
-// This will be considered to be the last day for which we have any data.
-// Adjust to get the correct date for sessions starting after midnight.
-QDate getLastDate () {
-    return QDate();
-}
-***/
 
 // Return date used within OSCAR, assuming day ends at split time in preferences (usually noon)
 QDate getNominalDate (QDateTime dt) {
@@ -1213,15 +1342,17 @@ bool load6Sessions () {
         // big endian
         ts1 = convertTime(rec->begin); // session start time (this is also the session id)
         ts2 = convertTime(rec->end); // session end time
-#ifdef DEBUG6
-        qDebug() << "U.BIN Session" << QDateTime::fromTime_t(ts1).toString("MM/dd/yyyy hh:mm:ss") << ts1 << "to" << QDateTime::fromTime_t(ts2).toString("MM/dd/yyyy hh:mm:ss") << ts2;
-#endif
+//#ifdef DEBUG6
+        qDebug() << "U.BIN Session" << QDateTime::fromSecsSinceEpoch(ts1).toString("MM/dd/yyyy hh:mm:ss") << ts1 << "to" << QDateTime::fromSecsSinceEpoch(ts2).toString("MM/dd/yyyy hh:mm:ss") << ts2;
+//#endif
         sinfo.sess = nullptr;
         sinfo.dailyData = nullptr;
         sinfo.begin = ts1;
         sinfo.end = ts2;
         sinfo.written = 0;
-        sinfo.haveHighResData = false;
+//        sinfo.haveHighResData = false;
+        sinfo.firstHighRes = 0;
+        sinfo.lastHighRes = 0;
 
         SessionData[ts1] = sinfo;
     } while (true);
@@ -1241,6 +1372,8 @@ bool load6Settings (const QString & path) {
     QByteArray dataBA;
 
     QFile f(path+"/"+SET_BIN);
+    if (rebuild_from_backups)
+        f.setFileName(rebuild_path+"/"+SET_BIN);
 
     if (f.open(QIODevice::ReadOnly)) {
         // Read and parse entire SET.BIN file
@@ -1361,6 +1494,8 @@ bool load6VersionInfo(const QString & path) {
     QByteArray str;
 
     QFile f(path+"/VER.BIN");
+    if (rebuild_from_backups)
+        f.setFileName(rebuild_path+"/VER.BIN");
     info.series = "DV6";
     info.brand = "DeVilbiss";
 
@@ -1434,19 +1569,21 @@ int create6Sessions() {
 
         if (mach->SessionExists(sid)) {
             // skip already imported sessions..
-            qDebug() << "Session already exists" << QDateTime::fromTime_t(sid).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "Session already exists" << QDateTime::fromSecsSinceEpoch(sid).toString("MM/dd/yyyy hh:mm:ss");
 
         } else if (sinfo->sess == nullptr) {
             // process new sessions
             sess = new Session(mach, sid);
 #ifdef DEBUG6
-            qDebug() << "Creating session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "to" << QDateTime::fromTime_t(sinfo->end).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "Creating session" << QDateTime::fromSecsSinceEpoch(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "to" << QDateTime::fromSecsSinceEpoch(sinfo->end).toString("MM/dd/yyyy hh:mm:ss");
 #endif
 
             sinfo->sess = sess;
             sinfo->dailyData = nullptr;
             sinfo->written = 0;
-            sinfo->haveHighResData = false;
+//            sinfo->haveHighResData = false;
+            sinfo->firstHighRes = 0;
+            sinfo->lastHighRes = 0;
 
             sess->really_set_first(quint64(sinfo->begin) * 1000L);
             sess->really_set_last(quint64(sinfo->end) * 1000L);
@@ -1464,9 +1601,9 @@ int create6Sessions() {
             sess->AddEventList(CPAP_MinuteVent, EVL_Event);
             sess->AddEventList(CPAP_RespRate, EVL_Event);
             sess->AddEventList(CPAP_Snore, EVL_Event);
+            sess->AddEventList(INTP_SnoreFlag, EVL_Event);
 
             sess->AddEventList(CPAP_Obstructive, EVL_Event);
-//            sess->AddEventList(CPAP_VSnore, EVL_Event);
             sess->AddEventList(CPAP_Hypopnea, EVL_Event);
             sess->AddEventList(CPAP_NRI, EVL_Event);
 //            sess->AddEventList(CPAP_LeakFlag, EVL_Event);
@@ -1483,7 +1620,7 @@ int create6Sessions() {
 //??                    SessionEnd[z] = 0;
 //??                    break;
 //??                }
-            qDebug() << sid << "has double ups" << QDateTime::fromTime_t(sid).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << sid << "has double ups" << QDateTime::fromSecsSinceEpoch(sid).toString("MM/dd/yyyy hh:mm:ss");
             
             /*Session *sess=Sessions[sid];
             Sessions.erase(Sessions.find(sid));
@@ -1560,9 +1697,9 @@ bool load6HighResData () {
 
         if (rec_ts1 < previousRecBegin) {
             qWarning() << "R.BIN - Corruption/Out of sequence data found, skipping record" << rf.recnum() << ", prev"
-                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
+                       << QDateTime::fromSecsSinceEpoch(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
                        << "this"
-                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
+                       << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
             continue;
         }
 
@@ -1592,8 +1729,8 @@ bool load6HighResData () {
         // Skip over sessions until we find one that this record is in
         while (rec_ts1 > sinfo->end) {
 #ifdef DEBUG6
-            qDebug() << "R.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss")
-                     << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+            qDebug() << "R.BIN - skipping session" << QDateTime::fromSecsSinceEpoch(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss")
+                     << "looking for" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
                      << "record" << rf.recnum();
 #endif
             if (inSession && sess) {
@@ -1657,9 +1794,12 @@ bool load6HighResData () {
             qint64 ti = qint64(rec_ts1) * 1000;
             flow->AddWaveform(ti,R->breath,50,2000);
             pressure->AddWaveform(ti, &R->pressure1, 2, 2000);
-            sinfo->haveHighResData = true;
+            if (sinfo->firstHighRes == 0 || sinfo->firstHighRes > rec_ts1) sinfo->firstHighRes = rec_ts1;
+            if (sinfo->lastHighRes == 0 || sinfo->lastHighRes < rec_ts1+2) sinfo->lastHighRes = rec_ts1+2;
+//            sinfo->haveHighResData = true;
             if (sess->first() == 0)
                 qWarning() << "first = 0 - 1442";
+
 
             //////////////////////////////////////////////////////////////////
             // Show Flow Limitation Events as a graph
@@ -2050,18 +2190,20 @@ bool load6PerMinute () {
         rec_ts1 = convertTime(rec->timestamp);
 
         if (rec_ts1 < previousRecBegin) {
+#ifdef DEBUG6
             qWarning() << "L.BIN - Corruption/Out of sequence data found, skipping record" << rf.recnum() << ", prev"
-                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
+                       << QDateTime::fromSecsSinceEpoch(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss") << previousRecBegin
                        << "this"
-                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
+                       << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << rec_ts1;
+#endif
             continue;
         }
 /****
         // Look for a gap in DV6_L records.  They should be at one minute intervals.
         // If there is a gap, we are probably in a new session
         if (inSession && ((rec_ts1 - previousRecBegin) > 60)) {
-            qDebug() << "L.BIN record gap, current" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
-                     << "previous" << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "L.BIN record gap, current" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                     << "previous" << QDateTime::fromSecsSinceEpoch(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss");
             sess->set_last(maxleak->last());
             sess = nullptr;
             leak = maxleak = MV = TV = RR = Pressure = nullptr;
@@ -2071,7 +2213,7 @@ bool load6PerMinute () {
         // Skip over sessions until we find one that this record is in
         while (rec_ts1 > sinfo->end) {
 #ifdef DEBUG6
-            qDebug() << "L.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "L.BIN - skipping session" << QDateTime::fromSecsSinceEpoch(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
 #endif
             if (inSession && sess) {
                 // Close the open session and update the min and max
@@ -2095,9 +2237,9 @@ bool load6PerMinute () {
 
         if (rec_ts1 < previousRecBegin) {
             qWarning() << "L.BIN - Corruption/Out of sequence data found, stopping import, prev"
-                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
+                       << QDateTime::fromSecsSinceEpoch(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
                        << "this"
-                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+                       << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
             break;
         }
 
@@ -2114,10 +2256,9 @@ bool load6PerMinute () {
                 if (sess->last()/1000 > sinfo->end)
                     sinfo->end = sess->last()/1000;
 
-                if (!sinfo->haveHighResData) {
+//                if (!sinfo->haveHighResData) {
                     // Don't use this pressure if we already have higher resolution data
-                    Pressure = sess->AddEventList(CPAP_Pressure, EVL_Event);
-                }
+
                 if (sinfo->mode == MODE_UNKNOWN) {
                     if (rec->pressureLimitLow != rec->pressureLimitHigh) {
                         sess->settings[CPAP_PressureMin] = rec->pressureLimitLow / 10.0f;
@@ -2141,7 +2282,29 @@ bool load6PerMinute () {
             leak->AddEvent(ti, rec->avgLeak);     //???
             RR->AddEvent(ti, rec->breathRate);
 
-            if (Pressure) Pressure->AddEvent(ti, rec->avgPressure / 10.0f);  // average pressure
+            if (   sinfo->firstHighRes ==  0        // No high res data
+                || rec_ts1 < sinfo->firstHighRes    // Before high res data begins
+                || ((rec_ts1 > (sinfo->lastHighRes+2)) && (sinfo->lastHighRes > 0))) // or after high res data ends
+            {
+                if (!Pressure)
+                    Pressure = sess->AddEventList(CPAP_Pressure, EVL_Event, 0.1f);
+
+//                if (sinfo->firstHighRes ==  0) {
+                Pressure->AddEvent(ti, rec->avgPressure);  // average pressure for next minute
+                Pressure->AddEvent(ti + 59998, rec->avgPressure);  // end of pressure block
+//                } else {
+//                    for (int i = 0; i < 60; i++) {
+//                        Pressure->AddEvent(ti+i, rec->avgPressure);  // average pressure for next minute
+//                    }
+//                }
+            }
+
+/***
+            if (Pressure)
+                qDebug() << "Lowres pressure" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                         << "rec_ts1" << rec_ts1 << "firstHighRes" << sinfo->firstHighRes << "last" << sinfo->lastHighRes
+                         << "Pressure" << rec->avgPressure / 10.0f;
+***/
 
             unsigned tv = rec->tidalVolume6 + (rec->tidalVolume7 << 8);
             MV->AddEvent(ti, rec->breathRate * tv / 1000.0 );
@@ -2177,13 +2340,14 @@ bool load6EventData () {
 
     EventList * OA = nullptr;
     EventList * CA = nullptr;
-    EventList * H = nullptr;
+    EventList * H  = nullptr;
     EventList * RE = nullptr;
     EventList * PB = nullptr;
     EventList * LL = nullptr;
     EventList * EP = nullptr;
     EventList * SN = nullptr;
     EventList * FL = nullptr;
+//    EventList * FLG = nullptr;
 
     if (!rf.open("E.BIN")) {
         qWarning() << "DV6 Unable to open E.BIN";
@@ -2209,7 +2373,7 @@ bool load6EventData () {
         // Skip over sessions until we find one that this record is in
         while (rec_ts1 > sinfo->end) {
 #ifdef DEBUG6
-            qDebug() << "E.BIN - skipping session" << QDateTime::fromTime_t(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+            qDebug() << "E.BIN - skipping session" << QDateTime::fromSecsSinceEpoch(sinfo->begin).toString("MM/dd/yyyy hh:mm:ss") << "looking for" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
 #endif
             if (inSession) {
                 // Close the open session and update the min and max
@@ -2227,11 +2391,14 @@ bool load6EventData () {
                     sess->set_last(LL->last());
                 if (EP->last() > 0)
                     sess->set_last(EP->last());
-                if (SN->last() > 0)
-                    sess->set_last(SN->last());
                 if (FL->last() > 0)
                     sess->set_last(FL->last());
-
+                if (SN->last() > 0)
+                    sess->set_last(SN->last());
+/***
+                if (FLG->last() > 0)
+                    sess->set_last(FLG->last());
+***/
                 sess = nullptr;
                 H = CA = RE = OA = PB = LL = EP = SN = FL = nullptr;
                 inSession = false;
@@ -2245,16 +2412,18 @@ bool load6EventData () {
 
         // If we have data beyond last session, we are in trouble (for unknown reasons)
         if (sinfo == SessionData.end()) {
-            qWarning() << "DV6 E.BIN import ran out of sessions to match flow data";
+            qWarning() << "DV6 E.BIN import ran out of sessions,"
+                       << "event data begins"
+                       << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
             break;
         }
 
         if (rec_ts1 < previousRecBegin) {
-            qWarning() << "E.BIN - Corruption/Out of sequence data found, stopping import, prev"
-                       << QDateTime::fromTime_t(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
-                       << "this"
-                       << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
-            break;
+            qWarning() << "DV6 E.BIN - Out of sequence data found, skipping, prev"
+                       << QDateTime::fromSecsSinceEpoch(previousRecBegin).toString("MM/dd/yyyy hh:mm:ss")
+                       << "this event"
+                       << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss");
+            continue; // break;
         }
 
         // Check if record belongs in this session or a future session
@@ -2268,10 +2437,12 @@ bool load6EventData () {
                 PB = sess->AddEventList(CPAP_PB, EVL_Event);
                 LL = sess->AddEventList(CPAP_LargeLeak, EVL_Event);
                 EP = sess->AddEventList(CPAP_ExP, EVL_Event);
-//                SN = sess->AddEventList(CPAP_VSnore, EVL_Event);
+                SN = sess->AddEventList(INTP_SnoreFlag, EVL_Event);
                 FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
 
-                SN = sess->AddEventList(CPAP_Snore, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+//                FLG = sess->AddEventList(CPAP_FLG, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+//                SN = sess->AddEventList(CPAP_Snore, EVL_Waveform, 1.0f, 0.0f, 0.0f, 0.0f, double(2000) / double(2));
+
                 inSession = true;
             }
         }
@@ -2281,11 +2452,12 @@ bool load6EventData () {
             // TODO: We don't know what is really going on here. Is it sloppiness on the part of the DV6 in recording time stamps?
             qint64 ti = qint64(rec_ts1 - (duration/2)) * 1000L;
             if (duration < 0) {
-                qDebug() << "E.BIN at" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
+                qDebug() << "E.BIN at" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
                          << "reports duration of" << duration
-                         << "ending" <<  QDateTime::fromTime_t(rec_ts2).toString("MM/dd/yyyy hh:mm:ss");
+                         << "ending" <<  QDateTime::fromSecsSinceEpoch(rec_ts2).toString("MM/dd/yyyy hh:mm:ss");
             }
             int code = rec->event_type;
+/***
             //////////////////////////////////////////////////////////////////
             // Show Snore Events as a graph
             //////////////////////////////////////////////////////////////////
@@ -2293,6 +2465,15 @@ bool load6EventData () {
                 qint16 severity = rec->event_severity;
                 SN->AddWaveform(ti, &severity, 1, duration*1000);
             }
+
+            //////////////////////////////////////////////////////////////////
+            // Show Flow Limit Events as a graph
+            //////////////////////////////////////////////////////////////////
+            if (code == 10) {
+                qint16 severity = rec->event_severity;
+                FLG->AddWaveform(ti, &severity, 1, duration*1000);
+            }
+***/
             if (rec->event_severity >= 3)
                 switch (code) {
                 case 1:
@@ -2300,33 +2481,33 @@ bool load6EventData () {
                     break;
                 case 2:
                     OA->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - OA" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - OA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 4:
                     H->AddEvent(ti, duration);
                     break;
                 case 5:
                     RE->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - RERA" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - RERA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 8:     // snore
                     SN->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - Snore" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - Snore" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 9:     // expiratory puff
                     EP->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - exhale puff" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - exhale puff" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 10:    // flow limitation
                     FL->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - flow limit" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - flow limit" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 11:    // periodic breathing
                     PB->AddEvent(ti, duration);
                     break;
                 case 12:    // large leaks
                     LL->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - large leak" << QDateTime::fromTime_t(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+//                    qDebug() << "E.BIN - large leak" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
                 case 13:    // pressure change
                     break;
@@ -2359,7 +2540,7 @@ int addSessions() {
             }
 #ifdef DEBUG6
             else
-                qDebug() << "Added session" << sess->session()  << QDateTime::fromTime_t(sess->session()).toString("MM/dd/yyyy hh:mm:ss");;
+                qDebug() << "Added session" << sess->session()  << QDateTime::fromSecsSinceEpoch(sess->session()).toString("MM/dd/yyyy hh:mm:ss");;
 #endif
 
             // Update indexes, process waveform and perform flagging
@@ -2370,8 +2551,8 @@ int addSessions() {
 
             // Unload them from memory
             sess->TrashEvents();
-        } else
-            qWarning() << "addSessions: session pointer is null";
+        } // else
+          //  qWarning() << "addSessions: session pointer is null";
     }
 
     return SessionData.size();
@@ -2391,24 +2572,10 @@ bool backup6 (const QString & path)  {
     QDir ipath(path);
     QDir cpath(card_path);
     QDir bpath(backup_path);
-
-    if ( ! bpath.exists()) {
-        if ( ! bpath.mkpath(backup_path) ) {
-            qWarning() << "Could not create DV6 backup directory" << backup_path;
-            return false;
-        }
-    }
+    QDir hpath(history_path);
 
     // Copy input data to backup location
     copyPath(ipath.absolutePath(), bpath.absolutePath());
-
-    // Create history directory for dated backups
-    QDir hpath(history_path);
-    if ( ! hpath.exists())
-        if ( ! hpath.mkpath(history_path)) {
-            qWarning() << "Could not create DV6 archive directory" << history_path;
-            return false;
-        }
 
     // Create archive of settings file if needed (SET.BIN)
     bool backup_settings = true;
@@ -2460,10 +2627,12 @@ bool init6Environment (const QString & path) {
 
     backup_path = mach->getBackupPath();
     history_path = backup_path + "/HISTORY";
+    rebuild_path = backup_path + "/DV6";
 
     // Compare QDirs rather than QStrings because separators may be different, especially on Windows.
     QDir ipath(path);
     QDir bpath(backup_path);
+    QDir hpath(history_path);
 
     if (ipath == bpath) {
         // Don't create backups if importing from backup folder
@@ -2472,6 +2641,20 @@ bool init6Environment (const QString & path) {
     } else {
         rebuild_from_backups = false;
         create_backups = p_profile->session->backupCardData();
+
+        if ( ! bpath.exists()) {
+            if ( ! bpath.mkpath(backup_path) ) {
+                qWarning() << "Could not create DV6 backup directory" << backup_path;
+                return false;
+            }
+        }
+        if ( ! hpath.exists()) {
+            if ( ! hpath.mkpath(history_path) ) {
+                qWarning() << "Could not create DV6 backup HISTORY directory" << history_path;
+                return false;
+            }
+        }
+
     }
 
     return true;
@@ -2485,6 +2668,10 @@ int IntellipapLoader::OpenDV6(const QString & path)
 {
     qDebug() << "DV6 loader started";
     card_path = path + DV6_DIR;
+
+    emit updateMessage(QObject::tr("Getting Ready..."));
+    emit setProgressValue(0);
+    QCoreApplication::processEvents();
 
     // 1. Prime the machine database's info field with this machine
     info = newInfo();
@@ -2505,9 +2692,15 @@ int IntellipapLoader::OpenDV6(const QString & path)
     if (!load6DailySummaries())
         return -1;
 
+    emit updateMessage(QObject::tr("Backing up files..."));
+    QCoreApplication::processEvents();
+
     // 6. Back up data files (must do after parsing VER.BIN, S.BIN, and creating Machine)
     if (!backup6(path))
         return -1;
+
+    emit updateMessage(QObject::tr("Reading data files..."));
+    QCoreApplication::processEvents();
 
     // 7. U.BIN - Open and parse session list and create a list of session times
     // (S.BIN must already be loaded)
@@ -2529,6 +2722,9 @@ int IntellipapLoader::OpenDV6(const QString & path)
     // E.BIN - Open and parse event data
     if (!load6EventData())
         return -1;
+
+    emit updateMessage(QObject::tr("Finishing up..."));
+    QCoreApplication::processEvents();
 
     // Finalize input
     return addSessions();
@@ -2580,6 +2776,14 @@ void IntellipapLoader::initChannels()
         QObject::tr("Intellipap pressure relief level."),
         QObject::tr("SmartFlex Level"),
         "", DEFAULT, Qt::green));
+
+    channel.add(GRP_CPAP, new Channel(INTP_SnoreFlag = 0xe301, FLAG,  MT_CPAP,   SESSION,
+        "INTP_SnoreFlag",
+        QObject::tr("Snore"),
+        QObject::tr("Snoring event."),
+        QObject::tr("SN"),
+        STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#e20004")));
+
 }
 
 bool intellipap_initialized = false;
