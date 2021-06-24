@@ -81,9 +81,14 @@ int main(int argc, char *argv[]) {
     }
 
     EDFInfo edf;
-    QByteArray * buffer = edf.Open(filename);
-     if ( ! edf.Parse(buffer) )
-         exit(-1);
+    if ( ! edf.Open(filename) ) {
+        qDebug() << "Failed to open" << filename;
+        exit(-1);
+    }
+    if ( ! edf.Parse() ) {
+        qDebug() << "Parsing failed on" << filename;
+        exit(-1);
+    }
 
     QDate d2 = edf.edfHdr.startdate_orig.date();
     if (d2.year() < 2000) {
