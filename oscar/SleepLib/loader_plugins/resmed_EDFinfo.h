@@ -82,6 +82,7 @@ public:
         min_ipap = -1;
         epr = -1;
         epr_level = -1;
+        comfort = -1;
         sessionid = 0;
 
         ahi = -1;
@@ -170,6 +171,7 @@ public:
     EventDataType min_ipap;
     EventDataType epr;
     EventDataType epr_level;
+    EventDataType comfort;
     quint32 sessionid;
     EventDataType ahi;
     EventDataType oai;

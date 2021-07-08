@@ -31,10 +31,12 @@
 
 ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
-         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable;
+         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort;
 
 const QString STR_ResMed_AirSense10 = "AirSense 10";
-const QString STR_ResMed_AirCurve10= "AirCurve 10";
+const QString STR_ResMed_AirSense11 = "AirSense 11";
+const QString STR_ResMed_AirCurve10 = "AirCurve 10";
+const QString STR_ResMed_AirCurve11 = "AirCurve 11";
 const QString STR_ResMed_S9 = "S9";
 const QString STR_UnknownModel = "Resmed ???";
 
@@ -182,6 +184,12 @@ void ResmedLoader::initChannels()
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
     chan->addOption(2, QObject::tr("Auto"));
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Comfort = 0xe20E, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_Comfort", QObject::tr("Comfort"), QObject::tr("Comfort"), QObject::tr("Comfort"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, STR_TR_Off);     // This must be verified
+    chan->addOption(1, STR_TR_On);
 
     // Setup ResMeds signal name translation map
     setupResMedTranslationMap();
@@ -1146,7 +1154,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         // ResMed and their consistent naming and spacing... :/
         EDFSignal *maskon = str.lookupLabel("Mask On");     // Series 9 machines
         if (!maskon) {
-            maskon = str.lookupLabel("MaskOn");             // Series 10 machines
+            maskon = str.lookupLabel("MaskOn");             // Series 1x machines
         }
         EDFSignal *maskoff = str.lookupLabel("Mask Off");
         if (!maskoff) {
@@ -1176,7 +1184,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
 
 //      This is not what we want to check, we must look at this day in the database files...
-//      Found the plce in checkSummaryDay to compare session count with maskevents divided by 2
+//      Found the place in checkSummaryDay to compare session count with maskevents divided by 2
 #ifdef SESSION_DEBUG
             qDebug() << "ResdayList size is" << resdayList.size();
 #endif
@@ -1198,6 +1206,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 //     //      }
 
             int recstart = rec * maskon->sampleCnt;
+            qDebug() << "MaskOn SampleCount is" << maskon->sampleCnt;
 
             bool validday = false;
             for (int s = 0; s < maskon->sampleCnt; ++s) {
@@ -1210,9 +1219,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ( ! validday) {
                 // There are no mask on/off events, so this STR day is useless.
-#ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "No mask events";
-#endif
                 continue;
             }
 
@@ -1240,7 +1247,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             int lastOff = -1;
             for (int s = 0; s < maskon->sampleCnt; ++s) {
                 qint32 on = maskon->dataArray[recstart + s];    // these on/off times are minutes since noon
-                qint32 off = maskoff->dataArray[recstart + s];
+                qint32 off = maskoff->dataArray[recstart + s];  // we want the actual time in seconds 
                 if ( (on > 24*60) || (off > 24*60) ) {
                     qWarning().noquote() << "Mask times are out of range. Possible SDcard corruption" << "date" << date << "on" << on << "off" <<off;
                     continue;
@@ -1262,8 +1269,6 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
                 R.maskon[0] = noonstamp;
             }
-            // TODO This should be last non-zero sample, not the last sample in the array
-                    // DONE
             if ( (lastOn >= 0) && (lastOff >= 0) ) {
                 if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
                     R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).addDays(1).toTime_t() - 1;
@@ -1279,7 +1284,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.rms9_mode = mod;
 
                 if (mod == 11) {
-                    mode = MODE_APAP; // For her
+                    mode = MODE_A4Her; // For her
                 } else if (mod >= 8) {       // mod 8 == vpap adapt variable epap
                     mode = MODE_ASV_VARIABLE_EPAP;
                 } else if (mod >= 7) {       // mod 7 == vpap adapt
@@ -1302,7 +1307,10 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // Settings.Adaptive Starting Pressure? // mode 11 = APAP for her?
-                if (((mod == 1) || (mod == 11)) && (sig = str.lookupLabel("S.AS.StartPress"))) {
+                if ( (mod == 1) && ((sig = str.lookupLabel("S.AS.StartPress")) || (sig = str.lookupLabel("S.A.StartPress"))) ) {
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                }
+                if ( (mod == 11) && (sig = str.lookupLabel("S.AFH.StartPress"))) {
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((R.mode == MODE_BILEVEL_FIXED) && (sig = str.lookupLabel("S.BL.StartPress"))) {
@@ -1315,7 +1323,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 }
             }
 
-            if ((sig = str.lookupLabel("Mask Dur"))) {
+            if ((sig = str.lookupLabel("Mask Dur")) || (sig = str.lookupLabel("Duration"))) {
                 R.maskdur = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("Leak Med")) || (sig = str.lookupLabel("Leak.50"))) {
@@ -1495,8 +1503,12 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
 
             EventDataType epr = -1, epr_level = -1;
-            bool a10 = false;
+            bool a1x = false;
             if ((mode == MODE_CPAP) || (mode == MODE_APAP)) {
+                if ((sig = str.lookupLabel("S.AS.Comfort"))) { // first check machines opinion
+                    a1x = true;
+                    R.comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                }
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
                     epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
@@ -1504,20 +1516,20 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     epr_level= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.EPR.EPRType"))) {
-                    a10 = true;
+                    a1x = true;
                     epr = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     epr += 1;
                 }
                 int epr_on=0, clin_epr_on=0;
                 if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check machines opinion
-                    a10 = true;
+                    a1x = true;
                     epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if (epr_on && (sig = str.lookupLabel("S.EPR.ClinEnable"))) {
-                    a10 = true;
+                    a1x = true;
                     clin_epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
-                if (a10 && !(epr_on && clin_epr_on)) {
+                if (a1x && !(epr_on && clin_epr_on)) {
                     epr = 0;
                     epr_level = 0;
                 }
@@ -3259,6 +3271,7 @@ void setupResMedTranslationMap()
 {
     ////////////////////////////////////////////////////////////////////////////
     // Translation lookup table for non-english machines
+    // Also combine S9, AS10, and AS11 variants
     ////////////////////////////////////////////////////////////////////////////
 
     // Only put the first part, enough to be identifiable, because ResMed likes
@@ -3303,12 +3316,14 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_Apnea] = QStringList { "Apnea" };
     resmed_codes[CPAP_RERA] = QStringList { "Arousal" };
     resmed_codes[CPAP_ClearAirway] = QStringList { "Central apnea" };
+
+    // STR signals
     resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F", "Mod" };
     resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press", "Basıncı Ayarl" };
     resmed_codes[RMS9_EPR] = QStringList { "EPR", "\xE5\x91\xBC\xE6\xB0\x94\xE9\x87\x8A\xE5\x8E\x8B\x28\x45\x50" };
     resmed_codes[RMS9_EPRLevel] = QStringList { "EPR Level", "EPR-Stufe", "EPR-niveau", "\x45\x50\x52\x20\xE6\xB0\xB4\xE5\xB9\xB3", "Niveau EPR", "EPR-nivå", "EPR-nivÃ¥", "S.EPR.Level", "EPR Düzeyi" };
-    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress", "Azami Basınç" };
-    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress", "Min Basınç" };
+    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress", "S.A.MaxPress", "Azami Basınç" };
+    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress", "S.A.MinPress", "Min Basınç" };
 
     //resmed_codes[RMS9_EPR].push_back("S.EPR.EPRType");
 }
