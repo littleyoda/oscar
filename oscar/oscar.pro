@@ -295,6 +295,8 @@ SOURCES += \
     SleepLib/loader_plugins/cms50_loader.cpp \
     SleepLib/loader_plugins/dreem_loader.cpp \
     SleepLib/loader_plugins/icon_loader.cpp \
+    SleepLib/loader_plugins/sleepstyle_loader.cpp \
+    SleepLib/loader_plugins/sleepstyle_EDFinfo.cpp \
     SleepLib/loader_plugins/intellipap_loader.cpp \
     SleepLib/loader_plugins/mseries_loader.cpp \
     SleepLib/loader_plugins/prs1_loader.cpp \
@@ -380,6 +382,8 @@ HEADERS  += \
     SleepLib/loader_plugins/cms50_loader.h \
     SleepLib/loader_plugins/dreem_loader.h \
     SleepLib/loader_plugins/icon_loader.h \
+    SleepLib/loader_plugins/sleepstyle_loader.h \
+    SleepLib/loader_plugins/sleepstyle_EDFinfo.h \
     SleepLib/loader_plugins/intellipap_loader.h \
     SleepLib/loader_plugins/mseries_loader.h \
     SleepLib/loader_plugins/prs1_loader.h \
