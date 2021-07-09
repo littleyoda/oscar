@@ -1507,7 +1507,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((mode == MODE_CPAP) || (mode == MODE_APAP)) {
                 if ((sig = str.lookupLabel("S.AS.Comfort"))) { // first check machines opinion
                     a1x = true;
-                    R.comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_Comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
                     epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -2065,6 +2065,9 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
             if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
             if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
+        } else if (R.mode == MODE_A4Her) {
+            if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
+            if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
         }
     } else {
         if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
@@ -2130,6 +2133,9 @@ void StoreSettings(Session * sess, STRRecord & R)
         if ((R.s_TempEnable >= 1) && (R.s_Temp >= 0)){
             sess->settings[RMS9_Temp] = (short)R.s_Temp;
         }
+    }
+    if (R.s_Comfort >= 0) {
+        sess->settings[RMAS1x_Comfort] = R.s_Comfort;
     }
 }
 
