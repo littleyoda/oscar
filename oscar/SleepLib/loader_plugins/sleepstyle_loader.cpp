@@ -819,11 +819,11 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
         EventList *LK = sess->AddEventList(CPAP_LeakTotal, EVL_Event, 1);
         EventList *PR = sess->AddEventList(CPAP_Pressure, EVL_Event, 0.1F);
-        EventList *OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
+//        EventList *OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
         EventList *H =  sess->AddEventList(CPAP_Hypopnea, EVL_Event);
         EventList *FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
         EventList *SA = sess->AddEventList(CPAP_SensAwake, EVL_Event);
-        EventList *CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
+//        EventList *CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
         EventList *UA = sess->AddEventList(CPAP_Apnea, EVL_Event);
 // For testing to determine which bit is for which event type:
 //        EventList *UF1 = sess->AddEventList(CPAP_UserFlag1, EVL_Event);
@@ -851,18 +851,18 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 a5 = data[idx + 6];   // [0..5] UF2,  [6..7] Unknown
 
                 // Sure there isn't 6 SenseAwake bits?
-                a6 = (a1 >> 6) << 4 | ((a2 >> 6) << 2) | (a3 >> 6);
+                a6 = (a3 >> 6) << 4 | ((a4 >> 6) << 2) | (a5 >> 6);
 
                 // this does the same thing as behaviour
 //                a6 = (a3 >> 7) << 3 | ((a3 >> 6) & 1);
-                a7 =   (a4 >> 6) | (a5 >> 6); // Are these bits used?
+                a7 =   (a1 >> 6) | (a2 >> 6); // Are these bits used?
 
                 bitmask = 1;
                 for (int k = 0; k < 6; k++) {  // There are 6 flag sets per 2 minutes
                     if (a1 & bitmask) { UA->AddEvent(ti+60000, 0); }
-                    if (a2 & bitmask) { CA->AddEvent(ti+60000, 0); }
+                    if (a2 & bitmask) { UA->AddEvent(ti+60000, 0); } // may be CA?
                     if (a3 & bitmask) {  H->AddEvent(ti+60000, 0); }
-                    if (a4 & bitmask) { OA->AddEvent(ti+60000, 0); }
+                    if (a4 & bitmask) {  H->AddEvent(ti+60000, 0); } // may be OA?
                     if (a5 & bitmask) { FL->AddEvent(ti+60000, 0); }
                     if (a6 & bitmask) { SA->AddEvent(ti+60000, 0); }
 
