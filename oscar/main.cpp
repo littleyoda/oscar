@@ -43,6 +43,7 @@
 #include "SleepLib/loader_plugins/resmed_loader.h"
 #include "SleepLib/loader_plugins/intellipap_loader.h"
 #include "SleepLib/loader_plugins/icon_loader.h"
+#include "SleepLib/loader_plugins/sleepstyle_loader.h"
 #include "SleepLib/loader_plugins/weinmann_loader.h"
 #include "SleepLib/loader_plugins/viatom_loader.h"
 
@@ -666,6 +667,7 @@ int main(int argc, char *argv[]) {
     ResmedLoader::Register();
     IntellipapLoader::Register();
     FPIconLoader::Register();
+    SleepStyleLoader::Register();
     WeinmannLoader::Register();
     CMS50Loader::Register();
     CMS50F37Loader::Register();

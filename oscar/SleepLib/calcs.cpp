@@ -480,6 +480,7 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
     quint32 *tv_tptr = nullptr;
     EventStoreType *tv_dptr = nullptr;
     int tv_count = 0;
+    double tvlast, tvlast2, tvlast3;
 
     if (calcTv) {
         TV = m_session->AddEventList(CPAP_TidalVolume, EVL_Event);
@@ -598,8 +599,15 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
             //double x=sqrt(q)*2;
             //val2=x;
 
-            if (tv < mintv) { mintv = tv; }
+            // Average TV over last three data points
+            if (tv_count == 0)
+                tvlast = tvlast2 = tvlast3 = tv;
+            tv = (tvlast + tvlast2 + tvlast3 + tv*2)/5;
+            tvlast3 = tvlast2;
+            tvlast2 = tvlast;
+            tvlast = tv;
 
+            if (tv < mintv) { mintv = tv; }
             if (tv > maxtv) { maxtv = tv; }
 
             *tv_tptr++ = timeval;
@@ -889,8 +897,9 @@ void calcRespRate(Session *session, FlowParser *flowparser)
     bool calcTe = !session->eventlist.contains(CPAP_Te);
     bool calcMv = !session->eventlist.contains(CPAP_MinuteVent);
 
-
     int z = (calcResp ? 1 : 0) + (calcTv ? 1 : 0) + (calcMv ? 1 : 0);
+// Force calculation for testing calculation vs CPAP data
+//    z = 1;
 
     // If any of these three missing, remove all, and switch all on
     if (z > 0 && z < 3) {

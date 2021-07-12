@@ -74,7 +74,7 @@ struct ValueCount {
 
 extern int idealThreads();
 
-void copyPath(QString src, QString dst);
+void copyPath(QString src, QString dst, bool overwrite=false);
 
 
 // Primarily sort by value
@@ -157,6 +157,7 @@ const QString STR_MACH_Journal = "Journal";
 const QString STR_MACH_Intellipap = "Intellipap";
 const QString STR_MACH_Weinmann= "Weinmann";
 const QString STR_MACH_FPIcon = "FPIcon";
+const QString STR_MACH_SleepStyle = "SleepStyle";
 const QString STR_MACH_MSeries = "MSeries";
 const QString STR_MACH_CMS50 = "CMS50";
 const QString STR_MACH_ZEO = "Zeo";

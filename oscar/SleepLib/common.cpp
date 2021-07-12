@@ -415,7 +415,7 @@ bool removeDir(const QString &path)
     return result;
 }
 
-void copyPath(QString src, QString dst)
+void copyPath(QString src, QString dst, bool overwrite)
 {
     QDir dir(src);
     if (!dir.exists())
@@ -425,7 +425,7 @@ void copyPath(QString src, QString dst)
     foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
         QString dst_path = dst + QDir::separator() + d;
         dir.mkpath(dst_path);
-        copyPath(src + QDir::separator() + d, dst_path);
+        copyPath(src + QDir::separator() + d, dst_path, overwrite);
     }
 
     // Files
@@ -433,6 +433,9 @@ void copyPath(QString src, QString dst)
         QString srcFile = src + QDir::separator() + f;
         QString destFile = dst + QDir::separator() + f;
 
+        if (overwrite && QFile::exists(destFile)) {
+            QFile::remove(destFile);
+        }
         if (!QFile::exists(destFile)) {
             if (!QFile::copy(srcFile, destFile)) {
                 qWarning() << "copyPath: could not copy" << srcFile << "to" << destFile;

@@ -12,6 +12,8 @@ CONFIG -= debug_and_release
 
 QT += core widgets
 
+DEFINES+=DUMPSTR
+
 TARGET = anotDump
 
 TEMPLATE = app
@@ -27,6 +29,6 @@ SOURCES += \
 	dumpSTR/edfparser.cpp \
 
 HEADERS  += \
-    dumpSTR/common.h \
+    dumpSTR/SleepLib/common.h \
     dumpSTR/edfparser.h \
 

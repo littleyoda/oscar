@@ -1080,6 +1080,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt)
         w.setDirectory(folder);
         w.setFileMode(QFileDialog::Directory);
         w.setOption(QFileDialog::ShowDirsOnly, true);
+        w.setWindowTitle(tr("Find your CPAP data card"));
 
         // This doesn't work on WinXP
 
