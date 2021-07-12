@@ -2575,7 +2575,7 @@ bool backup6 (const QString & path)  {
     QDir hpath(history_path);
 
     // Copy input data to backup location
-    copyPath(ipath.absolutePath(), bpath.absolutePath());
+    copyPath(ipath.absolutePath(), bpath.absolutePath(), true);
 
     // Create archive of settings file if needed (SET.BIN)
     bool backup_settings = true;

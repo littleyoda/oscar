@@ -124,5 +124,6 @@ int main(int argc, char *argv[]) {
             qDebug() << "Offset: " << anno->offset << " Duration: " << anno->duration << " Text: " << anno->text;
         }
     }
-	
+
+    exit(0);
 }

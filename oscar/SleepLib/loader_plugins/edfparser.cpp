@@ -58,6 +58,12 @@ EDFInfo::~EDFInfo()
 //    	delete  a;
 }
 
+// Set timezone to UTC
+void EDFInfo::setTimeZoneUTC () {
+    TZ_offset = 0;
+    EDFInfo::localNoDST = QTimeZone(TZ_offset);
+}
+
 bool EDFInfo::Open(const QString & name)
 {
     if (hdrPtr != nullptr) {

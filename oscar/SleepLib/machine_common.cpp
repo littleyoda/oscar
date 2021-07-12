@@ -34,6 +34,8 @@ ChannelID CPAP_LargeLeak,
           PRS1_BND, PRS1_FlexMode, PRS1_FlexLevel, PRS1_HumidStatus, PRS1_HumidLevel, PRS1_HumidTargetTime, PRS1_MaskResistLock,
           PRS1_MaskResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
 
+ChannelID SS_SenseAwakeLevel, SS_SmartFlexLevel;
+
 ChannelID OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_PulseChange, OXI_SPO2Drop, OXI_Plethy;
 
 ChannelID Journal_Notes, Journal_Weight, Journal_BMI, Journal_ZombieMeter, LastUpdated,

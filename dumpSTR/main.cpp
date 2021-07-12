@@ -193,4 +193,6 @@ int main(int argc, char *argv[]) {
 //  delete &str;
 	QThread::sleep(1);
     qDebug() << "Done";
+
+    exit(0);
 }
