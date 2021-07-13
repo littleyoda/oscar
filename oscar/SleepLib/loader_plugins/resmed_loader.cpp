@@ -3031,18 +3031,18 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_Pressure, es.label)) {
             code = CPAP_Pressure;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IPAP, es.label)) {
             code = CPAP_IPAP;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_EPAP, es.label)) { // Expiratory Pressure
             code = CPAP_EPAP;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
 
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         }  else if (matchSignal(CPAP_MinuteVent,es.label)) {
@@ -3076,8 +3076,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_MaskPressure, es.label)) {
             code = CPAP_MaskPressure;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
 
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IE, es.label)) { //I:E ratio
@@ -3237,8 +3237,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         }
 
         if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
-             qDebug() << "Before loop to buildEventList" << el->count() << "Last:" << last*es.gain << "Next:" << (*sptr)*es.gain << "Pos:" << sptr - es.dataArray <<
-                QDateTime::fromMSecsSinceEpoch(tt).toString();
+             qDebug() << "Before loop to buildEventList" << el->count() << "Last:" << last*es.gain << "Next:" << (*sptr)*es.gain <<
+                "Pos:" << sptr - es.dataArray << QDateTime::fromMSecsSinceEpoch(tt).toString();
         for (; sptr < eptr; sptr++) {
             c = *sptr;
             if (last != c) {
