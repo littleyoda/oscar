@@ -480,7 +480,7 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
     quint32 *tv_tptr = nullptr;
     EventStoreType *tv_dptr = nullptr;
     int tv_count = 0;
-    double tvlast, tvlast2, tvlast3;
+    double tvlast = 0, tvlast2 = 0, tvlast3 = 0;
 
     if (calcTv) {
         TV = m_session->AddEventList(CPAP_TidalVolume, EVL_Event);
@@ -600,8 +600,14 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
             //val2=x;
 
             // Average TV over last three data points
-            if (tv_count == 0)
+            if (tv_count == 0) {
+                if (tv > 800)           // Very much a Q&D patch to handle the first TV value not being calculated well
+                    tv = 300;           // If unreasonable, just set to a "reasonable" number.
                 tvlast = tvlast2 = tvlast3 = tv;
+            }
+            if (tv_count < 4) {
+                qDebug() << "tv" << tv << tvlast << tvlast2 << tvlast3 << "avg" << (tvlast + tvlast2 + tvlast3 + tv*2)/5;
+            }
             tv = (tvlast + tvlast2 + tvlast3 + tv*2)/5;
             tvlast3 = tvlast2;
             tvlast2 = tvlast;
