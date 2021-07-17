@@ -38,9 +38,7 @@ class SleepStyle: public CPAP
 
 const int sleepstyle_load_buffer_size = 1024 * 1024;
 
-extern ChannelID INTP_SmartFlexMode;
-extern ChannelID SS_SmartFlexLevel;
-extern ChannelID SS_SenseAwakeLevel;
+extern ChannelID SS_SenseAwakeLevel, SS_EPR, SS_EPRLevel, SS_Ramp, SS_Humidity;
 
 const QString sleepstyle_class_name = STR_MACH_SleepStyle;
 
@@ -90,19 +88,16 @@ class SleepStyleLoader : public CPAPLoader
         return MachineInfo(MT_CPAP, 0, sleepstyle_class_name, QObject::tr("Fisher & Paykel"), QString(), QString(), QString(), QObject::tr("SleepStyle"), QDateTime::currentDateTime(), sleepstyle_data_version);
     }
 
-
     //! \brief Registers this MachineLoader with the master list, so F&P Icon data can load
     static void Register();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Now for some CPAPLoader overrides
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    virtual QString presRelType() { return QObject::tr(""); } // might not need this one
-
-    virtual ChannelID presRelSet() { return NoChannel; }
-    virtual ChannelID presRelLevel() { return NoChannel; }
+    virtual QString presRelType() { return QObject::tr("EPR"); }
+    virtual ChannelID presReliefMode() { return SS_EPR; }
+    virtual ChannelID PresReliefLevel() { return SS_EPRLevel; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
   protected:
 //    QDateTime readFPDateTime(quint8 *data);
@@ -111,12 +106,6 @@ class SleepStyleLoader : public CPAPLoader
     QHash<QString, Machine *> MachList;
     QMap<SessionID, Session *> Sessions;
     QMultiMap<QDate, Session *> SessDate;
-    //QMap<int,QList<EventList *> > FLWMapFlow;
-    //QMap<int,QList<EventList *> > FLWMapLeak;
-    //QMap<int,QList<EventList *> > FLWMapPres;
-    //QMap<int,QList<qint64> > FLWDuration;
-    //QMap<int,QList<qint64> > FLWTS;
-    //QMap<int,QDate> FLWDate;
 
     QString serialPath; // fully qualified path to  the input data, ...SDCard.../FPHCARE/ICON/serial
 //    QString serial;    // Serial number
