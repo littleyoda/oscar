@@ -1145,7 +1145,8 @@ QString Daily::getMachineSettings(Day * day) {
         if (sess) for (; it != it_end; ++it) {
             ChannelID code = it.key();
 
-            if ((code <= 1) || (code == RMS9_MaskOnTime) || (code == CPAP_Mode) || (code == cpapmode) || (code == CPAP_SummaryOnly)) continue;
+            if ((code <= 1) || (code == RMS9_MaskOnTime) || (code == CPAP_Mode) || (code == cpapmode) || (code == CPAP_SummaryOnly))
+                continue;
 
             schema::Channel & chan = schema::channel[code];
 
@@ -1179,7 +1180,7 @@ QString Daily::getMachineSettings(Day * day) {
                     .arg(schema::channel[code].label())
                     .arg(schema::channel[code].description())
                     .arg(data);
-
+//qDebug() << QString::number( code, 16 ) << tmp;
             if (first_channels.contains(code)) {
                 first[code] = tmp;
             } else {
