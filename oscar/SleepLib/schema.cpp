@@ -55,23 +55,32 @@ QHash<QString, ScopeType> Scopes;
 
 bool schema_initialized = false;
 
+// Order in which indices appear on Daily page
 void setOrders() {
-    schema::channel[CPAP_PB].setOrder(1);
-    schema::channel[CPAP_CSR].setOrder(1);
-    schema::channel[CPAP_Ramp].setOrder(2);
-    schema::channel[CPAP_LargeLeak].setOrder(2);
-    schema::channel[CPAP_ClearAirway].setOrder(3);
-    schema::channel[CPAP_Obstructive].setOrder(4);
-    schema::channel[CPAP_Apnea].setOrder(4);
-    schema::channel[CPAP_NRI].setOrder(3);
-    schema::channel[CPAP_Hypopnea].setOrder(5);
-    schema::channel[CPAP_FlowLimit].setOrder(6);
-    schema::channel[CPAP_RERA].setOrder(6);
-    schema::channel[CPAP_VSnore].setOrder(7);
-    schema::channel[CPAP_VSnore2].setOrder(8);
-    schema::channel[CPAP_ExP].setOrder(6);
-    schema::channel[CPAP_UserFlag1].setOrder(256);
-    schema::channel[CPAP_UserFlag2].setOrder(257);
+    int order = 1;
+    schema::channel[CPAP_PB].setOrder(order++);
+    schema::channel[CPAP_CSR].setOrder(order++);
+    schema::channel[CPAP_Ramp].setOrder(order++);
+    schema::channel[CPAP_LargeLeak].setOrder(order++);
+
+    schema::channel[CPAP_ClearAirway].setOrder(order++);
+    schema::channel[CPAP_NRI].setOrder(order++);
+    schema::channel[CPAP_Obstructive].setOrder(order++);
+    schema::channel[CPAP_Apnea].setOrder(order++);
+    schema::channel[CPAP_Hypopnea].setOrder(order++);
+    schema::channel[CPAP_FlowLimit].setOrder(order++);
+
+    schema::channel[CPAP_RERA].setOrder(order++);
+    schema::channel[CPAP_ExP].setOrder(order++);
+    schema::channel[CPAP_VSnore].setOrder(order++);
+    schema::channel[CPAP_VSnore2].setOrder(order++);
+
+    // Any channels not set above appear here, as default value for order is 255.
+
+    // Finally, include user flags
+    order = 256;
+    schema::channel[CPAP_UserFlag1].setOrder(order++);
+    schema::channel[CPAP_UserFlag2].setOrder(order++);
 }
 
 void init()
