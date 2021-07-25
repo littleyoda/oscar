@@ -676,7 +676,7 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 
             SessDate.insert(date, sess);
 
-            if (mode) {
+            if (mode || minPressSeen != maxPressSeen || minPressSeen != CPAP_PressureSet) {
                 sess->settings[CPAP_Mode] = (int)MODE_APAP;
                 sess->settings[CPAP_PressureMin] = minPressSet / 10.0;
                 sess->settings[CPAP_PressureMax] = maxPressSet / 10.0;
@@ -826,12 +826,12 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
         EventList *LK = sess->AddEventList(CPAP_LeakTotal, EVL_Event, 1);
         EventList *PR = sess->AddEventList(CPAP_Pressure, EVL_Event, 0.1F);
-        EventList *OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
+        EventList *A = sess->AddEventList(CPAP_AllApnea, EVL_Event);
         EventList *H =  sess->AddEventList(CPAP_Hypopnea, EVL_Event);
         EventList *FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
         EventList *SA = sess->AddEventList(CPAP_SensAwake, EVL_Event);
-        EventList *CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
-        EventList *UA = sess->AddEventList(CPAP_Apnea, EVL_Event);
+//        EventList *CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
+//        EventList *UA = sess->AddEventList(CPAP_Apnea, EVL_Event);
 // For testing to determine which bit is for which event type:
 //        EventList *UF1 = sess->AddEventList(CPAP_UserFlag1, EVL_Event);
 //        EventList *UF2 = sess->AddEventList(CPAP_UserFlag2, EVL_Event);
@@ -857,23 +857,22 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 a4 = data[idx + 5];   // [0..5] UF1,  [6..7] Unknown
                 a5 = data[idx + 6];   // [0..5] UF2,  [6..7] Unknown
 
-                // Sure there isn't 6 SenseAwake bits?
+                // SenseAwake bits are in the first two bits of the last three data fields
                 a6 = (a3 >> 6) << 4 | ((a4 >> 6) << 2) | (a5 >> 6);
 
-                // this does the same thing as behaviour
-//                a6 = (a3 >> 7) << 3 | ((a3 >> 6) & 1);
-                a7 =   (a1 >> 6) | (a2 >> 6); // Are these bits used?
+                // See if extra bits from the first two fields are used at any time (see debug later)
+                a7 =   ((a1 >> 6) << 2) | (a2 >> 6);
 
                 bitmask = 1;
                 for (int k = 0; k < 6; k++) {  // There are 6 flag sets per 2 minutes
-                    if (a1 & bitmask) { OA->AddEvent(ti+60000, 0); } // Grouped by F&P as A
-                    if (a2 & bitmask) { CA->AddEvent(ti+60000, 0); } // Grouped by F&P as A
+                    if (a1 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
+                    if (a2 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
                     if (a3 & bitmask) {  H->AddEvent(ti+60000, 0); } // Grouped by F&P as H
-                    if (a4 & bitmask) { UA->AddEvent(ti+60000, 0); } // Grouped by F&P as H
+                    if (a4 & bitmask) {  H->AddEvent(ti+60000, 0); } // Grouped by F&P as H
                     if (a5 & bitmask) { FL->AddEvent(ti+60000, 0); }
                     if (a6 & bitmask) { SA->AddEvent(ti+60000, 0); }
 
-                    bitmask <<= 1;
+                    bitmask = bitmask << 1;
                     ti += 20000L;  // Increment 20 seconds
                 }
 
