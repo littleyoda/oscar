@@ -139,6 +139,7 @@ public:
         s_TempEnable = -1;
         s_Temp = -1;
         s_SmartStart = -1;
+        s_SmartStop  = -1;
         s_Comfort = -1;
 
         ramp_pressure = -1;
@@ -222,6 +223,7 @@ public:
     int s_TempEnable;
     EventDataType s_Temp;
     int s_SmartStart;
+    int s_SmartStop;
     int s_Comfort;
 
 };

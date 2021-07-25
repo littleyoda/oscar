@@ -32,7 +32,7 @@
 
 
 ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
-         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
+         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMS9_SmartStop,
          RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort;
 
 const QString STR_ResMed_AirSense10 = "AirSense 10";
@@ -190,7 +190,13 @@ void ResmedLoader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Comfort = 0xe20E, SETTING, MT_CPAP, SESSION,
         "RMAS1x_Comfort", QObject::tr("Comfort"), QObject::tr("Comfort"), QObject::tr("Comfort"), "", LOOKUP, Qt::black));
 
-    chan->addOption(0, STR_TR_Off);     // This must be verified
+    chan->addOption(0, QObject::tr("Soft"));     // This must be verified
+    chan->addOption(1, QObject::tr("Standard"));
+
+    channel.add(GRP_CPAP, chan = new Channel(RMS9_SmartStop = 0xe20F, SETTING, MT_CPAP, SESSION,
+        "RMS9_SmartStop", QObject::tr("SmartStop"), QObject::tr("Machine auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
     // Setup ResMeds signal name translation map
@@ -1146,7 +1152,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
 // This function parses a list of STR files and creates a date ordered map of individual records
 bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate firstImport)
 {
-    Q_UNUSED(mach)
+    bool AS_eleven = (mach->info.modelnumber.toInt() >= 39000);
 
 //  QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
 //  bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
@@ -1327,19 +1333,21 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
                 if (mod == 11) {
                     mode = MODE_A4Her; // For her
-                } else if (mod >= 8) {       // mod 8 == vpap adapt variable epap
+                } else if (mod == 9) {
+                    mode = MODE_AVAPS;
+                } else if (mod == 8) {       // mod 8 == vpap adapt variable epap
                     mode = MODE_ASV_VARIABLE_EPAP;
-                } else if (mod >= 7) {       // mod 7 == vpap adapt
+                } else if (mod == 7) {       // mod 7 == vpap adapt
                     mode = MODE_ASV;
-                } else if (mod >= 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
+                } else if (mod == 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
                     mode = MODE_BILEVEL_AUTO_FIXED_PS;
-                } else if (mod >= 3) {// mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                } else if (mod == 3) {// mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
                     mode = MODE_BILEVEL_FIXED;
                     // 4,5 are S/T types...
-                } else if (mod >= 1) {
+                } else if (mod == 1) {
                     mode = MODE_APAP; // mod 1 == apap
                     // not sure what mode 2 is ?? split ?
-                } else {
+                } else  if (mod == 0) {
                     mode = MODE_CPAP; // mod 0 == cpap
                 }
                 R.mode = mode;
@@ -1365,6 +1373,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 }
             }
 
+// Collect the staistics 
             if ((sig = str.lookupLabel("Mask Dur")) || (sig = str.lookupLabel("Duration"))) {
                 R.maskdur = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
@@ -1447,6 +1456,8 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("I:E 95"))) {
                 R.ie95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
+
+// Collect the pressure settings
 
             bool haveipap = false;
             Q_UNUSED( haveipap );
@@ -1544,15 +1555,21 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.max_ipap = R.epap + R.max_ps;
             }
 
+// Collect the other settings
+
+            if ((sig = str.lookupLabel("S.AS.Comfort"))) {
+                R.s_Comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_Comfort--;
+            }
+
             EventDataType epr = -1, epr_level = -1;
-            bool a1x = false;
-            if ((mode == MODE_CPAP) || (mode == MODE_APAP)) {
-                if ((sig = str.lookupLabel("S.AS.Comfort"))) { // first check machines opinion
-                    a1x = true;
-                    R.s_Comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-                }
+            bool a1x = false;       // AS-10 or AS-11
+            if ((mode == MODE_CPAP) || (mode == MODE_APAP) || (mode == MODE_A4Her)) {
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
                     epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        epr--;
                 }
                 if ((sig = str.lookupSignal(RMS9_EPRLevel))) {
                     epr_level= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -1561,15 +1578,21 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     a1x = true;
                     epr = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     epr += 1;
+                    if ( AS_eleven )
+                        epr--;
                 }
                 int epr_on=0, clin_epr_on=0;
                 if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check machines opinion
                     a1x = true;
                     epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        epr_on--;
                 }
                 if (epr_on && (sig = str.lookupLabel("S.EPR.ClinEnable"))) {
                     a1x = true;
                     clin_epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        clin_epr_on--;
                 }
                 if (a1x && !(epr_on && clin_epr_on)) {
                     epr = 0;
@@ -1624,39 +1647,64 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ((sig = str.lookupLabel("S.RampEnable"))) {
                 R.s_RampEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_RampEnable--;
             }
             if ((sig = str.lookupLabel("S.EPR.ClinEnable"))) {
                 R.s_EPR_ClinEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_EPR_ClinEnable--;
             }
             if ((sig = str.lookupLabel("S.EPR.EPREnable"))) {
                 R.s_EPREnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_EPREnable--;
             }
 
             if ((sig = str.lookupLabel("S.ABFilter"))) {
                 R.s_ABFilter = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_ABFilter--;
             }
 
             if ((sig = str.lookupLabel("S.ClimateControl"))) {
                 R.s_ClimateControl = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_ClimateControl--;
             }
 
             if ((sig = str.lookupLabel("S.Mask"))) {
                 R.s_Mask = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_Mask--;
             }
             if ((sig = str.lookupLabel("S.PtAccess"))) {
                 R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_PtAccess--;
             }
             if ((sig = str.lookupLabel("S.SmartStart"))) {
                 R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_SmartStart--;
+            }
+            if ((sig = str.lookupLabel("S.SmartStop"))) {
+                R.s_SmartStop = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_SmartStop--;
             }
             if ((sig = str.lookupLabel("S.HumEnable"))) {
                 R.s_HumEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_HumEnable--;
             }
             if ((sig = str.lookupLabel("S.HumLevel"))) {
                 R.s_HumLevel = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.TempEnable"))) {
                 R.s_TempEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_TempEnable--;
             }
             if ((sig = str.lookupLabel("S.Temp"))) {
                 R.s_Temp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
