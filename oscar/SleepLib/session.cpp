@@ -1139,7 +1139,14 @@ void Session::updateCountSummary(ChannelID code)
         }
     }
 
-    if (valsum.size() == 0) { 
+    if ( valsum.size() == 0) {
+        using namespace schema;
+        Channel *ch_p = channel.channels[code];
+        if (  ! ch_p->isNull() ) {
+            if ( ch_p->type() == FLAG )
+                return;
+                qDebug() << "No valuesummary for channel " << ch_p->label();
+        }
         qDebug() << "No valuesummary for channel (hex)" << QString::number(code, 16);
         return;
     }
