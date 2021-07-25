@@ -539,6 +539,7 @@ QString STR_TR_Humidifier;
 
 QString STR_TR_H;       // Short form of Hypopnea
 QString STR_TR_OA;      // Short form of Obstructive Apnea
+QString STR_TR_A;       // Short form of Apnea
 QString STR_TR_UA;      // Short form of Unspecified Apnea
 QString STR_TR_CA;      // Short form of Clear Airway Apnea
 QString STR_TR_FL;      // Short form of Flow Limitation
@@ -746,7 +747,8 @@ void initializeStrings()
 
     STR_TR_H = QObject::tr("H");      // Short form of Hypopnea
     STR_TR_OA = QObject::tr("OA");    // Short form of Obstructive Apnea
-    STR_TR_UA = QObject::tr("A");     // Short form of Unspecified Apnea
+    STR_TR_A = QObject::tr("A");     // Short form of All Apnea
+    STR_TR_UA = QObject::tr("UA");     // Short form of Unspecified Apnea
     STR_TR_CA = QObject::tr("CA");    // Short form of Clear Airway Apnea
     STR_TR_FL = QObject::tr("FL");    // Short form of Flow Limitation
     STR_TR_SA = QObject::tr("SA");    // Short form of Flow Limitation

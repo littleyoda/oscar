@@ -262,6 +262,7 @@ extern QString STR_TR_Humidifier;
 
 extern QString STR_TR_H;       // Short form of Hypopnea
 extern QString STR_TR_OA;      // Short form of Obstructive Apnea
+extern QString STR_TR_A;       // Short form of Apnea
 extern QString STR_TR_UA;      // Short form of Unspecified Apnea
 extern QString STR_TR_CA;      // Short form of Clear Airway Apnea
 extern QString STR_TR_FL;      // Short form of Flow Limitation

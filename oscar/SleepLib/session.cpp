@@ -1623,6 +1623,13 @@ EventDataType Session::countInsideSpan(ChannelID span, ChannelID code)
 
 EventDataType Session::rangeCount(ChannelID id, qint64 first, qint64 last)
 {
+    int total = 0, cnt;
+
+    if (id == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            total += rangeCount(ahiChannels.at(i), first, last);
+    }
+
     QHash<ChannelID, QVector<EventList *> >::iterator j = eventlist.find(id);
 
     if (j == eventlist.end()) {
@@ -1630,7 +1637,6 @@ EventDataType Session::rangeCount(ChannelID id, qint64 first, qint64 last)
     }
 
     QVector<EventList *> &evec = j.value();
-    int total = 0, cnt;
 
     qint64 t, start;
 
@@ -1897,6 +1903,14 @@ EventDataType Session::rangeMax(ChannelID id, qint64 first, qint64 last)
 
 EventDataType Session::count(ChannelID id)
 {
+    int sum = 0;
+
+    if (id == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            sum += count(ahiChannels.at(i));
+        return sum;
+    }
+
     QHash<ChannelID, EventDataType>::iterator i = m_cnt.find(id);
 
     if (i != m_cnt.end()) {
@@ -1912,7 +1926,6 @@ EventDataType Session::count(ChannelID id)
 
     QVector<EventList *> &evec = j.value();
 
-    int sum = 0;
     int evec_size=evec.size();
     if (evec_size == 0)
         return 0;

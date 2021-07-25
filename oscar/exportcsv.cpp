@@ -168,10 +168,14 @@ void ExportCSV::on_exportButton_clicked()
 
 
     QList<ChannelID> countlist, avglist, p90list, maxlist;
-    countlist.append(CPAP_Hypopnea);
-    countlist.append(CPAP_Obstructive);
-    countlist.append(CPAP_Apnea);
-    countlist.append(CPAP_ClearAirway);
+    for (int i = 0; i < ahiChannels.size(); i++)
+        countlist.append(ahiChannels.at(i));
+
+//    countlist.append(CPAP_Hypopnea);
+//    countlist.append(CPAP_Obstructive);
+//    countlist.append(CPAP_Apnea);
+//    countlist.append(CPAP_ClearAirway);
+//    countlist.append(CPAP_AllApnea);
     countlist.append(CPAP_VSnore);
     countlist.append(CPAP_VSnore2);
     countlist.append(CPAP_RERA);
@@ -298,8 +302,9 @@ void ExportCSV::on_exportButton_clicked()
                     int s = int(time) % 60;
                     data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
 
-                    float ahi = sess->count(CPAP_Obstructive) + sess->count(CPAP_Hypopnea) + sess->count(
-                                    CPAP_Apnea) + sess->count(CPAP_ClearAirway);
+                    float ahi = sess->count(AllAhiChannels);
+                                //sess->count(CPAP_AllApnea) + sess->count(CPAP_Obstructive) + sess->count(CPAP_Hypopnea)
+                                // + sess->count(CPAP_Apnea) + sess->count(CPAP_ClearAirway);
                     ahi /= sess->hours();
                     data += sep + QString::number(ahi, 'f', 3);
 

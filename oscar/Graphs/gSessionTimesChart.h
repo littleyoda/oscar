@@ -377,10 +377,14 @@ class gAHIChart : public gSummaryChart
 public:
     gAHIChart()
         :gSummaryChart("AHIChart", MT_CPAP) {
-        addCalc(CPAP_ClearAirway, ST_CPH);
-        addCalc(CPAP_Obstructive, ST_CPH);
-        addCalc(CPAP_Apnea, ST_CPH);
-        addCalc(CPAP_Hypopnea, ST_CPH);
+        for (int i = 0; i < ahiChannels.size(); i++)
+            addCalc(ahiChannels.at(i), ST_CPH);
+
+//        addCalc(CPAP_ClearAirway, ST_CPH);
+//        addCalc(CPAP_AllApnea, ST_CPH);
+//        addCalc(CPAP_Obstructive, ST_CPH);
+//        addCalc(CPAP_Apnea, ST_CPH);
+//        addCalc(CPAP_Hypopnea, ST_CPH);
         if (p_profile->general->calculateRDI())
             addCalc(CPAP_RERA, ST_CPH);
     }

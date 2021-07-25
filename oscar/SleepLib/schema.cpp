@@ -65,6 +65,7 @@ void setOrders() {
 
     schema::channel[CPAP_ClearAirway].setOrder(order++);
     schema::channel[CPAP_NRI].setOrder(order++);
+    schema::channel[CPAP_AllApnea].setOrder(order++);
     schema::channel[CPAP_Obstructive].setOrder(order++);
     schema::channel[CPAP_Apnea].setOrder(order++);
     schema::channel[CPAP_Hypopnea].setOrder(order++);
@@ -160,6 +161,8 @@ void init()
             QObject::tr("Hypopnea"), QObject::tr("A partially obstructed airway"), QObject::tr("H"),        STR_UNIT_EventsPerHour,    DEFAULT,    QColor("blue")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Apnea         = 0x1004, FLAG,        MT_CPAP, SESSION, "Apnea",
             QObject::tr("Unclassified Apnea"), QObject::tr("An apnea that couldn't be determined as Central or Obstructive."),QObject::tr("UA"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("dark green")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_AllApnea      = 0x1010, FLAG,        MT_CPAP, SESSION, "AllApnea",
+            QObject::tr("Apnea"), QObject::tr("An apnea reportred by your CPAP machine."),QObject::tr("A"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#40c0ff")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_FlowLimit     = 0x1005, FLAG,        MT_CPAP, SESSION, "FlowLimit",
             QObject::tr("Flow Limitation"), QObject::tr("A restriction in breathing from normal, causing a flattening of the flow waveform."), QObject::tr("FL"), STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#404040")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RERA          = 0x1006, FLAG,        MT_CPAP, SESSION, "RERA",
@@ -367,6 +370,18 @@ void init()
     schema::channel[CPAP_PB].setShowInOverview(true);
     schema::channel[CPAP_LargeLeak].setShowInOverview(true);
     schema::channel[CPAP_FLG].setShowInOverview(true);
+
+    // Identify the channels that contribute to AHI calculation
+    // When adding more AHI-contributing channels,
+    // 1) update this list
+    // 2) Update setOrders() above
+    // 3) Search source for CPAP_Obstructive to look for possible other places to add new channel
+    // 4) Search for AllAhiChannels to find all uses of the AHI-contributing channel list
+    ahiChannels.append(CPAP_ClearAirway);
+    ahiChannels.append(CPAP_AllApnea);
+    ahiChannels.append(CPAP_Obstructive);
+    ahiChannels.append(CPAP_Hypopnea);
+    ahiChannels.append(CPAP_Apnea);
 }
 
 

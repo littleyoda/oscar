@@ -240,7 +240,7 @@ void Statistics::updateRXChanges()
                     }
 
                     // Update AHI/RDI/Time counts
-                    tmp = day->count(CPAP_Hypopnea) + day->count(CPAP_Obstructive) + day->count(CPAP_Apnea) + day->count(CPAP_ClearAirway);
+                    tmp = day->count(AllAhiChannels);
                     rx.ahi += tmp;
                     rx.rdi += tmp + day->count(CPAP_RERA);
                     rx.hours += day->hours(MT_CPAP);
@@ -264,7 +264,7 @@ void Statistics::updateRXChanges()
                     rx1.days = 1;
 
                     // Only this days AHI/RDI counts
-                    tmp = day->count(CPAP_Hypopnea) + day->count(CPAP_Obstructive) + day->count(CPAP_Apnea) + day->count(CPAP_ClearAirway);
+                    tmp = day->count(AllAhiChannels);
                     rx1.ahi = tmp;
                     rx1.rdi = tmp + day->count(CPAP_RERA);
 
@@ -322,7 +322,7 @@ void Statistics::updateRXChanges()
                             Day * dy = rx.dates[di.key()] = p_profile->GetDay(di.key(), MT_CPAP);
 
                             // Update AHI/RDI counts
-                            tmp = dy->count(CPAP_Hypopnea) + dy->count(CPAP_Obstructive) + dy->count(CPAP_Apnea) + dy->count(CPAP_ClearAirway);;
+                            tmp = dy->count(AllAhiChannels);
                             rx.ahi += tmp;
                             rx.rdi += tmp + dy->count(CPAP_RERA);
 
@@ -350,7 +350,7 @@ void Statistics::updateRXChanges()
                             Day * dy = rx2.dates[di.key()] = p_profile->GetDay(di.key(), MT_CPAP);
 
                             // Update AHI/RDI counts
-                            tmp = dy->count(CPAP_Hypopnea) + dy->count(CPAP_Obstructive) + dy->count(CPAP_Apnea) + dy->count(CPAP_ClearAirway);;
+                            tmp = dy->count(AllAhiChannels);
                             rx2.ahi += tmp;
                             rx2.rdi += tmp + dy->count(CPAP_RERA);
 
@@ -434,7 +434,7 @@ void Statistics::updateRXChanges()
             if ((rx.relief == relief) && (rx.mode == mode) && (rx.pressure == pressure) && (rx.machine == mach) ) {
 
                 // Update AHI/RDI
-                tmp = day->count(CPAP_Hypopnea) + day->count(CPAP_Obstructive) + day->count(CPAP_Apnea) + day->count(CPAP_ClearAirway);
+                tmp = day->count(AllAhiChannels);
                 rx.ahi += tmp;
                 rx.rdi += tmp + day->count(CPAP_RERA);
 
@@ -466,7 +466,7 @@ void Statistics::updateRXChanges()
             rx.days = 1;
 
             // Set AHI/RDI for just this day
-            tmp = day->count(CPAP_Hypopnea) + day->count(CPAP_Obstructive) + day->count(CPAP_Apnea) + day->count(CPAP_ClearAirway);
+            tmp = day->count(AllAhiChannels);
             rx.ahi = tmp;
             rx.rdi = tmp + day->count(CPAP_RERA);
 
@@ -542,6 +542,7 @@ Statistics::Statistics(QObject *parent) :
 
     rows.push_back(StatisticsRow(tr("Therapy Efficacy"),  SC_SUBHEADING, MT_CPAP));
     rows.push_back(StatisticsRow("AHI",        SC_AHI,     MT_CPAP));
+    rows.push_back(StatisticsRow("AllApnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Obstructive",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Hypopnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Apnea",   SC_CPH,     MT_CPAP));
@@ -745,10 +746,16 @@ QString Statistics::generateFooter(bool showinfo)
 // Add RERA if calculating RDI instead of just AHI
 EventDataType calcAHI(QDate start, QDate end)
 {
-    EventDataType val = (p_profile->calcCount(CPAP_Obstructive, MT_CPAP, start, end)
-                         + p_profile->calcCount(CPAP_Hypopnea, MT_CPAP, start, end)
-                         + p_profile->calcCount(CPAP_ClearAirway, MT_CPAP, start, end)
-                         + p_profile->calcCount(CPAP_Apnea, MT_CPAP, start, end));
+    EventDataType val = 0;
+
+    for (int i = 0; i < ahiChannels.size(); i++)
+        val += p_profile->calcCount(ahiChannels.at(i), MT_CPAP, start, end);
+
+//                        (p_profile->calcCount(CPAP_Obstructive, MT_CPAP, start, end)
+//                         + p_profile->calcCount(CPAP_AllApnea, MT_CPAP, start, end)
+//                         + p_profile->calcCount(CPAP_Hypopnea, MT_CPAP, start, end)
+//                         + p_profile->calcCount(CPAP_ClearAirway, MT_CPAP, start, end)
+//                         + p_profile->calcCount(CPAP_Apnea, MT_CPAP, start, end));
 
     if (p_profile->general->calculateRDI()) {
         val += p_profile->calcCount(CPAP_RERA, MT_CPAP, start, end);

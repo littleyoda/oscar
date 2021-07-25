@@ -638,6 +638,12 @@ EventDataType Day::sum(ChannelID code)
     // Cache this?
     EventDataType val = 0;
 
+    if (code == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            val += sum(ahiChannels.at(i));
+        return val;
+    }
+
     for (auto & sess : sessions) {
         if (sess->enabled() && sess->m_sum.contains(code)) {
             val += sess->sum(code);
@@ -1117,6 +1123,12 @@ EventDataType Day::sph(ChannelID code)
 EventDataType Day::count(ChannelID code)
 {
     EventDataType total = 0;
+
+    if (code == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            total += count(ahiChannels.at(i));
+        return total;
+    }
 
     for (auto & sess : sessions) {
         if (sess->enabled() && sess->m_cnt.contains(code)) {

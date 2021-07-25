@@ -211,10 +211,13 @@ QList<ChannelID> CPAPLoader::eventFlags(Day * day)
         return list;
     }
 
-    list.push_back(CPAP_ClearAirway);
-    list.push_back(CPAP_Obstructive);
-    list.push_back(CPAP_Hypopnea);
-    list.push_back(CPAP_Apnea);
+    for (int i = 0; i < ahiChannels.size(); i++)
+        list.push_back(ahiChannels.at(i));
+//    list.push_back(CPAP_ClearAirway);
+//    list.push_back(CPAP_AllApnea);
+//    list.push_back(CPAP_Obstructive);
+//    list.push_back(CPAP_Hypopnea);
+//    list.push_back(CPAP_Apnea);
 
     return list;
 }

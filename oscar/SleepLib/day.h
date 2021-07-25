@@ -250,14 +250,14 @@ class Day
 
     //! \brief Calculate AHI (Apnea Hypopnea Index)
     EventDataType calcAHI() {
-        EventDataType c = count(CPAP_Hypopnea) + count(CPAP_Obstructive) + count(CPAP_Apnea) + count(CPAP_ClearAirway);
+        EventDataType c = count(AllAhiChannels);
         EventDataType minutes = hours(MT_CPAP) * 60.0;
         return (c * 60.0) / minutes;
     }
 
     //! \brief Calculate RDI (Respiratory Disturbance Index)
     EventDataType calcRDI() {
-        EventDataType c = count(CPAP_Hypopnea) + count(CPAP_Obstructive) + count(CPAP_Apnea) + count(CPAP_ClearAirway) + count(CPAP_RERA);
+        EventDataType c = count(AllAhiChannels) + count(CPAP_RERA);
         EventDataType minutes = hours(MT_CPAP) * 60.0;
         return (c * 60.0) / minutes;
     }
@@ -280,13 +280,13 @@ class Day
 
     //! \brief SleepyyHead Events Index, AHI combined with OSCAR detected events.. :)
     EventDataType calcSHEI() {
-        EventDataType c = count(CPAP_Hypopnea) + count(CPAP_Obstructive) + count(CPAP_Apnea) + count(CPAP_ClearAirway) + count(CPAP_UserFlag1) + count(CPAP_UserFlag2);
+        EventDataType c = count(AllAhiChannels) + count(CPAP_UserFlag1) + count(CPAP_UserFlag2);
         EventDataType minutes = hours(MT_CPAP) * 60.0;
         return (c * 60.0) / minutes;
     }
     //! \brief Total duration of all Apnea/Hypopnea events in seconds,
     EventDataType calcTTIA() {
-        EventDataType c = sum(CPAP_Hypopnea) + sum(CPAP_Obstructive) + sum(CPAP_Apnea) + sum(CPAP_ClearAirway);
+        EventDataType c = sum(AllAhiChannels);
         return c;
     }
     bool hasEvents();

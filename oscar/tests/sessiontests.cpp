@@ -148,6 +148,7 @@ static QString eventChannel(ChannelID i)
     QString s;
     do {
         CHANNELNAME(CPAP_Obstructive);
+        CHANNELNAME(CPAP_AllApnea);
         CHANNELNAME(CPAP_Hypopnea);
         CHANNELNAME(CPAP_PB);
         CHANNELNAME(CPAP_LeakTotal);

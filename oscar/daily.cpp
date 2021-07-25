@@ -291,6 +291,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     evseg->AddSlice(CPAP_Apnea,QColor(0x20,0x80,0x20,0xff),STR_TR_UA);
     evseg->AddSlice(CPAP_Obstructive,QColor(0x40,0xaf,0xbf,0xff),STR_TR_OA);
     evseg->AddSlice(CPAP_ClearAirway,QColor(0xb2,0x54,0xcd,0xff),STR_TR_CA);
+    evseg->AddSlice(CPAP_AllApnea,QColor(0x40,0xaf,0xbf,0xff),STR_TR_A);
     evseg->AddSlice(CPAP_RERA,QColor(0xff,0xff,0x80,0xff),STR_TR_RE);
     evseg->AddSlice(CPAP_NRI,QColor(0x00,0x80,0x40,0xff),STR_TR_NR);
     evseg->AddSlice(CPAP_FlowLimit,QColor(0x40,0x40,0x40,0xff),STR_TR_FL);
@@ -1395,7 +1396,7 @@ QString Daily::getStatisticsInfo(Day * day)
         html+="<tr><td colspan=5>&nbsp;</td></tr>";
 
         if ((cpap->loaderName() == STR_MACH_ResMed) || ((cpap->loaderName() == STR_MACH_PRS1) && (p_profile->cpap->resyncFromUserFlagging()))) {
-            int ttia = day->sum(CPAP_Obstructive) + day->sum(CPAP_ClearAirway) + day->sum(CPAP_Apnea) + day->sum(CPAP_Hypopnea);
+            int ttia = day->sum(AllAhiChannels);
             int h = ttia / 3600;
             int m = ttia / 60 % 60;
             int s = ttia % 60;
@@ -1500,15 +1501,24 @@ QString Daily::getPieChart (float values, Day * day) {
         } else {
             html += "<tr><td align=center>"+tr("Unable to display Pie Chart on this system")+"</td></tr>\n";
         }
-    } else if (   day->channelHasData(CPAP_Obstructive)
-               || day->channelHasData(CPAP_Hypopnea)
-               || day->channelHasData(CPAP_ClearAirway)
+    } else {
+        bool gotsome = false;
+        for (int i = 0; i < ahiChannels.size(); i++)
+            gotsome = gotsome || day->channelHasData(ahiChannels.at(i));
+
+//        if (   day->channelHasData(CPAP_Obstructive)
+//               || day->channelHasData(CPAP_AllApnea)
+//               || day->channelHasData(CPAP_Hypopnea)
+//               || day->channelHasData(CPAP_ClearAirway)
+//               || day->channelHasData(CPAP_Apnea)
+
+        if (   gotsome
                || day->channelHasData(CPAP_RERA)
-               || day->channelHasData(CPAP_Apnea)
                || day->channelHasData(CPAP_FlowLimit)
                || day->channelHasData(CPAP_SensAwake)
                ) {
             html += "<tr><td align=center><img src=\"qrc:/docs/0.0.gif\"></td></tr>\n";
+        }
     }
     html+="</table>\n";
     html+="<hr/>\n";
@@ -1650,7 +1660,12 @@ void Daily::Load(QDate date)
         if (GraphView->isEmpty() && (hours>0)) {
             // TODO: Eventually we should get isBrick from the loader, since some summary days
             // on a non-brick might legitimately have no graph data.
-            if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea)) {
+            bool gotsome = false;
+            for (int i = 0; i < ahiChannels.size(); i++)
+                gotsome = gotsome || p_profile->hasChannel(ahiChannels.at(i));
+
+//            if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea) && !p_profile->hasChannel(CPAP_AllApnea)  && !p_profile->hasChannel(CPAP_ClearAirway)) {
+            if (!gotsome) {
                 GraphView->setEmptyText(STR_Empty_Brick);
 
                 GraphView->setEmptyImage(QPixmap(":/icons/sadface.png"));
@@ -1664,7 +1679,7 @@ void Daily::Load(QDate date)
 
         modestr=schema::channel[CPAP_Mode].m_options[mode];
 
-        EventDataType ahi=(day->count(CPAP_Obstructive)+day->count(CPAP_Hypopnea)+day->count(CPAP_ClearAirway)+day->count(CPAP_Apnea));
+        EventDataType ahi=day->count(AllAhiChannels);
         if (p_profile->general->calculateRDI()) ahi+=day->count(CPAP_RERA);
         ahi/=hours;
 
@@ -1742,7 +1757,7 @@ void Daily::Load(QDate date)
 
             htmlLeftIndices+="</table><hr/>";
 
-            htmlLeftPieChart = getPieChart((values[CPAP_Obstructive] + values[CPAP_Hypopnea] +
+            htmlLeftPieChart = getPieChart((values[CPAP_Obstructive] + values[CPAP_Hypopnea] + values[CPAP_AllApnea] +
                                             values[CPAP_ClearAirway] + values[CPAP_Apnea] + values[CPAP_RERA] +
                                             values[CPAP_FlowLimit] + values[CPAP_SensAwake]), day);
 
