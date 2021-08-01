@@ -1143,7 +1143,7 @@ void Session::updateCountSummary(ChannelID code)
         using namespace schema;
         Channel *ch_p = channel.channels[code];
         if (  ! ch_p->isNull() ) {
-            if ( ch_p->type() == FLAG )
+            if ( (ch_p->type() & FLAG) == FLAG )
                 return;
                 qDebug() << "No valuesummary for channel " << ch_p->label();
         }

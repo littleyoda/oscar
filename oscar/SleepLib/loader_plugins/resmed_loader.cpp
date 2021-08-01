@@ -42,6 +42,16 @@ const QString STR_ResMed_AirCurve11 = "AirCurve 11";
 const QString STR_ResMed_S9 = "S9";
 const QString STR_UnknownModel = "Resmed ???";
 
+// TODO: See the PRSLoader::LogUnexpectedMessage TODO about generalizing this for other loaders.
+void ResmedLoader::LogUnexpectedMessage(const QString & message)
+{
+    m_importMutex.lock();
+    m_unexpectedMessages += message;
+    m_importMutex.unlock();
+}
+
+static const QVector<int> AS11TestedModels {39420, 0};
+
 ResmedLoader::ResmedLoader() {
 #ifndef UNITTEST_MODE
     const QString RMS9_ICON = ":/icons/rms9.png";
