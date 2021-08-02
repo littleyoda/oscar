@@ -94,9 +94,10 @@ class SleepStyleLoader : public CPAPLoader
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Now for some CPAPLoader overrides
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    virtual QString presRelType() { return QObject::tr("EPR"); }
-    virtual ChannelID presReliefMode() { return SS_EPR; }
-    virtual ChannelID PresReliefLevel() { return SS_EPRLevel; }
+//    virtual QString presRelType() { return QObject::tr("EPR"); }
+    virtual QString PresReliefLabel() { return QObject::tr("EPR: "); }
+    virtual ChannelID PresReliefMode();
+    virtual ChannelID PresReliefLevel();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected:
