@@ -418,6 +418,16 @@ int ResmedLoader::Open(const QString & dirpath)
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
+        int modelNum = info.modelnumber.toInt();
+        if ( modelNum >= 39000 ) {
+            if ( ! AS11TestedModels.contains(modelNum) ) {
+                QMessageBox::information(QApplication::activeWindow(),
+                             QObject::tr("Machine Untested"),
+                             QObject::tr("Your ResMed CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
+                             QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card to make sure it works with OSCAR.")
+                             ,QMessageBox::Ok);
+            }
+        }
         mach = p_profile->CreateMachine( info );
     }
     QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
