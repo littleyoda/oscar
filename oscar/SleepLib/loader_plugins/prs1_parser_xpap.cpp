@@ -1100,10 +1100,12 @@ bool PRS1DataChunk::ParseSettingsF0V45(const unsigned char* data, int size)
     // TODO: Where is altitude compensation set? We've seen it on 261CA.
 
     CHECK_VALUE(data[0x10], 0);
+    int autotrial_duration = data[0x11];
     if (cpapmode == PRS1_MODE_AUTOTRIAL) {
-        CHECK_VALUE(data[0x11], 7);  // 7-day duration?
+        CHECK_VALUES(autotrial_duration, 7, 30);
+        this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, autotrial_duration));
     } else {
-        CHECK_VALUE(data[0x11], 0);
+        CHECK_VALUE(autotrial_duration, 0);
     }
 
     return true;

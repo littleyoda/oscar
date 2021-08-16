@@ -1260,7 +1260,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
                     if (breath_rate < 4 || breath_rate > 16) UNEXPECTED_VALUE(breath_rate, "4-16");
-                    if (timed_inspiration < 12 || timed_inspiration > 24) UNEXPECTED_VALUE(timed_inspiration, "12-24");
+                    if (timed_inspiration < 12 || timed_inspiration > 25) UNEXPECTED_VALUE(timed_inspiration, "12-25");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
