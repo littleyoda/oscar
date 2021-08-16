@@ -1628,6 +1628,7 @@ EventDataType Session::rangeCount(ChannelID id, qint64 first, qint64 last)
     if (id == AllAhiChannels) {
         for (int i = 0; i < ahiChannels.size(); i++)
             total += rangeCount(ahiChannels.at(i), first, last);
+        return (EventDataType)total;
     }
 
     QHash<ChannelID, QVector<EventList *> >::iterator j = eventlist.find(id);
