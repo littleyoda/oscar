@@ -130,6 +130,7 @@ public:
         s_EPREnable = -1;
 
         s_PtAccess = -1;
+        s_PtView   = -1;
         s_ABFilter = -1;
         s_Mask = -1;
         s_Tube = -1;
@@ -214,6 +215,7 @@ public:
     int s_EPREnable;
 
     int s_PtAccess;
+    int s_PtView;
     int s_ABFilter;
     int s_Mask;
     int s_Tube;

@@ -32,8 +32,8 @@
 
 
 ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
-         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMS9_SmartStop,
-         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort;
+         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMAS11_SmartStop,
+         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort, RMAS11_PtView;
 
 const QString STR_ResMed_AirSense10 = "AirSense 10";
 const QString STR_ResMed_AirSense11 = "AirSense 11";
@@ -203,11 +203,17 @@ void ResmedLoader::initChannels()
     chan->addOption(0, QObject::tr("Soft"));     // This must be verified
     chan->addOption(1, QObject::tr("Standard"));
 
-    channel.add(GRP_CPAP, chan = new Channel(RMS9_SmartStop = 0xe20F, SETTING, MT_CPAP, SESSION,
-        "RMS9_SmartStop", QObject::tr("SmartStop"), QObject::tr("Machine auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
+    channel.add(GRP_CPAP, chan = new Channel(RMAS11_SmartStop = 0xe20F, SETTING, MT_CPAP, SESSION,
+        "RMAS11_SmartStop", QObject::tr("SmartStop"), QObject::tr("Machine auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS11_PtView= 0xe210, SETTING, MT_CPAP, SESSION,
+        "RMAS11_PTView", QObject::tr("Pt. View"), QObject::tr("Pt. View"), QObject::tr("Pt. View"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, QObject::tr("Simple"));
+    chan->addOption(1, QObject::tr("Advanced"));
 
     // Setup ResMeds signal name translation map
     setupResMedTranslationMap();
@@ -1699,9 +1705,11 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     R.s_Mask--;
             }
             if ((sig = str.lookupLabel("S.PtAccess"))) {
-                R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-                if ( AS_eleven )
-                    R.s_PtAccess--;
+                if ( AS_eleven ) {
+                    R.s_PtView = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_PtView--;
+                } else
+                    R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.SmartStart"))) {
                 R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -2280,6 +2288,10 @@ void StoreSettings(Session * sess, STRRecord & R)
     }
     if (R.s_PtAccess >= 0) {
         sess->settings[RMS9_PtAccess] = R.s_PtAccess;
+    }
+
+    if (R.s_PtView >= 0) {
+        sess->settings[RMAS11_PtView] = R.s_PtView;
     }
 
     if (R.s_HumEnable >= 0) {
