@@ -1514,6 +1514,31 @@ QString Day::getPressureRelief()
     ChannelID pr_level_chan = loader->PresReliefLevel();
     ChannelID pr_mode_chan = loader->PresReliefMode();
 
+    // Separate calculation for SleepStyle machines
+    if (mach->info.loadername == "SleepStyle") {
+        pr_str = loader->PresReliefLabel();
+
+        int pr_level = -1;
+        if (pr_level_chan != NoChannel && settingExists(pr_level_chan)) {
+            pr_level = qRound(settings_wavg(pr_level_chan));
+        }
+        if (pr_level == -1)
+            return STR_TR_None;
+
+        if ((pr_mode_chan != NoChannel) && settingExists(pr_mode_chan)) {
+            schema::Channel & chan = schema::channel[pr_level_chan];
+            QString level = chan.option(pr_level);
+            if (level.isEmpty()) {
+                level = QString().number(pr_level) + " " + chan.units();
+            if (settings_min(pr_level_chan) != settings_max(pr_level_chan))
+                level = QObject::tr("varies");
+            }
+            pr_str += QString(" %1").arg(level);
+        }
+
+        return pr_str;
+    }
+
     if ((pr_mode_chan != NoChannel) && settingExists(pr_mode_chan)) {
         // TODO: This is an awful hack that depends on the enum ordering of the pressure relief mode.
         // See the comment in getCPAPModeStr().

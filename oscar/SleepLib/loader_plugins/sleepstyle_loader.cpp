@@ -686,9 +686,12 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
             }
 
             if (EPRLevel == 0)
-                sess->settings[SS_EPR] = 0;
-            else
+                sess->settings[SS_EPR] = 0;     // Show EPR off
+            else {
                 sess->settings[SS_EPRLevel] = EPRLevel;
+                sess->settings[SS_EPR] = 1;
+            }
+
             sess->settings[SS_Humidity] = humidityLevel;
             sess->settings[SS_Ramp] = ramp;
 
@@ -858,6 +861,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 a5 = data[idx + 6];   // [0..5] UF2,  [6..7] Unknown
 
                 // SenseAwake bits are in the first two bits of the last three data fields
+                // TODO: Confirm that the bits are in the right order
                 a6 = (a3 >> 6) << 4 | ((a4 >> 6) << 2) | (a5 >> 6);
 
                 // See if extra bits from the first two fields are used at any time (see debug later)
@@ -865,6 +869,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
                 bitmask = 1;
                 for (int k = 0; k < 6; k++) {  // There are 6 flag sets per 2 minutes
+                    // TODO: Modify if all four channels are to be reported separately
                     if (a1 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
                     if (a2 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
                     if (a3 & bitmask) {  H->AddEvent(ti+60000, 0); } // Grouped by F&P as H
@@ -900,6 +905,9 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
     return 1;
 }
 
+ChannelID SleepStyleLoader::PresReliefMode() { return SS_EPR; }
+ChannelID SleepStyleLoader::PresReliefLevel() { return SS_EPRLevel; }
+
 void SleepStyleLoader::initChannels()
 {
     using namespace schema;
@@ -922,7 +930,7 @@ void SleepStyleLoader::initChannels()
 
     channel.add(GRP_CPAP, chan = new Channel(SS_EPRLevel = 0xf307, SETTING,  MT_CPAP,  SESSION,
         "EPRLevel-ss", QObject::tr("EPR Level"), QObject::tr("Exhale Pressure Relief Level"), QObject::tr("EPR Level"),
-        "", INTEGER, Qt::black));
+        STR_UNIT_CMH2O, INTEGER, Qt::black));
     chan->addOption(0, STR_TR_Off);
 
     channel.add(GRP_CPAP, chan = new Channel(SS_Ramp = 0xf308, SETTING, MT_CPAP,   SESSION,
