@@ -1139,15 +1139,17 @@ void Session::updateCountSummary(ChannelID code)
         }
     }
 
-    if ( valsum.size() == 0) {
+    if ( valsum.size() == 0) {  // no value summary for this channel
         using namespace schema;
         Channel *ch_p = channel.channels[code];
-        if (  ! ch_p->isNull() ) {
-            if ( (ch_p->type() & FLAG) == FLAG )
-                return;
-                qDebug() << "No valuesummary for channel " << ch_p->label();
+        if (  ! ch_p->isNull() ) {                      // the channel was found in the channel list
+            if ( ! ((ch_p->type() & FLAG) == FLAG) ) {  // the channel is not a flag type
+                qDebug() << "No valuesummary for channel " << ch_p->label();    // so tell about missing summary
+            }
+        } else {
+            // This channel wasn't added to the channel list, so we can't check its type
+            qDebug() << "No valuesummary for channel (hex)" << QString::number(code, 16);
         }
-        qDebug() << "No valuesummary for channel (hex)" << QString::number(code, 16);
         return;
     }
 
