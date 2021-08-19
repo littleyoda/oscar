@@ -276,7 +276,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
 
     SessionID sid;//,st;
     float hours, mins;
-
+    Q_UNUSED(mins)      // Used only in debug mode
     // For diagnostics, print summary of last 20 session or one week
     qDebug() << "SS Loader - last 20 Sessions:";
 
@@ -300,9 +300,9 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
             hours = sess->hours();
             mins = hours * 60;
             dt = QDateTime::fromTime_t(sid);
-
+#ifdef DEBUGSS
             qDebug() << cnt << ":" << dt << "session" << sid << "," << mins << "minutes" << a;
-
+#endif
             if (dt.date() < date) {
                 break;
             }
@@ -382,7 +382,9 @@ quint32 ssconvertDate(quint32 timestamp)
 
     QDateTime dt = QDateTime(QDate(year, month, day), QTime(hour, minute, second), Qt::UTC);
 
+#ifdef DEBUGSS
     qDebug().noquote() << "SS timestamp" << timestamp << year << month << day << dt << hour << minute << second;
+#endif
 
 //    Q NO!!! _ASSERT(dt.isValid());
 //    if ((year == 2013) && (month == 9) && (day == 18)) {
@@ -431,7 +433,9 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
         return false;
     }
 
+#ifdef DEBUGSS
     qDebug().noquote() << "SS ORT timestamp" << edf.startdate / 1000L << QDateTime::fromSecsSinceEpoch(edf.startdate / 1000L).toString("MM/dd/yyyy hh:mm:ss");
+#endif
     SessionID sessKey = findSession(edf.startdate / 1000L);
     if (sessKey == 0)  {
         qWarning() << "SS ORT session not found";
@@ -526,13 +530,13 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
 ////////////////////////////////////////////////////////////////////////////////////////////
 bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 {
-    qDebug() << filename;
+    qDebug() << "SS SUM File" << filename;
     QByteArray header;
     QFile file(filename);
     QString typex;
 
     if (!file.open(QFile::ReadOnly)) {
-        qDebug() << "SS SUM Couldn't open" << filename;
+        qWarning() << "SS SUM Couldn't open" << filename;
         return false;
     }
 
@@ -540,7 +544,7 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
     header = file.read(0x200);
 
     if (header.size() != 0x200) {
-        qDebug() << "SS SUM Short file" << filename;
+        qWarning() << "SS SUM Short file" << filename;
         file.close();
         return false;
     }
@@ -562,8 +566,9 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
     htxt >> type;  // SPSAAN etc with 4th character being A (Auto) or C (CPAP)
     htxt >> unknownident; // Constant, but has different value when version number is different.
 
+#ifdef DEBUGSS
     qDebug() << "SS SUM header" << h1 << version << fname << serial << model << type << unknownident;
-
+#endif
     if (type.length() > 4)
         typex = (type.at(3) == 'C' ? "CPAP" : "Auto");
     mach->setModel(model + " " + typex);
@@ -601,18 +606,23 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 
         in >> ts;
         if (ts == 0xffffffff) {
+#ifdef DEBUGSS
             qDebug() << "SS SUM 0xffffffff terminator found at block" << nblock;
+#endif
             break;
         }
         if ((ts & 0xffff) == 0xfafe) {
+#ifdef DEBUGSS
             qDebug() << "SS SUM 0xfafa terminator found at block" << nblock;
+#endif
             break;
         }
 
         ts = ssconvertDate(ts);
 
+#ifdef DEBUGSS
         qDebug() << "\nSS SUM Session" << nblock << "with timestamp" << ts << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss");
-
+#endif
         // the following two quite often match in value
         in >> runTime;          // 0x04
         in >> useTime;          // 0x05
@@ -654,20 +664,20 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
         unsigned char s [5];
         for (unsigned int i=0; i < sizeof(s); i++)
             in >> s[i];
-
+#ifdef DEBUGSS
         qDebug() << "SS SUM block" << nblock
                  << "a:"   <<"Pressure Min"<<minPressSeen<<"95%"<<pct95PressSeen<<"Max"<<maxPressSeen
                  << "\nd:" <<d1<<d2<<d3<<d4<<d5<<d6
                  << "\nj:" <<j1 << "   c:" << c1 << c2 << c3 << c4
                  << "\np:" <<p3<<"Ramp"<<(ramp?"on":"off")
-                 << "\nx:" <<x1<<"CPAP Pressure" << CPAPpressSet << "Mode" << (mode?"CPAP":"APAP")
+                 << "\nx:" <<x1<<"CPAP Pressure" << CPAPpressSet << "Mode" << mode << (mode==0?"APAP":"CPAP")
                  << "\ns:" <<"Min set" <<minPressSet<<"Max set"<<maxPressSet<<"SenseAwake"<<senseAwakeLevel<<"Humid"<<humidityLevel<<"EPR"<<EPRLevel<<"flags"<<flags
                  << "\ns:" <<s[0]<<s[1]<<s[2]<<s[3]<<s[4];
 
         if (runTime != useTime) {
             qDebug() << "SS SUM run time" << runTime << "!= use time" << useTime << "-" << nblock << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss");
         }
-
+#endif
         if (!mach->SessionExists(ts)) {
             Session *sess = new Session(mach, ts);
             sess->really_set_first(qint64(ts) * 1000L);
@@ -676,13 +686,13 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 
             SessDate.insert(date, sess);
 
-            if (mode || minPressSeen != maxPressSeen || minPressSeen != CPAP_PressureSet) {
+            if ((maxPressSeen == CPAPpressSet) && (pct95PressSeen == CPAPpressSet)) {
+                sess->settings[CPAP_Mode] = (int)MODE_CPAP;
+                sess->settings[CPAP_Pressure] = CPAPpressSet / 10.0;
+            } else {
                 sess->settings[CPAP_Mode] = (int)MODE_APAP;
                 sess->settings[CPAP_PressureMin] = minPressSet / 10.0;
                 sess->settings[CPAP_PressureMax] = maxPressSet / 10.0;
-            } else {
-                sess->settings[CPAP_Mode] = (int)MODE_CPAP;
-                sess->settings[CPAP_Pressure] = CPAPpressSet / 10.0;
             }
 
             if (EPRLevel == 0)
@@ -718,19 +728,21 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 {
     Q_UNUSED(mach);
 
+#ifdef DEBUGSS
     qDebug() << "SS DET Opening Detail" << filename;
+#endif
     QByteArray header;
     QFile file(filename);
 
     if (!file.open(QFile::ReadOnly)) {
-        qDebug() << "SS DET Couldn't open" << filename;
+        qWarning() << "SS DET Couldn't open" << filename;
         return false;
     }
 
     header = file.read(0x200);
 
     if (header.size() != 0x200) {
-        qDebug() << "SS DET short file" << filename;
+        qWarning() << "SS DET short file" << filename;
         file.close();
         return false;
     }
@@ -754,8 +766,9 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
     htxt >> type;  // SPSAAN etc with 4th character being A (Auto) or C (CPAP)
     htxt >> unknownident; // Constant, but has different value when version number is different.
 
+#ifdef DEBUGSS
     qDebug() << "SS DET file header" << h1 << version << fname << serial << model << type << unknownident;
-
+#endif
     // Read session indices
     QByteArray index = file.read(0x800);
     if (index.size()!=0x800) {
@@ -793,15 +806,16 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
         in >> unknownIndex;
         totalrecs += recs;      // Number of data records for this session
 
+#ifdef DEBUGSS
         qDebug().noquote() << "SS DET block timestamp" << ts << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss") << "start" << strt << "records" << recs << "unknown" << unknownIndex;
-
+#endif
         if (Sessions.contains(ts)) {
             times.push_back(ts);
             start.push_back(strt);
             records.push_back(recs);
         }
         else
-            qDebug() << "SS DET session not found" << ts;
+            qDebug() << "SS DET session not found" << ts << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss") << "start" << strt << "records" << recs << "unknown" << unknownIndex;;
     } while (!in.atEnd());
 
     QByteArray databytes = file.readAll();
@@ -815,7 +829,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
     quint8 *data = (quint8 *)databytes.data();
 
     qint64 ti;
-    quint8 pressure, leak, a1, a2, a3, a4, a5, a6, a7;
+    quint8 pressure, leak, a1, a2, a3, a4, a5, a6;
 //    quint8 sa1, sa2;  // The two sense awake bits per 2 minutes
     SessionID sessid;
     Session *sess;
@@ -864,9 +878,6 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 // TODO: Confirm that the bits are in the right order
                 a6 = (a3 >> 6) << 4 | ((a4 >> 6) << 2) | (a5 >> 6);
 
-                // See if extra bits from the first two fields are used at any time (see debug later)
-                a7 =   ((a1 >> 6) << 2) | (a2 >> 6);
-
                 bitmask = 1;
                 for (int k = 0; k < 6; k++) {  // There are 6 flag sets per 2 minutes
                     // TODO: Modify if all four channels are to be reported separately
@@ -881,13 +892,17 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                     ti += 20000L;  // Increment 20 seconds
                 }
 
+#ifdef DEBUGSS
                 // Debug print non-zero flags
+                // See if extra bits from the first two fields are used at any time (see debug later)
+                quint8 a7 =  ((a1 >> 6) << 2) | (a2 >> 6);
                 if (a1 != 0 || a2 != 0 || a3 != 0 || a4 != 0 || a5 != 0 || a6 != 0 || a7 != 0) {
                     qDebug() << "SS DET events" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("MM/dd/yyyy hh:mm:ss")
                              << "pressure" << pressure
                              << "leak" << leak
                              << "flags" << a1 << a2 << a3 << a4 << a5 << a6 << "unknown" << a7;
                 }
+#endif
 
                 idx += 7; //was 5;
             }
