@@ -613,9 +613,11 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
                     tv = 300;           // If unreasonable, just set to a "reasonable" number.
                 tvlast = tvlast2 = tvlast3 = tv;
             }
-            if (tv_count < 4) {
-                qDebug() << "tv" << tv << tvlast << tvlast2 << tvlast3 << "avg" << (tvlast + tvlast2 + tvlast3 + tv*2)/5;
-            }
+
+//          if (tv_count < 4) {
+//              qDebug() << "tv" << tv << tvlast << tvlast2 << tvlast3 << "avg" << (tvlast + tvlast2 + tvlast3 + tv*2)/5;
+//          }
+
             tv = (tvlast + tvlast2 + tvlast3 + tv*2)/5;
             tvlast3 = tvlast2;
             tvlast2 = tvlast;
