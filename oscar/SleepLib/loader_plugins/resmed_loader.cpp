@@ -1715,11 +1715,13 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 if ( AS_eleven )
                     R.s_SmartStart--;
+//              qDebug() << "SmartStart is set to" << R.s_SmartStart;
             }
             if ((sig = str.lookupLabel("S.SmartStop"))) {
                 R.s_SmartStop = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 if ( AS_eleven )
                     R.s_SmartStop--;
+                qDebug() << "SmartStop is set to" << R.s_SmartStop;
             }
             if ((sig = str.lookupLabel("S.HumEnable"))) {
                 R.s_HumEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -2273,6 +2275,9 @@ void StoreSettings(Session * sess, STRRecord & R)
 
     if (R.s_SmartStart >= 0) {
         sess->settings[RMS9_SmartStart] = R.s_SmartStart;
+    }
+    if (R.s_SmartStop >= 0) {
+        sess->settings[RMAS11_SmartStop] = R.s_SmartStop;
     }
     if (R.s_ABFilter >= 0) {
         sess->settings[RMS9_ABFilter] = R.s_ABFilter;
