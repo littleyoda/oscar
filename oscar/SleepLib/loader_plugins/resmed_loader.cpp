@@ -109,7 +109,7 @@ void ResmedLoader::initChannels()
     chan->addOption(6, QObject::tr("VPAPauto"));
     chan->addOption(7, QObject::tr("ASV"));
     chan->addOption(8, QObject::tr("ASVAuto"));
-    chan->addOption(9, QObject::tr("?9?"));
+    chan->addOption(9, QObject::tr("iVAPS"));
     chan->addOption(10, QObject::tr("?10?"));
     chan->addOption(11, QObject::tr("Auto for Her"));
 
@@ -161,9 +161,8 @@ void ResmedLoader::initChannels()
         "RMS9_TempEnable", QObject::tr("Temp. Enable"), QObject::tr("ClimateLine Temperature Enable"), QObject::tr("Temperature Enable"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
-//  chan->addOption(1, "1");
-//  chan->addOption(2, "2");
-//  chan->addOption(3, "3");
+    chan->addOption(1, STR_TR_On);
+    chan->addOption(2, STR_TR_Auto);
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_ABFilter= 0xe209, SETTING, MT_CPAP, SESSION,
         "RMS9_ABFilter", QObject::tr("AB Filter"), QObject::tr("Antibacterial Filter"), QObject::tr("Antibacterial Filter"), "", LOOKUP, Qt::black));
@@ -180,7 +179,7 @@ void ResmedLoader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(RMS9_ClimateControl= 0xe20B, SETTING, MT_CPAP, SESSION,
         "RMS9_ClimateControl", QObject::tr("Climate Control"), QObject::tr("Climate Control"), QObject::tr("Climate Control"), "", LOOKUP, Qt::black));
 
-    chan->addOption(0, QObject::tr("Auto"));
+    chan->addOption(0, STR_TR_Auto);
     chan->addOption(1, QObject::tr("Manual"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_Mask= 0xe20C, SETTING, MT_CPAP, SESSION,
@@ -189,13 +188,14 @@ void ResmedLoader::initChannels()
     chan->addOption(0, QObject::tr("Pillows"));
     chan->addOption(1, QObject::tr("Full Face"));
     chan->addOption(2, QObject::tr("Nasal"));
+    chan->addOption(3, QObject::tr("Unknown"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_RampEnable = 0xe20D, SETTING, MT_CPAP, SESSION,
         "RMS9_RampEnable", QObject::tr("Ramp"), QObject::tr("Ramp Enable"), QObject::tr("Ramp"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
-    chan->addOption(2, QObject::tr("Auto"));
+    chan->addOption(2, STR_TR_Auto);
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Comfort = 0xe20E, SETTING, MT_CPAP, SESSION,
         "RMAS1x_Comfort", QObject::tr("Comfort"), QObject::tr("Comfort"), QObject::tr("Comfort"), "", LOOKUP, Qt::black));
@@ -1280,7 +1280,6 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 //     //      }
 
             int recstart = rec * maskon->sampleCnt;
-            qDebug() << "MaskOn SampleCount is" << maskon->sampleCnt;
 
             bool validday = false;
             for (int s = 0; s < maskon->sampleCnt; ++s) {
@@ -1358,7 +1357,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.rms9_mode = mod;
 
                 if (mod == 11) {
-                    mode = MODE_A4Her; // For her
+                    mode = MODE_APAP; // For her is a special apap
                 } else if (mod == 9) {
                     mode = MODE_AVAPS;
                 } else if (mod == 8) {       // mod 8 == vpap adapt variable epap
@@ -1367,9 +1366,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     mode = MODE_ASV;
                 } else if (mod == 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
                     mode = MODE_BILEVEL_AUTO_FIXED_PS;
-                } else if (mod == 3) {// mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                } else if (mod >= 3) {  // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                                        // 4,5 are S/T types...
                     mode = MODE_BILEVEL_FIXED;
-                    // 4,5 are S/T types...
                 } else if (mod == 1) {
                     mode = MODE_APAP; // mod 1 == apap
                     // not sure what mode 2 is ?? split ?
@@ -1393,7 +1392,8 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     // Bilevel Starting Pressure
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
-                if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
+                if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP) ||
+                     (R.mode == MODE_BILEVEL_AUTO_FIXED_PS)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
                     // Bilevel Starting Pressure
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
@@ -1591,7 +1591,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
             EventDataType epr = -1, epr_level = -1;
             bool a1x = false;       // AS-10 or AS-11
-            if ((mode == MODE_CPAP) || (mode == MODE_APAP) || (mode == MODE_A4Her)) {
+            if ((mode == MODE_CPAP) || (mode == MODE_APAP) ) {
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
                     epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     if ( AS_eleven )
@@ -1715,11 +1715,13 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 if ( AS_eleven )
                     R.s_SmartStart--;
+//              qDebug() << "SmartStart is set to" << R.s_SmartStart;
             }
             if ((sig = str.lookupLabel("S.SmartStop"))) {
                 R.s_SmartStop = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 if ( AS_eleven )
                     R.s_SmartStop--;
+                qDebug() << "SmartStop is set to" << R.s_SmartStop;
             }
             if ((sig = str.lookupLabel("S.HumEnable"))) {
                 R.s_HumEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -2233,9 +2235,6 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
             if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
             if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
-        } else if (R.mode == MODE_A4Her) {
-            if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
-            if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
         }
     } else {
         if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
@@ -2276,6 +2275,9 @@ void StoreSettings(Session * sess, STRRecord & R)
 
     if (R.s_SmartStart >= 0) {
         sess->settings[RMS9_SmartStart] = R.s_SmartStart;
+    }
+    if (R.s_SmartStop >= 0) {
+        sess->settings[RMAS11_SmartStop] = R.s_SmartStop;
     }
     if (R.s_ABFilter >= 0) {
         sess->settings[RMS9_ABFilter] = R.s_ABFilter;

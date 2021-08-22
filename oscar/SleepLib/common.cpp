@@ -642,6 +642,7 @@ QString STR_TR_Start;
 QString STR_TR_End;
 QString STR_TR_On;
 QString STR_TR_Off;
+QString STR_TR_Auto;
 QString STR_TR_Yes;
 QString STR_TR_No;
 
@@ -850,6 +851,7 @@ void initializeStrings()
     STR_TR_End = QObject::tr("End");
     STR_TR_On = QObject::tr("On");
     STR_TR_Off = QObject::tr("Off");
+    STR_TR_Auto = QObject::tr("Auto");
     STR_TR_Yes = QObject::tr("Yes");
     STR_TR_No = QObject::tr("No");
 
