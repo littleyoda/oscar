@@ -444,6 +444,10 @@
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation>(Brak ustawień trybu i ciśnienia - pokazuję wczorajsze.)</translation>
     </message>
+    <message>
+        <source>99.5%</source>
+        <translation>99.5%</translation>
+    </message>
 </context>
 <context>
     <name>ExportCSV</name>
@@ -1267,7 +1271,7 @@
     </message>
     <message>
         <source>Import &amp;Viatom Data</source>
-        <translation>Importuj dane &amp;Viatom</translation>
+        <translation type="vanished">Importuj dane &amp;Viatom</translation>
     </message>
     <message>
         <source>Create zip of CPAP data card</source>
@@ -1410,6 +1414,18 @@
     <message>
         <source>Check for updates not implemented</source>
         <translation>Sprawdzanie uaktualnień nie wprowadzone</translation>
+    </message>
+    <message>
+        <source>Import &amp;Viatom/Wellue Data</source>
+        <translation>Import danych &amp;Viatom/Wellue</translation>
+    </message>
+    <message>
+        <source>Somnopause Data Import of %1 file(s) complete</source>
+        <translation>Ukończono import %1 plik(ów) danych Pozycji Snu</translation>
+    </message>
+    <message>
+        <source>Somnopose Import Partial Success</source>
+        <translation>Cęściowy sukces importu danych pozycji &amp;snu</translation>
     </message>
 </context>
 <context>
@@ -6194,7 +6210,7 @@ Proszę przebuduj dane CPAP</translation>
     </message>
     <message>
         <source>Humid. Lvl</source>
-        <translation>Poziom wilgotności</translation>
+        <translation type="vanished">Poziom wilgotności</translation>
     </message>
     <message>
         <source>12mm</source>
@@ -6631,6 +6647,18 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <source>Unable to check for updates. Please try again later.</source>
         <translation>Nie można sprawdzać aktualizacji. Proszę spróbować ponownie później.</translation>
+    </message>
+    <message>
+        <source>Target Time</source>
+        <translation>Czas docelowy</translation>
+    </message>
+    <message>
+        <source>PRS1 Humidifier Target Time</source>
+        <translation>Czas docelowy nawilżacza PRS1</translation>
+    </message>
+    <message>
+        <source>Hum. Tgt Time</source>
+        <translation>Czas docel. nawilż.</translation>
     </message>
 </context>
 <context>

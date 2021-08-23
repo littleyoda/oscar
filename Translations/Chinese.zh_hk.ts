@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<TS version="2.1" language="zh_HK" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>对话</translation>
+        <translation type="unfinished">对话</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;关于</translation>
+        <translation type="unfinished">關於</translation>
     </message>
     <message>
         <source>Release Notes</source>
-        <translation>版本注释</translation>
+        <translation type="unfinished">版本注释</translation>
     </message>
     <message>
         <source>Credits</source>
-        <translation>信任</translation>
+        <translation type="unfinished">信任</translation>
     </message>
     <message>
         <source>GPL License</source>
-        <translation>GPL许可证</translation>
+        <translation type="unfinished">GPL许可证</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="unfinished">关闭</translation>
     </message>
     <message>
         <source>Show data folder</source>
-        <translation>显示数据文件夹</translation>
+        <translation type="unfinished">显示数据文件夹</translation>
     </message>
     <message>
         <source>Sorry, could not locate About file.</source>
-        <translation>抱歉，无法找到相关文件.</translation>
+        <translation type="unfinished">抱歉，无法找到相关文件.</translation>
     </message>
     <message>
         <source>Sorry, could not locate Credits file.</source>
-        <translation>抱歉，无法找到信用证书.</translation>
+        <translation type="unfinished">抱歉，无法找到信用证书.</translation>
     </message>
     <message>
         <source>Important:</source>
-        <translation>重要提示:</translation>
+        <translation type="unfinished">重要提示:</translation>
     </message>
     <message>
         <source>To see if the license text is available in your language, see %1.</source>
-        <translation>若要查看许可证书是否可用，请参阅%1.</translation>
+        <translation type="unfinished">若要查看许可证书是否可用，请参阅%1.</translation>
     </message>
     <message>
         <source>Sorry, could not locate Release Notes.</source>
-        <translation>抱歉，无法找到版本注释.</translation>
+        <translation type="unfinished">抱歉，无法找到版本注释.</translation>
     </message>
     <message>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
@@ -61,37 +61,37 @@
     </message>
     <message>
         <source>OSCAR %1</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CMS50F37Loader</name>
     <message>
         <source>Could not find the oximeter file:</source>
-        <translation>抱歉，无法找到血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法找到血氧计文件:</translation>
     </message>
     <message>
         <source>Could not open the oximeter file:</source>
-        <translation>抱歉，无法打开血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法打开血氧计文件:</translation>
     </message>
 </context>
 <context>
     <name>CMS50Loader</name>
     <message>
         <source>Could not get data transmission from oximeter.</source>
-        <translation>无法传输血氧计数据.</translation>
+        <translation type="unfinished">无法传输血氧计数据.</translation>
     </message>
     <message>
         <source>Please ensure you select &apos;upload&apos; from the oximeter devices menu.</source>
-        <translation>请确认已在血氧计菜单中选择&apos;上传&apos;操作.</translation>
+        <translation type="unfinished">请确认已在血氧计菜单中选择&apos;上传&apos;操作.</translation>
     </message>
     <message>
         <source>Could not find the oximeter file:</source>
-        <translation>抱歉，无法找到血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法找到血氧计文件:</translation>
     </message>
     <message>
         <source>Could not open the oximeter file:</source>
-        <translation>抱歉，无法打开血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法打开血氧计文件:</translation>
     </message>
 </context>
 <context>
@@ -452,170 +452,170 @@
     <name>ExportCSV</name>
     <message>
         <source>AHI</source>
-        <translation>AHI</translation>
+        <translation type="unfinished">AHI</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>结束</translation>
+        <translation type="unfinished">结束</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>日期</translation>
+        <translation type="unfinished">日期</translation>
     </message>
     <message>
         <source>End:</source>
-        <translation>结束:</translation>
+        <translation type="unfinished">结束:</translation>
     </message>
     <message>
         <source>Quick Range:</source>
-        <translation>快速变化范围:</translation>
+        <translation type="unfinished">快速变化范围:</translation>
     </message>
     <message>
         <source>Daily</source>
-        <translation>日常</translation>
+        <translation type="unfinished">日常</translation>
     </message>
     <message>
         <source>Event</source>
-        <translation>事件</translation>
+        <translation type="unfinished">事件</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="unfinished">开始</translation>
     </message>
     <message>
         <source>Last Fortnight</source>
-        <translation>最后两周</translation>
+        <translation type="unfinished">最后两周</translation>
     </message>
     <message>
         <source>Most Recent Day</source>
-        <translation>最近一天</translation>
+        <translation type="unfinished">最近一天</translation>
     </message>
     <message>
         <source> Count</source>
-        <translation> 计数</translation>
+        <translation type="unfinished"> 计数</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation>文件名称:</translation>
+        <translation type="unfinished">文件名称:</translation>
     </message>
     <message>
         <source>Select file to export to</source>
-        <translation>选择文件导出到</translation>
+        <translation type="unfinished">选择文件导出到</translation>
     </message>
     <message>
         <source>Resolution:</source>
-        <translation>分辨率:</translation>
+        <translation type="unfinished">分辨率:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished">取消</translation>
     </message>
     <message>
         <source>Dates:</source>
-        <translation>日期:</translation>
+        <translation type="unfinished">日期:</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>自定义</translation>
+        <translation type="unfinished">自定义</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>导出</translation>
+        <translation type="unfinished">导出</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation>开始:</translation>
+        <translation type="unfinished">开始:</translation>
     </message>
     <message>
         <source>Data/Duration</source>
-        <translation>数据/时长</translation>
+        <translation type="unfinished">数据/时长</translation>
     </message>
     <message>
         <source>CSV Files (*.csv)</source>
-        <translation>CSV文件(*.ccsv)</translation>
+        <translation type="unfinished">CSV文件(*.ccsv)</translation>
     </message>
     <message>
         <source>Last Month</source>
-        <translation>上个月</translation>
+        <translation type="unfinished">上个月</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>过去六个月</translation>
+        <translation type="unfinished">过去六个月</translation>
     </message>
     <message>
         <source>Total Time</source>
-        <translation>总时长</translation>
+        <translation type="unfinished">总时长</translation>
     </message>
     <message>
         <source>DateTime</source>
-        <translation>日期时间</translation>
+        <translation type="unfinished">日期时间</translation>
     </message>
     <message>
         <source>Session Count</source>
-        <translation>会话计数</translation>
+        <translation type="unfinished">会话计数</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation>会话</translation>
+        <translation type="unfinished">会话</translation>
     </message>
     <message>
         <source>Everything</source>
-        <translation>所有</translation>
+        <translation type="unfinished">所有</translation>
     </message>
     <message>
         <source>Last Week</source>
-        <translation>上周</translation>
+        <translation type="unfinished">上周</translation>
     </message>
     <message>
         <source>Last Year</source>
-        <translation>去年</translation>
+        <translation type="unfinished">去年</translation>
     </message>
     <message>
         <source>Export as CSV</source>
-        <translation>导出为CSV格式数据</translation>
+        <translation type="unfinished">导出为CSV格式数据</translation>
     </message>
     <message>
         <source>Sessions_</source>
-        <translation>会话_</translation>
+        <translation type="unfinished">会话_</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>详情</translation>
+        <translation type="unfinished">详情</translation>
     </message>
     <message>
         <source>Summary_</source>
-        <translation>概要_</translation>
+        <translation type="unfinished">概要_</translation>
     </message>
     <message>
         <source>Details_</source>
-        <translation>详情_</translation>
+        <translation type="unfinished">详情_</translation>
     </message>
     <message>
         <source>Sessions</source>
-        <translation>会话</translation>
+        <translation type="unfinished">会话</translation>
     </message>
     <message>
         <source>%1% </source>
-        <translation>%1% </translation>
+        <translation type="unfinished">%1% </translation>
     </message>
     <message>
         <source>OSCAR_</source>
-        <translation>OSCAR_</translation>
+        <translation type="unfinished">OSCAR_</translation>
     </message>
 </context>
 <context>
     <name>FPIconLoader</name>
     <message>
         <source>Import Error</source>
-        <translation>导入出错</translation>
+        <translation type="unfinished">导入出错</translation>
     </message>
     <message>
         <source>This Machine Record cannot be imported in this profile.</source>
-        <translation>无法在此配置文件中导入此设备的记录。</translation>
+        <translation type="unfinished">无法在此配置文件中导入此设备的记录。</translation>
     </message>
     <message>
         <source>The Day records overlap with already existing content.</source>
-        <translation>本日的数据已覆盖已存储的内容.</translation>
+        <translation type="unfinished">本日的数据已覆盖已存储的内容.</translation>
     </message>
 </context>
 <context>
@@ -685,11 +685,11 @@
     <name>MD300W1Loader</name>
     <message>
         <source>Could not find the oximeter file:</source>
-        <translation>抱歉，无法找到血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法找到血氧计文件:</translation>
     </message>
     <message>
         <source>Could not open the oximeter file:</source>
-        <translation>抱歉，无法打开血氧计文件:</translation>
+        <translation type="unfinished">抱歉，无法打开血氧计文件:</translation>
     </message>
 </context>
 <context>
@@ -1409,35 +1409,35 @@
     <name>MinMaxWidget</name>
     <message>
         <source>Auto-Fit</source>
-        <translation>自适应</translation>
+        <translation type="unfinished">自适应</translation>
     </message>
     <message>
         <source>Defaults</source>
-        <translation>默认</translation>
+        <translation type="unfinished">默认</translation>
     </message>
     <message>
         <source>Override</source>
-        <translation>覆盖</translation>
+        <translation type="unfinished">覆盖</translation>
     </message>
     <message>
         <source>The Y-Axis scaling mode, &apos;Auto-Fit&apos; for automatic scaling, &apos;Defaults&apos; for settings according to manufacturer, and &apos;Override&apos; to choose your own.</source>
-        <translation>Y轴缩放模式:“自适应”意味着自动适应大小，“默认”意味着使用制造商的出厂值，“覆盖”意味着自定义.</translation>
+        <translation type="unfinished">Y轴缩放模式:“自适应”意味着自动适应大小，“默认”意味着使用制造商的出厂值，“覆盖”意味着自定义.</translation>
     </message>
     <message>
         <source>The Minimum Y-Axis value.. Note this can be a negative number if you wish.</source>
-        <translation>Y轴最小值，此值可为负。</translation>
+        <translation type="unfinished">Y轴最小值，此值可为负。</translation>
     </message>
     <message>
         <source>The Maximum Y-Axis value.. Must be greater than Minimum to work.</source>
-        <translation>Y轴最大值,必须大于最小值方可正常工作.</translation>
+        <translation type="unfinished">Y轴最大值,必须大于最小值方可正常工作.</translation>
     </message>
     <message>
         <source>Scaling Mode</source>
-        <translation>缩放模式</translation>
+        <translation type="unfinished">缩放模式</translation>
     </message>
     <message>
         <source>This button resets the Min and Max to match the Auto-Fit</source>
-        <translation>此按钮将按自适应模式重置最大最小值</translation>
+        <translation type="unfinished">此按钮将按自适应模式重置最大最小值</translation>
     </message>
 </context>
 <context>
@@ -1699,136 +1699,136 @@
     <name>Overview</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>End:</source>
-        <translation>结束:</translation>
+        <translation type="unfinished">结束:</translation>
     </message>
     <message>
         <source>Form</source>
-        <translation>表格</translation>
+        <translation type="unfinished">表格</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation>使用</translation>
+        <translation type="unfinished">使用</translation>
     </message>
     <message>
         <source>Respiratory
 Disturbance
 Index</source>
-        <translation>呼吸
+        <translation type="unfinished">呼吸
 紊乱
 指数</translation>
     </message>
     <message>
         <source>Show all graphs</source>
-        <translation>显示所有图表</translation>
+        <translation type="unfinished">显示所有图表</translation>
     </message>
     <message>
         <source>Reset view to selected date range</source>
-        <translation>将视图重置为所选日期范围</translation>
+        <translation type="unfinished">将视图重置为所选日期范围</translation>
     </message>
     <message>
         <source>Drop down to see list of graphs to switch on/off.</source>
-        <translation>下拉以查看要打开/关闭的图表列表。</translation>
+        <translation type="unfinished">下拉以查看要打开/关闭的图表列表。</translation>
     </message>
     <message>
         <source>Usage
 (hours)</source>
-        <translation>使用
+        <translation type="unfinished">使用
 (小时）</translation>
     </message>
     <message>
         <source>Last Three Months</source>
-        <translation>前三个月</translation>
+        <translation type="unfinished">前三个月</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>自定义</translation>
+        <translation type="unfinished">自定义</translation>
     </message>
     <message>
         <source>How you felt
 (0-10)</source>
-        <translation>感觉如何
+        <translation type="unfinished">感觉如何
 (0-10)</translation>
     </message>
     <message>
         <source>Graphs</source>
-        <translation>图表</translation>
+        <translation type="unfinished">图表</translation>
     </message>
     <message>
         <source>Range:</source>
-        <translation>范围:</translation>
+        <translation type="unfinished">范围:</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation>开始:</translation>
+        <translation type="unfinished">开始:</translation>
     </message>
     <message>
         <source>Last Month</source>
-        <translation>上个月</translation>
+        <translation type="unfinished">上个月</translation>
     </message>
     <message>
         <source>Apnea
 Hypopnea
 Index</source>
-        <translation>暂停
+        <translation type="unfinished">暂停
 低通气
 指数</translation>
     </message>
     <message>
         <source>Last 6 Months</source>
-        <translation>前六个月</translation>
+        <translation type="unfinished">前六个月</translation>
     </message>
     <message>
         <source>Body
 Mass
 Index</source>
-        <translation>身体
+        <translation type="unfinished">身体
 重量
 指数</translation>
     </message>
     <message>
         <source>Session Times</source>
-        <translation>会话时间</translation>
+        <translation type="unfinished">会话时间</translation>
     </message>
     <message>
         <source>Last Two Weeks</source>
-        <translation>前两周</translation>
+        <translation type="unfinished">前两周</translation>
     </message>
     <message>
         <source>Everything</source>
-        <translation>所有</translation>
+        <translation type="unfinished">所有</translation>
     </message>
     <message>
         <source>Last Week</source>
-        <translation>上周</translation>
+        <translation type="unfinished">上周</translation>
     </message>
     <message>
         <source>Last Year</source>
-        <translation>去年</translation>
+        <translation type="unfinished">去年</translation>
     </message>
     <message>
         <source>Toggle Graph Visibility</source>
-        <translation>切换视图</translation>
+        <translation type="unfinished">切换视图</translation>
     </message>
     <message>
         <source>Hide all graphs</source>
-        <translation>隐藏所有图表</translation>
+        <translation type="unfinished">隐藏所有图表</translation>
     </message>
     <message>
         <source>Last Two Months</source>
-        <translation>前两个月</translation>
+        <translation type="unfinished">前两个月</translation>
     </message>
     <message>
         <source>Total Time in Apnea</source>
-        <translation>呼吸暂停总时间</translation>
+        <translation type="unfinished">呼吸暂停总时间</translation>
     </message>
     <message>
         <source>Total Time in Apnea
 (Minutes)</source>
-        <translation>呼吸暂停总时间
+        <translation type="unfinished">呼吸暂停总时间
 （分钟）</translation>
     </message>
 </context>
@@ -2255,51 +2255,51 @@ Index</source>
     <name>Oximetry</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>日期</translation>
+        <translation type="unfinished">日期</translation>
     </message>
     <message>
         <source>Form</source>
-        <translation>表格</translation>
+        <translation type="unfinished">表格</translation>
     </message>
     <message>
         <source>SpO2</source>
-        <translation>血氧饱和度</translation>
+        <translation type="unfinished">血氧饱和度</translation>
     </message>
     <message>
         <source>Pulse</source>
-        <translation>脉搏</translation>
+        <translation type="unfinished">脉搏</translation>
     </message>
     <message>
         <source>&amp;Open .spo/R File</source>
-        <translation>&amp;打开 SPO/R 文件</translation>
+        <translation type="unfinished">&amp;打开 SPO/R 文件</translation>
     </message>
     <message>
         <source>R&amp;eset</source>
-        <translation>重&amp;置</translation>
+        <translation type="unfinished">重&amp;置</translation>
     </message>
     <message>
         <source>Serial &amp;Import</source>
-        <translation>序列号&amp;导入</translation>
+        <translation type="unfinished">序列号&amp;导入</translation>
     </message>
     <message>
         <source>Serial Port</source>
-        <translation>产口</translation>
+        <translation type="unfinished">产口</translation>
     </message>
     <message>
         <source>d/MM/yy h:mm:ss AP</source>
-        <translation>日/月/年 小时:分钟:秒</translation>
+        <translation type="unfinished">日/月/年 小时:分钟:秒</translation>
     </message>
     <message>
         <source>&amp;Start Live</source>
-        <translation>&amp;开始</translation>
+        <translation type="unfinished">&amp;开始</translation>
     </message>
     <message>
         <source>&amp;Rescan Ports</source>
-        <translation>&amp;扫描端口</translation>
+        <translation type="unfinished">&amp;扫描端口</translation>
     </message>
 </context>
 <context>
@@ -3611,82 +3611,82 @@ p, li { white-space: pre-wrap; }
     <name>ProgressDialog</name>
     <message>
         <source>Abort</source>
-        <translation>退出</translation>
+        <translation type="unfinished">退出</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>&quot;</source>
-        <translation>&quot;</translation>
+        <translation type="unfinished">&quot;</translation>
     </message>
     <message>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
         <source>A</source>
-        <translation>未分类</translation>
+        <translation type="unfinished">未分类</translation>
     </message>
     <message>
         <source>H</source>
-        <translation>低通气</translation>
+        <translation type="unfinished">低通气</translation>
     </message>
     <message>
         <source>P</source>
-        <translation>压力</translation>
+        <translation type="unfinished">压力</translation>
     </message>
     <message>
         <source>AI</source>
-        <translation>呼吸暂停指数</translation>
+        <translation type="unfinished">呼吸暂停指数</translation>
     </message>
     <message>
         <source>CA</source>
-        <translation>中枢性</translation>
+        <translation type="unfinished">中枢性</translation>
     </message>
     <message>
         <source>EP</source>
-        <translation>呼气压力</translation>
+        <translation type="unfinished">呼气压力</translation>
     </message>
     <message>
         <source>FL</source>
-        <translation>气流受限</translation>
+        <translation type="unfinished">气流受限</translation>
     </message>
     <message>
         <source>HI</source>
-        <translation>低通气指数</translation>
+        <translation type="unfinished">低通气指数</translation>
     </message>
     <message>
         <source>IE</source>
-        <translation>呼吸</translation>
+        <translation type="unfinished">呼吸</translation>
     </message>
     <message>
         <source>LE</source>
-        <translation>漏气率</translation>
+        <translation type="unfinished">漏气率</translation>
     </message>
     <message>
         <source>LL</source>
-        <translation>大量漏气</translation>
+        <translation type="unfinished">大量漏气</translation>
     </message>
     <message>
         <source>Kg</source>
-        <translation>公斤</translation>
+        <translation type="unfinished">公斤</translation>
     </message>
     <message>
         <source>O2</source>
-        <translation>氧气</translation>
+        <translation type="unfinished">氧气</translation>
     </message>
     <message>
         <source>OA</source>
-        <translation>阻塞性</translation>
+        <translation type="unfinished">阻塞性</translation>
     </message>
     <message>
         <source>NR</source>
-        <translation>未响应事件</translation>
+        <translation type="unfinished">未响应事件</translation>
     </message>
     <message>
         <source>PB</source>
-        <translation>周期性呼吸</translation>
+        <translation type="unfinished">周期性呼吸</translation>
     </message>
     <message>
         <source>PC</source>
@@ -4560,7 +4560,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>AI=%1 HI=%2 CAI=%3 </source>
-        <translation>暂停指数=%1 低通气指数=%2 中枢性暂停指数=%3</translation>
+        <translation type="unfinished">暂停指数=%1 低通气指数=%2 中枢性暂停指数=%3</translation>
     </message>
     <message>
         <source>Time taken to breathe in</source>
@@ -4780,7 +4780,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Vibratory Snore (VS2) </source>
-        <translation>呼吸
+        <translation type="unfinished">呼吸
 频率
 (呼吸次数/分钟)</translation>
     </message>
@@ -5502,389 +5502,389 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Smart Start</source>
-        <translation>自启动</translation>
+        <translation type="unfinished">自启动</translation>
     </message>
     <message>
         <source>Humid. Status</source>
-        <translation>湿化器状态</translation>
+        <translation type="unfinished">湿化器状态</translation>
     </message>
     <message>
         <source>Humidifier Enabled Status</source>
-        <translation>湿化器已启用</translation>
+        <translation type="unfinished">湿化器已启用</translation>
     </message>
     <message>
         <source>Humid. Level</source>
-        <translation>湿度</translation>
+        <translation type="unfinished">湿度</translation>
     </message>
     <message>
         <source>Humidity Level</source>
-        <translation>湿度</translation>
+        <translation type="unfinished">湿度</translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation>温度</translation>
+        <translation type="unfinished">温度</translation>
     </message>
     <message>
         <source>ClimateLine Temperature</source>
-        <translation>加热管路温度</translation>
+        <translation type="unfinished">加热管路温度</translation>
     </message>
     <message>
         <source>Temp. Enable</source>
-        <translation>温度启用</translation>
+        <translation type="unfinished">温度启用</translation>
     </message>
     <message>
         <source>ClimateLine Temperature Enable</source>
-        <translation>加热管路温度启用</translation>
+        <translation type="unfinished">加热管路温度启用</translation>
     </message>
     <message>
         <source>Temperature Enable</source>
-        <translation>温度测量启用</translation>
+        <translation type="unfinished">温度测量启用</translation>
     </message>
     <message>
         <source>AB Filter</source>
-        <translation>抗菌过滤棉</translation>
+        <translation type="unfinished">抗菌过滤棉</translation>
     </message>
     <message>
         <source>Antibacterial Filter</source>
-        <translation>抗菌过滤棉</translation>
+        <translation type="unfinished">抗菌过滤棉</translation>
     </message>
     <message>
         <source>Pt. Access</source>
-        <translation>患者通道</translation>
+        <translation type="unfinished">患者通道</translation>
     </message>
     <message>
         <source>Climate Control</source>
-        <translation>恒温控制</translation>
+        <translation type="unfinished">恒温控制</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>手动</translation>
+        <translation type="unfinished">手动</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation>自动</translation>
+        <translation type="unfinished">自动</translation>
     </message>
     <message>
         <source>Mask</source>
-        <translation>面罩</translation>
+        <translation type="unfinished">面罩</translation>
     </message>
     <message>
         <source>ResMed Mask Setting</source>
-        <translation>ResMed面罩设置</translation>
+        <translation type="unfinished">ResMed面罩设置</translation>
     </message>
     <message>
         <source>Pillows</source>
-        <translation>鼻枕</translation>
+        <translation type="unfinished">鼻枕</translation>
     </message>
     <message>
         <source>Full Face</source>
-        <translation>全脸</translation>
+        <translation type="unfinished">全脸</translation>
     </message>
     <message>
         <source>Nasal</source>
-        <translation>鼻罩</translation>
+        <translation type="unfinished">鼻罩</translation>
     </message>
     <message>
         <source>Ramp Enable</source>
-        <translation>斜坡升压启动</translation>
+        <translation type="unfinished">斜坡升压启动</translation>
     </message>
     <message>
         <source>h</source>
-        <translation>小时</translation>
+        <translation type="unfinished">小时</translation>
     </message>
     <message>
         <source>m</source>
-        <translation>分钟</translation>
+        <translation type="unfinished">分钟</translation>
     </message>
     <message>
         <source>s</source>
-        <translation>秒s</translation>
+        <translation type="unfinished">秒s</translation>
     </message>
     <message>
         <source>ms</source>
-        <translation>毫秒</translation>
+        <translation type="unfinished">毫秒</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>身高</translation>
+        <translation type="unfinished">身高</translation>
     </message>
     <message>
         <source>Physical Height</source>
-        <translation>身高</translation>
+        <translation type="unfinished">身高</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>备注</translation>
+        <translation type="unfinished">备注</translation>
     </message>
     <message>
         <source>Bookmark Notes</source>
-        <translation>标记备注</translation>
+        <translation type="unfinished">标记备注</translation>
     </message>
     <message>
         <source>Body Mass Index</source>
-        <translation>体重指数</translation>
+        <translation type="unfinished">体重指数</translation>
     </message>
     <message>
         <source>How you feel (0 = like crap, 10 = unstoppable)</source>
-        <translation>体感(0-无效，10=喜欢到停不下来)</translation>
+        <translation type="unfinished">体感(0-无效，10=喜欢到停不下来)</translation>
     </message>
     <message>
         <source>Bookmark Start</source>
-        <translation>标记开始</translation>
+        <translation type="unfinished">标记开始</translation>
     </message>
     <message>
         <source>Bookmark End</source>
-        <translation>标记结束</translation>
+        <translation type="unfinished">标记结束</translation>
     </message>
     <message>
         <source>Last Updated</source>
-        <translation>最后更新</translation>
+        <translation type="unfinished">最后更新</translation>
     </message>
     <message>
         <source>Journal Notes</source>
-        <translation>日志备注</translation>
+        <translation type="unfinished">日志备注</translation>
     </message>
     <message>
         <source>Journal</source>
-        <translation>日志日记</translation>
+        <translation type="unfinished">日志日记</translation>
     </message>
     <message>
         <source>1=Awake 2=REM 3=Light Sleep 4=Deep Sleep</source>
-        <translation>1=醒 2=动眼睡眠 3=浅睡眠 4=深睡眠</translation>
+        <translation type="unfinished">1=醒 2=动眼睡眠 3=浅睡眠 4=深睡眠</translation>
     </message>
     <message>
         <source>Brain Wave</source>
-        <translation>脑波</translation>
+        <translation type="unfinished">脑波</translation>
     </message>
     <message>
         <source>BrainWave</source>
-        <translation>脑波</translation>
+        <translation type="unfinished">脑波</translation>
     </message>
     <message>
         <source>Awakenings</source>
-        <translation>觉醒</translation>
+        <translation type="unfinished">觉醒</translation>
     </message>
     <message>
         <source>Number of Awakenings</source>
-        <translation>觉醒次数</translation>
+        <translation type="unfinished">觉醒次数</translation>
     </message>
     <message>
         <source>Morning Feel</source>
-        <translation>晨起感觉</translation>
+        <translation type="unfinished">晨起感觉</translation>
     </message>
     <message>
         <source>How you felt in the morning</source>
-        <translation>早上醒来的感觉</translation>
+        <translation type="unfinished">早上醒来的感觉</translation>
     </message>
     <message>
         <source>Time Awake</source>
-        <translation>清醒时间</translation>
+        <translation type="unfinished">清醒时间</translation>
     </message>
     <message>
         <source>Time spent awake</source>
-        <translation>清醒时长</translation>
+        <translation type="unfinished">清醒时长</translation>
     </message>
     <message>
         <source>Time In REM Sleep</source>
-        <translation>动眼睡眠时长</translation>
+        <translation type="unfinished">动眼睡眠时长</translation>
     </message>
     <message>
         <source>Time spent in REM Sleep</source>
-        <translation>动眼睡眠时长</translation>
+        <translation type="unfinished">动眼睡眠时长</translation>
     </message>
     <message>
         <source>Time in REM Sleep</source>
-        <translation>动眼睡眠时长</translation>
+        <translation type="unfinished">动眼睡眠时长</translation>
     </message>
     <message>
         <source>Time In Light Sleep</source>
-        <translation>浅睡眠时长</translation>
+        <translation type="unfinished">浅睡眠时长</translation>
     </message>
     <message>
         <source>Time spent in light sleep</source>
-        <translation>浅睡眠时长</translation>
+        <translation type="unfinished">浅睡眠时长</translation>
     </message>
     <message>
         <source>Time in Light Sleep</source>
-        <translation>浅睡眠时长</translation>
+        <translation type="unfinished">浅睡眠时长</translation>
     </message>
     <message>
         <source>Time In Deep Sleep</source>
-        <translation>深睡眠时长</translation>
+        <translation type="unfinished">深睡眠时长</translation>
     </message>
     <message>
         <source>Time spent in deep sleep</source>
-        <translation>深睡眠时长</translation>
+        <translation type="unfinished">深睡眠时长</translation>
     </message>
     <message>
         <source>Time in Deep Sleep</source>
-        <translation>深睡眠时长</translation>
+        <translation type="unfinished">深睡眠时长</translation>
     </message>
     <message>
         <source>Time to Sleep</source>
-        <translation>睡眠时长</translation>
+        <translation type="unfinished">睡眠时长</translation>
     </message>
     <message>
         <source>Time taken to get to sleep</source>
-        <translation>入睡时长</translation>
+        <translation type="unfinished">入睡时长</translation>
     </message>
     <message>
         <source>Zeo ZQ</source>
-        <translation>ZEO 睡商</translation>
+        <translation type="unfinished">ZEO 睡商</translation>
     </message>
     <message>
         <source>Zeo sleep quality measurement</source>
-        <translation>ZEO睡眠质量监测</translation>
+        <translation type="unfinished">ZEO睡眠质量监测</translation>
     </message>
     <message>
         <source>ZEO ZQ</source>
-        <translation>ZEP睡商</translation>
+        <translation type="unfinished">ZEP睡商</translation>
     </message>
     <message>
         <source>Pop out Graph</source>
-        <translation>弹出图表</translation>
+        <translation type="unfinished">弹出图表</translation>
     </message>
     <message>
         <source>Popout %1 Graph</source>
-        <translation>弹出图表%1</translation>
+        <translation type="unfinished">弹出图表%1</translation>
     </message>
     <message>
         <source> m</source>
-        <translation> m</translation>
+        <translation type="unfinished"> m</translation>
     </message>
     <message>
         <source> cm</source>
-        <translation> cm</translation>
+        <translation type="unfinished"> cm</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation>配置文件</translation>
+        <translation type="unfinished">配置文件</translation>
     </message>
     <message>
         <source>Getting Ready...</source>
-        <translation>准备就绪...</translation>
+        <translation type="unfinished">准备就绪...</translation>
     </message>
     <message>
         <source>Scanning Files...</source>
-        <translation>扫描文件...</translation>
+        <translation type="unfinished">扫描文件...</translation>
     </message>
     <message>
         <source>Importing Sessions...</source>
-        <translation>导入会话...</translation>
+        <translation type="unfinished">导入会话...</translation>
     </message>
     <message>
         <source>Finishing up...</source>
-        <translation>整理中...</translation>
+        <translation type="unfinished">整理中...</translation>
     </message>
     <message>
         <source>Breathing Not Detected</source>
-        <translation>呼吸未被检测到</translation>
+        <translation type="unfinished">呼吸未被检测到</translation>
     </message>
     <message>
         <source>A period during a session where the machine could not detect flow.</source>
-        <translation>机器无法检测流量的会话期间。</translation>
+        <translation type="unfinished">机器无法检测流量的会话期间。</translation>
     </message>
     <message>
         <source>BND</source>
-        <translation>BND</translation>
+        <translation type="unfinished">BND</translation>
     </message>
     <message>
         <source>Locating STR.edf File(s)...</source>
-        <translation>正在查找str.edf文件...</translation>
+        <translation type="unfinished">正在查找str.edf文件...</translation>
     </message>
     <message>
         <source>Cataloguing EDF Files...</source>
-        <translation>正在给EDF文件编辑目录...</translation>
+        <translation type="unfinished">正在给EDF文件编辑目录...</translation>
     </message>
     <message>
         <source>Queueing Import Tasks...</source>
-        <translation>正在排队导入任务...</translation>
+        <translation type="unfinished">正在排队导入任务...</translation>
     </message>
     <message>
         <source>Finishing Up...</source>
-        <translation>整理中...</translation>
+        <translation type="unfinished">整理中...</translation>
     </message>
     <message>
         <source>Loading %1 data for %2...</source>
-        <translation>正在为%2加载%1数据...</translation>
+        <translation type="unfinished">正在为%2加载%1数据...</translation>
     </message>
     <message>
         <source>Scanning Files</source>
-        <translation>正在扫描文件</translation>
+        <translation type="unfinished">正在扫描文件</translation>
     </message>
     <message>
         <source>Migrating Summary File Location</source>
-        <translation>正在迁移摘要文件位置</translation>
+        <translation type="unfinished">正在迁移摘要文件位置</translation>
     </message>
     <message>
         <source>Loading Summaries.xml.gz</source>
-        <translation>加载摘要.xml.gz文件</translation>
+        <translation type="unfinished">加载摘要.xml.gz文件</translation>
     </message>
     <message>
         <source>Loading Summary Data</source>
-        <translation>正在加载摘要数据</translation>
+        <translation type="unfinished">正在加载摘要数据</translation>
     </message>
     <message>
         <source>Please Wait...</source>
-        <translation>请稍候...</translation>
+        <translation type="unfinished">请稍候...</translation>
     </message>
     <message>
         <source>Loading profile &quot;%1&quot;...</source>
-        <translation>正在加载配置文件&quot;%1&quot;...</translation>
+        <translation type="unfinished">正在加载配置文件&quot;%1&quot;...</translation>
     </message>
     <message>
         <source>Most recent Oximetry data: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </source>
-        <translation>最新血氧测定数据：&lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </translation>
+        <translation type="unfinished">最新血氧测定数据：&lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </translation>
     </message>
     <message>
         <source>No oximetry data has been imported yet.</source>
-        <translation>尚未导入血氧测定数据。</translation>
+        <translation type="unfinished">尚未导入血氧测定数据。</translation>
     </message>
     <message>
         <source>Software Engine</source>
-        <translation>软件引擎</translation>
+        <translation type="unfinished">软件引擎</translation>
     </message>
     <message>
         <source>ANGLE / OpenGLES</source>
-        <translation>ANGLE / OpenGLES</translation>
+        <translation type="unfinished">ANGLE / OpenGLES</translation>
     </message>
     <message>
         <source>Desktop OpenGL</source>
-        <translation>桌面OpenGL</translation>
+        <translation type="unfinished">桌面OpenGL</translation>
     </message>
     <message>
         <source>Peak %1</source>
-        <translation>峰值%1</translation>
+        <translation type="unfinished">峰值%1</translation>
     </message>
     <message>
         <source>I&apos;m very sorry your machine doesn&apos;t record useful data to graph in Daily View :(</source>
-        <translation>很抱歉，您的计算机没有在每日视图中记录可用的数据 :(</translation>
+        <translation type="unfinished">很抱歉，您的计算机没有在每日视图中记录可用的数据 :(</translation>
     </message>
     <message>
         <source>There is no data to graph</source>
-        <translation>没有数据可供图表</translation>
+        <translation type="unfinished">没有数据可供图表</translation>
     </message>
     <message>
         <source>OSCAR</source>
-        <translation>OSCAR</translation>
+        <translation type="unfinished">OSCAR</translation>
     </message>
     <message>
         <source>OSCAR found an old Journal folder, but it looks like it&apos;s been renamed:</source>
-        <translation>OSCAR找到先前的日志文件夹，已被重命名:</translation>
+        <translation type="unfinished">OSCAR找到先前的日志文件夹，已被重命名:</translation>
     </message>
     <message>
         <source>OSCAR will not touch this folder, and will create a new one instead.</source>
-        <translation>OSCAR不会更改此文件夹，将会创建一个新文件夹。</translation>
+        <translation type="unfinished">OSCAR不会更改此文件夹，将会创建一个新文件夹。</translation>
     </message>
     <message>
         <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
-        <translation>请谨慎在OSCAR配置文件夹中操作:-P</translation>
+        <translation type="unfinished">请谨慎在OSCAR配置文件夹中操作:-P</translation>
     </message>
     <message>
         <source>For some reason, OSCAR couldn&apos;t find a journal object record in your profile, but did find multiple Journal data folders.
 
 </source>
-        <translation>出于某种原因，Oscar在您的配置文件中找不到日志对象记录，但找到了多个日志数据文件夹。
+        <translation type="unfinished">出于某种原因，Oscar在您的配置文件中找不到日志对象记录，但找到了多个日志数据文件夹。
 
 </translation>
     </message>
@@ -5892,77 +5892,77 @@ TTIA: %1</source>
         <source>OSCAR picked only the first one of these, and will use it in future:
 
 </source>
-        <translation>OSCAR将会使用其中的第一个：
+        <translation type="unfinished">OSCAR将会使用其中的第一个：
 
 </translation>
     </message>
     <message>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
-        <translation>OSCAR只能跟踪该机器的使用时间和基本的设置。</translation>
+        <translation type="unfinished">OSCAR只能跟踪该机器的使用时间和基本的设置。</translation>
     </message>
     <message>
         <source>&lt;b&gt;OSCAR maintains a backup of your devices data card that it uses for this purpose.&lt;/b&gt;</source>
-        <translation>&lt;b&gt;OSCAR保留了设备数据卡的备份&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;OSCAR保留了设备数据卡的备份&lt;/b&gt;</translation>
     </message>
     <message>
         <source>OSCAR does not yet have any automatic card backups stored for this device.</source>
-        <translation>OSCAR尚未为此设备存储任何备份。</translation>
+        <translation type="unfinished">OSCAR尚未为此设备存储任何备份。</translation>
     </message>
     <message>
         <source>If you are concerned, click No to exit, and backup your profile manually, before starting OSCAR again.</source>
-        <translation>请单击“否”退出，并在再次启动OSCAR之前手动备份您的配置文件。</translation>
+        <translation type="unfinished">请单击“否”退出，并在再次启动OSCAR之前手动备份您的配置文件。</translation>
     </message>
     <message>
         <source>Are you ready to upgrade, so you can run the new version of OSCAR?</source>
-        <translation>准备升级，是否运行新版本的OSCAR？</translation>
+        <translation type="unfinished">准备升级，是否运行新版本的OSCAR？</translation>
     </message>
     <message>
         <source>Sorry, the purge operation failed, which means this version of OSCAR can&apos;t start.</source>
-        <translation>抱歉，清除操作失败，此版本的OSCAR无法启动。</translation>
+        <translation type="unfinished">抱歉，清除操作失败，此版本的OSCAR无法启动。</translation>
     </message>
     <message>
         <source>Would you like to switch on automatic backups, so next time a new version of OSCAR needs to do so, it can rebuild from these?</source>
-        <translation>是否要打开自动备份，新版的OSCAR可以从这些版本重建？</translation>
+        <translation type="unfinished">是否要打开自动备份，新版的OSCAR可以从这些版本重建？</translation>
     </message>
     <message>
         <source>OSCAR will now start the import wizard so you can reinstall your %1 data.</source>
-        <translation>OSCAR现在将启动导入向导，以便您可以重新安装%1数据。</translation>
+        <translation type="unfinished">OSCAR现在将启动导入向导，以便您可以重新安装%1数据。</translation>
     </message>
     <message>
         <source>OSCAR will now exit, then (attempt to) launch your computers file manager so you can manually back your profile up:</source>
-        <translation>Oscar现在将退出，然后（尝试）启动计算机文件管理器，以便手动备份配置文件：</translation>
+        <translation type="unfinished">Oscar现在将退出，然后（尝试）启动计算机文件管理器，以便手动备份配置文件：</translation>
     </message>
     <message>
         <source>Use your file manager to make a copy of your profile directory, then afterwards, restart OSCAR and complete the upgrade process.</source>
-        <translation>使用文件管理器复制配置文件目录，然后重新启动oscar并完成升级过程。</translation>
+        <translation type="unfinished">使用文件管理器复制配置文件目录，然后重新启动oscar并完成升级过程。</translation>
     </message>
     <message>
         <source>A user definable event detected by OSCAR&apos;s flow waveform processor.</source>
-        <translation>由OSCAR的流量波形处理器检测到的用户自定义事件。</translation>
+        <translation type="unfinished">由OSCAR的流量波形处理器检测到的用户自定义事件。</translation>
     </message>
     <message>
         <source>As you did not select a data folder, OSCAR will exit.</source>
-        <translation>由于没有选择数据文件夹，OSCAR将退出。</translation>
+        <translation type="unfinished">由于没有选择数据文件夹，OSCAR将退出。</translation>
     </message>
     <message>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
-        <translation>您选择的文件夹不是空的，也不包含有效的OSCAR数据。</translation>
+        <translation type="unfinished">您选择的文件夹不是空的，也不包含有效的OSCAR数据。</translation>
     </message>
     <message>
         <source>OSCAR Reminder</source>
-        <translation>OSCAR提醒</translation>
+        <translation type="unfinished">OSCAR提醒</translation>
     </message>
     <message>
         <source>You can only work with one instance of an individual OSCAR profile at a time.</source>
-        <translation>一次只能处理单个OSCAR配置文件的一个实例。</translation>
+        <translation type="unfinished">一次只能处理单个OSCAR配置文件的一个实例。</translation>
     </message>
     <message>
         <source>If you are using cloud storage, make sure OSCAR is closed and syncing has completed first on the other computer before proceeding.</source>
-        <translation>如果正在使用云存储，请确保OSCAR已关闭，并且在继续操作之前已在另一台计算机上完成同步。</translation>
+        <translation type="unfinished">如果正在使用云存储，请确保OSCAR已关闭，并且在继续操作之前已在另一台计算机上完成同步。</translation>
     </message>
     <message>
         <source>You must run the OSCAR Migration Tool</source>
-        <translation>必须运行OSCAR迁移工具</translation>
+        <translation type="unfinished">必须运行OSCAR迁移工具</translation>
     </message>
     <message>
         <source>Using </source>
@@ -6071,11 +6071,11 @@ TTIA: %1</source>
     </message>
     <message>
         <source>d MMM yyyy [ %1 - %2 ]</source>
-        <translation>d MMM yyyy [ %1 - %2 ]</translation>
+        <translation type="unfinished">d MMM yyyy [ %1 - %2 ]</translation>
     </message>
     <message>
         <source>EPAP %1 PS %2-%3 (%4)</source>
-        <translation>EPAP %1 PS %2-%3 (%4)</translation>
+        <translation type="unfinished">EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
         <source>Pressure Set</source>
@@ -6135,7 +6135,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>P-Flex</source>
-        <translation>P-Flex</translation>
+        <translation type="unfinished">P-Flex</translation>
     </message>
     <message>
         <source>Humidification Mode</source>
@@ -6179,7 +6179,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>12mm</source>
-        <translation>12mm</translation>
+        <translation type="unfinished">12mm</translation>
     </message>
     <message>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
@@ -6227,7 +6227,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>%1 %2 %3</source>
-        <translation>%1 %2 %3</translation>
+        <translation type="unfinished">%1 %2 %3</translation>
     </message>
     <message>
         <source>Parsing STR.edf records...</source>
@@ -6628,22 +6628,22 @@ popout window, delete it, then pop out this graph again.</source>
     <name>Report</name>
     <message>
         <source>Form</source>
-        <translation>表格</translation>
+        <translation type="unfinished">表格</translation>
     </message>
     <message>
         <source>about:blank</source>
-        <translation>关于:空白</translation>
+        <translation type="unfinished">关于:空白</translation>
     </message>
 </context>
 <context>
     <name>SessionBar</name>
     <message>
         <source>No Sessions Present</source>
-        <translation>没有会话</translation>
+        <translation type="unfinished">没有会话</translation>
     </message>
     <message>
         <source>%1h %2m</source>
-        <translation>%1% %2m</translation>
+        <translation type="unfinished">%1% %2m</translation>
     </message>
 </context>
 <context>
@@ -6945,55 +6945,55 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>What would you like to do?</source>
-        <translation>确定?</translation>
+        <translation>你希望做什麼?</translation>
     </message>
     <message>
         <source>CPAP Importer</source>
-        <translation>CPAP导入器</translation>
+        <translation>轉入CPAP數據</translation>
     </message>
     <message>
         <source>Oximetry Wizard</source>
-        <translation>血氧测量向导</translation>
+        <translation>血氧測量</translation>
     </message>
     <message>
         <source>Daily View</source>
-        <translation>每日视图</translation>
+        <translation>每日使用情況</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation>总览</translation>
+        <translation>總覽</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>统计</translation>
+        <translation>統計</translation>
     </message>
     <message>
         <source>First import can take a few minutes.</source>
-        <translation>第一次导入将会花费数分钟.</translation>
+        <translation>第一次轉入數據將要數分鐘.</translation>
     </message>
     <message>
         <source>The last time you used your %1...</source>
-        <translation>上一次您使用您的%1...</translation>
+        <translation>上一次使用的%1...</translation>
     </message>
     <message>
         <source>last night</source>
-        <translation>上一晚</translation>
+        <translation>昨晚</translation>
     </message>
     <message>
         <source>%2 days ago</source>
-        <translation>%2 天以前</translation>
+        <translation>%2天以前</translation>
     </message>
     <message>
         <source>was %1 (on %2)</source>
-        <translation>是 %1 (在 %2)</translation>
+        <translation>是 %1 ( %2)</translation>
     </message>
     <message>
         <source>%1 hours, %2 minutes and %3 seconds</source>
-        <translation>%1 小时, %2分钟 %3 秒</translation>
+        <translation>%1 小時, %2分鐘 %3 秒</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
-        <translation>计算机已启用 %1。</translation>
+        <translation>呼吸機已啟用 %1。</translation>
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
@@ -7001,75 +7001,79 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>under</source>
-        <translation>低于</translation>
+        <translation type="unfinished">中文
+
+Dī yú
+
+低於</translation>
     </message>
     <message>
         <source>over</source>
-        <translation>高于</translation>
+        <translation>高於</translation>
     </message>
     <message>
         <source>reasonably close to</source>
-        <translation>合理地接近于</translation>
+        <translation>合理地接近於</translation>
     </message>
     <message>
         <source>equal to</source>
-        <translation>等于</translation>
+        <translation>等於</translation>
     </message>
     <message>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>AHI相等於%1, 即%2你的%3天平均值%4.</translation>
     </message>
     <message>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>压力低于 %1-%2 %3 ，持续时间%4% .</translation>
+        <translation>呼吸機使用低於 %1-%2 %3 ，持續時間%4% .</translation>
     </message>
     <message>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation>平均泄漏为%1 %2，即%3您的%5天的平均泄漏为%4。</translation>
+        <translation>平均洩漏為%1 %2，即%3您的%5天的平均洩漏為%4。</translation>
     </message>
     <message>
         <source>No CPAP data has been imported yet.</source>
-        <translation>未导入呼吸机数据.</translation>
+        <translation>未導入呼吸機數據.</translation>
     </message>
     <message>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
-        <translation>建议首选项为检查文件</translation>
+        <translation>建議先點擊檢查文件--&gt;選項</translation>
     </message>
     <message>
         <source>as there are some options that affect import.</source>
-        <translation>因为有些选项会影响导入.</translation>
+        <translation>因為有些選項會影響數據輸入.</translation>
     </message>
     <message>
         <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation>请注意，在检测到ResMed设备时会强制执行某些首选项</translation>
+        <translation>請注意，在檢測到ResMed設備時會強制執行某些首選項</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>欢迎使用开源CPAP分析报告</translation>
+        <translation>歡迎使用開源CPAP報告分析工具</translation>
     </message>
     <message>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation type="unfinished"></translation>
+        <translation>你的 呼吸機 使用 固定 %1 %2 氣 壓</translation>
     </message>
     <message>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation>压力低于 %1 %2 ，持续时间%3%.</translation>
+        <translation>壓力低於 %1 %2 ，持續時間%3%.</translation>
     </message>
     <message>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation type="unfinished"></translation>
+        <translation>你的 呼吸機 使用 固定 %1 %2 %3 氣 壓.</translation>
     </message>
     <message>
         <source>Your EPAP pressure fixed at %1 %2.</source>
-        <translation>呼气压力固定于 %1 %2.</translation>
+        <translation>呼氣壓力固定於 %1 %2.</translation>
     </message>
     <message>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>吸气压力低于 %1 %2 ，持续时间 %3%.</translation>
+        <translation>吸氣壓力低於 %1 %2 ，持續時間 %3%.</translation>
     </message>
     <message>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>呼气压力低于 %1 %2 ，持续时间 %3%.</translation>
+        <translation>呼氣壓力低於 %1 %2 ，持續時間 %3%.</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7084,7 +7088,7 @@ popout window, delete it, then pop out this graph again.</source>
     <name>gGraph</name>
     <message>
         <source>%1 days</source>
-        <translation>%1天</translation>
+        <translation type="unfinished">%1天</translation>
     </message>
 </context>
 <context>
