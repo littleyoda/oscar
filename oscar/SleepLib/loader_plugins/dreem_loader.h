@@ -25,8 +25,9 @@ class DreemLoader : public MachineLoader
 
     virtual bool Detect(const QString & path);
 
-    virtual int Open(const QString & path);
+    virtual int Open(const QString & path) { Q_UNUSED(path); return 0; } // Only for CPAP
     virtual int OpenFile(const QString & path);
+    virtual QStringList getNameFilter() { return QStringList("Dreem CSV File (*.csv)"); }
     static void Register();
 
     virtual int Version() { return dreem_data_version; }

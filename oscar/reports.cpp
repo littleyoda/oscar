@@ -208,8 +208,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
                 cpapinfo += /*QObject::tr("Pressure Relief")+": "+ */day->getPressureRelief() + "\n";
             }
 
-            float ahi = (day->count(CPAP_Obstructive) + day->count(CPAP_Hypopnea) +
-                         day->count(CPAP_ClearAirway) + day->count(CPAP_Apnea));
+            float ahi = day->count(AllAhiChannels);
 
             if (p_profile->general->calculateRDI()) { ahi += day->count(CPAP_RERA); }
 
@@ -219,6 +218,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
             //float pb = (100.0 / hours) * (day->sum(CPAP_PB) / 3600.0);
             float uai = day->count(CPAP_Apnea) / hours;
             float oai = day->count(CPAP_Obstructive) / hours;
+            float ai = day->count(CPAP_AllApnea) / hours;
             float hi = (day->count(CPAP_ExP) + day->count(CPAP_Hypopnea)) / hours;
             float cai = day->count(CPAP_ClearAirway) / hours;
             float rei = day->count(CPAP_RERA) / hours;
@@ -290,6 +290,8 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
             } else if (cpap->loaderName() == STR_MACH_Intellipap) {
                 stats += QObject::tr("NRI=%1 LKI=%2 EPI=%3")
                         .arg(nri, 0, 'f', 2).arg(lki, 0, 'f', 2).arg(exp, 0,'f', 2);
+            } else if (cpap->loaderName() == STR_MACH_SleepStyle) {
+                stats += QObject::tr("AI=%1 ").arg(ai, 0, 'f', 2);
             }
 
             bounds = painter.boundingRect(QRectF(0, top + ttop, virt_width, 0), stats,

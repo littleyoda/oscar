@@ -151,11 +151,6 @@ Overview::~Overview()
     disconnect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
     disconnect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
 
-    // Don't save custom date range.  Default to last 3 months
-    if (p_profile->general->lastOverviewRange() == 8) {
-        p_profile->general->setLastOverviewRange(4);
-    }
-
     // Save graph orders and pin status, etc...
     GraphView->SaveSettings("Overview");//no trans
 
@@ -337,9 +332,6 @@ void Overview::updateGraphCombo()
 {
     ui->graphCombo->clear();
     gGraph *g;
-    //    ui->graphCombo->addItem("Show All Graphs");
-    //    ui->graphCombo->addItem("Hide All Graphs");
-    //    ui->graphCombo->addItem("---------------");
 
     for (int i = 0; i < GraphView->size(); i++) {
         g = (*GraphView)[i];
@@ -357,6 +349,7 @@ void Overview::updateGraphCombo()
     updateCube();
 }
 
+#if 0
 void Overview::ResetGraphs()
 {
     QDate start = ui->dateStart->date();
@@ -378,6 +371,7 @@ void Overview::ResetGraph(QString name)
     g->setDay(nullptr);
     GraphView->redraw();
 }
+#endif
 
 void Overview::RedrawGraphs()
 {
@@ -442,6 +436,9 @@ void Overview::on_dateEnd_dateChanged(const QDate &date)
     qint64 d2 = qint64(QDateTime(date, QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
     GraphView->SetXBounds(d1, d2);
     ui->dateStart->setMaximumDate(date);
+    if (customMode) {
+        p_profile->general->setCustomOverviewRangeEnd(date);
+    }
 }
 
 void Overview::on_dateStart_dateChanged(const QDate &date)
@@ -450,6 +447,10 @@ void Overview::on_dateStart_dateChanged(const QDate &date)
     qint64 d2 = qint64(QDateTime(ui->dateEnd->date(), QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
     GraphView->SetXBounds(d1, d2);
     ui->dateEnd->setMinimumDate(date);
+    if (customMode) {
+        p_profile->general->setCustomOverviewRangeStart(date);
+    }
+
 }
 
 // Zoom to 100% button clicked or called back from 100% zoom in popup menu
@@ -475,7 +476,6 @@ void Overview::ResetGraphOrder(int type)
 // Process new range selection from combo button
 void Overview::on_rangeCombo_activated(int index)
 {
-    p_profile->general->setLastOverviewRange(index);  // type of range in last use
     ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
     ui->dateEnd->setMaximumDate(p_profile->LastDay());
 
@@ -486,22 +486,6 @@ void Overview::on_rangeCombo_activated(int index)
     end = max(end, p_profile->LastDay(MT_SLEEPSTAGE));
     QDate start;
 
-    if (index == 8) { // Custom
-        ui->dateStartLabel->setEnabled(true);
-        ui->dateEndLabel->setEnabled(true);
-        ui->dateEnd->setEnabled(true);
-        ui->dateStart->setEnabled(true);
-
-        ui->dateStart->setMaximumDate(ui->dateEnd->date());
-        ui->dateEnd->setMinimumDate(ui->dateStart->date());
-        p_profile->general->setLastOverviewRange(8);
-        return;
-    }
-
-    ui->dateEnd->setEnabled(false);
-    ui->dateStart->setEnabled(false);
-    ui->dateStartLabel->setEnabled(false);
-    ui->dateEndLabel->setEnabled(false);
 
     if (index == 0) {
         start = end.addDays(-6);
@@ -519,9 +503,47 @@ void Overview::on_rangeCombo_activated(int index)
         start = end.addYears(-1).addDays(1);
     } else if (index == 7) { // Everything
         start = p_profile->FirstDay();
+    } else if (index == 8 || index == 9) { // Custom
+        // Validate save Overview Custom Range for first access.
+        if (!p_profile->general->customOverviewRangeStart().isValid()
+            || (!p_profile->general->customOverviewRangeEnd().isValid() )
+            || (index==9 /* New Coustom mode - to reset custom range to displayed date range*/)
+        ) {
+            // Reset Custom Range to current range displayed
+            // on first initialization of this version of OSCAR
+            // or on new custom Mode to reset range.
+            qint64 istart,iend;
+            GraphView->GetXBounds(istart , iend);
+            start = QDateTime::fromMSecsSinceEpoch( istart ).date();
+            end =   QDateTime::fromMSecsSinceEpoch( iend ).date();
+            p_profile->general->setCustomOverviewRangeStart(start);
+            p_profile->general->setCustomOverviewRangeEnd(end);
+            index=8;
+            ui->rangeCombo->setCurrentIndex(index);
+        } else if (customMode) {      // last mode was custom.
+            // Reset Custom Range to current range in calendar widget
+            // Custom mode MUST be initialized to false when the Custom Instance is created.
+            start = ui->dateStart->date();
+            end = ui->dateEnd->date();
+            p_profile->general->setCustomOverviewRangeStart(start);
+            p_profile->general->setCustomOverviewRangeEnd(end);
+        } else {
+            // have a change in RangeCombo selection. Use last saved values.
+            start = p_profile->general->customOverviewRangeStart() ;
+            end   = p_profile->general->customOverviewRangeEnd() ;
+        }
     }
 
     if (start < p_profile->FirstDay()) { start = p_profile->FirstDay(); }
+
+    customMode = (index == 8) ;
+    ui->dateStartLabel->setEnabled(customMode);
+    ui->dateEndLabel->setEnabled(customMode);
+    ui->dateEnd->setEnabled(customMode);
+    ui->dateStart->setEnabled(customMode);
+
+
+    p_profile->general->setLastOverviewRange(index);  // type of range in last use
 
     // Ensure that all summary files are available and update version numbers if required
     int size = start.daysTo(end);

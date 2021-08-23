@@ -32,31 +32,6 @@ ZEOLoader::~ZEOLoader()
     closeCSV();
 }
 
-int ZEOLoader::Open(const QString & dirpath)
-{
-    QString newpath;
-
-    QString dirtag = "zeo";
-
-    // Could Scan the ZEO folder for a list of CSVs
-
-    QString path(dirpath);
-    path = path.replace("\\", "/");
-
-    if (path.toLower().endsWith("/" + dirtag)) {
-        return 0;
-        //newpath=path;
-    } else {
-        newpath = path + "/" + dirtag.toUpper();
-    }
-
-    //QString filename;
-
-    // ZEO folder structure detection stuff here.
-
-    return 0; // number of machines affected
-}
-
 /*15233: "Sleep Date"
 15234: "ZQ"
 15236: "Total Z"

@@ -16,6 +16,8 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QStringList>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <cmath>
 
 #include "SleepLib/session.h"
@@ -30,13 +32,25 @@
 
 
 ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus, RMS9_HumidLevel,
-         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType,
-         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable;
+         RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMAS11_SmartStop,
+         RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort, RMAS11_PtView;
 
 const QString STR_ResMed_AirSense10 = "AirSense 10";
-const QString STR_ResMed_AirCurve10= "AirCurve 10";
+const QString STR_ResMed_AirSense11 = "AirSense 11";
+const QString STR_ResMed_AirCurve10 = "AirCurve 10";
+const QString STR_ResMed_AirCurve11 = "AirCurve 11";
 const QString STR_ResMed_S9 = "S9";
 const QString STR_UnknownModel = "Resmed ???";
+
+// TODO: See the PRSLoader::LogUnexpectedMessage TODO about generalizing this for other loaders.
+void ResmedLoader::LogUnexpectedMessage(const QString & message)
+{
+    m_importMutex.lock();
+    m_unexpectedMessages += message;
+    m_importMutex.unlock();
+}
+
+static const QVector<int> AS11TestedModels {39420, 0};
 
 ResmedLoader::ResmedLoader() {
 #ifndef UNITTEST_MODE
@@ -95,7 +109,7 @@ void ResmedLoader::initChannels()
     chan->addOption(6, QObject::tr("VPAPauto"));
     chan->addOption(7, QObject::tr("ASV"));
     chan->addOption(8, QObject::tr("ASVAuto"));
-    chan->addOption(9, QObject::tr("?9?"));
+    chan->addOption(9, QObject::tr("iVAPS"));
     chan->addOption(10, QObject::tr("?10?"));
     chan->addOption(11, QObject::tr("Auto for Her"));
 
@@ -147,9 +161,8 @@ void ResmedLoader::initChannels()
         "RMS9_TempEnable", QObject::tr("Temp. Enable"), QObject::tr("ClimateLine Temperature Enable"), QObject::tr("Temperature Enable"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
-//  chan->addOption(1, "1");
-//  chan->addOption(2, "2");
-//  chan->addOption(3, "3");
+    chan->addOption(1, STR_TR_On);
+    chan->addOption(2, STR_TR_Auto);
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_ABFilter= 0xe209, SETTING, MT_CPAP, SESSION,
         "RMS9_ABFilter", QObject::tr("AB Filter"), QObject::tr("Antibacterial Filter"), QObject::tr("Antibacterial Filter"), "", LOOKUP, Qt::black));
@@ -166,7 +179,7 @@ void ResmedLoader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(RMS9_ClimateControl= 0xe20B, SETTING, MT_CPAP, SESSION,
         "RMS9_ClimateControl", QObject::tr("Climate Control"), QObject::tr("Climate Control"), QObject::tr("Climate Control"), "", LOOKUP, Qt::black));
 
-    chan->addOption(0, QObject::tr("Auto"));
+    chan->addOption(0, STR_TR_Auto);
     chan->addOption(1, QObject::tr("Manual"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_Mask= 0xe20C, SETTING, MT_CPAP, SESSION,
@@ -175,13 +188,32 @@ void ResmedLoader::initChannels()
     chan->addOption(0, QObject::tr("Pillows"));
     chan->addOption(1, QObject::tr("Full Face"));
     chan->addOption(2, QObject::tr("Nasal"));
+    chan->addOption(3, QObject::tr("Unknown"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_RampEnable = 0xe20D, SETTING, MT_CPAP, SESSION,
         "RMS9_RampEnable", QObject::tr("Ramp"), QObject::tr("Ramp Enable"), QObject::tr("Ramp"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
-    chan->addOption(2, QObject::tr("Auto"));
+    chan->addOption(2, STR_TR_Auto);
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Comfort = 0xe20E, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_Comfort", QObject::tr("Comfort"), QObject::tr("Comfort"), QObject::tr("Comfort"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, QObject::tr("Soft"));     // This must be verified
+    chan->addOption(1, QObject::tr("Standard"));
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS11_SmartStop = 0xe20F, SETTING, MT_CPAP, SESSION,
+        "RMAS11_SmartStop", QObject::tr("SmartStop"), QObject::tr("Machine auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS11_PtView= 0xe210, SETTING, MT_CPAP, SESSION,
+        "RMAS11_PTView", QObject::tr("Pt. View"), QObject::tr("Pt. View"), QObject::tr("Pt. View"), "", LOOKUP, Qt::black));
+
+    chan->addOption(0, QObject::tr("Simple"));
+    chan->addOption(1, QObject::tr("Advanced"));
 
     // Setup ResMeds signal name translation map
     setupResMedTranslationMap();
@@ -194,6 +226,7 @@ ChannelID ResmedLoader::PresReliefLevel() { return RMS9_EPRLevel; }
 QHash<ChannelID, QStringList> resmed_codes;
 
 const QString STR_ext_TGT = "tgt";
+const QString STR_ext_JSON = "json";
 const QString STR_ext_CRC = "crc";
 
 const QString RMS9_STR_datalog = "DATALOG";
@@ -222,6 +255,7 @@ bool ResmedLoader::Detect(const QString & givenpath)
 }
 
 QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info);    // forward
+void scanProductObject( const QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap );              // forward
 MachineInfo ResmedLoader::PeekInfo(const QString & path)
 {
     if (!Detect(path))
@@ -230,28 +264,55 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
     QFile f(path+"/"+RMS9_STR_idfile+"tgt");
 
     // Abort if this file is dodgy..
-    if (!f.exists() || !f.open(QIODevice::ReadOnly)) {
-        return MachineInfo();
-    }
-    MachineInfo info = newInfo();
+    if (f.exists() ) {
+        if ( !f.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        MachineInfo info = newInfo();
 
-    // Parse # entries into idmap.
-    while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
-        QHash<QString, QString> hash = parseIdentLine( line, & info );
-    }
+        // Parse # entries into idmap.
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            QHash<QString, QString> hash = parseIdentLine( line, & info );
+        }
 
-    return info;
+        return info;
+    }
+    QFile j(path+"/"+RMS9_STR_idfile+"json");
+    if (j.exists() ) {
+        if ( !j.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        QByteArray identData = j.readAll();
+        j.close();
+        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
+        QJsonObject  identObj = identDoc.object();
+        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
+            QJsonObject  flow = identObj["FlowGenerator"].toObject();
+            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
+                QJsonObject  profiles = flow["IdentificationProfiles"].toObject();
+                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
+                    QJsonObject  product = profiles["Product"].toObject();
+                    MachineInfo info = newInfo();
+                    scanProductObject( product, &info, nullptr);
+                    return info;
+                }
+            }
+        }
+
+    }
+    // neither filename exists, return empty info
+    return MachineInfo();
 }
 
 long event_cnt = 0;
 
-bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap );        // forward
+bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> & idmap );        // forward
 void backupSTRfiles( const QString strpath, const QString importPath, const QString backupPath,
                         MachineInfo & info, QMap<QDate, STRFile> & STRmap );                    // forward
 ResMedEDFInfo * fetchSTRandVerify( QString filename, QString serialNumber );                    // forward
 
-int ResmedLoader::Open(const QString & dirpath, ResDaySaveCallback s)                       // alternate for unit testing
+int ResmedLoader::OpenWithCallback(const QString & dirpath, ResDaySaveCallback s)               // alternate for unit testing
 {
     ResDaySaveCallback origCallback = saveCallback;
     saveCallback = s;
@@ -294,8 +355,8 @@ int ResmedLoader::Open(const QString & dirpath)
     m_abort = false;
     MachineInfo info = newInfo();
 
-    if ( ! parseIdentTGT(importPath, & info, idmap) ) {
-        qDebug() << "Failed to parse Identification.tgt";
+    if ( ! parseIdentFile(importPath, & info, idmap) ) {
+        qDebug() << "Failed to parse Identification file";
         return -1;
     }
  
@@ -363,6 +424,16 @@ int ResmedLoader::Open(const QString & dirpath)
     } else {            // Starting from new beginnings - new or purged
         qDebug() << "New machine or just purged";
         p_profile->forceResmedPrefs();
+        int modelNum = info.modelnumber.toInt();
+        if ( modelNum >= 39000 ) {
+            if ( ! AS11TestedModels.contains(modelNum) ) {
+                QMessageBox::information(QApplication::activeWindow(),
+                             QObject::tr("Machine Untested"),
+                             QObject::tr("Your ResMed CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
+                             QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card to make sure it works with OSCAR.")
+                             ,QMessageBox::Ok);
+            }
+        }
         mach = p_profile->CreateMachine( info );
     }
     QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
@@ -420,16 +491,27 @@ int ResmedLoader::Open(const QString & dirpath)
 
 
         // Copy Identification files to backup folder
-        QFile backupFile(backup_path + RMS9_STR_idfile + STR_ext_TGT);
+        QString idfile_ext;
+        if (QFile(importPath+RMS9_STR_idfile+STR_ext_TGT).exists()) {
+            idfile_ext = STR_ext_TGT;
+        }
+        else if (QFile(importPath+RMS9_STR_idfile+STR_ext_JSON).exists()) {
+            idfile_ext = STR_ext_JSON;
+        }
+        else {
+            idfile_ext = "";       // should never happen...
+        }
+
+        QFile backupFile(backup_path + RMS9_STR_idfile + idfile_ext);
         if (backupFile.exists())
             backupFile.remove();
-        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_TGT, backup_path + RMS9_STR_idfile + STR_ext_TGT))
-            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_TGT << "to backup" << backupFile.fileName();
+        if ( ! QFile::copy(importPath + RMS9_STR_idfile + idfile_ext, backup_path + RMS9_STR_idfile + idfile_ext))
+            qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + idfile_ext << "to backup" << backupFile.fileName();
 
         backupFile.setFileName(backup_path + RMS9_STR_idfile + STR_ext_CRC);
         if (backupFile.exists())
             backupFile.remove();
-        if (!QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC))
+        if ( ! QFile::copy(importPath + RMS9_STR_idfile + STR_ext_CRC, backup_path + RMS9_STR_idfile + STR_ext_CRC))
             qWarning() << "Could not copy" << importPath + RMS9_STR_idfile + STR_ext_CRC << "to backup" << backup_path;
     }
 
@@ -1096,7 +1178,7 @@ QString ResmedLoader::Backup(const QString & fullname, const QString & backup_pa
 // This function parses a list of STR files and creates a date ordered map of individual records
 bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap, QDate firstImport)
 {
-    Q_UNUSED(mach)
+    bool AS_eleven = (mach->info.modelnumber.toInt() >= 39000);
 
 //  QDateTime ignoreBefore = p_profile->session->ignoreOlderSessionsDate();
 //  bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
@@ -1146,7 +1228,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         // ResMed and their consistent naming and spacing... :/
         EDFSignal *maskon = str.lookupLabel("Mask On");     // Series 9 machines
         if (!maskon) {
-            maskon = str.lookupLabel("MaskOn");             // Series 10 machines
+            maskon = str.lookupLabel("MaskOn");             // Series 1x machines
         }
         EDFSignal *maskoff = str.lookupLabel("Mask Off");
         if (!maskoff) {
@@ -1176,7 +1258,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
 
 //      This is not what we want to check, we must look at this day in the database files...
-//      Found the plce in checkSummaryDay to compare session count with maskevents divided by 2
+//      Found the place in checkSummaryDay to compare session count with maskevents divided by 2
 #ifdef SESSION_DEBUG
             qDebug() << "ResdayList size is" << resdayList.size();
 #endif
@@ -1210,9 +1292,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ( ! validday) {
                 // There are no mask on/off events, so this STR day is useless.
-#ifdef SESSION_DEBUG
                 qDebug() << "Skipping" << date.toString() << "No mask events";
-#endif
                 continue;
             }
 
@@ -1240,7 +1320,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             int lastOff = -1;
             for (int s = 0; s < maskon->sampleCnt; ++s) {
                 qint32 on = maskon->dataArray[recstart + s];    // these on/off times are minutes since noon
-                qint32 off = maskoff->dataArray[recstart + s];
+                qint32 off = maskoff->dataArray[recstart + s];  // we want the actual time in seconds 
                 if ( (on > 24*60) || (off > 24*60) ) {
                     qWarning().noquote() << "Mask times are out of range. Possible SDcard corruption" << "date" << date << "on" << on << "off" <<off;
                     continue;
@@ -1262,8 +1342,6 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((R.maskon[0]==0) && (R.maskoff[0]>0)) {
                 R.maskon[0] = noonstamp;
             }
-            // TODO This should be last non-zero sample, not the last sample in the array
-                    // DONE
             if ( (lastOn >= 0) && (lastOff >= 0) ) {
                 if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
                     R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).addDays(1).toTime_t() - 1;
@@ -1279,20 +1357,22 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.rms9_mode = mod;
 
                 if (mod == 11) {
-                    mode = MODE_APAP; // For her
-                } else if (mod >= 8) {       // mod 8 == vpap adapt variable epap
+                    mode = MODE_APAP; // For her is a special apap
+                } else if (mod == 9) {
+                    mode = MODE_AVAPS;
+                } else if (mod == 8) {       // mod 8 == vpap adapt variable epap
                     mode = MODE_ASV_VARIABLE_EPAP;
-                } else if (mod >= 7) {       // mod 7 == vpap adapt
+                } else if (mod == 7) {       // mod 7 == vpap adapt
                     mode = MODE_ASV;
-                } else if (mod >= 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
+                } else if (mod == 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
                     mode = MODE_BILEVEL_AUTO_FIXED_PS;
-                } else if (mod >= 3) {// mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                } else if (mod >= 3) {  // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                                        // 4,5 are S/T types...
                     mode = MODE_BILEVEL_FIXED;
-                    // 4,5 are S/T types...
-                } else if (mod >= 1) {
+                } else if (mod == 1) {
                     mode = MODE_APAP; // mod 1 == apap
                     // not sure what mode 2 is ?? split ?
-                } else {
+                } else  if (mod == 0) {
                     mode = MODE_CPAP; // mod 0 == cpap
                 }
                 R.mode = mode;
@@ -1302,20 +1382,25 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // Settings.Adaptive Starting Pressure? // mode 11 = APAP for her?
-                if (((mod == 1) || (mod == 11)) && (sig = str.lookupLabel("S.AS.StartPress"))) {
+                if ( (mod == 1) && ((sig = str.lookupLabel("S.AS.StartPress")) || (sig = str.lookupLabel("S.A.StartPress"))) ) {
+                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                }
+                if ( (mod == 11) && (sig = str.lookupLabel("S.AFH.StartPress"))) {
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((R.mode == MODE_BILEVEL_FIXED) && (sig = str.lookupLabel("S.BL.StartPress"))) {
                     // Bilevel Starting Pressure
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
-                if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
+                if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP) ||
+                     (R.mode == MODE_BILEVEL_AUTO_FIXED_PS)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
                     // Bilevel Starting Pressure
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
             }
 
-            if ((sig = str.lookupLabel("Mask Dur"))) {
+// Collect the staistics 
+            if ((sig = str.lookupLabel("Mask Dur")) || (sig = str.lookupLabel("Duration"))) {
                 R.maskdur = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("Leak Med")) || (sig = str.lookupLabel("Leak.50"))) {
@@ -1397,6 +1482,8 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("I:E 95"))) {
                 R.ie95 = EventDataType(sig->dataArray[rec]) * sig->gain;
             }
+
+// Collect the pressure settings
 
             bool haveipap = false;
             Q_UNUSED( haveipap );
@@ -1494,30 +1581,46 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.max_ipap = R.epap + R.max_ps;
             }
 
+// Collect the other settings
+
+            if ((sig = str.lookupLabel("S.AS.Comfort"))) {
+                R.s_Comfort = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_Comfort--;
+            }
+
             EventDataType epr = -1, epr_level = -1;
-            bool a10 = false;
-            if ((mode == MODE_CPAP) || (mode == MODE_APAP)) {
+            bool a1x = false;       // AS-10 or AS-11
+            if ((mode == MODE_CPAP) || (mode == MODE_APAP) ) {
                 if ((sig = str.lookupSignal(RMS9_EPR))) {
                     epr= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        epr--;
                 }
                 if ((sig = str.lookupSignal(RMS9_EPRLevel))) {
                     epr_level= EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.EPR.EPRType"))) {
-                    a10 = true;
+                    a1x = true;
                     epr = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     epr += 1;
+                    if ( AS_eleven )
+                        epr--;
                 }
                 int epr_on=0, clin_epr_on=0;
                 if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check machines opinion
-                    a10 = true;
+                    a1x = true;
                     epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        epr_on--;
                 }
                 if (epr_on && (sig = str.lookupLabel("S.EPR.ClinEnable"))) {
-                    a10 = true;
+                    a1x = true;
                     clin_epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    if ( AS_eleven )
+                        clin_epr_on--;
                 }
-                if (a10 && !(epr_on && clin_epr_on)) {
+                if (a1x && !(epr_on && clin_epr_on)) {
                     epr = 0;
                     epr_level = 0;
                 }
@@ -1570,39 +1673,68 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ((sig = str.lookupLabel("S.RampEnable"))) {
                 R.s_RampEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_RampEnable--;
             }
             if ((sig = str.lookupLabel("S.EPR.ClinEnable"))) {
                 R.s_EPR_ClinEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_EPR_ClinEnable--;
             }
             if ((sig = str.lookupLabel("S.EPR.EPREnable"))) {
                 R.s_EPREnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_EPREnable--;
             }
 
             if ((sig = str.lookupLabel("S.ABFilter"))) {
                 R.s_ABFilter = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_ABFilter--;
             }
 
             if ((sig = str.lookupLabel("S.ClimateControl"))) {
                 R.s_ClimateControl = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_ClimateControl--;
             }
 
             if ((sig = str.lookupLabel("S.Mask"))) {
                 R.s_Mask = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_Mask--;
             }
             if ((sig = str.lookupLabel("S.PtAccess"))) {
-                R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven ) {
+                    R.s_PtView = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_PtView--;
+                } else
+                    R.s_PtAccess = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.SmartStart"))) {
                 R.s_SmartStart = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_SmartStart--;
+//              qDebug() << "SmartStart is set to" << R.s_SmartStart;
+            }
+            if ((sig = str.lookupLabel("S.SmartStop"))) {
+                R.s_SmartStop = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_SmartStop--;
+                qDebug() << "SmartStop is set to" << R.s_SmartStop;
             }
             if ((sig = str.lookupLabel("S.HumEnable"))) {
                 R.s_HumEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_HumEnable--;
             }
             if ((sig = str.lookupLabel("S.HumLevel"))) {
                 R.s_HumLevel = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupLabel("S.TempEnable"))) {
                 R.s_TempEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                if ( AS_eleven )
+                    R.s_TempEnable--;
             }
             if ((sig = str.lookupLabel("S.Temp"))) {
                 R.s_Temp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -1625,29 +1757,79 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
     ///////////////////////////////////////////////////////////////////////////////////
     // Parse Identification.tgt file (containing serial number and machine information)
     ///////////////////////////////////////////////////////////////////////////////////
-QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info);	//forward
-
-bool parseIdentTGT( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
+// QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info); // forward
+// void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap);                 // forward
+bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> & idmap ) {
     QString filename = path + RMS9_STR_idfile + STR_ext_TGT;
     QFile f(filename);
+    QFile j(path + RMS9_STR_idfile + STR_ext_JSON);
 
     // Abort if this file is dodgy..
-    if (!f.exists() || !f.open(QIODevice::ReadOnly)) {
-        return false;
-    }
-    qDebug() << "Parsing Identification File " << filename;
-//  emit updateMessage(QObject::tr("Parsing Identification File"));
-//  QApplication::processEvents();
+    if (f.exists() ) {
+        if ( !f.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+        qDebug() << "Parsing Identification File " << filename;
+    //  emit updateMessage(QObject::tr("Parsing Identification File"));
+    //  QApplication::processEvents();
 
-    // Parse # entries into idmap.
-    while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
-        QHash<QString, QString> hash = parseIdentLine( line, info );
-        idmap.unite(hash);
-    }
+        // Parse # entries into idmap.
+        while (!f.atEnd()) {
+           QString line = f.readLine().trimmed();
+           QHash<QString, QString> hash = parseIdentLine( line, info );
+           idmap.unite(hash);
+        }
 
-    f.close();
-    return true;
+        f.close();
+        return true;
+    }
+    if (j.exists() ) {
+        if ( !j.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+        QByteArray identData = j.readAll();
+        j.close();
+        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
+        QJsonObject identObj(identDoc.object());
+        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
+            QJsonObject flow = identObj["FlowGenerator"].toObject();
+            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
+                QJsonObject profiles = flow["IdentificationProfiles"].toObject();
+                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
+                    QJsonObject product = profiles["Product"].toObject();
+//                  MachineInfo info = newInfo();
+                    scanProductObject( product, info, &idmap);
+                    return true;
+                }
+            }
+        }
+
+    }
+    return false;
+}
+
+void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap) {
+    QHash<QString, QString> hash1, hash2, hash3;
+    if (product.contains("SerialNumber")) {
+        info->serial = product["SerialNumber"].toString();
+        hash1["SerialNumber"] = product["SerialNumber"].toString();
+        if (idmap)
+            idmap->unite(hash1);
+    }
+    if (product.contains("ProductCode")) {
+        info->modelnumber = product["ProductCode"].toString();
+        hash2["ProductCode"] = info->modelnumber;
+        if (idmap)
+            idmap->unite(hash2);
+    }
+    if (product.contains("ProductName")) {
+        info->model = product["ProductName"].toString();
+        hash3["ProductName"] = info->model;
+        if (idmap)
+            idmap->unite(hash3);
+        int idx = info->model.indexOf("11");
+        info->series = info->model.left(idx+2);
+    }
 }
 
 void backupSTRfiles( const QString strpath, const QString importPath, const QString backupPath, 
@@ -2094,6 +2276,9 @@ void StoreSettings(Session * sess, STRRecord & R)
     if (R.s_SmartStart >= 0) {
         sess->settings[RMS9_SmartStart] = R.s_SmartStart;
     }
+    if (R.s_SmartStop >= 0) {
+        sess->settings[RMAS11_SmartStop] = R.s_SmartStop;
+    }
     if (R.s_ABFilter >= 0) {
         sess->settings[RMS9_ABFilter] = R.s_ABFilter;
     }
@@ -2107,6 +2292,10 @@ void StoreSettings(Session * sess, STRRecord & R)
         sess->settings[RMS9_PtAccess] = R.s_PtAccess;
     }
 
+    if (R.s_PtView >= 0) {
+        sess->settings[RMAS11_PtView] = R.s_PtView;
+    }
+
     if (R.s_HumEnable >= 0) {
         sess->settings[RMS9_HumidStatus] = (short)R.s_HumEnable;
         if ((R.s_HumEnable >= 1) && (R.s_HumLevel >= 0)) {
@@ -2118,6 +2307,9 @@ void StoreSettings(Session * sess, STRRecord & R)
         if ((R.s_TempEnable >= 1) && (R.s_Temp >= 0)){
             sess->settings[RMS9_Temp] = (short)R.s_Temp;
         }
+    }
+    if (R.s_Comfort >= 0) {
+        sess->settings[RMAS1x_Comfort] = R.s_Comfort;
     }
 }
 
@@ -2856,6 +3048,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     time.start();
 #endif
     QString filename = path.section(-2, -1);
+    qDebug() << "LoadPLD opening" << filename.section("/", -2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
         qDebug() << "LoadPLD failed to open" << filename.section("/", -2, -1);
@@ -2888,49 +3081,59 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     int emptycnt = 0;
     EventList *a = nullptr;
     double rate;
-    long recs;
+    long samples;
     ChannelID code;
+    bool square = AppSetting->squareWavePlots();
     // The following is a hack to skip the multiple uses of Ti and Te by Resmed for signal labels
     // It should be replaced when code in resmed_info class changes the labels to be unique
     bool found_Ti_code = false;
     bool found_Te_code = false;
 
+    QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
+
     for (auto & es : edf.edfsignals) {
         a = nullptr;
-        recs = es.sampleCnt * edf.GetNumDataRecords();
+        samples = es.sampleCnt * edf.GetNumDataRecords();
 
-        if (recs <= 0)
+        if (samples <= 0)
             continue;
 
-        rate = double(duration) / double(recs);
+        rate = double(duration) / double(samples);
 
         //qDebug() << "EVE:" << es.digital_maximum << es.digital_minimum << es.physical_maximum << es.physical_minimum << es.gain;
+        if (forceDebug) {
+            qDebug() << "Session" << sessionStartDT.toString() << filename.section("/", -2, -1) << "signal" << es.label;
+            qDebug() << "\tSecond/rec:" << edf.GetDurationMillis()/1000 << "Samples/rec:" << es.sampleCnt;
+        }
         if (matchSignal(CPAP_Snore, es.label)) {
             code = CPAP_Snore;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_Pressure, es.label)) {
             code = CPAP_Pressure;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IPAP, es.label)) {
             code = CPAP_IPAP;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_EPAP, es.label)) { // Expiratory Pressure
             code = CPAP_EPAP;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
 
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         }  else if (matchSignal(CPAP_MinuteVent,es.label)) {
             code = CPAP_MinuteVent;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_RespRate, es.label)) {
             code = CPAP_RespRate;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
         } else if (matchSignal(CPAP_TidalVolume, es.label)) {
             code = CPAP_TidalVolume;
             es.gain *= 1000.0;
@@ -2938,7 +3141,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             es.physical_minimum *= 1000.0;
 //          es.digital_maximum*=1000.0;
 //          es.digital_minimum*=1000.0;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_Leak, es.label)) {
             code = CPAP_Leak;
             es.gain *= 60.0;
@@ -2947,18 +3150,18 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          es.digital_maximum*=60.0;
 //          es.digital_minimum*=60.0;
             es.physical_dimension = "L/M";
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0, true);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, true);
             sess->setPhysMax(code, 120.0);
             sess->setPhysMin(code, 0);
         } else if (matchSignal(CPAP_FLG, es.label)) {
             code = CPAP_FLG;
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_MaskPressure, es.label)) {
             code = CPAP_MaskPressure;
-            es.physical_maximum = 25;
-            es.physical_minimum = 4;
+//          es.physical_maximum = 25;
+//          es.physical_minimum = 4;
 
-            ToTimeDelta(sess, edf, es, code, recs, duration, 0, 0);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IE, es.label)) { //I:E ratio
             code = CPAP_IE;
 //          es.gain /= 100.0;
@@ -2967,8 +3170,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          qDebug() << "IE Gain, Max, Min" << es.gain << es.physical_maximum << es.physical_minimum;
 //          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
             // There are TWO of these with the same label on 36037, 36039, 36377 and others
@@ -2977,8 +3180,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
                 continue;
             found_Ti_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Te, es.label)) {
             code = CPAP_Te;
             // There are TWO of these with the same label on my VPAP Adapt 36037
@@ -2986,23 +3189,23 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
                 continue;
             found_Te_code = true;    
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_TgMV, es.label)) {
             code = CPAP_TgMV;
             a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-//          a = ToTimeDelta(sess,edf,es, code,recs,duration,0,0);
+            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (es.label == "Va") {  // Signal used in 36039... What to do with it???
             a = nullptr;                // We'll skip it for now
         } else if (es.label == "") { // What the hell resmed??
         // these empty lables should be changed in resmed_EDFInfo to something unique
             if (emptycnt == 0) {
                 code = RMS9_E01;
-//                ToTimeDelta(sess, edf, es, code, recs, duration);
+//                ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
             } else if (emptycnt == 1) {
                 code = RMS9_E02;
-//                ToTimeDelta(sess, edf, es, code, recs, duration);
+//                ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
             } else {
                 qDebug() << "Unobserved Empty Signal " << es.label;
             }
@@ -3035,11 +3238,19 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 }
 
 // Convert EDFSignal data to OSCAR's Time-Delta Event format
-void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
+EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
         EventDataType *min, EventDataType *max, double tt, EventList *el, Session * sess, ChannelID code );		// forward
 void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es, ChannelID code,
-                               long recs, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
+                               long samples, qint64 duration, EventDataType t_min, EventDataType t_max, bool square)
 {
+    using namespace schema;
+    ChannelList channel;
+
+//  QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
+
     if (t_min == t_max) {
         t_min = es.physical_minimum;
         t_max = es.physical_maximum;
@@ -3050,75 +3261,107 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
     time.start();
 #endif
 
-    double rate = (duration / recs); // milliseconds per record
+    double rate = (duration / samples); // milliseconds per record
     double tt = edf.startdate;
 
     EventStoreType c=0, last;
 
     int startpos = 0;
 
-    if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
-        startpos = 20; // Shave the first 20 seconds of pressure data
-        tt += rate * startpos;
-    }
+//  There's no reason to skip the first 40 seconds of slow data
+//  if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
+//      startpos = 20; // Shave the first 40 seconds of pressure data
+//      tt += rate * startpos;
+//  }
 
     qint16 *sptr = es.dataArray;
-    qint16 *eptr = sptr + recs;
+    qint16 *eptr = sptr + samples;
     sptr += startpos;
 
     EventDataType min = t_max, max = t_min, tmp;
 
     EventList *el = nullptr;
 
-    if (recs > startpos + 1) {
+    if (forceDebug)
+        qDebug() << "Code:" << QString::number(code, 16) << "Samples:" << samples;
 
+    if (samples > startpos + 1) {
         // Prime last with a good starting value
         do {
             last = *sptr++;
             tmp = EventDataType(last) * es.gain;
-
             if ((tmp >= t_min) && (tmp <= t_max)) {
                 min = tmp;
                 max = tmp;
                 el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-
+                if (forceDebug)
+//                  qDebug() << "New EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                    qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
                 el->AddEvent(tt, last);
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "First Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
                 tt += rate;
-
                 break;
             }
             tt += rate;
         } while (sptr < eptr);
 
-        if (!el)
+        if ( ! el) {
+            qWarning() << "No eventList for" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
+//                          << channel.channels[code]->code();
+                            << QString::number(code, 16);
+#ifdef DEBUG_EFFICIENCY
+            timeMutex.lock();
+            timeInTimeDelta += time.elapsed();
+            timeMutex.unlock();
+#endif
             return;
+        }
 
+        if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+             qDebug() << "Before loop to buildEventList" << el->count() << "Last:" << last*es.gain << "Next:" << (*sptr)*es.gain <<
+                "Pos:" << sptr - es.dataArray << QDateTime::fromMSecsSinceEpoch(tt).toString();
         for (; sptr < eptr; sptr++) {
             c = *sptr;
-
             if (last != c) {
                 if (square) {
-                    buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                    if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                        qDebug() << "Before square call to buildEventList" << el->count();
+                    el = buildEventList( last, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                    if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                        qDebug() << "After square call to buildEventList" << el->count();
                 }
-
-                buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "Before call to buildEventList" << el->count() << "Cur:" << c*es.gain << "Last:" << last*es.gain << "Pos:" << sptr - es.dataArray <<
+                        QDateTime::fromMSecsSinceEpoch(tt).toString();
+                el = buildEventList( c, t_min, t_max, es, &min, &max, tt, el, sess, code );
+                if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                    qDebug() << "After call to buildEventList" << el->count();
             }
-
             tt += rate;
-
             last = c;
         }
 
         tmp = EventDataType(c) * es.gain;
-
-        if ((tmp >= t_min) && (tmp <= t_max))
+        if ((tmp >= t_min) && (tmp <= t_max)) {
             el->AddEvent(tt, c);
+            if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
+                qDebug() << "Last Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
+        } else
+            qDebug() << "Failed to add last event" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
 
         sess->updateMin(code, min);
         sess->updateMax(code, max);
         sess->setPhysMin(code, es.physical_minimum);
         sess->setPhysMax(code, es.physical_maximum);
         sess->updateLast(tt);
+        if (forceDebug)
+//          qDebug() << "EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+            qDebug() << "EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Size" << el->count();
+    } else {
+        qWarning() << "not enough records for EventList" << QDateTime::fromMSecsSinceEpoch(sess->first()).toString() << "code"
+//                          << channel.channels[code]->code();
+                            << QString::number(code, 16);
     }
 
 #ifdef DEBUG_EFFICIENCY
@@ -3127,7 +3370,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         qint64 t = time.nsecsElapsed();
         int cnt = el->count();
         int bytes = cnt * (sizeof(EventStoreType) + sizeof(quint32));
-        int wvbytes = recs * (sizeof(EventStoreType));
+        int wvbytes = samples * (sizeof(EventStoreType));
         auto it = channel_efficiency.find(code);
 
         if (it == channel_efficiency.end()) {
@@ -3143,9 +3386,17 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
 #endif
 }       // end ResMedLoader::ToTimeDelta
 
-void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
+EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_max, EDFSignal &es,
         EventDataType *min, EventDataType *max, double tt, EventList *el, Session * sess, ChannelID code )
 {
+    using namespace schema;
+    ChannelList channel;
+//  QDateTime sessionStartDT = QDateTime:: fromMSecsSinceEpoch(sess->first());
+//  bool forceDebug = (sessionStartDT > QDateTime::fromString("2021-02-26 12:00:00", "yyyy-MM-dd HH:mm:ss")) &&
+//                      (sessionStartDT < QDateTime::fromString("2021-02-27 12:00:00", "yyyy-MM-dd HH:mm:ss"));
+    bool forceDebug = false;
+
+
     EventDataType tmp = EventDataType(est) * es.gain;
 
     if ((tmp >= t_min) && (tmp <= t_max)) {
@@ -3157,15 +3408,26 @@ void buildEventList( EventStoreType est, EventDataType t_min, EventDataType t_ma
 
         el->AddEvent(tt, est);
     } else {
+        qDebug() << "Value:" << tmp << "Out of range: t_min:" << t_min << "t_max:" << t_max << "EL count:" << el->count();
         // Out of bounds value, start a new eventlist
+        // But first drop a closing value that repeats the last one
+        el->AddEvent(tt, el->raw(el->count() - 1));
         if (el->count() > 1) {
             // that should be in session, not the eventlist.. handy for debugging though
             el->setDimension(es.physical_dimension);
 
             el = sess->AddEventList(code, EVL_Event, es.gain, es.offset, 0, 0);
-        } else
+            if (forceDebug)
+//              qDebug() << "New EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+        } else {
             el->clear(); // reuse the object
+            if (forceDebug)
+//              qDebug() << "Clear EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
+                qDebug() << "Clear EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+        }
     }
+    return el;
 }
 
 // Check if given string matches any alternative signal names for this channel
@@ -3189,6 +3451,7 @@ void setupResMedTranslationMap()
 {
     ////////////////////////////////////////////////////////////////////////////
     // Translation lookup table for non-english machines
+    // Also combine S9, AS10, and AS11 variants
     ////////////////////////////////////////////////////////////////////////////
 
     // Only put the first part, enough to be identifiable, because ResMed likes
@@ -3216,7 +3479,7 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_PS] = QStringList { "PS", "S.VA.PS" };
     resmed_codes[CPAP_PSMin] = QStringList { "Min PS" };
     resmed_codes[CPAP_PSMax] = QStringList { "Max PS" };
-    resmed_codes[CPAP_Leak] = QStringList { "Leak", "Leck", "Fuites", "Fuite", "Fuga", "\xE6\xBC\x8F\xE6\xB0\x94", "Lekk", "Läck","LÃ¤ck", "Leak.2s" };
+    resmed_codes[CPAP_Leak] = QStringList { "Leak", "Leck", "Fuites", "Fuite", "Fuga", "\xE6\xBC\x8F\xE6\xB0\x94", "Lekk", "Läck","LÃ¤ck", "Leak.2s", "Sızıntı" };
     resmed_codes[CPAP_RespRate] = QStringList {  "RR", "AF", "FR", "RespRate.2s" };
     resmed_codes[CPAP_MinuteVent] = QStringList { "MV", "VM", "MinVent.2s" };
     resmed_codes[CPAP_TidalVolume] = QStringList { "Vt", "VC", "TidVol.2s" };
@@ -3226,19 +3489,21 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_Ti] = QStringList { "Ti", "B5ITime.2s" };
     resmed_codes[CPAP_Te] = QStringList { "Te", "B5ETime.2s" };
     resmed_codes[CPAP_TgMV] = QStringList { "TgMV", "TgtVent.2s" };
-    resmed_codes[OXI_Pulse] = QStringList { "Pulse", "Puls", "Pouls", "Pols", "Pulse.1s" };
+    resmed_codes[OXI_Pulse] = QStringList { "Pulse", "Puls", "Pouls", "Pols", "Pulse.1s", "Nabiz" };
     resmed_codes[OXI_SPO2] = QStringList { "SpO2", "SpO2.1s" };
     resmed_codes[CPAP_Obstructive] = QStringList { "Obstructive apnea" };
     resmed_codes[CPAP_Hypopnea] = QStringList { "Hypopnea" };
     resmed_codes[CPAP_Apnea] = QStringList { "Apnea" };
     resmed_codes[CPAP_RERA] = QStringList { "Arousal" };
     resmed_codes[CPAP_ClearAirway] = QStringList { "Central apnea" };
-    resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F" };
-    resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press" };
+
+    // STR signals
+    resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F", "Mod" };
+    resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press", "Basıncı Ayarl" };
     resmed_codes[RMS9_EPR] = QStringList { "EPR", "\xE5\x91\xBC\xE6\xB0\x94\xE9\x87\x8A\xE5\x8E\x8B\x28\x45\x50" };
-    resmed_codes[RMS9_EPRLevel] = QStringList { "EPR Level", "EPR-Stufe", "EPR-niveau", "\x45\x50\x52\x20\xE6\xB0\xB4\xE5\xB9\xB3", "Niveau EPR", "EPR-nivå", "EPR-nivÃ¥", "S.EPR.Level" };
-    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress" };
-    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress" };
+    resmed_codes[RMS9_EPRLevel] = QStringList { "EPR Level", "EPR-Stufe", "EPR-niveau", "\x45\x50\x52\x20\xE6\xB0\xB4\xE5\xB9\xB3", "Niveau EPR", "EPR-nivå", "EPR-nivÃ¥", "S.EPR.Level", "EPR Düzeyi" };
+    resmed_codes[CPAP_PressureMax] = QStringList { "Max Pressure", "Max. Druck", "Max druk", "\xE6\x9C\x80\xE5\xA4\xA7\xE5\x8E\x8B\xE5\x8A\x9B", "Pression max.", "Max tryck", "S.AS.MaxPress", "S.A.MaxPress", "Azami Basınç" };
+    resmed_codes[CPAP_PressureMin] = QStringList { "Min Pressure", "Min. Druck", "Min druk", "\xE6\x9C\x80\xE5\xB0\x8F\xE5\x8E\x8B\xE5\x8A\x9B", "Pression min.", "Min tryck", "S.AS.MinPress", "S.A.MinPress", "Min Basınç" };
 
     //resmed_codes[RMS9_EPR].push_back("S.EPR.EPRType");
 }

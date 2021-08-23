@@ -9,12 +9,14 @@
 
 #include "machine_common.h"
 
+ChannelID AllAhiChannels = 0xffff;
+QVector<ChannelID> ahiChannels;
 
 ChannelID NoChannel, SESSION_ENABLED, CPAP_SummaryOnly;
 ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_Pressure,
           CPAP_PS, CPAP_Mode, CPAP_AHI,
           CPAP_PressureMin, CPAP_PressureMax, CPAP_Ramp, CPAP_RampTime, CPAP_RampPressure, CPAP_Obstructive,
-          CPAP_Hypopnea,
+          CPAP_Hypopnea, CPAP_AllApnea,
           CPAP_ClearAirway, CPAP_Apnea, CPAP_PB, CPAP_CSR, CPAP_LeakFlag, CPAP_ExP, CPAP_NRI, CPAP_VSnore,
           CPAP_VSnore2,
           CPAP_RERA, CPAP_PressurePulse, CPAP_FlowLimit, CPAP_SensAwake, CPAP_FlowRate, CPAP_MaskPressure,
@@ -28,11 +30,13 @@ ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAP
 
 
 ChannelID RMS9_E01, RMS9_E02, RMS9_SetPressure, RMS9_MaskOnTime;
-ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2;
+ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2, INTP_SnoreFlag;
 
 ChannelID CPAP_LargeLeak,
           PRS1_BND, PRS1_FlexMode, PRS1_FlexLevel, PRS1_HumidStatus, PRS1_HumidLevel, PRS1_HumidTargetTime, PRS1_MaskResistLock,
           PRS1_MaskResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
+
+//ChannelID SS_SenseAwakeLevel, SS_EPR, SS_EPRLevel, SS_Ramp;
 
 ChannelID OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_PulseChange, OXI_SPO2Drop, OXI_Plethy;
 

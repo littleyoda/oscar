@@ -28,8 +28,9 @@ class ViatomLoader : public MachineLoader
 
     virtual bool Detect(const QString & path);
 
-    virtual int Open(const QString & path);
-    Session* ParseFile(const QString & filename);
+    virtual int Open(const QString & path) { Q_UNUSED(path); return 0; } // Only for CPAP
+    virtual int Open(const QStringList & paths);
+    Session* ParseFile(const QString & filename, bool *existing=0);
 
     static void Register();
 
@@ -40,12 +41,12 @@ class ViatomLoader : public MachineLoader
         return MachineInfo(MT_OXIMETER, 0, viatom_class_name, QObject::tr("Viatom"), QString(), QString(), QString(), QObject::tr("Viatom Software"), QDateTime::currentDateTime(), viatom_data_version);
     }
 
-    QStringList getNameFilter();
+    virtual QStringList getNameFilter();
 
   //Machine *CreateMachine();
 
   protected:
-    bool OpenFile(const QString & filename);
+    int OpenFile(const QString & filename);
     void SaveSessionToDatabase(Session* session);
 
     void AddEvent(ChannelID channel, qint64 t, EventDataType value);

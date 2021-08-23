@@ -22,7 +22,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation.
 //
-const int resmed_data_version = 14;
+const int resmed_data_version = 15;
 //
 //********************************************************************************************
 
@@ -134,7 +134,9 @@ class ResmedLoader : public CPAPLoader
     volatile int sessionCount;
     static void SaveSession(ResmedLoader* loader, Session* session);
     ResDaySaveCallback saveCallback;
-    int Open(const QString & dirpath, ResDaySaveCallback s);
+    int OpenWithCallback(const QString & dirpath, ResDaySaveCallback s);
+
+    void LogUnexpectedMessage(const QString & message);
 
 protected:
 //! \brief The STR.edf file is a unique edf file with many signals
@@ -166,9 +168,16 @@ protected:
     volatile qint64 timeInAddWaveform;
     volatile qint64 timeInTimeDelta;
     QMutex timeMutex;
-
-
 #endif
+
+    // TODO: This really belongs in a generic location that all loaders can use.
+    // But that will require retooling the overall call structure so that there's
+    // a top-level import job that's managing a specific import. Right now it's
+    // essentially managed by the importCPAP method rather than an object instance
+    // with state.
+    QMutex m_importMutex;
+    QSet<QString> m_unexpectedMessages;
+
 };
 
 #endif // RESMED_LOADER_H

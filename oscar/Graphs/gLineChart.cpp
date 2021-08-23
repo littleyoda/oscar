@@ -1084,10 +1084,15 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     time /= 1000;
 
     QList<ChannelID> ahilist;
-    ahilist.push_back(CPAP_Hypopnea);
-    ahilist.push_back(CPAP_Obstructive);
-    ahilist.push_back(CPAP_Apnea);
-    ahilist.push_back(CPAP_ClearAirway);
+
+    for (int i = 0; i < ahiChannels.size(); i++)
+        ahilist.push_back(ahiChannels.at(i));
+
+//    ahilist.push_back(CPAP_Hypopnea);
+//    ahilist.push_back(CPAP_AllApnea);
+//    ahilist.push_back(CPAP_Obstructive);
+//    ahilist.push_back(CPAP_Apnea);
+//    ahilist.push_back(CPAP_ClearAirway);
 
     QList<ChannelID> extras;
     extras.push_back(CPAP_NRI);

@@ -55,23 +55,33 @@ QHash<QString, ScopeType> Scopes;
 
 bool schema_initialized = false;
 
+// Order in which indices appear on Daily page
 void setOrders() {
-    schema::channel[CPAP_PB].setOrder(1);
-    schema::channel[CPAP_CSR].setOrder(1);
-    schema::channel[CPAP_Ramp].setOrder(2);
-    schema::channel[CPAP_LargeLeak].setOrder(2);
-    schema::channel[CPAP_ClearAirway].setOrder(3);
-    schema::channel[CPAP_Obstructive].setOrder(4);
-    schema::channel[CPAP_Apnea].setOrder(4);
-    schema::channel[CPAP_NRI].setOrder(3);
-    schema::channel[CPAP_Hypopnea].setOrder(5);
-    schema::channel[CPAP_FlowLimit].setOrder(6);
-    schema::channel[CPAP_RERA].setOrder(6);
-    schema::channel[CPAP_VSnore].setOrder(7);
-    schema::channel[CPAP_VSnore2].setOrder(8);
-    schema::channel[CPAP_ExP].setOrder(6);
-    schema::channel[CPAP_UserFlag1].setOrder(256);
-    schema::channel[CPAP_UserFlag2].setOrder(257);
+    int order = 1;
+    schema::channel[CPAP_PB].setOrder(order++);
+    schema::channel[CPAP_CSR].setOrder(order++);
+    schema::channel[CPAP_Ramp].setOrder(order++);
+    schema::channel[CPAP_LargeLeak].setOrder(order++);
+
+    schema::channel[CPAP_ClearAirway].setOrder(order++);
+    schema::channel[CPAP_NRI].setOrder(order++);
+    schema::channel[CPAP_AllApnea].setOrder(order++);
+    schema::channel[CPAP_Obstructive].setOrder(order++);
+    schema::channel[CPAP_Apnea].setOrder(order++);
+    schema::channel[CPAP_Hypopnea].setOrder(order++);
+    schema::channel[CPAP_FlowLimit].setOrder(order++);
+
+    schema::channel[CPAP_RERA].setOrder(order++);
+    schema::channel[CPAP_ExP].setOrder(order++);
+    schema::channel[CPAP_VSnore].setOrder(order++);
+    schema::channel[CPAP_VSnore2].setOrder(order++);
+
+    // Any channels not set above appear here, as default value for order is 255.
+
+    // Finally, include user flags
+    order = 256;
+    schema::channel[CPAP_UserFlag1].setOrder(order++);
+    schema::channel[CPAP_UserFlag2].setOrder(order++);
 }
 
 void init()
@@ -151,6 +161,8 @@ void init()
             QObject::tr("Hypopnea"), QObject::tr("A partially obstructed airway"), QObject::tr("H"),        STR_UNIT_EventsPerHour,    DEFAULT,    QColor("blue")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Apnea         = 0x1004, FLAG,        MT_CPAP, SESSION, "Apnea",
             QObject::tr("Unclassified Apnea"), QObject::tr("An apnea that couldn't be determined as Central or Obstructive."),QObject::tr("UA"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("dark green")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_AllApnea      = 0x1010, FLAG,        MT_CPAP, SESSION, "AllApnea",
+            QObject::tr("Apnea"), QObject::tr("An apnea reportred by your CPAP machine."),QObject::tr("A"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#40c0ff")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_FlowLimit     = 0x1005, FLAG,        MT_CPAP, SESSION, "FlowLimit",
             QObject::tr("Flow Limitation"), QObject::tr("A restriction in breathing from normal, causing a flattening of the flow waveform."), QObject::tr("FL"), STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#404040")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RERA          = 0x1006, FLAG,        MT_CPAP, SESSION, "RERA",
@@ -358,6 +370,18 @@ void init()
     schema::channel[CPAP_PB].setShowInOverview(true);
     schema::channel[CPAP_LargeLeak].setShowInOverview(true);
     schema::channel[CPAP_FLG].setShowInOverview(true);
+
+    // Identify the channels that contribute to AHI calculation
+    // When adding more AHI-contributing channels,
+    // 1) update this list
+    // 2) Update setOrders() above
+    // 3) Search source for CPAP_Obstructive to look for possible other places to add new channel
+    // 4) Search for AllAhiChannels to find all uses of the AHI-contributing channel list
+    ahiChannels.append(CPAP_ClearAirway);
+    ahiChannels.append(CPAP_AllApnea);
+    ahiChannels.append(CPAP_Obstructive);
+    ahiChannels.append(CPAP_Hypopnea);
+    ahiChannels.append(CPAP_Apnea);
 }
 
 

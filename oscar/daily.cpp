@@ -291,6 +291,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     evseg->AddSlice(CPAP_Apnea,QColor(0x20,0x80,0x20,0xff),STR_TR_UA);
     evseg->AddSlice(CPAP_Obstructive,QColor(0x40,0xaf,0xbf,0xff),STR_TR_OA);
     evseg->AddSlice(CPAP_ClearAirway,QColor(0xb2,0x54,0xcd,0xff),STR_TR_CA);
+    evseg->AddSlice(CPAP_AllApnea,QColor(0x40,0xaf,0xbf,0xff),STR_TR_A);
     evseg->AddSlice(CPAP_RERA,QColor(0xff,0xff,0x80,0xff),STR_TR_RE);
     evseg->AddSlice(CPAP_NRI,QColor(0x00,0x80,0x40,0xff),STR_TR_NR);
     evseg->AddSlice(CPAP_FlowLimit,QColor(0x40,0x40,0x40,0xff),STR_TR_FL);
@@ -576,6 +577,7 @@ void Daily::Link_clicked(const QUrl &url)
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="toggleoxisession") { // Enable/Disable Oximetry session
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
+        if (!day) return;
         Session *sess=day->find(sid, MT_OXIMETER);
         if (!sess)
             return;
@@ -585,6 +587,20 @@ void Daily::Link_clicked(const QUrl &url)
         // Reload day
         LoadDate(previous_date);
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
+    } else  if (code=="togglestagesession") { // Enable/Disable Sleep Stage session
+        day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
+        if (!day) return;
+        Session *sess=day->find(sid, MT_SLEEPSTAGE);
+        if (!sess) return;
+        sess->setEnabled(!sess->enabled());
+        LoadDate(previous_date);
+    } else  if (code=="togglepositionsession") { // Enable/Disable Position session
+        day=p_profile->GetDay(previous_date,MT_POSITION);
+        if (!day) return;
+        Session *sess=day->find(sid, MT_POSITION);
+        if (!sess) return;
+        sess->setEnabled(!sess->enabled());
+        LoadDate(previous_date);
     } else if (code=="cpap")  {
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (day) {
@@ -1010,7 +1026,7 @@ QString Daily::getSessionInformation(Day * day)
             case MT_SLEEPSTAGE: type="stage";
                 html+=tr("Sleep Stage Sessions");
                 break;
-            case MT_POSITION: type="stage";
+            case MT_POSITION: type="position";
                 html+=tr("Position Sensor Sessions");
                 break;
 
@@ -1130,7 +1146,8 @@ QString Daily::getMachineSettings(Day * day) {
         if (sess) for (; it != it_end; ++it) {
             ChannelID code = it.key();
 
-            if ((code <= 1) || (code == RMS9_MaskOnTime) || (code == CPAP_Mode) || (code == cpapmode) || (code == CPAP_SummaryOnly)) continue;
+            if ((code <= 1) || (code == RMS9_MaskOnTime) || (code == CPAP_Mode) || (code == cpapmode) || (code == CPAP_SummaryOnly))
+                continue;
 
             schema::Channel & chan = schema::channel[code];
 
@@ -1164,7 +1181,7 @@ QString Daily::getMachineSettings(Day * day) {
                     .arg(schema::channel[code].label())
                     .arg(schema::channel[code].description())
                     .arg(data);
-
+//qDebug() << QString::number( code, 16 ) << tmp;
             if (first_channels.contains(code)) {
                 first[code] = tmp;
             } else {
@@ -1379,7 +1396,7 @@ QString Daily::getStatisticsInfo(Day * day)
         html+="<tr><td colspan=5>&nbsp;</td></tr>";
 
         if ((cpap->loaderName() == STR_MACH_ResMed) || ((cpap->loaderName() == STR_MACH_PRS1) && (p_profile->cpap->resyncFromUserFlagging()))) {
-            int ttia = day->sum(CPAP_Obstructive) + day->sum(CPAP_ClearAirway) + day->sum(CPAP_Apnea) + day->sum(CPAP_Hypopnea);
+            int ttia = day->sum(AllAhiChannels);
             int h = ttia / 3600;
             int m = ttia / 60 % 60;
             int s = ttia % 60;
@@ -1484,15 +1501,24 @@ QString Daily::getPieChart (float values, Day * day) {
         } else {
             html += "<tr><td align=center>"+tr("Unable to display Pie Chart on this system")+"</td></tr>\n";
         }
-    } else if (   day->channelHasData(CPAP_Obstructive)
-               || day->channelHasData(CPAP_Hypopnea)
-               || day->channelHasData(CPAP_ClearAirway)
+    } else {
+        bool gotsome = false;
+        for (int i = 0; i < ahiChannels.size(); i++)
+            gotsome = gotsome || day->channelHasData(ahiChannels.at(i));
+
+//        if (   day->channelHasData(CPAP_Obstructive)
+//               || day->channelHasData(CPAP_AllApnea)
+//               || day->channelHasData(CPAP_Hypopnea)
+//               || day->channelHasData(CPAP_ClearAirway)
+//               || day->channelHasData(CPAP_Apnea)
+
+        if (   gotsome
                || day->channelHasData(CPAP_RERA)
-               || day->channelHasData(CPAP_Apnea)
                || day->channelHasData(CPAP_FlowLimit)
                || day->channelHasData(CPAP_SensAwake)
                ) {
             html += "<tr><td align=center><img src=\"qrc:/docs/0.0.gif\"></td></tr>\n";
+        }
     }
     html+="</table>\n";
     html+="<hr/>\n";
@@ -1535,10 +1561,10 @@ QVariant MyTextBrowser::loadResource(int type, const QUrl &url)
 
 void Daily::Load(QDate date)
 {
-	qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
+    qDebug() << "Daily::Load called for" << date.toString() << "using" << QApplication::font().toString();
 
-	qDebug() << "Setting App font in Daily::Load";
-	setApplicationFont();
+    qDebug() << "Setting App font in Daily::Load";
+    setApplicationFont();
 
     dateDisplay->setText("<i>"+date.toString(Qt::SystemLocaleLongDate)+"</i>");
     previous_date=date;
@@ -1634,7 +1660,12 @@ void Daily::Load(QDate date)
         if (GraphView->isEmpty() && (hours>0)) {
             // TODO: Eventually we should get isBrick from the loader, since some summary days
             // on a non-brick might legitimately have no graph data.
-            if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea)) {
+            bool gotsome = false;
+            for (int i = 0; i < ahiChannels.size(); i++)
+                gotsome = gotsome || p_profile->hasChannel(ahiChannels.at(i));
+
+//            if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea) && !p_profile->hasChannel(CPAP_AllApnea)  && !p_profile->hasChannel(CPAP_ClearAirway)) {
+            if (!gotsome) {
                 GraphView->setEmptyText(STR_Empty_Brick);
 
                 GraphView->setEmptyImage(QPixmap(":/icons/sadface.png"));
@@ -1648,7 +1679,7 @@ void Daily::Load(QDate date)
 
         modestr=schema::channel[CPAP_Mode].m_options[mode];
 
-        EventDataType ahi=(day->count(CPAP_Obstructive)+day->count(CPAP_Hypopnea)+day->count(CPAP_ClearAirway)+day->count(CPAP_Apnea));
+        EventDataType ahi=day->count(AllAhiChannels);
         if (p_profile->general->calculateRDI()) ahi+=day->count(CPAP_RERA);
         ahi/=hours;
 
@@ -1726,7 +1757,7 @@ void Daily::Load(QDate date)
 
             htmlLeftIndices+="</table><hr/>";
 
-            htmlLeftPieChart = getPieChart((values[CPAP_Obstructive] + values[CPAP_Hypopnea] +
+            htmlLeftPieChart = getPieChart((values[CPAP_Obstructive] + values[CPAP_Hypopnea] + values[CPAP_AllApnea] +
                                             values[CPAP_ClearAirway] + values[CPAP_Apnea] + values[CPAP_RERA] +
                                             values[CPAP_FlowLimit] + values[CPAP_SensAwake]), day);
 
@@ -1897,17 +1928,18 @@ void Daily::Load(QDate date)
 
             ui->bookmarkTable->blockSignals(true);
 
-
+            // Careful with drift here - apply to the label but not the
+            // stored data (which will be saved if journal changes occur).
             qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
             Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
             drift=(dday!=nullptr) ? clockdrift : 0;
 
             bool ok;
             for (int i=0;i<start.size();i++) {
-                qint64 st=start.at(i).toLongLong(&ok)+drift;
-                qint64 et=end.at(i).toLongLong(&ok)+drift;
+                qint64 st=start.at(i).toLongLong(&ok);
+                qint64 et=end.at(i).toLongLong(&ok);
 
-                QDateTime d=QDateTime::fromTime_t(st/1000L);
+                QDateTime d=QDateTime::fromTime_t((st+drift)/1000L);
                 //int row=ui->bookmarkTable->rowCount();
                 ui->bookmarkTable->insertRow(i);
                 QTableWidgetItem *tw=new QTableWidgetItem(notes.at(i));
@@ -2110,7 +2142,7 @@ Session * Daily::CreateJournalSession(QDate date)
     sess->SetSessionID(st / 1000L);
     sess->set_first(st);
     sess->set_last(et);
-    m->AddSession(sess);
+    m->AddSession(sess, true);
     return sess;
 }
 Session * Daily::GetJournalSession(QDate date) // Get the first journal session
@@ -2320,14 +2352,16 @@ void Daily::on_bookmarkTable_itemClicked(QTableWidgetItem *item)
     int row=item->row();
     qint64 st,et;
 
-//    qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
-//    Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
-//    drift=(dday!=nullptr) ? clockdrift : 0;
+    qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
+    Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
+    drift=(dday!=nullptr) ? clockdrift : 0;
 
     QTableWidgetItem *it=ui->bookmarkTable->item(row,1);
     bool ok;
-    st=it->data(Qt::UserRole).toLongLong(&ok);
-    et=it->data(Qt::UserRole+1).toLongLong(&ok);
+
+    // Add drift back in (it was removed in addBookmark)
+    st=it->data(Qt::UserRole).toLongLong(&ok) + drift;
+    et=it->data(Qt::UserRole+1).toLongLong(&ok) + drift;
     qint64 st2=0,et2=0,st3,et3;
     Day * day=p_profile->GetGoodDay(previous_date,MT_CPAP);
     if (day) {

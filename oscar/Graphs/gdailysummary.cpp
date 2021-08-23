@@ -22,10 +22,14 @@ void gDailySummary::SetDay(Day *day)
 {
     QList<ChannelID> piechans;
 
-    piechans.append(CPAP_ClearAirway);
-    piechans.append(CPAP_Obstructive);
-    piechans.append(CPAP_Apnea);
-    piechans.append(CPAP_Hypopnea);
+    for (int i = 0; i < ahiChannels.size(); i++)
+        piechans.append(ahiChannels.at(i));
+
+//    piechans.append(CPAP_ClearAirway);
+//    piechans.append(CPAP_AllApnea);
+//    piechans.append(CPAP_Obstructive);
+//    piechans.append(CPAP_Apnea);
+//    piechans.append(CPAP_Hypopnea);
     piechans.append(CPAP_RERA);
     piechans.append(CPAP_FlowLimit);
 

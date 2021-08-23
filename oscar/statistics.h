@@ -128,7 +128,7 @@ public:
         dates = copy.dates;
         highlight = copy.highlight;
     }
-    RXItem& operator=(const RXItem& other) = default;
+    RXItem& operator=(const RXItem&) = default;
     inline quint64 count(ChannelID id) const {
         QHash<ChannelID, quint64>::const_iterator it = s_count.find(id);
         if (it == s_count.end()) return 0;

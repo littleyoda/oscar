@@ -182,7 +182,7 @@ QString Day::calcMiddleLabel(ChannelID code)
 }
 QString Day::calcMaxLabel(ChannelID code)
 {
-    return QObject::tr("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("Peak") : STR_TR_Max).arg(schema::channel[code].label());
+    return QObject::tr("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
 }
 QString Day::calcPercentileLabel(ChannelID code)
 {
@@ -637,6 +637,12 @@ EventDataType Day::sum(ChannelID code)
 {
     // Cache this?
     EventDataType val = 0;
+
+    if (code == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            val += sum(ahiChannels.at(i));
+        return val;
+    }
 
     for (auto & sess : sessions) {
         if (sess->enabled() && sess->m_sum.contains(code)) {
@@ -1118,6 +1124,12 @@ EventDataType Day::count(ChannelID code)
 {
     EventDataType total = 0;
 
+    if (code == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            total += count(ahiChannels.at(i));
+        return total;
+    }
+
     for (auto & sess : sessions) {
         if (sess->enabled() && sess->m_cnt.contains(code)) {
             total += sess->count(code);
@@ -1501,6 +1513,31 @@ QString Day::getPressureRelief()
 
     ChannelID pr_level_chan = loader->PresReliefLevel();
     ChannelID pr_mode_chan = loader->PresReliefMode();
+
+    // Separate calculation for SleepStyle machines
+    if (mach->info.loadername == "SleepStyle") {
+        pr_str = loader->PresReliefLabel();
+
+        int pr_level = -1;
+        if (pr_level_chan != NoChannel && settingExists(pr_level_chan)) {
+            pr_level = qRound(settings_wavg(pr_level_chan));
+        }
+        if (pr_level == -1)
+            return STR_TR_None;
+
+        if ((pr_mode_chan != NoChannel) && settingExists(pr_mode_chan)) {
+            schema::Channel & chan = schema::channel[pr_level_chan];
+            QString level = chan.option(pr_level);
+            if (level.isEmpty()) {
+                level = QString().number(pr_level) + " " + chan.units();
+            if (settings_min(pr_level_chan) != settings_max(pr_level_chan))
+                level = QObject::tr("varies");
+            }
+            pr_str += QString(" %1").arg(level);
+        }
+
+        return pr_str;
+    }
 
     if ((pr_mode_chan != NoChannel) && settingExists(pr_mode_chan)) {
         // TODO: This is an awful hack that depends on the enum ordering of the pressure relief mode.

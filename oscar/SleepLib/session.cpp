@@ -119,7 +119,9 @@ bool Session::OpenEvents()
 
 
     QString filename = eventFile();
+#ifdef DEBUG_EVENTS
     qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
+#endif
     bool b = LoadEvents(filename);
 
     if ( ! b) {
@@ -816,7 +818,7 @@ bool Session::LoadEvents(QString filename)
 
     QFile file(filename);
 
-    if (!file.open(QIODevice::ReadOnly)) {
+    if ( ! file.open(QIODevice::ReadOnly)) {
 //        qDebug() << "No Event/Waveform data available for" << s_session;
         qWarning() << "No Event/Waveform data available for" << s_session << "filename" << filename << "error code" << file.error() << file.errorString();
         return false;
@@ -835,6 +837,10 @@ bool Session::LoadEvents(QString filename)
     header >> sessid;           //(quint32)
     header >> s_first;          //(qint64)
     header >> s_last;           //(qint64)
+
+#ifdef DEBUG_EVENTS
+    qDebug() << "Session ID" << sessid << "Start Time" << QDateTime::fromMSecsSinceEpoch(s_first);
+#endif
 
     if (type != filetype_data) {
         qDebug() << "Wrong File Type in " << filename;
@@ -893,6 +899,9 @@ bool Session::LoadEvents(QString filename)
 
     qint16 mcsize;
     in >> mcsize;   // number of Machine Code lists
+#ifdef DEBUG_EVENTS
+    qDebug() << "Number of Channels" << mcsize;
+#endif
 
     ChannelID code;
     qint64 ts1, ts2;
@@ -916,10 +925,17 @@ bool Session::LoadEvents(QString filename)
         mcorder.push_back(code);
         in >> size2;
         sizevec.push_back(size2);
+#ifdef DEBUG_EVENTS
+        qDebug() << "For Channel (hex)" << QString::number(code, 16) << "there are" << size2 << "EventLists";
+#endif
 
         for (int j = 0; j < size2; j++) {
             in >> ts1;
             in >> ts2;
+#ifdef DEBUG_EVENTS
+            qDebug() << "Start:" << QDateTime::fromMSecsSinceEpoch(ts1).toString() <<
+                        "Finish:" << QDateTime::fromMSecsSinceEpoch(ts2).toString();
+#endif
             in >> evcount;
             in >> t8;
             elt = (EventListType)t8;
@@ -953,7 +969,7 @@ bool Session::LoadEvents(QString filename)
         }
     }
 
-    //EventStoreType t;
+    //EventStoreType t;     // qint16
     //quint32 x;
 
     for (int i = 0; i < mcsize; i++) {
@@ -970,6 +986,7 @@ bool Session::LoadEvents(QString filename)
             in.readRawData((char *)ptr, evec.m_count << 1);
 
             //*** Don't delete these comments ***
+            //*** They explain what the above ReadRawData is doing!
             //            for (quint32 c=0;c<evec.m_count;c++) {
             //                in >> t;
             //                *ptr++=t;
@@ -980,6 +997,7 @@ bool Session::LoadEvents(QString filename)
 
                 in.readRawData((char *)ptr, evec.m_count << 1);
                 //*** Don't delete these comments ***
+                //*** They explain what the above ReadRawData is doing!
                 //                for (quint32 c=0;c<evec.m_count;c++) {
                 //                    in >> t;
                 //                    *ptr++=t;
@@ -1045,7 +1063,10 @@ void Session::updateCountSummary(ChannelID code)
 {
     QHash<ChannelID, QVector<EventList *> >::iterator ev = eventlist.find(code);
 
-    if (ev == eventlist.end()) { return; }
+    if (ev == eventlist.end()) { 
+        qDebug() << "No events for channel (hex)" << QString::number(code, 16);
+        return;
+    }
 
     QHash<ChannelID, QHash<EventStoreType, EventStoreType> >::iterator vs = m_valuesummary.find(code);
 
@@ -1118,7 +1139,19 @@ void Session::updateCountSummary(ChannelID code)
         }
     }
 
-    if (valsum.size() == 0) { return; }
+    if ( valsum.size() == 0) {  // no value summary for this channel
+        using namespace schema;
+        Channel *ch_p = channel.channels[code];
+        if (  ! ch_p->isNull() ) {                      // the channel was found in the channel list
+            if ( ((ch_p->type() & (FLAG|SPAN)) == 0) ) {  // the channel is not a flag or span type
+                qDebug() << "No valuesummary for channel " << ch_p->label();    // so tell about missing summary
+            }
+        } else {
+            // This channel wasn't added to the channel list, so we can't check its type
+            qDebug() << "No valuesummary for channel (hex)" << QString::number(code, 16);
+        }
+        return;
+    }
 
     m_valuesummary[code] = valsum;
     m_timesummary[code] = timesum;
@@ -1517,7 +1550,9 @@ bool Session::channelDataExists(ChannelID id)
 }
 bool Session::channelExists(ChannelID id)
 {
-    if (!enabled()) { return false; }
+    if ( ! enabled()) { 
+        return false;
+    }
 
     if (s_events_loaded) {
         QHash<ChannelID, QVector<EventList *> >::iterator j = eventlist.find(id);
@@ -1532,7 +1567,9 @@ bool Session::channelExists(ChannelID id)
             return false;
         }
 
-        if (q.value() == 0) { return false; }
+        if (q.value() == 0) { 
+            return false;
+        }
     }
 
     return true;
@@ -1595,6 +1632,14 @@ EventDataType Session::countInsideSpan(ChannelID span, ChannelID code)
 
 EventDataType Session::rangeCount(ChannelID id, qint64 first, qint64 last)
 {
+    int total = 0, cnt;
+
+    if (id == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            total += rangeCount(ahiChannels.at(i), first, last);
+        return (EventDataType)total;
+    }
+
     QHash<ChannelID, QVector<EventList *> >::iterator j = eventlist.find(id);
 
     if (j == eventlist.end()) {
@@ -1602,7 +1647,6 @@ EventDataType Session::rangeCount(ChannelID id, qint64 first, qint64 last)
     }
 
     QVector<EventList *> &evec = j.value();
-    int total = 0, cnt;
 
     qint64 t, start;
 
@@ -1869,6 +1913,14 @@ EventDataType Session::rangeMax(ChannelID id, qint64 first, qint64 last)
 
 EventDataType Session::count(ChannelID id)
 {
+    int sum = 0;
+
+    if (id == AllAhiChannels) {
+        for (int i = 0; i < ahiChannels.size(); i++)
+            sum += count(ahiChannels.at(i));
+        return sum;
+    }
+
     QHash<ChannelID, EventDataType>::iterator i = m_cnt.find(id);
 
     if (i != m_cnt.end()) {
@@ -1884,7 +1936,6 @@ EventDataType Session::count(ChannelID id)
 
     QVector<EventList *> &evec = j.value();
 
-    int sum = 0;
     int evec_size=evec.size();
     if (evec_size == 0)
         return 0;

@@ -168,10 +168,14 @@ void ExportCSV::on_exportButton_clicked()
 
 
     QList<ChannelID> countlist, avglist, p90list, maxlist;
-    countlist.append(CPAP_Hypopnea);
-    countlist.append(CPAP_Obstructive);
-    countlist.append(CPAP_Apnea);
-    countlist.append(CPAP_ClearAirway);
+    for (int i = 0; i < ahiChannels.size(); i++)
+        countlist.append(ahiChannels.at(i));
+
+//    countlist.append(CPAP_Hypopnea);
+//    countlist.append(CPAP_Obstructive);
+//    countlist.append(CPAP_Apnea);
+//    countlist.append(CPAP_ClearAirway);
+//    countlist.append(CPAP_AllApnea);
     countlist.append(CPAP_VSnore);
     countlist.append(CPAP_VSnore2);
     countlist.append(CPAP_RERA);
@@ -248,14 +252,13 @@ void ExportCSV::on_exportButton_clicked()
                 data += sep + QString::number(day->size(), 10);
                 data += sep + start.toString(Qt::ISODate);
                 data += sep + end.toString(Qt::ISODate);
-                int time = day->total_time() / 1000L;
+                // Given this is a CPAP specific report, just report CPAP hours
+                int time = int(day->hours(MT_CPAP) * 3600L);
                 int h = time / 3600;
                 int m = int(time / 60) % 60;
                 int s = int(time) % 60;
                 data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
-                float ahi = day->count(CPAP_Obstructive) + day->count(CPAP_Hypopnea) + day->count(
-                                CPAP_Apnea) + day->count(CPAP_ClearAirway);
-                ahi /= day->hours();
+                float ahi = day->calcAHI();
                 data += sep + QString::number(ahi, 'f', 3);
 
                 for (int i = 0; i < countlist.size(); i++) {
@@ -299,8 +302,9 @@ void ExportCSV::on_exportButton_clicked()
                     int s = int(time) % 60;
                     data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
 
-                    float ahi = sess->count(CPAP_Obstructive) + sess->count(CPAP_Hypopnea) + sess->count(
-                                    CPAP_Apnea) + sess->count(CPAP_ClearAirway);
+                    float ahi = sess->count(AllAhiChannels);
+                                //sess->count(CPAP_AllApnea) + sess->count(CPAP_Obstructive) + sess->count(CPAP_Hypopnea)
+                                // + sess->count(CPAP_Apnea) + sess->count(CPAP_ClearAirway);
                     ahi /= sess->hours();
                     data += sep + QString::number(ahi, 'f', 3);
 

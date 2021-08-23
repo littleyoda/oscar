@@ -415,7 +415,7 @@ bool removeDir(const QString &path)
     return result;
 }
 
-void copyPath(QString src, QString dst)
+void copyPath(QString src, QString dst, bool overwrite)
 {
     QDir dir(src);
     if (!dir.exists())
@@ -425,7 +425,7 @@ void copyPath(QString src, QString dst)
     foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
         QString dst_path = dst + QDir::separator() + d;
         dir.mkpath(dst_path);
-        copyPath(src + QDir::separator() + d, dst_path);
+        copyPath(src + QDir::separator() + d, dst_path, overwrite);
     }
 
     // Files
@@ -433,6 +433,9 @@ void copyPath(QString src, QString dst)
         QString srcFile = src + QDir::separator() + f;
         QString destFile = dst + QDir::separator() + f;
 
+        if (overwrite && QFile::exists(destFile)) {
+            QFile::remove(destFile);
+        }
         if (!QFile::exists(destFile)) {
             if (!QFile::copy(srcFile, destFile)) {
                 qWarning() << "copyPath: could not copy" << srcFile << "to" << destFile;
@@ -536,6 +539,7 @@ QString STR_TR_Humidifier;
 
 QString STR_TR_H;       // Short form of Hypopnea
 QString STR_TR_OA;      // Short form of Obstructive Apnea
+QString STR_TR_A;       // Short form of Apnea
 QString STR_TR_UA;      // Short form of Unspecified Apnea
 QString STR_TR_CA;      // Short form of Clear Airway Apnea
 QString STR_TR_FL;      // Short form of Flow Limitation
@@ -638,6 +642,7 @@ QString STR_TR_Start;
 QString STR_TR_End;
 QString STR_TR_On;
 QString STR_TR_Off;
+QString STR_TR_Auto;
 QString STR_TR_Yes;
 QString STR_TR_No;
 
@@ -743,7 +748,8 @@ void initializeStrings()
 
     STR_TR_H = QObject::tr("H");      // Short form of Hypopnea
     STR_TR_OA = QObject::tr("OA");    // Short form of Obstructive Apnea
-    STR_TR_UA = QObject::tr("A");     // Short form of Unspecified Apnea
+    STR_TR_A = QObject::tr("A");     // Short form of All Apnea
+    STR_TR_UA = QObject::tr("UA");     // Short form of Unspecified Apnea
     STR_TR_CA = QObject::tr("CA");    // Short form of Clear Airway Apnea
     STR_TR_FL = QObject::tr("FL");    // Short form of Flow Limitation
     STR_TR_SA = QObject::tr("SA");    // Short form of Flow Limitation
@@ -845,6 +851,7 @@ void initializeStrings()
     STR_TR_End = QObject::tr("End");
     STR_TR_On = QObject::tr("On");
     STR_TR_Off = QObject::tr("Off");
+    STR_TR_Auto = QObject::tr("Auto");
     STR_TR_Yes = QObject::tr("Yes");
     STR_TR_No = QObject::tr("No");
 

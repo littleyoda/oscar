@@ -279,7 +279,11 @@ QDate Machine::pickDate(qint64 first)
     return date;
 }
 
-bool Machine::AddSession(Session *s)
+// allowOldSessions defaults to false and is only set to true when loading
+// summary data on profile load. This true setting prevents old sessions from
+// becoming lost if user preference indicates to not import sessions prior to a
+// given date.
+bool Machine::AddSession(Session *s, bool allowOldSessions)
 {
     if (s == nullptr) {
         qCritical() << "AddSession() called with a null object";
@@ -303,7 +307,10 @@ bool Machine::AddSession(Session *s)
         return false;
     }
 
-    if (profile->session->ignoreOlderSessions()) {
+    // allowOldSessions is true when loading summaries (already imported sessions)
+    // We don't want to throw away data already in the database in circumstances
+    // where user wants to ignore old sessions on import.
+    if (profile->session->ignoreOlderSessions() && !allowOldSessions) {
         qint64 ignorebefore = profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch();
         if (s->last() < ignorebefore) {
             qDebug() << s->session() << "Ignoring old session";
@@ -783,7 +790,7 @@ bool Machine::Load(ProgressDialog *progress)
 
             // Forced to load it, because know nothing about this session..
             if (sess->LoadSummary()) {
-                AddSession(sess);
+                AddSession(sess, true);
             } else {
                 qWarning() << "Error loading summary file" << filename;
                 delete sess;
@@ -1019,7 +1026,7 @@ bool Machine::LoadSummary(ProgressDialog * progress)
 //      } 
 *****************************************************************/
         Session * sess = it.value();
-        if ( ! AddSession(sess)) {
+        if ( ! AddSession(sess, true)) {
             delete sess;
         } else {
             if (loadSummaries) {

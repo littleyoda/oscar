@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Header
  *
- * Copyright (c) 2019-2020 The OSCAR Team
+ * Copyright (c) 2019-2021 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -44,6 +44,8 @@ const int max_load_buffer_size = 1024 * 1024;
 #endif
 const QString prs1_class_name = STR_MACH_PRS1;
 
+QString ts(qint64 msecs);
+
 /*! \struct PRS1Waveform
     \brief Used in PRS1 Waveform Parsing */
 struct PRS1Waveform {
@@ -56,218 +58,8 @@ struct PRS1Waveform {
 };
 
 
-/*! \class PRS1DataChunk
- *  \brief Representing a chunk of event/summary/waveform data after the header is parsed. */
-class PRS1DataChunk
-{
-public:
-    /*
-    PRS1DataChunk() {
-        fileVersion = 0;
-        blockSize = 0;
-        htype = 0;
-        family = 0;
-        familyVersion = 0;
-        ext = 255;
-        sessionid = 0;
-        timestamp = 0;
-        
-        duration = 0;
-
-        m_filepos = -1;
-        m_index = -1;
-    }
-    */
-    PRS1DataChunk(class QFile & f, class PRS1Loader* loader);
-    ~PRS1DataChunk();
-    inline int size() const { return m_data.size(); }
-
-    QByteArray m_header;
-    QByteArray m_data;
-    QByteArray m_headerblock;
-    QList<class PRS1ParsedEvent*> m_parsedData;
-
-    QString m_path;
-    qint64 m_filepos;  // file offset
-    int m_index;  // nth chunk in file
-    inline void SetIndex(int index) { m_index = index; }
-
-    // Common fields
-    quint8 fileVersion;
-    quint16 blockSize;
-    quint8 htype;
-    quint8 family;
-    quint8 familyVersion;
-    quint8 ext;
-    SessionID sessionid;
-    quint32 timestamp;
-
-    // Waveform-specific fields
-    quint16 interval_count;
-    quint8 interval_seconds;
-    int duration;
-    QList<PRS1Waveform> waveformInfo;
-    
-    // V3 normal/non-waveform fields
-    QMap<unsigned char, short> hblock;
-
-    QMap<unsigned char, QByteArray> mainblock;
-    QMap<unsigned char, QByteArray> hbdata;
-    
-    // Trailing common fields
-    quint8 storedChecksum;  // header checksum stored in file, last byte of m_header
-    quint8 calcChecksum;    // header checksum as calculated when parsing
-    quint32 storedCrc;      // header + data CRC stored in file, last 2-4 bytes of chunk
-    quint32 calcCrc;        // header + data CRC as calculated when parsing
-
-    //! \brief Calculate a simplistic hash to check whether two chunks are identical.
-    inline quint64 hash(void) const { return ((((quint64) this->calcCrc) << 32) | this->timestamp); }
-    
-    //! \brief Parse and return the next chunk from a PRS1 file
-    static PRS1DataChunk* ParseNext(class QFile & f, class PRS1Loader* loader);
-
-    //! \brief Read and parse the next chunk header from a PRS1 file
-    bool ReadHeader(class QFile & f);
-
-    //! \brief Read the chunk's data from a PRS1 file and calculate its CRC, must be called after ReadHeader
-    bool ReadData(class QFile & f);
-    
-    //! \brief Figures out which Compliance Parser to call, based on machine family/version and calls it.
-    bool ParseCompliance(void);
-    
-    //! \brief Parse a single data chunk from a .000 file containing compliance data for a P25x brick
-    bool ParseComplianceF0V23(void);
-    
-    //! \brief Parse a single data chunk from a .000 file containing compliance data for a P256x brick
-    bool ParseComplianceF0V4(void);
-    
-    //! \brief Parse a single data chunk from a .000 file containing compliance data for a x00V brick
-    bool ParseComplianceF0V5(void);
-    
-    //! \brief Parse a single data chunk from a .000 file containing compliance data for a DreamStation 200X brick
-    bool ParseComplianceF0V6(void);
-    
-    //! \brief Figures out which Summary Parser to call, based on machine family/version and calls it.
-    bool ParseSummary();
-
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 2 or 3 machine
-    bool ParseSummaryF0V23(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 4 machine
-    bool ParseSummaryF0V4(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 6 machine
-    bool ParseSummaryF0V6(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 0 or 3) machine
-    bool ParseSummaryF3V03(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6) machine
-    bool ParseSummaryF3V6(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 0-2 machine
-    bool ParseSummaryF5V012(void);
-    
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 3 machine
-    bool ParseSummaryF5V3(void);
-
-    //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for CPAP/APAP family versions 2, 3, 4, or 5
-    void ParseFlexSettingF0V2345(quint8 flex, int prs1mode);
-    
-    //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for ASV family versions 0, 1, or 2
-    void ParseFlexSettingF5V012(quint8 flex, int prs1mode);
-    
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for original System One (50-Series) machines: F0V23 and F5V0
-    void ParseHumidifierSetting50Series(int humid, bool add_setting=false);
-
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 (60-Series) machines
-    void ParseHumidifierSetting60Series(unsigned char humid1, unsigned char humid2, bool add_setting=false);
-
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 machines (differs from other 60-Series machines)
-    void ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting=false);
-
-    //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 machines
-    void ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting=false);
-
-    //! \brief Parse tubing type from a .001 containing summary data for fileversion 3 machines
-    void ParseTubingTypeV3(unsigned char type);
-
-    //! \brief Figures out which Event Parser to call, based on machine family/version and calls it.
-    bool ParseEvents(void);
-
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP machine
-    bool ParseEventsF0V23(void);
-    
-    //! \brief Parse a single data chunk from a .002 file containing event data for a 60 Series family 0 CPAP/APAP 60machine
-    bool ParseEventsF0V4(void);
-    
-    //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
-    bool ParseEventsF0V6(void);
-
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 0 or 3 machine
-    bool ParseEventsF3V03(void);
-    
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 6 machine
-    bool ParseEventsF3V6(void);
-    
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 0 machine
-    bool ParseEventsF5V0(void);
-
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 1 machine
-    bool ParseEventsF5V1(void);
-
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 2 machine
-    bool ParseEventsF5V2(void);
-
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 machine
-    bool ParseEventsF5V3(void);
-
-protected:
-    class PRS1Loader* loader;
-    
-    //! \brief Add a parsed event to the chunk
-    void AddEvent(class PRS1ParsedEvent* event);
-
-    //! \brief Read and parse the non-waveform header data from a V2 PRS1 file
-    bool ReadNormalHeaderV2(class QFile & f);
-
-    //! \brief Read and parse the non-waveform header data from a V3 PRS1 file
-    bool ReadNormalHeaderV3(class QFile & f);
-
-    //! \brief Read and parse the waveform-specific header data from a PRS1 file
-    bool ReadWaveformHeader(class QFile & f);
-
-    //! \brief Extract the stored CRC from the end of the data of a PRS1 chunk
-    bool ExtractStoredCrc(int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF0V23(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF0V45(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF0V6(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF5V012(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF5V3(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF3V03(const unsigned char* data, int size);
-
-    //! \brief Parse a settings slice from a .000 and .001 file
-    bool ParseSettingsF3V6(const unsigned char* data, int size);
-};
-
-
-#if UNITTEST_MODE
-QString _PRS1ParsedEventName(PRS1ParsedEvent* e);
-QMap<QString,QString> _PRS1ParsedEventContents(PRS1ParsedEvent* e);
-#endif
-
+class PRS1DataChunk;
+class PRS1ParsedEvent;
 
 class PRS1Loader;
 
@@ -282,13 +74,7 @@ public:
         session = nullptr;
         m_currentSliceInitialized = false;
     }
-    virtual ~PRS1Import() {
-        delete compliance;
-        delete summary;
-        for (auto & e : m_event_chunks.values()) { delete e; }
-        for (int i=0;i < waveforms.size(); ++i) { delete waveforms.at(i); }
-        for (auto & c : oximetry) { delete c; }
-    }
+    virtual ~PRS1Import();
 
     //! \brief PRS1Import thread starts execution here.
     virtual void run();
@@ -477,10 +263,6 @@ class PRS1Loader : public CPAPLoader
     bool ParseSummary(Machine *mach, qint32 sequence, quint32 timestamp, unsigned char *data,
                       quint16 size, int family, int familyVersion);
 
-
-
-    //! \brief Open a PRS1 data file, and break into data chunks, delivering them to the correct parser.
-    bool OpenFile(Machine *mach, const QString & filename);
 
     QHash<SessionID, Session *> extra_session;
 

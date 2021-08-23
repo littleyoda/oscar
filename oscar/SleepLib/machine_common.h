@@ -141,13 +141,15 @@ struct MachineInfo {
 enum MCDataType
 { MC_bool = 0, MC_int, MC_long, MC_float, MC_double, MC_string, MC_datetime };
 
+extern ChannelID AllAhiChannels;
+extern QVector<ChannelID> ahiChannels;
 
 extern ChannelID NoChannel, SESSION_ENABLED, CPAP_SummaryOnly;
 extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi,
        CPAP_Pressure, CPAP_PS, CPAP_PSMin, CPAP_PSMax,
        CPAP_Mode, CPAP_AHI,
        CPAP_PressureMin, CPAP_PressureMax, CPAP_Ramp, CPAP_RampTime, CPAP_RampPressure, CPAP_Obstructive,
-       CPAP_Hypopnea,
+       CPAP_Hypopnea, CPAP_AllApnea,
        CPAP_ClearAirway, CPAP_Apnea, CPAP_PB, CPAP_CSR, CPAP_LeakFlag, CPAP_ExP, CPAP_NRI, CPAP_VSnore,
        CPAP_VSnore2,
        CPAP_RERA, CPAP_PressurePulse, CPAP_FlowLimit, CPAP_SensAwake, CPAP_FlowRate, CPAP_MaskPressure,
@@ -164,7 +166,9 @@ extern ChannelID CPAP_LargeLeak, PRS1_BND,
        CPAP_HumidSetting,
        PRS1_MaskResistSet, PRS1_HoseDiam, PRS1_AutoOn, PRS1_AutoOff, PRS1_MaskAlert, PRS1_ShowAHI;
 
-extern ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2;
+extern ChannelID INTELLIPAP_Unknown1, INTELLIPAP_Unknown2, INTP_SnoreFlag;
+
+//extern ChannelID SS_SenseAwakeLevel, SS_EPR, SS_EPRLevel, SS_Ramp;
 
 extern ChannelID OXI_Pulse, OXI_SPO2, OXI_Perf, OXI_PulseChange, OXI_SPO2Drop, OXI_Plethy;
 

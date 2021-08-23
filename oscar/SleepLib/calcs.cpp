@@ -82,17 +82,25 @@ bool SearchEvent(Session * session, ChannelID code, qint64 time, int dur, bool u
 
 bool SearchApnea(Session *session, qint64 time, double dur)
 {
-    if (SearchEvent(session, CPAP_Obstructive, time, dur))
-        return true;
 
-    if (SearchEvent(session, CPAP_Apnea, time, dur))
-        return true;
+    for (int i = 0; i < ahiChannels.size(); i++)
+        if (SearchEvent(session, ahiChannels.at(i), time, dur))
+            return true;
 
-    if (SearchEvent(session, CPAP_ClearAirway, time, dur))
-        return true;
-
-    if (SearchEvent(session, CPAP_Hypopnea, time, dur))
-        return true;
+//    if (SearchEvent(session, CPAP_AllApnea, time, dur))
+//        return true;
+//
+//    if (SearchEvent(session, CPAP_Obstructive, time, dur))
+//        return true;
+//
+//    if (SearchEvent(session, CPAP_Apnea, time, dur))
+//        return true;
+//
+//    if (SearchEvent(session, CPAP_ClearAirway, time, dur))
+//        return true;
+//
+//    if (SearchEvent(session, CPAP_Hypopnea, time, dur))
+//        return true;
 
     if (SearchEvent(session, CPAP_UserFlag1, time, dur, false))
         return true;
@@ -480,6 +488,7 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
     quint32 *tv_tptr = nullptr;
     EventStoreType *tv_dptr = nullptr;
     int tv_count = 0;
+    double tvlast = 0, tvlast2 = 0, tvlast3 = 0;
 
     if (calcTv) {
         TV = m_session->AddEventList(CPAP_TidalVolume, EVL_Event);
@@ -598,8 +607,23 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
             //double x=sqrt(q)*2;
             //val2=x;
 
-            if (tv < mintv) { mintv = tv; }
+            // Average TV over last three data points
+            if (tv_count == 0) {
+                if (tv > 800)           // Very much a Q&D patch to handle the first TV value not being calculated well
+                    tv = 300;           // If unreasonable, just set to a "reasonable" number.
+                tvlast = tvlast2 = tvlast3 = tv;
+            }
 
+//          if (tv_count < 4) {
+//              qDebug() << "tv" << tv << tvlast << tvlast2 << tvlast3 << "avg" << (tvlast + tvlast2 + tvlast3 + tv*2)/5;
+//          }
+
+            tv = (tvlast + tvlast2 + tvlast3 + tv*2)/5;
+            tvlast3 = tvlast2;
+            tvlast2 = tvlast;
+            tvlast = tv;
+
+            if (tv < mintv) { mintv = tv; }
             if (tv > maxtv) { maxtv = tv; }
 
             *tv_tptr++ = timeval;
@@ -889,8 +913,9 @@ void calcRespRate(Session *session, FlowParser *flowparser)
     bool calcTe = !session->eventlist.contains(CPAP_Te);
     bool calcMv = !session->eventlist.contains(CPAP_MinuteVent);
 
-
     int z = (calcResp ? 1 : 0) + (calcTv ? 1 : 0) + (calcMv ? 1 : 0);
+// Force calculation for testing calculation vs CPAP data
+//    z = 1;
 
     // If any of these three missing, remove all, and switch all on
     if (z > 0 && z < 3) {
@@ -950,10 +975,11 @@ EventDataType calcAHI(Session *session, qint64 start, qint64 end)
     if (start < 0) {
         // much faster..
         hours = session->hours();
-        cnt = session->count(CPAP_Obstructive)
-              + session->count(CPAP_Hypopnea)
-              + session->count(CPAP_ClearAirway)
-              + session->count(CPAP_Apnea);
+        cnt = session->count(AllAhiChannels);
+//              + session->count(CPAP_AllApnea)
+//              + session->count(CPAP_Hypopnea)
+//              + session->count(CPAP_ClearAirway)
+//              + session->count(CPAP_Apnea);
 
         if (rdi) {
             cnt += session->count(CPAP_RERA);
@@ -965,10 +991,12 @@ EventDataType calcAHI(Session *session, qint64 start, qint64 end)
 
         if (hours == 0) { return 0; }
 
-        cnt = session->rangeCount(CPAP_Obstructive, start, end)
-              + session->rangeCount(CPAP_Hypopnea, start, end)
-              + session->rangeCount(CPAP_ClearAirway, start, end)
-              + session->rangeCount(CPAP_Apnea, start, end);
+        cnt = session->rangeCount(AllAhiChannels, start, end);
+//        cnt = session->rangeCount(CPAP_Obstructive, start, end)
+//              + session->rangeCount(CPAP_AllApnea, start, end)
+//              + session->rangeCount(CPAP_Hypopnea, start, end)
+//              + session->rangeCount(CPAP_ClearAirway, start, end)
+//              + session->rangeCount(CPAP_Apnea, start, end);
 
         if (rdi) {
             cnt += session->rangeCount(CPAP_RERA, start, end);
@@ -1004,12 +1032,18 @@ int calcAHIGraph(Session *session)
         session->destroyEvent(CPAP_RDI);
     }
 
-    if (!session->channelExists(CPAP_Obstructive) &&
-            !session->channelExists(CPAP_Hypopnea) &&
-            !session->channelExists(CPAP_Apnea) &&
-            !session->channelExists(CPAP_ClearAirway) &&
-            !session->channelExists(CPAP_RERA)
-       ) { return 0; }
+    bool gotsome = false;
+    for (int i = 0; i < ahiChannels.size(); i++)
+        gotsome = gotsome || session->channelExists(ahiChannels.at(i));
+
+//    if (!session->channelExists(CPAP_Obstructive) &&
+//            !session->channelExists(CPAP_AllApnea) &&
+//            !session->channelExists(CPAP_Hypopnea) &&
+//            !session->channelExists(CPAP_Apnea) &&
+//            !session->channelExists(CPAP_ClearAirway) &&
+//            !session->channelExists(CPAP_RERA)
+    if (!gotsome)
+       return 0;
 
     qint64 first = session->first(),
            last = session->last(),
@@ -1047,10 +1081,12 @@ int calcAHIGraph(Session *session)
                     break;
                 }
 
-                events = session->rangeCount(CPAP_Obstructive, ti, t)
-                         + session->rangeCount(CPAP_Hypopnea, ti, t)
-                         + session->rangeCount(CPAP_ClearAirway, ti, t)
-                         + session->rangeCount(CPAP_Apnea, ti, t);
+                events = session->rangeCount(AllAhiChannels, ti, t);
+//                events = session->rangeCount(CPAP_Obstructive, ti, t)
+//                         + session->rangeCount(CPAP_Hypopnea, ti, t)
+//                         + session->rangeCount(CPAP_Hypopnea, ti, t)
+//                         + session->rangeCount(CPAP_ClearAirway, ti, t)
+//                         + session->rangeCount(CPAP_Apnea, ti, t);
 
                 ahi = events / hours;
 
@@ -1076,10 +1112,13 @@ int calcAHIGraph(Session *session)
             f = ti - window_size_ms;
             //hours=window_size; //double(ti-f)/3600000L;
 
-            events = session->rangeCount(CPAP_Obstructive, f, ti)
-                     + session->rangeCount(CPAP_Hypopnea, f, ti)
-                     + session->rangeCount(CPAP_ClearAirway, f, ti)
-                     + session->rangeCount(CPAP_Apnea, f, ti);
+//            events = session->rangeCount(CPAP_Obstructive, f, ti)
+//                     + session->rangeCount(CPAP_AllApnea, f, ti)
+//                     + session->rangeCount(CPAP_Hypopnea, f, ti)
+//                     + session->rangeCount(CPAP_ClearAirway, f, ti)
+//                     + session->rangeCount(CPAP_Apnea, f, ti);
+
+            events = session->rangeCount(AllAhiChannels, f, ti);
 
             ahi = events / hours;
             avgahi += ahi;

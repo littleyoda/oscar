@@ -6,12 +6,18 @@
 
 message(Platform is $$QMAKESPEC )
 
-lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
-    message("You need Qt 5.9 to build OSCAR with Help Pages")
-    DEFINES += helpless
-}
-lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,7) {
+lessThan(QT_MAJOR_VERSION,5) {
     error("You need Qt 5.7 or newer to build OSCAR");
+}
+
+if (equals(QT_MAJOR_VERSION,5)) {
+    lessThan(QT_MINOR_VERSION,9) {
+        message("You need Qt 5.9 to build OSCAR with Help Pages")
+        DEFINES += helpless
+    }
+    lessThan(QT_MINOR_VERSION,7) {
+        error("You need Qt 5.7 or newer to build OSCAR");
+    }
 }
 
 # get rid of the help browser, at least for now
@@ -289,9 +295,15 @@ SOURCES += \
     SleepLib/loader_plugins/cms50_loader.cpp \
     SleepLib/loader_plugins/dreem_loader.cpp \
     SleepLib/loader_plugins/icon_loader.cpp \
+    SleepLib/loader_plugins/sleepstyle_loader.cpp \
+    SleepLib/loader_plugins/sleepstyle_EDFinfo.cpp \
     SleepLib/loader_plugins/intellipap_loader.cpp \
     SleepLib/loader_plugins/mseries_loader.cpp \
     SleepLib/loader_plugins/prs1_loader.cpp \
+    SleepLib/loader_plugins/prs1_parser.cpp \
+    SleepLib/loader_plugins/prs1_parser_xpap.cpp \
+    SleepLib/loader_plugins/prs1_parser_vent.cpp \
+    SleepLib/loader_plugins/prs1_parser_asv.cpp \
     SleepLib/loader_plugins/resmed_loader.cpp \
     SleepLib/loader_plugins/resmed_EDFinfo.cpp \
     SleepLib/loader_plugins/somnopose_loader.cpp \
@@ -300,6 +312,7 @@ SOURCES += \
     zip.cpp \
     miniz.c \
     csv.cpp \
+    rawdata.cpp \
     translation.cpp \
     statistics.cpp \
     oximeterimport.cpp \
@@ -369,9 +382,12 @@ HEADERS  += \
     SleepLib/loader_plugins/cms50_loader.h \
     SleepLib/loader_plugins/dreem_loader.h \
     SleepLib/loader_plugins/icon_loader.h \
+    SleepLib/loader_plugins/sleepstyle_loader.h \
+    SleepLib/loader_plugins/sleepstyle_EDFinfo.h \
     SleepLib/loader_plugins/intellipap_loader.h \
     SleepLib/loader_plugins/mseries_loader.h \
     SleepLib/loader_plugins/prs1_loader.h \
+    SleepLib/loader_plugins/prs1_parser.h \
     SleepLib/loader_plugins/resmed_loader.h \
     SleepLib/loader_plugins/resmed_EDFinfo.h \
     SleepLib/loader_plugins/somnopose_loader.h \
@@ -380,6 +396,7 @@ HEADERS  += \
     zip.h \
     miniz.h \
     csv.h \
+    rawdata.h \
     translation.h \
     statistics.h \
     oximeterimport.h \
@@ -487,18 +504,26 @@ DISTFILES += help/default.css \
 QMAKE_CFLAGS += -Werror
 QMAKE_CXXFLAGS += -Werror
 
+
 gcc | clang {
     COMPILER_VERSION = $$system($$QMAKE_CXX " -dumpversion")
-    COMPILER_MAJOR = $$str_member($$COMPILER_VERSION)
-    greaterThan(COMPILER_MAJOR, 9) : {
-        QMAKE_CFLAGS += -Wno-error=depreciated-copy
-        QMAKE_CXX_FLAGS += -Wno-error=depreciated-copy
-        message("Removing depreciated-copy error")
+    COMPILER_MAJOR = $$split(COMPILER_VERSION, ".")
+    COMPILER_MAJOR = $$first(COMPILER_MAJOR)
+
+    message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
+
+    greaterThan(COMPILER_MAJOR, 10) : {
+        QMAKE_CFLAGS += -Wno-error=stringop-overread
+        QMAKE_CXXFLAGS += -Wno-error=stringop-overread
+        message("Removing stringop-overread error")
     }
+
 }
+
 # Make deprecation warnings just warnings
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+
 lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
     QMAKE_CFLAGS += -Wno-error=strict-aliasing
     QMAKE_CXXFLAGS += -Wno-error=strict-aliasing
@@ -543,6 +568,7 @@ test {
 
     SOURCES += \
         tests/prs1tests.cpp \
+        tests/rawdatatests.cpp \
         tests/resmedtests.cpp \
         tests/sessiontests.cpp \
         tests/versiontests.cpp \
@@ -554,6 +580,7 @@ test {
     HEADERS += \
         tests/AutoTest.h \
         tests/prs1tests.h \
+        tests/rawdatatests.h \
         tests/resmedtests.h \
         tests/sessiontests.h \
         tests/versiontests.h \

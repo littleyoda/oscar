@@ -34,33 +34,30 @@ ViatomLoader::Detect(const QString & path)
 }
 
 int
-ViatomLoader::Open(const QString & dirpath)
+ViatomLoader::Open(const QStringList & paths)
 {
-    qDebug() << "ViatomLoader::Open(" << dirpath << ")";
+    qDebug() << "ViatomLoader::Open(" << paths.join("; ") << ")";
     m_mach = nullptr;
     int imported = 0;
     int found = 0;
     s_unexpectedMessages.clear();
 
-    if (QFileInfo(dirpath).isDir()) {
-        QDir dir(dirpath);
-        dir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden);
-        dir.setNameFilters(getNameFilter());
-        dir.setSorting(QDir::Name);
-
-        for (auto & fi : dir.entryInfoList()) {
-            if (OpenFile(fi.canonicalFilePath())) {
-                imported++;
-            }
-            found++;
+    int size = paths.size();
+    for (int i=0; i < size; i++) {
+        if (isAborted()) {
+            break;
         }
-    }
-    else {
         // This filename has already been filtered by QFileDialog.
-        if (OpenFile(dirpath)) {
+        int ok = OpenFile(paths[i]);
+        if (ok > 0) {
             imported++;
+        } else if (ok < 0) {
+            // Stop on error...
+            break;
         }
         found++;
+        emit setProgressValue(i+1);
+        QCoreApplication::processEvents();
     }
 
     if (!found) {
@@ -91,25 +88,30 @@ ViatomLoader::Open(const QString & dirpath)
         }
     }
 
-    return imported;
+    return found;
 }
 
-bool ViatomLoader::OpenFile(const QString & filename)
+int ViatomLoader::OpenFile(const QString & filename)
 {
     Machine* mach = nullptr;
+    bool existing = false;
 
-    Session* sess = ParseFile(filename);
+    Session* sess = ParseFile(filename, &existing);
     if (sess) {
         SaveSessionToDatabase(sess);
         mach = sess->machine();
         m_mach = mach;
+        return 1;
     }
 
-    return mach != nullptr;
+    return existing ? 0 : -1; // -1 = error
 }
 
-Session* ViatomLoader::ParseFile(const QString & filename)
+Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
 {
+    if (existing) {
+        *existing = false;
+    }
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
         qDebug() << "Couldn't open Viatom data file" << filename;
@@ -136,6 +138,10 @@ Session* ViatomLoader::ParseFile(const QString & filename)
     if (mach->SessionExists(v.sessionid())) {
         // Skip already imported session
         //qDebug() << filename << "session already exists, skipping" << v.sessionid();
+        if (existing) {
+            // Inform the caller (if they are interested) that this session was already imported
+            *existing = true;
+        }
         return nullptr;
     }
 

@@ -13,6 +13,7 @@
 
 #include "mainwindow.h"
 #include "SleepLib/profiles.h"
+#include "SleepLib/machine_common.h"
 #include "gSessionTimesChart.h"
 
 #include "gYAxis.h"
@@ -1134,7 +1135,9 @@ void gTTIAChart::afterDraw(QPainter &, gGraph &graph, QRectF rect)
 void gTTIAChart::populate(Day *day, int idx)
 {
     QVector<SummaryChartSlice> & slices = cache[idx];
-    float ttia = day->sum(CPAP_Obstructive) + day->sum(CPAP_ClearAirway) + day->sum(CPAP_Apnea) + day->sum(CPAP_Hypopnea);
+//    float ttia = day->sum(CPAP_AllApnea) + day->sum(CPAP_Obstructive) + day->sum(CPAP_ClearAirway) + day->sum(CPAP_Apnea) + day->sum(CPAP_Hypopnea);
+    float ttia = day->sum(AllAhiChannels);
+
     int h = ttia / 3600;
     int m = int(ttia) / 60 % 60;
     int s = int(ttia) % 60;

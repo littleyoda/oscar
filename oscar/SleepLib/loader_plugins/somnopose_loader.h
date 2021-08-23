@@ -26,8 +26,9 @@ class SomnoposeLoader : public MachineLoader
 
     virtual bool Detect(const QString & path) { Q_UNUSED(path); return false; }  // bypass autoscanner
 
-    virtual int Open(const QString & path);
+    virtual int Open(const QString & path) { Q_UNUSED(path); return 0; } // Only for CPAP
     virtual int OpenFile(const QString & filename);
+    virtual QStringList getNameFilter() { return QStringList("Somnopose CSV File (*.csv)"); }
     static void Register();
 
     virtual int Version() { return somnopose_data_version; }

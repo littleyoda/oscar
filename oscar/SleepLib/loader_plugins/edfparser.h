@@ -142,6 +142,9 @@ class EDFInfo
 
     static QDateTime getStartDT(const QString str);                    //! \brief Returns the start time using noLocalDST
 
+    static void setTimeZoneUTC();                                      //! \brief Sets noLocalDST to UTC (for EDF files using UTC time)
+
+
 //  The data members follow
 
     static int  TZ_offset;

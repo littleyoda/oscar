@@ -74,7 +74,7 @@ struct ValueCount {
 
 extern int idealThreads();
 
-void copyPath(QString src, QString dst);
+void copyPath(QString src, QString dst, bool overwrite=false);
 
 
 // Primarily sort by value
@@ -157,6 +157,7 @@ const QString STR_MACH_Journal = "Journal";
 const QString STR_MACH_Intellipap = "Intellipap";
 const QString STR_MACH_Weinmann= "Weinmann";
 const QString STR_MACH_FPIcon = "FPIcon";
+const QString STR_MACH_SleepStyle = "SleepStyle";
 const QString STR_MACH_MSeries = "MSeries";
 const QString STR_MACH_CMS50 = "CMS50";
 const QString STR_MACH_ZEO = "Zeo";
@@ -261,6 +262,7 @@ extern QString STR_TR_Humidifier;
 
 extern QString STR_TR_H;       // Short form of Hypopnea
 extern QString STR_TR_OA;      // Short form of Obstructive Apnea
+extern QString STR_TR_A;       // Short form of Apnea
 extern QString STR_TR_UA;      // Short form of Unspecified Apnea
 extern QString STR_TR_CA;      // Short form of Clear Airway Apnea
 extern QString STR_TR_FL;      // Short form of Flow Limitation
@@ -360,6 +362,7 @@ extern QString STR_TR_Start;
 extern QString STR_TR_End;
 extern QString STR_TR_On;
 extern QString STR_TR_Off;
+extern QString STR_TR_Auto;
 extern QString STR_TR_Yes;
 extern QString STR_TR_No;
 

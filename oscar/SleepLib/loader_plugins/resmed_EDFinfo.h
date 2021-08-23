@@ -130,6 +130,7 @@ public:
         s_EPREnable = -1;
 
         s_PtAccess = -1;
+        s_PtView   = -1;
         s_ABFilter = -1;
         s_Mask = -1;
         s_Tube = -1;
@@ -139,6 +140,8 @@ public:
         s_TempEnable = -1;
         s_Temp = -1;
         s_SmartStart = -1;
+        s_SmartStop  = -1;
+        s_Comfort = -1;
 
         ramp_pressure = -1;
 
@@ -212,6 +215,7 @@ public:
     int s_EPREnable;
 
     int s_PtAccess;
+    int s_PtView;
     int s_ABFilter;
     int s_Mask;
     int s_Tube;
@@ -221,6 +225,8 @@ public:
     int s_TempEnable;
     EventDataType s_Temp;
     int s_SmartStart;
+    int s_SmartStop;
+    int s_Comfort;
 
 };
 

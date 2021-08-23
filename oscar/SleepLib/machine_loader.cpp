@@ -211,10 +211,13 @@ QList<ChannelID> CPAPLoader::eventFlags(Day * day)
         return list;
     }
 
-    list.push_back(CPAP_ClearAirway);
-    list.push_back(CPAP_Obstructive);
-    list.push_back(CPAP_Hypopnea);
-    list.push_back(CPAP_Apnea);
+    for (int i = 0; i < ahiChannels.size(); i++)
+        list.push_back(ahiChannels.at(i));
+//    list.push_back(CPAP_ClearAirway);
+//    list.push_back(CPAP_AllApnea);
+//    list.push_back(CPAP_Obstructive);
+//    list.push_back(CPAP_Hypopnea);
+//    list.push_back(CPAP_Apnea);
 
     return list;
 }
@@ -316,3 +319,26 @@ bool compressFile(QString infile, QString outfile)
     return true;
 }
 
+int MachineLoader::Open(const QStringList & paths)
+{
+    int i, skipped = 0;
+    int size = paths.size();
+    for (i=0; i < size; i++) {
+        if (isAborted()) {
+            break;
+        }
+        QString filename = paths[i];
+
+        int res = OpenFile(filename);
+        if (res < 0) {
+            break;
+        }
+        if (res == 0) {
+            // Should we report on skipped count?
+            skipped++;
+        }
+        emit setProgressValue(i+1);
+        QCoreApplication::processEvents();
+    }
+    return i;
+}
