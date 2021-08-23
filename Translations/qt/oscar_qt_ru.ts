@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ko">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>QShortcut</name>
     <message>
         <source>No</source>
-        <translation>아니요</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>예</translation>
+        <translation>Да</translation>
     </message>
 </context>
 <context>
@@ -20,71 +20,71 @@
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>아니요</translation>
+        <translation>&amp;Нет</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>예</translation>
+        <translation>&amp;Да</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>도움말</translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>열기</translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>저장</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>중단</translation>
+        <translation>Прервать</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>적용</translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>닫기</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>재설정</translation>
+        <translation>Сброс</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation>재시도</translation>
+        <translation>Повторная попытка</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation>기본설정으로 되돌리기</translation>
+        <translation>Восстановление настроек по умолчанию</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>취소</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>무시</translation>
+        <translation>Игнорировать</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>모두 아니요</translation>
+        <translation>Н&amp;ет всем</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation>모두 저장</translation>
+        <translation>Сохранить все</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>포기</translation>
+        <translation>Отбросить</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>모두 예</translation>
+        <translation>Д&amp;а всем</translation>
     </message>
 </context>
 </TS>

@@ -443,6 +443,10 @@
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation>(Modus- und Druckeinstellungen fehlen; die von gestern werden gezeigt.)</translation>
     </message>
+    <message>
+        <source>99.5%</source>
+        <translation type="unfinished">90% {99.5%?}</translation>
+    </message>
 </context>
 <context>
     <name>ExportCSV</name>
@@ -1264,7 +1268,7 @@
     </message>
     <message>
         <source>Import &amp;Viatom Data</source>
-        <translation>Import &amp;Viatom Daten</translation>
+        <translation type="vanished">Import &amp;Viatom Daten</translation>
     </message>
     <message>
         <source>Create zip of CPAP data card</source>
@@ -1409,6 +1413,18 @@
     <message>
         <source>Check for updates not implemented</source>
         <translation>Prüfung auf nicht implementierte Updates</translation>
+    </message>
+    <message>
+        <source>Import &amp;Viatom/Wellue Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Somnopause Data Import of %1 file(s) complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Somnopose Import Partial Success</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6198,7 +6214,7 @@ Stunden: %1</translation>
     </message>
     <message>
         <source>Humid. Lvl</source>
-        <translation>Feucht. Lvl</translation>
+        <translation type="vanished">Feucht. Lvl</translation>
     </message>
     <message>
         <source>12mm</source>
@@ -6635,6 +6651,18 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     <message>
         <source>Unable to check for updates. Please try again later.</source>
         <translation>Suche nach Updates nicht möglich. Bitte versuchen Sie es später noch einmal.</translation>
+    </message>
+    <message>
+        <source>Target Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRS1 Humidifier Target Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hum. Tgt Time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
