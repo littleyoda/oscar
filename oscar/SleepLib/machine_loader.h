@@ -41,8 +41,8 @@ const QString genericPixmapPath = ":/icons/mask.png";
 class MachineLoader: public QObject
 {
     Q_OBJECT
-    friend class ImportThread;
-    friend class Machine;
+    //friend class ImportThread;
+    //friend class Machine;
   public:
     MachineLoader();
     virtual ~MachineLoader();
@@ -140,13 +140,13 @@ public:
     CPAPLoader() : MachineLoader() {}
     virtual ~CPAPLoader() {}
 
-    virtual QList<ChannelID> eventFlags(Day * day);
+    //virtual QList<ChannelID> eventFlags(Day * day);
 
     virtual QString PresReliefLabel() { return QString(""); }
     virtual ChannelID PresReliefMode() { return NoChannel; }
     virtual ChannelID PresReliefLevel() { return NoChannel; }
-    virtual ChannelID HumidifierConnected() { return NoChannel; }
-    virtual ChannelID HumidifierLevel() { return CPAP_HumidSetting; }
+    //virtual ChannelID HumidifierConnected() { return NoChannel; }
+    //virtual ChannelID HumidifierLevel() { return CPAP_HumidSetting; }
     virtual ChannelID CPAPModeChannel() { return CPAP_Mode; }
     virtual void initChannels() {}
 

@@ -200,6 +200,7 @@ void DestroyLoaders()
     m_loaders.clear();
 }
 
+/*
 QList<ChannelID> CPAPLoader::eventFlags(Day * day)
 {
     Machine * mach = day->machine(MT_CPAP);
@@ -221,6 +222,7 @@ QList<ChannelID> CPAPLoader::eventFlags(Day * day)
 
     return list;
 }
+*/
 
 bool uncompressFile(QString infile, QString outfile)
 {
