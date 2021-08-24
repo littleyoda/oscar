@@ -94,7 +94,7 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     }
 
     QDateTime epoch(QDate(2001, 1, 1));
-    qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time;
+    qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time=0;
     qDebug() << "Epoch starts at" << epoch.toString();
 
     double timestamp, orientation=0, inclination=0, movement=0;
@@ -102,7 +102,8 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     QStringList fields;
     bool ok, orientation_ok, inclination_ok, movement_ok;
 
-    bool first = true;
+    bool first = true, skip_session = false;
+    int session_count = 0;
     MachineInfo info = newInfo();
     info.model = model;
     info.serial = serial;
@@ -115,6 +116,39 @@ int SomnoposeLoader::OpenFile(const QString & filename)
     while (!(data = ts.readLine()).isEmpty()) {
         fields = data.split(",");
 
+        if (fields.size() >= col_timestamp && fields[col_timestamp] == "-") {
+            // Flag end of session...
+            if (sess) {
+                if (ev_orientation) {
+                    sess->setMin(POS_Orientation, ev_orientation->Min());
+                    sess->setMax(POS_Orientation, ev_orientation->Max());
+                }
+                if (ev_inclination) {
+                    sess->setMin(POS_Inclination, ev_inclination->Min());
+                    sess->setMax(POS_Inclination, ev_inclination->Max());
+                }
+                if (ev_movement) {
+                    sess->setMin(POS_Movement, ev_movement->Min());
+                    sess->setMax(POS_Movement, ev_movement->Max());
+                }
+                sess->really_set_last(time);
+                sess->SetChanged(true);
+
+                mach->AddSession(sess);
+                session_count++;
+            }
+            // Prepare for potential next session...
+            sess = nullptr;
+            ev_orientation = ev_inclination = ev_movement = nullptr;
+            first = true;
+            skip_session = false;
+            continue;
+        }
+
+        if (skip_session) {
+            continue;
+        }
+
         if (fields.size() < hdr_size) { // missing fields.. skip this record
             continue;
         }
@@ -122,6 +156,7 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         timestamp = fields[col_timestamp].toDouble(&ok);
 
         if (!ok) { continue; }
+        orientation_ok = inclination_ok = movement_ok = false;
 
         if (col_orientation >= 0) {
             orientation = fields[col_orientation].toDouble(&orientation_ok);
@@ -142,12 +177,15 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         time = (timestamp * 1000.0) + ep;
 
         if (first) {
+            first = false;
             sid = time / 1000;
             qDebug() << "First timestamp is" << QDateTime::fromMSecsSinceEpoch(time).toString();
 
             if (mach->SessionExists(sid)) {
-                qDebug() << "File " << filename << " already loaded... skipping";
-                return 0; // Already imported
+                qDebug() << "File " << filename << " session " << sid << " already loaded... skipping";
+                // Continue processing file to allow for case where new sessions are added to a file
+                skip_session = true;
+                continue;
             }
 
             sess = new Session(mach, sid);
@@ -161,7 +199,6 @@ int SomnoposeLoader::OpenFile(const QString & filename)
             if (col_movement >= 0) {
                 ev_movement = sess->AddEventList(POS_Movement, EVL_Event, 1, 0, 0, 0);
             }
-            first = false;
         }
 
         sess->set_last(time);
@@ -193,14 +230,17 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         sess->SetChanged(true);
 
         mach->AddSession(sess);
+        session_count++;
+    }
 
+    if (session_count) {
         mach->Save();
         // Adding these to hopefully make data persistent...
         mach->SaveSummaryCache();
         p_profile->StoreMachines();
     }
 
-    return 1;
+    return session_count;
 }
 
 
