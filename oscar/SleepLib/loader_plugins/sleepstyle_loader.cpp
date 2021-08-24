@@ -21,7 +21,7 @@
 
 const QString FPHCARE = "FPHCARE";
 
-ChannelID SS_SenseAwakeLevel;
+ChannelID SS_SensAwakeLevel;
 ChannelID SS_EPR;
 ChannelID SS_EPRLevel;
 ChannelID SS_Ramp;
@@ -276,7 +276,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
 
     SessionID sid;//,st;
     float hours, mins;
-    Q_UNUSED(mins)      // Used only in debug mode
+
     // For diagnostics, print summary of last 20 session or one week
     qDebug() << "SS Loader - last 20 Sessions:";
 
@@ -300,9 +300,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
             hours = sess->hours();
             mins = hours * 60;
             dt = QDateTime::fromTime_t(sid);
-#ifdef DEBUGSS
             qDebug() << cnt << ":" << dt << "session" << sid << "," << mins << "minutes" << a;
-#endif
             if (dt.date() < date) {
                 break;
             }
@@ -383,7 +381,7 @@ quint32 ssconvertDate(quint32 timestamp)
     QDateTime dt = QDateTime(QDate(year, month, day), QTime(hour, minute, second), Qt::UTC);
 
 #ifdef DEBUGSS
-    qDebug().noquote() << "SS timestamp" << timestamp << year << month << day << dt << hour << minute << second;
+//    qDebug().noquote() << "SS timestamp" << timestamp << year << month << day << dt << hour << minute << second;
 #endif
 
 //    Q NO!!! _ASSERT(dt.isValid());
@@ -585,16 +583,16 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 
     quint32 ts;
     //QByteArray line;
-    unsigned char ramp, p3, j1, x1, mode;
+    unsigned char ramp, j1, x1, x2, mode;
 
     unsigned char runTime, useTime, minPressSet, maxPressSet, minPressSeen, pct95PressSeen, maxPressSeen;
-    unsigned char senseAwakeLevel, humidityLevel, EPRLevel;
+    unsigned char sensAwakeLevel, humidityLevel, EPRLevel;
     unsigned char CPAPpressSet, flags;
     quint16 c1, c2, c3, c4;
 //    quint16 d1, d2, d3;
     unsigned char d1, d2, d3, d4, d5, d6;
 
-    int usage; //,runtime;
+    int usage;
 
     QDate date;
 
@@ -621,7 +619,7 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
         ts = ssconvertDate(ts);
 
 #ifdef DEBUGSS
-        qDebug() << "\nSS SUM Session" << nblock << "with timestamp" << ts << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss");
+        qDebug() << "\nSS SUM Session" << nblock << "ts" << ts << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss");
 #endif
         // the following two quite often match in value
         in >> runTime;          // 0x04
@@ -648,14 +646,14 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
 
         in >> mode;  // 0x18
         in >> ramp;  // 0x19
-        in >> p3;  // 0x1a
+        in >> x1;  // 0x1a
 
-        in >> x1;  // 0x1b
+        in >> x2;  // 0x1b
 
         in >> CPAPpressSet;  // 0x1c
         in >> minPressSet;
         in >> maxPressSet;
-        in >> senseAwakeLevel;
+        in >> sensAwakeLevel;
         in >> humidityLevel;
         in >> EPRLevel;
         in >> flags;
@@ -664,20 +662,18 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
         unsigned char s [5];
         for (unsigned int i=0; i < sizeof(s); i++)
             in >> s[i];
-#ifdef DEBUGSS
-        qDebug() << "SS SUM block" << nblock
-                 << "a:"   <<"Pressure Min"<<minPressSeen<<"95%"<<pct95PressSeen<<"Max"<<maxPressSeen
-                 << "\nd:" <<d1<<d2<<d3<<d4<<d5<<d6
-                 << "\nj:" <<j1 << "   c:" << c1 << c2 << c3 << c4
-                 << "\np:" <<p3<<"Ramp"<<(ramp?"on":"off")
-                 << "\nx:" <<x1<<"CPAP Pressure" << CPAPpressSet << "Mode" << mode << (mode==0?"APAP":"CPAP")
-                 << "\ns:" <<"Min set" <<minPressSet<<"Max set"<<maxPressSet<<"SenseAwake"<<senseAwakeLevel<<"Humid"<<humidityLevel<<"EPR"<<EPRLevel<<"flags"<<flags
-                 << "\ns:" <<s[0]<<s[1]<<s[2]<<s[3]<<s[4];
 
-        if (runTime != useTime) {
-            qDebug() << "SS SUM run time" << runTime << "!= use time" << useTime << "-" << nblock << QDateTime::fromSecsSinceEpoch(ts).toString("MM/dd/yyyy hh:mm:ss");
-        }
+#ifdef DEBUGSS
+        qDebug() << "\nRuntime" << runTime << "useTime" << useTime << (runTime!=useTime?"****runTime != useTime":"")
+                 << "\nPressure Min"<<minPressSeen<<"95%"<<pct95PressSeen<<"Max"<<maxPressSeen
+                 << "\nd:" <<d1<<d2<<d3<<d4<<d5<<d6
+                 << "\nj:" <<j1 << "    c:" << c1 << c2 << c3 << c4 << "    x:" <<x1<<x2
+                 <<"\nRamp"<<(ramp?"on":"off")
+                 <<"CPAP Pressure" << CPAPpressSet << "Mode" << mode << (mode==0?"APAP":"CPAP")
+                 <<"\nAPAP Min set" <<minPressSet<<"Max set"<<maxPressSet<<"SensAwake"<<sensAwakeLevel<<"Humid"<<humidityLevel<<"EPR"<<EPRLevel<<"flags"<<flags
+                 << "\ns:" <<s[0]<<s[1]<<s[2]<<s[3]<<s[4];
 #endif
+
         if (!mach->SessionExists(ts)) {
             Session *sess = new Session(mach, ts);
             sess->really_set_first(qint64(ts) * 1000L);
@@ -706,9 +702,9 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
             sess->settings[SS_Ramp] = ramp;
 
             if (flags & 0x04)
-                sess->settings[SS_SenseAwakeLevel] = senseAwakeLevel / 10.0;
+                sess->settings[SS_SensAwakeLevel] = sensAwakeLevel / 10.0;
             else
-                sess->settings[SS_SenseAwakeLevel] = 0;
+                sess->settings[SS_SensAwakeLevel] = 0;
 
             sess->settings[CPAP_PresReliefMode] = PR_EPR;
 
@@ -874,7 +870,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 a4 = data[idx + 5];   // [0..5] UF1,  [6..7] Unknown
                 a5 = data[idx + 6];   // [0..5] UF2,  [6..7] Unknown
 
-                // SenseAwake bits are in the first two bits of the last three data fields
+                // SensAwake bits are in the first two bits of the last three data fields
                 // TODO: Confirm that the bits are in the right order
                 a6 = (a3 >> 6) << 4 | ((a4 >> 6) << 2) | (a5 >> 6);
 
@@ -928,23 +924,23 @@ void SleepStyleLoader::initChannels()
     using namespace schema;
     Channel * chan = nullptr;
 
-    channel.add(GRP_CPAP, chan = new Channel(SS_SenseAwakeLevel = 0xf305, SETTING,  MT_CPAP,   SESSION,
-        "SenseAwakeLevel-ss",
-        QObject::tr("SenseAwake level"),
-        QObject::tr("SenseAwake level"),
-        QObject::tr("SenseAwake"),
+    channel.add(GRP_CPAP, chan = new Channel(SS_SensAwakeLevel = 0xf305, SETTING,  MT_CPAP,   SESSION,
+        "SensAwakeLevel-ss",
+        QObject::tr("SensAwake level"),
+        QObject::tr("SensAwake level"),
+        QObject::tr("SensAwake"),
         STR_UNIT_CMH2O, DEFAULT, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
 
     channel.add(GRP_CPAP, chan = new Channel(SS_EPR = 0xf306, SETTING, MT_CPAP,   SESSION,
-        "EPR-ss", QObject::tr("EPR"), QObject::tr("Exhale Pressure Relief"), QObject::tr("EPR"),
+        "EPR-ss", QObject::tr("EPR"), QObject::tr("Expiratory Relief"), QObject::tr("EPR"),
         "", DEFAULT, Qt::black));
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
 
     channel.add(GRP_CPAP, chan = new Channel(SS_EPRLevel = 0xf307, SETTING,  MT_CPAP,  SESSION,
-        "EPRLevel-ss", QObject::tr("EPR Level"), QObject::tr("Exhale Pressure Relief Level"), QObject::tr("EPR Level"),
+        "EPRLevel-ss", QObject::tr("EPR Level"), QObject::tr("Expiratory Relief Level"), QObject::tr("EPR Level"),
         STR_UNIT_CMH2O, INTEGER, Qt::black));
     chan->addOption(0, STR_TR_Off);
 

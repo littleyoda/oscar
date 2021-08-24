@@ -38,7 +38,7 @@ class SleepStyle: public CPAP
 
 const int sleepstyle_load_buffer_size = 1024 * 1024;
 
-extern ChannelID SS_SenseAwakeLevel, SS_EPR, SS_EPRLevel, SS_Ramp, SS_Humidity;
+extern ChannelID SS_SensAwakeLevel, SS_EPR, SS_EPRLevel, SS_Ramp, SS_Humidity;
 
 const QString sleepstyle_class_name = STR_MACH_SleepStyle;
 
