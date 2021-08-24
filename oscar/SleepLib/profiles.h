@@ -558,6 +558,9 @@ class CPAPSettings : public PrefSettings
         initPref(STR_CS_AutoImport, false);
         initPref(STR_CS_BrickWarning, true);
 
+        // From old zMaskProfile::calcLeak comments:
+        // Average mask leak minimum at pressure 4 = 20.167
+        // Average mask slope = 1.76
         m_calcUnintentionalLeaks = initPref(STR_CS_CalculateUnintentionalLeaks, true).toBool();
         m_4cmH2OLeaks = initPref(STR_CS_4cmH2OLeaks, 20.167).toDouble();
         m_20cmH2OLeaks = initPref(STR_CS_20cmH2OLeaks, 48.333).toDouble();

@@ -1180,8 +1180,8 @@ struct TimeValue {
 
 struct zMaskProfile {
   public:
-    zMaskProfile();
-    ~zMaskProfile();
+    zMaskProfile() {};
+    ~zMaskProfile() {};
 
     void scanPressure(Session *session);
 
@@ -1197,13 +1197,6 @@ struct zMaskProfile {
 bool operator<(const TimeValue &p1, const TimeValue &p2)
 {
     return p1.time < p2.time;
-}
-
-zMaskProfile::zMaskProfile()
-{
-}
-zMaskProfile::~zMaskProfile()
-{
 }
 
 void zMaskProfile::scanPressureList(Session *session, ChannelID code)
@@ -1247,24 +1240,17 @@ void zMaskProfile::scanPressure(Session *session)
 // Returns what the nominal leak SHOULD be at the given pressure
 EventDataType zMaskProfile::calcLeak(EventStoreType pressure)
 {
-
-    // Average mask leak minimum at pressure 4 = 20.167
-    // Average mask slope = 1.76
-    // Min/max Slope = 1.313 - 2.188
-    // Min/max leak at pressure 4 = 18 - 22
-    // Min/max leak at pressure 20 = 42 - 54
-
     float leak; // = 0.0;
 
-        float lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-        float lpm20 = p_profile->cpap->custom20cmH2OLeaks();
+    float lpm4 = p_profile->cpap->custom4cmH2OLeaks();
+    float lpm20 = p_profile->cpap->custom20cmH2OLeaks();
 
-        float lpm = lpm20 - lpm4;
-        float ppm = lpm / 16.0;
+    float lpm = lpm20 - lpm4;
+    float ppm = lpm / 16.0;
 
-        float p = (pressure/10.0f) - 4.0;
+    float p = (pressure/10.0f) - 4.0;
 
-        leak = p * ppm + lpm4;
+    leak = p * ppm + lpm4;
 
     return leak;
 }
@@ -1287,6 +1273,7 @@ int calcLeaks(Session *session)
 
     maskProfile->scanPressure(session);
 
+    // TODO: a single leak eventlist incorrectly handles discontinuous data
     EventList *leak = session->AddEventList(CPAP_Leak, EVL_Event, 1);
 
     auto & EVL = session->eventlist[CPAP_LeakTotal];
