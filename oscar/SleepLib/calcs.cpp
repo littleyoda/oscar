@@ -1,5 +1,6 @@
-﻿/* Custom CPAP/Oximetry Calculations Header
+/* Custom CPAP/Oximetry Calculations Header
  *
+ * Copyright (c) 2021 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -1179,41 +1180,17 @@ struct TimeValue {
 
 struct zMaskProfile {
   public:
-    zMaskProfile(MaskType type, QString name);
+    zMaskProfile();
     ~zMaskProfile();
 
-    void reset() { pressureleaks.clear(); }
-    void scanLeaks(Session *session);
     void scanPressure(Session *session);
-    void updatePressureMin();
-    void updateProfile(Session *session);
-
-    void load(Profile *profile);
-    void save();
-
-    QMap<EventStoreType, EventDataType> pressuremax;
-    QMap<EventStoreType, EventDataType> pressuremin;
-    QMap<EventStoreType, EventDataType> pressurecount;
-    QMap<EventStoreType, EventDataType> pressuretotal;
-    QMap<EventStoreType, EventDataType> pressuremean;
-    QMap<EventStoreType, EventDataType> pressurestddev;
 
     QVector<TimeValue> Pressure;
 
     EventDataType calcLeak(EventStoreType pressure);
 
   protected:
-    static const quint32 version = 0;
-    void scanLeakList(EventList *leak);
     void scanPressureList(Session *session, ChannelID code);
-
-    MaskType    m_type;
-    QString     m_name;
-    Profile      *m_profile;
-    QString     m_filename;
-
-    QMap<EventStoreType, QMap<EventStoreType, quint32> > pressureleaks;
-    EventDataType maxP, minP, maxL, minL, m_factor;
 };
 
 
@@ -1222,61 +1199,11 @@ bool operator<(const TimeValue &p1, const TimeValue &p2)
     return p1.time < p2.time;
 }
 
-zMaskProfile::zMaskProfile(MaskType type, QString name)
-    : m_type(type), m_name(name)
+zMaskProfile::zMaskProfile()
 {
 }
 zMaskProfile::~zMaskProfile()
 {
-    save();
-}
-
-void zMaskProfile::load(Profile *profile)
-{
-    m_profile = profile;
-    m_filename = m_profile->Get("{" + STR_GEN_DataFolder + "}/MaskProfile.mp");
-    QFile f(m_filename);
-
-    if (!f.open(QFile::ReadOnly)) {
-        return;
-    }
-
-    QDataStream in(&f);
-    in.setVersion(QDataStream::Qt_4_6);
-    in.setByteOrder(QDataStream::LittleEndian);
-
-    quint32 m, v;
-    in >> m;
-    in >> v;
-
-    if (m != magic) {
-        qDebug() << "Magic wrong in zMaskProfile::load";
-    }
-
-    in >> pressureleaks;
-    f.close();
-}
-void zMaskProfile::save()
-{
-    if (m_filename.isEmpty()) {
-        return;
-    }
-
-    QFile f(m_filename);
-
-    if (!f.open(QFile::WriteOnly)) {
-        return;
-    }
-
-    QDataStream out(&f);
-    out.setVersion(QDataStream::Qt_4_6);
-    out.setByteOrder(QDataStream::LittleEndian);
-
-    out << (quint32)magic;
-    out << (quint32)version;
-
-    out << pressureleaks;
-    f.close();
 }
 
 void zMaskProfile::scanPressureList(Session *session, ChannelID code)
@@ -1309,204 +1236,12 @@ void zMaskProfile::scanPressure(Session *session)
 {
     Pressure.clear();
 
+    // TODO: account for CPAP_PressureSet and CPAP_IPAPSet used by PRS1.
     scanPressureList(session, CPAP_Pressure);
     scanPressureList(session, CPAP_IPAP);
 
     // Sort by time
     std::sort(Pressure.begin(), Pressure.end());
-}
-void zMaskProfile::scanLeakList(EventList *el)
-{
-    // Scans through Leak list, and builds a histogram of each leak value for each pressure.
-
-    qint64 start = el->first();
-    int count = el->count();
-    EventStoreType *dptr = el->rawData();
-    EventStoreType *eptr = dptr + count;
-    quint32 *tptr = el->rawTime();
-    //EventDataType gain=el->gain();
-
-    EventStoreType pressure, leak;
-
-    //EventDataType fleak;
-    qint64 ti;
-    bool found;
-
-    int psize = Pressure.size();
-    if (psize == 0) return;
-    TimeValue *tvstr = Pressure.data();
-    TimeValue *tvend = tvstr + (psize - 1);
-    TimeValue *p1, *p2;
-
-    // Scan through each leak item in event list
-    for (; dptr < eptr; dptr++) {
-        leak = *dptr;
-        ti = start + *tptr++;
-
-        found = false;
-        pressure = Pressure[0].value;
-
-        if (psize > 1) {
-            // Scan through pressure list to find pressure at this particular leak time
-            for (p1 = tvstr; p1 != tvend; ++p1) {
-                p2 = p1+1;
-
-                if ((p2->time > ti) && (p1->time <= ti)) {
-                    // leak within current pressure range
-                    pressure = p1->value;
-                    found = true;
-                    break;
-                } else if (p2->time == ti) {
-                    // can't remember why a added this condition...
-                    pressure = p2->value;
-                    found = true;
-                    break;
-                }
-
-
-//            for (int i = 0; i < Pressure.size() - 1; i++) {
-//                const TimeValue &p1 = Pressure[i];
-//                const TimeValue &p2 = Pressure[i + 1];
-
-//                if ((p2.time > ti) && (p1.time <= ti)) {
-//                    pressure = p1.value;
-//                    found = true;
-//                    break;
-//                } else if (p2.time == ti) {
-//                    pressure = p2.value;
-//                    found = true;
-//                    break;
-//                }
-            }
-        } else {
-            // were talking CPAP here with no ramp..
-            found = true;
-        }
-
-        if (found) {
-            // update the histogram of leak values for this pressure
-            pressureleaks[pressure][leak]++;
-            //            pmin=pressuremin.find(pressure);
-            //            fleak=EventDataType(leak) * gain;
-            //            if (pmin==pressuremin.end()) {
-            //                pressuremin[pressure]=fleak;
-            //                pressurecount[pressure]=pressureleaks[pressure][leak];
-            //            } else {
-            //                if (pmin.value() > fleak) {
-            //                    pmin.value()=fleak;
-            //                    pressurecount[pressure]=pressureleaks[pressure][leak];
-            //                }
-            //            }
-        }
-    }
-
-
-}
-void zMaskProfile::scanLeaks(Session *session)
-{
-    auto ELV = session->eventlist.find(CPAP_LeakTotal);
-    if (ELV == session->eventlist.end()) return;
-
-    auto & elv = ELV.value();
-
-    for (auto & it : elv) {
-        scanLeakList(it);
-    }
-}
-void zMaskProfile::updatePressureMin()
-{
-    EventStoreType pressure;
-    //EventDataType perc=0.1;
-    //EventDataType tmp,l1,l2;
-    //int idx1, idx2,
-    //int lks;
-    double SN;
-    double percentile = 0.40;
-
-    double p = 100.0 * percentile;
-    double nth, nthi;
-
-    int sum1, sum2, w1, w2, N, k;
-
-    // Calculate a weighted percentile of all leak values contained within each pressure, using pressureleaks histogram
-    for (auto it = pressureleaks.begin(), plend=pressureleaks.end(); it != plend; it++) {
-        pressure = it.key();
-        QMap<EventStoreType, quint32> &leakmap = it.value();
-        //lks = leakmap.size();
-        SN = 0;
-
-        auto lmend = leakmap.end();
-        // First sum total counts of all leaks
-        for (auto lit = leakmap.begin(); lit != lmend; ++lit) {
-            SN += lit.value();
-        }
-
-
-        nth = double(SN) * percentile; // index of the position in the unweighted set would be
-        nthi = floor(nth);
-
-        sum1 = 0, sum2 = 0;
-        w1 = 0, w2 = 0;
-
-        EventDataType v1 = 0, v2;
-
-        N = leakmap.size();
-        k = 0;
-
-        bool found = false;
-        double total = 0;
-
-        // why do this effectively twice? and k = size
-        for (auto lit = leakmap.begin(); lit != lmend; ++lit, ++k) {
-            total += lit.value();
-        }
-
-        pressuretotal[pressure] = total;
-
-        k = 0;
-        for (auto lit=leakmap.begin(); lit != lmend; ++lit, ++k) {
-            //for (k=0;k < N;k++) {
-            v1 = lit.key();
-            w1 = lit.value();
-            sum1 += w1;
-
-            if (sum1 > nthi) {
-                pressuremin[pressure] = v1;
-                pressurecount[pressure] = w1;
-                found = true;
-                break;
-            }
-
-            if (sum1 == nthi) {
-                break; // boundary condition
-            }
-        }
-
-        if (found) { continue; }
-
-        if (k >= N) {
-            pressuremin[pressure] = v1;
-            pressurecount[pressure] = w1;
-            continue;
-        }
-
-        v2 = (leakmap.begin() + (k + 1)).key();
-        w2 = (leakmap.begin() + (k + 1)).value();
-        sum2 = sum1 + w2;
-        // value lies between v1 and v2
-
-        double px = 100.0 / double(SN); // Percentile represented by one full value
-
-        // calculate percentile ranks
-        double p1 = px * (double(sum1) - (double(w1) / 2.0));
-        double p2 = px * (double(sum2) - (double(w2) / 2.0));
-
-        // calculate linear interpolation
-        double v = v1 + ((p - p1) / (p2 - p1)) * (v2 - v1);
-        pressuremin[pressure] = v;
-        pressurecount[pressure] = w1;
-
-    }
 }
 
 // Returns what the nominal leak SHOULD be at the given pressure
@@ -1521,7 +1256,6 @@ EventDataType zMaskProfile::calcLeak(EventStoreType pressure)
 
     float leak; // = 0.0;
 
-//    if (p_profile->cpap->calculateUnintentionalLeaks()) {
         float lpm4 = p_profile->cpap->custom4cmH2OLeaks();
         float lpm20 = p_profile->cpap->custom20cmH2OLeaks();
 
@@ -1531,197 +1265,12 @@ EventDataType zMaskProfile::calcLeak(EventStoreType pressure)
         float p = (pressure/10.0f) - 4.0;
 
         leak = p * ppm + lpm4;
-//    } else {
-        // the old way sucks!
-
-//        if (maxP == minP) {
-//            leak = pressuremin[pressure];
-//        } else {
-//            leak = (pressure - minP) * (m_factor) + minL;
-//        }
-//    }
-    // Generic Average of Masks from a SpreadSheet... will add two sliders to tweak this between the ranges later
-//    EventDataType
 
     return leak;
 }
 
-void zMaskProfile::updateProfile(Session *session)
-{
-    scanPressure(session);
-    scanLeaks(session);
-
-    // new method doesn't require any of this, so bail here.
-    return;
-
-    // Do it the old way
-/*    updatePressureMin();
-
-    // PressureMin contains the baseline for each Pressure
-
-    // There is only one pressure (CPAP).. so switch off baseline and just use linear calculations
-    if (pressuremin.size() <= 1) {
-        maxP = minP = 0;
-        maxL = minL = 0;
-        m_factor = 0;
-        return;
-    }
-
-    EventDataType p, l, tmp, mean, sum;
-    minP = 250, maxP = 0;
-    minL = 1000, maxL = 0;
-
-    long cnt = 0, vcnt;
-    int n;
-
-    EventDataType maxcnt, maxval, lastval; //, lastcnt;
-
-
-    auto plend = pressureleaks.end();
-    auto it = pressureleaks.begin();
-
-    QMap<EventStoreType, quint32>::iterator lit;
-    QMap<EventStoreType, quint32>::iterator lvend;
-    for (; it != plend; ++it) {
-        p = it.key();
-        l = pressuremin[p];
-        QMap<EventStoreType, quint32> &leakval = it.value();
-        cnt = 0;
-        vcnt = -1;
-        n = leakval.size();
-        sum = 0;
-
-        maxcnt = 0, maxval = 0, lastval = 0;//, lastcnt = 0;
-
-        lvend = leakval.end();
-        for (lit = leakval.begin(); lit != lvend; ++lit) {
-            cnt += lit.value();
-
-            if (lit.value() > maxcnt) {
-                //lastcnt = maxcnt;
-                maxcnt = lit.value();
-                lastval = maxval;
-                maxval = lit.key();
-
-            }
-
-            sum += lit.key() * lit.value();
-
-            if (lit.key() == (EventStoreType)l) {
-                vcnt = lit.value();
-            }
-        }
-
-        pressuremean[p] = mean = sum / EventDataType(cnt);
-
-        if (lastval > 0) {
-            maxval = qMax(maxval, lastval); //((maxval*maxcnt)+(lastval*lastcnt)) / (maxcnt+lastcnt);
-        }
-
-        pressuremax[p] = lastval;
-        sum = 0;
-
-        for (lit = leakval.begin(); lit != lvend; lit++) {
-            tmp = lit.key() - mean;
-            sum += tmp * tmp;
-        }
-
-        pressurestddev[p] = tmp = sqrt(sum / EventDataType(n));
-
-        if (vcnt >= 0) {
-            tmp = 1.0 / EventDataType(cnt) * EventDataType(vcnt);
-
-        }
-    }
-
-    QMap<EventStoreType, EventDataType> pressureval;
-    QMap<EventStoreType, EventDataType> pressureval2;
-    EventDataType max = 0, tmp2, tmp3;
-
-    auto ptend = pressuretotal.end();
-    for (auto ptit = pressuretotal.begin(); ptit != ptend; ++ptit) {
-        if (max < ptit.value()) { max = ptit.value(); }
-    }
-
-    for (auto ptit = pressuretotal.begin(); ptit != ptend; ptit++) {
-        p = ptit.key();
-        tmp = pressurecount[p];
-        tmp2 = ptit.value();
-
-        tmp3 = (tmp / tmp2) * (tmp2 / max);
-
-        if (tmp3 > 0.05) {
-            tmp = pressuremean[p];
-
-            if (tmp > 0) {
-                pressureval[p] = tmp; // / tmp2;
-
-                if (p < minP) { minP = p; }
-
-                if (p > maxP) { maxP = p; }
-
-                if (tmp < minL) { minL = tmp; }
-
-                if (tmp > maxL) { maxL = tmp; }
-            }
-        }
-    }
-
-    if ((maxP == minP)  || (minL == maxL) || (minP == 250) || (minL == 1000)) {
-        // crappy data set
-        maxP = minP = 0;
-        maxL = minL = 0;
-        m_factor = 0;
-        return;
-    }
-
-    m_factor = (maxL - minL) / (maxP - minP);
-
-    //    for (auto it=pressuremin.begin();it!=pressuremin.end()-1;it++) {
-    //        p1=it.key();
-    //        p2=(it+1).key();
-    //        l1=it.value();
-    //        l2=(it+1).value();
-    //        if (l2 > l1) {
-    //            factor=(l2 - l1) / (p2 - p1);
-    //            sum+=factor;
-    //            cnt++;
-    //        }
-    //    }
-
-    //    m_factor=sum/double(cnt);
-
-    //    int i=0;
-    //    if (i==1) {
-    //        QFile f("/home/mark/leaks.csv");
-    //        f.open(QFile::WriteOnly);
-    //        QTextStream out(&f);
-    //        EventDataType p,l,c;
-    //        QString fmt;
-    //        for (auto it=pressuremin.begin();it!=pressuremin.end();it++) {
-    //            p=EventDataType(it.key()/10.0);
-    //            l=it.value();
-    //            fmt=QString("%1,%2\n").arg(p,0,'f',1).arg(l);
-    //            out << fmt;
-    //        }
-
-    // cruft
-    //        for (auto it=pressureleaks.begin();it!=pressureleaks.end();it++)  {
-    //            auto & leakval=it.value();
-    //            for (auto lit=leakval.begin();lit!=leakval.end();lit++) {
-    //                l=lit.key();
-    //                c=lit.value();
-    //                fmt=QString("%1,%2,%3\n").arg(p,0,'f',2).arg(l).arg(c);
-    //                out << fmt;
-    //            }
-    //        }
-    //        f.close();
-    //    }*/
-}
-
 QMutex zMaskmutex;
-zMaskProfile mmaskProfile(Mask_NasalPillows, "ResMed Swift FX");
-bool mmaskFirst = true;
+zMaskProfile mmaskProfile;
 
 int calcLeaks(Session *session)
 {
@@ -1736,16 +1285,7 @@ int calcLeaks(Session *session)
     zMaskmutex.lock();
     zMaskProfile *maskProfile = &mmaskProfile;
 
-    if (mmaskFirst) {
-        mmaskFirst = false;
-        maskProfile->load(p_profile);
-    }
-
-    //    if (!maskProfile) {
-    //        maskProfile=new zMaskProfile(Mask_NasalPillows,"ResMed Swift FX");
-    //    }
-    maskProfile->reset();
-    maskProfile->updateProfile(session);
+    maskProfile->scanPressure(session);
 
     EventList *leak = session->AddEventList(CPAP_Leak, EVL_Event, 1);
 
@@ -1784,6 +1324,8 @@ int calcLeaks(Session *session)
             // Find the current pressure at this moment in time
             pressure = pstr->value;
 
+            // TODO: This is O(n**2)! Refactor into a TimeSeries class that searches by timestamp but also tracks the last request
+            // so that it can search in O(n) for monotonically increasing timestamps, which is the common case.
             for (TimeValue *p1 = pstr; p1 != pend; ++p1) {
                 p2 = p1+1;
                 if ((p2->time > ti) && (p1->time <= ti)) {
