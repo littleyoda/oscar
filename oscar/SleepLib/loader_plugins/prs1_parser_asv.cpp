@@ -384,6 +384,7 @@ void PRS1DataChunk::ParseFlexSettingF5V012(quint8 flex, int cpapmode)
 
 const QVector<PRS1ParsedEventType> ParsedEventsF5V0 = {
     PRS1EPAPSetEvent::TYPE,
+    // No PP, unlike F5V1
     PRS1TimedBreathEvent::TYPE,
     PRS1ObstructiveApneaEvent::TYPE,
     PRS1ClearAirwayEvent::TYPE,
@@ -402,6 +403,7 @@ const QVector<PRS1ParsedEventType> ParsedEventsF5V0 = {
     PRS1TidalVolumeEvent::TYPE,
     PRS1SnoreEvent::TYPE,
     PRS1EPAPAverageEvent::TYPE,
+    // No LEAK, unlike F5V1
 };
 
 // 950P is F5V0

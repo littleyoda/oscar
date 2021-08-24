@@ -1258,7 +1258,7 @@ static const QHash<PRS1ParsedEventType,QVector<ChannelID*>> PRS1ImportChannelMap
 
     { PRS1PeriodicBreathingEvent::TYPE, { &CPAP_PB } },
     { PRS1LargeLeakEvent::TYPE,         { &CPAP_LargeLeak } },
-    { PRS1TotalLeakEvent::TYPE,         { &CPAP_LeakTotal, &CPAP_Leak } },  // TODO: Remove CPAP_Leak if we get rid of unintentional leak calculation in the importer.
+    { PRS1TotalLeakEvent::TYPE,         { &CPAP_LeakTotal } },
     { PRS1LeakEvent::TYPE,              { &CPAP_Leak } },
 
     { PRS1RespiratoryRateEvent::TYPE,   { &CPAP_RespRate } },
@@ -1504,17 +1504,6 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
     // F5, which only reports EPAP set events, but both IPAP/EPAP average, from which PS will be calculated.
     m_calcPSfromSet = supported.contains(PRS1IPAPSetEvent::TYPE) && supported.contains(PRS1EPAPSetEvent::TYPE);
     
-    // Unintentional leak calculation, see zMaskProfile:calcLeak in calcs.cpp for explanation
-    m_calcLeaks = p_profile->cpap->calculateUnintentionalLeaks();
-    if (m_calcLeaks) {
-        // Only needed for machines that don't support it directly.
-        m_calcLeaks = (supported.contains(PRS1LeakEvent::TYPE) == false);
-    }
-    m_lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-    EventDataType lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-    EventDataType lpm = lpm20 - m_lpm4;
-    m_ppm = lpm / 16.0;
-
     qint64 t = qint64(event->timestamp) * 1000L;
     if (session->first() == 0) {
         qWarning() << sessionid << "Start time not set by summary?";
@@ -1698,7 +1687,7 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
     // to be done in ImportEventChunk.
     
     const QVector<ChannelID*> & channels = PRS1ImportChannelMap[e->m_type];
-    ChannelID channel = NoChannel, PS, VS2, LEAK;
+    ChannelID channel = NoChannel, PS, VS2;
     if (channels.count() > 0) {
         channel = *channels.at(0);
     }
@@ -1750,22 +1739,6 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
             // Decide whether to preserve that behavior or change it universally and update either this code or comment.
             duration = e->m_duration * 1000L;
             AddEvent(channel, t + duration, e->m_duration, e->m_gain);
-            break;
-
-        case PRS1TotalLeakEvent::TYPE:
-            AddEvent(channel, t, e->m_value, e->m_gain);
-            // F0 up through F0V6 doesn't appear to report unintentional leak.
-            // TODO: decide whether to keep this here, shouldn't keep it here just because it's "quicker".
-            // TODO: compare this value for the reported value for F5V1 and higher?
-            // TODO: Fix this for 0.125 gain: it assumes 0.1 (dividing by 10.0)...
-            //   Or omit, because machines with 0.125 gain report unintentional leak directly.
-            if (m_calcLeaks) { // Much Quicker doing this here than the recalc method.
-                EventDataType leak = e->m_value;
-                leak -= (((m_currentPressure/10.0f) - 4.0) * m_ppm + m_lpm4);
-                if (leak < 0) leak = 0;
-                LEAK = *channels.at(1);
-                AddEvent(LEAK, t, leak, 1);
-            }
             break;
 
         case PRS1SnoreEvent::TYPE:  // snore count that shows up in flags but not waveform
