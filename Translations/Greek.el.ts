@@ -284,157 +284,157 @@
         <translation>Περιστατικα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="299"/>
+        <location filename="../oscar/daily.cpp" line="300"/>
         <source>UF1</source>
         <translation>UF1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="300"/>
+        <location filename="../oscar/daily.cpp" line="301"/>
         <source>UF2</source>
         <translation>UF2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="363"/>
+        <location filename="../oscar/daily.cpp" line="364"/>
         <source>Time at Pressure</source>
         <translation>Χρόνος στην πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="614"/>
+        <location filename="../oscar/daily.cpp" line="630"/>
         <source>No %1 events are recorded this day</source>
         <translation>Αριθμός %1 Περιστατικα που καταγράφικαν αυτή τη μέρα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="734"/>
+        <location filename="../oscar/daily.cpp" line="750"/>
         <source>%1 event</source>
         <translation>%1 Περιστατικο</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="735"/>
+        <location filename="../oscar/daily.cpp" line="751"/>
         <source>%1 events</source>
         <translation>%1 Περιστατικα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="778"/>
+        <location filename="../oscar/daily.cpp" line="794"/>
         <source>Session Start Times</source>
         <translation>Ώρες έναρξης Συνεδρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="779"/>
+        <location filename="../oscar/daily.cpp" line="795"/>
         <source>Session End Times</source>
         <translation>Ώρες Λήξης Συνεδρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="985"/>
+        <location filename="../oscar/daily.cpp" line="1001"/>
         <source>Session Information</source>
         <translation>Πληροφορίες συνεδρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1008"/>
+        <location filename="../oscar/daily.cpp" line="1024"/>
         <source>Oximetry Sessions</source>
         <translation>Οξυμετρικές συνεδρίες</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1028"/>
+        <location filename="../oscar/daily.cpp" line="1044"/>
         <source>Duration</source>
         <translation>Διάρκεια</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1261"/>
+        <location filename="../oscar/daily.cpp" line="1278"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2350"/>
+        <location filename="../oscar/daily.cpp" line="2384"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Αυτός ο σελιδοδείκτης βρίσκεται σε μια περιοχή με ειδικές ανάγκες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1005"/>
+        <location filename="../oscar/daily.cpp" line="1021"/>
         <source>CPAP Sessions</source>
         <translation>Συνεδρίες CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1011"/>
+        <location filename="../oscar/daily.cpp" line="1027"/>
         <source>Sleep Stage Sessions</source>
         <translation>Συνεδρίες Στάδιο Ύπνου</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1014"/>
+        <location filename="../oscar/daily.cpp" line="1030"/>
         <source>Position Sensor Sessions</source>
         <translation>Συνεδρίες θέσης αισθητήρα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1019"/>
+        <location filename="../oscar/daily.cpp" line="1035"/>
         <source>Unknown Session</source>
         <translation>άγνωστη Συνεδρία</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1093"/>
+        <location filename="../oscar/daily.cpp" line="1109"/>
         <source>Machine Settings</source>
         <translation>Ρυθμίσεις μηχανής</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1252"/>
+        <location filename="../oscar/daily.cpp" line="1269"/>
         <source>Model %1 - %2</source>
         <translation>Μοντέλο %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1257"/>
+        <location filename="../oscar/daily.cpp" line="1274"/>
         <source>PAP Mode: %1</source>
         <translation>Λειτουργία PAP: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1304"/>
+        <location filename="../oscar/daily.cpp" line="1321"/>
         <source>99.5%</source>
         <translation type="unfinished">90% {99.5%?}</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1377"/>
+        <location filename="../oscar/daily.cpp" line="1394"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Αυτή η μέρα περιέχει μόνο σύνοψη δεδομένων, υπάρχουν μόνο περιορισμένες πληροφορίες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1403"/>
+        <location filename="../oscar/daily.cpp" line="1420"/>
         <source>Total ramp time</source>
         <translation>Συνολικός χρόνος ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1407"/>
+        <location filename="../oscar/daily.cpp" line="1424"/>
         <source>Time outside of ramp</source>
         <translation>Χρόνος εκτός ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1448"/>
+        <location filename="../oscar/daily.cpp" line="1465"/>
         <source>Start</source>
         <translation>Αρχή</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1448"/>
+        <location filename="../oscar/daily.cpp" line="1465"/>
         <source>End</source>
         <translation>Τέλος</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1485"/>
+        <location filename="../oscar/daily.cpp" line="1502"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Δεν είναι δυνατή η εμφάνιση του Πίνακα πίτας σε αυτό το σύστημα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1748"/>
+        <location filename="../oscar/daily.cpp" line="1779"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>Λυπούμαστε, αυτό το μηχάνημα παρέχει μόνο δεδομένα συμμόρφωσης.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1767"/>
+        <location filename="../oscar/daily.cpp" line="1798"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Τίποτα δεν είναι εδώ!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1770"/>
+        <location filename="../oscar/daily.cpp" line="1801"/>
         <source>No data is available for this day.</source>
         <translation>Δεν υπάρχουν διαθέσιμα δεδομένα για αυτήν την ημέρα.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1225"/>
+        <location filename="../oscar/daily.cpp" line="1242"/>
         <source>Oximeter Information</source>
         <translation>πληροφορίες Οξύμετρο</translation>
     </message>
@@ -444,117 +444,117 @@
         <translation>Λεπτομέριες</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1048"/>
+        <location filename="../oscar/daily.cpp" line="1064"/>
         <source>Click to %1 this session.</source>
         <translation>Κάντε κλικ στο %1 αυτή την περίοδο σύνδεσης.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1048"/>
+        <location filename="../oscar/daily.cpp" line="1064"/>
         <source>disable</source>
         <translation>καθιστώ ανίκανο</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1048"/>
+        <location filename="../oscar/daily.cpp" line="1064"/>
         <source>enable</source>
         <translation>επιτρέπω</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1064"/>
+        <location filename="../oscar/daily.cpp" line="1080"/>
         <source>%1 Session #%2</source>
         <translation>%1 Συνεδρίαση #%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1065"/>
+        <location filename="../oscar/daily.cpp" line="1081"/>
         <source>%1h %2m %3s</source>
         <translation>%1ώ %2λ %3δ</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1096"/>
+        <location filename="../oscar/daily.cpp" line="1112"/>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
         <translation>&lt;b&gt; Σημείωση: &lt;/b&gt; Όλες οι παρακάτω ρυθμίσεις βασίζονται σε υποθέσεις που δεν έχουν αλλάξει από τις προηγούμενες ημέρες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1230"/>
+        <location filename="../oscar/daily.cpp" line="1247"/>
         <source>SpO2 Desaturations</source>
         <translation>Αποκορεσμούς SpO2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1231"/>
+        <location filename="../oscar/daily.cpp" line="1248"/>
         <source>Pulse Change events</source>
         <translation>Παλμική Αλλαγή γεγονότων</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1232"/>
+        <location filename="../oscar/daily.cpp" line="1249"/>
         <source>SpO2 Baseline Used</source>
         <translation>Χρησιμοποιείται Βάση SpO2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1303"/>
+        <location filename="../oscar/daily.cpp" line="1320"/>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1298"/>
+        <location filename="../oscar/daily.cpp" line="1315"/>
         <source>Statistics</source>
         <translation>Στατιστικά</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1387"/>
+        <location filename="../oscar/daily.cpp" line="1404"/>
         <source>Total time in apnea</source>
         <translation>Συνολικός χρόνος άπνοιας</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1397"/>
+        <location filename="../oscar/daily.cpp" line="1414"/>
         <source>Time over leak redline</source>
         <translation>Χρόνο πάνω από διαρροή κόκκινη υπογράμμιση</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1674"/>
+        <location filename="../oscar/daily.cpp" line="1705"/>
         <source>BRICK! :(</source>
         <translation>ΤΟΎΒΛΟ! :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1472"/>
+        <location filename="../oscar/daily.cpp" line="1489"/>
         <source>Event Breakdown</source>
         <translation>Κατανομή εκδήλωσης</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1738"/>
+        <location filename="../oscar/daily.cpp" line="1769"/>
         <source>Sessions all off!</source>
         <translation>Συνεδρίες όλοι σβηστοί!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1740"/>
+        <location filename="../oscar/daily.cpp" line="1771"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Υπάρχουν συνεδρίες για αυτήν την ημέρα, αλλά είναι απενεργοποιημένες.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1743"/>
+        <location filename="../oscar/daily.cpp" line="1774"/>
         <source>Impossibly short session</source>
         <translation>Ανέφικτα σύντομη συνεδρίαση</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1744"/>
+        <location filename="../oscar/daily.cpp" line="1775"/>
         <source>Zero hours??</source>
         <translation>Μηδέν ώρες ??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1747"/>
+        <location filename="../oscar/daily.cpp" line="1778"/>
         <source>BRICK :(</source>
         <translation>ΤΟΥΒΛΟΥ :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1749"/>
+        <location filename="../oscar/daily.cpp" line="1780"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Παραπονεθείτε στον Πάροχο του εξοπλισμό σας!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2065"/>
+        <location filename="../oscar/daily.cpp" line="2097"/>
         <source>Pick a Colour</source>
         <translation>Διαλέξτε χρώμα</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2393"/>
+        <location filename="../oscar/daily.cpp" line="2427"/>
         <source>Bookmark at %1</source>
         <translation>Αποθηκεύετε με σελιδοδείκτη στο %1</translation>
     </message>
@@ -701,68 +701,68 @@
         <translation>Αρχεία CSV (* .csv)</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="199"/>
+        <location filename="../oscar/exportcsv.cpp" line="203"/>
         <source>DateTime</source>
         <translation>Ημερομηνία ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="199"/>
-        <location filename="../oscar/exportcsv.cpp" line="205"/>
+        <location filename="../oscar/exportcsv.cpp" line="203"/>
+        <location filename="../oscar/exportcsv.cpp" line="209"/>
         <source>Session</source>
         <translation>Συνεδρίαση</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="199"/>
+        <location filename="../oscar/exportcsv.cpp" line="203"/>
         <source>Event</source>
         <translation>Εκδήλωση</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="199"/>
+        <location filename="../oscar/exportcsv.cpp" line="203"/>
         <source>Data/Duration</source>
         <translation>Δεδομένα / Διάρκεια</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="202"/>
-        <location filename="../oscar/exportcsv.cpp" line="205"/>
+        <location filename="../oscar/exportcsv.cpp" line="206"/>
+        <location filename="../oscar/exportcsv.cpp" line="209"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="202"/>
+        <location filename="../oscar/exportcsv.cpp" line="206"/>
         <source>Session Count</source>
         <translation>Καταμέτρηση συνόδων</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="202"/>
-        <location filename="../oscar/exportcsv.cpp" line="205"/>
+        <location filename="../oscar/exportcsv.cpp" line="206"/>
+        <location filename="../oscar/exportcsv.cpp" line="209"/>
         <source>Start</source>
         <translation>Αρχή</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="202"/>
-        <location filename="../oscar/exportcsv.cpp" line="205"/>
+        <location filename="../oscar/exportcsv.cpp" line="206"/>
+        <location filename="../oscar/exportcsv.cpp" line="209"/>
         <source>End</source>
         <translation>Τέλος</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="203"/>
-        <location filename="../oscar/exportcsv.cpp" line="206"/>
+        <location filename="../oscar/exportcsv.cpp" line="207"/>
+        <location filename="../oscar/exportcsv.cpp" line="210"/>
         <source>Total Time</source>
         <translation>Συνολικός χρόνος</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="203"/>
-        <location filename="../oscar/exportcsv.cpp" line="206"/>
+        <location filename="../oscar/exportcsv.cpp" line="207"/>
+        <location filename="../oscar/exportcsv.cpp" line="210"/>
         <source>AHI</source>
         <translation>AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="210"/>
+        <location filename="../oscar/exportcsv.cpp" line="214"/>
         <source> Count</source>
         <translation> μετρώ</translation>
     </message>
     <message>
-        <location filename="../oscar/exportcsv.cpp" line="218"/>
+        <location filename="../oscar/exportcsv.cpp" line="222"/>
         <source>%1% </source>
         <translation>%1% </translation>
     </message>
@@ -770,17 +770,17 @@
 <context>
     <name>FPIconLoader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="139"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="159"/>
         <source>Import Error</source>
         <translation>Σφάλμα εισαγωγής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="140"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="160"/>
         <source>This Machine Record cannot be imported in this profile.</source>
         <translation>Αυτή η εγγραφή μηχάνημα δεν μπορεί να εισαχθεί σε αυτό το προφίλ.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="140"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="160"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>Οι εγγραφές Ημέρας επικαλύπτονται με ήδη υπάρχον περιεχόμενο.</translation>
     </message>
@@ -890,7 +890,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1003"/>
-        <location filename="../oscar/mainwindow.ui" line="3285"/>
+        <location filename="../oscar/mainwindow.ui" line="3292"/>
         <source>Standard</source>
         <translation>Πρότυπο</translation>
     </message>
@@ -975,171 +975,206 @@
         <translation>Καθαρίστε όλα τα δεδομένα μηχανής</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2913"/>
+        <location filename="../oscar/mainwindow.ui" line="2925"/>
         <source>Rebuild CPAP Data</source>
         <translation>Επαναδημιουργία δεδομένων CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2936"/>
+        <location filename="../oscar/mainwindow.ui" line="2948"/>
         <source>&amp;Import CPAP Card Data</source>
         <translation>&amp;Εισαγωγή δεδομένων κάρτας CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2962"/>
+        <location filename="../oscar/mainwindow.ui" line="2974"/>
         <source>Show Daily view</source>
         <translation>Εμφάνιση ημερήσιας προβολής</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2973"/>
+        <location filename="../oscar/mainwindow.ui" line="2985"/>
         <source>Show Overview view</source>
         <translation>Εμφάνιση προβολής &quot;Επισκόπηση&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3013"/>
+        <location filename="../oscar/mainwindow.ui" line="3025"/>
         <source>&amp;Maximize Toggle</source>
         <translation>&amp;Μεγιστοποιήστε την εναλλαγή</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3016"/>
+        <location filename="../oscar/mainwindow.ui" line="3028"/>
         <source>Maximize window</source>
         <translation>Μεγιστοποίηση παραθύρου</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3035"/>
+        <location filename="../oscar/mainwindow.ui" line="3047"/>
         <source>Reset Graph &amp;Heights</source>
         <translation>Επαναφορά γραφήματος &amp;ύψους</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3038"/>
+        <location filename="../oscar/mainwindow.ui" line="3050"/>
         <source>Reset sizes of graphs</source>
         <translation>Επαναφορά μεγεθών γραφημάτων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3103"/>
+        <location filename="../oscar/mainwindow.ui" line="3110"/>
         <source>Show Right Sidebar</source>
         <translation>Εμφάνιση δεξιάς πλευρικής γραμμής</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3117"/>
+        <location filename="../oscar/mainwindow.ui" line="3124"/>
         <source>Show Statistics view</source>
         <translation>Εμφάνιση προβολής στατιστικών στοιχείων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3130"/>
+        <location filename="../oscar/mainwindow.ui" line="3137"/>
         <source>Import &amp;Dreem Data</source>
         <translation>Εισαγωγή &amp;Dreem Δεδομένα</translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3330"/>
+        <source>Purge Current Selected Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3335"/>
+        <source>&amp;CPAP</source>
+        <translation type="unfinished">&amp;CPAP</translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3340"/>
+        <source>&amp;Oximetry</source>
+        <translation type="unfinished">&amp;Οξυμετρία</translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3345"/>
+        <source>&amp;Sleep Stage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3350"/>
+        <source>&amp;Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3355"/>
+        <source>&amp;All except Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="3360"/>
+        <source>All including &amp;Notes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import &amp;Viatom Data</source>
         <translation type="vanished">Εισαγωγή &amp;Viatom Δεδομένα</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3173"/>
+        <location filename="../oscar/mainwindow.ui" line="3180"/>
         <source>Show &amp;Line Cursor</source>
         <translation>Εμφάνιση δρομέα &amp;γραμμής</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3195"/>
+        <location filename="../oscar/mainwindow.ui" line="3202"/>
         <source>Show Daily Left Sidebar</source>
         <translation>Εμφάνιση ημερήσια αριστερή πλευρική γραμμή</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3212"/>
+        <location filename="../oscar/mainwindow.ui" line="3219"/>
         <source>Show Daily Calendar</source>
         <translation>Εμφάνιση ημερήσιου ημερολογίου</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3233"/>
+        <location filename="../oscar/mainwindow.ui" line="3240"/>
         <source>Create zip of CPAP data card</source>
         <translation>Δημιουργία zip της κάρτας δεδομένων CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3238"/>
+        <location filename="../oscar/mainwindow.ui" line="3245"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3243"/>
+        <location filename="../oscar/mainwindow.ui" line="3250"/>
         <source>Create zip of all OSCAR data</source>
         <translation>Δημιουργία φερμουάρ για όλα τα δεδομένα του OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3258"/>
+        <location filename="../oscar/mainwindow.ui" line="3265"/>
         <source>Report an Issue</source>
         <translation>Αναφέρετε ένα πρόβλημα</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3263"/>
+        <location filename="../oscar/mainwindow.ui" line="3270"/>
         <source>System Information</source>
         <translation>Πληροφορίες συστήματος</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3274"/>
+        <location filename="../oscar/mainwindow.ui" line="3281"/>
         <source>Show &amp;Pie Chart</source>
         <translation>Εμφάνιση &amp;πίνακα πίτας</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3277"/>
+        <location filename="../oscar/mainwindow.ui" line="3284"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>Εμφάνιση πίνακα πίτας στην ημερήσια σελίδα</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3280"/>
+        <location filename="../oscar/mainwindow.ui" line="3287"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3288"/>
+        <location filename="../oscar/mainwindow.ui" line="3295"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
         <translation>Τυπική σειρά γραφημάτων, καλή για CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3293"/>
+        <location filename="../oscar/mainwindow.ui" line="3300"/>
         <source>Advanced</source>
         <translation>Προχωρημένος</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3296"/>
+        <location filename="../oscar/mainwindow.ui" line="3303"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation>Προηγμένη σειρά γραφημάτων, καλή για ASV, AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3307"/>
+        <location filename="../oscar/mainwindow.ui" line="3314"/>
         <source>Show Personal Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3315"/>
+        <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Check For &amp;Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2944"/>
+        <location filename="../oscar/mainwindow.ui" line="2956"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2949"/>
+        <location filename="../oscar/mainwindow.ui" line="2961"/>
         <source>&amp;Profiles</source>
         <translation>&amp;Προφίλ</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3005"/>
+        <location filename="../oscar/mainwindow.ui" line="3017"/>
         <source>&amp;About OSCAR</source>
         <translation>&amp;Σχετικά με το OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3228"/>
+        <location filename="../oscar/mainwindow.ui" line="3235"/>
         <source>Show Performance Information</source>
         <translation>Εμφάνιση πληροφοριών απόδοσης</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3248"/>
+        <location filename="../oscar/mainwindow.ui" line="3255"/>
         <source>CSV Export Wizard</source>
         <translation>Οδηγός εξαγωγής CSV</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3253"/>
+        <location filename="../oscar/mainwindow.ui" line="3260"/>
         <source>Export for Review</source>
         <translation>Εξαγωγή για αναθεώρηση</translation>
     </message>
@@ -1149,112 +1184,112 @@
         <translation>Ε&amp;ξοδος</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2954"/>
+        <location filename="../oscar/mainwindow.ui" line="2966"/>
         <source>Exit</source>
         <translation>Εξοδος</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2959"/>
+        <location filename="../oscar/mainwindow.ui" line="2971"/>
         <source>View &amp;Daily</source>
         <translation>Προβολή &amp;Καθημερινά</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2970"/>
+        <location filename="../oscar/mainwindow.ui" line="2982"/>
         <source>View &amp;Overview</source>
         <translation>Προβολή &amp;επισκόπηση</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2981"/>
+        <location filename="../oscar/mainwindow.ui" line="2993"/>
         <source>View &amp;Welcome</source>
         <translation>Προβολή &amp;Καλώς ορίσατε</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2989"/>
+        <location filename="../oscar/mainwindow.ui" line="3001"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3000"/>
+        <location filename="../oscar/mainwindow.ui" line="3012"/>
         <source>Use &amp;AntiAliasing</source>
         <translation>Χρήση &amp;αντισύλληψη</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3027"/>
+        <location filename="../oscar/mainwindow.ui" line="3039"/>
         <source>Show Debug Pane</source>
         <translation>Εμφάνιση παραθύρου εντοπισμού σφαλμάτων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3043"/>
+        <location filename="../oscar/mainwindow.ui" line="3055"/>
         <source>Take &amp;Screenshot</source>
         <translation>Πραγματοποιήστε &amp;λήψη της οθόνης</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3051"/>
+        <location filename="../oscar/mainwindow.ui" line="3063"/>
         <source>O&amp;ximetry Wizard</source>
         <translation>Οδηγός O &amp;οξυμετρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3059"/>
+        <location filename="../oscar/mainwindow.ui" line="3071"/>
         <source>Print &amp;Report</source>
         <translation>Εκτύπωση &amp;Αναφορά</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3064"/>
+        <location filename="../oscar/mainwindow.ui" line="3076"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;Επεξεργασία προφίλ</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3160"/>
+        <location filename="../oscar/mainwindow.ui" line="3167"/>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3209"/>
+        <location filename="../oscar/mainwindow.ui" line="3216"/>
         <source>Daily Calendar</source>
         <translation>Καθημερινό ημερολόγιο</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3220"/>
+        <location filename="../oscar/mainwindow.ui" line="3227"/>
         <source>Backup &amp;Journal</source>
         <translation>Backup &amp;Εφημερίδα</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3069"/>
+        <location filename="../oscar/mainwindow.ui" line="3081"/>
         <source>Online Users &amp;Guide</source>
         <translation>Online Χρήστες &amp;Οδηγός</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3074"/>
+        <location filename="../oscar/mainwindow.ui" line="3086"/>
         <source>&amp;Frequently Asked Questions</source>
         <translation>&amp;Συχνές Ερωτήσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3079"/>
+        <location filename="../oscar/mainwindow.ui" line="3091"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translation>&amp;Καθαρισμός αυτόματης οξυμετρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3084"/>
+        <location filename="../oscar/mainwindow.ui" line="3096"/>
         <source>Change &amp;User</source>
         <translation>Αλλαγή &amp;Χρήστη</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3089"/>
+        <location filename="../oscar/mainwindow.ui" line="2908"/>
         <source>Purge &amp;Current Selected Day</source>
         <translation>Εκκαθάριση &amp;τρέχουσας επιλεγμένης ημέρας</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3100"/>
+        <location filename="../oscar/mainwindow.ui" line="3107"/>
         <source>Right &amp;Sidebar</source>
         <translation>Δεξιά πλευρική &amp;γραμμή</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3192"/>
+        <location filename="../oscar/mainwindow.ui" line="3199"/>
         <source>Daily Sidebar</source>
         <translation>Ημερήσια πλευρική γραμμή</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3111"/>
+        <location filename="../oscar/mainwindow.ui" line="3118"/>
         <source>View S&amp;tatistics</source>
         <translation>Προβολή σ&amp;τατιστικών στοιχείων</translation>
     </message>
@@ -1294,48 +1329,48 @@
         <translation>Δεδομένα καθαρισμού οξυμετρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3114"/>
+        <location filename="../oscar/mainwindow.ui" line="3121"/>
         <source>View Statistics</source>
         <translation>Προβολή στατιστικών στοιχείων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3125"/>
+        <location filename="../oscar/mainwindow.ui" line="3132"/>
         <source>Import &amp;ZEO Data</source>
         <translation>Εισαγωγή δεδομένων &amp;ZEO</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3135"/>
+        <location filename="../oscar/mainwindow.ui" line="3142"/>
         <source>Import RemStar &amp;MSeries Data</source>
         <translation>Εισαγωγή δεδομένων RemStar &amp;MSeries</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3140"/>
+        <location filename="../oscar/mainwindow.ui" line="3147"/>
         <source>Sleep Disorder Terms &amp;Glossary</source>
         <translation>Όροι διαταραχής ύπνου &amp;Γλωσσάρι</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3145"/>
+        <location filename="../oscar/mainwindow.ui" line="3152"/>
         <source>Change &amp;Language</source>
         <translation>Αλλαξε &amp;γλώσσα</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3150"/>
+        <location filename="../oscar/mainwindow.ui" line="3157"/>
         <source>Change &amp;Data Folder</source>
         <translation>Αλλαγή του φακέλου &amp;δεδομένων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3155"/>
+        <location filename="../oscar/mainwindow.ui" line="3162"/>
         <source>Import &amp;Somnopose Data</source>
         <translation>Εισαγωγή δεδομένων &amp;Somnopose</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3165"/>
+        <location filename="../oscar/mainwindow.ui" line="3172"/>
         <source>Current Days</source>
         <translation>Τρέχουσες ημέρες</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="544"/>
-        <location filename="../oscar/mainwindow.cpp" line="2245"/>
+        <location filename="../oscar/mainwindow.cpp" line="2296"/>
         <source>Welcome</source>
         <translation>καλως ΗΡΘΑΤΕ</translation>
     </message>
@@ -1346,15 +1381,12 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="790"/>
-        <location filename="../oscar/mainwindow.cpp" line="1912"/>
+        <location filename="../oscar/mainwindow.cpp" line="1963"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>Περιμένετε, εισάγοντας από το φάκελο ή τα αντίγραφα ασφαλείας ...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="731"/>
-        <location filename="../oscar/mainwindow.cpp" line="2286"/>
-        <location filename="../oscar/mainwindow.cpp" line="2317"/>
-        <location filename="../oscar/mainwindow.cpp" line="2478"/>
         <source>Import Problem</source>
         <translation>Πρόβλημα εισαγωγής</translation>
     </message>
@@ -1379,38 +1411,43 @@
         <translation>Υπενθύμιση εισαγωγής</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1141"/>
+        <location filename="../oscar/mainwindow.cpp" line="1083"/>
+        <source>Find your CPAP data card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="1142"/>
         <source>Importing Data</source>
         <translation>Εισαγωγή δεδομένων</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1443"/>
+        <location filename="../oscar/mainwindow.cpp" line="1444"/>
         <source>Choose where to save screenshot</source>
         <translation>Επιλέξτε από πού να αποθηκεύσετε το στιγμιότυπο οθόνης</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1443"/>
+        <location filename="../oscar/mainwindow.cpp" line="1444"/>
         <source>Image files (*.png)</source>
         <translation>Αρχεία εικόνας (*.png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1517"/>
+        <location filename="../oscar/mainwindow.cpp" line="1518"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>Ο οδηγός χρήσης θα ανοίξει στο προεπιλεγμένο πρόγραμμα περιήγησης</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1525"/>
+        <location filename="../oscar/mainwindow.cpp" line="1526"/>
         <source>The FAQ is not yet implemented</source>
         <translation>Οι συνήθεις ερωτήσεις δεν έχουν ακόμη εφαρμοστεί</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1774"/>
-        <location filename="../oscar/mainwindow.cpp" line="1801"/>
+        <location filename="../oscar/mainwindow.cpp" line="1775"/>
+        <location filename="../oscar/mainwindow.cpp" line="1802"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>Εάν μπορείτε να διαβάσετε αυτό, η εντολή επανεκκίνησης δεν λειτούργησε. Θα πρέπει να το κάνετε μόνοι σας με το χέρι.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1887"/>
+        <location filename="../oscar/mainwindow.cpp" line="1938"/>
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
@@ -1419,184 +1456,165 @@
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1897"/>
+        <location filename="../oscar/mainwindow.cpp" line="1948"/>
         <source>For some reason, OSCAR does not have any backups for the following machine:</source>
         <translation>Για κάποιο λόγο, το OSCAR δεν διαθέτει αντίγραφα ασφαλείας για το ακόλουθο μηχάνημα:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1967"/>
+        <location filename="../oscar/mainwindow.cpp" line="2018"/>
         <source>OSCAR does not have any backups for this machine!</source>
         <translation>Το OSCAR δεν διαθέτει αντίγραφα ασφαλείας για αυτό το μηχάνημα!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1968"/>
+        <location filename="../oscar/mainwindow.cpp" line="2019"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Εάν δεν έχετε κάνει &lt;i&gt;τα αντίγραφα &lt;b&gt;δικά σας &lt;/b&gt;για ΟΛΑ τα δεδομένα σας για αυτό το μηχάνημα &lt;/i&gt;, &lt;font size=+2&gt;θα χάσετε μόνιμα τα στοιχεία του μηχανήματος &lt;b&gt; μόνιμα &lt;/b&gt;! &lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1974"/>
+        <location filename="../oscar/mainwindow.cpp" line="2025"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
         <translation>Πρόκειται να μετακινηθείτε &lt;font size= +2&gt; κατάργηση &lt;/font&gt; της μηχανής OSCAR για το ακόλουθο μηχάνημα: &lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2032"/>
+        <location filename="../oscar/mainwindow.cpp" line="2083"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>Ένα σφάλμα δικαιωμάτων αρχείου προκάλεσε την αποτυχία της διαδικασίας εκκαθάρισης. θα πρέπει να διαγράψετε το παρακάτω φάκελο με μη αυτόματο τρόπο:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2082"/>
+        <location filename="../oscar/mainwindow.cpp" line="2133"/>
         <source>No help is available.</source>
         <translation>Δεν υπάρχει βοήθεια.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2278"/>
         <source>Imported %1 ZEO session(s) from
 
 %2</source>
-        <translation>Εισαγόμενες %1 συνεδρίες από το ZEO από
+        <translation type="vanished">Εισαγόμενες %1 συνεδρίες από το ZEO από
 
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2284"/>
         <source>Already up to date with ZEO data at
 
 %1</source>
-        <translation>Ήδη ενημερωμένα με δεδομένα ZEO στη διεύθυνση
+        <translation type="vanished">Ήδη ενημερωμένα με δεδομένα ZEO στη διεύθυνση
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2286"/>
         <source>Couldn&apos;t find any valid ZEO CSV data at
 
 %1</source>
-        <translation>Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων CSE του ZEO στη διεύθυνση
+        <translation type="vanished">Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων CSE του ZEO στη διεύθυνση
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2309"/>
         <source>Imported %1 Dreem session(s) from
 
 %2</source>
-        <translation>Εισαγόμενες %1 συνεδρίες από το Dreem από
+        <translation type="vanished">Εισαγόμενες %1 συνεδρίες από το Dreem από
 
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2315"/>
         <source>Already up to date with Dreem data at
 
 %1</source>
-        <translation>Ήδη ενημερωμένη με τα δεδομένα του Dreem στο
+        <translation type="vanished">Ήδη ενημερωμένη με τα δεδομένα του Dreem στο
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2317"/>
         <source>Couldn&apos;t find any valid Dreem CSV data at
 
 %1</source>
-        <translation>Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων CSE του Dreem στη διεύθυνση
+        <translation type="vanished">Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων CSE του Dreem στη διεύθυνση
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2420"/>
-        <source>Somnopause Data Import of %1 file(s) complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.cpp" line="2422"/>
-        <source>Somnopose Import Partial Success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.cpp" line="2471"/>
         <source>Imported %1 oximetry session(s) from
 
 %2</source>
-        <translation>Εισαγόμενες συνεδρίες από oximetry %1 από
+        <translation type="vanished">Εισαγόμενες συνεδρίες από oximetry %1 από
 
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2476"/>
         <source>Already up to date with oximetry data at
 
 %1</source>
-        <translation>Ήδη ενημερωμένα με δεδομένα οξυμετρίας στο
+        <translation type="vanished">Ήδη ενημερωμένα με δεδομένα οξυμετρίας στο
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2478"/>
         <source>Couldn&apos;t find any valid data at
 
 %1</source>
-        <translation>Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων στο
+        <translation type="vanished">Δεν ήταν δυνατή η εύρεση έγκυρων δεδομένων στο
 
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2663"/>
+        <location filename="../oscar/mainwindow.cpp" line="2632"/>
         <source>%1&apos;s Journal</source>
         <translation>Εφημερίδα της %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2665"/>
+        <location filename="../oscar/mainwindow.cpp" line="2634"/>
         <source>Choose where to save journal</source>
         <translation>Επιλέξτε πού να αποθηκεύσετε το ημερολόγιο</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2665"/>
+        <location filename="../oscar/mainwindow.cpp" line="2634"/>
         <source>XML Files (*.xml)</source>
         <translation>Αρχεία XML (* .xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2685"/>
+        <location filename="../oscar/mainwindow.cpp" line="2654"/>
         <source>Export review is not yet implemented</source>
         <translation>Η αναθεώρηση εξαγωγής δεν έχει ακόμη εφαρμοστεί</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2695"/>
+        <location filename="../oscar/mainwindow.cpp" line="2664"/>
         <source>Would you like to zip this card?</source>
         <translation>Θα θέλατε να παραλάβετε αυτήν την κάρτα;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2717"/>
-        <location filename="../oscar/mainwindow.cpp" line="2768"/>
-        <location filename="../oscar/mainwindow.cpp" line="2819"/>
+        <location filename="../oscar/mainwindow.cpp" line="2686"/>
+        <location filename="../oscar/mainwindow.cpp" line="2737"/>
+        <location filename="../oscar/mainwindow.cpp" line="2788"/>
         <source>Choose where to save zip</source>
         <translation>Επιλέξτε πού να αποθηκεύσετε το φερμουάρ</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2717"/>
-        <location filename="../oscar/mainwindow.cpp" line="2768"/>
-        <location filename="../oscar/mainwindow.cpp" line="2819"/>
+        <location filename="../oscar/mainwindow.cpp" line="2686"/>
+        <location filename="../oscar/mainwindow.cpp" line="2737"/>
+        <location filename="../oscar/mainwindow.cpp" line="2788"/>
         <source>ZIP files (*.zip)</source>
         <translation>Αρχεία ZIP (* .zip)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2746"/>
-        <location filename="../oscar/mainwindow.cpp" line="2782"/>
-        <location filename="../oscar/mainwindow.cpp" line="2853"/>
+        <location filename="../oscar/mainwindow.cpp" line="2715"/>
+        <location filename="../oscar/mainwindow.cpp" line="2751"/>
+        <location filename="../oscar/mainwindow.cpp" line="2822"/>
         <source>Creating zip...</source>
         <translation>Δημιουργία φερμουάρ ...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2837"/>
+        <location filename="../oscar/mainwindow.cpp" line="2806"/>
         <source>Calculating size...</source>
         <translation>Υπολογισμός μεγέθους ...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2875"/>
+        <location filename="../oscar/mainwindow.cpp" line="2844"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>Τα θέματα αναφοράς δεν έχουν ακόμη εφαρμοστεί</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2884"/>
+        <location filename="../oscar/mainwindow.cpp" line="2853"/>
         <source>OSCAR Information</source>
         <translation>Πληροφορίες OSCAR</translation>
     </message>
@@ -1616,62 +1634,83 @@
         <translation>Θυμηθείτε να επιλέξετε τον ριζικό φάκελο ή το γράμμα μονάδας δίσκου της κάρτας δεδομένων σας και όχι έναν φάκελο μέσα σε αυτό.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1332"/>
+        <location filename="../oscar/mainwindow.cpp" line="1333"/>
         <source>Please open a profile first.</source>
         <translation>Ανοίξτε πρώτα ένα προφίλ.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1394"/>
+        <location filename="../oscar/mainwindow.cpp" line="1395"/>
         <source>Check for updates not implemented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1899"/>
+        <location filename="../oscar/mainwindow.cpp" line="1950"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>Με την προϋπόθεση ότι έχετε κάνει τα &lt;i&gt; αντίγραφα ασφαλείας &lt;b&gt; δικά σας &lt;/b&gt; για ΟΛΑ τα δεδομένα CPAP &lt;/i&gt;, μπορείτε να ολοκληρώσετε αυτήν την ενέργεια, αλλά θα πρέπει να επαναφέρετε από τα αντίγραφα ασφαλείας σας με μη αυτόματο τρόπο.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1900"/>
+        <location filename="../oscar/mainwindow.cpp" line="1951"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Είστε σίγουροι ότι θέλετε να το κάνετε αυτό;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1915"/>
+        <location filename="../oscar/mainwindow.cpp" line="1966"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>Επειδή δεν υπάρχουν εσωτερικά αντίγραφα ασφαλείας για την αποκατάσταση, θα πρέπει να αποκαταστήσετε από τη δική σας.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1916"/>
+        <location filename="../oscar/mainwindow.cpp" line="1967"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
         <translation>Θα θέλατε να εισαγάγετε από τα δικά σας αντίγραφα ασφαλείας τώρα; (δεν θα έχετε ορατά δεδομένα για αυτό το μηχάνημα μέχρι να το κάνετε)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1965"/>
+        <location filename="../oscar/mainwindow.cpp" line="2016"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Σημειώστε προληπτικά ότι ο φάκελος δημιουργίας αντιγράφων ασφαλείας θα παραμείνει στη θέση του.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1977"/>
+        <location filename="../oscar/mainwindow.cpp" line="2028"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>Είστε &lt;b&gt; απολύτως σίγουροι &lt;/b&gt; που θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2354"/>
+        <location filename="../oscar/mainwindow.cpp" line="2355"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Το Γλωσσάριο θα ανοίξει στο προεπιλεγμένο πρόγραμμα περιήγησης</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2577"/>
+        <location filename="../oscar/mainwindow.cpp" line="2426"/>
+        <location filename="../oscar/mainwindow.cpp" line="2430"/>
+        <source>There was a problem opening %1 Data File: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2429"/>
+        <source>%1 Data Import of %2 file(s) complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2431"/>
+        <source>%1 Import Partial Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2433"/>
+        <source>%1 Data Import complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2546"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>Είστε βέβαιοι ότι θέλετε να διαγράψετε δεδομένα oximetry για %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2579"/>
+        <location filename="../oscar/mainwindow.cpp" line="2548"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;Λάβετε υπόψη ότι δεν μπορείτε να αναιρέσετε αυτήν την ενέργεια! &lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2609"/>
+        <location filename="../oscar/mainwindow.cpp" line="2578"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>Επιλέξτε την ημέρα με έγκυρα δεδομένα οξυμετρίας σε ημερήσια προβολή πρώτα.</translation>
     </message>
@@ -1691,9 +1730,6 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="727"/>
-        <location filename="../oscar/mainwindow.cpp" line="2278"/>
-        <location filename="../oscar/mainwindow.cpp" line="2309"/>
-        <location filename="../oscar/mainwindow.cpp" line="2471"/>
         <source>Import Success</source>
         <translation>Εισαγωγή επιτυχίας</translation>
     </message>
@@ -1708,9 +1744,6 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="729"/>
-        <location filename="../oscar/mainwindow.cpp" line="2284"/>
-        <location filename="../oscar/mainwindow.cpp" line="2315"/>
-        <location filename="../oscar/mainwindow.cpp" line="2476"/>
         <source>Up to date</source>
         <translation>Ενημερωμένος</translation>
     </message>
@@ -1759,45 +1792,42 @@
         <translation>Προσδιορίζω</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1337"/>
+        <location filename="../oscar/mainwindow.cpp" line="1338"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>Η πρόσβαση στις προτιμήσεις έχει αποκλειστεί μέχρι να ολοκληρωθεί ο επανυπολογισμός.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1453"/>
+        <location filename="../oscar/mainwindow.cpp" line="1454"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>Παρουσιάστηκε σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης στο αρχείο &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1455"/>
+        <location filename="../oscar/mainwindow.cpp" line="1456"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Το στιγμιότυπο οθόνης αποθηκεύτηκε στο αρχείο &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1890"/>
+        <location filename="../oscar/mainwindow.cpp" line="1941"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>Σημειώστε ότι αυτό θα μπορούσε να οδηγήσει σε απώλεια δεδομένων αν τα αντίγραφα ασφαλείας του OSCAR έχουν απενεργοποιηθεί.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2339"/>
+        <location filename="../oscar/mainwindow.cpp" line="2340"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>Παρουσιάστηκε πρόβλημα κατά το άνοιγμα του αρχείου MSeries Αρχείο: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2343"/>
+        <location filename="../oscar/mainwindow.cpp" line="2344"/>
         <source>MSeries Import complete</source>
         <translation>Η εισαγωγή του MSeries ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2417"/>
-        <location filename="../oscar/mainwindow.cpp" line="2421"/>
         <source>There was a problem opening Somnopose Data File: </source>
-        <translation>Παρουσιάστηκε πρόβλημα κατά το άνοιγμα του αρχείου δεδομένων Somnopose: </translation>
+        <translation type="vanished">Παρουσιάστηκε πρόβλημα κατά το άνοιγμα του αρχείου δεδομένων Somnopose: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2435"/>
         <source>Somnopause Data Import complete</source>
-        <translation>Η εισαγωγή δεδομένων Somnopose ολοκληρώθηκε</translation>
+        <translation type="vanished">Η εισαγωγή δεδομένων Somnopose ολοκληρώθηκε</translation>
     </message>
 </context>
 <context>
@@ -2224,43 +2254,48 @@
         <translation>Επιλέγω</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="130"/>
+        <location filename="../oscar/overview.ui" line="127"/>
+        <source>Snapshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/overview.ui" line="135"/>
         <source>Start:</source>
         <translation>Αρχή:</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="153"/>
+        <location filename="../oscar/overview.ui" line="158"/>
         <source>End:</source>
         <translation>Τέλος:</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="176"/>
+        <location filename="../oscar/overview.ui" line="181"/>
         <source>Reset view to selected date range</source>
         <translation>Επαναφορά προβολής σε επιλεγμένο εύρος ημερομηνιών</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="195"/>
-        <location filename="../oscar/overview.ui" line="244"/>
+        <location filename="../oscar/overview.ui" line="200"/>
+        <location filename="../oscar/overview.ui" line="249"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="225"/>
+        <location filename="../oscar/overview.ui" line="230"/>
         <source>Toggle Graph Visibility</source>
         <translation>Εναλλαγή ορατότητας γραφήματος</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="260"/>
+        <location filename="../oscar/overview.ui" line="265"/>
         <source>Drop down to see list of graphs to switch on/off.</source>
         <translation>Πατήστε κάτω για να δείτε τη λίστα γραφημάτων για ενεργοποίηση / απενεργοποίηση.</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="267"/>
+        <location filename="../oscar/overview.ui" line="272"/>
         <source>Graphs</source>
         <translation>Γραφικές παραστάσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="185"/>
+        <location filename="../oscar/overview.cpp" line="180"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2269,7 +2304,7 @@ Index</source>
 Δείκτης</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="187"/>
+        <location filename="../oscar/overview.cpp" line="182"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2278,36 +2313,36 @@ Index</source>
 Δείκτης</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="193"/>
+        <location filename="../oscar/overview.cpp" line="188"/>
         <source>Usage</source>
         <translation>Χρήση</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="193"/>
+        <location filename="../oscar/overview.cpp" line="188"/>
         <source>Usage
 (hours)</source>
         <translation>Χρήση
 (ώρες)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="196"/>
+        <location filename="../oscar/overview.cpp" line="191"/>
         <source>Session Times</source>
         <translation>Ώρες συνεδρίας</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="204"/>
+        <location filename="../oscar/overview.cpp" line="199"/>
         <source>Total Time in Apnea</source>
         <translation>Συνολικός χρόνος στην άπνοια</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="204"/>
+        <location filename="../oscar/overview.cpp" line="199"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Συνολικός χρόνος στην άπνοια
 (Λεπτά)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="243"/>
+        <location filename="../oscar/overview.cpp" line="238"/>
         <source>Body
 Mass
 Index</source>
@@ -2316,19 +2351,19 @@ Index</source>
 Δείκτης</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="248"/>
+        <location filename="../oscar/overview.cpp" line="243"/>
         <source>How you felt
 (0-10)</source>
         <translation>Πως αισθάνθηκες
 (0-10)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="595"/>
+        <location filename="../oscar/overview.cpp" line="617"/>
         <source>Show all graphs</source>
         <translation>Εμφάνιση όλων των γραφημάτων</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="608"/>
+        <location filename="../oscar/overview.cpp" line="630"/>
         <source>Hide all graphs</source>
         <translation>Απόκρυψη όλων των γραφημάτων</translation>
     </message>
@@ -4584,6 +4619,7 @@ Would you like do this now?</source>
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="835"/>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1247"/>
         <source>No Data</source>
         <translation>Χωρίς δεδομένα</translation>
@@ -4677,119 +4713,119 @@ Would you like do this now?</source>
         <translation>Δεκ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="661"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
         <source>&quot;</source>
         <translation>&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
         <source>ft</source>
         <translation>ft</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="663"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
         <source>lb</source>
         <translation>lb</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="664"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
         <source>oz</source>
         <translation>oz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="665"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
         <source>Kg</source>
         <translation>kg</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
         <source>cmH2O</source>
         <translation>cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="210"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="211"/>
         <source>Med.</source>
         <translation>Διάμεσος</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="228"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="229"/>
         <source>Min: %1</source>
         <translation>Ελάχιστη: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="259"/>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="269"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="260"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="270"/>
         <source>Min: </source>
         <translation>Ελάχιστη: </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="264"/>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="274"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="265"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="275"/>
         <source>Max: </source>
         <translation>Μέγιστη: </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="278"/>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="282"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="279"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="283"/>
         <source>%1: </source>
         <translation>%1: </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="286"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="287"/>
         <source>???: </source>
         <translation>???: </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="293"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="294"/>
         <source>Max: %1</source>
         <translation>Μέγιστη: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="299"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="300"/>
         <source>%1 (%2 days): </source>
         <translation>%1 (%2 ημέρες): </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="301"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="302"/>
         <source>%1 (%2 day): </source>
         <translation>%1 (%2 ημέρα): </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="360"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="361"/>
         <source>% in %1</source>
         <translation>% σε %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="366"/>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="693"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="367"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>Hours</source>
         <translation>Ωρες</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="372"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="373"/>
         <source>Min %1</source>
         <translation>Ελάχιστο %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="678"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="679"/>
         <source>
 Hours: %1</source>
         <translation>
 Ωρες: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="744"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="745"/>
         <source>%1 low usage, %2 no usage, out of %3 days (%4% compliant.) Length: %5 / %6 / %7</source>
         <translation>%1 χαμηλή χρήση, %2 καμία χρήση, εκτός %3 ημέρες (%4% υποχωρητικός). Μήκος: %5 / %6 / %7</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="825"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="826"/>
         <source>Sessions: %1 / %2 / %3 Length: %4 / %5 / %6 Longest: %7 / %8 / %9</source>
         <translation>Συνεδρίες: %1 / %2 / %3 Μήκος: %4 / %5 / %6 Μακρύτερα: %7 / %8 / %9</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="944"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="945"/>
         <source>%1
 Length: %3
 Start: %2
@@ -4800,17 +4836,17 @@ Start: %2
 </translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="946"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="947"/>
         <source>Mask On</source>
         <translation>Μάσκα ενεργοποιημένο</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="946"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="947"/>
         <source>Mask Off</source>
         <translation>Μάσκα απενεργοποιημένη</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="957"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="958"/>
         <source>%1
 Length: %3
 Start: %2</source>
@@ -4819,657 +4855,659 @@ Start: %2</source>
 Αρχή: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1128"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1129"/>
         <source>TTIA:</source>
         <translation>TTIA:</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1141"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1144"/>
         <source>
 TTIA: %1</source>
         <translation>
 TTIA: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1242"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="1245"/>
         <source>%1 %2 / %3 / %4</source>
         <translation>%1 %2 / %3 / %4</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
         <source>Minutes</source>
         <translation>Λεπτά</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
         <source>Seconds</source>
         <translation>Δευτερόλεπτα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
         <source>h</source>
         <translation>h</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
         <source>s</source>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
         <source>Events/hr</source>
         <translation>Εκδηλώσεις / ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
         <source>bpm</source>
         <translation>bpm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
         <source>Litres</source>
         <translation>Λίτρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
         <source>ml</source>
         <translation>ml</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
         <source>Breaths/min</source>
         <translation>Αναπνοές / λεπτό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>?</source>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
         <source>Severity (0-1)</source>
         <translation>Σοβαρότητα (0-1)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
         <source>Degrees</source>
         <translation>Βαθμοί</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9419"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="693"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2904"/>
         <source>Error</source>
         <translation>Λάθος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
         <source>Warning</source>
         <translation>Προειδοποίηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
         <source>Information</source>
         <translation>Πληροφορίες</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
         <source>Busy</source>
         <translation>Απασχολημένος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
         <source>Please Note</source>
         <translation>Παρακαλώ σημειώστε</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="700"/>
         <source>Compliance Only :(</source>
         <translation>Μόνο συμμόρφωση :(</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>Graphs Switched Off</source>
         <translation>Τα γραφήματα είναι απενεργοποιημένα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
         <source>Summary Only :(</source>
         <translation>Περίληψη μόνο :(</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>Sessions Switched Off</source>
         <translation>Οι περίοδοι σύνδεσης απενεργοποιήθηκαν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="707"/>
         <source>&amp;Yes</source>
         <translation>&amp;Ναί</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="708"/>
         <source>&amp;No</source>
         <translation>&amp;Οχι</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Ματαίωση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="705"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
         <source>&amp;Destroy</source>
         <translation>&amp;Καταστρέφω</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="706"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
         <source>&amp;Save</source>
         <translation>&amp;Αποθηκεύσετε</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="708"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
         <source>BMI</source>
         <translation>BMI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="306"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="318"/>
         <source>Weight</source>
         <translation>Βάρος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>Zombie</source>
         <translation>Βρυκόλακας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="190"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
         <source>Pulse Rate</source>
         <translation>Καρδιακός σφυγμός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="712"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
         <source>SpO2</source>
         <translation>SpO2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="199"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
         <source>Plethy</source>
         <translation>Πλήθος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="719"/>
         <source>Pressure</source>
         <translation>Πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
         <source>Daily</source>
         <translation>Καθημερινά</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
         <source>Profile</source>
         <translation>Προφίλ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
         <source>Overview</source>
         <translation>επισκόπηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="719"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
         <source>Oximetry</source>
         <translation>Οξυμετρία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="726"/>
         <source>Oximeter</source>
         <translation>Οξύμετρο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="727"/>
         <source>Event Flags</source>
         <translation>Σημαίες συμβάντων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="725"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="730"/>
         <source>Default</source>
         <translation>Προκαθορισμένο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9340"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="89"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="733"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2825"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
         <source>CPAP</source>
         <translation>CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="729"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
         <source>BiPAP</source>
         <translation>BiPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="730"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9343"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
         <source>Bi-Level</source>
         <translation>Bi-Level</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="731"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <source>EPAP</source>
         <translation>EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="732"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
         <source>Min EPAP</source>
         <translation>Ελάχιστο EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="733"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
         <source>Max EPAP</source>
         <translation>Μέγιστη EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
         <source>IPAP</source>
         <translation>IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
         <source>Min IPAP</source>
         <translation>Ελάχιστο IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="741"/>
         <source>Max IPAP</source>
         <translation>Μέγιστη IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="90"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="104"/>
         <source>APAP</source>
         <translation>APAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9345"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="96"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="110"/>
         <source>ASV</source>
         <translation>ASV</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="300"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="312"/>
         <source>AVAPS</source>
         <translation>AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
         <source>ST/ASV</source>
         <translation>ST/ASV</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9404"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9431"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2916"/>
         <source>Humidifier</source>
         <translation>Υγραντήρας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="749"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>OA</source>
         <translation>OA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="746"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="753"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>CA</source>
         <translation>CA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>FL</source>
         <translation>FL</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="749"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="177"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SA</source>
         <translation>SA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
         <source>LE</source>
         <translation>LE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
         <source>EP</source>
         <translation>EP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>VS</source>
         <translation>VS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>VS2</source>
         <translation>VS2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>RERA</source>
         <translation>RERA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9331"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
         <source>PP</source>
         <translation>PP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>RE</source>
         <translation>RE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>NR</source>
         <translation>NR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
         <source>NRI</source>
         <translation>NRI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
         <source>O2</source>
         <translation>O2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9348"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>PC</source>
         <translation>PC</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
         <source>UF1</source>
         <translation>UF1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
         <source>UF2</source>
         <translation>UF2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <source>UF3</source>
         <translation>UF3</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
         <source>PS</source>
         <translation>PS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>AHI</source>
         <translation>AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="775"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
         <source>RDI</source>
         <translation>RDI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <source>HI</source>
         <translation>HI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
         <source>UAI</source>
         <translation>UAI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
         <source>CAI</source>
         <translation>CAI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
         <source>FLI</source>
         <translation>FLI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
         <source>REI</source>
         <translation>REI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
         <source>EPI</source>
         <translation>EPI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>PB</source>
         <translation>PB</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="789"/>
         <source>IE</source>
         <translation>IE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="246"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Insp. Time</source>
         <translation>Ώρα εισπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="243"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Exp. Time</source>
         <translation>Χρόνος λήξης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Resp. Event</source>
         <translation>Αναπνευστικό συμβάν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="787"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limitation</source>
         <translation>Περιορισμός ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="788"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
         <source>Flow Limit</source>
         <translation>Όριο ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="789"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="177"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation>SensAwake</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
         <source>Pat. Trig. Breath</source>
         <translation>Ελαφρό κτύπημα. Κομψός. Αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
         <source>Tgt. Min. Vent</source>
         <translation>Στόχευση λεπτών εξαερισμού</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
         <source>Target Vent.</source>
         <translation>Στόχευση εξαερισμού.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Minute Vent.</source>
         <translation>Λεπτό άνεμο.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="221"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
         <source>Tidal Volume</source>
         <translation>Παλιρροιακός Όγκος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Resp. Rate</source>
         <translation>Ρυθμός αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2782"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
         <source>Snore</source>
         <translation>Ροχαλίζω</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
         <source>Leak</source>
         <translation>Διαρροή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
         <source>Leaks</source>
         <translation>Διαρροές</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="168"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
         <source>Large Leak</source>
         <translation>Μεγάλη διαρροή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="168"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
         <source>LL</source>
         <translation>LL</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
         <source>Total Leaks</source>
         <translation>Συνολικές διαρροές</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
         <source>Unintentional Leaks</source>
         <translation>Μη σκόπιμες διαρροές</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="809"/>
         <source>MaskPressure</source>
         <translation>Μάσκα Πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="212"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Flow Rate</source>
         <translation>Ρυθμός ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="334"/>
         <source>Sleep Stage</source>
         <translation>Φάση ύπνου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
         <source>Usage</source>
         <translation>Χρήση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
         <source>Sessions</source>
         <translation>Συνεδρίες</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <source>Pr. Relief</source>
         <translation>Ανακούφιση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
         <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
         <source>OSCAR</source>
         <translation>OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
         <source>No Data Available</source>
         <translation>Δεν υπάρχουν διαθέσιμα δεδομένα</translation>
     </message>
@@ -5499,726 +5537,755 @@ TTIA: %1</translation>
         <translation>Γραφικά Τύπος κινητήρα:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="655"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="660"/>
         <source>Software Engine</source>
         <translation>Μηχανή Λογισμικού</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="656"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="661"/>
         <source>ANGLE / OpenGLES</source>
         <translation>ANGLE / OpenGLES</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="657"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
         <source>Desktop OpenGL</source>
         <translation>Desktop OpenGL</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="659"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="664"/>
         <source> m</source>
         <translation> m</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="660"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="665"/>
         <source> cm</source>
         <translation> cm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
         <source>Bookmarks</source>
         <translation>Σελιδοδείκτες</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9335"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9337"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="85"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>Mode</source>
         <translation>Τρόπος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
         <source>Model</source>
         <translation>Μοντέλο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="822"/>
         <source>Brand</source>
         <translation>Μάρκα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
         <source>Serial</source>
         <translation>Αύξων αριθμός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="818"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
         <source>Series</source>
         <translation>Σειρά</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="819"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Machine</source>
         <translation>Μηχανή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="820"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Channel</source>
         <translation>Κανάλι</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="277"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
         <source>Inclination</source>
         <translation>Κλίση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="274"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
         <source>Orientation</source>
         <translation>Προσανατολισμός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
         <source>Motion</source>
         <translation>Κίνηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
         <source>Name</source>
         <translation>Ονομα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
         <source>DOB</source>
         <translation>Ημερομηνια γεννησης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
         <source>Phone</source>
         <translation>Τηλέφωνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
         <source>Address</source>
         <translation>Διεύθυνση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
         <source>Email</source>
         <translation>διεύθυνση ηλεκτρονικού ταχυδρομείου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
         <source>Patient ID</source>
         <translation>Αναγνωριστικό ασθενούς</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="841"/>
         <source>Bedtime</source>
         <translation>Ωρα ύπνου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
         <source>Wake-up</source>
         <translation>Ξύπνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
         <source>Mask Time</source>
         <translation>Μάσκα Ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="191"/>
         <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="124"/>
         <source>Unknown</source>
         <translation>Αγνωστος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
         <source>None</source>
         <translation>Κανένας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="840"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
         <source>Ready</source>
         <translation>Ετοιμος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
         <source>First</source>
         <translation>Πρώτα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
         <source>Last</source>
         <translation>τελευταίος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="312"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="850"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>Start</source>
         <translation>Αρχή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="313"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
         <source>End</source>
         <translation>Τέλος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="164"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="177"/>
         <source>On</source>
         <translation>Επί</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
         <source>Off</source>
         <translation>Μακριά από</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
         <source>Yes</source>
         <translation>Ναί</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
         <source>No</source>
         <translation>Οχι</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
         <source>Min</source>
         <translation>Ελάχιστο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
         <source>Max</source>
         <translation>ανώτατο όριο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="860"/>
         <source>Med</source>
         <translation>Μεσαίο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="862"/>
         <source>Average</source>
         <translation>Μέση τιμή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
         <source>Median</source>
         <translation>Διάμεσος</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="214"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="215"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="864"/>
         <source>Avg</source>
         <translation>Μέγ</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="212"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
+        <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="213"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
         <source>W-Avg</source>
         <translation>Σταθμισμένος μέσος όρος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="900"/>
         <source>Non Data Capable Machine</source>
         <translation>Μηχανή μη ικανή για δεδομένα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="901"/>
         <source>Your Philips Respironics CPAP machine (Model %1) is unfortunately not a data capable model.</source>
         <translation>Το μηχάνημα Philips Respironics CPAP (μοντέλο %1) δυστυχώς δεν είναι μοντέλο ικανό για δεδομένα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="696"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2672"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="763"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="216"/>
         <source>Getting Ready...</source>
         <translation>Ετοιμάζομαι...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="819"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="883"/>
         <source>Machine Unsupported</source>
         <translation>Μη υποστηριζόμενη μηχανή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="820"/>
         <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation>Λυπούμαστε, η μηχανή σας Philips Respironics CPAP (Μοντέλο %1) δεν υποστηρίζεται ακόμα.</translation>
+        <translation type="vanished">Λυπούμαστε, η μηχανή σας Philips Respironics CPAP (Μοντέλο %1) δεν υποστηρίζεται ακόμα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>Λυπούμαστε, το μηχάνημά σας Philips Respironics CPAP (Μοντέλο% 1) δεν υποστηρίζεται ακόμη. Λυπούμαστε που αναφέρετε ότι το OSCAR μπορεί να παρακολουθεί μόνο τις ώρες χρήσης και τις πολύ βασικές ρυθμίσεις για αυτό το μηχάνημα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="720"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="787"/>
         <source>Scanning Files...</source>
         <translation>Σάρωση αρχείων ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="728"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="638"/>
-        <location filename="../oscar/mainwindow.cpp" line="2404"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="720"/>
+        <location filename="../oscar/mainwindow.cpp" line="2407"/>
         <source>Importing Sessions...</source>
         <translation>Εισαγωγή περιόδων σύνδεσης ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="733"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="357"/>
         <source>Finishing up...</source>
         <translation>Τελειώνω...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="821"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation>Οι προγραμματιστές χρειάζονται ένα αντίγραφο .zip της κάρτας SD αυτού του μηχανήματος και τις ανάλογες αναφορές .pdf του Encore για να λειτουργήσει με το OSCAR.</translation>
+        <translation type="vanished">Οι προγραμματιστές χρειάζονται ένα αντίγραφο .zip της κάρτας SD αυτού του μηχανήματος και τις ανάλογες αναφορές .pdf του Encore για να λειτουργήσει με το OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="843"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="431"/>
         <source>Machine Untested</source>
         <translation>Μη ελεγχθείσα μηχανή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
         <source>Your Philips Respironics CPAP machine (Model %1) has not been tested yet.</source>
         <translation>Η μηχανή σας Philips Respironics CPAP (Μοντέλο %1) δεν έχει ελεγχθεί ακόμα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="925"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure it works with OSCAR.</source>
         <translation>Φαίνεται αρκετά παρόμοια με άλλα μηχανήματα που θα μπορούσε να λειτουργήσει, αλλά οι προγραμματιστές θα ήθελαν ένα αντίγραφο .zip της κάρτας SD αυτού του μηχανήματος και τις αντίστοιχες αναφορές .pdf του Encore για να βεβαιωθείτε ότι λειτουργεί με το OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9377"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9379"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
         <source>Flex Lock</source>
         <translation>Flex Lock</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9378"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>Είτε υπάρχουν ρυθμίσεις Flex για εσάς.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9387"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2872"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>Το χρονικό διάστημα που απαιτείται για τη μετάβαση από το EPAP στο IPAP, τόσο μεγαλύτερος είναι ο αριθμός, τόσο πιο αργή είναι η μετάβαση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9393"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2878"/>
         <source>Rise Time Lock</source>
         <translation>Αύξηση χρόνου κλειδώματος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9394"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2879"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>Εάν οι ρυθμίσεις ώρας ανόδου είναι διαθέσιμες σε εσάς.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9395"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2880"/>
         <source>Rise Lock</source>
         <translation>Rise Lock</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9448"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9449"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2933"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
         <source>Mask Resistance Setting</source>
         <translation>Ρύθμιση αντίστασης μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9450"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
         <source>Mask Resist.</source>
         <translation>Mask Resist.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9458"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
         <source>Hose Diam.</source>
         <translation>Διάμετρος σωλήνα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9461"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2946"/>
         <source>15mm</source>
         <translation>15 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9460"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>22mm</source>
         <translation>22 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="711"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="778"/>
         <source>Backing Up Files...</source>
         <translation>Δημιουργία αντιγράφων ασφαλείας αρχείων ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="746"/>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="86"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="83"/>
         <source>Untested Data</source>
         <translation>Μη ελεγμένα δεδομένα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="747"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="814"/>
         <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
         <translation>Τα δεδομένα σας Philips Respironics %1 (%2) που δημιούργησε το OSCAR δεν έχει δει ποτέ πριν.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="748"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="815"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
         <translation>Τα εισαγόμενα δεδομένα ενδέχεται να μην είναι απολύτως ακριβή, οπότε οι προγραμματιστές θα θέλατε ένα αντίγραφο .zip της κάρτας SD αυτού του μηχανήματος και τις αντίστοιχες αναφορές .pdf του Encore, για να βεβαιωθείτε ότι η OSCAR χειρίζεται σωστά τα δεδομένα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9339"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
+        <source>model %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
+        <source>DreamStation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
+        <source>unknown model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
+        <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
+        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2824"/>
         <source>CPAP-Check</source>
         <translation>CPAP-Check</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9341"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2826"/>
         <source>AutoCPAP</source>
         <translation>AutoCPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9342"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
         <source>Auto-Trial</source>
         <translation>Auto-Trial</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9344"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>AutoBiLevel</source>
         <translation>AutoBiLevel</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9346"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2831"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9347"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
         <source>S/T</source>
         <translation>S/T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9349"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2834"/>
         <source>S/T - AVAPS</source>
         <translation>S/T - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9350"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2835"/>
         <source>PC - AVAPS</source>
         <translation>PC - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9353"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9355"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2840"/>
         <source>Flex Mode</source>
         <translation>Λειτουργία Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9354"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>Λειτουργία ανακούφισης πίεσης PRS1.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9358"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2843"/>
         <source>C-Flex</source>
         <translation>C-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9359"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>C-Flex+</source>
         <translation>C-Flex+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9360"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>A-Flex</source>
         <translation>A-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9361"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <source>P-Flex</source>
         <translation>P-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9362"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9386"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9388"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2871"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
         <source>Rise Time</source>
         <translation>Αύξηση χρόνου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9363"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2848"/>
         <source>Bi-Flex</source>
         <translation>Bi-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9365"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2850"/>
         <source>Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9369"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9371"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
         <source>Flex Level</source>
         <translation>Επίπεδο Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9370"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2855"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>Ρύθμιση πίεσης PRS1.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9418"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2903"/>
         <source>Passover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9439"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2924"/>
         <source>Target Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9440"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
         <source>PRS1 Humidifier Target Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9441"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Hum. Tgt Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9466"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2951"/>
         <source>Tubing Type Lock</source>
         <translation>Κλείδωμα τύπου σωλήνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9467"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>Είτε οι ρυθμίσεις τύπου σωλήνωσης είναι διαθέσιμες σε εσάς.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9468"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
         <source>Tube Lock</source>
         <translation>Κλείδωμα σωλήνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9475"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2960"/>
         <source>Mask Resistance Lock</source>
         <translation>Κλείδωμα αντίστασης μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9476"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>Εάν έχετε στη διάθεσή σας ρυθμίσεις αντοχής στη μάσκα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9477"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
         <source>Mask Res. Lock</source>
         <translation>Κλείδωμα αντίστασης μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9512"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
         <translation>Είτε το μηχάνημα δείχνει AHI μέσω ενσωματωμένης οθόνης.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9520"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9522"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
         <source>Ramp Type</source>
         <translation>Τύπος ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9521"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
         <source>Type of ramp curve to use.</source>
         <translation>Τύπος καμπύλης ράμπας για χρήση.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9524"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3009"/>
         <source>Linear</source>
         <translation>Γραμμικός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9525"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3010"/>
         <source>SmartRamp</source>
         <translation>SmartRamp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9529"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3014"/>
         <source>Backup Breath Mode</source>
         <translation>Λειτουργία αναπνοής δημιουργίας αντιγράφων ασφαλείας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9530"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3015"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>Το είδος της εφεδρικής αναπνοής κατά τη χρήση: καμία (εκτός λειτουργίας), αυτόματη ή σταθερή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9531"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3016"/>
         <source>Breath Rate</source>
         <translation>Ποσοστό αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9535"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3020"/>
         <source>Fixed</source>
         <translation>Σταθερός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9539"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3024"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>Σταθερή εφεδρική αναπνοή BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9540"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3025"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>Οι ελάχιστες αναπνοές ανά λεπτό (BPM) κάτω από τις οποίες θα ξεκινήσει μια χρονική αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9541"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3026"/>
         <source>Breath BPM</source>
         <translation>Breath BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9546"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
         <source>Timed Inspiration</source>
         <translation>Προσωρινή Έμπνευση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9547"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3032"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>Ο χρόνος που μια χρονική αναπνοή θα παρέχει IPAP πριν από τη μετάβαση στην EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9548"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3033"/>
         <source>Timed Insp.</source>
         <translation>Προσωρινή Έμπνευση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9553"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
         <source>Auto-Trial Duration</source>
         <translation>Διάρκεια αυτόματης δοκιμής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9554"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3039"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
         <translation>Ο αριθμός ημερών στη δοκιμαστική περίοδο Auto-CPAP, μετά την οποία το μηχάνημα θα επανέλθει στην CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9555"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3040"/>
         <source>Auto-Trial Dur.</source>
         <translation>Διάρκεια αυτόματης δοκιμής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9560"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9562"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3047"/>
         <source>EZ-Start</source>
         <translation>EZ-Start</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9561"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>Είτε ενεργοποιείται το EZ-Start είτε όχι</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9569"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3054"/>
         <source>Variable Breathing</source>
         <translation>Μεταβλητή αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9570"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3055"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>UNCONFIRMED: Πιθανώς μεταβλητή αναπνοή, που είναι περιόδους υψηλής απόκλισης από την κορυφαία τάση εισπνοής ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9593"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9595"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3078"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3080"/>
         <source>Peak Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9594"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3079"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9402"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2887"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
         <source>Humidifier Status</source>
         <translation>Κατάσταση υγραντήρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9403"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2888"/>
         <source>PRS1 humidifier connected?</source>
         <translation>Έχει συνδεθεί ο υγραντήρας PRS1;</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9406"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
         <source>Disconnected</source>
         <translation>Ασύνδετος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9407"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2892"/>
         <source>Connected</source>
         <translation>Συνδεδεμένος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9411"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2896"/>
         <source>Humidification Mode</source>
         <translation>Λειτουργία υγρασίας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9412"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2897"/>
         <source>PRS1 Humidification Mode</source>
         <translation>Λειτουργία υγρασίας PRS1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9413"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
         <source>Humid. Mode</source>
         <translation>Λειτουργία υγρασίας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9415"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
         <source>Fixed (Classic)</source>
         <translation>Σταθερό (κλασικό)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9416"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2901"/>
         <source>Adaptive (System One)</source>
         <translation>Προσαρμοστικό (Σύστημα Ένα)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9417"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2902"/>
         <source>Heated Tube</source>
         <translation>Θερμαινόμενος σωλήνας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9423"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
         <source>Tube Temperature</source>
         <translation>Θερμοκρασία σωλήνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9424"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>Θερμοκρασία θερμαινόμενου σωλήνα PRS1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9425"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
         <source>Tube Temp.</source>
         <translation>Θερμοκρασία σωλήνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9432"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>Ρύθμιση υγραντήρα PRS1</translation>
     </message>
@@ -6227,86 +6294,86 @@ TTIA: %1</translation>
         <translation type="vanished">Υγρός. Επίπεδο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9456"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2941"/>
         <source>Hose Diameter</source>
         <translation>Διάμετρος σωλήνα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9457"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2942"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>Διάμετρος του κύριου εύκαμπτου σωλήνα CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9462"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2947"/>
         <source>12mm</source>
         <translation>12mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9484"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9486"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2969"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
         <source>Auto On</source>
         <translation>Auto On</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9485"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
         <source>A few breaths automatically starts machine</source>
         <translation>Μερικές αναπνοές ξεκινούν αυτόματα μηχανή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9493"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9495"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2978"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
         <source>Auto Off</source>
         <translation>Auto Off</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9494"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2979"/>
         <source>Machine automatically switches off</source>
         <translation>Το μηχάνημα απενεργοποιείται αυτόματα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9502"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9504"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2987"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2989"/>
         <source>Mask Alert</source>
         <translation>Προειδοποίηση μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9503"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2988"/>
         <source>Whether or not machine allows Mask checking.</source>
         <translation>Εάν το μηχάνημα επιτρέπει τον έλεγχο της μάσκας.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9511"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9513"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2996"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
         <source>Show AHI</source>
         <translation>Εμφάνιση AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9578"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3063"/>
         <source>Breathing Not Detected</source>
         <translation>Η αναπνοή δεν εντοπίστηκε</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9579"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3064"/>
         <source>A period during a session where the machine could not detect flow.</source>
         <translation>Μια περίοδος κατά τη διάρκεια μιας περιόδου λειτουργίας όπου το μηχάνημα δεν μπόρεσε να εντοπίσει ροή.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9580"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3065"/>
         <source>BND</source>
         <translation>BND</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9585"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3070"/>
         <source>Timed Breath</source>
         <translation>Χρονική αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9586"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3071"/>
         <source>Machine Initiated Breath</source>
         <translation>Μηχανική διέγερση της αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9587"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3072"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
@@ -6433,1047 +6500,1059 @@ TTIA: %1</translation>
         <translation>Επανακατασκευή από %1 δημιουργία αντιγράφων ασφαλείας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="123"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="133"/>
         <source>Therapy Pressure</source>
         <translation>Πίεση Θεραπείας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="124"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
         <source>Inspiratory Pressure</source>
         <translation>Εισπνευστική πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="125"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="135"/>
         <source>Lower Inspiratory Pressure</source>
         <translation>Κάτω εισπνευστική πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="126"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="136"/>
         <source>Higher Inspiratory Pressure</source>
         <translation>Υψηλότερη εισπνευστική πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="127"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="137"/>
         <source>Expiratory Pressure</source>
         <translation>Εκπνευστική Πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="128"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Lower Expiratory Pressure</source>
         <translation>Κάτω εκπνευστική πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="129"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>Higher Expiratory Pressure</source>
         <translation>Υψηλότερη αναπνευστική πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="130"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>Pressure Support</source>
         <translation>Υποστήριξη πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="131"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="141"/>
         <source>PS Min</source>
         <translation>PS Min</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="131"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="141"/>
         <source>Pressure Support Minimum</source>
         <translation>Ελάχιστη υποστήριξη πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="132"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
         <source>PS Max</source>
         <translation>PS Max</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="132"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
         <source>Pressure Support Maximum</source>
         <translation>Μέγιστη υποστήριξη πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="133"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>Min Pressure</source>
         <translation>Πίεση μου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="133"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>Minimum Therapy Pressure</source>
         <translation>Ελάχιστη πίεση θεραπείας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Max Pressure</source>
         <translation>Μέγιστη πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Maximum Therapy Pressure</source>
         <translation>Μέγιστη πίεση θεραπείας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="135"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>Ramp Time</source>
         <translation>Ώρα ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="135"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>Ramp Delay Period</source>
         <translation>Περίοδος καθυστέρησης Ramp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="136"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
         <source>Ramp Pressure</source>
         <translation>Πίεση ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="136"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
         <source>Starting Ramp Pressure</source>
         <translation>Έναρξη πίεσης ράμπας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="137"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp Event</source>
         <translation>Γεγονός Ramp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="180"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="137"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="952"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Αναβαθμίδα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>Vibratory Snore (VS2) </source>
         <translation>Δονητική φλύκταινα (VS2) </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>A ResMed data item: Trigger Cycle Event</source>
         <translation>Ένα στοιχείο δεδομένων ResMed: Event Cycle Trigger</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="283"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="295"/>
         <source>Mask On Time</source>
         <translation>Μάσκα σε ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="283"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="295"/>
         <source>Time started according to str.edf</source>
         <translation>Ο χρόνος ξεκίνησε σύμφωνα με το str.edf</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
         <source>Summary Only</source>
         <translation>Περίληψη μόνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>An apnea where the airway is open</source>
         <translation>Μια άπνοια όπου ο αεραγωγός είναι ανοιχτός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>An apnea caused by airway obstruction</source>
         <translation>Άπνοια προκαλούμενη από απόφραξη των αεραγωγών</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Hypopnea</source>
         <translation>Υπόπνοια</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>A partially obstructed airway</source>
         <translation>Ένας μερικώς παρεμποδισμένος αεραγωγός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>Unclassified Apnea</source>
         <translation>Μη ταξινομημένη άπνοια</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>UA</source>
         <translation>UA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>Vibratory Snore</source>
         <translation>Δονητικό φίδι</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>A vibratory snore</source>
         <translation>Ένα δονητικό ροχαλητό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>A vibratory snore as detcted by a System One machine</source>
         <translation>Ένα δονητικό ροχαλητό όπως ανιχνεύεται από ένα μηχάνημα System One</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9329"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2814"/>
         <source>Pressure Pulse</source>
         <translation>Πίεση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9330"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>Ένας παλμός πίεσης &apos;pinged&apos; για να ανιχνεύσει έναν κλειστό αεραγωγό.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="164"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="168"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
         <source>A large mask leak affecting machine performance.</source>
         <translation>Μια μεγάλη διαρροή μάσκας που επηρεάζει την απόδοση της μηχανής.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>Non Responding Event</source>
         <translation>Μη ανταποκρινόμενο συμβάν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
         <translation>Ένας τύπος αναπνευστικού συμβάντος που δεν ανταποκρίνεται σε αύξηση της πίεσης.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
         <source>Expiratory Puff</source>
         <translation>Εκπνευσμένη ριπή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
         <source>Intellipap event where you breathe out your mouth.</source>
         <translation>Event Intellipap όπου εκπνέετε το στόμα σας.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="177"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake feature will reduce pressure when waking is detected.</source>
         <translation>Η λειτουργία SensAwake θα μειώσει την πίεση κατά την ανίχνευση ξυπνητηριού.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
         <source>User Flag #1</source>
         <translation>Σημαία χρήστη #1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
         <source>User Flag #2</source>
         <translation>Σημαία χρήστη #2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <source>User Flag #3</source>
         <translation>Σημαία χρήστη #3</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="190"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
         <source>Heart rate in beats per minute</source>
         <translation>Καρδιακός ρυθμός σε παλμούς ανά λεπτό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
         <source>SpO2 %</source>
         <translation>SpO2 %</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
         <source>Blood-oxygen saturation percentage</source>
         <translation>Ποσοστό κορεσμού οξυγόνου-οξυγόνου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="199"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
         <source>Plethysomogram</source>
         <translation>Πλεισματολογία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="199"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
         <source>An optical Photo-plethysomogram showing heart rhythm</source>
         <translation>Ένα οπτικό φωτοφραγματογράφημα που δείχνει καρδιακό ρυθμό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>Pulse Change</source>
         <translation>Αλλαγή παλμού</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>A sudden (user definable) change in heart rate</source>
         <translation>Μια ξαφνική (καθορίσιμη από το χρήστη) αλλαγή στον καρδιακό ρυθμό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="208"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>SpO2 Drop</source>
         <translation>SpO2 Drop</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="208"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
         <translation>Μια ξαφνική (καθορίσιμη από το χρήστη) πτώση του κορεσμού οξυγόνου αίματος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="208"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>SD</source>
         <translation>SD</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="212"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Breathing flow rate waveform</source>
         <translation>Κοιλιακή μορφή ρυθμού ροής αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
         <source>L/min</source>
         <translation>L/min</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="215"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="218"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Mask Pressure</source>
         <translation>Μάσκα Πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="221"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
         <source>Amount of air displaced per breath</source>
         <translation>Ποσότητα αέρα που μετατοπίζεται ανά αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
         <source>Graph displaying snore volume</source>
         <translation>Γραφή που εμφανίζει όγκο ροχαλητού</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Minute Ventilation</source>
         <translation>Εξαερισμός λεπτών</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Amount of air displaced per minute</source>
         <translation>Ποσότητα αέρα που μετατοπίζεται ανά λεπτό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Respiratory Rate</source>
         <translation>Ρυθμός αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Rate of breaths per minute</source>
         <translation>Ρυθμός αναπνοών ανά λεπτό</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
         <source>Patient Triggered Breaths</source>
         <translation>Διαταραχές της αναπνοής του ασθενούς</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
         <source>Percentage of breaths triggered by patient</source>
         <translation>Ποσοστό αναπνοών που προκαλούνται από τον ασθενή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
         <source>Pat. Trig. Breaths</source>
         <translation>Διαταραχές της αναπνοής του ασθενούς</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
         <source>Leak Rate</source>
         <translation>Ποσοστό διαρροών</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
         <source>Rate of detected mask leakage</source>
         <translation>Ποσοστό ανίχνευσης διαρροής μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="240"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
         <source>I:E Ratio</source>
         <translation>Ι:Ε Αναλογία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="240"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
         <source>Ratio between Inspiratory and Expiratory time</source>
         <translation>Αναλογία μεταξύ του χρόνου εισπνοής και της εκπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
         <source>ratio</source>
         <translation>αναλογία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="133"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>Pressure Min</source>
         <translation>Πίεση Ελάχ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Pressure Max</source>
         <translation>Μέγιστη πίεση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="148"/>
         <source>Pressure Set</source>
         <translation>Ρύθμιση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="148"/>
         <source>Pressure Setting</source>
         <translation>Ρύθμιση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>IPAP Set</source>
         <translation>Ρύθμιση IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>IPAP Setting</source>
         <translation>Ρύθμιση IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>EPAP Set</source>
         <translation>Ρύθμιση EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>EPAP Setting</source>
         <translation>Ρύθμιση EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
         <source>Cheyne Stokes Respiration</source>
         <translation>Cheyne Stokes Αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
         <translation>Μια ανώμαλη περίοδος αναπνοής του Cheyne Stokes</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
         <source>CSR</source>
         <translation>CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>Periodic Breathing</source>
         <translation>Περιοδική αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>An abnormal period of Periodic Breathing</source>
         <translation>Μία ανώμαλη περίοδος περιοδικής αναπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>Clear Airway</source>
         <translation>Άνοιγμα των αεραγωγών</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>Obstructive</source>
         <translation>Κωλυσιεργικός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>An apnea that couldn&apos;t be determined as Central or Obstructive.</source>
         <translation>Μια άπνοια που δεν μπορούσε να προσδιοριστεί ως Κεντρική ή Αποφρακτική.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>A restriction in breathing from normal, causing a flattening of the flow waveform.</source>
         <translation>Ένας περιορισμός στην αναπνοή από το φυσιολογικό, προκαλώντας μια ισοπέδωση της κυματομορφής ροής.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance.</source>
         <translation>Δύσπνοια που σχετίζεται με την αναπνευστική προσπάθεια: Περιορισμός στην αναπνοή που προκαλεί είτε διαταραχή αφύπνισης είτε ύπνου.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="164"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
         <source>Leak Flag</source>
         <translation>Διαρροή Σημαία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="164"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
         <source>LF</source>
         <translation>LF</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <source>A user definable event detected by OSCAR&apos;s flow waveform processor.</source>
         <translation>Ένα συμβάν καθορισμένο από το χρήστη ανιχνεύεται από τον επεξεργαστή κυματομορφής ροής του OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
         <source>Perfusion Index</source>
         <translation>Δείκτης διάχυσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
         <source>A relative assessment of the pulse strength at the monitoring site</source>
         <translation>Σχετική εκτίμηση της αντοχής των παλμών στη θέση παρακολούθησης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
         <source>Perf. Index %</source>
         <translation>Δείκτης διάχυσης %</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="218"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Mask Pressure (High frequency)</source>
         <translation>Πίεση μάσκας (υψηλή συχνότητα)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="243"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Expiratory Time</source>
         <translation>Χρόνος εκπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="243"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Time taken to breathe out</source>
         <translation>Χρόνος που απαιτείται για να αναπνέει</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="246"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Inspiratory Time</source>
         <translation>Εμπνευσμένος χρόνος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="246"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Time taken to breathe in</source>
         <translation>Χρόνος που απαιτείται για να εισπνεύσουμε</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="249"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Respiratory Event</source>
         <translation>Αναπνευστικό συμβάν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Graph showing severity of flow limitations</source>
         <translation>Γράφημα που δείχνει τη σοβαρότητα των περιορισμών ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limit.</source>
         <translation>Όριο ροής.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
         <source>Target Minute Ventilation</source>
         <translation>Στόχευση λεπτού εξαερισμού</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
         <source>Maximum Leak</source>
         <translation>Μέγιστη διαρροή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
         <source>The maximum rate of mask leakage</source>
         <translation>Το μέγιστο ποσοστό διαρροής μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
         <source>Max Leaks</source>
         <translation>Μέγιστη διαρροή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>Apnea Hypopnea Index</source>
         <translation>Δείκτης Υπερπνοίας Άπνοιας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>Graph showing running AHI for the past hour</source>
         <translation>Γράφημα που δείχνει την τρέχουσα AHI για την τελευταία ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
         <source>Total Leak Rate</source>
         <translation>Συνολικό ποσοστό διαρροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
         <source>Detected mask leakage including natural Mask leakages</source>
         <translation>Ανίχνευση διαρροής μάσκας, συμπεριλαμβανομένων φυσικών διαρροών μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
         <source>Median Leak Rate</source>
         <translation>Διάμεσος ρυθμός διαρροής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
         <source>Median rate of detected mask leakage</source>
         <translation>Μέσος ρυθμός ανίχνευσης διαρροής μάσκας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
         <source>Median Leaks</source>
         <translation>Μέσες διαρροές</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
         <source>Respiratory Disturbance Index</source>
         <translation>Δείκτης Αναπνευστικής Διαταραχής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
         <source>Graph showing running RDI for the past hour</source>
         <translation>Γράφημα που δείχνει την τρέχουσα RDI για την τελευταία ώρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="274"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
         <source>Sleep position in degrees</source>
         <translation>Θέση ύπνου σε μοίρες</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="277"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
         <source>Upright angle in degrees</source>
         <translation>Όρθια γωνία σε μοίρες</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="280"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="292"/>
         <source>Movement</source>
         <translation>Κίνηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="280"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="292"/>
         <source>Movement detector</source>
         <translation>Ανιχνευτής κίνησης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
         <source>CPAP Session contains summary data only</source>
         <translation>Η περίοδος CPAP περιέχει μόνο σύνοψη δεδομένων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9336"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="290"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="302"/>
         <source>PAP Mode</source>
         <translation>Λειτουργία PAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="111"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="121"/>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="290"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
+        <source>Apnea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
+        <source>An apnea reportred by your CPAP machine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="302"/>
         <source>PAP Device Mode</source>
         <translation>Λειτουργία συσκευής PAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="294"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="306"/>
         <source>APAP (Variable)</source>
         <translation>APAP (μεταβλητή)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
         <source>ASV (Fixed EPAP)</source>
         <translation>ASV (Σταθερό EPAP)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="299"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
         <source>ASV (Variable EPAP)</source>
         <translation>ASV (μεταβλητή EPAP)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="307"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="319"/>
         <source>Height</source>
         <translation>Υψος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="307"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="319"/>
         <source>Physical Height</source>
         <translation>Φυσικό Ύψος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
         <source>Notes</source>
         <translation>Σημειώσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
         <source>Bookmark Notes</source>
         <translation>Σημειώσεις σημειώσεων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
         <source>Body Mass Index</source>
         <translation>Δείκτη μάζας σώματος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>How you feel (0 = like crap, 10 = unstoppable)</source>
         <translation>Πώς νιώθεις (0 = σαν χάλια, 10 = ασταμάτητη)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="312"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>Bookmark Start</source>
         <translation>Σημειώστε την έναρξη</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="313"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
         <source>Bookmark End</source>
         <translation>Σελιδοδείκτης Τέλος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="314"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
         <source>Last Updated</source>
         <translation>Τελευταία ενημέρωση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="315"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
         <source>Journal Notes</source>
         <translation>Σημειώσεις περιοδικών</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="315"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
         <source>Journal</source>
         <translation>Ημερολόγιο διάφορων πράξεων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="334"/>
         <source>1=Awake 2=REM 3=Light Sleep 4=Deep Sleep</source>
         <translation>1 = Ξυπνήστε 2 = REM 3 = Ελαφρύς ύπνος 4 = Deep Sleep</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
         <source>Brain Wave</source>
         <translation>Κύμα του εγκεφάλου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
         <source>BrainWave</source>
         <translation>BrainWave</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
         <source>Awakenings</source>
         <translation>Αφυπνίσεις</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
         <source>Number of Awakenings</source>
         <translation>Αριθμός Αφυπνίσεων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
         <source>Morning Feel</source>
         <translation>Πρωινή αίσθηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
         <source>How you felt in the morning</source>
         <translation>Πώς νιώσατε το πρωί</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
         <source>Time Awake</source>
         <translation>Ώρα Ξυπνήστε</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
         <source>Time spent awake</source>
         <translation>Ώρα ξοδευμένος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="328"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
         <source>Time In REM Sleep</source>
         <translation>Ώρα σε ύπνο REM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="328"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
         <source>Time spent in REM Sleep</source>
         <translation>Χρόνος που δαπανάται στο REM Sleep</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="328"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
         <source>Time in REM Sleep</source>
         <translation>Ώρα σε ύπνο REM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="329"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time In Light Sleep</source>
         <translation>Χρόνος στην ανοιχτή νύχτα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="329"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time spent in light sleep</source>
         <translation>Χρόνος που ξοδεύεται σε ανοιχτό ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="329"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time in Light Sleep</source>
         <translation>Ώρα στην Ελαφριά ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="330"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time In Deep Sleep</source>
         <translation>Χρόνος σε βαθύ ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="330"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time spent in deep sleep</source>
         <translation>Ο χρόνος που περνάει σε βαθύ ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="330"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time in Deep Sleep</source>
         <translation>Ώρα σε βαθιά ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="331"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time to Sleep</source>
         <translation>Ωρα για ύπνο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="331"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time taken to get to sleep</source>
         <translation>Ώρα για να κοιμηθείς</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="332"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Zeo ZQ</source>
         <translation>Zeo ZQ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="332"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Zeo sleep quality measurement</source>
         <translation>Μέτρηση ποιότητας ύπνου Zeo</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="332"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>ZEO ZQ</source>
         <translation>ZEO ZQ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
         <source>Debugging channel #1</source>
         <translation>Κανάλι εντοπισμού σφαλμάτων # 1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
         <source>Test #1</source>
         <translation>Δοκιμή # 1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>For internal use only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>Debugging channel #2</source>
         <translation>Κανάλι εντοπισμού σφαλμάτων # 2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>Test #2</source>
         <translation>Δοκιμή # 2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="774"/>
         <source>Zero</source>
         <translation>Μηδέν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="753"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="777"/>
         <source>Upper Threshold</source>
         <translation>Ανώτερο όριο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="756"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="780"/>
         <source>Lower Threshold</source>
         <translation>Κάτω όριο</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="505"/>
+        <location filename="../oscar/main.cpp" line="506"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>Καθώς δεν επιλέξατε φάκελο δεδομένων, το OSCAR θα εξέλθει.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="192"/>
+        <location filename="../oscar/main.cpp" line="193"/>
         <source>or CANCEL to skip migration.</source>
         <translation>ή ΑΚΥΡΩΣΗ για να παρακάμψετε τη μετάβαση.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="191"/>
+        <location filename="../oscar/main.cpp" line="192"/>
         <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="206"/>
+        <location filename="../oscar/main.cpp" line="207"/>
         <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="207"/>
+        <location filename="../oscar/main.cpp" line="208"/>
         <source>You cannot use this folder:</source>
         <translation>Δεν μπορείτε να χρησιμοποιήσετε αυτόν το φάκελο:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="222"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source>Migrating </source>
         <translation>Μετεγκατάσταση </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="222"/>
+        <location filename="../oscar/main.cpp" line="223"/>
         <source> files</source>
         <translation> αρχεία</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="223"/>
+        <location filename="../oscar/main.cpp" line="224"/>
         <source>from </source>
         <translation>από </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="223"/>
+        <location filename="../oscar/main.cpp" line="224"/>
         <source>to </source>
         <translation>προς το </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="330"/>
+        <location filename="../oscar/main.cpp" line="331"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="331"/>
+        <location filename="../oscar/main.cpp" line="332"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="491"/>
+        <location filename="../oscar/main.cpp" line="492"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>Το OSCAR θα δημιουργήσει ένα φάκελο για τα δεδομένα σας.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="492"/>
+        <location filename="../oscar/main.cpp" line="493"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="493"/>
+        <location filename="../oscar/main.cpp" line="494"/>
         <source>OSCAR can copy your old data to this folder later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="546"/>
+        <location filename="../oscar/main.cpp" line="547"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="547"/>
+        <location filename="../oscar/main.cpp" line="548"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="548"/>
+        <location filename="../oscar/main.cpp" line="549"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="494"/>
+        <location filename="../oscar/main.cpp" line="495"/>
         <source>We suggest you use this folder: </source>
         <translation>Προτείνουμε να χρησιμοποιήσετε αυτόν το φάκελο: </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="495"/>
+        <location filename="../oscar/main.cpp" line="496"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation>Κάντε κλικ στο OK για να το αποδεχτείτε ή στο No (Όχι) εάν θέλετε να χρησιμοποιήσετε διαφορετικό φάκελο.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="501"/>
+        <location filename="../oscar/main.cpp" line="502"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>Επιλέξτε ή δημιουργήστε ένα νέο φάκελο για δεδομένα OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="506"/>
+        <location filename="../oscar/main.cpp" line="507"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>Την επόμενη φορά που θα εκτελέσετε το OSCAR, θα σας ζητηθεί ξανά.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="517"/>
+        <location filename="../oscar/main.cpp" line="518"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation>Την επόμενη φορά που θα εκτελέσετε το OSCAR, θα σας ζητηθεί ξανά.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="538"/>
+        <location filename="../oscar/main.cpp" line="539"/>
         <source>Data directory:</source>
         <translation>Κατάλογος δεδομένων:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="557"/>
+        <location filename="../oscar/main.cpp" line="558"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="567"/>
+        <location filename="../oscar/main.cpp" line="568"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="568"/>
+        <location filename="../oscar/main.cpp" line="569"/>
         <source>Error code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="569"/>
+        <location filename="../oscar/main.cpp" line="570"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="580"/>
+        <location filename="../oscar/main.cpp" line="581"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="639"/>
+        <location filename="../oscar/main.cpp" line="640"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation>Η έκδοση &quot;%1&quot; δεν είναι έγκυρη, δεν μπορεί να συνεχιστεί!</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="648"/>
+        <location filename="../oscar/main.cpp" line="649"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation>Η έκδοση του OSCAR που εκτελείτε (%1) είναι παλαιότερη από αυτή που χρησιμοποιήθηκε για τη δημιουργία αυτών των δεδομένων (%2).</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="652"/>
+        <location filename="../oscar/main.cpp" line="653"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>Είναι πιθανό ότι αυτό θα προκαλέσει καταστροφή δεδομένων, είστε σίγουροι ότι θέλετε να το κάνετε αυτό;</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
         <source>Question</source>
         <translation>Ερώτηση</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="504"/>
-        <location filename="../oscar/main.cpp" line="556"/>
-        <location filename="../oscar/main.cpp" line="571"/>
+        <location filename="../oscar/main.cpp" line="505"/>
+        <location filename="../oscar/main.cpp" line="557"/>
+        <location filename="../oscar/main.cpp" line="572"/>
         <source>Exiting</source>
         <translation>Έξοδος</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="518"/>
+        <location filename="../oscar/main.cpp" line="519"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>Είστε βέβαιοι ότι θέλετε να χρησιμοποιήσετε αυτόν τον φάκελο;</translation>
     </message>
@@ -7514,24 +7593,24 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2150"/>
+        <location filename="../oscar/mainwindow.cpp" line="2201"/>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
         <translation>Λυπούμαστε, το μηχάνημά σας %1 %2 δεν υποστηρίζεται αυτή τη στιγμή.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2157"/>
+        <location filename="../oscar/mainwindow.cpp" line="2208"/>
         <source>Recompressing Session Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2727"/>
+        <location filename="../oscar/mainwindow.cpp" line="2696"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation>Επιλέξτε μια τοποθεσία για το φερμουάρ σας εκτός από την ίδια την κάρτα δεδομένων!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2754"/>
-        <location filename="../oscar/mainwindow.cpp" line="2804"/>
-        <location filename="../oscar/mainwindow.cpp" line="2863"/>
+        <location filename="../oscar/mainwindow.cpp" line="2723"/>
+        <location filename="../oscar/mainwindow.cpp" line="2773"/>
+        <location filename="../oscar/mainwindow.cpp" line="2832"/>
         <source>Unable to create zip!</source>
         <translation>Δεν είναι δυνατή η δημιουργία φερμουάρ!</translation>
     </message>
@@ -7607,32 +7686,37 @@ TTIA: %1</translation>
         <translation>NRI=%1 LKI=%2 EPI=%3</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="360"/>
+        <location filename="../oscar/reports.cpp" line="294"/>
+        <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/reports.cpp" line="362"/>
         <source>Reporting from %1 to %2</source>
         <translation>Αναφορά από %1 σε %2</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="425"/>
+        <location filename="../oscar/reports.cpp" line="427"/>
         <source>Entire Day&apos;s Flow Waveform</source>
         <translation>Ολόκληρη η ροή της ημέρας</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="427"/>
+        <location filename="../oscar/reports.cpp" line="429"/>
         <source>Current Selection</source>
         <translation>Τρέχουσα επιλογή</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="437"/>
+        <location filename="../oscar/reports.cpp" line="439"/>
         <source>Entire Day</source>
         <translation>Ολόκληρη μέρα</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="553"/>
+        <location filename="../oscar/reports.cpp" line="555"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="562"/>
+        <location filename="../oscar/reports.cpp" line="564"/>
         <source>Page %1 of %2</source>
         <translation>Σελίδα %1 του %2</translation>
     </message>
@@ -7682,9 +7766,8 @@ TTIA: %1</translation>
         <translation>Υπάρχει ήδη κλειδωμένο αρχείο κλειδώματος για αυτό το προφίλ &apos;%1&apos;, το οποίο αξιώνεται στο &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>Peak</source>
-        <translation>Κορυφή</translation>
+        <translation type="vanished">Κορυφή</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="189"/>
@@ -7692,63 +7775,73 @@ TTIA: %1</translation>
         <translation>%1% %2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="295"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="307"/>
         <source>Fixed Bi-Level</source>
         <translation>Σταθερό επίπεδο δύο επιπέδων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="296"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
         <source>Auto Bi-Level (Fixed PS)</source>
         <translation>Auto Bi-Level (Σταθερό PS)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="297"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="309"/>
         <source>Auto Bi-Level (Variable PS)</source>
         <translation>Auto Bi-επίπεδο (μεταβλητό PS)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1509"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="185"/>
+        <source>99.5%</source>
+        <translation type="unfinished">90% {99.5%?}</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
+        <source>varies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1531"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1568"/>
         <source>n/a</source>
         <translation>n/a</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1585"/>
         <source>Fixed %1 (%2)</source>
         <translation>Σταθερό %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1550"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1587"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>Ελάχιστο %1 Μέγιστο %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1552"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1589"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation>EPAP %1 IPAP %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1554"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1591"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translation>PS %1 πάνω από %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1556"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1565"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1593"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1602"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translation>Ελάχιστο EPAP %1 Μέγιστο IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1561"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1598"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1572"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1609"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
     </message>
@@ -7761,27 +7854,27 @@ TTIA: %1</translation>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="358"/>
+        <location filename="../oscar/welcome.cpp" line="359"/>
         <source>Most recent Oximetry data: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </source>
         <translation>Τα πιο πρόσφατα δεδομένα οξυμετρίας: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="359"/>
+        <location filename="../oscar/welcome.cpp" line="360"/>
         <source>(last night)</source>
         <translation>(την προηγούμενη νύχτα)</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="360"/>
+        <location filename="../oscar/welcome.cpp" line="361"/>
         <source>(1 day ago)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="361"/>
+        <location filename="../oscar/welcome.cpp" line="362"/>
         <source>(%2 days ago)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="366"/>
+        <location filename="../oscar/welcome.cpp" line="367"/>
         <source>No oximetry data has been imported yet.</source>
         <translation>Δεν έχουν εισαχθεί ακόμα δεδομένα οξυμετρίας.</translation>
     </message>
@@ -7798,6 +7891,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="77"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>Fisher &amp; Paykel</source>
         <translation>Fisher &amp; Paykel</translation>
     </message>
@@ -7842,12 +7936,12 @@ TTIA: %1</translation>
         <translation>M-Series</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="425"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="211"/>
         <source>Philips Respironics</source>
         <translation>Philips Respironics</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="425"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="211"/>
         <source>System One</source>
         <translation>System One</translation>
     </message>
@@ -7863,26 +7957,27 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.h" line="126"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="98"/>
         <source>EPR: </source>
         <translation>EPR: </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="37"/>
+        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="38"/>
         <source>Somnopose</source>
         <translation>Somnopose</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="37"/>
+        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="38"/>
         <source>Somnopose Software</source>
         <translation>Λογισμικό Somnopose</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="39"/>
+        <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="40"/>
         <source>Zeo</source>
         <translation>Zeo</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="39"/>
+        <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="40"/>
         <source>Personal Sleep Coach</source>
         <translation>Προσωπικός προπονητής ύπνου</translation>
     </message>
@@ -7964,37 +8059,38 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Pin %1 Γράφημα</translation>
     </message>
     <message>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="824"/>
         <location filename="../oscar/Graphs/gLineChart.cpp" line="1050"/>
         <source>Plots Disabled</source>
         <translation>Τα οικόπεδα είναι απενεργοποιημένα</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1124"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1129"/>
         <source>Duration %1:%2:%3</source>
         <translation>Διάρκεια %1:%2:%3</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineChart.cpp" line="1125"/>
+        <location filename="../oscar/Graphs/gLineChart.cpp" line="1130"/>
         <source>AHI %1</source>
         <translation>AHI %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gdailysummary.cpp" line="108"/>
+        <location filename="../oscar/Graphs/gdailysummary.cpp" line="112"/>
         <source>%1: %2</source>
         <translation>%1: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gdailysummary.cpp" line="151"/>
+        <location filename="../oscar/Graphs/gdailysummary.cpp" line="155"/>
         <source>Relief: %1</source>
         <translation>Ανακούφιση: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gdailysummary.cpp" line="157"/>
+        <location filename="../oscar/Graphs/gdailysummary.cpp" line="161"/>
         <source>Hours: %1h, %2m, %3s</source>
         <translation>Ωρες: %1h, %2m, %3s</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gdailysummary.cpp" line="260"/>
+        <location filename="../oscar/Graphs/gdailysummary.cpp" line="264"/>
         <source>Machine Information</source>
         <translation>Πληροφορίες μηχανής</translation>
     </message>
@@ -8052,270 +8148,348 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>CMS50F</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2366"/>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2368"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
+        <source>Backing up files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
+        <source>Reading data files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2764"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2766"/>
         <source>SmartFlex Mode</source>
         <translation>Λειτουργία SmartFlex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2367"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2765"/>
         <source>Intellipap pressure relief mode.</source>
         <translation>Λειτουργία ανακούφισης πίεσης Intellipap.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2373"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2771"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="120"/>
         <source>Ramp Only</source>
         <translation>Μόνο Ramp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2374"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2772"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="121"/>
         <source>Full Time</source>
         <translation>Πλήρης απασχόληση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2377"/>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2379"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2775"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2777"/>
         <source>SmartFlex Level</source>
         <translation>Επίπεδο SmartFlex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2378"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2776"/>
         <source>Intellipap pressure relief level.</source>
         <translation>Επίπεδο ανακούφισης πίεσης Intellipap.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="442"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
+        <source>Snoring event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
+        <source>SN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="524"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Εντοπισμός αρχείων STR.edf ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="603"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="685"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Καταλογογράφηση αρχείων EDF ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="622"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="704"/>
         <source>Queueing Import Tasks...</source>
         <translation>Εργασίες εισαγωγής ουράς ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="651"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="733"/>
         <source>Finishing Up...</source>
         <translation>Τελειώνω...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="85"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>CPAP Mode</source>
         <translation>Λειτουργία CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="91"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <source>VPAP-T</source>
         <translation>VPAP-T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="92"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
         <source>VPAP-S</source>
         <translation>VPAP-S</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="93"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <source>VPAP-S/T</source>
         <translation>VPAP-S/T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="95"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="109"/>
         <source>VPAPauto</source>
         <translation>VPAPauto</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="97"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="111"/>
         <source>ASVAuto</source>
         <translation>ASVAuto</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="100"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="112"/>
+        <source>iVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
         <source>Auto for Her</source>
         <translation>Αυτόματα για αυτήν</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
         <source>EPR</source>
         <translation>EPR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
         <source>ResMed Exhale Pressure Relief</source>
         <translation>ResMed Έκπλυση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="122"/>
         <source>Patient???</source>
         <translation>Υπομονετικος???</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="111"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>EPR Level</source>
         <translation>Επίπεδο EPR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="111"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>Επίπεδο ανακούφισης πίεσης εκπνοής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="94"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>?5?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="98"/>
-        <source>?9?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>?10?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
         <source>SmartStart</source>
         <translation>SmartStart</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
         <source>Machine auto starts by breathing</source>
         <translation>Η αυτόματη μηχανή ξεκινά με αναπνοή</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
         <source>Smart Start</source>
         <translation>Έξυπνη εκκίνηση</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
         <source>Humid. Status</source>
         <translation>Κατάσταση υγραντήρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
         <source>Humidifier Enabled Status</source>
         <translation>Κατάσταση ενεργοποιημένου υγραντήρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9433"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="130"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="144"/>
         <source>Humid. Level</source>
         <translation>Επίπεδο υγραντήρα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="130"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="144"/>
         <source>Humidity Level</source>
         <translation>Επίπεδο υγρασίας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="157"/>
         <source>Temperature</source>
         <translation>Θερμοκρασία</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="157"/>
         <source>ClimateLine Temperature</source>
         <translation>Θερμοκρασία κλιματικής γραμμής</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
         <source>Temp. Enable</source>
         <translation>Θερμοκρασία. επιτρέπω</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
         <source>ClimateLine Temperature Enable</source>
         <translation>Ενεργοποίηση θερμοκρασίας ClimateLine</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
         <source>Temperature Enable</source>
         <translation>Ενεργοποίηση θερμοκρασίας</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="168"/>
         <source>AB Filter</source>
         <translation>Φίλτρο ΑΒ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="168"/>
         <source>Antibacterial Filter</source>
         <translation>Αντιβακτηριακό φίλτρο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="174"/>
         <source>Pt. Access</source>
         <translation>Πρόσβαση ασθενούς</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="174"/>
         <source>Essentials</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="163"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="176"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="167"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="180"/>
         <source>Climate Control</source>
         <translation>Ελεγχος του κλίματος</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="170"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="183"/>
         <source>Manual</source>
         <translation>Εγχειρίδιο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1118"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
+        <source>Comfort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
+        <source>Soft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
+        <source>Standard</source>
+        <translation type="unfinished">Πρότυπο</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <source>SmartStop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <source>Machine auto stops by breathing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <source>Smart Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
+        <source>Pt. View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
+        <source>Advanced</source>
+        <translation type="unfinished">Προχωρημένος</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
+        <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
+        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1200"/>
         <source>Parsing STR.edf records...</source>
         <translation>Ανάλυση αρχείων STR.edf ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9444"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="9534"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="169"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="184"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="854"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2929"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3019"/>
         <source>Auto</source>
         <translation>Αυτο</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="173"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="186"/>
         <source>Mask</source>
         <translation>Μάσκα</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="173"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="186"/>
         <source>ResMed Mask Setting</source>
         <translation>Ρύθμιση μάσκας ResMed</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="175"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="188"/>
         <source>Pillows</source>
         <translation>Μαξιλάρια</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="176"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="189"/>
         <source>Full Face</source>
         <translation>ΟΛΟΚΛΗΡΟ ΠΡΟΣΩΠΟ</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="177"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="190"/>
         <source>Nasal</source>
         <translation>Ρινικός</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
         <source>Ramp Enable</source>
         <translation>Ενεργοποίηση ράμπας</translation>
     </message>
@@ -8345,27 +8519,27 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>CMS50E/F</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="688"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="695"/>
         <source>Loading %1 data for %2...</source>
         <translation>Φόρτωση δεδομένων %1 για %2 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="699"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="706"/>
         <source>Scanning Files</source>
         <translation>Σάρωση αρχείων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="733"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="740"/>
         <source>Migrating Summary File Location</source>
         <translation>Μετεγκατάσταση τοποθεσίας συνοπτικού αρχείου</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="903"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="910"/>
         <source>Loading Summaries.xml.gz</source>
         <translation>Φόρτωση περιλήψεων.xml.gz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="1035"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="1042"/>
         <source>Loading Summary Data</source>
         <translation>Φόρτωση δεδομένων περίληψης</translation>
     </message>
@@ -8375,9 +8549,8 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Παρακαλώ περιμένετε...</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="312"/>
         <source>Peak %1</source>
-        <translation>Κορυφή %1</translation>
+        <translation type="vanished">Κορυφή %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="168"/>
@@ -8385,37 +8558,37 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Ενημέρωση της προσωρινής μνήμης στατιστικών στοιχείων</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="712"/>
+        <location filename="../oscar/statistics.cpp" line="714"/>
         <source>Usage Statistics</source>
         <translation>Στατιστικά χρήσης</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="530"/>
+        <location filename="../oscar/overview.cpp" line="552"/>
         <source>Loading summaries</source>
         <translation>Φόρτωση περιλήψεων</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/dreem_loader.h" line="36"/>
+        <location filename="../oscar/SleepLib/loader_plugins/dreem_loader.h" line="37"/>
         <source>Dreem</source>
         <translation>Dreem</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="87"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="84"/>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
         <translation>Η συσκευή σας Viatom δημιούργησε δεδομένα που ο OSCAR δεν έχει δει ποτέ πριν.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="88"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="85"/>
         <source>The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.</source>
         <translation>Τα εισαγόμενα δεδομένα ενδέχεται να μην είναι απολύτως ακριβή, οπότε οι προγραμματιστές θα ήθελαν ένα αντίγραφο των αρχείων Viatom να βεβαιωθεί ότι η OSCAR χειρίζεται σωστά τα δεδομένα.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="41"/>
         <source>Viatom</source>
         <translation>Viatom</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="41"/>
         <source>Viatom Software</source>
         <translation>Λογισμικό Viatom</translation>
     </message>
@@ -8464,6 +8637,32 @@ popout window, delete it, then pop out this graph again.</source>
         <source>Unable to check for updates. Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="933"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="934"/>
+        <source>SenseAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="935"/>
+        <source>SenseAwake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
+        <source>Exhale Pressure Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="959"/>
+        <source>Humidity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
+        <source>SleepStyle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -8492,6 +8691,24 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
 </context>
 <context>
+    <name>SleepStyleLoader</name>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="204"/>
+        <source>Import Error</source>
+        <translation type="unfinished">Σφάλμα εισαγωγής</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="unfinished">Αυτή η εγγραφή μηχάνημα δεν μπορεί να εισαχθεί σε αυτό το προφίλ.</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
+        <source>The Day records overlap with already existing content.</source>
+        <translation type="unfinished">Οι εγγραφές Ημέρας επικαλύπτονται με ήδη υπάρχον περιεχόμενο.</translation>
+    </message>
+</context>
+<context>
     <name>Statistics</name>
     <message>
         <location filename="../oscar/statistics.cpp" line="536"/>
@@ -8500,7 +8717,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="539"/>
-        <location filename="../oscar/statistics.cpp" line="1383"/>
+        <location filename="../oscar/statistics.cpp" line="1391"/>
         <source>CPAP Usage</source>
         <translation>Χρήση CPAP</translation>
     </message>
@@ -8515,248 +8732,248 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Αποτελεσματικότητα θεραπείας</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="553"/>
+        <location filename="../oscar/statistics.cpp" line="555"/>
         <source>Leak Statistics</source>
         <translation>Στατιστικά διαρροών</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="558"/>
+        <location filename="../oscar/statistics.cpp" line="560"/>
         <source>Pressure Statistics</source>
         <translation>Στατιστικές πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="583"/>
+        <location filename="../oscar/statistics.cpp" line="585"/>
         <source>Oximeter Statistics</source>
         <translation>Στατιστικά Οξύμετρο</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="587"/>
+        <location filename="../oscar/statistics.cpp" line="589"/>
         <source>Blood Oxygen Saturation</source>
         <translation>Κορεσμός οξυγόνου αίματος</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="592"/>
+        <location filename="../oscar/statistics.cpp" line="594"/>
         <source>Pulse Rate</source>
         <translation>Καρδιακός σφυγμός</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="603"/>
+        <location filename="../oscar/statistics.cpp" line="605"/>
         <source>%1 Median</source>
         <translation>%1 διάμεσος</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="604"/>
-        <location filename="../oscar/statistics.cpp" line="605"/>
+        <location filename="../oscar/statistics.cpp" line="606"/>
+        <location filename="../oscar/statistics.cpp" line="607"/>
         <source>Average %1</source>
         <translation>Μέσο %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="607"/>
+        <location filename="../oscar/statistics.cpp" line="609"/>
         <source>Min %1</source>
         <translation>Ελάχιστο %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="608"/>
+        <location filename="../oscar/statistics.cpp" line="610"/>
         <source>Max %1</source>
         <translation>Μέγιστο %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="609"/>
+        <location filename="../oscar/statistics.cpp" line="611"/>
         <source>%1 Index</source>
         <translation>%1 Ευρετήριο</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="610"/>
+        <location filename="../oscar/statistics.cpp" line="612"/>
         <source>% of time in %1</source>
         <translation>% του χρόνου στο %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="611"/>
+        <location filename="../oscar/statistics.cpp" line="613"/>
         <source>% of time above %1 threshold</source>
         <translation>% του χρόνου πάνω από το %1 όριο</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="612"/>
+        <location filename="../oscar/statistics.cpp" line="614"/>
         <source>% of time below %1 threshold</source>
         <translation>% του χρόνου κάτω από το %1 όριο</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="634"/>
+        <location filename="../oscar/statistics.cpp" line="636"/>
         <source>Name: %1, %2</source>
         <translation>Ονομα: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="636"/>
+        <location filename="../oscar/statistics.cpp" line="638"/>
         <source>DOB: %1</source>
         <translation>Ημερομηνια γεννησης: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="639"/>
+        <location filename="../oscar/statistics.cpp" line="641"/>
         <source>Phone: %1</source>
         <translation>Τηλέφωνο: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="642"/>
+        <location filename="../oscar/statistics.cpp" line="644"/>
         <source>Email: %1</source>
         <translation>ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="645"/>
+        <location filename="../oscar/statistics.cpp" line="647"/>
         <source>Address:</source>
         <translation>Διεύθυνση:</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="731"/>
+        <location filename="../oscar/statistics.cpp" line="733"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
         <translation>Αυτή η αναφορά ετοιμάστηκε για %1 από OSCAR %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1384"/>
+        <location filename="../oscar/statistics.cpp" line="1392"/>
         <source>Days Used: %1</source>
         <translation>Ημέρες που χρησιμοποιήθηκαν: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1385"/>
+        <location filename="../oscar/statistics.cpp" line="1393"/>
         <source>Low Use Days: %1</source>
         <translation>Ημέρες χαμηλής χρήσης: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1386"/>
+        <location filename="../oscar/statistics.cpp" line="1394"/>
         <source>Compliance: %1%</source>
         <translation>Συμμόρφωση: %1%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1410"/>
+        <location filename="../oscar/statistics.cpp" line="1418"/>
         <source>Days AHI of 5 or greater: %1</source>
         <translation>Ημέρες AHI 5 ή μεγαλύτερες: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1417"/>
+        <location filename="../oscar/statistics.cpp" line="1425"/>
         <source>Best AHI</source>
         <translation>Καλύτερο AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1421"/>
-        <location filename="../oscar/statistics.cpp" line="1433"/>
+        <location filename="../oscar/statistics.cpp" line="1429"/>
+        <location filename="../oscar/statistics.cpp" line="1441"/>
         <source>Date: %1 AHI: %2</source>
         <translation>Ημερομηνία: %1 Τύπος: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1427"/>
+        <location filename="../oscar/statistics.cpp" line="1435"/>
         <source>Worst AHI</source>
         <translation>Χειρότερη AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1464"/>
+        <location filename="../oscar/statistics.cpp" line="1472"/>
         <source>Best Flow Limitation</source>
         <translation>Καλύτερος περιορισμός ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1468"/>
-        <location filename="../oscar/statistics.cpp" line="1481"/>
+        <location filename="../oscar/statistics.cpp" line="1476"/>
+        <location filename="../oscar/statistics.cpp" line="1489"/>
         <source>Date: %1 FL: %2</source>
         <translation>Ημερομηνία: %1 FL: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1474"/>
+        <location filename="../oscar/statistics.cpp" line="1482"/>
         <source>Worst Flow Limtation</source>
         <translation>Περιορισμός χειρότερης ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1486"/>
+        <location filename="../oscar/statistics.cpp" line="1494"/>
         <source>No Flow Limitation on record</source>
         <translation>Δεν υπάρχει Περιορισμός ροής</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1507"/>
+        <location filename="../oscar/statistics.cpp" line="1515"/>
         <source>Worst Large Leaks</source>
         <translation>Χειρότερες μεγάλες διαρροές</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1515"/>
+        <location filename="../oscar/statistics.cpp" line="1523"/>
         <source>Date: %1 Leak: %2%</source>
         <translation>Ημερομηνία: %1 Διαρροή: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1521"/>
+        <location filename="../oscar/statistics.cpp" line="1529"/>
         <source>No Large Leaks on record</source>
         <translation>Δεν υπάρχουν μεγάλες διαρροές στο αρχείο</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1544"/>
+        <location filename="../oscar/statistics.cpp" line="1552"/>
         <source>Worst CSR</source>
         <translation>Χειρότερη CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1552"/>
+        <location filename="../oscar/statistics.cpp" line="1560"/>
         <source>Date: %1 CSR: %2%</source>
         <translation>Ημερομηνία: %1 CSR: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1557"/>
+        <location filename="../oscar/statistics.cpp" line="1565"/>
         <source>No CSR on record</source>
         <translation>Δεν υπάρχει CSR στην εγγραφή</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1574"/>
+        <location filename="../oscar/statistics.cpp" line="1582"/>
         <source>Worst PB</source>
         <translation>Χειρότερη PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1582"/>
+        <location filename="../oscar/statistics.cpp" line="1590"/>
         <source>Date: %1 PB: %2%</source>
         <translation>Ημερομηνία: %1 PB: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1587"/>
+        <location filename="../oscar/statistics.cpp" line="1595"/>
         <source>No PB on record</source>
         <translation>Δεν υπάρχει αρχείο PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1595"/>
+        <location filename="../oscar/statistics.cpp" line="1603"/>
         <source>Want more information?</source>
         <translation>Θέλετε περισσότερες πληροφορίες;</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1596"/>
+        <location filename="../oscar/statistics.cpp" line="1604"/>
         <source>OSCAR needs all summary data loaded to calculate best/worst data for individual days.</source>
         <translation>Το OSCAR χρειάζεται όλα τα συγκεντρωτικά δεδομένα που έχουν φορτωθεί για να υπολογίσουν τα καλύτερα / χειρότερα δεδομένα για μεμονωμένες ημέρες.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1597"/>
+        <location filename="../oscar/statistics.cpp" line="1605"/>
         <source>Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.</source>
         <translation>Ενεργοποιήστε το πλαίσιο ελέγχου Pre-Load Summaries στις προτιμήσεις για να βεβαιωθείτε ότι τα δεδομένα αυτά είναι διαθέσιμα.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1617"/>
+        <location filename="../oscar/statistics.cpp" line="1625"/>
         <source>Best RX Setting</source>
         <translation>Καλύτερη ρύθμιση Rx</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1620"/>
-        <location filename="../oscar/statistics.cpp" line="1632"/>
+        <location filename="../oscar/statistics.cpp" line="1628"/>
+        <location filename="../oscar/statistics.cpp" line="1640"/>
         <source>Date: %1 - %2</source>
         <translation>Ημερομηνία: %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1623"/>
-        <location filename="../oscar/statistics.cpp" line="1635"/>
+        <location filename="../oscar/statistics.cpp" line="1631"/>
+        <location filename="../oscar/statistics.cpp" line="1643"/>
         <source>AHI: %1</source>
         <translation>AHI: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1624"/>
-        <location filename="../oscar/statistics.cpp" line="1636"/>
+        <location filename="../oscar/statistics.cpp" line="1632"/>
+        <location filename="../oscar/statistics.cpp" line="1644"/>
         <source>Total Hours: %1</source>
         <translation>Συνολικές ώρες: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1629"/>
+        <location filename="../oscar/statistics.cpp" line="1637"/>
         <source>Worst RX Setting</source>
         <translation>Χειρότερη ρύθμιση Rx</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1154"/>
+        <location filename="../oscar/statistics.cpp" line="1162"/>
         <source>Most Recent</source>
         <translation>Πρόσφατα</translation>
     </message>
@@ -8766,97 +8983,97 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Συμμόρφωση (%1 ώρα/ημέρα)</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="734"/>
+        <location filename="../oscar/statistics.cpp" line="736"/>
         <source>OSCAR is free open-source CPAP report software</source>
         <translation>Το OSCAR είναι δωρεάν λογισμικό αναφορών CPAP ανοιχτού κώδικα</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="967"/>
+        <location filename="../oscar/statistics.cpp" line="975"/>
         <source>Changes to Machine Settings</source>
         <translation>Αλλαγές στις Ρυθμίσεις μηχανής</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1053"/>
+        <location filename="../oscar/statistics.cpp" line="1061"/>
         <source>No data found?!?</source>
         <translation>Δε βρέθηκαν δεδομένα?!?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1055"/>
+        <location filename="../oscar/statistics.cpp" line="1063"/>
         <source>Oscar has no data to report :(</source>
         <translation>Το Όσκαρ δεν έχει δεδομένα για να αναφέρει :(</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1155"/>
+        <location filename="../oscar/statistics.cpp" line="1163"/>
         <source>Last Week</source>
         <translation>Την προηγούμενη εβδομάδα</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1156"/>
+        <location filename="../oscar/statistics.cpp" line="1164"/>
         <source>Last 30 Days</source>
         <translation>Τελευταίες 30 ημέρες</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1157"/>
+        <location filename="../oscar/statistics.cpp" line="1165"/>
         <source>Last 6 Months</source>
         <translation>Τελευταίοι 6 μήνες</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1158"/>
+        <location filename="../oscar/statistics.cpp" line="1166"/>
         <source>Last Year</source>
         <translation>Πέρυσι</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1162"/>
+        <location filename="../oscar/statistics.cpp" line="1170"/>
         <source>Last Session</source>
         <translation>Τελευταία σύνοδος</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1203"/>
+        <location filename="../oscar/statistics.cpp" line="1211"/>
         <source>Details</source>
         <translation>Λεπτομέριες</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1217"/>
+        <location filename="../oscar/statistics.cpp" line="1225"/>
         <source>No %1 data available.</source>
         <translation>Δεν υπάρχουν διαθέσιμα δεδομέναv%1.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1220"/>
+        <location filename="../oscar/statistics.cpp" line="1228"/>
         <source>%1 day of %2 Data on %3</source>
         <translation>%1 ημέρα %2 Δεδομένα στο %3</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1226"/>
+        <location filename="../oscar/statistics.cpp" line="1234"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
         <translation>%1 ημέρες %2 Δεδομένα, μεταξύ %3 και %4</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="975"/>
+        <location filename="../oscar/statistics.cpp" line="983"/>
         <source>Days</source>
         <translation>Ημέρες</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="979"/>
+        <location filename="../oscar/statistics.cpp" line="987"/>
         <source>Pressure Relief</source>
         <translation>Ανακούφιση πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="981"/>
+        <location filename="../oscar/statistics.cpp" line="989"/>
         <source>Pressure Settings</source>
         <translation>Ρυθμίσεις πίεσης</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="908"/>
+        <location filename="../oscar/statistics.cpp" line="916"/>
         <source>Machine Information</source>
         <translation>Πληροφορίες μηχανής</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="914"/>
+        <location filename="../oscar/statistics.cpp" line="922"/>
         <source>First Use</source>
         <translation>Πρώτη χρήση</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="915"/>
+        <location filename="../oscar/statistics.cpp" line="923"/>
         <source>Last Use</source>
         <translation>Τελευταία χρήση</translation>
     </message>
@@ -8964,63 +9181,63 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>&lt;font color = red&gt;Φορέσατε τη μάσκα μόνο για %1.&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="208"/>
+        <location filename="../oscar/welcome.cpp" line="209"/>
         <source>under</source>
         <translation>κάτω από</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="209"/>
+        <location filename="../oscar/welcome.cpp" line="210"/>
         <source>over</source>
         <translation>πάνω από</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="210"/>
+        <location filename="../oscar/welcome.cpp" line="211"/>
         <source>reasonably close to</source>
         <translation>σχετικά κοντά</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="211"/>
+        <location filename="../oscar/welcome.cpp" line="212"/>
         <source>equal to</source>
         <translation>ίσος με</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="225"/>
+        <location filename="../oscar/welcome.cpp" line="226"/>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
         <translation>Είχατε Δείκτη Απνοιών %1, ο οποίος είναι %2 τον μέσο όρο των %3 ημερών που είναι %4.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="256"/>
+        <location filename="../oscar/welcome.cpp" line="257"/>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
         <translation>Το μηχάνημα CPAP χρησιμοποίησε σταθερά %1 %2 αέρα</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="261"/>
+        <location filename="../oscar/welcome.cpp" line="262"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
         <translation>Η πίεσή σας ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="269"/>
+        <location filename="../oscar/welcome.cpp" line="270"/>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
         <translation>Το μηχάνημά σας χρησιμοποίησε σταθερά %1-%2 %3 αέρα.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="284"/>
+        <location filename="../oscar/welcome.cpp" line="285"/>
         <source>Your EPAP pressure fixed at %1 %2.</source>
         <translation>Η πίεσή σας EPAP καθορίστηκε στο %1 %2.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="287"/>
-        <location filename="../oscar/welcome.cpp" line="296"/>
+        <location filename="../oscar/welcome.cpp" line="288"/>
+        <location filename="../oscar/welcome.cpp" line="297"/>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>Η πίεση IPAP ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="295"/>
+        <location filename="../oscar/welcome.cpp" line="296"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>Η πίεση σας EPAP ήταν κάτω από %1 %2 για το %3% του χρόνου.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="276"/>
+        <location filename="../oscar/welcome.cpp" line="277"/>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
         <translation>Το μηχάνημά σας ήταν κάτω από %1-%2 %3 για το %4% του χρόνου.</translation>
     </message>
@@ -9030,12 +9247,12 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>χθες</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="316"/>
+        <location filename="../oscar/welcome.cpp" line="317"/>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
         <translation>Ο μέσος όρος της διαρροής αέρα ήταν %1 %2, ο οποίος είναι %3 τον μέσο όρο των %4 ημερών που είναι %5.</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.cpp" line="322"/>
+        <location filename="../oscar/welcome.cpp" line="323"/>
         <source>No CPAP data has been imported yet.</source>
         <translation>Δεν έχουν εισαχθεί ακόμα δεδομένα CPAP.</translation>
     </message>

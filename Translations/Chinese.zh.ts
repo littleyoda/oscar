@@ -720,7 +720,7 @@
     </message>
     <message>
         <source>There was a problem opening Somnopose Data File: </source>
-        <translation>打开睡眠姿势数据文件出错: </translation>
+        <translation type="vanished">打开睡眠姿势数据文件出错: </translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -828,7 +828,7 @@
     </message>
     <message>
         <source>Somnopause Data Import complete</source>
-        <translation>睡眠姿势数据导入完成</translation>
+        <translation type="vanished">睡眠姿势数据导入完成</translation>
     </message>
     <message>
         <source>Report Mode</source>
@@ -1303,60 +1303,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Imported %1 ZEO session(s) from
-
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Already up to date with ZEO data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid ZEO CSV data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Imported %1 Dreem session(s) from
-
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Already up to date with Dreem data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Dreem CSV data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Imported %1 oximetry session(s) from
-
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Already up to date with oximetry data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid data at
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Would you like to zip this card?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1397,11 +1343,51 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Somnopause Data Import of %1 file(s) complete</source>
+        <source>Purge Current Selected Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Somnopose Import Partial Success</source>
+        <source>&amp;CPAP</source>
+        <translation type="unfinished">&amp;CPAP</translation>
+    </message>
+    <message>
+        <source>&amp;Oximetry</source>
+        <translation type="unfinished">&amp;血氧测量</translation>
+    </message>
+    <message>
+        <source>&amp;Sleep Stage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;All except Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All including &amp;Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find your CPAP data card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There was a problem opening %1 Data File: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Data Import of %2 file(s) complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Import Partial Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 Data Import complete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1830,6 +1816,10 @@ Index</source>
 (Minutes)</source>
         <translation>呼吸暂停总时间
 （分钟）</translation>
+    </message>
+    <message>
+        <source>Snapshot</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5172,7 +5162,7 @@ Please Rebuild CPAP Data</source>
     </message>
     <message>
         <source>Peak</source>
-        <translation>峰值</translation>
+        <translation type="vanished">峰值</translation>
     </message>
     <message>
         <source>%1% %2</source>
@@ -5406,7 +5396,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation>抱歉，暂不支持飞利浦伟康呼吸机（机型 %1）.</translation>
+        <translation type="vanished">抱歉，暂不支持飞利浦伟康呼吸机（机型 %1）.</translation>
     </message>
     <message>
         <source>CPAP Mode</source>
@@ -5854,7 +5844,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Peak %1</source>
-        <translation>峰值%1</translation>
+        <translation type="vanished">峰值%1</translation>
     </message>
     <message>
         <source>I&apos;m very sorry your machine doesn&apos;t record useful data to graph in Daily View :(</source>
@@ -6039,10 +6029,6 @@ TTIA: %1</source>
     </message>
     <message>
         <source>Graphics Engine type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6454,10 +6440,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>?9?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>?10?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6623,6 +6605,130 @@ popout window, delete it, then pop out this graph again.</source>
         <source>Hum. Tgt Time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>99.5%</source>
+        <translation type="unfinished">90% {99.5%?}</translation>
+    </message>
+    <message>
+        <source>varies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backing up files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reading data files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snoring event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>model %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DreamStation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iVAPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comfort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Soft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation type="unfinished">标准</translation>
+    </message>
+    <message>
+        <source>SmartStop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Machine auto stops by breathing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smart Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pt. View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SenseAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SenseAwake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exhale Pressure Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humidity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SleepStyle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apnea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An apnea reportred by your CPAP machine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Report</name>
@@ -6644,6 +6750,21 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <source>%1h %2m</source>
         <translation>%1% %2m</translation>
+    </message>
+</context>
+<context>
+    <name>SleepStyleLoader</name>
+    <message>
+        <source>Import Error</source>
+        <translation type="unfinished">导入出错</translation>
+    </message>
+    <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="unfinished">无法在此配置文件中导入此设备的记录。</translation>
+    </message>
+    <message>
+        <source>The Day records overlap with already existing content.</source>
+        <translation type="unfinished">本日的数据已覆盖已存储的内容.</translation>
     </message>
 </context>
 <context>
