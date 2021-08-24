@@ -1161,102 +1161,120 @@ int calcAHIGraph(Session *session)
 
     return cnt;
 }
-struct TimeValue {
-    TimeValue() {
-        time = 0;
-        value = 0;
-    }
-    TimeValue(qint64 t, EventStoreType v) {
-        time = t;
-        value = v;
-    }
-    TimeValue(const TimeValue &copy) {
-        time = copy.time;
-        value = copy.value;
-    }
-    qint64 time;
-    EventStoreType value;
+
+
+class LeakCalculator
+{
+public:
+    virtual ~LeakCalculator() {}
+    virtual EventDataType calcLeakAt(EventDataType pressure) = 0;
 };
 
-struct zMaskProfile {
-  public:
-    zMaskProfile() {};
-    ~zMaskProfile() {};
-
-    void scanPressure(Session *session);
-
-    QVector<TimeValue> Pressure;
-
-    EventDataType calcLeak(EventStoreType pressure);
+class LinearInterpolateLeak : public LeakCalculator
+{
+public:
+    LinearInterpolateLeak(EventDataType minPressure, EventDataType leakAtMinPressure,
+                          EventDataType maxPressure, EventDataType leakAtMaxPressure)
+    : m_minPressure(minPressure), m_leakAtMinPressure(leakAtMinPressure),
+      m_maxPressure(maxPressure), m_leakAtMaxPressure(leakAtMaxPressure)
+    {
+        m_leakSlope = (m_leakAtMaxPressure - m_leakAtMinPressure) / (m_maxPressure - m_minPressure);
+    }
+    virtual ~LinearInterpolateLeak() {}
+    virtual EventDataType calcLeakAt(EventDataType pressure)
+    {
+        float dx = pressure - m_minPressure;
+        float leak = dx * m_leakSlope + m_leakAtMinPressure;
+        return leak;
+    }
 
   protected:
-    void scanPressureList(Session *session, ChannelID code);
+    EventDataType m_minPressure, m_leakAtMinPressure;
+    EventDataType m_maxPressure, m_leakAtMaxPressure;
+    float m_leakSlope;
 };
 
-
-bool operator<(const TimeValue &p1, const TimeValue &p2)
+class ProfileLeakCalculator : public LinearInterpolateLeak
 {
-    return p1.time < p2.time;
-}
+public:
+    ProfileLeakCalculator(Profile* profile)
+    : LinearInterpolateLeak(4.0, profile->cpap->custom4cmH2OLeaks(),
+                            20.0, profile->cpap->custom20cmH2OLeaks())
+    {}
+    virtual ~ProfileLeakCalculator() {}
+};
 
-void zMaskProfile::scanPressureList(Session *session, ChannelID code)
+// Provides an accessor for the value at a point in time for discontinuous (channel) data.
+// This is designed to be efficient for the common case of repeated searches over increasing timestamps.
+class TimeSeries
 {
-    auto it = session->eventlist.find(code);
-    if (it == session->eventlist.end()) return;
-
-    int prescnt = session->count(code);
-    Pressure.reserve(Pressure.size() + prescnt);
-
-    auto & EVL = it.value();
-
-    for (const auto & el : EVL) {
-        qint64 start = el->first();
-        int count = el->count();
-        EventStoreType *dptr = el->rawData();
-        EventStoreType *eptr = dptr + count;
-        quint32 *tptr = el->rawTime();
-        qint64 time;
-        EventStoreType pressure;
-
-        for (; dptr < eptr; dptr++) {
-            time = start + *tptr++;
-            pressure = *dptr;
-            Pressure.push_back(TimeValue(time, pressure));
-        }
+public:
+    TimeSeries(QVector<EventList *> events)
+    : m_events(events)
+    {
+        m_curEventList = nullptr;
+        m_curEvent = 0;
+        m_lastTime = 0;
     }
-}
-void zMaskProfile::scanPressure(Session *session)
-{
-    Pressure.clear();
+    EventDataType valueAt(qint64 time, bool* outValid)
+    {
+        EventDataType result = 0;
+        bool found = findEventListContaining(time);
+        if (found) {
+            m_lastTime = time;
+            result = findValueAtOrBefore(time);
+        }
+        *outValid = found;
+        return result;
+    }
+protected:
+    bool findEventListContaining(qint64 time)
+    {
+        // Fast return if we're already there.
+        if (m_curEventList) {
+            if (m_curEventList->first() <= time && time <= m_curEventList->last()) {
+                if (time < m_lastTime) {
+                    // Reset the offset for correctness in case someone searches backwards.
+                    m_curEvent = 0;
+                }
+                return true;
+            }
+        }
+        // Search the event lists to see if any match.
+        bool found = false;
+        for (auto & eventlist : m_events) {
+            if (eventlist->first() <= time && time <= eventlist->last()) {
+                found = true;
+                m_curEventList = eventlist;
+                m_curEvent = 0;
+                break;
+            }
+        }
+        return found;
+    }
+    EventDataType findValueAtOrBefore(qint64 time)
+    {
+        // curTime is always <= time, due to eventlist first/last search and m_curEvent reset.
+        qint64 curTime = m_curEventList->time(m_curEvent);
+        for (quint32 i = m_curEvent + 1; i < m_curEventList->count(); i++) {
+            qint64 nextTime = m_curEventList->time(i);
+            if (nextTime > time) {
+                // stick with the current value
+                break;
+            }
+            // else nextTime <= time, advance
+            m_curEvent = i;
+            curTime = nextTime;
+        }
+        EventDataType result = m_curEventList->data(m_curEvent);
+        return result;
+    }
+    QVector<EventList *> m_events;
+    EventList* m_curEventList;
+    int m_curEvent;
+    qint64 m_lastTime;
+};
 
-    // TODO: account for CPAP_PressureSet and CPAP_IPAPSet used by PRS1.
-    scanPressureList(session, CPAP_Pressure);
-    scanPressureList(session, CPAP_IPAP);
-
-    // Sort by time
-    std::sort(Pressure.begin(), Pressure.end());
-}
-
-// Returns what the nominal leak SHOULD be at the given pressure
-EventDataType zMaskProfile::calcLeak(EventStoreType pressure)
-{
-    float leak; // = 0.0;
-
-    float lpm4 = p_profile->cpap->custom4cmH2OLeaks();
-    float lpm20 = p_profile->cpap->custom20cmH2OLeaks();
-
-    float lpm = lpm20 - lpm4;
-    float ppm = lpm / 16.0;
-
-    float p = (pressure/10.0f) - 4.0;
-
-    leak = p * ppm + lpm4;
-
-    return leak;
-}
-
-QMutex zMaskmutex;
-zMaskProfile mmaskProfile;
 
 int calcLeaks(Session *session)
 {
@@ -1268,80 +1286,48 @@ int calcLeaks(Session *session)
 
     if (!session->eventlist.contains(CPAP_LeakTotal)) { return 0; } // can't calculate without this..
 
-    zMaskmutex.lock();
-    zMaskProfile *maskProfile = &mmaskProfile;
+    // Choose the formula for calculating mask leakage as a function of pressure.
+    LeakCalculator* calc = new ProfileLeakCalculator(p_profile);
+    
+    // Prefer IPAPSet/PressureSet for machines (PRS1) that use these, since they use Pressure to report averages.
+    ChannelID pressure_channel = CPAP_Pressure;  // default
+    for (auto & ch : { CPAP_IPAPSet, CPAP_IPAP, CPAP_PressureSet }) {
+        if (session->eventlist.contains(ch)) {
+            pressure_channel = ch;
+            break;
+        }
+    }
+    TimeSeries pressureEvents(session->eventlist[pressure_channel]);
 
-    maskProfile->scanPressure(session);
+    int totalEvents = 0;
 
-    // TODO: a single leak eventlist incorrectly handles discontinuous data
-    EventList *leak = session->AddEventList(CPAP_Leak, EVL_Event, 1);
-
-    auto & EVL = session->eventlist[CPAP_LeakTotal];
-
-    TimeValue *p2, *pstr, *pend;
-
-    // can this go out of the loop?
-    int mppressize = maskProfile->Pressure.size();
-    pstr = maskProfile->Pressure.data();
-    pend = maskProfile->Pressure.data()+(mppressize-1);
-
-    // For each sessions Total Leaks list
-    EventDataType gain, tmp, val;
-    int count;
-    EventStoreType *dptr, *eptr, pressure;
-    quint32 * tptr;
-    qint64 start, ti;
-    bool found;
-
-    for (auto & el : EVL) {
-        gain = el->gain();
-        count = el->count();
-        dptr = el->rawData();
-        eptr = dptr + count;
-        tptr = el->rawTime();
-        start = el->first();
+    auto & totalLeaks = session->eventlist[CPAP_LeakTotal];
+    for (auto & eventList : totalLeaks) {
+        EventList *leak = session->AddEventList(CPAP_Leak, EVL_Event, 1);
 
         // Scan through this Total Leak list's data
-        for (; dptr < eptr; ++dptr) {
-            tmp = EventDataType(*dptr) * gain;
-            ti = start + *tptr++;
-
-            found = false;
-
-            // Find the current pressure at this moment in time
-            pressure = pstr->value;
-
-            // TODO: This is O(n**2)! Refactor into a TimeSeries class that searches by timestamp but also tracks the last request
-            // so that it can search in O(n) for monotonically increasing timestamps, which is the common case.
-            for (TimeValue *p1 = pstr; p1 != pend; ++p1) {
-                p2 = p1+1;
-                if ((p2->time > ti) && (p1->time <= ti)) {
-                    pressure = p1->value;
-                    found = true;
-                    break;
-                } else if (p2->time == ti) {
-                    pressure = p2->value;
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {
+        for (quint32 i = 0; i < eventList->count(); i++) {
+            bool valid;
+            qint64 time = eventList->time(i);
+            EventDataType pressure = pressureEvents.valueAt(time, &valid);
+            if (valid) {
                 // lookup and subtract the calculated leak baseline for this pressure
-                val = tmp - maskProfile->calcLeak(pressure);
-
+                EventDataType totalLeak = eventList->data(i);
+                EventDataType maskLeak = calc->calcLeakAt(pressure);
+                EventDataType val = totalLeak - maskLeak;
                 if (val < 0) {
                     val = 0;
                 }
-
-                leak->AddEvent(ti, val);
+                leak->AddEvent(time, val);
             }
         }
+        
+        totalEvents += leak->count();
     }
 
-    zMaskmutex.unlock();
+    delete calc;
 
-    return leak->count();
+    return totalEvents;
 }
 
 void flagLargeLeaks(Session *session)
