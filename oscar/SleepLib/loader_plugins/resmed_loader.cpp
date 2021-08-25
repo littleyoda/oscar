@@ -198,7 +198,7 @@ void ResmedLoader::initChannels()
     chan->addOption(2, STR_TR_Auto);
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Comfort = 0xe20E, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_Comfort", QObject::tr("Comfort"), QObject::tr("Comfort"), QObject::tr("Comfort"), "", LOOKUP, Qt::black));
+        "RMAS1x_Comfort", QObject::tr("Response"), QObject::tr("Response"), QObject::tr("Response"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, QObject::tr("Soft"));     // This must be verified
     chan->addOption(1, QObject::tr("Standard"));
@@ -210,7 +210,7 @@ void ResmedLoader::initChannels()
     chan->addOption(1, STR_TR_On);
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS11_PtView= 0xe210, SETTING, MT_CPAP, SESSION,
-        "RMAS11_PTView", QObject::tr("Pt. View"), QObject::tr("Pt. View"), QObject::tr("Pt. View"), "", LOOKUP, Qt::black));
+        "RMAS11_PTView", QObject::tr("Patient View"), QObject::tr("Patient View"), QObject::tr("Patient View"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, QObject::tr("Simple"));
     chan->addOption(1, QObject::tr("Advanced"));
