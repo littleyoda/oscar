@@ -1154,14 +1154,6 @@
         <translation>Ukończono import MSeries</translation>
     </message>
     <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">Problem z otwarciem pliku danych Pozycji Snu: </translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">Ukończono import danych Pozycji Snu</translation>
-    </message>
-    <message>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>Gdy kopie zapasowe są wyłączone lub zaburzone w inny sposób, może to spowodować utratę danych.</translation>
     </message>
@@ -1270,10 +1262,6 @@
         <translation>Importuj dane &amp;Dreem</translation>
     </message>
     <message>
-        <source>Import &amp;Viatom Data</source>
-        <translation type="vanished">Importuj dane &amp;Viatom</translation>
-    </message>
-    <message>
         <source>Create zip of CPAP data card</source>
         <translation>Utwórz archiwum zip danych karty CPAP</translation>
     </message>
@@ -1308,76 +1296,6 @@
     <message>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Dopóki nie utworzysz &lt;i&gt;swoich &lt;b&gt;własnych &lt;/b&gt; kopii zapasowych WSZYSTKICH danych dla tego aparatu&lt;/i&gt;, &lt;font size=+2&gt;utracisz wszwszystkie dane tego aparatu &lt;b&gt;trwale&lt;/b&gt;!&lt;/font&gt;</translation>
-    </message>
-    <message>
-        <source>Imported %1 ZEO session(s) from
-
-%2</source>
-        <translation type="vanished">Zaimportowano %1 sesji ZEO z 
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with ZEO data at
-
-%1</source>
-        <translation type="vanished">Aktualne z danymi ZEO na 
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid ZEO CSV data at
-
-%1</source>
-        <translation type="vanished">Nie znaleziono ważnych danych ZEO CSV na 
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 Dreem session(s) from
-
-%2</source>
-        <translation type="vanished">Zaimportowano %1 sesji Dreem z 
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with Dreem data at
-
-%1</source>
-        <translation type="vanished">Aktualne z danymi Dreem na
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Dreem CSV data at
-
-%1</source>
-        <translation type="vanished">Nie znaleziono ważnych danych Dreem CSV na
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 oximetry session(s) from
-
-%2</source>
-        <translation type="vanished">Zaimportowano %1 sesji pulsoksymetrii z %2</translation>
-    </message>
-    <message>
-        <source>Already up to date with oximetry data at
-
-%1</source>
-        <translation type="vanished">Już aktualne z danymi pulsoksymetrii na
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid data at
-
-%1</source>
-        <translation type="vanished">Nie mogę znaleźć ważnych danych na
-
-%1</translation>
     </message>
     <message>
         <source>Would you like to zip this card?</source>
@@ -1418,14 +1336,6 @@
     <message>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation>Import danych &amp;Viatom/Wellue</translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import of %1 file(s) complete</source>
-        <translation type="vanished">Ukończono import %1 plik(ów) danych Pozycji Snu</translation>
-    </message>
-    <message>
-        <source>Somnopose Import Partial Success</source>
-        <translation type="vanished">Cęściowy sukces importu danych pozycji &amp;snu</translation>
     </message>
     <message>
         <source>Purge Current Selected Day</source>
@@ -4546,10 +4456,6 @@ TTIA: %1</translation>
         <translation>Aparat nie wspierany</translation>
     </message>
     <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">Przepraszam, ale Twój aparat Philips Respironics CPAP (Model %1) jeszcze nie jest wspierany.</translation>
-    </message>
-    <message>
         <source>15mm</source>
         <translation>15mm</translation>
     </message>
@@ -5549,10 +5455,6 @@ TTIA: %1</translation>
         <translation>Jest plik blokady dla tego profilu &apos;%1&apos;, zgłoszony na &apos;%2&apos;.</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">Szczyt</translation>
-    </message>
-    <message>
         <source>%1% %2</source>
         <translation>%1% %2</translation>
     </message>
@@ -6015,10 +5917,6 @@ Proszę przebuduj dane CPAP</translation>
         <translation>CMS50E/F</translation>
     </message>
     <message>
-        <source>Peak %1</source>
-        <translation type="vanished">Szczyt %1</translation>
-    </message>
-    <message>
         <source>Loading %1 data for %2...</source>
         <translation>Ładuję %1 dane dla %2...</translation>
     </message>
@@ -6123,10 +6021,6 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <source>Graphics Engine type:</source>
         <translation>Typ silnika graficznego:</translation>
-    </message>
-    <message>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation type="vanished">Deweloperzy potrzebują kopię .zip karty SD tego urządzenia i odpowiedniego raportu w .pdf z Encore aby móc obsługiwać to urządzenie w programie OSCAR.</translation>
     </message>
     <message>
         <source>Machine Untested</source>
@@ -6259,10 +6153,6 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>Ustawienie nawilżania PRS1</translation>
-    </message>
-    <message>
-        <source>Humid. Lvl</source>
-        <translation type="vanished">Poziom wilgotności</translation>
     </message>
     <message>
         <source>12mm</source>
@@ -6553,10 +6443,6 @@ Proszę przebuduj dane CPAP</translation>
         <translation>?5?</translation>
     </message>
     <message>
-        <source>?9?</source>
-        <translation type="vanished">?9?</translation>
-    </message>
-    <message>
         <source>?10?</source>
         <translation>?10?</translation>
     </message>
@@ -6805,18 +6691,6 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SenseAwake level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SenseAwake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6834,6 +6708,18 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     </message>
     <message>
         <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

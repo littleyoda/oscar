@@ -1722,14 +1722,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">Hubo un problema abriendo el Archivo de Datos Somnopose: </translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">Importación de Datos de Somnopause completada</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="2664"/>
         <source>Would you like to zip this card?</source>
         <translation type="unfinished"></translation>
@@ -5283,6 +5275,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="931"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation></translation>
@@ -5617,7 +5610,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="357"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="355"/>
         <source>Finishing up...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6823,7 +6816,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="948"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Rampa</translation>
@@ -7673,10 +7666,6 @@ TTIA: %1</source>
         <translation>Ya hay un archivo de cierre (lockfile) presente para el perfil &apos;%1&apos;, reclamado en &apos;%2&apos;.</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">Pico</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="189"/>
         <source>%1% %2</source>
         <translation type="unfinished">%1% %2</translation>
@@ -7952,7 +7941,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>EPR</source>
         <translation></translation>
     </message>
@@ -7968,13 +7957,12 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>EPR Level</source>
         <translation>Nivel EPR</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>Alivio de presión de exhalación</translation>
     </message>
@@ -8540,23 +8528,23 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="933"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="934"/>
-        <source>SenseAwake level</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
+        <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="935"/>
-        <source>SenseAwake</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
-        <source>Exhale Pressure Relief</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="959"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>

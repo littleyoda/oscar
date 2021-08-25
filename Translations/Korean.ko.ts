@@ -1065,10 +1065,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import &amp;Viatom Data</source>
-        <translation type="vanished">&amp;Viatom 데이터 가져 오기</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="3180"/>
         <source>Show &amp;Line Cursor</source>
         <translation>&amp;줄 커서 표시</translation>
@@ -1486,70 +1482,6 @@
         <translation>도움을받을 수 없습니다.</translation>
     </message>
     <message>
-        <source>Imported %1 ZEO session(s) from
-
-%2</source>
-        <translation type="vanished">%1에서 ZEO 세션(s)을 가져 왔습니다
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with ZEO data at
-
-%1</source>
-        <translation type="vanished">ZEO 데이터가 이미 최신 상태입니다.
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid ZEO CSV data at
-
-%1</source>
-        <translation type="vanished">%1에서 유효한 ZEO CSV 데이터를 찾을 수 없습니다</translation>
-    </message>
-    <message>
-        <source>Imported %1 Dreem session(s) from
-
-%2</source>
-        <translation type="vanished">에서 %1 개의 Dreem 세션을 가져 왔습니다
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with Dreem data at
-
-%1</source>
-        <translation type="vanished">Dreem 데이터가 이미 최신 상태입니다.
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Dreem CSV data at
-
-%1</source>
-        <translation type="vanished">유효한 Dreem CSV 데이터를 찾을 수 없습니다.
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 oximetry session(s) from
-
-%2</source>
-        <translation type="vanished">%2에서 %1 산소 측정 세션을 가져 왔습니다</translation>
-    </message>
-    <message>
-        <source>Already up to date with oximetry data at
-
-%1</source>
-        <translation type="vanished">%1에 산소 측정 데이터가 이미 최신 상태입니다</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid data at
-
-%1</source>
-        <translation type="vanished">%1에서 유효한 데이터를 찾을 수 없습니다</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="2632"/>
         <source>%1&apos;s Journal</source>
         <translation>%1 일지</translation>
@@ -1806,14 +1738,6 @@
         <location filename="../oscar/mainwindow.cpp" line="2344"/>
         <source>MSeries Import complete</source>
         <translation>MSeries 가져 오기 완료</translation>
-    </message>
-    <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">Somnopose 데이타 파일을 여는 중 문제가 발생했습니다: </translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">Somnopause 데이터 가져 오기 완료</translation>
     </message>
 </context>
 <context>
@@ -5378,6 +5302,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="931"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation type="unfinished"></translation>
@@ -5784,10 +5709,6 @@ TTIA: %1</source>
         <translation>지원되지 않는 기계</translation>
     </message>
     <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">죄송합니다. Philips Respironics CPAP 머신 (모델 %1)은 아직 지원되지 않습니다.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>OSCAR가이 컴퓨터의 사용 시간과 매우 기본적인 설정 만 추적 할 수 있다는 사실을 알려 드려 죄송합니다.</translation>
@@ -5807,13 +5728,9 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="357"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="355"/>
         <source>Finishing up...</source>
         <translation>끝내는 중 ...</translation>
-    </message>
-    <message>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation type="vanished">개발자는이 컴퓨터의 SD 카드의 .zip 사본과 일치하는 Encore .pdf 보고서가 있어야 OSCAR에서 작동합니다.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
@@ -6278,10 +6195,6 @@ TTIA: %1</source>
         <translation>PRS1 가습기 설정</translation>
     </message>
     <message>
-        <source>Humid. Lvl</source>
-        <translation type="vanished">가습, 레벨</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2941"/>
         <source>Hose Diameter</source>
         <translation>호스 직경</translation>
@@ -6594,7 +6507,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="948"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Ramp(압력상승)</translation>
@@ -7752,10 +7665,6 @@ TTIA: %1</source>
         <translation>&apos;%2&apos;에 대해 주장 된이 프로파일 &apos;%1&apos;에 대해 이미 존재하는 잠금 파일이 있습니다.</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">절정</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="189"/>
         <source>%1% %2</source>
         <translation type="unfinished">%1시 %2분 {1%?} {2?}</translation>
@@ -8250,7 +8159,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>EPR</source>
         <translation>호흡압력완화(EPR)</translation>
     </message>
@@ -8266,13 +8175,12 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>EPR Level</source>
         <translation>호흡압력완화(EPR) 레벨</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>날숨 압력 완화 수준</translation>
     </message>
@@ -8535,10 +8443,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>잠시만 기다려 주세요...</translation>
     </message>
     <message>
-        <source>Peak %1</source>
-        <translation type="vanished">최고치 %1</translation>
-    </message>
-    <message>
         <location filename="../oscar/statistics.cpp" line="168"/>
         <source>Updating Statistics cache</source>
         <translation type="unfinished">통계 캐시 업데이트</translation>
@@ -8624,23 +8528,23 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="933"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="934"/>
-        <source>SenseAwake level</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
+        <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="935"/>
-        <source>SenseAwake</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
-        <source>Exhale Pressure Relief</source>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="959"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>

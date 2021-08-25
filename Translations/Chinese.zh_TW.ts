@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_HK" sourcelanguage="en_US">
+<TS version="2.1" language="zh_TW" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished">關於</translation>
+        <translation type="unfinished">&amp;關於</translation>
     </message>
     <message>
         <source>Release Notes</source>
@@ -719,10 +719,6 @@
         <translation>&amp;查看</translation>
     </message>
     <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">打开睡眠姿势数据文件出错: </translation>
-    </message>
-    <message>
         <source>E&amp;xit</source>
         <translation>&amp;退出</translation>
     </message>
@@ -825,10 +821,6 @@
     <message>
         <source>Use &amp;AntiAliasing</source>
         <translation>使用&amp;图形保真</translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">睡眠姿势数据导入完成</translation>
     </message>
     <message>
         <source>Report Mode</source>
@@ -2070,7 +2062,7 @@ Index</source>
     </message>
     <message>
         <source>CMS50D+/E/F, Pulox PO-200/300</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ChoiceMMed MD300W1</source>
@@ -3007,13 +2999,15 @@ Are you sure you want to make these changes?</source>
     <message>
         <source>AHI</source>
         <extracomment>Apnea Hypopnea Index</extracomment>
-        <translatorcomment>呼吸暂停低通气指数</translatorcomment>
+        <translatorcomment>呼吸暂停低通气指数
+</translatorcomment>
         <translation>AHI</translation>
     </message>
     <message>
         <source>RDI</source>
         <extracomment>Respiratory Disturbance Index</extracomment>
-        <translatorcomment>呼吸紊乱指数</translatorcomment>
+        <translatorcomment>呼吸紊乱指数
+</translatorcomment>
         <translation>RDI</translation>
     </message>
     <message>
@@ -4550,7 +4544,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>AI=%1 HI=%2 CAI=%3 </source>
-        <translation type="unfinished">暂停指数=%1 低通气指数=%2 中枢性暂停指数=%3</translation>
+        <translation type="unfinished">暂停指数=%1 低通气指数=%2 中枢性暂停指数=%3 </translation>
     </message>
     <message>
         <source>Time taken to breathe in</source>
@@ -4770,9 +4764,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Vibratory Snore (VS2) </source>
-        <translation type="unfinished">呼吸
-频率
-(呼吸次数/分钟)</translation>
+        <translation type="unfinished">震动式鼾声 (VS2) </translation>
     </message>
     <message>
         <source>Mask On Time</source>
@@ -5161,10 +5153,6 @@ Please Rebuild CPAP Data</source>
         <translation>AHI %1</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">峰值</translation>
-    </message>
-    <message>
         <source>%1% %2</source>
         <translation>%1% %2</translation>
     </message>
@@ -5393,10 +5381,6 @@ TTIA: %1</source>
     <message>
         <source>Machine Unsupported</source>
         <translation>不支持的机型</translation>
-    </message>
-    <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">抱歉，暂不支持飞利浦伟康呼吸机（机型 %1）.</translation>
     </message>
     <message>
         <source>CPAP Mode</source>
@@ -5843,10 +5827,6 @@ TTIA: %1</source>
         <translation type="unfinished">桌面OpenGL</translation>
     </message>
     <message>
-        <source>Peak %1</source>
-        <translation type="obsolete">峰值%1</translation>
-    </message>
-    <message>
         <source>I&apos;m very sorry your machine doesn&apos;t record useful data to graph in Daily View :(</source>
         <translation type="unfinished">很抱歉，您的计算机没有在每日视图中记录可用的数据 :(</translation>
     </message>
@@ -6249,7 +6229,7 @@ TTIA: %1</source>
     </message>
     <message>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
-        <translation type="unfinished">呼气压力 %1 吸气压力%2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation type="unfinished">呼气压力 %1 吸气压力 %2 %3 (%4)</translation>
     </message>
     <message>
         <source>CPAP-Check</source>
@@ -6698,18 +6678,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SenseAwake level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SenseAwake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6727,6 +6695,18 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7066,35 +7046,35 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>What would you like to do?</source>
-        <translation>你希望做什麼?</translation>
+        <translation>您希望從何處著手？</translation>
     </message>
     <message>
         <source>CPAP Importer</source>
-        <translation>轉入CPAP數據</translation>
+        <translation>CPAP 導入器</translation>
     </message>
     <message>
         <source>Oximetry Wizard</source>
-        <translation>血氧測量</translation>
+        <translation>血氧測定精靈</translation>
     </message>
     <message>
         <source>Daily View</source>
-        <translation>每日使用情況</translation>
+        <translation>每日概況</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation>總覽</translation>
+        <translation>綜合概況</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>統計</translation>
+        <translation>統計數據</translation>
     </message>
     <message>
         <source>First import can take a few minutes.</source>
-        <translation>第一次轉入數據將要數分鐘.</translation>
+        <translation>首次記錄導入需耗時數分鐘。</translation>
     </message>
     <message>
         <source>The last time you used your %1...</source>
-        <translation>上一次使用的%1...</translation>
+        <translation>您上次使用 %1...</translation>
     </message>
     <message>
         <source>last night</source>
@@ -7102,31 +7082,27 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>%2 days ago</source>
-        <translation>%2天以前</translation>
+        <translation>%2 天前</translation>
     </message>
     <message>
         <source>was %1 (on %2)</source>
-        <translation>是 %1 ( %2)</translation>
+        <translation>為 %1 (於 %2)</translation>
     </message>
     <message>
         <source>%1 hours, %2 minutes and %3 seconds</source>
-        <translation>%1 小時, %2分鐘 %3 秒</translation>
+        <translation>%1 小時，%2分 %3 秒</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
-        <translation>呼吸機已啟用 %1。</translation>
+        <translation>呼吸器使用時間為 %1。</translation>
     </message>
     <message>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
-        <translation>&lt;font color = red&gt;带呼吸面罩 %1.&lt;/font&gt;</translation>
+        <translation>&lt;font color = red&gt;您有戴著呼吸罩使用機器的計時只有 %1.&lt;/font&gt;</translation>
     </message>
     <message>
         <source>under</source>
-        <translation type="unfinished">中文
-
-Dī yú
-
-低於</translation>
+        <translation>低於</translation>
     </message>
     <message>
         <source>over</source>
@@ -7134,7 +7110,7 @@ Dī yú
     </message>
     <message>
         <source>reasonably close to</source>
-        <translation>合理地接近於</translation>
+        <translation>合理地近似</translation>
     </message>
     <message>
         <source>equal to</source>
@@ -7142,67 +7118,67 @@ Dī yú
     </message>
     <message>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation>AHI相等於%1, 即%2你的%3天平均值%4.</translation>
+        <translation>您的 AHI 相等於%1, 即 %2 您的 %3 天 %4 的平均值。</translation>
     </message>
     <message>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>呼吸機使用低於 %1-%2 %3 ，持續時間%4% .</translation>
+        <translation>呼吸器使用時數低於 %1-%2 %3 ，持續時間%4% 。</translation>
     </message>
     <message>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation>平均洩漏為%1 %2，即%3您的%5天的平均洩漏為%4。</translation>
+        <translation>平均漏氣為 %1 %2，即 %3 您的 %5 天 %4 平均值。</translation>
     </message>
     <message>
         <source>No CPAP data has been imported yet.</source>
-        <translation>未導入呼吸機數據.</translation>
+        <translation>尚未匯入呼吸器資料。</translation>
     </message>
     <message>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
-        <translation>建議先點擊檢查文件--&gt;選項</translation>
+        <translation>開始的第一步，先檢查 檔案 --&gt; 偏好選項，</translation>
     </message>
     <message>
         <source>as there are some options that affect import.</source>
-        <translation>因為有些選項會影響數據輸入.</translation>
+        <translation>有些至關重要的偏好選項會影響資料匯入.</translation>
     </message>
     <message>
         <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation>請注意，在檢測到ResMed設備時會強制執行某些首選項</translation>
+        <translation>請注意，在偵測到 ResMed 設備時某些偏好選項會直接套用</translation>
     </message>
     <message>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation>歡迎使用開源CPAP報告分析工具</translation>
+        <translation>歡迎使用開放資源 CPAP 解析彙整程式</translation>
     </message>
     <message>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation>你的 呼吸機 使用 固定 %1 %2 氣 壓</translation>
+        <translation>您的呼吸器使用固定 %1 %2 加壓空氣。</translation>
     </message>
     <message>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation>壓力低於 %1 %2 ，持續時間%3%.</translation>
+        <translation>壓力低於 %1 %2，持續時間%3%.</translation>
     </message>
     <message>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation>你的 呼吸機 使用 固定 %1 %2 %3 氣 壓.</translation>
+        <translation>您的呼吸機使用固定 %1 %2 %3 加壓空氣。</translation>
     </message>
     <message>
         <source>Your EPAP pressure fixed at %1 %2.</source>
-        <translation>呼氣壓力固定於 %1 %2.</translation>
+        <translation>呼氣壓力固定於 %1 %2。</translation>
     </message>
     <message>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>吸氣壓力低於 %1 %2 ，持續時間 %3%.</translation>
+        <translation>吸氣壓力低於 %1 %2，持續時間 %3%。</translation>
     </message>
     <message>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation>呼氣壓力低於 %1 %2 ，持續時間 %3%.</translation>
+        <translation>呼氣壓力低於 %1 %2，持續時間 %3%。</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;請務必啟用 ResMed S9 記憶卡覆寫保護&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;特別是在插入其它電腦裝置之前&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;有些作業系統會在媒體裡插入時自動寫入索引檔案且無預設提示通知，而此類別系統動作將可能導致呼吸器無法辨識讀取記憶卡&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 天前</translation>
     </message>
 </context>
 <context>

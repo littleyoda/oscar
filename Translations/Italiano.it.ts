@@ -1296,10 +1296,6 @@
         <translation>importa &amp;Somnopose Dati</translation>
     </message>
     <message>
-        <source>Import &amp;Viatom Data</source>
-        <translation type="vanished">Importa dati &amp;Viatom</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="3172"/>
         <source>Current Days</source>
         <translation>Giorno Corrente</translation>
@@ -1533,81 +1529,9 @@
         <translation>Nessun aiuto è disponibile.</translation>
     </message>
     <message>
-        <source>Imported %1 ZEO session(s) from
-
-%2</source>
-        <translation type="vanished">Sessione(i) di ZEO %1 importata da
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with ZEO data at
-
-%1</source>
-        <translation type="vanished">Già aggiornato con i dati ZEO a
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid ZEO CSV data at
-
-%1</source>
-        <translation type="vanished">Impossibile trovare dati CSV ZEO validi all&apos;indirizzo
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 Dreem session(s) from
-
-%2</source>
-        <translation type="vanished">Sessione(i) Dreem importata %1 da
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with Dreem data at
-
-%1</source>
-        <translation type="vanished">Già aggiornato con i dati Dreem a
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Dreem CSV data at
-
-%1</source>
-        <translation type="vanished">Impossibile trovare dati CSV Dreem validi all&apos;indirizzo
-
-%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="2355"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Il Glossario si aprirà nel browser predefinito</translation>
-    </message>
-    <message>
-        <source>Imported %1 oximetry session(s) from
-
-%2</source>
-        <translation type="vanished">Sessione(i) di ossimetria %1 importata da
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with oximetry data at
-
-%1</source>
-        <translation type="vanished">Già aggiornato con i dati di ossimetria a
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid data at
-
-%1</source>
-        <translation type="vanished">Impossibile trovare dati validi all&apos;indirizzo
-
-%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2654"/>
@@ -1790,14 +1714,6 @@
         <location filename="../oscar/mainwindow.cpp" line="2433"/>
         <source>%1 Data Import complete</source>
         <translation type="unfinished">%1 Importazione dati completa</translation>
-    </message>
-    <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">C&apos;è stato un problema di apertura Somnopose Data File: </translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">Importazione dati Somnopause completa</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2546"/>
@@ -5645,6 +5561,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="931"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation>sveglio</translation>
@@ -5970,10 +5887,6 @@ TTIA: %1</translation>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">Picco</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>99.5%</source>
         <translation type="unfinished">99,5%</translation>
@@ -6237,10 +6150,6 @@ TTIA: %1</translation>
         <translation>Macchina non supportata</translation>
     </message>
     <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>Mi dispiace segnalare che OSCAR può monitorare solo le ore di utilizzo e le impostazioni di base per questa macchina.</translation>
@@ -6260,13 +6169,9 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="357"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="355"/>
         <source>Finishing up...</source>
         <translation>Terminando...</translation>
-    </message>
-    <message>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation type="vanished">Gli sviluppatori hanno bisogno di una copia .zip della scheda SD di questa macchina e dei corrispondenti report Encore .pdf per farlo funzionare con OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
@@ -6741,10 +6646,6 @@ TTIA: %1</translation>
         <translation>Impostazione dell&apos;umidificatore PRS1</translation>
     </message>
     <message>
-        <source>Humid. Lvl</source>
-        <translation type="vanished">Livello Umido</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2941"/>
         <source>Hose Diameter</source>
         <translation>Diametro del tubo</translation>
@@ -6895,7 +6796,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>EPR</source>
         <translation>EPR</translation>
     </message>
@@ -6911,13 +6812,12 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>EPR Level</source>
         <translation>Livello EPR</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>Espirare il livello di scarico della pressione</translation>
     </message>
@@ -6925,10 +6825,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>?5?</source>
         <translation>?5?</translation>
-    </message>
-    <message>
-        <source>?9?</source>
-        <translation type="vanished">?9?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
@@ -7125,7 +7021,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="948"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Rampa</translation>
@@ -8563,10 +8459,6 @@ TTIA: %1</translation>
         <translation>Attendere prego...</translation>
     </message>
     <message>
-        <source>Peak %1</source>
-        <translation type="vanished">Picco %1</translation>
-    </message>
-    <message>
         <location filename="../oscar/statistics.cpp" line="168"/>
         <source>Updating Statistics cache</source>
         <translation>Aggiornamento della cache delle statistiche</translation>
@@ -8652,23 +8544,23 @@ TTIA: %1</translation>
         <translation type="unfinished">Impossibile controllare gli aggiornamenti. Si prega di riprovare più tardi.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="933"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="934"/>
-        <source>SenseAwake level</source>
-        <translation type="unfinished">Livello SenseAwake</translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="935"/>
-        <source>SenseAwake</source>
-        <translation type="unfinished">SenseAwake</translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished">Espirare la pressione di scarico</translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <source>Expiratory Relief Level</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="959"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
         <source>Humidity</source>
         <translation type="unfinished">Umidità</translation>
     </message>

@@ -5440,18 +5440,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SenseAwake level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SenseAwake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6628,91 +6616,17 @@ TTIA: %1</source>
         <source>No oximetry data has been imported yet.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QPlatformTheme</name>
     <message>
-        <source>OK</source>
-        <translation type="vanished">OK</translation>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;No</source>
-        <translation type="vanished">아니요</translation>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Yes</source>
-        <translation type="vanished">예</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="vanished">도움말</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">열기</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">저장</translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation type="vanished">중단</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="vanished">적용</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">재설정</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translation type="vanished">재시도</translation>
-    </message>
-    <message>
-        <source>Restore Defaults</source>
-        <translation type="vanished">기본설정으로 되돌리기</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">취소</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation type="vanished">무시</translation>
-    </message>
-    <message>
-        <source>N&amp;o to All</source>
-        <translation type="vanished">모두 아니요</translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="vanished">모두 저장</translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation type="vanished">포기</translation>
-    </message>
-    <message>
-        <source>Yes to &amp;All</source>
-        <translation type="vanished">모두 예</translation>
-    </message>
-</context>
-<context>
-    <name>QShortcut</name>
-    <message>
-        <source>No</source>
-        <translation type="vanished">아니요</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="vanished">예</translation>
+        <source>Expiratory Relief Level</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

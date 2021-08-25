@@ -719,10 +719,6 @@
         <translation>&amp;查看</translation>
     </message>
     <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">打开睡眠姿势数据文件出错: </translation>
-    </message>
-    <message>
         <source>E&amp;xit</source>
         <translation>&amp;退出</translation>
     </message>
@@ -825,10 +821,6 @@
     <message>
         <source>Use &amp;AntiAliasing</source>
         <translation>使用&amp;图形保真</translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">睡眠姿势数据导入完成</translation>
     </message>
     <message>
         <source>Report Mode</source>
@@ -5161,10 +5153,6 @@ Please Rebuild CPAP Data</source>
         <translation>AHI %1</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">峰值</translation>
-    </message>
-    <message>
         <source>%1% %2</source>
         <translation>%1% %2</translation>
     </message>
@@ -5393,10 +5381,6 @@ TTIA: %1</source>
     <message>
         <source>Machine Unsupported</source>
         <translation>不支持的机型</translation>
-    </message>
-    <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">抱歉，暂不支持飞利浦伟康呼吸机（机型 %1）.</translation>
     </message>
     <message>
         <source>CPAP Mode</source>
@@ -5841,10 +5825,6 @@ TTIA: %1</source>
     <message>
         <source>Desktop OpenGL</source>
         <translation>桌面OpenGL</translation>
-    </message>
-    <message>
-        <source>Peak %1</source>
-        <translation type="vanished">峰值%1</translation>
     </message>
     <message>
         <source>I&apos;m very sorry your machine doesn&apos;t record useful data to graph in Daily View :(</source>
@@ -6698,18 +6678,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SenseAwake level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SenseAwake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6727,6 +6695,18 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

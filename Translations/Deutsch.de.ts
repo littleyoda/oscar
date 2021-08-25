@@ -731,10 +731,6 @@
         <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <source>There was a problem opening Somnopose Data File: </source>
-        <translation type="vanished">Es gab ein Problem beim Öffnen der CSV Datendatei: </translation>
-    </message>
-    <message>
         <source>E&amp;xit</source>
         <translation>&amp;Schließen</translation>
     </message>
@@ -965,10 +961,6 @@
     <message>
         <source>Would you like to import from this location?</source>
         <translation>Möchten Sie von diesem Ort impoertieren?</translation>
-    </message>
-    <message>
-        <source>Somnopause Data Import complete</source>
-        <translation type="vanished">Somnopause Datenimport abgeschlossen</translation>
     </message>
     <message>
         <source>Report Mode</source>
@@ -1267,10 +1259,6 @@
         <translation>Import &amp;Dreem Daten</translation>
     </message>
     <message>
-        <source>Import &amp;Viatom Data</source>
-        <translation type="vanished">Import &amp;Viatom Daten</translation>
-    </message>
-    <message>
         <source>Create zip of CPAP data card</source>
         <translation>Zip der CPAP-Datenkarte erstellen</translation>
     </message>
@@ -1305,78 +1293,6 @@
     <message>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Wenn Sie nicht &lt;i&gt;eigene &lt;b&gt;own&lt;/b&gt; Backups für ALLE Ihre Daten für dieses Gerät&lt;/i&gt;, &lt;font size=+2&gt;werden Sie die Daten dieses Geräts&lt;b&gt;permanent&lt;/b&gt;!&lt;/verlieren&gt;</translation>
-    </message>
-    <message>
-        <source>Imported %1 ZEO session(s) from
-
-%2</source>
-        <translation type="vanished">Import %1 ZEO Sitzung(en) aus
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with ZEO data at
-
-%1</source>
-        <translation type="vanished">Bereits auf dem neuesten Stand mit ZEO-Daten unter
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid ZEO CSV data at
-
-%1</source>
-        <translation type="vanished">Konnte keine gültigen ZEO-CSV-Daten finden unter
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 Dreem session(s) from
-
-%2</source>
-        <translation type="vanished">Importiere %1 Schlaf Sitzung(en) aus
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with Dreem data at
-
-%1</source>
-        <translation type="vanished">Bereits auf dem neuesten Stand mit Dreem-Daten unter
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Dreem CSV data at
-
-%1</source>
-        <translation type="vanished">Konnte keine gültigen Dreem-CSV-Daten finden unter
-
-%1</translation>
-    </message>
-    <message>
-        <source>Imported %1 oximetry session(s) from
-
-%2</source>
-        <translation type="vanished">Import %1 von Oxymetrie Daten aus
-
-%2</translation>
-    </message>
-    <message>
-        <source>Already up to date with oximetry data at
-
-%1</source>
-        <translation type="vanished">Bereits auf dem neuesten Stand mit Oximetrie-Daten bei
-
-%1</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid data at
-
-%1</source>
-        <translation type="vanished">Konnte keine gültigen Daten finden unter
-
-%1</translation>
     </message>
     <message>
         <source>Would you like to zip this card?</source>
@@ -4133,10 +4049,6 @@ p, li { white-space: pre-wrap; }
         <translation>RERA</translation>
     </message>
     <message>
-        <source>Peak</source>
-        <translation type="vanished">Spitze</translation>
-    </message>
-    <message>
         <source>Ramp</source>
         <translation>Rampe</translation>
     </message>
@@ -5043,10 +4955,6 @@ Start: %2</translation>
         <translation>Wenn Sie atmen beginnt das Gerät zu arbeiten</translation>
     </message>
     <message>
-        <source>Peak %1</source>
-        <translation type="vanished">Spitze %1</translation>
-    </message>
-    <message>
         <source>ANGLE / OpenGLES</source>
         <translation>ANGLE / OpenGLES</translation>
     </message>
@@ -5345,10 +5253,6 @@ TTIA: %1</translation>
     <message>
         <source>Temperature Enable</source>
         <translation>Temperatur aktivieren</translation>
-    </message>
-    <message>
-        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
-        <translation type="vanished">Leider wird Ihr Philips Respironics CPAP-Gerät (Modell %1) noch nicht unterstützt.</translation>
     </message>
     <message>
         <source>Seconds</source>
@@ -6121,10 +6025,6 @@ Stunden: %1</translation>
         <translation>Typ der Grafik-Engine:</translation>
     </message>
     <message>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
-        <translation type="vanished">Die Entwickler benötigen eine.zip-Kopie der SD-Karte dieses Geräts und passende Encore.pdf-Berichte, damit es mit OSCAR funktioniert.</translation>
-    </message>
-    <message>
         <source>Machine Untested</source>
         <translation>Geräteüberprüfung</translation>
     </message>
@@ -6255,10 +6155,6 @@ Stunden: %1</translation>
     <message>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1-Luftbefeuchter-Einstellung</translation>
-    </message>
-    <message>
-        <source>Humid. Lvl</source>
-        <translation type="vanished">Feucht. Lvl</translation>
     </message>
     <message>
         <source>12mm</source>
@@ -6537,10 +6433,6 @@ Stunden: %1</translation>
         <translation>?5?</translation>
     </message>
     <message>
-        <source>?9?</source>
-        <translation type="vanished">?9?</translation>
-    </message>
-    <message>
         <source>?10?</source>
         <translation>?10?</translation>
     </message>
@@ -6801,18 +6693,6 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SenseAwake level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SenseAwake</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6830,6 +6710,18 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     </message>
     <message>
         <source>AI=%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SensAwake level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
