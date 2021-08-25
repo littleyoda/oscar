@@ -1104,37 +1104,41 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Purge Current Selected Day</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensa valda dagar</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3335"/>
         <source>&amp;CPAP</source>
-        <translation type="unfinished">&amp;CPAP</translation>
+        <translation>&amp;CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3340"/>
         <source>&amp;Oximetry</source>
-        <translation type="unfinished">&amp;Oximeter</translation>
+        <translation>&amp;Oximeter</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3345"/>
         <source>&amp;Sleep Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sömnsteg</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3350"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Position</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3355"/>
         <source>&amp;All except Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alla utom noterade</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3360"/>
         <source>All including &amp;Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla inklusive &amp;Noteringar</translation>
+    </message>
+    <message>
+        <source>Import &amp;Viatom Data</source>
+        <translation type="vanished">Importera &amp;Viatom Data</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3240"/>
@@ -1469,22 +1473,22 @@
         <location filename="../oscar/mainwindow.cpp" line="2426"/>
         <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>There was a problem opening %1 Data File: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Det var ett problem med att öppna %1 Datafil: %2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2429"/>
         <source>%1 Data Import of %2 file(s) complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Dataimporten av %2 fil/filer är färdig</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2431"/>
         <source>%1 Import Partial Success</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Importen är delvis lyckad</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2433"/>
         <source>%1 Data Import complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Dataimporten är färdig</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2853"/>
@@ -1549,7 +1553,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1083"/>
         <source>Find your CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök din CPAP:s minneskort</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1395"/>
@@ -1615,6 +1619,86 @@
         <location filename="../oscar/mainwindow.cpp" line="2133"/>
         <source>No help is available.</source>
         <translation>Ingen hjälpfil är tillgänglig.</translation>
+    </message>
+    <message>
+        <source>Imported %1 ZEO session(s) from
+
+%2</source>
+        <translation type="vanished">Importerad %1 ZEO inspelning(ar) från
+
+%2</translation>
+    </message>
+    <message>
+        <source>Already up to date with ZEO data at
+
+%1</source>
+        <translation type="vanished">Redan uppdaterade ZEO data på
+
+%1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid ZEO CSV data at
+
+%1</source>
+        <translation type="vanished">Kunde inte finna några giltiga ZEO CSV data på
+
+%1</translation>
+    </message>
+    <message>
+        <source>Imported %1 Dreem session(s) from
+
+%2</source>
+        <translation type="vanished">Importerad %1 Dreem inspelning(ar) från
+
+%2</translation>
+    </message>
+    <message>
+        <source>Already up to date with Dreem data at
+
+%1</source>
+        <translation type="vanished">Redan uppdaterad med Dreem data på
+
+%1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid Dreem CSV data at
+
+%1</source>
+        <translation type="vanished">Kunde inte finna några giltiga Dreem CSV data på
+
+%1</translation>
+    </message>
+    <message>
+        <source>Somnopause Data Import of %1 file(s) complete</source>
+        <translation type="vanished">Somnopause Data Import av %1 fil/filer färdig</translation>
+    </message>
+    <message>
+        <source>Somnopose Import Partial Success</source>
+        <translation type="vanished">Somnopose Import delvis lyckad</translation>
+    </message>
+    <message>
+        <source>Imported %1 oximetry session(s) from
+
+%2</source>
+        <translation type="vanished">Importerad %1 oximeter inspelning(ar) från
+
+%2</translation>
+    </message>
+    <message>
+        <source>Already up to date with oximetry data at
+
+%1</source>
+        <translation type="vanished">Redan uppdaterad med oximeter data på
+
+%1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid data at
+
+%1</source>
+        <translation type="vanished">Kunde inte finna några giltiga data på
+
+%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2654"/>
@@ -1716,6 +1800,14 @@
         <location filename="../oscar/mainwindow.cpp" line="1456"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Skärmdumpen sparades till filen &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>There was a problem opening Somnopose Data File: </source>
+        <translation type="vanished">Det gick inte att öppna Somnopose datafil: </translation>
+    </message>
+    <message>
+        <source>Somnopause Data Import complete</source>
+        <translation type="vanished">Somnopose data-import komplett</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2546"/>
@@ -2174,7 +2266,7 @@
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärmdump</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="135"/>
@@ -5223,7 +5315,6 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="931"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation>SensAwake</translation>
@@ -5649,6 +5740,10 @@ TTIA: %1</translation>
         <translation>Maskinen stöds inte</translation>
     </message>
     <message>
+        <source>Sorry, your Philips Respironics CPAP machine (Model %1) is not supported yet.</source>
+        <translation type="vanished">Tyvärr, din Philips Respironics CPAP-maskin (Modell%1) stöds inte för tillfället.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>Jag är ledsen att rapportera att OSCAR endast kan spåra timmar av användning och endast grundläggande inställningar för den här maskinen.</translation>
@@ -5668,7 +5763,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="355"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="357"/>
         <source>Finishing up...</source>
         <translation>Avslutar...</translation>
     </message>
@@ -5687,6 +5782,10 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="815"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
         <translation>De importerade uppgifterna kanske inte är helt exakta, så utvecklarna vill gärna ha en .zip-kopia av maskinens SD-kort och matchande Encore .pdf-rapport för att se till att OSCAR hanterar data korrekt.</translation>
+    </message>
+    <message>
+        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make it work with OSCAR.</source>
+        <translation type="vanished">Utvecklarna behöver en .zip-kopia av maskinens SD-kort och matchande Encore .pdf-rapporter för att det ska fungera med OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
@@ -5769,27 +5868,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
         <source>model %1</source>
-        <translation type="unfinished"></translation>
+        <translation>model %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
         <source>DreamStation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>DreamStation 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
         <source>unknown model</source>
-        <translation type="unfinished"></translation>
+        <translation>okänd modell</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
         <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyvärr, din Philips respironics CPAP maskin (%1) stöds inte än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklarna behöver en .zip-kopia av maskinens SD-kort och matchande Encore  eller Care Orchestrator .pdf-rapporter för att det ska fungera med OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2814"/>
@@ -6143,6 +6242,10 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1 Befuktningsinställning</translation>
+    </message>
+    <message>
+        <source>Humid. Lvl</source>
+        <translation type="vanished">Fuktighetsnivå</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2941"/>
@@ -6650,7 +6753,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/reports.cpp" line="294"/>
         <source>AI=%1 </source>
-        <translation type="unfinished"></translation>
+        <translation>AI=%1 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="362"/>
@@ -6927,7 +7030,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="948"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="952"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Ramp</translation>
@@ -7002,12 +7105,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Apnea</source>
-        <translation type="unfinished"></translation>
+        <translation>Apne</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>An apnea reportred by your CPAP machine.</source>
-        <translation type="unfinished"></translation>
+        <translation>En apne rapporterad av din CPAP maskin.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
@@ -7799,6 +7902,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>%1 %2</translation>
     </message>
     <message>
+        <source>Peak</source>
+        <translation type="vanished">Topp</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="189"/>
         <source>%1% %2</source>
         <translation>%1% %2</translation>
@@ -7821,12 +7928,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
-        <translation type="unfinished"></translation>
+        <translation>varierar</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
@@ -7952,13 +8059,13 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
         <source>Backing up files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör backup på filer....</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
         <source>Reading data files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Läser datafiler...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2764"/>
@@ -7997,12 +8104,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
         <source>Snoring event.</source>
-        <translation type="unfinished"></translation>
+        <translation>Snarkning.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
         <source>SN</source>
-        <translation type="unfinished"></translation>
+        <translation>SN</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="77"/>
@@ -8107,7 +8214,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="112"/>
         <source>iVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>iVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8116,7 +8223,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
         <source>EPR</source>
         <translation>EPR</translation>
     </message>
@@ -8132,14 +8239,19 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>EPR Level</source>
         <translation>EPR-nivå</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="947"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>Nivå på trycklindring vid utandning</translation>
+    </message>
+    <message>
+        <source>?9?</source>
+        <translation type="vanished">?9?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
@@ -8245,57 +8357,57 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
         <source>Comfort</source>
-        <translation type="unfinished"></translation>
+        <translation>Komfort</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjuk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Standard</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>SmartStop</source>
-        <translation type="unfinished"></translation>
+        <translation>SmartStop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Machine auto stops by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinen autostannar av andningen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Smart Stop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
         <source>Pt. View</source>
-        <translation type="unfinished"></translation>
+        <translation>Pt. Vy</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkelt</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
         <source>Advanced</source>
-        <translation type="unfinished">Avancerat</translation>
+        <translation>Avancerat</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din ResMed CPAP maskin (Modell %1) är inte testad än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det ser ut som från andra maskiner, så det kan fungera, men utvecklarna vill gärna ha en .zip-kopia av den här maskinens SD-kort för att se till att det fungerar med OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1200"/>
@@ -8456,6 +8568,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Vänta en stund...</translation>
     </message>
     <message>
+        <source>Peak %1</source>
+        <translation type="vanished">Högsta %1</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="168"/>
         <source>Updating Statistics cache</source>
         <translation>Uppdaterar cache för statistik</translation>
@@ -8541,30 +8657,30 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Kan inte söka efter uppdateringar, försök igen senare.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
-        <source>SensAwake level</source>
-        <translation type="unfinished"></translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="933"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="934"/>
+        <source>SenseAwake level</source>
+        <translation>SenseAwake nivå</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
-        <source>Expiratory Relief</source>
-        <translation type="unfinished"></translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="935"/>
+        <source>SenseAwake</source>
+        <translation>SenseAwake</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
-        <source>Expiratory Relief Level</source>
-        <translation type="unfinished"></translation>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="941"/>
+        <source>Exhale Pressure Relief</source>
+        <translation>Trycklättnad på utandning</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="959"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Befuktning</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
-        <translation type="unfinished"></translation>
+        <translation>SleepStyle</translation>
     </message>
 </context>
 <context>
@@ -8598,17 +8714,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="204"/>
         <source>Import Error</source>
-        <translation type="unfinished">Import-fel</translation>
+        <translation>Import-fel</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="unfinished">Maskin-data kan inte importeras till denna profil.</translation>
+        <translation>Maskin-data kan inte importeras till denna profil.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>The Day records overlap with already existing content.</source>
-        <translation type="unfinished">Den här dagens data överlappar redan sparat innehåll.</translation>
+        <translation>Den här dagens data överlappar redan sparat innehåll.</translation>
     </message>
 </context>
 <context>
@@ -9116,7 +9232,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="262"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation>Ditt tryck var under %1 %2 i %3% av tiden.</translation>
+        <translation>Ditt tryck var på eller under %1 %2 i %3% av tiden.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="270"/>
