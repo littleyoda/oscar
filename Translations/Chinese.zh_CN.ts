@@ -6634,10 +6634,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comfort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Soft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6655,10 +6651,6 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt. View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6707,6 +6699,14 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <source>Expiratory Relief Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Patient View</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

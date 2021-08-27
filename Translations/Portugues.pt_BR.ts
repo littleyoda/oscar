@@ -8260,6 +8260,16 @@ existente, exclua-a e, em seguida, abra este gráfico novamente.</translation>
         <translation>Alívio de Pressão de Expiração</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
+        <source>Response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
+        <source>Patient View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>?5?</source>
         <translation>?5?</translation>
@@ -8368,11 +8378,6 @@ existente, exclua-a e, em seguida, abra este gráfico novamente.</translation>
         <translation>Manual</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
-        <source>Comfort</source>
-        <translation>Conforto</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
         <translation>Macio</translation>
@@ -8396,11 +8401,6 @@ existente, exclua-a e, em seguida, abra este gráfico novamente.</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
         <translation>Parada Inteligente</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
-        <source>Pt. View</source>
-        <translation>Pto de Vista</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>

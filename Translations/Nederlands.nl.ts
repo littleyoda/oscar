@@ -8145,6 +8145,16 @@ Gaarne gegevens opnieuw inlezen</translation>
         <translation>Niveau van uitademingsdrukhulp</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
+        <source>Response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
+        <source>Patient View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>?10?</source>
         <translation>?10?</translation>
@@ -8246,11 +8256,6 @@ Gaarne gegevens opnieuw inlezen</translation>
         <translation>Handmatig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
-        <source>Comfort</source>
-        <translation>Comfort</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
         <translation>Zacht</translation>
@@ -8274,11 +8279,6 @@ Gaarne gegevens opnieuw inlezen</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
         <translation>Automatisch stoppen</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
-        <source>Pt. View</source>
-        <translation>Pt weergave</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>

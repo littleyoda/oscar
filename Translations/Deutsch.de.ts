@@ -6649,10 +6649,6 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comfort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Soft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6670,10 +6666,6 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     </message>
     <message>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt. View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6722,6 +6714,14 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     </message>
     <message>
         <source>Expiratory Relief Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Patient View</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -6647,10 +6647,6 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comfort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Soft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6668,10 +6664,6 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     </message>
     <message>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt. View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6720,6 +6712,14 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     </message>
     <message>
         <source>Expiratory Relief Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Patient View</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
