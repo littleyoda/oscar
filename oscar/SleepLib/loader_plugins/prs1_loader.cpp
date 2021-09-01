@@ -751,6 +751,9 @@ int PRS1Loader::Open(const QString & selectedPath)
         ImportContext* ctx = new ProfileImportContext(p_profile);
         SetContext(ctx);
         connect(ctx, &ImportContext::importEncounteredUnexpectedData, &ui, &ImportUI::onUnexpectedData);
+        connect(this, &PRS1Loader::deviceReportsUsageOnly, &ui, &ImportUI::onDeviceReportsUsageOnly);
+        connect(this, &PRS1Loader::deviceIsUntested, &ui, &ImportUI::onDeviceIsUntested);
+        connect(this, &PRS1Loader::deviceIsUnsupported, &ui, &ImportUI::onDeviceIsUnsupported);
 #endif
         c += OpenMachine(machinePath);
 #if 1
@@ -858,49 +861,32 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 
 Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
+    MachineInfo info = newInfo();
     QHash<QString,QString> props;
     if (!PeekProperties(propertyfile, props) || !s_PRS1ModelInfo.IsSupported(props)) {
-        QString name;
         if (props.contains("ModelNumber")) {
             int family, familyVersion;
             getVersionFromProps(props, family, familyVersion);
             QString model_number = props["ModelNumber"];
             qWarning().noquote() << "Model" << model_number << QString("(F%1V%2)").arg(family).arg(familyVersion) << "unsupported.";
-            name = QObject::tr("model %1").arg(model_number);
+            info.modelnumber = QObject::tr("model %1").arg(model_number);
         } else if (propertyfile.endsWith("PROP.BIN")) {
             // TODO: Remove this once DS2 is supported.
             qWarning() << "DreamStation 2 not supported:" << propertyfile;
-            name = QObject::tr("DreamStation 2");
+            info.modelnumber = QObject::tr("DreamStation 2");
         } else {
             qWarning() << "Unable to identify model or series!";
-            name = QObject::tr("unknown model");
+            info.modelnumber = QObject::tr("unknown model");
         }
-#ifndef UNITTEST_MODE
-        QMessageBox::information(QApplication::activeWindow(),
-                                 QObject::tr("Machine Unsupported"),
-                                 QObject::tr("Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.").arg(name) +"\n\n"+
-                                 QObject::tr("The developers needs a .zip copy of this machine's SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.")
-                                 ,QMessageBox::Ok);
-#endif
+        emit deviceIsUnsupported(info);
         return nullptr;
     }
 
-    MachineInfo info = newInfo();
     // Have a peek first to get the model number.
     PeekProperties(info, propertyfile);
 
-    if (true) {
-        if (s_PRS1ModelInfo.IsBrick(info.modelnumber) && p_profile->cpap->brickWarning()) {
-#ifndef UNITTEST_MODE
-            QApplication::processEvents();
-            QMessageBox::information(QApplication::activeWindow(),
-                                     QObject::tr("Non Data Capable Machine"),
-                                     QString(QObject::tr("Your Philips Respironics CPAP machine (Model %1) is unfortunately not a data capable model.")+"\n\n"+
-                                             QObject::tr("I'm sorry to report that OSCAR can only track hours of use and very basic settings for this machine.")).
-                                     arg(info.modelnumber),QMessageBox::Ok);
-#endif
-            p_profile->cpap->setBrickWarning(false);
-        }
+    if (s_PRS1ModelInfo.IsBrick(info.modelnumber)) {
+        emit deviceReportsUsageOnly(info);
     }
 
     // Which is needed to get the right machine record..
@@ -911,28 +897,9 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
     
     if (!s_PRS1ModelInfo.IsTested(props)) {
         qDebug() << info.modelnumber << "untested";
-        if (p_profile->session->warnOnUntestedMachine() && m->warnOnUntested()) {
-            m->suppressWarnOnUntested();  // don't warn the user more than once
-#ifndef UNITTEST_MODE
-            // TODO: Rework the importer call structure so that this can become an
-            // emit statement to the appropriate import job.
-            QMessageBox::information(QApplication::activeWindow(),
-                                 QObject::tr("Machine Untested"),
-                                 QObject::tr("Your Philips Respironics CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
-                                 QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card and matching Encore .pdf reports to make sure it works with OSCAR.")
-                                 ,QMessageBox::Ok);
-
-#endif
-        }
+        emit deviceIsUntested(info);
     }
 
-    // Mark the machine in the profile as unsupported.
-    if (!s_PRS1ModelInfo.IsSupported(props)) {
-        if (!m->unsupported()) {
-            unsupported(m);
-        }
-    }
-    
     return m;
 }
 
