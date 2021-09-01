@@ -43,6 +43,18 @@ protected:
 };
 
 
+// Loaders and parsers #define IMPORT_CTX and SESSIONID based on their internal data structures.
+#define UNEXPECTED_VALUE(SRC, VALS) { \
+    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
+    qWarning() << SESSIONID << message; \
+    IMPORT_CTX->LogUnexpectedMessage(message); \
+    }
+#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
+#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
+// For more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails.
+#define HEX(SRC) { qWarning() << SESSIONID << QString("%1:%2: %3 = %4").arg(__func__).arg(__LINE__).arg(#SRC).arg((SRC & 0xFF), 2, 16, QChar('0')); }
+
+
 // ProfileImportContext isolates the loader from Profile and its storage.
 class Profile;
 class ProfileImportContext : public ImportContext
