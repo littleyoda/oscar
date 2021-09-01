@@ -11,6 +11,7 @@
 
 #include "../SleepLib/loader_plugins/prs1_loader.h"
 #include "../SleepLib/loader_plugins/prs1_parser.h"
+#include "../SleepLib/importcontext.h"
 
 #define TESTDATA_PATH "./testdata/"
 
@@ -80,6 +81,13 @@ void parseAndEmitSessionYaml(const QString & path)
 {
     qDebug() << path;
 
+    ImportContext* ctx = new ProfileImportContext(p_profile);
+    s_loader->SetContext(ctx);
+
+    ctx->connect(ctx, &ImportContext::importEncounteredUnexpectedData, [=]() {
+        qWarning() << "*** Found unexpected data";
+    });
+
     // This mirrors the functional bits of PRS1Loader::OpenMachine.
     // TODO: Refactor PRS1Loader so that the tests can use the same
     // underlying logic as OpenMachine rather than duplicating it here.
@@ -114,9 +122,8 @@ void parseAndEmitSessionYaml(const QString & path)
         delete session;
         delete task;
     }
-    if (s_loader->m_unexpectedMessages.count() > 0) {
-        qWarning() << "*** Found unexpected data";
-    }
+
+    delete ctx;
 }
 
 void PRS1Tests::testSessionsToYaml()
@@ -263,6 +270,9 @@ void parseAndEmitChunkYaml(const QString & path)
     bool FV = false;  // set this to true to emit family/familyVersion for this path
     qDebug() << path;
 
+    ImportContext* ctx = new ProfileImportContext(p_profile);
+    s_loader->SetContext(ctx);
+
     QHash<QString,QSet<quint64>> written;
     QStringList paths;
     QString propertyfile;
@@ -370,6 +380,8 @@ void parseAndEmitChunkYaml(const QString & path)
             file.close();
         }
     }
+    
+    delete ctx;
     
     p_profile->removeMachine(m);
     delete m;

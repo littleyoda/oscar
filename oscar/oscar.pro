@@ -288,6 +288,7 @@ SOURCES += \
     SleepLib/event.cpp \
     SleepLib/machine.cpp \
     SleepLib/machine_loader.cpp \
+    SleepLib/importcontext.cpp \
     SleepLib/preferences.cpp \
     SleepLib/profiles.cpp \
     SleepLib/schema.cpp \
@@ -375,6 +376,7 @@ HEADERS  += \
     SleepLib/machine.h \
     SleepLib/machine_common.h \
     SleepLib/machine_loader.h \
+    SleepLib/importcontext.h \
     SleepLib/preferences.h \
     SleepLib/profiles.h \
     SleepLib/schema.h \

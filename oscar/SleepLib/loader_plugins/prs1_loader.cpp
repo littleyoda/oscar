@@ -18,6 +18,7 @@
 #include <cmath>
 
 #include "SleepLib/schema.h"
+#include "SleepLib/importcontext.h"
 #include "prs1_loader.h"
 #include "prs1_parser.h"
 #include "SleepLib/session.h"
@@ -53,9 +54,7 @@ QString ts(qint64 msecs)
 // TODO: See the LogUnexpectedMessage TODO about generalizing this for other loaders.
 void PRS1Loader::LogUnexpectedMessage(const QString & message)
 {
-    m_importMutex.lock();
-    m_unexpectedMessages += message;
-    m_importMutex.unlock();
+    m_ctx->LogUnexpectedMessage(message);
 }
 
 
@@ -459,6 +458,7 @@ PRS1Loader::PRS1Loader()
 #endif
 
     m_type = MT_CPAP;
+    m_ctx = nullptr;
 }
 
 PRS1Loader::~PRS1Loader()
@@ -737,9 +737,25 @@ int PRS1Loader::Open(const QString & selectedPath)
     }
 
     // Import each machine, from oldest to newest.
+    // TODO: Loaders should return the set of machines during detection, so that Open() will
+    // open a unique device, instead of surprising the user.
     int c = 0;
     for (auto & machinePath : machines) {
+#if 1
+        // TODO: Move this to the main application once all loaders support contexts and UI signals.
+        if (p_profile == nullptr) {
+            qWarning() << "PRS1Loader::Open() called without a valid p_profile object present";
+            return 0;
+        }
+        ImportUI ui(p_profile);
+        ImportContext* ctx = new ProfileImportContext(p_profile);
+        SetContext(ctx);
+        connect(ctx, &ImportContext::importEncounteredUnexpectedData, &ui, &ImportUI::onUnexpectedData);
+#endif
         c += OpenMachine(machinePath);
+#if 1
+        delete ctx;
+#endif
     }
     return c;
 }
@@ -747,10 +763,7 @@ int PRS1Loader::Open(const QString & selectedPath)
 
 int PRS1Loader::OpenMachine(const QString & path)
 {
-    if (p_profile == nullptr) {
-        qWarning() << "PRS1Loader::OpenMachine() called without a valid p_profile object present";
-        return 0;
-    }
+    Q_ASSERT(m_ctx);
 
     qDebug() << "Opening PRS1 " << path;
     QDir dir(path);
@@ -802,22 +815,6 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     finishAddingSessions();
 
-    if (m_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
-        // Compare this to the list of messages previously seen for this machine
-        // and only alert if there are new ones.
-        QSet<QString> newMessages = m_unexpectedMessages - m->previouslySeenUnexpectedData();
-        if (newMessages.count() > 0) {
-            // TODO: Rework the importer call structure so that this can become an
-            // emit statement to the appropriate import job.
-            QMessageBox::information(QApplication::activeWindow(),
-                                     QObject::tr("Untested Data"),
-                                     QObject::tr("Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.").arg(m->getInfo().model).arg(m->getInfo().modelnumber) +"\n\n"+
-                                     QObject::tr("The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine's SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.")
-                                     ,QMessageBox::Ok);
-            m->previouslySeenUnexpectedData() += newMessages;
-        }
-    }
-    
     return m->unsupported() ? -1 : tasks;
 }
 
@@ -907,7 +904,7 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
     }
 
     // Which is needed to get the right machine record..
-    Machine *m = p_profile->CreateMachine(info);
+    Machine *m = m_ctx->CreateMachineFromInfo(info);
 
     // This time supply the machine object so it can populate machine properties..
     PeekProperties(m->info, propertyfile, m);
@@ -975,7 +972,6 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     sesstasks.clear();
     new_sessions.clear(); // this hash is used by OpenFile
-    m_unexpectedMessages.clear();
 
 
     PRS1Import * task = nullptr;
@@ -983,8 +979,8 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
 
     QDateTime datetime;
 
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
-    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+    qint64 ignoreBefore = m_ctx->IgnoreSessionsOlderThan().toMSecsSinceEpoch()/1000;
+    bool ignoreOldSessions = m_ctx->ShouldIgnoreOldSessions();
     QSet<SessionID> skipped;
 
     // for each p0/p1/p2/etc... folder
@@ -2333,8 +2329,8 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
     // This won't be perfect, since any coalesced chunks starting after midnight of the threshhold
     // date will also be imported, but those should be relatively few, and tolerable imprecision.
     QList<PRS1DataChunk *> coalescedAndFiltered;
-    qint64 ignoreBefore = p_profile->session->ignoreOlderSessionsDate().toMSecsSinceEpoch()/1000;
-    bool ignoreOldSessions = p_profile->session->ignoreOlderSessions();
+    qint64 ignoreBefore = loader->context()->IgnoreSessionsOlderThan().toMSecsSinceEpoch()/1000;
+    bool ignoreOldSessions = loader->context()->ShouldIgnoreOldSessions();
 
     for (auto & chunk : coalesced) {
         if (ignoreOldSessions && chunk->timestamp < ignoreBefore) {

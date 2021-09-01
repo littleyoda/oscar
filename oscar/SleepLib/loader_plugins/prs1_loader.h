@@ -57,6 +57,7 @@ struct PRS1Waveform {
     quint8 sample_format;
 };
 
+class ImportContext;
 
 class PRS1DataChunk;
 class PRS1ParsedEvent;
@@ -178,6 +179,9 @@ class PRS1Loader : public CPAPLoader
   public:
     PRS1Loader();
     virtual ~PRS1Loader();
+    
+    void SetContext(ImportContext* ctx) { m_ctx = ctx; }
+    inline ImportContext* context() { return m_ctx; }
 
     //! \brief Peek into PROP.TXT or properties.txt at given path, and return it as a normalized key/value hash
     bool PeekProperties(const QString & filename, QHash<QString,QString> & props);
@@ -231,7 +235,13 @@ class PRS1Loader : public CPAPLoader
 
     QHash<SessionID, PRS1Import*> sesstasks;
 
+  signals:
+    void deviceReportsUsageOnly(MachineInfo & info);
+    void deviceIsUntested(MachineInfo & info);
+    void deviceIsUnsupported(MachineInfo & info);
+    
   protected:
+    ImportContext* m_ctx;
     QString last;
     QHash<QString, Machine *> PRS1List;
 
@@ -269,13 +279,6 @@ class PRS1Loader : public CPAPLoader
     //! \brief PRS1 Data files can store multiple sessions, so store them in this list for later processing.
     QHash<SessionID, Session *> new_sessions;
 
-    // TODO: This really belongs in a generic location that all loaders can use.
-    // But that will require retooling the overall call structure so that there's
-    // a top-level import job that's managing a specific import. Right now it's
-    // essentially managed by the importCPAP method rather than an object instance
-    // with state.
-    QMutex m_importMutex;
-    QSet<QString> m_unexpectedMessages;
 public:
     void LogUnexpectedMessage(const QString & message);
 };
