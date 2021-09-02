@@ -59,6 +59,7 @@
 #include "checkupdates.h"
 #include "SleepLib/calcs.h"
 #include "SleepLib/progressdialog.h"
+#include "SleepLib/importcontext.h"
 
 #include "reports.h"
 #include "statistics.h"
@@ -721,7 +722,18 @@ int MainWindow::importCPAP(ImportPath import, const QString &message)
     connect(import.loader, SIGNAL(setProgressValue(int)), progdlg, SLOT(setProgressValue(int)));
     connect(progdlg, SIGNAL(abortClicked()), import.loader, SLOT(abortImport()));
 
+    ImportUI importui(p_profile);
+    ImportContext* ctx = new ProfileImportContext(p_profile);
+    import.loader->SetContext(ctx);
+    connect(ctx, &ImportContext::importEncounteredUnexpectedData, &importui, &ImportUI::onUnexpectedData);
+    connect(import.loader, &MachineLoader::deviceReportsUsageOnly, &importui, &ImportUI::onDeviceReportsUsageOnly);
+    connect(import.loader, &MachineLoader::deviceIsUntested, &importui, &ImportUI::onDeviceIsUntested);
+    connect(import.loader, &MachineLoader::deviceIsUnsupported, &importui, &ImportUI::onDeviceIsUnsupported);
+
     int c = import.loader->Open(import.path);
+
+    import.loader->SetContext(nullptr);
+    delete ctx;
 
     if (c > 0) {
         Notify(tr("Imported %1 CPAP session(s) from\n\n%2").arg(c).arg(import.path), tr("Import Success"));

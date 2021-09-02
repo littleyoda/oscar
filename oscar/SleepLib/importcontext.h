@@ -33,9 +33,9 @@ public:
     // TODO: Isolate the Machine object from the loader rather than returning it.
     virtual Machine* CreateMachineFromInfo(const MachineInfo & info) = 0;
 
-protected:
     void FlushUnexpectedMessages();
 
+protected:
     QMutex m_mutex;
     QSet<QString> m_unexpectedMessages;
     MachineInfo m_machineInfo;

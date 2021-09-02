@@ -82,8 +82,6 @@ class MachineLoader: public QObject
 
     virtual void initChannels() {}
 
-    void unsupported(Machine * m);
-
     void addSession(Session * sess);
 
     inline MachineType type() { return m_type; }
@@ -112,7 +110,6 @@ signals:
     void setProgressMax(int max);
     void setProgressValue(int val);
     void updateMessage(QString);
-    void machineUnsupported(Machine *);
 
     void deviceReportsUsageOnly(MachineInfo & info);
     void deviceIsUntested(MachineInfo & info);

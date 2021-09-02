@@ -38,17 +38,6 @@ MachineLoader::~MachineLoader()
 {
 }
 
-void MachineLoader::unsupported(Machine * m)
-{
-    if (m == nullptr) {
-        qCritical("MachineLoader::unsupported(Machine *) called with null machine object");
-        return;
-    }
-
-    m->setUnsupported(true);
-    emit machineUnsupported(m);
-}
-
 void MachineLoader::addSession(Session * sess)
 {
     sessionMutex.lock();

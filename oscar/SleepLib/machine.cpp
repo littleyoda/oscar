@@ -87,7 +87,6 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
 {
     day.clear();
     highest_sessionid = 0;
-    m_unsupported = false;
     m_suppressUntestedWarning = false;
     // TODO: Have the machine write m_suppressUntestedWarning and m_previousUnexpected
     // to XML (along with the current OSCAR version number) so that they persist across

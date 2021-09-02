@@ -733,24 +733,12 @@ int PRS1Loader::Open(const QString & selectedPath)
     // open a unique device, instead of surprising the user.
     int c = 0;
     for (auto & machinePath : machines) {
-#if 1
-        // TODO: Move this to the main application once all loaders support contexts and UI signals.
-        if (p_profile == nullptr) {
-            qWarning() << "PRS1Loader::Open() called without a valid p_profile object present";
+        if (m_ctx == nullptr) {
+            qWarning() << "PRS1Loader::Open() called without a valid m_ctx object present";
             return 0;
         }
-        ImportUI ui(p_profile);
-        ImportContext* ctx = new ProfileImportContext(p_profile);
-        SetContext(ctx);
-        connect(ctx, &ImportContext::importEncounteredUnexpectedData, &ui, &ImportUI::onUnexpectedData);
-        connect(this, &MachineLoader::deviceReportsUsageOnly, &ui, &ImportUI::onDeviceReportsUsageOnly);
-        connect(this, &MachineLoader::deviceIsUntested, &ui, &ImportUI::onDeviceIsUntested);
-        connect(this, &MachineLoader::deviceIsUnsupported, &ui, &ImportUI::onDeviceIsUnsupported);
-#endif
         c += OpenMachine(machinePath);
-#if 1
-        delete ctx;
-#endif
+        m_ctx->FlushUnexpectedMessages();
     }
     return c;
 }
@@ -780,6 +768,7 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     Machine *m = CreateMachineFromProperties(propertyfile);
     if (m == nullptr) {
+        // Device is unsupported.
         return -1;
     }
 
@@ -810,7 +799,7 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     finishAddingSessions();
 
-    return m->unsupported() ? -1 : tasks;
+    return tasks;
 }
 
 
@@ -2506,9 +2495,6 @@ void PRS1Import::ImportWaveforms()
 
 void PRS1Import::run()
 {
-    if (mach->unsupported())
-        return;
-
     if (ParseSession()) {
         SaveSessionToDatabase();
     }

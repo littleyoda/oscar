@@ -177,8 +177,6 @@ class Machine
 
     bool hasModifiedSessions();
 
-    bool unsupported() { return m_unsupported; }
-    void setUnsupported(bool b) { m_unsupported = b; }
     bool warnOnUntested() { return m_suppressUntestedWarning == false; }
     void suppressWarnOnUntested() { m_suppressUntestedWarning = true; }
     QSet<QString> & previouslySeenUnexpectedData() { return m_previousUnexpected; }
@@ -252,7 +250,6 @@ class Machine
 //  Public Data Members follow
     MachineInfo info;
 
-    bool m_unsupported;
     bool m_suppressUntestedWarning;
     QSet<QString> m_previousUnexpected;
 
