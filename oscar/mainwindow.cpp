@@ -999,7 +999,7 @@ void MainWindow::on_action_Import_Data_triggered()
 }
 
 
-QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt)
+QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool alwaysPrompt)
 {
     QList<ImportPath> datacards = detectCPAPCards();
 
@@ -1028,7 +1028,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt)
             infostr = tr("A %1 file structure was located at:").arg(datacards[0].loader->loaderName());
         }
 
-        if (!p_profile->cpap->autoImport()) {
+        if (alwaysPrompt || !p_profile->cpap->autoImport()) {
             QMessageBox mbox(QMessageBox::NoIcon,
                 tr("CPAP Data Located"), infostr+"\n\n"+QDir::toNativeSeparators(datacards[0].path)+"\n\n"+
                 prompt,
@@ -2661,7 +2661,7 @@ void MainWindow::on_mainsplitter_splitterMoved(int, int)
 
 void MainWindow::on_actionCreate_Card_zip_triggered()
 {
-    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to zip this card?"));
+    QList<ImportPath> datacards = selectCPAPDataCards(tr("Would you like to zip this card?"), true);
 
     for (auto & datacard : datacards) {
         QString cardPath = QDir(datacard.path).canonicalPath();

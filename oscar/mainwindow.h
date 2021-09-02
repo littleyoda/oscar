@@ -374,7 +374,7 @@ private:
     QString getMainWindowTitle();
     void importCPAPBackups();
     QList<ImportPath> detectCPAPCards();
-    QList<ImportPath> selectCPAPDataCards(const QString & prompt);
+    QList<ImportPath> selectCPAPDataCards(const QString & prompt, bool alwaysPrompt = false);
     void importCPAPDataCards(const QList<ImportPath> & datacards);
     void addMachineToMenu(Machine* mach, QMenu* menu);
     void purgeDay(MachineType type);
