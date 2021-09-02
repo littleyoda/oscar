@@ -29,6 +29,7 @@
 #endif
 
 class MachineLoader;    // forward
+class ImportContext;
 
 enum DeviceStatus { NEUTRAL, IMPORTING, LIVE, DETECTING };
 
@@ -46,6 +47,9 @@ class MachineLoader: public QObject
   public:
     MachineLoader();
     virtual ~MachineLoader();
+
+    void SetContext(ImportContext* ctx) { m_ctx = ctx; }
+    inline ImportContext* context() { return m_ctx; }
 
     //! \brief Detect if the given path contains a valid folder structure
     virtual bool Detect(const QString & path) = 0;
@@ -110,7 +114,12 @@ signals:
     void updateMessage(QString);
     void machineUnsupported(Machine *);
 
+    void deviceReportsUsageOnly(MachineInfo & info);
+    void deviceIsUntested(MachineInfo & info);
+    void deviceIsUnsupported(MachineInfo & info);
+
 protected:
+    ImportContext* m_ctx;
     void finishAddingSessions();
 
     static QPixmap * genericCPAPPixmap;

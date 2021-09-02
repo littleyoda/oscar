@@ -31,6 +31,7 @@ MachineLoader::MachineLoader() :QObject(nullptr)
     m_abort = false;
     m_type = MT_UNKNOWN;
     m_status = NEUTRAL;
+    m_ctx = nullptr;
 }
 
 MachineLoader::~MachineLoader()

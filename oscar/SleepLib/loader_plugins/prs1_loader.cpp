@@ -51,13 +51,6 @@ QString ts(qint64 msecs)
 }
 
 
-// TODO: See the LogUnexpectedMessage TODO about generalizing this for other loaders.
-void PRS1Loader::LogUnexpectedMessage(const QString & message)
-{
-    m_ctx->LogUnexpectedMessage(message);
-}
-
-
 ChannelID PRS1_Mode = 0;
 ChannelID PRS1_TimedBreath = 0, PRS1_HumidMode = 0, PRS1_TubeTemp = 0;
 ChannelID PRS1_FlexLock = 0, PRS1_TubeLock = 0, PRS1_RampType = 0;
@@ -458,7 +451,6 @@ PRS1Loader::PRS1Loader()
 #endif
 
     m_type = MT_CPAP;
-    m_ctx = nullptr;
 }
 
 PRS1Loader::~PRS1Loader()
@@ -751,9 +743,9 @@ int PRS1Loader::Open(const QString & selectedPath)
         ImportContext* ctx = new ProfileImportContext(p_profile);
         SetContext(ctx);
         connect(ctx, &ImportContext::importEncounteredUnexpectedData, &ui, &ImportUI::onUnexpectedData);
-        connect(this, &PRS1Loader::deviceReportsUsageOnly, &ui, &ImportUI::onDeviceReportsUsageOnly);
-        connect(this, &PRS1Loader::deviceIsUntested, &ui, &ImportUI::onDeviceIsUntested);
-        connect(this, &PRS1Loader::deviceIsUnsupported, &ui, &ImportUI::onDeviceIsUnsupported);
+        connect(this, &MachineLoader::deviceReportsUsageOnly, &ui, &ImportUI::onDeviceReportsUsageOnly);
+        connect(this, &MachineLoader::deviceIsUntested, &ui, &ImportUI::onDeviceIsUntested);
+        connect(this, &MachineLoader::deviceIsUnsupported, &ui, &ImportUI::onDeviceIsUnsupported);
 #endif
         c += OpenMachine(machinePath);
 #if 1
@@ -928,6 +920,7 @@ static QString chunkComparison(const PRS1DataChunk* a, const PRS1DataChunk* b)
 
 void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machine * m)
 {
+    Q_ASSERT(m_ctx);
     SessionID sid;
     long ext;
 
@@ -2718,7 +2711,7 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
                     || (lastchunk->htype != chunk->htype)) {
                 QString message = "*** unexpected change in header data";
                 qWarning() << path << message;
-                LogUnexpectedMessage(message);
+                m_ctx->LogUnexpectedMessage(message);
                 // There used to be error-recovery code here, written before we checked CRCs.
                 // If we ever encounter data with a valid CRC that triggers the above warnings,
                 // we can then revisit how to handle it.
