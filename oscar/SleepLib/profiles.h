@@ -88,11 +88,6 @@ class Profile : public Preferences
 
     QString path() { return p_path; }
 
-        /*! \brief Import Machine Data
-        \param path containing import location
-     */
-    int Import(QString path);
-
     //! \brief Removes a given day from the date, destroying the daylist date record if empty
     bool unlinkDay(Day * day);
 

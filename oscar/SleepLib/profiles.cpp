@@ -877,27 +877,6 @@ Day *Profile::FindDay(QDate date, MachineType type)
 }
 
 
-int Profile::Import(QString path)
-{
-    int c = 0;
-    qDebug() << "Importing " << path;
-    path = path.replace("\\", "/");
-
-    if (path.endsWith("/")) {
-        path.chop(1);
-    }
-
-    QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
-
-    for(auto & loader : loaders) {
-        if (c += loader->Open(path)) {
-            break;
-        }
-    }
-
-    return c;
-}
-
 MachineLoader *GetLoader(QString name)
 {
     QList<MachineLoader *> loaders = GetLoaders();

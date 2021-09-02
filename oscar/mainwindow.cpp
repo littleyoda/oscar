@@ -2432,7 +2432,20 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
             QCoreApplication::processEvents();
         }
         QString name = loader.loaderName();
+        
+        ImportUI importui(p_profile);
+        ImportContext* ctx = new ProfileImportContext(p_profile);
+        loader.SetContext(ctx);
+        connect(ctx, &ImportContext::importEncounteredUnexpectedData, &importui, &ImportUI::onUnexpectedData);
+        connect(&loader, &MachineLoader::deviceReportsUsageOnly, &importui, &ImportUI::onDeviceReportsUsageOnly);
+        connect(&loader, &MachineLoader::deviceIsUntested, &importui, &ImportUI::onDeviceIsUntested);
+        connect(&loader, &MachineLoader::deviceIsUnsupported, &importui, &ImportUI::onDeviceIsUnsupported);
+
         int res = loader.Open(files);
+
+        loader.SetContext(nullptr);
+        delete ctx;
+
         if (size > 1) {
             disconnect(&loader, SIGNAL(setProgressValue(int)), &progress, SLOT(setProgressValue(int)));
             disconnect(&progress, SIGNAL(abortClicked()), &loader, SLOT(abortImport()));
