@@ -16,7 +16,7 @@ class ImportContext : public QObject
 {
     Q_OBJECT
 public:
-    ImportContext() {}
+    ImportContext();
     virtual ~ImportContext();
 
     // Loaders will call this directly. It manages the machine's stored set of previously seen messages
@@ -32,6 +32,12 @@ public:
     
     // TODO: Isolate the Machine object from the loader rather than returning it.
     virtual Machine* CreateMachineFromInfo(const MachineInfo & info) = 0;
+    
+    // TODO: Eventually backup (and rebuild) should be handled invisibly to loaders.
+    virtual QString GetBackupPath();
+
+    virtual bool SessionExists(SessionID sid);
+    virtual Session* CreateSession(SessionID sid);
 
     void FlushUnexpectedMessages();
 

@@ -775,7 +775,7 @@ int PRS1Loader::OpenMachine(const QString & path)
     emit updateMessage(QObject::tr("Backing Up Files..."));
     QCoreApplication::processEvents();
 
-    QString backupPath = m->getBackupPath() + path.section("/", -2);
+    QString backupPath = context()->GetBackupPath() + path.section("/", -2);
 
     if (QDir::cleanPath(path).compare(QDir::cleanPath(backupPath)) != 0) {
         copyPath(path, backupPath);
@@ -785,7 +785,7 @@ int PRS1Loader::OpenMachine(const QString & path)
     QCoreApplication::processEvents();
 
     // Walk through the files and create an import task for each logical session.
-    ScanFiles(paths, sessionid_base, m);
+    ScanFiles(paths, sessionid_base);
 
     int tasks = countTasks();
 
@@ -907,7 +907,7 @@ static QString chunkComparison(const PRS1DataChunk* a, const PRS1DataChunk* b)
 
 }
 
-void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machine * m)
+void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
 {
     Q_ASSERT(m_ctx);
     SessionID sid;
@@ -980,7 +980,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
             // chunks, which might not correspond to the filename. But before we can
             // fix this we need to come up with a reasonably fast way to filter previously
             // imported files without re-reading all of them.
-            if (m->SessionExists(sid)) {
+            if (context()->SessionExists(sid)) {
                 // Skip already imported session
                 qDebug() << path << "session already exists, skipping" << sid;
                 continue;
@@ -1005,7 +1005,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // Should probably check if session already imported has this data missing..
 
                     // Create the group if we see it first..
-                    task = new PRS1Import(this, sid, m, sessionid_base);
+                    task = new PRS1Import(this, sid, sessionid_base);
                     sesstasks[sid] = task;
                     queTask(task);
                 }
@@ -1055,7 +1055,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                     // the first available filename isn't the first session contained in the file.
                     //qDebug() << fi.canonicalFilePath() << "first session is" << chunk_sid << "instead of" << sid;
                 }
-                if (m->SessionExists(chunk_sid)) {
+                if (context()->SessionExists(chunk_sid)) {
                     qDebug() << path << "session already imported, skipping" << sid << chunk_sid;
                     delete chunk;
                     continue;
@@ -1074,7 +1074,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base, Machin
                 if (it != sesstasks.end()) {
                     task = it.value();
                 } else {
-                    task = new PRS1Import(this, chunk_sid, m, sessionid_base);
+                    task = new PRS1Import(this, chunk_sid, sessionid_base);
                     sesstasks[chunk_sid] = task;
                     // save a loop an que this now
                     queTask(task);
@@ -2505,7 +2505,7 @@ bool PRS1Import::ParseSession(void)
 {
     bool ok = false;
     bool save = false;
-    session = new Session(mach, sessionid);
+    session = loader->context()->CreateSession(sessionid);
 
     do {
         if (compliance != nullptr) {
@@ -2639,7 +2639,7 @@ void PRS1Import::SaveSessionToDatabase(void)
 
     // Save is not threadsafe
     loader->saveMutex.lock();
-    session->Store(mach->getDataPath());
+    session->Store(session->machine()->getDataPath());
     loader->saveMutex.unlock();
 
     // Unload them from memory

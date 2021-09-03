@@ -12,6 +12,11 @@
 #include "SleepLib/importcontext.h"
 
 
+ImportContext::ImportContext()
+    : m_machine(nullptr)
+{
+}
+
 ImportContext::~ImportContext()
 {
     FlushUnexpectedMessages();
@@ -36,6 +41,24 @@ void ImportContext::FlushUnexpectedMessages()
         }
     }
     m_unexpectedMessages.clear();
+}
+
+QString ImportContext::GetBackupPath()
+{
+    Q_ASSERT(m_machine);
+    return m_machine->getBackupPath();
+}
+
+bool ImportContext::SessionExists(SessionID sid)
+{
+    Q_ASSERT(m_machine);
+    return m_machine->SessionExists(sid);
+}
+
+Session* ImportContext::CreateSession(SessionID sid)
+{
+    Q_ASSERT(m_machine);
+    return new Session(m_machine, sid);
 }
 
 

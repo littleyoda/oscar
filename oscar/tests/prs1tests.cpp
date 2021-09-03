@@ -103,7 +103,7 @@ void parseAndEmitSessionYaml(const QString & path)
         return;
     }
 
-    s_loader->ScanFiles(paths, sessionid_base, m);
+    s_loader->ScanFiles(paths, sessionid_base);
     
     // Each session now has a PRS1Import object in m_MLtasklist
     QList<ImportTask*>::iterator i;

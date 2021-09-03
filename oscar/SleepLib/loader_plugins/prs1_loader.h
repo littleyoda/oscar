@@ -67,7 +67,7 @@ class PRS1Loader;
 class PRS1Import:public ImportTask
 {
 public:
-    PRS1Import(PRS1Loader * l, SessionID s, Machine * m, int base): loader(l), sessionid(s), mach(m), m_sessionid_base(base) {
+    PRS1Import(PRS1Loader * l, SessionID s, int base): loader(l), sessionid(s), m_sessionid_base(base) {
         summary = nullptr;
         compliance = nullptr;
         session = nullptr;
@@ -117,7 +117,6 @@ protected:
     Session * session;
     PRS1Loader * loader;
     SessionID sessionid;
-    Machine * mach;
     QHash<ChannelID,EventList*> m_importChannels;  // map channel ID to the session's current EventList*
 
     int summary_duration;
@@ -250,7 +249,7 @@ class PRS1Loader : public CPAPLoader
     Machine* CreateMachineFromProperties(QString propertyfile);
 
     //! \brief Scans the given directories for session data and create an import task for each logical session.
-    void ScanFiles(const QStringList & paths, int sessionid_base, Machine * m);
+    void ScanFiles(const QStringList & paths, int sessionid_base);
     
 //    //! \brief Parses "properties.txt" file containing machine information
 //    bool ParseProperties(Machine *m, QString filename);
