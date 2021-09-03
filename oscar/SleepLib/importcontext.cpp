@@ -24,9 +24,9 @@ ImportContext::~ImportContext()
 
 void ImportContext::LogUnexpectedMessage(const QString & message)
 {
-    m_mutex.lock();
+    m_logMutex.lock();
     m_unexpectedMessages += message;
-    m_mutex.unlock();
+    m_logMutex.unlock();
 }
 
 void ImportContext::FlushUnexpectedMessages()
@@ -61,6 +61,51 @@ Session* ImportContext::CreateSession(SessionID sid)
     return new Session(m_machine, sid);
 }
 
+bool ImportContext::AddSession(Session* session)
+{
+    // Make sure the session will be saved.
+    session->SetChanged(true);
+
+    // Update indexes, process waveform and perform flagging.
+    session->UpdateSummaries();
+
+    // Write the session file to disk.
+    bool ok = session->Store(session->machine()->getDataPath());
+    if (!ok) {
+        qWarning() << "Failed to store session" << session->session();
+    }
+
+    // Unload the memory-intensive data now that it's written to disk.
+    session->TrashEvents();
+    
+    // TODO: Remove MachineLoader::addSession once all loaders use this.
+    // Add the session to the database
+    m_sessionMutex.lock();
+    m_sessions[session->session()] = session;
+    m_sessionMutex.unlock();
+
+    return ok;
+}
+
+bool ImportContext::Commit()
+{
+    bool ok = true;
+    
+    // TODO: Remove MachineLoader::finishAddingSessions once all loaders use this.
+    // Using a map specifically so they are inserted in order.
+    for (auto session : m_sessions) {
+        bool added = session->machine()->AddSession(session);
+        if (!added) {
+            qWarning() << "Session" << session->session() << "was not addded";
+            ok = false;
+        }
+    }
+    m_sessions.clear();
+
+    // TODO: Move what we can from finishCPAPImport into here,
+    // e.g. Profile::StoreMachines and Machine::SaveSummaryCache.
+    return ok;
+}
 
 ProfileImportContext::ProfileImportContext(Profile* profile)
     : m_profile(profile)
@@ -80,6 +125,11 @@ QDateTime ProfileImportContext::IgnoreSessionsOlderThan()
 
 Machine* ProfileImportContext::CreateMachineFromInfo(const MachineInfo & info)
 {
+    if (m_machine) {
+        // TODO: Ultimately a context will probably take MachineInfo as a constructor,
+        // once all loaders fully populate MachineInfo prior to import.
+        qWarning() << "ProfileImportContext::CreateMachineFromInfo called more than once for this context!";
+    }
     m_machineInfo = info;
     m_machine = m_profile->CreateMachine(m_machineInfo);
     return m_machine;

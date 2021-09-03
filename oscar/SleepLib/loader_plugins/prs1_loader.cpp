@@ -794,11 +794,6 @@ int PRS1Loader::OpenMachine(const QString & path)
 
     runTasks(AppSetting->multithreading());
 
-    emit updateMessage(QObject::tr("Finishing up..."));
-    QCoreApplication::processEvents();
-
-    finishAddingSessions();
-
     return tasks;
 }
 
@@ -2496,7 +2491,7 @@ void PRS1Import::ImportWaveforms()
 void PRS1Import::run()
 {
     if (ParseSession()) {
-        SaveSessionToDatabase();
+        loader->context()->AddSession(session);
     }
 }
 
@@ -2623,27 +2618,6 @@ QList<PRS1DataChunk *> PRS1Import::ReadWaveformData(QList<QString> & files, cons
     result = CoalesceWaveformChunks(result);
 
     return result;
-}
-
-
-void PRS1Import::SaveSessionToDatabase(void)
-{
-    // Make sure it's saved
-    session->SetChanged(true);
-
-    // Add the session to the database
-    loader->addSession(session);
-
-    // Update indexes, process waveform and perform flagging
-    session->UpdateSummaries();
-
-    // Save is not threadsafe
-    loader->saveMutex.lock();
-    session->Store(session->machine()->getDataPath());
-    loader->saveMutex.unlock();
-
-    // Unload them from memory
-    session->TrashEvents();
 }
 
 

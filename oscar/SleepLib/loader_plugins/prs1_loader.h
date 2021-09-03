@@ -126,8 +126,6 @@ protected:
     CPAPMode importMode(int mode);
     //! \brief Parse all the chunks in a single machine session
     bool ParseSession(void);
-    //! \brief Save parsed session data to the database
-    void SaveSessionToDatabase(void);
 
     //! \brief Cache a single slice from a summary or compliance chunk.
     void AddSlice(qint64 chunk_start, PRS1ParsedEvent* e);

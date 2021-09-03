@@ -732,6 +732,10 @@ int MainWindow::importCPAP(ImportPath import, const QString &message)
 
     int c = import.loader->Open(import.path);
 
+    progdlg->setMessage(QObject::tr("Finishing up..."));
+    QCoreApplication::processEvents();
+    ctx->Commit();
+
     import.loader->SetContext(nullptr);
     delete ctx;
 
@@ -2442,6 +2446,10 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
         connect(&loader, &MachineLoader::deviceIsUnsupported, &importui, &ImportUI::onDeviceIsUnsupported);
 
         int res = loader.Open(files);
+
+        progress.setMessage(QObject::tr("Finishing up..."));
+        QCoreApplication::processEvents();
+        ctx->Commit();
 
         loader.SetContext(nullptr);
         delete ctx;

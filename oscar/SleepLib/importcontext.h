@@ -27,6 +27,10 @@ signals:
     void importEncounteredUnexpectedData(const MachineInfo & info, QSet<QString> & newMessages);
 
 public:
+    // Emit the importEncounteredUnexpectedData signal if there are any new messages and clear the list.
+    // TODO: This will no longer need to be public once a context doesn't get reused between machines.
+    void FlushUnexpectedMessages();
+
     virtual bool ShouldIgnoreOldSessions() { return false; }
     virtual QDateTime IgnoreSessionsOlderThan() { return QDateTime(); }
     
@@ -37,15 +41,25 @@ public:
     virtual QString GetBackupPath();
 
     virtual bool SessionExists(SessionID sid);
+    
+    // Create an in-memory Session object for the importer to fill out.
     virtual Session* CreateSession(SessionID sid);
 
-    void FlushUnexpectedMessages();
+    // Write the session to disk and release its memory, adding it to the queue to be committed.
+    virtual bool AddSession(Session* session);
+    
+    // Update the database to include all the newly added sessions.
+    virtual bool Commit();
 
 protected:
-    QMutex m_mutex;
+    QMutex m_logMutex;
     QSet<QString> m_unexpectedMessages;
+
     MachineInfo m_machineInfo;
     Machine* m_machine;
+
+    QMutex m_sessionMutex;
+    QMap<SessionID, Session *> m_sessions;
 };
 
 
