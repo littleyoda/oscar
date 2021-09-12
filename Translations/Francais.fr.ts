@@ -1442,22 +1442,22 @@
         <location filename="../oscar/mainwindow.cpp" line="2426"/>
         <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>There was a problem opening %1 Data File: %2</source>
-        <translation>Problème d&apos;ouverture %1 du fichier de données : %2</translation>
+        <translation>Un problème est survenu lors de l&apos;ouverture %1 du fichier de données :% 2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2429"/>
         <source>%1 Data Import of %2 file(s) complete</source>
-        <translation>Import de %1 des données de %2 fichiers</translation>
+        <translation>%1 Import de données de %2 fichier(s) terminé</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2431"/>
         <source>%1 Import Partial Success</source>
-        <translation>%1 Import partielememnt réussi</translation>
+        <translation>%1 Import partiellement réussi</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2433"/>
         <source>%1 Data Import complete</source>
-        <translation>Import des données : %1</translation>
+        <translation>%1 Import de données terminé</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2654"/>
@@ -1522,7 +1522,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3167"/>
         <source>Import &amp;Viatom/Wellue Data</source>
-        <translation>Importer des données &amp;Viatom/Wellue</translation>
+        <translation>Import de données &amp;Viatom/Wellue</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3180"/>
@@ -1557,7 +1557,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Purge Current Selected Day</source>
-        <translation>Purger le jour courant sélectionné</translation>
+        <translation>Purger le jour sélectionné</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3335"/>
@@ -1572,7 +1572,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3345"/>
         <source>&amp;Sleep Stage</source>
-        <translation>Phase du &amp;sommeil</translation>
+        <translation>&amp;Stade de sommeil</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3350"/>
@@ -1582,12 +1582,13 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3355"/>
         <source>&amp;All except Notes</source>
-        <translation>Tout s&amp;auf les notes</translation>
+        <translatorcomment>&amp;Tout sauf les Notes</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3360"/>
         <source>All including &amp;Notes</source>
-        <translation>Tout y compris les &amp;notes</translation>
+        <translation>Tout y compris les &amp;Notes</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
@@ -1672,7 +1673,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1083"/>
         <source>Find your CPAP data card</source>
-        <translation>Recherche de la carte des données du PPC</translation>
+        <translation>Trouver votre carte de données PPC</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1444"/>
@@ -1738,7 +1739,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Check For &amp;Updates</source>
-        <translation>&amp;Rechercher des mises à jour</translation>
+        <translation>Rechercher des mises à jour</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1395"/>
@@ -2265,7 +2266,7 @@ corporelle</translation>
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation>Copie écran</translation>
+        <translation>Copie d&apos;écran</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="230"/>
@@ -4569,7 +4570,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="776"/>
         <source>AI</source>
-        <translation>AI</translation>
+        <translation>IA</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="753"/>
@@ -4792,7 +4793,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="215"/>
         <location filename="../oscar/SleepLib/common.cpp" line="864"/>
         <source>Avg</source>
-        <translation>Moy</translation>
+        <translation>Moy.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="834"/>
@@ -4970,7 +4971,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
-        <translation>variations</translation>
+        <translation>varie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
@@ -5444,7 +5445,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../oscar/SleepLib/common.cpp" line="799"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Minute Vent.</source>
-        <translation>Vent. minute.</translation>
+        <translation>Vent. minute</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
@@ -5534,13 +5535,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
         <source>Backing up files...</source>
-        <translation>Sauvegarde des fichiers...</translation>
+        <translation>Sauvegarde des fichiers ...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
         <source>Reading data files...</source>
-        <translation>Lecture des données...</translation>
+        <translation>Lecture des fichiers de données ...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2772"/>
@@ -5557,12 +5558,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
         <source>Snoring event.</source>
-        <translation>Ronflement.</translation>
+        <translation>Ronflement</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
         <source>SN</source>
-        <translation>Nb</translation>
+        <translation>SN</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
@@ -5646,7 +5647,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../oscar/SleepLib/common.cpp" line="798"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
         <source>Target Vent.</source>
-        <translation>Vent. cible.</translation>
+        <translation>Vent. cible</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
@@ -5895,7 +5896,7 @@ Merci de reconstruire les données de PPC</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limit.</source>
-        <translation>Limitation du flux.</translation>
+        <translation>Limitation du flux</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
@@ -6123,7 +6124,7 @@ Début : %2</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
         <source>Machine auto starts by breathing</source>
-        <translation>Mise en marche par respiration</translation>
+        <translation>Démarrage auto par respiration</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
@@ -6377,7 +6378,7 @@ TTIA : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>An apnea reportred by your CPAP machine.</source>
-        <translation>Une apnée détectée par votre respirateur PPC.</translation>
+        <translation>Apnée signalée par votre appareil CPAP.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
@@ -6526,7 +6527,7 @@ TTIA : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
         <source>Humid. Status</source>
-        <translation>État humidificateur</translation>
+        <translation>État humidif.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1119"/>
@@ -7417,8 +7418,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
-        <translatorcomment>Without the while context, it&apos;s diffcult / To be verified</translatorcomment>
-        <translation>Lente</translation>
+        <translation>Doux</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
@@ -7428,17 +7428,17 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>SmartStop</source>
-        <translation>Arrêt graduel</translation>
+        <translation>Smart Stop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Machine auto stops by breathing</source>
-        <translation>Arrêt automatique de la machine pendant la respiration</translation>
+        <translation>Arrêt auto par respiration</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
-        <translation>Arrêt graduel</translation>
+        <translation>Smart Stop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
@@ -7463,12 +7463,12 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
-        <translation>Votre appareil Philips Respironics (Model %1) n&apos;est pas encore été testé.</translation>
+        <translation>Votre machine PPC Resmed (Modèle %1) n&apos;a pas encore été testée</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation>Cet appareil semble assez similaire à d&apos;autres. Il devrait fonctionner, mais les développeurs ont besoin d&apos;une copie zippée la carte SD de cet appareil et du pdf accompagnant le rapport pour vérifier son fonctionnement avec OSCAR.</translation>
+        <translation>Cela semble assez similaire à d&apos;autres machines et devrait fonctionner, mais les développeurs aimeraient une copie .zip de la carte SD de cette machine pour s&apos;assurer qu&apos;elle fonctionne avec OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="524"/>
@@ -7908,7 +7908,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
         <source>Humid. Mode</source>
-        <translation>Mode humid</translation>
+        <translation>Mode humid.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
@@ -7923,23 +7923,23 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2902"/>
         <source>Heated Tube</source>
-        <translation>Tuyau chauffé</translation>
+        <translation>Tuyau chauffant</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
         <source>Tube Temperature</source>
-        <translatorcomment>Température du tube</translatorcomment>
-        <translation>Temperature circuit</translation>
+        <translatorcomment>Température du tuyau</translatorcomment>
+        <translation>Température du tuyau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
         <source>PRS1 Heated Tube Temperature</source>
-        <translation>Température circuit chauffé PRS1</translation>
+        <translation>Température tuyau chauffant PRS1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
         <source>Tube Temp.</source>
-        <translation>Temp. circuit.</translation>
+        <translation>Temp. tuyau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
@@ -8041,7 +8041,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
         <source>model %1</source>
-        <translation>Modèle %1</translation>
+        <translation>modèle %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
@@ -8051,17 +8051,17 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
         <source>unknown model</source>
-        <translation>Modèle inconnu</translation>
+        <translation>modèle inconnu</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
         <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
-        <translation>Désolé mais votre respirateur PPC Philips Respironics (%1) n&apos;est pas encore supporté.</translation>
+        <translation>Désolé, votre appareil PPC Philips Respironics (%1) n&apos;est pas encore pris en charge.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
-        <translation>Les développeurs ont besoin d&apos;une copie zippée la carte SD de cet appareil et du pdf Encore ou Care Orchestrator afin de le fairefonctionner avec OSCAR.</translation>
+        <translation>Les développeurs ont besoin d&apos;une copie .zip de la carte SD de cette machine et des rapports correspondants &quot;Encore&quot; ou &quot;Care Orchestrator&quot; .pdf pour la faire fonctionner avec OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2824"/>
@@ -8152,17 +8152,17 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2924"/>
         <source>Target Time</source>
-        <translation>Heure cible</translation>
+        <translation>Durée cible</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
         <source>PRS1 Humidifier Target Time</source>
-        <translation>Heure cible pour l&apos;humificateur PRS1</translation>
+        <translation>Durée cible de l’humidificateur PRS1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Hum. Tgt Time</source>
-        <translation>h. cible Humidificateur</translation>
+        <translation>Hum. Durée cible</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2933"/>
@@ -8173,17 +8173,17 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
         <source>Mask Resist.</source>
-        <translation>Résist. masque.</translation>
+        <translation>Résist. masque</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
         <source>Hose Diam.</source>
-        <translation>Diamètre tuyau.</translation>
+        <translation>Diamètre tuyau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2951"/>
         <source>Tubing Type Lock</source>
-        <translation>Type de verrou du circuit</translation>
+        <translation>Type de verrou du tuyau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
@@ -8193,7 +8193,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
         <source>Tube Lock</source>
-        <translation>Verrouillage circuit</translation>
+        <translation>Verrouillage tuyau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2960"/>
@@ -8284,7 +8284,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3033"/>
         <source>Timed Insp.</source>
-        <translation>Insp. chronométrée.</translation>
+        <translation>Insp. chronométrée</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
@@ -8299,7 +8299,7 @@ Heures : %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3040"/>
         <source>Auto-Trial Dur.</source>
-        <translation>Durée Auto-Test.</translation>
+        <translation>Durée Auto-Test</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
@@ -8548,17 +8548,17 @@ contextuelle actuelle, supprimez-la, puis affichez à nouveau ce graphique.</tra
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
         <source>SensAwake level</source>
-        <translation>Niveau détection Réveil</translation>
+        <translation>Niveau SensAwake</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>Expiratory Relief</source>
-        <translation>Relief expiration</translation>
+        <translation>Décharge pression expiratoire</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>Expiratory Relief Level</source>
-        <translation>Niveau relief expiration</translation>
+        <translation>Niveau de décharge pression expiratoire</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
@@ -8568,7 +8568,7 @@ contextuelle actuelle, supprimez-la, puis affichez à nouveau ce graphique.</tra
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
-        <translation>Style de sommeil</translation>
+        <translation>Mode sommeil</translation>
     </message>
 </context>
 <context>
@@ -8607,7 +8607,7 @@ contextuelle actuelle, supprimez-la, puis affichez à nouveau ce graphique.</tra
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>This Machine Record cannot be imported in this profile.</source>
-        <translation>Import impossible des données de cet appareil dans ce profil.</translation>
+        <translation>Import impossible des données depuis cet appareil dans ce profil.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>

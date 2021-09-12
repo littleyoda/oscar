@@ -387,7 +387,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1321"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1394"/>
@@ -1013,37 +1013,37 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Purge Current Selected Day</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä nykyinen valittu päivä</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3335"/>
         <source>&amp;CPAP</source>
-        <translation type="unfinished">&amp;CPAP</translation>
+        <translation>&amp;CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3340"/>
         <source>&amp;Oximetry</source>
-        <translation type="unfinished">&amp;Oksimetri</translation>
+        <translation>&amp;Oksimetri</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3345"/>
         <source>&amp;Sleep Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Univaihe</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3350"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Asema</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3355"/>
         <source>&amp;All except Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>K&amp;aikki paitsi muistiinpanot</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3360"/>
         <source>All including &amp;Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaikki mukaa&amp;n lukien muistiinpanot</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3180"/>
@@ -1228,7 +1228,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3167"/>
         <source>Import &amp;Viatom/Wellue Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo &amp;Viatom/Wellue tietoja</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3216"/>
@@ -1426,22 +1426,22 @@
         <location filename="../oscar/mainwindow.cpp" line="2426"/>
         <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>There was a problem opening %1 Data File: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Data-tiedoston: %2 avaamisessa oli ongelma</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2429"/>
         <source>%1 Data Import of %2 file(s) complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 tiedosto(je)n %1 tietojen tuonti valmis</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2431"/>
         <source>%1 Import Partial Success</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tuonti osittain valmis</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2433"/>
         <source>%1 Data Import complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tietojen tuonti valmis</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2632"/>
@@ -1476,7 +1476,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1083"/>
         <source>Find your CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi CPAP-tietojen SD-kortti</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1333"/>
@@ -2173,7 +2173,7 @@
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikakuva</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="135"/>
@@ -5851,17 +5851,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2924"/>
         <source>Target Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tavoiteaika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
         <source>PRS1 Humidifier Target Time</source>
-        <translation type="unfinished"></translation>
+        <translation>PRS1 kostuttimen tavoiteaika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Hum. Tgt Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Kostuttimen tavoiteaika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2933"/>
@@ -6050,27 +6050,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
         <source>model %1</source>
-        <translation type="unfinished"></translation>
+        <translation>malli %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
         <source>DreamStation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>DreamStation 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
         <source>unknown model</source>
-        <translation type="unfinished"></translation>
+        <translation>tuntematon malli</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
         <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pahoittelut, sinun Philips Respironics CPAP-laitetta (%1) ei vielä tueta.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehittelijät tarvitsevat .zip kopion tämän laitteen SD-koritsta ja vastaavat Encore- tai Care Orchestrator .pdf -raportit, jotta se toimii OSCARin kanssa.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
@@ -6895,7 +6895,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limit.</source>
-        <translation>Virtauksen rajoite.</translation>
+        <translation type="unfinished">Virtauksen rajoite</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
@@ -6945,12 +6945,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Apnea</source>
-        <translation type="unfinished"></translation>
+        <translation>Apnea-katkos</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>An apnea reportred by your CPAP machine.</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP-laitteesi raportoi apnea-katkoksen.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
@@ -7594,7 +7594,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/reports.cpp" line="294"/>
         <source>AI=%1 </source>
-        <translation type="unfinished"></translation>
+        <translation>AI=%1 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="362"/>
@@ -7694,12 +7694,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
-        <translation type="unfinished"></translation>
+        <translation>vaihtelee</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
@@ -8053,13 +8053,13 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
         <source>Backing up files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Varmuuskopioi tiedostoja...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
         <source>Reading data files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukee datatiedostoja...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2764"/>
@@ -8098,12 +8098,12 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
         <source>Snoring event.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuorsaustapahtuma.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
         <source>SN</source>
-        <translation type="unfinished"></translation>
+        <translation>SN</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="524"/>
@@ -8158,7 +8158,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="112"/>
         <source>iVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>iVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8311,47 +8311,47 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeä</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Standard</source>
-        <translation type="unfinished">Standardi</translation>
+        <translation>Standardi</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>SmartStop</source>
-        <translation type="unfinished"></translation>
+        <translation>Älykäs pysäytys</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Machine auto stops by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Laite lopettaa automaattisesti hengityksen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Älykäs pysäytys</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Yksinkertainen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
         <source>Advanced</source>
-        <translation type="unfinished">Lisää</translation>
+        <translation>Monipuolinen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinun ResMed CPAP-laitemalliasi (Model %1) ei ole vielä testattu.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se näyttää riittävän samanlaiselta kuin muut koneet, että se voisi toimia, mutta kehittäjät haluavat tämän koneen SD-kortin .zip -kopion varmistaakseen, että se toimii OSCAR:in kanssa.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1200"/>
@@ -8554,12 +8554,12 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Kosteus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
-        <translation type="unfinished"></translation>
+        <translation>Unityyli</translation>
     </message>
 </context>
 <context>
@@ -8593,17 +8593,17 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="204"/>
         <source>Import Error</source>
-        <translation type="unfinished">Tuontivirhe</translation>
+        <translation>Tuontivirhe</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="unfinished">Tämän koneen tietuetta ei voida tuoda tähän profiiliin.</translation>
+        <translation>Tämän koneen tietuetta ei voida tuoda tähän profiiliin.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>The Day records overlap with already existing content.</source>
-        <translation type="unfinished">Päivän tietueet ovat päällekkäisiä jo olemassa oleville tiedoille.</translation>
+        <translation>Päivän tietueet ovat päällekkäisiä jo olemassa oleville tiedoille.</translation>
     </message>
 </context>
 <context>
