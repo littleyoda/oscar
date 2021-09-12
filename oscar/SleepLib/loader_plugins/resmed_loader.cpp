@@ -263,25 +263,13 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
 
     QFile f(path+"/"+RMS9_STR_idfile+"tgt");
 
-    // Abort if this file is dodgy..
-    if (f.exists() ) {
-        if ( !f.open(QIODevice::ReadOnly)) {
-            return MachineInfo();
-        }
-        MachineInfo info = newInfo();
-
-        // Parse # entries into idmap.
-        while (!f.atEnd()) {
-            QString line = f.readLine().trimmed();
-            QHash<QString, QString> hash = parseIdentLine( line, & info );
-        }
-
-        return info;
-    }
-    QFile j(path+"/"+RMS9_STR_idfile+"json");
-    if (j.exists() ) {
+    QFile j(path+"/"+RMS9_STR_idfile+"json");       // Check for AS11 file first, just in case
+    if (j.exists() ) {                              // somebody is reusing an SD card w/o re-formatting
         if ( !j.open(QIODevice::ReadOnly)) {
             return MachineInfo();
+        }
+        if ( f.exists() ) {
+            qDebug() << "Old Ident.tgt file is ignored";
         }
         QByteArray identData = j.readAll();
         j.close();
@@ -300,6 +288,21 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
             }
         }
 
+    }
+    // Abort if this file is dodgy..
+    if (f.exists() ) {
+        if ( !f.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        MachineInfo info = newInfo();
+
+        // Parse # entries into idmap.
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            QHash<QString, QString> hash = parseIdentLine( line, & info );
+        }
+
+        return info;
     }
     // neither filename exists, return empty info
     return MachineInfo();
