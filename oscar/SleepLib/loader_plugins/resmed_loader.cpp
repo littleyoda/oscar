@@ -2881,6 +2881,8 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
                         CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
                     if (sess->checkInside(tt))
                         CA->AddEvent(tt, anno->duration);
+                } else if (anno->text == "SpO2 Desaturation") {    // Used in 28509
+                        continue;                               // ignored for now
                 } else {
                     if (anno->text != "Recording starts") {
                         qDebug() << "Unobserved ResMed annotation field: " << anno->text;
@@ -3239,6 +3241,12 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
 //          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (es.label == "Va") {  // Signal used in 36039... What to do with it???
+            a = nullptr;                // We'll skip it for now
+        } else if (es.label == "AlvMinVent.2s") {  // Signal used in 28509... What to do with it???
+            a = nullptr;                // We'll skip it for now
+        } else if (es.label == "CLRatio.2s") {  // Signal used in 28509... What to do with it???
+            a = nullptr;                // We'll skip it for now
+        } else if (es.label == "TRRatio.2s") {  // Signal used in 28509... What to do with it???
             a = nullptr;                // We'll skip it for now
         } else if (es.label == "") { // What the hell resmed??
         // these empty lables should be changed in resmed_EDFInfo to something unique
