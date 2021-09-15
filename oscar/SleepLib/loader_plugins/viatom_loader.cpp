@@ -208,7 +208,8 @@ void ViatomLoader::EndEventList(ChannelID channel, qint64 /*t*/)
 
 QStringList ViatomLoader::getNameFilter()
 {
-    return QStringList("20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]");
+    // Sometimes the files have a SleepU_ or O2Ring_ prefix.
+    return QStringList("*20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]");
 }
 
 static bool viatom_initialized = false;
