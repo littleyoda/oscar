@@ -2712,8 +2712,28 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         bool ok = z.Open(filename);
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
+            
+            // Very full cards can sometimes take nearly a minute to scan,
+            // so display the progress dialog immediately.
+            prog->setMessage(tr("Calculating size..."));
+            prog->setWindowModality(Qt::ApplicationModal);
+            prog->open();
+
+            // Build the list of files.
+            FileQueue files;
+            bool ok = files.AddDirectory(cardPath, prefix);
+
+            // If there were any unexpected errors scanning the media, add the debug log to the zip.
+            if (!ok) {
+                qWarning() << "Unexpected errors when scanning SD card, adding debug log to zip.";
+                QString debugLog = logger->logFileName();
+                files.AddFile(debugLog, prefix + "-debug.txt");
+            }
+
             prog->setMessage(tr("Creating zip..."));
-            ok = z.AddDirectory(cardPath, prefix, prog);
+
+            // Create the zip.
+            ok = z.AddFiles(files, prog);
             z.Close();
         } else {
             qWarning() << "Unable to open" << filename;
