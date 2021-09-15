@@ -2,7 +2,6 @@
  *
  * Copyright (c) 2019-2020 The OSCAR Team
  * (Initial importer written by dave madden <dhm@mersenne.com>)
- * Modified 02/21/2021 to allow for CheckMe device data files by Crimson Nape <CrimsonNape@gmail.com>
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -280,14 +279,7 @@ bool ViatomFile::ParseHeader()
     int min   = header[7];
     int sec   = header[8];
 
-
-    /*  CN - Changed the if statement to a switch to accomdate additional Viatom/Wellue signatures in the future
-    if (sig != 0x0003) {
-        qDebug() << m_file.fileName() << "invalid signature for Viatom data file" << sig;
-        return false;
-    }
-   CN */
-    switch (sig){
+    switch (sig) {
     case 0x0003:
     case 0x0005:
         break;
@@ -361,8 +353,10 @@ bool ViatomFile::ParseHeader()
         CHECK_VALUE(filesize, m_file.size());
     }
     CHECK_VALUES(m_resolution, 2000, 4000);
-//    CHECK_VALUE(datasize % RECORD_SIZE, 0); CN - Commented out these 2 lines because CheckMe can record odd number of entries
-//    CHECK_VALUE(m_duration % m_record_count, 0);
+    if (true) {  // TODO: We need CheckMe sample data where this doesn't hold true.
+        CHECK_VALUE(datasize % RECORD_SIZE, 0);
+        CHECK_VALUE(m_duration % m_record_count, 0);
+    }
 
     //qDebug().noquote() << m_file.fileName() << ts(m_timestamp) << dur(m_duration * 1000L) << ":" << m_record_count << "records @" << m_resolution << "ms";
 
@@ -374,22 +368,25 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
     QByteArray data = m_file.readAll();
     QDataStream in(data);
     in.setByteOrder(QDataStream::LittleEndian);
-    int iCheckMeAdj; // Allows for an odd number in the CheckMe  duration/# of records return
+
     QList<ViatomFile::Record> records;
+    
     // Read all Pulse, SPO2 and Motion data
     do {
         ViatomFile::Record rec;
         in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec.vibration;
-        CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF); //If it doesn't have one of these 2 values, it's bad
-        if (rec.vibration == 0x40) rec.vibration = 0x80; //0x040 (64) or 0x80 (128) when vibration is triggered
-        CHECK_VALUES(rec.vibration, 0, 0x80);  // 0x80 (128) when vibration is triggered
+        CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF);
+        if (rec.vibration) {
+            CHECK_VALUES(rec.vibration, 0x40, 0x80);  // 0x40 or 0x80 when vibration is triggered
+        }
+        // Invalid readings indicate any interruption in the measurements, whether
+        // transitory (e.g. due to movement) or when the device is removed at the end of a session.
         if (rec.oximetry_invalid == 0xFF) {
             CHECK_VALUE(rec.spo2, 0xFF);
-            CHECK_VALUE(rec.hr, 0xFF);  // if all 3 have 0xFF, then end of data
+            CHECK_VALUE(rec.hr, 0xFF);
         }
         records.append(rec);
-     } while (records.size() < m_record_count); // CN Changed to allow for an incomlpete record values
-// CN   } while (!in.atEnd());
+    } while (records.size() < m_record_count);
 
     // It turns out 2s files are actually just double-reported samples!
     if (m_resolution == 2000) {
@@ -416,11 +413,14 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
             records = dedup;
         }
     }
+    /* TODO: Test against CheckMe sample data
+    int iCheckMeAdj; // Allows for an odd number in the CheckMe  duration/# of records return
     iCheckMeAdj = duration() / records.size();
     if(iCheckMeAdj == 3) iCheckMeAdj = 4; // CN - Sanity check for CheckMe devices since their files do not always terminate on an even number.
 
     CHECK_VALUE(iCheckMeAdj, 4);  // Crimson Nape - Changed to accomadate the CheckMe data files.
-    //    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
+    */
+    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
 
     return records;
 }
