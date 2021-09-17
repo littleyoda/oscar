@@ -304,6 +304,20 @@ bool ViatomFile::ParseHeader()
     // starting timestamp). Technically these should probably be square charts, but
     // the code currently forces them to be non-square.
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
+
+    QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
+    QDateTime filename_timestamp = QDateTime::fromString(date_string, "yyyyMMddHHmmss");
+    if (filename_timestamp.isValid()) {
+        if (filename_timestamp != data_timestamp) {
+            // TODO: Once there's a better/easier way to adjust session times within OSCAR, we can remove the below.
+            qDebug() << m_file.fileName() << "Using filename timestamp" << filename_timestamp.toString("yyyy-MM-dd HH:mm:ss")
+                     << "instead of header timestamp" << data_timestamp.toString("yyyy-MM-dd HH:mm:ss");
+            data_timestamp = filename_timestamp;
+        }
+    } else {
+        qWarning() << m_file.fileName() << "invalid timestamp in Viatom filename";
+    }
+
     m_timestamp = data_timestamp.toMSecsSinceEpoch();
     m_sessionid = m_timestamp / 1000L;
 
