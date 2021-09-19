@@ -363,6 +363,8 @@ void NewProfile::edit(const QString name)
     ui->untreatedAHIEdit->setValue(profile->cpap->untreatedAHI());
     ui->cpapModeCombo->setCurrentIndex((int)profile->cpap->mode());
 
+    on_cpapModeCombo_activated(profile->cpap->mode());
+
     ui->doctorNameEdit->setText(profile->doctor->name());
     ui->doctorPracticeEdit->setText(profile->doctor->practiceName());
     ui->doctorPhoneEdit->setText(profile->doctor->phone());

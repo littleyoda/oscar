@@ -50,6 +50,7 @@ class CheckUpdates : public QMainWindow
     QString msg;                // Message to show to user
     bool msgIsReady = false;    // Message is ready to be displayed
     bool showIfCurrent = false; // show a message if running current release
+    bool showTestVersion = false; // Show message if test version is available
     QProgressDialog * checkingBox;// Looking for updates message
 
     QNetworkReply *reply;
