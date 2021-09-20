@@ -237,7 +237,11 @@ void ViatomLoader::EndEventList(ChannelID channel, qint64 /*t*/)
 QStringList ViatomLoader::getNameFilter()
 {
     // Sometimes the files have a SleepU_ or O2Ring_ prefix.
-    return QStringList("*20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]");
+    // Sometimes they have punctuation in the timestamp.
+    // Note that ":" is not allowed on macOS, so Mac users will need to rename their files in order to select and import them.
+    return QStringList({"*20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]",
+                        "*20[0-5][0-9]-[01][0-9]-[0-3][0-9] [012][0-9]:[0-5][0-9]:[0-5][0-9]"
+    });
 }
 
 static bool viatom_initialized = false;
@@ -309,7 +313,11 @@ bool ViatomFile::ParseHeader()
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
 
     QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
-    QDateTime filename_timestamp = QDateTime::fromString(date_string, "yyyyMMddHHmmss");
+    QString format_string = "yyyyMMddHHmmss";
+    if (date_string.contains(":")) {
+        format_string = "yyyy-MM-dd HH:mm:ss";
+    }
+    QDateTime filename_timestamp = QDateTime::fromString(date_string, format_string);
     if (filename_timestamp.isValid()) {
         if (filename_timestamp != data_timestamp) {
             // TODO: Once there's a better/easier way to adjust session times within OSCAR, we can remove the below.
