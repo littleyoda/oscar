@@ -2474,6 +2474,7 @@ void Daily::on_ZombieMeter_valueChanged(int action)
     }
     journal->settings[Journal_ZombieMeter]=ui->ZombieMeter->value();
     journal->SetChanged(true);
+    mainwin->updateOverview();
 }
 
 void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
@@ -2552,6 +2553,7 @@ void Daily::on_weightSpinBox_editingFinished()
         if (g) g->setDay(nullptr);
     }
     journal->SetChanged(true);
+    mainwin->updateOverview();
 }
 
 void Daily::on_ouncesSpinBox_valueChanged(int arg1)

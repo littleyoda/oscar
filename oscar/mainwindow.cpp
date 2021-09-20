@@ -746,6 +746,11 @@ int MainWindow::importCPAP(ImportPath import, const QString &message)
     return c;
 }
 
+void MainWindow::updateOverview()
+{
+    if (overview)
+        overview->ReloadGraphs();
+}
 void MainWindow::finishCPAPImport()
 {
     if (daily)
