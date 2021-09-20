@@ -22,6 +22,16 @@
 #include "viatom_loader.h"
 #include "SleepLib/machine.h"
 
+// TODO: Merge this with PRS1 macros and generalize for all loaders.
+#define SESSIONID m_session->session()
+#define UNEXPECTED_VALUE(SRC, VALS) { \
+    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
+    qWarning() << SESSIONID << message; \
+    s_unexpectedMessages += message; \
+    }
+#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
+#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
+// for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
 static QSet<QString> s_unexpectedMessages;
 
 bool
@@ -157,8 +167,27 @@ Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
             EndEventList(OXI_Pulse, time_ms);
             EndEventList(OXI_SPO2, time_ms);
         } else {
+            // Viatom advertises a range of 30 - 250 bpm.
+            if (rec.hr < 30 || rec.hr > 250) {
+                UNEXPECTED_VALUE(rec.hr, "30-250");
+            }
             AddEvent(OXI_Pulse, time_ms, rec.hr);
-            AddEvent(OXI_SPO2, time_ms, rec.spo2);
+
+            if (rec.spo2 == 0xFF) {
+                // When the readings fall below 61%, Viatom devices record 0xFF for SpO2.
+                // The official software discards these readings.
+                // TODO: Consider whether to import these as 60% since they reflect hypoxia.
+                EndEventList(OXI_SPO2, time_ms);
+                //qDebug() << "<61% at" << QDateTime::fromMSecsSinceEpoch(time_ms);
+            } else {
+                // Viatom advertises (and graphs) a range of 70% - 99%, but apparently records down to 61%.
+                // The official software graphs 61%-70% as 70%.
+                // TODO: Consider whether we should import 61%-70% as 70% to match the official reports.
+                if (rec.spo2 < 61 || rec.spo2 > 99) {
+                    UNEXPECTED_VALUE(rec.spo2, "61-99%");
+                }
+                AddEvent(OXI_SPO2, time_ms, rec.spo2);
+            }
         }
         AddEvent(POS_Movement, time_ms, rec.motion);
         time_ms += m_step;
@@ -227,35 +256,8 @@ ViatomLoader::Register()
 
 // ===============================================================================================
 
-/*
-static QString ts(qint64 msecs)
-{
-    // TODO: make this UTC so that tests don't vary by where they're run
-    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
-}
-
-static QString dur(qint64 msecs)
-{
-    qint64 s = msecs / 1000L;
-    int h = s / 3600; s -= h * 3600;
-    int m = s / 60; s -= m * 60;
-    return QString("%1:%2:%3")
-        .arg(h, 2, 10, QChar('0'))
-        .arg(m, 2, 10, QChar('0'))
-        .arg(s, 2, 10, QChar('0'));
-}
-*/
-
-// TODO: Merge this with PRS1 macros and generalize for all loaders.
-#define UNEXPECTED_VALUE(SRC, VALS) { \
-    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
-    qWarning() << this->m_sessionid << message; \
-    s_unexpectedMessages += message; \
-    }
-#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
-#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
-// for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
-
+#undef SESSIONID
+#define SESSIONID this->m_sessionid
 
 ViatomFile::ViatomFile(QFile & file) : m_file(file)
 {
@@ -341,7 +343,7 @@ bool ViatomFile::ParseHeader()
     CHECK_VALUE(header[27], 0);
     CHECK_VALUE(header[28], 0);
     CHECK_VALUE(header[29], 0);
-    CHECK_VALUE(header[30], 0);
+    //CHECK_VALUE(header[30], 0);  // average pulse rate (when nonzero)
     CHECK_VALUE(header[31], 0);
     CHECK_VALUE(header[32], 0);
     CHECK_VALUE(header[33], 0);
