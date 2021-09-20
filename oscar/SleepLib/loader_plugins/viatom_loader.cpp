@@ -290,6 +290,7 @@ bool ViatomFile::ParseHeader()
         return false;
         break;
     }
+    CHECK_VALUE(sig, 3);  // We have only a single sample of 5, without a corresponding PDF. We need more samples.
 
     if ((year < 2015 || year > 2059) || (month < 1 || month > 12) || (day < 1 || day > 31) ||
         (hour > 23) || (min > 59) || (sec > 59)) {
@@ -339,7 +340,7 @@ bool ViatomFile::ParseHeader()
     //int time_under_90pct = header[22] | (header[23] << 8);  // in seconds
     //int events_under_90pct = header[24];  // number of distinct events
     //float o2_score = header[25] * 0.1;
-    CHECK_VALUE(header[26], 0);
+    CHECK_VALUES(header[26], 0, 4);  // 4 has been seen only once
     CHECK_VALUE(header[27], 0);
     CHECK_VALUE(header[28], 0);
     CHECK_VALUE(header[29], 0);
