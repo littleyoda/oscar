@@ -1374,7 +1374,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 } else if (mod >= 3) {  // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
                                         // 4,5 are S/T types...
                     mode = MODE_BILEVEL_FIXED;
-                } else if ((mod == 2)) {
+                } else if (mod == 2) {
                     if ( AS_eleven )
                         mode = MODE_APAP; 
                     else
