@@ -8147,12 +8147,12 @@ Gaarne gegevens opnieuw inlezen</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
         <source>Response</source>
-        <translation type="unfinished"></translation>
+        <translation>Reactie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
         <source>Patient View</source>
-        <translation type="unfinished"></translation>
+        <translation>Patiënt weergave</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
@@ -8621,17 +8621,17 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
         <source>SensAwake level</source>
-        <translation type="unfinished"></translation>
+        <translation>SensAwake niveau</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>Expiratory Relief</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitademings hulp</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>Expiratory Relief Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitademings hulp instelling</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>

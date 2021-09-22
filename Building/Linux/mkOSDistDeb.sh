@@ -1,7 +1,24 @@
 #! /bin/bash
-# First parameter names distribution and release number
-# eg Debian10 Ubuntu18 RasPiOS
+# No parameter is not required
+# This script will identify the distribution and release version
 #
+
+function getOS () {
+  rel=$(lsb_release -r | awk '{print $2}')
+  os=$(lsb_release -i | awk '{print $3}')
+  tmp2=${os:0:3}
+  echo "tmp2 = '$tmp2'"
+  if [ "$tmp2" = "Ubu" ] ; then
+    OSNAME=$os${rel:0:2}
+  elif [ "$tmp2" = "Deb" ];then
+    OSNAME=$os$rel
+  elif [ "$tmp2" = "Ras" ];then
+    OSNAME="RasPiOS"
+  else
+    OSNAME="unknown"
+  fi
+}
+
 function getPkg () {
     unset PKGNAME
     unset PKGVERS
@@ -59,19 +76,25 @@ temp_folder="/home/$USER/tmp_deb_${appli_name}/"
 # destination folder in the .deb file
 dest_folder="/usr/"
 
-# the .deb file mustn't exist 
+# the .deb file mustn't exist
 archi_tmp=$(lscpu | grep -i architecture | awk -F: {'print $2'} | tr -d " ")
 if [ "$archi_tmp" = "x86_64" ];then
     archi="amd64"
 else
     archi="unknown"
 fi
-deb_file="${appli_name}_${VERSION}-${ITERATION}_$archi.deb"
+
+# detection of the OS with version for Ubuntu
+getOS
+echo "osname='$OSNAME'"
+
+#deb_file="${appli_name}_${VERSION}-${ITERATION}_$archi.deb"
+deb_file="${appli_name}_${VERSION}-${OSNAME}_$archi.deb"
 
 # if deb file exists, fatal error
 if [ -f "./$deb_file" ]; then
     echo "destination file (./$deb_file) exists. fatal error"
-    exit 
+    exit
 fi
 
 # retrieve packages version for the dependencies
@@ -160,7 +183,7 @@ fpm --input-type dir --output-type deb  \
     --after-install ${post_inst}   \
     --before-remove ${pre_rem}   \
     --after-remove ${post_rem} \
-    --name ${appli_name} --version ${VERSION} --iteration ${ITERATION} \
+    --name ${appli_name} --version ${VERSION} --iteration ${OSNAME} \
     --category misc               \
     --deb-priority optional \
     --maintainer " -- oscar-team.org <oscar@oscar-team.org>"   \

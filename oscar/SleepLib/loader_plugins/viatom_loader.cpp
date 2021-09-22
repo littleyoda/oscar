@@ -2,7 +2,6 @@
  *
  * Copyright (c) 2019-2020 The OSCAR Team
  * (Initial importer written by dave madden <dhm@mersenne.com>)
- * Modified 02/21/2021 to allow for CheckMe device data files by Crimson Nape <CrimsonNape@gmail.com>
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -23,6 +22,16 @@
 #include "viatom_loader.h"
 #include "SleepLib/machine.h"
 
+// TODO: Merge this with PRS1 macros and generalize for all loaders.
+#define SESSIONID m_session->session()
+#define UNEXPECTED_VALUE(SRC, VALS) { \
+    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
+    qWarning() << SESSIONID << message; \
+    s_unexpectedMessages += message; \
+    }
+#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
+#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
+// for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
 static QSet<QString> s_unexpectedMessages;
 
 bool
@@ -158,8 +167,27 @@ Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
             EndEventList(OXI_Pulse, time_ms);
             EndEventList(OXI_SPO2, time_ms);
         } else {
+            // Viatom advertises a range of 30 - 250 bpm.
+            if (rec.hr < 30 || rec.hr > 250) {
+                UNEXPECTED_VALUE(rec.hr, "30-250");
+            }
             AddEvent(OXI_Pulse, time_ms, rec.hr);
-            AddEvent(OXI_SPO2, time_ms, rec.spo2);
+
+            if (rec.spo2 == 0xFF) {
+                // When the readings fall below 61%, Viatom devices record 0xFF for SpO2.
+                // The official software discards these readings.
+                // TODO: Consider whether to import these as 60% since they reflect hypoxia.
+                EndEventList(OXI_SPO2, time_ms);
+                //qDebug() << "<61% at" << QDateTime::fromMSecsSinceEpoch(time_ms);
+            } else {
+                // Viatom advertises (and graphs) a range of 70% - 99%, but apparently records down to 61%.
+                // The official software graphs 61%-70% as 70%.
+                // TODO: Consider whether we should import 61%-70% as 70% to match the official reports.
+                if (rec.spo2 < 61 || rec.spo2 > 99) {
+                    UNEXPECTED_VALUE(rec.spo2, "61-99%");
+                }
+                AddEvent(OXI_SPO2, time_ms, rec.spo2);
+            }
         }
         AddEvent(POS_Movement, time_ms, rec.motion);
         time_ms += m_step;
@@ -208,7 +236,12 @@ void ViatomLoader::EndEventList(ChannelID channel, qint64 /*t*/)
 
 QStringList ViatomLoader::getNameFilter()
 {
-    return QStringList("20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]");
+    // Sometimes the files have a SleepU_ or O2Ring_ prefix.
+    // Sometimes they have punctuation in the timestamp.
+    // Note that ":" is not allowed on macOS, so Mac users will need to rename their files in order to select and import them.
+    return QStringList({"*20[0-5][0-9][01][0-9][0-3][0-9][012][0-9][0-5][0-9][0-5][0-9]",
+                        "*20[0-5][0-9]-[01][0-9]-[0-3][0-9] [012][0-9]:[0-5][0-9]:[0-5][0-9]"
+    });
 }
 
 static bool viatom_initialized = false;
@@ -227,35 +260,8 @@ ViatomLoader::Register()
 
 // ===============================================================================================
 
-/*
-static QString ts(qint64 msecs)
-{
-    // TODO: make this UTC so that tests don't vary by where they're run
-    return QDateTime::fromMSecsSinceEpoch(msecs).toString(Qt::ISODate);
-}
-
-static QString dur(qint64 msecs)
-{
-    qint64 s = msecs / 1000L;
-    int h = s / 3600; s -= h * 3600;
-    int m = s / 60; s -= m * 60;
-    return QString("%1:%2:%3")
-        .arg(h, 2, 10, QChar('0'))
-        .arg(m, 2, 10, QChar('0'))
-        .arg(s, 2, 10, QChar('0'));
-}
-*/
-
-// TODO: Merge this with PRS1 macros and generalize for all loaders.
-#define UNEXPECTED_VALUE(SRC, VALS) { \
-    QString message = QString("%1:%2: %3 = %4 != %5").arg(__func__).arg(__LINE__).arg(#SRC).arg(SRC).arg(VALS); \
-    qWarning() << this->m_sessionid << message; \
-    s_unexpectedMessages += message; \
-    }
-#define CHECK_VALUE(SRC, VAL) if ((SRC) != (VAL)) UNEXPECTED_VALUE(SRC, VAL)
-#define CHECK_VALUES(SRC, VAL1, VAL2) if ((SRC) != (VAL1) && (SRC) != (VAL2)) UNEXPECTED_VALUE(SRC, #VAL1 " or " #VAL2)
-// for more than 2 values, just write the test manually and use UNEXPECTED_VALUE if it fails
-
+#undef SESSIONID
+#define SESSIONID this->m_sessionid
 
 ViatomFile::ViatomFile(QFile & file) : m_file(file)
 {
@@ -279,14 +285,7 @@ bool ViatomFile::ParseHeader()
     int min   = header[7];
     int sec   = header[8];
 
-
-    /*  CN - Changed the if statement to a switch to accomdate additional Viatom/Wellue signatures in the future
-    if (sig != 0x0003) {
-        qDebug() << m_file.fileName() << "invalid signature for Viatom data file" << sig;
-        return false;
-    }
-   CN */
-    switch (sig){
+    switch (sig) {
     case 0x0003:
     case 0x0005:
         break;
@@ -295,6 +294,7 @@ bool ViatomFile::ParseHeader()
         return false;
         break;
     }
+    CHECK_VALUE(sig, 3);  // We have only a single sample of 5, without a corresponding PDF. We need more samples.
 
     if ((year < 2015 || year > 2059) || (month < 1 || month > 12) || (day < 1 || day > 31) ||
         (hour > 23) || (min > 59) || (sec > 59)) {
@@ -311,6 +311,24 @@ bool ViatomFile::ParseHeader()
     // starting timestamp). Technically these should probably be square charts, but
     // the code currently forces them to be non-square.
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
+
+    QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
+    QString format_string = "yyyyMMddHHmmss";
+    if (date_string.contains(":")) {
+        format_string = "yyyy-MM-dd HH:mm:ss";
+    }
+    QDateTime filename_timestamp = QDateTime::fromString(date_string, format_string);
+    if (filename_timestamp.isValid()) {
+        if (filename_timestamp != data_timestamp) {
+            // TODO: Once there's a better/easier way to adjust session times within OSCAR, we can remove the below.
+            qDebug() << m_file.fileName() << "Using filename timestamp" << filename_timestamp.toString("yyyy-MM-dd HH:mm:ss")
+                     << "instead of header timestamp" << data_timestamp.toString("yyyy-MM-dd HH:mm:ss");
+            data_timestamp = filename_timestamp;
+        }
+    } else {
+        qWarning() << m_file.fileName() << "invalid timestamp in Viatom filename";
+    }
+
     m_timestamp = data_timestamp.toMSecsSinceEpoch();
     m_sessionid = m_timestamp / 1000L;
 
@@ -330,11 +348,11 @@ bool ViatomFile::ParseHeader()
     //int time_under_90pct = header[22] | (header[23] << 8);  // in seconds
     //int events_under_90pct = header[24];  // number of distinct events
     //float o2_score = header[25] * 0.1;
-    CHECK_VALUE(header[26], 0);
+    CHECK_VALUES(header[26], 0, 4);  // 4 has been seen only once
     CHECK_VALUE(header[27], 0);
     CHECK_VALUE(header[28], 0);
     CHECK_VALUE(header[29], 0);
-    CHECK_VALUE(header[30], 0);
+    //CHECK_VALUE(header[30], 0);  // average pulse rate (when nonzero)
     CHECK_VALUE(header[31], 0);
     CHECK_VALUE(header[32], 0);
     CHECK_VALUE(header[33], 0);
@@ -360,8 +378,10 @@ bool ViatomFile::ParseHeader()
         CHECK_VALUE(filesize, m_file.size());
     }
     CHECK_VALUES(m_resolution, 2000, 4000);
-//    CHECK_VALUE(datasize % RECORD_SIZE, 0); CN - Commented out these 2 lines because CheckMe can record odd number of entries
-//    CHECK_VALUE(m_duration % m_record_count, 0);
+    if (true) {  // TODO: We need CheckMe sample data where this doesn't hold true.
+        CHECK_VALUE(datasize % RECORD_SIZE, 0);
+        CHECK_VALUE(m_duration % m_record_count, 0);
+    }
 
     //qDebug().noquote() << m_file.fileName() << ts(m_timestamp) << dur(m_duration * 1000L) << ":" << m_record_count << "records @" << m_resolution << "ms";
 
@@ -373,22 +393,25 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
     QByteArray data = m_file.readAll();
     QDataStream in(data);
     in.setByteOrder(QDataStream::LittleEndian);
-    int iCheckMeAdj; // Allows for an odd number in the CheckMe  duration/# of records return
+
     QList<ViatomFile::Record> records;
+    
     // Read all Pulse, SPO2 and Motion data
     do {
         ViatomFile::Record rec;
         in >> rec.spo2 >> rec.hr >> rec.oximetry_invalid >> rec.motion >> rec.vibration;
-        CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF); //If it doesn't have one of these 2 values, it's bad
-        if (rec.vibration == 0x40) rec.vibration = 0x80; //0x040 (64) or 0x80 (128) when vibration is triggered
-        CHECK_VALUES(rec.vibration, 0, 0x80);  // 0x80 (128) when vibration is triggered
+        CHECK_VALUES(rec.oximetry_invalid, 0, 0xFF);
+        if (rec.vibration) {
+            CHECK_VALUES(rec.vibration, 0x40, 0x80);  // 0x40 or 0x80 when vibration is triggered
+        }
+        // Invalid readings indicate any interruption in the measurements, whether
+        // transitory (e.g. due to movement) or when the device is removed at the end of a session.
         if (rec.oximetry_invalid == 0xFF) {
             CHECK_VALUE(rec.spo2, 0xFF);
-            CHECK_VALUE(rec.hr, 0xFF);  // if all 3 have 0xFF, then end of data
+            CHECK_VALUE(rec.hr, 0xFF);
         }
         records.append(rec);
-     } while (records.size() < m_record_count); // CN Changed to allow for an incomlpete record values
-// CN   } while (!in.atEnd());
+    } while (records.size() < m_record_count);
 
     // It turns out 2s files are actually just double-reported samples!
     if (m_resolution == 2000) {
@@ -415,11 +438,14 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
             records = dedup;
         }
     }
+    /* TODO: Test against CheckMe sample data
+    int iCheckMeAdj; // Allows for an odd number in the CheckMe  duration/# of records return
     iCheckMeAdj = duration() / records.size();
     if(iCheckMeAdj == 3) iCheckMeAdj = 4; // CN - Sanity check for CheckMe devices since their files do not always terminate on an even number.
 
     CHECK_VALUE(iCheckMeAdj, 4);  // Crimson Nape - Changed to accomadate the CheckMe data files.
-    //    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
+    */
+    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
 
     return records;
 }

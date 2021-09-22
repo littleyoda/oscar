@@ -121,7 +121,7 @@
     <message>
         <location filename="../oscar/checkupdates.cpp" line="240"/>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Caut versiuni mai noi ale programului OSCAR</translation>
     </message>
 </context>
 <context>
@@ -342,7 +342,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1278"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Lipsesc setarile Mod si Presiune; se afiseaza ziua de ieri)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2384"/>
@@ -393,7 +393,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1321"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1394"/>
@@ -1036,37 +1036,37 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Purge Current Selected Day</source>
-        <translation type="unfinished"></translation>
+        <translation>Sterge ziua curenta selectata</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3335"/>
         <source>&amp;CPAP</source>
-        <translation type="unfinished">&amp;CPAP</translation>
+        <translation>&amp;CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3340"/>
         <source>&amp;Oximetry</source>
-        <translation type="unfinished">&amp;Oximetrie</translation>
+        <translation>&amp;Oximetrie</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3345"/>
         <source>&amp;Sleep Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Stadiu &amp;Somn</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3350"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pozitie</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3355"/>
         <source>&amp;All except Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate cu excepti&amp;A Notes</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3360"/>
         <source>All including &amp;Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate inclusiv &amp;Notes</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3180"/>
@@ -1091,7 +1091,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3245"/>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Creaza arhiva ZIP cu log-urile de diagnostic ale OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3250"/>
@@ -1141,12 +1141,12 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3314"/>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Arata date personale</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Cautare &amp;Updates</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2956"/>
@@ -1241,7 +1241,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3167"/>
         <source>Import &amp;Viatom/Wellue Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa Date din aparatul &amp;Viatom/Wellue</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3216"/>
@@ -1413,7 +1413,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1083"/>
         <source>Find your CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>Gasiti-va cardul de date CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1142"/>
@@ -1469,22 +1469,22 @@
         <location filename="../oscar/mainwindow.cpp" line="2426"/>
         <location filename="../oscar/mainwindow.cpp" line="2430"/>
         <source>There was a problem opening %1 Data File: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>A aparut o problema la deschiderea %1 fisier date: %2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2429"/>
         <source>%1 Data Import of %2 file(s) complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Import Date din %2 fisier(e) complet</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2431"/>
         <source>%1 Import Partial Success</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Import Partial Succes</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2433"/>
         <source>%1 Data Import complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Import Date complet</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2632"/>
@@ -1550,12 +1550,12 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1333"/>
         <source>Please open a profile first.</source>
-        <translation>Va rugam deschideti mai intai un Profil.</translation>
+        <translation>Va rugam deschideti mai intai un Profil pacient.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1395"/>
         <source>Check for updates not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Cautarea actualizarilor nu e implementata</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1444"/>
@@ -1640,7 +1640,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="565"/>
         <source>%1 (Profile: %2)</source>
-        <translation>%1 (Profil: %2)</translation>
+        <translation>%1 (Pacient: %2)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="727"/>
@@ -1687,7 +1687,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="977"/>
         <source>No profile has been selected for Import.</source>
-        <translation>Nu a fost selectat niciun Profil pentru Import.</translation>
+        <translation>Nu a fost selectat niciun Profil pacient pentru Import.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="985"/>
@@ -1798,7 +1798,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="14"/>
         <source>Edit User Profile</source>
-        <translation>Editeaza profil utilizator</translation>
+        <translation>Editeaza profil pacient</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="70"/>
@@ -1818,7 +1818,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Password Protect Profile</source>
-        <translation>Parola de protectie a Profilului</translation>
+        <translation>Parola de protectie a Profilului pacientului</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="182"/>
@@ -1853,7 +1853,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="152"/>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Parola e foarte slaba si nu e recomandata daca se doreste securizarea datelor.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="240"/>
@@ -2068,7 +2068,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR este copyright &amp;copy;2011-2018 Mark Watkins si module &amp;copy;2019-2020 The OSCAR Team</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>
@@ -2176,7 +2176,7 @@
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura Ecran</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="135"/>
@@ -2246,7 +2246,7 @@ Index</translation>
     <message>
         <location filename="../oscar/overview.cpp" line="191"/>
         <source>Session Times</source>
-        <translation>Timip Sesiune</translation>
+        <translation>Timp Sesiune</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="199"/>
@@ -3384,7 +3384,7 @@ Afectează în principal importatorul.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="580"/>
         <source>Bypass the login screen and load the most recent User Profile</source>
-        <translation>Sariti peste ecranul de conectare si incarcati cel mai recent utilizat Profil</translation>
+        <translation>Sariti peste ecranul de conectare si incarcati cel mai recent utilizat Profil de pacient</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="489"/>
@@ -3587,7 +3587,7 @@ OSCAR poate păstra o copie a acestor date dacă intenționați să reinstalați
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce filă se deschide la încărcarea unui profil. (Notă: implicit va fi pagina de Profiel dacă OSCAR este setat să nu deschidă un profil la pornire)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce filă se deschide la încărcarea unui profil pacient. (Notă: implicit va fi pagina de Profil dacă OSCAR este setat să nu deschidă un profil la pornire)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2559"/>
@@ -3669,12 +3669,12 @@ OSCAR poate păstra o copie a acestor date dacă intenționați să reinstalați
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="583"/>
         <source>Auto-Launch CPAP Importer after opening profile</source>
-        <translation>Lanseaza automat Importatorul de CPAP dupa incarcarea Profilului</translation>
+        <translation>Lanseaza automat Importatorul de date CPAP dupa incarcarea Profilului pacientului</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="623"/>
         <source>Automatically load last used profile on start-up</source>
-        <translation>Incarca automat la pornire ultimul Profil utilizat</translation>
+        <translation>Incarca automat la pornire ultimul Pacient utilizat</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="640"/>
@@ -3753,37 +3753,37 @@ p, li {white-space: preambalare; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2074"/>
         <source>Check For Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Cauta actualizari</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2089"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
-        <translation type="unfinished"></translation>
+        <translation>Folosiți o versiune de testare a OSCAR. Versiunile de testare verifică automat dacă există actualizări cel puțin o dată la șapte zile.  Puteți seta intervalul la mai puțin de șapte zile.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2107"/>
         <source>Automatically check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Cauta actualizari OSCAR automat</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2129"/>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Frecvența cu care OSCAR trebuie să verifice dacă există actualizări.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2210"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dacă sunteți interesat să ajutați la testarea timpurie a noilor caracteristici și a corecțiilor de erori, faceți clic aici.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vreau să încerc construcțiile experimentale și de testare. (Doar utilizatorii avansați, vă rog.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2226"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Dacă doriți să ajutați la testarea versiunilor timpurii ale OSCAR, vă rugăm să consultați pagina Wiki despre testarea OSCAR.  Îi primim cu plăcere pe toți cei care doresc să testeze OSCAR, să contribuie la dezvoltarea OSCAR și să ajute la traducerile în limbi existente sau noi. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2291"/>
@@ -3925,12 +3925,12 @@ Acest lucru afectează de asemenea rapoartele tipărite.
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2753"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimați rapoarte în alb-negru, care pot fi astfel mai ușor de citit</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2756"/>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimarea rapoartelor în alb-negru (monocrom)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2788"/>
@@ -4298,17 +4298,17 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.ui" line="216"/>
         <source>&amp;Open Profile</source>
-        <translation>&amp;Deschide Profil</translation>
+        <translation>&amp;Deschide Profil pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="227"/>
         <source>&amp;Edit Profile</source>
-        <translation>&amp;Editeaza Profil</translation>
+        <translation>&amp;Editeaza Profil pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="241"/>
         <source>&amp;New Profile</source>
-        <translation>&amp;Profil nou</translation>
+        <translation>&amp;Pacient nou</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="260"/>
@@ -4318,17 +4318,17 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.ui" line="281"/>
         <source>Please select or create a profile...</source>
-        <translation>Va rog selectati sau creati un profil...</translation>
+        <translation>Va rog selectati sau creati un profil pacient...</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="332"/>
         <source>Destroy Profile</source>
-        <translation>Elimina Profil</translation>
+        <translation>Elimina Pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="90"/>
         <source>Profile</source>
-        <translation>Profil</translation>
+        <translation>Profil pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="91"/>
@@ -4364,7 +4364,7 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="170"/>
         <source>You must create a profile</source>
-        <translation>Trebuie sa creati un Profil</translation>
+        <translation>Trebuie sa creati un Profil pacient nou</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="233"/>
@@ -4391,12 +4391,12 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="322"/>
         <source>Select a profile first</source>
-        <translation>Selectati intai un Profil</translation>
+        <translation>Selectati intai un Profil pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="357"/>
         <source>The selected profile does not appear to contain any data and cannot be removed by OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacientul selectat nu contine date si nu poat efi eliminat de OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="389"/>
@@ -4406,12 +4406,12 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>You are about to destroy profile &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</source>
-        <translation>Sunteti pe cale sa eliminati Profilul &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</translation>
+        <translation>Sunteti pe cale sa eliminati Profilul pacientului &apos;&lt;b&gt;%1&lt;/b&gt;&apos;.</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="399"/>
         <source>Think carefully, as this will irretrievably delete the profile along with all &lt;b&gt;backup data&lt;/b&gt; stored under&lt;br/&gt;%2.</source>
-        <translation>Ganditi-va bine, asta va sterge iremediabil Profilul impreuna cu toate&lt;b&gt;backup-urile&lt;/b&gt; salvate in el&lt;br/&gt;%2.</translation>
+        <translation>Ganditi-va bine, asta va sterge iremediabil Profilul pacientului impreuna cu toate&lt;b&gt;backup-urile&lt;/b&gt; salvate in el&lt;br/&gt;%2.</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="399"/>
@@ -4522,12 +4522,12 @@ Vreti să faceti asta acum?</translation>
     <message>
         <location filename="../oscar/profileselector.cpp" line="512"/>
         <source>No profile information given</source>
-        <translation>Nu au fost furnizate informatii de Profil</translation>
+        <translation>Nu au fost furnizate informatii pentru pacient</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="515"/>
         <source>Profile: %1</source>
-        <translation>Profil: %1</translation>
+        <translation>Pacient: %1</translation>
     </message>
 </context>
 <context>
@@ -4989,7 +4989,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="722"/>
         <source>Profile</source>
-        <translation>Profil</translation>
+        <translation>Pacient</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="723"/>
@@ -5290,7 +5290,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>PB</source>
         <translatorcomment>Respiratie periodică</translatorcomment>
-        <translation>RP</translation>
+        <translation>Resp period</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="789"/>
@@ -5839,7 +5839,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2850"/>
         <source>Flex</source>
-        <translation type="unfinished"></translation>
+        <translation>Flex</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
@@ -5926,17 +5926,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2924"/>
         <source>Target Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Timp tinta</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
         <source>PRS1 Humidifier Target Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Timp țintă pentru umidificatorul PRS1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Hum. Tgt Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Timp Tinta Umid</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2951"/>
@@ -6131,27 +6131,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
         <source>model %1</source>
-        <translation type="unfinished"></translation>
+        <translation>model %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
         <source>DreamStation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>DreamStation 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
         <source>unknown model</source>
-        <translation type="unfinished"></translation>
+        <translation>model necunoscut</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
         <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pare rău, aparatul dumneavoastră CPAP Philips Respironics (%1) nu este încă acceptat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
         <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dezvoltatorii au nevoie de o copie .zip a cardului SD al acestui aparat și de rapoartele Encore sau Care Orchestrator .pdf corespunzătoare pentru a face ca acesta să funcționeze cu OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
@@ -6378,7 +6378,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="557"/>
         <source>If you are concerned, click No to exit, and backup your profile manually, before starting OSCAR again.</source>
-        <translation>Daca va faceti griji, alegeti No pentru a iesi si faceti manual backupul Profilului inainte de a reporni OSCAR.</translation>
+        <translation>Daca va faceti griji, alegeti No pentru a iesi si faceti manual backupul Profilului pacientului inainte de a reporni OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="558"/>
@@ -6403,12 +6403,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="608"/>
         <source>OSCAR will now exit, then (attempt to) launch your computers file manager so you can manually back your profile up:</source>
-        <translation>OSCAR se va opri si apoi va (incerca sa) porneasca Windows Explorer ca sa puteti face backup manual la Profil:</translation>
+        <translation>OSCAR se va opri si apoi va (incerca sa) porneasca Windows Explorer ca sa puteti face backup manual la Profilul pacientului:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="610"/>
         <source>Use your file manager to make a copy of your profile directory, then afterwards, restart OSCAR and complete the upgrade process.</source>
-        <translation>Folositi managerul de fisiere pentru a face o copie a dosarului de Profil, apoi restartati OSCAR si finalizati actualizarea versiunii.</translation>
+        <translation>Folositi managerul de fisiere pentru a face o copie a dosarului Pacientului, apoi restartati OSCAR si finalizati actualizarea versiunii.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="561"/>
@@ -6418,7 +6418,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>După ce faceți upgrade, &lt;font size = + 1&gt; nu mai puteți &lt;/font&gt; utiliza acest profil cu versiunea anterioară.</translation>
+        <translation>După ce faceți upgrade, &lt;font size = + 1&gt; nu mai puteți &lt;/font&gt; utiliza acest profil de pacient cu versiunea anterioară.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="573"/>
@@ -6605,7 +6605,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Hypopnea</source>
-        <translation>Hipopnee</translation>
+        <translation>Hipopnea</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
@@ -6758,7 +6758,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Mask Pressure</source>
-        <translation>Presiunea pe Masca</translation>
+        <translation>Presiune Masca</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
@@ -6808,7 +6808,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
         <source>Leak Rate</source>
-        <translation>Rata Scăpărilor</translation>
+        <translation>Rata Scăpări</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
@@ -6977,7 +6977,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limit.</source>
-        <translation>Limita Flux.</translation>
+        <translation>Limitare Flux.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
@@ -7078,17 +7078,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="121"/>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu s-a putut analiza Channels.xml, OSCAR nu poate continua și se va opri.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Apnea</source>
-        <translation type="unfinished"></translation>
+        <translation>Apnea</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>An apnea reportred by your CPAP machine.</source>
-        <translation type="unfinished"></translation>
+        <translation>O apnee raportata de aparatul dvs CPAP.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="302"/>
@@ -7296,7 +7296,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>For internal use only</source>
-        <translation type="unfinished"></translation>
+        <translation>Doar pentru uz intern</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
@@ -7336,12 +7336,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="192"/>
         <source>Choose the SleepyHead or OSCAR data folder to migrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Agegeti locatia fisierelor SleepyHead sau OSCAR pentru a migra datele</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="207"/>
         <source>The folder you chose does not contain valid SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosarul pe care l-ați ales nu conține date SleepyHead sau OSCAR valide.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="208"/>
@@ -7386,27 +7386,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="493"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
-        <translation type="unfinished"></translation>
+        <translation>Dacă ați utilizat SleepyHead sau o versiune mai veche de OSCAR,</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="494"/>
         <source>OSCAR can copy your old data to this folder later.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR poate copia ulterior datele vechi în acest dosar.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="547"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrez datele  SleepyHead sau OSCAR?</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="548"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pe ecranul următor, OSCAR vă va cere să selectați un dosar cu date SleepyHead sau OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="549"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Faceți clic pe [OK] pentru a trece la ecranul următor sau pe [No] dacă nu doriți să utilizați datele SleepyHead sau OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="495"/>
@@ -7441,27 +7441,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/main.cpp" line="558"/>
         <source>Unable to create the OSCAR data folder at</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate crea dosarul de date OSCAR in</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="568"/>
         <source>Unable to write to OSCAR data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate scrie în directorul de date OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="569"/>
         <source>Error code</source>
-        <translation type="unfinished"></translation>
+        <translation>Cod eroare</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="570"/>
         <source>OSCAR cannot continue and is exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR nu poate continua rularea și se va opri.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="581"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate scrie în jurnalul de depanare. Puteți utiliza în continuare panoul de depanare (Help/Troubleshooting/Show Debug Pane), dar jurnalul de depanare nu va fi scris pe disc.</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="640"/>
@@ -7508,7 +7508,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="467"/>
         <source>You can only work with one instance of an individual OSCAR profile at a time.</source>
-        <translation>Puteti lucra cu un singur Profil OSCAR la un moment dat.</translation>
+        <translation>Puteti lucra cu un singur Profil pacient la un moment dat.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="468"/>
@@ -7518,18 +7518,19 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="481"/>
         <source>Loading profile &quot;%1&quot;...</source>
-        <translation>Incarc Profilul &quot;%1&quot;...</translation>
+        <translation>Incarc Profil pacient &quot;%1&quot;...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="928"/>
         <source>Chromebook file system detected, but no removable device found
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Chromebook-ul dvs nu are un dispozitiv de memorie detasabil (card de memorie)
+</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="929"/>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
-        <translation type="unfinished"></translation>
+        <translation>Trebuie să partajați cardul SD cu Linux utilizând programul ChromeOS Files</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2201"/>
@@ -7630,7 +7631,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/reports.cpp" line="294"/>
         <source>AI=%1 </source>
-        <translation type="unfinished"></translation>
+        <translation>AI=%1 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="362"/>
@@ -7705,7 +7706,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="466"/>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
-        <translation>Exista deja un fisier blocat pentru acest Profil &apos;%1&apos;, creat pe &apos;%2&apos;.</translation>
+        <translation>Exista deja un fisier blocat pentru acest Profil pacient&apos;%1&apos;, creat pe &apos;%2&apos;.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="189"/>
@@ -7730,12 +7731,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
-        <translation type="unfinished"></translation>
+        <translation>variante</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
@@ -7804,12 +7805,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="361"/>
         <source>(1 day ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(o zi in urma)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="362"/>
         <source>(%2 days ago)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%2 zile in urma)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="367"/>
@@ -7944,7 +7945,8 @@ Please Rebuild CPAP Data</source>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="473"/>
         <source>The popout window is full. You should capture the existing
 popout window, delete it, then pop out this graph again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fereastra popout este plină. Ar trebui să capturați imaginea existentă
+fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1445"/>
@@ -8087,13 +8089,13 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
         <source>Backing up files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvez backup fisiere...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
         <source>Reading data files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Citesc fisierele de date...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2764"/>
@@ -8132,12 +8134,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
         <source>Snoring event.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sforait detectat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
         <source>SN</source>
-        <translation type="unfinished"></translation>
+        <translation>SN</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="524"/>
@@ -8192,7 +8194,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="112"/>
         <source>iVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>iVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8229,12 +8231,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
         <source>Response</source>
-        <translation type="unfinished"></translation>
+        <translation>Raspuns</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
         <source>Patient View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizare pacient</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
@@ -8325,12 +8327,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="174"/>
         <source>Essentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Esentiale</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="176"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="180"/>
@@ -8345,47 +8347,47 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>Soft</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Standard</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>SmartStop</source>
-        <translation type="unfinished"></translation>
+        <translation>SmartStop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Machine auto stops by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparatul  se oprește automat cand respirați</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Smart Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Smart Stop</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Simplu</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
         <source>Advanced</source>
-        <translation type="unfinished">Avansat</translation>
+        <translation>Avansat</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pare suficient de asemănător cu alte aparate cpap  pentru a putea funcționa, dar dezvoltatorii ar dori o copie .zip a cardului SD al acestui aparat pentru a se asigura că funcționează cu OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1200"/>
@@ -8527,73 +8529,73 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="152"/>
         <source>New versions file improperly formed</source>
-        <translation type="unfinished"></translation>
+        <translation>Noi versiuni de fișiere au formate necorespunzătoare</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="168"/>
         <source>You are running the latest release of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Aveti deja ultima versiune de OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>A more recent version of OSCAR is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Exista o versiune mai recenta a programului OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulati versiunea %1</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="173"/>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR %1 e disponibil &lt;a href=&apos;%2&apos;&gt;aici&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Informații despre versiunea mai recentă de test %1 sunt disponibile la &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="183"/>
         <source>(Reading %1 took %2 seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Citirea %1 a durat %2 secunde)</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="204"/>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Caut actualizari ale programului OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="266"/>
         <source>Unable to check for updates. Please try again later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate verifica dacă există actualizări. Vă rugăm să încercați din nou mai târziu.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
         <source>SensAwake level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel SensAwake</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>Expiratory Relief</source>
-        <translation type="unfinished"></translation>
+        <translation>Usurare respiratie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>Expiratory Relief Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel usurare respiratie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Umiditate</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil de somn</translation>
     </message>
 </context>
 <context>
@@ -8627,17 +8629,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="204"/>
         <source>Import Error</source>
-        <translation type="unfinished">Eroare la Importare</translation>
+        <translation>Eroare la Importare</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="unfinished">Datele din acest aparat nu pot fi importate in acest profil.</translation>
+        <translation>Datele din acest aparat nu pot fi importate in acest profil.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
         <source>The Day records overlap with already existing content.</source>
-        <translation type="unfinished">Datele din aceasta zi se suprapun cu cele deja existente.</translation>
+        <translation>Datele din aceasta zi se suprapun cu cele deja existente.</translation>
     </message>
 </context>
 <context>
@@ -8722,7 +8724,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="613"/>
         <source>% of time above %1 threshold</source>
-        <translation>% din timp peste pragul de %1</translation>
+        <translation>% din timp peste pragul %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="614"/>
@@ -8977,7 +8979,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1234"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
-        <translation>%1 zi din %2 Date, intre %3 si %4</translation>
+        <translation>%1 zile din Datele %2, intre %3 si %4</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="983"/>
@@ -9135,7 +9137,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="226"/>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation>Ati avut un  AHI de %1, care este %2 media zilnica de %4 in ultimele %3 zile.</translation>
+        <translation>Ati avut un AHI de %1, care este %2 media zilnica de %4 din ultimele %3 zile.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="257"/>
@@ -9171,12 +9173,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="277"/>
         <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation>Aparatul dvs a fost sub %1-%2 %3 pentru %4% din timp.</translation>
+        <translation>Aparatul dvs a fost la presiunea %1-%2 %3 pentru %4% din timp.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>o zi in urma</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="317"/>

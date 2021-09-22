@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>942</width>
-    <height>651</height>
+    <height>655</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2210,7 +2210,7 @@ Mainly affects the importer.</string>
                 <string>If you are interested in helping test new features and bugfixes early, click here.</string>
                </property>
                <property name="text">
-                <string>I want to try experimental and test builds. (Advanced users only please.)</string>
+                <string>I want to be notified of test versions. (Advanced users only please.)</string>
                </property>
               </widget>
              </item>

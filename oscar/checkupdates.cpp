@@ -162,25 +162,30 @@ void CheckUpdates::compareVersions () {
     VersionInfo testVersion = getVersionInfo ("test", platformStr());
 
     msg = "";
+    if (!showTestVersion)
+        testVersion.version = "";
 
     if (testVersion.version.length() == 0 && releaseVersion.version.length() == 0) {
-        if (showIfCurrent)
-            msg = QObject::tr("You are running the latest release of OSCAR");
+        if (showIfCurrent) {
+            QString txt = getVersion().IsReleaseVersion()?QObject::tr("release"):QObject::tr("test version");
+            QString txt2 = QObject::tr("You are running the latest %1 of OSCAR").arg(txt);
+            msg = txt2 + "<p>" + QObject::tr("You are running OSCAR %1").arg(getVersion()) + "</p>";
+        }
     } else {
         msg = QObject::tr("A more recent version of OSCAR is available");
-        msg += "<p>" + QObject::tr("You are running version %1").arg(getVersion()) + "</p>";
+        msg += "<p>" + QObject::tr("You are running OSCAR %1").arg(getVersion()) + "</p>";
         if (releaseVersion.version.length() > 0) {
             msg += "<p>" + QObject::tr("OSCAR %1 is available <a href='%2'>here</a>.").arg(releaseVersion.version).arg(releaseVersion.urlInstaller) + "</p>";
         }
-        if (testVersion.version.length() > 0) {
+        if (showTestVersion && (testVersion.version.length() > 0)) {
             msg += "<p>" + QObject::tr("Information about more recent test version %1 is available at <a href='%2'>%2</a>").arg(testVersion.version).arg(testVersion.urlInstaller) + "</p>";
         }
     }
 
     if (msg.length() > 0) {
         // Add elapsed time in test versions only
-        if (elapsedTime > 0 && !getVersion().IsReleaseVersion())
-            msg += "<font size='-1'><p>" + QString(QObject::tr("(Reading %1 took %2 seconds)")).arg("versions.xml").arg(elapsedTime) + "</p></font>";
+//        if (elapsedTime > 0 && !getVersion().IsReleaseVersion())
+//            msg += "<font size='-1'><p>" + QString(QObject::tr("(Reading %1 took %2 seconds)")).arg("versions.xml").arg(elapsedTime) + "</p></font>";
         msgIsReady = true;
     }
 
@@ -212,9 +217,12 @@ void CheckUpdates::showMessage()
 void CheckUpdates::checkForUpdates(bool showWhenCurrent)
 {
     showIfCurrent = showWhenCurrent;
+    showTestVersion = false;
 
     // If running a test version of OSCAR, try reading versions.xml from OSCAR_Data directory
+    // and force display of any new test version
     if (!getVersion().IsReleaseVersion()) {
+        showTestVersion = true;
         versionXML = readLocalVersions();
         if (versionXML.length() > 0) {
             compareVersions();
@@ -223,6 +231,8 @@ void CheckUpdates::checkForUpdates(bool showWhenCurrent)
             showMessage();
             return;
         }
+    } else {
+        showTestVersion = AppSetting->allowEarlyUpdates();
     }
 
     readTimer.start();
