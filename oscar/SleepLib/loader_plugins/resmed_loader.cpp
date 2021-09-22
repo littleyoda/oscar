@@ -1527,13 +1527,16 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 if ((sig = str.lookupLabel("S.i.MaxPS"))) {
                     R.max_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
-                if ( R.epap >= 0 ) {
+                if ( (R.epap >= 0) && (R.max_epap == R.epap) ) {
                     R.max_ipap = R.epap + R.max_ps;
                     R.min_ipap = R.epap + R.min_ps;
                 } else {
                     R.max_ipap = R.max_epap + R.max_ps;
                     R.min_ipap = R.min_epap + R.min_ps;
                 }
+//              qDebug() << "AVAPS mode; Ramp" << R.ramp_pressure << "Min EPAP" << R.min_epap <<
+//                          "Max EPAP" << R.max_epap << "Min PS" << R.min_ps << "Max PS" << R.max_ps <<
+//                          "Min IPAP" << R.min_ipap << "Max_IPAP" << R.max_ipap;
             }
             if (R.mode == MODE_ASV) {
                 if ((sig = str.lookupLabel("S.AV.StartPress"))) {
@@ -2280,20 +2283,21 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
             if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
             if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
+        } else {
+//          qDebug() << "Setting session pressures for random mode";
+            if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
+            if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
+            if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
+            if (R.max_epap >= 0) sess->settings[CPAP_EPAPHi] = R.max_epap;
+            if (R.min_epap >= 0) sess->settings[CPAP_EPAPLo] = R.min_epap;
+            if (R.max_ipap >= 0) sess->settings[CPAP_IPAPHi] = R.max_ipap;
+            if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
+            if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
+            if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
+            if (R.ps >= 0) sess->settings[CPAP_PS] = R.ps;
+            if (R.epap >= 0) sess->settings[CPAP_EPAP] = R.epap;
+            if (R.ipap >= 0) sess->settings[CPAP_IPAP] = R.ipap;
         }
-    } else {
-        if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
-        if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
-        if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
-        if (R.max_epap >= 0) sess->settings[CPAP_EPAPHi] = R.max_epap;
-        if (R.min_epap >= 0) sess->settings[CPAP_EPAPLo] = R.min_epap;
-        if (R.max_ipap >= 0) sess->settings[CPAP_IPAPHi] = R.max_ipap;
-        if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
-        if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
-        if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
-        if (R.ps >= 0) sess->settings[CPAP_PS] = R.ps;
-        if (R.epap >= 0) sess->settings[CPAP_EPAP] = R.epap;
-        if (R.ipap >= 0) sess->settings[CPAP_IPAP] = R.ipap;
     }
 
     if (R.epr >= 0) {
@@ -3095,7 +3099,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     time.start();
 #endif
     QString filename = path.section(-2, -1);
-    qDebug() << "LoadPLD opening" << filename.section("/", -2, -1);
+//  qDebug() << "LoadPLD opening" << filename.section("/", -2, -1);
     ResMedEDFInfo edf;
     if ( ! edf.Open(path) ) {
         qDebug() << "LoadPLD failed to open" << filename.section("/", -2, -1);
@@ -3461,7 +3465,8 @@ EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataTy
 
         el->AddEvent(tt, est);
     } else {
-        qDebug() << "Value:" << tmp << "Out of range: t_min:" << t_min << "t_max:" << t_max << "EL count:" << el->count();
+        if ( tmp > 0 )
+            qDebug() << "Value:" << tmp << "Out of range: t_min:" << t_min << "t_max:" << t_max << "EL count:" << el->count();
         // Out of bounds value, start a new eventlist
         // But first drop a closing value that repeats the last one
         el->AddEvent(tt, el->raw(el->count() - 1));

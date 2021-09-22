@@ -848,11 +848,13 @@ ChannelID Day::getPressureChannelID() {
     for (auto & preferredID : preferredIDs) {
         // If preferred channel has data, return it
         if (channelHasData(preferredID)) {
-            //qDebug() << QString("Found pressure channel 0x%1").arg(preferredID, 4, 16, QChar('0'));
+//          if ( cpapmode == MODE_AVAPS )
+//              qDebug() << QString("Found pressure channel 0x%1").arg(preferredID, 4, 16, QChar('0'));
             return preferredID;
         }
     }
     
+    qDebug() << "No pressure channel for " << getCPAPModeStr();
     return NoChannel;
 }
 
@@ -1582,13 +1584,21 @@ QString Day::getPressureSettings()
     QString units = schema::channel[CPAP_Pressure].units();
 
     if (mode == MODE_CPAP) {
-        return QObject::tr("Fixed %1 (%2)").arg(validPressure(settings_min(CPAP_Pressure))).arg(units);
+        return QObject::tr("Fixed %1 (%2)").arg(validPressure(settings_min(CPAP_Pressure))).
+                                            arg(units);
     } else if (mode == MODE_APAP) {
-        return QObject::tr("Min %1 Max %2 (%3)").arg(validPressure(settings_min(CPAP_PressureMin))).arg(validPressure(settings_max(CPAP_PressureMax))).arg(units);
+        return QObject::tr("Min %1 Max %2 (%3)").arg(validPressure(settings_min(CPAP_PressureMin))).
+                                                 arg(validPressure(settings_max(CPAP_PressureMax))).
+                                                 arg(units);
     } else if (mode == MODE_BILEVEL_FIXED ) {
-        return QObject::tr("EPAP %1 IPAP %2 (%3)").arg(validPressure(settings_min(CPAP_EPAP))).arg(validPressure(settings_max(CPAP_IPAP))).arg(units);
+        return QObject::tr("EPAP %1 IPAP %2 (%3)").arg(validPressure(settings_min(CPAP_EPAP))).
+                                                   arg(validPressure(settings_max(CPAP_IPAP))).
+                                                   arg(units);
     } else if (mode == MODE_BILEVEL_AUTO_FIXED_PS) {
-        return QObject::tr("PS %1 over %2-%3 (%4)").arg(validPressure(settings_max(CPAP_PS))).arg(validPressure(settings_min(CPAP_EPAPLo))).arg(validPressure(settings_max(CPAP_IPAPHi))).arg(units);
+        return QObject::tr("PS %1 over %2-%3 (%4)").arg(validPressure(settings_max(CPAP_PS))).
+                                                    arg(validPressure(settings_min(CPAP_EPAPLo))).
+                                                    arg(validPressure(settings_max(CPAP_IPAPHi))).
+                                                    arg(units);
     } else if (mode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
         return QObject::tr("Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)").arg(validPressure(settings_min(CPAP_EPAPLo))).
                 arg(validPressure(settings_max(CPAP_IPAPHi))).
@@ -1606,11 +1616,25 @@ QString Day::getPressureSettings()
                 arg(validPressure(settings_min(CPAP_PSMax))).
                 arg(units);
     } else if (mode == MODE_AVAPS) {
-        return QObject::tr("EPAP %1 IPAP %2-%3 (%4)").
+//      qDebug() << "AVAPS: EPAP" << settings_min(CPAP_EPAP) << "IPAP min" << settings_max(CPAP_IPAPLo) <<
+//                  "IPAP max" << settings_max(CPAP_IPAPHi);
+        QString retStr;
+        if (settings_min(CPAP_EPAPLo) == settings_max(CPAP_EPAPHi))
+            retStr = QObject::tr("EPAP %1 IPAP %2-%3 (%4)").
                 arg(validPressure(settings_min(CPAP_EPAP))).
                 arg(validPressure(settings_max(CPAP_IPAPLo))).
                 arg(validPressure(settings_max(CPAP_IPAPHi))).
                 arg(units);
+        else 
+            retStr = QObject::tr("EPAP %1-%2 IPAP %3-%4 (%5)").
+                arg(validPressure(settings_min(CPAP_EPAPLo))).
+                arg(validPressure(settings_min(CPAP_EPAPHi))).
+                arg(validPressure(settings_max(CPAP_IPAPLo))).
+                arg(validPressure(settings_max(CPAP_IPAPHi))).
+                arg(units);
+
+//      qDebug() << "AVAPS mode:" << retStr;
+        return retStr;
     }
 
     return STR_TR_Unknown;
