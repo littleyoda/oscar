@@ -112,6 +112,8 @@ class SleepStyleLoader : public CPAPLoader
 //    QString serial;    // Serial number
     bool rebuild_from_backups = false;
     bool create_backups = true;
+    bool calc_leaks = true;
+    float lpm4, lpm20;  // Leak per minute at 4 and 20 cmH20
 
     unsigned char *m_buffer;
 };

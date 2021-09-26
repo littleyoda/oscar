@@ -225,6 +225,10 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
 
     backupData(mach, path);
 
+    calc_leaks = p_profile->cpap->calculateUnintentionalLeaks();
+    lpm4 = p_profile->cpap->custom4cmH2OLeaks();
+    lpm20 = p_profile->cpap->custom20cmH2OLeaks();
+
     qDebug() << "Opening F&P SleepStyle" << ssPath;
 
     dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
@@ -451,23 +455,32 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
     sess->really_set_first(edf.startdate);
 
     qint64 duration = edf.GetNumDataRecords() * edf.GetDurationMillis();
+    qDebug() << "SS EDF millis" << edf.GetDurationMillis() << "num recs" << edf.GetNumDataRecords();
     sess->updateLast(edf.startdate + duration);
 
 // Find the leak signal and data
     long leakrecs = 0;
     EDFSignal leakSignal;
+    EDFSignal maskSignal;
+    long maskRecs;
     for (auto & esleak : edf.edfsignals) {
         leakrecs = esleak.sampleCnt * edf.GetNumDataRecords();
         if (leakrecs < 0)
             continue;
         if (esleak.label == "Leak") {
             leakSignal = esleak;
+            break;
         }
     }
 
 // Walk through all signals, ignoring leaks
     for (auto & es : edf.edfsignals) {
         long recs = es.sampleCnt * edf.GetNumDataRecords();
+#ifdef DEBUGSS
+        qDebug() << "SS EDF" << es.label << "count" << es.sampleCnt << "gain" << es.gain << "offset" << es.offset
+                 << "dim" << es.physical_dimension << "phys min" << es.physical_minimum << "max" << es.physical_maximum
+                 << "dig min" << es.digital_minimum << "max" << es.digital_maximum;
+#endif
         if (recs < 0)
             continue;
         ChannelID code = 0;
@@ -492,6 +505,59 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
 
         } else if (es.label == "Pressure") {
             code = CPAP_MaskPressure;
+            maskRecs = es.sampleCnt * edf.GetNumDataRecords();
+            maskSignal = es;
+            float lpm = lpm20 - lpm4;
+            float ppm = lpm / 16.0;
+            if (maskRecs != leakrecs) {
+                qWarning() << "SS ORT maskRecs" << maskRecs << "!= leakrecs" << leakrecs;
+            } else {
+                qint16 * leakarray = new qint16 [maskRecs];
+
+                for (int i = 0; i < maskRecs; i++) {
+
+                    // Extract IPAP from mask pressure, which is a combination of IPAP and EPAP values
+                    // get maximum mask pressure over next several data points to make best guess at IPAP
+                    float mp = es.dataArray[i];
+                    for (int j = 1; j < 9; j++)
+                        if (i < maskRecs-j)
+                            mp = fmaxf(mp, es.dataArray[i+j]);
+
+                    float press = mp * es.gain - 4.0; // Convert pressure to cmH2O and get difference from low end of adjustment curve
+
+                    // Calculate expected (intentional) leak in l/m
+                    float expLeak = press * ppm + lpm4;
+                    qint16 unintLeak = leakSignal.dataArray[i] - (qint16)(expLeak / es.gain);
+                    if (unintLeak < 0)
+                        unintLeak = 0;
+
+                    leakarray[i] = unintLeak;
+                }
+
+                ChannelID leakcode = CPAP_Leak;
+                double rate = double(duration) / double(recs);
+                EventList *a = sess->AddEventList(leakcode, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+                a->setDimension(es.physical_dimension);
+                a->AddWaveform(edf.startdate, leakarray, recs, duration);
+                EventDataType min = a->Min();
+                EventDataType max = a->Max();
+    /***
+                // Cap to physical dimensions, because there can be ram glitches/whatever that throw really big outliers.
+                if (min < es.physical_minimum)
+                    min = es.physical_minimum;
+                if (max > es.physical_maximum)
+                    max = es.physical_maximum;
+    ***/
+                sess->updateMin(leakcode, min);
+                sess->updateMax(leakcode, max);
+                sess->setPhysMin(leakcode, es.physical_minimum);
+                sess->setPhysMax(leakcode, es.physical_maximum);
+
+                delete [] leakarray;
+            }
+
+        } else if (es.label == "Leak") {
+            code = CPAP_LeakTotal;
 
         } else
             continue;
@@ -501,7 +567,9 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
             EventList *a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
             a->setDimension(es.physical_dimension);
             a->AddWaveform(edf.startdate, es.dataArray, recs, duration);
-
+#ifdef DEBUGSS
+            qDebug() << "SS EDF recs" << recs << "duration" << duration << "rate" << rate;
+#endif
             EventDataType min = a->Min();
             EventDataType max = a->Max();
 
@@ -826,6 +894,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
     qint64 ti;
     quint8 pressure, leak, a1, a2, a3, a4, a5, a6;
+    Q_UNUSED(leak)
 //    quint8 sa1, sa2;  // The two sense awake bits per 2 minutes
     SessionID sessid;
     Session *sess;
@@ -836,8 +905,9 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
         sess = Sessions[sessid];
         ti = qint64(sessid) * 1000L;
         sess->really_set_first(ti);
+        long PRSessCount = 0;
 
-        EventList *LK = sess->AddEventList(CPAP_LeakTotal, EVL_Event, 1);
+//fastleak        EventList *LK = sess->AddEventList(CPAP_LeakTotal, EVL_Event, 1);
         EventList *PR = sess->AddEventList(CPAP_Pressure, EVL_Event, 0.1F);
         EventList *A = sess->AddEventList(CPAP_AllApnea, EVL_Event);
         EventList *H =  sess->AddEventList(CPAP_Hypopnea, EVL_Event);
@@ -859,10 +929,14 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
             for (int j = 0; j < 3; ++j) {
                 pressure = data[idx];
                 PR->AddEvent(ti+120000, pressure);
+                PRSessCount++;
 
+#ifdef DEBUGSS
                 leak = data[idx + 1];
+#endif
+/* fastleak
                 LK->AddEvent(ti+120000, leak);
-
+*/
                                       // Comments below from MW. Appear not to be accurate
                 a1 = data[idx + 2];   // [0..5] Obstructive flag, [6..7] Unknown
                 a2 = data[idx + 3];   // [0..5] Hypopnea,         [6..7] Unknown
@@ -904,6 +978,9 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
             }
         }
 
+#ifdef DEBUGSS
+        qDebug() << "SS DET pressure events" << PR->count() << "prSessVount" << PRSessCount << "beginning" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("MM/dd/yyyy hh:mm:ss");
+#endif
         // Update indexes, process waveform and perform flagging
         sess->setSummaryOnly(false);
         sess->UpdateSummaries();
