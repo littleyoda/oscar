@@ -348,7 +348,7 @@ bool ViatomFile::ParseHeader()
     //int time_under_90pct = header[22] | (header[23] << 8);  // in seconds
     //int events_under_90pct = header[24];  // number of distinct events
     //float o2_score = header[25] * 0.1;
-    CHECK_VALUES(header[26], 0, 4);  // 4 has been seen only once
+    //CHECK_VALUES(header[26], 0, 4);  // number of steps taken (when nonzero, only reported by some models)
     CHECK_VALUE(header[27], 0);
     CHECK_VALUE(header[28], 0);
     CHECK_VALUE(header[29], 0);
