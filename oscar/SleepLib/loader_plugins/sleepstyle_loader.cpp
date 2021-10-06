@@ -504,7 +504,7 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
             }
 
         } else if (es.label == "Pressure") {
-            code = CPAP_MaskPressure;
+            // First compute CPAP_Leak data
             maskRecs = es.sampleCnt * edf.GetNumDataRecords();
             maskSignal = es;
             float lpm = lpm20 - lpm4;
@@ -517,11 +517,13 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
                 for (int i = 0; i < maskRecs; i++) {
 
                     // Extract IPAP from mask pressure, which is a combination of IPAP and EPAP values
-                    // get maximum mask pressure over next several data points to make best guess at IPAP
+                    // get maximum mask pressure over several adjacent data points to make best guess at IPAP
                     float mp = es.dataArray[i];
-                    for (int j = 1; j < 9; j++)
-                        if (i < maskRecs-j)
-                            mp = fmaxf(mp, es.dataArray[i+j]);
+                    int jrange = 3; // Number on each side of center
+                    int jstart = std::max(0, i-jrange);
+                    int jend = (i+jrange)>maskRecs ? maskRecs : i+jrange;
+                    for (int j = jstart; j < jend; j++)
+                        mp = fmaxf(mp, es.dataArray[j]);
 
                     float press = mp * es.gain - 4.0; // Convert pressure to cmH2O and get difference from low end of adjustment curve
 
@@ -555,6 +557,9 @@ bool SleepStyleLoader::OpenRealTime(Machine *mach, const QString & fname, const 
 
                 delete [] leakarray;
             }
+
+            // Now do normal processing for Mask Pressure
+            code = CPAP_MaskPressure;
 
         } else if (es.label == "Leak") {
             code = CPAP_LeakTotal;
