@@ -11,7 +11,7 @@
     <message>
         <location filename="../oscar/aboutdialog.ui" line="35"/>
         <source>&amp;About</source>
-        <translation type="unfinished">За &amp;приложение</translation>
+        <translation>За &amp;приложение</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.ui" line="49"/>
@@ -22,13 +22,13 @@
     <message>
         <location filename="../oscar/aboutdialog.ui" line="63"/>
         <source>Credits</source>
-        <translation type="unfinished">Заслуги</translation>
+        <translation>Заслуги</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.ui" line="77"/>
         <source>GPL License</source>
         <translatorcomment>As a whole this actually should read &quot;Общ публичен лиценз на ГНУ&quot;, but that is a bit long on a tab. I think it would be acceptable to just say &quot;license GPL&quot; and then the explanation is written in the tab. The Bulgarian wikipedia page for the GPL gives a couple of translation options.</translatorcomment>
-        <translation type="unfinished">лиценз GPL</translation>
+        <translation>лиценз GPL</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.ui" line="239"/>
@@ -38,27 +38,27 @@
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="35"/>
         <source>Show data folder</source>
-        <translation type="unfinished">Покажи папката на данните</translation>
+        <translation>Покажи папката на данните</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="39"/>
         <source>About OSCAR %1</source>
-        <translation type="unfinished">За предложението OSCAR %1</translation>
+        <translation>За предложение OSCAR %1</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="83"/>
         <source>Sorry, could not locate About file.</source>
-        <translation type="unfinished">За съжаление, файлът За приложение не се намери.</translation>
+        <translation>За съжаление, файлът „За приложение“ не се намери.</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="97"/>
         <source>Sorry, could not locate Credits file.</source>
-        <translation type="unfinished">За съжаление, файлът Заслуги не се намери.</translation>
+        <translation>За съжаление, файлът „Заслуги“ не се намери.</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="111"/>
         <source>Sorry, could not locate Release Notes.</source>
-        <translation type="unfinished">За съжаление, Бележки по изданието не се намери.</translation>
+        <translation>За съжаление, Бележки по изданието не се намери.</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="123"/>
@@ -73,12 +73,12 @@
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="127"/>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
-        <translation type="unfinished">Тъй като това е предварително издание, препоръчано е &lt;b&gt;да направите ръчно архивиране на своята папка с данни&lt;/b&gt; преди да продължите, защото е възможно при по-късен опит за връщане назад нещата да се повредят.</translation>
+        <translation>Тъй като това е предварително издание, препоръчано е &lt;b&gt;да направите ръчно архивиране на своята папка с данни&lt;/b&gt; преди да продължите, защото е възможно при по-късен опит за връщане назад нещата да се повредят.</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="139"/>
         <source>To see if the license text is available in your language, see %1.</source>
-        <translation type="unfinished">За да проверите дали съществува превода на лиценз на Вашия език, вижте %1.</translation>
+        <translation>За да проверите дали съществува превода на лиценз на Вашия език, вижте %1.</translation>
     </message>
 </context>
 <context>
@@ -86,12 +86,12 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="879"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished">Файлът на оксиметър не се намери:</translation>
+        <translation>Файлът на оксиметъра не се намери:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="885"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished">Не може да се отвори файлът на оксиметър:</translation>
+        <translation>Не може да се отвори файлът на оксиметъра:</translation>
     </message>
 </context>
 <context>
@@ -109,12 +109,12 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="547"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished">Файлът на оксиметър не се намери:</translation>
+        <translation>Файлът на оксиметъра не се намери:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="553"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished">Не може да се отвори файлът на оксиметър:</translation>
+        <translation>Не може да се отвори файлът на оксиметъра:</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../oscar/checkupdates.cpp" line="240"/>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished">Проверяваме за за нова версия на OSCAR</translation>
+        <translation>Проверяваме за нова версия на OSCAR</translation>
     </message>
 </context>
 <context>
@@ -192,12 +192,12 @@
     <message>
         <location filename="../oscar/daily.ui" line="1199"/>
         <source>I&apos;m feeling ...</source>
-        <translation type="unfinished">Чувствам се ...</translation>
+        <translation>Чувствам се ...</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1222"/>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
-        <translation type="unfinished">Ако в настройки ръст е над нула, задаване на тегло тук ще се покажи стойността на индекса на телесната маса (ИТМ)</translation>
+        <translation>Ако в настройки ръст е над нула, задаване на тегло тук ще се покажи стойността на индекса на телесната маса (ИТМ)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1496"/>
@@ -212,7 +212,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1573"/>
         <source>Show/hide available graphs.</source>
-        <translation type="unfinished">Покажи или скрий достъпни графики.</translation>
+        <translation>Покажи или скрий достъпни графики.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1085"/>
@@ -392,7 +392,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1779"/>
         <source>Sorry, this machine only provides compliance data.</source>
-        <translation type="unfinished">За съжаление, тази машина предоставя само данни за съответствие.</translation>
+        <translation>За съжаление, тази машина предоставя само данни за съответствие.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1780"/>
@@ -442,7 +442,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1112"/>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
-        <translation type="unfinished">&lt;b&gt;Моля, Забележете:&lt;/b&gt;Всичките настройки, които са показани надолу, се основават на предположения, че нищо не се е променило от предишните дни.</translation>
+        <translation>&lt;b&gt;Моля, Забележете:&lt;/b&gt;Всичките настройки, които са показани надолу, се основават на предположения, че нищо не се е променило от предишните дни.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1242"/>
@@ -467,12 +467,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1278"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(липсват настройките на Режима и Налягането; показват се вчерашните.)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1321"/>
         <source>99.5%</source>
-        <translation type="unfinished">90% {99.5%?}</translation>
+        <translation>99,5%</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1465"/>
@@ -487,7 +487,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2384"/>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation type="unfinished"></translation>
+        <translation>Тази отметка се намира в зона, която в момента е деактивирана..</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1109"/>
@@ -507,7 +507,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1024"/>
         <source>Oximetry Sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Оксиметрични сесии</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1027"/>
@@ -517,17 +517,17 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1269"/>
         <source>Model %1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Модел %1 - %2</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1274"/>
         <source>PAP Mode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>PAP оперативен режим: %1</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1394"/>
         <source>This day just contains summary data, only limited information is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Този ден съдържа само обобщаващи данни, а наличната информация е ограничена.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1420"/>
@@ -547,7 +547,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1801"/>
         <source>No data is available for this day.</source>
-        <translation type="unfinished"></translation>
+        <translation>Няма налични данни за този ден.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2097"/>
@@ -796,42 +796,42 @@
     <message>
         <location filename="../oscar/help.ui" line="92"/>
         <source>Hide this message</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрий това съобщение</translation>
     </message>
     <message>
         <location filename="../oscar/help.ui" line="198"/>
         <source>Search Topic:</source>
-        <translation type="unfinished"></translation>
+        <translation>Темата за търсене</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="58"/>
         <source>Help Files are not yet available for %1 and will display in %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файловете за помощ все още не са налични за %1 и ще се покажат в %2.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="68"/>
         <source>Help files do not appear to be present.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файловете за помощ не изглеждат налични.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="84"/>
         <source>HelpEngine did not set up correctly</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощ (HelpEngine) не е настроен правилно</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="99"/>
         <source>HelpEngine could not register documentation correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощ (HelpEngine) не можа да регистрира правилно документацията.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="110"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Съдържание</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="111"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="115"/>
@@ -841,12 +841,12 @@
     <message>
         <location filename="../oscar/help.cpp" line="125"/>
         <source>No documentation available</source>
-        <translation type="unfinished"></translation>
+        <translation>Няма налична документация</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="213"/>
         <source>Please wait a bit.. Indexing still in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Моля, изчакайте малко .. Индексирането продължава</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="239"/>
@@ -856,12 +856,12 @@
     <message>
         <location filename="../oscar/help.cpp" line="240"/>
         <source>%1 result(s) for &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 резултат(и) за &quot;%2&quot;</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="241"/>
         <source>clear</source>
-        <translation type="unfinished"></translation>
+        <translation>изчисти</translation>
     </message>
 </context>
 <context>
@@ -869,12 +869,12 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="165"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished">Файлът на оксиметър не се намери:</translation>
+        <translation>Файлът на оксиметър не се намери:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="171"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished">Не може да се отвори файлът на оксиметър:</translation>
+        <translation>Не може да се отвори файлът на оксиметър:</translation>
     </message>
 </context>
 <context>
@@ -948,7 +948,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
         <source>&amp;Reset Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Нулиране на графики</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2859"/>
@@ -958,7 +958,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2863"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>Отстраняване на неизправности</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2889"/>
@@ -973,22 +973,22 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2974"/>
         <source>Show Daily view</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи на ежедневния изглед</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2985"/>
         <source>Show Overview view</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи изглед за преглед</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3025"/>
         <source>&amp;Maximize Toggle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Превключването на &amp;максимизиране</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3028"/>
         <source>Maximize window</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимизирай прозорец</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3047"/>
