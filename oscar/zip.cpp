@@ -168,6 +168,14 @@ bool FileQueue::AddDirectory(const QString & path, const QString & prefix)
     QDir dir(path);
     if (!dir.exists() || !dir.isReadable()) {
         qWarning() << dir.canonicalPath() << "can't read directory";
+#if defined(Q_OS_MACOS)
+        // If this is a directory known to be protected by macOS "Full Disk Access" permissions,
+        // skip it but don't consider it an error.
+        static const QSet<QString> s_macProtectedDirs = { ".fseventsd", ".Spotlight-V100", ".Trashes" };
+        if (s_macProtectedDirs.contains(dir.dirName())) {
+            return true;
+        }
+#endif
         return false;
     }
     QString base = prefix;
@@ -190,14 +198,12 @@ bool FileQueue::AddDirectory(const QString & path, const QString & prefix)
             qWarning() << "skipping symlink" << canonicalPath << fi.symLinkTarget();
         } else if (fi.isDir()) {
             // Descend and recurse
-            ok = AddDirectory(canonicalPath, relative_path);
+            ok &= AddDirectory(canonicalPath, relative_path);
         } else {
             // Add the file to the zip
-            ok = AddFile(canonicalPath, relative_path);
+            ok &= AddFile(canonicalPath, relative_path);
         }
-        if (!ok) {
-            break;
-        }
+        // Don't stop in our tracks when we hit an error.
     }
 
     return ok;

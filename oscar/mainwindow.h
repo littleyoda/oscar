@@ -137,6 +137,8 @@ class MainWindow : public QMainWindow
     //! \brief Returns the Overview Tab object
     Overview *getOverview() { return overview; }
 
+    void updateOverview();
+
     /*! \fn void RestartApplication(bool force_login=false);
         \brief Closes down OSCAR and restarts it
         \param bool force_login

@@ -1300,6 +1300,7 @@ EventDataType gGraph::MinY()
     }
 
     return rmin_y = val;
+//    return rmin_y = val * 0.9;
 }
 EventDataType gGraph::MaxY()
 {

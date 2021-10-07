@@ -99,6 +99,9 @@ QDateTime SleepStyleEDFInfo::getStartDT( QString dateTimeStr )
 //    dateStr = dateTimeStr.left(8);
 //    timeStr = dateTimeStr.right(8);
     qDate = QDate::fromString(dateTimeStr.left(8), "dd.MM.yy");
+    if (qDate.year() < 2000) {
+        qDate = qDate.addYears(100);
+    }
     qTime = QTime::fromString(dateTimeStr.right(8), "HH.mm.ss");
     return QDateTime(qDate, qTime, Qt::UTC);
 }

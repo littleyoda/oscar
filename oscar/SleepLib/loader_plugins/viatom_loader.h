@@ -2,7 +2,6 @@
  *
  * Copyright (c) 2019-2020 The OSCAR Team
  * (Initial importer written by dave madden <dhm@mersenne.com>)
- * Modified 02/21/2021 to allow for CheckMe device data files by Crimson Nape <CrimsonNape@gmail.com>
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
