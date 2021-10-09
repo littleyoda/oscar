@@ -1149,7 +1149,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3250"/>
         <source>Create zip of all OSCAR data</source>
-        <translation>Skapa en zip-fil av alla OSCAR:s data</translation>
+        <translation>Skapa en zip-fil av alla OSCAR:s sparade data</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3287"/>
@@ -3719,7 +3719,7 @@ Om du använder några olika masker, plocka medelvärden istället. Det bör for
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="583"/>
         <source>Auto-Launch CPAP Importer after opening profile</source>
-        <translation>Starta CPAP-importen automatiskt efter profilen är vald</translation>
+        <translation>Starta CPAP-importen automatiskt efter att profilen är vald</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="623"/>
@@ -5207,7 +5207,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="792"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Resp. Event</source>
-        <translation>Andningshändelser</translation>
+        <translation>Trigger</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="793"/>
@@ -8144,12 +8144,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
         <source>Response</source>
-        <translation type="unfinished"></translation>
+        <translation>Respons</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
         <source>Patient View</source>
-        <translation type="unfinished"></translation>
+        <translation>Patientvy</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
@@ -8544,17 +8544,17 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
         <source>SensAwake level</source>
-        <translation type="unfinished"></translation>
+        <translation>SenseAwake nivå</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
         <source>Expiratory Relief</source>
-        <translation type="unfinished"></translation>
+        <translation>Trycklättnad utandning</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
         <source>Expiratory Relief Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Trycklättnad utandning nivå</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
@@ -8883,7 +8883,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="541"/>
         <source>Compliance (%1 hrs/day)</source>
-        <translation>Compliance (%1 Timmar/dag)</translation>
+        <translation>Compliance (Minst %1 tim/dygn)</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="975"/>
@@ -9111,7 +9111,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="257"/>
         <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation>Din CPAP maskin använde %1 %2 luft</translation>
+        <translation>Din CPAP maskin använde %1 %2 i tryck</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="262"/>
@@ -9121,7 +9121,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="270"/>
         <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation>Din maskin använde %1-%2 %3 luft.</translation>
+        <translation>Din maskin använde %1-%2 %3 i tryck.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="285"/>

@@ -5347,13 +5347,13 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="749"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>H</source>
-        <translation>H</translation>
+        <translation>I</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="750"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>OA</source>
-        <translation>OA</translation>
+        <translation>AO</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="751"/>
@@ -5365,7 +5365,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="753"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>CA</source>
-        <translation>CA</translation>
+        <translation>AC</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="754"/>
@@ -5446,7 +5446,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>PC</source>
-        <translation>PC</translation>
+        <translation>VP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="769"/>
@@ -5539,7 +5539,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="791"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Exp. Time</source>
-        <translation>Exp. Tempo</translation>
+        <translation>Esp. Tempo</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="792"/>
@@ -5621,13 +5621,13 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="805"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
         <source>Large Leak</source>
-        <translation>Perdita Grande</translation>
+        <translation>Indice Grande Perdita </translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="806"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
         <source>LL</source>
-        <translation>PG</translation>
+        <translation>GP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="807"/>
@@ -7373,7 +7373,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>Clear Airway</source>
-        <translation>Apnea centrale</translation>
+        <translation>Indice Apnea Centrale (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
@@ -7383,7 +7383,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>Obstructive</source>
-        <translation>Ostruttiva</translation>
+        <translation>Indice Apnea Ostruttiva (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
@@ -7393,7 +7393,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Hypopnea</source>
-        <translation>Ipopnea</translation>
+        <translation>Indice Ipopnea (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
@@ -7403,7 +7403,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>Unclassified Apnea</source>
-        <translation>Apnea non classificata</translation>
+        <translation>Indice Apnea Non Classificata (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="752"/>
@@ -7552,7 +7552,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>Pulse Change</source>
-        <translation>Indice Variazione Pulsazioni</translation>
+        <translation>Indice Variazione Pulsazioni (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
@@ -7562,7 +7562,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>SpO2 Drop</source>
-        <translation>Indice Desaturazioni</translation>
+        <translation>Indice SpO2 Desaturazione (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
@@ -7572,7 +7572,8 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>SD</source>
-        <translation>ODI</translation>
+        <translatorcomment>Desaturazione ossigeno</translatorcomment>
+        <translation>SD</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
@@ -7733,7 +7734,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>Apnea Hypopnea Index</source>
-        <translation>Indice di Apnea Ipopnea</translation>
+        <translation>Indice di Apnea Ipopnea (per ora)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
