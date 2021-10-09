@@ -196,8 +196,13 @@ bool MD300W1Loader::readDATFile(const QString & path)
         QString datestr = QString().sprintf("%02d/%02d/%02d %02d:%02d:%02d",
                 (unsigned char)data.at(i+4),(unsigned char)data.at(i+5),(unsigned char)data.at(i+3),
                 (unsigned char)data.at(i+6),(unsigned char)data.at(i+7),(unsigned char)data.at(i+8));
-        QDateTime datetime = QDateTime::fromString(datestr,"MM/dd/yy HH:mm:ss");
-        if (datetime.date().year() < 2000) datetime = datetime.addYears(100);
+        // Ensure date is correct first to ensure DST is handled correctly
+        QDate date = QDate::fromString(datestr.left(8),"MM/dd/yy");
+        QTime time = QTime::fromString(datestr.right(8),"HH:mm:ss");
+        if (date.year() < 2000) {
+            date = date.addYears(100);
+        }
+        QDateTime datetime = QDateTime(date, time);
         ts = datetime.toTime_t();
         gap = ts - lasttime;
         if (gap > 1) {			// always true for first record, b/c time started on 1 Jan 1970
