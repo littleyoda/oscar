@@ -119,7 +119,7 @@
 <context>
     <name>CheckUpdates</name>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="240"/>
+        <location filename="../oscar/checkupdates.cpp" line="250"/>
         <source>Checking for newer OSCAR versions</source>
         <translation>Letar efter en nyare version av OSCAR</translation>
     </message>
@@ -1368,7 +1368,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="544"/>
-        <location filename="../oscar/mainwindow.cpp" line="2296"/>
+        <location filename="../oscar/mainwindow.cpp" line="2301"/>
         <source>Welcome</source>
         <translation>Välkommen</translation>
     </message>
@@ -1378,8 +1378,8 @@
         <translation>&amp;Om</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="790"/>
-        <location filename="../oscar/mainwindow.cpp" line="1963"/>
+        <location filename="../oscar/mainwindow.cpp" line="795"/>
+        <location filename="../oscar/mainwindow.cpp" line="1968"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>Vänta, importerar från backup-mappen(s)...</translation>
     </message>
@@ -1389,7 +1389,7 @@
         <translation>Importproblem</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="898"/>
+        <location filename="../oscar/mainwindow.cpp" line="903"/>
         <source>Choose a folder</source>
         <translation>Välj en mapp</translation>
     </message>
@@ -1431,63 +1431,63 @@
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="891"/>
+        <location filename="../oscar/mainwindow.cpp" line="896"/>
         <source>Please insert your CPAP data card...</source>
         <translation>Sätt in CPAP minnes-kortet...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="981"/>
+        <location filename="../oscar/mainwindow.cpp" line="986"/>
         <source>Access to Import has been blocked while recalculations are in progress.</source>
         <translation>Tillgången till import har blockerats medan omräkning pågår.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1026"/>
+        <location filename="../oscar/mainwindow.cpp" line="1031"/>
         <source>A %1 file structure for a %2 was located at:</source>
         <translation>En %1 fil struktur för %2 hittades här:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1028"/>
+        <location filename="../oscar/mainwindow.cpp" line="1033"/>
         <source>A %1 file structure was located at:</source>
         <translation>En %1 fil struktur hittades här:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1033"/>
+        <location filename="../oscar/mainwindow.cpp" line="1038"/>
         <source>CPAP Data Located</source>
         <translation>CPAP-data hittades</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1068"/>
+        <location filename="../oscar/mainwindow.cpp" line="1073"/>
         <source>Import Reminder</source>
         <translation>Importpåminnelse</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1142"/>
+        <location filename="../oscar/mainwindow.cpp" line="1147"/>
         <source>Importing Data</source>
         <translation>Importerar data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2426"/>
-        <location filename="../oscar/mainwindow.cpp" line="2430"/>
+        <location filename="../oscar/mainwindow.cpp" line="2431"/>
+        <location filename="../oscar/mainwindow.cpp" line="2435"/>
         <source>There was a problem opening %1 Data File: %2</source>
         <translation>Det var ett problem med att öppna %1 Datafil: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2429"/>
+        <location filename="../oscar/mainwindow.cpp" line="2434"/>
         <source>%1 Data Import of %2 file(s) complete</source>
         <translation>%1 Dataimporten av %2 fil/filer är färdig</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2431"/>
+        <location filename="../oscar/mainwindow.cpp" line="2436"/>
         <source>%1 Import Partial Success</source>
         <translation>%1 Importen är delvis lyckad</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2433"/>
+        <location filename="../oscar/mainwindow.cpp" line="2438"/>
         <source>%1 Data Import complete</source>
         <translation>%1 Dataimporten är färdig</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2853"/>
+        <location filename="../oscar/mainwindow.cpp" line="2878"/>
         <source>OSCAR Information</source>
         <translation>OSCAR Information</translation>
     </message>
@@ -1502,37 +1502,37 @@
         <translation>Laddar profile &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="985"/>
+        <location filename="../oscar/mainwindow.cpp" line="990"/>
         <source>Import is already running in the background.</source>
         <translation>Importen körs redan i bakgrunden.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="993"/>
+        <location filename="../oscar/mainwindow.cpp" line="998"/>
         <source>Would you like to import from this location?</source>
         <translation>Vill du importera härifrån?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1037"/>
+        <location filename="../oscar/mainwindow.cpp" line="1042"/>
         <source>Specify</source>
         <translation>Specificera</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2355"/>
+        <location filename="../oscar/mainwindow.cpp" line="2360"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Ordlistan öppnas i din standardwebbläsare</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1941"/>
+        <location filename="../oscar/mainwindow.cpp" line="1946"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>Observera, det här kan resultera i förlorade data om OSCAR&apos;s interna backup är avstängd.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1526"/>
+        <location filename="../oscar/mainwindow.cpp" line="1531"/>
         <source>The FAQ is not yet implemented</source>
         <translation>Vanliga frågor (FAQ) är inte i funktion för tillfället</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="977"/>
+        <location filename="../oscar/mainwindow.cpp" line="982"/>
         <source>No profile has been selected for Import.</source>
         <translation>Ingen profil har blivit markerad för import.</translation>
     </message>
@@ -1542,43 +1542,43 @@
         <translation>%1 (Profil: %2)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1067"/>
+        <location filename="../oscar/mainwindow.cpp" line="1072"/>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
         <translation>Kom ihåg att välja root-mappen eller enhetensbokstaven på minneskortet och inte en mapp på kortet.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1083"/>
+        <location filename="../oscar/mainwindow.cpp" line="1088"/>
         <source>Find your CPAP data card</source>
         <translation>Sök din CPAP:s minneskort</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1395"/>
+        <location filename="../oscar/mainwindow.cpp" line="1400"/>
         <source>Check for updates not implemented</source>
         <translation>Kontrollera uppdateringar som ej är genomförda</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1444"/>
+        <location filename="../oscar/mainwindow.cpp" line="1449"/>
         <source>Choose where to save screenshot</source>
         <translation>Välj vart du vill spara skärmdumpar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1444"/>
+        <location filename="../oscar/mainwindow.cpp" line="1449"/>
         <source>Image files (*.png)</source>
         <translation>Bildfiler (*.png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1518"/>
+        <location filename="../oscar/mainwindow.cpp" line="1523"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>Användarmanualen öpnnas i din standardwebbläsare</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1775"/>
-        <location filename="../oscar/mainwindow.cpp" line="1802"/>
+        <location filename="../oscar/mainwindow.cpp" line="1780"/>
+        <location filename="../oscar/mainwindow.cpp" line="1807"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>Om du kan läsa det här, så fungerar inte den automatiska omstarten. Du måste starta om manuellt.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1938"/>
+        <location filename="../oscar/mainwindow.cpp" line="1943"/>
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
@@ -1587,163 +1587,164 @@
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1948"/>
+        <location filename="../oscar/mainwindow.cpp" line="1953"/>
         <source>For some reason, OSCAR does not have any backups for the following machine:</source>
         <translation>Av någon anledning, så har inte OSCAR någon säkerhetskopia för följande maskiner:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2018"/>
+        <location filename="../oscar/mainwindow.cpp" line="2023"/>
         <source>OSCAR does not have any backups for this machine!</source>
         <translation>OSCAR har ingen backup för den här maskinen!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2019"/>
+        <location filename="../oscar/mainwindow.cpp" line="2024"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Såvida du inte har gjort &lt;i&gt;din &lt;b&gt;egen&lt;/b&gt; säkerhetskopia för ALLA dina data från den här maskinen&lt;/i&gt;, &lt;font size=+2&gt;så förlorar du den här maskinens data &lt;b&gt;permanent&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2025"/>
+        <location filename="../oscar/mainwindow.cpp" line="2030"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
         <translation>Du är på väg att &lt;font size=+2&gt;radera/förstöra&lt;/font&gt; OSCAR&apos;s maskin-databas för följande maskiner:&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2083"/>
+        <location filename="../oscar/mainwindow.cpp" line="2088"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>Åtkomst nekades under raderingsåtgärden, så följande katalog måste raderas manuellt:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2133"/>
+        <location filename="../oscar/mainwindow.cpp" line="2138"/>
         <source>No help is available.</source>
         <translation>Ingen hjälpfil är tillgänglig.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2654"/>
+        <location filename="../oscar/mainwindow.cpp" line="2659"/>
         <source>Export review is not yet implemented</source>
         <translation>Export-granskning är inte i funktion än</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2664"/>
+        <location filename="../oscar/mainwindow.cpp" line="2669"/>
         <source>Would you like to zip this card?</source>
         <translation>Vill du göra en zip-fil av det här kortet?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2686"/>
-        <location filename="../oscar/mainwindow.cpp" line="2737"/>
-        <location filename="../oscar/mainwindow.cpp" line="2788"/>
+        <location filename="../oscar/mainwindow.cpp" line="2691"/>
+        <location filename="../oscar/mainwindow.cpp" line="2762"/>
+        <location filename="../oscar/mainwindow.cpp" line="2813"/>
         <source>Choose where to save zip</source>
         <translation>Välj vart du vill spara zip-filen</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2686"/>
-        <location filename="../oscar/mainwindow.cpp" line="2737"/>
-        <location filename="../oscar/mainwindow.cpp" line="2788"/>
+        <location filename="../oscar/mainwindow.cpp" line="2691"/>
+        <location filename="../oscar/mainwindow.cpp" line="2762"/>
+        <location filename="../oscar/mainwindow.cpp" line="2813"/>
         <source>ZIP files (*.zip)</source>
         <translation>ZIP filer (*.zip)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2715"/>
-        <location filename="../oscar/mainwindow.cpp" line="2751"/>
-        <location filename="../oscar/mainwindow.cpp" line="2822"/>
+        <location filename="../oscar/mainwindow.cpp" line="2738"/>
+        <location filename="../oscar/mainwindow.cpp" line="2776"/>
+        <location filename="../oscar/mainwindow.cpp" line="2847"/>
         <source>Creating zip...</source>
         <translation>Skapa zip-fil...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2806"/>
+        <location filename="../oscar/mainwindow.cpp" line="2723"/>
+        <location filename="../oscar/mainwindow.cpp" line="2831"/>
         <source>Calculating size...</source>
         <translation>Beräknar storlek...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2844"/>
+        <location filename="../oscar/mainwindow.cpp" line="2869"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>Att rapportera ett problem är inte i funktion än</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1333"/>
+        <location filename="../oscar/mainwindow.cpp" line="1338"/>
         <source>Please open a profile first.</source>
         <translation>Öppna en profil först.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1950"/>
+        <location filename="../oscar/mainwindow.cpp" line="1955"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>Förutsett att du har gjort &lt;i&gt;en &lt;b&gt;egen&lt;/b&gt; backup för alla dina CPAP-data&lt;/i&gt;, så kan du fortfarande slutföra denna åtgärd. Men du måste återställa dina data manuellt från din backup.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1951"/>
+        <location filename="../oscar/mainwindow.cpp" line="1956"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Är du verkligen säker på att du vill göra detta?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1966"/>
+        <location filename="../oscar/mainwindow.cpp" line="1971"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>Därför att det finns ingen automatisk backup att återställa från, så du måste återställa från din egna.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1967"/>
+        <location filename="../oscar/mainwindow.cpp" line="1972"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
         <translation>Vill du återställa från din egen backup nu? (du kommer inte att se några data förrän du gör så)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2016"/>
+        <location filename="../oscar/mainwindow.cpp" line="2021"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Notera att som en försiktighetsåtgärd, kommer säkerhetskopierings-mappen att lämnas kvar på samma plats.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2028"/>
+        <location filename="../oscar/mainwindow.cpp" line="2033"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>Är du &lt;b&gt;helt säker&lt;/b&gt; att du vill fortsätta?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2632"/>
+        <location filename="../oscar/mainwindow.cpp" line="2637"/>
         <source>%1&apos;s Journal</source>
         <translation>%1&apos;s Journal</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2634"/>
+        <location filename="../oscar/mainwindow.cpp" line="2639"/>
         <source>Choose where to save journal</source>
         <translation>Välj vart du vill spara din journal</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2634"/>
+        <location filename="../oscar/mainwindow.cpp" line="2639"/>
         <source>XML Files (*.xml)</source>
         <translation>XML-filer (*.xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1454"/>
+        <location filename="../oscar/mainwindow.cpp" line="1459"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>Det uppstod ett fel när skärmdumpen skulle sparas till filen &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1456"/>
+        <location filename="../oscar/mainwindow.cpp" line="1461"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Skärmdumpen sparades till filen &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2546"/>
+        <location filename="../oscar/mainwindow.cpp" line="2551"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>Är du säker på att du vill ta bort oximetridata för %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2548"/>
+        <location filename="../oscar/mainwindow.cpp" line="2553"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;Tänk på att du INTE kan ångra den här åtgärden!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2578"/>
+        <location filename="../oscar/mainwindow.cpp" line="2583"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>Markera dagen med giltiga oximetridata i daglig vy först.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1338"/>
+        <location filename="../oscar/mainwindow.cpp" line="1343"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>Tillgång till Preferences har blockerats tills omräkning avslutas.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2340"/>
+        <location filename="../oscar/mainwindow.cpp" line="2345"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>Det var ett problem att öppna MSeries block fil: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2344"/>
+        <location filename="../oscar/mainwindow.cpp" line="2349"/>
         <source>MSeries Import complete</source>
         <translation>MSeries import är klar</translation>
     </message>
@@ -2109,7 +2110,7 @@
         <translation>&amp;Avsluta</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.cpp" line="450"/>
+        <location filename="../oscar/newprofile.cpp" line="452"/>
         <source>&amp;Close this window</source>
         <translation>&amp;Stäng detta fönster</translation>
     </message>
@@ -3520,6 +3521,11 @@ p, li { white-space: pre-wrap; }
         <translation>Textetikett</translation>
     </message>
     <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2213"/>
+        <source>I want to be notified of test versions. (Advanced users only please.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="2256"/>
         <source>&amp;Appearance</source>
         <translation>&amp;Utseende</translation>
@@ -3795,11 +3801,6 @@ Om du använder några olika masker, plocka medelvärden istället. Det bör for
         <location filename="../oscar/preferencesdialog.ui" line="2210"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation>Om du är intresserad av att testa nya funktioner, hitta buggar m,m, klicka här.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2213"/>
-        <source>I want to try experimental and test builds. (Advanced users only please.)</source>
-        <translation>Jag vill prova experimentella och testversioner. (Endast Avancerade användare.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2226"/>
@@ -5223,7 +5224,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="931"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1013"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>SensAwake</source>
         <translation>SensAwake</translation>
@@ -5660,21 +5661,21 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="720"/>
-        <location filename="../oscar/mainwindow.cpp" line="2407"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="723"/>
+        <location filename="../oscar/mainwindow.cpp" line="2412"/>
         <source>Importing Sessions...</source>
         <translation>Importerar inspelningar ...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="355"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="359"/>
         <source>Finishing up...</source>
         <translation>Avslutar...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="813"/>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="83"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="92"/>
         <source>Untested Data</source>
         <translation>Otestade data</translation>
     </message>
@@ -5690,7 +5691,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="431"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="434"/>
         <source>Machine Untested</source>
         <translation>Denna maskin är otestad</translation>
     </message>
@@ -6543,36 +6544,36 @@ TTIA: %1</translation>
         <translation>Laddar profile &quot;%1&quot;...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="928"/>
+        <location filename="../oscar/mainwindow.cpp" line="933"/>
         <source>Chromebook file system detected, but no removable device found
 </source>
         <translation>Chromebook filsystem upptäcktes, men ingen flyttbar enhet hittades
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="929"/>
+        <location filename="../oscar/mainwindow.cpp" line="934"/>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation>Du måste dela ditt Linux SD-kort med ChromeOS Fil-hanterare</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2201"/>
+        <location filename="../oscar/mainwindow.cpp" line="2206"/>
         <source>Sorry, your %1 %2 machine is not currently supported.</source>
         <translation>Ledsen, din %1 %2 maskin stöds för närvarande inte.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2208"/>
+        <location filename="../oscar/mainwindow.cpp" line="2213"/>
         <source>Recompressing Session Files</source>
         <translation>Återkomprimera sessionsfiler</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2696"/>
+        <location filename="../oscar/mainwindow.cpp" line="2701"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation>Välj en annan plats för din zip-kopia än själva datakortet!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2723"/>
-        <location filename="../oscar/mainwindow.cpp" line="2773"/>
-        <location filename="../oscar/mainwindow.cpp" line="2832"/>
+        <location filename="../oscar/mainwindow.cpp" line="2748"/>
+        <location filename="../oscar/mainwindow.cpp" line="2798"/>
+        <location filename="../oscar/mainwindow.cpp" line="2857"/>
         <source>Unable to create zip!</source>
         <translation>Kan inte skapa en zip-kopia!</translation>
     </message>
@@ -6927,7 +6928,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="948"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp</source>
         <translation>Ramp</translation>
@@ -7824,55 +7825,60 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>99.5%</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1536"/>
         <source>varies</source>
         <translation>varierar</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
         <source>%1%2</source>
         <translation>%1%2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1568"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1570"/>
         <source>n/a</source>
         <translation>Ej tillämplig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1585"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1587"/>
         <source>Fixed %1 (%2)</source>
         <translation>Fast %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1587"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1590"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>Min %1 Max %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1589"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1594"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation>EPAP %1 IPAP %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1591"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1598"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translation>PS %1 över %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1593"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1602"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1603"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1612"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translation>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1598"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1608"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1609"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1623"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation>EPAP %1 IPAP %2-%3 (%4)</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/day.cpp" line="1629"/>
+        <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
+        <translation type="unfinished">EPAP %1 IPAP %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
@@ -7956,7 +7962,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="236"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="240"/>
         <source>Reading data files...</source>
         <translation>Läser datafiler...</translation>
     </message>
@@ -8050,22 +8056,22 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>System One</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="524"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="527"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>Söker STR.edf fil(er)...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="685"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="688"/>
         <source>Cataloguing EDF Files...</source>
         <translation>Katalogisering av EDF-filer...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="704"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="707"/>
         <source>Queueing Import Tasks...</source>
         <translation>Köar importen...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="733"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="736"/>
         <source>Finishing Up...</source>
         <translation>Avslutar...</translation>
     </message>
@@ -8073,26 +8079,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>CPAP Mode</source>
         <translation>CPAP-inställning</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
-        <source>VPAP-T</source>
-        <translation>VPAP-T</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
-        <source>VPAP-S</source>
-        <translation>VPAP-S</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
-        <source>VPAP-S/T</source>
-        <translation>VPAP-S/T</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
-        <source>?5?</source>
-        <translation>?5?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="109"/>
@@ -8110,13 +8096,18 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>iVAPS</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
+        <source>PAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
         <source>Auto for Her</source>
         <translation>Auto for Her</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1019"/>
         <source>EPR</source>
         <translation>EPR</translation>
     </message>
@@ -8132,7 +8123,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1025"/>
         <source>EPR Level</source>
         <translation>EPR-nivå</translation>
     </message>
@@ -8150,11 +8141,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
         <source>Patient View</source>
         <translation>Patientvy</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
-        <source>?10?</source>
-        <translation>?10?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
@@ -8253,14 +8239,30 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Manuell</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Soft</source>
         <translation>Mjuk</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
         <source>Standard</source>
         <translation>Standard</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
+        <source>BiPAP-T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
+        <source>BiPAP-S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
+        <source>BiPAP-S/T</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
@@ -8278,27 +8280,27 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Smart Stop</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
         <source>Simple</source>
         <translation>Enkelt</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
         <source>Advanced</source>
         <translation>Avancerat</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="432"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="435"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
         <translation>Din ResMed CPAP maskin (Modell %1) är inte testad än.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="433"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="436"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
         <translation>Det ser ut som från andra maskiner, så det kan fungera, men utvecklarna vill gärna ha en .zip-kopia av den här maskinens SD-kort för att se till att det fungerar med OSCAR.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1200"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1203"/>
         <source>Parsing STR.edf records...</source>
         <translation>Analyserar STR.edf poster...</translation>
     </message>
@@ -8476,22 +8478,22 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Dreem</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="84"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="93"/>
         <source>Your Viatom device generated data that OSCAR has never seen before.</source>
         <translation>Din Viatom-enhet genererade data som OSCAR aldrig har sett förut.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="85"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="94"/>
         <source>The imported data may not be entirely accurate, so the developers would like a copy of your Viatom files to make sure OSCAR is handling the data correctly.</source>
         <translation>Den importerade informationen kanske inte är helt korrekt, så utvecklarna vill gärna ha en kopia av dina Viatom-filer för att se till att OSCAR hanterar data korrekt.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="41"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
         <source>Viatom</source>
         <translation>Viatom</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="41"/>
+        <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
         <source>Viatom Software</source>
         <translation>Viatom mjukvara</translation>
     </message>
@@ -8501,63 +8503,69 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Nya versioner är felaktigt utformade</translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="168"/>
-        <source>You are running the latest release of OSCAR</source>
-        <translation>Du kör den senaste versionen av OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/checkupdates.cpp" line="170"/>
+        <location filename="../oscar/checkupdates.cpp" line="175"/>
         <source>A more recent version of OSCAR is available</source>
         <translation>En nyare version av OSCAR finns tillgänglig</translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="171"/>
-        <source>You are running version %1</source>
-        <translation>Du kör version %1</translation>
+        <location filename="../oscar/checkupdates.cpp" line="170"/>
+        <source>release</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="173"/>
+        <location filename="../oscar/checkupdates.cpp" line="170"/>
+        <source>test version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/checkupdates.cpp" line="171"/>
+        <source>You are running the latest %1 of OSCAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/checkupdates.cpp" line="172"/>
+        <location filename="../oscar/checkupdates.cpp" line="176"/>
+        <source>You are running OSCAR %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/checkupdates.cpp" line="178"/>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
         <translation>OSCAR %1 är tillgänglig &lt;a href=&apos;%2&apos;&gt;här&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="176"/>
+        <location filename="../oscar/checkupdates.cpp" line="181"/>
         <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
         <translation>Information om nyare testversion %1 finns på &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="183"/>
-        <source>(Reading %1 took %2 seconds)</source>
-        <translation>(Att läsa %1 tog %2 sekunder)</translation>
-    </message>
-    <message>
-        <location filename="../oscar/checkupdates.cpp" line="204"/>
+        <location filename="../oscar/checkupdates.cpp" line="209"/>
         <source>Check for OSCAR Updates</source>
         <translation>Kontrollera för uppdateringar till OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/checkupdates.cpp" line="266"/>
+        <location filename="../oscar/checkupdates.cpp" line="276"/>
         <source>Unable to check for updates. Please try again later.</source>
         <translation>Kan inte söka efter uppdateringar, försök igen senare.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="929"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="930"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1011"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1012"/>
         <source>SensAwake level</source>
         <translation>SenseAwake nivå</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="937"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1019"/>
         <source>Expiratory Relief</source>
         <translation>Trycklättnad utandning</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1025"/>
         <source>Expiratory Relief Level</source>
         <translation>Trycklättnad utandning nivå</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="955"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1037"/>
         <source>Humidity</source>
         <translation>Befuktning</translation>
     </message>
