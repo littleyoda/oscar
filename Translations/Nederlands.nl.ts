@@ -72,7 +72,7 @@
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="127"/>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
-        <translation>Dit is nog geen uiteindelijke versie, dus maak een backup van de map OSCAR-Data voordat U verder gaat. Dan kunt U terugvallen op een vorige versie.
+        <translation>Dit is nog geen uiteindelijke versie, dus &lt;b&gt; maak een backup van de map OSCAR-Data&lt;/b&gt; voordat U verder gaat. Dan kunt U terugvallen op een vorige versie.
 &lt;b&gt;U vindt de vertaling van onderstaande lijst in de wiki van OSCAR, zie hieronder.&lt;/b&gt;</translation>
     </message>
     <message>
@@ -3613,7 +3613,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
+<<<<<<< HEAD
+        <translation>Ik wil meldingen voor testversies ontvangen (Indien aangemeld als tester)</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2256"/>
@@ -7844,7 +7848,11 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1629"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
+<<<<<<< HEAD
+        <translation>EPAP %1-%2 IPAP %3-%4 (%5)</translation>
+=======
         <translation type="unfinished">EPAP: %1 IPAP: %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="176"/>
@@ -8101,7 +8109,11 @@ Gaarne gegevens opnieuw inlezen</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>PAC</source>
+<<<<<<< HEAD
+        <translation>PAC</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8255,17 +8267,29 @@ Gaarne gegevens opnieuw inlezen</translation>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>BiPAP-T</source>
+<<<<<<< HEAD
+        <translation>BiPAP-T</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
         <source>BiPAP-S</source>
+<<<<<<< HEAD
+        <translation>BiPAP-S</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <source>BiPAP-S/T</source>
+<<<<<<< HEAD
+        <translation>BiPAP-S/T</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
@@ -8586,23 +8610,39 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>release</source>
+<<<<<<< HEAD
+        <translation>release</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>test version</source>
+<<<<<<< HEAD
+        <translation>testversie</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running the latest %1 of OSCAR</source>
+<<<<<<< HEAD
+        <translation>U gebruikt de nieuwste %1 van OSCAR</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="172"/>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>You are running OSCAR %1</source>
+<<<<<<< HEAD
+        <translation>U gebruikt OSCAR %1</translation>
+=======
         <translation type="unfinished"></translation>
+>>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="178"/>
