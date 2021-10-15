@@ -3597,11 +3597,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
-<<<<<<< HEAD
         <translation>테스트 버전에 대한 알림을 받고 싶습니다. (고급 사용자만 해당)</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2256"/>
@@ -3773,11 +3769,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2210"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
-<<<<<<< HEAD
         <translation>새로운 기능 및 버그 수정을 조기에 테스트하려면 여기를 클릭하십시오.</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2226"/>
@@ -7753,11 +7745,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1629"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
-<<<<<<< HEAD
         <translation>EPAP(날숨) %1-%2 IPAP(들숨) %3-%4 (%5)</translation>
-=======
-        <translation type="unfinished">EPAP(날숨) %1 IPAP(들숨) %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="176"/>
@@ -8506,20 +8494,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="175"/>
         <source>A more recent version of OSCAR is available</source>
-<<<<<<< HEAD
         <translation>오스카의 최신 버전을 사용할 수 있습니다</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>release</source>
-<<<<<<< HEAD
         <translation>릴리즈</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
@@ -8529,26 +8509,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running the latest %1 of OSCAR</source>
-<<<<<<< HEAD
         <translation>오스카의 최신 %1을 실행하고 있습니다</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="172"/>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>You are running OSCAR %1</source>
-<<<<<<< HEAD
         <translation>OscAR %1을 실행하고 있습니다</translation>
-=======
-        <translation type="unfinished"></translation>
->>>>>>> master
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="178"/>
         <source>OSCAR %1 is available &lt;a href=&apos;%2&apos;&gt;here&lt;/a&gt;.</source>
-<<<<<<< HEAD
         <translation>OSCAR %1 이용할수 있다 &lt;a href=&apos;%2&apos;&gt;여기&lt;/a&gt;.</translation>
     </message>
     <message>
@@ -8557,16 +8528,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>최신 테스트 버전 %1에 대한 정보는 &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;에서 확인할 수 있다</translation>
     </message>
     <message>
-=======
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/checkupdates.cpp" line="181"/>
-        <source>Information about more recent test version %1 is available at &lt;a href=&apos;%2&apos;&gt;%2&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
->>>>>>> master
         <location filename="../oscar/checkupdates.cpp" line="209"/>
         <source>Check for OSCAR Updates</source>
         <translation>오스카 업데이트 확인</translation>
