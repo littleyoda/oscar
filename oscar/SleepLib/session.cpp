@@ -1225,6 +1225,11 @@ void Session::UpdateSummaries()
 
 EventDataType Session::SearchValue(ChannelID code, qint64 time, bool square)
 {
+    qint64 drift = qint64(p_profile->cpap->clockDrift()) * 1000L;
+    // Address clock drift for CPAP so correct value is displayed
+    if (s_machine->type() == MT_CPAP) {
+        time -= drift;
+    }
     qint64 t1, t2, start;
     QHash<ChannelID, QVector<EventList *> >::iterator it;
     it = eventlist.find(code);
@@ -1253,13 +1258,15 @@ EventDataType Session::SearchValue(ChannelID code, qint64 time, bool square)
 
                     a = el->data(i1);
 
-                    if (i2 >= cnt) { return a; }
+                    // Don't interpolate if next data point is past end or on exact data point
+                    if (i2 >= cnt || i1 == i2) { return a; }
 
                     qint64 t1 = i1 * el->rate();
                     qint64 t2 = i2 * el->rate();
 
                     c = EventDataType(t2 - t1);
-                    if (c == 0) return 0;
+                    // Don't interpolate if t2-t1==0 (should be caught by i1==i2 above)
+                    if (c == 0) return a;
                     d = EventDataType(t2 - tt);
 
                     e = d/c;
