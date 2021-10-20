@@ -202,14 +202,12 @@ EventDataType Day::countInsideSpan(ChannelID span, ChannelID code)
 
 EventDataType Day::lookupValue(ChannelID code, qint64 time, bool square)
 {
-    // Remove drift from CPAP graphs so we get the right value...
-    qint64 clockdrift = qint64(p_profile->cpap->clockDrift()) * 1000L;
     for (auto & sess : sessions) {
         if (sess->enabled()) {
-            qint64 drift = (sess->type() == MT_CPAP?clockdrift:0);
-            if ((time-drift > sess->first()) && (time-drift < sess->last())) {
+            // drift is handled by session first/last/SearchValue
+            if ((time > sess->first()) && (time < sess->last())) {
                 if (sess->channelExists(code)) {
-                    return sess->SearchValue(code,time-drift,square);
+                    return sess->SearchValue(code,time,square);
                 }
             }
         }
