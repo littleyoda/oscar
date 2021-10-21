@@ -35,8 +35,114 @@ FPIconLoader::~FPIconLoader()
 {
 }
 
+/*
+ * getIconDir - returns the path to the ICON directory
+ */
+QString getIconDir2 (QString givenpath) {
+
+    QString path = givenpath;
+
+    path = path.replace("\\", "/");
+
+    if (path.endsWith("/")) {
+        path.chop(1);
+    }
+
+    if (path.endsWith("/" + FPHCARE)) {
+        path = path.section("/",0,-2);
+    }
+
+    QDir dir(path);
+
+    if (!dir.exists()) {
+        return "";
+    }
+
+    // If this is a backup directory, higher level directories have been
+    // omitted.
+    if (path.endsWith("/Backup/", Qt::CaseInsensitive))
+        return path;
+
+    // F&P Icon have a folder called FPHCARE in the root directory
+    if (!dir.exists(FPHCARE)) {
+        return "";
+    }
+
+    // CHECKME: I can't access F&P ICON data right now
+    if (!dir.exists("FPHCARE/ICON")) {
+        return "";
+    }
+
+    return dir.filePath("FPHCARE/ICON");
+}
+
+/*
+ * getIconMachines returns a list of all Iocn machine folders in the ICON directory
+ */
+QStringList getIconMachines (QString iconPath) {
+    QStringList iconMachines;
+
+    QDir iconDir (iconPath);
+
+    iconDir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    iconDir.setSorting(QDir::Name);
+
+    QFileInfoList flist = iconDir.entryInfoList();   // List of Icon subdirectories
+
+    // Walk though directory list and save those that appear to be for SleepStyle machins.
+    for (int i = 0; i < flist.size(); i++) {
+        QFileInfo fi = flist.at(i);
+        QString filename = fi.fileName();
+
+        // directory is serial number and must have a SUM*.FPH file within it to be an Icon or SleepStyle folder
+
+        QDir machineDir (iconPath + "/" + filename);
+        machineDir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+        machineDir.setSorting(QDir::Name);
+        QStringList filters;
+        filters << "SUM*.fph";
+        machineDir.setNameFilters(filters);
+        QFileInfoList flist = machineDir.entryInfoList();
+        if (flist.size() <= 0) {
+            continue;
+        }
+
+        // Find out what machine model this is
+        QFile sumFile (flist.at(0).absoluteFilePath());
+
+        QString line;
+
+        sumFile.open(QIODevice::ReadOnly);
+        QTextStream instr(&sumFile);
+        for (int j = 0; j < 5; j++) {
+            line = "";
+            QString c = "";
+            while ((c = instr.read(1)) != "\r") {
+                line += c;
+            }
+        }
+        sumFile.close();
+        if (line.toUpper() == "ICON")
+            iconMachines.push_back(filename);
+
+    }
+
+    return iconMachines;
+}
+
 bool FPIconLoader::Detect(const QString & givenpath)
 {
+    QString iconPath = getIconDir2(givenpath);
+    if (iconPath.isEmpty())
+        return false;
+
+    QStringList machines = getIconMachines(iconPath);
+    if (machines.length() <= 0)
+        // Did not find any SleepStyle machine directories
+        return false;
+
+    return true;
+/****
     QString path = givenpath;
     
     path = path.replace("\\", "/");
@@ -87,66 +193,32 @@ bool FPIconLoader::Detect(const QString & givenpath)
         }
     }
     return true;
+****/
 }
 
 
 int FPIconLoader::Open(const QString & path)
 {
-    QString tmp = path;
+    QString iconPath = getIconDir2(path);
+    if (iconPath.isEmpty())
+        return false;
 
-    tmp = tmp.replace("\\", "/");
-    if (tmp.endsWith("/")) {
-        tmp.chop(1);
-    }
-
-    QString newpath;
-
-    if (tmp.endsWith("/" + FPHCARE)) {
-        newpath = tmp;
-    } else {
-        newpath = tmp + "/" + FPHCARE;
-    }
-
-    newpath += "/ICON/";
-
-    QString filename;
-
-    QDir dir(newpath);
-
-    if ((!dir.exists() || !dir.isReadable())) {
-        return -1;
-    }
-
-    dir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-    dir.setSorting(QDir::Name);
-    QFileInfoList flist = dir.entryInfoList();
-
-    QStringList SerialNumbers;
-
-    bool ok;
-
-    for (int i = 0; i < flist.size(); i++) {
-        QFileInfo fi = flist.at(i);
-        QString filename = fi.fileName();
-
-        filename.toInt(&ok);
-
-        if (ok) {
-            SerialNumbers.push_back(filename);
-        }
-    }
+    QStringList serialNumbers = getIconMachines(iconPath);
+    if (serialNumbers.length() <= 0)
+        // Did not find any SleepStyle machine directories
+        return false;
 
     Machine *m;
 
     QString npath;
 
     int c = 0;
-    for (int i = 0; i < SerialNumbers.size(); i++) {
+    for (int i = 0; i < serialNumbers.size(); i++) {
         MachineInfo info = newInfo();
-        info.serial = SerialNumbers[i];
+        info.serial = serialNumbers[i];
         m = p_profile->CreateMachine(info);
 
-        npath = newpath + "/" + info.serial;
+        npath = iconPath + "/" + info.serial;
 
         try {
             if (m) {

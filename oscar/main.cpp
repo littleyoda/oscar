@@ -666,8 +666,8 @@ int main(int argc, char *argv[]) {
     PRS1Loader::Register();
     ResmedLoader::Register();
     IntellipapLoader::Register();
-    FPIconLoader::Register();
     SleepStyleLoader::Register();
+    FPIconLoader::Register();
     WeinmannLoader::Register();
     CMS50Loader::Register();
     CMS50F37Loader::Register();
