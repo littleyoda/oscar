@@ -95,38 +95,47 @@ QStringList getSleepStyleMachines (QString iconPath) {
 
     QDir iconDir (iconPath);
 
-    // SleepStyle are mixed alpha and numeric; ICON serial numbers (directory names) are all digits
     iconDir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     iconDir.setSorting(QDir::Name);
 
     QFileInfoList flist = iconDir.entryInfoList();   // List of Icon subdirectories
 
-    bool isIconFilename;
-
     // Walk though directory list and save those that appear to be for SleepStyle machins.
     for (int i = 0; i < flist.size(); i++) {
         QFileInfo fi = flist.at(i);
         QString filename = fi.fileName();
-        filename.toInt(&isIconFilename);
-        if (isIconFilename) // Ignore this directory if named as used for older F&P Icon machine
-            continue;
-        if (filename.length() < 8)  // F&P machine names are 8 characters long, but we allow more just in case...
-            continue;
 
-        // directory is serial number and must not be all digits (which would make it an ICON directory)
-        // and it must have *.FPH files within it to be a SleepStyle folder
+        // directory is serial number and must have a SUM*.FPH file within it to be an Icon or SleepStyle folder
 
         QDir machineDir (iconPath + "/" + filename);
         machineDir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
         machineDir.setSorting(QDir::Name);
         QStringList filters;
-        filters << "*.fph";
+        filters << "SUM*.fph";
         machineDir.setNameFilters(filters);
         QFileInfoList flist = machineDir.entryInfoList();
         if (flist.size() <= 0) {
             continue;
         }
-        ssMachines.push_back(filename);
+
+        // Find out what machine model this is
+        QFile sumFile (flist.at(0).absoluteFilePath());
+
+        QString line;
+
+        sumFile.open(QIODevice::ReadOnly);
+        QTextStream instr(&sumFile);
+        for (int j = 0; j < 5; j++) {
+            line = "";
+            QString c = "";
+            while ((c = instr.read(1)) != "\r") {
+                line += c;
+            }
+        }
+        sumFile.close();
+        if (line.toUpper() == "SLEEPSTYLE")
+            ssMachines.push_back(filename);
+
     }
 
     return ssMachines;
