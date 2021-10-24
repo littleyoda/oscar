@@ -2,6 +2,7 @@
  *
  * Date created: 7/5/2018
  *
+ * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (c) 2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -76,6 +77,10 @@ QString AboutDialog::getFilename(QString name)
     return filename;
 }
 
+QString transLink (QString text) {
+    return text.replace("This page in other languages:", QObject::tr("This page in other languages:"));
+}
+
 QString AboutDialog::getAbout()
 {
     QString aboutFile = getFilename("about");
@@ -83,6 +88,7 @@ QString AboutDialog::getAbout()
     QString text = tr("Sorry, could not locate About file.");
     if (clfile.open(QIODevice::ReadOnly)) {
         text = clfile.readAll();
+        text = transLink(text);
     } else
         qWarning() << "Could not open" << aboutFile << "for reading, error code" << clfile.error() << clfile.errorString();
 //        qDebug() << "Failed to open About file";
@@ -97,6 +103,7 @@ QString AboutDialog::getCredits()
     QString text = tr("Sorry, could not locate Credits file.");
     if (clfile.open(QIODevice::ReadOnly)) {
         text = clfile.readAll();
+        text = transLink(text);
     } else {
         qWarning() << "Could not open" << creditsFile << "for reading, error code" << clfile.error() << clfile.errorString();
     }
@@ -128,6 +135,7 @@ QString AboutDialog::getRelnotes()
     }
     text += changeLog;
     text += "</body></html>";
+    text = transLink(text);
     return text;
 }
 
