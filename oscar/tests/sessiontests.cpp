@@ -196,6 +196,8 @@ static QString eventChannel(ChannelID i)
         CHANNELNAME(CPAP_FLG);
         CHANNELNAME(CPAP_AHI);
         CHANNELNAME(CPAP_TgMV);
+        // Calculated channels
+        CHANNELNAME(CPAP_RDI);
         s = hex(i);
         qDebug() << "event channel" << qPrintable(s);
     } while(false);

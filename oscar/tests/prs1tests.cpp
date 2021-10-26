@@ -14,6 +14,7 @@
 #include "../SleepLib/importcontext.h"
 
 #define TESTDATA_PATH "./testdata/"
+//#define TEST_OSCAR_CALCS
 
 static PRS1Loader* s_loader = nullptr;
 static void iterateTestCards(const QString & root, void (*action)(const QString &));
@@ -24,6 +25,12 @@ void PRS1Tests::initTestCase(void)
 {
     p_profile = new Profile(TESTDATA_PATH "profile/", false);
 
+#ifdef TEST_OSCAR_CALCS
+    p_pref = new Preferences("Preferences");
+    p_pref->Open();
+    AppSetting = new AppWideSetting(p_pref);
+#endif
+
     schema::init();
     PRS1Loader::Register();
     s_loader = dynamic_cast<PRS1Loader*>(lookupLoader(prs1_class_name));
@@ -33,6 +40,9 @@ void PRS1Tests::cleanupTestCase(void)
 {
     delete p_profile;
     p_profile = nullptr;
+#ifdef TEST_OSCAR_CALCS
+    delete p_pref;
+#endif
 }
 
 
@@ -117,6 +127,10 @@ void parseAndEmitSessionYaml(const QString & path)
         // Emit the parsed session data to compare against our regression benchmarks
         Session* session = import->session;
         QString outpath = prs1OutputPath(path, m->serial(), session->session(), "-session.yml");
+#ifdef TEST_OSCAR_CALCS
+        session->s_events_loaded = true;
+        session->UpdateSummaries();
+#endif
         SessionToYaml(outpath, session, ok);
         
         delete session;

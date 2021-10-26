@@ -1254,8 +1254,7 @@ protected:
     }
     EventDataType findValueAtOrBefore(qint64 time)
     {
-        // curTime is always <= time, due to eventlist first/last search and m_curEvent reset.
-        qint64 curTime = m_curEventList->time(m_curEvent);
+        // m_curEvent is always <= time, due to eventlist first/last search and m_curEvent reset.
         for (quint32 i = m_curEvent + 1; i < m_curEventList->count(); i++) {
             qint64 nextTime = m_curEventList->time(i);
             if (nextTime > time) {
@@ -1264,7 +1263,6 @@ protected:
             }
             // else nextTime <= time, advance
             m_curEvent = i;
-            curTime = nextTime;
         }
         EventDataType result = m_curEventList->data(m_curEvent);
         return result;
