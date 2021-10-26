@@ -737,7 +737,10 @@ int PRS1Loader::Open(const QString & selectedPath)
             qWarning() << "PRS1Loader::Open() called without a valid m_ctx object present";
             return 0;
         }
-        c += OpenMachine(machinePath);
+        int imported = OpenMachine(machinePath);
+        if (imported > 0) {  // don't let errors < 0 suppress subsequent successes
+            c += imported;
+        }
         m_ctx->FlushUnexpectedMessages();
     }
     return c;
