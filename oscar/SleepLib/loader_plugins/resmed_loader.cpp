@@ -466,7 +466,7 @@ int ResmedLoader::Open(const QString & dirpath)
     // Copy the idmap into machine objects properties, (overwriting any old values)
     ///////////////////////////////////////////////////////////////////////////////////
     for (auto i=idmap.begin(), idend=idmap.end(); i != idend; i++) {
-        mach->properties[i.key()] = i.value();
+        mach->info.properties[i.key()] = i.value();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////

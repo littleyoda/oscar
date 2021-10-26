@@ -257,7 +257,7 @@ bool Profile::OpenMachines()
 
         m = CreateMachine(info, m_id);
 
-        if (m) m->properties = prop;
+        if (m) m->info.properties = prop;
 
         elem = elem.nextSiblingElement();
     }
@@ -282,7 +282,7 @@ bool Profile::StoreMachines()
         QDomElement pe = doc.createElement("properties");
         me.appendChild(pe);
 
-        for (QHash<QString, QString>::iterator j = m->properties.begin(); j != m->properties.end(); j++) {
+        for (QHash<QString, QString>::iterator j = m->info.properties.begin(); j != m->info.properties.end(); j++) {
             QDomElement pp = doc.createElement(j.key());
             pp.appendChild(doc.createTextNode(j.value()));
             pe.appendChild(pp);

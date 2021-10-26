@@ -676,7 +676,7 @@ bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Ma
         }
         if (!mach || skip) continue;
 
-        mach->properties[key] = props[key];
+        mach->info.properties[key] = props[key];
     };
 
     if (!modelnum.isEmpty()) {

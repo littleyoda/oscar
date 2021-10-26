@@ -126,6 +126,9 @@ struct MachineInfo {
     QDateTime lastimported;
     int version;
     QDate purgeDate;
+
+    //! \brief List of text machine properties, like brand, model, etc...
+    QHash<QString, QString> properties;
 };
 
 

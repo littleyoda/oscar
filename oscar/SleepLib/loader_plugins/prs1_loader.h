@@ -136,8 +136,6 @@ protected:
     // State that needs to persist between individual events:
     EventDataType m_currentPressure;
     bool m_calcPSfromSet;
-    bool m_calcLeaks;
-    EventDataType m_lpm4, m_ppm;
 
     //! \brief Advance the current mask-on slice if needed and update import data structures accordingly.
     bool UpdateCurrentSlice(PRS1DataChunk* chunk, qint64 t);

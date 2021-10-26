@@ -259,9 +259,6 @@ class Machine
     //! \brief Contains all sessions for this machine, indexed by SessionID
     QHash<SessionID, Session *> sessionlist;
 
-    //! \brief List of text machine properties, like brand, model, etc...
-    QHash<QString, QString> properties;
-
     //! \brief The list of sessions that need saving (for multithreaded save code)
 //  QList<Session *> m_savelist;
 

@@ -1,4 +1,4 @@
-﻿/* SleepLib (DeVilbiss) Intellipap Loader Implementation
+/* SleepLib (DeVilbiss) Intellipap Loader Implementation
  *
  * Notes: Intellipap DV54 requires the SmartLink attachment to access this data.
  *
@@ -260,7 +260,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
 
     // Refresh properties data..
     for (QHash<QString, QString>::iterator i = set1.begin(); i != set1.end(); i++) {
-        mach->properties[i.key()] = i.value();
+        mach->info.properties[i.key()] = i.value();
     }
 
     f.close();
