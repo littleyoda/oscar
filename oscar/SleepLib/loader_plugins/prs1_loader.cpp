@@ -650,7 +650,7 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
     return props.size() > 0;
 }
 
-bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Machine * mach)
+bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename)
 {
     QHash<QString,QString> props;
     if (!PeekProperties(filename, props)) {
@@ -674,9 +674,9 @@ bool PRS1Loader::PeekProperties(MachineInfo & info, const QString & filename, Ma
             if (!ok) qWarning() << "ProductType" << props[key];
             skip = true;
         }
-        if (!mach || skip) continue;
+        if (skip) continue;
 
-        mach->info.properties[key] = props[key];
+        info.properties[key] = props[key];
     };
 
     if (!modelnum.isEmpty()) {
@@ -769,8 +769,8 @@ int PRS1Loader::OpenMachine(const QString & path)
     int sessionid_base;
     sessionid_base = FindSessionDirsAndProperties(path, paths, propertyfile);
 
-    Machine *m = CreateMachineFromProperties(propertyfile);
-    if (m == nullptr) {
+    bool supported = CreateMachineFromProperties(propertyfile);
+    if (!supported) {
         // Device is unsupported.
         return -1;
     }
@@ -838,7 +838,7 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 }
 
 
-Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
+bool PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
     MachineInfo info = newInfo();
     QHash<QString,QString> props;
@@ -858,7 +858,7 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
             info.modelnumber = QObject::tr("unknown model");
         }
         emit deviceIsUnsupported(info);
-        return nullptr;
+        return false;
     }
 
     // Have a peek first to get the model number.
@@ -869,17 +869,14 @@ Machine* PRS1Loader::CreateMachineFromProperties(QString propertyfile)
     }
 
     // Which is needed to get the right machine record..
-    Machine *m = m_ctx->CreateMachineFromInfo(info);
+    m_ctx->CreateMachineFromInfo(info);
 
-    // This time supply the machine object so it can populate machine properties..
-    PeekProperties(m->info, propertyfile, m);
-    
     if (!s_PRS1ModelInfo.IsTested(props)) {
         qDebug() << info.modelnumber << "untested";
         emit deviceIsUntested(info);
     }
 
-    return m;
+    return true;
 }
 
 
