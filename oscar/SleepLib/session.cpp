@@ -1143,7 +1143,7 @@ void Session::updateCountSummary(ChannelID code)
         using namespace schema;
         Channel *ch_p = channel.channels[code];
         if (  ! ch_p->isNull() ) {                      // the channel was found in the channel list
-            if ( ((ch_p->type() & (FLAG|SPAN)) == 0) ) {  // the channel is not a flag or span type
+            if ( ((ch_p->type() & (FLAG|SPAN|MINOR_FLAG)) == 0) ) {  // the channel is not a flag or span type
                 qDebug() << "No valuesummary for channel " << ch_p->label();    // so tell about missing summary
             }
         } else {
