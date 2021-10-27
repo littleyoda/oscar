@@ -1547,69 +1547,6 @@ void MainWindow::on_action_Frequently_Asked_Questions_triggered()
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("The FAQ is not yet implemented"));
 }
 
-void packEventList(EventList *el, EventDataType minval = 0)
-{
-    if (el->count() < 2) { return; }
-
-    EventList nel(EVL_Waveform);
-    EventDataType t = 0, lastt = 0; //el->data(0);
-    qint64 ti = 0; //=el->time(0);
-    //nel.AddEvent(ti,lastt);
-    bool f = false;
-    qint64 lasttime = 0;
-    EventDataType min = 999, max = 0;
-
-    for (quint32 i = 0; i < el->count(); i++) {
-        t = el->data(i);
-        ti = el->time(i);
-        f = false;
-
-        if (t > minval) {
-            if (t != lastt) {
-                if (!lasttime) {
-                    nel.setFirst(ti);
-                }
-
-                nel.AddEvent(ti, t);
-
-                if (t < min) { min = t; }
-
-                if (t > max) { max = t; }
-
-                lasttime = ti;
-                f = true;
-            }
-        } else {
-            if (lastt > minval) {
-                nel.AddEvent(ti, lastt);
-                lasttime = ti;
-                f = true;
-            }
-        }
-
-
-        lastt = t;
-    }
-
-    if (!f) {
-        if (t > minval) {
-            nel.AddEvent(ti, t);
-        }
-    }
-
-    el->setFirst(nel.first());
-    el->setLast(nel.last());
-    el->setMin(min);
-    el->setMax(max);
-
-    el->getData().clear();
-    el->getTime().clear();
-    el->setCount(nel.count());
-
-    el->getData() = nel.getData();
-    el->getTime() = nel.getTime();
-}
-
 void MainWindow::on_action_Rebuild_Oximetry_Index_triggered()
 {
     QVector<ChannelID> valid;
@@ -1708,8 +1645,6 @@ void MainWindow::on_action_Rebuild_Oximetry_Index_triggered()
                     }
 
                     for (int i = 0; i < newlist.size(); i++) {
-                        packEventList(newlist[i], 8);
-
                         EventList *el = newlist[i];
 
                         if (!f || f > el->first()) { f = el->first(); }
