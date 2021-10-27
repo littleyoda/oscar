@@ -1549,13 +1549,6 @@ void MainWindow::on_action_Frequently_Asked_Questions_triggered()
 
 void MainWindow::on_action_Rebuild_Oximetry_Index_triggered()
 {
-    QVector<ChannelID> valid;
-    valid.push_back(OXI_Pulse);
-    valid.push_back(OXI_SPO2);
-    valid.push_back(OXI_Plethy);
-    //valid.push_back(OXI_PulseChange); // Delete these and recalculate..
-    //valid.push_back(OXI_SPO2Drop);
-
     QVector<ChannelID> invalid;
 
     QList<Machine *> machines = p_profile->GetMachines(MT_OXIMETER);
@@ -1568,6 +1561,9 @@ void MainWindow::on_action_Rebuild_Oximetry_Index_triggered()
     for (int z = 0; z < machines.size(); z++) {
         m = machines.at(z);
         //m->sessionlist.erase(m->sessionlist.find(0));
+        QList<ChannelID> valid = m->availableChannels(schema::ChanType::ALL);
+        valid.removeAll(OXI_PulseChange);  // Delete only these and recalculate.
+        valid.removeAll(OXI_SPO2Drop);
 
         // For each Session
         for (QHash<SessionID, Session *>::iterator s = m->sessionlist.begin(); s != m->sessionlist.end();
@@ -1596,44 +1592,6 @@ void MainWindow::on_action_Rebuild_Oximetry_Index_triggered()
                     e.value().clear();
                     invalid.push_back(e.key());
                 } else {
-                    // Valid event
-
-
-                    //                    // Clean up outliers at start of eventlist chunks
-                    //                    EventDataType baseline=sess->wavg(OXI_SPO2);
-                    //                    if (e.key()==OXI_SPO2) {
-                    //                        const int o2start_threshold=10000; // seconds since start of event
-
-                    //                        EventDataType zz;
-                    //                        int ii;
-
-                    //                        // Trash suspect outliers in the first o2start_threshold milliseconds
-                    //                        for (int j=0;j<e.value().size();j++) {
-                    //                            EventList *ev=e.value()[j];
-                    //                            if ((ev->count() <= (unsigned)discard_threshold))
-                    //                                continue;
-
-                    //                            qint64 ti=ev->time(0);
-
-                    //                            zz=-1;
-                    //                            // Peek o2start_threshold ms ahead and grab the value
-                    //                            for (ii=0;ii<ev->count();ii++) {
-                    //                                if (((ev->time(ii)-ti) > o2start_threshold)) {
-                    //                                    zz=ev->data(ii);
-                    //                                    break;
-                    //                                }
-                    //                            }
-                    //                            if (zz<0)
-                    //                                continue;
-                    //                            // Trash any suspect outliers
-                    //                            for (int i=0;i<ii;i++) {
-                    //                                if (ev->data(i) < baseline) { //(zz-10)) {
-
-                    //                                    ev->getData()[i]=0;
-                    //                                }
-                    //                            }
-                    //                        }
-                    //                    }
                     QVector<EventList *> newlist;
 
                     for (int i = 0; i < e.value().size(); i++)  {
