@@ -607,6 +607,6 @@ macx {
 
     # Add a dist-mac target to build the distribution .dmg.
     QMAKE_EXTRA_TARGETS += dist-mac
-    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/../Building/MacOS/create_dmg $${TARGET} $${TARGET}.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd
+    dist-mac.commands = QT_BIN=$$[QT_INSTALL_PREFIX]/bin $$_PRO_FILE_PWD_/../Building/MacOS/create_dmg $${TARGET} $${TARGET}.app $$_PRO_FILE_PWD_/../Building/MacOS/README.rtfd $$_PRO_FILE_PWD_/../Building/MacOS/background.png
     dist-mac.depends = $${TARGET}.app/Contents/MacOS/$${TARGET}
 }

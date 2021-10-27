@@ -1,8 +1,6 @@
 #!/bin/bash
 # Usage: create_dmg target_name file1 [file2...]
 
-# TODO: add background image and symlink to /Applications, once we have a signed app and no longer need the README
-
 STAGING_DIR="./Staging"
 
 # Extract the target name
@@ -11,9 +9,11 @@ shift
 
 # Look for the .app in the files to be added to the .dmg
 APP=""
+BACKGROUND_IMG=""
 for src in "$@"
 do
     [[ "$src" == *.app ]] && APP="$src"
+    [[ "$src" == *background.png ]] && BACKGROUND_IMG="$src"
 done
 
 if [[ ${APP} != "" ]]; then
@@ -52,7 +52,69 @@ do
     cp -a "$src" "${STAGING_DIR}/."
 done
 
+VOL_NAME="${TARGET} ${VERSION} Installer"
 echo "Creating .dmg"
-hdiutil create -srcfolder "${STAGING_DIR}" -volname "${TARGET}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}-${VERSION}.dmg" -ov
+
+if [[ ${BACKGROUND_IMG} == "" ]]; then
+  hdiutil create -srcfolder "${STAGING_DIR}" -volname "${VOL_NAME}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDZO -imagekey zlib-level=9 -o "${TARGET}-${VERSION}.dmg" -ov
+else
+  # Arrange the files needed for a custom Finder display.
+  pushd "${STAGING_DIR}" > /dev/null
+
+  # Add a link to /Applications
+  echo "Add link to /Applications"
+  ln -s /Applications
+
+  # Add a hidden .background folder and move the png to it
+  echo "Move background.png into position"
+  mkdir .background
+  mv background.png .background/background.png
+
+  popd > /dev/null
+
+  # Create a temporary image then mount it so we can tell Finder how to display it.
+
+  TARGET_TMP="${TARGET}-${VERSION}-tmp.dmg"
+  hdiutil create -srcfolder "${STAGING_DIR}" -volname "${VOL_NAME}" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "${TARGET_TMP}" -ov
+  DEVICE=$(hdiutil attach "${TARGET_TMP}" | egrep '^/dev/' | sed 1q | awk '{print $1}')
+
+  sleep 2
+
+  # tell Finder to resize the window, set the background,
+  # change the icon size, place the icons in the right position, etc.
+  echo '
+     tell application "Finder"
+       tell disk "'${VOL_NAME}'"
+             open
+             set current view of container window to icon view
+             set toolbar visible of container window to false
+             set statusbar visible of container window to false
+             set the bounds of container window to {400, 100, 1040, 610}
+             set viewOptions to the icon view options of container window
+             set arrangement of viewOptions to not arranged
+             set icon size of viewOptions to 72
+             set background picture of viewOptions to file ".background:background.png"
+             set position of item "'${APP}'" of container window to {210, 350}
+             set position of item "Applications" of container window to {430, 350}
+             set position of item "README.rtfd" of container window to {210, 220}
+             close
+             open
+             update without registering applications
+             delay 2
+       end tell
+     end tell
+  ' | osascript
+
+  sync
+
+  # unmount it
+  hdiutil detach "${DEVICE}"
+
+  # now make the final image for distribution
+  echo "Creating compressed image"
+  hdiutil convert "${TARGET_TMP}" -format UDZO -imagekey zlib-level=9 -o "${TARGET}-${VERSION}.dmg" -ov
+
+  rm -rf "${TARGET_TMP}"
+fi
 
 rm -rf "${STAGING_DIR}"
