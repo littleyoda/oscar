@@ -2061,6 +2061,11 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 }
                 this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_HUMID_TARGET_TIME, data[pos], 0.1));
                 break;
+            case 0x46:  // Tubing Type (alternate, seen instead of 0x3b on 700X110 v1.2 firmware)
+                CHECK_VALUE(len, 1);
+                CHECK_VALUE(data[pos], 2);  // 15HT = 2 based on user report
+                this->ParseTubingTypeV3(data[pos]);  // Since 15HT matches 0x3b above, assume the rest do (but warn)
+                break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");
                 qDebug() << "Unknown setting:" << hex << code << "in" << this->sessionid << "at" << pos;
