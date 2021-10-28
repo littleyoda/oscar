@@ -977,7 +977,8 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
             // imported files without re-reading all of them.
             if (context()->SessionExists(sid)) {
                 // Skip already imported session
-                qDebug() << path << "session already exists, skipping" << sid;
+                // TODO: Consider reinstating this debug statement if/when we scan only new/changed files.
+                //qDebug() << path << "session already exists, skipping" << sid;
                 continue;
             }
 
