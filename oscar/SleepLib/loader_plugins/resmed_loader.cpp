@@ -285,9 +285,14 @@ MachineInfo ResmedLoader::PeekInfo(const QString & path)
                     MachineInfo info = newInfo();
                     scanProductObject( product, &info, nullptr);
                     return info;
-                }
-            }
-        }
+                } else
+                    qDebug() << "No Product in Profiles";
+            } else
+                qDebug() << "No IdentificationProfiles in FlowGenerator";
+        } else
+            qDebug() << "No FlowGenerator in Identification.json";
+
+        return MachineInfo();
 
     }
     // Abort if this file is dodgy..
@@ -1833,6 +1838,28 @@ bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> &
     QFile f(filename);
     QFile j(path + RMS9_STR_idfile + STR_ext_JSON);
 
+    if (j.exists() ) {      // chose the AS11 file if both exist
+        if ( !j.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+        QByteArray identData = j.readAll();
+        j.close();
+        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
+        QJsonObject identObj(identDoc.object());
+        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
+            QJsonObject flow = identObj["FlowGenerator"].toObject();
+            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
+                QJsonObject profiles = flow["IdentificationProfiles"].toObject();
+                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
+                    QJsonObject product = profiles["Product"].toObject();
+// passed in        MachineInfo info = newInfo();
+                    scanProductObject( product, info, &idmap);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     // Abort if this file is dodgy..
     if (f.exists() ) {
         if ( !f.open(QIODevice::ReadOnly)) {
@@ -1851,28 +1878,6 @@ bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> &
 
         f.close();
         return true;
-    }
-    if (j.exists() ) {
-        if ( !j.open(QIODevice::ReadOnly)) {
-            return false;
-        }
-        QByteArray identData = j.readAll();
-        j.close();
-        QJsonDocument identDoc(QJsonDocument::fromJson(identData));
-        QJsonObject identObj(identDoc.object());
-        if ( identObj.contains("FlowGenerator") && identObj["FlowGenerator"].isObject()) {
-            QJsonObject flow = identObj["FlowGenerator"].toObject();
-            if ( flow.contains("IdentificationProfiles") && flow["IdentificationProfiles"].isObject()) {
-                QJsonObject profiles = flow["IdentificationProfiles"].toObject();
-                if ( profiles.contains("Product") && profiles["Product"].isObject()) {
-                    QJsonObject product = profiles["Product"].toObject();
-//                  MachineInfo info = newInfo();
-                    scanProductObject( product, info, &idmap);
-                    return true;
-                }
-            }
-        }
-
     }
     return false;
 }
