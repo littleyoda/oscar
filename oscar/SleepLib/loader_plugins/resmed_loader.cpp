@@ -3347,10 +3347,11 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
     int startpos = 0;
 
 //  There's no reason to skip the first 40 seconds of slow data
-//  if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
-//      startpos = 20; // Shave the first 40 seconds of pressure data
-//      tt += rate * startpos;
-//  }
+//  Reduce that to 10 seconds, to allow presssures to stabilise
+    if ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) {
+        startpos = 5; // Shave the first 10 seconds of pressure data
+        tt += rate * startpos;
+    }
 
     qint16 *sptr = es.dataArray;
     qint16 *eptr = sptr + samples;
