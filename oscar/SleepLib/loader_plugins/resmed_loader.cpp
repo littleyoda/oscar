@@ -112,6 +112,7 @@ void ResmedLoader::initChannels()
     chan->addOption(9, QObject::tr("iVAPS"));
     chan->addOption(10, QObject::tr("PAC"));
     chan->addOption(11, QObject::tr("Auto for Her"));
+    chan->addOption(16, QObject::tr("Unknown"));        // out of bounds of edf signal
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_EPR = 0xe201, SETTING, MT_CPAP,   SESSION,
         "EPR", QObject::tr("EPR"), QObject::tr("ResMed Exhale Pressure Relief"), QObject::tr("EPR"), "", LOOKUP, Qt::green));
@@ -1358,8 +1359,25 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupSignal(CPAP_Mode))) {
                 int mod = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 R.rms9_mode = mod;
-                if ( AS_eleven && (mod == 2) )
-                    R.rms9_mode = 11;           //make it look like A4Her
+                if ( AS_eleven  ) {         // translate AS11 mode values back to S9 / AS10 values
+                    switch ( mod ) {
+                    case 0:
+                        R.rms9_mode = 16;    // Unknown
+                        break;
+                    case 1:
+                        R.rms9_mode = 1;     // still APAP
+                        break;
+                    case 2:
+                        R.rms9_mode = 11;   //make it look like A4Her
+                        break;
+                    case 3:
+                        R.rms9_mode = 0;    // make it be CPAP
+                        break;
+                    default:
+                        R.rms9_mode = 16;   // unknown for now
+                        break;
+                    }
+                }
 
                 if ((mod == 11) && ( ! AS_eleven)) {
                     mode = MODE_APAP; // For her is a special apap
@@ -1373,13 +1391,16 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     mode = MODE_BILEVEL_AUTO_FIXED_PS;
                 } else if (mod >= 3) {  // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
                                         // 4,5 are S/T types...
-                    mode = MODE_BILEVEL_FIXED;
+                    if ( AS_eleven )
+                        mode = MODE_CPAP;
+                    else    
+                        mode = MODE_BILEVEL_FIXED;
                 } else if (mod == 2) {
                     if ( AS_eleven )
                         mode = MODE_APAP; 
                     else
-                        mode = MODE_UNKNOWN;
-                } else if (mod == 1) {
+                        mode = MODE_BILEVEL_FIXED;
+                } else if (mod == 1) {      // same for AS11 as for AS10
                     mode = MODE_APAP; // mod 1 == apap
                     // not sure what mode 2 is ?? split ?
                 } else  if (mod == 0) {
@@ -2285,18 +2306,18 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
         } else {
 //          qDebug() << "Setting session pressures for random mode";
-            if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
-            if (R.min_pressure >= 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
-            if (R.max_pressure >= 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
-            if (R.max_epap >= 0) sess->settings[CPAP_EPAPHi] = R.max_epap;
-            if (R.min_epap >= 0) sess->settings[CPAP_EPAPLo] = R.min_epap;
-            if (R.max_ipap >= 0) sess->settings[CPAP_IPAPHi] = R.max_ipap;
-            if (R.min_ipap >= 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
-            if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
-            if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
-            if (R.ps >= 0) sess->settings[CPAP_PS] = R.ps;
-            if (R.epap >= 0) sess->settings[CPAP_EPAP] = R.epap;
-            if (R.ipap >= 0) sess->settings[CPAP_IPAP] = R.ipap;
+            if (R.set_pressure > 0) sess->settings[CPAP_Pressure] = R.set_pressure;
+            if (R.min_pressure > 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
+            if (R.max_pressure > 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
+            if (R.max_epap > 0) sess->settings[CPAP_EPAPHi] = R.max_epap;
+            if (R.min_epap > 0) sess->settings[CPAP_EPAPLo] = R.min_epap;
+            if (R.max_ipap > 0) sess->settings[CPAP_IPAPHi] = R.max_ipap;
+            if (R.min_ipap > 0) sess->settings[CPAP_IPAPLo] = R.min_ipap;
+            if (R.min_ps > 0) sess->settings[CPAP_PSMin] = R.min_ps;
+            if (R.max_ps > 0) sess->settings[CPAP_PSMax] = R.max_ps;
+            if (R.ps > 0) sess->settings[CPAP_PS] = R.ps;
+            if (R.epap > 0) sess->settings[CPAP_EPAP] = R.epap;
+            if (R.ipap > 0) sess->settings[CPAP_IPAP] = R.ipap;
         }
     }
 
