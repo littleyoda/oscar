@@ -1,6 +1,6 @@
 /* PRS1 Parsing for CPAP and BIPAP (Family 0)
  *
- * Copyright (c) 2019-2021 The OSCAR Team
+ * Copyright (c) 2019-2022 The OSCAR Team
  * Portions copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public

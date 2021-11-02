@@ -1,6 +1,6 @@
 /* gPressureChart Header
  *
- * Copyright (c) 2020 The Oscar Team
+ * Copyright (c) 2020-2022 The Oscar Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public

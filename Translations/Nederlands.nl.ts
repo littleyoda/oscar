@@ -2105,8 +2105,8 @@ AK: Waar staat dat Welkomst-/Startscherm???
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation>Het auteursrecht van OSCAR &amp;copy;2011-2018 berust bij Mark Watkins en delen &amp;copy;2019-2020 bij The OSCAR Team</translation>
+        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
+        <translation>Het auteursrecht van OSCAR &amp;copy;2011-2018 berust bij Mark Watkins en delen &amp;copy;2019-2022 bij The OSCAR Team</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="111"/>

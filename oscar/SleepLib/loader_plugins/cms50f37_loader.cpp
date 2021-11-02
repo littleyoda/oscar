@@ -1,5 +1,6 @@
 ﻿/* SleepLib CMS50X Loader Implementation
  *
+ * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public

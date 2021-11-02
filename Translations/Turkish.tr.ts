@@ -2058,8 +2058,8 @@
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation>OSCAR&apos;ın telif hakkı &amp;copy;2011-2018 Mark Watkins&apos;e ve bazı kısımları &amp;copy;2019-2020 OSCAR Takımı&apos;ına aittir</translation>
+        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
+        <translation>OSCAR&apos;ın telif hakkı &amp;copy;2011-2018 Mark Watkins&apos;e ve bazı kısımları &amp;copy;2019-2022 OSCAR Takımı&apos;ına aittir</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>

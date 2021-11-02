@@ -2059,8 +2059,8 @@
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2020 The OSCAR Team</source>
-        <translation>O OSCAR é marca registrada de &amp;copy;2011-2018 Mark Watkins e partes &amp;copy;2019-2020 The OSCAR Team</translation>
+        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
+        <translation>O OSCAR é marca registrada de &amp;copy;2011-2018 Mark Watkins e partes &amp;copy;2019-2022 The OSCAR Team</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="111"/>
