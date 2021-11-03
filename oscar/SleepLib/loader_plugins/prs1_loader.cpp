@@ -127,6 +127,8 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X130", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
+    { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label
+
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "960P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
@@ -481,6 +483,7 @@ QMap<const char*,const char*> s_PRS1Series = {
     { "System One 60 Series", ":/icons/prs1_60s.png" },  // needs to come before following substring
     { "System One",           ":/icons/prs1.png" },
     { "C Series",             ":/icons/prs1vent.png" },
+    { "DreamStation 2",       ":/icons/prds2.png" },  // needs to come before following substring
     { "DreamStation",         ":/icons/dreamstation.png" },
 };
 
