@@ -405,7 +405,7 @@ bool PRDS2File::parseDS2Header()
     if (m_guid.size() != 36) {
         qWarning() << "DS2 guid unexpected length" << m_guid.size();
     } else {
-        qDebug() << "DS2 guid {" << m_guid << "}";
+        //qDebug() << "DS2 guid {" << m_guid << "}";
     }
 
     m_iv = readBytes();  // 96-bit IV
@@ -413,7 +413,7 @@ bool PRDS2File::parseDS2Header()
     if (m_iv.size() != 12 || e.size() != 16) {
         qWarning() << "DS2 IV,e sizes =" << m_iv.size() << e.size();
     } else {
-        qDebug() << "DS2 IV,e =" << m_iv.toHex() << e.toHex();
+        //qDebug() << "DS2 IV,e =" << m_iv.toHex() << e.toHex();
     }
     
     int f = read16();
@@ -427,7 +427,7 @@ bool PRDS2File::parseDS2Header()
     if (h.size() != 32 || i.size() != 16) {
         qWarning() << "DS2 h,i sizes =" << h.size() << i.size();
     } else {
-        qDebug() << "DS2 h,i =" << h.toHex() << i.toHex();
+        //qDebug() << "DS2 h,i =" << h.toHex() << i.toHex();
     }
 
     j = readBytes();  // same per d,e pair, does NOT vary per machine; possibly key or IV
@@ -435,14 +435,14 @@ bool PRDS2File::parseDS2Header()
     if (j.size() != 32 || k.size() != 16) {
         qWarning() << "DS2 j,k sizes =" << j.size() << k.size();
     } else {
-        qDebug() << "DS2 j,k =" << j.toHex() << k.toHex();
+        //qDebug() << "DS2 j,k =" << j.toHex() << k.toHex();
     }
 
     m_payload_tag = readBytes();
     if (m_payload_tag.size() != 16) {
         qWarning() << "DS2 payload tag size =" << m_payload_tag.size();
     } else {
-        qDebug() << "DS2 payload tag =" << m_payload_tag.toHex();
+        //qDebug() << "DS2 payload tag =" << m_payload_tag.toHex();
     }
 
     if (m_device.pos() != m_header_size) {
@@ -655,7 +655,13 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
     RawDataFile* src;
     if (QFileInfo(f).suffix().toUpper() == "BIN") {
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
-        src = new PRDS2File(f);
+        PRDS2File* ds2 = new PRDS2File(f);
+        if (!ds2->isValid()) {
+            qWarning() << filename << "unable to decrypt";
+            delete ds2;
+            return false;
+        }
+        src = ds2;
     } else {
         // Otherwise just use the file as input.
         src = new RawDataFile(f);
@@ -1010,6 +1016,9 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
             }
 
             QString ext_s = fi.fileName().section(".", -1);
+            if (ext_s.toUpper().startsWith("B")) {  // .B01, .B02, etc.
+                ext_s = ext_s.mid(1);
+            }
             ext = ext_s.toInt(&ok);
             if (!ok) {
                 // not a numerical extension
@@ -2699,9 +2708,15 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
     }
     
     RawDataFile* src;
-    if (QFileInfo(f).suffix().toUpper() == "BIN") {
+    if (QFileInfo(f).suffix().toUpper().startsWith("B")) {  // .B01, .B02, etc.
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
-        src = new PRDS2File(f);
+        PRDS2File* ds2 = new PRDS2File(f);
+        if (!ds2->isValid()) {
+            qWarning() << path << "unable to decrypt";
+            delete ds2;
+            return CHUNKS;
+        }
+        src = ds2;
     } else {
         // Otherwise just use the file as input.
         src = new RawDataFile(f);

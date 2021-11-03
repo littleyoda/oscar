@@ -329,6 +329,9 @@ void parseAndEmitChunkYaml(const QString & path)
             }
 
             QString ext_s = fi.fileName().section(".", -1);
+            if (ext_s.toUpper().startsWith("B")) {  // .B01, .B02, etc.
+                ext_s = ext_s.mid(1);
+            }
             int ext = ext_s.toInt(&ok);
             if (!ok) {
                 // not a numerical extension
