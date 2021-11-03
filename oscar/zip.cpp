@@ -275,7 +275,7 @@ const QString FileQueue::toString() const
 // ==================================================================================================
 // Static functions to abstract the details of miniz from the primary logic.
 
-#include "miniz.h"
+#include "SleepLib/thirdparty/miniz.h"
 
 // Callback for miniz to write compressed data
 static size_t zip_write(void *pOpaque, mz_uint64 /*file_ofs*/, const void *pBuf, size_t n)
