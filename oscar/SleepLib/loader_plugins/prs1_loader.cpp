@@ -12,6 +12,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
+#include <QBuffer>
 #include <QDataStream>
 #include <QMessageBox>
 #include <QDebug>
@@ -242,6 +243,8 @@ const char* PRS1ModelInfo::Name(const QString & model) const
 
 //********************************************************************************************
 
+#include "SleepLib/thirdparty/botan_all.h"
+
 // Decoder for DreamStation 2 files, which encrypt the actual data after a header with the key.
 // The public read/seek/pos/etc. functions are all in terms of the decoded stream.
 class PRDS2File : public RawDataFile
@@ -249,13 +252,19 @@ class PRDS2File : public RawDataFile
   public:
     PRDS2File(class QFile & file);
     virtual ~PRDS2File() {};
+    bool isValid() const;
   private:
-    void parseDS2Header();
+    bool parseDS2Header();
     int read16();
     QByteArray readBytes();
-    void initializeKey();
-    QByteArray d, e, j, k;
-    QByteArray m_key;
+    bool initializeKey();
+    bool decryptData();
+    QByteArray m_iv;
+    QByteArray e, j, k;
+    QByteArray m_payload_key;
+    QByteArray m_payload_tag;
+    QBuffer m_payload;
+    bool m_valid;
   protected:
     virtual qint64 readData(char *data, qint64 maxSize);
     virtual bool seek(qint64 pos);
@@ -269,61 +278,96 @@ class PRDS2File : public RawDataFile
 PRDS2File::PRDS2File(class QFile & file)
     : RawDataFile(file)
 {
-    parseDS2Header();
-    initializeKey();
+    bool valid = parseDS2Header();
+    if (valid) {
+        valid = initializeKey();
+        if (valid) {
+            valid = decryptData();
+        }
+    }
+    m_valid = valid;
+    if (m_valid) {
+        seek(0);  // initialize internal position
+    }
+}
+
+bool PRDS2File::isValid() const {
+    return m_valid;
 }
 
 bool PRDS2File::seek(qint64 pos)
 {
+    if (!m_valid) {
+        qWarning() << "seeking in unsupported DS2 file";
+        return false;
+    }
     QIODevice::seek(pos);
-    return RawDataFile::seek(pos + m_header_size);
+    return m_payload.seek(pos);
 }
 
 qint64 PRDS2File::pos() const
 {
-    return RawDataFile::pos() - m_header_size;
+    if (!m_valid) {
+        qWarning() << "querying pos in unsupported DS2 file";
+        return 0;
+    }
+    return m_payload.pos();
 }
 
 qint64 PRDS2File::size() const
 {
-    return RawDataFile::size() - m_header_size;
+    return m_payload.size();
 }
 
 qint64 PRDS2File::readData(char *data, qint64 maxSize)
 {
-    qint64 pos = this->pos();
-    if (pos < 0) {
-        qWarning() << "unexpected PRDS2 header read at real offset" << (m_header_size + pos) << "pos =" << pos;
+    if (!m_valid) {
+        qWarning() << "reading from unsupported DS2 file";
         return -1;
     }
-    int result = RawDataFile::readData(data, maxSize);
-
-    if (result > 0) {
-        qint64 bytesRead = result;
-        // TODO: Find and implement the actual algorithm.
-        // For now just use the known key stream fragment when appropriate.
-        qint64 key_size = m_key.size();
-        if (pos < key_size) {
-            qint64 limit = key_size - pos;
-            if (limit > bytesRead) limit = bytesRead;
-            for (qint64 i = 0; i < limit; i++) {
-                data[i] ^= m_key.at(pos+i);
-            }
-        }
-    }
-
-    return result;
+    return m_payload.read(data, maxSize);
 }
 
-void PRDS2File::initializeKey()
+bool PRDS2File::decryptData()
 {
-    // TODO: Find and implement the actual algorithm and keying method.
-    // It may be that the algorithm is obfuscating h,i,j,k,l before reaching the data,
-    // but since we don't yet know what those represent, for now just start with a known
-    // key stream for the following known values.
-    //
-    // These test values show up on multiple machines, sometimes multiple times.
-    static const unsigned char knownD[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+    bool valid = false;
+    try {
+        QByteArray ciphertext = m_device.read(m_device.size() - m_device.pos());
+
+        const std::vector<uint8_t> key(m_payload_key.begin(), m_payload_key.end());
+        const std::vector<uint8_t> iv(m_iv.begin(), m_iv.end());
+        const std::vector<uint8_t> tag(m_payload_tag.begin(), m_payload_tag.end());
+
+        Botan::secure_vector<uint8_t> message(ciphertext.begin(), ciphertext.end());
+        message += tag;
+
+        std::unique_ptr<Botan::Cipher_Mode> dec = Botan::Cipher_Mode::create("AES-256/GCM", Botan::DECRYPTION);
+        dec->set_key(key);
+        dec->start(iv);
+        try {
+            dec->finish(message);
+            //qDebug() << QString::fromStdString(Botan::hex_encode(message.data(), message.size()));
+            m_payload.setData((char*) message.data(), message.size());
+            m_payload.open(QIODevice::ReadOnly);
+            valid = true;
+        }
+        catch (const Botan::Invalid_Authentication_Tag& e) {
+            qWarning() << "DS2 payload doesn't match tag in" << name();
+        }
+    }
+    catch (exception& e) {
+        // Make sure no Botan exceptions leak out and terminate the application.
+        qWarning() << "*** DS2 unexpected exception decrypting" << name() << ":" << e.what();
+    }
+    return valid;
+}
+
+bool PRDS2File::initializeKey()
+{
+    bool valid = false;
+    
+    // TODO: Figure out how the non-default payload key is derived.
+    static const unsigned char knownIV[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
     static const unsigned char knownE[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
     static const unsigned char knownJ[] = {
         0x9a, 0x93, 0x15, 0xc8, 0xd4, 0x24, 0xef, 0x7f, 0xa6, 0xa7, 0x9f, 0xce, 0x82, 0xdd, 0x5d, 0xfe,
@@ -332,27 +376,27 @@ void PRDS2File::initializeKey()
     static const unsigned char knownK[] = {
         0xc1, 0x70, 0x9e, 0xe9, 0xf0, 0xdf, 0x0a, 0xd4, 0x79, 0xd5, 0xaa, 0x07, 0x97, 0xd4, 0x5c, 0x33
     };
-    if (d == QByteArray((const char*) knownD, sizeof(knownD)) && e == QByteArray((const char*) knownE, sizeof(knownE))) {
+    if (m_iv == QByteArray((const char*) knownIV, sizeof(knownIV)) && e == QByteArray((const char*) knownE, sizeof(knownE))) {
         if (j == QByteArray((const char*) knownJ, sizeof(knownJ)) && k == QByteArray((const char*) knownK, sizeof(knownK))) {
-            static const unsigned char knownStream[] = {
-                0x07, 0x47, 0xc3, 0x34, 0x70, 0x65, 0xac, 0x7c, 0xc6, 0x0b, 0x56, 0x53, 0xe9, 0x57, 0xbe, 0x1a,
-                0xcb, 0xd8, 0x71, 0x66, 0x08, 0x86, 0xa6, 0xd8
-            };
-            m_key = QByteArray((const char*) knownStream, sizeof(knownStream));
+            m_payload_key = e + e;  // This doesn't seem to apply to non-default keys.
+            valid = true;
         } else {
-            qWarning() << "*** Unexpected j,k for key?";
+            qWarning() << "*** DS2 unexpected j,k for default key in" << name();
         }
+    } else {
+        qWarning() << "DS2 unknown key for" << name();
     }
+    return valid;
 }
 
-void PRDS2File::parseDS2Header()
+bool PRDS2File::parseDS2Header()
 {
     int a = read16();
     int b = read16();
     int c = read16();
     if (a != 0x0D || b != 1 || c != 1) {
         qWarning() << "DS2 unexpected first bytes =" << a << b << c;
-        return;
+        return false;
     }
 
     m_guid = readBytes();
@@ -362,12 +406,12 @@ void PRDS2File::parseDS2Header()
         qDebug() << "DS2 guid {" << m_guid << "}";
     }
 
-    d = readBytes();  // 96 bits, probably IV or key
-    e = readBytes();  // 128 bits, probably key or IV
-    if (d.size() != 12 || e.size() != 16) {
-        qWarning() << "DS2 d,e sizes =" << d.size() << e.size();
+    m_iv = readBytes();  // 96-bit IV
+    e = readBytes();  // 128 bits, somehow seeds key
+    if (m_iv.size() != 12 || e.size() != 16) {
+        qWarning() << "DS2 IV,e sizes =" << m_iv.size() << e.size();
     } else {
-        qDebug() << "DS2 key? =" << d.toHex() << e.toHex();
+        qDebug() << "DS2 IV,e =" << m_iv.toHex() << e.toHex();
     }
     
     int f = read16();
@@ -392,17 +436,17 @@ void PRDS2File::parseDS2Header()
         qDebug() << "DS2 j,k =" << j.toHex() << k.toHex();
     }
 
-    QByteArray l = readBytes();  // differs for EVERY file, and machine, even with same values above
-    if (l.size() != 16) {
-        qWarning() << "DS2 l size =" << l.size();
+    m_payload_tag = readBytes();
+    if (m_payload_tag.size() != 16) {
+        qWarning() << "DS2 payload tag size =" << m_payload_tag.size();
     } else {
-        qDebug() << "DS2 l =" << l.toHex();
+        qDebug() << "DS2 payload tag =" << m_payload_tag.toHex();
     }
 
     if (m_device.pos() != m_header_size) {
         qWarning() << "DS2 header size !=" << m_header_size;
     }
-    seek(0);  // update internal position
+    return true;
 }
 
 int PRDS2File::read16()

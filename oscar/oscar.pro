@@ -310,6 +310,7 @@ SOURCES += \
     SleepLib/loader_plugins/somnopose_loader.cpp \
     SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
+    SleepLib/thirdparty/botan_all.cpp \
     zip.cpp \
     miniz.c \
     csv.cpp \
@@ -395,6 +396,10 @@ HEADERS  += \
     SleepLib/loader_plugins/somnopose_loader.h \
     SleepLib/loader_plugins/viatom_loader.h \
     SleepLib/loader_plugins/zeo_loader.h \
+    SleepLib/thirdparty/botan_all.h \
+    SleepLib/thirdparty/botan_windows.h \
+    SleepLib/thirdparty/botan_linux.h \
+    SleepLib/thirdparty/botan_macos.h \
     zip.h \
     miniz.h \
     csv.h \
