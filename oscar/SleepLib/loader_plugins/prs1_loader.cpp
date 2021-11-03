@@ -779,16 +779,23 @@ int PRS1Loader::Open(const QString & selectedPath)
     // TODO: Loaders should return the set of machines during detection, so that Open() will
     // open a unique device, instead of surprising the user.
     int c = 0;
+    bool failures = false;
     for (auto & machinePath : machines) {
         if (m_ctx == nullptr) {
             qWarning() << "PRS1Loader::Open() called without a valid m_ctx object present";
             return 0;
         }
         int imported = OpenMachine(machinePath);
-        if (imported > 0) {  // don't let errors < 0 suppress subsequent successes
+        if (imported >= 0) {  // don't let errors < 0 suppress subsequent successes
             c += imported;
+        } else {
+            failures = true;
         }
         m_ctx->FlushUnexpectedMessages();
+    }
+    if (c == 0 && failures) {
+        // report an error when there were failures and no successess
+        c = -1;
     }
     return c;
 }
