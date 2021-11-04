@@ -1549,7 +1549,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const int minimum_sizes[] = { 1, 0x2b, 9, 4, 2, 4, 1, 4, 0x1b, 2, 4, 0x0b, 1, 2, 6 };
+    static const int minimum_sizes[] = { 1, 0x29, 9, 4, 2, 4, 1, 4, 0x1b, 2, 4, 0x0b, 1, 2, 6 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
     // NOTE: The sizes contained in hblock can vary, even within a single machine, as can the length of hblock itself!
 
@@ -2061,10 +2061,19 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 }
                 this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_HUMID_TARGET_TIME, data[pos], 0.1));
                 break;
-            case 0x46:  // Tubing Type (alternate, seen instead of 0x3b on 700X110 v1.2 firmware)
+            case 0x46:  // Tubing Type (alternate, seen instead of 0x3b on 700X110 v1.2 firmware and on DS2)
                 CHECK_VALUE(len, 1);
-                CHECK_VALUE(data[pos], 2);  // 15HT = 2 based on user report
-                this->ParseTubingTypeV3(data[pos]);  // Since 15HT matches 0x3b above, assume the rest do (but warn)
+                if (data[pos] > 3) UNEXPECTED_VALUE(data[pos], "0-3");  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm
+                // TODO: Confirm that 4 is 12HT and update ParseTubingTypeV3.
+                this->ParseTubingTypeV3(data[pos]);
+                break;
+            case 0x4a:  // Patient controls access, specific to DreamStation 2.
+                CHECK_VALUE(len, 1);
+                CHECK_VALUES(data[pos], 0, 0x80);
+                break;
+            case 0x4b:  // Patient data access, specific to DreamStation 2.
+                CHECK_VALUE(len, 1);
+                CHECK_VALUES(data[pos], 0, 0x80);
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");

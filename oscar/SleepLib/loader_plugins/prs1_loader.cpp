@@ -127,7 +127,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X130", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
-    { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label
+    { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
 
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
@@ -637,6 +637,8 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         { "LD", "LastDate" },
         // SID?
         // SK?
+        // TS?
+        // DC?
         { "BK", "BasicKey" },
         { "DK", "DetailsKey" },
         { "EK", "ErrorKey" },
