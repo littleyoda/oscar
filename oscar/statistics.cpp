@@ -548,6 +548,7 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("Apnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("ClearAirway",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("FlowLimit",  SC_CPH,     MT_CPAP));
+    rows.push_back(StatisticsRow("FLG",  SC_90P,     MT_CPAP));
     rows.push_back(StatisticsRow("RERA",       SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("SensAwake",       SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("CSR", SC_SPH, MT_CPAP));
