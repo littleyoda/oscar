@@ -123,6 +123,7 @@ void init()
         QApplication::exit(-1);
     }
 
+    Channel *ch;
 
     // Lookup Code strings are used internally and not meant to be translated
     // Lookup Code strings are also used as a key to a graph of this channel
@@ -143,7 +144,8 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PressureMin   = 0x1020, SETTING,     MT_CPAP, SESSION, "PressureMin",    QObject::tr("Min Pressure"),    QObject::tr("Minimum Therapy Pressure"),       QObject::tr("Pressure Min"), STR_UNIT_CMH2O,        DEFAULT,    QColor("orange")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PressureMax   = 0x1021, SETTING,     MT_CPAP, SESSION, "PressureMax",    QObject::tr("Max Pressure"),    QObject::tr("Maximum Therapy Pressure"),       QObject::tr("Pressure Max"), STR_UNIT_CMH2O,        DEFAULT,    QColor("light blue")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RampTime      = 0x1022, SETTING,     MT_CPAP, SESSION, "RampTime",       QObject::tr("Ramp Time") ,      QObject::tr("Ramp Delay Period"),              QObject::tr("Ramp Time"),    STR_UNIT_Minutes,      DEFAULT,    QColor("black")));
-    schema::channel.add(GRP_CPAP, new Channel(CPAP_RampPressure  = 0x1023, SETTING,     MT_CPAP, SESSION, "RampPressure",   QObject::tr("Ramp Pressure"),   QObject::tr("Starting Ramp Pressure"),         QObject::tr("Ramp Pressure"),STR_UNIT_CMH2O,        DEFAULT,    QColor("black")));
+    schema::channel.add(GRP_CPAP, ch = new Channel(CPAP_RampPressure  = 0x1023, SETTING,     MT_CPAP, SESSION, "RampPressure",   QObject::tr("Ramp Pressure"),   QObject::tr("Starting Ramp Pressure"),         QObject::tr("Ramp Pressure"),STR_UNIT_CMH2O,        LOOKUP,    QColor("black")));
+    ch->addOption(0, STR_TR_Off);
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Ramp          = 0x1027, SPAN,        MT_CPAP, SESSION, "Ramp",           QObject::tr("Ramp Event") ,     QObject::tr("Ramp Event"),                     QObject::tr("Ramp"),         STR_UNIT_EventsPerHour,DEFAULT,    QColor("light blue")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PressureSet   = 0x11A4, WAVEFORM,    MT_CPAP, SESSION, "PressureSet",    QObject::tr("Pressure Set"),    QObject::tr("Pressure Setting"),               QObject::tr("Pressure Set"), STR_UNIT_CMH2O,        DEFAULT,    QColor("dark red")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_IPAPSet       = 0x11A5, WAVEFORM,    MT_CPAP, SESSION, "IPAPSet",        QObject::tr("IPAP Set"),        QObject::tr("IPAP Setting"),                   QObject::tr("IPAP Set"),     STR_UNIT_CMH2O,        DEFAULT,    QColor("dark red")));
@@ -297,7 +299,6 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_SummaryOnly       = 0x1026, DATA,   MT_CPAP,  SESSION, "SummaryOnly",
             QObject::tr("Summary Only"), QObject::tr("CPAP Session contains summary data only"),  QObject::tr("Summary Only"),  STR_UNIT_Unknown, DEFAULT,  Qt::black));
 
-    Channel *ch;
     schema::channel.add(GRP_CPAP, ch = new Channel(CPAP_Mode         = 0x1200, SETTING,   MT_CPAP,  SESSION, "PAPMode",
                         QObject::tr("PAP Mode"), QObject::tr("PAP Device Mode"), QObject::tr("PAP Mode"),  QString(), LOOKUP,  Qt::black));
 

@@ -2969,6 +2969,7 @@ void PRS1Loader::initChannels()
         "", LOOKUP, Qt::black));
     chan->addOption(0, QObject::tr("Linear"));
     chan->addOption(1, QObject::tr("SmartRamp"));
+    chan->addOption(2, QObject::tr("Ramp+"));
 
     channel.add(GRP_CPAP, chan = new Channel(PRS1_BackupBreathMode = 0xe114, SETTING, MT_CPAP,   SESSION,
         "PRS1BackupBreathMode",
