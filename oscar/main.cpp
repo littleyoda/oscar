@@ -366,12 +366,19 @@ int main(int argc, char *argv[]) {
                 exit(1);
             }
         } else if (args[i] == "--datadir") { // mltam's idea
-            QString datadir ;
+            QString datadir, datadirwas ;
             if ((i+1) < args.size()) {
-                datadir = args[++i];
-                if (datadir.length() < 2 || datadir.at(1) != QLatin1Char(':'))  // Allow a Windows drive letter (but not UNC)
+                datadirwas = datadir = args[++i];
+                bool havefullpath = false;
+                if (datadir.length() >= 2) {
+                    havefullpath =    (datadir.at(1) == QLatin1Char(':')) // Allow a Windows drive letter
+                                   || (datadir.at(0) == '/')              // or Linux full path
+                                   || (datadir.at(0) == '\\');
+                }
+                if (!havefullpath)
                     datadir = homeDocs+datadir;
                 settings.setValue("Settings/AppData", datadir);
+                qDebug() << "--datadir" << datadirwas << "homeDocs:" << homeDocs << "appdata:" << datadir;
 //            force_data_dir = true;
             } else {
                 fprintf(stderr, "Missing argument to --datadir\n");
