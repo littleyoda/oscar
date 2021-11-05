@@ -912,8 +912,10 @@ bool PRS1Loader::CreateMachineFromProperties(QString propertyfile)
             qWarning().noquote() << "Model" << model_number << QString("(F%1V%2)").arg(family).arg(familyVersion) << "unsupported.";
             info.modelnumber = QObject::tr("model %1").arg(model_number);
         } else if (propertyfile.endsWith("PROP.BIN")) {
-            // TODO: Remove this once DS2 is supported.
-            qWarning() << "DreamStation 2 not supported:" << propertyfile;
+            // TODO: If we end up releasing without support for non-default keys,
+            // add a loaderSpecificAlert(QString & message, bool deferred=false) signal
+            // and use that instead of telling the user that the DS2 is entirely unsupported.
+            qWarning() << "DreamStation 2 not using default keys:" << propertyfile;
             info.modelnumber = QObject::tr("DreamStation 2");
         } else {
             qWarning() << "Unable to identify model or series!";
