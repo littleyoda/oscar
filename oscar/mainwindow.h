@@ -182,8 +182,6 @@ class MainWindow : public QMainWindow
     void doReprocessEvents();
     void doRecompressEvents();
 
-    void MachineUnsupported(Machine * m);
-
 
   protected:
     void closeEvent(QCloseEvent *) override;

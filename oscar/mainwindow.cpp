@@ -518,11 +518,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
         p_profile->p_preferences[STR_PREF_ReimportBackup]=false;
     }
 
-    QList<MachineLoader *> loaders = GetLoaders();
-    for (int i=0; i<loaders.size(); ++i) {
-        connect(loaders.at(i), SIGNAL(machineUnsupported(Machine*)), this, SLOT(MachineUnsupported(Machine*)));
-    }
-
     p_profile->LoadMachineData(progress);
     progress->setMessage(tr("Loading profile \"%1\"").arg(profileName));
 
@@ -2104,15 +2099,6 @@ void MainWindow::FreeSessions()
 
         date = date.addDays(-1);
     }  while (date >= first);
-}
-
-void MainWindow::MachineUnsupported(Machine * m)
-{
-    if (m == nullptr) {
-        qCritical() << "MainWindow::MachineUnsupported called with null machine object";
-        return;
-    }
-    QMessageBox::information(this, STR_MessageBox_Error, QObject::tr("Sorry, your %1 %2 machine is not currently supported.").arg(m->brand()).arg(m->model()), QMessageBox::Ok);
 }
 
 void MainWindow::doRecompressEvents()
