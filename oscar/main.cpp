@@ -334,6 +334,14 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
+    initializeLogger();
+    // After initializing the logger, any qDebug() messages will be queued but not written to console
+    // until MainWindow is constructed below. In spite of that, we initialize the logger here so that
+    // the intervening messages show up in the debug pane.
+    //
+    // The only time this is really noticeable is when initTranslations() presents its language
+    // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
+
     QString lastlanguage = settings.value(LangSetting, "").toString();
     if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'
         lastlanguage = "he";
@@ -386,14 +394,6 @@ int main(int argc, char *argv[]) {
             }
         }
     }   // end of for args loop
-
-    initializeLogger();
-    // After initializing the logger, any qDebug() messages will be queued but not written to console
-    // until MainWindow is constructed below. In spite of that, we initialize the logger here so that
-    // the intervening messages show up in the debug pane.
-    //
-    // The only time this is really noticeable is when initTranslations() presents its language
-    // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
 
     qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
     qDebug() << "APP-NAME:" << QCoreApplication::applicationName();
