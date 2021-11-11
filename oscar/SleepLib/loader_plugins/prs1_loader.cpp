@@ -92,6 +92,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
 
     { "261CA",  0, 4, "REMstar Plus (System One 60 Series)" },  // (brick)
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
+    { "460PBT", 0, 4, "REMstar Pro (System One 60 Series)" },  // evidently built-in bluetooth
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "462P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "461CA",  0, 4, "REMstar Pro (System One 60 Series)" },
