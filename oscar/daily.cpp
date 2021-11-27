@@ -1701,8 +1701,8 @@ void Daily::Load(QDate date)
                 htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><p title='%4'><font size=+3 color='%2'><b>%3</b></font></p> &nbsp; <font size=+3 color='%2'><b>%5</b></font></td>\n")
                         .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
             } else {
-                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'>%2</font></td>\n")
-                        .arg("#F88017").arg(tr("BRICK! :("));
+                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'><b>%2</b></font></td>\n")
+                        .arg("#F88017").arg(tr("This CPAP machine does NOT record detailed data"));
             }
             htmlLeftAHI+="</tr>\n";
             htmlLeftAHI+="</table>\n";
