@@ -2450,7 +2450,8 @@ bool load6EventData () {
             qint64 duration = rec_ts2 - rec_ts1;
             // We make an ad hoc adjustment to the start time so that the event lines up better with the flow graph
             // TODO: We don't know what is really going on here. Is it sloppiness on the part of the DV6 in recording time stamps?
-            qint64 ti = qint64(rec_ts1 - (duration/2)) * 1000L;
+//            qint64 ti = qint64(rec_ts1 - (duration/2)) * 1000L;
+            qint64 ti = qint64(rec_ts1 - duration) * 1000L;
             if (duration < 0) {
                 qDebug() << "E.BIN at" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss")
                          << "reports duration of" << duration
@@ -2481,37 +2482,58 @@ bool load6EventData () {
                     break;
                 case 2:
                     OA->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - OA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - OA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 4:
                     H->AddEvent(ti, duration);
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - H" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 5:
                     RE->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - RERA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - RERA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
                     break;
+#endif
                 case 8:     // snore
                     SN->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - Snore" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - Snore" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 9:     // expiratory puff
                     EP->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - exhale puff" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - exhale puff" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 10:    // flow limitation
                     FL->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - flow limit" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - flow limit" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 11:    // periodic breathing
                     PB->AddEvent(ti, duration);
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - periodic breathing" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 12:    // large leaks
                     LL->AddEvent(ti, duration);
-//                    qDebug() << "E.BIN - large leak" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - large leak" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 case 13:    // pressure change
                     break;
                 case 14:    // start of session
+#ifdef DEBUGDV6
+                    qDebug() << "E.BIN - session start" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
+#endif
                     break;
                 default:
                     break;
