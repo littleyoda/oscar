@@ -2496,8 +2496,8 @@ bool load6EventData () {
                     RE->AddEvent(ti, duration);
 #ifdef DEBUGDV6
                     qDebug() << "E.BIN - RERA" << QDateTime::fromSecsSinceEpoch(rec_ts1).toString("MM/dd/yyyy hh:mm:ss") << "ti" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("hh:mm:ss") << "duration" << duration << "r" << rf.recnum();
-                    break;
 #endif
+                    break;
                 case 8:     // snore
                     SN->AddEvent(ti, duration);
 #ifdef DEBUGDV6
