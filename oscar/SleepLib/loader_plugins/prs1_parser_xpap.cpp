@@ -707,11 +707,10 @@ bool PRS1DataChunk::ParseComplianceF0V4(void)
             case 1:  // Equipment Off
                 tt += data[pos] | (data[pos+1] << 8);
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, EquipmentOff));
-                // TODO: check values
-                CHECK_VALUES(data[pos+2], 1, 3);
+                //CHECK_VALUES(data[pos+2], 1, 3);  // or 0
                 //CHECK_VALUE(data[pos+2] & ~(0x40|8|4|2|1), 0);  // ???, seen various bit combinations
                 //CHECK_VALUE(data[pos+3], 0x19);  // 0x17, 0x16
-                CHECK_VALUES(data[pos+4], 0, 1);
+                //CHECK_VALUES(data[pos+4], 0, 1);  // or 2
                 //CHECK_VALUES(data[pos+4], 0, 1);  // or 2
                 //CHECK_VALUE(data[pos+5], 0x35);  // 0x36, 0x36
                 if (data[pos+6] != 1) {

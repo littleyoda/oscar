@@ -91,6 +91,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "750P", 0, 2, "BiPAP Auto (System One)" },
 
     { "261CA",  0, 4, "REMstar Plus (System One 60 Series)" },  // (brick)
+    { "261P",   0, 4, "REMstar Plus (System One 60 Series)" },  // (brick)
     { "460P",   0, 4, "REMstar Pro (System One 60 Series)" },
     { "460PBT", 0, 4, "REMstar Pro (System One 60 Series)" },  // evidently built-in bluetooth
     { "461P",   0, 4, "REMstar Pro (System One 60 Series)" },
@@ -161,7 +162,7 @@ PRS1ModelInfo::PRS1ModelInfo()
         m_modelNames[model.model] = model.name;
     }
     
-    m_bricks = { "251P", "261CA", "200X110", "501V" };
+    m_bricks = { "251P", "261CA", "261P", "200X110", "501V" };
 }
 
 bool PRS1ModelInfo::IsSupported(int family, int familyVersion) const
