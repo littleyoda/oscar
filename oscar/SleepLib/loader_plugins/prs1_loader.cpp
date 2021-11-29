@@ -258,6 +258,7 @@ class PRDS2File : public RawDataFile
     PRDS2File(class QFile & file);
     virtual ~PRDS2File() {};
     bool isValid() const;
+    QString guid() const;
   private:
     bool parseDS2Header();
     int read16();
@@ -298,6 +299,11 @@ PRDS2File::PRDS2File(class QFile & file)
 
 bool PRDS2File::isValid() const {
     return m_valid;
+}
+
+QString PRDS2File::guid() const {
+    QString guid(m_guid);
+    return guid;
 }
 
 bool PRDS2File::seek(qint64 pos)
@@ -667,6 +673,7 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
             return false;
         }
         src = ds2;
+        props["GUID"] = ds2->guid();
     } else {
         // Otherwise just use the file as input.
         src = new RawDataFile(f);
