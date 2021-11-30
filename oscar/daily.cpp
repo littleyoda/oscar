@@ -482,6 +482,8 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     icon_on=new QIcon(":/icons/session-on.png");
     icon_off=new QIcon(":/icons/session-off.png");
+    icon_up_down=new QIcon(":/icons/up-down.png");
+    icon_warning=new QIcon(":/icons/warning.png");
 
     ui->splitter->setVisible(false);
 
@@ -958,7 +960,7 @@ void Daily::ResetGraphOrder(int type)
     }
 
     // Enable all graphs (make them not hidden)
-    for (int i=0;i<ui->graphCombo->count();i++) {
+    for (int i=1;i<ui->graphCombo->count();i++) {
         // If disabled, emulate a click to enable the graph
         if (!ui->graphCombo->itemData(i,Qt::UserRole).toBool()) {
 //            qDebug() << "resetting graph" << i;
@@ -967,7 +969,7 @@ void Daily::ResetGraphOrder(int type)
     }
 
     // Mark all events as active
-    for (int i=0;i<ui->eventsCombo->count();i++) {
+    for (int i=1;i<ui->eventsCombo->count();i++) {
         // If disabled, emulate a click to enable the event
         ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
         schema::Channel * chan = &schema::channel[code];
@@ -1644,13 +1646,14 @@ void Daily::Load(QDate date)
     QList<ChannelID> available;
     if (day) available.append(day->getSortedMachineChannels(chans));
 
+    ui->eventsCombo->addItem(*icon_up_down, tr("10 of 10 Event Types"), 0); // Translation used only for spacing
     for (int i=0; i < available.size(); ++i) {
         ChannelID code = available.at(i);
         schema::Channel & chan = schema::channel[code];
         ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
         ui->eventsCombo->setItemData(i, chan.fullname(), Qt::ToolTipRole);
-
     }
+    setFlagText();
 
     if (!cpap) {
         GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
@@ -2578,6 +2581,47 @@ QString Daily::GetDetailsText()
     return content;
 }
 
+void Daily::setGraphText () {
+    int numOff = 0;
+    int numTotal = 0;
+
+    gGraph *g;
+    for (int i=0;i<GraphView->size();i++) {
+        g=(*GraphView)[i];
+        if (!g->isEmpty()) {
+            numTotal++;
+            if (!g->visible()) {
+                numOff++;
+            }
+        }
+    }
+    ui->graphCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
+    QString graphText;
+    if (numOff == 0) graphText = QObject::tr("%1 Graphs").arg(numTotal);
+    else             graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+    ui->graphCombo->setItemText(0, graphText);
+}
+
+void Daily::setFlagText () {
+    int numOff = 0;
+    int numTotal = 0;
+
+    for (int i=1; i < ui->eventsCombo->count(); ++i) {
+        numTotal++;
+        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
+        schema::Channel * chan = &schema::channel[code];
+
+        if (!chan->enabled())
+            numOff++;
+    }
+
+    ui->eventsCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
+    QString flagsText;
+    if (numOff == 0) flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
+    else             flagsText = QObject::tr("%1 of %2 Event Types").arg(numTotal-numOff).arg(numTotal);
+    ui->eventsCombo->setItemText(0, flagsText);
+}
+
 void Daily::on_graphCombo_activated(int index)
 {
     if (index<0)
@@ -2586,16 +2630,17 @@ void Daily::on_graphCombo_activated(int index)
     gGraph *g;
     QString s;
     s=ui->graphCombo->currentText();
-    bool b=!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
-    ui->graphCombo->setItemData(index,b,Qt::UserRole);
-    if (b) {
-        ui->graphCombo->setItemIcon(index,*icon_on);
-    } else {
-        ui->graphCombo->setItemIcon(index,*icon_off);
-    }
-    g=GraphView->findGraphTitle(s);
-    g->setVisible(b);
+    if (index > 0) {
+        bool b=!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
+        ui->graphCombo->setItemData(index,b,Qt::UserRole);
+        ui->graphCombo->setItemIcon(index, b ? *icon_on : *icon_off);
 
+        g=GraphView->findGraphTitle(s);
+        g->setVisible(b);
+    }
+    ui->graphCombo->setCurrentIndex(0);
+
+    setGraphText();
     updateCube();
     GraphView->updateScale();
     GraphView->redraw();
@@ -2639,7 +2684,7 @@ void Daily::updateCube()
 
 void Daily::on_toggleGraphs_clicked(bool /*checked*/)
 {
-    QString s;
+    //QString s;
     //QIcon *icon=checked ? icon_off : icon_on;
     if (ui->graphCombo == nullptr )
         qDebug() << "ToggleGraphs clicked with null graphCombo ptr";
@@ -2667,10 +2712,11 @@ void Daily::updateGraphCombo()
     ui->graphCombo->clear();
     gGraph *g;
 
+    ui->graphCombo->addItem(*icon_up_down, tr("10 of 10 Graphs"), true); // Translation only to define space required
+
     for (int i=0;i<GraphView->size();i++) {
         g=(*GraphView)[i];
         if (g->isEmpty()) continue;
-
 
         if (g->visible()) {
             ui->graphCombo->addItem(*icon_on,g->title(),true);
@@ -2678,8 +2724,9 @@ void Daily::updateGraphCombo()
             ui->graphCombo->addItem(*icon_off,g->title(),false);
         }
     }
-    ui->graphCombo->setCurrentIndex(0);
 
+    ui->graphCombo->setCurrentIndex(0);
+    setGraphText();
     updateCube();
 }
 
@@ -2688,14 +2735,17 @@ void Daily::on_eventsCombo_activated(int index)
     if (index<0)
         return;
 
-    ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
-    schema::Channel * chan = &schema::channel[code];
+    if (index > 0) {
+        ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
+        schema::Channel * chan = &schema::channel[code];
 
-    bool b = !chan->enabled();
-    chan->setEnabled(b);
+        bool b = !chan->enabled();
+        chan->setEnabled(b);
+        ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+    }
 
-    ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
-
+    ui->eventsCombo->setCurrentIndex(0);
+    setFlagText();
     GraphView->redraw();
 }
 

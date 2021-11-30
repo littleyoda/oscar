@@ -309,6 +309,9 @@ private:
 
     void updateCube();
 
+    void setGraphText();
+    void setFlagText();
+
 
     QString getLeftAHI (Day * day);
     QString getSessionInformation(Day *);
@@ -340,6 +343,8 @@ private:
     QLabel *emptyToggleArea;
     QIcon * icon_on;
     QIcon * icon_off;
+    QIcon * icon_up_down;
+    QIcon * icon_warning;
 
     SessionBar * sessionbar;
     MyLabel * dateDisplay;

@@ -56,5 +56,7 @@
         <file>icons/dv64.png</file>
         <file>icons/overview-page.png</file>
         <file>icons/fp_icon.png</file>
+        <file>icons/up-down.png</file>
+        <file>icons/warning.png</file>
     </qresource>
 </RCC>

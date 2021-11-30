@@ -264,6 +264,7 @@ SOURCES += \
     newprofile.cpp \
     overview.cpp \
     preferencesdialog.cpp \
+#    psettings.cpp \
     reports.cpp \
     sessionbar.cpp \
 #    updateparser.cpp \
@@ -351,6 +352,7 @@ HEADERS  += \
     newprofile.h \
     overview.h \
     preferencesdialog.h \
+#    psettings.h \
     reports.h \
     sessionbar.h \
 #    updateparser.h \
