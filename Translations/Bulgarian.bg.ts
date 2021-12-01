@@ -826,7 +826,7 @@
     <message>
         <location filename="../oscar/help.cpp" line="110"/>
         <source>Contents</source>
-        <translation type="unfinished">Съдържание</translation>
+        <translation>Съдържание</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="111"/>
@@ -948,7 +948,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
         <source>&amp;Reset Graphs</source>
-        <translation>&amp;Нулиране на графики</translation>
+        <translation>&amp;Възстановяване на графики</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2859"/>
@@ -973,7 +973,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2974"/>
         <source>Show Daily view</source>
-        <translation>Покажи на ежедневния изглед</translation>
+        <translation>Покажи ежедневния изглед</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2985"/>
@@ -983,7 +983,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3025"/>
         <source>&amp;Maximize Toggle</source>
-        <translation type="unfinished">Превключването на &amp;максимизиране</translation>
+        <translation>Превключването на &amp;максимизиране</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3028"/>
@@ -993,32 +993,32 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3047"/>
         <source>Reset Graph &amp;Heights</source>
-        <translation type="unfinished"></translation>
+        <translation>Възстановяване на височините на &amp;графиката</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3050"/>
         <source>Reset sizes of graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Възстановяване на размерите на графиките</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3110"/>
         <source>Show Right Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи дясната странична лента</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3124"/>
         <source>Show Statistics view</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи изглед на Статистика</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3137"/>
         <source>Import &amp;Dreem Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортирай данни от &amp;Dreem</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3180"/>
         <source>Show &amp;Line Cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи стрелка за &amp;линя</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3202"/>
@@ -1028,42 +1028,42 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3219"/>
         <source>Show Daily Calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи ежедневния календар</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3240"/>
         <source>Create zip of CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>Създай цип от карта с данни на CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3245"/>
         <source>Create zip of OSCAR diagnostic logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Създай цип от диагностични журнали на OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3250"/>
         <source>Create zip of all OSCAR data</source>
-        <translation type="unfinished"></translation>
+        <translation>Създай цип от всички данни на OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3265"/>
         <source>Report an Issue</source>
-        <translation type="unfinished"></translation>
+        <translation>Съобщи за проблем</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3270"/>
         <source>System Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация за система</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3281"/>
         <source>Show &amp;Pie Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи &amp;Кръгова диаграма</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3284"/>
         <source>Show Pie Chart on Daily page</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи кръгова диаграма в ежедневната страница</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3287"/>
@@ -1073,27 +1073,27 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3295"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандартен графичен ред, подходящ за CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3300"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Разширено</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3303"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Разширено графичен ред, подходящ за ASV, AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3314"/>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи лични данни</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Провери за &amp;обновления</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3330"/>
@@ -1103,32 +1103,32 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3335"/>
         <source>&amp;CPAP</source>
-        <translation type="unfinished">&amp;CPAP</translation>
+        <translation>&amp;CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3340"/>
         <source>&amp;Oximetry</source>
-        <translation type="unfinished">&amp;Оксиметрия</translation>
+        <translation>&amp;Оксиметрия</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3345"/>
         <source>&amp;Sleep Stage</source>
-        <translation type="unfinished"></translation>
+        <translation>Фаза на &amp;сън</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3350"/>
         <source>&amp;Position</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Позиция</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3355"/>
         <source>&amp;All except Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Всички с изключение на бележки</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3360"/>
         <source>All including &amp;Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Всички, включително &amp;бележки</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2925"/>
@@ -1148,7 +1148,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3017"/>
         <source>&amp;About OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;За приложение OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3235"/>
@@ -1228,7 +1228,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3167"/>
         <source>Import &amp;Viatom/Wellue Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортирай данни на &amp;Viatom/Wellvue</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3216"/>
@@ -1308,7 +1308,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="1347"/>
         <source>Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Профили</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2897"/>
@@ -1318,12 +1318,12 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2903"/>
         <source>Purge ALL Machine Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Изтрий ВСИЧКИ данни за машината</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2948"/>
         <source>&amp;Import CPAP Card Data</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Импортирай данни от картата CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3121"/>
@@ -1424,12 +1424,12 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1088"/>
         <source>Find your CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>Намери картата с данни за CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1523"/>
         <source>The User&apos;s Guide will open in your default browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Ръководството на потребителя ще се отвори в браузъра по подразбиране</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1955"/>
@@ -1454,7 +1454,7 @@
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2360"/>
         <source>The Glossary will open in your default browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Глосарият ще се отвори в браузъра по подразбиране</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2431"/>
@@ -1849,7 +1849,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="152"/>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Много слаба защита с парола и не се препоръчва, ако се изисква сигурност.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="240"/>
@@ -1874,7 +1874,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="364"/>
         <source>It&apos;s totally ok to fib or skip this, but your rough age is needed to enhance accuracy of certain calculations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не е страшно да се пренебрегнеш или да пропуснеш това, но приблизителната ти възраст е необходима, за да се повиши точността на някои изчисления.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="367"/>
@@ -1884,7 +1884,7 @@
     <message>
         <location filename="../oscar/newprofile.ui" line="383"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Biological (birth) gender is sometimes needed to enhance the accuracy of a few calculations, feel free to leave this blank and skip any of them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Понякога биологичен (рожден) пол е необходим, за да се повиши точността на някои изчисления, но не се колебай да оставиш това поле празно и да пропуснеш някое от тях.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="386"/>
@@ -2172,7 +2172,7 @@
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Моментална снимка</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="135"/>
@@ -2309,12 +2309,12 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="921"/>
         <source>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</source>
-        <translation type="unfinished"></translation>
+        <translation>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="967"/>
         <source>CMS50E/F users, when importing directly, please don&apos;t select upload on your device until OSCAR prompts you to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Потребители на CMS50E/F, когато импортирате директно, моля, не избирайте качване на устройството ви, докато OSCAR не ви подкани за това.</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1004"/>
@@ -3400,12 +3400,16 @@ which is common on Mac &amp; Linux platforms..
 
 OSCAR can import from this compressed backup directory natively.. 
 To use it with ResScan will require the .gz files to be uncompressed first..</source>
-        <translation type="unfinished"></translation>
+        <translation>Компресирай резервните копия на ResMed (EDF), за да спестиш място на диска.
+Резервните копия на EDF файлове се съхраняват във формат .gz, който е обикновенен формат в Мак ОС и в Линукс
+
+OSCAR може да импортира от тази компресирина папка за резервни копия (.gz файл)..
+За да я използва с ResScan, първо е необходимо да декромпесираш .gz файловете..</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="458"/>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Следните опции влияят на количеството дисково пространство, което OSCAR използва, и на времето, което отнема импортирането.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="468"/>
@@ -4236,12 +4240,12 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/profileselector.ui" line="26"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Филтър:</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="36"/>
         <source>Reset filter to see all profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Възстанови филтъра, за да видиш всички профили</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="55"/>
@@ -4498,7 +4502,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/SleepLib/progressdialog.cpp" line="56"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Прекрати</translation>
     </message>
 </context>
 <context>
@@ -5088,7 +5092,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="193"/>
         <source>Operating system:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Операционна система:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="191"/>
@@ -7712,12 +7716,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1623"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1 ?} {2-%3 ?} {4)?}</translation>
+        <translation>EPAP %1 IPAP %2 %3 (%4)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1629"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2 (%3) {1-%2 ?} {3-%4 ?} {5)?}</translation>
+        <translation>EPAP %1  %2 IPAP %3 %4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="176"/>
@@ -8247,7 +8251,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="161"/>
         <source>Hours: %1h, %2m, %3s</source>
-        <translation>Време: %1ч, %2м, %3с</translation>
+        <translation type="unfinished">Време: %1ч, %2м, %3с</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="264"/>

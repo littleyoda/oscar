@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../oscar/aboutdialog.ui" line="49"/>
-        <location filename="../oscar/aboutdialog.cpp" line="122"/>
+        <location filename="../oscar/aboutdialog.cpp" line="129"/>
         <source>Release Notes</source>
         <translation>릴리즈 노트</translation>
     </message>
@@ -35,47 +35,47 @@
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="35"/>
+        <location filename="../oscar/aboutdialog.cpp" line="36"/>
         <source>Show data folder</source>
         <translation>데이터 폴더 보기</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="39"/>
+        <location filename="../oscar/aboutdialog.cpp" line="40"/>
         <source>About OSCAR %1</source>
         <translation>OSCAR에 대해 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="83"/>
+        <location filename="../oscar/aboutdialog.cpp" line="88"/>
         <source>Sorry, could not locate About file.</source>
         <translation>죄송합니다. 파일 정보를 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="97"/>
+        <location filename="../oscar/aboutdialog.cpp" line="103"/>
         <source>Sorry, could not locate Credits file.</source>
         <translation>죄송합니다. 크레딧 파일을 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="111"/>
+        <location filename="../oscar/aboutdialog.cpp" line="118"/>
         <source>Sorry, could not locate Release Notes.</source>
         <translation>죄송합니다. 릴리스 노트를 찾을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="123"/>
+        <location filename="../oscar/aboutdialog.cpp" line="130"/>
         <source>OSCAR %1</source>
         <translation>오스카 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="126"/>
+        <location filename="../oscar/aboutdialog.cpp" line="133"/>
         <source>Important:</source>
         <translation>중요:</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="127"/>
+        <location filename="../oscar/aboutdialog.cpp" line="134"/>
         <source>As this is a pre-release version, it is recommended that you &lt;b&gt;back up your data folder manually&lt;/b&gt; before proceeding, because attempting to roll back later may break things.</source>
         <translation>이 버전은 시험판 버전으로 추후 원복하려고 하면 문제가 발생할수 있으므로,&lt;b&gt;데이터 폴더를 수동으로 백업&lt;/b&gt;하는 것이 좋습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.cpp" line="139"/>
+        <location filename="../oscar/aboutdialog.cpp" line="147"/>
         <source>To see if the license text is available in your language, see %1.</source>
         <translation>사용자 언어로 라이센스 텍스트를 사용할 수 있는지 확인하려면 %1을 참조하십시오.</translation>
     </message>
@@ -83,12 +83,12 @@
 <context>
     <name>CMS50F37Loader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="879"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="880"/>
         <source>Could not find the oximeter file:</source>
         <translation>산소 측정기 파일을 찾을 수 없습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="885"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="886"/>
         <source>Could not open the oximeter file:</source>
         <translation>산소 측정기 파일을 열 수 없습니다.:</translation>
     </message>
@@ -96,22 +96,22 @@
 <context>
     <name>CMS50Loader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="479"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="480"/>
         <source>Could not get data transmission from oximeter.</source>
         <translation>산소측정기부터 전송 데이터를 가져올 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="479"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="480"/>
         <source>Please ensure you select &apos;upload&apos; from the oximeter devices menu.</source>
         <translation>산소측정기 장치 메뉴에서 &apos;업로드&apos;를 선택 하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="547"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="548"/>
         <source>Could not find the oximeter file:</source>
         <translation>산소측정기 파일을 찾을 수 없습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="553"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="554"/>
         <source>Could not open the oximeter file:</source>
         <translation>산소측정기 파일을 열수 없습니다:</translation>
     </message>
@@ -299,57 +299,57 @@
         <translation>압력 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="630"/>
+        <location filename="../oscar/daily.cpp" line="632"/>
         <source>No %1 events are recorded this day</source>
         <translation>이날 %1 이벤트는 기록되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="750"/>
+        <location filename="../oscar/daily.cpp" line="752"/>
         <source>%1 event</source>
         <translation>%1 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="751"/>
+        <location filename="../oscar/daily.cpp" line="753"/>
         <source>%1 events</source>
         <translation>%1 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="794"/>
+        <location filename="../oscar/daily.cpp" line="796"/>
         <source>Session Start Times</source>
         <translation>세션 시작 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="795"/>
+        <location filename="../oscar/daily.cpp" line="797"/>
         <source>Session End Times</source>
         <translation>세션 종료 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1001"/>
+        <location filename="../oscar/daily.cpp" line="1003"/>
         <source>Session Information</source>
         <translation>세션 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1024"/>
+        <location filename="../oscar/daily.cpp" line="1026"/>
         <source>Oximetry Sessions</source>
         <translation>산소측정기 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1044"/>
+        <location filename="../oscar/daily.cpp" line="1046"/>
         <source>Duration</source>
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1278"/>
+        <location filename="../oscar/daily.cpp" line="1280"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation>(모드 및 압력 설정이 누락되었습니다. 어제와 같습니다.)</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2384"/>
+        <location filename="../oscar/daily.cpp" line="2387"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>이 북마크는 현재 비활성 영역에 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1021"/>
+        <location filename="../oscar/daily.cpp" line="1023"/>
         <source>CPAP Sessions</source>
         <translation>CPAP 세션</translation>
     </message>
@@ -359,202 +359,212 @@
         <translation>상세</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1027"/>
+        <location filename="../oscar/daily.cpp" line="1029"/>
         <source>Sleep Stage Sessions</source>
         <translation>수면 단계 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1030"/>
+        <location filename="../oscar/daily.cpp" line="1032"/>
         <source>Position Sensor Sessions</source>
         <translation>위치 센서 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1035"/>
+        <location filename="../oscar/daily.cpp" line="1037"/>
         <source>Unknown Session</source>
         <translation>알수없는 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1109"/>
+        <location filename="../oscar/daily.cpp" line="1111"/>
         <source>Machine Settings</source>
         <translation>기기 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1269"/>
+        <location filename="../oscar/daily.cpp" line="1271"/>
         <source>Model %1 - %2</source>
         <translation>모델 %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1274"/>
+        <location filename="../oscar/daily.cpp" line="1276"/>
         <source>PAP Mode: %1</source>
         <translation>PAP 모드: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1321"/>
+        <location filename="../oscar/daily.cpp" line="1323"/>
         <source>99.5%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1394"/>
+        <location filename="../oscar/daily.cpp" line="1396"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>이날은 요약 데이터만 포함되며 제한된 정보만 사용할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1420"/>
+        <location filename="../oscar/daily.cpp" line="1422"/>
         <source>Total ramp time</source>
         <translation>총 ramp(압력상승) 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1424"/>
+        <location filename="../oscar/daily.cpp" line="1426"/>
         <source>Time outside of ramp</source>
         <translation>ramp(압력상승)외 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1465"/>
+        <location filename="../oscar/daily.cpp" line="1467"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1465"/>
+        <location filename="../oscar/daily.cpp" line="1467"/>
         <source>End</source>
         <translation>종료</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1502"/>
+        <location filename="../oscar/daily.cpp" line="1504"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>이 시스템에 원형 차트를 표시할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1779"/>
+        <location filename="../oscar/daily.cpp" line="1649"/>
+        <source>10 of 10 Event Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="1708"/>
+        <source>This CPAP machine does NOT record detailed data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="1782"/>
         <source>Sorry, this machine only provides compliance data.</source>
         <translation>죄송합니다.이 기기는 순응 데이터만 제공합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1798"/>
+        <location filename="../oscar/daily.cpp" line="1801"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;아무것도 없습니다!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1801"/>
+        <location filename="../oscar/daily.cpp" line="1804"/>
         <source>No data is available for this day.</source>
         <translation>이 날은 자료가 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1242"/>
+        <location filename="../oscar/daily.cpp" line="2715"/>
+        <source>10 of 10 Graphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="1244"/>
         <source>Oximeter Information</source>
         <translation>산소측정기 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1064"/>
+        <location filename="../oscar/daily.cpp" line="1066"/>
         <source>Click to %1 this session.</source>
         <translation>이 세션에서 %1을 클릭하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1064"/>
+        <location filename="../oscar/daily.cpp" line="1066"/>
         <source>disable</source>
         <translation>비활성</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1064"/>
+        <location filename="../oscar/daily.cpp" line="1066"/>
         <source>enable</source>
         <translation>활성</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1080"/>
+        <location filename="../oscar/daily.cpp" line="1082"/>
         <source>%1 Session #%2</source>
         <translation>%1 세션 #%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1081"/>
+        <location filename="../oscar/daily.cpp" line="1083"/>
         <source>%1h %2m %3s</source>
         <translation>%1시 %2분 %3초</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1112"/>
+        <location filename="../oscar/daily.cpp" line="1114"/>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
         <translation>&lt;b&gt; 참고 사항 :&lt;/b&gt; 아래에 표시된 모든 설정은 전날 이후로 변경된 사항이 없음을 전제로 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1247"/>
+        <location filename="../oscar/daily.cpp" line="1249"/>
         <source>SpO2 Desaturations</source>
         <translation>SpO2(혈중산소포화도) 불포화</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1248"/>
+        <location filename="../oscar/daily.cpp" line="1250"/>
         <source>Pulse Change events</source>
         <translation>맥박 변화 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1249"/>
+        <location filename="../oscar/daily.cpp" line="1251"/>
         <source>SpO2 Baseline Used</source>
         <translation>SpO2(혈중산소포화도) 기준선 사용됨</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1320"/>
+        <location filename="../oscar/daily.cpp" line="1322"/>
         <source>%1%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1315"/>
+        <location filename="../oscar/daily.cpp" line="1317"/>
         <source>Statistics</source>
         <translation>통계</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1404"/>
+        <location filename="../oscar/daily.cpp" line="1406"/>
         <source>Total time in apnea</source>
         <translation>무호흡 총 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1414"/>
+        <location filename="../oscar/daily.cpp" line="1416"/>
         <source>Time over leak redline</source>
         <translation>시간 초과 누출 임계선</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1705"/>
-        <source>BRICK! :(</source>
-        <translation>먹통! :(</translation>
-    </message>
-    <message>
-        <location filename="../oscar/daily.cpp" line="1489"/>
+        <location filename="../oscar/daily.cpp" line="1491"/>
         <source>Event Breakdown</source>
         <translation>이벤트 분석</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1769"/>
+        <location filename="../oscar/daily.cpp" line="1772"/>
         <source>Sessions all off!</source>
         <translation>세션이 모두 끝남!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1771"/>
+        <location filename="../oscar/daily.cpp" line="1774"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>세션이 이날 존재하지만 꺼져 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1774"/>
+        <location filename="../oscar/daily.cpp" line="1777"/>
         <source>Impossibly short session</source>
         <translation>난해한 짧은 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1775"/>
+        <location filename="../oscar/daily.cpp" line="1778"/>
         <source>Zero hours??</source>
         <translation>제로 시간 ??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1778"/>
+        <location filename="../oscar/daily.cpp" line="1781"/>
         <source>BRICK :(</source>
         <translation>먹통! :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1780"/>
+        <location filename="../oscar/daily.cpp" line="1783"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>장비 공급자에게 문의 하십시오!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2097"/>
+        <location filename="../oscar/daily.cpp" line="2100"/>
         <source>Pick a Colour</source>
         <translation>색상 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2427"/>
+        <location filename="../oscar/daily.cpp" line="2430"/>
         <source>Bookmark at %1</source>
         <translation>북마크 at %1</translation>
     </message>
@@ -770,17 +780,17 @@
 <context>
     <name>FPIconLoader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="232"/>
         <source>Import Error</source>
         <translation>불러오기 에러</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="160"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>This Machine Record cannot be imported in this profile.</source>
         <translation>프로필에서 기기 기록을 가져올 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="160"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>일별 기록이 이미 존재하는 내용과 겹칩니다.</translation>
     </message>
@@ -803,62 +813,62 @@
         <translation>검색 주제:</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="58"/>
+        <location filename="../oscar/help.cpp" line="59"/>
         <source>Help Files are not yet available for %1 and will display in %2.</source>
         <translation>도움말 파일은 %1에서 아직 사용할 수 없으며 %2에 표시됩니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="68"/>
+        <location filename="../oscar/help.cpp" line="69"/>
         <source>Help files do not appear to be present.</source>
         <translation>도움말 파일을 찾을 수 없습니다 .</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="84"/>
+        <location filename="../oscar/help.cpp" line="85"/>
         <source>HelpEngine did not set up correctly</source>
         <translation>HelpEngine이 정상적으로 설정되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="99"/>
+        <location filename="../oscar/help.cpp" line="100"/>
         <source>HelpEngine could not register documentation correctly.</source>
         <translation>HelpEngine이 문서를 정상적으로 등록하지 못했습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="110"/>
+        <location filename="../oscar/help.cpp" line="111"/>
         <source>Contents</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="111"/>
+        <location filename="../oscar/help.cpp" line="112"/>
         <source>Index</source>
         <translation>목차</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="115"/>
+        <location filename="../oscar/help.cpp" line="116"/>
         <source>Search</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="125"/>
+        <location filename="../oscar/help.cpp" line="126"/>
         <source>No documentation available</source>
         <translation>사용 가능한 문서가 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="213"/>
+        <location filename="../oscar/help.cpp" line="214"/>
         <source>Please wait a bit.. Indexing still in progress</source>
         <translation>잠시 기다리십시오.. 인덱싱이 계속 진행 중입니다</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="239"/>
+        <location filename="../oscar/help.cpp" line="240"/>
         <source>No</source>
         <translation>아니요</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="240"/>
+        <location filename="../oscar/help.cpp" line="241"/>
         <source>%1 result(s) for &quot;%2&quot;</source>
         <translation>&quot;%2&quot;의 결과중 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/help.cpp" line="241"/>
+        <location filename="../oscar/help.cpp" line="242"/>
         <source>clear</source>
         <translation>지우기</translation>
     </message>
@@ -866,12 +876,12 @@
 <context>
     <name>MD300W1Loader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="165"/>
+        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="166"/>
         <source>Could not find the oximeter file:</source>
         <translation>산소측정기 파일을 찾을 수 없습니다 :</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="172"/>
         <source>Could not open the oximeter file:</source>
         <translation>산소측정기 파일을 열 수 없습니다:</translation>
     </message>
@@ -1175,7 +1185,7 @@
         <translation>검토를 위해 내보내기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="109"/>
+        <location filename="../oscar/mainwindow.cpp" line="110"/>
         <source>E&amp;xit</source>
         <translation>나&amp;가기</translation>
     </message>
@@ -1365,85 +1375,85 @@
         <translation>현재 날짜</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="544"/>
-        <location filename="../oscar/mainwindow.cpp" line="2301"/>
+        <location filename="../oscar/mainwindow.cpp" line="540"/>
+        <location filename="../oscar/mainwindow.cpp" line="2196"/>
         <source>Welcome</source>
         <translation>환영합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="106"/>
+        <location filename="../oscar/mainwindow.cpp" line="107"/>
         <source>&amp;About</source>
         <translation>&amp;정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="795"/>
-        <location filename="../oscar/mainwindow.cpp" line="1968"/>
+        <location filename="../oscar/mainwindow.cpp" line="806"/>
+        <location filename="../oscar/mainwindow.cpp" line="1872"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>잠시 기다려 주십시오. 백업 폴더에서 가져오는 중입니다...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="731"/>
+        <location filename="../oscar/mainwindow.cpp" line="742"/>
         <source>Import Problem</source>
         <translation>불러오기 문제</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="896"/>
+        <location filename="../oscar/mainwindow.cpp" line="907"/>
         <source>Please insert your CPAP data card...</source>
         <translation>CPAP 데이터 카드를 삽입 하십시오...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="986"/>
+        <location filename="../oscar/mainwindow.cpp" line="997"/>
         <source>Access to Import has been blocked while recalculations are in progress.</source>
         <translation>재계산중 가져 오기에 대한 액세스가 차단 되었습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1038"/>
+        <location filename="../oscar/mainwindow.cpp" line="1049"/>
         <source>CPAP Data Located</source>
         <translation>CPAP 데이터 위치</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1073"/>
+        <location filename="../oscar/mainwindow.cpp" line="1084"/>
         <source>Import Reminder</source>
         <translation>가져오기 알림</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1088"/>
+        <location filename="../oscar/mainwindow.cpp" line="1099"/>
         <source>Find your CPAP data card</source>
         <translation>CPAP 데이터 카드 찾기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1147"/>
+        <location filename="../oscar/mainwindow.cpp" line="1158"/>
         <source>Importing Data</source>
         <translation>데이터 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1449"/>
+        <location filename="../oscar/mainwindow.cpp" line="1460"/>
         <source>Choose where to save screenshot</source>
         <translation>스크린 샷을 저장할 위치 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1449"/>
+        <location filename="../oscar/mainwindow.cpp" line="1460"/>
         <source>Image files (*.png)</source>
         <translation>이미지 파일 (* .png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1523"/>
+        <location filename="../oscar/mainwindow.cpp" line="1534"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>사용자 가이드가 기본 브라우저에서 열립니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1531"/>
+        <location filename="../oscar/mainwindow.cpp" line="1542"/>
         <source>The FAQ is not yet implemented</source>
         <translation>FAQ가 아직 구현되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1780"/>
-        <location filename="../oscar/mainwindow.cpp" line="1807"/>
+        <location filename="../oscar/mainwindow.cpp" line="1684"/>
+        <location filename="../oscar/mainwindow.cpp" line="1711"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>이 내용을 읽을 수 있으면 재시작 명령이 작동하지 않았습니다. 수동으로 시작해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1943"/>
+        <location filename="../oscar/mainwindow.cpp" line="1847"/>
         <source>Are you sure you want to rebuild all CPAP data for the following machine:
 
 </source>
@@ -1452,291 +1462,291 @@
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1953"/>
+        <location filename="../oscar/mainwindow.cpp" line="1857"/>
         <source>For some reason, OSCAR does not have any backups for the following machine:</source>
         <translation>어떤 이유로 OSCAR에는 다음 기기에 대한 백업이 없습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2023"/>
+        <location filename="../oscar/mainwindow.cpp" line="1927"/>
         <source>OSCAR does not have any backups for this machine!</source>
         <translation>OSCAR에는이 기기에 대한 백업이 없습니다!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2024"/>
+        <location filename="../oscar/mainwindow.cpp" line="1928"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>&lt;i&gt;이 기기의 모든 데이터를 &lt;b&gt;&lt;/b&gt; 백업 &lt;/i&gt;하지 않으면 &lt;font size = + 2&gt;이 기기의 데이터를 &lt;b&gt; 영구적으로 &lt;/b 잃게 됩니다. &gt;! &lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2030"/>
+        <location filename="../oscar/mainwindow.cpp" line="1934"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
         <translation>다음 기기에서 OSCAR의 기기 데이터베이스를 &lt;font size=+2&gt; 제거합니다 &lt;/font&gt; : &lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2088"/>
+        <location filename="../oscar/mainwindow.cpp" line="1992"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>파일 권한 오류로 인해 제거 프로세스가 실패했습니다. 다음 폴더를 수동으로 삭제해야합니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2138"/>
+        <location filename="../oscar/mainwindow.cpp" line="2042"/>
         <source>No help is available.</source>
         <translation>도움을받을 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2637"/>
+        <location filename="../oscar/mainwindow.cpp" line="2549"/>
         <source>%1&apos;s Journal</source>
         <translation>%1 일지</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2639"/>
+        <location filename="../oscar/mainwindow.cpp" line="2551"/>
         <source>Choose where to save journal</source>
         <translation>일지 저장 위치 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2639"/>
+        <location filename="../oscar/mainwindow.cpp" line="2551"/>
         <source>XML Files (*.xml)</source>
         <translation>XML 파일 (*.xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2659"/>
+        <location filename="../oscar/mainwindow.cpp" line="2571"/>
         <source>Export review is not yet implemented</source>
         <translation>내보내기 리뷰가 아직 구현되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2669"/>
+        <location filename="../oscar/mainwindow.cpp" line="2581"/>
         <source>Would you like to zip this card?</source>
         <translation>이 카드를 압축 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2691"/>
-        <location filename="../oscar/mainwindow.cpp" line="2762"/>
-        <location filename="../oscar/mainwindow.cpp" line="2813"/>
+        <location filename="../oscar/mainwindow.cpp" line="2603"/>
+        <location filename="../oscar/mainwindow.cpp" line="2674"/>
+        <location filename="../oscar/mainwindow.cpp" line="2725"/>
         <source>Choose where to save zip</source>
         <translation>zip 저장 위치 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2691"/>
-        <location filename="../oscar/mainwindow.cpp" line="2762"/>
-        <location filename="../oscar/mainwindow.cpp" line="2813"/>
+        <location filename="../oscar/mainwindow.cpp" line="2603"/>
+        <location filename="../oscar/mainwindow.cpp" line="2674"/>
+        <location filename="../oscar/mainwindow.cpp" line="2725"/>
         <source>ZIP files (*.zip)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2738"/>
-        <location filename="../oscar/mainwindow.cpp" line="2776"/>
-        <location filename="../oscar/mainwindow.cpp" line="2847"/>
+        <location filename="../oscar/mainwindow.cpp" line="2650"/>
+        <location filename="../oscar/mainwindow.cpp" line="2688"/>
+        <location filename="../oscar/mainwindow.cpp" line="2759"/>
         <source>Creating zip...</source>
         <translation>ZIP 생성 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2723"/>
-        <location filename="../oscar/mainwindow.cpp" line="2831"/>
+        <location filename="../oscar/mainwindow.cpp" line="2635"/>
+        <location filename="../oscar/mainwindow.cpp" line="2743"/>
         <source>Calculating size...</source>
         <translation>크기 계산 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2869"/>
+        <location filename="../oscar/mainwindow.cpp" line="2781"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>이슈보고는 아직 구현되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2878"/>
+        <location filename="../oscar/mainwindow.cpp" line="2790"/>
         <source>OSCAR Information</source>
         <translation>OSCAR 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="267"/>
+        <location filename="../oscar/mainwindow.cpp" line="268"/>
         <source>Help Browser</source>
         <translation>도움말 브라우저</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="565"/>
+        <location filename="../oscar/mainwindow.cpp" line="561"/>
         <source>%1 (Profile: %2)</source>
         <translation>%1 (프로필: %2)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1072"/>
+        <location filename="../oscar/mainwindow.cpp" line="1083"/>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
         <translation>데이터 카드의 루트 폴더 또는 드라이브 문자를 선택하고 그 안에있는 폴더는 선택하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1338"/>
+        <location filename="../oscar/mainwindow.cpp" line="1349"/>
         <source>Please open a profile first.</source>
         <translation>먼저 프로필을 여십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1400"/>
+        <location filename="../oscar/mainwindow.cpp" line="1411"/>
         <source>Check for updates not implemented</source>
         <translation>구현되지 않은 업데이트 확인</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1955"/>
+        <location filename="../oscar/mainwindow.cpp" line="1859"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>모든 CPAP 데이터&lt;/i&gt;에 대해 &lt;i&gt; your &gt;&lt;b&gt;own &lt;/b&gt; 백업을 수행한 경우에도 이 작업을 완료할 수 있지만 백업에서 수동으로 복원해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1956"/>
+        <location filename="../oscar/mainwindow.cpp" line="1860"/>
         <source>Are you really sure you want to do this?</source>
         <translation>정말이 작업을 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1971"/>
+        <location filename="../oscar/mainwindow.cpp" line="1875"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>재구성할 내부 백업이 없으므로 사용자가 직접 복원해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1972"/>
+        <location filename="../oscar/mainwindow.cpp" line="1876"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
         <translation>지금 자신의 백업에서 가져 오시겠습니까? (당신이 할때까지 이 컴퓨터에 대한 데이터를 볼 수 없습니다)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2021"/>
+        <location filename="../oscar/mainwindow.cpp" line="1925"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>예방 조치로 백업 폴더는 그대로 유지됩니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2033"/>
+        <location filename="../oscar/mainwindow.cpp" line="1937"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>&lt;b&gt;무조건&lt;/b&gt; 진행하기를 원하십니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2360"/>
+        <location filename="../oscar/mainwindow.cpp" line="2255"/>
         <source>The Glossary will open in your default browser</source>
         <translation>용어집이 기본 브라우저에서 열립니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2431"/>
-        <location filename="../oscar/mainwindow.cpp" line="2435"/>
+        <location filename="../oscar/mainwindow.cpp" line="2343"/>
+        <location filename="../oscar/mainwindow.cpp" line="2347"/>
         <source>There was a problem opening %1 Data File: %2</source>
         <translation>%1 데이터 파일을 여는 중 문제가 발생했습니다. %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2434"/>
+        <location filename="../oscar/mainwindow.cpp" line="2346"/>
         <source>%1 Data Import of %2 file(s) complete</source>
         <translation>%2중 %1 파일의 데이터 가져오기 완료</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2436"/>
+        <location filename="../oscar/mainwindow.cpp" line="2348"/>
         <source>%1 Import Partial Success</source>
         <translation>%1 가져오기 부분 성공</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2438"/>
+        <location filename="../oscar/mainwindow.cpp" line="2350"/>
         <source>%1 Data Import complete</source>
         <translation>%1 데이터 가져오기 완료</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2551"/>
+        <location filename="../oscar/mainwindow.cpp" line="2463"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>%1에 대한 산소측정 데이터를 삭제 하시겠습니까</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2553"/>
+        <location filename="../oscar/mainwindow.cpp" line="2465"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;이 작업을 실행 취소 할 수 없습니다.!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2583"/>
+        <location filename="../oscar/mainwindow.cpp" line="2495"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>먼저 일별 보기에서 유효한 산소 측정 데이터가 포함된 요일을 선택 하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="526"/>
+        <location filename="../oscar/mainwindow.cpp" line="522"/>
         <source>Loading profile &quot;%1&quot;</source>
         <translation>프로필 &quot;%1&quot;로드 중</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="727"/>
+        <location filename="../oscar/mainwindow.cpp" line="738"/>
         <source>Imported %1 CPAP session(s) from
 
 %2</source>
         <translation>%2로부터 %1 개의 CPAP 세션 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="727"/>
+        <location filename="../oscar/mainwindow.cpp" line="738"/>
         <source>Import Success</source>
         <translation>가져오기 성공</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="729"/>
+        <location filename="../oscar/mainwindow.cpp" line="740"/>
         <source>Already up to date with CPAP data at
 
 %1</source>
         <translation>%1에 CPAP 데이터에 대한 최신 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="729"/>
+        <location filename="../oscar/mainwindow.cpp" line="740"/>
         <source>Up to date</source>
         <translation>최신 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="731"/>
+        <location filename="../oscar/mainwindow.cpp" line="742"/>
         <source>Couldn&apos;t find any valid Machine Data at
 
 %1</source>
         <translation>%1에서 유효한 기기 데이터를 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="903"/>
+        <location filename="../oscar/mainwindow.cpp" line="914"/>
         <source>Choose a folder</source>
         <translation>폴더 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="982"/>
+        <location filename="../oscar/mainwindow.cpp" line="993"/>
         <source>No profile has been selected for Import.</source>
         <translation>가져 오기에 대한 프로파일이 선택되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="990"/>
+        <location filename="../oscar/mainwindow.cpp" line="1001"/>
         <source>Import is already running in the background.</source>
         <translation>가져오기가 이미 백그라운드에서 실행 중입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1031"/>
+        <location filename="../oscar/mainwindow.cpp" line="1042"/>
         <source>A %1 file structure for a %2 was located at:</source>
         <translation>%2에 대한 %1 파일 구조는 다음 위치에 있습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1033"/>
+        <location filename="../oscar/mainwindow.cpp" line="1044"/>
         <source>A %1 file structure was located at:</source>
         <translation>%1 파일 구조는 다음 위치에 있습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="998"/>
+        <location filename="../oscar/mainwindow.cpp" line="1009"/>
         <source>Would you like to import from this location?</source>
         <translation>이 위치에서 가져 오시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1042"/>
+        <location filename="../oscar/mainwindow.cpp" line="1053"/>
         <source>Specify</source>
         <translation>지정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1343"/>
+        <location filename="../oscar/mainwindow.cpp" line="1354"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>재계산 완료될 때까지 기본 설정에 대한 액세스가 차단되었습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1459"/>
+        <location filename="../oscar/mainwindow.cpp" line="1470"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>파일 &quot;%1&quot;에 스크린 샷을 저장하는 중 오류가 발생했습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1461"/>
+        <location filename="../oscar/mainwindow.cpp" line="1472"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>%1&quot;파일에 스크린 샷 저장 됨</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1946"/>
+        <location filename="../oscar/mainwindow.cpp" line="1850"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>OSCAR의 백업이 비활성화 된 경우 데이터가 손실 될 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2345"/>
+        <location filename="../oscar/mainwindow.cpp" line="2240"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>MSeries 블록 파일을 여는 중 문제가 발생했습니다: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2349"/>
+        <location filename="../oscar/mainwindow.cpp" line="2244"/>
         <source>MSeries Import complete</source>
         <translation>MSeries 가져 오기 완료</translation>
     </message>
@@ -1744,42 +1754,42 @@
 <context>
     <name>MinMaxWidget</name>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2044"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2004"/>
         <source>Auto-Fit</source>
         <translation>자동 맞춤</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2045"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2005"/>
         <source>Defaults</source>
         <translation>기본값</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2046"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2006"/>
         <source>Override</source>
         <translation>덮어쓰기</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2047"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2007"/>
         <source>The Y-Axis scaling mode, &apos;Auto-Fit&apos; for automatic scaling, &apos;Defaults&apos; for settings according to manufacturer, and &apos;Override&apos; to choose your own.</source>
         <translation>Y축 스케일링 모드, 자동 스케일링을 위한 &apos;Auto-Fit&apos;, 제조업체별 설정의 &apos;Defaults&apos;, 자신만의 설정을 위한 &apos;Override&apos;.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2053"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2013"/>
         <source>The Minimum Y-Axis value.. Note this can be a negative number if you wish.</source>
         <translation>최소 Y축 값 원하는 경우 음수가 될 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2054"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2014"/>
         <source>The Maximum Y-Axis value.. Must be greater than Minimum to work.</source>
         <translation>최대 Y축 값. 동작하려면 최소값보다 커야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2089"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2049"/>
         <source>Scaling Mode</source>
         <translation>스케일링 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2111"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2071"/>
         <source>This button resets the Min and Max to match the Auto-Fit</source>
         <translation>이 버튼은 자동 맞춤과 일치 하도록 최소 및 최대를 재설정 합니다</translation>
     </message>
@@ -2288,7 +2298,7 @@ Index</source>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="61"/>
-        <location filename="../oscar/oximeterimport.cpp" line="37"/>
+        <location filename="../oscar/oximeterimport.cpp" line="38"/>
         <source>Oximeter Import Wizard</source>
         <translation>산소측정기 가져 오기 마법사</translation>
     </message>
@@ -2560,247 +2570,247 @@ Index</source>
         <translation>&amp;시작</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="188"/>
+        <location filename="../oscar/oximeterimport.cpp" line="189"/>
         <source>Scanning for compatible oximeters</source>
         <translation>호환 산소측정기 스캔</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="220"/>
+        <location filename="../oscar/oximeterimport.cpp" line="221"/>
         <source>Could not detect any connected oximeter devices.</source>
         <translation>연결된 산소 농도계를 감지 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="228"/>
+        <location filename="../oscar/oximeterimport.cpp" line="229"/>
         <source>Connecting to %1 Oximeter</source>
         <translation>%1 산소측정기에 연결 중</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="256"/>
+        <location filename="../oscar/oximeterimport.cpp" line="257"/>
         <source>Renaming this oximeter from &apos;%1&apos; to &apos;%2&apos;</source>
         <translation>Renaming this oximeter from &apos;%1&apos; to &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="259"/>
+        <location filename="../oscar/oximeterimport.cpp" line="260"/>
         <source>Oximeter name is different.. If you only have one and are sharing it between profiles, set the name to the same on both profiles.</source>
         <translation>산소측정기 이름이 다릅니다. 프로필이 하나만 있고 프로필간에 공유하는 경우 두 프로필에서 이름을 동일하게 설정하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="302"/>
+        <location filename="../oscar/oximeterimport.cpp" line="303"/>
         <source>&quot;%1&quot;, session %2</source>
         <translation>&quot;%1&quot;, 세션 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="327"/>
+        <location filename="../oscar/oximeterimport.cpp" line="328"/>
         <source>Nothing to import</source>
         <translation>가져올 항목 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="328"/>
+        <location filename="../oscar/oximeterimport.cpp" line="329"/>
         <source>Your oximeter did not have any valid sessions.</source>
         <translation>산소 측정기에 유효한 세션이 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="329"/>
+        <location filename="../oscar/oximeterimport.cpp" line="330"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="332"/>
+        <location filename="../oscar/oximeterimport.cpp" line="333"/>
         <source>Waiting for %1 to start</source>
         <translation>%1이 (가) 시작될 때까지 대기 중입니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="333"/>
+        <location filename="../oscar/oximeterimport.cpp" line="334"/>
         <source>Waiting for the device to start the upload process...</source>
         <translation>기기가 업로드 프로세스를 시작하기를 기다리는 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="335"/>
+        <location filename="../oscar/oximeterimport.cpp" line="336"/>
         <source>Select upload option on %1</source>
         <translation>%1의 업로드 옵션 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="336"/>
+        <location filename="../oscar/oximeterimport.cpp" line="337"/>
         <source>You need to tell your oximeter to begin sending data to the computer.</source>
         <translation>데이터를 컴퓨터에 보내기 시작하려면 산소 측정기에 알려야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="337"/>
+        <location filename="../oscar/oximeterimport.cpp" line="338"/>
         <source>Please connect your oximeter, enter it&apos;s menu and select upload to commence data transfer...</source>
         <translation>산소측정기를 연결하고 메뉴를 입력 한 다음 업로드를 선택하여 데이터 전송을 시작하십시오....</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="367"/>
+        <location filename="../oscar/oximeterimport.cpp" line="368"/>
         <source>%1 device is uploading data...</source>
         <translation>%1 장치에서 데이터를 업로드하는 중입니다...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="368"/>
+        <location filename="../oscar/oximeterimport.cpp" line="369"/>
         <source>Please wait until oximeter upload process completes. Do not unplug your oximeter.</source>
         <translation>산소측정기 업로드 프로세스가 완료될 때까지 기다려주십시오. 산소측정기를 분리하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="387"/>
+        <location filename="../oscar/oximeterimport.cpp" line="388"/>
         <source>Oximeter import completed..</source>
         <translation>산소측정기 불러오기가 완료 되었습니다 ..</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="412"/>
+        <location filename="../oscar/oximeterimport.cpp" line="413"/>
         <source>Select a valid oximetry data file</source>
         <translation>유효한 산소측정기 데이터 파일을 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="412"/>
+        <location filename="../oscar/oximeterimport.cpp" line="413"/>
         <source>Oximetry Files (*.spo *.spor *.spo2 *.SpO2 *.dat)</source>
         <translation>산소측정기 파일들 (*.spo *.spor *.spo2 *.SpO2 *.dat)</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="434"/>
+        <location filename="../oscar/oximeterimport.cpp" line="435"/>
         <source>No Oximetry module could parse the given file:</source>
         <translation>산소측정기 모듈이 주어진 파일을 분석 할 수 없습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="482"/>
+        <location filename="../oscar/oximeterimport.cpp" line="483"/>
         <source>Live Oximetry Mode</source>
         <translation>라이브 산소측정 트리 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="534"/>
+        <location filename="../oscar/oximeterimport.cpp" line="535"/>
         <source>Live Oximetry Stopped</source>
         <translation>활성 산소계량 정지</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="535"/>
+        <location filename="../oscar/oximeterimport.cpp" line="536"/>
         <source>Live Oximetry import has been stopped</source>
         <translation>실시간 Oximetry 가져오기가 중지 되었습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1095"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1096"/>
         <source>Oximeter Session %1</source>
         <translation>산소측정기 세션 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1140"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1141"/>
         <source>OSCAR gives you the ability to track Oximetry data alongside CPAP session data, which can give valuable insight into the effectiveness of CPAP treatment. It will also work standalone with your Pulse Oximeter, allowing you to store, track and review your recorded data.</source>
         <translation>OSCAR는 CPAP 세션 데이터와 함께 Oximetry 데이터를 추적 할 수있는 기능을 제공하므로 CPAP 치료의 효과에 대한 중요한 정보를 얻을 수 있습니다. 또한 맥박 측정기로 독립형으로 작동하므로 기록된 데이터를 저장, 추적 및 검토 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1151"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1152"/>
         <source>If you are trying to sync oximetry and CPAP data, please make sure you imported your CPAP sessions first before proceeding!</source>
         <translation>산소측정과 CPAP 데이터를 동기화하려는 경우 계속하기 전에 먼저 CPAP 세션을 가져오십시오!</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1154"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1155"/>
         <source>For OSCAR to be able to locate and read directly from your Oximeter device, you need to ensure the correct device drivers (eg. USB to Serial UART) have been installed on your computer. For more information about this, %1click here%2.</source>
         <translation>OSCAR에서 Oximeter 장치를 찾아서 직접 읽을 수 있으려면 올바른 장치 드라이버 (예 : USB - 직렬 UART)가 컴퓨터에 설치되어 있는지 확인해야합니다. 이에 대한 자세한 내용은 %1 여기를%2 클릭하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="464"/>
+        <location filename="../oscar/oximeterimport.cpp" line="465"/>
         <source>Oximeter not detected</source>
         <translation>산소측정기가 감지되지 않음</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="471"/>
+        <location filename="../oscar/oximeterimport.cpp" line="472"/>
         <source>Couldn&apos;t access oximeter</source>
         <translation>산소측정기 액세스 할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="485"/>
+        <location filename="../oscar/oximeterimport.cpp" line="486"/>
         <source>Starting up...</source>
         <translation>시작 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="486"/>
+        <location filename="../oscar/oximeterimport.cpp" line="487"/>
         <source>If you can still read this after a few seconds, cancel and try again</source>
         <translation>몇 초 후에도 내용을 읽을 수 없으면 취소하고 다시 시도 하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="533"/>
+        <location filename="../oscar/oximeterimport.cpp" line="534"/>
         <source>Live Import Stopped</source>
         <translation>라이브 가져 오기 중지됨</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="586"/>
+        <location filename="../oscar/oximeterimport.cpp" line="587"/>
         <source>%1 session(s) on %2, starting at %3</source>
         <translation>%2에서 세션(s)을 %1, %3부터 시작</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="590"/>
+        <location filename="../oscar/oximeterimport.cpp" line="591"/>
         <source>No CPAP data available on %1</source>
         <translation>%1에서 사용할수 있는 CPAP 데이터가 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="598"/>
+        <location filename="../oscar/oximeterimport.cpp" line="599"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="725"/>
+        <location filename="../oscar/oximeterimport.cpp" line="726"/>
         <source>Recording...</source>
         <translation>기록중...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="732"/>
+        <location filename="../oscar/oximeterimport.cpp" line="733"/>
         <source>Finger not detected</source>
         <translation>손가락이 감지되지 않음</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="832"/>
+        <location filename="../oscar/oximeterimport.cpp" line="833"/>
         <source>I want to use the time my computer recorded for this live oximetry session.</source>
         <translation>컴퓨터가 실시간 산소포화도 측정 세션을 위해 기록한 시간을 사용하고 싶습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="835"/>
+        <location filename="../oscar/oximeterimport.cpp" line="836"/>
         <source>I need to set the time manually, because my oximeter doesn&apos;t have an internal clock.</source>
         <translation>산소측정기가 내부 시계를 가지고 있지 않기 때문에 수동으로 시간을 설정해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="847"/>
+        <location filename="../oscar/oximeterimport.cpp" line="848"/>
         <source>Something went wrong getting session data</source>
         <translation>세션 데이터를 가져 오는 중 오류가 발생했습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1136"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1137"/>
         <source>Welcome to the Oximeter Import Wizard</source>
         <translation>산소측정기 가져 오기 마법사에 오신 것을 환영합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1138"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1139"/>
         <source>Pulse Oximeters are medical devices used to measure blood oxygen saturation. During extended Apnea events and abnormal breathing patterns, blood oxygen saturation levels can drop significantly, and can indicate issues that need medical attention.</source>
         <translation>맥박 산소 측정기는 혈액 산소 포화도를 측정하는데 사용되는 의료 기기입니다. 연장된 무호흡 이벤트 및 비정상적인 호흡 패턴 동안, 혈중 산소 포화도가 크게 떨어질 수 있으며 의료 조치가 필요한 문제를 나타낼 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1142"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1143"/>
         <source>OSCAR is currently compatible with Contec CMS50D+, CMS50E, CMS50F and CMS50I serial oximeters.&lt;br/&gt;(Note: Direct importing from bluetooth models is &lt;span style=&quot; font-weight:600;&quot;&gt;probably not&lt;/span&gt; possible yet)</source>
         <translation>OSCAR은 현재 Contec CMS50D +, CMS50E, CMS50F 및 CMS50I 직렬 산소 농도계와 호환됩니다. (참고 : 블루투스 모델에서 직접 가져 오기는 아마도 가능)</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1144"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1145"/>
         <source>You may wish to note, other companies, such as Pulox, simply rebadge Contec CMS50&apos;s under new names, such as the Pulox PO-200, PO-300, PO-400. These should also work.</source>
         <translation>Pulox와 같은 다른 회사는 단순히 Contec CMS50을 Pulox PO-200, PO-300, PO-400과 같은 새로운 이름으로 재지정하는 것을 원할 수 있습니다. 이것들 역시 효과가 있을 것입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1147"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1148"/>
         <source>It also can read from ChoiceMMed MD300W1 oximeter .dat files.</source>
         <translation>또한 ChoiceMMed MD300W1 Oximeter .dat 파일에서도 읽을 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1149"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1150"/>
         <source>Please remember:</source>
         <translation>기억해 주세요:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1153"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1154"/>
         <source>Important Notes:</source>
         <translation>중요 사항 :</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1156"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1157"/>
         <source>Contec CMS50D+ devices do not have an internal clock, and do not record a starting time. If you do not have a CPAP session to link a recording to, you will have to enter the start time manually after the import process is completed.</source>
         <translation>Contec CMS50D + 장치에는 내부 시계가 없으며 시작 시간을 기록하지 않습니다. CPAP 세션이 없으면 가져 오기 프로세스가 완료된 후 수동으로 시작 시간을 입력해야합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.cpp" line="1158"/>
+        <location filename="../oscar/oximeterimport.cpp" line="1159"/>
         <source>Even for devices with an internal clock, it is still recommended to get into the habit of starting oximeter records at the same time as CPAP sessions, because CPAP internal clocks tend to drift over time, and not all can be reset easily.</source>
         <translation>내부 시계가 있는 장치의 경우에도 CPAP 세션과 동시에 시간 기록을 시작하는 습관을 유지하는 것이 좋습니다. CPAP 내부 시계는 시간이 지남에 따라 표류하는 경향이 있으며 모든 것을 쉽게 재설정 할 수는 없기 때문입니다.</translation>
     </message>
@@ -4524,7 +4534,7 @@ Would you like do this now?</source>
 <context>
     <name>ProgressDialog</name>
     <message>
-        <location filename="../oscar/SleepLib/progressdialog.cpp" line="56"/>
+        <location filename="../oscar/SleepLib/progressdialog.cpp" line="57"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -4532,126 +4542,126 @@ Would you like do this now?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="835"/>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1247"/>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="836"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1248"/>
         <source>No Data</source>
         <translation>데이터 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="378"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="379"/>
         <source>Events</source>
         <translation>이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="376"/>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="379"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="377"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="380"/>
         <source>Duration</source>
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="393"/>
+        <location filename="../oscar/Graphs/gLineOverlay.cpp" line="394"/>
         <source>(% %1 in events)</source>
         <translation>(이벤트에서 % %1)</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>Jan</source>
         <translation>1월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>Feb</source>
         <translation>2월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>Mar</source>
         <translation>3월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>Apr</source>
         <translation>4월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>May</source>
         <translation>5월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="65"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="397"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
         <source>Jun</source>
         <translation>6월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Jul</source>
         <translation>7월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Aug</source>
         <translation>8월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Sep</source>
         <translation>9월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Oct</source>
         <translation>10월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Nov</source>
         <translation>11월</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="66"/>
-        <location filename="../oscar/Graphs/gXAxis.cpp" line="398"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="67"/>
+        <location filename="../oscar/Graphs/gXAxis.cpp" line="399"/>
         <source>Dec</source>
         <translation>12월</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
         <source>&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
         <source>ft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
         <source>lb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
         <source>oz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
         <source>Kg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>cmH2O</source>
         <translation>cmH2O(압력)</translation>
     </message>
@@ -4711,7 +4721,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="367"/>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="694"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
         <source>Hours</source>
         <translation>시간</translation>
     </message>
@@ -4785,1520 +4795,1527 @@ TTIA: %1</source>
         <translation>%1 %2 / %3 / %4</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
         <source>Minutes</source>
         <translation>분</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
         <source>Seconds</source>
         <translation>초</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
         <source>h</source>
         <translation>시</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
         <source>m</source>
         <translation>분</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
         <source>s</source>
         <translation>초</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
         <source>ms</source>
         <translation>밀리세컨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
         <source>Events/hr</source>
         <translation>이벤트/시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
         <source>Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
         <source>bpm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
         <source>Litres</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
         <source>ml</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>Breaths/min</source>
         <translation>호흡/분</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
         <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
         <source>Severity (0-1)</source>
         <translation>심각도(0-1)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
         <source>Degrees</source>
         <translation>도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="693"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2904"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2869"/>
         <source>Error</source>
         <translation>에러</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
         <source>Information</source>
         <translation>정보</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
         <source>Busy</source>
         <translation>바쁨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
         <source>Please Note</source>
         <translation>참고 사항</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="700"/>
-        <source>Compliance Only :(</source>
-        <translation>순응만:()</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="701"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
         <source>Graphs Switched Off</source>
         <translation>그래프 전환</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
-        <source>Summary Only :(</source>
-        <translation>요약 만 :(</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
         <source>Sessions Switched Off</source>
         <translation>세션 전환</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="707"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="708"/>
         <source>&amp;Yes</source>
         <translation>&amp;예</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="708"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
         <source>&amp;No</source>
         <translation>&amp;아니오</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
         <source>&amp;Cancel</source>
         <translation>&amp;취소</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
         <source>&amp;Destroy</source>
         <translation>&amp;파괴</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="712"/>
         <source>&amp;Save</source>
         <translation>&amp;저장</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>BMI</source>
         <translation>BMI(체질량지수)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="318"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="319"/>
         <source>Weight</source>
         <translation>무게</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>Zombie</source>
         <translation>무기력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
         <source>Pulse Rate</source>
         <translation>맥박수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
         <source>SpO2</source>
         <translation>SpO2(혈중산소포화도)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="719"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
         <source>Plethy</source>
         <translation>쾌적한</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="719"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="720"/>
         <source>Pressure</source>
         <translation>압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
         <source>Daily</source>
         <translation>일간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
         <source>Profile</source>
         <translation>프로필</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
         <source>Overview</source>
         <translation>개요</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="725"/>
         <source>Oximetry</source>
         <translation>산소계</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="726"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="727"/>
         <source>Oximeter</source>
         <translation>산소측정기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="727"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
         <source>Event Flags</source>
         <translation>이벤트 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="730"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="731"/>
         <source>Default</source>
         <translation>디볼트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="733"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2825"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2790"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
         <source>CPAP</source>
         <translation>CPAP(고정)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <source>BiPAP</source>
         <translation>BiPAP이중형양압기(중추용)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2793"/>
         <source>Bi-Level</source>
         <translation>Bi-Level(이중형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
         <source>EPAP</source>
         <translation>호기(날숨)압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
         <source>Min EPAP</source>
         <translation>최저 EPAP(날숨압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
         <source>Max EPAP</source>
         <translation>최대 EPAP)(날숨압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
         <source>IPAP</source>
         <translation>IPAP(들숨압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="741"/>
         <source>Min IPAP</source>
         <translation>최소 IPAP(들숨압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="741"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
         <source>Max IPAP</source>
         <translation>최대 IPAP(들숨압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="104"/>
         <source>APAP</source>
         <translation>APAP(자동양압기)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2795"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="110"/>
         <source>ASV</source>
         <translation>ASV(지능형 인공호흡기)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="312"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="313"/>
         <source>AVAPS</source>
         <translation>평균양 보장 압력 지원</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="746"/>
         <source>ST/ASV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2916"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2881"/>
         <source>Humidifier</source>
         <translation>가습기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="749"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>H</source>
         <translation>H(저호흡)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>OA</source>
         <translation>OA(폐쇄)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="753"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>CA</source>
         <translation>CA(열기)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>FL</source>
         <translation>FL(흐제)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SA</source>
         <translation>SA(기상시압력감소)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
         <source>LE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
         <source>EP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>VS</source>
         <translation>코골이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
         <source>VS2</source>
         <translation>코골이2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>RERA</source>
         <translation>각성(RERA)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2781"/>
         <source>PP</source>
         <translation>PP(압력변화)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
         <source>P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>RE</source>
         <translation>RE(각성)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>NR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
         <source>NRI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
         <source>O2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2798"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>PC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
         <source>UF1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="197"/>
         <source>UF2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="200"/>
         <source>UF3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
         <source>PS</source>
         <translation>압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="775"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>AHI</source>
         <translation>AHI(무저호흡지수)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="775"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>RDI</source>
         <translation type="unfinished">호흡 방해 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <source>AI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
         <source>HI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
         <source>UAI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
         <source>CAI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="781"/>
         <source>FLI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
         <source>REI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
         <source>EPI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>PB</source>
         <translation>PB(주호)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="789"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
         <source>IE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="260"/>
         <source>Insp. Time</source>
         <translation>들숨. 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="257"/>
         <source>Exp. Time</source>
         <translation>날숨. 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="263"/>
         <source>Resp. Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="266"/>
         <source>Flow Limitation</source>
         <translation>흐름 제한(FL)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
         <source>Flow Limit</source>
         <translation>흐름 제한(FL)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1013"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1022"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
         <source>Pat. Trig. Breath</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
         <source>Tgt. Min. Vent</source>
         <translation>Tgt. Min. 벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="269"/>
         <source>Target Vent.</source>
         <translation>대상 환기구.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="241"/>
         <source>Minute Vent.</source>
         <translation>분당 공기변위량.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="235"/>
         <source>Tidal Volume</source>
         <translation>호흡량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="244"/>
         <source>Resp. Rate</source>
         <translation>분당 호흡회수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2782"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2804"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="238"/>
         <source>Snore</source>
         <translation>코골이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
         <source>Leak</source>
         <translation>누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
         <source>Leaks</source>
         <translation>누출들</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>Large Leak</source>
         <translation>대량 누출(LL)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>LL</source>
         <translation>LL(대누)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
         <source>Total Leaks</source>
         <translation>총 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="809"/>
         <source>Unintentional Leaks</source>
         <translation>의도하지 않은 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="809"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
         <source>MaskPressure</source>
         <translation>마스크압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="226"/>
         <source>Flow Rate</source>
         <translation>유동률</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="334"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="335"/>
         <source>Sleep Stage</source>
         <translation>수면 단계</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
         <source>Usage</source>
         <translation>사용</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <source>Sessions</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
         <source>Pr. Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="818"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="26"/>
         <source>OSCAR</source>
         <translation>OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="700"/>
         <source>No Data Available</source>
         <translation>자료 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="201"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="202"/>
         <source>App key:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="193"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="194"/>
         <source>Operating system:</source>
         <translation>운영 체제 :</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="191"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="192"/>
         <source>Built with Qt %1 on %2</source>
         <translation>%2에 Qt %1로 빌드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="195"/>
         <source>Graphics Engine:</source>
         <translation>그래픽 엔진 :</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="196"/>
         <source>Graphics Engine type:</source>
         <translation>그래픽 엔진 유형 :</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="660"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="661"/>
         <source>Software Engine</source>
         <translation>소프트웨어 엔진</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="661"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
         <source>ANGLE / OpenGLES</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="663"/>
         <source>Desktop OpenGL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="664"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="665"/>
         <source> m</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="665"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
         <source> cm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="701"/>
+        <source>Only Settings and Compliance Data Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
+        <source>Summary Data Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
         <source>Bookmarks</source>
         <translation>북마크</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="820"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2785"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2787"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>Mode</source>
         <translation>모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="822"/>
         <source>Model</source>
         <translation>모델</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="822"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
         <source>Brand</source>
         <translation>브랜드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
         <source>Serial</source>
         <translation>시리얼</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Series</source>
         <translation>시리즈</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Machine</source>
         <translation>기기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Channel</source>
         <translation>채널</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
         <source>Settings</source>
         <translation>세팅</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="291"/>
         <source>Inclination</source>
         <translation>기울기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="288"/>
         <source>Orientation</source>
         <translation>방향</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
         <source>Motion</source>
         <translation>동작</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
         <source>DOB</source>
         <translation>생년월일</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
         <source>Phone</source>
         <translation>전화</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
         <source>Address</source>
         <translation>주소</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
         <source>Email</source>
         <translation>이메일</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
         <source>Patient ID</source>
         <translation>환자 ID</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="840"/>
         <source>Date</source>
         <translation>날</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="841"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
         <source>Bedtime</source>
         <translation>취침시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
         <source>Wake-up</source>
         <translation>기상</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
         <source>Mask Time</source>
         <translation>마스크 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="191"/>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="124"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="115"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="125"/>
         <source>Unknown</source>
         <translation>알수 없는</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
         <source>None</source>
         <translation>없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
         <source>Ready</source>
         <translation>준비된</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
         <source>First</source>
         <translation>처음</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="850"/>
         <source>Last</source>
         <translation>마지막</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="850"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
         <source>End</source>
         <translation>종료</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="177"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="178"/>
         <source>On</source>
         <translation>켬</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="854"/>
         <source>Off</source>
         <translation>끔</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
         <source>Yes</source>
         <translation>예</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
         <source>No</source>
         <translation>아니요</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
         <source>Min</source>
         <translation>최소</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="860"/>
         <source>Max</source>
         <translation>최대</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="860"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="861"/>
         <source>Med</source>
         <translation>중간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="862"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
         <source>Average</source>
         <translation>평균</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="864"/>
         <source>Median</source>
         <translation>중간</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="215"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="864"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
         <source>Avg</source>
         <translation>평균</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="213"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="866"/>
         <source>W-Avg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="900"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="151"/>
+        <source>Your %1 %2 (%3) generated data that OSCAR has never seen before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
+        <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="161"/>
         <source>Non Data Capable Machine</source>
         <translation>비 데이터 가능 기기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="901"/>
-        <source>Your Philips Respironics CPAP machine (Model %1) is unfortunately not a data capable model.</source>
-        <translation>Philips Respironics CPAP 시스템 (모델 %1)은 불행히도 데이터 가능 모델이 아닙니다.</translation>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
+        <source>Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2672"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="763"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="216"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
+        <source>Your %1 CPAP machine (Model %2) has not been tested yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
+        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
+        <source>Sorry, your %1 CPAP machine (%2) is not supported yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
+        <source>The developers need a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>준비 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="883"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="185"/>
         <source>Machine Unsupported</source>
         <translation>지원되지 않는 기계</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="163"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
         <translation>OSCAR가이 컴퓨터의 사용 시간과 매우 기본적인 설정 만 추적 할 수 있다는 사실을 알려 드려 죄송합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="787"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="851"/>
         <source>Scanning Files...</source>
         <translation>파일 스캔 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="795"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="723"/>
-        <location filename="../oscar/mainwindow.cpp" line="2412"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="729"/>
+        <location filename="../oscar/mainwindow.cpp" line="2307"/>
         <source>Importing Sessions...</source>
         <translation>세션 가져 오는 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2726"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="800"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="359"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2748"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="368"/>
+        <location filename="../oscar/mainwindow.cpp" line="730"/>
+        <location filename="../oscar/mainwindow.cpp" line="2329"/>
         <source>Finishing up...</source>
         <translation>끝내는 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="923"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="434"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="175"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="440"/>
         <source>Machine Untested</source>
         <translation>테스트되지 않은 기계</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
-        <source>Your Philips Respironics CPAP machine (Model %1) has not been tested yet.</source>
-        <translation>Philips Respironics CPAP 기기 (모델 %1)는 아직 테스트되지 않았습니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="925"/>
-        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure it works with OSCAR.</source>
-        <translation>작동 할 수있는 다른 컴퓨터와 비슷해 보이지만 개발자는이 컴퓨터의 SD 카드의 .zip 복사본과 일치하는 Encore .pdf 보고서를 통해 OSCAR에서 작동하는지 확인합니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>Flex Lock</source>
         <translation>Flex 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>Flex 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2872"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>EPAP(날숨)에서 IPAP(들숨)로 전환하는 데 걸리는 시간이 높을수록 전환 속도가 느려집니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2878"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2843"/>
         <source>Rise Time Lock</source>
         <translation>상승 시간 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2879"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>상승 시간 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2880"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>Rise Lock</source>
         <translation>상승 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2933"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2899"/>
         <source>Mask Resistance Setting</source>
         <translation>마스크 저항 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
         <source>Mask Resist.</source>
         <translation>마스크 저항.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
         <source>Hose Diam.</source>
         <translation>호스 직경.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2946"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
         <source>15mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
         <source>22mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="778"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="842"/>
         <source>Backing Up Files...</source>
         <translation>파일 백업 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/importcontext.cpp" line="150"/>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="92"/>
         <source>Untested Data</source>
         <translation>테스트되지 않은 데이터</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="814"/>
-        <source>Your Philips Respironics %1 (%2) generated data that OSCAR has never seen before.</source>
-        <translation>Philips Respironics %1 (%2)에서 OSCAR가 이전에 본 적이없는 데이터를 생성했습니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="815"/>
-        <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching Encore .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation>가져온 데이터가 완전히 정확하지 않을 수 있으므로 개발자는 OSCAR에서 데이터를 올바르게 처리하는지 확인하기 위해이 컴퓨터의 SD 카드와 일치하는 Encore .pdf 보고서의 .zip 사본을 원합니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="872"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="915"/>
         <source>model %1</source>
         <translation>모델 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="876"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="921"/>
         <source>DreamStation 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="879"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
         <source>unknown model</source>
         <translation>알 수 없는 모델</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
-        <source>Sorry, your Philips Respironics CPAP machine (%1) is not supported yet.</source>
-        <translation>죄송합니다. Philips Respironics CPAP 시스템(%1)은 아직 지원되지 않습니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
-        <source>The developers needs a .zip copy of this machine&apos;s SD card and matching Encore or Care Orchestrator .pdf reports to make it work with OSCAR.</source>
-        <translation>개발자는 OSCAR에서 작동하도록 하려면 이 시스템의 SD 카드와 일치하는 Encore 또는 Care Orchestrator .pdf 보고서의 .zip 사본이 필요합니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2824"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2789"/>
         <source>CPAP-Check</source>
         <translation>CPAP- 체크</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2826"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2791"/>
         <source>AutoCPAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2792"/>
         <source>Auto-Trial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2794"/>
         <source>AutoBiLevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2831"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2796"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2797"/>
         <source>S/T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2834"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
         <source>S/T - AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2835"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2800"/>
         <source>PC - AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2840"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2803"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2805"/>
         <source>Flex Mode</source>
         <translation type="unfinished">Flex(압력완화) 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2804"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>PRS1 압력 완화 모드.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2843"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2808"/>
         <source>C-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2809"/>
         <source>C-Flex+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2810"/>
         <source>A-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2811"/>
         <source>P-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2871"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2812"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
         <source>Rise Time</source>
         <translation>상승 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2848"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2813"/>
         <source>Bi-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2850"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
         <source>Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2819"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
         <source>Flex Level</source>
         <translation>Flex(압력완화) 레벨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2855"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>PRS1 압력 완화 설정.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2903"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2868"/>
         <source>Passover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2924"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
         <source>Target Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
         <source>PRS1 Humidifier Target Time</source>
         <translation>PRS1 가습기 목표시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
         <source>Hum. Tgt Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2951"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2916"/>
         <source>Tubing Type Lock</source>
         <translation>튜브 유형 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>튜브 유형 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
         <source>Tube Lock</source>
         <translation>튜브 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2960"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
         <source>Mask Resistance Lock</source>
         <translation>마스크 저항 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>마스크 저항 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
         <source>Mask Res. Lock</source>
         <translation>마스크 저항. 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
         <translation>기기가 내장 디스플레이를 통해 AHI를 표시하는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <source>Ramp Type</source>
         <translation>Ramp(압력상승) 유형</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
         <source>Type of ramp curve to use.</source>
         <translation>사용할 ramp(압력상승) 곡선 유형입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3009"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2974"/>
         <source>Linear</source>
         <translation>선형</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3010"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2975"/>
         <source>SmartRamp</source>
         <translation type="unfinished">SmartRamp(스마트압력상승)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3014"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
+        <source>Ramp+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
         <source>Backup Breath Mode</source>
         <translation>백업 호흡 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3015"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>사용중인 백업 호흡 속도의 종류 : 없음 (꺼짐), 자동 또는 고정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3016"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>Breath Rate</source>
         <translation>호흡 수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3020"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2986"/>
         <source>Fixed</source>
         <translation>고정됨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3024"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>고정 백업 호흡 BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3025"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>시간 제한 호흡이 시작되는 분당 최소 호흡 (BPM)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3026"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
         <source>Breath BPM</source>
         <translation>호흡 BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
         <source>Timed Inspiration</source>
         <translation type="unfinished">초과 시간
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3032"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>시간 제한 호흡이 EPAP(날숨)로 전환하기 전에 IPAP(들숨)를 제공하는 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3033"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
         <source>Timed Insp.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3004"/>
         <source>Auto-Trial Duration</source>
         <translation>자동 평가 기간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3039"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
         <translation>Auto-CPAP 평가판 기간의 일수입니다. 이후 컴퓨터는 CPAP로 되돌아갑니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3040"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
         <source>Auto-Trial Dur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3047"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3011"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
         <source>EZ-Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>EZ-Start 활성화 여부</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3054"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3020"/>
         <source>Variable Breathing</source>
         <translation>가변 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3055"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>확인되지 않음 : 최대 흡기 흐름 추세에서 크게 벗어난 기간 인 가변 호흡 가능성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3078"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3080"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3044"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
         <source>Peak Flow</source>
         <translation>최고 유량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3079"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation>2 분 간격의 최대 유량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2887"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2852"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="139"/>
         <source>Humidifier Status</source>
         <translation>가습기 상태</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2888"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2853"/>
         <source>PRS1 humidifier connected?</source>
         <translation>PRS1 가습기를 연결했습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
         <source>Disconnected</source>
         <translation>연결 끊김</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2892"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
         <source>Connected</source>
         <translation>연결됨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2896"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2861"/>
         <source>Humidification Mode</source>
         <translation>가습기 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2897"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
         <source>PRS1 Humidification Mode</source>
         <translation>PRS1 가습 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
         <source>Humid. Mode</source>
         <translation>가습.모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
         <source>Fixed (Classic)</source>
         <translation>고정 (구형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2901"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
         <source>Adaptive (System One)</source>
         <translation>자동 (System One)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2902"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
         <source>Heated Tube</source>
         <translation>열선 튜브</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
         <source>Tube Temperature</source>
         <translation>튜브 온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>PRS1 가열 튜브 온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
         <source>Tube Temp.</source>
         <translation>튜브 온도.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1 가습기 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2941"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2906"/>
         <source>Hose Diameter</source>
         <translation>호스 직경</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2942"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>주 CPAP 호스의 직경</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2947"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
         <source>12mm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2969"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
         <source>Auto On</source>
         <translation>자동 켜기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
         <source>A few breaths automatically starts machine</source>
         <translation>몇 번의 호흡이 자동으로 기기를 시작합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2978"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>Auto Off</source>
         <translation>자동 끔</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2979"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
         <source>Machine automatically switches off</source>
         <translation>기기 자동 끄기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2987"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2989"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
         <source>Mask Alert</source>
         <translation>마스크 경고</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2988"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
         <source>Whether or not machine allows Mask checking.</source>
         <translation>기기가 마스크 검사를 허용하는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2996"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <source>Show AHI</source>
         <translation>AHI 보기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3063"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3029"/>
         <source>Breathing Not Detected</source>
         <translation>호흡 무감지</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3064"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3030"/>
         <source>A period during a session where the machine could not detect flow.</source>
         <translation>시스템이 흐흠을 감지 할수 없는 세션 동안의 기간.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3065"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
         <source>BND</source>
         <translation type="unfinished">BND(호흡무)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3070"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
         <source>Timed Breath</source>
         <translation>시측된 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3071"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3037"/>
         <source>Machine Initiated Breath</source>
         <translation>기기 개시 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3072"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
         <source>TB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/preferences.cpp" line="36"/>
+        <location filename="../oscar/SleepLib/preferences.cpp" line="37"/>
         <source>Windows User</source>
         <translation>Windows 사용자</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/preferences.cpp" line="201"/>
+        <location filename="../oscar/SleepLib/preferences.cpp" line="202"/>
         <source>Using </source>
         <translation>사용 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/preferences.cpp" line="201"/>
+        <location filename="../oscar/SleepLib/preferences.cpp" line="202"/>
         <source>, found SleepyHead -
 </source>
         <translation>, SleepyHead 발견 -
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/preferences.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/preferences.cpp" line="203"/>
         <source>You must run the OSCAR Migration Tool</source>
         <translation>OSCAR 마이그레이션 도구를 실행해야합니다</translation>
     </message>
@@ -6403,641 +6420,641 @@ TTIA: %1</source>
         <translation>%1 백업에서 재 구축</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="133"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
         <source>Therapy Pressure</source>
         <translation>치료 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="135"/>
         <source>Inspiratory Pressure</source>
         <translation>흡기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="135"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="136"/>
         <source>Lower Inspiratory Pressure</source>
         <translation>낮은 흡기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="136"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="137"/>
         <source>Higher Inspiratory Pressure</source>
         <translation>더 높은 흡기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="137"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
         <source>Expiratory Pressure</source>
         <translation>호기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
         <source>Lower Expiratory Pressure</source>
         <translation>낮은 호기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="139"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
         <source>Higher Expiratory Pressure</source>
         <translation>높은 호기 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="140"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="141"/>
         <source>Pressure Support</source>
         <translation>보조 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="141"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
         <source>PS Min</source>
         <translation>최저 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="141"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
         <source>Pressure Support Minimum</source>
         <translation>최저 보조 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>PS Max</source>
         <translation>최고 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>Pressure Support Maximum</source>
         <translation>최대 보조 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Min Pressure</source>
         <translation>최소 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Minimum Therapy Pressure</source>
         <translation>최소 치료 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>Max Pressure</source>
         <translation>최대 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>Maximum Therapy Pressure</source>
         <translation>최대 치료 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
         <source>Ramp Time</source>
         <translation>Ramp(압력상승) 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
         <source>Ramp Delay Period</source>
         <translation>Ramp(압력상승) 지연 기간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Ramp Pressure</source>
         <translation>Ramp(상승) 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
         <source>Starting Ramp Pressure</source>
         <translation>Ramp(압력상승) 시작</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>Ramp Event</source>
         <translation>Ramp(압력상승) 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="147"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1039"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
         <source>Ramp</source>
         <translation>Ramp(압력상승)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
         <translation>교차성 호흡의 이상한시기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>An apnea that couldn&apos;t be determined as Central or Obstructive.</source>
         <translation>중추 또는 폐쇠로 판단할 수 없는 무호흡증.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>A restriction in breathing from normal, causing a flattening of the flow waveform.</source>
         <translation>정상에서 호흡을 제한하여 흐름 파형을 평평하게 만듭니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
         <source>Vibratory Snore (VS2) </source>
         <translation>코골이 (VS2) </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="263"/>
         <source>A ResMed data item: Trigger Cycle Event</source>
         <translation>ResMed 데이터 항목 : 트리거주기 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="295"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="297"/>
         <source>Mask On Time</source>
         <translation>마스크 켜기 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="295"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="297"/>
         <source>Time started according to str.edf</source>
         <translation>str.edf에 따라 시간이 시작되었습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="300"/>
         <source>Summary Only</source>
         <translation>요약만</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>An apnea where the airway is open</source>
         <translation>기도가 열려 있는 무호흡(중추성 무호흡 증상과 비슷한 무호흡-&gt;단정할순 없습니다)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>An apnea caused by airway obstruction</source>
         <translation>기도 폐쇄로 인한 무호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>Hypopnea</source>
         <translation>저호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>A partially obstructed airway</source>
         <translation>부분적으로 폐쇄된 기도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Unclassified Apnea</source>
         <translation>분류되지 않은 무호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="753"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>UA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>Vibratory Snore</source>
         <translation>코골이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>A vibratory snore</source>
         <translation>코골이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
         <source>A vibratory snore as detcted by a System One machine</source>
         <translation>시스템 원 기기가 감지 한 진동 코콜이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2814"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2779"/>
         <source>Pressure Pulse</source>
         <translation>압력변화(PP)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2780"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>폐쇄된 기도를 감지하기 위해 &apos;반복된 &apos;압력 변화.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>A large mask leak affecting machine performance.</source>
         <translation>기기 성능에 영향을 주는 대량 마스크 누출.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>Non Responding Event</source>
         <translation>응답 없는 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
         <translation>압력 증가에 반응하지 않는 호흡 이벤트 유형.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
         <source>Expiratory Puff</source>
         <translation>호기 펌프</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
         <source>Intellipap event where you breathe out your mouth.</source>
         <translation>입김을 내뿜는 Intellipap 이벤트.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake feature will reduce pressure when waking is detected.</source>
         <translation>SensAwake 기능은 잠에서 깨어 났을때 압력을 감소시킵니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
         <source>User Flag #1</source>
         <translation>사용자 표시 #1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="197"/>
         <source>User Flag #2</source>
         <translation>사용자 플래그 #2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="200"/>
         <source>User Flag #3</source>
         <translation>사용자 플래그 #3</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
         <source>Heart rate in beats per minute</source>
         <translation>분당 비트 수의 심박수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
         <source>SpO2 %</source>
         <translation>SpO2 %</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
         <source>Blood-oxygen saturation percentage</source>
         <translation>혈액-산소 포화율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
         <source>Plethysomogram</source>
         <translation>혈구 혈압</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
         <source>An optical Photo-plethysomogram showing heart rhythm</source>
         <translation>박동을 보여주는 광학적 사진-생리학</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>Pulse Change</source>
         <translation>펄스 변경</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>A sudden (user definable) change in heart rate</source>
         <translation>갑작스런 (사용자가 정의할수 있는) 심박수 변화</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>SpO2 Drop</source>
         <translation>혈중산소포화도 떨어짐</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
         <translation>갑작스런 (사용자가 정의할수 있는) 혈중 산소 포화도 감소</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>SD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="226"/>
         <source>Breathing flow rate waveform</source>
         <translation>호흡 유량 파형</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
         <source>L/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="229"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="232"/>
         <source>Mask Pressure</source>
         <translation>마스크 압력</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="235"/>
         <source>Amount of air displaced per breath</source>
         <translation>호흡 당 이동 된 공기의 양</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="238"/>
         <source>Graph displaying snore volume</source>
         <translation>코골이 볼륨을 나타내는 그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="241"/>
         <source>Minute Ventilation</source>
         <translation>분당 환기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="241"/>
         <source>Amount of air displaced per minute</source>
         <translation>1분간 폐에서 배출되는 공기량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="244"/>
         <source>Respiratory Rate</source>
         <translation>호흡 속도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="244"/>
         <source>Rate of breaths per minute</source>
         <translation>분당 호흡 수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="247"/>
         <source>Patient Triggered Breaths</source>
         <translation>환자 작동 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="247"/>
         <source>Percentage of breaths triggered by patient</source>
         <translation>환자에 의해 유발된 호흡 비율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="247"/>
         <source>Pat. Trig. Breaths</source>
         <translation>패치. 트리거. 숨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="250"/>
         <source>Leak Rate</source>
         <translation>누출율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="250"/>
         <source>Rate of detected mask leakage</source>
         <translation>감지된 마스크 누출 비율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="254"/>
         <source>I:E Ratio</source>
         <translation>I:E 비율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="252"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="254"/>
         <source>Ratio between Inspiratory and Expiratory time</source>
         <translation>흡기 시간과 호기 시간 간 비율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
         <source>ratio</source>
         <translation>비율</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>Pressure Min</source>
         <translation>압력 최소</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
         <source>Pressure Max</source>
         <translation>압력 최대값</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="148"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>Pressure Set</source>
         <translation>압력 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="148"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>Pressure Setting</source>
         <translation>압력 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
         <source>IPAP Set</source>
         <translation>IPAP(들숨) Set</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="151"/>
         <source>IPAP Setting</source>
         <translation>IPAP(들숨) 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="152"/>
         <source>EPAP Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="152"/>
         <source>EPAP Setting</source>
         <translation>EPAP 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>Cheyne Stokes Respiration</source>
         <translation>교차성 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="153"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>CSR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>Periodic Breathing</source>
         <translation>주기적 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>An abnormal period of Periodic Breathing</source>
         <translation>주기적 호흡의 이상기 - 무호흡과 저호흡이 주기적(3회이상)으로 나타남</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>Clear Airway</source>
         <translation>열린기도 무호흡(CA)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Obstructive</source>
         <translation>폐쇄성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance.</source>
         <translation>호흡 노력 관련 각성 : 각성 또는 수면 장애를 유발하는 호흡 제한.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <source>Leak Flag</source>
         <translation>누출 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <source>LF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="197"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="200"/>
         <source>A user definable event detected by OSCAR&apos;s flow waveform processor.</source>
         <translation>OSCAR의 흐름 파형 프로세서에 의해 검출 된 사용자 정의 가능한 이벤트.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="216"/>
         <source>Perfusion Index</source>
         <translation>관류 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="216"/>
         <source>A relative assessment of the pulse strength at the monitoring site</source>
         <translation>모니터링 사이트에서의 맥박 강도의 상대적 평가</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="216"/>
         <source>Perf. Index %</source>
         <translation>성능. 지수 %</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="232"/>
         <source>Mask Pressure (High frequency)</source>
         <translation>마스크 압력(고주파)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="257"/>
         <source>Expiratory Time</source>
         <translation>만기 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="257"/>
         <source>Time taken to breathe out</source>
         <translation>날숨 걸린 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="260"/>
         <source>Inspiratory Time</source>
         <translation>흡기 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="260"/>
         <source>Time taken to breathe in</source>
         <translation>들숨 걸린 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="263"/>
         <source>Respiratory Event</source>
         <translation>호흡기 이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="266"/>
         <source>Graph showing severity of flow limitations</source>
         <translation>흐름 제한의 심각도를 나타내는 그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="266"/>
         <source>Flow Limit.</source>
         <translation>흐름 제한.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="269"/>
         <source>Target Minute Ventilation</source>
         <translation>목표 분간 환기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="272"/>
         <source>Maximum Leak</source>
         <translation>최대 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="272"/>
         <source>The maximum rate of mask leakage</source>
         <translation>최대 마스크 누출률</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="272"/>
         <source>Max Leaks</source>
         <translation>최대 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Apnea Hypopnea Index</source>
         <translation>무호흡 저호흡 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Graph showing running AHI for the past hour</source>
         <translation>지난 1시간 동안 AHI(수면무호흡) 진행을 보여주는 그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
         <source>Total Leak Rate</source>
         <translation>총 누출률</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
         <source>Detected mask leakage including natural Mask leakages</source>
         <translation>자연스런 공기 누출을 포함한 마스크 누출 감지</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
         <source>Median Leak Rate</source>
         <translation>중간 누출률</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
         <source>Median rate of detected mask leakage</source>
         <translation>검출 된 마스크 누출의 중간값</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
         <source>Median Leaks</source>
         <translation>중간 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>Respiratory Disturbance Index</source>
         <translation>호흡 장애 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>Graph showing running RDI for the past hour</source>
         <translation>지난 1 시간 동안 RDI 실행을 보여주는 그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="288"/>
         <source>Sleep position in degrees</source>
         <translation>잠자리 위치 (도)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="291"/>
         <source>Upright angle in degrees</source>
         <translation>직각도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="292"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="294"/>
         <source>Movement</source>
         <translation type="unfinished">움직임</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="292"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="294"/>
         <source>Movement detector</source>
         <translation type="unfinished">움직임 감지기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="300"/>
         <source>CPAP Session contains summary data only</source>
         <translation>CPAP 세션에는 요약 데이터만 포함됩니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
-        <location filename="../oscar/SleepLib/schema.cpp" line="302"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
         <source>PAP Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7047,248 +7064,248 @@ TTIA: %1</source>
         <translation>Channels.xml을 구문 분석할 수 없습니다. OSCAR을 계속할 수 없으며 종료 중입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>Apnea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>An apnea reportred by your CPAP machine.</source>
         <translation>CPAP 기계에 의해 무호흡이 보고되었습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="302"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
         <source>PAP Device Mode</source>
         <translation>PAP 장치 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="306"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="307"/>
         <source>APAP (Variable)</source>
         <translation>APAP(자동양압기) (가변)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
         <source>ASV (Fixed EPAP)</source>
         <translation>ASV(지능형 인공호흡기) (날숨 고정)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="312"/>
         <source>ASV (Variable EPAP)</source>
         <translation>&gt;ASV(지능형 인공호흡기) (날숨 가변)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="319"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
         <source>Height</source>
         <translation>신장</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="319"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
         <source>Physical Height</source>
         <translation>물리적 높이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
         <source>Notes</source>
         <translation>메모</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
         <source>Bookmark Notes</source>
         <translation>북마크 메모</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>Body Mass Index</source>
         <translation>체질량 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>How you feel (0 = like crap, 10 = unstoppable)</source>
         <translation>귀하의 느낌 (0 = like crap, 10 = unstoppable)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
         <source>Bookmark Start</source>
         <translation>북마크 시작</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="325"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
         <source>Bookmark End</source>
         <translation>북마크 종료</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="326"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
         <source>Last Updated</source>
         <translation>마지막 업데이트됨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="328"/>
         <source>Journal Notes</source>
         <translation>일지 메모</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="327"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="328"/>
         <source>Journal</source>
         <translation>일지</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="334"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="335"/>
         <source>1=Awake 2=REM 3=Light Sleep 4=Deep Sleep</source>
         <translation>1=깸 2=REM 3=얇은 잠 4=깊은 잠</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
         <source>Brain Wave</source>
         <translation>뇌파</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
         <source>BrainWave</source>
         <translation>뇌파</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
         <source>Awakenings</source>
         <translation>각성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
         <source>Number of Awakenings</source>
         <translation>각성 횟수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
         <source>Morning Feel</source>
         <translation>아침기분</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
         <source>How you felt in the morning</source>
         <translation>아침에 어떻게 느꼈나요</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
         <source>Time Awake</source>
         <translation>깬 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="339"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
         <source>Time spent awake</source>
         <translation>깨어있는 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time In REM Sleep</source>
         <translation>REM 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time spent in REM Sleep</source>
         <translation>REM 수면에 소비 된 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time in REM Sleep</source>
         <translation>REM 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time In Light Sleep</source>
         <translation>가벼운 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time spent in light sleep</source>
         <translation>가벼운 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time in Light Sleep</source>
         <translation>가벼운 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time In Deep Sleep</source>
         <translation>깊은 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time spent in deep sleep</source>
         <translation>깊은 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time in Deep Sleep</source>
         <translation>깊은 수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Time to Sleep</source>
         <translation>수면 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
         <source>Time taken to get to sleep</source>
         <translation>잠이든 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="345"/>
         <source>Zeo ZQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="345"/>
         <source>Zeo sleep quality measurement</source>
         <translation>Zeo 수면 품질 측정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="344"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="345"/>
         <source>ZEO ZQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>Debugging channel #1</source>
         <translation>디버깅 채널 #1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
         <source>Test #1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="355"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="357"/>
         <source>For internal use only</source>
         <translation>내부 전용</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="357"/>
         <source>Debugging channel #2</source>
         <translation>디버깅 채널 #2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="356"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="357"/>
         <source>Test #2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="774"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="775"/>
         <source>Zero</source>
         <translation>제로</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="777"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="778"/>
         <source>Upper Threshold</source>
         <translation>상한 임계 값</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="780"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="781"/>
         <source>Lower Threshold</source>
         <translation>하한선</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="506"/>
+        <location filename="../oscar/main.cpp" line="513"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>데이터 폴더를 선택하지 않으면 OSCAR이 종료됩니다.</translation>
     </message>
@@ -7343,177 +7360,172 @@ TTIA: %1</source>
         <translation>이 문제를 해결하기 위해 OSCAR는 느리지 만 호환성이 더 좋은 그리기 방법으로 되돌 렸습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="492"/>
+        <location filename="../oscar/main.cpp" line="499"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>OSCAR는 데이터를 저장할 폴더를 설정합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="493"/>
+        <location filename="../oscar/main.cpp" line="500"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
         <translation>만약 당신이 SleepHead나 이전 버전의 Oscar를 사용해왔다면,</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="494"/>
+        <location filename="../oscar/main.cpp" line="501"/>
         <source>OSCAR can copy your old data to this folder later.</source>
         <translation>오스카는 나중에 이전 데이터를 이 폴더에 복사할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="547"/>
+        <location filename="../oscar/main.cpp" line="554"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
         <translation>슬리피헤드 또는 오스카 데이터를 마이그레이션하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="548"/>
+        <location filename="../oscar/main.cpp" line="555"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
         <translation>다음 화면에서 Oscar는 SleepHead 또는 Oscar 데이터가 있는 폴더를 선택하라는 메시지를 표시합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="549"/>
+        <location filename="../oscar/main.cpp" line="556"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
         <translation>다음 화면으로 이동하려면 [OK]를 클릭하고 SleepHead 또는 Oscar 데이터를 사용하지 않으려면 [No]를 클릭합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="558"/>
+        <location filename="../oscar/main.cpp" line="565"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation>다음 위치에서 오스카 데이터 폴더를 만들 수 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="568"/>
+        <location filename="../oscar/main.cpp" line="575"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation>오스카 데이터 디렉토리에 쓸 수 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="569"/>
+        <location filename="../oscar/main.cpp" line="576"/>
         <source>Error code</source>
         <translation>에러코드</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="570"/>
+        <location filename="../oscar/main.cpp" line="577"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation>OSCAR을 계속할 수 없으며 종료하고 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="581"/>
+        <location filename="../oscar/main.cpp" line="588"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation>디버그 로그에 쓸 수 없습니다. 디버그 창(도움말/문제 해결/디버그 창 표시)을 계속 사용할 수 있지만 디버그 로그는 디스크에 기록되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="495"/>
+        <location filename="../oscar/main.cpp" line="502"/>
         <source>We suggest you use this folder: </source>
         <translation>이 폴더를 사용하는 것이 좋습니다: </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="496"/>
+        <location filename="../oscar/main.cpp" line="503"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation>다른 폴더를 사용하려면 확인을 클릭하고 그렇지 않으면 아니오를 클릭하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="502"/>
+        <location filename="../oscar/main.cpp" line="509"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>OscAR 데이터에 대한 새 폴더 선택 또는 만들기</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="507"/>
+        <location filename="../oscar/main.cpp" line="514"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>다음에 OSCAR을 실행하면 다시 묻습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="518"/>
+        <location filename="../oscar/main.cpp" line="525"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation>선택한 폴더가 비어 있지 않으며 유효한 OSCAR 데이터가 이미 포함되어 있지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="539"/>
+        <location filename="../oscar/main.cpp" line="546"/>
         <source>Data directory:</source>
         <translation>데이터 디렉토리 :</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="640"/>
+        <location filename="../oscar/main.cpp" line="647"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation>&quot;%1&quot; 버전이 잘못되었습니다. 계속할 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="649"/>
+        <location filename="../oscar/main.cpp" line="656"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation>실행중인 OSCAR 버전 (%1)이이 데이터를 만드는 데 사용 된 버전 (%2)보다 오래되었습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="653"/>
+        <location filename="../oscar/main.cpp" line="660"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>이렇게하면 데이터가 손상 될 수 있습니다.이 작업을 수행 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="693"/>
         <source>Question</source>
         <translation>질문</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="505"/>
-        <location filename="../oscar/main.cpp" line="557"/>
-        <location filename="../oscar/main.cpp" line="572"/>
+        <location filename="../oscar/main.cpp" line="512"/>
+        <location filename="../oscar/main.cpp" line="564"/>
+        <location filename="../oscar/main.cpp" line="579"/>
         <source>Exiting</source>
         <translation>종료중</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="519"/>
+        <location filename="../oscar/main.cpp" line="526"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>이 폴더를 사용 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="283"/>
+        <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>Don&apos;t forget to place your datacard back in your CPAP machine</source>
         <translation>CPAP 시스템에 데이터 카드를 다시 놓지 마세요</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="283"/>
+        <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>OSCAR Reminder</source>
         <translation>OSCAR 알림</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="467"/>
+        <location filename="../oscar/mainwindow.cpp" line="468"/>
         <source>You can only work with one instance of an individual OSCAR profile at a time.</source>
         <translation>한 번에 하나의 개별 OSCAR 프로파일 인스턴스로만 작업 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="468"/>
+        <location filename="../oscar/mainwindow.cpp" line="469"/>
         <source>If you are using cloud storage, make sure OSCAR is closed and syncing has completed first on the other computer before proceeding.</source>
         <translation>클라우드 저장소를 사용하는 경우 진행하기 전에 OSCAR이 닫혀 있고 동기화가 다른 컴퓨터에서 먼저 완료되었는지 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="481"/>
+        <location filename="../oscar/mainwindow.cpp" line="482"/>
         <source>Loading profile &quot;%1&quot;...</source>
         <translation>프로필 읽는중 &quot;%1&quot;...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="933"/>
+        <location filename="../oscar/mainwindow.cpp" line="944"/>
         <source>Chromebook file system detected, but no removable device found
 </source>
         <translation>크롬북 파일 시스템이 감지되었지만 이동식 장치를 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="934"/>
+        <location filename="../oscar/mainwindow.cpp" line="945"/>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation>ChromeOS Files 프로그램을 사용하여 Linux와 SD 카드를 공유해야 합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2206"/>
-        <source>Sorry, your %1 %2 machine is not currently supported.</source>
-        <translation>죄송합니다. 현재 %1 %2 기기는 지원되지 않습니다.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.cpp" line="2213"/>
+        <location filename="../oscar/mainwindow.cpp" line="2108"/>
         <source>Recompressing Session Files</source>
         <translation>세션 파일 재 압축</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2701"/>
+        <location filename="../oscar/mainwindow.cpp" line="2613"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation>데이터 카드 이외의 다른 zip 위치를 선택하십시오!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2748"/>
-        <location filename="../oscar/mainwindow.cpp" line="2798"/>
-        <location filename="../oscar/mainwindow.cpp" line="2857"/>
+        <location filename="../oscar/mainwindow.cpp" line="2660"/>
+        <location filename="../oscar/mainwindow.cpp" line="2710"/>
+        <location filename="../oscar/mainwindow.cpp" line="2769"/>
         <source>Unable to create zip!</source>
         <translation>zip을 만들 수 없습니다!</translation>
     </message>
@@ -7622,47 +7634,47 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="997"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="998"/>
         <source>Days: %1</source>
         <translation>일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1001"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1002"/>
         <source>Low Usage Days: %1</source>
         <translation>낮은 사용 일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1002"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1003"/>
         <source>(%1% compliant, defined as &gt; %2 hours)</source>
         <translation>(%1% 순응, &gt; %2 시간으로 정의)</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1119"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1120"/>
         <source>(Sess: %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1127"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1128"/>
         <source>Bedtime: %1</source>
         <translation>취침시간: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1129"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1130"/>
         <source>Waketime: %1</source>
         <translation>기상시간: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1169"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1170"/>
         <source>90%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1241"/>
+        <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1242"/>
         <source>(Summary Only)</source>
         <translation>(요약만)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="466"/>
+        <location filename="../oscar/mainwindow.cpp" line="467"/>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
         <translation>&apos;%2&apos;에 대해 주장 된이 프로파일 &apos;%1&apos;에 대해 이미 존재하는 잠금 파일이 있습니다.</translation>
     </message>
@@ -7672,17 +7684,17 @@ TTIA: %1</source>
         <translation type="unfinished">%1시 %2분 {1%?} {2?}</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="307"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
         <source>Fixed Bi-Level</source>
         <translation>고정 Bi-Leve(이중형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="309"/>
         <source>Auto Bi-Level (Fixed PS)</source>
         <translation>자동 Bi-Level(이중형) (고정 압력)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="309"/>
+        <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
         <source>Auto Bi-Level (Variable PS)</source>
         <translation>자동 Bi-Level(이중형) (가변 압력)</translation>
     </message>
@@ -7692,58 +7704,58 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1536"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1548"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1546"/>
         <source>%1%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1570"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1568"/>
         <source>n/a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1587"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1585"/>
         <source>Fixed %1 (%2)</source>
         <translation>고정 %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1590"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1588"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>최소 %1 최대 %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1594"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1592"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation>EPAP(날숨) %1 IPAP(들숨) %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1598"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1596"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translation>압력 %1 초과 %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1603"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1612"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1601"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1610"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translation>최소 EPAP(날숨) %1 최대 IPAP(들숨) %2 압력 %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1608"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1606"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation>날숨 %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1623"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1621"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation>EPAP(날숨) %1 IPAP(들숨) %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1629"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
         <translation>EPAP(날숨) %1-%2 IPAP(들숨) %3-%4 (%5)</translation>
     </message>
@@ -7781,69 +7793,69 @@ TTIA: %1</source>
         <translation>산소 측정 데이터가 아직 가져 오지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="39"/>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="41"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="40"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>Contec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="39"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="40"/>
         <source>CMS50</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="77"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="78"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>Fisher &amp; Paykel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="77"/>
+        <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="78"/>
         <source>ICON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="77"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="78"/>
         <source>DeVilbiss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="77"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="78"/>
         <source>Intellipap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="85"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="86"/>
         <source>SmartFlex Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="39"/>
+        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="40"/>
         <source>ChoiceMMed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="39"/>
+        <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="40"/>
         <source>MD300</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="66"/>
+        <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="67"/>
         <source>Respironics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="66"/>
+        <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="67"/>
         <source>M-Series</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="211"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="187"/>
         <source>Philips Respironics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="211"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="187"/>
         <source>System One</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7864,12 +7876,12 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="38"/>
+        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="39"/>
         <source>Somnopose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="38"/>
+        <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="39"/>
         <source>Somnopose Software</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7913,56 +7925,56 @@ popout window, delete it, then pop out this graph again.</source>
 팝업 창을 삭제한 다음 이 그래프를 다시 팝업합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1445"/>
-        <source>I&apos;m very sorry your machine doesn&apos;t record useful data to graph in Daily View :(</source>
-        <translation>일일보기에서 그래프로 유용한 데이터를 기록하지 못해 죄송합니다 :(</translation>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1444"/>
+        <source>Your machine doesn&apos;t record data to graph in Daily View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1448"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1447"/>
         <source>There is no data to graph</source>
         <translation>그래프로 표시 할 데이터가 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1633"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1593"/>
         <source>d MMM yyyy [ %1 - %2 ]</source>
         <translation type="unfinished">yyyy MMM d [ %1 - %2 ]</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2191"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2234"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2305"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2322"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2151"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2194"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2265"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2282"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2286"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2246"/>
         <source>Hide All Events</source>
         <translation>모든 이벤트 숨김</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2287"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2247"/>
         <source>Show All Events</source>
         <translation>모든 이벤트 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2628"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2588"/>
         <source>Unpin %1 Graph</source>
         <translation>%1 그래프 고정 해제</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2630"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2705"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2590"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2665"/>
         <source>Popout %1 Graph</source>
         <translation type="unfinished">팝업 %1 그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2707"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2667"/>
         <source>Pin %1 Graph</source>
         <translation>%1 그래프 고정</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="824"/>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="825"/>
         <location filename="../oscar/Graphs/gLineChart.cpp" line="1050"/>
         <source>Plots Disabled</source>
         <translation>플롯 비활성</translation>
@@ -7998,27 +8010,27 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>기기 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="25"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="26"/>
         <source>Journal Data</source>
         <translation>일지 데이터</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="43"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="44"/>
         <source>OSCAR found an old Journal folder, but it looks like it&apos;s been renamed:</source>
         <translation>OSCAR은 이전 저널 폴더를 찾았지만 이름이 변경된 것처럼 보입니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="45"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="46"/>
         <source>OSCAR will not touch this folder, and will create a new one instead.</source>
         <translation>OSCAR는이 폴더를 건드리지 않고 대신 새로운 폴더를 만듭니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="46"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="47"/>
         <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
         <translation>OSCAR의 프로필 폴더에서 재생할 때 주의하십시오 :-P</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="53"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="54"/>
         <source>For some reason, OSCAR couldn&apos;t find a journal object record in your profile, but did find multiple Journal data folders.
 
 </source>
@@ -8027,7 +8039,7 @@ popout window, delete it, then pop out this graph again.</source>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="54"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="55"/>
         <source>OSCAR picked only the first one of these, and will use it in future:
 
 </source>
@@ -8036,92 +8048,92 @@ popout window, delete it, then pop out this graph again.</source>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="56"/>
+        <location filename="../oscar/SleepLib/journal.cpp" line="57"/>
         <source>If your old data is missing, copy the contents of all the other Journal_XXXXXXX folders to this one manually.</source>
         <translation>이전 데이터가 누락 된 경우 다른 모든 Journal_XXXXXXX 폴더의 내용을 수동으로 여기에 복사하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="41"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>CMS50F3.7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="41"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>CMS50F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2695"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2717"/>
         <source>Backing up files...</source>
         <translation>파일 백업 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2702"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="240"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2724"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="249"/>
         <source>Reading data files...</source>
         <translation>데이터 파일을 읽는 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2764"/>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2766"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2788"/>
         <source>SmartFlex Mode</source>
         <translation type="unfinished">SmartFlex(스마트압력완화) 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2765"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2787"/>
         <source>Intellipap pressure relief mode.</source>
         <translation>Intellipap 압력 완화 모드.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2771"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="120"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2793"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="121"/>
         <source>Ramp Only</source>
         <translation>Ramp(압력상승)만</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2772"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="121"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2794"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="122"/>
         <source>Full Time</source>
         <translation>전체시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2775"/>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2777"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2797"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2799"/>
         <source>SmartFlex Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2776"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2798"/>
         <source>Intellipap pressure relief level.</source>
         <translation>Intellipap 압력 완화 수준.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2783"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2805"/>
         <source>Snoring event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2784"/>
+        <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2806"/>
         <source>SN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="527"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="533"/>
         <source>Locating STR.edf File(s)...</source>
         <translation>STR.edf 파일을 찾는 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="688"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="694"/>
         <source>Cataloguing EDF Files...</source>
         <translation>EDF 파일 카탈로깅 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="707"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="713"/>
         <source>Queueing Import Tasks...</source>
         <translation>대기열 작업 가져 오기 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="742"/>
         <source>Finishing Up...</source>
         <translation>마무리 중...</translation>
     </message>
@@ -8156,145 +8168,145 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Auto for Her(여성용 자동)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1019"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1028"/>
         <source>EPR</source>
         <translation>호흡압력완화(EPR)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
         <source>ResMed Exhale Pressure Relief</source>
         <translation>ResMed Exhale 압력 완화</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="122"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="123"/>
         <source>Patient???</source>
         <translation>환자???</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1025"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="126"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1034"/>
         <source>EPR Level</source>
         <translation>호흡압력완화(EPR) 레벨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="126"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>날숨 압력 완화 수준</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="201"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="202"/>
         <source>Response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="213"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="214"/>
         <source>Patient View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="133"/>
         <source>SmartStart</source>
         <translation>스마트 스타트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="133"/>
         <source>Machine auto starts by breathing</source>
         <translation>호흡으로 기기 자동 시동</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="133"/>
         <source>Smart Start</source>
         <translation>스마트 스타트</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="139"/>
         <source>Humid. Status</source>
         <translation>가습. 상태</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="138"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="139"/>
         <source>Humidifier Enabled Status</source>
         <translation>가습기 사용 가능 상태</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="144"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2883"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="145"/>
         <source>Humid. Level</source>
         <translation>가습 레벨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="144"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="145"/>
         <source>Humidity Level</source>
         <translation>습도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="158"/>
         <source>Temperature</source>
         <translation>온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="157"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="158"/>
         <source>ClimateLine Temperature</source>
         <translation>열선 온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="162"/>
         <source>Temp. Enable</source>
         <translation>온도. 활성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="162"/>
         <source>ClimateLine Temperature Enable</source>
         <translation>ClimateLine 온도 활성화</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="161"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="162"/>
         <source>Temperature Enable</source>
         <translation>온도 활성화</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="168"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="169"/>
         <source>AB Filter</source>
         <translation>AB Filter(향균 필터)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="168"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="169"/>
         <source>Antibacterial Filter</source>
         <translation>항균 필터</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="174"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="175"/>
         <source>Pt. Access</source>
         <translation type="unfinished">Pt. 엑세스</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="174"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="175"/>
         <source>Essentials</source>
         <translation>에센셜</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="176"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="177"/>
         <source>Plus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="180"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="181"/>
         <source>Climate Control</source>
         <translation>기후 제어</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="183"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="184"/>
         <source>Manual</source>
         <translation>수동</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="205"/>
         <source>Soft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="203"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Standard</source>
         <translation type="unfinished">표준</translation>
     </message>
@@ -8315,134 +8327,134 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
         <source>SmartStop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
         <source>Machine auto stops by breathing</source>
         <translation>호흡으로 기계 자동 정지</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
         <source>Smart Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="217"/>
         <source>Simple</source>
         <translation>간단</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="215"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="435"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="441"/>
         <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
         <translation>ResMed CPAP 시스템(%1 모델)이 아직 테스트되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="436"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="442"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
         <translation>다른 기계들과 충분히 비슷해 보이지만, 개발자들은 이 기계가 OSCAR와 함께 작동하는 것을 확실히 하기 위해 이 기계의 SD 카드의 .zip 복사본을 원할 것이다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1203"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1209"/>
         <source>Parsing STR.edf records...</source>
         <translation>STR.edf 레코드를 구문 분석하는 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="854"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2929"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3019"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2894"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2985"/>
         <source>Auto</source>
         <translation>자동</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="187"/>
         <source>Mask</source>
         <translation>마스크</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="186"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="187"/>
         <source>ResMed Mask Setting</source>
         <translation>ResMed 마스크 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="188"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="189"/>
         <source>Pillows</source>
         <translation>필로우(코구멍형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="189"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="190"/>
         <source>Full Face</source>
         <translation>풀페이스(안면형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="190"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="191"/>
         <source>Nasal</source>
         <translation>나잘(코형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="195"/>
         <source>Ramp Enable</source>
         <translation>Ramp(압력상승) 활성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="116"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
         <source>Weinmann</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="116"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
         <source>SOMNOsoft2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraph.cpp" line="352"/>
+        <location filename="../oscar/Graphs/gGraph.cpp" line="353"/>
         <source>Snapshot %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="268"/>
         <source>CMS50D+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="267"/>
+        <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="268"/>
         <source>CMS50E/F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="695"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="694"/>
         <source>Loading %1 data for %2...</source>
         <translation>%2에 대해 %1 데이터를 로드하는 중...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="706"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="705"/>
         <source>Scanning Files</source>
         <translation>파일 검사</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="739"/>
         <source>Migrating Summary File Location</source>
         <translation>요약 파일 위치 마이그레이션</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="910"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="909"/>
         <source>Loading Summaries.xml.gz</source>
         <translation>Summaries.xml.gz 로드 중</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/machine.cpp" line="1042"/>
+        <location filename="../oscar/SleepLib/machine.cpp" line="1041"/>
         <source>Loading Summary Data</source>
         <translation>요약 데이터로드 중</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/progressdialog.cpp" line="14"/>
+        <location filename="../oscar/SleepLib/progressdialog.cpp" line="15"/>
         <source>Please Wait...</source>
         <translation>잠시만 기다려 주세요...</translation>
     </message>
@@ -8452,7 +8464,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>통계 캐시 업데이트</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="714"/>
+        <location filename="../oscar/statistics.cpp" line="715"/>
         <source>Usage Statistics</source>
         <translation>사용 통계</translation>
     </message>
@@ -8538,23 +8550,23 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>업데이트를 확인할 수 없습니다. 나중에 다시 시도하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1011"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1020"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1021"/>
         <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1019"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1028"/>
         <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1025"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1034"/>
         <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1037"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1046"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8562,6 +8574,31 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
         <translation>수면스타일</translation>
+    </message>
+    <message>
+        <location filename="../oscar/aboutdialog.cpp" line="81"/>
+        <source>This page in other languages:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="2600"/>
+        <source>%1 Graphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="2601"/>
+        <source>%1 of %2 Graphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="2620"/>
+        <source>%1 Event Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="2621"/>
+        <source>%1 of %2 Event Types</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8580,12 +8617,12 @@ popout window, delete it, then pop out this graph again.</source>
 <context>
     <name>SessionBar</name>
     <message>
-        <location filename="../oscar/sessionbar.cpp" line="246"/>
+        <location filename="../oscar/sessionbar.cpp" line="247"/>
         <source>%1h %2m</source>
         <translation>%1시 %2분</translation>
     </message>
     <message>
-        <location filename="../oscar/sessionbar.cpp" line="289"/>
+        <location filename="../oscar/sessionbar.cpp" line="290"/>
         <source>No Sessions Present</source>
         <translation>현재 세션이 없습니다</translation>
     </message>
@@ -8593,17 +8630,17 @@ popout window, delete it, then pop out this graph again.</source>
 <context>
     <name>SleepStyleLoader</name>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="204"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="213"/>
         <source>Import Error</source>
         <translation>불러오기 에러</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This Machine Record cannot be imported in this profile.</source>
         <translation>프로필에서 기기 기록을 가져올 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="205"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>일별 기록이 이미 존재하는 내용과 겹칩니다.</translation>
     </message>
@@ -8617,7 +8654,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="539"/>
-        <location filename="../oscar/statistics.cpp" line="1391"/>
+        <location filename="../oscar/statistics.cpp" line="1392"/>
         <source>CPAP Usage</source>
         <translation>CPAP 사용율</translation>
     </message>
@@ -8632,248 +8669,248 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>치료 효과</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="555"/>
+        <location filename="../oscar/statistics.cpp" line="556"/>
         <source>Leak Statistics</source>
         <translation>누출 통계</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="560"/>
+        <location filename="../oscar/statistics.cpp" line="561"/>
         <source>Pressure Statistics</source>
         <translation>압력 통계</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="585"/>
+        <location filename="../oscar/statistics.cpp" line="586"/>
         <source>Oximeter Statistics</source>
         <translation>산소측정기 통계</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="589"/>
+        <location filename="../oscar/statistics.cpp" line="590"/>
         <source>Blood Oxygen Saturation</source>
         <translation>혈중 산소 포화도</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="594"/>
+        <location filename="../oscar/statistics.cpp" line="595"/>
         <source>Pulse Rate</source>
         <translation>맥박수</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="605"/>
+        <location filename="../oscar/statistics.cpp" line="606"/>
         <source>%1 Median</source>
         <translation>%1 중위수</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="606"/>
         <location filename="../oscar/statistics.cpp" line="607"/>
+        <location filename="../oscar/statistics.cpp" line="608"/>
         <source>Average %1</source>
         <translation>평균 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="609"/>
+        <location filename="../oscar/statistics.cpp" line="610"/>
         <source>Min %1</source>
         <translation>최소 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="610"/>
+        <location filename="../oscar/statistics.cpp" line="611"/>
         <source>Max %1</source>
         <translation>최대 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="611"/>
+        <location filename="../oscar/statistics.cpp" line="612"/>
         <source>%1 Index</source>
         <translation>%1 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="612"/>
+        <location filename="../oscar/statistics.cpp" line="613"/>
         <source>% of time in %1</source>
         <translation>%1의 시간 %</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="613"/>
+        <location filename="../oscar/statistics.cpp" line="614"/>
         <source>% of time above %1 threshold</source>
         <translation>%1 임계 값 초과 시간 %</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="614"/>
+        <location filename="../oscar/statistics.cpp" line="615"/>
         <source>% of time below %1 threshold</source>
         <translation>%1 임계 값 미만의 시간 %</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="636"/>
+        <location filename="../oscar/statistics.cpp" line="637"/>
         <source>Name: %1, %2</source>
         <translation>이름: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="638"/>
+        <location filename="../oscar/statistics.cpp" line="639"/>
         <source>DOB: %1</source>
         <translation>생년월일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="641"/>
+        <location filename="../oscar/statistics.cpp" line="642"/>
         <source>Phone: %1</source>
         <translation>전화: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="644"/>
+        <location filename="../oscar/statistics.cpp" line="645"/>
         <source>Email: %1</source>
         <translation>이메일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="647"/>
+        <location filename="../oscar/statistics.cpp" line="648"/>
         <source>Address:</source>
         <translation>주소:</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="733"/>
+        <location filename="../oscar/statistics.cpp" line="734"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
         <translation>이 보고서는 Oscar %2에 의해 %1에 작성되었습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1392"/>
+        <location filename="../oscar/statistics.cpp" line="1393"/>
         <source>Days Used: %1</source>
         <translation>사용일 : %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1393"/>
+        <location filename="../oscar/statistics.cpp" line="1394"/>
         <source>Low Use Days: %1</source>
         <translation>낮은 사용일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1394"/>
+        <location filename="../oscar/statistics.cpp" line="1395"/>
         <source>Compliance: %1%</source>
         <translation>순응도: %1%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1418"/>
+        <location filename="../oscar/statistics.cpp" line="1419"/>
         <source>Days AHI of 5 or greater: %1</source>
         <translation>AHI 5이상 일: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1425"/>
+        <location filename="../oscar/statistics.cpp" line="1426"/>
         <source>Best AHI</source>
         <translation>최상 AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1429"/>
-        <location filename="../oscar/statistics.cpp" line="1441"/>
+        <location filename="../oscar/statistics.cpp" line="1430"/>
+        <location filename="../oscar/statistics.cpp" line="1442"/>
         <source>Date: %1 AHI: %2</source>
         <translation>일: %1 AHI: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1435"/>
+        <location filename="../oscar/statistics.cpp" line="1436"/>
         <source>Worst AHI</source>
         <translation>최악 AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1472"/>
+        <location filename="../oscar/statistics.cpp" line="1473"/>
         <source>Best Flow Limitation</source>
         <translation>최상의 흐름 제한</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1476"/>
-        <location filename="../oscar/statistics.cpp" line="1489"/>
+        <location filename="../oscar/statistics.cpp" line="1477"/>
+        <location filename="../oscar/statistics.cpp" line="1490"/>
         <source>Date: %1 FL: %2</source>
         <translation>일: %1 FL: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1482"/>
+        <location filename="../oscar/statistics.cpp" line="1483"/>
         <source>Worst Flow Limtation</source>
         <translation>최악의 흐름 제한</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1494"/>
+        <location filename="../oscar/statistics.cpp" line="1495"/>
         <source>No Flow Limitation on record</source>
         <translation>기록에 유량 제한 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1515"/>
+        <location filename="../oscar/statistics.cpp" line="1516"/>
         <source>Worst Large Leaks</source>
         <translation>최악의 대형 누출</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1523"/>
+        <location filename="../oscar/statistics.cpp" line="1524"/>
         <source>Date: %1 Leak: %2%</source>
         <translation>일: %1 Leak: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1529"/>
+        <location filename="../oscar/statistics.cpp" line="1530"/>
         <source>No Large Leaks on record</source>
         <translation>기록에 큰 누출 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1552"/>
+        <location filename="../oscar/statistics.cpp" line="1553"/>
         <source>Worst CSR</source>
         <translation>최악의 CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1560"/>
+        <location filename="../oscar/statistics.cpp" line="1561"/>
         <source>Date: %1 CSR: %2%</source>
         <translation>일: %1 CSR: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1565"/>
+        <location filename="../oscar/statistics.cpp" line="1566"/>
         <source>No CSR on record</source>
         <translation>기록에 CSR 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1582"/>
+        <location filename="../oscar/statistics.cpp" line="1583"/>
         <source>Worst PB</source>
         <translation>최악의 PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1590"/>
+        <location filename="../oscar/statistics.cpp" line="1591"/>
         <source>Date: %1 PB: %2%</source>
         <translation>일: %1 PB: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1595"/>
+        <location filename="../oscar/statistics.cpp" line="1596"/>
         <source>No PB on record</source>
         <translation>기록에 PB 없음</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1603"/>
+        <location filename="../oscar/statistics.cpp" line="1604"/>
         <source>Want more information?</source>
         <translation>더 많은 정보를 원하십니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1604"/>
+        <location filename="../oscar/statistics.cpp" line="1605"/>
         <source>OSCAR needs all summary data loaded to calculate best/worst data for individual days.</source>
         <translation>Oscar는 개별 날짜에 대한 최고/최악의 데이터를 계산하기 위해 모든 요약 데이터를 로드해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1605"/>
+        <location filename="../oscar/statistics.cpp" line="1606"/>
         <source>Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.</source>
         <translation>이 데이터를 사용할 수 있도록 하려면 기본 설정에서 사전 로드 요약 확인란을 활성화하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1625"/>
+        <location filename="../oscar/statistics.cpp" line="1626"/>
         <source>Best RX Setting</source>
         <translation>최상의 RX 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1628"/>
-        <location filename="../oscar/statistics.cpp" line="1640"/>
+        <location filename="../oscar/statistics.cpp" line="1629"/>
+        <location filename="../oscar/statistics.cpp" line="1641"/>
         <source>Date: %1 - %2</source>
         <translation>일: %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1631"/>
-        <location filename="../oscar/statistics.cpp" line="1643"/>
+        <location filename="../oscar/statistics.cpp" line="1632"/>
+        <location filename="../oscar/statistics.cpp" line="1644"/>
         <source>AHI: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1632"/>
-        <location filename="../oscar/statistics.cpp" line="1644"/>
+        <location filename="../oscar/statistics.cpp" line="1633"/>
+        <location filename="../oscar/statistics.cpp" line="1645"/>
         <source>Total Hours: %1</source>
         <translation>총 시간: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1637"/>
+        <location filename="../oscar/statistics.cpp" line="1638"/>
         <source>Worst RX Setting</source>
         <translation>최악의 RX 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1162"/>
+        <location filename="../oscar/statistics.cpp" line="1163"/>
         <source>Most Recent</source>
         <translation>가장최근</translation>
     </message>
@@ -8883,97 +8920,97 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>순응도 (%1 시간/일)</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="736"/>
+        <location filename="../oscar/statistics.cpp" line="737"/>
         <source>OSCAR is free open-source CPAP report software</source>
         <translation>OSCAR는 무료 오픈 소스 CPAP 보고서 소프트웨어입니다</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="975"/>
+        <location filename="../oscar/statistics.cpp" line="976"/>
         <source>Changes to Machine Settings</source>
         <translation>기기 설정 변경</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1061"/>
+        <location filename="../oscar/statistics.cpp" line="1062"/>
         <source>No data found?!?</source>
         <translation>데이터가 없습니다?!?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1063"/>
+        <location filename="../oscar/statistics.cpp" line="1064"/>
         <source>Oscar has no data to report :(</source>
         <translation>Oscar는보고 할 데이터가 없습니다:(</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1163"/>
+        <location filename="../oscar/statistics.cpp" line="1164"/>
         <source>Last Week</source>
         <translation>지난주</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1164"/>
+        <location filename="../oscar/statistics.cpp" line="1165"/>
         <source>Last 30 Days</source>
         <translation>최근30일</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1165"/>
+        <location filename="../oscar/statistics.cpp" line="1166"/>
         <source>Last 6 Months</source>
         <translation>최근6달</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1166"/>
+        <location filename="../oscar/statistics.cpp" line="1167"/>
         <source>Last Year</source>
         <translation>지난해</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1170"/>
+        <location filename="../oscar/statistics.cpp" line="1171"/>
         <source>Last Session</source>
         <translation>마지막 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1211"/>
+        <location filename="../oscar/statistics.cpp" line="1212"/>
         <source>Details</source>
         <translation>상세</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1225"/>
+        <location filename="../oscar/statistics.cpp" line="1226"/>
         <source>No %1 data available.</source>
         <translation>사용 가능한 %1 데이터 없음.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1228"/>
+        <location filename="../oscar/statistics.cpp" line="1229"/>
         <source>%1 day of %2 Data on %3</source>
         <translation>%2일중 %1일 %3일 데이터</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1234"/>
+        <location filename="../oscar/statistics.cpp" line="1235"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
         <translation>%2 데이터 %1일(%3요일 부터 %4요일 사이)</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="983"/>
+        <location filename="../oscar/statistics.cpp" line="984"/>
         <source>Days</source>
         <translation>일</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="987"/>
+        <location filename="../oscar/statistics.cpp" line="988"/>
         <source>Pressure Relief</source>
         <translation>압력 완화</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="989"/>
+        <location filename="../oscar/statistics.cpp" line="990"/>
         <source>Pressure Settings</source>
         <translation>압력 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="916"/>
+        <location filename="../oscar/statistics.cpp" line="917"/>
         <source>Machine Information</source>
         <translation>기기 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="922"/>
+        <location filename="../oscar/statistics.cpp" line="923"/>
         <source>First Use</source>
         <translation>첫사용</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="923"/>
+        <location filename="../oscar/statistics.cpp" line="924"/>
         <source>Last Use</source>
         <translation>최근사용</translation>
     </message>
@@ -9160,7 +9197,7 @@ popout window, delete it, then pop out this graph again.</source>
 <context>
     <name>gGraph</name>
     <message>
-        <location filename="../oscar/Graphs/gGraph.cpp" line="795"/>
+        <location filename="../oscar/Graphs/gGraph.cpp" line="796"/>
         <source>%1 days</source>
         <translation>%1 일</translation>
     </message>
@@ -9218,20 +9255,20 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>점선</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1826"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1879"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1786"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1839"/>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
         <translation>고정 / 고정해제 제목 더블 클릭
 그래프를 다시 정렬하려면 클릭하고 드레그</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2124"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2084"/>
         <source>Remove Clone</source>
         <translation>복제본 제거</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2128"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2088"/>
         <source>Clone %1 Graph</source>
         <translation>그래프 %1 복제</translation>
     </message>
