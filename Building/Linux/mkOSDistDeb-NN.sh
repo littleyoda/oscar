@@ -112,7 +112,7 @@ if [[ -n ${PRERELEASE}  && -z ${RC} ]] ; then
     post_rem="clean_rm-result-NN-test.sh"
 else
     post_inst="ln_usrbin-result-NN.sh"
-    pre_rem="rm_usrbin-result.sh"
+    pre_rem="rm_usrbin-result-NN.sh"
     post_rem="clean_rm-result-NN.sh"
 fi
 
