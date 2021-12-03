@@ -1068,10 +1068,12 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
             case 9:  // new to F5V3 vs. F0V6, comes right after settings, before mask on?
                 CHECK_VALUE(data[pos], 0);
                 CHECK_VALUE(data[pos+1], 1);
-                CHECK_VALUE(data[pos+2], 0);
+                CHECK_VALUES(data[pos+2], 0, 4);  // Apnea Alarm, 0 = off, 4 = 40
                 CHECK_VALUE(data[pos+3], 1);
                 CHECK_VALUE(data[pos+4], 1);
-                CHECK_VALUE(data[pos+5], 0);
+                if (data[pos+5] > 3) {
+                    UNEXPECTED_VALUE(data[pos+5], "0-3");  // Low Minute Ventilation Alarm, 0 = off, 1-3 = 1-3
+                }
                 CHECK_VALUE(data[pos+6], 2);
                 CHECK_VALUE(data[pos+7], 1);
 
@@ -1262,7 +1264,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                     breath_rate = data[pos+1];
                     timed_inspiration = data[pos+2];
                     if (breath_rate < 4 || breath_rate > 16) UNEXPECTED_VALUE(breath_rate, "4-16");
-                    if (timed_inspiration < 12 || timed_inspiration > 25) UNEXPECTED_VALUE(timed_inspiration, "12-25");
+                    if (timed_inspiration < 12 || timed_inspiration > 30) UNEXPECTED_VALUE(timed_inspiration, "12-30");
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_MODE, PRS1Backup_Fixed));
                     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_BACKUP_BREATH_RATE, breath_rate));  // BPM
                     this->AddEvent(new PRS1ScaledSettingEvent(PRS1_SETTING_BACKUP_TIMED_INSPIRATION, timed_inspiration, 0.1));
