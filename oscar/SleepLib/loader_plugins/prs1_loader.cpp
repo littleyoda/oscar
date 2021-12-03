@@ -24,6 +24,7 @@
 #include "prs1_parser.h"
 #include "SleepLib/session.h"
 #include "SleepLib/calcs.h"
+#include "SleepLib/crypto.h"
 #include "rawdata.h"
 
 
@@ -248,8 +249,6 @@ const char* PRS1ModelInfo::Name(const QString & model) const
 
 //********************************************************************************************
 
-#include "SleepLib/thirdparty/botan_all.h"
-
 // Decoder for DreamStation 2 files, which encrypt the actual data after a header with the key.
 // The public read/seek/pos/etc. functions are all in terms of the decoded stream.
 class PRDS2File : public RawDataFile
@@ -344,34 +343,22 @@ qint64 PRDS2File::readData(char *data, qint64 maxSize)
 bool PRDS2File::decryptData()
 {
     bool valid = false;
-    try {
-        QByteArray ciphertext = m_device.read(m_device.size() - m_device.pos());
+    QByteArray ciphertext = m_device.read(m_device.size() - m_device.pos());
+    QByteArray plaintext;
 
-        const std::vector<uint8_t> key(m_payload_key.begin(), m_payload_key.end());
-        const std::vector<uint8_t> iv(m_iv.begin(), m_iv.end());
-        const std::vector<uint8_t> tag(m_payload_tag.begin(), m_payload_tag.end());
+    CryptoResult error = decrypt_aes256_gcm(m_payload_key, m_iv, ciphertext, m_payload_tag, plaintext);
 
-        Botan::secure_vector<uint8_t> message(ciphertext.begin(), ciphertext.end());
-        message += tag;
-
-        std::unique_ptr<Botan::Cipher_Mode> dec = Botan::Cipher_Mode::create("AES-256/GCM", Botan::DECRYPTION);
-        dec->set_key(key);
-        dec->start(iv);
-        try {
-            dec->finish(message);
-            //qDebug() << QString::fromStdString(Botan::hex_encode(message.data(), message.size()));
-            m_payload.setData((char*) message.data(), message.size());
-            m_payload.open(QIODevice::ReadOnly);
-            valid = true;
-        }
-        catch (const Botan::Invalid_Authentication_Tag& e) {
+    if (error) {
+        if (error == InvalidTag) {
             // This has been observed where the tag is zero and the data appears truncated.
             qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+        } else {
+            qWarning() << "*** DS2 unexpected exception decrypting" << name();
         }
-    }
-    catch (exception& e) {
-        // Make sure no Botan exceptions leak out and terminate the application.
-        qWarning() << "*** DS2 unexpected exception decrypting" << name() << ":" << e.what();
+    } else {
+        m_payload.setData(plaintext);
+        m_payload.open(QIODevice::ReadOnly);
+        valid = true;
     }
     return valid;
 }
@@ -381,45 +368,36 @@ static const int KEY_SIZE = 256 / 8;  // AES-256
 static const uint8_t OSCAR_KEY[KEY_SIZE+1]  = "Patient access to their own data";
 static const uint8_t COMMON_KEY[KEY_SIZE] = { 0x75, 0xB3, 0xA2, 0x12, 0x4A, 0x65, 0xAF, 0x97, 0x54, 0xD8, 0xC1, 0xF3, 0xE5, 0x2E, 0xB6, 0xF0, 0x23, 0x20, 0x57, 0x69, 0x7E, 0x38, 0x0E, 0xC9, 0x4A, 0xDC, 0x46, 0x45, 0xB6, 0x92, 0x5A, 0x98 };
 
+static const QByteArray s_oscar_key((const char*) OSCAR_KEY, KEY_SIZE);
+static const QByteArray s_common_key((const char*) COMMON_KEY, KEY_SIZE);
+
 bool PRDS2File::initializeKey()
 {
     bool valid = false;
-    try {
-        Botan::secure_vector<uint8_t> common_key(COMMON_KEY, COMMON_KEY + KEY_SIZE);
-        Botan::secure_vector<uint8_t> oscar_key(OSCAR_KEY, OSCAR_KEY + KEY_SIZE);
-        std::unique_ptr<Botan::BlockCipher> oscar = Botan::BlockCipher::create("AES-256");
-        oscar->set_key(oscar_key);
-        oscar->decrypt(common_key);
+    QByteArray common_key;
 
-        std::unique_ptr<Botan::PasswordHashFamily> family = Botan::PasswordHashFamily::create("PBKDF2(SHA-256)");
-        std::unique_ptr<Botan::PasswordHash> kdf = family->from_params(10000);
-        Botan::secure_vector<uint8_t> salted_key(KEY_SIZE);
-        kdf->derive_key(salted_key.data(), salted_key.size(),
-                        (const char*) common_key.data(), common_key.size(),
-                        (const uint8_t*) m_salt.data(), m_salt.size());
-
-        const std::vector<uint8_t> iv(m_iv.begin(), m_iv.end());
-        const std::vector<uint8_t> tag(m_export_key_tag.begin(), m_export_key_tag.end());
-        Botan::secure_vector<uint8_t> message(m_export_key.begin(), m_export_key.end());
-        message += tag;
-
-        std::unique_ptr<Botan::Cipher_Mode> dec = Botan::Cipher_Mode::create("AES-256/GCM", Botan::DECRYPTION);
-        dec->set_key(salted_key);
-        dec->start(iv);
-        try {
-            dec->finish(message);
-            //qDebug() << QString::fromStdString(Botan::hex_encode(message.data(), message.size()));
-            QByteArray payload_key((char*) message.data(), message.size());
-            m_payload_key = payload_key;
-            valid = true;
-        }
-        catch (const Botan::Invalid_Authentication_Tag& e) {
-            qWarning() << "DS2 validation of payload key failed for" << name();
-        }
+    CryptoResult error = decrypt_aes256(s_oscar_key, s_common_key, common_key);
+    if (error) {
+        qWarning() << "*** DS2 unexpected exception deriving common key";
+        return false;
     }
-    catch (exception& e) {
-        // Make sure no Botan exceptions leak out and terminate the application.
-        qWarning() << "*** DS2 unexpected exception deriving key for" << name() << ":" << e.what();
+
+    QByteArray salted_key(KEY_SIZE, 0);
+    error = pbkdf2_sha256(common_key, m_salt, 10000, salted_key);
+    if (error) {
+        qWarning() << "*** DS2 unexpected exception deriving salted key for" << name();
+        return false;
+    }
+
+    error = decrypt_aes256_gcm(salted_key, m_iv, m_export_key, m_export_key_tag, m_payload_key);
+    if (error) {
+        if (error == InvalidTag) {
+            qWarning() << "DS2 validation of payload key failed for" << name();
+        } else {
+            qWarning() << "*** DS2 unexpected exception deriving key for" << name();
+        }
+    } else {
+        valid = true;
     }
     return valid;
 }

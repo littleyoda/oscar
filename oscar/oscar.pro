@@ -312,6 +312,7 @@ SOURCES += \
     SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
     SleepLib/thirdparty/botan_all.cpp \
+    SleepLib/crypto.cpp \
     zip.cpp \
     SleepLib/thirdparty/miniz.c \
     csv.cpp \
@@ -402,6 +403,7 @@ HEADERS  += \
     SleepLib/thirdparty/botan_windows.h \
     SleepLib/thirdparty/botan_linux.h \
     SleepLib/thirdparty/botan_macos.h \
+    SleepLib/crypto.h \
     zip.h \
     SleepLib/thirdparty/miniz.h \
     csv.h \
@@ -583,6 +585,7 @@ test {
         tests/versiontests.cpp \
         tests/viatomtests.cpp \
         tests/deviceconnectiontests.cpp \
+        tests/cryptotests.cpp \
         tests/dreemtests.cpp \
         tests/zeotests.cpp
 
@@ -595,6 +598,7 @@ test {
         tests/versiontests.h \
         tests/viatomtests.h \
         tests/deviceconnectiontests.h \
+        tests/cryptotests.h \
         tests/dreemtests.h \
         tests/zeotests.h
 }
