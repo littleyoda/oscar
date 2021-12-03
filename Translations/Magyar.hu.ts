@@ -426,12 +426,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>10 / 10 Esemény típus</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP machine does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez a CPAP gép nem rögzít részletes adatokat</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1782"/>
@@ -451,7 +451,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2715"/>
         <source>10 of 10 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>10 / 10 Grafikon</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1244"/>
@@ -541,7 +541,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1777"/>
         <source>Impossibly short session</source>
-        <translation>Lehetséges rövid szakasz</translation>
+        <translation>Lehetetlenül rövid szakasz</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1778"/>
@@ -3768,7 +3768,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2129"/>
         <source>How often OSCAR should check for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Milyen gyakran keressen az OSCAR frissítéseket.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2210"/>
@@ -3875,7 +3875,7 @@ Próbálja ki és döntse el, hogy tetszik-e.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2703"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2706"/>
@@ -3925,7 +3925,7 @@ Próbálja ki és döntse el, hogy tetszik-e.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2756"/>
         <source>Print reports in black and white (monochrome)</source>
-        <translation type="unfinished"></translation>
+        <translation>Riportok fekete-fehérben nyomtatása (monokróm)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2788"/>
@@ -5472,12 +5472,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>Only Settings and Compliance Data Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak beállítások és teljesítés adatok elérhetőek</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>Summary Data Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak összegző adatok</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="817"/>
@@ -5510,7 +5510,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Series</source>
-        <translation type="unfinished"></translation>
+        <translation>Széria</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="826"/>
@@ -5668,7 +5668,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="861"/>
         <source>Med</source>
-        <translation type="unfinished"></translation>
+        <translation>Közép</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="863"/>
@@ -5846,17 +5846,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="915"/>
         <source>model %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 model</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="921"/>
         <source>DreamStation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>DreamStation 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
         <source>unknown model</source>
-        <translation type="unfinished"></translation>
+        <translation>ismeretlen model</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2789"/>
@@ -5944,7 +5944,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
         <source>Flex</source>
-        <translation type="unfinished"></translation>
+        <translation>Flex</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2819"/>
@@ -6128,7 +6128,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3044"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
         <source>Peak Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Áramlási csúcs</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
@@ -6169,7 +6169,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
         <source>Humid. Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Párásító mód</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
@@ -6184,7 +6184,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
         <source>Heated Tube</source>
-        <translation type="unfinished"></translation>
+        <translation>Fűtött cső</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
@@ -6209,7 +6209,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2906"/>
         <source>Hose Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Cső átmérő</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
@@ -6225,7 +6225,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
         <source>Auto On</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikus bekapcsolás</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
@@ -6236,7 +6236,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>Auto Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikus kikapcsolás</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
@@ -6273,7 +6273,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
         <source>BND</source>
-        <translation type="unfinished"></translation>
+        <translation>BND</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
@@ -6683,7 +6683,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
         <source>Blood-oxygen saturation percentage</source>
-        <translation type="unfinished"></translation>
+        <translation>Vér-oxigén szaturáció (százalék)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
@@ -6849,7 +6849,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>Cheyne Stokes Respiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Cheyne Stokes légzés</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="785"/>
@@ -7153,7 +7153,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="337"/>
         <source>BrainWave</source>
-        <translation type="unfinished"></translation>
+        <translation>Agyhullám</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
@@ -7695,7 +7695,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="185"/>
         <source>99.5%</source>
-        <translation type="unfinished">99.5%</translation>
+        <translation>99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
@@ -7751,7 +7751,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
+        <translation>EPAP %1-%2 IPAP %3-%4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="176"/>
@@ -7920,7 +7920,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1444"/>
         <source>Your machine doesn&apos;t record data to graph in Daily View</source>
-        <translation type="unfinished"></translation>
+        <translation>Az Ön gépe nem rögzít adatokat a napi nézethez</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1447"/>
@@ -8303,17 +8303,17 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>BiPAP-T</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
         <source>BiPAP-S</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-S</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <source>BiPAP-S/T</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-S/T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
@@ -8531,7 +8531,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="209"/>
         <source>Check for OSCAR Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR frissítések keresése</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="276"/>
@@ -8572,22 +8572,22 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/daily.cpp" line="2600"/>
         <source>%1 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Grafikonok</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2601"/>
         <source>%1 of %2 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 Grafikonok</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2620"/>
         <source>%1 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Esemény típusok</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2621"/>
         <source>%1 of %2 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 Esemény típusok</translation>
     </message>
 </context>
 <context>

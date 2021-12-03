@@ -376,12 +376,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>10 von 10 Event-Typen</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP machine does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses CPAP-Gerät zeichnet KEINE detaillierten Daten auf</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1801"/>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2715"/>
         <source>10 of 10 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>10 von 10 Grafiken</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1083"/>
@@ -1864,7 +1864,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
-        <translation type="unfinished">OSCAR ist Copyright &amp;copy;2011-2018 Mark Watkins und Teile &amp;copy;2019-2020 Das OSCAR-Team {2011-2018 ?} {2019-2022 ?}</translation>
+        <translation>OSCAR ist urheberrechtlich geschützt &amp;copy;2011-2018 Mark Watkins und Teile &amp;copy;2019-2022 Das OSCAR-Team</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="452"/>
@@ -4566,12 +4566,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>Only Settings and Compliance Data Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Einstellungen und Compliance-Daten verfügbar</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>Summary Data Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur zusammenfassende Daten</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="752"/>
@@ -4613,7 +4613,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1444"/>
         <source>Your machine doesn&apos;t record data to graph in Daily View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Gerät zeichnet in der Tagesansicht keine Daten auf, um sie grafisch darzustellen</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2151"/>
@@ -5739,27 +5739,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="151"/>
         <source>Your %1 %2 (%3) generated data that OSCAR has never seen before.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihre %1 %2 (%3) haben Daten generiert, die OSCAR noch nie zuvor gesehen hat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die importierten Daten sind möglicherweise nicht ganz korrekt, daher möchten die Entwickler eine ZIP-Kopie der SD-Karte dieses Geräts und die entsprechenden PDF-Berichte des Klinikers, um sicherzustellen, dass OSCAR die Daten korrekt verarbeitet.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
         <source>Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr %1 CPAP-Gerät (Modell %2) ist leider kein datenfähiges Modell.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
         <source>Your %1 CPAP machine (Model %2) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr %1 CPAP-Gerät (Modell %2) wurde noch nicht getestet.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es scheint anderen Computern ähnlich genug zu sein, dass es funktionieren könnte, aber die Entwickler möchten eine ZIP-Kopie der SD-Karte dieses Computers und passende .pdf-Berichte für den Kliniker, um sicherzustellen, dass es mit OSCAR funktioniert.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="185"/>
@@ -5769,12 +5769,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
         <source>Sorry, your %1 CPAP machine (%2) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr %1 CPAP-Gerät (%2) wird leider noch nicht unterstützt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
         <source>The developers need a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Entwickler benötigen eine ZIP-Kopie der SD-Karte dieses Geräts und die entsprechenden PDF-Berichte des Klinikers, damit es mit OSCAR funktioniert.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
@@ -8106,7 +8106,7 @@ Stunden: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
         <source>Ramp+</source>
-        <translation type="unfinished"></translation>
+        <translation>Rampe+</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
@@ -8587,27 +8587,27 @@ Popup-Fenster, löschen Sie es, und öffnen Sie dann dieses Diagramm erneut.</tr
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="81"/>
         <source>This page in other languages:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Seite in anderen Sprachen:</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2600"/>
         <source>%1 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Grafiken</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2601"/>
         <source>%1 of %2 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 von %2 Grafiken</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2620"/>
         <source>%1 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Ereignistypen</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2621"/>
         <source>%1 of %2 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 von %2 Ereignistypen</translation>
     </message>
 </context>
 <context>
