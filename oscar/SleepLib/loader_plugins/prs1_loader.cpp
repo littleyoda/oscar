@@ -266,7 +266,9 @@ class PRDS2File : public RawDataFile
     bool initializeKey();
     bool decryptData();
     QByteArray m_iv;
-    QByteArray e, j, k;
+    QByteArray m_salt;
+    QByteArray m_export_key;
+    QByteArray m_export_key_tag;
     QByteArray m_payload_key;
     QByteArray m_payload_tag;
     QBuffer m_payload;
@@ -363,7 +365,8 @@ bool PRDS2File::decryptData()
             valid = true;
         }
         catch (const Botan::Invalid_Authentication_Tag& e) {
-            qWarning() << "DS2 payload doesn't match tag in" << name();
+            // This has been observed where the tag is zero and the data appears truncated.
+            qWarning() << name() << "DS2 payload doesn't match tag, skipping";
         }
     }
     catch (exception& e) {
@@ -373,29 +376,50 @@ bool PRDS2File::decryptData()
     return valid;
 }
 
+
+static const int KEY_SIZE = 256 / 8;  // AES-256
+static const uint8_t OSCAR_KEY[KEY_SIZE+1]  = "Patient access to their own data";
+static const uint8_t COMMON_KEY[KEY_SIZE] = { 0x75, 0xB3, 0xA2, 0x12, 0x4A, 0x65, 0xAF, 0x97, 0x54, 0xD8, 0xC1, 0xF3, 0xE5, 0x2E, 0xB6, 0xF0, 0x23, 0x20, 0x57, 0x69, 0x7E, 0x38, 0x0E, 0xC9, 0x4A, 0xDC, 0x46, 0x45, 0xB6, 0x92, 0x5A, 0x98 };
+
 bool PRDS2File::initializeKey()
 {
     bool valid = false;
-    
-    // TODO: Figure out how the non-default payload key is derived.
-    static const unsigned char knownIV[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
-    static const unsigned char knownE[] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
-    static const unsigned char knownJ[] = {
-        0x9a, 0x93, 0x15, 0xc8, 0xd4, 0x24, 0xef, 0x7f, 0xa6, 0xa7, 0x9f, 0xce, 0x82, 0xdd, 0x5d, 0xfe,
-        0xde, 0x8d, 0x4f, 0x9f, 0x15, 0x32, 0x4d, 0x2e, 0x6d, 0x1d, 0x6e, 0xc4, 0xcb, 0x5f, 0xce, 0x64
-    };
-    static const unsigned char knownK[] = {
-        0xc1, 0x70, 0x9e, 0xe9, 0xf0, 0xdf, 0x0a, 0xd4, 0x79, 0xd5, 0xaa, 0x07, 0x97, 0xd4, 0x5c, 0x33
-    };
-    if (m_iv == QByteArray((const char*) knownIV, sizeof(knownIV)) && e == QByteArray((const char*) knownE, sizeof(knownE))) {
-        if (j == QByteArray((const char*) knownJ, sizeof(knownJ)) && k == QByteArray((const char*) knownK, sizeof(knownK))) {
-            m_payload_key = e + e;  // This doesn't seem to apply to non-default keys.
+    try {
+        Botan::secure_vector<uint8_t> common_key(COMMON_KEY, COMMON_KEY + KEY_SIZE);
+        Botan::secure_vector<uint8_t> oscar_key(OSCAR_KEY, OSCAR_KEY + KEY_SIZE);
+        std::unique_ptr<Botan::BlockCipher> oscar = Botan::BlockCipher::create("AES-256");
+        oscar->set_key(oscar_key);
+        oscar->decrypt(common_key);
+
+        std::unique_ptr<Botan::PasswordHashFamily> family = Botan::PasswordHashFamily::create("PBKDF2(SHA-256)");
+        std::unique_ptr<Botan::PasswordHash> kdf = family->from_params(10000);
+        Botan::secure_vector<uint8_t> salted_key(KEY_SIZE);
+        kdf->derive_key(salted_key.data(), salted_key.size(),
+                        (const char*) common_key.data(), common_key.size(),
+                        (const uint8_t*) m_salt.data(), m_salt.size());
+
+        const std::vector<uint8_t> iv(m_iv.begin(), m_iv.end());
+        const std::vector<uint8_t> tag(m_export_key_tag.begin(), m_export_key_tag.end());
+        Botan::secure_vector<uint8_t> message(m_export_key.begin(), m_export_key.end());
+        message += tag;
+
+        std::unique_ptr<Botan::Cipher_Mode> dec = Botan::Cipher_Mode::create("AES-256/GCM", Botan::DECRYPTION);
+        dec->set_key(salted_key);
+        dec->start(iv);
+        try {
+            dec->finish(message);
+            //qDebug() << QString::fromStdString(Botan::hex_encode(message.data(), message.size()));
+            QByteArray payload_key((char*) message.data(), message.size());
+            m_payload_key = payload_key;
             valid = true;
-        } else {
-            qWarning() << "*** DS2 unexpected j,k for default key in" << name();
         }
-    } else {
-        qWarning() << "DS2 unknown key for" << name();
+        catch (const Botan::Invalid_Authentication_Tag& e) {
+            qWarning() << "DS2 validation of payload key failed for" << name();
+        }
+    }
+    catch (exception& e) {
+        // Make sure no Botan exceptions leak out and terminate the application.
+        qWarning() << "*** DS2 unexpected exception deriving key for" << name() << ":" << e.what();
     }
     return valid;
 }
@@ -418,11 +442,11 @@ bool PRDS2File::parseDS2Header()
     }
 
     m_iv = readBytes();  // 96-bit IV
-    e = readBytes();  // 128 bits, somehow seeds key
-    if (m_iv.size() != 12 || e.size() != 16) {
-        qWarning() << "DS2 IV,e sizes =" << m_iv.size() << e.size();
+    m_salt = readBytes();  // 128-bit salt used to decrypt export key
+    if (m_iv.size() != 12 || m_salt.size() != 16) {
+        qWarning() << "DS2 IV,salt sizes =" << m_iv.size() << m_salt.size();
     } else {
-        //qDebug() << "DS2 IV,e =" << m_iv.toHex() << e.toHex();
+        //qDebug() << "DS2 IV,salt =" << m_iv.toHex() << m_salt.toHex();
     }
     
     int f = read16();
@@ -431,20 +455,20 @@ bool PRDS2File::parseDS2Header()
         qWarning() << "DS2 unexpected middle bytes =" << f << g;
     }
     
-    QByteArray h = readBytes();  // same per d,e pair, varies per machine
-    QByteArray i = readBytes();  // same per d,e pair, varies per machine
-    if (h.size() != 32 || i.size() != 16) {
-        qWarning() << "DS2 h,i sizes =" << h.size() << i.size();
+    QByteArray import_key = readBytes();      // payload key encrypted with machine-specific key
+    QByteArray import_key_tag = readBytes();  // tag of import key
+    if (import_key.size() != 32 || import_key_tag.size() != 16) {
+        qWarning() << "DS2 import_key sizes =" << import_key.size() << import_key_tag.size();
     } else {
-        //qDebug() << "DS2 h,i =" << h.toHex() << i.toHex();
+        //qDebug() << "DS2 import_key,tag =" << import_key.toHex() << import_key_tag.toHex();
     }
 
-    j = readBytes();  // same per d,e pair, does NOT vary per machine; possibly key or IV
-    k = readBytes();  // same per d,e pair, does NOT vary per machine; possibly key or IV
-    if (j.size() != 32 || k.size() != 16) {
-        qWarning() << "DS2 j,k sizes =" << j.size() << k.size();
+    m_export_key = readBytes();      // payload key encrypted with salted common key
+    m_export_key_tag = readBytes();  // tag of export key
+    if (m_export_key.size() != 32 || m_export_key_tag.size() != 16) {
+        qWarning() << "DS2 export_key sizes =" << m_export_key.size() << m_export_key_tag.size();
     } else {
-        //qDebug() << "DS2 j,k =" << j.toHex() << k.toHex();
+        //qDebug() << "DS2 export_key,tag =" << m_export_key.toHex() << m_export_key_tag.toHex();
     }
 
     m_payload_tag = readBytes();
@@ -668,7 +692,7 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
         PRDS2File* ds2 = new PRDS2File(f);
         if (!ds2->isValid()) {
-            qWarning() << filename << "unable to decrypt";
+            //qWarning() << filename << "unable to decrypt";
             delete ds2;
             return false;
         }
@@ -921,12 +945,6 @@ bool PRS1Loader::CreateMachineFromProperties(QString propertyfile)
             QString model_number = props["ModelNumber"];
             qWarning().noquote() << "Model" << model_number << QString("(F%1V%2)").arg(family).arg(familyVersion) << "unsupported.";
             info.modelnumber = QObject::tr("model %1").arg(model_number);
-        } else if (propertyfile.endsWith("PROP.BIN")) {
-            // TODO: If we end up releasing without support for non-default keys,
-            // add a loaderSpecificAlert(QString & message, bool deferred=false) signal
-            // and use that instead of telling the user that the DS2 is entirely unsupported.
-            qWarning() << "DreamStation 2 not using default keys:" << propertyfile;
-            info.modelnumber = QObject::tr("DreamStation 2");
         } else {
             qWarning() << "Unable to identify model or series!";
             info.modelnumber = QObject::tr("unknown model");
@@ -2726,7 +2744,7 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
         PRDS2File* ds2 = new PRDS2File(f);
         if (!ds2->isValid()) {
-            qWarning() << path << "unable to decrypt";
+            //qWarning() << path << "unable to decrypt";
             delete ds2;
             return CHUNKS;
         }

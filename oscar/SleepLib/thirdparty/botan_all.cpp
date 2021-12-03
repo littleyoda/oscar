@@ -5008,6 +5008,340 @@ void GHASH::reset()
 
 }
 /*
+* Hash Functions
+* (C) 2015 Jack Lloyd
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+#if defined(BOTAN_HAS_ADLER32)
+#endif
+
+#if defined(BOTAN_HAS_CRC24)
+#endif
+
+#if defined(BOTAN_HAS_CRC32)
+#endif
+
+#if defined(BOTAN_HAS_GOST_34_11)
+#endif
+
+#if defined(BOTAN_HAS_KECCAK)
+#endif
+
+#if defined(BOTAN_HAS_MD4)
+#endif
+
+#if defined(BOTAN_HAS_MD5)
+#endif
+
+#if defined(BOTAN_HAS_RIPEMD_160)
+#endif
+
+#if defined(BOTAN_HAS_SHA1)
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32)
+#endif
+
+#if defined(BOTAN_HAS_SHA2_64)
+#endif
+
+#if defined(BOTAN_HAS_SHA3)
+#endif
+
+#if defined(BOTAN_HAS_SHAKE)
+#endif
+
+#if defined(BOTAN_HAS_SKEIN_512)
+#endif
+
+#if defined(BOTAN_HAS_STREEBOG)
+#endif
+
+#if defined(BOTAN_HAS_SM3)
+#endif
+
+#if defined(BOTAN_HAS_TIGER)
+#endif
+
+#if defined(BOTAN_HAS_WHIRLPOOL)
+#endif
+
+#if defined(BOTAN_HAS_PARALLEL_HASH)
+#endif
+
+#if defined(BOTAN_HAS_COMB4P)
+#endif
+
+#if defined(BOTAN_HAS_BLAKE2B)
+#endif
+
+#if defined(BOTAN_HAS_OPENSSL)
+#endif
+
+#if defined(BOTAN_HAS_COMMONCRYPTO)
+#endif
+
+namespace Botan {
+
+std::unique_ptr<HashFunction> HashFunction::create(const std::string& algo_spec,
+                                                   const std::string& provider)
+   {
+
+#if defined(BOTAN_HAS_COMMONCRYPTO)
+   if(provider.empty() || provider == "commoncrypto")
+      {
+      if(auto hash = make_commoncrypto_hash(algo_spec))
+         return hash;
+
+      if(!provider.empty())
+         return nullptr;
+      }
+#endif
+
+#if defined(BOTAN_HAS_OPENSSL)
+   if(provider.empty() || provider == "openssl")
+      {
+      if(auto hash = make_openssl_hash(algo_spec))
+         return hash;
+
+      if(!provider.empty())
+         return nullptr;
+      }
+#endif
+
+   if(provider.empty() == false && provider != "base")
+      return nullptr; // unknown provider
+
+#if defined(BOTAN_HAS_SHA1)
+   if(algo_spec == "SHA-160" ||
+      algo_spec == "SHA-1" ||
+      algo_spec == "SHA1")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_160);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32)
+   if(algo_spec == "SHA-224")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_224);
+      }
+
+   if(algo_spec == "SHA-256")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_256);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_64)
+   if(algo_spec == "SHA-384")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_384);
+      }
+
+   if(algo_spec == "SHA-512")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_512);
+      }
+
+   if(algo_spec == "SHA-512-256")
+      {
+      return std::unique_ptr<HashFunction>(new SHA_512_256);
+      }
+#endif
+
+#if defined(BOTAN_HAS_RIPEMD_160)
+   if(algo_spec == "RIPEMD-160")
+      {
+      return std::unique_ptr<HashFunction>(new RIPEMD_160);
+      }
+#endif
+
+#if defined(BOTAN_HAS_WHIRLPOOL)
+   if(algo_spec == "Whirlpool")
+      {
+      return std::unique_ptr<HashFunction>(new Whirlpool);
+      }
+#endif
+
+#if defined(BOTAN_HAS_MD5)
+   if(algo_spec == "MD5")
+      {
+      return std::unique_ptr<HashFunction>(new MD5);
+      }
+#endif
+
+#if defined(BOTAN_HAS_MD4)
+   if(algo_spec == "MD4")
+      {
+      return std::unique_ptr<HashFunction>(new MD4);
+      }
+#endif
+
+#if defined(BOTAN_HAS_GOST_34_11)
+   if(algo_spec == "GOST-R-34.11-94" || algo_spec == "GOST-34.11")
+      {
+      return std::unique_ptr<HashFunction>(new GOST_34_11);
+      }
+#endif
+
+#if defined(BOTAN_HAS_ADLER32)
+   if(algo_spec == "Adler32")
+      {
+      return std::unique_ptr<HashFunction>(new Adler32);
+      }
+#endif
+
+#if defined(BOTAN_HAS_CRC24)
+   if(algo_spec == "CRC24")
+      {
+      return std::unique_ptr<HashFunction>(new CRC24);
+      }
+#endif
+
+#if defined(BOTAN_HAS_CRC32)
+   if(algo_spec == "CRC32")
+      {
+      return std::unique_ptr<HashFunction>(new CRC32);
+      }
+#endif
+
+   const SCAN_Name req(algo_spec);
+
+#if defined(BOTAN_HAS_TIGER)
+   if(req.algo_name() == "Tiger")
+      {
+      return std::unique_ptr<HashFunction>(
+         new Tiger(req.arg_as_integer(0, 24),
+                   req.arg_as_integer(1, 3)));
+      }
+#endif
+
+#if defined(BOTAN_HAS_SKEIN_512)
+   if(req.algo_name() == "Skein-512")
+      {
+      return std::unique_ptr<HashFunction>(
+         new Skein_512(req.arg_as_integer(0, 512), req.arg(1, "")));
+      }
+#endif
+
+#if defined(BOTAN_HAS_BLAKE2B)
+   if(req.algo_name() == "Blake2b" || req.algo_name() == "BLAKE2b")
+      {
+      return std::unique_ptr<HashFunction>(
+         new Blake2b(req.arg_as_integer(0, 512)));
+   }
+#endif
+
+#if defined(BOTAN_HAS_KECCAK)
+   if(req.algo_name() == "Keccak-1600")
+      {
+      return std::unique_ptr<HashFunction>(
+         new Keccak_1600(req.arg_as_integer(0, 512)));
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA3)
+   if(req.algo_name() == "SHA-3")
+      {
+      return std::unique_ptr<HashFunction>(
+         new SHA_3(req.arg_as_integer(0, 512)));
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHAKE)
+   if(req.algo_name() == "SHAKE-128")
+      {
+      return std::unique_ptr<HashFunction>(new SHAKE_128(req.arg_as_integer(0, 128)));
+      }
+   if(req.algo_name() == "SHAKE-256")
+      {
+      return std::unique_ptr<HashFunction>(new SHAKE_256(req.arg_as_integer(0, 256)));
+      }
+#endif
+
+#if defined(BOTAN_HAS_STREEBOG)
+   if(algo_spec == "Streebog-256")
+      {
+      return std::unique_ptr<HashFunction>(new Streebog_256);
+      }
+   if(algo_spec == "Streebog-512")
+      {
+      return std::unique_ptr<HashFunction>(new Streebog_512);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SM3)
+   if(algo_spec == "SM3")
+      {
+      return std::unique_ptr<HashFunction>(new SM3);
+      }
+#endif
+
+#if defined(BOTAN_HAS_WHIRLPOOL)
+   if(req.algo_name() == "Whirlpool")
+      {
+      return std::unique_ptr<HashFunction>(new Whirlpool);
+      }
+#endif
+
+#if defined(BOTAN_HAS_PARALLEL_HASH)
+   if(req.algo_name() == "Parallel")
+      {
+      std::vector<std::unique_ptr<HashFunction>> hashes;
+
+      for(size_t i = 0; i != req.arg_count(); ++i)
+         {
+         auto h = HashFunction::create(req.arg(i));
+         if(!h)
+            {
+            return nullptr;
+            }
+         hashes.push_back(std::move(h));
+         }
+
+      return std::unique_ptr<HashFunction>(new Parallel(hashes));
+      }
+#endif
+
+#if defined(BOTAN_HAS_COMB4P)
+   if(req.algo_name() == "Comb4P" && req.arg_count() == 2)
+      {
+      std::unique_ptr<HashFunction> h1(HashFunction::create(req.arg(0)));
+      std::unique_ptr<HashFunction> h2(HashFunction::create(req.arg(1)));
+
+      if(h1 && h2)
+         return std::unique_ptr<HashFunction>(new Comb4P(h1.release(), h2.release()));
+      }
+#endif
+
+
+   return nullptr;
+   }
+
+//static
+std::unique_ptr<HashFunction>
+HashFunction::create_or_throw(const std::string& algo,
+                              const std::string& provider)
+   {
+   if(auto hash = HashFunction::create(algo, provider))
+      {
+      return hash;
+      }
+   throw Lookup_Error("Hash", algo, provider);
+   }
+
+std::vector<std::string> HashFunction::providers(const std::string& algo_spec)
+   {
+   return probe_providers_of<HashFunction>(algo_spec, {"base", "openssl", "commoncrypto"});
+   }
+
+}
+
+/*
 * Hex Encoding and Decoding
 * (C) 2010,2020 Jack Lloyd
 *
@@ -5214,6 +5548,429 @@ std::vector<uint8_t> hex_decode(const std::string& input,
 
 }
 /*
+* HMAC
+* (C) 1999-2007,2014,2020 Jack Lloyd
+*     2007 Yves Jerschow
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+namespace Botan {
+
+/*
+* Update a HMAC Calculation
+*/
+void HMAC::add_data(const uint8_t input[], size_t length)
+   {
+   verify_key_set(m_ikey.empty() == false);
+   m_hash->update(input, length);
+   }
+
+/*
+* Finalize a HMAC Calculation
+*/
+void HMAC::final_result(uint8_t mac[])
+   {
+   verify_key_set(m_okey.empty() == false);
+   m_hash->final(mac);
+   m_hash->update(m_okey);
+   m_hash->update(mac, m_hash_output_length);
+   m_hash->final(mac);
+   m_hash->update(m_ikey);
+   }
+
+Key_Length_Specification HMAC::key_spec() const
+   {
+   // Support very long lengths for things like PBKDF2 and the TLS PRF
+   return Key_Length_Specification(0, 4096);
+   }
+
+size_t HMAC::output_length() const
+   {
+   return m_hash_output_length;
+   }
+
+/*
+* HMAC Key Schedule
+*/
+void HMAC::key_schedule(const uint8_t key[], size_t length)
+   {
+   const uint8_t ipad = 0x36;
+   const uint8_t opad = 0x5C;
+
+   m_hash->clear();
+
+   m_ikey.resize(m_hash_block_size);
+   m_okey.resize(m_hash_block_size);
+
+   clear_mem(m_ikey.data(), m_ikey.size());
+   clear_mem(m_okey.data(), m_okey.size());
+
+   /*
+   * Sometimes the HMAC key length itself is sensitive, as with PBKDF2 where it
+   * reveals the length of the passphrase. Make some attempt to hide this to
+   * side channels. Clearly if the secret is longer than the block size then the
+   * branch to hash first reveals that. In addition, counting the number of
+   * compression functions executed reveals the size at the granularity of the
+   * hash function's block size.
+   *
+   * The greater concern is for smaller keys; being able to detect when a
+   * passphrase is say 4 bytes may assist choosing weaker targets. Even though
+   * the loop bounds are constant, we can only actually read key[0..length] so
+   * it doesn't seem possible to make this computation truly constant time.
+   *
+   * We don't mind leaking if the length is exactly zero since that's
+   * trivial to simply check.
+   */
+
+   if(length > m_hash_block_size)
+      {
+      m_hash->update(key, length);
+      m_hash->final(m_ikey.data());
+      }
+   else if(length > 0)
+      {
+      for(size_t i = 0, i_mod_length = 0; i != m_hash_block_size; ++i)
+         {
+         /*
+         access key[i % length] but avoiding division due to variable
+         time computation on some processors.
+         */
+         auto needs_reduction = CT::Mask<size_t>::is_lte(length, i_mod_length);
+         i_mod_length = needs_reduction.select(0, i_mod_length);
+         const uint8_t kb = key[i_mod_length];
+
+         auto in_range = CT::Mask<size_t>::is_lt(i, length);
+         m_ikey[i] = static_cast<uint8_t>(in_range.if_set_return(kb));
+         i_mod_length += 1;
+         }
+      }
+
+   for(size_t i = 0; i != m_hash_block_size; ++i)
+      {
+      m_ikey[i] ^= ipad;
+      m_okey[i] = m_ikey[i] ^ ipad ^ opad;
+      }
+
+   m_hash->update(m_ikey);
+   }
+
+/*
+* Clear memory of sensitive data
+*/
+void HMAC::clear()
+   {
+   m_hash->clear();
+   zap(m_ikey);
+   zap(m_okey);
+   }
+
+/*
+* Return the name of this type
+*/
+std::string HMAC::name() const
+   {
+   return "HMAC(" + m_hash->name() + ")";
+   }
+
+/*
+* Return a clone of this object
+*/
+MessageAuthenticationCode* HMAC::clone() const
+   {
+   return new HMAC(m_hash->clone());
+   }
+
+/*
+* HMAC Constructor
+*/
+HMAC::HMAC(HashFunction* hash) :
+   m_hash(hash),
+   m_hash_output_length(m_hash->output_length()),
+   m_hash_block_size(m_hash->hash_block_size())
+   {
+   BOTAN_ARG_CHECK(m_hash_block_size >= m_hash_output_length,
+                   "HMAC is not compatible with this hash function");
+   }
+
+}
+/*
+* Message Authentication Code base class
+* (C) 1999-2008 Jack Lloyd
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+#if defined(BOTAN_HAS_CBC_MAC)
+#endif
+
+#if defined(BOTAN_HAS_CMAC)
+#endif
+
+#if defined(BOTAN_HAS_GMAC)
+#endif
+
+#if defined(BOTAN_HAS_HMAC)
+#endif
+
+#if defined(BOTAN_HAS_POLY1305)
+#endif
+
+#if defined(BOTAN_HAS_SIPHASH)
+#endif
+
+#if defined(BOTAN_HAS_ANSI_X919_MAC)
+#endif
+
+namespace Botan {
+
+std::unique_ptr<MessageAuthenticationCode>
+MessageAuthenticationCode::create(const std::string& algo_spec,
+                                  const std::string& provider)
+   {
+   const SCAN_Name req(algo_spec);
+
+#if defined(BOTAN_HAS_GMAC)
+   if(req.algo_name() == "GMAC" && req.arg_count() == 1)
+      {
+      if(provider.empty() || provider == "base")
+         {
+         if(auto bc = BlockCipher::create(req.arg(0)))
+            return std::unique_ptr<MessageAuthenticationCode>(new GMAC(bc.release()));
+         }
+      }
+#endif
+
+#if defined(BOTAN_HAS_HMAC)
+   if(req.algo_name() == "HMAC" && req.arg_count() == 1)
+      {
+      // TODO OpenSSL
+      if(provider.empty() || provider == "base")
+         {
+         if(auto h = HashFunction::create(req.arg(0)))
+            return std::unique_ptr<MessageAuthenticationCode>(new HMAC(h.release()));
+         }
+      }
+#endif
+
+#if defined(BOTAN_HAS_POLY1305)
+   if(req.algo_name() == "Poly1305" && req.arg_count() == 0)
+      {
+      if(provider.empty() || provider == "base")
+         return std::unique_ptr<MessageAuthenticationCode>(new Poly1305);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SIPHASH)
+   if(req.algo_name() == "SipHash")
+      {
+      if(provider.empty() || provider == "base")
+         {
+         return std::unique_ptr<MessageAuthenticationCode>(
+            new SipHash(req.arg_as_integer(0, 2), req.arg_as_integer(1, 4)));
+         }
+      }
+#endif
+
+#if defined(BOTAN_HAS_CMAC)
+   if((req.algo_name() == "CMAC" || req.algo_name() == "OMAC") && req.arg_count() == 1)
+      {
+      // TODO: OpenSSL CMAC
+      if(provider.empty() || provider == "base")
+         {
+         if(auto bc = BlockCipher::create(req.arg(0)))
+            return std::unique_ptr<MessageAuthenticationCode>(new CMAC(bc.release()));
+         }
+      }
+#endif
+
+
+#if defined(BOTAN_HAS_CBC_MAC)
+   if(req.algo_name() == "CBC-MAC" && req.arg_count() == 1)
+      {
+      if(provider.empty() || provider == "base")
+         {
+         if(auto bc = BlockCipher::create(req.arg(0)))
+            return std::unique_ptr<MessageAuthenticationCode>(new CBC_MAC(bc.release()));
+         }
+      }
+#endif
+
+#if defined(BOTAN_HAS_ANSI_X919_MAC)
+   if(req.algo_name() == "X9.19-MAC")
+      {
+      if(provider.empty() || provider == "base")
+         {
+         return std::unique_ptr<MessageAuthenticationCode>(new ANSI_X919_MAC);
+         }
+      }
+#endif
+
+   BOTAN_UNUSED(req);
+   BOTAN_UNUSED(provider);
+
+   return nullptr;
+   }
+
+std::vector<std::string>
+MessageAuthenticationCode::providers(const std::string& algo_spec)
+   {
+   return probe_providers_of<MessageAuthenticationCode>(algo_spec, {"base", "openssl"});
+   }
+
+//static
+std::unique_ptr<MessageAuthenticationCode>
+MessageAuthenticationCode::create_or_throw(const std::string& algo,
+                                           const std::string& provider)
+   {
+   if(auto mac = MessageAuthenticationCode::create(algo, provider))
+      {
+      return mac;
+      }
+   throw Lookup_Error("MAC", algo, provider);
+   }
+
+void MessageAuthenticationCode::start_msg(const uint8_t nonce[], size_t nonce_len)
+   {
+   BOTAN_UNUSED(nonce);
+   if(nonce_len > 0)
+      throw Invalid_IV_Length(name(), nonce_len);
+   }
+
+/*
+* Default (deterministic) MAC verification operation
+*/
+bool MessageAuthenticationCode::verify_mac(const uint8_t mac[], size_t length)
+   {
+   secure_vector<uint8_t> our_mac = final();
+
+   if(our_mac.size() != length)
+      return false;
+
+   return constant_time_compare(our_mac.data(), mac, length);
+   }
+
+}
+/*
+* Merkle-Damgard Hash Function
+* (C) 1999-2008,2018 Jack Lloyd
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+namespace Botan {
+
+/*
+* MDx_HashFunction Constructor
+*/
+MDx_HashFunction::MDx_HashFunction(size_t block_len,
+                                   bool byte_big_endian,
+                                   bool bit_big_endian,
+                                   uint8_t cnt_size) :
+   m_pad_char(bit_big_endian == true ? 0x80 : 0x01),
+   m_counter_size(cnt_size),
+   m_block_bits(ceil_log2(block_len)),
+   m_count_big_endian(byte_big_endian),
+   m_count(0),
+   m_buffer(block_len),
+   m_position(0)
+   {
+   if(!is_power_of_2(block_len))
+      throw Invalid_Argument("MDx_HashFunction block length must be a power of 2");
+   if(m_block_bits < 3 || m_block_bits > 16)
+      throw Invalid_Argument("MDx_HashFunction block size too large or too small");
+   if(m_counter_size < 8 || m_counter_size > block_len)
+      throw Invalid_State("MDx_HashFunction invalid counter length");
+   }
+
+/*
+* Clear memory of sensitive data
+*/
+void MDx_HashFunction::clear()
+   {
+   zeroise(m_buffer);
+   m_count = m_position = 0;
+   }
+
+/*
+* Update the hash
+*/
+void MDx_HashFunction::add_data(const uint8_t input[], size_t length)
+   {
+   const size_t block_len = static_cast<size_t>(1) << m_block_bits;
+
+   m_count += length;
+
+   if(m_position)
+      {
+      buffer_insert(m_buffer, m_position, input, length);
+
+      if(m_position + length >= block_len)
+         {
+         compress_n(m_buffer.data(), 1);
+         input += (block_len - m_position);
+         length -= (block_len - m_position);
+         m_position = 0;
+         }
+      }
+
+   // Just in case the compiler can't figure out block_len is a power of 2
+   const size_t full_blocks = length >> m_block_bits;
+   const size_t remaining   = length & (block_len - 1);
+
+   if(full_blocks > 0)
+      {
+      compress_n(input, full_blocks);
+      }
+
+   buffer_insert(m_buffer, m_position, input + full_blocks * block_len, remaining);
+   m_position += remaining;
+   }
+
+/*
+* Finalize a hash
+*/
+void MDx_HashFunction::final_result(uint8_t output[])
+   {
+   const size_t block_len = static_cast<size_t>(1) << m_block_bits;
+
+   clear_mem(&m_buffer[m_position], block_len - m_position);
+   m_buffer[m_position] = m_pad_char;
+
+   if(m_position >= block_len - m_counter_size)
+      {
+      compress_n(m_buffer.data(), 1);
+      zeroise(m_buffer);
+      }
+
+   write_count(&m_buffer[block_len - m_counter_size]);
+
+   compress_n(m_buffer.data(), 1);
+   copy_out(output);
+   clear();
+   }
+
+/*
+* Write the count bits to the buffer
+*/
+void MDx_HashFunction::write_count(uint8_t out[])
+   {
+   BOTAN_ASSERT_NOMSG(m_counter_size <= output_length());
+   BOTAN_ASSERT_NOMSG(m_counter_size >= 8);
+
+   const uint64_t bit_count = m_count * 8;
+
+   if(m_count_big_endian)
+      store_be(bit_count, out + m_counter_size - 8);
+   else
+      store_le(bit_count, out + m_counter_size - 8);
+   }
+
+}
+/*
 * Cipher Modes
 * (C) 2015 Jack Lloyd
 *
@@ -5407,6 +6164,467 @@ std::vector<std::string> Cipher_Mode::providers(const std::string& algo_spec)
 
 }
 /*
+* PBKDF
+* (C) 2012 Jack Lloyd
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+#if defined(BOTAN_HAS_PBKDF1)
+#endif
+
+#if defined(BOTAN_HAS_PBKDF2)
+#endif
+
+#if defined(BOTAN_HAS_PGP_S2K)
+#endif
+
+namespace Botan {
+
+std::unique_ptr<PBKDF> PBKDF::create(const std::string& algo_spec,
+                                     const std::string& provider)
+   {
+   const SCAN_Name req(algo_spec);
+
+#if defined(BOTAN_HAS_PBKDF2)
+   if(req.algo_name() == "PBKDF2")
+      {
+      // TODO OpenSSL
+
+      if(provider.empty() || provider == "base")
+         {
+         if(auto mac = MessageAuthenticationCode::create(req.arg(0)))
+            return std::unique_ptr<PBKDF>(new PKCS5_PBKDF2(mac.release()));
+
+         if(auto mac = MessageAuthenticationCode::create("HMAC(" + req.arg(0) + ")"))
+            return std::unique_ptr<PBKDF>(new PKCS5_PBKDF2(mac.release()));
+         }
+
+      return nullptr;
+      }
+#endif
+
+#if defined(BOTAN_HAS_PBKDF1)
+   if(req.algo_name() == "PBKDF1" && req.arg_count() == 1)
+      {
+      if(auto hash = HashFunction::create(req.arg(0)))
+         return std::unique_ptr<PBKDF>(new PKCS5_PBKDF1(hash.release()));
+
+      }
+#endif
+
+#if defined(BOTAN_HAS_PGP_S2K)
+   if(req.algo_name() == "OpenPGP-S2K" && req.arg_count() == 1)
+      {
+      if(auto hash = HashFunction::create(req.arg(0)))
+         return std::unique_ptr<PBKDF>(new OpenPGP_S2K(hash.release()));
+      }
+#endif
+
+   BOTAN_UNUSED(req);
+   BOTAN_UNUSED(provider);
+
+   return nullptr;
+   }
+
+//static
+std::unique_ptr<PBKDF>
+PBKDF::create_or_throw(const std::string& algo,
+                             const std::string& provider)
+   {
+   if(auto pbkdf = PBKDF::create(algo, provider))
+      {
+      return pbkdf;
+      }
+   throw Lookup_Error("PBKDF", algo, provider);
+   }
+
+std::vector<std::string> PBKDF::providers(const std::string& algo_spec)
+   {
+   return probe_providers_of<PBKDF>(algo_spec, { "base", "openssl" });
+   }
+
+void PBKDF::pbkdf_timed(uint8_t out[], size_t out_len,
+                        const std::string& passphrase,
+                        const uint8_t salt[], size_t salt_len,
+                        std::chrono::milliseconds msec,
+                        size_t& iterations) const
+   {
+   iterations = pbkdf(out, out_len, passphrase, salt, salt_len, 0, msec);
+   }
+
+void PBKDF::pbkdf_iterations(uint8_t out[], size_t out_len,
+                             const std::string& passphrase,
+                             const uint8_t salt[], size_t salt_len,
+                             size_t iterations) const
+   {
+   if(iterations == 0)
+      throw Invalid_Argument(name() + ": Invalid iteration count");
+
+   const size_t iterations_run = pbkdf(out, out_len, passphrase,
+                                       salt, salt_len, iterations,
+                                       std::chrono::milliseconds(0));
+   BOTAN_ASSERT_EQUAL(iterations, iterations_run, "Expected PBKDF iterations");
+   }
+
+secure_vector<uint8_t> PBKDF::pbkdf_iterations(size_t out_len,
+                                            const std::string& passphrase,
+                                            const uint8_t salt[], size_t salt_len,
+                                            size_t iterations) const
+   {
+   secure_vector<uint8_t> out(out_len);
+   pbkdf_iterations(out.data(), out_len, passphrase, salt, salt_len, iterations);
+   return out;
+   }
+
+secure_vector<uint8_t> PBKDF::pbkdf_timed(size_t out_len,
+                                       const std::string& passphrase,
+                                       const uint8_t salt[], size_t salt_len,
+                                       std::chrono::milliseconds msec,
+                                       size_t& iterations) const
+   {
+   secure_vector<uint8_t> out(out_len);
+   pbkdf_timed(out.data(), out_len, passphrase, salt, salt_len, msec, iterations);
+   return out;
+   }
+
+}
+/*
+* (C) 2018 Ribose Inc
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+#if defined(BOTAN_HAS_PBKDF2)
+#endif
+
+#if defined(BOTAN_HAS_PGP_S2K)
+#endif
+
+#if defined(BOTAN_HAS_SCRYPT)
+#endif
+
+#if defined(BOTAN_HAS_ARGON2)
+#endif
+
+#if defined(BOTAN_HAS_PBKDF_BCRYPT)
+#endif
+
+namespace Botan {
+
+std::unique_ptr<PasswordHashFamily> PasswordHashFamily::create(const std::string& algo_spec,
+                                     const std::string& provider)
+   {
+   const SCAN_Name req(algo_spec);
+
+#if defined(BOTAN_HAS_PBKDF2)
+   if(req.algo_name() == "PBKDF2")
+      {
+      // TODO OpenSSL
+
+      if(provider.empty() || provider == "base")
+         {
+         if(auto mac = MessageAuthenticationCode::create(req.arg(0)))
+            return std::unique_ptr<PasswordHashFamily>(new PBKDF2_Family(mac.release()));
+
+         if(auto mac = MessageAuthenticationCode::create("HMAC(" + req.arg(0) + ")"))
+            return std::unique_ptr<PasswordHashFamily>(new PBKDF2_Family(mac.release()));
+         }
+
+      return nullptr;
+      }
+#endif
+
+#if defined(BOTAN_HAS_SCRYPT)
+   if(req.algo_name() == "Scrypt")
+      {
+      return std::unique_ptr<PasswordHashFamily>(new Scrypt_Family);
+      }
+#endif
+
+#if defined(BOTAN_HAS_ARGON2)
+   if(req.algo_name() == "Argon2d")
+      {
+      return std::unique_ptr<PasswordHashFamily>(new Argon2_Family(0));
+      }
+   else if(req.algo_name() == "Argon2i")
+      {
+      return std::unique_ptr<PasswordHashFamily>(new Argon2_Family(1));
+      }
+   else if(req.algo_name() == "Argon2id")
+      {
+      return std::unique_ptr<PasswordHashFamily>(new Argon2_Family(2));
+      }
+#endif
+
+#if defined(BOTAN_HAS_PBKDF_BCRYPT)
+   if(req.algo_name() == "Bcrypt-PBKDF")
+      {
+      return std::unique_ptr<PasswordHashFamily>(new Bcrypt_PBKDF_Family);
+      }
+#endif
+
+#if defined(BOTAN_HAS_PGP_S2K)
+   if(req.algo_name() == "OpenPGP-S2K" && req.arg_count() == 1)
+      {
+      if(auto hash = HashFunction::create(req.arg(0)))
+         {
+         return std::unique_ptr<PasswordHashFamily>(new RFC4880_S2K_Family(hash.release()));
+         }
+      }
+#endif
+
+   BOTAN_UNUSED(req);
+   BOTAN_UNUSED(provider);
+
+   return nullptr;
+   }
+
+//static
+std::unique_ptr<PasswordHashFamily>
+PasswordHashFamily::create_or_throw(const std::string& algo,
+                             const std::string& provider)
+   {
+   if(auto pbkdf = PasswordHashFamily::create(algo, provider))
+      {
+      return pbkdf;
+      }
+   throw Lookup_Error("PasswordHashFamily", algo, provider);
+   }
+
+std::vector<std::string> PasswordHashFamily::providers(const std::string& algo_spec)
+   {
+   return probe_providers_of<PasswordHashFamily>(algo_spec, { "base", "openssl" });
+   }
+
+}
+/*
+* PBKDF2
+* (C) 1999-2007 Jack Lloyd
+* (C) 2018 Ribose Inc
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+namespace Botan {
+
+namespace {
+
+void pbkdf2_set_key(MessageAuthenticationCode& prf,
+                    const char* password,
+                    size_t password_len)
+   {
+   try
+      {
+      prf.set_key(cast_char_ptr_to_uint8(password), password_len);
+      }
+   catch(Invalid_Key_Length&)
+      {
+      throw Invalid_Argument("PBKDF2 cannot accept passphrase of the given size");
+      }
+   }
+
+}
+
+size_t
+pbkdf2(MessageAuthenticationCode& prf,
+       uint8_t out[],
+       size_t out_len,
+       const std::string& password,
+       const uint8_t salt[], size_t salt_len,
+       size_t iterations,
+       std::chrono::milliseconds msec)
+   {
+   if(iterations == 0)
+      {
+      iterations = PBKDF2(prf, out_len, msec).iterations();
+      }
+
+   PBKDF2 pbkdf2(prf, iterations);
+
+   pbkdf2.derive_key(out, out_len,
+                     password.c_str(), password.size(),
+                     salt, salt_len);
+
+   return iterations;
+   }
+
+namespace {
+
+size_t tune_pbkdf2(MessageAuthenticationCode& prf,
+                   size_t output_length,
+                   uint32_t msec)
+   {
+   if(output_length == 0)
+      output_length = 1;
+
+   const size_t prf_sz = prf.output_length();
+   BOTAN_ASSERT_NOMSG(prf_sz > 0);
+   secure_vector<uint8_t> U(prf_sz);
+
+   const size_t trial_iterations = 2000;
+
+   // Short output ensures we only need a single PBKDF2 block
+
+   Timer timer("PBKDF2");
+
+   const auto tune_time = BOTAN_PBKDF_TUNING_TIME;
+
+   prf.set_key(nullptr, 0);
+
+   timer.run_until_elapsed(tune_time, [&]() {
+      uint8_t out[12] = { 0 };
+      uint8_t salt[12] = { 0 };
+      pbkdf2(prf, out, sizeof(out), salt, sizeof(salt), trial_iterations);
+      });
+
+   if(timer.events() == 0)
+      return trial_iterations;
+
+   const uint64_t duration_nsec = timer.value() / timer.events();
+
+   const uint64_t desired_nsec = static_cast<uint64_t>(msec) * 1000000;
+
+   if(duration_nsec > desired_nsec)
+      return trial_iterations;
+
+   const size_t blocks_needed = (output_length + prf_sz - 1) / prf_sz;
+
+   const size_t multiplier = static_cast<size_t>(desired_nsec / duration_nsec / blocks_needed);
+
+   if(multiplier == 0)
+      return trial_iterations;
+   else
+      return trial_iterations * multiplier;
+   }
+
+}
+
+void pbkdf2(MessageAuthenticationCode& prf,
+            uint8_t out[],
+            size_t out_len,
+            const uint8_t salt[],
+            size_t salt_len,
+            size_t iterations)
+   {
+   if(iterations == 0)
+      throw Invalid_Argument("PBKDF2: Invalid iteration count");
+
+   clear_mem(out, out_len);
+
+   if(out_len == 0)
+      return;
+
+   const size_t prf_sz = prf.output_length();
+   BOTAN_ASSERT_NOMSG(prf_sz > 0);
+
+   secure_vector<uint8_t> U(prf_sz);
+
+   uint32_t counter = 1;
+   while(out_len)
+      {
+      const size_t prf_output = std::min<size_t>(prf_sz, out_len);
+
+      prf.update(salt, salt_len);
+      prf.update_be(counter++);
+      prf.final(U.data());
+
+      xor_buf(out, U.data(), prf_output);
+
+      for(size_t i = 1; i != iterations; ++i)
+         {
+         prf.update(U);
+         prf.final(U.data());
+         xor_buf(out, U.data(), prf_output);
+         }
+
+      out_len -= prf_output;
+      out += prf_output;
+      }
+   }
+
+// PBKDF interface
+size_t
+PKCS5_PBKDF2::pbkdf(uint8_t key[], size_t key_len,
+                    const std::string& password,
+                    const uint8_t salt[], size_t salt_len,
+                    size_t iterations,
+                    std::chrono::milliseconds msec) const
+   {
+   if(iterations == 0)
+      {
+      iterations = PBKDF2(*m_mac, key_len, msec).iterations();
+      }
+
+   PBKDF2 pbkdf2(*m_mac, iterations);
+
+   pbkdf2.derive_key(key, key_len,
+                     password.c_str(), password.size(),
+                     salt, salt_len);
+
+   return iterations;
+   }
+
+std::string PKCS5_PBKDF2::name() const
+   {
+   return "PBKDF2(" + m_mac->name() + ")";
+   }
+
+PBKDF* PKCS5_PBKDF2::clone() const
+   {
+   return new PKCS5_PBKDF2(m_mac->clone());
+   }
+
+// PasswordHash interface
+
+PBKDF2::PBKDF2(const MessageAuthenticationCode& prf, size_t olen, std::chrono::milliseconds msec) :
+   m_prf(prf.clone()),
+   m_iterations(tune_pbkdf2(*m_prf, olen, static_cast<uint32_t>(msec.count())))
+   {}
+
+std::string PBKDF2::to_string() const
+   {
+   return "PBKDF2(" + m_prf->name() + "," + std::to_string(m_iterations) + ")";
+   }
+
+void PBKDF2::derive_key(uint8_t out[], size_t out_len,
+                        const char* password, const size_t password_len,
+                        const uint8_t salt[], size_t salt_len) const
+   {
+   pbkdf2_set_key(*m_prf, password, password_len);
+   pbkdf2(*m_prf, out, out_len, salt, salt_len, m_iterations);
+   }
+
+std::string PBKDF2_Family::name() const
+   {
+   return "PBKDF2(" + m_prf->name() + ")";
+   }
+
+std::unique_ptr<PasswordHash> PBKDF2_Family::tune(size_t output_len, std::chrono::milliseconds msec, size_t) const
+   {
+   return std::unique_ptr<PasswordHash>(new PBKDF2(*m_prf, output_len, msec));
+   }
+
+std::unique_ptr<PasswordHash> PBKDF2_Family::default_params() const
+   {
+   return std::unique_ptr<PasswordHash>(new PBKDF2(*m_prf, 150000));
+   }
+
+std::unique_ptr<PasswordHash> PBKDF2_Family::from_params(size_t iter, size_t, size_t) const
+   {
+   return std::unique_ptr<PasswordHash>(new PBKDF2(*m_prf, iter));
+   }
+
+std::unique_ptr<PasswordHash> PBKDF2_Family::from_iterations(size_t iter) const
+   {
+   return std::unique_ptr<PasswordHash>(new PBKDF2(*m_prf, iter));
+   }
+
+}
+/*
 * (C) 2016 Jack Lloyd
 *
 * Botan is released under the Simplified BSD License (see license.txt)
@@ -5490,6 +6708,280 @@ Serialized_RNG::Serialized_RNG()
 #endif
 
 #endif
+
+}
+/*
+* SHA-{224,256}
+* (C) 1999-2010,2017 Jack Lloyd
+*     2007 FlexSecure GmbH
+*
+* Botan is released under the Simplified BSD License (see license.txt)
+*/
+
+
+namespace Botan {
+
+namespace {
+
+std::string sha256_provider()
+   {
+#if defined(BOTAN_HAS_SHA2_32_X86)
+   if(CPUID::has_intel_sha())
+      {
+      return "shani";
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_X86_BMI2)
+   if(CPUID::has_bmi2())
+      {
+      return "bmi2";
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_ARMV8)
+   if(CPUID::has_arm_sha2())
+      {
+      return "armv8";
+      }
+#endif
+
+   return "base";
+   }
+
+}
+
+std::unique_ptr<HashFunction> SHA_224::copy_state() const
+   {
+   return std::unique_ptr<HashFunction>(new SHA_224(*this));
+   }
+
+std::unique_ptr<HashFunction> SHA_256::copy_state() const
+   {
+   return std::unique_ptr<HashFunction>(new SHA_256(*this));
+   }
+
+/*
+* SHA-256 F1 Function
+*
+* Use a macro as many compilers won't inline a function this big,
+* even though it is much faster if inlined.
+*/
+#define SHA2_32_F(A, B, C, D, E, F, G, H, M1, M2, M3, M4, magic) do {               \
+   uint32_t A_rho = rotr<2>(A) ^ rotr<13>(A) ^ rotr<22>(A); \
+   uint32_t E_rho = rotr<6>(E) ^ rotr<11>(E) ^ rotr<25>(E); \
+   uint32_t M2_sigma = rotr<17>(M2) ^ rotr<19>(M2) ^ (M2 >> 10);    \
+   uint32_t M4_sigma = rotr<7>(M4) ^ rotr<18>(M4) ^ (M4 >> 3);      \
+   H += magic + E_rho + ((E & F) ^ (~E & G)) + M1;                                  \
+   D += H;                                                                          \
+   H += A_rho + ((A & B) | ((A | B) & C));                                          \
+   M1 += M2_sigma + M3 + M4_sigma;                                                  \
+   } while(0);
+
+/*
+* SHA-224 / SHA-256 compression function
+*/
+void SHA_256::compress_digest(secure_vector<uint32_t>& digest,
+                              const uint8_t input[], size_t blocks)
+   {
+#if defined(BOTAN_HAS_SHA2_32_X86)
+   if(CPUID::has_intel_sha())
+      {
+      return SHA_256::compress_digest_x86(digest, input, blocks);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_X86_BMI2)
+   if(CPUID::has_bmi2())
+      {
+      return SHA_256::compress_digest_x86_bmi2(digest, input, blocks);
+      }
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_ARMV8)
+   if(CPUID::has_arm_sha2())
+      {
+      return SHA_256::compress_digest_armv8(digest, input, blocks);
+      }
+#endif
+
+   uint32_t A = digest[0], B = digest[1], C = digest[2],
+            D = digest[3], E = digest[4], F = digest[5],
+            G = digest[6], H = digest[7];
+
+   for(size_t i = 0; i != blocks; ++i)
+      {
+      uint32_t W00 = load_be<uint32_t>(input,  0);
+      uint32_t W01 = load_be<uint32_t>(input,  1);
+      uint32_t W02 = load_be<uint32_t>(input,  2);
+      uint32_t W03 = load_be<uint32_t>(input,  3);
+      uint32_t W04 = load_be<uint32_t>(input,  4);
+      uint32_t W05 = load_be<uint32_t>(input,  5);
+      uint32_t W06 = load_be<uint32_t>(input,  6);
+      uint32_t W07 = load_be<uint32_t>(input,  7);
+      uint32_t W08 = load_be<uint32_t>(input,  8);
+      uint32_t W09 = load_be<uint32_t>(input,  9);
+      uint32_t W10 = load_be<uint32_t>(input, 10);
+      uint32_t W11 = load_be<uint32_t>(input, 11);
+      uint32_t W12 = load_be<uint32_t>(input, 12);
+      uint32_t W13 = load_be<uint32_t>(input, 13);
+      uint32_t W14 = load_be<uint32_t>(input, 14);
+      uint32_t W15 = load_be<uint32_t>(input, 15);
+
+      SHA2_32_F(A, B, C, D, E, F, G, H, W00, W14, W09, W01, 0x428A2F98);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W01, W15, W10, W02, 0x71374491);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W02, W00, W11, W03, 0xB5C0FBCF);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W03, W01, W12, W04, 0xE9B5DBA5);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W04, W02, W13, W05, 0x3956C25B);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W05, W03, W14, W06, 0x59F111F1);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W06, W04, W15, W07, 0x923F82A4);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W07, W05, W00, W08, 0xAB1C5ED5);
+      SHA2_32_F(A, B, C, D, E, F, G, H, W08, W06, W01, W09, 0xD807AA98);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W09, W07, W02, W10, 0x12835B01);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W10, W08, W03, W11, 0x243185BE);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W11, W09, W04, W12, 0x550C7DC3);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W12, W10, W05, W13, 0x72BE5D74);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W13, W11, W06, W14, 0x80DEB1FE);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W14, W12, W07, W15, 0x9BDC06A7);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W15, W13, W08, W00, 0xC19BF174);
+
+      SHA2_32_F(A, B, C, D, E, F, G, H, W00, W14, W09, W01, 0xE49B69C1);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W01, W15, W10, W02, 0xEFBE4786);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W02, W00, W11, W03, 0x0FC19DC6);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W03, W01, W12, W04, 0x240CA1CC);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W04, W02, W13, W05, 0x2DE92C6F);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W05, W03, W14, W06, 0x4A7484AA);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W06, W04, W15, W07, 0x5CB0A9DC);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W07, W05, W00, W08, 0x76F988DA);
+      SHA2_32_F(A, B, C, D, E, F, G, H, W08, W06, W01, W09, 0x983E5152);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W09, W07, W02, W10, 0xA831C66D);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W10, W08, W03, W11, 0xB00327C8);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W11, W09, W04, W12, 0xBF597FC7);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W12, W10, W05, W13, 0xC6E00BF3);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W13, W11, W06, W14, 0xD5A79147);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W14, W12, W07, W15, 0x06CA6351);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W15, W13, W08, W00, 0x14292967);
+
+      SHA2_32_F(A, B, C, D, E, F, G, H, W00, W14, W09, W01, 0x27B70A85);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W01, W15, W10, W02, 0x2E1B2138);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W02, W00, W11, W03, 0x4D2C6DFC);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W03, W01, W12, W04, 0x53380D13);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W04, W02, W13, W05, 0x650A7354);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W05, W03, W14, W06, 0x766A0ABB);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W06, W04, W15, W07, 0x81C2C92E);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W07, W05, W00, W08, 0x92722C85);
+      SHA2_32_F(A, B, C, D, E, F, G, H, W08, W06, W01, W09, 0xA2BFE8A1);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W09, W07, W02, W10, 0xA81A664B);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W10, W08, W03, W11, 0xC24B8B70);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W11, W09, W04, W12, 0xC76C51A3);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W12, W10, W05, W13, 0xD192E819);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W13, W11, W06, W14, 0xD6990624);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W14, W12, W07, W15, 0xF40E3585);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W15, W13, W08, W00, 0x106AA070);
+
+      SHA2_32_F(A, B, C, D, E, F, G, H, W00, W14, W09, W01, 0x19A4C116);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W01, W15, W10, W02, 0x1E376C08);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W02, W00, W11, W03, 0x2748774C);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W03, W01, W12, W04, 0x34B0BCB5);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W04, W02, W13, W05, 0x391C0CB3);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W05, W03, W14, W06, 0x4ED8AA4A);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W06, W04, W15, W07, 0x5B9CCA4F);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W07, W05, W00, W08, 0x682E6FF3);
+      SHA2_32_F(A, B, C, D, E, F, G, H, W08, W06, W01, W09, 0x748F82EE);
+      SHA2_32_F(H, A, B, C, D, E, F, G, W09, W07, W02, W10, 0x78A5636F);
+      SHA2_32_F(G, H, A, B, C, D, E, F, W10, W08, W03, W11, 0x84C87814);
+      SHA2_32_F(F, G, H, A, B, C, D, E, W11, W09, W04, W12, 0x8CC70208);
+      SHA2_32_F(E, F, G, H, A, B, C, D, W12, W10, W05, W13, 0x90BEFFFA);
+      SHA2_32_F(D, E, F, G, H, A, B, C, W13, W11, W06, W14, 0xA4506CEB);
+      SHA2_32_F(C, D, E, F, G, H, A, B, W14, W12, W07, W15, 0xBEF9A3F7);
+      SHA2_32_F(B, C, D, E, F, G, H, A, W15, W13, W08, W00, 0xC67178F2);
+
+      A = (digest[0] += A);
+      B = (digest[1] += B);
+      C = (digest[2] += C);
+      D = (digest[3] += D);
+      E = (digest[4] += E);
+      F = (digest[5] += F);
+      G = (digest[6] += G);
+      H = (digest[7] += H);
+
+      input += 64;
+      }
+   }
+
+std::string SHA_224::provider() const
+   {
+   return sha256_provider();
+   }
+
+std::string SHA_256::provider() const
+   {
+   return sha256_provider();
+   }
+
+/*
+* SHA-224 compression function
+*/
+void SHA_224::compress_n(const uint8_t input[], size_t blocks)
+   {
+   SHA_256::compress_digest(m_digest, input, blocks);
+   }
+
+/*
+* Copy out the digest
+*/
+void SHA_224::copy_out(uint8_t output[])
+   {
+   copy_out_vec_be(output, output_length(), m_digest);
+   }
+
+/*
+* Clear memory of sensitive data
+*/
+void SHA_224::clear()
+   {
+   MDx_HashFunction::clear();
+   m_digest[0] = 0xC1059ED8;
+   m_digest[1] = 0x367CD507;
+   m_digest[2] = 0x3070DD17;
+   m_digest[3] = 0xF70E5939;
+   m_digest[4] = 0xFFC00B31;
+   m_digest[5] = 0x68581511;
+   m_digest[6] = 0x64F98FA7;
+   m_digest[7] = 0xBEFA4FA4;
+   }
+
+/*
+* SHA-256 compression function
+*/
+void SHA_256::compress_n(const uint8_t input[], size_t blocks)
+   {
+   SHA_256::compress_digest(m_digest, input, blocks);
+   }
+
+/*
+* Copy out the digest
+*/
+void SHA_256::copy_out(uint8_t output[])
+   {
+   copy_out_vec_be(output, output_length(), m_digest);
+   }
+
+/*
+* Clear memory of sensitive data
+*/
+void SHA_256::clear()
+   {
+   MDx_HashFunction::clear();
+   m_digest[0] = 0x6A09E667;
+   m_digest[1] = 0xBB67AE85;
+   m_digest[2] = 0x3C6EF372;
+   m_digest[3] = 0xA54FF53A;
+   m_digest[4] = 0x510E527F;
+   m_digest[5] = 0x9B05688C;
+   m_digest[6] = 0x1F83D9AB;
+   m_digest[7] = 0x5BE0CD19;
+   }
 
 }
 /*

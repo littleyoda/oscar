@@ -31,7 +31,7 @@
 * Build configuration for Botan 2.18.2
 *
 * Automatically generated from
-* 'configure.py --amalgamation --os=macos --cpu=generic --disable-shared --minimized-build --enable-modules=aes,gcm'
+* 'configure.py --amalgamation --os=macos --cpu=generic --disable-shared --minimized-build --enable-modules=aes,gcm,sha2_32,pbkdf2'
 *
 * Target
 *  - Compiler: clang++ -fstack-protector -pthread -stdlib=libc++ -std=c++11 -D_REENTRANT -O3
@@ -111,8 +111,15 @@
 #define BOTAN_HAS_CTR_BE 20131128
 #define BOTAN_HAS_ENTROPY_SOURCE 20151120
 #define BOTAN_HAS_GHASH 20201002
+#define BOTAN_HAS_HASH 20180112
 #define BOTAN_HAS_HEX_CODEC 20131128
+#define BOTAN_HAS_HMAC 20131128
+#define BOTAN_HAS_MAC 20150626
+#define BOTAN_HAS_MDX_HASH_FUNCTION 20131128
 #define BOTAN_HAS_MODES 20150626
+#define BOTAN_HAS_PBKDF 20180902
+#define BOTAN_HAS_PBKDF2 20180902
+#define BOTAN_HAS_SHA2_32 20131128
 #define BOTAN_HAS_STREAM_CIPHER 20131128
 #define BOTAN_HAS_UTIL_FUNCTIONS 20180903
 
@@ -4474,6 +4481,82 @@ class BOTAN_PUBLIC_API(2,0) GHASH final : public SymmetricAlgorithm
 namespace Botan {
 
 /**
+* This class represents hash function (message digest) objects
+*/
+class BOTAN_PUBLIC_API(2,0) HashFunction : public Buffered_Computation
+   {
+   public:
+      /**
+      * Create an instance based on a name, or return null if the
+      * algo/provider combination cannot be found. If provider is
+      * empty then best available is chosen.
+      */
+      static std::unique_ptr<HashFunction>
+         create(const std::string& algo_spec,
+                const std::string& provider = "");
+
+      /**
+      * Create an instance based on a name
+      * If provider is empty then best available is chosen.
+      * @param algo_spec algorithm name
+      * @param provider provider implementation to use
+      * Throws Lookup_Error if not found.
+      */
+      static std::unique_ptr<HashFunction>
+         create_or_throw(const std::string& algo_spec,
+                         const std::string& provider = "");
+
+      /**
+      * @return list of available providers for this algorithm, empty if not available
+      * @param algo_spec algorithm name
+      */
+      static std::vector<std::string> providers(const std::string& algo_spec);
+
+      /**
+      * @return new object representing the same algorithm as *this
+      */
+      virtual HashFunction* clone() const = 0;
+
+      /**
+      * @return provider information about this implementation. Default is "base",
+      * might also return "sse2", "avx2", "openssl", or some other arbitrary string.
+      */
+      virtual std::string provider() const { return "base"; }
+
+      virtual ~HashFunction() = default;
+
+      /**
+      * Reset the state.
+      */
+      virtual void clear() = 0;
+
+      /**
+      * @return the hash function name
+      */
+      virtual std::string name() const = 0;
+
+      /**
+      * @return hash block size as defined for this algorithm
+      */
+      virtual size_t hash_block_size() const { return 0; }
+
+      /**
+      * Return a new hash object with the same state as *this. This
+      * allows computing the hash of several messages with a common
+      * prefix more efficiently than would otherwise be possible.
+      *
+      * This function should be called `clone` but that was already
+      * used for the case of returning an uninitialized object.
+      * @return new hash object
+      */
+      virtual std::unique_ptr<HashFunction> copy_state() const = 0;
+   };
+
+}
+
+namespace Botan {
+
+/**
 * Perform hex encoding
 * @param output an array of at least input_length*2 bytes
 * @param input is some binary data
@@ -4602,6 +4685,171 @@ hex_decode_locked(const char input[],
 secure_vector<uint8_t> BOTAN_PUBLIC_API(2,0)
 hex_decode_locked(const std::string& input,
                   bool ignore_ws = true);
+
+}
+
+namespace Botan {
+
+/**
+* This class represents Message Authentication Code (MAC) objects.
+*/
+class BOTAN_PUBLIC_API(2,0) MessageAuthenticationCode : public Buffered_Computation,
+                                            public SymmetricAlgorithm
+   {
+   public:
+      /**
+      * Create an instance based on a name
+      * If provider is empty then best available is chosen.
+      * @param algo_spec algorithm name
+      * @param provider provider implementation to use
+      * @return a null pointer if the algo/provider combination cannot be found
+      */
+      static std::unique_ptr<MessageAuthenticationCode>
+         create(const std::string& algo_spec,
+                const std::string& provider = "");
+
+      /*
+      * Create an instance based on a name
+      * If provider is empty then best available is chosen.
+      * @param algo_spec algorithm name
+      * @param provider provider implementation to use
+      * Throws a Lookup_Error if algo/provider combination cannot be found
+      */
+      static std::unique_ptr<MessageAuthenticationCode>
+         create_or_throw(const std::string& algo_spec,
+                         const std::string& provider = "");
+
+      /**
+      * @return list of available providers for this algorithm, empty if not available
+      */
+      static std::vector<std::string> providers(const std::string& algo_spec);
+
+      virtual ~MessageAuthenticationCode() = default;
+
+      /**
+      * Prepare for processing a message under the specified nonce
+      *
+      * Most MACs neither require nor support a nonce; for these algorithms
+      * calling `start_msg` is optional and calling it with anything other than
+      * an empty string is an error. One MAC which *requires* a per-message
+      * nonce be specified is GMAC.
+      *
+      * @param nonce the message nonce bytes
+      * @param nonce_len the size of len in bytes
+      * Default implementation simply rejects all non-empty nonces
+      * since most hash/MAC algorithms do not support randomization
+      */
+      virtual void start_msg(const uint8_t nonce[], size_t nonce_len);
+
+      /**
+      * Begin processing a message with a nonce
+      *
+      * @param nonce the per message nonce
+      */
+      template<typename Alloc>
+      void start(const std::vector<uint8_t, Alloc>& nonce)
+         {
+         start_msg(nonce.data(), nonce.size());
+         }
+
+      /**
+      * Begin processing a message.
+      * @param nonce the per message nonce
+      * @param nonce_len length of nonce
+      */
+      void start(const uint8_t nonce[], size_t nonce_len)
+         {
+         start_msg(nonce, nonce_len);
+         }
+
+      /**
+      * Begin processing a message.
+      */
+      void start()
+         {
+         return start_msg(nullptr, 0);
+         }
+
+      /**
+      * Verify a MAC.
+      * @param in the MAC to verify as a byte array
+      * @param length the length of param in
+      * @return true if the MAC is valid, false otherwise
+      */
+      virtual bool verify_mac(const uint8_t in[], size_t length);
+
+      /**
+      * Verify a MAC.
+      * @param in the MAC to verify as a byte array
+      * @return true if the MAC is valid, false otherwise
+      */
+      virtual bool verify_mac(const std::vector<uint8_t>& in)
+         {
+         return verify_mac(in.data(), in.size());
+         }
+
+      /**
+      * Verify a MAC.
+      * @param in the MAC to verify as a byte array
+      * @return true if the MAC is valid, false otherwise
+      */
+      virtual bool verify_mac(const secure_vector<uint8_t>& in)
+         {
+         return verify_mac(in.data(), in.size());
+         }
+
+      /**
+      * Get a new object representing the same algorithm as *this
+      */
+      virtual MessageAuthenticationCode* clone() const = 0;
+
+      /**
+      * @return provider information about this implementation. Default is "base",
+      * might also return "sse2", "avx2", "openssl", or some other arbitrary string.
+      */
+      virtual std::string provider() const { return "base"; }
+
+   };
+
+typedef MessageAuthenticationCode MAC;
+
+}
+
+BOTAN_FUTURE_INTERNAL_HEADER(hmac.h)
+
+namespace Botan {
+
+/**
+* HMAC
+*/
+class BOTAN_PUBLIC_API(2,0) HMAC final : public MessageAuthenticationCode
+   {
+   public:
+      void clear() override;
+      std::string name() const override;
+      MessageAuthenticationCode* clone() const override;
+
+      size_t output_length() const override;
+
+      Key_Length_Specification key_spec() const override;
+
+      /**
+      * @param hash the hash to use for HMACing
+      */
+      explicit HMAC(HashFunction* hash);
+
+      HMAC(const HMAC&) = delete;
+      HMAC& operator=(const HMAC&) = delete;
+   private:
+      void add_data(const uint8_t[], size_t) override;
+      void final_result(uint8_t[]) override;
+      void key_schedule(const uint8_t[], size_t) override;
+
+      std::unique_ptr<HashFunction> m_hash;
+      secure_vector<uint8_t> m_ikey, m_okey;
+      size_t m_hash_output_length;
+      size_t m_hash_block_size;
+   };
 
 }
 
@@ -5289,6 +5537,66 @@ void copy_out_vec_le(uint8_t out[], size_t out_bytes, const std::vector<T, Alloc
 
 }
 
+BOTAN_FUTURE_INTERNAL_HEADER(mdx_hash.h)
+
+namespace Botan {
+
+/**
+* MDx Hash Function Base Class
+*/
+class BOTAN_PUBLIC_API(2,0) MDx_HashFunction : public HashFunction
+   {
+   public:
+      /**
+      * @param block_length is the number of bytes per block, which must
+      *        be a power of 2 and at least 8.
+      * @param big_byte_endian specifies if the hash uses big-endian bytes
+      * @param big_bit_endian specifies if the hash uses big-endian bits
+      * @param counter_size specifies the size of the counter var in bytes
+      */
+      MDx_HashFunction(size_t block_length,
+                       bool big_byte_endian,
+                       bool big_bit_endian,
+                       uint8_t counter_size = 8);
+
+      size_t hash_block_size() const override final { return m_buffer.size(); }
+   protected:
+      void add_data(const uint8_t input[], size_t length) override final;
+      void final_result(uint8_t output[]) override final;
+
+      /**
+      * Run the hash's compression function over a set of blocks
+      * @param blocks the input
+      * @param block_n the number of blocks
+      */
+      virtual void compress_n(const uint8_t blocks[], size_t block_n) = 0;
+
+      void clear() override;
+
+      /**
+      * Copy the output to the buffer
+      * @param buffer to put the output into
+      */
+      virtual void copy_out(uint8_t buffer[]) = 0;
+
+      /**
+      * Write the count, if used, to this spot
+      * @param out where to write the counter to
+      */
+      virtual void write_count(uint8_t out[]);
+   private:
+      const uint8_t m_pad_char;
+      const uint8_t m_counter_size;
+      const uint8_t m_block_bits;
+      const bool m_count_big_endian;
+
+      uint64_t m_count;
+      secure_vector<uint8_t> m_buffer;
+      size_t m_position;
+   };
+
+}
+
 BOTAN_FUTURE_INTERNAL_HEADER(mul128.h)
 
 namespace Botan {
@@ -5563,6 +5871,485 @@ bool BOTAN_PUBLIC_API(2,0) host_wildcard_match(const std::string& wildcard,
 
 }
 
+namespace Botan {
+
+/**
+* Base class for PBKDF (password based key derivation function)
+* implementations. Converts a password into a key using a salt
+* and iterated hashing to make brute force attacks harder.
+*
+* Starting in 2.8 this functionality is also offered by PasswordHash.
+* The PBKDF interface may be removed in a future release.
+*/
+class BOTAN_PUBLIC_API(2,0) PBKDF
+   {
+   public:
+      /**
+      * Create an instance based on a name
+      * If provider is empty then best available is chosen.
+      * @param algo_spec algorithm name
+      * @param provider provider implementation to choose
+      * @return a null pointer if the algo/provider combination cannot be found
+      */
+      static std::unique_ptr<PBKDF> create(const std::string& algo_spec,
+                                           const std::string& provider = "");
+
+      /**
+      * Create an instance based on a name, or throw if the
+      * algo/provider combination cannot be found. If provider is
+      * empty then best available is chosen.
+      */
+      static std::unique_ptr<PBKDF>
+         create_or_throw(const std::string& algo_spec,
+                         const std::string& provider = "");
+
+      /**
+      * @return list of available providers for this algorithm, empty if not available
+      */
+      static std::vector<std::string> providers(const std::string& algo_spec);
+
+      /**
+      * @return new instance of this same algorithm
+      */
+      virtual PBKDF* clone() const = 0;
+
+      /**
+      * @return name of this PBKDF
+      */
+      virtual std::string name() const = 0;
+
+      virtual ~PBKDF() = default;
+
+      /**
+      * Derive a key from a passphrase for a number of iterations
+      * specified by either iterations or if iterations == 0 then
+      * running until msec time has elapsed.
+      *
+      * @param out buffer to store the derived key, must be of out_len bytes
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param iterations the number of iterations to use (use 10K or more)
+      * @param msec if iterations is zero, then instead the PBKDF is
+      *        run until msec milliseconds has passed.
+      * @return the number of iterations performed
+      */
+      virtual size_t pbkdf(uint8_t out[], size_t out_len,
+                           const std::string& passphrase,
+                           const uint8_t salt[], size_t salt_len,
+                           size_t iterations,
+                           std::chrono::milliseconds msec) const = 0;
+
+      /**
+      * Derive a key from a passphrase for a number of iterations.
+      *
+      * @param out buffer to store the derived key, must be of out_len bytes
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param iterations the number of iterations to use (use 10K or more)
+      */
+      void pbkdf_iterations(uint8_t out[], size_t out_len,
+                            const std::string& passphrase,
+                            const uint8_t salt[], size_t salt_len,
+                            size_t iterations) const;
+
+      /**
+      * Derive a key from a passphrase, running until msec time has elapsed.
+      *
+      * @param out buffer to store the derived key, must be of out_len bytes
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param msec if iterations is zero, then instead the PBKDF is
+      *        run until msec milliseconds has passed.
+      * @param iterations set to the number iterations executed
+      */
+      void pbkdf_timed(uint8_t out[], size_t out_len,
+                         const std::string& passphrase,
+                         const uint8_t salt[], size_t salt_len,
+                         std::chrono::milliseconds msec,
+                         size_t& iterations) const;
+
+      /**
+      * Derive a key from a passphrase for a number of iterations.
+      *
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param iterations the number of iterations to use (use 10K or more)
+      * @return the derived key
+      */
+      secure_vector<uint8_t> pbkdf_iterations(size_t out_len,
+                                           const std::string& passphrase,
+                                           const uint8_t salt[], size_t salt_len,
+                                           size_t iterations) const;
+
+      /**
+      * Derive a key from a passphrase, running until msec time has elapsed.
+      *
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param msec if iterations is zero, then instead the PBKDF is
+      *        run until msec milliseconds has passed.
+      * @param iterations set to the number iterations executed
+      * @return the derived key
+      */
+      secure_vector<uint8_t> pbkdf_timed(size_t out_len,
+                                      const std::string& passphrase,
+                                      const uint8_t salt[], size_t salt_len,
+                                      std::chrono::milliseconds msec,
+                                      size_t& iterations) const;
+
+      // Following kept for compat with 1.10:
+
+      /**
+      * Derive a key from a passphrase
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param iterations the number of iterations to use (use 10K or more)
+      */
+      OctetString derive_key(size_t out_len,
+                             const std::string& passphrase,
+                             const uint8_t salt[], size_t salt_len,
+                             size_t iterations) const
+         {
+         return pbkdf_iterations(out_len, passphrase, salt, salt_len, iterations);
+         }
+
+      /**
+      * Derive a key from a passphrase
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param iterations the number of iterations to use (use 10K or more)
+      */
+      template<typename Alloc>
+      OctetString derive_key(size_t out_len,
+                             const std::string& passphrase,
+                             const std::vector<uint8_t, Alloc>& salt,
+                             size_t iterations) const
+         {
+         return pbkdf_iterations(out_len, passphrase, salt.data(), salt.size(), iterations);
+         }
+
+      /**
+      * Derive a key from a passphrase
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      * @param msec is how long to run the PBKDF
+      * @param iterations is set to the number of iterations used
+      */
+      OctetString derive_key(size_t out_len,
+                             const std::string& passphrase,
+                             const uint8_t salt[], size_t salt_len,
+                             std::chrono::milliseconds msec,
+                             size_t& iterations) const
+         {
+         return pbkdf_timed(out_len, passphrase, salt, salt_len, msec, iterations);
+         }
+
+      /**
+      * Derive a key from a passphrase using a certain amount of time
+      * @param out_len the desired length of the key to produce
+      * @param passphrase the password to derive the key from
+      * @param salt a randomly chosen salt
+      * @param msec is how long to run the PBKDF
+      * @param iterations is set to the number of iterations used
+      */
+      template<typename Alloc>
+      OctetString derive_key(size_t out_len,
+                             const std::string& passphrase,
+                             const std::vector<uint8_t, Alloc>& salt,
+                             std::chrono::milliseconds msec,
+                             size_t& iterations) const
+         {
+         return pbkdf_timed(out_len, passphrase, salt.data(), salt.size(), msec, iterations);
+         }
+   };
+
+/*
+* Compatibility typedef
+*/
+typedef PBKDF S2K;
+
+/**
+* Password based key derivation function factory method
+* @param algo_spec the name of the desired PBKDF algorithm
+* @param provider the provider to use
+* @return pointer to newly allocated object of that type
+*/
+inline PBKDF* get_pbkdf(const std::string& algo_spec,
+                        const std::string& provider = "")
+   {
+   return PBKDF::create_or_throw(algo_spec, provider).release();
+   }
+
+inline PBKDF* get_s2k(const std::string& algo_spec)
+   {
+   return get_pbkdf(algo_spec);
+   }
+
+
+}
+
+namespace Botan {
+
+/**
+* Base class for password based key derivation functions.
+*
+* Converts a password into a key using a salt and iterated hashing to
+* make brute force attacks harder.
+*/
+class BOTAN_PUBLIC_API(2,8) PasswordHash
+   {
+   public:
+      virtual ~PasswordHash() = default;
+
+      virtual std::string to_string() const = 0;
+
+      /**
+      * Most password hashes have some notion of iterations.
+      */
+      virtual size_t iterations() const = 0;
+
+      /**
+      * Some password hashing algorithms have a parameter which controls how
+      * much memory is used. If not supported by some algorithm, returns 0.
+      */
+      virtual size_t memory_param() const { return 0; }
+
+      /**
+      * Some password hashing algorithms have a parallelism parameter.
+      * If the algorithm does not support this notion, then the
+      * function returns zero. This allows distinguishing between a
+      * password hash which just does not support parallel operation,
+      * vs one that does support parallel operation but which has been
+      * configured to use a single lane.
+      */
+      virtual size_t parallelism() const { return 0; }
+
+      /**
+      * Returns an estimate of the total memory usage required to perform this
+      * key derivation.
+      *
+      * If this algorithm uses a small and constant amount of memory, with no
+      * effort made towards being memory hard, this function returns 0.
+      */
+      virtual size_t total_memory_usage() const { return 0; }
+
+      /**
+      * Derive a key from a password
+      *
+      * @param out buffer to store the derived key, must be of out_len bytes
+      * @param out_len the desired length of the key to produce
+      * @param password the password to derive the key from
+      * @param password_len the length of password in bytes
+      * @param salt a randomly chosen salt
+      * @param salt_len length of salt in bytes
+      *
+      * This function is const, but is not thread safe. Different threads should
+      * either use unique objects, or serialize all access.
+      */
+      virtual void derive_key(uint8_t out[], size_t out_len,
+                              const char* password, size_t password_len,
+                              const uint8_t salt[], size_t salt_len) const = 0;
+   };
+
+class BOTAN_PUBLIC_API(2,8) PasswordHashFamily
+   {
+   public:
+      /**
+      * Create an instance based on a name
+      * If provider is empty then best available is chosen.
+      * @param algo_spec algorithm name
+      * @param provider provider implementation to choose
+      * @return a null pointer if the algo/provider combination cannot be found
+      */
+      static std::unique_ptr<PasswordHashFamily> create(const std::string& algo_spec,
+                                                        const std::string& provider = "");
+
+      /**
+      * Create an instance based on a name, or throw if the
+      * algo/provider combination cannot be found. If provider is
+      * empty then best available is chosen.
+      */
+      static std::unique_ptr<PasswordHashFamily>
+         create_or_throw(const std::string& algo_spec,
+                         const std::string& provider = "");
+
+      /**
+      * @return list of available providers for this algorithm, empty if not available
+      */
+      static std::vector<std::string> providers(const std::string& algo_spec);
+
+      virtual ~PasswordHashFamily() = default;
+
+      /**
+      * @return name of this PasswordHash
+      */
+      virtual std::string name() const = 0;
+
+      /**
+      * Return a new parameter set tuned for this machine
+      * @param output_length how long the output length will be
+      * @param msec the desired execution time in milliseconds
+      *
+      * @param max_memory_usage_mb some password hash functions can use a tunable
+      * amount of memory, in this case max_memory_usage limits the amount of RAM
+      * the returned parameters will require, in mebibytes (2**20 bytes). It may
+      * require some small amount above the request. Set to zero to place no
+      * limit at all.
+      */
+      virtual std::unique_ptr<PasswordHash> tune(size_t output_length,
+                                                 std::chrono::milliseconds msec,
+                                                 size_t max_memory_usage_mb = 0) const = 0;
+
+      /**
+      * Return some default parameter set for this PBKDF that should be good
+      * enough for most users. The value returned may change over time as
+      * processing power and attacks improve.
+      */
+      virtual std::unique_ptr<PasswordHash> default_params() const = 0;
+
+      /**
+      * Return a parameter chosen based on a rough approximation with the
+      * specified iteration count. The exact value this returns for a particular
+      * algorithm may change from over time. Think of it as an alternative to
+      * tune, where time is expressed in terms of PBKDF2 iterations rather than
+      * milliseconds.
+      */
+      virtual std::unique_ptr<PasswordHash> from_iterations(size_t iterations) const = 0;
+
+      /**
+      * Create a password hash using some scheme specific format.
+      * Eg PBKDF2 and PGP-S2K set iterations in i1
+      * Scrypt uses N,r,p in i{1-3}
+      * Bcrypt-PBKDF just has iterations
+      * Argon2{i,d,id} would use iterations, memory, parallelism for i{1-3},
+      * and Argon2 type is part of the family.
+      *
+      * Values not needed should be set to 0
+      */
+      virtual std::unique_ptr<PasswordHash> from_params(
+         size_t i1,
+         size_t i2 = 0,
+         size_t i3 = 0) const = 0;
+   };
+
+}
+
+BOTAN_FUTURE_INTERNAL_HEADER(pbkdf2.h)
+
+namespace Botan {
+
+BOTAN_PUBLIC_API(2,0) size_t pbkdf2(MessageAuthenticationCode& prf,
+                        uint8_t out[],
+                        size_t out_len,
+                        const std::string& passphrase,
+                        const uint8_t salt[], size_t salt_len,
+                        size_t iterations,
+                        std::chrono::milliseconds msec);
+
+/**
+* Perform PBKDF2. The prf is assumed to be keyed already.
+*/
+BOTAN_PUBLIC_API(2,8) void pbkdf2(MessageAuthenticationCode& prf,
+                                  uint8_t out[], size_t out_len,
+                                  const uint8_t salt[], size_t salt_len,
+                                  size_t iterations);
+
+/**
+* PBKDF2
+*/
+class BOTAN_PUBLIC_API(2,8) PBKDF2 final : public PasswordHash
+   {
+   public:
+      PBKDF2(const MessageAuthenticationCode& prf, size_t iter) :
+         m_prf(prf.clone()),
+         m_iterations(iter)
+         {}
+
+      PBKDF2(const MessageAuthenticationCode& prf, size_t olen, std::chrono::milliseconds msec);
+
+      size_t iterations() const override { return m_iterations; }
+
+      std::string to_string() const override;
+
+      void derive_key(uint8_t out[], size_t out_len,
+                      const char* password, size_t password_len,
+                      const uint8_t salt[], size_t salt_len) const override;
+   private:
+      std::unique_ptr<MessageAuthenticationCode> m_prf;
+      size_t m_iterations;
+   };
+
+/**
+* Family of PKCS #5 PBKDF2 operations
+*/
+class BOTAN_PUBLIC_API(2,8) PBKDF2_Family final : public PasswordHashFamily
+   {
+   public:
+      PBKDF2_Family(MessageAuthenticationCode* prf) : m_prf(prf) {}
+
+      std::string name() const override;
+
+      std::unique_ptr<PasswordHash> tune(size_t output_len,
+                                         std::chrono::milliseconds msec,
+                                         size_t max_memory) const override;
+
+      /**
+      * Return some default parameter set for this PBKDF that should be good
+      * enough for most users. The value returned may change over time as
+      * processing power and attacks improve.
+      */
+      std::unique_ptr<PasswordHash> default_params() const override;
+
+      std::unique_ptr<PasswordHash> from_iterations(size_t iter) const override;
+
+      std::unique_ptr<PasswordHash> from_params(
+         size_t iter, size_t, size_t) const override;
+   private:
+      std::unique_ptr<MessageAuthenticationCode> m_prf;
+   };
+
+/**
+* PKCS #5 PBKDF2 (old interface)
+*/
+class BOTAN_PUBLIC_API(2,0) PKCS5_PBKDF2 final : public PBKDF
+   {
+   public:
+      std::string name() const override;
+
+      PBKDF* clone() const override;
+
+      size_t pbkdf(uint8_t output_buf[], size_t output_len,
+                   const std::string& passphrase,
+                   const uint8_t salt[], size_t salt_len,
+                   size_t iterations,
+                   std::chrono::milliseconds msec) const override;
+
+      /**
+      * Create a PKCS #5 instance using the specified message auth code
+      * @param mac_fn the MAC object to use as PRF
+      */
+      explicit PKCS5_PBKDF2(MessageAuthenticationCode* mac_fn) : m_mac(mac_fn) {}
+   private:
+      std::unique_ptr<MessageAuthenticationCode> m_mac;
+   };
+
+}
+
 BOTAN_FUTURE_INTERNAL_HEADER(rotate.h)
 
 namespace Botan {
@@ -5768,6 +6555,87 @@ std::vector<std::string> probe_providers_of(const std::string& algo_spec,
       }
    return providers;
    }
+
+}
+
+BOTAN_FUTURE_INTERNAL_HEADER(sha2_32.h)
+
+namespace Botan {
+
+/**
+* SHA-224
+*/
+class BOTAN_PUBLIC_API(2,0) SHA_224 final : public MDx_HashFunction
+   {
+   public:
+      std::string name() const override { return "SHA-224"; }
+      size_t output_length() const override { return 28; }
+      HashFunction* clone() const override { return new SHA_224; }
+      std::unique_ptr<HashFunction> copy_state() const override;
+
+      void clear() override;
+
+      std::string provider() const override;
+
+      SHA_224() : MDx_HashFunction(64, true, true), m_digest(8)
+         { clear(); }
+   private:
+      void compress_n(const uint8_t[], size_t blocks) override;
+      void copy_out(uint8_t[]) override;
+
+      secure_vector<uint32_t> m_digest;
+   };
+
+/**
+* SHA-256
+*/
+class BOTAN_PUBLIC_API(2,0) SHA_256 final : public MDx_HashFunction
+   {
+   public:
+      std::string name() const override { return "SHA-256"; }
+      size_t output_length() const override { return 32; }
+      HashFunction* clone() const override { return new SHA_256; }
+      std::unique_ptr<HashFunction> copy_state() const override;
+
+      void clear() override;
+
+      std::string provider() const override;
+
+      SHA_256() : MDx_HashFunction(64, true, true), m_digest(8)
+         { clear(); }
+
+      /*
+      * Perform a SHA-256 compression. For internal use
+      */
+      static void compress_digest(secure_vector<uint32_t>& digest,
+                                  const uint8_t input[],
+                                  size_t blocks);
+
+   private:
+
+#if defined(BOTAN_HAS_SHA2_32_ARMV8)
+      static void compress_digest_armv8(secure_vector<uint32_t>& digest,
+                                        const uint8_t input[],
+                                        size_t blocks);
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_X86_BMI2)
+      static void compress_digest_x86_bmi2(secure_vector<uint32_t>& digest,
+                                           const uint8_t input[],
+                                           size_t blocks);
+#endif
+
+#if defined(BOTAN_HAS_SHA2_32_X86)
+      static void compress_digest_x86(secure_vector<uint32_t>& digest,
+                                      const uint8_t input[],
+                                      size_t blocks);
+#endif
+
+      void compress_n(const uint8_t[], size_t blocks) override;
+      void copy_out(uint8_t[]) override;
+
+      secure_vector<uint32_t> m_digest;
+   };
 
 }
 

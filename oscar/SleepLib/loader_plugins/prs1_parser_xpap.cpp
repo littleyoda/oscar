@@ -1557,7 +1557,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
         qWarning() << this->sessionid << "summary data too short:" << chunk_size;
         return false;
     }
-    if (chunk_size < 59) UNEXPECTED_VALUE(chunk_size, ">= 59");
+    if (chunk_size < 58) UNEXPECTED_VALUE(chunk_size, ">= 58");
 
     bool ok = true;
     int pos = 0;
