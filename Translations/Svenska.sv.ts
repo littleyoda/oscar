@@ -271,7 +271,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1573"/>
         <source>Show/hide available graphs.</source>
-        <translation>Visa/dölj tillgängliga diagram.</translation>
+        <translation>Visa/dölj tillgängliga grafer.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="288"/>
@@ -531,12 +531,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>10 av 10 typ av händelser</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP machine does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här CPAP-maskinen sparar inga detaljerade data</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1782"/>
@@ -551,7 +551,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2715"/>
         <source>10 of 10 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>10 av 10 grafer</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1801"/>
@@ -1038,7 +1038,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2834"/>
         <source>&amp;Reset Graphs</source>
-        <translation>&amp;Återställ diagrammen</translation>
+        <translation>&amp;Återställ graferna</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2897"/>
@@ -1168,7 +1168,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3295"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation>Standardvisning av diagram, passar för CPAP, APAP, Bi-Level</translation>
+        <translation>Standardvisning av grafer, passar för CPAP, APAP, Bi-Level</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3300"/>
@@ -1178,7 +1178,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3303"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation>Avancerad visning av diagram, passar AVS, AVAPS</translation>
+        <translation>Avancerad visning av grafer, passar AVS, AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3314"/>
@@ -1193,7 +1193,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="3050"/>
         <source>Reset sizes of graphs</source>
-        <translation>Återställ storlek på diagram</translation>
+        <translation>Återställ storlek på grafer</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="3055"/>
@@ -2091,7 +2091,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
-        <translation type="unfinished">OSCAR är upphovsrättsskyddad &amp;copy;2011-2018 Mark Watkins och delvis &amp;copy;2019-2020 OSCAR Team {2011-2018 ?} {2019-2022 ?}</translation>
+        <translation>OSCAR är upphovsrättsskyddad &amp;copy;2011-2018 Mark Watkins och delvis &amp;copy;2019-2022 The OSCAR Team</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
@@ -2387,7 +2387,7 @@ Index</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1391"/>
         <source>Show Live Graphs</source>
-        <translation>Visa Live Diagram</translation>
+        <translation>Visa Live graf</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1422"/>
@@ -2969,7 +2969,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1118"/>
         <source>Show in Event Breakdown Piechart</source>
-        <translation>Visa i cirkeldiagrammet</translation>
+        <translation>Visa i cirkeldiagrafen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1141"/>
@@ -3352,7 +3352,7 @@ eftersom det är det enda värdet som finns på bara-översikts dagar.</translat
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1209"/>
         <source>AHI/Hour Graph Time Window</source>
-        <translation>AHI/timme tidsfönster</translation>
+        <translation>AHI/timme graf</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1265"/>
@@ -3463,7 +3463,7 @@ OSCAR kan behålla en kopia av dessa uppgifter om du behöver installera om.
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gör starten av OSCAR lite långsammare genom att förladda alla sammanställningsdata vid uppstart. Men visningen av sammanställngningsdata och vissa andra krävande visningar går snabbare sen i gengäld.&lt;/p&gt;&lt;p&gt;Om du har stora mängder sömndata, kan det vara värt att ha detta avstängt. Fast om du normalt vill se&lt;span style=&quot; font-style:italic;&quot;&gt;ALLT&lt;/span&gt; i översikten, så måste alla data laddas ändå. &lt;/p&gt;&lt;p&gt;Notera att denna inställning påverkar inte diagrammen för andningsflöde och händelsedata, som alltid laddas vid behov&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gör starten av OSCAR lite långsammare genom att förladda alla sammanställningsdata vid uppstart. Men visningen av sammanställngningsdata och vissa andra krävande visningar går snabbare sen i gengäld.&lt;/p&gt;&lt;p&gt;Om du har stora mängder sömndata, kan det vara värt att ha detta avstängt. Fast om du normalt vill se&lt;span style=&quot; font-style:italic;&quot;&gt;ALLT&lt;/span&gt; i översikten, så måste alla data laddas ändå. &lt;/p&gt;&lt;p&gt;Notera att denna inställning påverkar inte graferna för andningsflöde och händelsedata, som alltid laddas vid behov&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="977"/>
@@ -3532,7 +3532,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Jag vill bli aviserad om test-versioner. (Endast erfarna användare.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2256"/>
@@ -3587,7 +3587,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2052"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
-        <translation>Prova att ändra det här från standardinställningen (Desktop OpenGL) om du upplever problem med OSCARs diagram.</translation>
+        <translation>Prova att ändra det här från standardinställningen (Desktop OpenGL) om du upplever problem med OSCAR´s grafer.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2788"/>
@@ -5428,12 +5428,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>Only Settings and Compliance Data Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Endast inställningar och compliance data tillgängligt</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>Summary Data Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Endast sammanfattningsdata</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="817"/>
@@ -5640,12 +5640,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="151"/>
         <source>Your %1 %2 (%3) generated data that OSCAR has never seen before.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din %1 %2 (%3) genererade data som OSCAR aldrig sett tidigare.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den importerade datan kanske inte är helt korrekt, därför vill gärna utvecklarna få tillgång till en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="161"/>
@@ -5655,27 +5655,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
         <source>Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din %1 CPAP maskin (Modell %2) är tyvärr inte kapabel till att spara data.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
         <source>Your %1 CPAP machine (Model %2) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din %1 CPAP maskin (Modell %2) har inte blivit testad än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det ser tillräckligt lika ut som andra maskiner så det kan fungera, men utvecklarna vill ändå få tillgång till en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
         <source>Sorry, your %1 CPAP machine (%2) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledsen, men din %1 CPAP maskin (%2) stöds inte än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
         <source>The developers need a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklarna behöver en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
@@ -5991,7 +5991,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
         <source>Ramp+</source>
-        <translation type="unfinished"></translation>
+        <translation>Ramp+</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
@@ -7272,7 +7272,7 @@ orsakar antingen ett uppvaknande eller en sömnstörning.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="266"/>
         <source>Graph showing severity of flow limitations</source>
-        <translation>Diagram som visar svårighetsgraden av flödesbegränsningar</translation>
+        <translation>Graf som visar svårighetsgraden av flödesbegränsningar</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="266"/>
@@ -7370,7 +7370,7 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Graph showing running AHI for the past hour</source>
-        <translation>Diagram som visar rullande AHI den senaste timmen</translation>
+        <translation>Graf som visar rullande AHI den senaste timmen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
@@ -7405,7 +7405,7 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>Graph showing running RDI for the past hour</source>
-        <translation>Diagram som visar rullande RDI den senaste timmen</translation>
+        <translation>Graf som visar rullande RDI den senaste timmen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="288"/>
@@ -7709,7 +7709,7 @@ Vänligen återskapa CPAP-data</translation>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="390"/>
         <source>Pop out Graph</source>
-        <translation>Koppla loss diagram</translation>
+        <translation>Koppla loss graf</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="473"/>
@@ -7720,12 +7720,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1444"/>
         <source>Your machine doesn&apos;t record data to graph in Daily View</source>
-        <translation type="unfinished"></translation>
+        <translation>Din maskin sparar inte data till graferna i Daglig vy</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1447"/>
         <source>There is no data to graph</source>
-        <translation>Det finns inga data i diagrammet</translation>
+        <translation>Det finns inga data i graferna</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1593"/>
@@ -7759,7 +7759,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2590"/>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2665"/>
         <source>Popout %1 Graph</source>
-        <translation>Koppla loss %1 diagrammet</translation>
+        <translation>Koppla loss %1 grafen</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2667"/>
@@ -7889,7 +7889,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
+        <translation>EPAP %1-%2 IPAP %3-%4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="26"/>
@@ -8109,7 +8109,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>PAC</source>
-        <translation type="unfinished"></translation>
+        <translation>PAC</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8263,17 +8263,17 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>BiPAP-T</source>
-        <translation type="unfinished"></translation>
+        <translation>BIPAP-T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
         <source>BiPAP-S</source>
-        <translation type="unfinished"></translation>
+        <translation>BIPAP-S</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <source>BiPAP-S/T</source>
-        <translation type="unfinished"></translation>
+        <translation>BIPAP-S/T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
@@ -8521,23 +8521,23 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>release</source>
-        <translation type="unfinished"></translation>
+        <translation>version</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>test version</source>
-        <translation type="unfinished"></translation>
+        <translation>test-version</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running the latest %1 of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Du använder den senaste %1 av OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="172"/>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>You are running OSCAR %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Du använder OSCAR %1</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="178"/>
@@ -8588,27 +8588,27 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="81"/>
         <source>This page in other languages:</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här sidan i andra språk:</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2600"/>
         <source>%1 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 graf</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2601"/>
         <source>%1 of %2 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 av %2 grafer</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2620"/>
         <source>%1 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 händelsetyp</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2621"/>
         <source>%1 of %2 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 av %2 händelsetyper</translation>
     </message>
 </context>
 <context>
@@ -9270,7 +9270,7 @@ popout window, delete it, then pop out this graph again.</source>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
         <translation>Dubbelklicka på rubriken för att fästa / lossa
-Klicka och dra för att omordna grafer</translation>
+Klicka och dra för att omorganisera grafer</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2084"/>

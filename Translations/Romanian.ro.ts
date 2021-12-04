@@ -428,12 +428,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>10 din 10 tipuri de evenimente</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP machine does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>Acest aparat CPAP nu inregistreaza date detaliate</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1782"/>
@@ -453,7 +453,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="2715"/>
         <source>10 of 10 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>10 din 10 Grafice</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1244"/>
@@ -3588,7 +3588,7 @@ OSCAR poate păstra o copie a acestor date dacă intenționați să reinstalați
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2213"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vreau să fiu notificat cu privire la versiunile de testare. (Numai pentru utilizatorii avansați, vă rog.)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2256"/>
@@ -5509,12 +5509,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>Only Settings and Compliance Data Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunt disponibile doar setările și datele de conformitate</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>Summary Data Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Doar date sumare</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="817"/>
@@ -5733,12 +5733,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="151"/>
         <source>Your %1 %2 (%3) generated data that OSCAR has never seen before.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparatul dvs %1 %2 (%3) a generat date pe care OSCAR nu le-a mai văzut până acum.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este posibil ca datele importate să nu fie în întregime exacte, astfel încât dezvoltatorii ar dori o copie .zip a cardului SD al acestui aparat și rapoartele .pdf ale clinicianului pentru a se asigura că OSCAR gestionează corect datele.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="161"/>
@@ -5748,27 +5748,27 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
         <source>Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparatul dumneavoastră CPAP %1 (model %2) nu este, din păcate, un model cu card de date SD.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
         <source>Your %1 CPAP machine (Model %2) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparatul dumneavoastră CPAP %1 (model %2) nu a fost încă testat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
         <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pare suficient de asemănător cu alte aparate pentru a putea funcționa, dar dezvoltatorii ar dori o copie .zip a cardului SD al acestui aparat și rapoartele .pdf ale medicilor pentru a se asigura că funcționează cu OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
         <source>Sorry, your %1 CPAP machine (%2) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pare rău, aparatul dumneavoastră CPAP %1 (%2) nu este încă acceptat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
         <source>The developers need a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dezvoltatorii au nevoie de o copie .zip a cardului SD al acestui aparat și de rapoartele .pdf corespunzătoare ale medicilor pentru a-l face să funcționeze cu OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
@@ -6020,7 +6020,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
         <source>Ramp+</source>
-        <translation type="unfinished"></translation>
+        <translation>Ramp+</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
@@ -7800,7 +7800,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
-        <translation type="unfinished">EPAP %1 IPAP %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
+        <translation>EPAP %1 IPAP %2-%3 (%4) {1-%2 ?} {3-%4 ?} {5)?}</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="176"/>
@@ -7969,7 +7969,7 @@ fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1444"/>
         <source>Your machine doesn&apos;t record data to graph in Daily View</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparatul dvs. nu înregistrează date pentru a le reprezenta grafic în Vizualizare zilnică</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1447"/>
@@ -8202,7 +8202,7 @@ fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>PAC</source>
-        <translation type="unfinished"></translation>
+        <translation>PAC</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
@@ -8356,17 +8356,17 @@ fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>BiPAP-T</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="106"/>
         <source>BiPAP-S</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-S</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <source>BiPAP-S/T</source>
-        <translation type="unfinished"></translation>
+        <translation>BiPAP-S/T</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="208"/>
@@ -8553,23 +8553,23 @@ fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>release</source>
-        <translation type="unfinished"></translation>
+        <translation>versiune</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="170"/>
         <source>test version</source>
-        <translation type="unfinished"></translation>
+        <translation>versiune de test</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="171"/>
         <source>You are running the latest %1 of OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulezi cea mai recentă versiune %1 de OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="172"/>
         <location filename="../oscar/checkupdates.cpp" line="176"/>
         <source>You are running OSCAR %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulati OSCAR %1</translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="178"/>
@@ -8620,27 +8620,27 @@ fereastra popout, să o ștergeți, apoi să deschideți din nou acest grafic.</
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="81"/>
         <source>This page in other languages:</source>
-        <translation type="unfinished"></translation>
+        <translation>Această pagină în alte limbi:</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2600"/>
         <source>%1 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Grafice</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2601"/>
         <source>%1 of %2 Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 din %2 Grafice</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2620"/>
         <source>%1 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tipuri de evenimente</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2621"/>
         <source>%1 of %2 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 din %2 Tipuri de evenimente</translation>
     </message>
 </context>
 <context>
