@@ -9,6 +9,8 @@
 #include "cryptotests.h"
 #include "SleepLib/crypto.h"
 
+//#define BENCHMARK_CRYPTO 1
+
 void CryptoTests::testAES256()
 {
     // From FIPS-197 C.3
@@ -100,4 +102,42 @@ void CryptoTests::testPBKDF2_SHA256()
     CryptoResult result = pbkdf2_sha256(passphrase, salt, iterations, derived_key);
     Q_ASSERT(result == OK);
     Q_ASSERT(derived_key == expected_key);
+}
+
+
+void CryptoTests::testPRS1Benchmarks()
+{
+#if BENCHMARK_CRYPTO
+    static const int AES_ITERATIONS = 500;
+    static const int PBKDF2_ITERATIONS = 100;
+    
+    QTime time;
+    qDebug() << "Timing AESGCM...";
+    time.start();
+    for (int i = 0; i < AES_ITERATIONS; i++) {
+        // On average, a full directory of 500 PRS1 files is about 10-20MB, so use 32kB/file as representative.
+        QByteArray ciphertext(32768, 0);
+        QByteArray key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
+        QByteArray iv = QByteArray::fromHex("000000000000000000000000");
+        QByteArray tag = QByteArray::fromHex("51dedf58b6a5299bff9d06e041efe725");
+
+        QByteArray plaintext;
+        CryptoResult result = decrypt_aes256_gcm(key, iv, ciphertext, tag, plaintext);
+        Q_ASSERT(result == OK);
+    }
+    int elapsed = time.restart();
+    qDebug() << "AESGCM x" << AES_ITERATIONS << "=" << elapsed << "ms," << ((float)elapsed / AES_ITERATIONS) << "ms/file";
+
+    qDebug() << "Timing PBKDF2...";
+    time.restart();
+    for (int i = 0; i < PBKDF2_ITERATIONS; i++) {
+        QByteArray passphrase("passwd");
+        QByteArray salt("salt");
+        QByteArray derived_key(32, 0);
+        CryptoResult result = pbkdf2_sha256(passphrase, salt, 10000, derived_key);
+        Q_ASSERT(result == OK);
+    }
+    elapsed = time.restart();
+    qDebug() << "PBKDF2 x" << PBKDF2_ITERATIONS << "=" << elapsed << "ms," << ((float)elapsed / PBKDF2_ITERATIONS) << "ms/file";
+#endif
 }
