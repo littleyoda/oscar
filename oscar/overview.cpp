@@ -131,6 +131,8 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
 
     icon_on = new QIcon(":/icons/session-on.png");
     icon_off = new QIcon(":/icons/session-off.png");
+    icon_up_down = new QIcon(":/icons/up-down.png");
+    icon_warning = new QIcon(":/icons/warning.png");
 
     GraphView->resetLayout();
     GraphView->SaveDefaultSettings();
@@ -328,11 +330,33 @@ void Overview::ReloadGraphs()
     on_rangeCombo_activated(ui->rangeCombo->currentIndex());
 }
 
+void Overview::setGraphText () {
+    int numOff = 0;
+    int numTotal = 0;
+
+    gGraph *g;
+    for (int i=0;i<GraphView->size();i++) {
+        g=(*GraphView)[i];
+        if (!g->isEmpty()) {
+            numTotal++;
+            if (!g->visible()) {
+                numOff++;
+            }
+        }
+    }
+    ui->graphCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
+    QString graphText;
+    if (numOff == 0) graphText = QObject::tr("%1 Charts").arg(numTotal);
+    else             graphText = QObject::tr("%1 of %2 Charts").arg(numTotal-numOff).arg(numTotal);
+    ui->graphCombo->setItemText(0, graphText);
+}
+
 void Overview::updateGraphCombo()
 {
     ui->graphCombo->clear();
     gGraph *g;
 
+    ui->graphCombo->addItem(*icon_up_down, tr("10 of 10 Charts"), true); // Translation only to define space required
     for (int i = 0; i < GraphView->size(); i++) {
         g = (*GraphView)[i];
 
@@ -346,6 +370,7 @@ void Overview::updateGraphCombo()
     }
 
     ui->graphCombo->setCurrentIndex(0);
+    setGraphText();
     updateCube();
 }
 
@@ -591,22 +616,25 @@ void Overview::on_graphCombo_activated(int index)
         return;
     }
 
-    gGraph *g;
-    QString s;
-    s = ui->graphCombo->currentText();
-    bool b = !ui->graphCombo->itemData(index, Qt::UserRole).toBool();
-    ui->graphCombo->setItemData(index, b, Qt::UserRole);
+    if (index > 0 ) {
+        gGraph *g;
+        QString s;
+        s = ui->graphCombo->currentText();
+        bool b = !ui->graphCombo->itemData(index, Qt::UserRole).toBool();
+        ui->graphCombo->setItemData(index, b, Qt::UserRole);
 
-    if (b) {
-        ui->graphCombo->setItemIcon(index, *icon_on);
-    } else {
-        ui->graphCombo->setItemIcon(index, *icon_off);
-    }
+        if (b) {
+            ui->graphCombo->setItemIcon(index, *icon_on);
+        } else {
+            ui->graphCombo->setItemIcon(index, *icon_off);
+        }
 
-    g = GraphView->findGraphTitle(s);
-    g->setVisible(b);
-
+        g = GraphView->findGraphTitle(s);
+        g->setVisible(b);
+}
+    ui->graphCombo->setCurrentIndex(0);
     updateCube();
+    setGraphText();
     GraphView->updateScale();
     GraphView->redraw();
 }

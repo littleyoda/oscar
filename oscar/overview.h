@@ -116,7 +116,7 @@ class Overview : public QWidget
 
     void on_LineCursorUpdate(double time);
     void on_RangeUpdate(double minx, double maxx);
-
+    void setGraphText ();
 
   private:
     void CreateAllGraphs();
@@ -128,6 +128,8 @@ class Overview : public QWidget
     gGraphView *m_shared;
     QIcon *icon_on;
     QIcon *icon_off;
+    QIcon *icon_up_down;
+    QIcon *icon_warning;
     MyLabel *dateLabel;
     bool customMode=false;
 
