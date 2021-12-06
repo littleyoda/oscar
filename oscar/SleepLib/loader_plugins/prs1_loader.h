@@ -228,6 +228,9 @@ class PRS1Loader : public CPAPLoader
     
     //! \brief PRS1 Data files can store multiple sessions, so store them in this list for later processing.
     QHash<SessionID, Session *> new_sessions;
+    
+    //! \brief DS2 key derivation is very slow, but keys are reused in multiple files, so we cache the derived keys.
+    QHash<QByteArray, QByteArray> m_keycache;
 };
 
 

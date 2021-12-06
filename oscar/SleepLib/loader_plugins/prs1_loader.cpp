@@ -254,7 +254,7 @@ const char* PRS1ModelInfo::Name(const QString & model) const
 class PRDS2File : public RawDataFile
 {
   public:
-    PRDS2File(class QFile & file);
+    PRDS2File(class QFile & file, QHash<QByteArray,QByteArray> & keycache);
     virtual ~PRDS2File() {};
     bool isValid() const;
     QString guid() const;
@@ -282,12 +282,21 @@ class PRDS2File : public RawDataFile
     static const int m_header_size = 0xCA;
 };
 
-PRDS2File::PRDS2File(class QFile & file)
+PRDS2File::PRDS2File(class QFile & file, QHash<QByteArray,QByteArray> & keycache)
     : RawDataFile(file)
 {
     bool valid = parseDS2Header();
     if (valid) {
-        valid = initializeKey();
+        QByteArray key = m_iv + m_salt + m_export_key + m_export_key_tag;
+        m_payload_key = keycache[key];
+        if (m_payload_key.isEmpty()) {
+            // Derive the key (slow).
+            valid = initializeKey();
+            if (valid) {
+                // Cache the result for the next file.
+                keycache[key] = m_payload_key;
+            }
+        }
         if (valid) {
             valid = decryptData();
         }
@@ -668,7 +677,7 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
     RawDataFile* src;
     if (QFileInfo(f).suffix().toUpper() == "BIN") {
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
-        PRDS2File* ds2 = new PRDS2File(f);
+        PRDS2File* ds2 = new PRDS2File(f, m_keycache);
         if (!ds2->isValid()) {
             //qWarning() << filename << "unable to decrypt";
             delete ds2;
@@ -914,6 +923,8 @@ int PRS1Loader::FindSessionDirsAndProperties(const QString & path, QStringList &
 
 bool PRS1Loader::CreateMachineFromProperties(QString propertyfile)
 {
+    m_keycache.clear();
+    
     MachineInfo info = newInfo();
     QHash<QString,QString> props;
     if (!PeekProperties(propertyfile, props) || !s_PRS1ModelInfo.IsSupported(props)) {
@@ -2720,7 +2731,7 @@ QList<PRS1DataChunk *> PRS1Loader::ParseFile(const QString & path)
     RawDataFile* src;
     if (QFileInfo(f).suffix().toUpper().startsWith("B")) {  // .B01, .B02, etc.
         // If it's a DS2 file, insert the DS2 wrapper to decode the chunk stream.
-        PRDS2File* ds2 = new PRDS2File(f);
+        PRDS2File* ds2 = new PRDS2File(f, m_keycache);
         if (!ds2->isValid()) {
             //qWarning() << path << "unable to decrypt";
             delete ds2;
