@@ -301,6 +301,7 @@ SOURCES += \
     SleepLib/loader_plugins/sleepstyle_EDFinfo.cpp \
     SleepLib/loader_plugins/intellipap_loader.cpp \
     SleepLib/loader_plugins/mseries_loader.cpp \
+    SleepLib/loader_plugins/prisma_loader.cpp \
     SleepLib/loader_plugins/prs1_loader.cpp \
     SleepLib/loader_plugins/prs1_parser.cpp \
     SleepLib/loader_plugins/prs1_parser_xpap.cpp \
@@ -403,6 +404,7 @@ HEADERS  += \
     SleepLib/loader_plugins/sleepstyle_EDFinfo.h \
     SleepLib/loader_plugins/intellipap_loader.h \
     SleepLib/loader_plugins/mseries_loader.h \
+    SleepLib/loader_plugins/prisma_loader.h \
     SleepLib/loader_plugins/prs1_loader.h \
     SleepLib/loader_plugins/prs1_parser.h \
     SleepLib/loader_plugins/resmed_loader.h \

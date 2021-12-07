@@ -46,6 +46,7 @@
 #include "SleepLib/loader_plugins/sleepstyle_loader.h"
 #include "SleepLib/loader_plugins/weinmann_loader.h"
 #include "SleepLib/loader_plugins/viatom_loader.h"
+#include "SleepLib/loader_plugins/prisma_loader.h"
 
 MainWindow *mainwin = nullptr;
 
@@ -691,6 +692,7 @@ int main(int argc, char *argv[]) {
     CMS50F37Loader::Register();
     MD300W1Loader::Register();
     ViatomLoader::Register();
+    PrismaLoader::Register();
 
     // Begin logging device connection activity.
     QString connectionsLogDir = GetLogDir() + "/connections";

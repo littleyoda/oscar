@@ -1,0 +1,235 @@
+/* SleepLib Löwenstein Prisma Loader Header
+ *
+ * Copyright (c) 2019-2022 The OSCAR Team
+ * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
+ *
+ * This file is subject to the terms and conditions of the GNU General Public
+ * License. See the file COPYING in the main directory of the source code
+ * for more details. */
+
+#ifndef PRISMA_LOADER_H
+#define PRISMA_LOADER_H
+#include "SleepLib/machine_loader.h"
+#include "SleepLib/loader_plugins/edfparser.h"
+
+#ifdef UNITTEST_MODE
+#define private public
+#define protected public
+#endif
+
+//********************************************************************************************
+/// IMPORTANT!!!
+//********************************************************************************************
+// Please INCREMENT the following value when making changes to this loaders implementation
+// BEFORE making a release
+const int prisma_data_version = 1;
+//
+//********************************************************************************************
+const QString prisma_class_name = STR_MACH_Prisma;
+
+//********************************************************************************************
+
+enum Prisma_Parameters {
+    PRISMA_MODE = 6,
+    PRISMA_PRESSURE = 9,
+    PRISMA_PRESSURE_MAX = 10,
+    PRISMA_PSOFT_MIN = 11,
+    PRISMA_PSOFT = 12,
+    PRISMA_SOFTPAP = 13,
+    PRISMA_APAP_DYNAMIC = 15,
+    PRISMA_HUMIDLEVEL = 16,
+    PRISMA_AUTOSTART = 17,
+    PRISMA_SOFTSTART_TIME_MAX = 18,
+    PRISMA_SOFTSTART_TIME = 19,
+    PRISMA_TUBE_TYPE = 21,
+    PRISMA_PMAXOA = 38
+};
+
+enum Prisma_Mode {
+    PRISMA_MODE_CPAP = 1,
+    PRISMA_MODE_APAP = 2,
+};
+
+enum Prisma_APAP_Mode {
+    PRISMA_APAP_MODE_STANDARD = 1,
+    PRISMA_APAP_MODE_DYNAMIC = 2,
+};
+
+enum Prisma_SoftPAP_Mode {
+    Prisma_SoftPAP_OFF = 0,
+    Prisma_SoftPAP_SLIGHT = 1,
+    Prisma_SoftPAP_STANDARD = 2
+};
+
+enum Prisma_Combined_Mode {
+    PRISMA_COMBINED_MODE_CPAP = 1,
+    PRISMA_COMBINED_MODE_APAP_STD = 2,
+    PRISMA_COMBINED_MODE_APAP_DYN = 3,
+};
+
+enum Prisma_Event_Type {
+    PRISMA_EVENT_EPOCH_SEVERE_OBSTRUCTION = 1,
+    PRISMA_EVENT_EPOCH_MILD_OBSTRUCTION = 2,
+    PRISMA_EVENT_EPOCH_FLOW_LIMITATION = 3,
+    PRISMA_EVENT_EPOCH_SNORE = 4,
+    PRISMA_EVENT_EPOCH_PERIODIC_BREATHING  = 5,
+    PRISMA_EVENT_OBSTRUCTIVE_APNEA = 101,
+    PRISMA_EVENT_CENTRAL_APNEA = 102,
+    PRISMA_EVENT_APNEA_LEAKAGE = 103,
+    PRISMA_EVENT_APNEA_HIGH_PRESSURE = 105,
+    PRISMA_EVENT_APNEA_MOVEMENT = 106,
+    PRISMA_EVENT_OBSTRUCTIVE_HYPOPNEA= 111,
+    PRISMA_EVENT_CENTRAL_HYPOPNEA = 112,
+    PRISMA_EVENT_HYPOPNEA_LEAKAGE = 113,
+    PRISMA_EVENT_RERA = 121,
+    PRISMA_EVENT_SNORE = 131,
+    PRISMA_EVENT_ARTIFACT = 141,
+    PRISMA_EVENT_FLOW_LIMITATION = 151,
+    PRISMA_EVENT_CRITICAL_LEAKAGE = 161,
+    PRISMA_EVENT_CS_RESPIRATION = 181,
+    PRISMA_EVENT_EPOCH_DEEPSLEEP = 261,
+};
+
+//********************************************************************************************
+
+class WMEDFInfo : public EDFInfo {
+    virtual bool ParseSignalData();
+
+  protected:
+    qint8 Read8S();
+    quint8 Read8U();
+
+};
+
+//********************************************************************************************
+
+class PrismaLoader;
+class PrismaEventFile;
+
+/*! \class PrismaImport
+ *  \brief Contains the functions to parse a single session... multithreaded */
+class PrismaImport:public ImportTask
+{
+public:
+    PrismaImport(PrismaLoader * l, const MachineInfo& m, SessionID s, QString e, QString d): loader(l), machineInfo(m), sessionid(s), eventFileName(e), signalFileName(d) {}
+    virtual ~PrismaImport() {};
+
+    //! \brief PrismaImport thread starts execution here.
+    virtual void run();
+
+protected:    
+    PrismaLoader * loader;
+    const MachineInfo & machineInfo;
+    SessionID sessionid;
+    QString eventFileName;
+    QString signalFileName;
+    qint64 startdate;
+    qint64 enddate;
+    WMEDFInfo wmedf;
+    PrismaEventFile * eventFile;
+    Session * session;
+
+    void AddWaveform(ChannelID code, QString edfLabel);
+    void AddEvents(ChannelID channel, Prisma_Event_Type eventType) {
+        QList<Prisma_Event_Type> eventTypes = { eventType };
+        AddEvents(channel, eventTypes);
+    }
+    void AddEvents(ChannelID channel, QList<Prisma_Event_Type> eventTypes);
+
+};
+
+//********************************************************************************************
+
+/*! \class PrismaLoader
+    \brief Löwenstein Prisma Loader Module
+    */
+class PrismaLoader : public CPAPLoader
+{
+    Q_OBJECT
+    static bool initialized;
+  public:
+    PrismaLoader();
+    virtual ~PrismaLoader();
+
+    //! \brief Detect if the given path contains a valid Folder structure
+    virtual bool Detect(const QString & path);
+
+    //! \brief Load MachineInfo structure.
+    virtual MachineInfo PeekInfo(const QString & path);
+
+    //! \brief Scans directory path for valid Prisma signature
+    virtual int Open(const QString & path);
+
+    //! \brief Returns the database version of this loader
+    virtual int Version() { return prisma_data_version; }
+
+    //! \brief Return the loaderName, in this case "Prisma"
+    virtual const QString &loaderName() { return prisma_class_name; }
+
+    //! \brief Register this Module to the list of Loaders, so it knows to search for Prisma data.
+    static void Register();
+
+    //! \brief Generate a generic MachineInfo structure, with basic Prisma info to be expanded upon.
+    virtual MachineInfo newInfo() {
+        return MachineInfo(MT_CPAP, 0, prisma_class_name, QObject::tr("Löwenstein"), QObject::tr("Prisma Smart"), QString(), QString(), QObject::tr(""), QDateTime::currentDateTime(), prisma_data_version);
+    }
+
+    virtual QString PresReliefLabel();
+    virtual ChannelID CPAPModeChannel();
+    virtual ChannelID PresReliefMode();
+
+
+    //! \brief Called at application init, to set up any custom Prisma Channels
+    virtual void initChannels();
+
+    QHash<SessionID, PrismaImport*> sesstasks;
+
+  protected:
+
+    MachineInfo PeekInfoFromConfig(const QString & configPath);
+
+    //! \brief Scans the given directories for session data and create an import task for each logical session.
+    void ScanFiles(const MachineInfo& info, const QString & path);
+};
+
+//********************************************************************************************
+class PrismaEvent
+{
+public:
+    PrismaEvent(int endTime, int duration, int pressure, int strength) : m_endTime(endTime), m_duration(duration), m_pressure(pressure), m_strenght(strength) {}
+    int endTime() { return m_endTime; }
+    int duration() { return m_duration; }
+    int strength() { return m_strenght; }
+protected:
+    int m_endTime;
+    int m_duration;
+    int m_pressure;
+    int m_strenght;
+};
+
+class PrismaEventFile
+{
+public:
+    PrismaEventFile(QString fname);
+    QHash<int, int> getParameters() {return m_parameters; }
+    QList<PrismaEvent> getEvents(int eventId) {return m_events.contains(eventId) ? m_events[eventId] : QList<PrismaEvent>(); }
+
+protected:
+    QHash<int, int> m_parameters;
+    QHash<int, QList<PrismaEvent>> m_events;
+};
+
+//********************************************************************************************
+
+class PrismaModelInfo
+{
+protected:
+    QHash<QString,const char*> m_modelNames;
+
+public:
+    PrismaModelInfo();
+    bool IsTested(const QString &  deviceId) const;
+    const char* Name(const QString & deviceId) const;
+};
+
+#endif // PRISMA_LOADER_H
