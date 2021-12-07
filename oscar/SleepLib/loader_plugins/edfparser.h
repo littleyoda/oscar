@@ -129,6 +129,8 @@ class EDFInfo
 
     virtual bool Parse();                          //! \brief Parse the EDF+ file into the EDFheaderQT. Must call Open(..) first.
 
+    virtual bool ParseSignalData();                          //! \brief Parse the signal data
+
     virtual bool parseHeader( EDFHeaderRaw * hdrPtr );                  //! \brief parse just the edf header for duration, etc
 
     virtual EDFSignal * lookupLabel(const QString & name, int index=0);  //! \brief Return a ptr to the i'th signal with that name
@@ -166,24 +168,27 @@ class EDFInfo
     QHash<QString, QList<EDFSignal *> > signalList; //! \brief ResMed sometimes re-uses the SAME signal name
 
 //  the following could be private
+  protected:
+    //! \brief This is the array of signal descriptors and values
+    char *signalPtr;
+    long filesize;
+    long datasize;
+    long pos;
+    bool eof;
+
+    //! \brief This is the array holding the EDF file data
+    QByteArray  fileData;
+    //! \brief Read 16 bit word of data from the EDF+ data stream
+    qint16 Read16();
+
   private:
     QVector<Annotation> ReadAnnotations( const char * data, int charLen );	//! \brief Create an Annotaion vector from the signal values
 
     QString ReadBytes(unsigned n);                                   //! \brief Read n bytes of 8 bit data from the EDF+ data stream
 
-    qint16 Read16();                                            //! \brief Read 16 bit word of data from the EDF+ data stream
-
-    //! \brief This is the array holding the EDF file data
-    QByteArray  fileData;
     //! \brief  The EDF+ files header structure, used as a place holder while processing the text data.
     EDFHeaderRaw *hdrPtr;
-    //! \brief This is the array of signal descriptors and values
-    char *signalPtr;
 
-    long filesize;
-    long datasize;
-    long pos;
-    bool eof;
 };
 
 

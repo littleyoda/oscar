@@ -250,6 +250,12 @@ bool EDFInfo::Parse() {
         return false;
     }
 
+    bool ret = ParseSignalData();
+    fileData.clear();
+    return ret;
+}
+
+bool EDFInfo::ParseSignalData() {
     // Now check the file isn't truncated before allocating space for the values
     long allocsize = 0;
     for (auto & sig : edfsignals) {
@@ -265,7 +271,6 @@ bool EDFInfo::Parse() {
         fileData.clear();
         return false;
     }
-
     // allocate the arrays for the signal values
     for (auto & sig : edfsignals) {
         long samples = sig.sampleCnt * edfHdr.num_data_records;
@@ -289,7 +294,7 @@ bool EDFInfo::Parse() {
             }
         }
     }
-    fileData.clear();
+
     return true;
 }
 
