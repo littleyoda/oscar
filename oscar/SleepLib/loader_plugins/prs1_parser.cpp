@@ -1395,9 +1395,9 @@ static crc32_t CRC32(const unsigned char *data, size_t data_len, crc32_t crc)
 }
 
 
-// Strangely, the PRS1 CRC32 appears to consider every byte a 32-bit wchar_t.
-// Nothing like trying a bunch of encodings and CRC32 variants on PROP.TXT files
-// until you find a winner.
+// The PRS1 CRC32 considers every byte a 32-bit wchar_t, presumably due to
+// use of the STM32 CRC calculation unit, in which "CRC computation is done
+// on the whole 32-bit data word, and not byte per byte".
 
 static crc32_t CRC32wchar(const unsigned char *data, size_t data_len, crc32_t crc)
 {
