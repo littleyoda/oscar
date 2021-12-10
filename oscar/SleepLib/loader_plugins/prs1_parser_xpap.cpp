@@ -1870,8 +1870,8 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // but curiously report the use of C-Flex+, even though Auto-CPAP uses A-Flex.
                 CHECK_VALUE(len, 3);
                 CHECK_VALUES(cpapmode, PRS1_MODE_CPAP, PRS1_MODE_CPAPCHECK);
-                if (data[pos] != 30 && data[pos] != 9) {
-                    CHECK_VALUES(data[pos], 5, 25);  // Auto-Trial Duration
+                if (data[pos] < 5 || data[pos] > 30) {  // We've seen 5, 9, 14, 25, and 30
+                    UNEXPECTED_VALUE(data[pos], "5-30");  // Auto-Trial Duration
                 }
                 this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_AUTO_TRIAL, data[pos]));
                 // If we want C-Flex+ to be reported as A-Flex, we can set cpapmode = PRS1_MODE_AUTOTRIAL here.
