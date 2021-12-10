@@ -183,7 +183,7 @@ void MainWindow::SetupGUI()
     ui->statEndDate->setVisible(false);
     ui->statStartDate->setVisible(false);
 
-    ui->reportModeRange->setVisible(false);
+//    ui->reportModeRange->setVisible(false);
     int srm = 0;
     if (p_profile) {
         srm = p_profile->general->statReportMode();
@@ -582,9 +582,13 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     switch (srm) {
         case 0:
             ui->reportModeStandard->setChecked(true);
+            ui->statEndDate->setVisible(false);
+            ui->statStartDate->setVisible(false);
             break;
         case 1:
             ui->reportModeMonthly->setChecked(true);
+            ui->statEndDate->setVisible(false);
+            ui->statStartDate->setVisible(false);
             break;
         case 2:
             ui->reportModeRange->setChecked(true);
@@ -2382,6 +2386,10 @@ void MainWindow::GenerateStatistics()
     QString htmlStats = stats.GenerateHTML();
     QString htmlRecords = stats.UpdateRecordsBox();
 
+    bool brange = (p_profile->general->statReportMode() == 2);
+    ui->statEndDate->setVisible(brange);
+    ui->statStartDate->setVisible(brange);
+
     updateFavourites();
 
     setStatsHTML(htmlStats);
@@ -2450,6 +2458,18 @@ void MainWindow::on_reportModeRange_clicked()
         p_profile->general->setStatReportMode(2);
         GenerateStatistics();
     }
+}
+
+void MainWindow::on_statEndDate_dateChanged(const QDate &date)
+{
+    p_profile->general->setStatReportRangeEnd(date);
+    GenerateStatistics();
+}
+
+void MainWindow::on_statStartDate_dateChanged(const QDate &date)
+{
+    p_profile->general->setStatReportRangeStart(date);
+    GenerateStatistics();
 }
 
 void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()

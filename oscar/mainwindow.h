@@ -324,6 +324,10 @@ class MainWindow : public QMainWindow
 
     void on_reportModeRange_clicked();
 
+    void on_statEndDate_dateChanged(const QDate &date);
+
+    void on_statStartDate_dateChanged(const QDate &date);
+
     void on_actionPurgeCurrentDaysOximetry_triggered();
 
     void logMessage(QString msg);

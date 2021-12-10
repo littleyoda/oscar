@@ -28,7 +28,7 @@ extern MainWindow *mainwin;
 
 // HTML components that make up Statistics page and printed report
 QString htmlReportHeader = "";      // Page header
-QString htmlReportHeaderPrint = "";      // Page header
+QString htmlReportHeaderPrint = ""; // Page header
 QString htmlUsage = "";             // CPAP and Oximetry
 QString htmlMachineSettings = "";   // Machine (formerly Rx) changes
 QString htmlMachines = "";          // Machines used in this profile
@@ -1141,6 +1141,7 @@ QString Statistics::GenerateCPAPUsage()
         if (number_periods > 12) {
             number_periods = 12;
         }
+//    } else if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
     }
 
     QDate last = lastcpap, first = lastcpap;
@@ -1165,7 +1166,7 @@ QString Statistics::GenerateCPAPUsage()
                 periods.push_back(Period(qMax(last.addDays(-29),first), last, tr("Last 30 Days")));
                 periods.push_back(Period(qMax(last.addMonths(-6), first), last, tr("Last 6 Months")));
                 periods.push_back(Period(qMax(last.addMonths(-12), first), last, tr("Last Year")));
-            } else {            // STAT_MODE_MONTHLY or STAT_MODE_RANGE
+            } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
 
                 periods.push_back(Period(last,last,tr("Last Session")));
@@ -1188,6 +1189,10 @@ QString Statistics::GenerateCPAPUsage()
                 for (; j < number_periods; ++j) {
                     periods.push_back(Period(last,last, ""));
                 }
+            } else {            // STAT_MODE_RANGE
+                first = p_profile->general->statReportRangeStart();
+                last = p_profile->general->statReportRangeEnd();
+                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" -<br/>"+last.toString(MedDateFormat)));
             }
 
             int days = p_profile->countDays(row.type, first, last);
