@@ -653,7 +653,12 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
     // When no_data, reports always say "System One" with humidity level 3, regardless of humidlevel and humidsystemone
 
     if (humidsystemone + tubepresent + no_data == 0) CHECK_VALUE(humidclassic, true);  // Always set when everything else is off
-    if (humidsystemone + tubepresent + no_data > 1) UNEXPECTED_VALUE(humid2, "one bit set");  // Only one of these ever seems to be set at a time
+    if (no_data && humidsystemone && add_setting == false) {
+        // This has been seen once on a 560P in a session that also generated a file in the error directory.
+        qWarning() << this->sessionid << "Humidification error during session?";
+    } else {
+        if (humidsystemone + tubepresent + no_data > 1) UNEXPECTED_VALUE(humid2, "one bit set");  // Only one of these ever seems to be set at a time
+    }
     if (tubepresent && tubetemp == 0) CHECK_VALUE(tubehumidlevel, 0);  // When the heated tube is off, tube humidity seems to be 0
     
     if (tubepresent) humidclassic = false;  // Classic mode bit is evidently ignored when tube is present
