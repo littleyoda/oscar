@@ -4,11 +4,6 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../oscar/aboutdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>Diyalog</translation>
-    </message>
-    <message>
         <location filename="../oscar/aboutdialog.ui" line="35"/>
         <source>&amp;About</source>
         <translation>&amp;Hakkında</translation>
@@ -30,7 +25,12 @@
         <translation>GPL Lisansı</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.ui" line="239"/>
+        <location filename="../oscar/aboutdialog.ui" line="163"/>
+        <source>Build Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/aboutdialog.ui" line="238"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
@@ -127,11 +127,6 @@
 <context>
     <name>Daily</name>
     <message>
-        <location filename="../oscar/daily.ui" line="435"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="506"/>
         <source>Go to the previous day</source>
         <translation>Bir önceki güne git</translation>
@@ -163,7 +158,7 @@
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="968"/>
-        <location filename="../oscar/daily.ui" line="1395"/>
+        <location filename="../oscar/daily.ui" line="1391"/>
         <source>Notes</source>
         <translation>Notlar</translation>
     </message>
@@ -178,98 +173,98 @@
         <translation> i </translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1063"/>
+        <location filename="../oscar/daily.ui" line="1062"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1075"/>
+        <location filename="../oscar/daily.ui" line="1074"/>
         <source>u</source>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1085"/>
+        <location filename="../oscar/daily.ui" line="1084"/>
         <source>Color</source>
         <translation>Renk</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1107"/>
-        <location filename="../oscar/daily.ui" line="1117"/>
+        <location filename="../oscar/daily.ui" line="1106"/>
+        <location filename="../oscar/daily.ui" line="1116"/>
         <source>Small</source>
         <translation>Küçük</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1122"/>
+        <location filename="../oscar/daily.ui" line="1121"/>
         <source>Medium</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1127"/>
+        <location filename="../oscar/daily.ui" line="1126"/>
         <source>Big</source>
         <translation>Büyük</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1186"/>
+        <location filename="../oscar/daily.ui" line="1184"/>
         <source>Zombie</source>
         <translation>Zombi</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1199"/>
+        <location filename="../oscar/daily.ui" line="1196"/>
         <source>I&apos;m feeling ...</source>
         <translation>Kendimi nasıl hissediyorum....</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1215"/>
+        <location filename="../oscar/daily.ui" line="1212"/>
         <source>Weight</source>
         <translation>Ağırlık</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1222"/>
+        <location filename="../oscar/daily.ui" line="1219"/>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
         <translation>Seçenekler Penceresinde yükseklik sıfırın üstünde ise, buraya ağırlığın girilmesi Vücut Kitle İndeksi (BMI) değerini gösterecektir</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1292"/>
+        <location filename="../oscar/daily.ui" line="1288"/>
         <source>Awesome</source>
         <translation>Müthiş</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1330"/>
+        <location filename="../oscar/daily.ui" line="1326"/>
         <source>B.M.I.</source>
         <translation>B.M.I.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1346"/>
+        <location filename="../oscar/daily.ui" line="1342"/>
         <source>Bookmarks</source>
         <translation>Yer İşaretleri</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1367"/>
+        <location filename="../oscar/daily.ui" line="1363"/>
         <source>Add Bookmark</source>
         <translation>Yer İşareti Ekle</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1390"/>
+        <location filename="../oscar/daily.ui" line="1386"/>
         <source>Starts</source>
         <translation>Başlangıçlar</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1403"/>
+        <location filename="../oscar/daily.ui" line="1399"/>
         <source>Remove Bookmark</source>
         <translation>Yer İşaretini Kaldır</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1496"/>
+        <location filename="../oscar/daily.ui" line="1492"/>
         <source>Flags</source>
         <translation>İşaretler</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1548"/>
+        <location filename="../oscar/daily.ui" line="1544"/>
         <source>Graphs</source>
         <translation>Grafikler</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1573"/>
+        <location filename="../oscar/daily.ui" line="1569"/>
         <source>Show/hide available graphs.</source>
         <translation>Mevcut grafikleri göster/gizle.</translation>
     </message>
@@ -798,17 +793,12 @@
 <context>
     <name>Help</name>
     <message>
-        <location filename="../oscar/help.ui" line="20"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <location filename="../oscar/help.ui" line="92"/>
+        <location filename="../oscar/help.ui" line="91"/>
         <source>Hide this message</source>
         <translation>Bu mesajı gizle</translation>
     </message>
     <message>
-        <location filename="../oscar/help.ui" line="198"/>
+        <location filename="../oscar/help.ui" line="196"/>
         <source>Search Topic:</source>
         <translation>Konu Ara:</translation>
     </message>
@@ -900,7 +890,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1003"/>
-        <location filename="../oscar/mainwindow.ui" line="3292"/>
+        <location filename="../oscar/mainwindow.ui" line="3319"/>
         <source>Standard</source>
         <translation>Standart</translation>
     </message>
@@ -945,242 +935,242 @@
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2805"/>
+        <location filename="../oscar/mainwindow.ui" line="2832"/>
         <source>&amp;File</source>
         <translation>&amp;Dosya</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2830"/>
+        <location filename="../oscar/mainwindow.ui" line="2857"/>
         <source>&amp;View</source>
         <translation>&amp;Görünüm</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2834"/>
+        <location filename="../oscar/mainwindow.ui" line="2861"/>
         <source>&amp;Reset Graphs</source>
         <translation>Grafikleri &amp;Sıfırla</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2859"/>
+        <location filename="../oscar/mainwindow.ui" line="2886"/>
         <source>&amp;Help</source>
         <translation>&amp;Yardım</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2863"/>
+        <location filename="../oscar/mainwindow.ui" line="2890"/>
         <source>Troubleshooting</source>
         <translation>Sorun giderme</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2889"/>
+        <location filename="../oscar/mainwindow.ui" line="2916"/>
         <source>&amp;Data</source>
         <translation>&amp;Veri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2893"/>
+        <location filename="../oscar/mainwindow.ui" line="2920"/>
         <source>&amp;Advanced</source>
         <translation>&amp;İleri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2903"/>
+        <location filename="../oscar/mainwindow.ui" line="2930"/>
         <source>Purge ALL Machine Data</source>
         <translation>TÜM Cihaz Verisini Sil</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2925"/>
+        <location filename="../oscar/mainwindow.ui" line="2952"/>
         <source>Rebuild CPAP Data</source>
         <translation>CPAP Verisini Yeniden İnşaa Et</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2948"/>
+        <location filename="../oscar/mainwindow.ui" line="2975"/>
         <source>&amp;Import CPAP Card Data</source>
         <translation>CPAP Kart Verisini &amp;İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2974"/>
+        <location filename="../oscar/mainwindow.ui" line="3001"/>
         <source>Show Daily view</source>
         <translation>Günlük görünümü Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2985"/>
+        <location filename="../oscar/mainwindow.ui" line="3012"/>
         <source>Show Overview view</source>
         <translation>Genel Bakış görünümünü göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3025"/>
+        <location filename="../oscar/mainwindow.ui" line="3052"/>
         <source>&amp;Maximize Toggle</source>
         <translation>&amp;Maksimizasyon Düğmesi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3028"/>
+        <location filename="../oscar/mainwindow.ui" line="3055"/>
         <source>Maximize window</source>
         <translation>Pencereyi maksimize et</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3047"/>
+        <location filename="../oscar/mainwindow.ui" line="3074"/>
         <source>Reset Graph &amp;Heights</source>
         <translation>Grafik &amp;Yüksekliklerini Sıfırla</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3050"/>
+        <location filename="../oscar/mainwindow.ui" line="3077"/>
         <source>Reset sizes of graphs</source>
         <translation>Grafiklerin boyutlarını sıfırla</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3110"/>
+        <location filename="../oscar/mainwindow.ui" line="3137"/>
         <source>Show Right Sidebar</source>
         <translation>Sağ Kenar Çubuğunu Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3124"/>
+        <location filename="../oscar/mainwindow.ui" line="3151"/>
         <source>Show Statistics view</source>
         <translation>İstatistik görünümünü Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3137"/>
+        <location filename="../oscar/mainwindow.ui" line="3164"/>
         <source>Import &amp;Dreem Data</source>
         <translation>&amp;Dreem Verisini İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3330"/>
+        <location filename="../oscar/mainwindow.ui" line="3357"/>
         <source>Purge Current Selected Day</source>
         <translation>Seçili Günü Temizle</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3335"/>
+        <location filename="../oscar/mainwindow.ui" line="3362"/>
         <source>&amp;CPAP</source>
         <translation>&amp;CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3340"/>
+        <location filename="../oscar/mainwindow.ui" line="3367"/>
         <source>&amp;Oximetry</source>
         <translation>&amp;Oksimetri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3345"/>
+        <location filename="../oscar/mainwindow.ui" line="3372"/>
         <source>&amp;Sleep Stage</source>
         <translation>&amp;Uyku Evresi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3350"/>
+        <location filename="../oscar/mainwindow.ui" line="3377"/>
         <source>&amp;Position</source>
         <translation>&amp;Pozisyon</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3355"/>
+        <location filename="../oscar/mainwindow.ui" line="3382"/>
         <source>&amp;All except Notes</source>
         <translation>Notlar hariç &amp;Tümü</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3360"/>
+        <location filename="../oscar/mainwindow.ui" line="3387"/>
         <source>All including &amp;Notes</source>
         <translation>&amp;Notlar dahil Tümü</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3180"/>
+        <location filename="../oscar/mainwindow.ui" line="3207"/>
         <source>Show &amp;Line Cursor</source>
         <translation>&amp;Çizgi Kürsörünü Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3202"/>
+        <location filename="../oscar/mainwindow.ui" line="3229"/>
         <source>Show Daily Left Sidebar</source>
         <translation>Günlük Sol Kenar Çubuğunu Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3219"/>
+        <location filename="../oscar/mainwindow.ui" line="3246"/>
         <source>Show Daily Calendar</source>
         <translation>Günlük Takvimi Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3240"/>
+        <location filename="../oscar/mainwindow.ui" line="3267"/>
         <source>Create zip of CPAP data card</source>
         <translation>CPAP veri kartının zip dosyasını yarat</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3245"/>
+        <location filename="../oscar/mainwindow.ui" line="3272"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation>OSCAR&apos;ın teşhis günlüklerinin zip dosyasını oluştur</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3250"/>
+        <location filename="../oscar/mainwindow.ui" line="3277"/>
         <source>Create zip of all OSCAR data</source>
         <translation>Tüm OSCAR verisinin zip dosyasını yarat</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3265"/>
+        <location filename="../oscar/mainwindow.ui" line="3292"/>
         <source>Report an Issue</source>
         <translation>Sorun Bildir</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3270"/>
+        <location filename="../oscar/mainwindow.ui" line="3297"/>
         <source>System Information</source>
         <translation>Sistem Bilgisi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3281"/>
+        <location filename="../oscar/mainwindow.ui" line="3308"/>
         <source>Show &amp;Pie Chart</source>
         <translation>&amp;Dilim Grafiğini Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3284"/>
+        <location filename="../oscar/mainwindow.ui" line="3311"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>Günlük sayfada Dilim Grafiğini Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3287"/>
+        <location filename="../oscar/mainwindow.ui" line="3314"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3295"/>
+        <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
         <translation>Standart grafik dizilimi; CPAP, APAP,Bi-Level için iyi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3300"/>
+        <location filename="../oscar/mainwindow.ui" line="3327"/>
         <source>Advanced</source>
         <translation>Gelişmiş</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3303"/>
+        <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation>Gelişmiş grafik sıralaması, ASV, AVAPS için uygun</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3314"/>
+        <location filename="../oscar/mainwindow.ui" line="3341"/>
         <source>Show Personal Data</source>
         <translation>Kişisel Verileri Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3322"/>
+        <location filename="../oscar/mainwindow.ui" line="3349"/>
         <source>Check For &amp;Updates</source>
         <translation>&amp;Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2956"/>
+        <location filename="../oscar/mainwindow.ui" line="2983"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Seçenekler</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2961"/>
+        <location filename="../oscar/mainwindow.ui" line="2988"/>
         <source>&amp;Profiles</source>
         <translation>&amp;Profiller</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3017"/>
+        <location filename="../oscar/mainwindow.ui" line="3044"/>
         <source>&amp;About OSCAR</source>
         <translation>&amp;OSCAR Hakkında</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3235"/>
+        <location filename="../oscar/mainwindow.ui" line="3262"/>
         <source>Show Performance Information</source>
         <translation>Performans Bilgisini Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3255"/>
+        <location filename="../oscar/mainwindow.ui" line="3282"/>
         <source>CSV Export Wizard</source>
         <translation>CSV Dışa Aktarım Sihirbazı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3260"/>
+        <location filename="../oscar/mainwindow.ui" line="3287"/>
         <source>Export for Review</source>
         <translation>Gözden Geçirme için Dışarı Veri Aktar</translation>
     </message>
@@ -1190,117 +1180,107 @@
         <translation>&amp;Çıkış</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2966"/>
+        <location filename="../oscar/mainwindow.ui" line="2993"/>
         <source>Exit</source>
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2971"/>
+        <location filename="../oscar/mainwindow.ui" line="2998"/>
         <source>View &amp;Daily</source>
         <translation>&amp;Günlük Görünüm</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2982"/>
+        <location filename="../oscar/mainwindow.ui" line="3009"/>
         <source>View &amp;Overview</source>
         <translation>&amp;Genel Bakış Görünümü</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2993"/>
+        <location filename="../oscar/mainwindow.ui" line="3020"/>
         <source>View &amp;Welcome</source>
         <translation>&amp;Karşılama Sayfasını Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3001"/>
-        <source>-</source>
-        <translation>-</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="3012"/>
+        <location filename="../oscar/mainwindow.ui" line="3039"/>
         <source>Use &amp;AntiAliasing</source>
         <translation>&amp;Kenar Yumuşatma Kullan</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3039"/>
+        <location filename="../oscar/mainwindow.ui" line="3066"/>
         <source>Show Debug Pane</source>
         <translation>Hata Ayıklama Bölmesini Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3055"/>
+        <location filename="../oscar/mainwindow.ui" line="3082"/>
         <source>Take &amp;Screenshot</source>
         <translation>&amp;Ekran Görüntüsü Al</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3063"/>
+        <location filename="../oscar/mainwindow.ui" line="3090"/>
         <source>O&amp;ximetry Wizard</source>
         <translation>O&amp;ksimetri Sihirbazı</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3071"/>
+        <location filename="../oscar/mainwindow.ui" line="3098"/>
         <source>Print &amp;Report</source>
         <translation>&amp;Rapor Yaz</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3076"/>
+        <location filename="../oscar/mainwindow.ui" line="3103"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;Profili Düzenle</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3167"/>
+        <location filename="../oscar/mainwindow.ui" line="3194"/>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation>&amp;Viatom/Wellue Verisini İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3216"/>
+        <location filename="../oscar/mainwindow.ui" line="3243"/>
         <source>Daily Calendar</source>
         <translation>Günlük Takvim</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3227"/>
+        <location filename="../oscar/mainwindow.ui" line="3254"/>
         <source>Backup &amp;Journal</source>
         <translation>&amp;Günlüğü Yedekle</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3081"/>
+        <location filename="../oscar/mainwindow.ui" line="3108"/>
         <source>Online Users &amp;Guide</source>
         <translation>Çevirim içi Kullanıcı&amp;Rehberi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="441"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="3086"/>
+        <location filename="../oscar/mainwindow.ui" line="3113"/>
         <source>&amp;Frequently Asked Questions</source>
         <translation>&amp;Sıkça Sorulan Sorular</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3091"/>
+        <location filename="../oscar/mainwindow.ui" line="3118"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translation>&amp;Otomatik Oksimetri Temizliği</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3096"/>
+        <location filename="../oscar/mainwindow.ui" line="3123"/>
         <source>Change &amp;User</source>
         <translation>&amp;Kullanıcıyı Değiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2908"/>
+        <location filename="../oscar/mainwindow.ui" line="2935"/>
         <source>Purge &amp;Current Selected Day</source>
         <translation>&amp;Seçili Günü Sil</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3107"/>
+        <location filename="../oscar/mainwindow.ui" line="3134"/>
         <source>Right &amp;Sidebar</source>
         <translation>Sağ &amp;Kenar Çubuğu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3199"/>
+        <location filename="../oscar/mainwindow.ui" line="3226"/>
         <source>Daily Sidebar</source>
         <translation>Günlük Kenar Çubuğu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3118"/>
+        <location filename="../oscar/mainwindow.ui" line="3145"/>
         <source>View S&amp;tatistics</source>
         <translation>&amp;İstatistikleri Görüntüle</translation>
     </message>
@@ -1315,12 +1295,12 @@
         <translation>Yer İşaretleri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2746"/>
+        <location filename="../oscar/mainwindow.ui" line="2773"/>
         <source>Records</source>
         <translation>Kayıtlar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2809"/>
+        <location filename="../oscar/mainwindow.ui" line="2836"/>
         <source>Exp&amp;ort Data</source>
         <translation>Dışa Veri &amp;Aktar</translation>
     </message>
@@ -1330,47 +1310,47 @@
         <translation>Profiller</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2897"/>
+        <location filename="../oscar/mainwindow.ui" line="2924"/>
         <source>Purge Oximetry Data</source>
         <translation>Oksimetri Verisini Sil</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3121"/>
+        <location filename="../oscar/mainwindow.ui" line="3148"/>
         <source>View Statistics</source>
         <translation>İstatistikleri Görüntüle</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3132"/>
+        <location filename="../oscar/mainwindow.ui" line="3159"/>
         <source>Import &amp;ZEO Data</source>
         <translation>&amp;ZEO Verisini İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3142"/>
+        <location filename="../oscar/mainwindow.ui" line="3169"/>
         <source>Import RemStar &amp;MSeries Data</source>
         <translation>RemStar &amp;MSeries Verisini İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3147"/>
+        <location filename="../oscar/mainwindow.ui" line="3174"/>
         <source>Sleep Disorder Terms &amp;Glossary</source>
         <translation>Uyku Hastalıkları Terimleri &amp;Sözlüğü</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3152"/>
+        <location filename="../oscar/mainwindow.ui" line="3179"/>
         <source>Change &amp;Language</source>
         <translation>&amp;Dili Değiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3157"/>
+        <location filename="../oscar/mainwindow.ui" line="3184"/>
         <source>Change &amp;Data Folder</source>
         <translation>&amp;Veri Klasörünü Değiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3162"/>
+        <location filename="../oscar/mainwindow.ui" line="3189"/>
         <source>Import &amp;Somnopose Data</source>
         <translation>&amp;Somnopose Verisini İçe Aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3172"/>
+        <location filename="../oscar/mainwindow.ui" line="3199"/>
         <source>Current Days</source>
         <translation>Mevcut Günler</translation>
     </message>
@@ -2010,22 +1990,17 @@
         <translation>Hasta Kimliği</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="877"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/newprofile.ui" line="955"/>
+        <location filename="../oscar/newprofile.ui" line="954"/>
         <source>&amp;Cancel</source>
         <translation>&amp;İptal</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="971"/>
+        <location filename="../oscar/newprofile.ui" line="970"/>
         <source>&amp;Back</source>
         <translation>&amp;Geri</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="987"/>
+        <location filename="../oscar/newprofile.ui" line="986"/>
         <location filename="../oscar/newprofile.cpp" line="276"/>
         <location filename="../oscar/newprofile.cpp" line="285"/>
         <source>&amp;Next</source>
@@ -2120,11 +2095,6 @@
 <context>
     <name>Overview</name>
     <message>
-        <location filename="../oscar/overview.ui" line="14"/>
-        <source>Form</source>
-        <translation>From</translation>
-    </message>
-    <message>
         <location filename="../oscar/overview.ui" line="68"/>
         <source>Range:</source>
         <translation>Aralık:</translation>
@@ -2195,7 +2165,6 @@
         <translation>Görünümü seçili tarih aralığına sıfırla</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="200"/>
         <location filename="../oscar/overview.ui" line="249"/>
         <source>...</source>
         <translation>...</translation>
@@ -2297,11 +2266,6 @@ Kitle
 <context>
     <name>OximeterImport</name>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>Diyalog</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="61"/>
         <location filename="../oscar/oximeterimport.cpp" line="38"/>
         <source>Oximeter Import Wizard</source>
@@ -2323,164 +2287,163 @@ Kitle
         <translation>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="967"/>
+        <location filename="../oscar/oximeterimport.ui" line="966"/>
         <source>CMS50E/F users, when importing directly, please don&apos;t select upload on your device until OSCAR prompts you to.</source>
         <translation>CMS50E/F kullanıcıları, doğrudan içe aktarım gerçekleştirirken, lütfen OSCAR size belirtene kadar cihazınızda yükleme seçeneğini seçmeyin.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1004"/>
+        <location filename="../oscar/oximeterimport.ui" line="1003"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, OSCAR will automatically reset your CMS50&apos;s internal clock using your computers current time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eğer etkinleştirilmiş ise, OSCAR otomatik olarak CMS50&apos;nizin dahili saatini bilgisayarınızın güncel saatine ayarlayacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1036"/>
+        <location filename="../oscar/oximeterimport.ui" line="1035"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can enter a 7 character name for this oximeter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Buraya oksimetreniz için 7 karakterden oluşan bir isim girebilirsiniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1077"/>
+        <location filename="../oscar/oximeterimport.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option will erase the imported session from your oximeter after import has completed. &lt;/p&gt;&lt;p&gt;Use with caution,  because if something goes wrong before OSCAR saves your session, you can&apos;t get it back.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek, içe aktarım sona erdikten sonra, içe aktarılan seansı oksimetrenizden silecektir. &lt;/p&gt;&lt;p&gt;Kullanırken dikkatli olun, çünkü OSCAR seansınızı kaydetmeden önce bir hata oluşursa bir daha geri alamazsınız.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1106"/>
+        <location filename="../oscar/oximeterimport.ui" line="1105"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import (via cable) from your oximeters internal recordings.&lt;/p&gt;&lt;p&gt;After selecting on this option, old Contec oximeters will require you to use the device&apos;s menu to initiate the upload.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek oksimetrenizin içinde yer alan kayıtları (kablo aracılığıyla) içe aktarmanızı sağlar.&lt;/p&gt;&lt;p&gt;Bu seçeneği seçtikten sonra, eski Contec oksimetrelerinde yüklemeyi başlatmanızı için cihazın menüsünü kullanmanız gerekmektedir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1148"/>
+        <location filename="../oscar/oximeterimport.ui" line="1147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t mind a being attached to a running computer overnight, this option provide a useful plethysomogram graph, which gives an indication of heart rhythm, on top of the normal oximetry readings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eğer bütün bir gece boyunca çalışmakta olan bir bilgisayara bağlı kalmak sizin için sorun değilse, bu seçenek normal oksimetri okumalarına ek olarak kalp ritmi ile ilgili faydalı bir pletismogram grafiği sunmaktadır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1154"/>
+        <location filename="../oscar/oximeterimport.ui" line="1153"/>
         <source>Record attached to computer overnight (provides plethysomogram)</source>
         <translation>Bilgisayara bağlı olarak gece boyunca kaydet (pletismografi sağlar)</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1187"/>
+        <location filename="../oscar/oximeterimport.ui" line="1186"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import from data files created by software that came with your Pulse Oximeter, such as SpO2Review.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek, Nabız Oksimetrenizle birlikte gelen SpO2Review gibi bir yazılım tarafından oluşturulan veri dosyalarından içe aktarmanıza olanak tanır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1193"/>
+        <location filename="../oscar/oximeterimport.ui" line="1192"/>
         <source>Import from a datafile saved by another program, like SpO2Review</source>
         <translation>SpO2Review gibi başka bir program tarafından kaydedilmiş bir veri dosyasını içe aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1272"/>
+        <location filename="../oscar/oximeterimport.ui" line="1271"/>
         <source>Please connect your oximeter device</source>
         <translation>Lütfen oksimetre cihazınızı bağlayın</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1290"/>
+        <location filename="../oscar/oximeterimport.ui" line="1289"/>
         <source>If you can read this, you likely have your oximeter type set wrong in preferences.</source>
         <translation>Eğer bunu okuyorsanız, muhtemelen seçenekler bölümünde oksimetrenizin tipini yanlış ayarladınız.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1319"/>
+        <location filename="../oscar/oximeterimport.ui" line="1318"/>
         <source>Please connect your oximeter device, turn it on, and enter the menu</source>
         <translation>Lütfen oksimetre cihazınızı bağlayın, çalıştırın, ve menüye girin</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1345"/>
+        <location filename="../oscar/oximeterimport.ui" line="1344"/>
         <source>Press Start to commence recording</source>
         <translation>Kaydetmeye başlamak için Başlat&apos;a basın</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1391"/>
+        <location filename="../oscar/oximeterimport.ui" line="1389"/>
         <source>Show Live Graphs</source>
         <translation>Canlı Grafikleri Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1422"/>
-        <location filename="../oscar/oximeterimport.ui" line="1676"/>
+        <location filename="../oscar/oximeterimport.ui" line="1419"/>
+        <location filename="../oscar/oximeterimport.ui" line="1671"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1458"/>
+        <location filename="../oscar/oximeterimport.ui" line="1454"/>
         <source>SpO2 %</source>
         <translation>SpO2 %</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1540"/>
+        <location filename="../oscar/oximeterimport.ui" line="1535"/>
         <source>Pulse Rate</source>
         <translation>Nabız Hızı</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1632"/>
+        <location filename="../oscar/oximeterimport.ui" line="1627"/>
         <source>Multiple Sessions Detected</source>
         <translation>Birden Fazla Seans Tespit Edildi</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1671"/>
+        <location filename="../oscar/oximeterimport.ui" line="1666"/>
         <source>Start Time</source>
         <translation>Başlangıç Zamanı</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1681"/>
+        <location filename="../oscar/oximeterimport.ui" line="1676"/>
         <source>Details</source>
         <translation>Detaylar</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1698"/>
+        <location filename="../oscar/oximeterimport.ui" line="1693"/>
         <source>Import Completed. When did the recording start?</source>
         <translation>İçe Aktarma Tamamlandı. Kayıt ne zaman başladı?</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1722"/>
+        <location filename="../oscar/oximeterimport.ui" line="1717"/>
         <source>Day recording (normally would of) started</source>
         <translation>Günlük kayıt (normalde) başladı</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1768"/>
+        <location filename="../oscar/oximeterimport.ui" line="1763"/>
         <source>Oximeter Starting time</source>
         <translation>Oksimetre Başlangıç zamanı</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1780"/>
+        <location filename="../oscar/oximeterimport.ui" line="1775"/>
         <source>I want to use the time reported by my oximeter&apos;s built in clock.</source>
         <translation>Oksimetremin dahili saati tarafından bildirilen zamanı kullanmak istiyorum.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1796"/>
+        <location filename="../oscar/oximeterimport.ui" line="1791"/>
         <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
         <translation>Bu oksimetre kaydını CPAP cihazımdaki bir seans ile aynı (veya ona yakın) zamanda başlattım.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1857"/>
+        <location filename="../oscar/oximeterimport.ui" line="1852"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: Syncing to CPAP session starting time will always be more accurate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Not: CPAP seansı başlangıç zamanına senkronizasyon her zaman daha doğru olacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1878"/>
+        <location filename="../oscar/oximeterimport.ui" line="1873"/>
         <source>Choose CPAP session to sync to:</source>
         <translation>Senkronize edilecek CPAP seansını seçin:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1917"/>
-        <location filename="../oscar/oximeterimport.ui" line="1956"/>
+        <location filename="../oscar/oximeterimport.ui" line="1951"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1998"/>
+        <location filename="../oscar/oximeterimport.ui" line="1993"/>
         <source>You can manually adjust the time here if required:</source>
         <translation>İhtiyaç halinde saati buradan manüel olarak ayarlayabilirsiniz:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2019"/>
+        <location filename="../oscar/oximeterimport.ui" line="2014"/>
         <source>HH:mm:ssap</source>
         <translation>SS:dd:ssap</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2116"/>
+        <location filename="../oscar/oximeterimport.ui" line="2111"/>
         <source>&amp;Cancel</source>
         <translation>&amp;İptal</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2097"/>
+        <location filename="../oscar/oximeterimport.ui" line="2092"/>
         <source>&amp;Information Page</source>
         <translation>&amp;Bilgi Sayfası</translation>
     </message>
@@ -2505,72 +2468,72 @@ Kitle
         <translation>ChoiceMMed MD300W1</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1007"/>
+        <location filename="../oscar/oximeterimport.ui" line="1006"/>
         <source>Set device date/time</source>
         <translation>Cihaz tarih/saatini ayarlayın</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1014"/>
+        <location filename="../oscar/oximeterimport.ui" line="1013"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check to enable updating the device identifier next import, which is useful for those who have multiple oximeters lying around.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Elinde birden fazla oksimetre cihazı bulunanlar için bir sonraki içe aktarım sırasında cihaz tanımlayıcısının güncellenmesini etkinleştirmek için işaretlemek faydalı olabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1017"/>
+        <location filename="../oscar/oximeterimport.ui" line="1016"/>
         <source>Set device identifier</source>
         <translation>Cihaz tanımlayıcısını belirleyin</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1080"/>
+        <location filename="../oscar/oximeterimport.ui" line="1079"/>
         <source>Erase session after successful upload</source>
         <translation>Yükleme başarılı olduktan sonra seansı sil</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1112"/>
+        <location filename="../oscar/oximeterimport.ui" line="1111"/>
         <source>Import directly from a recording on a device</source>
         <translation>Cihazdaki bir kayıttan doğrudan içe aktar</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1237"/>
+        <location filename="../oscar/oximeterimport.ui" line="1236"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Reminder for CPAP users: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Did you remember to import your CPAP sessions first?&lt;br/&gt;&lt;/span&gt;If you forget, you won&apos;t have a valid time to sync this oximetry session to.&lt;br/&gt;To a ensure good sync between devices, always try to start both at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;CPAP kullanıcıları için hatırlatma: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Öncelikle CPAP seansınızı içe aktarmayı unutmadınız, değil mi?&lt;br/&gt;&lt;/span&gt;Eğer unuttuysanız, bu oksimetre seansını senkronize etmek için geçerli bir zamanınız olmayacaktır.&lt;br/&gt; Cihazlar arasında iyi bir senkronizasyon sağlamak için her zaman ikisini de aynı anda başlatmaya çalışın.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1648"/>
+        <location filename="../oscar/oximeterimport.ui" line="1643"/>
         <source>Please choose which one you want to import into OSCAR</source>
         <translation>Lüften hangisini OSCAR&apos;a içe aktarmak istediğinizi seçin</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1825"/>
+        <location filename="../oscar/oximeterimport.ui" line="1820"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR needs a starting time to know where to save this oximetry session to.&lt;/p&gt;&lt;p&gt;Choose one of the following options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR&apos;ın bu oksimetri seansını kaydedebilmesi için bir başlangıç saatine ihtiyacı vardır.&lt;/p&gt;&lt;p&gt;Şu seçeneklerden birisini seçin:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2135"/>
+        <location filename="../oscar/oximeterimport.ui" line="2130"/>
         <source>&amp;Retry</source>
         <translation>&amp;Tekrar Dene</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2154"/>
+        <location filename="../oscar/oximeterimport.ui" line="2149"/>
         <source>&amp;Choose Session</source>
         <translation>&amp;Seansı Seç</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2173"/>
+        <location filename="../oscar/oximeterimport.ui" line="2168"/>
         <source>&amp;End Recording</source>
         <translation>Kaydı &amp;Bitir</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2192"/>
+        <location filename="../oscar/oximeterimport.ui" line="2187"/>
         <source>&amp;Sync and Save</source>
         <translation>&amp;Senkronize et ve Kaydet</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2211"/>
+        <location filename="../oscar/oximeterimport.ui" line="2206"/>
         <source>&amp;Save and Finish</source>
         <translation>&amp;Kaydet ve Bitir</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2230"/>
+        <location filename="../oscar/oximeterimport.ui" line="2225"/>
         <source>&amp;Start</source>
         <translation>&amp;Başlat</translation>
     </message>
@@ -2823,11 +2786,6 @@ Kitle
 <context>
     <name>Oximetry</name>
     <message>
-        <location filename="../oscar/oximetry.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="89"/>
         <source>Date</source>
         <translation>Tarih</translation>
@@ -2843,19 +2801,9 @@ Kitle
         <translation>R&amp;eset</translation>
     </message>
     <message>
-        <location filename="../oscar/oximetry.ui" line="160"/>
-        <source>SpO2</source>
-        <translation>SpO2</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
         <translation>Nabız</translation>
-    </message>
-    <message>
-        <location filename="../oscar/oximetry.ui" line="346"/>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="366"/>
@@ -2960,12 +2908,12 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1307"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1306"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
         <translation>Bu miktarın altında kullanım süresi olan günleri &quot;uyumsuz&quot; olarak kabul et. Genellikle 4 saat uyumlu olarak kabul edilir.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1310"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1309"/>
         <source> hours</source>
         <translation> saat</translation>
     </message>
@@ -2991,14 +2939,6 @@ A value of 20% works well for detecting apneas. </source>
 Apne tespiti için genellikle 20% değeri işe yarar. </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1014"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1108"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1585"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1745"/>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1081"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -3019,9 +2959,9 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1004"/>
         <location filename="../oscar/preferencesdialog.ui" line="1128"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1602"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1690"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1719"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1601"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1689"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1718"/>
         <source>s</source>
         <translation>s</translation>
     </message>
@@ -3048,12 +2988,12 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation> dakika</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1272"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1271"/>
         <source>Reset the counter to zero at beginning of each (time) window.</source>
         <translation>Her (zaman) penceresi başlangıcında sayacı sıfırla.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1275"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1274"/>
         <source>Zero Reset</source>
         <translation>Sıfırlama</translation>
     </message>
@@ -3078,28 +3018,28 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation>gg AAAA yyyy</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1288"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1287"/>
         <source>User definable threshold considered large leak</source>
         <translation>Büyük kaçak tanımı için kullanıcı tarafından belirlenebilen eşik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1291"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1290"/>
         <source> L/min</source>
         <translation> L/dk</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1255"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1254"/>
         <source>Whether to show the leak redline in the leak graph</source>
         <translation>Kaçak grafiğinde kaçak kırmızı çizgisinin gösterilip gösterilmeyeceği</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1832"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1911"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1831"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1910"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1528"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1527"/>
         <source>&amp;Oximetry</source>
         <translation>&amp;Oksimetri</translation>
     </message>
@@ -3109,84 +3049,69 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation>Olay Dökümü Dilim Grafiğinde Göster</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1141"/>
-        <source>#1</source>
-        <translation>#1</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1047"/>
-        <source>#2</source>
-        <translation>#2</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1027"/>
         <source>Resync Machine Detected Events (Experimental)</source>
         <translation>Cihaz Tarafından Tespit Edilen Olayları Tekrar Senkronize Et (Deneysel)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1680"/>
-        <source>SPO2</source>
-        <translation>SPO2</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1742"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1741"/>
         <source>Percentage drop in oxygen saturation</source>
         <translation>Oksijen satürasyonunda düşüş yüzdesi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1735"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1734"/>
         <source>Pulse</source>
         <translation>Nabız</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1700"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1699"/>
         <source>Sudden change in Pulse Rate of at least this amount</source>
         <translation>Nabız Hızında izlenen en az bu miktardaki ani değişiklik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1592"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1622"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1703"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1591"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1621"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1702"/>
         <source> bpm</source>
         <translation> vuru/dakika</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1687"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1686"/>
         <source>Minimum duration of drop in oxygen saturation</source>
         <translation>Oksijen satürasyonunda minimum düşüş süresi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1716"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1715"/>
         <source>Minimum duration of pulse change event.</source>
         <translation>Nabız değişikliği olayının minimum süresi.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1599"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1598"/>
         <source>Small chunks of oximetry data under this amount will be discarded.</source>
         <translation>Bu değerin altındaki küçük oksimetri veri parçaları atılacaktır.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1967"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1966"/>
         <source>&amp;General</source>
         <translation>&amp;Genel</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1355"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1354"/>
         <source>Changes to the following settings needs a restart, but not a recalc.</source>
         <translation>Aşağıdaki ayarlarda yapılan değişiklikler programın yeniden başlatılmasını gerektirir, ancak yeniden hesaplanma gerekmez.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1358"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1357"/>
         <source>Preferred Calculation Methods</source>
         <translation>Tercih Edilen Hesaplama Yöntemleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1387"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1386"/>
         <source>Middle Calculations</source>
         <translation>Orta Hesapları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1401"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1400"/>
         <source>Upper Percentile</source>
         <translation>Üst Yüzdelik</translation>
     </message>
@@ -3269,13 +3194,13 @@ Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler s
         <translation>Bilinmeyen Olaylar Kanallarını Etkinleştir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1333"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1332"/>
         <source>AHI</source>
         <extracomment>Apnea Hypopnea Index</extracomment>
         <translation>AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1338"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1337"/>
         <source>RDI</source>
         <extracomment>Respiratory Disturbance Index</extracomment>
         <translation>RDI</translation>
@@ -3286,7 +3211,7 @@ Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler s
         <translation>AHI/Saat Grafik Zaman Penceresi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1265"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1264"/>
         <source>Preferred major event index</source>
         <translation>Tercih edilen önemli olay dizini</translation>
     </message>
@@ -3296,7 +3221,7 @@ Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler s
         <translation>Uyumun nasıl tarif edildiği</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1258"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1257"/>
         <source>Flag leaks over threshold</source>
         <translation>Eşik üstü kaçakları işaretle</translation>
     </message>
@@ -3316,72 +3241,72 @@ Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler s
         <translation>Saat</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1364"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1363"/>
         <source>For consistancy, ResMed users should use 95% here,
 as this is the only value available on summary-only days.</source>
         <translation>Tutarlılık amacıyla, ResMed kullanıcıları burada 95%&apos;i kullanmalıdır,
 çünkü bu değer sadece özet verisi olan günlerdeki mevcut olan tek değerdir.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1415"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1414"/>
         <source>Median is recommended for ResMed users.</source>
         <translation>ResMed kullanıcıları için median önerilir.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1419"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1482"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1418"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1481"/>
         <source>Median</source>
         <translation>Median</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1424"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1423"/>
         <source>Weighted Average</source>
         <translation>Ağırlıklı Ortalama</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1429"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1428"/>
         <source>Normal Average</source>
         <translation>Normal Ortalama</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1453"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1452"/>
         <source>True Maximum</source>
         <translation>Gerçek Maksimum</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1458"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1457"/>
         <source>99% Percentile</source>
         <translation>99% Persantil</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1394"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1393"/>
         <source>Maximum Calcs</source>
         <translation>Maksimum Hesapl</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1981"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1980"/>
         <source>General Settings</source>
         <translation>Genel Ayarlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2723"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2721"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
         <translation>Günlük görünüm gezinme düğmeleri, veri kayıtları olmayan günleri atlayacak</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2726"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2724"/>
         <source>Skip over Empty Days</source>
         <translation>Boş Günleri Atla</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2002"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2001"/>
         <source>Allow use of multiple CPU cores where available to improve performance. 
 Mainly affects the importer.</source>
         <translation>Eğer mevcutsa, performansı iyileştirmek için birden fazla işlemci çekirdeği kullanımına izin ver. 
 Özellikle içe aktarıcıya etki eder.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2006"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2005"/>
         <source>Enable Multithreading</source>
         <translation>Multithreading&apos;i Etkinleştir</translation>
     </message>
@@ -3396,29 +3321,24 @@ Mainly affects the importer.</source>
         <translation>İçe aktarım esnasıında SD Kartının Yedeğini Al (Kapatırsanız günahı boynunuza!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1449"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1448"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gerçek maksimum veri setinin maksimumudur.&lt;/p&gt;&lt;p&gt;99. persantil nadir istisnaları eler.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1467"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1466"/>
         <source>Combined Count divided by Total Hours</source>
         <translation>Kombine Sayım bölü Toplam Saat</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1472"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1471"/>
         <source>Time Weighted average of Indice</source>
         <translation>Indeksin Zaman Ağırlıklı ortalaması</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1477"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1476"/>
         <source>Standard average of indice</source>
         <translation>İndeksin standart ortalaması</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1408"/>
-        <source>Culminative Indices</source>
-        <translation>Zirve İndeksleri</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="977"/>
@@ -3426,54 +3346,54 @@ Mainly affects the importer.</source>
         <translation>Kişiselleştirilmiş CPAP Olay İşaretleyicisi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1809"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1808"/>
         <source>Events</source>
         <translation>Olaylar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1862"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1941"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1861"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1940"/>
         <source>Reset &amp;Defaults</source>
         <translation>Sıfırla&amp;Varsayılanlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1875"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1954"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1874"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1953"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Uyarı: &lt;/span&gt;Yapabiliyor olmanız, iyi bir uygulama örneği olduğu anlamına gelmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1888"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1887"/>
         <source>Waveforms</source>
         <translation>Dalga formları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1668"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1667"/>
         <source>Flag rapid changes in oximetry stats</source>
         <translation>Oksimetri istatistiklerindeki hızlı değişiklikleri işaretle</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1579"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1578"/>
         <source>Other oximetry options</source>
         <translation>Diğer oksimetri seçenekleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1629"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1628"/>
         <source>Flag SPO2 Desaturations Below</source>
         <translation>Bu Değerin Altındaki SPO2 Desatürasyonlarını İşaretle</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1612"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1611"/>
         <source>Discard segments under</source>
         <translation>Bu değerin altındaki segmentleri at</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1649"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1648"/>
         <source>Flag Pulse Rate Above</source>
         <translation>Bu Değerin Üstündeki Nabız Hızlarını İşaretle</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1639"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1638"/>
         <source>Flag Pulse Rate Below</source>
         <translation>Bu Değerin Altındaki Nabız Hızlarını İşaretle</translation>
     </message>
@@ -3553,147 +3473,119 @@ OSCAR, eğer tekrar kurulum gerçekleştirmeye ihtiyacınız olursa, bu verinin 
         <translation>Cihaz tarafından tespit edilen henüz tanımlanamamış olayları işaretle.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1789"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oksimetri ve CPAP verisi senkronize ediliyor&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SPO2Review&apos;dan (.spoR dosyalarından) veya seri aktarma yöntemiyle içe aktarılan CMS50 verileri, senkronize edebilmek için gerekli olan doğru zaman mührüne sahip &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;değildir&lt;/span&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Canlı gösterim modu (seri kablo kullanarak) CMS50 oksimetreleri ile doğru bir şekilde senkronizasyon sağlamak için bir yöntemdir ancak CPAP saatindeki kaymaya karşı etkisi yoktur.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Eğer Oksimetrenizi kayıt modunu CPAP makineniz ile&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;tam olarak &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;aynı anda başlatırsanız da senkronizasyon sağlayabilirsiniz. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Seri içe alma işlemi başlangıç zamanını önceki gecenin ilk CPAP seansından alır. (Önce CPAP verisini içe aktarmayı unutmayın!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2013"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2012"/>
         <source>Show Remove Card reminder notification on OSCAR shutdown</source>
         <translation>OSCAR kapatılırken Kartı Çıkar hatırlatıcısını göster</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2122"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2120"/>
         <source>Check for new version every</source>
         <translation>Yeni sürüm varlığını bu aralıkla kontrol et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2145"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2143"/>
         <source>days.</source>
         <translation>gün.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2175"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2173"/>
         <source>Last Checked For Updates: </source>
         <translation>Güncellemelerin En Son Kontrol Edildiği Tarih: </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2188"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2186"/>
         <source>TextLabel</source>
         <translation>YazıEtiketi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2213"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2211"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
         <translation>Test sürümlerinden haberdar olmak istiyorum. (Lütfen sadece ileri kullanıcılar.)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2256"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2254"/>
         <source>&amp;Appearance</source>
         <translation>&amp;Görünüm</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2285"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2283"/>
         <source>Graph Settings</source>
         <translation>Grafik Ayarları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2301"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2299"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bir profil yüklendiğinde hangi sekmenin açılacağı. (Not: Eğer OSCAR başlangıçta bir profil yüklemeyecek şekilde ayarlanmışsa, Profil varsayılan ayardır)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2559"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2557"/>
         <source>Bar Tops</source>
         <translation>Bar Üstleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2564"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2562"/>
         <source>Line Chart</source>
         <translation>Çizgi Grafik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2654"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2652"/>
         <source>Overview Linecharts</source>
         <translation>Çizgi Grafikleri Gözden Geçir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2052"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2051"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
         <translation>OSCAR&apos;ın grafiklerinde görselleştirme sorunları yaşıyorsanız bunu varsayılan ayardan (Desktop OpenGL) değiştirmeyi deneyin.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2599"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek,duyarlı çiftyönlü dokunmatik yüzeylerde görüntü büyütülmüş iken kaydırmayı kolaylaştırır&lt;/p&gt;&lt;p&gt;50 ms tavsiye edilen değerdir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2493"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2491"/>
         <source>How long you want the tooltips to stay visible.</source>
         <translation>Yardım kutularının görünür halde kalmalarını istediğiniz süre.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2481"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2479"/>
         <source>Scroll Dampening</source>
         <translation>Kaydırma Sönümlemesi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2471"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2469"/>
         <source>Tooltip Timeout</source>
         <translation>Yardım Kutusu Zaman Aşımı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2578"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2576"/>
         <source>Default display height of graphs in pixels</source>
         <translation>Grafiklerin piksel cinsinden varsayılan gösterim yükseklikleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2551"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2549"/>
         <source>Graph Tooltips</source>
         <translation>Grafik Yardım Kutuları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2427"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2425"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
         <translation>Dalgaformu işaretleyicilerinin görsel olarak gösterim yöntemi.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2432"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2430"/>
         <source>Standard Bars</source>
         <translation>Standart Çubuklar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2437"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2435"/>
         <source>Top Markers</source>
         <translation>Üst İşaretleyiciler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2385"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2383"/>
         <source>Graph Height</source>
         <translation>Grafik Yüksekliği</translation>
     </message>
@@ -3743,116 +3635,149 @@ p, li { white-space: pre-wrap; }
         <translation>Maskenizin 4 cmH20 basınçta hava tahliye miktarı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1496"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1407"/>
+        <source>Cumulative Indices</source>
+        <translation>Zirve İndeksleri</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1495"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Not: &lt;/span&gt;Özet tasarımındaki sınırlamalar nedeniyle, ResMed makineleri bu ayarların değiştirilmesine izin vermemektedir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1549"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1548"/>
         <source>Oximetry Settings</source>
         <translation>Oksimetri Ayarları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2020"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1788"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oksimetri ve CPAP verisi senkronize ediliyor&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SPO2Review&apos;dan (.spoR dosyalarından) veya seri aktarma yöntemiyle içe aktarılan CMS50 verileri, senkronize edebilmek için gerekli olan doğru zaman mührüne sahip &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;değildir&lt;/span&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Canlı gösterim modu (seri kablo kullanarak) CMS50 oksimetreleri ile doğru bir şekilde senkronizasyon sağlamak için bir yöntemdir ancak CPAP saatindeki kaymaya karşı etkisi yoktur.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Eğer Oksimetrenizi kayıt modunu CPAP makineniz ile&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;tam olarak &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;aynı anda başlatırsanız da senkronizasyon sağlayabilirsiniz. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Seri içe alma işlemi başlangıç zamanını önceki gecenin ilk CPAP seansından alır. (Önce CPAP verisini içe aktarmayı unutmayın!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2019"/>
         <source>Always save screenshots in the OSCAR Data folder</source>
         <translation>Ekran görüntülerini her zaman OSCAR Veri klasörüne kaydet</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2074"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2073"/>
         <source>Check For Updates</source>
         <translation>Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2089"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2088"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
         <translation>OSCAR&apos;ın bir deneme sürümünü kullanmaktasınız. Deneme sürümleri otomatik olarak yedi günde bir güncelleme kontrolü yaparlar. Bu aralığı yedi günden daha kısa bir süreye ayarlayabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2107"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2105"/>
         <source>Automatically check for updates</source>
         <translation>Güncellemeleri otomatik olarak kontrol et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2129"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2127"/>
         <source>How often OSCAR should check for updates.</source>
         <translation>OSCAR&apos;ın hangi sıklıkta güncellemeleri kontrol edeceği.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2210"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2208"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation>Eğer yeni özellikleri ve hata ayıklamalarını test etmek ilginizi çekiyorsa buraya klikleyin.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2226"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2224"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
         <translation>Eğer OSCAR&apos;ın erken deneme sürümlerinin test edilmesine yardımcı olmak istiyorsanız, OSCAR&apos;ı test etmekle ilgili Wiki sayfasına bakınız.  OSCAR&apos;ı test etmek isteyen, OSCAR&apos;ın geliştirilmesine yardımcı olmak ve mevcut veya yeni dillere çeviriler konusunda katkıda bulunmak isteyen herkesi aramıza davet ediyoruz.. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2291"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2289"/>
         <source>On Opening</source>
         <translation>Açılışta</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2304"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2308"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2302"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2306"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2313"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2352"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2311"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2350"/>
         <source>Welcome</source>
         <translation>Hoş Geldiniz</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2318"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2357"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2316"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2355"/>
         <source>Daily</source>
         <translation>Günlük</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2328"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2367"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2326"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2365"/>
         <source>Statistics</source>
         <translation>İstatistikler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2336"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2334"/>
         <source>Switch Tabs</source>
         <translation>Sekmeleri Değiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2347"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2345"/>
         <source>No change</source>
         <translation>Değişiklik yok</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2375"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2373"/>
         <source>After Import</source>
         <translation>İçe Aktarım Sonrası</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2401"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2399"/>
         <source>Overlay Flags</source>
         <translation>İşaretleri Çakıştır</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2411"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2409"/>
         <source>Line Thickness</source>
         <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2447"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2445"/>
         <source>The pixel thickness of line plots</source>
         <translation>Çizgi grafiklerinin piksel kalınlığı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2673"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2671"/>
         <source>Other Visual Settings</source>
         <translation>Diğer Görsel Ayarlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2679"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2677"/>
         <source>Anti-Aliasing applies smoothing to graph plots.. 
 Certain plots look more attractive with this on. 
 This also affects printed reports.
@@ -3865,134 +3790,134 @@ Yazılı raporlara da etkisi mevcuttur.
 Deneyin ve beğenip beğenmediğinizi görün.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2686"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2684"/>
         <source>Use Anti-Aliasing</source>
         <translation>Anti-Aliasing Kullan</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2693"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2691"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
         <translation>Bazı grafikleri daha &quot;köşeli&quot; hale sokar.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2696"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2694"/>
         <source>Square Wave Plots</source>
         <translation>Kare Dalga Grafikleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2703"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2701"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
         <translation>Pixmap önbellekleme bir grafik hızlandırma tekniğidir. Platformunuzdaki grafik görüntüleme alanında yazı karakteri çizimi ile ilgili sorunlara neden olabilir.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2706"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2704"/>
         <source>Use Pixmap Caching</source>
         <translation>Pixmap Önbelleklemesi Kullan</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2713"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2711"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu özellikler yakın bir zamanda budanmıştır. Daha sonra tekrar eklenecektir. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2716"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2714"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
         <translation>Animasyonlar &amp;&amp; Süslemeler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2733"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2731"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
         <translation>yAksı skalasını yAksı etiketlerine çift klikleyerek değiştirmeye izin verip vermeme</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2736"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2734"/>
         <source>Allow YAxis Scaling</source>
         <translation>YAksı Ölçeklemesine İzin Ver</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2743"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2741"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
         <translation>Cihaz ayar değişiklikleri raporuna cihazın seri numarasını ekleyip eklememe</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2746"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2744"/>
         <source>Include Serial Number</source>
         <translation>Seri Numarasını Ekle</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2046"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2045"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation>Grafik Motoru (Tekrardan Başlatmayı Gerektirir)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2753"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2751"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
         <translation>Raporları siyah beyaz yazdır, renkli olmayan yazıcılarda daha okunabilir olabilir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2756"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2754"/>
         <source>Print reports in black and white (monochrome)</source>
         <translation>Raporları siyah beyaz yazdır (monokrom)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2788"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2786"/>
         <source>Fonts (Application wide settings)</source>
         <translation>Yazı Karakterleri (Tüm uygulamada geçerli)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2823"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2820"/>
         <source>Font</source>
         <translation>Yazı Karakteri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2842"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2838"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2861"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2856"/>
         <source>Bold  </source>
         <translation>Kalın  </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2883"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2877"/>
         <source>Italic</source>
         <translation>İtalik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2896"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2890"/>
         <source>Application</source>
         <translation>Uygulama</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2960"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2954"/>
         <source>Graph Text</source>
         <translation>Grafik Yazısı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3021"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3015"/>
         <source>Graph Titles</source>
         <translation>Grafik Başlıkları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3082"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3076"/>
         <source>Big  Text</source>
         <translation>Büyük  Yazı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3149"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3142"/>
         <location filename="../oscar/preferencesdialog.cpp" line="466"/>
         <location filename="../oscar/preferencesdialog.cpp" line="598"/>
         <source>Details</source>
         <translation>Detaylar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3181"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3174"/>
         <source>&amp;Cancel</source>
         <translation>&amp;İptal</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3188"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3181"/>
         <source>&amp;Ok</source>
         <translation>&amp;Ok</translation>
     </message>
@@ -4056,8 +3981,8 @@ Deneyin ve beğenip beğenmediğinizi görün.</translation>
         <translation>Bu kanalın varsayılan çizim/olay/veri rengini değiştirmek için çift tıklayın.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2323"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2362"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2321"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2360"/>
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
@@ -4268,11 +4193,6 @@ Bunu şimdi yapmak ister misiniz?</translation>
 <context>
     <name>ProfileSelector</name>
     <message>
-        <location filename="../oscar/profileselector.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
         <location filename="../oscar/profileselector.ui" line="26"/>
         <source>Filter:</source>
         <translation>Filtre:</translation>
@@ -4283,47 +4203,37 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <translation>Tüm profilleri görebilmek için filtreyi sıfırlayın</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="55"/>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <location filename="../oscar/profileselector.ui" line="184"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/profileselector.ui" line="199"/>
+        <location filename="../oscar/profileselector.ui" line="198"/>
         <source>Version</source>
         <translation>Versiyon</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="216"/>
+        <location filename="../oscar/profileselector.ui" line="215"/>
         <source>&amp;Open Profile</source>
         <translation>Profili &amp;Aç</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="227"/>
+        <location filename="../oscar/profileselector.ui" line="226"/>
         <source>&amp;Edit Profile</source>
         <translation>Profili &amp;Düzenle</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="241"/>
+        <location filename="../oscar/profileselector.ui" line="240"/>
         <source>&amp;New Profile</source>
         <translation>&amp;Yeni Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="260"/>
+        <location filename="../oscar/profileselector.ui" line="258"/>
         <source>Profile: None</source>
         <translation>Profil: Yok</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="281"/>
+        <location filename="../oscar/profileselector.ui" line="278"/>
         <source>Please select or create a profile...</source>
         <translation>Bir profil seçin veya yaratın...</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="332"/>
+        <location filename="../oscar/profileselector.ui" line="328"/>
         <source>Destroy Profile</source>
         <translation>Profili Yok Et</translation>
     </message>
@@ -4872,7 +4782,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2869"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2870"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
@@ -5009,7 +4919,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="734"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2790"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2791"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
         <source>CPAP</source>
         <translation>CPAP</translation>
@@ -5021,7 +4931,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2793"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2794"/>
         <source>Bi-Level</source>
         <translation>Bi-Level</translation>
     </message>
@@ -5063,7 +4973,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="744"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2796"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="110"/>
         <source>ASV</source>
         <translation>ASV</translation>
@@ -5081,8 +4991,8 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="748"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2881"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2855"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
         <source>Humidifier</source>
         <translation>Nemlendirici</translation>
     </message>
@@ -5153,7 +5063,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="763"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2781"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2782"/>
         <source>PP</source>
         <translation>PP</translation>
     </message>
@@ -5186,7 +5096,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="769"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2798"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>PC</source>
         <translation>PC</translation>
@@ -5493,8 +5403,8 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="821"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2785"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2787"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2788"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>Mode</source>
         <translation>Mod</translation>
@@ -5741,7 +5651,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="827"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>Hazırlanıyor...</translation>
@@ -5757,12 +5667,12 @@ TTIA: %1</translation>
         <translation>OSCAR&apos;ın bu cihaz için sadece kullanım süresi ve bazı çok basit ayarları takip edebileceğini üzülerek bildiririz.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="852"/>
         <source>Scanning Files...</source>
         <translation>Dosyalar Taranıyor...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="860"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="729"/>
         <location filename="../oscar/mainwindow.cpp" line="2311"/>
         <source>Importing Sessions...</source>
@@ -5783,64 +5693,64 @@ TTIA: %1</translation>
         <translation>Test Edilmemiş Cihaz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
         <source>Flex Lock</source>
         <translation>Flex Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>Flex seçeneklerinin sizin için mevcut olup olmadığı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>EPAP&apos;tan IPAP&apos;a geçmek için gereken süre, rakam yükseldikçe geçiş daha yavaştır</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2843"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>Rise Time Lock</source>
         <translation>Yükselme Süresi (Rise Time) Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>Yükselme Süresi (Rise Time) seçeneklerinin sizin için mevcut olup olmadığı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <source>Rise Lock</source>
         <translation>Yükselme Kilidi (Rise Lock)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2899"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
         <source>Mask Resistance Setting</source>
         <translation>Maske Direnci Ayarlı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2901"/>
         <source>Mask Resist.</source>
         <translation>Mask. Direnc.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
         <source>Hose Diam.</source>
         <translation>Hortum Çapı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
         <source>15mm</source>
         <translation>15mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
         <source>22mm</source>
         <translation>22mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="843"/>
         <source>Backing Up Files...</source>
         <translation>Dosyalar Yedekleniyor...</translation>
     </message>
@@ -5851,449 +5761,449 @@ TTIA: %1</translation>
         <translation>Test Edilmemiş Veri</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="915"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="916"/>
         <source>model %1</source>
         <translation>model %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="921"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="922"/>
         <source>DreamStation 2</source>
         <translation>DreamStation 2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="925"/>
         <source>unknown model</source>
         <translation>bilinmeyen model</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2789"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2790"/>
         <source>CPAP-Check</source>
         <translation>CPAP-Kontrolü</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2791"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2792"/>
         <source>AutoCPAP</source>
         <translation>AutoCPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2792"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2793"/>
         <source>Auto-Trial</source>
         <translation>Oto-Deneme</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2794"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2795"/>
         <source>AutoBiLevel</source>
         <translation>AutoBiLevel</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2796"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2797"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2797"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2798"/>
         <source>S/T</source>
         <translation>S/T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2800"/>
         <source>S/T - AVAPS</source>
         <translation>S/T - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2800"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2801"/>
         <source>PC - AVAPS</source>
         <translation>PC - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2803"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2805"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2804"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2806"/>
         <source>Flex Mode</source>
         <translation>Flex Modu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2804"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2805"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>PRS1 basınç tahliyesi modu.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2808"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2809"/>
         <source>C-Flex</source>
         <translation>C-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2809"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2810"/>
         <source>C-Flex+</source>
         <translation>C-Flex+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2810"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2811"/>
         <source>A-Flex</source>
         <translation>A-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2811"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2812"/>
         <source>P-Flex</source>
         <translation>P-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2812"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
         <source>Rise Time</source>
         <translation>Yükselme Süresi (Rise Time)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2814"/>
         <source>Bi-Flex</source>
         <translation>Bi-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
         <source>Flex</source>
         <translation>Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2819"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
         <source>Flex Level</source>
         <translation>Flex Düzeyi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>PRS1 basınç tahliyesi ayarı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2868"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2869"/>
         <source>Passover</source>
         <translation>Üzerinden geçerek</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
         <source>Target Time</source>
         <translation>Hedef Süre</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
         <source>PRS1 Humidifier Target Time</source>
         <translation>PRS1 Nemlendirici Hedef Süresi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2892"/>
         <source>Hum. Tgt Time</source>
         <translation>Nml. Hdf Süresi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2916"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
         <source>Tubing Type Lock</source>
         <translation>Hortum Tipi Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>Hortum tipi seçeneklerinin sizin için mevcut olup olmadığı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2919"/>
         <source>Tube Lock</source>
         <translation>Hortum Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Mask Resistance Lock</source>
         <translation>Maske Direnci Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>Maske direnci seçeneklerinin sizin için mevcut olup olmadığı.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2928"/>
         <source>Mask Res. Lock</source>
         <translation>Maske Dir. Kilidi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
         <translation>Cihazın AHI&apos;yi dahili ekranı üzerinden gösterip göstermediği.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2973"/>
         <source>Ramp Type</source>
         <translation>Rampa Tipi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <source>Type of ramp curve to use.</source>
         <translation>Kullanılacak rampa eğrisinin tipi.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2974"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2975"/>
         <source>Linear</source>
         <translation>Lineer</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2975"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
         <source>SmartRamp</source>
         <translation>SmartRamp</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2977"/>
         <source>Ramp+</source>
         <translation>Rampa+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
         <source>Backup Breath Mode</source>
         <translation>Nefes Destek Modu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>Kullanımda olan destek nefes sayısı: yok (kapalı), otomatik, veya sabit</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2983"/>
         <source>Breath Rate</source>
         <translation>Nefes Hızı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2986"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2987"/>
         <source>Fixed</source>
         <translation>Sabit</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>Sabit Nefes Desteği BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>Dakika başına minimum nefes sayısının (BPM) altında olması durumunda zamanlanmış bir nefesin başlatılacağı değer</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2993"/>
         <source>Breath BPM</source>
         <translation>Nefes BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
         <source>Timed Inspiration</source>
         <translation>Zamanlanmış Nefes Alma (Inspiration)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>Zamanlanmış bir nefesin EPAP&apos;a geçmeden önce sağlayacağı IPAP süresi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3000"/>
         <source>Timed Insp.</source>
         <translation>Zamanl.Nfs Alm.(Timed Insp).</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3004"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
         <source>Auto-Trial Duration</source>
         <translation>Otomatik-Deneme Süresi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
         <translation>Deneme sürecinde cihazın Auto-CPAP modunda kalacağı ve sonrasında CPAP moduna döneceği gün sayısı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
         <source>Auto-Trial Dur.</source>
         <translation>Oto-Dnm Sür.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3011"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3014"/>
         <source>EZ-Start</source>
         <translation>EZ-Start</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>EZ-Start&apos;ın etkin olup olmadığı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3020"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
         <source>Variable Breathing</source>
         <translation>Değişken Solunum (Variable Breathing)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3022"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>TEYİT EDİLMEMİŞ: Tepe inspiratuar (nefes alma) akış trendinden yüksek sapma gösteren dönemler ile karakterize değişken soluma (Variable Breathing) olasılığı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3044"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3047"/>
         <source>Peak Flow</source>
         <translation>Tepe Akımı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation>2 dakikalık bir aralıktaki tepe akımı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2852"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2853"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="139"/>
         <source>Humidifier Status</source>
         <translation>Nemlendiricinin Durumu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2853"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
         <source>PRS1 humidifier connected?</source>
         <translation>PSR1 nemlendiricisi bağlı?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
         <source>Disconnected</source>
         <translation>Bağlı değil</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2858"/>
         <source>Connected</source>
         <translation>Bağlı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2861"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
         <source>Humidification Mode</source>
         <translation>Nemlendime Modu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
         <source>PRS1 Humidification Mode</source>
         <translation>PRS1 Nemlendirme Modu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
         <source>Humid. Mode</source>
         <translation>Neml. Modu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
         <source>Fixed (Classic)</source>
         <translation>Sabitlenmiş (Klasik)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
         <source>Adaptive (System One)</source>
         <translation>Uyarlanabilir (Adaptive)(System One)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2868"/>
         <source>Heated Tube</source>
         <translation>Isıtmalı Hortum</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
         <source>Tube Temperature</source>
         <translation>Hortum Sıcaklığı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>PRS1 Isıtmalı Hortum Sıcaklığı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2876"/>
         <source>Tube Temp.</source>
         <translation>Hort.Sıcakl.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2883"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1 Nemlendirici Ayarları</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2906"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
         <source>Hose Diameter</source>
         <translation>Hortum Çapı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>Primer CPAP hortumunun çapı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2913"/>
         <source>12mm</source>
         <translation>12mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2937"/>
         <source>Auto On</source>
         <translation>Otomatik Açılma</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
         <source>A few breaths automatically starts machine</source>
         <translation>Birkaç kez nefes alıp verme ile cihaz otomatik olarak çalışmaya başlar</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2946"/>
         <source>Auto Off</source>
         <translation>Otomatik Kapanma</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>Machine automatically switches off</source>
         <translation>Cihaz otomatik olarak kapanır</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2955"/>
         <source>Mask Alert</source>
         <translation>Maske Uyarısı</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
         <source>Whether or not machine allows Mask checking.</source>
         <translation>Cihazın Maske kontrolüne izin verip vermediği.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2964"/>
         <source>Show AHI</source>
         <translation>AHI&apos;yi göster</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3030"/>
         <source>Breathing Not Detected</source>
         <translation>Solunum Tespit Edilemedi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3030"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
         <source>A period during a session where the machine could not detect flow.</source>
         <translation>Seans esnasında cihazın akımı tesbit edemediği bir dönem.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3032"/>
         <source>BND</source>
         <translation>BND</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3037"/>
         <source>Timed Breath</source>
         <translation>Zamanlanmış Nefes</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3037"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
         <source>Machine Initiated Breath</source>
         <translation>Cihaz Tarafından Başlatılan Nefes</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3039"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
@@ -6623,12 +6533,12 @@ TTIA: %1</translation>
         <translation>System One cihazı tarafından tespit edilen titreşimli horlama</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2779"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2780"/>
         <source>Pressure Pulse</source>
         <translation>Basınç Darbesi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2780"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2781"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>Kapalı bir hava yolunu tespit etmek için &apos;yollanan&apos; basınç darbesi.</translation>
     </message>
@@ -7053,7 +6963,7 @@ TTIA: %1</translation>
         <translation>CPAP Seansı sadece özet verisi içeriyor</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2787"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
         <source>PAP Mode</source>
         <translation>PAP Modu</translation>
@@ -8233,7 +8143,7 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>Nemlendirici Etkin Durumu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2883"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2884"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="145"/>
         <source>Humid. Level</source>
         <translation>Neml. Düzeyi</translation>
@@ -8371,8 +8281,8 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="855"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2894"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2985"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2895"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2986"/>
         <source>Auto</source>
         <translation>Oto</translation>
     </message>
@@ -8616,11 +8526,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
 </context>
 <context>
     <name>Report</name>
-    <message>
-        <location filename="../oscar/reports.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
     <message>
         <location filename="../oscar/reports.ui" line="27"/>
         <source>about:blank</source>
@@ -9031,47 +8936,42 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
 <context>
     <name>Welcome</name>
     <message>
-        <location filename="../oscar/welcome.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <location filename="../oscar/welcome.ui" line="128"/>
+        <location filename="../oscar/welcome.ui" line="127"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
         <translation>Açık Kaynak Kodlu CPAP Analizi Raporlayıcısına Hoş Geldiniz</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="143"/>
+        <location filename="../oscar/welcome.ui" line="142"/>
         <source>What would you like to do?</source>
         <translation>Ne yapmak istersiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="186"/>
+        <location filename="../oscar/welcome.ui" line="185"/>
         <source>CPAP Importer</source>
         <translation>CPAP İçe Aktarıcısı</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="224"/>
+        <location filename="../oscar/welcome.ui" line="223"/>
         <source>Oximetry Wizard</source>
         <translation>Oksimetri Sihirbazı</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="262"/>
+        <location filename="../oscar/welcome.ui" line="261"/>
         <source>Daily View</source>
         <translation>Günlük Görünüm</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="300"/>
+        <location filename="../oscar/welcome.ui" line="299"/>
         <source>Overview</source>
         <translation>Genel Bakış</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="338"/>
+        <location filename="../oscar/welcome.ui" line="337"/>
         <source>Statistics</source>
         <translation>İstatistikler</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="581"/>
+        <location filename="../oscar/welcome.ui" line="580"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Uyarı: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD Kartları &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;bilgisayarınıza yerleştirilmeden önce &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;kilitlenmelidir&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Bazı işletim sistemleri karta izin almadan endeks dostaları yazabilirler, ki bu durumda kart cpap cihazınız tarafından okunamaz hale gelebilir.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>

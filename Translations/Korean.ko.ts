@@ -4,11 +4,6 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../oscar/aboutdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>다이얼로그</translation>
-    </message>
-    <message>
         <location filename="../oscar/aboutdialog.ui" line="35"/>
         <source>&amp;About</source>
         <translation>&amp;정보</translation>
@@ -30,7 +25,12 @@
         <translation>GPL 라이선스</translation>
     </message>
     <message>
-        <location filename="../oscar/aboutdialog.ui" line="239"/>
+        <location filename="../oscar/aboutdialog.ui" line="163"/>
+        <source>Build Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/aboutdialog.ui" line="238"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -127,11 +127,6 @@
 <context>
     <name>Daily</name>
     <message>
-        <location filename="../oscar/daily.ui" line="435"/>
-        <source>Form</source>
-        <translation>폼</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="506"/>
         <source>Go to the previous day</source>
         <translation>전날로 이동</translation>
@@ -163,7 +158,7 @@
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="968"/>
-        <location filename="../oscar/daily.ui" line="1395"/>
+        <location filename="../oscar/daily.ui" line="1391"/>
         <source>Notes</source>
         <translation>메모</translation>
     </message>
@@ -178,98 +173,98 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1063"/>
+        <location filename="../oscar/daily.ui" line="1062"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1075"/>
+        <location filename="../oscar/daily.ui" line="1074"/>
         <source>u</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1085"/>
+        <location filename="../oscar/daily.ui" line="1084"/>
         <source>Color</source>
         <translation>색상</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1107"/>
-        <location filename="../oscar/daily.ui" line="1117"/>
+        <location filename="../oscar/daily.ui" line="1106"/>
+        <location filename="../oscar/daily.ui" line="1116"/>
         <source>Small</source>
         <translation>소</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1122"/>
+        <location filename="../oscar/daily.ui" line="1121"/>
         <source>Medium</source>
         <translation>중</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1127"/>
+        <location filename="../oscar/daily.ui" line="1126"/>
         <source>Big</source>
         <translation>대</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1186"/>
+        <location filename="../oscar/daily.ui" line="1184"/>
         <source>Zombie</source>
         <translation>무기력</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1199"/>
+        <location filename="../oscar/daily.ui" line="1196"/>
         <source>I&apos;m feeling ...</source>
         <translation>나의 느낌은 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1215"/>
+        <location filename="../oscar/daily.ui" line="1212"/>
         <source>Weight</source>
         <translation>체중</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1222"/>
+        <location filename="../oscar/daily.ui" line="1219"/>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
         <translation>기본 설정 대화 상자에서 키가 0보다 큰 경우 여기에서 체중을 설정하면 체질량지수(BMI) 값이 표시됩니다</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1292"/>
+        <location filename="../oscar/daily.ui" line="1288"/>
         <source>Awesome</source>
         <translation>활기찬</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1330"/>
+        <location filename="../oscar/daily.ui" line="1326"/>
         <source>B.M.I.</source>
         <translation>B.M.I.(체질량지수)</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1346"/>
+        <location filename="../oscar/daily.ui" line="1342"/>
         <source>Bookmarks</source>
         <translation>북마크</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1367"/>
+        <location filename="../oscar/daily.ui" line="1363"/>
         <source>Add Bookmark</source>
         <translation>북마크 추가</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1390"/>
+        <location filename="../oscar/daily.ui" line="1386"/>
         <source>Starts</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1403"/>
+        <location filename="../oscar/daily.ui" line="1399"/>
         <source>Remove Bookmark</source>
         <translation>북마크 삭제</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1496"/>
+        <location filename="../oscar/daily.ui" line="1492"/>
         <source>Flags</source>
         <translation>플래그</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1548"/>
+        <location filename="../oscar/daily.ui" line="1544"/>
         <source>Graphs</source>
         <translation>그래프</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.ui" line="1573"/>
+        <location filename="../oscar/daily.ui" line="1569"/>
         <source>Show/hide available graphs.</source>
         <translation>유효한 그래프를 표시/숨김.</translation>
     </message>
@@ -798,17 +793,12 @@
 <context>
     <name>Help</name>
     <message>
-        <location filename="../oscar/help.ui" line="20"/>
-        <source>Form</source>
-        <translation>양식</translation>
-    </message>
-    <message>
-        <location filename="../oscar/help.ui" line="92"/>
+        <location filename="../oscar/help.ui" line="91"/>
         <source>Hide this message</source>
         <translation>메시지 숨기기</translation>
     </message>
     <message>
-        <location filename="../oscar/help.ui" line="198"/>
+        <location filename="../oscar/help.ui" line="196"/>
         <source>Search Topic:</source>
         <translation>검색 주제:</translation>
     </message>
@@ -900,7 +890,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1003"/>
-        <location filename="../oscar/mainwindow.ui" line="3292"/>
+        <location filename="../oscar/mainwindow.ui" line="3319"/>
         <source>Standard</source>
         <translation>표준</translation>
     </message>
@@ -945,242 +935,242 @@
         <translation>도움말</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2805"/>
+        <location filename="../oscar/mainwindow.ui" line="2832"/>
         <source>&amp;File</source>
         <translation>&amp;파일</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2830"/>
+        <location filename="../oscar/mainwindow.ui" line="2857"/>
         <source>&amp;View</source>
         <translation>&amp;보기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2834"/>
+        <location filename="../oscar/mainwindow.ui" line="2861"/>
         <source>&amp;Reset Graphs</source>
         <translation>&amp;그래프 재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2859"/>
+        <location filename="../oscar/mainwindow.ui" line="2886"/>
         <source>&amp;Help</source>
         <translation>&amp;도움말</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2863"/>
+        <location filename="../oscar/mainwindow.ui" line="2890"/>
         <source>Troubleshooting</source>
         <translation>문제 해결</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2889"/>
+        <location filename="../oscar/mainwindow.ui" line="2916"/>
         <source>&amp;Data</source>
         <translation>&amp;데이터</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2893"/>
+        <location filename="../oscar/mainwindow.ui" line="2920"/>
         <source>&amp;Advanced</source>
         <translation>&amp;고급설정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2903"/>
+        <location filename="../oscar/mainwindow.ui" line="2930"/>
         <source>Purge ALL Machine Data</source>
         <translation>모든 기기 데이터 제거</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2925"/>
+        <location filename="../oscar/mainwindow.ui" line="2952"/>
         <source>Rebuild CPAP Data</source>
         <translation>CPAP 데이터 재구성</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2948"/>
+        <location filename="../oscar/mainwindow.ui" line="2975"/>
         <source>&amp;Import CPAP Card Data</source>
         <translation>&amp;CPAP 카드 데이터 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2974"/>
+        <location filename="../oscar/mainwindow.ui" line="3001"/>
         <source>Show Daily view</source>
         <translation>일별보기 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2985"/>
+        <location filename="../oscar/mainwindow.ui" line="3012"/>
         <source>Show Overview view</source>
         <translation>개요보기 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3025"/>
+        <location filename="../oscar/mainwindow.ui" line="3052"/>
         <source>&amp;Maximize Toggle</source>
         <translation>&amp;데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3028"/>
+        <location filename="../oscar/mainwindow.ui" line="3055"/>
         <source>Maximize window</source>
         <translation>창 최대화</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3047"/>
+        <location filename="../oscar/mainwindow.ui" line="3074"/>
         <source>Reset Graph &amp;Heights</source>
         <translation>&amp;그래프 높이 재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3050"/>
+        <location filename="../oscar/mainwindow.ui" line="3077"/>
         <source>Reset sizes of graphs</source>
         <translation>그래프 크기 재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3110"/>
+        <location filename="../oscar/mainwindow.ui" line="3137"/>
         <source>Show Right Sidebar</source>
         <translation>오른쪽 사이드 바 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3124"/>
+        <location filename="../oscar/mainwindow.ui" line="3151"/>
         <source>Show Statistics view</source>
         <translation>통계보기 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3137"/>
+        <location filename="../oscar/mainwindow.ui" line="3164"/>
         <source>Import &amp;Dreem Data</source>
         <translation>&amp;Dreem 데이터 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3330"/>
+        <location filename="../oscar/mainwindow.ui" line="3357"/>
         <source>Purge Current Selected Day</source>
         <translation>현재 선택한 날짜 삭제</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3335"/>
+        <location filename="../oscar/mainwindow.ui" line="3362"/>
         <source>&amp;CPAP</source>
         <translation>&amp;양압기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3340"/>
+        <location filename="../oscar/mainwindow.ui" line="3367"/>
         <source>&amp;Oximetry</source>
         <translation>&amp;산소측정기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3345"/>
+        <location filename="../oscar/mainwindow.ui" line="3372"/>
         <source>&amp;Sleep Stage</source>
         <translation>&amp;수면 단계</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3350"/>
+        <location filename="../oscar/mainwindow.ui" line="3377"/>
         <source>&amp;Position</source>
         <translation>&amp;위치</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3355"/>
+        <location filename="../oscar/mainwindow.ui" line="3382"/>
         <source>&amp;All except Notes</source>
         <translation>&amp;메모를 제외한 모든 항목</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3360"/>
+        <location filename="../oscar/mainwindow.ui" line="3387"/>
         <source>All including &amp;Notes</source>
         <translation>모두 포함 &amp;Notes</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3180"/>
+        <location filename="../oscar/mainwindow.ui" line="3207"/>
         <source>Show &amp;Line Cursor</source>
         <translation>&amp;줄 커서 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3202"/>
+        <location filename="../oscar/mainwindow.ui" line="3229"/>
         <source>Show Daily Left Sidebar</source>
         <translation>일별 왼쪽 사이드 바 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3219"/>
+        <location filename="../oscar/mainwindow.ui" line="3246"/>
         <source>Show Daily Calendar</source>
         <translation>일별 캘린더 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3240"/>
+        <location filename="../oscar/mainwindow.ui" line="3267"/>
         <source>Create zip of CPAP data card</source>
         <translation>CPAP 데이터 카드의 zip 생성</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3245"/>
+        <location filename="../oscar/mainwindow.ui" line="3272"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation>OscAR 진단 로그 zip 만들기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3250"/>
+        <location filename="../oscar/mainwindow.ui" line="3277"/>
         <source>Create zip of all OSCAR data</source>
         <translation>모든 OSCAR 데이터의 zip 생성</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3265"/>
+        <location filename="../oscar/mainwindow.ui" line="3292"/>
         <source>Report an Issue</source>
         <translation>이슈 보고</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3270"/>
+        <location filename="../oscar/mainwindow.ui" line="3297"/>
         <source>System Information</source>
         <translation>시스템 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3281"/>
+        <location filename="../oscar/mainwindow.ui" line="3308"/>
         <source>Show &amp;Pie Chart</source>
         <translation>&amp;원형 차트 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3284"/>
+        <location filename="../oscar/mainwindow.ui" line="3311"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>일별 페이지에 원형 차트 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3287"/>
+        <location filename="../oscar/mainwindow.ui" line="3314"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3295"/>
+        <location filename="../oscar/mainwindow.ui" line="3322"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
         <translation>표준 그래프 정렬, CPAP, APAP, Bi-Level에 적합</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3300"/>
+        <location filename="../oscar/mainwindow.ui" line="3327"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3303"/>
+        <location filename="../oscar/mainwindow.ui" line="3330"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation>ASV, AVAPS에 적합한 고급 그래프 정렬</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3314"/>
+        <location filename="../oscar/mainwindow.ui" line="3341"/>
         <source>Show Personal Data</source>
         <translation>개인 데이터 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3322"/>
+        <location filename="../oscar/mainwindow.ui" line="3349"/>
         <source>Check For &amp;Updates</source>
         <translation>&amp;Updates 확인</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2956"/>
+        <location filename="../oscar/mainwindow.ui" line="2983"/>
         <source>&amp;Preferences</source>
         <translation>&amp;설정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2961"/>
+        <location filename="../oscar/mainwindow.ui" line="2988"/>
         <source>&amp;Profiles</source>
         <translation>&amp;프로필</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3017"/>
+        <location filename="../oscar/mainwindow.ui" line="3044"/>
         <source>&amp;About OSCAR</source>
         <translation>&amp;OSCAR 정보</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3235"/>
+        <location filename="../oscar/mainwindow.ui" line="3262"/>
         <source>Show Performance Information</source>
         <translation>실적 정보 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3255"/>
+        <location filename="../oscar/mainwindow.ui" line="3282"/>
         <source>CSV Export Wizard</source>
         <translation>CSV 내보내기 마법사</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3260"/>
+        <location filename="../oscar/mainwindow.ui" line="3287"/>
         <source>Export for Review</source>
         <translation>검토를 위해 내보내기</translation>
     </message>
@@ -1190,117 +1180,107 @@
         <translation>나&amp;가기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2966"/>
+        <location filename="../oscar/mainwindow.ui" line="2993"/>
         <source>Exit</source>
         <translation>나가기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2971"/>
+        <location filename="../oscar/mainwindow.ui" line="2998"/>
         <source>View &amp;Daily</source>
         <translation>일별 &amp;보기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2982"/>
+        <location filename="../oscar/mainwindow.ui" line="3009"/>
         <source>View &amp;Overview</source>
         <translation>개요&amp;보기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2993"/>
+        <location filename="../oscar/mainwindow.ui" line="3020"/>
         <source>View &amp;Welcome</source>
         <translation>환영인사 &amp;보기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3001"/>
-        <source>-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="3012"/>
+        <location filename="../oscar/mainwindow.ui" line="3039"/>
         <source>Use &amp;AntiAliasing</source>
         <translation>앤티앨리어싱 &amp;사용</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3039"/>
+        <location filename="../oscar/mainwindow.ui" line="3066"/>
         <source>Show Debug Pane</source>
         <translation>디버그 창 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3055"/>
+        <location filename="../oscar/mainwindow.ui" line="3082"/>
         <source>Take &amp;Screenshot</source>
         <translation>스크린샷 &amp;저장</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3063"/>
+        <location filename="../oscar/mainwindow.ui" line="3090"/>
         <source>O&amp;ximetry Wizard</source>
         <translation>산&amp;소측정기 마법사</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3071"/>
+        <location filename="../oscar/mainwindow.ui" line="3098"/>
         <source>Print &amp;Report</source>
         <translation>보고서 &amp;출력</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3076"/>
+        <location filename="../oscar/mainwindow.ui" line="3103"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;프로필 수정</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3167"/>
+        <location filename="../oscar/mainwindow.ui" line="3194"/>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation>&amp;Viatom/Wellue 데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3216"/>
+        <location filename="../oscar/mainwindow.ui" line="3243"/>
         <source>Daily Calendar</source>
         <translation>일간 달력</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3227"/>
+        <location filename="../oscar/mainwindow.ui" line="3254"/>
         <source>Backup &amp;Journal</source>
         <translation>일지 &amp;백업</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3081"/>
+        <location filename="../oscar/mainwindow.ui" line="3108"/>
         <source>Online Users &amp;Guide</source>
         <translation>온라인 사용자 &amp;가이드</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="441"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="3086"/>
+        <location filename="../oscar/mainwindow.ui" line="3113"/>
         <source>&amp;Frequently Asked Questions</source>
         <translation>&amp;자주 묻는 질문</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3091"/>
+        <location filename="../oscar/mainwindow.ui" line="3118"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translation>&amp;자동 산소측정기 정리</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3096"/>
+        <location filename="../oscar/mainwindow.ui" line="3123"/>
         <source>Change &amp;User</source>
         <translation>사용자 &amp;변경</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2908"/>
+        <location filename="../oscar/mainwindow.ui" line="2935"/>
         <source>Purge &amp;Current Selected Day</source>
         <translation>현재 &amp;선택한 요일 제거</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3107"/>
+        <location filename="../oscar/mainwindow.ui" line="3134"/>
         <source>Right &amp;Sidebar</source>
         <translation>오르쪽 &amp;슬라이드바</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3199"/>
+        <location filename="../oscar/mainwindow.ui" line="3226"/>
         <source>Daily Sidebar</source>
         <translation>일별 슬라이드</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3118"/>
+        <location filename="../oscar/mainwindow.ui" line="3145"/>
         <source>View S&amp;tatistics</source>
         <translation>통계 &amp;보기</translation>
     </message>
@@ -1315,12 +1295,12 @@
         <translation>북마크</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2746"/>
+        <location filename="../oscar/mainwindow.ui" line="2773"/>
         <source>Records</source>
         <translation>기록</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2809"/>
+        <location filename="../oscar/mainwindow.ui" line="2836"/>
         <source>Exp&amp;ort Data</source>
         <translation>&amp;데이터 내보내기</translation>
     </message>
@@ -1330,47 +1310,47 @@
         <translation>프로필</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2897"/>
+        <location filename="../oscar/mainwindow.ui" line="2924"/>
         <source>Purge Oximetry Data</source>
         <translation>산소측정기 데이터 제거</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3121"/>
+        <location filename="../oscar/mainwindow.ui" line="3148"/>
         <source>View Statistics</source>
         <translation>통계 보기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3132"/>
+        <location filename="../oscar/mainwindow.ui" line="3159"/>
         <source>Import &amp;ZEO Data</source>
         <translation>ZEO 데이터 &amp;가져오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3142"/>
+        <location filename="../oscar/mainwindow.ui" line="3169"/>
         <source>Import RemStar &amp;MSeries Data</source>
         <translation>RemStar &amp;MSeries 데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3147"/>
+        <location filename="../oscar/mainwindow.ui" line="3174"/>
         <source>Sleep Disorder Terms &amp;Glossary</source>
         <translation>수면 장애 용어 &amp;사전</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3152"/>
+        <location filename="../oscar/mainwindow.ui" line="3179"/>
         <source>Change &amp;Language</source>
         <translation>언어 &amp;변경</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3157"/>
+        <location filename="../oscar/mainwindow.ui" line="3184"/>
         <source>Change &amp;Data Folder</source>
         <translation>데이터 폴더 &amp;변경</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3162"/>
+        <location filename="../oscar/mainwindow.ui" line="3189"/>
         <source>Import &amp;Somnopose Data</source>
         <translation>Somnopose &amp;데이터 가져오기</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="3172"/>
+        <location filename="../oscar/mainwindow.ui" line="3199"/>
         <source>Current Days</source>
         <translation>현재 날짜</translation>
     </message>
@@ -2010,22 +1990,17 @@
         <translation>환자 ID</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="877"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/newprofile.ui" line="955"/>
+        <location filename="../oscar/newprofile.ui" line="954"/>
         <source>&amp;Cancel</source>
         <translation>&amp;취소</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="971"/>
+        <location filename="../oscar/newprofile.ui" line="970"/>
         <source>&amp;Back</source>
         <translation>&amp;이전</translation>
     </message>
     <message>
-        <location filename="../oscar/newprofile.ui" line="987"/>
+        <location filename="../oscar/newprofile.ui" line="986"/>
         <location filename="../oscar/newprofile.cpp" line="276"/>
         <location filename="../oscar/newprofile.cpp" line="285"/>
         <source>&amp;Next</source>
@@ -2120,11 +2095,6 @@
 <context>
     <name>Overview</name>
     <message>
-        <location filename="../oscar/overview.ui" line="14"/>
-        <source>Form</source>
-        <translation>양식</translation>
-    </message>
-    <message>
         <location filename="../oscar/overview.ui" line="68"/>
         <source>Range:</source>
         <translation>구간:</translation>
@@ -2195,7 +2165,6 @@
         <translation>선택한 기간으로보기 재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.ui" line="200"/>
         <location filename="../oscar/overview.ui" line="249"/>
         <source>...</source>
         <translation>...</translation>
@@ -2297,11 +2266,6 @@ Index</source>
 <context>
     <name>OximeterImport</name>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>다이얼로그</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="61"/>
         <location filename="../oscar/oximeterimport.cpp" line="38"/>
         <source>Oximeter Import Wizard</source>
@@ -2323,164 +2287,163 @@ Index</source>
         <translation>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="967"/>
+        <location filename="../oscar/oximeterimport.ui" line="966"/>
         <source>CMS50E/F users, when importing directly, please don&apos;t select upload on your device until OSCAR prompts you to.</source>
         <translation>CMS50E / F 사용자는 직접 가져올 때 OSCAR에서 메시지를 표시 할 때까지 장치에서 업로드를 선택하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1004"/>
+        <location filename="../oscar/oximeterimport.ui" line="1003"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, OSCAR will automatically reset your CMS50&apos;s internal clock using your computers current time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;활성화 된 경우, OSCAR는 현재 컴퓨터를 사용하여 CMS50의 내부 클럭을 자동으로 재설정합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1036"/>
+        <location filename="../oscar/oximeterimport.ui" line="1035"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can enter a 7 character name for this oximeter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; 여기에이 산소 농도계의 7자 이름을 입력 할 수 있습니다. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1077"/>
+        <location filename="../oscar/oximeterimport.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option will erase the imported session from your oximeter after import has completed. &lt;/p&gt;&lt;p&gt;Use with caution,  because if something goes wrong before OSCAR saves your session, you can&apos;t get it back.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;이 옵션은 가져 오기가 완료된 후 산소 농도계에서 가져온 세션을 지웁니다. &lt;/p&gt; &lt;p&gt; OSCAR가 세션을 저장하기 전에 문제가 발생하면 다시 가져올 수 없으므로주의해서 사용하십시오. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1106"/>
+        <location filename="../oscar/oximeterimport.ui" line="1105"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import (via cable) from your oximeters internal recordings.&lt;/p&gt;&lt;p&gt;After selecting on this option, old Contec oximeters will require you to use the device&apos;s menu to initiate the upload.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;이 옵션을 사용하면 산소 농도계 내부 기록에서 케이블을 통해 가져올 수 있습니다. &lt;/p&gt; &lt;p&gt;이 옵션을 선택한 후에는 이전 Contec 산소 농도계를 사용해야합니다. 업로드를 시작하는 기기의 메뉴입니다. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1148"/>
+        <location filename="../oscar/oximeterimport.ui" line="1147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t mind a being attached to a running computer overnight, this option provide a useful plethysomogram graph, which gives an indication of heart rhythm, on top of the normal oximetry readings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;실행중인 컴퓨터에 밤새 부착되는 것을 마음에 들지 않으면,이 옵션은 심장 박동의 표시를 제공하는 유용한 흉막 조영 그래프를 제공합니다.정상적인 산소 측정 판독 값의 상단.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1154"/>
+        <location filename="../oscar/oximeterimport.ui" line="1153"/>
         <source>Record attached to computer overnight (provides plethysomogram)</source>
         <translation>컴퓨터에 밤새 연결된 기록 (plethysomogram 제공)</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1187"/>
+        <location filename="../oscar/oximeterimport.ui" line="1186"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option allows you to import from data files created by software that came with your Pulse Oximeter, such as SpO2Review.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이 옵션을 사용하면 SpO2Review와 같이 맥박 산소포화도 측정기와 함께 제공된 소프트웨어로 만든 데이터 파일에서 가져올 수 있습니다..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1193"/>
+        <location filename="../oscar/oximeterimport.ui" line="1192"/>
         <source>Import from a datafile saved by another program, like SpO2Review</source>
         <translation>SpO2Review와 같은 다른 프로그램에서 저장 한 데이터 파일에서 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1272"/>
+        <location filename="../oscar/oximeterimport.ui" line="1271"/>
         <source>Please connect your oximeter device</source>
         <translation>산소측정기 장치를 연결하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1290"/>
+        <location filename="../oscar/oximeterimport.ui" line="1289"/>
         <source>If you can read this, you likely have your oximeter type set wrong in preferences.</source>
         <translation>이것을 읽을 수 있다면 산소측정기 유형을 환경 설정에서 잘못 설정했을 가능성이 큽니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1319"/>
+        <location filename="../oscar/oximeterimport.ui" line="1318"/>
         <source>Please connect your oximeter device, turn it on, and enter the menu</source>
         <translation>산소 농도계 장치를 연결하고 켜고 메뉴로 들어갑니다</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1345"/>
+        <location filename="../oscar/oximeterimport.ui" line="1344"/>
         <source>Press Start to commence recording</source>
         <translation>시작을 눌러 기록을 시작하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1391"/>
+        <location filename="../oscar/oximeterimport.ui" line="1389"/>
         <source>Show Live Graphs</source>
         <translation>라이브 그래프 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1422"/>
-        <location filename="../oscar/oximeterimport.ui" line="1676"/>
+        <location filename="../oscar/oximeterimport.ui" line="1419"/>
+        <location filename="../oscar/oximeterimport.ui" line="1671"/>
         <source>Duration</source>
         <translation>구간</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1458"/>
+        <location filename="../oscar/oximeterimport.ui" line="1454"/>
         <source>SpO2 %</source>
         <translation>혈중산소포화도 %</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1540"/>
+        <location filename="../oscar/oximeterimport.ui" line="1535"/>
         <source>Pulse Rate</source>
         <translation>맥박수</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1632"/>
+        <location filename="../oscar/oximeterimport.ui" line="1627"/>
         <source>Multiple Sessions Detected</source>
         <translation>감지 된 여러 세션</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1671"/>
+        <location filename="../oscar/oximeterimport.ui" line="1666"/>
         <source>Start Time</source>
         <translation>시작 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1681"/>
+        <location filename="../oscar/oximeterimport.ui" line="1676"/>
         <source>Details</source>
         <translation>상세</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1698"/>
+        <location filename="../oscar/oximeterimport.ui" line="1693"/>
         <source>Import Completed. When did the recording start?</source>
         <translation>가져 오기가 완료되었습니다. 기록이 언제 시작 되었습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1722"/>
+        <location filename="../oscar/oximeterimport.ui" line="1717"/>
         <source>Day recording (normally would of) started</source>
         <translation>일 기록 (일반적으로) 시작됨</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1768"/>
+        <location filename="../oscar/oximeterimport.ui" line="1763"/>
         <source>Oximeter Starting time</source>
         <translation>산소측정기 시작 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1780"/>
+        <location filename="../oscar/oximeterimport.ui" line="1775"/>
         <source>I want to use the time reported by my oximeter&apos;s built in clock.</source>
         <translation>산소측정기가 시계에 내장 된 시간을 보고 싶습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1796"/>
+        <location filename="../oscar/oximeterimport.ui" line="1791"/>
         <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
         <translation>나는 CPAP 머신에서 같은 시간에 (또는 그와 가까운 시간에)이 산소 농도계 기록을 시작했다.</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1857"/>
+        <location filename="../oscar/oximeterimport.ui" line="1852"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: Syncing to CPAP session starting time will always be more accurate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;메모: CPAP 세션 시작 시간과의 동기화는 항상 보다 정확할 것입니다..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1878"/>
+        <location filename="../oscar/oximeterimport.ui" line="1873"/>
         <source>Choose CPAP session to sync to:</source>
         <translation>동기화 할 CPAP 세션을 선택하십시오:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1917"/>
-        <location filename="../oscar/oximeterimport.ui" line="1956"/>
+        <location filename="../oscar/oximeterimport.ui" line="1951"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1998"/>
+        <location filename="../oscar/oximeterimport.ui" line="1993"/>
         <source>You can manually adjust the time here if required:</source>
         <translation>필요한 경우 여기에서 시간을 수동으로 조정할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2019"/>
+        <location filename="../oscar/oximeterimport.ui" line="2014"/>
         <source>HH:mm:ssap</source>
         <translation>HH:mm:ssap</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2116"/>
+        <location filename="../oscar/oximeterimport.ui" line="2111"/>
         <source>&amp;Cancel</source>
         <translation>&amp;취소</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2097"/>
+        <location filename="../oscar/oximeterimport.ui" line="2092"/>
         <source>&amp;Information Page</source>
         <translation>&amp;정보 페이지</translation>
     </message>
@@ -2505,72 +2468,72 @@ Index</source>
         <translation>ChoiceMMed MD300W1</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1007"/>
+        <location filename="../oscar/oximeterimport.ui" line="1006"/>
         <source>Set device date/time</source>
         <translation>기기 날짜 / 시간 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1014"/>
+        <location filename="../oscar/oximeterimport.ui" line="1013"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check to enable updating the device identifier next import, which is useful for those who have multiple oximeters lying around.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;다음 가져 오기를 업데이트 할 수 있도록 설정하려면 선택합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1017"/>
+        <location filename="../oscar/oximeterimport.ui" line="1016"/>
         <source>Set device identifier</source>
         <translation>기기 식별자 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1080"/>
+        <location filename="../oscar/oximeterimport.ui" line="1079"/>
         <source>Erase session after successful upload</source>
         <translation>업로드 성공 후 세션 지우기</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1112"/>
+        <location filename="../oscar/oximeterimport.ui" line="1111"/>
         <source>Import directly from a recording on a device</source>
         <translation>장치의 레코딩에서 직접 가져 오기</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1237"/>
+        <location filename="../oscar/oximeterimport.ui" line="1236"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Reminder for CPAP users: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Did you remember to import your CPAP sessions first?&lt;br/&gt;&lt;/span&gt;If you forget, you won&apos;t have a valid time to sync this oximetry session to.&lt;br/&gt;To a ensure good sync between devices, always try to start both at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;CPAP 사용자를위한 알림 : &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;CPAP 세션을 먼저 가져 오는 것을 잊지 않으셨습니까? &lt;br/&gt;&lt;/span&gt;만약 잊었다면 이 산소 측정 세션을 동기화 할 수있는 유효한 시간이 없습니다.&lt;br/&gt;기기간에 양호한 동기화를 유지하려면 항상 동시에 두 가지를 시작하십시오.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1648"/>
+        <location filename="../oscar/oximeterimport.ui" line="1643"/>
         <source>Please choose which one you want to import into OSCAR</source>
         <translation>OSCAR로 가져올 항목을 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="1825"/>
+        <location filename="../oscar/oximeterimport.ui" line="1820"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR needs a starting time to know where to save this oximetry session to.&lt;/p&gt;&lt;p&gt;Choose one of the following options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>OSCAR은이 산소 측정 세션을 저장할 위치를 알기 위한 시작 시간을 필요로 합니다. 다음 옵션 중 하나를 선택 하십시오</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2135"/>
+        <location filename="../oscar/oximeterimport.ui" line="2130"/>
         <source>&amp;Retry</source>
         <translation>&amp;재시도</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2154"/>
+        <location filename="../oscar/oximeterimport.ui" line="2149"/>
         <source>&amp;Choose Session</source>
         <translation>&amp;세션 선택</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2173"/>
+        <location filename="../oscar/oximeterimport.ui" line="2168"/>
         <source>&amp;End Recording</source>
         <translation>&amp;레코딩 종료</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2192"/>
+        <location filename="../oscar/oximeterimport.ui" line="2187"/>
         <source>&amp;Sync and Save</source>
         <translation>&amp;동기화 및 저장</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2211"/>
+        <location filename="../oscar/oximeterimport.ui" line="2206"/>
         <source>&amp;Save and Finish</source>
         <translation>&amp;저장 및 마침</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="2230"/>
+        <location filename="../oscar/oximeterimport.ui" line="2225"/>
         <source>&amp;Start</source>
         <translation>&amp;시작</translation>
     </message>
@@ -2823,11 +2786,6 @@ Index</source>
 <context>
     <name>Oximetry</name>
     <message>
-        <location filename="../oscar/oximetry.ui" line="14"/>
-        <source>Form</source>
-        <translation>폼</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="89"/>
         <source>Date</source>
         <translation>날짜</translation>
@@ -2843,19 +2801,9 @@ Index</source>
         <translation>&amp;리셋</translation>
     </message>
     <message>
-        <location filename="../oscar/oximetry.ui" line="160"/>
-        <source>SpO2</source>
-        <translation>SpO2(혈중산소포화도)</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
         <translation>맥백</translation>
-    </message>
-    <message>
-        <location filename="../oscar/oximetry.ui" line="346"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="366"/>
@@ -2960,12 +2908,12 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;양압기</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1307"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1306"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
         <translation>이 사용법을 적용한 날을 &quot;불일치&quot;라고 간주 하십시오. 4 시간은 일반적으로 준수로 간주됩니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1310"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1309"/>
         <source> hours</source>
         <translation> 시간</translation>
     </message>
@@ -2991,14 +2939,6 @@ A value of 20% works well for detecting apneas. </source>
 20 %의 값은 무호흡을 감지하는데 적합합니다. </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1014"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1108"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1585"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1745"/>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1081"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -3019,11 +2959,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1004"/>
         <location filename="../oscar/preferencesdialog.ui" line="1128"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1602"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1690"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1719"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1601"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1689"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1718"/>
         <source>s</source>
-        <translation type="unfinished">초</translation>
+        <translation>초</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1164"/>
@@ -3048,12 +2988,12 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation> 분</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1272"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1271"/>
         <source>Reset the counter to zero at beginning of each (time) window.</source>
         <translation>각 (시간) 창의 시작 부분에서 카운터를 0으로 재설정하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1275"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1274"/>
         <source>Zero Reset</source>
         <translation>Zero 리셋</translation>
     </message>
@@ -3078,28 +3018,28 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation>yyyy MMMM dd</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1288"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1287"/>
         <source>User definable threshold considered large leak</source>
         <translation>큰 누출로 간주되는 사용자 정의 임계값</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1291"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1290"/>
         <source> L/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1255"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1254"/>
         <source>Whether to show the leak redline in the leak graph</source>
         <translation>누출 그래프에 누출 임계선을 표시할지 여부</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1832"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1911"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1831"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1910"/>
         <source>Search</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1528"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1527"/>
         <source>&amp;Oximetry</source>
         <translation>&amp;산소측정기</translation>
     </message>
@@ -3109,84 +3049,69 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation>이벤트 분석 파이 차트에 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1141"/>
-        <source>#1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1047"/>
-        <source>#2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1027"/>
         <source>Resync Machine Detected Events (Experimental)</source>
         <translation>기기 재동기화 감지 이벤트(실험)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1680"/>
-        <source>SPO2</source>
-        <translation>혈중산소포화도</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1742"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1741"/>
         <source>Percentage drop in oxygen saturation</source>
         <translation>산소 포화도의 백분율 저하</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1735"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1734"/>
         <source>Pulse</source>
         <translation>맥박</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1700"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1699"/>
         <source>Sudden change in Pulse Rate of at least this amount</source>
         <translation>최소양의 맥박 속도 급격한 변화</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1592"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1622"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1703"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1591"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1621"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1702"/>
         <source> bpm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1687"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1686"/>
         <source>Minimum duration of drop in oxygen saturation</source>
         <translation>산소 포화의 최소 강하 지속시간</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1716"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1715"/>
         <source>Minimum duration of pulse change event.</source>
         <translation>펄스 변경 이벤트의 최소 지속 시간.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1599"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1598"/>
         <source>Small chunks of oximetry data under this amount will be discarded.</source>
         <translation>이 양에 따른 작은 산소 측정 데이터는 폐기될 것이다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1967"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1966"/>
         <source>&amp;General</source>
         <translation>&amp;일반적</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1355"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1354"/>
         <source>Changes to the following settings needs a restart, but not a recalc.</source>
         <translation>다음 설정을 변경하면 다시 시작해야하지만 다시 시작할 필요는 없습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1358"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1357"/>
         <source>Preferred Calculation Methods</source>
         <translation>선호하는 계산 방법</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1387"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1386"/>
         <source>Middle Calculations</source>
         <translation>중간 계산</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1401"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1400"/>
         <source>Upper Percentile</source>
         <translation>상단 백분위 수</translation>
     </message>
@@ -3269,13 +3194,13 @@ If you use a few different masks, pick average values instead. It should still b
         <translation>알수 없는 이벤트 채널 사용</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1333"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1332"/>
         <source>AHI</source>
         <extracomment>Apnea Hypopnea Index</extracomment>
         <translation>AHI(무저호흡지수)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1338"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1337"/>
         <source>RDI</source>
         <extracomment>Respiratory Disturbance Index</extracomment>
         <translation>호흡 방해 지수</translation>
@@ -3286,7 +3211,7 @@ If you use a few different masks, pick average values instead. It should still b
         <translation>AHI / 시간 그래프 시간 창</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1265"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1264"/>
         <source>Preferred major event index</source>
         <translation>선호하는 주요 이벤트 지수</translation>
     </message>
@@ -3296,7 +3221,7 @@ If you use a few different masks, pick average values instead. It should still b
         <translation>순응도(시간) 정의</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1258"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1257"/>
         <source>Flag leaks over threshold</source>
         <translation>임계값 초과 표시</translation>
     </message>
@@ -3316,72 +3241,72 @@ If you use a few different masks, pick average values instead. It should still b
         <translation>시간</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1364"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1363"/>
         <source>For consistancy, ResMed users should use 95% here,
 as this is the only value available on summary-only days.</source>
         <translation>일관성을 위해 ResMed 사용자는 여기에서 95%를 사용해야하며,
 이는 요약 전용 일에 사용할 수있는 유일한 값이기 때문입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1415"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1414"/>
         <source>Median is recommended for ResMed users.</source>
         <translation>ResMed 사용자에게는 중간값이 권장됩니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1419"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1482"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1418"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1481"/>
         <source>Median</source>
         <translation>중간값</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1424"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1423"/>
         <source>Weighted Average</source>
         <translation>가중 평균</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1429"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1428"/>
         <source>Normal Average</source>
         <translation>보통 평균</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1453"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1452"/>
         <source>True Maximum</source>
         <translation>실제 최대값</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1458"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1457"/>
         <source>99% Percentile</source>
         <translation>99% 퍼센트</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1394"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1393"/>
         <source>Maximum Calcs</source>
         <translation>최대값 계산</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1981"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1980"/>
         <source>General Settings</source>
         <translation>일반 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2723"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2721"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
         <translation>일간보기 탐색버튼 클릭시 데이터 기록이 없는 날 건너뜀</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2726"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2724"/>
         <source>Skip over Empty Days</source>
         <translation>미 사용일 건너 뛰기</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2002"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2001"/>
         <source>Allow use of multiple CPU cores where available to improve performance. 
 Mainly affects the importer.</source>
         <translation>성능을 향상시키기 위해 멀티 CPU 코어를 사용 허용.
 주로 데이터 불러오기에 영향을 줌.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2006"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2005"/>
         <source>Enable Multithreading</source>
         <translation>멀티 스레딩 사용</translation>
     </message>
@@ -3396,29 +3321,24 @@ Mainly affects the importer.</source>
         <translation>가져오는 동안 SD 카드 백업 생성 (스스로 위험을 감수 한다면 이것을 끄세요!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1449"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1448"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;True maximum is the maximum of the data set.&lt;/p&gt;&lt;p&gt;99th percentile filters out the rarest outliers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;실제 최대 값은 데이터 세트의 최대 값입니다..&lt;/p&gt;&lt;p&gt; 99번째 백분위수는 가장 희귀한 특이치를 걸러낸다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1467"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1466"/>
         <source>Combined Count divided by Total Hours</source>
         <translation>합계 수를 총 시간으로 나눈 값</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1472"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1471"/>
         <source>Time Weighted average of Indice</source>
         <translation>시간 가중 평균 지수</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1477"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1476"/>
         <source>Standard average of indice</source>
         <translation>표준 평균 지수</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1408"/>
-        <source>Culminative Indices</source>
-        <translation>절정 지수</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="977"/>
@@ -3426,54 +3346,54 @@ Mainly affects the importer.</source>
         <translation>맞춤 CPAP 사용자 이벤트 신고</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1809"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1808"/>
         <source>Events</source>
         <translation>이벤트</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1862"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1941"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1861"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1940"/>
         <source>Reset &amp;Defaults</source>
         <translation>기본값 &amp;재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1875"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1954"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1874"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1953"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; 경고: 설정한다고 그것이 좋은 실행이라는 것을 의미하지는 않습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1888"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1887"/>
         <source>Waveforms</source>
         <translation>파형</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1668"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1667"/>
         <source>Flag rapid changes in oximetry stats</source>
         <translation>산소측정 통계의 신속한 변화 플래그</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1579"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1578"/>
         <source>Other oximetry options</source>
         <translation>기타 산소 측정 옵션</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1629"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1628"/>
         <source>Flag SPO2 Desaturations Below</source>
         <translation>SPO2(혈중산소포화도) 이하 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1612"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1611"/>
         <source>Discard segments under</source>
         <translation>세그먼트 삭제</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1649"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1648"/>
         <source>Flag Pulse Rate Above</source>
         <translation>상의 맥박 비율 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1639"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1638"/>
         <source>Flag Pulse Rate Below</source>
         <translation>하의 맥박 비율 표시</translation>
     </message>
@@ -3554,150 +3474,119 @@ OSCAR는 재설치가 필요한 경우이 데이터의 사본을 보관할 수 �
         <translation>아직 식별되지 않은 머신 감지 이벤트에 대한 플래그를 표시합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1789"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oximetry 및 CPAP 데이터 동기화&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SpO2Review (.spoR 파일에서 가져온)에서 가져온 CMS50 데이터 또는 직렬 가져 오기 방법
- &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;동기화에 필요한 정확한 타임 스탬프를 가지고있다.
-.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;라이브 뷰 모드 (직렬 케이블 사용)는 CMS 50 옥시 미터에서 정확한 동기화를 달성하는 한 가지 방법이지만 CPAP 클록 드리프트에 대해서는 반대하지 않습니다.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Oximeters 기록 모드를에서 시작하면 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;정확하게 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CPAP 시스템을 시작할 때와 동시에 이제 동기화를 수행 할 수 있습니다. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;직렬 가져 오기 프로세스는 지난 밤 첫 CPAP 세션의 시작 시간을 사용합니다. CPAP 데이터를 먼저 가져와야 합니다!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2013"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2012"/>
         <source>Show Remove Card reminder notification on OSCAR shutdown</source>
         <translation>OSCAR 종료시 카드 미리 알림 알림 표시</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2122"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2120"/>
         <source>Check for new version every</source>
         <translation>매번 새 버전 확인</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2145"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2143"/>
         <source>days.</source>
         <translation>일.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2175"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2173"/>
         <source>Last Checked For Updates: </source>
         <translation>마지막으로 업데이트 확인 : </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2188"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2186"/>
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2213"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2211"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
         <translation>테스트 버전에 대한 알림을 받고 싶습니다. (고급 사용자만 해당)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2256"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2254"/>
         <source>&amp;Appearance</source>
         <translation>&amp;외관</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2285"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2283"/>
         <source>Graph Settings</source>
         <translation>그래프 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2301"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2299"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;프로필을로드 할 때 열리는 탭입니다. (참고 : OSCAR이 시작시 프로필을 열지 않도록 설정하면 프로필로 기본 설정됩니다.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2559"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2557"/>
         <source>Bar Tops</source>
         <translation>바 상단</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2564"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2562"/>
         <source>Line Chart</source>
         <translation>선형 차트</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2654"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2652"/>
         <source>Overview Linecharts</source>
         <translation>선형 차트 개용</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2052"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2051"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
         <translation>OSCAR의 그래프에서 렌더링 문제가 발생하면 이것을 기본 설정 (Desktop OpenGL)에서 변경하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2599"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 민감한 양방향 터치패드에서 쉽게 확대/축소할 때 스크롤할 수 있는 값.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2493"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2491"/>
         <source>How long you want the tooltips to stay visible.</source>
         <translation>툴팁을 얼마나 오랫동안 보길 원하십니까.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2481"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2479"/>
         <source>Scroll Dampening</source>
         <translation>스크롤 감소</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2471"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2469"/>
         <source>Tooltip Timeout</source>
         <translation>툴팁 타임 아웃</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2578"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2576"/>
         <source>Default display height of graphs in pixels</source>
         <translation>그래프의 기본 표시 높이 (픽셀 단위)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2551"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2549"/>
         <source>Graph Tooltips</source>
         <translation>그래프 툴팁</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2427"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2425"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
         <translation>파형 겹침 플래그를 표시하는 시각적 방법.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2432"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2430"/>
         <source>Standard Bars</source>
         <translation>표준 막대</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2437"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2435"/>
         <source>Top Markers</source>
         <translation>최고 마커</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2385"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2383"/>
         <source>Graph Height</source>
         <translation>그래프 높이</translation>
     </message>
@@ -3747,116 +3636,152 @@ p, li { white-space: pre-wrap; }
         <translation>4cmH2O 압력에서 마스크 배출 속도</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1496"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1407"/>
+        <source>Cumulative Indices</source>
+        <translation>절정 지수</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1495"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; &lt;span style = &quot;font-weight : 600;&quot;&gt; 참고 : &lt;/span&gt; 요약 디자인 제한으로 인해 ResMed 시스템은 이러한 설정 변경을 지원하지 않습니다. &lt;/p &gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1549"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1548"/>
         <source>Oximetry Settings</source>
         <translation>산소측적기 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2020"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1788"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oximetry 및 CPAP 데이터 동기화&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SpO2Review (.spoR 파일에서 가져온)에서 가져온 CMS50 데이터 또는 직렬 가져 오기 방법
+ &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;동기화에 필요한 정확한 타임 스탬프를 가지고있다.
+.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;라이브 뷰 모드 (직렬 케이블 사용)는 CMS 50 옥시 미터에서 정확한 동기화를 달성하는 한 가지 방법이지만 CPAP 클록 드리프트에 대해서는 반대하지 않습니다.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Oximeters 기록 모드를에서 시작하면 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;정확하게 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CPAP 시스템을 시작할 때와 동시에 이제 동기화를 수행 할 수 있습니다. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;직렬 가져 오기 프로세스는 지난 밤 첫 CPAP 세션의 시작 시간을 사용합니다. CPAP 데이터를 먼저 가져와야 합니다!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2019"/>
         <source>Always save screenshots in the OSCAR Data folder</source>
         <translation>항상 OSCAR 데이터 폴더에 스크린 샷 저장</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2074"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2073"/>
         <source>Check For Updates</source>
         <translation>업데이트 확인</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2089"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2088"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
         <translation>오스카의 테스트 버전을 사용하고 있습니다. 테스트 버전은 7일에 한 번 이상 자동으로 업데이트를 확인합니다. 간격을 7일 미만으로 설정할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2107"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2105"/>
         <source>Automatically check for updates</source>
         <translation>자동으로 업데이트 확인</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2129"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2127"/>
         <source>How often OSCAR should check for updates.</source>
         <translation>오스카에서 업데이트를 확인하는 빈도입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2210"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2208"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation>새로운 기능 및 버그 수정을 조기에 테스트하려면 여기를 클릭하십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2226"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2224"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
         <translation>Oscar의 초기 버전을 테스트하는 데 도움이 필요하면 Oscar 테스트에 대한 Wiki 페이지를 참조하십시오. 오스카를 테스트하고, 오스카를 개발하고, 기존 또는 새로운 언어로 번역하는 것을 돕고 싶은 모든 사람들을 환영합니다. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2291"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2289"/>
         <source>On Opening</source>
         <translation>열기</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2304"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2308"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2302"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2306"/>
         <source>Profile</source>
         <translation>프로필</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2313"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2352"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2311"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2350"/>
         <source>Welcome</source>
         <translation>환영합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2318"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2357"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2316"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2355"/>
         <source>Daily</source>
         <translation>일간</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2328"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2367"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2326"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2365"/>
         <source>Statistics</source>
         <translation>통계</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2336"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2334"/>
         <source>Switch Tabs</source>
         <translation>탭 전환</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2347"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2345"/>
         <source>No change</source>
         <translation>변화 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2375"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2373"/>
         <source>After Import</source>
         <translation>가져온 후</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2401"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2399"/>
         <source>Overlay Flags</source>
         <translation>오버레이 플래그(표시 중첩)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2411"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2409"/>
         <source>Line Thickness</source>
         <translation>선 두께</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2447"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2445"/>
         <source>The pixel thickness of line plots</source>
         <translation>선 그래프의 픽셀 두께</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2673"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2671"/>
         <source>Other Visual Settings</source>
         <translation>기타 시각적 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2679"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2677"/>
         <source>Anti-Aliasing applies smoothing to graph plots.. 
 Certain plots look more attractive with this on. 
 This also affects printed reports.
@@ -3869,134 +3794,134 @@ Try it and see if you like it.</source>
 그것을 시도하고 귀하이 그것을 좋아하는지보십시오.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2686"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2684"/>
         <source>Use Anti-Aliasing</source>
         <translation>앤티 앨리어싱 사용</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2693"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2691"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
         <translation>특정 플롯들을 더욱&quot;사각파형으로&quot; 보이게 합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2696"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2694"/>
         <source>Square Wave Plots</source>
         <translation>구형파(사각파) 그림</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2703"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2701"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
         <translation>Pixmap 캐싱은 그래픽 가속 기술입니다. 플랫폼의 그래프 표시 영역에서 글꼴 그리기에 문제가 발생할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2706"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2704"/>
         <source>Use Pixmap Caching</source>
         <translation>Pixmap 캐싱 사용</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2713"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2711"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 이러한 기능은 최근에 제거되었습니다. 그들은 나중에 추가 될것입니다. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2716"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2714"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
         <translation>애니메이션 &amp;&amp; 장식</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2733"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2731"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
         <translation>x축 레이블을 두번 클릭하여 y축 배율을 변경할 수 있는지 여부</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2736"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2734"/>
         <source>Allow YAxis Scaling</source>
         <translation>Y축 스케일링 허용</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2743"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2741"/>
         <source>Whether to include machine serial number on machine settings changes report</source>
         <translation>기기 설정 변경 보고서에 컴퓨터 일련 번호를 포함할지 여부</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2746"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2744"/>
         <source>Include Serial Number</source>
         <translation>일련 번호 포함</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2046"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2045"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation>그래픽 엔진 (재시작 필요)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2753"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2751"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
         <translation>컬러 프린터가 아닌 다른 프린터에서 더 쉽게 읽을 수 있는 흑백 보고서 인쇄</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2756"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2754"/>
         <source>Print reports in black and white (monochrome)</source>
         <translation>흑백으로 보고서 인쇄(단색)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2788"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2786"/>
         <source>Fonts (Application wide settings)</source>
         <translation>글꼴 (응용프로그램 전체 설정)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2823"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2820"/>
         <source>Font</source>
         <translation>폰트</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2842"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2838"/>
         <source>Size</source>
         <translation>크기</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2861"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2856"/>
         <source>Bold  </source>
         <translation>굵게  </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2883"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2877"/>
         <source>Italic</source>
         <translation>이탤릭체</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2896"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2890"/>
         <source>Application</source>
         <translation>응용프로그램</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2960"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2954"/>
         <source>Graph Text</source>
         <translation>그래프 텍스트</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3021"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3015"/>
         <source>Graph Titles</source>
         <translation>그래프 제목</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3082"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3076"/>
         <source>Big  Text</source>
         <translation>큰 글자</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3149"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3142"/>
         <location filename="../oscar/preferencesdialog.cpp" line="466"/>
         <location filename="../oscar/preferencesdialog.cpp" line="598"/>
         <source>Details</source>
         <translation>상세</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3181"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3174"/>
         <source>&amp;Cancel</source>
         <translation>&amp;취소</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3188"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3181"/>
         <source>&amp;Ok</source>
         <translation>&amp;확인</translation>
     </message>
@@ -4060,8 +3985,8 @@ Try it and see if you like it.</source>
         <translation>Double click to change the default colour for this channel plot/flag/data.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2323"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2362"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2321"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2360"/>
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
@@ -4272,11 +4197,6 @@ Would you like do this now?</source>
 <context>
     <name>ProfileSelector</name>
     <message>
-        <location filename="../oscar/profileselector.ui" line="14"/>
-        <source>Form</source>
-        <translation>폼</translation>
-    </message>
-    <message>
         <location filename="../oscar/profileselector.ui" line="26"/>
         <source>Filter:</source>
         <translation>필터:</translation>
@@ -4287,47 +4207,37 @@ Would you like do this now?</source>
         <translation>모든 프로필을 보려면 필터 재설정</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="55"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../oscar/profileselector.ui" line="184"/>
-        <source>OSCAR</source>
-        <translation>OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/profileselector.ui" line="199"/>
+        <location filename="../oscar/profileselector.ui" line="198"/>
         <source>Version</source>
         <translation>버전</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="216"/>
+        <location filename="../oscar/profileselector.ui" line="215"/>
         <source>&amp;Open Profile</source>
         <translation>&amp;프로필 열기</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="227"/>
+        <location filename="../oscar/profileselector.ui" line="226"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;프로필 수정</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="241"/>
+        <location filename="../oscar/profileselector.ui" line="240"/>
         <source>&amp;New Profile</source>
         <translation>&amp;새 프로필</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="260"/>
+        <location filename="../oscar/profileselector.ui" line="258"/>
         <source>Profile: None</source>
         <translation>프로필: 없습니다</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="281"/>
+        <location filename="../oscar/profileselector.ui" line="278"/>
         <source>Please select or create a profile...</source>
         <translation>프로필을 선택하거나 생성 하십시오...</translation>
     </message>
     <message>
-        <location filename="../oscar/profileselector.ui" line="332"/>
+        <location filename="../oscar/profileselector.ui" line="328"/>
         <source>Destroy Profile</source>
         <translation>프로필 삭제</translation>
     </message>
@@ -4876,7 +4786,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2869"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2870"/>
         <source>Error</source>
         <translation>에러</translation>
     </message>
@@ -5013,7 +4923,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="734"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2790"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2791"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="103"/>
         <source>CPAP</source>
         <translation>CPAP(고정)</translation>
@@ -5025,7 +4935,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2793"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2794"/>
         <source>Bi-Level</source>
         <translation>Bi-Level(이중형)</translation>
     </message>
@@ -5067,7 +4977,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="744"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2795"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2796"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="110"/>
         <source>ASV</source>
         <translation>ASV(지능형 인공호흡기)</translation>
@@ -5085,8 +4995,8 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="748"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2881"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2855"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
         <source>Humidifier</source>
         <translation>가습기</translation>
     </message>
@@ -5157,7 +5067,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="763"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2781"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2782"/>
         <source>PP</source>
         <translation>PP(압력변화)</translation>
     </message>
@@ -5190,7 +5100,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="769"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2798"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>PC</source>
         <translation type="unfinished"></translation>
@@ -5497,8 +5407,8 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="821"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2785"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2787"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2788"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="99"/>
         <source>Mode</source>
         <translation>모드</translation>
@@ -5745,7 +5655,7 @@ TTIA: %1</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="827"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>준비 중 ...</translation>
@@ -5761,12 +5671,12 @@ TTIA: %1</source>
         <translation>OSCAR가이 컴퓨터의 사용 시간과 매우 기본적인 설정 만 추적 할 수 있다는 사실을 알려 드려 죄송합니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="852"/>
         <source>Scanning Files...</source>
         <translation>파일 스캔 중 ...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="860"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="729"/>
         <location filename="../oscar/mainwindow.cpp" line="2311"/>
         <source>Importing Sessions...</source>
@@ -5787,64 +5697,64 @@ TTIA: %1</source>
         <translation>테스트되지 않은 기계</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
         <source>Flex Lock</source>
         <translation>Flex 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>Flex 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>EPAP(날숨)에서 IPAP(들숨)로 전환하는 데 걸리는 시간이 높을수록 전환 속도가 느려집니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2843"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>Rise Time Lock</source>
         <translation>상승 시간 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>상승 시간 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <source>Rise Lock</source>
         <translation>상승 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2899"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
         <source>Mask Resistance Setting</source>
         <translation>마스크 저항 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2901"/>
         <source>Mask Resist.</source>
         <translation>마스크 저항.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
         <source>Hose Diam.</source>
         <translation>호스 직경.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
         <source>15mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
         <source>22mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="843"/>
         <source>Backing Up Files...</source>
         <translation>파일 백업 ...</translation>
     </message>
@@ -5855,450 +5765,450 @@ TTIA: %1</source>
         <translation>테스트되지 않은 데이터</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="915"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="916"/>
         <source>model %1</source>
         <translation>모델 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="921"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="922"/>
         <source>DreamStation 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="924"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="925"/>
         <source>unknown model</source>
         <translation>알 수 없는 모델</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2789"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2790"/>
         <source>CPAP-Check</source>
         <translation>CPAP- 체크</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2791"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2792"/>
         <source>AutoCPAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2792"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2793"/>
         <source>Auto-Trial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2794"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2795"/>
         <source>AutoBiLevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2796"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2797"/>
         <source>S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2797"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2798"/>
         <source>S/T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2800"/>
         <source>S/T - AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2800"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2801"/>
         <source>PC - AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2803"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2805"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2804"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2806"/>
         <source>Flex Mode</source>
         <translation type="unfinished">Flex(압력완화) 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2804"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2805"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>PRS1 압력 완화 모드.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2808"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2809"/>
         <source>C-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2809"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2810"/>
         <source>C-Flex+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2810"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2811"/>
         <source>A-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2811"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2812"/>
         <source>P-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2812"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
         <source>Rise Time</source>
         <translation>상승 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2813"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2814"/>
         <source>Bi-Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
         <source>Flex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2819"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
         <source>Flex Level</source>
         <translation>Flex(압력완화) 레벨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2820"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>PRS1 압력 완화 설정.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2868"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2869"/>
         <source>Passover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
         <source>Target Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
         <source>PRS1 Humidifier Target Time</source>
         <translation>PRS1 가습기 목표시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2892"/>
         <source>Hum. Tgt Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2916"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
         <source>Tubing Type Lock</source>
         <translation>튜브 유형 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>튜브 유형 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2919"/>
         <source>Tube Lock</source>
         <translation>튜브 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Mask Resistance Lock</source>
         <translation>마스크 저항 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>마스크 저항 설정을 사용할 수 있는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2928"/>
         <source>Mask Res. Lock</source>
         <translation>마스크 저항. 잠금</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <source>Whether or not machine shows AHI via built-in display.</source>
         <translation>기기가 내장 디스플레이를 통해 AHI를 표시하는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2973"/>
         <source>Ramp Type</source>
         <translation>Ramp(압력상승) 유형</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <source>Type of ramp curve to use.</source>
         <translation>사용할 ramp(압력상승) 곡선 유형입니다.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2974"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2975"/>
         <source>Linear</source>
         <translation>선형</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2975"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
         <source>SmartRamp</source>
         <translation type="unfinished">SmartRamp(스마트압력상승)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2976"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2977"/>
         <source>Ramp+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
         <source>Backup Breath Mode</source>
         <translation>백업 호흡 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>사용중인 백업 호흡 속도의 종류 : 없음 (꺼짐), 자동 또는 고정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2983"/>
         <source>Breath Rate</source>
         <translation>호흡 수</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2986"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2987"/>
         <source>Fixed</source>
         <translation>고정됨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>고정 백업 호흡 BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>시간 제한 호흡이 시작되는 분당 최소 호흡 (BPM)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2993"/>
         <source>Breath BPM</source>
         <translation>호흡 BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
         <source>Timed Inspiration</source>
         <translation type="unfinished">초과 시간
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>시간 제한 호흡이 EPAP(날숨)로 전환하기 전에 IPAP(들숨)를 제공하는 시간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3000"/>
         <source>Timed Insp.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3004"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
         <source>Auto-Trial Duration</source>
         <translation>자동 평가 기간</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3005"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
         <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
         <translation>Auto-CPAP 평가판 기간의 일수입니다. 이후 컴퓨터는 CPAP로 되돌아갑니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
         <source>Auto-Trial Dur.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3011"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3014"/>
         <source>EZ-Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>EZ-Start 활성화 여부</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3020"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
         <source>Variable Breathing</source>
         <translation>가변 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3022"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>확인되지 않음 : 최대 흡기 흐름 추세에서 크게 벗어난 기간 인 가변 호흡 가능성</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3044"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3047"/>
         <source>Peak Flow</source>
         <translation>최고 유량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3045"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3046"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation>2 분 간격의 최대 유량</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2852"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2853"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="139"/>
         <source>Humidifier Status</source>
         <translation>가습기 상태</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2853"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
         <source>PRS1 humidifier connected?</source>
         <translation>PRS1 가습기를 연결했습니까?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
         <source>Disconnected</source>
         <translation>연결 끊김</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2858"/>
         <source>Connected</source>
         <translation>연결됨</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2861"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
         <source>Humidification Mode</source>
         <translation>가습기 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2862"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
         <source>PRS1 Humidification Mode</source>
         <translation>PRS1 가습 모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
         <source>Humid. Mode</source>
         <translation>가습.모드</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
         <source>Fixed (Classic)</source>
         <translation>고정 (구형)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
         <source>Adaptive (System One)</source>
         <translation>자동 (System One)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2867"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2868"/>
         <source>Heated Tube</source>
         <translation>열선 튜브</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
         <source>Tube Temperature</source>
         <translation>튜브 온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>PRS1 가열 튜브 온도</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2876"/>
         <source>Tube Temp.</source>
         <translation>튜브 온도.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2883"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1 가습기 설정</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2906"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
         <source>Hose Diameter</source>
         <translation>호스 직경</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>주 CPAP 호스의 직경</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2913"/>
         <source>12mm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2937"/>
         <source>Auto On</source>
         <translation>자동 켜기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
         <source>A few breaths automatically starts machine</source>
         <translation>몇 번의 호흡이 자동으로 기기를 시작합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2946"/>
         <source>Auto Off</source>
         <translation>자동 끔</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>Machine automatically switches off</source>
         <translation>기기 자동 끄기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2955"/>
         <source>Mask Alert</source>
         <translation>마스크 경고</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
         <source>Whether or not machine allows Mask checking.</source>
         <translation>기기가 마스크 검사를 허용하는지 여부.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2964"/>
         <source>Show AHI</source>
         <translation>AHI 보기</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3030"/>
         <source>Breathing Not Detected</source>
         <translation>호흡 무감지</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3030"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
         <source>A period during a session where the machine could not detect flow.</source>
         <translation>시스템이 흐흠을 감지 할수 없는 세션 동안의 기간.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3031"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3032"/>
         <source>BND</source>
         <translation type="unfinished">BND(호흡무)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3037"/>
         <source>Timed Breath</source>
         <translation>시측된 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3037"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
         <source>Machine Initiated Breath</source>
         <translation>기기 개시 호흡</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3038"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3039"/>
         <source>TB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6628,12 +6538,12 @@ TTIA: %1</source>
         <translation>시스템 원 기기가 감지 한 진동 코콜이</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2779"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2780"/>
         <source>Pressure Pulse</source>
         <translation>압력변화(PP)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2780"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2781"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>폐쇄된 기도를 감지하기 위해 &apos;반복된 &apos;압력 변화.</translation>
     </message>
@@ -7058,7 +6968,7 @@ TTIA: %1</source>
         <translation>CPAP 세션에는 요약 데이터만 포함됩니다</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2786"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2787"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
         <source>PAP Mode</source>
         <translation type="unfinished"></translation>
@@ -8235,7 +8145,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>가습기 사용 가능 상태</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2883"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2884"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="145"/>
         <source>Humid. Level</source>
         <translation>가습 레벨</translation>
@@ -8373,8 +8283,8 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="855"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2894"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2985"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2895"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2986"/>
         <source>Auto</source>
         <translation>자동</translation>
     </message>
@@ -8618,11 +8528,6 @@ popout window, delete it, then pop out this graph again.</source>
 </context>
 <context>
     <name>Report</name>
-    <message>
-        <location filename="../oscar/reports.ui" line="14"/>
-        <source>Form</source>
-        <translation>폼</translation>
-    </message>
     <message>
         <location filename="../oscar/reports.ui" line="27"/>
         <source>about:blank</source>
@@ -9033,47 +8938,42 @@ popout window, delete it, then pop out this graph again.</source>
 <context>
     <name>Welcome</name>
     <message>
-        <location filename="../oscar/welcome.ui" line="14"/>
-        <source>Form</source>
-        <translation>폼</translation>
-    </message>
-    <message>
-        <location filename="../oscar/welcome.ui" line="128"/>
+        <location filename="../oscar/welcome.ui" line="127"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
         <translation>오픈 소스 CPAP 분석 리포터 사용을 환영합니다</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="143"/>
+        <location filename="../oscar/welcome.ui" line="142"/>
         <source>What would you like to do?</source>
         <translation>무엇을 하고 싶으세요?</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="186"/>
+        <location filename="../oscar/welcome.ui" line="185"/>
         <source>CPAP Importer</source>
         <translation>CPAP 가져오기 도구</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="224"/>
+        <location filename="../oscar/welcome.ui" line="223"/>
         <source>Oximetry Wizard</source>
         <translation>산소측정기 마법사</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="262"/>
+        <location filename="../oscar/welcome.ui" line="261"/>
         <source>Daily View</source>
         <translation>일별보기</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="300"/>
+        <location filename="../oscar/welcome.ui" line="299"/>
         <source>Overview</source>
         <translation>개요</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="338"/>
+        <location filename="../oscar/welcome.ui" line="337"/>
         <source>Statistics</source>
         <translation>통계</translation>
     </message>
     <message>
-        <location filename="../oscar/welcome.ui" line="581"/>
+        <location filename="../oscar/welcome.ui" line="580"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;경고: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;당신의 컴퓨터에 삽입전에.ResMed S9 SDCards 잠금이 필요함 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;어떤 OS시스템은 사용자 확인없이 카드에 인덱스 파일을 작성하여 당신의 양압기에서 당신의 메모리카드를 읽지 못할수 있다.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
