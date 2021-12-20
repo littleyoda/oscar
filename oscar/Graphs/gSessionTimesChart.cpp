@@ -68,8 +68,16 @@ void gSummaryChart::SetDay(Day *unused_day)
     Q_UNUSED(unused_day)
     Layer::SetDay(nullptr);
 
-    firstday = p_profile->FirstDay(m_machtype);
-    lastday = p_profile->LastDay(m_machtype);
+    if (m_machtype != MT_CPAP) {
+        // Channels' machine types are not terribly reliable: oximetry channels can be reported by a CPAP,
+        // and position channels can be reported by an oximeter. So look for any days with data.
+        firstday = p_profile->FirstDay();
+        lastday = p_profile->LastDay();
+    } else {
+        // But CPAP channels (like pressure settings) can only be reported by a CPAP.
+        firstday = p_profile->FirstDay(m_machtype);
+        lastday = p_profile->LastDay(m_machtype);
+    }
 
     dayindex.clear();
     daylist.clear();
