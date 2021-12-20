@@ -263,7 +263,7 @@ EventDataType Day::settings_max(ChannelID code)
     EventDataType value;
 
     for (auto & sess : sessions) {
-        if (sess->enabled()) {
+        if (sess->enabled() && sess->s_machtype != MT_JOURNAL) {
             value = sess->settings.value(code, min).toFloat();
             if (value > max) {
                 max = value;
@@ -280,7 +280,7 @@ EventDataType Day::settings_min(ChannelID code)
     EventDataType value;
 
     for (auto & sess : sessions) {
-        if (sess->enabled()) {
+        if (sess->enabled() && sess->s_machtype != MT_JOURNAL) {
             value = sess->settings.value(code, max).toFloat();
             if (value < min) {
                 min = value;

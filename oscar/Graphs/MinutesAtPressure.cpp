@@ -232,7 +232,11 @@ EventDataType msecToMinutes(EventDataType value) {
 }
 
 EventDataType getSetting(Session * sess,ChannelID code) {
-    auto setting=sess->settings[code];
+    if (!sess->settings.contains(code)) {
+        qWarning() << "MinutesAtPressure could not find channel" << code;
+        return -1;
+    }
+    auto setting=sess->settings.value(code);/*[code]; */
     enum schema::DataType datatype = schema::channel[code].datatype();
     if (!( datatype == schema::DEFAULT || datatype == schema::DOUBLE )) return -1;
     return setting.toDouble();
@@ -714,22 +718,24 @@ void RecalcMAP::run()
 
     for ( int idx=0; idx<sessions.size() ; idx++ ) {
         auto & sess = sessions[idx];
-        IPAP.updateBucketsPerPressure(sess);
-        EPAP.updateBucketsPerPressure(sess);
-        IPAP.eventLists = sess->eventlist.value(ipapcode);
-        EPAP.eventLists = sess->eventlist.value(epapcode);
+        if (sess->type() == MT_CPAP) {
+            IPAP.updateBucketsPerPressure(sess);
+            EPAP.updateBucketsPerPressure(sess);
+            IPAP.eventLists = sess->eventlist.value(ipapcode);
+            EPAP.eventLists = sess->eventlist.value(epapcode);
 
-        updateTimes(IPAP);
-        updateTimes(EPAP);
+            updateTimes(IPAP);
+            updateTimes(EPAP);
 
-        EventDataType value = getSetting(sess, CPAP_PressureMin);
-        if (value >=0.1 && minP >value)  minP=value;
-        value = getSetting(sess, CPAP_PressureMax);
-        if (value >=0.1 && maxP <value)  maxP=value;
+            EventDataType value = getSetting(sess, CPAP_PressureMin);
+            if (value >=0.1 && minP >value)  minP=value;
+            value = getSetting(sess, CPAP_PressureMax);
+            if (value >=0.1 && maxP <value)  maxP=value;
 
-        updateEvents(sess,IPAP);
+            updateEvents(sess,IPAP);
 
-        if (m_quit)  break;
+            if (m_quit)  break;
+        }
 
     }
     if (minP>maxP) minP=maxP;
