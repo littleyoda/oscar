@@ -266,6 +266,9 @@ void NewProfile::on_nextButton_clicked()
 
             profile->Save();
 
+            if (mainwin)
+                mainwin->GenerateStatistics();
+
             this->accept();
         }
     }
