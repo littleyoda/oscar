@@ -13,6 +13,7 @@
 #include <QDir>
 #include <QFile>
 #include <QBuffer>
+#include <QByteArray>
 #include <QDataStream>
 #include <QMessageBox>
 #include <QJsonDocument>
@@ -28,7 +29,13 @@
 #include "SleepLib/calcs.h"
 #include "rawdata.h"
 
-#define CONFIG_FILE "config.pscfg"
+
+#define MINIZ_NO_ZLIB_COMPATIBLE_NAMES
+#include "../thirdparty/miniz.h"
+
+#define PRISMA_SMART_CONFIG_FILE "config.pscfg"
+#define PRISMA_LINE_CONFIG_FILE "config.pcfg"
+#define PRISMA_LINE_THERAPY_FILE "therapy.pdat"
 
 //********************************************************************************************
 /// IMPORTANT!!!
@@ -51,14 +58,18 @@ ChannelID PrismaLoader::CPAPModeChannel() { return Prisma_Mode; }
 //********************************************************************************************
 
 bool WMEDFInfo::ParseSignalData() {
-    // Now check the file isn't truncated before allocating space for the values
-    long allocsize = 0;
+    int bytes = 0;
     for (auto & sig : edfsignals) {
-        if (edfHdr.num_data_records > 0) {
-            allocsize += sig.sampleCnt * edfHdr.num_data_records * 2;
+        if (sig.reserved == "#1") {
+            bytes += 1 * sig.sampleCnt;
+        }
+        else if (sig.reserved == "#2") {
+            bytes += 2 * sig.sampleCnt;
         }
     }
     // allocate the arrays for the signal values
+    edfHdr.num_data_records = (fileData.size() - edfHdr.num_header_bytes) / bytes;
+
     for (auto & sig : edfsignals) {
         long samples = sig.sampleCnt * edfHdr.num_data_records;
         if (edfHdr.num_data_records <= 0) {
@@ -115,19 +126,19 @@ quint8 WMEDFInfo::Read8U()
 
 void PrismaImport::run()
 {
-    qDebug() << "PRISMA IMPORT" << eventFileName << " " << signalFileName;
+    qDebug() << "PRISMA IMPORT" << sessionid;
 
-    if (!wmedf.Open(signalFileName)) {
-        qWarning() << "Signal file open failed" << signalFileName;
+    if (!wmedf.Open(signalData)) {
+        qWarning() << "Signal file open failed";
         return;
     }
 
     if (!wmedf.Parse()) {
-        qWarning() << "Signal file parsing failed" << signalFileName;
+        qWarning() << "Signal file parsing failed";
         return;
     }
 
-    eventFile = new PrismaEventFile(eventFileName);
+    eventFile = new PrismaEventFile(eventData);
 
     startdate = qint64(wmedf.edfHdr.startdate_orig.toTime_t()) * 1000L;
     enddate = startdate + wmedf.GetDuration() * qint64(wmedf.GetNumDataRecords()) * 1000;
@@ -178,17 +189,45 @@ void PrismaImport::run()
     session->settings[Prisma_PMaxOA] = parameters[PRISMA_PMAXOA] / 100;
 
     // add waveforms
-    AddWaveform(CPAP_Pressure, QString("CPAPPressure"));
-    AddWaveform(CPAP_EPAP, QString("EPAP"));
+    // common
     AddWaveform(CPAP_MaskPressure, QString("Pressure"));
     AddWaveform(CPAP_FlowRate, QString("RespFlow"));
     AddWaveform(CPAP_Leak, QString("LeakFlowBreath"));
     AddWaveform(Prisma_ObstructLevel, QString("ObstructLevel"));
+    AddWaveform(Prisma_SPRStatus, QString("SPRStatus"));
+
+    //prisma smart
+    // AddWaveform(CPAP_Pressure, QString("CPAPPressure"));
+    AddWaveform(CPAP_EPAP, QString("EPAP"));
+    AddWaveform(CPAP_IPAP, QString("IPAP"));
     AddWaveform(Prisma_rMVFluctuation, QString("rMVFluctuation"));
     AddWaveform(Prisma_rRMV, QString("rRMV"));
     AddWaveform(Prisma_PressureMeasured, QString("PressureMeasured"));
     AddWaveform(Prisma_FlowFull, QString("FlowFull"));
-    AddWaveform(Prisma_SPRStatus, QString("SPRStatus"));
+
+    // prisma line
+    AddWaveform(CPAP_EPAP, QString("EPAPsoll"));
+    AddWaveform(CPAP_IPAP, QString("IPAPsoll"));
+    // AddWaveform(CPAP_EEPAP, QString("EEPAPsoll"));
+
+    // AddWaveform(CPAP_RespRate, "BreathFrequency");
+    // AddWaveform(CPAP_TidalVolume, "BreathVolume");
+    // AddWaveform(CPAP_IE, "InspExpirRel");
+
+    // AddWaveform(OXI_Pulse, "HeartFrequency");
+    // AddWaveform(OXI_SPO2, "SpO2");
+
+    // AddWaveform(CPAP_LeakTotal, QString("TotalLeakage"));
+    // AddWaveform(CPAP_Test1, QString("RSBI"));
+
+    // 20A, 25ST
+    //  MV.txt
+    //  rAMV.txt
+    // 25S:
+    //  rMVFluctuation.txt
+    //  RSBI.txt
+    //  TotalLeakage.txt
+
 
     // add signals
     AddEvents(CPAP_Obstructive, PRISMA_EVENT_OBSTRUCTIVE_APNEA);
@@ -245,43 +284,37 @@ void PrismaImport::AddEvents(ChannelID channel, QList<Prisma_Event_Type> eventTy
 }
 
 //********************************************************************************************
-PrismaEventFile::PrismaEventFile(QString fname)
-{
-    QFile file(fname);
+PrismaEventFile::PrismaEventFile(QByteArray &buffer) {
     QDomDocument dom;
+    dom.setContent(buffer);
 
-    if(file.open(QIODevice::ReadOnly)) {
-        dom.setContent(&file);
-        file.close();
-
-        QDomElement root = dom.documentElement();
-
-        QDomNodeList  deviceEventNodelist = root.elementsByTagName("DeviceEvent");
-        for(int i=0; i < deviceEventNodelist.count(); i++)
-        {
-            QDomElement node=deviceEventNodelist.item(i).toElement();
-            int eventId = node.attribute("DeviceEventID").toInt();
-            if (eventId == 0) {
-                int parameterId = node.attribute("ParameterID").toInt();
-                int value = node.attribute("NewValue").toInt();
-                m_parameters[parameterId] = value;
-            }
-        }
-
-        QDomNodeList  respEventNodelist = root.elementsByTagName("RespEvent");
-        for(int i=0; i < respEventNodelist.count(); i++)
-        {
-            QDomElement node=respEventNodelist.item(i).toElement();
-            int eventId = node.attribute("RespEventID").toInt();
-            const int time_quantum = 10;
-            int endTime  = node.attribute("EndTime").toInt() * 1000 / time_quantum;
-            int duration = node.attribute("Duration").toInt() / time_quantum;
-            int pressure = node.attribute("Pressure").toInt();
-            int strength = node.attribute("Strength").toInt();
-            m_events[eventId].append(PrismaEvent(endTime, duration, pressure, strength));
+    QDomElement root = dom.documentElement();
+    QDomNodeList  deviceEventNodelist = root.elementsByTagName("DeviceEvent");
+    for(int i=0; i < deviceEventNodelist.count(); i++)
+    {
+        QDomElement node=deviceEventNodelist.item(i).toElement();
+        int eventId = node.attribute("DeviceEventID").toInt();
+        if (eventId == 0) {
+            int parameterId = node.attribute("ParameterID").toInt();
+            int value = node.attribute("NewValue").toInt();
+            m_parameters[parameterId] = value;
         }
     }
-};
+
+    QDomNodeList  respEventNodelist = root.elementsByTagName("RespEvent");
+    for(int i=0; i < respEventNodelist.count(); i++)
+    {
+        QDomElement node=respEventNodelist.item(i).toElement();
+        int eventId = node.attribute("RespEventID").toInt();
+        const int time_quantum = 10;
+        int endTime  = node.attribute("EndTime").toInt() * 1000 / time_quantum;
+        int duration = node.attribute("Duration").toInt() / time_quantum;
+        int pressure = node.attribute("Pressure").toInt();
+        int strength = node.attribute("Strength").toInt();
+        m_events[eventId].append(PrismaEvent(endTime, duration, pressure, strength));
+    }
+    qDebug() << "SIZE" << m_events.size();
+}
 
 //********************************************************************************************
 
@@ -336,8 +369,9 @@ PrismaLoader::~PrismaLoader()
 
 bool PrismaLoader::Detect(const QString & selectedPath)
 {
-    QFile configFile(selectedPath + QDir::separator() + CONFIG_FILE);
-    return configFile.exists();
+    QFile prismaSmartConfigFile(selectedPath + QDir::separator() + PRISMA_SMART_CONFIG_FILE);
+    QFile prismaLineConfigFile(selectedPath + QDir::separator() + PRISMA_LINE_CONFIG_FILE);
+    return prismaSmartConfigFile.exists() || prismaLineConfigFile.exists();
 }
 
 int PrismaLoader::Open(const QString & selectedPath)
@@ -350,33 +384,26 @@ int PrismaLoader::Open(const QString & selectedPath)
 
     qDebug() << "Prisma opening" << selectedPath;
 
-    QString configFilePath = selectedPath + QDir::separator() + CONFIG_FILE;
-    QFile configFile(configFilePath);
-    if (!configFile.exists()) // TODO AXT || !configFile.isReadable() fails
-    {
-        qDebug() << "Prisma config file error" << configFile << " " << configFile.exists() << " " << configFile.isReadable();
-        return 0;
-    }
 
-    m_abort = false;
-    emit setProgressValue(0);
-    emit updateMessage(QObject::tr("Getting Ready..."));
-    QCoreApplication::processEvents();
+    QFile prismaSmartConfigFile(selectedPath + QDir::separator() + PRISMA_SMART_CONFIG_FILE);
+    QFile prismaLineConfigFile(selectedPath + QDir::separator() + PRISMA_LINE_CONFIG_FILE);
 
-    MachineInfo info = PeekInfoFromConfig(configFilePath);
-    qDebug() << "Prisma machine info" << info.serial;
-
+    MachineInfo info = PeekInfoFromConfig(selectedPath);
     if (info.type == MT_UNKNOWN) {
         emit deviceIsUnsupported(info);
         return -1;
     }
-
     m_ctx->CreateMachineFromInfo(info);
 
     if (!s_PrismaModelInfo.IsTested(info.modelnumber)) {
         qDebug() << info.modelnumber << "untested";
         emit deviceIsUntested(info);
     }
+
+    m_abort = false;
+    emit setProgressValue(0);
+    emit updateMessage(QObject::tr("Getting Ready..."));
+    QCoreApplication::processEvents();
 
     emit updateMessage(QObject::tr("Backing Up Files..."));
     QCoreApplication::processEvents();
@@ -390,16 +417,93 @@ int PrismaLoader::Open(const QString & selectedPath)
     emit updateMessage(QObject::tr("Scanning Files..."));
     QCoreApplication::processEvents();
 
-    // TODO AXT extract
-    char out[12];
-    int serialInDecimal;
-    sscanf(info.serial.toLocal8Bit().data() , "%x", &serialInDecimal);
-    snprintf(out, 12, "%010d", serialInDecimal);
 
-    ScanFiles(info, selectedPath + QDir::separator() + out);
+    if (prismaSmartConfigFile.exists()) // TODO AXT || !configFile.isReadable() fails
+    {
+        // TODO AXT extract
+        char out[12];
+        int serialInDecimal;
+        sscanf(info.serial.toLocal8Bit().data() , "%x", &serialInDecimal);
+        snprintf(out, 12, "%010d", serialInDecimal);
+
+        ScanFiles(info, selectedPath + QDir::separator() + out);
+    }
+    else if (prismaLineConfigFile.exists())
+    {
+        QSet<SessionID> sessions;
+        QHash<SessionID, QString> eventFiles;
+        QHash<SessionID, QString> signalFiles;
+
+
+        QFile prismaLineTherapyFile(selectedPath + QDir::separator() + PRISMA_LINE_THERAPY_FILE);
+        if (!prismaLineTherapyFile.exists()) { // TODO AXT || !configFile.isReadable() fails
+            qDebug() << "Prisma line therapy file error" << prismaLineTherapyFile;
+            return 0;
+        }
+        if (!prismaLineTherapyFile.open(QIODevice::ReadOnly)) {
+            qDebug() << "Prisma line therapy file not readable" << prismaLineTherapyFile;
+            return 0;
+        }
+        QByteArray therapyData = prismaLineTherapyFile.readAll();
+        prismaLineTherapyFile.close();
+
+        mz_bool status;
+        mz_zip_archive zip_archive;
+        mz_zip_archive_file_stat file_stat;
+
+        memset(&zip_archive, 0, sizeof(zip_archive));
+
+        status = mz_zip_reader_init_mem(&zip_archive, (const void*)therapyData.constData(), therapyData.size(), 0);
+
+        if (!status)
+        {
+            qDebug() <<  "mz_zip_reader_init_file() failed!";
+            return 0;
+        }
+
+        int n = mz_zip_reader_get_num_files(&zip_archive);
+        for (int i = 0; i < n; ++i) {
+          if (!mz_zip_reader_file_stat(&zip_archive, i, &file_stat)) {
+              qDebug() << "mz_zip_reader_file_stat() failed!";
+              mz_zip_reader_end(&zip_archive);
+              return 0;
+          }
+          qDebug() << file_stat.m_filename;
+
+          QString fileName(file_stat.m_filename);
+          if (fileName.contains("event_") && fileName.endsWith(".xml")) {
+              SessionID sid = fileName.mid(fileName.size()-4-6,6).toLong();
+              sessions += sid;
+              eventFiles[sid] = fileName;
+          }
+          if (fileName.contains("signal_") && fileName.endsWith(".wmedf")) {
+              SessionID sid = fileName.mid(fileName.size()-6-6,6).toLong();
+              sessions += sid;
+              signalFiles[sid] = fileName;
+          }
+        }
+        qDebug() << sessions;
+
+        for(auto & sid : sessions) {
+            size_t uncomp_size_events;
+            void *extract_events = mz_zip_reader_extract_file_to_heap(&zip_archive, eventFiles[sid].toLocal8Bit(), &uncomp_size_events, 0);
+            QByteArray eventData((const char*)extract_events, uncomp_size_events);
+            free(extract_events);
+            size_t uncomp_size_signals;
+            void *extract_signals = mz_zip_reader_extract_file_to_heap(&zip_archive, signalFiles[sid].toLocal8Bit(), &uncomp_size_signals, 0);
+            QByteArray signalData((const char*)extract_signals, uncomp_size_signals);
+            free(extract_signals);
+            queTask(new PrismaImport(this, info,  sid, eventData, signalData));
+        }
+        mz_zip_reader_end(&zip_archive);
+    } else {
+        qDebug() << "Prisma config file error" << selectedPath;
+        return 0;
+    }
+
 
     int tasks = countTasks();
-
+    qDebug() << "Task count " << tasks;
     emit updateMessage(QObject::tr("Importing Sessions..."));
     QCoreApplication::processEvents();
 
@@ -416,20 +520,22 @@ MachineInfo PrismaLoader::PeekInfo(const QString & selectedPath)
     if (!Detect(selectedPath))
         return MachineInfo();
 
-    return PeekInfoFromConfig(selectedPath + QDir::separator() + CONFIG_FILE);
+    return PeekInfoFromConfig(selectedPath + QDir::separator() + PRISMA_SMART_CONFIG_FILE);
 }
 
-MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & configFilePath)
+MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & selectedPath)
 {
-    QFile configFile(configFilePath);
+    QFile prismaSmartConfigFile(selectedPath + QDir::separator() + PRISMA_SMART_CONFIG_FILE);
+    QFile prismaLineConfigFile(selectedPath + QDir::separator() + PRISMA_LINE_CONFIG_FILE);
 
-    if (configFile.exists()) {
-        if (!configFile.open(QIODevice::ReadOnly)) {
+    // TODO AXT, extract into ConfigFile class
+    if (prismaSmartConfigFile.exists()) {
+        if (!prismaSmartConfigFile.open(QIODevice::ReadOnly)) {
             return MachineInfo();
         }
         MachineInfo info = newInfo();
-        QByteArray configData = configFile.readAll();
-        configFile.close();
+        QByteArray configData = prismaSmartConfigFile.readAll();
+        prismaSmartConfigFile.close();
 
         QJsonDocument configDoc(QJsonDocument::fromJson(configData));
         QJsonObject  configObj = configDoc.object();
@@ -440,10 +546,24 @@ MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & configFilePath)
         // TODO AXT load props
         info.properties["cica"] = "mica";
         return info;
+    } else if (prismaLineConfigFile.exists()) {
+        // TODO AXT add loader
+        if (!prismaLineConfigFile.open(QIODevice::ReadOnly)) {
+            return MachineInfo();
+        }
+        MachineInfo info = newInfo();
+        prismaLineConfigFile.close();
+        info.modelnumber=42;
+        info.model = "Unknown PrismaLine";
+        info.serial = "0x42424242";
+        // TODO AXT load props
+        info.properties["cica"] = "mica";
+        return info;
     }
     return MachineInfo();
 }
 
+// TODO AXT PrismaSmart specific, extract it into a parser class with the config files
 void PrismaLoader::ScanFiles(const MachineInfo& info, const QString & machinePath)
 {
     Q_ASSERT(m_ctx);
@@ -500,7 +620,22 @@ void PrismaLoader::ScanFiles(const MachineInfo& info, const QString & machinePat
     }
 
     for(auto & sid : sessions) {
-        queTask(new PrismaImport(this, info,  sid, eventFiles[sid], signalFiles[sid]));
+        QByteArray eventData;
+        QByteArray signalData;
+
+        QFile efile(eventFiles[sid]);
+        if(efile.open(QIODevice::ReadOnly)) {
+            eventData = efile.readAll();
+            efile.close();
+        }
+
+        QFile sfile(signalFiles[sid]);
+        if(sfile.open(QIODevice::ReadOnly)) {
+            signalData = sfile.readAll();
+            sfile.close();
+        }
+
+        queTask(new PrismaImport(this, info,  sid, eventData, signalData));
     }
 }
 

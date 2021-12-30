@@ -126,6 +126,8 @@ class EDFInfo
     virtual ~EDFInfo();
 
     virtual bool Open(const QString & name);                    //! \brief Open the EDF+ file, and read it's header
+    virtual bool Open(const QByteArray &data);
+
 
     virtual bool Parse();                          //! \brief Parse the EDF+ file into the EDFheaderQT. Must call Open(..) first.
 

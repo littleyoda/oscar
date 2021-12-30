@@ -111,7 +111,7 @@ class PrismaEventFile;
 class PrismaImport:public ImportTask
 {
 public:
-    PrismaImport(PrismaLoader * l, const MachineInfo& m, SessionID s, QString e, QString d): loader(l), machineInfo(m), sessionid(s), eventFileName(e), signalFileName(d) {}
+    PrismaImport(PrismaLoader * l, const MachineInfo& m, SessionID s, QByteArray e, QByteArray d): loader(l), machineInfo(m), sessionid(s), eventData(e), signalData(d) {}
     virtual ~PrismaImport() {};
 
     //! \brief PrismaImport thread starts execution here.
@@ -121,8 +121,8 @@ protected:
     PrismaLoader * loader;
     const MachineInfo & machineInfo;
     SessionID sessionid;
-    QString eventFileName;
-    QString signalFileName;
+    QByteArray eventData;
+    QByteArray signalData;
     qint64 startdate;
     qint64 enddate;
     WMEDFInfo wmedf;
@@ -186,7 +186,7 @@ class PrismaLoader : public CPAPLoader
 
   protected:
 
-    MachineInfo PeekInfoFromConfig(const QString & configPath);
+    MachineInfo PeekInfoFromConfig(const QString & selectedPath);
 
     //! \brief Scans the given directories for session data and create an import task for each logical session.
     void ScanFiles(const MachineInfo& info, const QString & path);
@@ -210,7 +210,7 @@ protected:
 class PrismaEventFile
 {
 public:
-    PrismaEventFile(QString fname);
+    PrismaEventFile(QByteArray &buffer);
     QHash<int, int> getParameters() {return m_parameters; }
     QList<PrismaEvent> getEvents(int eventId) {return m_events.contains(eventId) ? m_events[eventId] : QList<PrismaEvent>(); }
 
