@@ -293,6 +293,7 @@ struct PrismaTestedModel
 
 static const PrismaTestedModel s_PrismaTestedModels[] = {
     { "0x92", "Prisma Smart" },
+    { "0x91", "Prisma Soft" },
     { "", ""}
 };
 
@@ -434,6 +435,7 @@ MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & configFilePath)
         QJsonObject  configObj = configDoc.object();
         QJsonObject  devObj = configObj["dev"].toObject();
         info.modelnumber=configObj["devid"].toString();
+        info.model = s_PrismaModelInfo.Name(info.modelnumber);
         info.serial = devObj["sn"].toString();
         // TODO AXT load props
         info.properties["cica"] = "mica";
