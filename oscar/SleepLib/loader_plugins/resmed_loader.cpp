@@ -2284,6 +2284,8 @@ void StoreSettings(Session * sess, STRRecord & R)
     if (R.mode >= 0) {
         sess->settings[CPAP_Mode] = R.mode;
         sess->settings[RMS9_Mode] = R.rms9_mode;
+        if ( R.min_pressure == 0 )
+            qDebug() << "Min Pressure is zero, R.mode is" << R.mode;
         if (R.mode == MODE_CPAP) {
             if (R.set_pressure >= 0) sess->settings[CPAP_Pressure] = R.set_pressure;
         } else if (R.mode == MODE_APAP) {
@@ -2310,7 +2312,7 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
             if (R.max_ps >= 0) sess->settings[CPAP_PSMax] = R.max_ps;
         } else {
-//          qDebug() << "Setting session pressures for random mode";
+            qDebug() << "Setting session pressures for R.mode" << R.mode;
             if (R.set_pressure > 0) sess->settings[CPAP_Pressure] = R.set_pressure;
             if (R.min_pressure > 0) sess->settings[CPAP_PressureMin] = R.min_pressure;
             if (R.max_pressure > 0) sess->settings[CPAP_PressureMax] = R.max_pressure;
@@ -3213,6 +3215,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
         } else if (matchSignal(CPAP_TidalVolume, es.label)) {
             code = CPAP_TidalVolume;
+            es.physical_dimension = "mL";
             es.gain *= 1000.0;
             es.physical_maximum *= 1000.0;
             es.physical_minimum *= 1000.0;
@@ -3493,7 +3496,8 @@ EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataTy
         el->AddEvent(tt, est);
     } else {
         if ( tmp > 0 )
-            qDebug() << "Value:" << tmp << "Out of range: t_min:" << t_min << "t_max:" << t_max << "EL count:" << el->count();
+            qDebug() << "Code:" << QString::number(code, 16) <<"Value:" << tmp << "Out of range:\n\t t_min:" <<
+                t_min << "t_max:" << t_max << "EL count:" << el->count();
         // Out of bounds value, start a new eventlist
         // But first drop a closing value that repeats the last one
         el->AddEvent(tt, el->raw(el->count() - 1));
