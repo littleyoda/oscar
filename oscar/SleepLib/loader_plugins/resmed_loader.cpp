@@ -1384,48 +1384,53 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     }
                 }
 
-                if ((mod == 11) && ( ! AS_eleven)) {
+                int RMS9_mode = R.rms9_mode;
+                switch ( RMS9_mode ) {
+                case 11:    
                     mode = MODE_APAP; // For her is a special apap
-                } else if (mod == 9) {
+                    break;
+                case 9:    
                     mode = MODE_AVAPS;
-                } else if (mod == 8) {       // mod 8 == vpap adapt variable epap
+                    break;
+                case 8:    // mod 8 == vpap adapt variable epap
                     mode = MODE_ASV_VARIABLE_EPAP;
-                } else if (mod == 7) {       // mod 7 == vpap adapt
+                    break;
+                case 7:    // mod 7 == vpap adapt
                     mode = MODE_ASV;
-                } else if (mod == 6) { // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
+                    break;
+                case 6:    // mod 6 == vpap auto (Min EPAP, Max IPAP, PS)
                     mode = MODE_BILEVEL_AUTO_FIXED_PS;
-                } else if (mod >= 3) {  // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
-                                        // 4,5 are S/T types...
-                    if ( AS_eleven )
-                        mode = MODE_CPAP;
-                    else    
-                        mode = MODE_BILEVEL_FIXED;
-                } else if (mod == 2) {
-                    if ( AS_eleven )
-                        mode = MODE_APAP; 
-                    else
-                        mode = MODE_BILEVEL_FIXED;
-                } else if (mod == 1) {      // same for AS11 as for AS10
+                    break;
+                case 5: // 4,5 are S/T types...
+                case 4:
+                case 3:    // mod 3 == vpap s fixed pressure (EPAP, IPAP, No PS)
+                    mode = MODE_BILEVEL_FIXED;
+                    break;
+                case 2:    
+                    mode = MODE_BILEVEL_FIXED;
+                    break;
+                case 1:    
                     mode = MODE_APAP; // mod 1 == apap
-                    // not sure what mode 2 is ?? split ?
-                } else  if (mod == 0) {
+                    break;
+                case 0:    
                     mode = MODE_CPAP; // mod 0 == cpap
-                }
+                    break;
+                default:
+                    mode = MODE_UNKNOWN;
+                }    
                 R.mode = mode;
 
                 // Settings.CPAP.Starting Pressure
-                if ((mod == 0) && (sig = str.lookupLabel("S.C.StartPress"))) {
+                if ((R.rms9_mode == 0) && (sig = str.lookupLabel("S.C.StartPress"))) {
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // Settings.Adaptive Starting Pressure? 
-                if ( (mod == 1) && ((sig = str.lookupLabel("S.AS.StartPress")) || (sig = str.lookupLabel("S.A.StartPress"))) ) {
+                if ( (R.rms9_mode == 1) && ((sig = str.lookupLabel("S.AS.StartPress")) || (sig = str.lookupLabel("S.A.StartPress"))) ) {
                     R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // mode 11 = APAP for her?
-                if ( ((mod == 11) && ( ! AS_eleven)) || ((mod == 2) && AS_eleven) ) {
-                    if ( nullptr != (sig = str.lookupLabel("S.AFH.StartPress"))) {
+                if ( (R.rms9_mode == 11) && (sig = str.lookupLabel("S.AFH.StartPress"))) {
                         R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-                    }
                 }
                 if ((R.mode == MODE_BILEVEL_FIXED) && (sig = str.lookupLabel("S.BL.StartPress"))) {
                     // Bilevel Starting Pressure
@@ -1600,10 +1605,16 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                     R.min_ipap = R.min_epap + R.min_ps;
                 }
             }
-            if ((sig = str.lookupSignal(CPAP_PressureMax))) {
+            if ( (R.rms9_mode == 11) && (sig = str.lookupLabel("S.AFH.MaxPress")) ) {
                 R.max_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
-            if ((sig = str.lookupSignal(CPAP_PressureMin))) {
+            else if ((sig = str.lookupSignal(CPAP_PressureMax))) {
+                R.max_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            }
+            if ( (R.rms9_mode == 11) && (sig = str.lookupLabel("S.AFH.MinPress")) ) {
+                R.min_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            }
+            else if ((sig = str.lookupSignal(CPAP_PressureMin))) {
                 R.min_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
             if ((sig = str.lookupSignal(RMS9_SetPressure))) {
@@ -3435,7 +3446,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
             if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
                 qDebug() << "Last Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
         } else
-            qDebug() << "Failed to add last event" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
+            qDebug() << "Failed to add last event - Code:" << QString::number(code, 16) << "Value:" << tmp << 
+                QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
 
         sess->updateMin(code, min);
         sess->updateMax(code, max);
@@ -3495,7 +3507,7 @@ EventList * buildEventList( EventStoreType est, EventDataType t_min, EventDataTy
 
         el->AddEvent(tt, est);
     } else {
-        if ( tmp > 0 )
+//        if ( tmp > 0 )
             qDebug() << "Code:" << QString::number(code, 16) <<"Value:" << tmp << "Out of range:\n\t t_min:" <<
                 t_min << "t_max:" << t_max << "EL count:" << el->count();
         // Out of bounds value, start a new eventlist
