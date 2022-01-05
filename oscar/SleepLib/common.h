@@ -15,7 +15,7 @@
 #include <QObject>
 #include <QThread>
 
-#define DEBUG_EFFICIENCY 1
+// #define DEBUG_EFFICIENCY 1   // Developers can define this for qmake if they want it
 
 #include <QLocale>
 #include "Graphs/glcommon.h"

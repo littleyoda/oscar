@@ -67,8 +67,10 @@ ResmedLoader::ResmedLoader() {
 #endif
     m_type = MT_CPAP;
 
+#ifdef DEBUG_EFFICIENCY
     timeInTimeDelta = timeInLoadBRP = timeInLoadPLD = timeInLoadEVE = 0;
     timeInLoadCSL = timeInLoadSAD = timeInEDFInfo = timeInEDFOpen = timeInAddWaveform = 0;
+#endif    
 
     saveCallback = SaveSession;
 }
@@ -775,15 +777,15 @@ int ResmedLoader::Open(const QString & dirpath)
         qDebug() << "Total CPU time in LoadCSL" << timeInLoadCSL;
         qDebug() << "Total CPU time in (BRP) AddWaveform" << timeInAddWaveform;
         qDebug() << "Total CPU time in TimeDelta function" << timeInTimeDelta;
+
+        channel_efficiency.clear();
+        channel_time.clear();
     }
 #endif
 
 //    sessfiles.clear();
 //    strsess.clear();
 //    strdate.clear();
-
-    channel_efficiency.clear();
-    channel_time.clear();
 
     qDebug() << "Total Events " << event_cnt;
     qDebug() << "Total new Sessions " << num_new_sessions;
@@ -2457,7 +2459,7 @@ void ResDayTask::run()
                 save(loader, sess);                     // This is aliased to SaveSession - unless testing
             }
         }
-        qDebug() << "Finished summary processing for" << resday->date;
+//        qDebug() << "Finished summary processing for" << resday->date;
         return;
     }
 
