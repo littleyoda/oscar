@@ -1829,6 +1829,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             }
+            if ( R.min_pressure == 0 ) {
+                qDebug() << "Min Pressure is zero on" << date.toString();
+            }
 #ifdef STR_DEBUG
             qDebug() << "Finished" << date.toString();
 #endif
