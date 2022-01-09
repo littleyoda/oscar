@@ -3376,6 +3376,11 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         startpos = 5; // Shave the first 10 seconds of pressure data
         tt += rate * startpos;
     }
+// Likewise for the values that the machine computes for us, but 20 seconds
+    if ((code == CPAP_MinuteVent) || (code == CPAP_RespRate) || (code == CPAP_TidalVolume)) {
+        startpos = 10; // Shave the first 20 seconds of computed data
+        tt += rate * startpos;
+    }
 
     qint16 *sptr = es.dataArray;
     qint16 *eptr = sptr + samples;
