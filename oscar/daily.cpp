@@ -1377,7 +1377,7 @@ QString Daily::getStatisticsInfo(Day * day)
 
 //        QString oldtip = tooltip;
         tooltip.replace("'", "&apos;");
-//        qDebug() << schema::channel[code].label() << "old tooltip" << oldtip << "tooltip" << tooltip ;
+//        qDebug() << schema::channel[code].label() << "old tooltip" << oldtip << "; new tooltip" << tooltip ;
 
         html+=QString("<tr><td align=left title='%6'>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
             .arg(schema::channel[code].label())
@@ -1753,9 +1753,16 @@ void Daily::Load(QDate date)
                 // percentage of patient-triggered breaths, which is much more useful
                 // than the duration of timed breaths per hour.
                 values[code] = val;
+                QString tooltip=schema::channel[code].description();
+                tooltip.replace("'", "&apos;");
                 QColor altcolor = (brightness(chan.defaultColor()) < 0.3) ? Qt::white : Qt::black; // pick a contrasting color
-                htmlLeftIndices+=QString("<tr><td align='left' bgcolor='%1'><b><font color='%2'><a href='event=%5' style='text-decoration:none;color:%2'>%3</a></font></b></td><td width=20% bgcolor='%1'><b><font color='%2'>%4</font></b></td></tr>")
-                        .arg(chan.defaultColor().name()).arg(altcolor.name()).arg(chan.fullname()).arg(data).arg(code);
+                htmlLeftIndices+=QString("<tr><td align='left' bgcolor='%1'><b><font color='%2'><a href='event=%5' style='text-decoration:none;color:%2' title='<p>%6</p>'>%3</a></font></b></td><td width=20% bgcolor='%1'><b><font color='%2'>%4</font></b></td></tr>")
+                        .arg(chan.defaultColor().name())
+                        .arg(altcolor.name())
+                        .arg(chan.fullname())
+                        .arg(data)
+                        .arg(code)
+                        .arg(tooltip);
             }
 
             htmlLeftIndices+="</table><hr/>";
