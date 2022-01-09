@@ -3175,7 +3175,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
     QString t;
     int emptycnt = 0;
     EventList *a = nullptr;
-    double rate;
+//  double rate;
     long samples;
     ChannelID code;
     bool square = AppSetting->squareWavePlots();
@@ -3196,7 +3196,7 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
         if (samples <= 0)
             continue;
 
-        rate = double(duration) / double(samples);
+//      rate = double(duration) / double(samples);
 
         //qDebug() << "EVE:" << es.digital_maximum << es.digital_minimum << es.physical_maximum << es.physical_minimum << es.gain;
         if (forceDebug) {
@@ -3227,8 +3227,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_RespRate, es.label)) {
             code = CPAP_RespRate;
-            a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+//          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+//          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_TidalVolume, es.label)) {
             code = CPAP_TidalVolume;
             es.physical_dimension = "mL";
@@ -3265,9 +3266,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          es.physical_minimum /= 100.0;
 //          qDebug() << "IE Gain, Max, Min" << es.gain << es.physical_maximum << es.physical_minimum;
 //          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
-            a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
-//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
+//          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+//          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
             // There are TWO of these with the same label on 36037, 36039, 36377 and others
@@ -3275,23 +3276,23 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             if ( found_Ti_code )
                 continue;
             found_Ti_code = true;    
-            a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
-//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
+//          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+//          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Te, es.label)) {
             code = CPAP_Te;
             // There are TWO of these with the same label on my VPAP Adapt 36037
             if ( found_Te_code )
                 continue;
             found_Te_code = true;    
-            a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
-//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
+//          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+//          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_TgMV, es.label)) {
             code = CPAP_TgMV;
-            a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
-            a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
-//          a = ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
+//          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
+//          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
+            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (es.label == "Va") {  // Signal used in 36039... What to do with it???
             a = nullptr;                // We'll skip it for now
         } else if (es.label == "AlvMinVent.2s") {  // Signal used in 28509... What to do with it???
