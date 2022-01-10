@@ -906,7 +906,9 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
 ///////////////////////////////////////////////////////////////////////////////////////////
 int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate firstImport)
 {
+#ifdef DEBUG_EFFICIENCY    
     QTime time;
+#endif    
 
     bool create_backups = p_profile->session->backupCardData();
     QString backup_path = mach->getBackupPath();
@@ -2981,10 +2983,10 @@ bool ResmedLoader::LoadBRP(Session *sess, const QString & path)
     int edfparsetime = time.elapsed();
     time.start();
     int AddWavetime = 0;
+    QTime time2;
 #endif
     sess->updateFirst(edf.startdate);
 
-    QTime time2;
     qint64 duration = edf.GetNumDataRecords() * edf.GetDurationMillis();
     sess->updateLast(edf.startdate + duration);
 
