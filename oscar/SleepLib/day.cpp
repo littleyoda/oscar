@@ -173,20 +173,20 @@ QString Day::calcMiddleLabel(ChannelID code)
 {
     int c = p_profile->general->prefCalcMiddle();
     if (c == 0) {
-        return QObject::tr("%1 %2").arg(STR_TR_Median).arg(schema::channel[code].label());
+        return QString("%1 %2").arg(STR_TR_Median).arg(schema::channel[code].label());
     } else if (c == 1) {
-        return QObject::tr("%1 %2").arg(STR_TR_WAvg).arg(schema::channel[code].label());
+        return QString("%1 %2").arg(STR_TR_WAvg).arg(schema::channel[code].label());
     } else {
-        return QObject::tr("%1 %2").arg(STR_TR_Avg).arg(schema::channel[code].label());
+        return QString("%1 %2").arg(STR_TR_Avg).arg(schema::channel[code].label());
     }
 }
 QString Day::calcMaxLabel(ChannelID code)
 {
-    return QObject::tr("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
+    return QString("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
 }
 QString Day::calcPercentileLabel(ChannelID code)
 {
-    return QObject::tr("%1% %2").arg(p_profile->general->prefCalcPercentile(),0, 'f',0).arg(schema::channel[code].label());
+    return QString("%1% %2").arg(p_profile->general->prefCalcPercentile(),0, 'f',0).arg(schema::channel[code].label());
 }
 
 EventDataType Day::countInsideSpan(ChannelID span, ChannelID code)
@@ -1543,7 +1543,7 @@ QString Day::getPressureRelief()
         // TODO: This is an awful hack that depends on the enum ordering of the pressure relief mode.
         // See the comment in getCPAPModeStr().
         int pr_mode = qRound(settings_wavg(pr_mode_chan));
-        pr_str = QObject::tr("%1%2").arg(loader->PresReliefLabel()).arg(schema::channel[pr_mode_chan].option(pr_mode));
+        pr_str = QString("%1%2").arg(loader->PresReliefLabel()).arg(schema::channel[pr_mode_chan].option(pr_mode));
 
         int pr_level = -1;
         if (pr_level_chan != NoChannel && settingExists(pr_level_chan)) {

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -52,7 +52,7 @@ QToolButton:pressed {
 }</string>
            </property>
            <property name="text">
-            <string>...</string>
+            <string notr="true">...</string>
            </property>
            <property name="icon">
             <iconset resource="Resources.qrc">
@@ -176,12 +176,11 @@ QToolButton:pressed {
           <property name="font">
            <font>
             <pointsize>13</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
           <property name="text">
-           <string>OSCAR</string>
+           <string notr="true">OSCAR</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -252,7 +251,6 @@ QToolButton:pressed {
           </property>
           <property name="font">
            <font>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -273,7 +271,6 @@ QToolButton:pressed {
              </property>
              <property name="font">
               <font>
-               <weight>50</weight>
                <bold>false</bold>
               </font>
              </property>
@@ -298,7 +295,6 @@ QToolButton:pressed {
             <widget class="QLabel" name="diskSpaceInfo">
              <property name="font">
               <font>
-               <weight>50</weight>
                <bold>false</bold>
               </font>
              </property>

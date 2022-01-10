@@ -432,7 +432,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
@@ -1047,7 +1047,7 @@ QToolButton:pressed {
                </font>
               </property>
               <property name="text">
-               <string> i </string>
+               <string notr="true"> i </string>
               </property>
              </widget>
             </item>
@@ -1055,7 +1055,6 @@ QToolButton:pressed {
              <widget class="QToolButton" name="JournalNotesBold">
               <property name="font">
                <font>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -1178,7 +1177,6 @@ QToolButton:pressed {
                 </property>
                 <property name="font">
                  <font>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -1191,7 +1189,6 @@ QToolButton:pressed {
                <widget class="QLabel" name="label_9">
                 <property name="font">
                  <font>
-                  <weight>50</weight>
                   <bold>false</bold>
                  </font>
                 </property>
@@ -1284,7 +1281,6 @@ QSlider::handle:horizontal  {
                 </property>
                 <property name="font">
                  <font>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>

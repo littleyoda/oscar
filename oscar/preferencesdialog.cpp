@@ -318,8 +318,8 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->maskLeaks4Slider->setValue(profile->cpap->custom4cmH2OLeaks()*10.0);
     ui->maskLeaks20Slider->setValue(profile->cpap->custom20cmH2OLeaks()*10.0);
 
-    ui->maskLeaks4Label->setText(tr("%1 %2").arg(profile->cpap->custom4cmH2OLeaks(), 5, 'f', 1).arg(STR_UNIT_LPM));
-    ui->maskLeaks20Label->setText(tr("%1 %2").arg(profile->cpap->custom20cmH2OLeaks(), 5, 'f', 1).arg(STR_UNIT_LPM));
+    ui->maskLeaks4Label->setText(QString("%1 %2").arg(profile->cpap->custom4cmH2OLeaks(), 5, 'f', 1).arg(STR_UNIT_LPM));
+    ui->maskLeaks20Label->setText(QString("%1 %2").arg(profile->cpap->custom20cmH2OLeaks(), 5, 'f', 1).arg(STR_UNIT_LPM));
 
     /*    QLocale locale=QLocale::system();
         QString shortformat=locale.dateFormat(QLocale::ShortFormat);

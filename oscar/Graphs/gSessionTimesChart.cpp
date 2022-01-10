@@ -284,15 +284,15 @@ void gSummaryChart::afterDraw(QPainter &painter, gGraph &graph, QRectF rect)
             break;
         case ST_MID:
             val = mid;
-            txt = QObject::tr("%1: ").arg(midstr);
+            txt = QString("%1: ").arg(midstr);
             break;
         case ST_90P:
             val = mid;
-            txt = QObject::tr("%1: ").arg(percstr);
+            txt = QString("%1: ").arg(percstr);
             break;
         default:
             val = mid;
-            txt = QObject::tr("???: ");
+            txt = QString("???: ");
             break;
         }
         strlist.append(QString("%1%2").arg(txt).arg(val,0,'f',2));
@@ -1250,7 +1250,7 @@ void gAHIChart::afterDraw(QPainter & /*painter */, gGraph &graph, QRectF rect)
     }
 
     QStringList txtlist;
-    if (!skip) txtlist.append(QObject::tr("%1 %2 / %3 / %4").arg(STR_TR_AHI).arg(min_ahi, 0, 'f', 2).arg(med, 0, 'f', 2).arg(max_ahi, 0, 'f', 2));
+    if (!skip) txtlist.append(QString("%1 %2 / %3 / %4").arg(STR_TR_AHI).arg(min_ahi, 0, 'f', 2).arg(med, 0, 'f', 2).arg(max_ahi, 0, 'f', 2));
 
     int i = calcitems.size();
     while (i > 0) {

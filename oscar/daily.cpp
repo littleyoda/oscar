@@ -1319,7 +1319,7 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Channel)
             .arg(STR_TR_Min)
             .arg(midname)
-            .arg(tr("%1%2").arg(percentile*100,0,'f',0).arg(STR_UNIT_Percentage))
+            .arg(QString("%1%2").arg(percentile*100,0,'f',0).arg(STR_UNIT_Percentage))
             .arg(ST_max == ST_MAX?STR_TR_Max:tr("99.5%"));
 
     ChannelID chans[]={

@@ -2148,7 +2148,7 @@ void gGraphView::populateMenu(gGraph * graph)
 
         if (lines_menu->actions().size() > 0) {
             lines_menu->insertSeparator(lines_menu->actions()[0]);
-            action = new QAction(QObject::tr("%1").arg(graph->title()), lines_menu);
+            action = new QAction(QString("%1").arg(graph->title()), lines_menu);
             lines_menu->insertAction(lines_menu->actions()[0], action);
             action->setFont(font);
             action->setData(QString(""));
@@ -2191,7 +2191,7 @@ void gGraphView::populateMenu(gGraph * graph)
 
         if (plots_menu->actions().size() > 0) {
             plots_menu->insertSeparator(plots_menu->actions()[0]);
-            action = new QAction(QObject::tr("%1").arg(graph->title()), plots_menu);
+            action = new QAction(QString("%1").arg(graph->title()), plots_menu);
             plots_menu->insertAction(plots_menu->actions()[0], action);
 
             action->setFont(font);
@@ -2262,7 +2262,7 @@ void gGraphView::populateMenu(gGraph * graph)
 
             // Show CPAP Events menu Header...
             cpap_menu->insertSeparator(cpap_menu->actions()[0]);
-            action = new QAction(QObject::tr("%1").arg(graph->title()), cpap_menu);
+            action = new QAction(QString("%1").arg(graph->title()), cpap_menu);
             cpap_menu->insertAction(cpap_menu->actions()[0], action);
             action->setFont(font);
             action->setData(QString(""));
@@ -2279,7 +2279,7 @@ void gGraphView::populateMenu(gGraph * graph)
             }
 
             oximeter_menu->insertSeparator(oximeter_menu->actions()[0]);
-            action = new QAction(QObject::tr("%1").arg(graph->title()), oximeter_menu);
+            action = new QAction(QString("%1").arg(graph->title()), oximeter_menu);
             oximeter_menu->insertAction(oximeter_menu->actions()[0], action);
             action->setFont(font);
             action->setData(QString(""));

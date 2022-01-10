@@ -1167,7 +1167,7 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                         break;
 
                     case ST_90P:
-                        strDataType = QObject::tr("90%");
+                        strDataType = QString("90%");
                         break;
 
                     case ST_PERC:

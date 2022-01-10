@@ -206,7 +206,7 @@ void init()
     schema::channel[OXI_Pulse].setUpperThreshold(130);
 
     schema::channel.add(GRP_OXI, new Channel(OXI_SPO2            = 0x1801, WAVEFORM,    MT_OXIMETER, SESSION, STR_GRAPH_Oxi_SPO2,
-            QObject::tr("SpO2 %"), QObject::tr("Blood-oxygen saturation percentage"), QObject::tr("SpO2"),       STR_UNIT_Percentage,          DEFAULT,    QColor("blue")));
+            QString("SpO2 %"), QObject::tr("Blood-oxygen saturation percentage"), QString("SpO2"),       STR_UNIT_Percentage,          DEFAULT,    QColor("blue")));
     schema::channel[OXI_SPO2].setLowerThreshold(88);
 
     schema::channel.add(GRP_OXI, new Channel(OXI_Plethy          = 0x1802, WAVEFORM,    MT_OXIMETER, SESSION, STR_GRAPH_Oxi_Plethy,

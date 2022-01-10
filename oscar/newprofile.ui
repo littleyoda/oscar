@@ -40,7 +40,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="welcomePage">
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -53,6 +53,9 @@
               <url>
                <string>about:blank</string>
               </url>
+             </property>
+             <property name="searchPaths">
+              <stringlist notr="true"/>
              </property>
              <property name="openExternalLinks">
               <bool>false</bool>
@@ -868,13 +871,12 @@
          <property name="font">
           <font>
            <pointsize>14</pointsize>
-           <weight>75</weight>
            <italic>false</italic>
            <bold>true</bold>
           </font>
          </property>
          <property name="text">
-          <string>OSCAR</string>
+          <string notr="true">OSCAR</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>

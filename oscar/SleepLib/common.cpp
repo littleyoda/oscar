@@ -664,7 +664,7 @@ void initializeStrings()
 
     STR_UNIT_M = QObject::tr(" m");
     STR_UNIT_CM = QObject::tr(" cm");
-    STR_UNIT_INCH = QObject::tr("\"");
+    STR_UNIT_INCH = QObject::tr("in");
     STR_UNIT_FOOT = QObject::tr("ft");
     STR_UNIT_POUND = QObject::tr("lb");
     STR_UNIT_OUNCE = QObject::tr("oz");
@@ -678,7 +678,7 @@ void initializeStrings()
     STR_UNIT_s = QObject::tr("s"); // seconds shortform
     STR_UNIT_ms = QObject::tr("ms"); // milliseconds
     STR_UNIT_EventsPerHour = QObject::tr("Events/hr"); // Events per hour
-    STR_UNIT_Percentage = QObject::tr("%");
+    STR_UNIT_Percentage = QString("%");
     STR_UNIT_Hz = QObject::tr("Hz");          // Hertz
     STR_UNIT_BPM = QObject::tr("bpm");        // Beats per Minute
     STR_UNIT_LPM = QObject::tr("L/min");      // Litres per Minute
@@ -715,7 +715,7 @@ void initializeStrings()
     STR_TR_Weight = QObject::tr("Weight");
     STR_TR_Zombie = QObject::tr("Zombie");
     STR_TR_PulseRate = QObject::tr("Pulse Rate"); // Pulse / Heart rate
-    STR_TR_SpO2 = QObject::tr("SpO2");
+    STR_TR_SpO2 = QString("SpO2");
     STR_TR_Plethy = QObject::tr("Plethy");        // Plethysomogram
     STR_TR_Pressure = QObject::tr("Pressure");
 
@@ -815,7 +815,7 @@ void initializeStrings()
     STR_TR_PrRelief = QObject::tr("Pr. Relief"); // Pressure Relief
 
     STR_TR_Bookmarks = QObject::tr("Bookmarks");
-    STR_TR_OSCAR = QObject::tr("OSCAR");
+    STR_TR_OSCAR = QString("OSCAR");
     //STR_TR_AppVersion = QObject::tr("v%1").arg(getVersion());
 
     STR_TR_Mode = QObject::tr("Mode");

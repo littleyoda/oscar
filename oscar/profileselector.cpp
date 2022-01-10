@@ -132,7 +132,7 @@ void ProfileSelector::updateProfileList()
         // Problem: Can't access profile details until it's loaded.
         QString usersname;
         if (!prof->user->lastName().isEmpty()) {
-            usersname = tr("%1, %2").arg(prof->user->lastName()).arg(prof->user->firstName());
+            usersname = QString("%1, %2").arg(prof->user->lastName()).arg(prof->user->firstName());
         }
 
         model->setData(model->index(row, 0, QModelIndex()), name);
@@ -309,7 +309,7 @@ void ProfileSelector::on_buttonEditProfile_clicked()
         if (newprof->exec() != NewProfile::Rejected) {
             QString usersname;
             if (!prof->user->lastName().isEmpty()) {
-                usersname = tr("%1, %2").arg(prof->user->lastName()).arg(prof->user->firstName());
+                usersname = QString("%1, %2").arg(prof->user->lastName()).arg(prof->user->firstName());
             }
 
             proxy->setData(proxy->index(ui->profileView->currentIndex().row(), 5, QModelIndex()), usersname);

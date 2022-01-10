@@ -71,7 +71,7 @@ ExportCSV::~ExportCSV()
 
 void ExportCSV::on_filenameBrowseButton_clicked()
 {
-    QString timestamp = tr("OSCAR_");
+    QString timestamp = QString("OSCAR_");
     timestamp += p_profile->Get("UserName") + "_";
 
     if (ui->rb1_details->isChecked()) { timestamp += tr("Details_"); }
@@ -219,7 +219,7 @@ void ExportCSV::on_exportButton_clicked()
         }
 
         for (int i = 0; i < p90list.size(); i++) {
-            header += sep + tr("%1% ").arg(percent*100.0, 0, 'f', 0) + schema::channel[p90list[i]].label();
+            header += sep + QString("%1% ").arg(percent*100.0, 0, 'f', 0) + schema::channel[p90list[i]].label();
         }
 
         for (int i = 0; i < maxlist.size(); i++) {

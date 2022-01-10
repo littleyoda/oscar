@@ -596,7 +596,7 @@ void OximeterImport::on_calendarWidget_clicked(const QDate &date)
         sessbar->update();
     } else if (ui->radioSyncOximeter) {
         qDebug() << "oximod - Using oximeter date and time";
-        ui->sessbarLabel->setText(tr("%1").arg(date.toString(Qt::SystemLocaleLongDate)));
+        ui->sessbarLabel->setText(QString("%1").arg(date.toString(Qt::SystemLocaleLongDate)));
         ui->dateTimeEdit->setDateTime(QDateTime(date, ui->dateTimeEdit->dateTime().time()));
     }
 }

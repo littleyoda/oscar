@@ -109,7 +109,7 @@ void gDailySummary::SetDay(Day *day)
 
         CPAPMode mode = (CPAPMode)(int)round(day->settings_wavg(CPAP_Mode));
 
-        info.append(QObject::tr("%1: %2").arg(STR_TR_AHI).arg(day->calcAHI(),0,'f',2));
+        info.append(QString("%1: %2").arg(STR_TR_AHI).arg(day->calcAHI(),0,'f',2));
         info_background.append(QColor("orange"));
 
 
