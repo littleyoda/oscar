@@ -287,14 +287,15 @@ bool ViatomFile::ParseHeader()
 
     switch (sig) {
     case 0x0003:
-    case 0x0005:
+    case 0x0005:  // CheckMe O2 Max
         break;
     default:
         qDebug() << m_file.fileName() << "invalid signature for Viatom data file" << sig;
         return false;
         break;
     }
-    CHECK_VALUE(sig, 3);  // We have only a single sample of 5, without a corresponding PDF. We need more samples.
+    m_sig = sig;
+    CHECK_VALUES(m_sig, 3, 5);
 
     if ((year < 2015 || year > 2059) || (month < 1 || month > 12) || (day < 1 || day > 31) ||
         (hour > 23) || (min > 59) || (sec > 59)) {
@@ -332,8 +333,7 @@ bool ViatomFile::ParseHeader()
     m_timestamp = data_timestamp.toMSecsSinceEpoch();
     m_sessionid = m_timestamp / 1000L;
 
-    int filesize = header[9] | (header[10] << 8);  // possibly 32-bit
-    CHECK_VALUE(header[11], 0);
+    int filesize = header[9] | (header[10] << 8) | (header[11] << 16);  // possibly 32-bit
     CHECK_VALUE(header[12], 0);
 
     m_duration   = header[13] | (header[14] << 8);  // possibly 32-bit
@@ -367,7 +367,7 @@ bool ViatomFile::ParseHeader()
     qint64 datasize = m_file.size() - HEADER_SIZE;
     m_record_count = datasize / RECORD_SIZE;
     m_resolution = m_duration / m_record_count * 1000L;
-    if (m_resolution == 2000) {
+    if (m_resolution == 2000 && m_sig == 3) {
         // Interestingly the file size in the header corresponds the number of
         // distinct samples. These files actually double-report each sample!
         // So this resolution isn't really the real one. The importer should
@@ -413,7 +413,7 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
         records.append(rec);
     } while (records.size() < m_record_count);
 
-    // It turns out 2s files are actually just double-reported samples!
+    // It turns out 2s files are actually just double-reported samples on older models!
     if (m_resolution == 2000) {
         QList<ViatomFile::Record> dedup;
         bool all_are_duplicated = true;
@@ -432,20 +432,24 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
             }
             dedup.append(a);
         }
-        CHECK_VALUE(all_are_duplicated, true);
+        if (m_sig == 5) {
+            // Confirm that CheckMe O2 Max is a true 2s sample rate.
+            CHECK_VALUE(all_are_duplicated, false);
+        } else {
+            // Confirm that older models are actually a 4s sample rate.
+            CHECK_VALUE(m_sig, 3);
+            CHECK_VALUE(all_are_duplicated, true);
+        }
         if (all_are_duplicated) {
             // Return the deduplicated list.
             records = dedup;
         }
     }
-    /* TODO: Test against CheckMe sample data
-    int iCheckMeAdj; // Allows for an odd number in the CheckMe  duration/# of records return
-    iCheckMeAdj = duration() / records.size();
-    if(iCheckMeAdj == 3) iCheckMeAdj = 4; // CN - Sanity check for CheckMe devices since their files do not always terminate on an even number.
-
-    CHECK_VALUE(iCheckMeAdj, 4);  // Crimson Nape - Changed to accomadate the CheckMe data files.
-    */
-    CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
+    if (m_sig == 5) {
+        CHECK_VALUES(duration() / records.size(), 2, 4);  // We've seen 2s and 4s resolution.
+    } else {
+        CHECK_VALUE(duration() / records.size(), 4);  // We've only seen 4s true resolution so far.
+    }
 
     return records;
 }

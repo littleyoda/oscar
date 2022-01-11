@@ -82,6 +82,7 @@ public:
 protected:
     static const int RECORD_SIZE = 5;
     QFile & m_file;
+    int m_sig;
     quint64 m_timestamp;
     int m_duration;
     int m_record_count;
