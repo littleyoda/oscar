@@ -1360,7 +1360,7 @@ void Statistics::printReport(QWidget * parent) {
 
         qDebug() << "Enlarged printer font" << font << "printer default font set" << doc.defaultFont();
 
-        doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter);
+        doc.setHtml(htmlReportHeaderPrint + htmlUsage + htmlReportFooter + htmlMachineSettings + htmlMachines + htmlReportFooter);
 
         // Dump HTML for use with HTML4 validator
 //        QString html = htmlReportHeaderPrint + htmlUsage + htmlMachineSettings + htmlMachines + htmlReportFooter;
