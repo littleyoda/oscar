@@ -262,6 +262,13 @@ int main(int argc, char* argv[])
 
 #else
 
+#ifndef Q_OS_LINUX
+// Due to a bug in Qt, creating multiple QApplication instances in a process
+// causes subsequent native file dialog boxes to hang on Fedora 35.
+// See https://bugreports.qt.io/browse/QTBUG-90616
+//
+// Since Linux users can simply use the --legacy command-line argument,
+// we can remove the shift-key check that requires those multiple instances.
 bool shiftKeyPressedAtLaunch(int argc, char *argv[])
 {
     // Reliably detecting the shift key requires a QGuiApplication instance, but
@@ -272,6 +279,7 @@ bool shiftKeyPressedAtLaunch(int argc, char *argv[])
     delete app;
     return keymodifier == Qt::ShiftModifier;
 }
+#endif
 
 int main(int argc, char *argv[]) {
 
@@ -284,10 +292,13 @@ int main(int argc, char *argv[]) {
 
     // If shift key was held down when OSCAR was launched, force Software graphics Engine (aka LegacyGFX)
     QString forcedEngine = "";
+#ifndef Q_OS_LINUX
+    // Shift key check is skipped on Linux due to a Qt bug, see comment at shiftKeyPressedAtLaunch().
     if (shiftKeyPressedAtLaunch(argc, argv)){
         settings.setValue(GFXEngineSetting, (unsigned int)GFX_Software);
         forcedEngine = "Software Engine forced by shift key at launch";
     }
+#endif
     // This argument needs to be processed before creating the QApplication,
     // based on sample code at https://doc.qt.io/qt-5/qapplication.html#details
     for (int i = 1; i < argc; ++i) {
