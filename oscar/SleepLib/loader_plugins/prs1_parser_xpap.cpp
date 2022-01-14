@@ -2074,7 +2074,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 break;
             case 0x46:  // Tubing Type (alternate, seen instead of 0x3b on 700X110 v1.2 firmware and on DS2)
                 CHECK_VALUE(len, 1);
-                if (data[pos] > 3) UNEXPECTED_VALUE(data[pos], "0-3");  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm
+                if (data[pos] > 4) UNEXPECTED_VALUE(data[pos], "0-4");  // 0 = 22mm, 1 = 15mm, 2 = 15HT, 3 = 12mm, 4 = HT12
                 // TODO: Confirm that 4 is 12HT and update ParseTubingTypeV3.
                 this->ParseTubingTypeV3(data[pos]);
                 break;

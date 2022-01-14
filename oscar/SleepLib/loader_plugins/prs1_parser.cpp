@@ -916,6 +916,7 @@ void PRS1DataChunk::ParseTubingTypeV3(unsigned char type)
     case 1: diam = 15; break;
     case 2: diam = 15; break;  // 15HT, though the reports only say "15" for DreamStation models
     case 3: diam = 12; break;  // seen on DreamStation Go models
+    case 4: diam = 12; break;  // HT12, seen on DreamStation 2 models
     default:
         UNEXPECTED_VALUE(type, "known tubing type");
         return;
