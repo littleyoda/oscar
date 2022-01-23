@@ -163,10 +163,6 @@
         <translation>Päivyri</translation>
     </message>
     <message>
-        <source> i </source>
-        <translation type="vanished"> i </translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="1062"/>
         <source>B</source>
         <translation>B</translation>
@@ -494,10 +490,6 @@
         <translation>Happisaturaation vertailukohta</translation>
     </message>
     <message>
-        <source>%1%2</source>
-        <translation type="vanished">%1%2</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1317"/>
         <source>Statistics</source>
         <translation>Tilastot</translation>
@@ -670,10 +662,6 @@
         <translation>Räätälöity</translation>
     </message>
     <message>
-        <source>OSCAR_</source>
-        <translation type="vanished">OSCAR_</translation>
-    </message>
-    <message>
         <location filename="../oscar/exportcsv.cpp" line="77"/>
         <source>Details_</source>
         <translation>Details_</translation>
@@ -758,10 +746,6 @@
         <location filename="../oscar/exportcsv.cpp" line="214"/>
         <source> Count</source>
         <translation> Lukumäärä</translation>
-    </message>
-    <message>
-        <source>%1% </source>
-        <translation type="vanished">%1% </translation>
     </message>
 </context>
 <context>
@@ -882,7 +866,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="595"/>
-        <location filename="../oscar/mainwindow.ui" line="2917"/>
+        <location filename="../oscar/mainwindow.ui" line="2890"/>
         <source>Standard</source>
         <translation>Standardi</translation>
     </message>
@@ -927,235 +911,227 @@
         <translation>Apua</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2424"/>
+        <location filename="../oscar/mainwindow.ui" line="2397"/>
         <source>&amp;File</source>
         <translation>&amp;Tiedostot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2449"/>
+        <location filename="../oscar/mainwindow.ui" line="2422"/>
         <source>&amp;View</source>
         <translation>&amp;Näytä</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2478"/>
+        <location filename="../oscar/mainwindow.ui" line="2451"/>
         <source>&amp;Help</source>
         <translation>&amp;Apua</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2482"/>
+        <location filename="../oscar/mainwindow.ui" line="2455"/>
         <source>Troubleshooting</source>
         <translation>Ongelmien ratkaisu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2508"/>
+        <location filename="../oscar/mainwindow.ui" line="2481"/>
         <source>&amp;Data</source>
         <translation>Tie&amp;dot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2512"/>
+        <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>&amp;Advanced</source>
         <translation>&amp;Lisää</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2593"/>
+        <location filename="../oscar/mainwindow.ui" line="2566"/>
         <source>Show Daily view</source>
         <translation>Näytä päivittäiset tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2604"/>
+        <location filename="../oscar/mainwindow.ui" line="2577"/>
         <source>Show Overview view</source>
         <translation>Näytä yleistiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2650"/>
+        <location filename="../oscar/mainwindow.ui" line="2623"/>
         <source>&amp;Maximize Toggle</source>
         <translation>&amp;Maksimoi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2653"/>
+        <location filename="../oscar/mainwindow.ui" line="2626"/>
         <source>Maximize window</source>
         <translation>Suurenna ikkuna</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2672"/>
+        <location filename="../oscar/mainwindow.ui" line="2645"/>
         <source>Reset Graph &amp;Heights</source>
         <translation>Pala&amp;uta kaavioiden korkeudet</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2675"/>
+        <location filename="../oscar/mainwindow.ui" line="2648"/>
         <source>Reset sizes of graphs</source>
         <translation>Palauta alkuperäiset ikkunakoot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2735"/>
+        <location filename="../oscar/mainwindow.ui" line="2708"/>
         <source>Show Right Sidebar</source>
         <translation>Näytä oikea sivupalkki</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2749"/>
+        <location filename="../oscar/mainwindow.ui" line="2722"/>
         <source>Show Statistics view</source>
         <translation>Näytä tilastotiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2762"/>
+        <location filename="../oscar/mainwindow.ui" line="2735"/>
         <source>Import &amp;Dreem Data</source>
         <translation>Tuo &amp;Dream tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2955"/>
+        <location filename="../oscar/mainwindow.ui" line="2928"/>
         <source>Purge Current Selected Day</source>
         <translation>Tyhjennä nykyinen valittu päivä</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2960"/>
+        <location filename="../oscar/mainwindow.ui" line="2933"/>
         <source>&amp;CPAP</source>
         <translation>&amp;CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2965"/>
+        <location filename="../oscar/mainwindow.ui" line="2938"/>
         <source>&amp;Oximetry</source>
         <translation>&amp;Oksimetri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2970"/>
+        <location filename="../oscar/mainwindow.ui" line="2943"/>
         <source>&amp;Sleep Stage</source>
         <translation>&amp;Univaihe</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2975"/>
+        <location filename="../oscar/mainwindow.ui" line="2948"/>
         <source>&amp;Position</source>
         <translation>&amp;Asema</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2980"/>
+        <location filename="../oscar/mainwindow.ui" line="2953"/>
         <source>&amp;All except Notes</source>
         <translation>K&amp;aikki paitsi muistiinpanot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2985"/>
+        <location filename="../oscar/mainwindow.ui" line="2958"/>
         <source>All including &amp;Notes</source>
         <translation>Kaikki mukaa&amp;n lukien muistiinpanot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2805"/>
+        <location filename="../oscar/mainwindow.ui" line="2778"/>
         <source>Show &amp;Line Cursor</source>
         <translation>Näytä &amp;linjakursori</translation>
     </message>
     <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2827"/>
+        <location filename="../oscar/mainwindow.ui" line="2800"/>
         <source>Show Daily Left Sidebar</source>
         <translation>Näytä päivittäinen vasemmanpuolinen sivupalkki</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2844"/>
+        <location filename="../oscar/mainwindow.ui" line="2817"/>
         <source>Show Daily Calendar</source>
         <translation>Näytä päivittäinen kalenteri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2865"/>
+        <location filename="../oscar/mainwindow.ui" line="2838"/>
         <source>Create zip of CPAP data card</source>
         <translation>Luo SD-kortin tiedoista pakattu zip-tiedosto</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2870"/>
+        <location filename="../oscar/mainwindow.ui" line="2843"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation>Luo zip-paketti Oscarin diagnostisista lokeista</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2875"/>
+        <location filename="../oscar/mainwindow.ui" line="2848"/>
         <source>Create zip of all OSCAR data</source>
         <translation>Luo kaikista Oscarin tiedoista pakattu zip-tiedosto</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2890"/>
+        <location filename="../oscar/mainwindow.ui" line="2863"/>
         <source>Report an Issue</source>
         <translation>Raportoi ongelma</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2895"/>
+        <location filename="../oscar/mainwindow.ui" line="2868"/>
         <source>System Information</source>
         <translation>Järjestelmäinformaatio</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2906"/>
+        <location filename="../oscar/mainwindow.ui" line="2879"/>
         <source>Show &amp;Pie Chart</source>
         <translation>Näytä &amp;Piirakkakaavio</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2909"/>
+        <location filename="../oscar/mainwindow.ui" line="2882"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>Näytä piirakkakaavio päivittäisellä sivulla</translation>
     </message>
     <message>
-        <source>F3</source>
-        <translation type="vanished">F3</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2920"/>
+        <location filename="../oscar/mainwindow.ui" line="2893"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
         <translation>Normaali grafiikka. Hyvä CPAP, APAP ja Bi-PAP laitteille</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2925"/>
+        <location filename="../oscar/mainwindow.ui" line="2898"/>
         <source>Advanced</source>
         <translation>Lisää</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2928"/>
+        <location filename="../oscar/mainwindow.ui" line="2901"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation>Laajempi grafiikkavalinta. Hyvä ASV- ja AVAPS laitteille</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2939"/>
+        <location filename="../oscar/mainwindow.ui" line="2912"/>
         <source>Show Personal Data</source>
         <translation>Näytä henkilökohtaiset tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2947"/>
+        <location filename="../oscar/mainwindow.ui" line="2920"/>
         <source>Check For &amp;Updates</source>
         <translation>Tarkista &amp;päivitykset</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2453"/>
+        <location filename="../oscar/mainwindow.ui" line="2426"/>
         <source>&amp;Reset Graphs</source>
         <translation>Palauta &amp;Kaaviot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2544"/>
+        <location filename="../oscar/mainwindow.ui" line="2517"/>
         <source>Rebuild CPAP Data</source>
         <translation>Rakenna CPAP tiedot uudelleen</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2575"/>
+        <location filename="../oscar/mainwindow.ui" line="2548"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Asetukset</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2580"/>
+        <location filename="../oscar/mainwindow.ui" line="2553"/>
         <source>&amp;Profiles</source>
         <translation>&amp;Profiilit</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2642"/>
+        <location filename="../oscar/mainwindow.ui" line="2615"/>
         <source>&amp;About OSCAR</source>
         <translation>Tietoj&amp;a Oscarista</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2860"/>
+        <location filename="../oscar/mainwindow.ui" line="2833"/>
         <source>Show Performance Information</source>
         <translation>Näytä suoritusarvot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2880"/>
+        <location filename="../oscar/mainwindow.ui" line="2853"/>
         <source>CSV Export Wizard</source>
         <translation>CSV:n vientivelho</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2885"/>
+        <location filename="../oscar/mainwindow.ui" line="2858"/>
         <source>Export for Review</source>
         <translation>Vie katselmoitavaksi</translation>
     </message>
@@ -1165,107 +1141,107 @@
         <translation>&amp;Poistu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2585"/>
+        <location filename="../oscar/mainwindow.ui" line="2558"/>
         <source>Exit</source>
         <translation>Poistu</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2590"/>
+        <location filename="../oscar/mainwindow.ui" line="2563"/>
         <source>View &amp;Daily</source>
         <translation>Näytä &amp;Päivittäin</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2601"/>
+        <location filename="../oscar/mainwindow.ui" line="2574"/>
         <source>View &amp;Overview</source>
         <translation>Näytä &amp;Yleiskatsaus</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2612"/>
+        <location filename="../oscar/mainwindow.ui" line="2585"/>
         <source>View &amp;Welcome</source>
         <translation>Näytä Ter&amp;vetuloa</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2637"/>
+        <location filename="../oscar/mainwindow.ui" line="2610"/>
         <source>Use &amp;AntiAliasing</source>
         <translation>Käytä &amp;reunojen pehmennys</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2664"/>
+        <location filename="../oscar/mainwindow.ui" line="2637"/>
         <source>Show Debug Pane</source>
         <translation>Näytä debuggauspaneeli</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2680"/>
+        <location filename="../oscar/mainwindow.ui" line="2653"/>
         <source>Take &amp;Screenshot</source>
         <translation>&amp;Ota kuvaruudunkaappaus</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2688"/>
+        <location filename="../oscar/mainwindow.ui" line="2661"/>
         <source>O&amp;ximetry Wizard</source>
         <translation>O&amp;ksimetrivelho</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2696"/>
+        <location filename="../oscar/mainwindow.ui" line="2669"/>
         <source>Print &amp;Report</source>
         <translation>Tulosta &amp;raportti</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2701"/>
+        <location filename="../oscar/mainwindow.ui" line="2674"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;Muokkaa profiilia</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2792"/>
+        <location filename="../oscar/mainwindow.ui" line="2765"/>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation>Tuo &amp;Viatom/Wellue tietoja</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2841"/>
+        <location filename="../oscar/mainwindow.ui" line="2814"/>
         <source>Daily Calendar</source>
         <translation>Päivittäinen kalenteri</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2852"/>
+        <location filename="../oscar/mainwindow.ui" line="2825"/>
         <source>Backup &amp;Journal</source>
         <translation>&amp;Päivyrin varmuuskopiointi</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2706"/>
+        <location filename="../oscar/mainwindow.ui" line="2679"/>
         <source>Online Users &amp;Guide</source>
         <translation>&amp;Käyttäjäopas verkossa</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2711"/>
+        <location filename="../oscar/mainwindow.ui" line="2684"/>
         <source>&amp;Frequently Asked Questions</source>
         <translation>&amp;UKK</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2716"/>
+        <location filename="../oscar/mainwindow.ui" line="2689"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translation>&amp;Automaattinen oksimetrin puhdistus</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2721"/>
+        <location filename="../oscar/mainwindow.ui" line="2694"/>
         <source>Change &amp;User</source>
         <translation>Vaihda &amp;käyttäjä</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2527"/>
+        <location filename="../oscar/mainwindow.ui" line="2500"/>
         <source>Purge &amp;Current Selected Day</source>
         <translation>Tyhjennä &amp;valittu päivä</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2732"/>
+        <location filename="../oscar/mainwindow.ui" line="2705"/>
         <source>Right &amp;Sidebar</source>
         <translation>Oikea &amp;Sivuikkuna</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2824"/>
+        <location filename="../oscar/mainwindow.ui" line="2797"/>
         <source>Daily Sidebar</source>
         <translation>Päivittäinen sivupalkki</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2743"/>
+        <location filename="../oscar/mainwindow.ui" line="2716"/>
         <source>View S&amp;tatistics</source>
         <translation>Näytä &amp;Tilastot</translation>
     </message>
@@ -1280,12 +1256,12 @@
         <translation>Kirjanmerkit</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2365"/>
+        <location filename="../oscar/mainwindow.ui" line="2338"/>
         <source>Records</source>
         <translation>Tietueet</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2428"/>
+        <location filename="../oscar/mainwindow.ui" line="2401"/>
         <source>Exp&amp;ort Data</source>
         <translation>&amp;Vie tietoja</translation>
     </message>
@@ -1295,57 +1271,57 @@
         <translation>Profiilit</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2516"/>
+        <location filename="../oscar/mainwindow.ui" line="2489"/>
         <source>Purge Oximetry Data</source>
         <translation>Poista oksimetrin tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2522"/>
+        <location filename="../oscar/mainwindow.ui" line="2495"/>
         <source>Purge ALL Machine Data</source>
         <translation>Poista KAIKKI koneen tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2567"/>
+        <location filename="../oscar/mainwindow.ui" line="2540"/>
         <source>&amp;Import CPAP Card Data</source>
         <translation>Tuo CPAP kort&amp;in tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2746"/>
+        <location filename="../oscar/mainwindow.ui" line="2719"/>
         <source>View Statistics</source>
         <translation>Näytä Tilastot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2757"/>
+        <location filename="../oscar/mainwindow.ui" line="2730"/>
         <source>Import &amp;ZEO Data</source>
         <translation>Tuo &amp;ZEO-tietoja</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2767"/>
+        <location filename="../oscar/mainwindow.ui" line="2740"/>
         <source>Import RemStar &amp;MSeries Data</source>
         <translation>Tuo RemStar &amp;MSeries tietoja</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2772"/>
+        <location filename="../oscar/mainwindow.ui" line="2745"/>
         <source>Sleep Disorder Terms &amp;Glossary</source>
         <translation>&amp;Unihäiriöiden termistö</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2777"/>
+        <location filename="../oscar/mainwindow.ui" line="2750"/>
         <source>Change &amp;Language</source>
         <translation>Vaihda kie&amp;li</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2782"/>
+        <location filename="../oscar/mainwindow.ui" line="2755"/>
         <source>Change &amp;Data Folder</source>
         <translation>Va&amp;ihda tietojen kansio</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2787"/>
+        <location filename="../oscar/mainwindow.ui" line="2760"/>
         <source>Import &amp;Somnopose Data</source>
         <translation>Tuo &amp;Somnopose-tietoja</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2797"/>
+        <location filename="../oscar/mainwindow.ui" line="2770"/>
         <source>Current Days</source>
         <translation>Nykyiset päivät</translation>
     </message>
@@ -1991,10 +1967,6 @@
         <translation>Potilasnumero</translation>
     </message>
     <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="957"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Keskeytä</translation>
@@ -2170,10 +2142,6 @@
         <translation>Tyhjennä valittujen päivien väli näyttö</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
         <location filename="../oscar/overview.ui" line="230"/>
         <source>Toggle Graph Visibility</source>
         <translation>Vaihda kaavioiden näkyvyys</translation>
@@ -2252,7 +2220,7 @@ indeksi</translation>
     <message>
         <location filename="../oscar/overview.cpp" line="359"/>
         <source>10 of 10 Charts</source>
-        <translation type="unfinished"></translation>
+        <translation>10 - 10 kaaviot</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="645"/>
@@ -2281,7 +2249,7 @@ indeksi</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="499"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Please note: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;First select your correct oximeter type from the pull-down menu below.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Huomaa: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Valitse ensin oikea oksimetrisi tyyppi allaolevasta avautuvasta valikosta.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="542"/>
@@ -2291,7 +2259,7 @@ indeksi</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="586"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;FIRST Select your Oximeter from these groups:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;ENSIN valitse oksimetrisi näistä ryhmistä:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="602"/>
@@ -2375,10 +2343,6 @@ indeksi</translation>
         <translation>Kesto</translation>
     </message>
     <message>
-        <source>SpO2 %</source>
-        <translation type="vanished">SpO2 %</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="1217"/>
         <source>Pulse Rate</source>
         <translation>Pulssitaso</translation>
@@ -2402,10 +2366,6 @@ indeksi</translation>
         <location filename="../oscar/oximeterimport.ui" line="1375"/>
         <source>Import Completed. When did the recording start?</source>
         <translation>Tuonti valmis. Milloin tallennus alkoi?</translation>
-    </message>
-    <message>
-        <source>Day recording (normally would of) started</source>
-        <translation type="vanished">Päivä milloinka tallennus alkoi</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1445"/>
@@ -2433,10 +2393,6 @@ indeksi</translation>
         <translation>Valitse synkronoitava CPAP-käyttöjakso:</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="1675"/>
         <source>You can manually adjust the time here if required:</source>
         <translation>Voit muuttaa tässä aikaa käsin, jos haluat:</translation>
@@ -2455,14 +2411,6 @@ indeksi</translation>
         <location filename="../oscar/oximeterimport.ui" line="1774"/>
         <source>&amp;Information Page</source>
         <translation>&amp;Infosivu</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Please note: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Make sure your correct oximeter type is selected otherwise import will fail.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Huomaa: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Varmista, että oikea oksimetri-tyyppi on valittu, muuten tuonti epäonnistuu.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Select Oximeter Type:</source>
-        <translation type="vanished">Valitse oksimetri-tyyppi:</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="607"/>
@@ -2512,7 +2460,7 @@ indeksi</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1399"/>
         <source>Day recording (normally would have) started</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivän tallennus olisi alkanut (normaalisti)</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1502"/>
@@ -2725,10 +2673,6 @@ indeksi</translation>
         <translation>CPAP-dataa ei ole saatavilla paikassa %1</translation>
     </message>
     <message>
-        <source>%1</source>
-        <translation type="vanished">%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.cpp" line="726"/>
         <source>Recording...</source>
         <translation>Tallentaa...</translation>
@@ -2812,17 +2756,9 @@ indeksi</translation>
         <translation>&amp;Palauta</translation>
     </message>
     <message>
-        <source>SpO2</source>
-        <translation type="obsolete">SpO2</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
         <translation>Pulssi</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="366"/>
@@ -3041,10 +2977,6 @@ Oletusarvo on 60 minuuttia. Suositellaan jättää muuttumattomana.</translation
         <location filename="../oscar/preferencesdialog.ui" line="1287"/>
         <source>User definable threshold considered large leak</source>
         <translation>Käyttäjän määrittelemä kynnys suurelle vuodolle</translation>
-    </message>
-    <message>
-        <source> L/min</source>
-        <translation type="vanished"> l/min</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1254"/>
@@ -3307,7 +3239,7 @@ koska tämä on ainoa arvo saatavilla yhteenvetopäiville.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1407"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cumulative Indices&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kumulatiiviset indeksit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1414"/>
@@ -3445,10 +3377,6 @@ Vaikuttaa eniten tuontitoimintoihin.</translation>
         <translation>Muut oksimetrin asetukset</translation>
     </message>
     <message>
-        <source>Flag SPO2 Desaturations Below</source>
-        <translation type="vanished">Liputa happisaturaation laskut alle</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1611"/>
         <source>Discard segments under</source>
         <translation>Hävitä lyhyemmät jaksot kuin</translation>
@@ -3495,10 +3423,6 @@ Käyttäessäsi eri maskeja, käytä keskiarvoja. Se on tarpeeksi lähellä.</tr
         <location filename="../oscar/preferencesdialog.ui" line="953"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
         <translation>Huom.: Lineaarinen laskenta käytetty. Tietojen muutto vaatii uudelleenlaskenta.</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1199"/>
@@ -3658,10 +3582,6 @@ Käyttäessäsi eri maskeja, käytä keskiarvoja. Se on tarpeeksi lähellä.</tr
         <translation>Maskin virtausnopeus 4 4 cmH2O paineessa</translation>
     </message>
     <message>
-        <source>Cumulative Indices</source>
-        <translation type="vanished">Huipennetut indeksit</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1495"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Huom: &lt;/span&gt;Suunnittelurajoitusten takia ResMed-laitteet eivät tue näiden asetusten muuttamista.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -3670,34 +3590,6 @@ Käyttäessäsi eri maskeja, käytä keskiarvoja. Se on tarpeeksi lähellä.</tr
         <location filename="../oscar/preferencesdialog.ui" line="1548"/>
         <source>Oximetry Settings</source>
         <translation>Oksimetrin asetukset</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method does &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Synkronoi oksimetriä ja cpap-tietoja&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 tiedot tuotu SpO2Review (.spoR-tiedostoista) tai sarjatuontimetodin &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; pitää korjata synkronoinnin tarvitseman aikaleiman.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Reaaliaikainen näyttötapa (käyttäen sarjakaapelia) on yksi tapa saada tarkka synkronointi CMS50-oksimetreille, mutta se ei ota huomioon CPAP-laitteen kellon edistämistä.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Jos käynnistät oksimetrin nauhoituksella &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;täsmälleen &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samaan aikaan kun käynnistät CPAP-laitteen, voit saavuttaa synkronoinnin. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Sarjamuotoinen tietojen tuontiprosessi ottaa aloitusajaksi viime yön ensimmäisen CPAP-käyttökerran. (Muista tuoda CPAP-tiedot ensin!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2019"/>
@@ -3875,12 +3767,13 @@ Se voi aiheuttaa ongelmia fonttien piirtämisen kanssa kaaviokuvissa nyt käytö
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1290"/>
         <source> l/min</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment> l/min</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1628"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flag SpO&lt;span style=&quot; vertical-align:sub;&quot;&gt;2&lt;/span&gt; Desaturations Below&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Valitse SpO&lt;span style=&quot; vertical-align:sub;&quot;&gt;2&lt;/span&gt; Desaturaatiot alla&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1788"/>
@@ -3897,7 +3790,19 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Synkronoi oksimetri- ja cpap-tietoja&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50-tiedot SpO2-arviointi (.spoR-tiedostoista) tai sarjatuonti-metodi &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; on oikea aikaleima, jota tarvitaan synkronoinnissa.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Ajantasainen näyttö käyttää sarjakaapelia) on yksi tapa saavuttaa tarkka synkronointi CMS 50 -oksimetreissä, mutta se ei estä CPAP-kellon poikkeamaa.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Jos aloitat oksimetrisi tallennusmoodin &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;täsmällisesti &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samaan aikaan kun aloitat cpap-laitteen käytön, saavutat näin synkronoinnin. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Tietojen sarjatuontiprosessi alkaa ciime yön ensimmäisestä cpcp-tietojen tuonnista. (Muista tuoda cpap-tiedot ensin!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2051"/>
@@ -4254,14 +4159,6 @@ Would you like do this now?</source>
         <translation>Palauta suodatin nähdäksesi kaikki profiilit</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
         <location filename="../oscar/profileselector.ui" line="198"/>
         <source>Version</source>
         <translation>Versio</translation>
@@ -4325,10 +4222,6 @@ Would you like do this now?</source>
         <location filename="../oscar/profileselector.cpp" line="95"/>
         <source>Name</source>
         <translation>Nimi</translation>
-    </message>
-    <message>
-        <source>%1, %2</source>
-        <translation type="vanished">%1, %2</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="170"/>
@@ -4604,10 +4497,6 @@ Would you like do this now?</source>
         <translation>Joulu</translation>
     </message>
     <message>
-        <source>&quot;</source>
-        <translation type="vanished">&quot;</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="668"/>
         <source>ft</source>
         <translation>ft</translation>
@@ -4653,14 +4542,6 @@ Would you like do this now?</source>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="283"/>
         <source>Max: </source>
         <translation>Maks: </translation>
-    </message>
-    <message>
-        <source>%1: </source>
-        <translation type="vanished">%1: </translation>
-    </message>
-    <message>
-        <source>???: </source>
-        <translation type="vanished">???: </translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="302"/>
@@ -4752,10 +4633,6 @@ Alku: %2</translation>
 TTIA: %1</source>
         <translation>
 TTIA: %1</translation>
-    </message>
-    <message>
-        <source>%1 %2 / %3 / %4</source>
-        <translation type="vanished">%1 %2 / %3 / %4</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="674"/>
@@ -4916,10 +4793,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
         <source>Pulse Rate</source>
         <translation>Pulssi</translation>
-    </message>
-    <message>
-        <source>SpO2</source>
-        <translation type="vanished">SpO2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="719"/>
@@ -5376,10 +5249,6 @@ TTIA: %1</translation>
         <translation>Pain. kev.</translation>
     </message>
     <message>
-        <source>OSCAR</source>
-        <translation type="vanished">OSCAR</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="700"/>
         <source>No Data Available</source>
         <translation>Tietoa ei ole saatavilla</translation>
@@ -5437,7 +5306,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="667"/>
         <source>in</source>
-        <translation type="unfinished"></translation>
+        <translation>tuumaa</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
@@ -6516,10 +6385,6 @@ TTIA: %1</translation>
         <translation>Vain yhteenveto</translation>
     </message>
     <message>
-        <source>%</source>
-        <translation type="vanished">%</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>An apnea where the airway is open</source>
         <translation>Apnea, jossa ilmavirtaus on auki</translation>
@@ -6625,10 +6490,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
         <source>Heart rate in beats per minute</source>
         <translation>Syke minuutissa</translation>
-    </message>
-    <message>
-        <source>SpO2 %</source>
-        <translation type="vanished">SpO2 %</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
@@ -7297,87 +7158,87 @@ TTIA: %1</translation>
         <translation>tänne </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="331"/>
+        <location filename="../oscar/main.cpp" line="342"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
         <translation>Oscar kaatui tietokoneesi graafisen järjestelmän takia.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="332"/>
+        <location filename="../oscar/main.cpp" line="343"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation>Tämän ratkaisemiseksi Oscar on palannut hitaampaan, mutta entistä yhteensopivampaan piirtämismenetelmään.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="499"/>
+        <location filename="../oscar/main.cpp" line="510"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation>Oscar luo kansion tiedoillesi.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="502"/>
+        <location filename="../oscar/main.cpp" line="513"/>
         <source>We suggest you use this folder: </source>
         <translation>Ehdotamme, että käytät tätä kansiota: </translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="503"/>
+        <location filename="../oscar/main.cpp" line="514"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation>Napsauta Ok hyväksyäksesi tämän, tai Ei jos haluat käyttää toista kansiota.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="514"/>
+        <location filename="../oscar/main.cpp" line="525"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation>Kun käytät Oscaria seuraavan kerran, sinulta kysytään tämä uudelleen.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="554"/>
+        <location filename="../oscar/main.cpp" line="565"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
         <translation>Siirretäänkö SleepyHead- tai OSCAR-tiedot?</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="555"/>
+        <location filename="../oscar/main.cpp" line="566"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
         <translation>Seuraavassa näytössä OSCAR pyytää sinua valitsemaan kansion SleepyHead- tai OSCAR-tiedoilla</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="556"/>
+        <location filename="../oscar/main.cpp" line="567"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
         <translation>Napsauta [OK] siirtyäksesi seuraavaan näyttöön tai [Ei], jos et halua käyttää mitään SleepyHead- tai OSCAR-tietoja.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="565"/>
+        <location filename="../oscar/main.cpp" line="576"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation>Ei voitu luoda Oscarin datakansiota kohteessa</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="575"/>
+        <location filename="../oscar/main.cpp" line="586"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation>Oscar ei voinut kirjoittaa Oscarin datakansioon</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="576"/>
+        <location filename="../oscar/main.cpp" line="587"/>
         <source>Error code</source>
         <translation>Virhekoodi</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="577"/>
+        <location filename="../oscar/main.cpp" line="588"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation>Oscar ei voi jatkaa ja sulkeutuu.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="588"/>
+        <location filename="../oscar/main.cpp" line="599"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation>Oscar ei voinut kirjoittaa debug-lokia. Voit silti käyttää debug-paneelia (Apua/Vianetsintä/Näytä Debug-paneeli), mutta debug-lokia ei voida kirjoittaa levylle.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="647"/>
+        <location filename="../oscar/main.cpp" line="658"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation>Versio &quot;%1&quot; on epäkelpo, ei voi jatkaa!</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="656"/>
+        <location filename="../oscar/main.cpp" line="667"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation>Käyttämäsi Oscarin versio (%1) on VANHEMPI kuin millä nämä tiedot (%2) on luotu.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="509"/>
+        <location filename="../oscar/main.cpp" line="520"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation>Valitse tai luo uusi kansio Oscarin tiedoille</translation>
     </message>
@@ -7392,32 +7253,32 @@ TTIA: %1</translation>
         <translation>Valitsemasi kansio ei sisällä kelvollisia SleepyHead- tai OSCAR-tietoja.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="500"/>
+        <location filename="../oscar/main.cpp" line="511"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
         <translation>Jos olet käyttänyt SleepyHeadia tai vanhempaa OSCAR-versiota,</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="501"/>
+        <location filename="../oscar/main.cpp" line="512"/>
         <source>OSCAR can copy your old data to this folder later.</source>
         <translation>OSCAR voi kopioida vanhat tiedot tähän kansioon myöhemmin.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="513"/>
+        <location filename="../oscar/main.cpp" line="524"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>Koska et valinnut tietojen kansiota, Oscar lopettaa toimintansa.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="525"/>
+        <location filename="../oscar/main.cpp" line="536"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation>Valitsemasi kansio ei ole tyhjä eikä siellä ole Oscar-tietoa.</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="546"/>
+        <location filename="../oscar/main.cpp" line="557"/>
         <source>Data directory:</source>
         <translation>Tietojen kansio:</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="660"/>
+        <location filename="../oscar/main.cpp" line="671"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>Se voi mahdollisesti aiheuttaa tietojen hajoaminen. Oletko varma että haluat jatkaa?</translation>
     </message>
@@ -7427,14 +7288,14 @@ TTIA: %1</translation>
         <translation>Kysymys</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="512"/>
-        <location filename="../oscar/main.cpp" line="564"/>
-        <location filename="../oscar/main.cpp" line="579"/>
+        <location filename="../oscar/main.cpp" line="523"/>
+        <location filename="../oscar/main.cpp" line="575"/>
+        <location filename="../oscar/main.cpp" line="590"/>
         <source>Exiting</source>
         <translation>Poistuu</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="526"/>
+        <location filename="../oscar/main.cpp" line="537"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>Oletko varma, että haluat käyttää tätä kansiota?</translation>
     </message>
@@ -7589,10 +7450,6 @@ TTIA: %1</translation>
         <translation>Koko päivä</translation>
     </message>
     <message>
-        <source>%1 %2 %3</source>
-        <translation type="vanished">%1 %2 %3</translation>
-    </message>
-    <message>
         <location filename="../oscar/reports.cpp" line="564"/>
         <source>Page %1 of %2</source>
         <translation>Sivu %1 / %2</translation>
@@ -7628,10 +7485,6 @@ TTIA: %1</translation>
         <translation>Heräämisaika: %1</translation>
     </message>
     <message>
-        <source>90%</source>
-        <translation type="vanished">90%</translation>
-    </message>
-    <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1242"/>
         <source>(Summary Only)</source>
         <translation>(Vain yhteenveto)</translation>
@@ -7640,10 +7493,6 @@ TTIA: %1</translation>
         <location filename="../oscar/mainwindow.cpp" line="467"/>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
         <translation>Profiilille &apos;%1&apos; on asetettu jo aiemmin lukitus, kohde &apos;%2&apos;.</translation>
-    </message>
-    <message>
-        <source>%1% %2</source>
-        <translation type="vanished">%1% %2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
@@ -7669,10 +7518,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
         <translation>vaihtelee</translation>
-    </message>
-    <message>
-        <source>%1%2</source>
-        <translation type="vanished">%1%2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1568"/>
@@ -7719,10 +7564,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
         <translation>EPAP %1-%2 IPAP %3-%4 (%5)</translation>
-    </message>
-    <message>
-        <source>%1 %2</source>
-        <translation type="vanished">%1 %2</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="359"/>
@@ -7897,10 +7738,6 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <translation>p KKK vvvv [ %1 - %2 ]</translation>
     </message>
     <message>
-        <source>%1</source>
-        <translation type="vanished">%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2246"/>
         <source>Hide All Events</source>
         <translation>Piilota kaikki tapahtumat</translation>
@@ -7941,10 +7778,6 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <location filename="../oscar/Graphs/gLineChart.cpp" line="1130"/>
         <source>AHI %1</source>
         <translation>AHI %1</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <translation type="vanished">%1: %2</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="155"/>
@@ -8314,7 +8147,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <translation>Se näyttää riittävän samanlaiselta kuin muut koneet, että se voisi toimia, mutta kehittäjät haluavat tämän koneen SD-kortin .zip -kopion varmistaakseen, että se toimii OSCAR:in kanssa.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1211"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1213"/>
         <source>Parsing STR.edf records...</source>
         <translation>Parsii STR.edf tietueita...</translation>
     </message>
@@ -8423,12 +8256,12 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/overview.cpp" line="349"/>
         <source>%1 Charts</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Kaaviot</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="350"/>
         <source>%1 of %2 Charts</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 Kaaviot</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="577"/>

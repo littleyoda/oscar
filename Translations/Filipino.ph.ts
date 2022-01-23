@@ -163,10 +163,6 @@
         <translation>Talaarawan</translation>
     </message>
     <message>
-        <source> i </source>
-        <translation type="vanished"> i </translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="1062"/>
         <source>B</source>
         <translation>B</translation>
@@ -493,10 +489,6 @@
         <translation>Ginamitan ng Sp02 Baseline</translation>
     </message>
     <message>
-        <source>%1%2</source>
-        <translation type="vanished">%1%2</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1317"/>
         <source>Statistics</source>
         <translation>Statistics</translation>
@@ -669,10 +661,6 @@
         <translation>Custom</translation>
     </message>
     <message>
-        <source>OSCAR_</source>
-        <translation type="vanished">OSCAR_</translation>
-    </message>
-    <message>
         <location filename="../oscar/exportcsv.cpp" line="77"/>
         <source>Details_</source>
         <translation>Details_</translation>
@@ -757,10 +745,6 @@
         <location filename="../oscar/exportcsv.cpp" line="214"/>
         <source> Count</source>
         <translation> Bilang</translation>
-    </message>
-    <message>
-        <source>%1% </source>
-        <translation type="vanished">%1% </translation>
     </message>
 </context>
 <context>
@@ -881,7 +865,7 @@
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="595"/>
-        <location filename="../oscar/mainwindow.ui" line="2917"/>
+        <location filename="../oscar/mainwindow.ui" line="2890"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
@@ -926,237 +910,237 @@
         <translation>Tulong</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2424"/>
+        <location filename="../oscar/mainwindow.ui" line="2397"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2449"/>
+        <location filename="../oscar/mainwindow.ui" line="2422"/>
         <source>&amp;View</source>
         <translation>&amp;Tingnan</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2478"/>
+        <location filename="../oscar/mainwindow.ui" line="2451"/>
         <source>&amp;Help</source>
         <translation>&amp;Tulong</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2482"/>
+        <location filename="../oscar/mainwindow.ui" line="2455"/>
         <source>Troubleshooting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2508"/>
+        <location filename="../oscar/mainwindow.ui" line="2481"/>
         <source>&amp;Data</source>
         <translation>&amp;Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2512"/>
+        <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>&amp;Advanced</source>
         <translation>&amp;Advanced</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2522"/>
+        <location filename="../oscar/mainwindow.ui" line="2495"/>
         <source>Purge ALL Machine Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2544"/>
+        <location filename="../oscar/mainwindow.ui" line="2517"/>
         <source>Rebuild CPAP Data</source>
         <translation>Bumuo muli ng CPAP Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2567"/>
+        <location filename="../oscar/mainwindow.ui" line="2540"/>
         <source>&amp;Import CPAP Card Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2593"/>
+        <location filename="../oscar/mainwindow.ui" line="2566"/>
         <source>Show Daily view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2604"/>
+        <location filename="../oscar/mainwindow.ui" line="2577"/>
         <source>Show Overview view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2650"/>
+        <location filename="../oscar/mainwindow.ui" line="2623"/>
         <source>&amp;Maximize Toggle</source>
         <translation>&amp;Maximize Toggle</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2653"/>
+        <location filename="../oscar/mainwindow.ui" line="2626"/>
         <source>Maximize window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2672"/>
+        <location filename="../oscar/mainwindow.ui" line="2645"/>
         <source>Reset Graph &amp;Heights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2675"/>
+        <location filename="../oscar/mainwindow.ui" line="2648"/>
         <source>Reset sizes of graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2735"/>
+        <location filename="../oscar/mainwindow.ui" line="2708"/>
         <source>Show Right Sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2749"/>
+        <location filename="../oscar/mainwindow.ui" line="2722"/>
         <source>Show Statistics view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2762"/>
+        <location filename="../oscar/mainwindow.ui" line="2735"/>
         <source>Import &amp;Dreem Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2805"/>
+        <location filename="../oscar/mainwindow.ui" line="2778"/>
         <source>Show &amp;Line Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2827"/>
+        <location filename="../oscar/mainwindow.ui" line="2800"/>
         <source>Show Daily Left Sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2844"/>
+        <location filename="../oscar/mainwindow.ui" line="2817"/>
         <source>Show Daily Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2865"/>
+        <location filename="../oscar/mainwindow.ui" line="2838"/>
         <source>Create zip of CPAP data card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2870"/>
+        <location filename="../oscar/mainwindow.ui" line="2843"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2875"/>
+        <location filename="../oscar/mainwindow.ui" line="2848"/>
         <source>Create zip of all OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2890"/>
+        <location filename="../oscar/mainwindow.ui" line="2863"/>
         <source>Report an Issue</source>
         <translation>i-Report ang Issue</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2895"/>
+        <location filename="../oscar/mainwindow.ui" line="2868"/>
         <source>System Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2906"/>
+        <location filename="../oscar/mainwindow.ui" line="2879"/>
         <source>Show &amp;Pie Chart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2909"/>
+        <location filename="../oscar/mainwindow.ui" line="2882"/>
         <source>Show Pie Chart on Daily page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2920"/>
+        <location filename="../oscar/mainwindow.ui" line="2893"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2925"/>
+        <location filename="../oscar/mainwindow.ui" line="2898"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2928"/>
+        <location filename="../oscar/mainwindow.ui" line="2901"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2939"/>
+        <location filename="../oscar/mainwindow.ui" line="2912"/>
         <source>Show Personal Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2947"/>
+        <location filename="../oscar/mainwindow.ui" line="2920"/>
         <source>Check For &amp;Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2955"/>
+        <location filename="../oscar/mainwindow.ui" line="2928"/>
         <source>Purge Current Selected Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2960"/>
+        <location filename="../oscar/mainwindow.ui" line="2933"/>
         <source>&amp;CPAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2965"/>
+        <location filename="../oscar/mainwindow.ui" line="2938"/>
         <source>&amp;Oximetry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2970"/>
+        <location filename="../oscar/mainwindow.ui" line="2943"/>
         <source>&amp;Sleep Stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2975"/>
+        <location filename="../oscar/mainwindow.ui" line="2948"/>
         <source>&amp;Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2980"/>
+        <location filename="../oscar/mainwindow.ui" line="2953"/>
         <source>&amp;All except Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2985"/>
+        <location filename="../oscar/mainwindow.ui" line="2958"/>
         <source>All including &amp;Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2453"/>
+        <location filename="../oscar/mainwindow.ui" line="2426"/>
         <source>&amp;Reset Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2575"/>
+        <location filename="../oscar/mainwindow.ui" line="2548"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferences</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2580"/>
+        <location filename="../oscar/mainwindow.ui" line="2553"/>
         <source>&amp;Profiles</source>
         <translation>&amp;Profiles</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2642"/>
+        <location filename="../oscar/mainwindow.ui" line="2615"/>
         <source>&amp;About OSCAR</source>
         <translation>&amp;Tungkol sa OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2860"/>
+        <location filename="../oscar/mainwindow.ui" line="2833"/>
         <source>Show Performance Information</source>
         <translation>Show Performance Information</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2880"/>
+        <location filename="../oscar/mainwindow.ui" line="2853"/>
         <source>CSV Export Wizard</source>
         <translation>CSV Export Wizard</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2885"/>
+        <location filename="../oscar/mainwindow.ui" line="2858"/>
         <source>Export for Review</source>
         <translation>i-Export para ma Review</translation>
     </message>
@@ -1166,107 +1150,107 @@
         <translation>E&amp;xit</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2585"/>
+        <location filename="../oscar/mainwindow.ui" line="2558"/>
         <source>Exit</source>
         <translation>Exit</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2590"/>
+        <location filename="../oscar/mainwindow.ui" line="2563"/>
         <source>View &amp;Daily</source>
         <translation>View &amp;Daily</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2601"/>
+        <location filename="../oscar/mainwindow.ui" line="2574"/>
         <source>View &amp;Overview</source>
         <translation>View &amp;Overview</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2612"/>
+        <location filename="../oscar/mainwindow.ui" line="2585"/>
         <source>View &amp;Welcome</source>
         <translation>View &amp;Welcome</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2637"/>
+        <location filename="../oscar/mainwindow.ui" line="2610"/>
         <source>Use &amp;AntiAliasing</source>
         <translation>Use&amp;AntiAiasing</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2664"/>
+        <location filename="../oscar/mainwindow.ui" line="2637"/>
         <source>Show Debug Pane</source>
         <translation>Show Debug Pane</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2680"/>
+        <location filename="../oscar/mainwindow.ui" line="2653"/>
         <source>Take &amp;Screenshot</source>
         <translation>Kumuha &amp;Screenshot</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2688"/>
+        <location filename="../oscar/mainwindow.ui" line="2661"/>
         <source>O&amp;ximetry Wizard</source>
         <translation>O&amp;ximetry Wizard</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2696"/>
+        <location filename="../oscar/mainwindow.ui" line="2669"/>
         <source>Print &amp;Report</source>
         <translation>i-Print &amp;i-Report</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2701"/>
+        <location filename="../oscar/mainwindow.ui" line="2674"/>
         <source>&amp;Edit Profile</source>
         <translation>&amp;i-Edit ang Profile</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2792"/>
+        <location filename="../oscar/mainwindow.ui" line="2765"/>
         <source>Import &amp;Viatom/Wellue Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2841"/>
+        <location filename="../oscar/mainwindow.ui" line="2814"/>
         <source>Daily Calendar</source>
         <translation>Daily Calendar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2852"/>
+        <location filename="../oscar/mainwindow.ui" line="2825"/>
         <source>Backup &amp;Journal</source>
         <translation>Backup &amp;Journal</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2706"/>
+        <location filename="../oscar/mainwindow.ui" line="2679"/>
         <source>Online Users &amp;Guide</source>
         <translation>Online Users &amp;Guide</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2711"/>
+        <location filename="../oscar/mainwindow.ui" line="2684"/>
         <source>&amp;Frequently Asked Questions</source>
         <translation>&amp;Mga Tanong na Maaring Meron Ka</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2716"/>
+        <location filename="../oscar/mainwindow.ui" line="2689"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translation>&amp;Automatic Oximetry Cleanup</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2721"/>
+        <location filename="../oscar/mainwindow.ui" line="2694"/>
         <source>Change &amp;User</source>
         <translation>Palitan &amp;User</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2527"/>
+        <location filename="../oscar/mainwindow.ui" line="2500"/>
         <source>Purge &amp;Current Selected Day</source>
         <translation>Purge&amp;Current Selected Day</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2732"/>
+        <location filename="../oscar/mainwindow.ui" line="2705"/>
         <source>Right &amp;Sidebar</source>
         <translation>Kanan &amp;Sidebar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2824"/>
+        <location filename="../oscar/mainwindow.ui" line="2797"/>
         <source>Daily Sidebar</source>
         <translation>Daily SIdebar</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2743"/>
+        <location filename="../oscar/mainwindow.ui" line="2716"/>
         <source>View S&amp;tatistics</source>
         <translation>View S&amp;tatistics</translation>
     </message>
@@ -1281,12 +1265,12 @@
         <translation>Bookmarks</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2365"/>
+        <location filename="../oscar/mainwindow.ui" line="2338"/>
         <source>Records</source>
         <translation>Records</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2428"/>
+        <location filename="../oscar/mainwindow.ui" line="2401"/>
         <source>Exp&amp;ort Data</source>
         <translation>i-Exp&amp;ort ang Data</translation>
     </message>
@@ -1296,51 +1280,47 @@
         <translation>Profiles</translation>
     </message>
     <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2516"/>
+        <location filename="../oscar/mainwindow.ui" line="2489"/>
         <source>Purge Oximetry Data</source>
         <translation>Purge Oximetry Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2746"/>
+        <location filename="../oscar/mainwindow.ui" line="2719"/>
         <source>View Statistics</source>
         <translation>View Statistics</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2757"/>
+        <location filename="../oscar/mainwindow.ui" line="2730"/>
         <source>Import &amp;ZEO Data</source>
         <translation>i-Import ang &amp;ZEO Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2767"/>
+        <location filename="../oscar/mainwindow.ui" line="2740"/>
         <source>Import RemStar &amp;MSeries Data</source>
         <translation>i-Import ang Remstar &amp;MSeries Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2772"/>
+        <location filename="../oscar/mainwindow.ui" line="2745"/>
         <source>Sleep Disorder Terms &amp;Glossary</source>
         <translation>Sleep Disorder Terms &amp;Glossary</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2777"/>
+        <location filename="../oscar/mainwindow.ui" line="2750"/>
         <source>Change &amp;Language</source>
         <translation>Ibahin &amp;Language</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2782"/>
+        <location filename="../oscar/mainwindow.ui" line="2755"/>
         <source>Change &amp;Data Folder</source>
         <translation>Ibahin &amp;Folder ng Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2787"/>
+        <location filename="../oscar/mainwindow.ui" line="2760"/>
         <source>Import &amp;Somnopose Data</source>
         <translation>i-Import &amp;Somnopose Data</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2797"/>
+        <location filename="../oscar/mainwindow.ui" line="2770"/>
         <source>Current Days</source>
         <translation>Kasalukuyang mga Araw</translation>
     </message>
@@ -1986,10 +1966,6 @@
         <translation>Patient ID</translation>
     </message>
     <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="957"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
@@ -2163,10 +2139,6 @@
         <location filename="../oscar/overview.ui" line="181"/>
         <source>Reset view to selected date range</source>
         <translation>i-Reset ang view sa piniling date range</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="230"/>
@@ -2363,10 +2335,6 @@ Index</source>
         <translation>Gaano katagal</translation>
     </message>
     <message>
-        <source>SpO2 %</source>
-        <translation type="vanished">SpO2%</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="1217"/>
         <source>Pulse Rate</source>
         <translation>Pulse Rate</translation>
@@ -2390,10 +2358,6 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1375"/>
         <source>Import Completed. When did the recording start?</source>
         <translation>Import Completed. Kelang nag umpisa ang recording?</translation>
-    </message>
-    <message>
-        <source>Day recording (normally would of) started</source>
-        <translation type="vanished">Nagumpisa na ang recording sa araw</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1445"/>
@@ -2421,10 +2385,6 @@ Index</source>
         <translation>Piliin ang CPAP session na gusto mo i-sync:</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="1675"/>
         <source>You can manually adjust the time here if required:</source>
         <translation>Pwede mo baguhin ang oras pag kelangan:</translation>
@@ -2443,14 +2403,6 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1774"/>
         <source>&amp;Information Page</source>
         <translation>&amp;Information Page</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Please note: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Make sure your correct oximeter type is selected otherwise import will fail.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Tandaan: &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;siguraduhin na tama ang oximeter type kundi mag fail ang importl.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Select Oximeter Type:</source>
-        <translation type="vanished">Select Oximeter Type:</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="607"/>
@@ -2708,10 +2660,6 @@ Index</source>
         <translation>Walang CPAP data available sa %1</translation>
     </message>
     <message>
-        <source>%1</source>
-        <translation type="vanished">%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.cpp" line="726"/>
         <source>Recording...</source>
         <translation>Recording...</translation>
@@ -2803,10 +2751,6 @@ Index</source>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../oscar/oximetry.ui" line="366"/>
@@ -4148,14 +4092,6 @@ Would you like do this now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
-    </message>
-    <message>
         <location filename="../oscar/profileselector.ui" line="198"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
@@ -4539,10 +4475,6 @@ Would you like do this now?</source>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="283"/>
         <source>Max: </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1: </source>
-        <translation type="obsolete">%1%  {1:?}</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="302"/>
@@ -5241,10 +5173,6 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="815"/>
         <source>Pr. Relief</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OSCAR</source>
-        <translation type="obsolete">OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="700"/>
@@ -6493,10 +6421,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SpO2 %</source>
-        <translation type="obsolete">SpO2%</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="209"/>
         <source>Blood-oxygen saturation percentage</source>
         <translation type="unfinished"></translation>
@@ -7128,7 +7052,7 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="513"/>
+        <location filename="../oscar/main.cpp" line="524"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7173,112 +7097,112 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="331"/>
+        <location filename="../oscar/main.cpp" line="342"/>
         <source>OSCAR crashed due to an incompatibility with your graphics hardware.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="332"/>
+        <location filename="../oscar/main.cpp" line="343"/>
         <source>To resolve this, OSCAR has reverted to a slower but more compatible method of drawing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="499"/>
+        <location filename="../oscar/main.cpp" line="510"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="500"/>
+        <location filename="../oscar/main.cpp" line="511"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="501"/>
+        <location filename="../oscar/main.cpp" line="512"/>
         <source>OSCAR can copy your old data to this folder later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="554"/>
+        <location filename="../oscar/main.cpp" line="565"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="555"/>
+        <location filename="../oscar/main.cpp" line="566"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="556"/>
+        <location filename="../oscar/main.cpp" line="567"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="502"/>
+        <location filename="../oscar/main.cpp" line="513"/>
         <source>We suggest you use this folder: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="503"/>
+        <location filename="../oscar/main.cpp" line="514"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="509"/>
+        <location filename="../oscar/main.cpp" line="520"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="514"/>
+        <location filename="../oscar/main.cpp" line="525"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="525"/>
+        <location filename="../oscar/main.cpp" line="536"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="546"/>
+        <location filename="../oscar/main.cpp" line="557"/>
         <source>Data directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="565"/>
+        <location filename="../oscar/main.cpp" line="576"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="575"/>
+        <location filename="../oscar/main.cpp" line="586"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="576"/>
+        <location filename="../oscar/main.cpp" line="587"/>
         <source>Error code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="577"/>
+        <location filename="../oscar/main.cpp" line="588"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="588"/>
+        <location filename="../oscar/main.cpp" line="599"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="647"/>
+        <location filename="../oscar/main.cpp" line="658"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="656"/>
+        <location filename="../oscar/main.cpp" line="667"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="660"/>
+        <location filename="../oscar/main.cpp" line="671"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7288,14 +7212,14 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="512"/>
-        <location filename="../oscar/main.cpp" line="564"/>
-        <location filename="../oscar/main.cpp" line="579"/>
+        <location filename="../oscar/main.cpp" line="523"/>
+        <location filename="../oscar/main.cpp" line="575"/>
+        <location filename="../oscar/main.cpp" line="590"/>
         <source>Exiting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="526"/>
+        <location filename="../oscar/main.cpp" line="537"/>
         <source>Are you sure you want to use this folder?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7446,10 +7370,6 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 %2 %3</source>
-        <translation type="obsolete">%1 %2 %3</translation>
-    </message>
-    <message>
         <location filename="../oscar/reports.cpp" line="564"/>
         <source>Page %1 of %2</source>
         <translation type="unfinished"></translation>
@@ -7510,18 +7430,14 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="185"/>
-        <source>99.5%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1%2</source>
-        <translation type="obsolete">%1%2</translation>
+        <location filename="../oscar/SleepLib/day.cpp" line="185"/>
+        <source>99.5%</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1568"/>
@@ -7568,10 +7484,6 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/day.cpp" line="1627"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 %2</source>
-        <translation type="obsolete">%1 %2</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="359"/>
@@ -7742,10 +7654,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="1593"/>
         <source>d MMM yyyy [ %1 - %2 ]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1</source>
-        <translation type="obsolete">%1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2246"/>
@@ -8153,7 +8061,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1211"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1213"/>
         <source>Parsing STR.edf records...</source>
         <translation type="unfinished"></translation>
     </message>
