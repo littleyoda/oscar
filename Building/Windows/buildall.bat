@@ -2,7 +2,7 @@ setlocal
 :::@echo off
 ::: You must set these paths to your QT configuration
 set qtpath=E:\Qt
-set qtVersion=5.12.8
+set qtVersion=5.12.12
 
 :::
 ::: Build 32- and 64-bit versions of OSCAR for Windows.
