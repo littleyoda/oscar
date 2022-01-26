@@ -132,6 +132,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
     { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
+    { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
 
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
