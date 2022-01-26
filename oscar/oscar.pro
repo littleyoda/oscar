@@ -350,7 +350,7 @@ optimize.name = optimize
 optimize.input = SOURCES_OPTIMIZE
 optimize.dependency_type = TYPE_C
 optimize.variable_out = OBJECTS
-optimize.output = ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+optimize.output = ${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
 optimize.commands = $${QMAKE_CXX} -c $(CXXFLAGS) -O3 $(INCPATH) -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_IN}
 QMAKE_EXTRA_COMPILERS += optimize
 
