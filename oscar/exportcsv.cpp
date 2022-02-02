@@ -292,6 +292,7 @@ void ExportCSV::on_exportButton_clicked()
                     QDateTime start = QDateTime::fromTime_t(sess->first() / 1000L);
                     QDateTime end = QDateTime::fromTime_t(sess->last() / 1000L);
 
+                    sess->OpenEvents();
                     data = date.toString(Qt::ISODate);
                     data += sep + QString::number(sess->session(), 10);
                     data += sep + start.toString(Qt::ISODate);
