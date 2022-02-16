@@ -1167,11 +1167,11 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
                 switch (ext) {
                 case 0:
                     if (task->compliance) {
-                        if (chunksIdentical(chunk, task->summary)) {
+                        if (chunksIdentical(chunk, task->compliance)) {
                             // Never seen identical compliance chunks, so keep logging this for now.
-                            qDebug() << chunkComparison(chunk, task->summary);
+                            qDebug() << chunkComparison(chunk, task->compliance);
                         } else {
-                            qWarning() << chunkComparison(chunk, task->summary);
+                            qWarning() << chunkComparison(chunk, task->compliance);
                         }
                         delete chunk;
                         continue; // (skipping to avoid duplicates)
