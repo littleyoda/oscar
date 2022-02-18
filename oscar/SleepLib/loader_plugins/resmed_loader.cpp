@@ -2812,7 +2812,8 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
     time.start();
 #endif
 
-    EventList *CSR = nullptr;
+    // Always create CSR event list so that overview always finds something
+    EventList *CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
 
     // Allow for empty sessions..
     qint64 csr_starts = 0;
@@ -2830,9 +2831,9 @@ bool ResmedLoader::LoadCSL(Session *sess, const QString & path)
                 if (anno->text == "CSR Start") {
                     csr_starts = tt;
                 } else if (anno->text == "CSR End") {
-                    if ( ! CSR) {
-                        CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
-                    }
+//                    if ( ! CSR) {
+//                        CSR = sess->AddEventList(CPAP_CSR, EVL_Event);
+//                    }
                     if (csr_starts > 0) {
                         if (sess->checkInside(csr_starts)) {
                             CSR->AddEvent(tt, double(tt - csr_starts) / 1000.0);
