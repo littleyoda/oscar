@@ -871,8 +871,8 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 CHECK_VALUE(data[pos+0xc], 0);
                 //CHECK_VALUE(data[pos+0xd], 0);
                 CHECK_VALUE(data[pos+0xe], 0);
-                //CHECK_VALUE(data[pos+0xf], 0);  // CA count, probably 16-bit
-                CHECK_VALUE(data[pos+0x10], 0);
+                //CHECK_VALUE(data[pos+0xf], 0);  // 16-bit CA count
+                //CHECK_VALUE(data[pos+0x10], 0);
                 //CHECK_VALUE(data[pos+0x11], 40);  // 16-bit something: 0x88, 0x26, etc. ???
                 //CHECK_VALUE(data[pos+0x12], 0);
                 //CHECK_VALUE(data[pos+0x13], 0);  // 16-bit minutes in LL
