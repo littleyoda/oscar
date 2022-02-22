@@ -7,6 +7,20 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define xDEBUG_FUNCTIONS
+#ifdef DEBUG_FUNCTIONS
+#include <QRegularExpression>
+#define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
+#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+
+#define O( XX ) " " #XX ":" << XX
+#define OO( XX , YY ) " " #XX ":" << YY
+#define NAME( id) schema::channel[ id ].label()
+#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
+#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
+#endif
+
 #include <math.h>
 #include <QLabel>
 #include <QDateTime>
@@ -104,12 +118,10 @@ void gSummaryChart::SetDay(Day *unused_day)
     m_maxy = 20;
 
     m_empty = false;
+    m_emptyPrev = true;
 
 }
 
-
-//QMap<QDate, int> gSummaryChart::dayindex;
-//QList<Day *> gSummaryChart::daylist;
 
 int gSummaryChart::addCalc(ChannelID code, SummaryType type, QColor color)
 {
@@ -565,7 +577,8 @@ void gSummaryChart::paint(QPainter &painter, gGraph &graph, const QRegion &regio
 
         totaldays++;
 
-        if (!day) {//  || !day->hasMachine(m_machtype)) {
+        if (!day)
+        {
            // lasty1 = rect.bottom();
             lastx1 += barw;
             it++;
@@ -675,9 +688,13 @@ void gSummaryChart::paint(QPainter &painter, gGraph &graph, const QRegion &regio
 
     // This could be turning off graphs prematurely..
     if (cache.size() == 0) {
-
         m_empty = true;
+        m_emptyPrev = true;
         graph.graphView()->updateScale();
+        emit summaryChartEmpty(this,m_minx,m_maxx,true);
+    } else if (m_emptyPrev) {
+        m_emptyPrev = false;
+        emit summaryChartEmpty(this,m_minx,m_maxx,false);
     }
 
 }
@@ -1019,8 +1036,8 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
 
         totaldays++;
 
-
-        if (!day) { // || !day->hasMachine(m_machtype)) {
+        if (!day)
+        {
            // lasty1 = rect.bottom();
             lastx1 += barw;
             nousedays++;
@@ -1090,6 +1107,7 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
     painter.drawRects(outlines);
     afterDraw(painter, graph, rect);
 }
+
 
 ////////////////////////////////////////////////////////////////////////////
 /// Total Time in Apnea Chart Stuff

@@ -7,15 +7,30 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define xDEBUG_FUNCTIONS
+#ifdef DEBUG_FUNCTIONS
+#include <QRegularExpression>
+#define DEBUGQ  qDebug()
+#define DEBUGL  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
+#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGT qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") 
+
+#define O( XX ) " " #XX ":" << XX
+#define OO( XX , YY ) " " #XX ":" << YY
+#define NAME( id) schema::channel[ id ].label()
+#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
+#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
+#endif
+
+
 #include <QCalendarWidget>
 #include <QTextCharFormat>
-//#include <QSystemLocale>
 #include <QDebug>
 #include <QDateTimeEdit>
 #include <QCalendarWidget>
 #include <QFileDialog>
 #include <QMessageBox>
-//#include <QProgressBar>
 
 #include "SleepLib/profiles.h"
 #include "overview.h"
@@ -30,11 +45,27 @@
 #include "mainwindow.h"
 extern MainWindow *mainwin;
 
+
+qint64 convertDateToTimeRtn(const QDate &date,int hours,int min,int sec) {
+    return QDateTime(date).addSecs(((hours*60+min)*60)+sec).toMSecsSinceEpoch();
+}
+qint64 convertDateToStartTime(const QDate &date) {
+    return convertDateToTimeRtn(date,0,10,0);
+}
+qint64 convertDateToEndTime(const QDate &date) {
+    return convertDateToTimeRtn(date,23,0,0);
+}
+QDate convertTimeToDate(qint64 time) {
+    return QDateTime::fromMSecsSinceEpoch(time).date();
+}
+
 Overview::Overview(QWidget *parent, gGraphView *shared) :
     QWidget(parent),
     ui(new Ui::Overview),
     m_shared(shared)
 {
+    chartsToBeMonitored.clear();
+    chartsEmpty.clear();;
     ui->setupUi(this);
 
     // Set Date controls locale to 4 digit years
@@ -67,7 +98,6 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     // Connect the signals to update which days have CPAP data when the month is changed
     connect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
     connect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
-
     QVBoxLayout *framelayout = new QVBoxLayout;
     ui->graphArea->setLayout(framelayout);
 
@@ -143,15 +173,18 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     connect(GraphView, SIGNAL(updateCurrentTime(double)), this, SLOT(on_LineCursorUpdate(double)));
     connect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     connect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
+    connect(GraphView, SIGNAL(XBoundsChanged(qint64 ,qint64)), this, SLOT(on_XBoundsChanged(qint64 ,qint64)));
 }
 
 Overview::~Overview()
 {
+    disconnect(GraphView, SIGNAL(XBoundsChanged(qint64 ,qint64)), this, SLOT(on_XBoundsChanged(qint64 ,qint64)));
     disconnect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
     disconnect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     disconnect(GraphView, SIGNAL(updateCurrentTime(double)), this, SLOT(on_LineCursorUpdate(double)));
     disconnect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
     disconnect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
+    disconnectgSummaryCharts() ;
 
     // Save graph orders and pin status, etc...
     GraphView->SaveSettings("Overview");//no trans
@@ -166,18 +199,63 @@ void Overview::ResetFont()
     dateLabel->setFont(font);
 }
 
+
+void Overview::connectgSummaryCharts()
+{
+    for (auto it = chartsToBeMonitored.begin(); it != chartsToBeMonitored.end(); ++it) {
+        gSummaryChart* sc =it.key();
+        connect(sc, SIGNAL(summaryChartEmpty(gSummaryChart*,qint64,qint64,bool)), this, SLOT(on_summaryChartEmpty(gSummaryChart*,qint64,qint64,bool)));
+    }
+}
+
+void Overview::disconnectgSummaryCharts()
+{
+    for (auto it = chartsToBeMonitored.begin(); it != chartsToBeMonitored.end(); ++it) {
+        gSummaryChart* sc =it.key();
+        disconnect(sc, SIGNAL(summaryChartEmpty(gSummaryChart*,qint64,qint64,bool)), this, SLOT(on_summaryChartEmpty(gSummaryChart*,qint64,qint64,bool)));
+    }
+    chartsToBeMonitored.clear();
+    chartsEmpty.clear();;
+}
+
+void Overview::on_summaryChartEmpty(gSummaryChart*sc,qint64 firstI,qint64 lastI,bool empty)
+{
+
+    auto it = chartsToBeMonitored.find(sc);
+    if (it==chartsToBeMonitored.end()) {
+        return;
+    }
+    gGraph* graph=it.value();
+    if (empty) {
+        // on next range change allow empty flag to be recalculated
+        chartsEmpty.insert(sc,graph);
+        //DEBUGF << graph->name() << "Chart is Empty" << "Range" << convertTimeToDate(firstI) << convertTimeToDate(lastI);
+    } else {
+        // The chart has some entry with data.
+        chartsEmpty.remove(sc);
+        updateGraphCombo();
+        //DEBUGF << graph->name() << "Chart is enabled with range:" << convertTimeToDate(firstI) << "==>" << convertTimeToDate(lastI) ;
+    }
+    Q_UNUSED(firstI);
+    Q_UNUSED(lastI);
+};
+
+
 // Create all the graphs for the Overview page
 void Overview::CreateAllGraphs() {
-
     ///////////////////////////////////////////////////////////////////////////////
     // Add all the graphs
     // Process is to createGraph() to make the graph object, then add a layer
     // that provides the contents for that graph.
     ///////////////////////////////////////////////////////////////////////////////
+    if (chartsToBeMonitored.size()>0) {
+        disconnectgSummaryCharts();
+    }
+    chartsEmpty.clear();;
+    chartsToBeMonitored.clear();;
 
     // Add graphs that are always included
     ChannelID ahicode = p_profile->general->calculateRDI() ? CPAP_RDI : CPAP_AHI;
-
     if (ahicode == CPAP_RDI) {
         AHI = createGraph("AHIBreakdown", STR_TR_RDI, tr("Respiratory\nDisturbance\nIndex"));
     } else {
@@ -186,9 +264,11 @@ void Overview::CreateAllGraphs() {
 
     ahi = new gAHIChart();
     AHI->AddLayer(ahi);
+    //chartsToBeMonitored.insert(ahi,AHI);
 
     UC = createGraph(STR_GRAPH_Usage, tr("Usage"), tr("Usage\n(hours)"));
     UC->AddLayer(uc = new gUsageChart());
+    //chartsToBeMonitored.insert(uc,UC);
 
     STG = createGraph("New Session", tr("Session Times"), tr("Session Times"),  YT_Time);
     stg = new gSessionTimesChart();
@@ -197,10 +277,12 @@ void Overview::CreateAllGraphs() {
     PR = createGraph("Pressure Settings", STR_TR_Pressure, STR_TR_Pressure + "\n(" + STR_UNIT_CMH2O + ")");
     pres = new gPressureChart();
     PR->AddLayer(pres);
+    //chartsToBeMonitored.insert(pres,PR);
 
     TTIA = createGraph("TTIA", tr("Total Time in Apnea"), tr("Total Time in Apnea\n(Minutes)"));
     ttia = new gTTIAChart();
     TTIA->AddLayer(ttia);
+    //chartsToBeMonitored.insert(ttia,TTIA);
 
     // Add graphs for all channels that have been marked in Preferences Dialog as wanting a graph
     QHash<ChannelID, schema::Channel *>::iterator chit;
@@ -212,42 +294,58 @@ void Overview::CreateAllGraphs() {
             ChannelID code = chan->id();
             QString name = chan->fullname();
             if (name.length() > 16) name = chan->label();
-//            qDebug() << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype();
             gGraph *G = createGraph(chan->code(), name, chan->description());
+            gSummaryChart * sc = nullptr;
             if ((chan->type() == schema::FLAG) || (chan->type() == schema::MINOR_FLAG)) {
-                gSummaryChart * sc = new gSummaryChart(chan->code(), chan->machtype()); // gts was MT_CPAP
+                sc = new gSummaryChart(chan->code(), chan->machtype()); // gts was MT_CPAP
                 sc->addCalc(code, ST_CPH, schema::channel[code].defaultColor());
                 G->AddLayer(sc);
+                chartsToBeMonitored.insert(sc,G);
             } else if (chan->type() == schema::SPAN) {
-                gSummaryChart * sc = new gSummaryChart(chan->code(), MT_CPAP);
+                sc = new gSummaryChart(chan->code(), MT_CPAP);
                 sc->addCalc(code, ST_SPH, schema::channel[code].defaultColor());
                 G->AddLayer(sc);
+                chartsToBeMonitored.insert(sc,G);
             } else if (chan->type() == schema::WAVEFORM) {
-                G->AddLayer(new gSummaryChart(code, chan->machtype()));
+                sc= new gSummaryChart(code, chan->machtype());
+                G->AddLayer(sc);
+                chartsToBeMonitored.insert(sc,G);
             } else if (chan->type() == schema::UNKNOWN) {
-                gSummaryChart * sc = new gSummaryChart(chan->code(), MT_CPAP);
+                sc = new gSummaryChart(chan->code(), MT_CPAP);
                 sc->addCalc(code, ST_CPH, schema::channel[code].defaultColor());
                 G->AddLayer(sc);
+                chartsToBeMonitored.insert(sc,G);
+            } 
+            if (sc== nullptr) {
+                //DEBUGF << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype() << "IGNORED";
+            } else {
+                sc ->reCalculate();
+                //DEBUGF << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype() << OO(Empty,sc->isEmpty());
             }
         } // if showInOverview()
     } // for chit
-
+    // Note The following don not use gSummaryChart. They use SummaryChart instead. and can not be monitored.
     WEIGHT = createGraph(STR_GRAPH_Weight, STR_TR_Weight, STR_TR_Weight, YT_Weight);
     weight = new SummaryChart("Weight", GT_LINE);
     weight->setMachineType(MT_JOURNAL);
     weight->addSlice(Journal_Weight, QColor("black"), ST_SETAVG);
     WEIGHT->AddLayer(weight);
+
     BMI = createGraph(STR_GRAPH_BMI, STR_TR_BMI, tr("Body\nMass\nIndex"));
     bmi = new SummaryChart("BMI", GT_LINE);
     bmi->setMachineType(MT_JOURNAL);
     bmi->addSlice(Journal_BMI, QColor("black"), ST_SETAVG);
     BMI->AddLayer(bmi);
+
     ZOMBIE = createGraph(STR_GRAPH_Zombie, STR_TR_Zombie, tr("How you felt\n(0-10)"));
     zombie = new SummaryChart("Zombie", GT_LINE);
     zombie->setMachineType(MT_JOURNAL);
     zombie->addSlice(Journal_ZombieMeter, QColor("black"), ST_SETAVG);
     ZOMBIE->AddLayer(zombie);
+
+    connectgSummaryCharts();
 }
+
 
 // Recalculates Overview chart info
 void Overview::RebuildGraphs(bool reset)
@@ -257,14 +355,16 @@ void Overview::RebuildGraphs(bool reset)
         GraphView->GetXBounds(minx, maxx);
     }
 
+    minRangeStartDate=p_profile->LastDay(MT_CPAP);
+    maxRangeEndDate=minRangeStartDate.addDays(-1);      // force a range change;
+    disconnectgSummaryCharts() ;
     GraphView->trashGraphs(true);       // Remove all existing graphs
-
     CreateAllGraphs();
 
     if (reset) {
         GraphView->resetLayout();
         GraphView->setDay(nullptr);
-        GraphView->SetXBounds(minx, maxx, 0, false);
+        SetXBounds(minx, maxx, 0, false);
         GraphView->resetLayout();
         updateGraphCombo();
     }
@@ -374,35 +474,12 @@ void Overview::updateGraphCombo()
     updateCube();
 }
 
-#if 0
-void Overview::ResetGraphs()
-{
-    QDate start = ui->dateStart->date();
-    QDate end = ui->dateEnd->date();
-    GraphView->setDay(nullptr);
-    updateCube();
-
-    if (start.isValid() && end.isValid()) {
-        setRange(start, end);
-    }
-}
-
-void Overview::ResetGraph(QString name)
-{
-    gGraph *g = GraphView->findGraph(name);
-
-    if (!g) { return; }
-
-    g->setDay(nullptr);
-    GraphView->redraw();
-}
-#endif
-
 void Overview::RedrawGraphs()
 {
     GraphView->redraw();
 }
 
+// Updates calendar format and profile data.
 void Overview::UpdateCalendarDay(QDateEdit *dateedit, QDate date)
 {
     QCalendarWidget *calendar = dateedit->calendarWidget();
@@ -433,6 +510,71 @@ void Overview::UpdateCalendarDay(QDateEdit *dateedit, QDate date)
 
     calendar->setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
 }
+
+void Overview::SetXBounds(qint64 start, qint64 end, short group , bool refresh )
+{
+     GraphView->SetXBounds( start , end ,group,refresh);
+}
+
+void Overview::on_XBoundsChanged(qint64 start,qint64 end)
+{
+    displayStartDate = convertTimeToDate(start);
+    displayEndDate = convertTimeToDate(end);
+
+    bool largerRange=false;
+    if (displayStartDate>maxRangeEndDate || minRangeStartDate>displayEndDate) {
+        // have non-overlaping ranges 
+        // Only occurs when custom mode is switched to/from a latest mode. custom mode to/from last week.
+        // All other displays expand the existing range.
+        // reset all empty flags to not empty 
+        if (displayStartDate>maxRangeEndDate) {
+            //DEBUGF << "Two ranges" O(displayStartDate) <<">" << O(maxRangeEndDate);
+        }
+        if (minRangeStartDate>displayEndDate) {
+            //DEBUGF << "Two ranges" O(minRangeStartDate) <<">" << O(displayEndDate);
+        }
+        largerRange=true;
+        chartsEmpty = QHash<gSummaryChart*, gGraph*>( chartsToBeMonitored );
+        minRangeStartDate = displayStartDate;
+        maxRangeEndDate   = displayEndDate;
+    } else {
+        // new range overlaps with old range
+        if (displayStartDate<minRangeStartDate) {
+            //DEBUGF << "Start lower" <<O(minRangeStartDate)<< ">" <<O(displayStartDate);
+            largerRange=true;
+            minRangeStartDate = displayStartDate;
+        }
+        if (displayEndDate>maxRangeEndDate) {
+            //DEBUGF << "End Higher" <<O(maxRangeEndDate)<< "<" <<O(displayEndDate);
+            largerRange=true;
+            maxRangeEndDate   = displayEndDate;
+        }
+    }
+    if (!largerRange) {
+        if (displayStartDate<minRangeStartDate ) {
+            //DEBUGF << "ERROR" <<O(minRangeStartDate)<< "==" <<O(displayStartDate);
+        } 
+        if (displayEndDate>maxRangeEndDate) {
+            //DEBUGF << "ERROR" <<O(maxRangeEndDate)<< "==" <<O(displayEndDate);
+        }
+    }
+
+    if (largerRange) {
+        for (auto it= chartsEmpty.begin();it!=chartsEmpty.end();it++) {
+            gSummaryChart* sc = it.key();
+            bool empty=sc->isEmpty();
+            if (empty) {
+                sc ->reCalculate();
+                GraphView->updateScale();
+                GraphView->redraw();
+                GraphView->timedRedraw(150);
+            }
+        }
+        chartsEmpty.clear();
+        updateGraphCombo();
+    }
+}
+
 void Overview::dateStart_currentPageChanged(int year, int month)
 {
     QDate d(year, month, 1);
@@ -443,6 +585,7 @@ void Overview::dateStart_currentPageChanged(int year, int month)
         UpdateCalendarDay(ui->dateStart, d);
     }
 }
+
 void Overview::dateEnd_currentPageChanged(int year, int month)
 {
     QDate d(year, month, 1);
@@ -459,7 +602,7 @@ void Overview::on_dateEnd_dateChanged(const QDate &date)
 {
     qint64 d1 = qint64(QDateTime(ui->dateStart->date(), QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
     qint64 d2 = qint64(QDateTime(date, QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    GraphView->SetXBounds(d1, d2);
+    SetXBounds(d1, d2);
     ui->dateStart->setMaximumDate(date);
     if (customMode) {
         p_profile->general->setCustomOverviewRangeEnd(date);
@@ -470,12 +613,11 @@ void Overview::on_dateStart_dateChanged(const QDate &date)
 {
     qint64 d1 = qint64(QDateTime(date, QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
     qint64 d2 = qint64(QDateTime(ui->dateEnd->date(), QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    GraphView->SetXBounds(d1, d2);
+    SetXBounds(d1, d2);
     ui->dateEnd->setMinimumDate(date);
     if (customMode) {
         p_profile->general->setCustomOverviewRangeStart(date);
     }
-
 }
 
 // Zoom to 100% button clicked or called back from 100% zoom in popup menu
@@ -483,7 +625,7 @@ void Overview::on_zoomButton_clicked()
 {
     qint64 d1 = qint64(QDateTime(ui->dateStart->date(), QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;  // GTS why UTC?
     qint64 d2 = qint64(QDateTime(ui->dateEnd->date(), QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;  // Interesting: start date set to 10 min after midnight, ending at 11 pm
-    GraphView->SetXBounds(d1, d2);
+    SetXBounds(d1, d2);
 }
 
 void Overview::ResetGraphLayout()
@@ -501,8 +643,14 @@ void Overview::ResetGraphOrder(int type)
 // Process new range selection from combo button
 void Overview::on_rangeCombo_activated(int index)
 {
+    // Block signal so that graphs are not updated for these.
+    ui->dateEnd->blockSignals(true);
+    ui->dateStart->blockSignals(true);
     ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
     ui->dateEnd->setMaximumDate(p_profile->LastDay());
+    // these signals will be reenabled in setRange.
+    //ui->dateEnd->blockSignals(false);
+    //ui->dateStart->blockSignals(false);
 
     // Exclude Journal in calculating the last day
     QDate end = p_profile->LastDay(MT_CPAP);
@@ -592,21 +740,27 @@ void Overview::on_rangeCombo_activated(int index)
     delete progress;
 
     // first and last dates for ANY machine type
+    //uiStartDate=start;
+    //uiEndDate=end;
     setRange(start, end);
 }
 
 // Saves dates in UI, clicks zoom button, and updates combo box
-void Overview::setRange(QDate start, QDate end)
+// 1. Updates the dates in the start / end date boxs
+// 2. optionally also changes display range for graphs.
+void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
 {
     ui->dateEnd->blockSignals(true);
     ui->dateStart->blockSignals(true);
+
     ui->dateStart->setMaximumDate(end);
     ui->dateEnd->setMinimumDate(start);
     ui->dateStart->setDate(start);
     ui->dateEnd->setDate(end);
+
     ui->dateEnd->blockSignals(false);
     ui->dateStart->blockSignals(false);
-    this->on_zoomButton_clicked();  // Click on zoom-out to 100% button
+    if (updateGraphs) this->on_zoomButton_clicked();  // Click on zoom-out to 100% button
     updateGraphCombo();
 }
 
@@ -631,7 +785,7 @@ void Overview::on_graphCombo_activated(int index)
 
         g = GraphView->findGraphTitle(s);
         g->setVisible(b);
-}
+    }
     ui->graphCombo->setCurrentIndex(0);
     updateCube();
     setGraphText();

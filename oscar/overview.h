@@ -65,7 +65,7 @@ class Overview : public QWidget
     void RedrawGraphs();
 
     //! \brief Sets the currently selected date range of the overview display
-    void setRange(QDate start, QDate end);
+    void setRange(QDate& start, QDate& end,bool updateGraphs=true);
 
     /*! \brief Create an overview graph, adding it to the overview gGraphView object
         \param QString name  The title of the graph
@@ -78,11 +78,6 @@ class Overview : public QWidget
 
     gSummaryChart * stg, *uc, *ahi, * pres, *lk, *npb, *rr, *mv, *tv, *nll, *sn, *ttia;
 
-    //! \brief List of SummaryCharts shown on the overview page
-    QVector<SummaryChart *> OverviewCharts;
-
-    //void ResetGraph(QString name);
-
     void RebuildGraphs(bool reset = true);
 
   public slots:
@@ -93,6 +88,8 @@ class Overview : public QWidget
 
   private slots:
     void updateGraphCombo();
+    void on_XBoundsChanged(qint64 ,qint64);
+    void on_summaryChartEmpty(gSummaryChart*,qint64,qint64,bool);
 
     //! \brief Resets the graph view because the Start date has been changed
     void on_dateStart_dateChanged(const QDate &date);
@@ -120,6 +117,7 @@ class Overview : public QWidget
 
   private:
     void CreateAllGraphs();
+    void timedUpdateOverview(int ms=0);
 
     Ui::Overview *ui;
     gGraphView *GraphView;
@@ -138,6 +136,23 @@ class Overview : public QWidget
     void updateCube();
 
     Day *day; // dummy in this case
+
+
+    bool checkRangeChanged(QDate& first, QDate& last);
+    void connectgSummaryCharts() ;
+    void disconnectgSummaryCharts() ;
+    void SetXBounds(qint64 minx, qint64 maxx, short group = 0, bool refresh = true);
+
+    // Start and of dates of the current graph display
+    QDate displayStartDate;
+    QDate displayEndDate;
+
+    // min / max dates of the graph Range 
+    QDate minRangeStartDate;
+    QDate maxRangeEndDate;
+
+    QHash<gSummaryChart*,gGraph*> chartsToBeMonitored;
+    QHash<gSummaryChart*,gGraph* > chartsEmpty;
 
 };
 
