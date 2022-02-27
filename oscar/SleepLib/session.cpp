@@ -613,7 +613,7 @@ bool Session::LoadSummary()
             in >> m_upperThreshold;
             in >> m_timeBelowTheshold;
             in >> m_lowerThreshold;
-        } // else this is ugly.. forced machine database upgrade will solve it though.
+        } // else this is ugly.. forced device database upgrade will solve it though.
 
         if (version == 13) {
             QHash<ChannelID, QVariant>::iterator it = settings.find(CPAP_SummaryOnly);
@@ -685,7 +685,7 @@ bool Session::StoreEvents()
     header << (quint32)magic;      // New Magic Number
     header << (quint16)events_version; // File Version
     header << (quint16)filetype_data;  // File type 1 == Event
-    header << (quint32)s_machine->id();// Machine Type
+    header << (quint32)s_machine->id();// Device Type
     header << (quint32)s_session;      // This session's ID
     header << s_first;
     header << s_last;
@@ -698,7 +698,7 @@ bool Session::StoreEvents()
 
     header << (quint16)compress;
 
-    header << (quint16)s_machine->type();// Machine Type
+    header << (quint16)s_machine->type();// Device Type
 
     QByteArray databytes;
     QDataStream out(&databytes, QIODevice::WriteOnly);
@@ -833,7 +833,7 @@ bool Session::LoadEvents(QString filename)
     header >> magicnum;         // Magic Number (quint32)
     header >> version;          // Version (quint16)
     header >> type;             // File type (quint16)
-    header >> machid;           // Machine ID (quint32)
+    header >> machid;           // Device ID (quint32)
     header >> sessid;           //(quint32)
     header >> s_first;          //(qint64)
     header >> s_last;           //(qint64)
@@ -861,7 +861,7 @@ bool Session::LoadEvents(QString filename)
         file.seek(32);
     } else {
         header >> compmethod;   // Compression Method (quint16)
-        header >> machtype;     // Machine Type (quint16)
+        header >> machtype;     // Device Type (quint16)
         header >> datasize;     // Size of Uncompressed Data (quint32)
         header >> crc16;        // CRC16 of Uncompressed Data (quint16)
     }
@@ -898,7 +898,7 @@ bool Session::LoadEvents(QString filename)
     in.setByteOrder(QDataStream::LittleEndian);
 
     qint16 mcsize;
-    in >> mcsize;   // number of Machine Code lists
+    in >> mcsize;   // number of Device Code lists
 #ifdef DEBUG_EVENTS
     qDebug() << "Number of Channels" << mcsize;
 #endif
@@ -1170,7 +1170,7 @@ void Session::UpdateSummaries()
     // Generate unintentional leaks if not present
     calcLeaks(this);
 
-    // Flag the Large Leaks if unintentional leaks is available, and no LargeLeaks weren't flagged by the machine already.
+    // Flag the Large Leaks if unintentional leaks is available, and no LargeLeaks weren't flagged by the device already.
     flagLargeLeaks(this);
 
     calcSPO2Drop(this);

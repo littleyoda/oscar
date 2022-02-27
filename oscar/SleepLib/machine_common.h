@@ -1,4 +1,4 @@
-/* SleepLib Common Machine Header
+/* SleepLib Common Device Header
  *
  * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
@@ -49,22 +49,22 @@ qint64 timezoneOffset();
 enum SummaryType { ST_CNT, ST_SUM, ST_AVG, ST_WAVG, ST_PERC, ST_90P, ST_MIN, ST_MAX, ST_MID, ST_CPH, ST_SPH, ST_FIRST, ST_LAST, ST_HOURS, ST_SESSIONS, ST_SETMIN, ST_SETAVG, ST_SETMAX, ST_SETWAVG, ST_SETSUM, ST_SESSIONID, ST_DATE };
 
 /*! \enum MachineType
-    \brief Generalized type of a machine. MT_CPAP is any type of xPAP machine, MT_OXIMETER any type of Oximeter
+    \brief Generalized type of a device. MT_CPAP is any type of xPAP device, MT_OXIMETER any type of Oximeter
     \brief MT_SLEEPSTAGE stage of sleep detector (ZEO importer), MT_JOURNAL for optional notes, MT_POSITION for sleep position detector (Somnopose)
   */
-// TODO: This really needs to be a bitmask, since there are increasing numbers of machines that provide
+// TODO: This really needs to be a bitmask, since there are increasing numbers of devices that provide
 // multiple kinds of data, such as oximetry + motion/position, or sleep stage + oximetry, etc.
 //
-// Machine/loader classes will use the bitmask to identify which data they are capable of importing.
-// It may be that we ultimately prefer to have each machine identify a primary type instead or in addition.
+// Device/loader classes will use the bitmask to identify which data they are capable of importing.
+// It may be that we ultimately prefer to have each device identify a primary type instead or in addition.
 //
 // The channel schema's use of these is probably fine.
 //
-// Days/Sessions/etc. that currently search for data based on the machines they contain will instead
+// Days/Sessions/etc. that currently search for data based on the devices they contain will instead
 // need to search for channels with data of that MT type. And anywhere else the code makes decisions
 // based on MT.
 //
-// Unfortunately, this also includes previously imported data, as Session encodes the machine's type in
+// Unfortunately, this also includes previously imported data, as Session encodes the device's type in
 // each file on disk. We might be partially saved by the fact that MT_CPAP and MT_OXIMETER were originally
 // 1 and 2, which would only break MT_SLEEPSTAGE and higher.
 enum MachineType { MT_UNKNOWN = 0, MT_CPAP, MT_OXIMETER, MT_SLEEPSTAGE, MT_JOURNAL, MT_POSITION, MT_UNCATEGORIZED = 99};
@@ -99,7 +99,7 @@ enum CPAPMode { //:short
 };
 
 /*! \enum PRTypes
-    \brief Pressure Relief Types, used by CPAP machines
+    \brief Pressure Relief Types, used by CPAP devices
   */
 enum PRTypes { //:short
     PR_UNKNOWN = 0, PR_NONE, PR_CFLEX, PR_CFLEXPLUS, PR_AFLEX, PR_BIFLEX, PR_EPR, PR_SMARTFLEX, PR_EASYBREATHE, PR_SENSAWAKE
@@ -128,7 +128,7 @@ struct MachineInfo {
     int version;
     QDate purgeDate;
 
-    //! \brief List of text machine properties, like brand, model, etc...
+    //! \brief List of text device properties, like brand, model, etc...
     QHash<QString, QString> properties;
 };
 

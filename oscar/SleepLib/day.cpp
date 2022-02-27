@@ -182,7 +182,7 @@ QString Day::calcMiddleLabel(ChannelID code)
 }
 QString Day::calcMaxLabel(ChannelID code)
 {
-    return QString("%1 %2").arg(p_profile->general->prefCalcMax() ? QObject::tr("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
+    return QString("%1 %2").arg(p_profile->general->prefCalcMax() ? QString("99.5%") : STR_TR_Max).arg(schema::channel[code].label());
 }
 QString Day::calcPercentileLabel(ChannelID code)
 {
@@ -752,7 +752,7 @@ qint64 Day::total_time()
     return total; //d_totaltime;
 }
 
-// Total session time in milliseconds, only considering machinetype
+// Total session time in milliseconds, only considering device type
 qint64 Day::total_time(MachineType type)
 {
     qint64 d_totaltime = 0;
@@ -1145,7 +1145,7 @@ bool Day::noSettings(Machine * mach)
             // If this day generally has just summary data.
             return true;
         } else if ((mach == sess->machine())  && sess->noSettings()) {
-            // Focus only on machine mach
+            // Focus only on device match
             return true;
         }
     }
@@ -1159,7 +1159,7 @@ bool Day::summaryOnly(Machine * mach)
             // If this day generally has just summary data.
             return true;
         } else if ((mach == sess->machine())  && sess->summaryOnly()) {
-            // Focus only on machine mach
+            // Focus only on device match
             return true;
         }
     }
@@ -1420,7 +1420,7 @@ void Day::removeMachine(Machine * mach)
     QList<Session*> list = sessions;  // make a copy so the iterator doesn't get broken by removals
     for (auto & sess : list) {
         if (sess->machine() == mach) {
-            // This indicates a problem with the Machine class not tracking all of its sessions, for
+            // This indicates a problem with the device class not tracking all of its sessions, for
             // example if there's a duplicate session ID.
             qCritical() << "Day object" << this->date().toString()
                         << "session" << sess->session() << "refers to machine" << mach->serial();
@@ -1456,7 +1456,7 @@ int Day::getCPAPMode()
 
 //    schema::Channel & chan = schema::channel[modechan];
 
-    // TODO: This is an awful hack that depends on the enum ordering of the machine-specific CPAP mode.
+    // TODO: This is an awful hack that depends on the enum ordering of the device-specific CPAP mode.
     // See the comment in getCPAPModeStr().
     int mode = (CPAPMode)(int)qRound(settings_wavg(modechan));
 
@@ -1474,7 +1474,7 @@ QString Day::getCPAPModeStr()
 
     schema::Channel & chan = schema::channel[modechan];
 
-    // TODO: This is an awful hack that depends on the enum ordering of the machine-specific CPAP mode.
+    // TODO: This is an awful hack that depends on the enum ordering of the device-specific CPAP mode.
     // Instead, we should calculate how long each mode was in operation and
     // determine the one that was running the longest, along with the settings
     // while that mode was in operation.
@@ -1514,7 +1514,7 @@ QString Day::getPressureRelief()
     ChannelID pr_level_chan = loader->PresReliefLevel();
     ChannelID pr_mode_chan = loader->PresReliefMode();
 
-    // Separate calculation for SleepStyle machines
+    // Separate calculation for SleepStyle devices
     if (mach->info.loadername == "SleepStyle") {
         pr_str = loader->PresReliefLabel();
 

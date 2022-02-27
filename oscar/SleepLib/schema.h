@@ -52,8 +52,8 @@ enum Function {
 ///
 /// \brief The ChanType enum defines the type of data channel.  Bit flags so multiple settings are possible.
 /// DATA: A single number such as Height, ZombieMeter.
-/// SETTING: Machine setting, such as EPR, temperature, Ramp enabled.
-/// FLAG: Event flags reported by CPAP machine.  Each flag has its own channel.
+/// SETTING: Device setting, such as EPR, temperature, Ramp enabled.
+/// FLAG: Event flags reported by CPAP device.  Each flag has its own channel.
 /// MINOR_FLAG: More event flags such as PressurePulse and TimedBreath.
 /// SPAN: A flag that has a timespan associated with it (CSR, LeakSpan, Ramp, ...).
 /// WAVEFORM: A waveform such as flow rate.
@@ -102,7 +102,7 @@ class Channel
     //! \brief Data format such as integer vs RTF, called Field Type in channel initializers in schema.cpp
     inline DataType datatype() const { return m_datatype; }
 
-    //! \brief Type of machine (CPAP, Oximeter, Journal, etc.) as defined in machine_common.h. Set in channel initializers in schema.cpp
+    //! \brief Type of device (CPAP, Oximeter, Journal, etc.) as defined in machine_common.h. Set in channel initializers in schema.cpp
     inline MachineType machtype() const { return m_machtype; }
 
     //! \brief Unique string identifier for this channel.  Must not be translated.  Later used as a unique key to identify graph derived from this channel.

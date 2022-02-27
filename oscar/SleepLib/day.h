@@ -17,7 +17,7 @@
 #include "SleepLib/session.h"
 
 /*! \class OneTypePerDay
-    \brief An Exception class to catch multiple machine records per day
+    \brief An Exception class to catch multiple device records per day
     */
 class OneTypePerDay
 {
@@ -27,7 +27,7 @@ class Machine;
 class Session;
 
 /*! \class Day
-    \brief Contains a list of all Sessions for single date, for a single machine
+    \brief Contains a list of all Sessions for single date, for a single device
     */
 class Day
 {
@@ -35,13 +35,13 @@ class Day
     Day();
     ~Day();
 
-    //! \brief Add a new machine to this day record
+    //! \brief Add a new device to this day record
     bool addMachine(Machine *m);
 
-    //! \brief Returns a machine record if present of specified machine type
+    //! \brief Returns a device record if present of specified device type
     Machine *machine(MachineType type);
 
-    //! \brief Returns a list of sessions for the specified machine type
+    //! \brief Returns a list of sessions for the specified device type
     QList<Session *> getSessions(MachineType type, bool ignore_enabled = false);
 
     //! \brief Add Session to this Day object (called during Load)
@@ -92,16 +92,16 @@ class Day
     //! \brief Returns if the cache contains SummaryType information about the requested code
     bool hasData(ChannelID code, SummaryType type);
 
-    //! \brief Returns true if Day has specific machine type
+    //! \brief Returns true if Day has specific device type
     inline bool hasMachine(MachineType mt) const { return machines.contains(mt); }
 
-    //! \brief Returns true if Day has specific machine record
+    //! \brief Returns true if Day has specific device record
     bool hasMachine(Machine * mach);
 
-    //! \brief Returns true if any sessions have records matching specific machine type
+    //! \brief Returns true if any sessions have records matching specific device type
     bool searchMachine(MachineType mt);
 
-    //! \brief Removes any lingering references to a specific machine record and emits a warning if there were any
+    //! \brief Removes any lingering references to a specific device record and emits a warning if there were any
     void removeMachine(Machine * mach);
 
     //! \brief Returns the Average of all Sessions setting 'code' for this day
@@ -138,10 +138,10 @@ class Day
     //! \brief Returns the last session time of this day
     qint64 last();
 
-    //! \brief Returns the first session time of this machine type for this day
+    //! \brief Returns the first session time of this device type for this day
     qint64 first(MachineType type);
 
-    //! \brief Returns the last session time of this machine type for this day
+    //! \brief Returns the last session time of this device type for this day
     qint64 last(MachineType type);
 
 
@@ -160,10 +160,10 @@ class Day
     //! \brief Returns the total time in milliseconds for this day
     qint64 total_time();
 
-    //! \brief Returns the total time in milliseconds for this day for given machine type
+    //! \brief Returns the total time in milliseconds for this day for given device type
     qint64 total_time(MachineType type);
 
-    //! \brief Returns true if this day has enabled sessions for supplied machine type
+    //! \brief Returns true if this day has enabled sessions for supplied device type
     bool hasEnabledSessions(MachineType);
 
     //! \brief Returns true if this day has enabled sessions
@@ -236,7 +236,7 @@ class Day
     //! \brief Returns a list of channels of supplied types, according to channel orders
     QList<ChannelID> getSortedMachineChannels(quint32 chantype);
 
-    //! \brief Returns a list of machine specific channels of supplied types, according to channel orders
+    //! \brief Returns a list of device specific channels of supplied types, according to channel orders
     QList<ChannelID> getSortedMachineChannels(MachineType type, quint32 chantype);
 
     // Some ugly CPAP specific stuff
