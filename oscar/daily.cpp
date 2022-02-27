@@ -1108,7 +1108,7 @@ QString Daily::getMachineSettings(Day * day) {
     Machine * cpap = day->machine(MT_CPAP);
     if (cpap && day->hasEnabledSessions(MT_CPAP)) {
         html="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
-        html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>").arg(tr("Machine Settings"));
+        html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>").arg(tr("Device Settings"));
 
         if (day->noSettings(cpap)) {
             html+="<tr><td colspan=5 align=center><i><font color='red'>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</font></i></td></tr>\n";
@@ -1117,7 +1117,7 @@ QString Daily::getMachineSettings(Day * day) {
         }
         /*
         } else if ((day->settingExists(CPAP_BrokenSummary))) {
-            html+="<tr><td colspan=5 align=center><i>"+tr("Machine Settings Unavailable")+"</i></td></tr></table><hr/>\n";
+            html+="<tr><td colspan=5 align=center><i>"+tr("Device Settings Unavailable")+"</i></td></tr></table><hr/>\n";
             return html;
         }
         */
@@ -1320,7 +1320,7 @@ QString Daily::getStatisticsInfo(Day * day)
             .arg(STR_TR_Min)
             .arg(midname)
             .arg(QString("%1%2").arg(percentile*100,0,'f',0).arg(STR_UNIT_Percentage))
-            .arg(ST_max == ST_MAX?STR_TR_Max:tr("99.5%"));
+            .arg(ST_max == ST_MAX?STR_TR_Max:QString("99.5%"));
 
     ChannelID chans[]={
         CPAP_Pressure,CPAP_PressureSet,CPAP_EPAP,CPAP_EPAPSet,CPAP_IPAP,CPAP_IPAPSet,CPAP_PS,CPAP_PTB,
@@ -1705,7 +1705,7 @@ void Daily::Load(QDate date)
                         .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
             } else {
                 htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'><b>%2</b></font></td>\n")
-                        .arg("#F88017").arg(tr("This CPAP machine does NOT record detailed data"));
+                        .arg("#F88017").arg(tr("This CPAP device does NOT record detailed data"));
             }
             htmlLeftAHI+="</tr>\n";
             htmlLeftAHI+="</table>\n";
@@ -1732,7 +1732,7 @@ void Daily::Load(QDate date)
                 QString data;
                 float channelHours = hours;
                 if (chan.machtype() != MT_CPAP) {
-                    // Use machine type hours (if available) rather than CPAP hours, since
+                    // Use device type hours (if available) rather than CPAP hours, since
                     // might have Oximetry (for example) longer or shorter than CPAP
                     channelHours = day->hours(chan.machtype());
                     if (channelHours <= 0) {
@@ -1784,9 +1784,9 @@ void Daily::Load(QDate date)
                     htmlLeftNoHours+="<tr><td colspan=5 align='center'><b><h2>"+tr("Impossibly short session")+"</h2></b></td></tr>";
                     htmlLeftNoHours+="<tr><td colspan=5 align='center'><i>"+tr("Zero hours??")+"</i></td></tr>\n";
                 }
-            } else { // machine is a brick
-                htmlLeftNoHours+="<tr><td colspan=5 align='center'><b><h2>"+tr("BRICK :(")+"</h2></b></td></tr>";
-                htmlLeftNoHours+="<tr><td colspan=5 align='center'><i>"+tr("Sorry, this machine only provides compliance data.")+"</i></td></tr>\n";
+            } else { // Device is a brick
+                htmlLeftNoHours+="<tr><td colspan=5 align='center'><b><h2>"+tr("no data :(")+"</h2></b></td></tr>";
+                htmlLeftNoHours+="<tr><td colspan=5 align='center'><i>"+tr("Sorry, this device only provides compliance data.")+"</i></td></tr>\n";
                 htmlLeftNoHours+="<tr><td colspan=5 align='center'><i>"+tr("Complain to your Equipment Provider!")+"</i></td></tr>\n";
             }
             htmlLeftNoHours+="<tr><td colspan='5'>&nbsp;</td></tr>\n";

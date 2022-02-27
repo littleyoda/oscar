@@ -63,7 +63,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="importTab">
          <attribute name="title">
@@ -477,9 +477,9 @@ If you've got a new computer with a small solid state disk, this is a good optio
              <item row="2" column="0">
               <widget class="QCheckBox" name="createSDBackups">
                <property name="toolTip">
-                <string>This maintains a backup of SD-card data for ResMed machines, 
+                <string>This maintains a backup of SD-card data for ResMed devices, 
 
-ResMed S9 series machines delete high resolution data older than 7 days, 
+ResMed S9 series devices delete high resolution data older than 7 days, 
 and graph data older than 30 days..
 
 OSCAR can keep a copy of this data if you ever need to reinstall. 
@@ -637,10 +637,10 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
              <item row="1" column="1">
               <widget class="QCheckBox" name="warnOnUntestedMachine">
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="text">
-                <string>Warn when importing data from an untested machine</string>
+                <string>Warn when importing data from an untested device</string>
                </property>
               </widget>
              </item>
@@ -805,7 +805,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
+               <string>This calculation requires Total Leaks data to be provided by the CPAP device. (Eg, PRS1, but not ResMed, which has these already)
 
 The Unintentional Leak calculations used here are linear, they don't model the mask vent curve.
 
@@ -970,7 +970,7 @@ If you use a few different masks, pick average values instead. It should still b
               </property>
               <property name="toolTip">
                <string>Enable/disable experimental event flagging enhancements. 
-It allows detecting borderline events, and some the machine missed.
+It allows detecting borderline events, and some the device missed.
 This option must be enabled before import, otherwise a purge is required.</string>
               </property>
               <property name="title">
@@ -1021,10 +1021,10 @@ This option must be enabled before import, otherwise a purge is required.</strin
                <item row="6" column="0" colspan="4">
                 <widget class="QCheckBox" name="resyncMachineDetectedEvents">
                  <property name="toolTip">
-                  <string>This experimental option attempts to use OSCAR's event flagging system to improve machine detected event positioning.</string>
+                  <string>This experimental option attempts to use OSCAR's event flagging system to improve device detected event positioning.</string>
                  </property>
                  <property name="text">
-                  <string>Resync Machine Detected Events (Experimental)</string>
+                  <string>Resync Device Detected Events (Experimental)</string>
                  </property>
                 </widget>
                </item>
@@ -1082,7 +1082,7 @@ This option must be enabled before import, otherwise a purge is required.</strin
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1148,7 +1148,7 @@ A value of 20% works well for detecting apneas. </string>
                <item row="4" column="0" colspan="4">
                 <widget class="QCheckBox" name="userEventDuplicates">
                  <property name="text">
-                  <string>Allow duplicates near machine events.</string>
+                  <string>Allow duplicates near device events.</string>
                  </property>
                 </widget>
                </item>
@@ -1196,7 +1196,7 @@ A value of 20% works well for detecting apneas. </string>
                <item row="3" column="0">
                 <widget class="QCheckBox" name="showUnknownFlags">
                  <property name="toolTip">
-                  <string>Show flags for machine detected events that haven't been identified yet.</string>
+                  <string>Show flags for device detected events that haven't been identified yet.</string>
                  </property>
                  <property name="text">
                   <string>Enable Unknown Events Channels</string>
@@ -1492,7 +1492,7 @@ as this is the only value available on summary-only days.</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed devices do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1795,7 +1795,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -2497,10 +2497,10 @@ Mainly affects the importer.</string>
                     <number>30000</number>
                    </property>
                    <property name="singleStep">
-                    <number>100</number>
+                    <number>1000</number>
                    </property>
                    <property name="pageStep">
-                    <number>500</number>
+                    <number>5000</number>
                    </property>
                    <property name="value">
                     <number>5000</number>
@@ -2738,7 +2738,7 @@ Try it and see if you like it.</string>
                <item>
                 <widget class="QCheckBox" name="includeSerial">
                  <property name="toolTip">
-                  <string>Whether to include machine serial number on machine settings changes report</string>
+                  <string>Whether to include device serial number on device settings changes report</string>
                  </property>
                  <property name="text">
                   <string>Include Serial Number</string>

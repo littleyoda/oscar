@@ -212,7 +212,7 @@ void Overview::CreateAllGraphs() {
             ChannelID code = chan->id();
             QString name = chan->fullname();
             if (name.length() > 16) name = chan->label();
-//            qDebug() << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype();
+//            qDebug() << "Channel" << name << "type" << chan->type() << "device type" << chan->machtype();
             gGraph *G = createGraph(chan->code(), name, chan->description());
             if ((chan->type() == schema::FLAG) || (chan->type() == schema::MINOR_FLAG)) {
                 gSummaryChart * sc = new gSummaryChart(chan->code(), chan->machtype()); // gts was MT_CPAP
@@ -501,7 +501,7 @@ void Overview::ResetGraphOrder(int type)
 // Process new range selection from combo button
 void Overview::on_rangeCombo_activated(int index)
 {
-    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
+    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY device type
     ui->dateEnd->setMaximumDate(p_profile->LastDay());
 
     // Exclude Journal in calculating the last day
@@ -591,7 +591,7 @@ void Overview::on_rangeCombo_activated(int index)
     progress->close();
     delete progress;
 
-    // first and last dates for ANY machine type
+    // first and last dates for ANY device type
     setRange(start, end);
 }
 

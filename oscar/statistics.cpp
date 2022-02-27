@@ -30,8 +30,8 @@ extern MainWindow *mainwin;
 QString htmlReportHeader = "";      // Page header
 QString htmlReportHeaderPrint = ""; // Page header
 QString htmlUsage = "";             // CPAP and Oximetry
-QString htmlMachineSettings = "";   // Machine (formerly Rx) changes
-QString htmlMachines = "";          // Machines used in this profile
+QString htmlMachineSettings = "";   // Device (formerly Rx) changes
+QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
 QString resizeHTMLPixmap(QPixmap &pixmap, int width, int height) {
@@ -529,7 +529,7 @@ void Statistics::updateRXChanges()
 // Statistics constructor is responsible for creating list of rows that will on the Statistics page
 // and skeletons of column 1 text that correspond to each calculation type.
 // Actual column 1 text is combination of skeleton for the row's calculation time and the text of the row.
-// Also creates "machine" names for machine types.
+// Also creates "device" names for device types.
 Statistics::Statistics(QObject *parent) :
     QObject(parent)
 {
@@ -803,7 +803,7 @@ EventDataType calcSA(QDate start, QDate end)
     return val;
 }
 
-// Structure for recording Prescription Changes (now called Machine Settings Changes)
+// Structure for recording Prescription Changes (now called Device Settings Changes)
 struct RXChange {
     RXChange() { highlight = 0; machine = nullptr; }
     RXChange(const RXChange &copy) {
@@ -888,7 +888,7 @@ const QString heading_color="#ffffff";
 const QString subheading_color="#e0e0e0";
 //const int rxthresh = 5;
 
-// Sort machines by first day of use
+// Sort devices by first day of use
 bool machineCompareFirstDay(Machine* left, Machine *right) {
   return left->FirstDay() > right->FirstDay();
 }
@@ -914,7 +914,7 @@ QString Statistics::GenerateMachineList()
         html += QString("<table class=curved style='page-break-before:auto' "+table_width+">");
 
         html += "<thead>";
-        html += "<tr bgcolor='"+heading_color+"'><th colspan=7 align=center><font size='+2'>" + tr("Machine Information") + "</font></th></tr>";
+        html += "<tr bgcolor='"+heading_color+"'><th colspan=7 align=center><font size='+2'>" + tr("Device Information") + "</font></th></tr>";
 
         html += QString("<tr><td><b>%1</b></td><td><b>%2</b></td><td><b>%3</b></td><td><b>%4</b></td><td><b>%5</b></td></tr>")
                 .arg(STR_TR_Brand)
@@ -931,7 +931,7 @@ QString Statistics::GenerateMachineList()
             m = mach.at(i);
 
             if (m->type() == MT_JOURNAL) { continue; }
-//qDebug() << "Machine" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
+//qDebug() << "Device" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
             QDate d1 = m->FirstDay();
             QDate d2 = m->LastDay();
             QString mn = m->modelnumber();
@@ -952,7 +952,7 @@ QString Statistics::GenerateMachineList()
 }
 QString Statistics::GenerateRXChanges()
 {
-    // Generate list only if there are CPAP machines
+    // Generate list only if there are CPAP devices
     QList<Machine *> cpap_machines = p_profile->GetMachines(MT_CPAP);
     if (cpap_machines.isEmpty())
         return "";
@@ -973,7 +973,7 @@ QString Statistics::GenerateRXChanges()
     QString html = "<div align=center><br>";
     html += QString("<table class=curved style='page-break-before:always' " + table_width+">");
     html += "<thead>";
-    html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size='+2'>" + tr("Changes to Machine Settings") + "</font></th></tr>";
+    html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size='+2'>" + tr("Changes to Device Settings") + "</font></th></tr>";
 
 //    QString extratxt;
 
@@ -1083,7 +1083,7 @@ QString Statistics::GenerateCPAPUsage()
     mach.append(cpap_machines);
     mach.append(oximeters);
 
-    // Go through all CPAP and Oximeter machines and see if any data is present
+    // Go through all CPAP and Oximeter devices and see if any data is present
     bool havedata = false;
     for (int i=0; i < mach.size(); ++i) {
         int daysize = mach[i]->day.size();
@@ -1378,7 +1378,7 @@ QString Statistics::UpdateRecordsBox()
                      "a:link,a:visited { color: inherit; text-decoration: none; }" //font-weight: normal;
                      "a:hover { background-color: inherit; color: white; text-decoration:none; font-weight: bold; }"
                      "</style>"
-                     "<title>Machine Statistics Panel</title>"
+                     "<title>Device Statistics Panel</title>"
                      "</head><body>";
 
     Machine * cpap = p_profile->GetMachine(MT_CPAP);

@@ -54,7 +54,7 @@ void Welcome::refreshPage()
     ui->S9Warning->setVisible(showCardWarning);
 
     if (!b) {
-        qDebug() << "No machines in Profile";
+        qDebug() << "No devices in Profile";
 //        sleep(3);
         ui->cpapIcon->setPixmap(pixmap);
     }
@@ -159,7 +159,7 @@ QString Welcome::GenerateCPAPHTML()
     if (!havecpapdata && !haveoximeterdata) {
         html += "<p>" + tr("It would be a good idea to check File->Preferences first,") + "<br />" +
                         tr("as there are some options that affect import.")+"</p>" +
-        "<p>" + tr("Note that some preferences are forced when a ResMed machine is detected") + "</p>" +
+        "<p>" + tr("Note that some preferences are forced when a ResMed device is detected") + "</p>" +
         "<p>" + tr("First import can take a few minutes.") + "</p>";
     } else {
         QDate date = p_profile->LastDay(MT_CPAP);
@@ -192,7 +192,7 @@ QString Welcome::GenerateCPAPHTML()
             QString timestr = tr("%1 hours, %2 minutes and %3 seconds").arg(hour).arg(minutes).arg(seconds);
 
             const EventDataType compliance_min = p_profile->cpap->m_complianceHours; // 4.0;
-            if (hours > compliance_min) html += tr("Your machine was on for %1.").arg(timestr)+"<br/>";
+            if (hours > compliance_min) html += tr("Your device was on for %1.").arg(timestr)+"<br/>";
             else html += tr("<font color = red>You only had the mask on for %1.</font>").arg(timestr)+"<br/>";
 
 
@@ -254,7 +254,7 @@ QString Welcome::GenerateCPAPHTML()
                 pressSettingChanID = CPAP_Pressure;  // DreamStation ventilators report EPAP/IPAP data, but the setting is Pressure
                 EventDataType pressure = day->settings_max(pressSettingChanID);
                 qDebug() << pressSettingChanID << pressure;
-                html += tr("Your CPAP machine used a constant %1 %2 of air")
+                html += tr("Your CPAP device used a constant %1 %2 of air")
                         .arg(pressure)
                         .arg(schema::channel[pressChanID].units());
             } else if (cpapmode == MODE_APAP) {
@@ -267,14 +267,14 @@ QString Welcome::GenerateCPAPHTML()
 //                pressSettingChanID = CPAP_IPAP;
 //                EventDataType ipap = day->settings_max(pressSettingChanID);
 //                EventDataType epap = day->settings_min(CPAP_EPAP);
-                html += tr("Your machine used a constant %1-%2 %3 of air.")
+                html += tr("Your device used a constant %1-%2 %3 of air.")
                         .arg(day->validPressure(day->settings_min(CPAP_EPAP)))
                         .arg(day->validPressure(day->settings_max(CPAP_IPAP)))
                         .arg(schema::channel[CPAP_IPAP].units());
             } else if (cpapmode == MODE_BILEVEL_AUTO_FIXED_PS) {
                 EventDataType ipap = day->percentile(pressChanID, perc/100.0);
                 EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
-                html += tr("Your machine was under %1-%2 %3 for %4% of the time.")
+                html += tr("Your device was under %1-%2 %3 for %4% of the time.")
                         .arg(epap)
                         .arg(ipap)
                         .arg(schema::channel[pressChanID].units())

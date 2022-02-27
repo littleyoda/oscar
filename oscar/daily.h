@@ -279,7 +279,7 @@ private:
         \brief Create a new journal session for this date, if one doesn't exist.
         \param QDate date
 
-        Creates a new journal Machine record if necessary.
+        Creates a new journal device record if necessary.
         */
     Session * CreateJournalSession(QDate date);
 
