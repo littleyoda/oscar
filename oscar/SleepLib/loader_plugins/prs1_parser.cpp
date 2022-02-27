@@ -539,7 +539,7 @@ void PRS1DataChunk::ParseHumidifierSetting50Series(int humid, bool add_setting)
 
     // Check for truly unexpected values:
     if (humidlevel > 5) UNEXPECTED_VALUE(humidlevel, "<= 5");
-    //if (!humidifier_present) CHECK_VALUES(humidlevel, 0, 1);  // Some machines appear to encode the humidlevel setting even when the humidifier is not present.
+    //if (!humidifier_present) CHECK_VALUES(humidlevel, 0, 1);  // Some devices appear to encode the humidlevel setting even when the humidifier is not present.
 }
 
 
@@ -1103,7 +1103,7 @@ bool PRS1DataChunk::ReadNormalHeaderV3(RawDataDevice & f)
     unsigned char * header;
     QByteArray headerB2;
 
-    // This is a new machine, byte 15 is header data block length
+    // This is a new device, byte 15 is header data block length
     // followed by variable, data byte pairs
     do {
         QByteArray extra = f.read(1);

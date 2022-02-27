@@ -68,13 +68,13 @@ class ResmedLoader : public CPAPLoader
     ResmedLoader();
     virtual ~ResmedLoader();
 
-    //! \brief Register the ResmedLoader with the list of other machine loaders
+    //! \brief Register the ResmedLoader with the list of other device loaders
     static void Register();
 
     //! \brief Detect if the given path contains a valid Folder structure
     virtual bool Detect(const QString & path);
 
-    //! \brief Look up machine model information of ResMed file structure stored at path
+    //! \brief Look up device model information of ResMed file structure stored at path
     virtual MachineInfo PeekInfo(const QString & path);
 
     virtual void checkSummaryDay( ResMedDay & resday, QDate date, Machine * mach );
@@ -85,7 +85,7 @@ class ResmedLoader : public CPAPLoader
     //! \brief Returns the version number of this ResMed loader
     virtual int Version() { return resmed_data_version; }
 
-    //! \brief Returns the Machine class name of this loader. ("ResMed")
+    //! \brief Returns the device class name of this loader. ("ResMed")
     virtual const QString &loaderName() { return resmed_class_name; }
 
     virtual MachineInfo newInfo() {

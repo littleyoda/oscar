@@ -27,7 +27,7 @@ const int mseries_data_version = 2;
 //********************************************************************************************
 
 /*! \class MSeries
-    \brief RemStar M-Series customized machine object
+    \brief RemStar M-Series customized device object
     */
 class MSeries: public CPAP
 {
@@ -60,7 +60,7 @@ class MSeriesLoader : public MachineLoader
     //! \brief Return the loaderName, in this case "MSeries"
     virtual const QString & loaderName() { return mseries_class_name; }
 
-    //! \brief Create a new PRS1 machine record, indexed by Serial number.
+    //! \brief Create a new PRS1 device record, indexed by Serial number.
    // Machine *CreateMachine(QString serial);
 
     virtual MachineInfo newInfo() {

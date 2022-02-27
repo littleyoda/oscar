@@ -26,7 +26,7 @@ const int fpicon_data_version = 3;
 //********************************************************************************************
 
 /*! \class FPIcon
-    \brief F&P Icon customized machine object
+    \brief F&P Icon customized device object
     */
 class FPIcon: public CPAP
 {
@@ -68,10 +68,10 @@ class FPIconLoader : public CPAPLoader
     //! \brief Returns SleepLib database version of this F&P Icon loader
     virtual int Version() { return fpicon_data_version; }
 
-    //! \brief Returns the machine class name of this CPAP machine, "FPIcon"
+    //! \brief Returns the device class name of this CPAP device, "FPIcon"
     virtual const QString & loaderName() { return fpicon_class_name; }
 
-    // ! \brief Creates a machine object, indexed by serial number
+    // ! \brief Creates a device object, indexed by serial number
     //Machine *CreateMachine(QString serial);
 
     virtual MachineInfo newInfo() {

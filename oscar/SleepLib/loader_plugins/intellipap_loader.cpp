@@ -238,7 +238,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
         mode = (set_epap > 0) ? MODE_BILEVEL_FIXED : MODE_APAP;
         break;
     default:
-        qDebug() << "New machine mode";
+        qDebug() << "New device mode";
     }
 
     if (!info.serial.isEmpty()) {
@@ -246,7 +246,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
     }
 
     if (!mach) {
-        qDebug() << "Couldn't get Intellipap machine record";
+        qDebug() << "Couldn't get Intellipap device record";
         return -1;
     }
 
@@ -602,11 +602,11 @@ int IntellipapLoader::OpenDV5(const QString & path)
 // 1a) Flow graph for days without high resolution data is absent
 // 1b) Pressure graph is high resolution when high res data is available and
 //     only 1 per minute when using low resolution data.
-// 2)  Max and Average leak rates are as reported by DV64 machine but we're
-//     not sure how those measures relate to other machine's data. Leak rate
+// 2)  Max and Average leak rates are as reported by DV64 device but we're
+//     not sure how those measures relate to other device's data. Leak rate
 //     seems to include the intentional mask leak.
 // 2a) Not sure how SmartLink calculates the pct of time of poor mask fit.
-//     May be same as what we call large leak time for other machines?
+//     May be same as what we call large leak time for other devices?
 ////////////////////////////////////////////////////////////////////////////
 
 struct DV6TestedModel
@@ -1735,7 +1735,7 @@ bool load6HighResData () {
 #endif
             if (inSession && sess) {
                 // update min and max
-                // then add to machine
+                // then add to device
                 if (sess->first() == 0)
                     qWarning() << "R.BIN first = 0 - 1284";
                 EventDataType min = flow->Min();
@@ -2129,7 +2129,7 @@ bool load6HighResData () {
             if (inPB) RE->AddEvent(REstart,(REend-REstart) / 1000L);
 ***/
         // update min and max
-        // then add to machine
+        // then add to device
         if (sess->first() == 0)
             qWarning() << "R.BIN first = 0 - 1665";
         EventDataType min = flow->Min();
@@ -2640,10 +2640,10 @@ bool backup6 (const QString & path)  {
 
 bool init6Environment (const QString & path) {
 
-    // Create Machine database record if it doesn't exist already
+    // Create device database record if it doesn't exist already
     mach = p_profile->CreateMachine(info);
     if (mach == nullptr) {
-        qWarning() << "Could not create DV6 Machine data structure";
+        qWarning() << "Could not create DV6 device data structure";
         return false;
     }
 
@@ -2695,7 +2695,7 @@ int IntellipapLoader::OpenDV6(const QString & path)
     emit setProgressValue(0);
     QCoreApplication::processEvents();
 
-    // 1. Prime the machine database's info field with this machine
+    // 1. Prime the device database's info field with this device
     info = newInfo();
 
     // 2. VER.BIN - Parse model number, serial, etc. into info structure
@@ -2717,7 +2717,7 @@ int IntellipapLoader::OpenDV6(const QString & path)
     emit updateMessage(QObject::tr("Backing up files..."));
     QCoreApplication::processEvents();
 
-    // 6. Back up data files (must do after parsing VER.BIN, S.BIN, and creating Machine)
+    // 6. Back up data files (must do after parsing VER.BIN, S.BIN, and creating device)
     if (!backup6(path))
         return -1;
 

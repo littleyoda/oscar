@@ -25,7 +25,7 @@ const int intellipap_data_version = 3;
 //********************************************************************************************
 
 /*! \class Intellipap
-    \brief Intellipap customized machine object
+    \brief Intellipap customized device object
     */
 class Intellipap: public CPAP
 {
@@ -65,10 +65,10 @@ class IntellipapLoader : public CPAPLoader
     //! \brief Returns SleepLib database version of this IntelliPap loader
     virtual int Version() { return intellipap_data_version; }
 
-    //! \brief Returns the machine class name of this IntelliPap, "Intellipap"
+    //! \brief Returns the device class name of this IntelliPap, "Intellipap"
     virtual const QString &loaderName() { return intellipap_class_name; }
 
-    //! \brief Creates a machine object, indexed by serial number
+    //! \brief Creates a device object, indexed by serial number
  //   Machine *CreateMachine(QString serial);
 
     //! \brief Registers this MachineLoader with the master list, so Intellipap data can load

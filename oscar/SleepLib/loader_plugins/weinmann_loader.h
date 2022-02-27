@@ -25,7 +25,7 @@ const int weinmann_data_version = 3;
 //********************************************************************************************
 
 /*! \class Weinmann
-    \brief Weinmann customized machine object
+    \brief Weinmann customized device object
     */
 class Weinmann: public CPAP
 {
@@ -101,13 +101,13 @@ class WeinmannLoader : public CPAPLoader
     //! \brief Returns SleepLib database version of this Weinmann loader
     virtual int Version() { return weinmann_data_version; }
 
-    //! \brief Returns the machine loader name of this class
+    //! \brief Returns the device loader name of this class
     virtual const QString &loaderName() { return weinmann_class_name; }
 
     int ParseIndex(QFile & wmdata);
 
 
-    //! \brief Creates a machine object, indexed by serial number
+    //! \brief Creates a device object, indexed by serial number
  //   Machine *CreateMachine(QString serial);
 
     //! \brief Registers this MachineLoader with the master list, so Weinmann data can load

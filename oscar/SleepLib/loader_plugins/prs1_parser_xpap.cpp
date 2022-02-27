@@ -19,7 +19,7 @@ bool PRS1DataChunk::ParseComplianceF0V23(void)
         qWarning() << "ParseComplianceF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // All sample devices with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
     // We should flag an actual familyVersion 3 file if we ever encounter one!
     CHECK_VALUE(this->familyVersion, 2);
     
@@ -104,7 +104,7 @@ bool PRS1DataChunk::ParseSummaryF0V23()
         qWarning() << "ParseSummaryF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // All sample devices with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
     // We should flag an actual familyVersion 3 file if we ever encounter one!
     CHECK_VALUE(this->familyVersion, 2);
     
@@ -462,7 +462,7 @@ bool PRS1DataChunk::ParseEventsF0V23()
         qWarning() << "ParseEventsF0V23 called with family" << this->family << "familyVersion" << this->familyVersion;
         return false;
     }
-    // All sample machines with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
+    // All sample devices with FamilyVersion 3 in the properties.txt file have familyVersion 2 in their .001/.002/.005 files!
     // We should flag an actual familyVersion 3 file if we ever encounter one!
     CHECK_VALUE(this->familyVersion, 2);
     
@@ -746,7 +746,7 @@ bool PRS1DataChunk::ParseComplianceF0V4(void)
                 // often clock adjustments without corresponding discontinuities in the waveform, and vice versa.
                 // It's possible internal clock inaccuracy causes both independently.
                 //
-                // TODO: why do some machines have lots of these and others none? Maybe cellular modems make daily tweaks?
+                // TODO: why do some devices have lots of these and others none? Maybe cellular modems make daily tweaks?
                 if (false) {
                     long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
                     qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
@@ -932,7 +932,7 @@ bool PRS1DataChunk::ParseSummaryF0V4(void)
                 // often clock adjustments without corresponding discontinuities in the waveform, and vice versa.
                 // It's possible internal clock inaccuracy causes both independently.
                 //
-                // TODO: why do some machines have lots of these and others none? Maybe cellular modems make daily tweaks?
+                // TODO: why do some devices have lots of these and others none? Maybe cellular modems make daily tweaks?
                 if (false) {
                     long value = data[pos] | data[pos+1]<<8 | data[pos+2]<<16 | data[pos+3]<<24;
                     qDebug() << this->sessionid << "clock changing from" << ts(value * 1000L)
@@ -1550,7 +1550,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
     int chunk_size = this->m_data.size();
     static const int minimum_sizes[] = { 1, 0x29, 9, 4, 2, 4, 1, 4, 0x1b, 2, 4, 0x0b, 1, 2, 6 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
-    // NOTE: The sizes contained in hblock can vary, even within a single machine, as can the length of hblock itself!
+    // NOTE: The sizes contained in hblock can vary, even within a single device, as can the length of hblock itself!
 
     // TODO: hardcoding this is ugly, think of a better approach
     if (chunk_size < minimum_sizes[0] + minimum_sizes[1] + minimum_sizes[2]) {
@@ -1611,7 +1611,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
                 this->AddEvent(new PRS1ParsedSliceEvent(tt, MaskOff));
                 break;
             case 8:  // vs. 7 in compliance, always follows mask off (except when there's a 5, see below), also longer
-                // Maybe statistics of some kind, given the pressure stats that seem to appear before it on AutoCPAP machines?
+                // Maybe statistics of some kind, given the pressure stats that seem to appear before it on AutoCPAP devices?
                 //CHECK_VALUES(data[pos], 0x02, 0x01);  // probably 16-bit value
                 CHECK_VALUE(data[pos+1], 0x00);
                 //CHECK_VALUES(data[pos+2], 0x0d, 0x0a);  // probably 16-bit value, maybe OA count?
@@ -1739,7 +1739,7 @@ bool PRS1DataChunk::ParseSummaryF0V6(void)
 // The below is based on a combination of the old mainblock parsing for fileVersion == 3
 // in ParseSummary() and the switch statements of ParseSummaryF0V6.
 //
-// Both compliance and summary files (at least for 200X and 400X machines) seem to have
+// Both compliance and summary files (at least for 200X and 400X devices) seem to have
 // the same length for this slice, so maybe the settings are the same? At least 0x0a
 // looks like a pressure in compliance files.
 bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
@@ -1946,7 +1946,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                             break;
                     }
                     break;
-                case 0x90:  // C-Flex+ or A-Flex, depending on machine mode
+                case 0x90:  // C-Flex+ or A-Flex, depending on device mode
                     switch (cpapmode) {
                     case PRS1_MODE_CPAP:
                     case PRS1_MODE_CPAPCHECK:
@@ -2130,7 +2130,7 @@ const QVector<PRS1ParsedEventType> ParsedEventsF0V6 = {
     PRS1SnoresAtPressureEvent::TYPE,
 };
 
-// DreamStation family 0 CPAP/APAP machines (400X-700X, 400G-502G)
+// DreamStation family 0 CPAP/APAP devices (400X-700X, 400G-502G)
 // Originally derived from F5V3 parsing + (incomplete) F0V234 parsing + sample data
 bool PRS1DataChunk::ParseEventsF0V6()
 {
