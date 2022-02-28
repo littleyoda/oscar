@@ -244,7 +244,7 @@ extern QString STR_TR_Inclination;
 extern QString STR_TR_Orientation;
 extern QString STR_TR_Motion;
 
-// Machine type names.
+// Device type names.
 extern QString STR_TR_CPAP;    // Constant Positive Airway Pressure
 extern QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 extern QString STR_TR_BiLevel; // Another name for BiPAP
@@ -272,13 +272,13 @@ extern QString STR_TR_LE;      // Short form of Leak Event
 extern QString STR_TR_EP;      // Short form of Expiratory Puff
 extern QString STR_TR_VS;      // Short form of Vibratory Snore
 extern QString
-STR_TR_VS2;     // Short form of Secondary Vibratory Snore (Some Philips Respironics Machines have two sources)
+STR_TR_VS2;     // Short form of Secondary Vibratory Snore (Some Philips Respironics devices have two sources)
 extern QString STR_TR_RERA;    // Acronym for Respiratory Effort Related Arousal
 extern QString STR_TR_PP;      // Short form for Pressure Pulse
 extern QString STR_TR_P;       // Short form for Pressure Event
 extern QString STR_TR_RE;      // Short form of Respiratory Effort Related Arousal
 extern QString STR_TR_NR;      // Short form of Non Responding event? (forgot sorry)
-extern QString STR_TR_NRI;     // Sorry I Forgot.. it's a flag on Intellipap machines
+extern QString STR_TR_NRI;     // Sorry I Forgot.. it's a flag on Intellipap devices
 extern QString STR_TR_O2;      // SpO2 Desaturation
 extern QString STR_TR_PC;      // Short form for Pulse Change
 extern QString STR_TR_UF1;     // Short form for User Flag 1

@@ -449,7 +449,7 @@ bool PRDS2File::parseDS2Header()
         qWarning() << "DS2 unexpected middle bytes =" << f << g;
     }
     
-    QByteArray import_key = readBytes();      // payload key encrypted with machine-specific key
+    QByteArray import_key = readBytes();      // payload key encrypted with device-specific key
     QByteArray import_key_tag = readBytes();  // tag of import key
     if (import_key.size() != 32 || import_key_tag.size() != 16) {
         qWarning() << "DS2 import_key sizes =" << import_key.size() << import_key_tag.size();
@@ -589,7 +589,7 @@ QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
         pseries.setSorting(QDir::Name);
         QFileInfoList plist = pseries.entryInfoList();
 
-        // Look for machine directories (containing a PROP.TXT or properties.txt)
+        // Look for device directories (containing a PROP.TXT or properties.txt)
         QFileInfoList propertyfiles;
         for (auto & pfi : plist) {
             if (pfi.isDir()) {
@@ -598,18 +598,18 @@ QStringList PRS1Loader::FindMachinesOnCard(const QString & cardPath)
                 QFileInfoList mlist = machineDir.entryInfoList();
                 for (auto & mfi : mlist) {
                     if (QDir::match("PROP*.TXT", mfi.fileName())) {
-                        // Found a properties file, this is a machine folder
+                        // Found a properties file, this is a device folder
                         propertyfiles.append(mfi);
                     }
                     if (QDir::match("PROP.BIN", mfi.fileName())) {
-                        // Found a DreamStation 2 properties file, this is a machine folder
+                        // Found a DreamStation 2 properties file, this is a device folder
                         propertyfiles.append(mfi);
                     }
                 }
             }
         }
 
-        // Sort machines from oldest to newest.
+        // Sort devices from oldest to newest.
         std::sort(propertyfiles.begin(), propertyfiles.end(),
             [](const QFileInfo & a, const QFileInfo & b)
         {
@@ -779,7 +779,7 @@ MachineInfo PRS1Loader::PeekInfo(const QString & path)
         return MachineInfo();
     }
 
-    // Present information about the newest machine on the card.
+    // Present information about the newest device on the card.
     QString newpath = machines.last();
     
     MachineInfo info = newInfo();
@@ -805,14 +805,14 @@ int PRS1Loader::Open(const QString & selectedPath)
     }
 
     QStringList machines = FindMachinesOnCard(path);
-    // Return an error if no machines were found.
+    // Return an error if no devices were found.
     if (machines.isEmpty()) {
-        qDebug() << "No PRS1 machines found at" << path;
+        qDebug() << "No PRS1 devices found at" << path;
         return -1;
     }
 
-    // Import each machine, from oldest to newest.
-    // TODO: Loaders should return the set of machines during detection, so that Open() will
+    // Import each device, from oldest to newest.
+    // TODO: Loaders should return the set of devices during detection, so that Open() will
     // open a unique device, instead of surprising the user.
     int c = 0;
     bool failures = false;
@@ -956,7 +956,7 @@ bool PRS1Loader::CreateMachineFromProperties(QString propertyfile)
         emit deviceReportsUsageOnly(info);
     }
 
-    // Which is needed to get the right machine record..
+    // Which is needed to get the right device record..
     m_ctx->CreateMachineFromInfo(info);
 
     if (!s_PRS1ModelInfo.IsTested(props)) {
@@ -1100,7 +1100,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
                 if (ext == 5) {
                     // Occasionally waveforms in a session can be split into multiple files.
                     //
-                    // This seems to happen when the machine begins writing the waveform file
+                    // This seems to happen when the device begins writing the waveform file
                     // before realizing that it will hit its 500-file-per-directory limit
                     // for the remaining session files, at which point it appears to write
                     // the rest of the waveform data along with the summary and event files
@@ -1130,7 +1130,7 @@ void PRS1Loader::ScanFiles(const QStringList & paths, int sessionid_base)
 
                 SessionID chunk_sid = chunk->sessionid;
                 if (i == 0 && chunk_sid != sid) {  // log session ID mismatches
-                    // This appears to be benign, probably when a card is out of the machine one night and
+                    // This appears to be benign, probably when a card is out of the device one night and
                     // then inserted in the morning. It writes out all of the still-in-memory summaries and
                     // events up through the last night (and no waveform data).
                     //
@@ -1347,8 +1347,8 @@ void PRS1Import::CreateEventChannels(const PRS1DataChunk* chunk)
 {
     const QVector<PRS1ParsedEventType> & supported = GetSupportedEvents(chunk);
 
-    // Generate the list of channels created by non-slice events for this machine.
-    // We can't just use the full list of non-slice events, since on some machines
+    // Generate the list of channels created by non-slice events for this device.
+    // We can't just use the full list of non-slice events, since on some devices
     // PS is generated by slice events (EPAP/IPAP average).
     // TODO: convert supported to QSet and clean this up.
     QSet<PRS1ParsedEventType> supportedNonSliceEvents = QSet<PRS1ParsedEventType>::fromList(QList<PRS1ParsedEventType>::fromVector(supported));
@@ -1589,7 +1589,7 @@ bool PRS1Import::ImportEventChunk(PRS1DataChunk* event)
                 // We can't just call it again here for simplicity, since the timestamps of F3V3 stat events
                 // can go past the end of the slice.
             } else {
-                // For all other machines, the event's time stamp will be within bounds of its slice, so
+                // For all other devices, the event's time stamp will be within bounds of its slice, so
                 // we can use it to find the current slice.
                 UpdateCurrentSlice(event, t);
             }
@@ -1711,7 +1711,7 @@ void PRS1Import::ImportEvent(qint64 t, PRS1ParsedEvent* e)
 
     // TODO: Filter out duplicate/overlapping PB and RE events.
     //
-    // These actually get reported by the machines, but they cause "unordered time" warnings
+    // These actually get reported by the devices, but they cause "unordered time" warnings
     // and they throw off the session statistics. Even official reports show the wrong stats,
     // for example counting each of 3 duplicate PBs towards the total time in PB.
     //
@@ -2508,9 +2508,9 @@ void PRS1Import::ImportWaveforms()
             // - In the case of multiple discontinuities, fitting them is more complicated
             // > The down side of this approach is that events won't line up exactly the same as official reports.
             //
-            // Evidently the machines' internal clock drifts slightly, and in some sessions that
+            // Evidently the devices' internal clock drifts slightly, and in some sessions that
             // means two adjacent (5-minute) waveform chunks have have a +/- 1 second difference in
-            // their notion of the correct time, since the machines only record time at 1-second
+            // their notion of the correct time, since the devices only record time at 1-second
             // resolution. Presumably the real drift is fractional, but there's no way to tell from
             // the data.
             //
@@ -2533,7 +2533,7 @@ void PRS1Import::ImportWaveforms()
             if ((waveform->family == 5 && (waveform->familyVersion == 2 || waveform->familyVersion == 3)) ||
                 (waveform->family == 3 && waveform->familyVersion == 6)){
                 // F5V2, F5V3, and F3V6 use a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
-                pressure_gain = 0.125F;  // TODO: this should be parameterized somewhere better, once we have a clear idea of which machines use this
+                pressure_gain = 0.125F;  // TODO: this should be parameterized somewhere better, once we have a clear idea of which devices use this
             }
             
             // Process interleaved samples
@@ -2952,7 +2952,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(PRS1_AutoOn = 0xe109, SETTING, MT_CPAP,   SESSION,
         "PRS1AutoOn",
         QObject::tr("Auto On"),
-        QObject::tr("A few breaths automatically starts machine"),
+        QObject::tr("A few breaths automatically starts device"),
         QObject::tr("Auto On"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
@@ -2961,7 +2961,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(PRS1_AutoOff = 0xe10a, SETTING, MT_CPAP,   SESSION,
         "PRS1AutoOff",
         QObject::tr("Auto Off"),
-        QObject::tr("Machine automatically switches off"),
+        QObject::tr("Device automatically switches off"),
         QObject::tr("Auto Off"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
@@ -2970,7 +2970,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(PRS1_MaskAlert = 0xe10b, SETTING,  MT_CPAP,  SESSION,
         "PRS1MaskAlert",
         QObject::tr("Mask Alert"),
-        QObject::tr("Whether or not machine allows Mask checking."),
+        QObject::tr("Whether or not device allows Mask checking."),
         QObject::tr("Mask Alert"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
@@ -2979,7 +2979,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(PRS1_ShowAHI = 0xe10c, SETTING, MT_CPAP,   SESSION,
         "PRS1ShowAHI",
         QObject::tr("Show AHI"),
-        QObject::tr("Whether or not machine shows AHI via built-in display."),
+        QObject::tr("Whether or not device shows AHI via built-in display."),
         QObject::tr("Show AHI"),
         "", LOOKUP, Qt::green));
     chan->addOption(0, STR_TR_Off);
@@ -3022,7 +3022,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, chan = new Channel(PRS1_AutoTrial = 0xe117, SETTING, MT_CPAP,   SESSION,
         "PRS1AutoTrial",
         QObject::tr("Auto-Trial Duration"),
-        QObject::tr("The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP"),
+        QObject::tr("The number of days in the Auto-CPAP trial period, after which the device will revert to CPAP"),
         QObject::tr("Auto-Trial Dur."),
         "", LOOKUP, Qt::black));
 
@@ -3047,7 +3047,7 @@ void PRS1Loader::initChannels()
     channel.add(GRP_CPAP, new Channel(PRS1_BND = 0x1159, SPAN,  MT_CPAP,   SESSION,
         "PRS1_BND",
         QObject::tr("Breathing Not Detected"),
-        QObject::tr("A period during a session where the machine could not detect flow."),
+        QObject::tr("A period during a session where the device could not detect flow."),
         QObject::tr("BND"),
         STR_UNIT_Unknown,
         DEFAULT,    QColor("light purple")));

@@ -302,7 +302,7 @@ bool Preferences::Open(QString filename)
 
     //////////////////////////////////////////////////////////////////////////////////////
     // This is a dirty hack to clean up a legacy issue
-    // The old Profile system used to have machines in Profile.xml
+    // The old Profile system used to have devices in Profile.xml
     // We need to clean up this mistake up here, because C++ polymorphism won't otherwise
     // let us open properly in constructor
     //////////////////////////////////////////////////////////////////////////////////////

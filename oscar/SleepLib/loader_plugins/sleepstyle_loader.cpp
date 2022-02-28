@@ -88,7 +88,7 @@ QString getIconDir (QString givenpath) {
 }
 
 /*
- * getSleepStyleMachines returns a list of all SleepStyle machine folders in the ICON directory
+ * getSleepStyleMachines returns a list of all SleepStyle device folders in the ICON directory
  */
 QStringList getSleepStyleMachines (QString iconPath) {
     QStringList ssMachines;
@@ -118,7 +118,7 @@ QStringList getSleepStyleMachines (QString iconPath) {
             continue;
         }
 
-        // Find out what machine model this is
+        // Find out what device model this is
         QFile sumFile (flist.at(0).absoluteFilePath());
 
         QString line;
@@ -149,7 +149,7 @@ bool SleepStyleLoader::Detect(const QString & givenpath)
 
     QStringList machines = getSleepStyleMachines(iconPath);
     if (machines.length() <= 0)
-        // Did not find any SleepStyle machine directories
+        // Did not find any SleepStyle device directories
         return false;
 
     return true;
@@ -189,7 +189,7 @@ int SleepStyleLoader::Open(const QString & path)
 
     QStringList serialNumbers = getSleepStyleMachines(iconPath);
     if (serialNumbers.length() <= 0)
-        // Did not find any SleepStyle machine directories
+        // Did not find any SleepStyle device directories
         return false;
 
     Machine *m;
@@ -211,7 +211,7 @@ int SleepStyleLoader::Open(const QString & path)
             p_profile->DelMachine(m);
             MachList.erase(MachList.find(info.serial));
             QMessageBox::warning(nullptr, tr("Import Error"),
-                                 tr("This Machine Record cannot be imported in this profile.")+"\n\n"+tr("The Day records overlap with already existing content."),
+                                 tr("This device Record cannot be imported in this profile.")+"\n\n"+tr("The Day records overlap with already existing content."),
                                  QMessageBox::Ok);
             delete m;
         }
@@ -642,7 +642,7 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
     htxt >> version;
     htxt >> fname;
     htxt >> serial;
-    htxt >> model; //TODO: Should become Series in machine info???
+    htxt >> model; //TODO: Should become Series in device info???
     htxt >> type;  // SPSAAN etc with 4th character being A (Auto) or C (CPAP)
     htxt >> unknownident; // Constant, but has different value when version number is different.
 
@@ -840,7 +840,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
     htxt >> version;
     htxt >> fname;
     htxt >> serial;
-    htxt >> model; //TODO: Should become Series in machine info???
+    htxt >> model; //TODO: Should become Series in device info???
     htxt >> type;  // SPSAAN etc with 4th character being A (Auto) or C (CPAP)
     htxt >> unknownident; // Constant, but has different value when version number is different.
 

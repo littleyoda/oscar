@@ -503,7 +503,7 @@ public:
     //! \brief Read the chunk's data from a PRS1 file and calculate its CRC, must be called after ReadHeader
     bool ReadData(class RawDataDevice & f);
     
-    //! \brief Figures out which Compliance Parser to call, based on machine family/version and calls it.
+    //! \brief Figures out which Compliance Parser to call, based on device family/version and calls it.
     bool ParseCompliance(void);
     
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a P25x brick
@@ -518,28 +518,28 @@ public:
     //! \brief Parse a single data chunk from a .000 file containing compliance data for a DreamStation 200X brick
     bool ParseComplianceF0V6(void);
     
-    //! \brief Figures out which Summary Parser to call, based on machine family/version and calls it.
+    //! \brief Figures out which Summary Parser to call, based on device family/version and calls it.
     bool ParseSummary();
 
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 2 or 3 machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 2 or 3 device
     bool ParseSummaryF0V23(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 4 machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 4 device
     bool ParseSummaryF0V4(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 6 machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 0 CPAP/APAP family version 6 device
     bool ParseSummaryF0V6(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 0 or 3) machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 0 or 3) device
     bool ParseSummaryF3V03(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6) machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 3 ventilator (family version 6) device
     bool ParseSummaryF3V6(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 0-2 machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 0-2 device
     bool ParseSummaryF5V012(void);
     
-    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 3 machine
+    //! \brief Parse a single data chunk from a .001 file containing summary data for a family 5 ASV family version 3 device
     bool ParseSummaryF5V3(void);
 
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for CPAP/APAP family versions 2, 3, 4, or 5
@@ -548,49 +548,49 @@ public:
     //! \brief Parse a flex setting byte from a .000 or .001 containing compliance/summary data for ASV family versions 0, 1, or 2
     void ParseFlexSettingF5V012(quint8 flex, int prs1mode);
     
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for original System One (50-Series) machines: F0V23 and F5V0
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for original System One (50-Series) devices: F0V23 and F5V0
     void ParseHumidifierSetting50Series(int humid, bool add_setting=false);
 
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 (60-Series) machines
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F0V4 and F5V012 (60-Series) devices
     void ParseHumidifierSetting60Series(unsigned char humid1, unsigned char humid2, bool add_setting=false);
 
-    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 machines (differs from other 60-Series machines)
+    //! \brief Parse an humidifier setting byte from a .000 or .001 containing compliance/summary data for F3V3 devices (differs from other 60-Series devices)
     void ParseHumidifierSettingF3V3(unsigned char humid1, unsigned char humid2, bool add_setting=false);
 
-    //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 machines
+    //! \brief Parse humidifier setting bytes from a .000 or .001 containing compliance/summary data for fileversion 3 devices
     void ParseHumidifierSettingV3(unsigned char byte1, unsigned char byte2, bool add_setting=false);
 
-    //! \brief Parse tubing type from a .001 containing summary data for fileversion 3 machines
+    //! \brief Parse tubing type from a .001 containing summary data for fileversion 3 devices
     void ParseTubingTypeV3(unsigned char type);
 
-    //! \brief Figures out which Event Parser to call, based on machine family/version and calls it.
+    //! \brief Figures out which Event Parser to call, based on device family/version and calls it.
     bool ParseEvents(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 0 CPAP/APAP device
     bool ParseEventsF0V23(void);
     
-    //! \brief Parse a single data chunk from a .002 file containing event data for a 60 Series family 0 CPAP/APAP 60machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a 60 Series family 0 CPAP/APAP 60 device
     bool ParseEventsF0V4(void);
     
-    //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a DreamStation family 0 CPAP/APAP device
     bool ParseEventsF0V6(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 0 or 3 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 0 or 3 device
     bool ParseEventsF3V03(void);
     
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 6 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 3 ventilator family version 6 device
     bool ParseEventsF3V6(void);
     
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 0 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 0 device
     bool ParseEventsF5V0(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 1 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 1 device
     bool ParseEventsF5V1(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 2 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 2 device
     bool ParseEventsF5V2(void);
 
-    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 machine
+    //! \brief Parse a single data chunk from a .002 file containing event data for a family 5 ASV family version 3 device
     bool ParseEventsF5V3(void);
 
 protected:

@@ -94,7 +94,7 @@ Profile::~Profile()
         removeLock();
     }
 
-    // delete machine objects...
+    // delete device objects...
     for (auto & mach : m_machlist) {
         delete mach;
     }
@@ -253,7 +253,7 @@ bool Profile::OpenMachines()
 
         Machine *m = nullptr;
 
-        // Create Machine needs a profile passed to it..
+        // Create device needs a profile passed to it..
 
         m = CreateMachine(info, m_id);
 
@@ -546,11 +546,11 @@ void Profile::DataFormatError(Machine *m)
 
     if (backups) {
         msg = msg + QObject::tr("<b>OSCAR maintains a backup of your devices data card that it uses for this purpose.</b>")+ "<br/><br/>";
-        msg = msg + QObject::tr("<i>Your old machine data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.</i>") + "<br/><br/>";
+        msg = msg + QObject::tr("<i>Your old device data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.</i>") + "<br/><br/>";
         backups = true;
     } else {
         msg = msg + "<font size=+1>"+STR_MessageBox_Warning+":</font> "+QObject::tr("OSCAR does not yet have any automatic card backups stored for this device.") + "<br/><br/>";
-        msg = msg + QObject::tr("This means you will need to import this machine data again afterwards from your own backups or data card.") + "<br/><br/>";
+        msg = msg + QObject::tr("This means you will need to import this device data again afterwards from your own backups or data card.") + "<br/><br/>";
     }
 
     msg += "<font size=+1>"+QObject::tr("Important:")+"</font> "+QObject::tr("Once you upgrade, you <font size=+1>cannot</font> use this profile with the previous version anymore.")+"<br/><br/>"+
@@ -558,7 +558,7 @@ void Profile::DataFormatError(Machine *m)
     msg = msg + "<font size=+1>"+QObject::tr("Are you ready to upgrade, so you can run the new version of OSCAR?")+"</font>";
 
 
-    QMessageBox * question = new QMessageBox(QMessageBox::Warning, QObject::tr("Machine Database Changes"), msg, QMessageBox::Yes | QMessageBox::No);
+    QMessageBox * question = new QMessageBox(QMessageBox::Warning, QObject::tr("Device Database Changes"), msg, QMessageBox::Yes | QMessageBox::No);
     question->setDefaultButton(QMessageBox::Yes);
 
     QFont font("Sans Serif", 11, QFont::Normal);
@@ -570,7 +570,7 @@ void Profile::DataFormatError(Machine *m)
             // Purge failed.. probably a permissions error.. let the user deal with it.
             QMessageBox::critical(nullptr, STR_MessageBox_Error,
                                   QObject::tr("Sorry, the purge operation failed, which means this version of OSCAR can't start.")+"\n\n"+
-                                  QObject::tr("The machine data folder needs to be removed manually.")+"\n\n"+
+                                  QObject::tr("The device data folder needs to be removed manually.")+"\n\n"+
                                   QObject::tr("This folder currently resides at the following location:")+"\n\n"+
                                   QDir::toNativeSeparators(Get(p_preferences[STR_GEN_DataFolder].toString())), QMessageBox::Ok);
             QApplication::exit(-1);
@@ -799,7 +799,7 @@ Day *Profile::addDay(QDate date)
     return day;
 }
 
-// Get Day record if data available for date and machine type,
+// Get Day record if data available for date and device type,
 // and has enabled session data, else return nullptr
 Day *Profile::GetGoodDay(QDate date, MachineType type)
 {
@@ -807,7 +807,7 @@ Day *Profile::GetGoodDay(QDate date, MachineType type)
     if (!day)
         return nullptr;
 
-    // For a machine match, find at least one enabled Session.
+    // For a device match, find at least one enabled Session.
 
     for (auto & sess : day->sessions) {
         if (((type == MT_UNKNOWN) || (sess->type() == type)) && sess->enabled()) {
@@ -826,7 +826,7 @@ Day *Profile::FindGoodDay(QDate date, MachineType type)
     if (!day)
         return nullptr;
 
-    // For a machine match, find at least one enabled Session.
+    // For a device match, find at least one enabled Session.
     for (auto & sess : day->sessions) {
         if (((type == MT_UNKNOWN) || (sess->type() == type)) && sess->enabled()) {
             return day;
@@ -891,7 +891,7 @@ MachineLoader *GetLoader(QString name)
 }
 
 
-// Returns a QVector containing all machine objects regisered of type t
+// Returns a QVector containing all device objects regisered of type t
 QList<Machine *> Profile::GetMachines(MachineType t)
 {
     QList<Machine *> vec;
@@ -920,7 +920,7 @@ Machine *Profile::GetMachine(MachineType t)
         return nullptr;
     }
 
-    // Find most recently imported machine
+    // Find most recently imported device
     int idx = 0;
 
     for (int i=1; i < vec.size(); i++) {
@@ -1157,7 +1157,7 @@ void Scan()
 } // namespace Profiles
 
 
-// Returns a list of all days records matching machine type between start and end date
+// Returns a list of all days records matching device type between start and end date
 QList<Day *> Profile::getDays(MachineType mt, QDate start, QDate end)
 {
     QList<Day *> list;
@@ -1198,7 +1198,7 @@ QList<Day *> Profile::getDays(MachineType mt, QDate start, QDate end)
     return list;
 }
 
-// Counts number of days in range with data for specified machine type
+// Counts number of days in range with data for specified device type
 int Profile::countDays(MachineType mt, QDate start, QDate end)
 {
     if (!start.isValid()) {
@@ -1853,7 +1853,7 @@ EventDataType Profile::calcPercentile(ChannelID code, EventDataType percent, Mac
     return v;
 }
 
-// Lookup first day record of the specified machine type, or return the first day overall if MT_UNKNOWN
+// Lookup first day record of the specified device type, or return the first day overall if MT_UNKNOWN
 QDate Profile::FirstDay(MachineType mt)
 {
     if ((mt == MT_UNKNOWN) || (!m_last.isValid()) || (!m_first.isValid())) {
@@ -1873,7 +1873,7 @@ QDate Profile::FirstDay(MachineType mt)
     return m_last;
 }
 
-// Lookup last day record of the specified machine type, or return the last day overall if MT_UNKNOWN
+// Lookup last day record of the specified device type, or return the last day overall if MT_UNKNOWN
 QDate Profile::LastDay(MachineType mt)
 {
     if ((mt == MT_UNKNOWN) || (!m_last.isValid()) || (!m_first.isValid())) {

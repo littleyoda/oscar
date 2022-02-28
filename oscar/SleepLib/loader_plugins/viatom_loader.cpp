@@ -37,7 +37,7 @@ static QSet<QString> s_unexpectedMessages;
 bool
 ViatomLoader::Detect(const QString & path)
 {
-    // This is only used for CPAP machines, when detecting CPAP cards.
+    // This is only used for CPAP devices, when detecting CPAP cards.
     qDebug() << "ViatomLoader::Detect(" << path << ")";
     return false;
 }
@@ -74,7 +74,7 @@ ViatomLoader::Open(const QStringList & paths)
     }
 
     Machine* mach = m_mach;
-    if (imported && mach == nullptr) qWarning() << "No machine record created?";
+    if (imported && mach == nullptr) qWarning() << "No device record created?";
     if (mach) {
         qDebug() << "Imported" << imported << "sessions";
         mach->Save();
@@ -82,7 +82,7 @@ ViatomLoader::Open(const QStringList & paths)
         p_profile->StoreMachines();
     }
     if (mach && s_unexpectedMessages.count() > 0 && p_profile->session->warnOnUnexpectedData()) {
-        // Compare this to the list of messages previously seen for this machine
+        // Compare this to the list of messages previously seen for this device
         // and only alert if there are new ones.
         QSet<QString> newMessages = s_unexpectedMessages - mach->previouslySeenUnexpectedData();
         if (newMessages.count() > 0) {

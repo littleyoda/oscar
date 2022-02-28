@@ -264,7 +264,7 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
         this->ParseHumidifierSetting50Series(data[0x0d], true);
         pos = 0xe;
     } else {
-        // 60-Series machines have a 2-byte humidfier setting.
+        // 60-Series devices have a 2-byte humidfier setting.
         this->ParseHumidifierSetting60Series(data[0x0d], data[0x0e], true);
         pos = 0xf;
     }
@@ -1002,7 +1002,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
 // Originally based on ParseSummaryF0V6, with changes observed in ASV sample data
 // based on size, slices 0-5 look similar, and it looks like F0V6 slides 8-B are equivalent to 6-9
 //
-// TODO: surely there will be a way to merge these loops and abstract the machine-specific
+// TODO: surely there will be a way to merge these loops and abstract the device-specific
 // encodings into another function or class, but that's probably worth pursuing only after
 // the details have been figured out.
 bool PRS1DataChunk::ParseSummaryF5V3(void)
@@ -1015,7 +1015,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
     int chunk_size = this->m_data.size();
     static const int minimum_sizes[] = { 1, 0x35, 9, 4, 2, 4, 0x1e, 2, 4, 9 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
-    // NOTE: The sizes contained in hblock can vary, even within a single machine, as can the length of hblock itself!
+    // NOTE: The sizes contained in hblock can vary, even within a single device, as can the length of hblock itself!
 
     // TODO: hardcoding this is ugly, think of a better approach
     if (chunk_size < minimum_sizes[0] + minimum_sizes[1] + minimum_sizes[2]) {
@@ -1059,7 +1059,7 @@ bool PRS1DataChunk::ParseSummaryF5V3(void)
         switch (code) {
             case 0:  // Equipment On
                 CHECK_VALUE(pos, 1);  // Always first?
-                //CHECK_VALUES(data[pos], 1, 7);  // or 3, or 0?  3 when machine turned on via auto-on, 1 when turned on via button
+                //CHECK_VALUES(data[pos], 1, 7);  // or 3, or 0?  3 when device turned on via auto-on, 1 when turned on via button
                 CHECK_VALUE(size, 1);
                 break;
             case 1:  // Settings

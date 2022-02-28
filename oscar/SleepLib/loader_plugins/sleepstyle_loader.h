@@ -26,7 +26,7 @@ const int sleepstyle_data_version = 1;
 //********************************************************************************************
 
 /*! \class SleepStyle
-    \brief F&P SleepStyle customized machine object
+    \brief F&P SleepStyle customized device object
     */
 class SleepStyle: public CPAP
 {
@@ -70,10 +70,10 @@ class SleepStyleLoader : public CPAPLoader
     //! \brief Returns SleepLib database version of this F&P SleepStyle loader
     virtual int Version() { return sleepstyle_data_version; }
 
-    //! \brief Returns the machine class name of this CPAP machine, "SleepStyle"
+    //! \brief Returns the device class name of this CPAP device, "SleepStyle"
     virtual const QString & loaderName() { return sleepstyle_class_name; }
 
-    // ! \brief Creates a machine object, indexed by serial number
+    // ! \brief Creates a device object, indexed by serial number
     //Machine *CreateMachine(QString serial);
 
     QString getSerialPath () {return serialPath;}

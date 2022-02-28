@@ -1047,7 +1047,7 @@ QToolButton:pressed {
                </font>
               </property>
               <property name="text">
-               <string notr="true"> i </string>
+               <string> i </string>
               </property>
              </widget>
             </item>

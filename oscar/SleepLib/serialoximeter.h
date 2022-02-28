@@ -1,4 +1,4 @@
-/* SleepLib MachineLoader Base Class Header
+/* SleepLib DeviceLoader Base Class Header
  *
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  * Copyright (c) 2019-2022 The OSCAR Team

@@ -41,7 +41,7 @@ class MainWindow;
 
  Open Source CPAP Analysis Reporter (OSCAR) is a program derived from the SleepyHead program written by Mark Watkins.
 
- SleepyHead was a Cross-Platform Open-Source software for reviewing data from %CPAP machines, which are used in the treatment of Sleep Disorders.
+ SleepyHead was a Cross-Platform Open-Source software for reviewing data from %CPAP devices, which are used in the treatment of Sleep Disorders.
 
  SleepyHead was created by <a href="http://jedimark64.blogspot.com">Mark Watkins</a> (JediMark), an Australian software developer.
 
@@ -60,7 +60,7 @@ class MainWindow;
  \section structure Program Structure
  OSCAR is written in C++ using Qt Toolkit library, and comprises of 3 main components
  \list
- \li The SleepLib Database, a specialized database for working with multiple sources of Sleep machine data.
+ \li The SleepLib Database, a specialized database for working with multiple sources of Sleep device data.
  \li A custom designed, high performance and interactive OpenGL Graphing Library.
  \li and the main Application user interface.
  \endlist
@@ -408,7 +408,7 @@ private:
 
     void PopulatePurgeMenu();
 
-    //! \brief Destroy ALL the CPAP data for the selected machine
+    //! \brief Destroy ALL the CPAP data for the selected device
     void purgeMachine(Machine *);
 
     int warnidx;

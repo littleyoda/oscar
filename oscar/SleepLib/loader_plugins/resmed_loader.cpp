@@ -132,7 +132,7 @@ void ResmedLoader::initChannels()
 //             RMS9_Temp, RMS9_TempEnable;
 
     channel.add(GRP_CPAP, chan = new Channel(RMS9_SmartStart = 0xe204, SETTING, MT_CPAP, SESSION,
-        "RMS9_SmartStart", QObject::tr("SmartStart"), QObject::tr("Machine auto starts by breathing"), QObject::tr("Smart Start"), "", LOOKUP, Qt::black));
+        "RMS9_SmartStart", QObject::tr("SmartStart"), QObject::tr("Device auto starts by breathing"), QObject::tr("Smart Start"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
@@ -207,7 +207,7 @@ void ResmedLoader::initChannels()
     chan->addOption(1, QObject::tr("Soft"));
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS11_SmartStop = 0xe20F, SETTING, MT_CPAP, SESSION,
-        "RMAS11_SmartStop", QObject::tr("SmartStop"), QObject::tr("Machine auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
+        "RMAS11_SmartStop", QObject::tr("SmartStop"), QObject::tr("Device auto stops by breathing"), QObject::tr("Smart Stop"), "", LOOKUP, Qt::black));
 
     chan->addOption(0, STR_TR_Off);
     chan->addOption(1, STR_TR_On);
@@ -336,7 +336,7 @@ int ResmedLoader::Open(const QString & dirpath)
 {
     qDebug() << "Starting ResmedLoader::Open( with " << dirpath << ")";
     QString datalogPath;
-    QHash<QString, QString> idmap;  // Temporary machine ID properties hash
+    QHash<QString, QString> idmap;  // Temporary device ID properties hash
 
     QString importPath(dirpath);
     importPath = importPath.replace("\\", "/");
@@ -387,7 +387,7 @@ int ResmedLoader::Open(const QString & dirpath)
 
     bool compress_backups = p_profile->session->compressBackupData();
 
-    // Early check for STR.edf file, so we can early exit before creating faulty machine record.
+    // Early check for STR.edf file, so we can early exit before creating faulty device record.
     // str.edf is the first (primary) file to check, str.edf.gz is the secondary
     QString pripath = importPath + "STR.edf"; // STR.edf file
     QString secpath = pripath + STR_ext_gz;   // STR.edf.gz file
@@ -415,16 +415,16 @@ int ResmedLoader::Open(const QString & dirpath)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // Create machine object (unless it's already registered)
+    // Create device object (unless it's already registered)
     ///////////////////////////////////////////////////////////////////////////////////
 
-    QDate firstImportDay = QDate().fromString("2010-01-01", "yyyy-MM-dd");     // Before Series 8 machines (I think)
+    QDate firstImportDay = QDate().fromString("2010-01-01", "yyyy-MM-dd");     // Before Series 8 devices (I think)
 
     Machine *mach = p_profile->lookupMachine(info.serial, info.loadername);
-    if ( mach ) {       // we have seen this machine
+    if ( mach ) {       // we have seen this device
         qDebug() << "We have seen this machime";
         mach->setInfo( info );                      // update info
-        QDate lastDate = mach->LastDay();           // use the last day for this machine
+        QDate lastDate = mach->LastDay();           // use the last day for this device
         firstImportDay = lastDate;                  // re-import the last day, to  pick up partial days
         QDate purgeDate = mach->purgeDate();
         if (purgeDate.isValid()) {
@@ -433,15 +433,15 @@ int ResmedLoader::Open(const QString & dirpath)
 //      firstImportDay = lastDate.addDays(-1);      // start the day before, to  pick up partial days
 //      firstImportDay = lastDate.addDays(1);       // start the day after until we  figure out the purge
     } else {            // Starting from new beginnings - new or purged
-        qDebug() << "New machine or just purged";
+        qDebug() << "New device or just purged";
         p_profile->forceResmedPrefs();
         int modelNum = info.modelnumber.toInt();
         if ( modelNum >= 39000 ) {
             if ( ! AS11TestedModels.contains(modelNum) ) {
                 QMessageBox::information(QApplication::activeWindow(),
-                             QObject::tr("Machine Untested"),
-                             QObject::tr("Your ResMed CPAP machine (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
-                             QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card to make sure it works with OSCAR.")
+                             QObject::tr("Device Untested"),
+                             QObject::tr("Your ResMed CPAP device (Model %1) has not been tested yet.").arg(info.modelnumber) +"\n\n"+
+                             QObject::tr("It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device's SD card to make sure it works with OSCAR.")
                              ,QMessageBox::Ok);
             }
         }
@@ -471,7 +471,7 @@ int ResmedLoader::Open(const QString & dirpath)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // Copy the idmap into machine objects properties, (overwriting any old values)
+    // Copy the idmap into device objects properties, (overwriting any old values)
     ///////////////////////////////////////////////////////////////////////////////////
     for (auto i=idmap.begin(), idend=idmap.end(); i != idend; i++) {
         mach->info.properties[i.key()] = i.value();
@@ -826,7 +826,7 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
     qDebug() << "Starting checkSummary for" << date.toString();
 #endif
     if (day && day->hasMachine(mach)) {
-        // Sessions found for this machine, check if only summary info
+        // Sessions found for this device, check if only summary info
 #ifdef STR_DEBUG
         qDebug() << "Sessions already found for this date";
 #endif
@@ -869,7 +869,7 @@ void ResmedLoader::checkSummaryDay( ResMedDay & resday, QDate date, Machine * ma
                     numPairs++;
             QList<Session *> sessions = day->getSessions(MT_CPAP, true);
             // If we have more sessions that we found in the str file,
-            // or if the sessions are for a different machine,
+            // or if the sessions are for a different device,
             // leave well enough alone and don't re-import the day
             if (sessions.length() >= numPairs || sessions[0]->machine() != mach) {
 #ifdef STR_DEBUG
@@ -931,7 +931,7 @@ int ResmedLoader::ScanFiles(Machine * mach, const QString & datalog_path, QDate 
 
     QDir dir(datalog_path);
 
-    // First list any EDF files in DATALOG folder - Series 9 machines
+    // First list any EDF files in DATALOG folder - Series 9 devices
     QStringList filter;
     filter << "*.edf";
     dir.setNameFilters(filter);
@@ -1239,9 +1239,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
         }
 
         // ResMed and their consistent naming and spacing... :/
-        EDFSignal *maskon = str.lookupLabel("Mask On");     // Series 9 machines
+        EDFSignal *maskon = str.lookupLabel("Mask On");     // Series 9 devices
         if (!maskon) {
-            maskon = str.lookupLabel("MaskOn");             // Series 1x machines
+            maskon = str.lookupLabel("MaskOn");             // Series 1x devices
         }
         EDFSignal *maskoff = str.lookupLabel("Mask Off");
         if (!maskoff) {
@@ -1691,7 +1691,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                         epr--;
                 }
                 int epr_on=0, clin_epr_on=0;
-                if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check machines opinion
+                if ((sig = str.lookupLabel("S.EPR.EPREnable"))) { // first check devices opinion
                     a1x = true;
                     epr_on = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     if ( AS_eleven )
@@ -1847,7 +1847,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // Parse Identification.tgt file (containing serial number and machine information)
+    // Parse Identification.tgt file (containing serial number and device information)
     ///////////////////////////////////////////////////////////////////////////////////
 // QHash<QString, QString> parseIdentLine( const QString line, MachineInfo * info); // forward
 // void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, QString> *idmap);                 // forward
@@ -2471,7 +2471,7 @@ void ResDayTask::run()
     // sooo... at this point we have
     // resday record populated with correct STR.edf settings for this date
     // files list containing unsorted EDF files that match this day
-    // guaranteed no sessions for this day for this machine.
+    // guaranteed no sessions for this day for this device.
 
     // Need to check overlapping files in session candidates
 
@@ -2923,13 +2923,13 @@ bool ResmedLoader::LoadEVE(Session *sess, const QString & path)
                     if (sess->checkInside(tt))
                         UA->AddEvent(tt, anno->duration);
                 } else if (matchSignal(CPAP_RERA, anno->text)) {
-                    // Not all machines have it, so only create it when necessary..
+                    // Not all devices have it, so only create it when necessary..
                     if ( ! RE)
                         RE = sess->AddEventList(CPAP_RERA, EVL_Event);
                     if (sess->checkInside(tt))
                         RE->AddEvent(tt, anno->duration);
                 } else if (matchSignal(CPAP_ClearAirway, anno->text)) {
-                    // Not all machines have it, so only create it when necessary..
+                    // Not all devices have it, so only create it when necessary..
                     if ( ! CA)
                         CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
                     if (sess->checkInside(tt))
@@ -3379,7 +3379,7 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         startpos = 5; // Shave the first 10 seconds of pressure data
         tt += rate * startpos;
     }
-// Likewise for the values that the machine computes for us, but 20 seconds
+// Likewise for the values that the device computes for us, but 20 seconds
     if ((code == CPAP_MinuteVent) || (code == CPAP_RespRate) || (code == CPAP_TidalVolume)) {
         startpos = 10; // Shave the first 20 seconds of computed data
         tt += rate * startpos;
@@ -3564,7 +3564,7 @@ bool matchSignal(ChannelID ch, const QString & name)
 void setupResMedTranslationMap()
 {
     ////////////////////////////////////////////////////////////////////////////
-    // Translation lookup table for non-english machines
+    // Translation lookup table for non-english devices
     // Also combine S9, AS10, and AS11 variants
     ////////////////////////////////////////////////////////////////////////////
 

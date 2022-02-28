@@ -281,7 +281,7 @@ void MainWindow::closeEvent(QCloseEvent * event)
     static bool runonce = false;
     if (!runonce) {
         if (AppSetting->removeCardReminder()) {
-            Notify(QObject::tr("Don't forget to place your datacard back in your CPAP machine"), QObject::tr("OSCAR Reminder"));
+            Notify(QObject::tr("Don't forget to place your datacard back in your CPAP device"), QObject::tr("OSCAR Reminder"));
             QThread::msleep(1000);
             QApplication::processEvents();
         }
@@ -391,7 +391,7 @@ void MainWindow::PopulatePurgeMenu()
         addMachineToMenu(mach, ui->menu_Rebuild_CPAP_Data);
     }
     
-    // Add any imported machine (except the built-in journal) to the purge menu.
+    // Add any imported device (except the built-in journal) to the purge menu.
     machines = p_profile->GetMachines();
     for (int i=0; i < machines.size(); ++i) {
         Machine *mach = machines.at(i);
@@ -484,13 +484,13 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     QList<Machine *> machines = p_profile->GetMachines(MT_CPAP);
     if (machines.isEmpty()) {
-        qDebug() << "No machines in profile";
+        qDebug() << "No devices in profile";
     } else {
 #ifdef LOCK_RESMED_SESSIONS
     for (QList<Machine *>::iterator it = machines.begin(); it != machines.end(); ++it) {
         QString mclass=(*it)->loaderName();
         if (mclass == STR_MACH_ResMed) {
-            qDebug() << "ResMed machine found.. locking OSCAR preferences to suit it's summary system";
+            qDebug() << "ResMed device found.. locking OSCAR preferences to suit it's summary system";
 
             // Have to sacrifice these features to get access to summary data.
             p_profile->session->setCombineCloseSessions(0);
@@ -743,7 +743,7 @@ int MainWindow::importCPAP(ImportPath import, const QString &message)
     } else if (c == 0) {
         Notify(tr("Already up to date with CPAP data at\n\n%1").arg(import.path), tr("Up to date"));
     } else {
-        Notify(tr("Couldn't find any valid Machine Data at\n\n%1").arg(import.path),tr("Import Problem"));
+        Notify(tr("Couldn't find any valid Device Data at\n\n%1").arg(import.path),tr("Import Problem"));
     }
     disconnect(progdlg, SIGNAL(abortClicked()), import.loader, SLOT(abortImport()));
     disconnect(import.loader, SIGNAL(setProgressMax(int)), progdlg, SLOT(setProgressMax(int)));
@@ -797,7 +797,7 @@ void MainWindow::finishCPAPImport()
 
 void MainWindow::importCPAPBackups()
 {
-    // Get BackupPaths for all CPAP machines
+    // Get BackupPaths for all CPAP devices
     QList<Machine *> machlist = p_profile->GetMachines(MT_CPAP);
     QList<ImportPath> paths;
     Q_FOREACH(Machine *m, machlist) {
@@ -959,7 +959,7 @@ QList<ImportPath> MainWindow::detectCPAPCards()
         }
 
         Q_FOREACH(const QString &path, AutoScannerPaths) {
-            // Scan through available machine loaders and test if this folder contains valid folder structure
+            // Scan through available device loaders and test if this folder contains valid folder structure
             Q_FOREACH(MachineLoader * loader, loaders) {
                 if (loader->Detect(path)) {
                     detectedCards.append(ImportPath(path, loader));
@@ -1748,7 +1748,7 @@ void MainWindow::on_actionPurgeCurrentDayAll_triggered()
     this->purgeDay(MT_JOURNAL);
 }
 
-// Purge data for a given machine type.
+// Purge data for a given device type.
 // Special handling: MT_JOURNAL == All data. MT_UNKNOWN == All except journal
 void MainWindow::purgeDay(MachineType type)
 {
@@ -1848,7 +1848,7 @@ void MainWindow::on_actionRebuildCPAP(QAction *action)
 
     if (backups) {
         if (QMessageBox::question(this, STR_MessageBox_Question,
-                tr("Are you sure you want to rebuild all CPAP data for the following machine:\n\n") +
+                tr("Are you sure you want to rebuild all CPAP data for the following device:\n\n") +
                 mach->brand() + " " + mach->model() + " " +
                 mach->modelnumber() + " (" + mach->serial() + ")\n\n" +
                 tr("Please note, that this could result in loss of data if OSCAR's backups have been disabled."),
@@ -1858,7 +1858,7 @@ void MainWindow::on_actionRebuildCPAP(QAction *action)
     } else {
         if (QMessageBox::question(this,
                 STR_MessageBox_Warning,
-                "<p><b>"+STR_MessageBox_Warning+": </b>"+tr("For some reason, OSCAR does not have any backups for the following machine:")+ "</p>" +
+                "<p><b>"+STR_MessageBox_Warning+": </b>"+tr("For some reason, OSCAR does not have any backups for the following device:")+ "</p>" +
                 "<p>"+mach->brand() + " " + mach->model() + " " + mach->modelnumber() + " (" + mach->serial() + ")</p>"+
                 "<p>"+tr("Provided you have made <i>your <b>own</b> backups for ALL of your CPAP data</i>, you can still complete this operation, but you will have to restore from your backups manually.")+"</p>" +
                 "<p><b>"+tr("Are you really sure you want to do this?")+"</b></p>",
@@ -1870,14 +1870,14 @@ void MainWindow::on_actionRebuildCPAP(QAction *action)
     QString path = mach->getBackupPath();
     MachineLoader *loader = lookupLoader(mach);
 
-    purgeMachine(mach); // purge destroys machine record
+    purgeMachine(mach); // purge destroys device record
 
     if (backups) {
         importCPAP(ImportPath(path, loader), tr("Please wait, importing from backup folder(s)..."));
     } else {
         if (QMessageBox::information(this, STR_MessageBox_Warning,
                 tr("Because there are no internal backups to rebuild from, you will have to restore from your own.")+"\n\n"+
-                tr("Would you like to import from your own backups now? (you will have no data visible for this machine until you do)"),
+                tr("Would you like to import from your own backups now? (you will have no data visible for this device until you do)"),
                 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
             on_action_Import_Data_triggered();
         } else {
@@ -1928,14 +1928,14 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
     if (backups) {
         backupnotice = "<p>" + tr("Note as a precaution, the backup folder will be left in place.") + "</p>";
     } else {
-        backupnotice = "<p>" + tr("OSCAR does not have any backups for this machine!") + "</p>" +
-                       "<p>" + tr("Unless you have made <i>your <b>own</b> backups for ALL of your data for this machine</i>, "
-                                  "<font size=+2>you will lose this machine's data <b>permanently</b>!</font>") + "</p>";
+        backupnotice = "<p>" + tr("OSCAR does not have any backups for this device!") + "</p>" +
+                       "<p>" + tr("Unless you have made <i>your <b>own</b> backups for ALL of your data for this device</i>, "
+                                  "<font size=+2>you will lose this device's data <b>permanently</b>!</font>") + "</p>";
     }
 
     if (QMessageBox::question(this, STR_MessageBox_Warning, 
             "<p><b>"+STR_MessageBox_Warning+":</b> "  +
-            tr("You are about to <font size=+2>obliterate</font> OSCAR's machine database for the following machine:</p>") +
+            tr("You are about to <font size=+2>obliterate</font> OSCAR's device database for the following device:</p>") +
             "<p><font size=+2>" + machname + "</font></p>" +
             backupnotice+
             "<p>"+tr("Are you <b>absolutely sure</b> you want to proceed?")+"</p>",
@@ -1958,7 +1958,7 @@ void MainWindow::purgeMachine(Machine * mach)
         QDir dir;
         QString path = mach->getDataPath();
         path.chop(1);
-        qDebug() << "path to machine" << path;
+        qDebug() << "path to device" << path;
 
         p_profile->DelMachine(mach);
         delete mach;
@@ -2496,7 +2496,7 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
             delete sess;
         }
         
-        // We have to update the summary cache for the affected machine(s),
+        // We have to update the summary cache for the affected device(s),
         // otherwise OSCAR will still think this day has oximetry data at next launch.
         for (auto & mach : machines) {
             mach->SaveSummaryCache();

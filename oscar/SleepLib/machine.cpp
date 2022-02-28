@@ -1,4 +1,4 @@
-/* SleepLib Machine Class Implementation
+/* SleepLib Device Class Implementation
  *
  * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
@@ -81,14 +81,14 @@ void LoadTask::run()
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Machine Base-Class implmementation
+// Device Base-Class implmementation
 //////////////////////////////////////////////////////////////////////////////////////////
 Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
 {
     day.clear();
     highest_sessionid = 0;
     m_suppressUntestedWarning = false;
-    // TODO: Have the machine write m_suppressUntestedWarning and m_previousUnexpected
+    // TODO: Have the device write m_suppressUntestedWarning and m_previousUnexpected
     // to XML (along with the current OSCAR version number) so that they persist across
     // application launches (but reset with each new OSCAR version).
 
@@ -97,7 +97,7 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
         MachineID temp;
 
         bool found;
-        // Keep trying until we get a unique machineID for this profile
+        // Keep trying until we get a unique DeviceID for this profile
         do {
             temp = rand();
 
@@ -112,14 +112,14 @@ Machine::Machine(Profile *_profile, MachineID id) : profile(_profile)
     } else { m_id = id; }
     m_loader = nullptr;
 
-   // qDebug() << "Create Machine: " << hex << m_id; //%lx",m_id);
+   // qDebug() << "Create device: " << hex << m_id; //%lx",m_id);
     m_type = MT_UNKNOWN;
     firstsession = true;
 }
 Machine::~Machine()
 {
     saveSessionInfo();
-    //qDebug() << "Destroy Machine" << info.loadername << hex << m_id;
+    //qDebug() << "Destroy device" << info.loadername << hex << m_id;
 }
 Session *Machine::SessionExists(SessionID session)
 {
@@ -472,7 +472,7 @@ bool Machine::unlinkSession(Session * sess)
 {
     MachineType mt = sess->type();
 
-    // Remove the object from the machine object's session list
+    // Remove the object from the device object's session list
     bool b=sessionlist.remove(sess->session());
 
     QList<QDate> dates;
@@ -509,7 +509,7 @@ bool Machine::unlinkSession(Session * sess)
     return b;
 }
 
-// This functions purpose is murder and mayhem... It deletes all of a machines data.
+// This functions purpose is murder and mayhem... It deletes all of a devices data.
 bool Machine::Purge(int secret)
 {
     // Boring api key to stop this function getting called by accident :)
@@ -559,7 +559,7 @@ bool Machine::Purge(int secret)
 
         delete sess;
     }
-    // Make sure there aren't any dangling references to this machine
+    // Make sure there aren't any dangling references to this device
     for (auto & d : days) {
         d->removeMachine(this);
     }
@@ -725,7 +725,7 @@ bool Machine::Load(ProgressDialog *progress)
         int size = filelist.size();
 
 
-        // Legacy crap.. Summary and Event stuff used to be in one big pile in the machine folder root
+        // Legacy crap.. Summary and Event stuff used to be in one big pile in the device folder root
         for (auto & filename : filelist) {
             QFile::rename(path+filename, summarypath+filename);
         }
