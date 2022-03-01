@@ -154,6 +154,8 @@ class Overview : public QWidget
     QHash<gSummaryChart*,gGraph*> chartsToBeMonitored;
     QHash<gSummaryChart*,gGraph* > chartsEmpty;
 
+    bool settingsLoaded ;
+
 };
 
 #endif // OVERVIEW_H

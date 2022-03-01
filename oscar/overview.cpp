@@ -155,6 +155,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     ///////////////////////////////////////////////////////////////////////////////
     // Rebuild contents
     ///////////////////////////////////////////////////////////////////////////////
+    settingsLoaded=false;
     RebuildGraphs(false);
 
     ui->rangeCombo->setCurrentIndex(p_profile->general->lastOverviewRange());
@@ -354,12 +355,15 @@ void Overview::RebuildGraphs(bool reset)
     if (reset) {
         GraphView->GetXBounds(minx, maxx);
     }
-
+    if (settingsLoaded) GraphView->SaveSettings("Overview");
+    settingsLoaded=false;
     minRangeStartDate=p_profile->LastDay(MT_CPAP);
     maxRangeEndDate=minRangeStartDate.addDays(-1);      // force a range change;
     disconnectgSummaryCharts() ;
     GraphView->trashGraphs(true);       // Remove all existing graphs
     CreateAllGraphs();
+    GraphView->LoadSettings("Overview");
+    settingsLoaded = true;
 
     if (reset) {
         GraphView->resetLayout();
