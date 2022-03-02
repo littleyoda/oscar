@@ -1,4 +1,4 @@
-﻿/* Overview GUI Headers
+/* Overview GUI Headers
  *
  * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
@@ -132,7 +132,7 @@ class Overview : public QWidget
     bool customMode=false;
 
     //! \brief Updates the calendar highlighting for the calendar object for this date.
-    void UpdateCalendarDay(QDateEdit *calendar, QDate date);
+    void UpdateCalendarDay(QDateEdit *calendar, QDate date,bool startDateWidget);
     void updateCube();
 
     Day *day; // dummy in this case
@@ -142,6 +142,7 @@ class Overview : public QWidget
     void connectgSummaryCharts() ;
     void disconnectgSummaryCharts() ;
     void SetXBounds(qint64 minx, qint64 maxx, short group = 0, bool refresh = true);
+    void SetXBounds(QDate & start, QDate&  end, short group =0 , bool refresh  = true);
 
     // Start and of dates of the current graph display
     QDate displayStartDate;
@@ -155,6 +156,13 @@ class Overview : public QWidget
     QHash<gSummaryChart*,gGraph* > chartsEmpty;
 
     bool settingsLoaded ;
+
+    // Actual dates displayed in Start/End Widgets.
+    QDate uiStartDate;
+    QDate uiEndDate;
+
+    // Are start and end widgets displaying the same month.
+    bool samePage;
 
 };
 
