@@ -579,7 +579,7 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
 
             // Scan the upper breath
             for (int j = bs; j < bm; j++)  {
-                // convert flow to ml/s to L/min and divide by samples per second
+                // convert flow from ml/s to l/min and divide by samples per second
                 c = double(qAbs(m_filtered[j])) * 1000.0 / 60.0 / sps;
                 val2 += c;
                 //val2+=c*c; // for RMS
@@ -589,7 +589,7 @@ void FlowParser::calc(bool calcResp, bool calcTv, bool calcTi, bool calcTe, bool
             bool usebothhalves = false;
             if (usebothhalves) {
                 for (int j = bm; j < be; j++)  {
-                    // convert flow to ml/s to L/min and divide by samples per second
+                    // convert flow from ml/s to l/min and divide by samples per second
                     c = double(qAbs(m_filtered[j])) * 1000.0 / 60.0 / sps;
                     val1 += c;
                     //val1 += c*c; // for RMS
@@ -860,7 +860,7 @@ void FlowParser::flagUserEvents(ChannelID code, EventDataType restriction, Event
 
         if (dur >= duration) { // is the event greater than the duration threshold?
 
-            // Unless duplicates have been specifically allowed, scan for any apnea's already detected by the machine
+            // Unless duplicates have been specifically allowed, scan for any apnea's already detected by the device
             if (allowDuplicates || !SearchApnea(m_session, et, dur)) {
                 if (!uf) {
                     // Create event list if not already done
@@ -1287,7 +1287,7 @@ int calcLeaks(Session *session)
     // Choose the formula for calculating mask leakage as a function of pressure.
     LeakCalculator* calc = new ProfileLeakCalculator(p_profile);
     
-    // Prefer IPAPSet/PressureSet for machines (PRS1) that use these, since they use Pressure to report averages.
+    // Prefer IPAPSet/PressureSet for devices (PRS1) that use these, since they use Pressure to report averages.
     ChannelID pressure_channel = CPAP_Pressure;  // default
     for (auto & ch : { CPAP_IPAPSet, CPAP_IPAP, CPAP_PressureSet }) {
         if (session->eventlist.contains(ch)) {

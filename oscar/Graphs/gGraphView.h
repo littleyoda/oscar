@@ -707,6 +707,7 @@ class gGraphView
     void updateCurrentTime(double);
     void updateRange(double,double);
     void GraphsChanged();
+    void XBoundsChanged(qint64 ,qint64);
 
   public slots:
     //! \brief Callback from the ScrollBar, to change scroll position

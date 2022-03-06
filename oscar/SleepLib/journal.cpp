@@ -22,10 +22,10 @@ const int journal_data_version = 1;
 JournalEntry::JournalEntry(QDate date)
 {
     Machine * jmach = p_profile->GetMachine(MT_JOURNAL);
-    if (jmach == nullptr) { // Create Journal machine record if it doesn't already exist
+    if (jmach == nullptr) { // Create Journal Device record if it doesn't already exist
         MachineInfo info(MT_JOURNAL,0, "Journal", QObject::tr("Journal Data"), QString(), QString(), QString(), QString("OSCAR"), QDateTime::currentDateTime(), journal_data_version);
 
-        // Using machine ID 1 rather than a random number, so in future, if profile.xml gets screwed up they'll get their data back..
+        // Using device ID 1 rather than a random number, so in future, if profile.xml gets screwed up they'll get their data back..
         // TODO: Perhaps search for unlinked journal folders here to save some anger and frustration? :P
 
         MachineID machid = 1;

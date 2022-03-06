@@ -2492,7 +2492,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QMenu" name="menuPurge_CPAP_Data">
       <property name="title">
-       <string>Purge ALL Machine Data</string>
+       <string>Purge ALL Device Data</string>
       </property>
      </widget>
      <widget class="QMenu" name="menuPurge_Current_Selected_Day">

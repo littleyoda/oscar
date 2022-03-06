@@ -1,4 +1,4 @@
-/* SleepLib Machine Class Header
+/* SleepLib Device Class Header
  *
  * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
@@ -95,7 +95,7 @@ protected:
 class MachineLoader;    // forward
 
 /*! \class Machine
-    \brief This Machine class is the Heart of SleepyLib, representing a single Machine and holding it's data
+    \brief This device class is the Heart of SleepyLib, representing a single device and holding it's data
     */
 class Machine
 {
@@ -104,14 +104,14 @@ class Machine
 
   public:
     /*! \fn Machine(MachineID id=0);
-        \brief Constructs a Machine object with MachineID id
+        \brief Constructs a device object with MachineID id
 
         If supplied MachineID is zero, it will generate a new unused random one.
         */
     Machine(Profile * _profile, MachineID id = 0);
     virtual ~Machine();
 
-    //! \brief Load all Machine summary data
+    //! \brief Load all device summary data
     bool Load(ProgressDialog *progress);
 
     bool LoadSummary(ProgressDialog *progress);
@@ -123,10 +123,10 @@ class Machine
     //! \brief Save individual session
     bool SaveSession(Session *sess);
 
-    //! \brief Deletes the crud out of all machine data in the SleepLib database
+    //! \brief Deletes the crud out of all device data in the SleepLib database
     bool Purge(int secret);
 
-    //! \brief Unlink a session from any Machine related indexes
+    //! \brief Unlink a session from any device related indexes
     bool unlinkSession(Session * sess);
 
     bool unlinkDay(Day * day);
@@ -142,7 +142,7 @@ class Machine
     //! \brief Returns a pointer to a valid Session object if SessionID exists
     Session *SessionExists(SessionID session);
 
-    //! \brief Adds the session to this machine object, and the Master Profile list. (used during load)
+    //! \brief Adds the session to this device object, and the Master Profile list. (used during load)
     bool AddSession(Session *s, bool allowOldSessions=false);
 
     //! \brief Find the date this session belongs in, according to profile settings
@@ -253,10 +253,10 @@ class Machine
     bool m_suppressUntestedWarning;
     QSet<QString> m_previousUnexpected;
 
-    //! \brief Contains a secondary index of day data, containing just this machines sessions
+    //! \brief Contains a secondary index of day data, containing just this devices sessions
     QMap<QDate, Day *> day;
 
-    //! \brief Contains all sessions for this machine, indexed by SessionID
+    //! \brief Contains all sessions for this device, indexed by SessionID
     QHash<SessionID, Session *> sessionlist;
 
     //! \brief The list of sessions that need saving (for multithreaded save code)
@@ -303,7 +303,7 @@ class Machine
 
 
 /*! \class CPAP
-    \brief A CPAP classed machine object..
+    \brief A CPAP classed device object..
     */
 class CPAP: public Machine
 {
@@ -315,7 +315,7 @@ class CPAP: public Machine
 
 
 /*! \class Oximeter
-    \brief An Oximeter classed machine object..
+    \brief An Oximeter classed device object..
     */
 class Oximeter: public Machine
 {
@@ -326,7 +326,7 @@ class Oximeter: public Machine
 };
 
 /*! \class SleepStage
-    \brief A SleepStage classed machine object..
+    \brief A SleepStage classed device object..
     */
 class SleepStage: public Machine
 {
@@ -337,7 +337,7 @@ class SleepStage: public Machine
 };
 
 /*! \class PositionSensor
-    \brief A PositionSensor classed machine object..
+    \brief A PositionSensor classed device object..
     */
 class PositionSensor: public Machine
 {

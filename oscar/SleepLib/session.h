@@ -51,7 +51,7 @@ public:
 };
 
 /*! \class Session
-    \brief Contains a single Sessions worth of machine event/waveform information.
+    \brief Contains a single Sessions worth of device event/waveform information.
 
     This class also contains all the primary database logic for SleepLib
     */
@@ -61,7 +61,7 @@ class Session
     friend class Machine;
   public:
     /*! \fn Session(Machine *,SessionID);
-        \brief Create a session object belonging to Machine, with supplied SessionID
+        \brief Create a session object belonging to device, with supplied SessionID
         If sessionID is 0, the next in sequence will be picked
         */
     Session(Machine *, SessionID);
@@ -200,7 +200,7 @@ class Session
         return t;
     }
 
-    //! \brief Flag this Session as dirty, so Machine object can save it
+    //! \brief Flag this Session as dirty, so device object can save it
     void SetChanged(bool val) {
         s_changed = val;
         s_events_loaded = val; // dirty hack putting this here
@@ -230,7 +230,7 @@ class Session
     QHash<ChannelID, EventDataType> m_min; // The actual minimum
     QHash<ChannelID, EventDataType> m_max;
 
-    // This could go in channels, but different machines interpret it differently
+    // This could go in channels, but different devices interpret it differently
     // Under the new SleepyLib data Device model this can be done, but unfortunately not here..
     QHash<ChannelID, EventDataType> m_physmin; // The physical minimum for graph display purposes
     QHash<ChannelID, EventDataType> m_physmax; // The physical maximum
@@ -394,7 +394,7 @@ class Session
                             EventDataType offset = 0.0, EventDataType min = 0.0, EventDataType max = 0.0,
                             EventDataType rate = 0.0, bool second_field = false);
 
-    //! \brief Returns this sessions MachineID
+    //! \brief Returns this sessions DeviceID
     Machine *machine() { return s_machine; }
 
     //! \brief Returns true if session only contains summary data
@@ -428,7 +428,7 @@ class Session
 
     QString eventFile() const;
 
-    //! \brief Returns MachineType for this session
+    //! \brief Returns DeviceType for this session
     MachineType type() { return s_machtype; }
 
 

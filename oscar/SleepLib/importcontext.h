@@ -19,7 +19,7 @@ public:
     ImportContext();
     virtual ~ImportContext();
 
-    // Loaders will call this directly. It manages the machine's stored set of previously seen messages
+    // Loaders will call this directly. It manages the device's stored set of previously seen messages
     // and will emit an importEncounteredUnexpectedData signal in its dtor if any are new.
     void LogUnexpectedMessage(const QString & message);
 
@@ -28,7 +28,7 @@ signals:
 
 public:
     // Emit the importEncounteredUnexpectedData signal if there are any new messages and clear the list.
-    // TODO: This will no longer need to be public once a context doesn't get reused between machines.
+    // TODO: This will no longer need to be public once a context doesn't get reused between devices.
     void FlushUnexpectedMessages();
 
     virtual bool ShouldIgnoreOldSessions() { return false; }

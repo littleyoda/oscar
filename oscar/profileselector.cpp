@@ -125,7 +125,7 @@ void ProfileSelector::updateProfileList()
 
         Machine * mach = prof->GetMachine(MT_CPAP);  // only interested in last cpap machine...
         if (!mach) {
-            qDebug() << "Couldn't find machine info for" << name;
+            qDebug() << "Couldn't find device info for" << name;
         }
 
         model->insertRows(row, 1, QModelIndex());

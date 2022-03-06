@@ -155,8 +155,9 @@ struct SummaryChartSlice {
 //    QBrush brush;
 };
 
-class gSummaryChart : public Layer
+class gSummaryChart : public QObject , public Layer
 {
+    Q_OBJECT;
 public:
     gSummaryChart(QString label, MachineType machtype);
     gSummaryChart(ChannelID code, MachineType machtype);
@@ -170,6 +171,9 @@ public:
 
     //! \brief Returns true if no data was found for this day during SetDay
     virtual bool isEmpty() { return m_empty; }
+
+    //! \brief Allows chart to recalculate empty flag.
+    void reCalculate() {m_empty=false;};
 
     virtual void populate(Day *, int idx);
 
@@ -217,6 +221,8 @@ public:
         layer->dayindex = dayindex;
         layer->daylist = daylist;
     }
+signals:
+    void summaryChartEmpty(gSummaryChart*,qint64,qint64,bool);
 
 protected:
     //! \brief Key was pressed that effects this layer
@@ -234,6 +240,7 @@ protected:
     QString m_label;
     MachineType m_machtype;
     bool m_empty;
+    bool m_emptyPrev;
     int hl_day;
     int tz_offset;
     float tz_hours;
@@ -259,6 +266,7 @@ protected:
 
     short midcalc;
 };
+
 
 
 /*! \class gSessionTimesChart

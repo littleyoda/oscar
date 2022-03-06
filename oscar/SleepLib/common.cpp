@@ -521,7 +521,7 @@ QString STR_TR_Orientation;
 QString STR_TR_Motion;
 
 
-// Machine type names.
+// Device type names.
 QString STR_TR_CPAP;    // Constant Positive Airway Pressure
 QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 QString STR_TR_BiLevel; // Another name for BiPAP
@@ -548,13 +548,13 @@ QString STR_TR_SA;      // Short form of SensAwake
 QString STR_TR_LE;      // Short form of Leak Event
 QString STR_TR_EP;      // Short form of Expiratory Puff
 QString STR_TR_VS;      // Short form of Vibratory Snore
-QString STR_TR_VS2;     // Short form of Secondary Vibratory Snore (Some Philips Respironics Machines have two sources)
+QString STR_TR_VS2;     // Short form of Secondary Vibratory Snore (Some Philips Respironics devices have two sources)
 QString STR_TR_RERA;    // Acronym for Respiratory Effort Related Arousal
 QString STR_TR_PP;      // Short form for Pressure Pulse
 QString STR_TR_P;       // Short form for Pressure Event
 QString STR_TR_RE;      // Short form of Respiratory Effort Related Arousal
 QString STR_TR_NR;      // Short form of Non Responding event? (forgot sorry)
-QString STR_TR_NRI;     // Sorry I Forgot.. it's a flag on Intellipap machines
+QString STR_TR_NRI;     // Sorry I Forgot.. it's a flag on Intellipap devices
 QString STR_TR_O2;      // SpO2 Desaturation
 QString STR_TR_PC;      // Short form for Pulse Change
 QString STR_TR_UF1;     // Short form for User Flag 1
@@ -668,7 +668,7 @@ void initializeStrings()
     STR_UNIT_FOOT = QObject::tr("ft");
     STR_UNIT_POUND = QObject::tr("lb");
     STR_UNIT_OUNCE = QObject::tr("oz");
-    STR_UNIT_KG = QObject::tr("Kg");
+    STR_UNIT_KG = QObject::tr("kg");
     STR_UNIT_CMH2O = QObject::tr("cmH2O");
     STR_UNIT_Hours = QObject::tr("Hours");
     STR_UNIT_Minutes = QObject::tr("Minutes");
@@ -681,11 +681,11 @@ void initializeStrings()
     STR_UNIT_Percentage = QString("%");
     STR_UNIT_Hz = QObject::tr("Hz");          // Hertz
     STR_UNIT_BPM = QObject::tr("bpm");        // Beats per Minute
-    STR_UNIT_LPM = QObject::tr("L/min");      // Litres per Minute
+    STR_UNIT_LPM = QObject::tr("l/min");      // Litres per Minute
     STR_UNIT_Litres = QObject::tr("Litres");
     STR_UNIT_ml = QObject::tr("ml");        // millilitres
     STR_UNIT_BreathsPerMinute = QObject::tr("Breaths/min"); // Breaths per minute
-    STR_UNIT_Unknown = QObject::tr("?");
+    STR_UNIT_Unknown = QString("?");
     STR_UNIT_Ratio = QObject::tr("ratio");
     STR_UNIT_Severity = QObject::tr("Severity (0-1)");
     STR_UNIT_Degrees = QObject::tr("Degrees");
@@ -730,7 +730,7 @@ void initializeStrings()
 
     STR_TR_Default = QObject::tr("Default");
 
-    // Machine type names.
+    // Device type names.
     STR_TR_CPAP = QObject::tr("CPAP");    // Constant Positive Airway Pressure
     STR_TR_BIPAP = QObject::tr("BiPAP");  // Bi-Level Positive Airway Pressure
     STR_TR_BiLevel = QObject::tr("Bi-Level"); // Another name for BiPAP
@@ -758,13 +758,13 @@ void initializeStrings()
     STR_TR_EP = QObject::tr("EP");    // Short form of Expiratory Puff
     STR_TR_VS = QObject::tr("VS");    // Short form of Vibratory Snore
     STR_TR_VS2 =
-        QObject::tr("VS2");  // Short form of Secondary Vibratory Snore (Some Philips Respironics Machines have two sources)
+        QObject::tr("VS2");  // Short form of Secondary Vibratory Snore (Some Philips Respironics devices have two sources)
     STR_TR_RERA = QObject::tr("RERA"); // Acronym for Respiratory Effort Related Arousal
     STR_TR_PP = QObject::tr("PP");    // Short form for Pressure Pulse
     STR_TR_P = QObject::tr("P");      // Short form for Pressure Event
     STR_TR_RE = QObject::tr("RE");    // Short form of Respiratory Effort Related Arousal
     STR_TR_NR = QObject::tr("NR");    // Short form of Non Responding event? (forgot sorry)
-    STR_TR_NRI = QObject::tr("NRI");  // Sorry I Forgot.. it's a flag on Intellipap machines
+    STR_TR_NRI = QObject::tr("NRI");  // Sorry I Forgot.. it's a flag on Intellipap devices
     STR_TR_O2 = QObject::tr("O2");    // SpO2 Desaturation
     STR_TR_PC = QObject::tr("PC");    // Short form for Pulse Change
     STR_TR_UF1 = QObject::tr("UF1");    // Short form for User Flag 1
@@ -823,7 +823,7 @@ void initializeStrings()
     STR_TR_Brand = QObject::tr("Brand");
     STR_TR_Serial = QObject::tr("Serial");
     STR_TR_Series = QObject::tr("Series");
-    STR_TR_Machine = QObject::tr("Machine");
+    STR_TR_Machine = QObject::tr("Device");
     STR_TR_Channel = QObject::tr("Channel");
     STR_TR_Settings = QObject::tr("Settings");
 

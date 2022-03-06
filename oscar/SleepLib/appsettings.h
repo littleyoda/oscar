@@ -123,7 +123,7 @@ public:
   inline bool squareWavePlots() const { return m_squareWavePlots; }
   //! \brief Whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   bool allowYAxisScaling() const { return getPref(STR_AS_AllowYAxisScaling).toBool(); }
-  //! \brief Whether to include serial number in machine settings changes report
+  //! \brief Whether to include serial number in device settings changes report
   bool includeSerial() const { return getPref(STR_AS_IncludeSerial).toBool(); }
   //! \brief Whether to print reports in black and white, which can be more legible on non-color printers
   bool monochromePrinting() const { return getPref(STR_AS_MonochromePrinting).toBool(); }
@@ -180,7 +180,7 @@ public:
   void setOverlayType(OverlayDisplayType odt) { setPref(STR_AS_OverlayType, (int)(m_odt=odt)); }
   //! \brief Sets whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   void setAllowYAxisScaling(bool b) { setPref(STR_AS_AllowYAxisScaling, b); }
-  //! \brief Sets whether to include machine serial number on machine settings report
+  //! \brief Sets whether to include device serial number on device settings report
   void setIncludeSerial(bool b) { setPref(STR_AS_IncludeSerial, b); }
   //! \brief Sets whether to print reports in black and white, which can be more legible on non-color printers
   void setMonochromePrinting(bool b) { setPref(STR_AS_MonochromePrinting, b); }

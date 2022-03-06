@@ -1005,7 +1005,7 @@ void OximeterImport::on_saveButton_clicked()
     calcSPO2Drop(session);
     calcPulseChange(session);
 
-    qDebug() << "oximod - Setting up machine and session";
+    qDebug() << "oximod - Setting up device and session";
 
     mach->setModel(oximodule->getModel());
     mach->setBrand(oximodule->getVendor());
@@ -1040,9 +1040,9 @@ void OximeterImport::on_saveButton_clicked()
 
     session->setOpened(true);
 
-    qDebug() << "oximod - Adding session to machine";
+    qDebug() << "oximod - Adding session to device";
     mach->AddSession(session);
-    qDebug() << "oximod - Saving machine";
+    qDebug() << "oximod - Saving device";
     mach->Save();
     mach->SaveSummaryCache();
     p_profile->StoreMachines();

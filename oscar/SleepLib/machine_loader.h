@@ -1,4 +1,4 @@
-/* SleepLib MachineLoader Base Class Header
+/* SleepLib DeviceLoader Base Class Header
  *
  * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (c) 2018 Mark Watkins <mark@jedimark.net>
@@ -37,7 +37,7 @@ const QString genericPixmapPath = ":/icons/mask.png";
 
 
 /*! \class MachineLoader
-    \brief Base class to derive a new Machine importer from
+    \brief Base class to derive a new device importer from
     */
 class MachineLoader: public QObject
 {
@@ -54,10 +54,10 @@ class MachineLoader: public QObject
     //! \brief Detect if the given path contains a valid folder structure
     virtual bool Detect(const QString & path) = 0;
 
-    //! \brief Look up and return machine model information stored at path
+    //! \brief Look up and return device model information stored at path
     virtual MachineInfo PeekInfo(const QString & path) { Q_UNUSED(path); return MachineInfo(); }
 
-    //! \brief Override this to scan path and detect new machine data
+    //! \brief Override this to scan path and detect new device data
     virtual int Open(const QString & path) = 0;
 
     //! \brief Load all of the given files and update dialog with progress (for non-CPAP devices)
@@ -66,16 +66,16 @@ class MachineLoader: public QObject
     //! \brief Load a specific (non-CPAP) file
     virtual int OpenFile(const QString & path) { Q_UNUSED(path); return 0; }
 
-    //! \brief Override to returns the Version number of this MachineLoader
+    //! \brief Override to returns the Version number of this DeviceLoader
     virtual int Version() = 0;
 
     //! \brief Name filter for files for this loader
     virtual QStringList getNameFilter() { return QStringList(""); }
 
-    // !\\brief Used internally by loaders, override to return base MachineInfo record
+    // !\\brief Used internally by loaders, override to return base DeviceInfo record
     virtual MachineInfo newInfo() { return MachineInfo(); }
 
-    //! \brief Override to returns the class name of this MachineLoader
+    //! \brief Override to returns the class name of this DeviceLoader
     virtual const QString & loaderName() = 0;
 
     virtual void process() {}
@@ -177,7 +177,7 @@ public:
 };
 
 
-// Put in machine loader class as static??
+// Put in device loader class as static??
 void RegisterLoader(MachineLoader *loader);
 QList<MachineLoader *> GetLoaders(MachineType mt = MT_UNKNOWN);
 MachineLoader * lookupLoader(Machine * m);

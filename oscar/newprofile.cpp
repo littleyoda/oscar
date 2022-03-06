@@ -110,7 +110,7 @@ QString NewProfile::getIntroHTML()
            "<body>"
            "<div align=center><h1>" + tr("Welcome to the Open Source CPAP Analysis Reporter") + "</h1></div>"
 
-           "<p>" + tr("This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.")
+           "<p>" + tr("This software is being designed to assist you in reviewing the data produced by your CPAP Devices and related equipment.")
            + "</p>"
 
            "<p>" + tr("OSCAR has been released freely under the <a href='qrc:/COPYING'>GNU Public License v3</a>, and comes with no warranty, and without ANY claims to fitness for any purpose.")

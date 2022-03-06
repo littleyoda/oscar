@@ -7,6 +7,20 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define xDEBUG_FUNCTIONS
+#ifdef DEBUG_FUNCTIONS
+#include <QRegularExpression>
+#define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
+#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+
+#define O( XX ) " " #XX ":" << XX
+#define OO( XX , YY ) " " #XX ":" << YY
+#define NAME( id) schema::channel[ id ].label()
+#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
+#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
+#endif
+
 #include "Graphs/gGraphView.h"
 
 #include <QDir>
@@ -470,7 +484,7 @@ void gGraphView::popoutGraph()
         qDebug() << "widget geometry" << newDockWidget->frameGeometry() << "title bar height" << titleBarHeight;
         if (newDockHeight > screenHeight) {
             QMessageBox::warning(nullptr, STR_MessageBox_Warning,
-                                QObject::tr("The popout window is full. You should capture the existing\npopout window, delete it, then pop out this graph again."));
+            QObject::tr("The popout window is full. You should capture the existing\npopout window, delete it, then pop out this graph again."));
             return;
         }
         qDebug() << "dock height" << dock->height() << "popout graph height" << popout_graph->height();
@@ -1151,6 +1165,8 @@ void gGraphView::GetXBounds(qint64 &st, qint64 &et)
 // Supplies time range to all graph objects in linked group, refreshing if requested
 void gGraphView::SetXBounds(qint64 minx, qint64 maxx, short group, bool refresh)
 {
+    bool changed= (minx!=m_minx)||(maxx!=m_maxx);
+
     for (auto & graph : m_graphs) {
         if ((graph->group() == group)) {
             graph->SetXBounds(minx, maxx);
@@ -1161,6 +1177,7 @@ void gGraphView::SetXBounds(qint64 minx, qint64 maxx, short group, bool refresh)
     m_maxx = maxx;
 
     if (refresh) { timedRedraw(0); }
+    if (changed) emit XBoundsChanged(minx ,maxx);
 }
 
 void gGraphView::updateScrollBar()

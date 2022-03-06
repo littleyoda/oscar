@@ -78,7 +78,7 @@ QString getIconDir2 (QString givenpath) {
 }
 
 /*
- * getIconMachines returns a list of all Iocn machine folders in the ICON directory
+ * getIconMachines returns a list of all Iocn device folders in the ICON directory
  */
 QStringList getIconMachines (QString iconPath) {
     QStringList iconMachines;
@@ -108,7 +108,7 @@ QStringList getIconMachines (QString iconPath) {
             continue;
         }
 
-        // Find out what machine model this is
+        // Find out what device model this is
         QFile sumFile (flist.at(0).absoluteFilePath());
 
         QString line;
@@ -139,7 +139,7 @@ bool FPIconLoader::Detect(const QString & givenpath)
 
     QStringList machines = getIconMachines(iconPath);
     if (machines.length() <= 0)
-        // Did not find any SleepStyle machine directories
+        // Did not find any SleepStyle device directories
         return false;
 
     return true;
@@ -206,7 +206,7 @@ int FPIconLoader::Open(const QString & path)
 
     QStringList serialNumbers = getIconMachines(iconPath);
     if (serialNumbers.length() <= 0)
-        // Did not find any SleepStyle machine directories
+        // Did not find any SleepStyle device directories
         return false;
 
     Machine *m;
@@ -230,7 +230,7 @@ int FPIconLoader::Open(const QString & path)
             p_profile->DelMachine(m);
             MachList.erase(MachList.find(info.serial));
             QMessageBox::warning(nullptr, tr("Import Error"),
-                                 tr("This Machine Record cannot be imported in this profile.")+"\n\n"+tr("The Day records overlap with already existing content."),
+                                 tr("This device Record cannot be imported in this profile.")+"\n\n"+tr("The Day records overlap with already existing content."),
                                  QMessageBox::Ok);
             delete m;
         }
@@ -508,12 +508,12 @@ hour=(ts >> 12) & 0x1f; */
 
 // FLW Header Structure
 // 0x0000-0x01fe
-// newline (0x0d) seperated list of machine information strings.
+// newline (0x0d) seperated list of device information strings.
 // magic?         0201
 // version        1.5.0
 // serial number  12 digits
-// Machine Series "ICON"
-// Machine Model  "Auto"
+// Device Series "ICON"
+// Device Model  "Auto"
 // Remainder of header is 0 filled...
 // 0x01ff 8 bit additive sum checksum byte of previous header bytes
 

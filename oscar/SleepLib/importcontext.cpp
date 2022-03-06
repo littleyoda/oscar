@@ -32,7 +32,7 @@ void ImportContext::LogUnexpectedMessage(const QString & message)
 void ImportContext::FlushUnexpectedMessages()
 {
     if (m_unexpectedMessages.count() > 0 && m_machine) {
-        // Compare this to the list of messages previously seen for this machine
+        // Compare this to the list of messages previously seen for this device
         // and only alert if there are new ones.
         QSet<QString> newMessages = m_unexpectedMessages - m_machine->previouslySeenUnexpectedData();
         if (newMessages.count() > 0) {
@@ -149,7 +149,7 @@ void ImportUI::onUnexpectedData(const MachineInfo & info, QSet<QString> & /*newM
     QMessageBox::information(QApplication::activeWindow(),
                              QObject::tr("Untested Data"),
                              QObject::tr("Your %1 %2 (%3) generated data that OSCAR has never seen before.").arg(info.brand).arg(info.model).arg(info.modelnumber) +"\n\n"+
-                             QObject::tr("The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine's SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.")
+                             QObject::tr("The imported data may not be entirely accurate, so the developers would like a .zip copy of this device's SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.")
                              ,QMessageBox::Ok);
 }
 
@@ -158,9 +158,9 @@ void ImportUI::onDeviceReportsUsageOnly(const MachineInfo & info)
     if (m_profile->cpap->brickWarning()) {
         QApplication::processEvents();
         QMessageBox::information(QApplication::activeWindow(),
-                                 QObject::tr("Non Data Capable Machine"),
-                                 QString(QObject::tr("Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
-                                         QObject::tr("I'm sorry to report that OSCAR can only track hours of use and very basic settings for this machine."))
+                                 QObject::tr("Non Data Capable Device"),
+                                 QString(QObject::tr("Your %1 CPAP Device (Model %2) is unfortunately not a data capable model.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
+                                         QObject::tr("I'm sorry to report that OSCAR can only track hours of use and very basic settings for this device."))
                                  ,QMessageBox::Ok);
         m_profile->cpap->setBrickWarning(false);
     }
@@ -172,9 +172,9 @@ void ImportUI::onDeviceIsUntested(const MachineInfo & info)
     if (m_profile->session->warnOnUntestedMachine() && m->warnOnUntested()) {
         m->suppressWarnOnUntested();  // don't warn the user more than once
         QMessageBox::information(QApplication::activeWindow(),
-                             QObject::tr("Machine Untested"),
-                             QObject::tr("Your %1 CPAP machine (Model %2) has not been tested yet.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
-                             QObject::tr("It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine's SD card and matching clinician .pdf reports to make sure it works with OSCAR.")
+                             QObject::tr("Device Untested"),
+                             QObject::tr("Your %1 CPAP Device (Model %2) has not been tested yet.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
+                             QObject::tr("It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device's SD card and matching clinician .pdf reports to make sure it works with OSCAR.")
                              ,QMessageBox::Ok);
     }
 }
@@ -182,8 +182,8 @@ void ImportUI::onDeviceIsUntested(const MachineInfo & info)
 void ImportUI::onDeviceIsUnsupported(const MachineInfo & info)
 {
     QMessageBox::information(QApplication::activeWindow(),
-                             QObject::tr("Machine Unsupported"),
-                             QObject::tr("Sorry, your %1 CPAP machine (%2) is not supported yet.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
-                             QObject::tr("The developers need a .zip copy of this machine's SD card and matching clinician .pdf reports to make it work with OSCAR.")
+                             QObject::tr("Device Unsupported"),
+                             QObject::tr("Sorry, your %1 CPAP Device (%2) is not supported yet.").arg(info.brand).arg(info.modelnumber) +"\n\n"+
+                             QObject::tr("The developers need a .zip copy of this device's SD card and matching clinician .pdf reports to make it work with OSCAR.")
                              ,QMessageBox::Ok);
 }

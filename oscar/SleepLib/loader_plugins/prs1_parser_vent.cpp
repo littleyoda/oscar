@@ -513,7 +513,7 @@ const QVector<PRS1ParsedEventType> ParsedEventsF3V3 = {
 // 1061, 1061T, 1160P series
 bool PRS1DataChunk::ParseEventsF3V03(void)
 {
-    // NOTE: Older ventilators (BiPAP S/T and AVAPS) machines don't use timestamped events like everything else.
+    // NOTE: Older ventilators (BiPAP S/T and AVAPS) devices don't use timestamped events like everything else.
     // Instead, they use a fixed interval format like waveforms do (see PRS1_HTYPE_INTERVAL).
 
     if (this->family != 3 || (this->familyVersion != 0 && this->familyVersion != 3)) {
@@ -605,7 +605,7 @@ bool PRS1DataChunk::ParseEventsF3V03(void)
 
 // Originally based on ParseSummaryF5V3, with changes observed in ventilator sample data
 //
-// TODO: surely there will be a way to merge ParseSummary (FV3) loops and abstract the machine-specific
+// TODO: surely there will be a way to merge ParseSummary (FV3) loops and abstract the device-specific
 // encodings into another function or class, but that's probably worth pursuing only after
 // the details have been figured out.
 bool PRS1DataChunk::ParseSummaryF3V6(void)
@@ -618,7 +618,7 @@ bool PRS1DataChunk::ParseSummaryF3V6(void)
     int chunk_size = this->m_data.size();
     static const int minimum_sizes[] = { 1, 0x25, 9, 7, 4, 2, 1, 2, 2, 1, 0x18, 2, 4 };  // F5V3 = { 1, 0x38, 4, 2, 4, 0x1e, 2, 4, 9 };
     static const int ncodes = sizeof(minimum_sizes) / sizeof(int);
-    // NOTE: The sizes contained in hblock can vary, even within a single machine, as can the length of hblock itself!
+    // NOTE: The sizes contained in hblock can vary, even within a single device, as can the length of hblock itself!
 
     // TODO: hardcoding this is ugly, think of a better approach
     if (chunk_size < minimum_sizes[0] + minimum_sizes[1] + minimum_sizes[2]) {

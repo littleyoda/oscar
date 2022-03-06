@@ -38,7 +38,7 @@ class SessionSettings;
   \class Profile
   \author Mark Watkins
   \date 28/04/11
-  \brief The User profile system, containing all information for a user, and an index into all Machine data
+  \brief The User profile system, containing all information for a user, and an index into all device data
  */
 class Profile : public Preferences
 {
@@ -57,7 +57,7 @@ class Profile : public Preferences
     qint64 diskSpaceBackups();
     qint64 diskSpace();
 
-    //! \brief Force some preferences for ResMed machines
+    //! \brief Force some preferences for ResMed devices
     virtual void forceResmedPrefs();
 
     //! \brief Returns hostname that locked profile, or empty string if unlocked
@@ -71,16 +71,16 @@ class Profile : public Preferences
     //! \brief Save Profile object (This is an extension to Preference::Save(..))
     virtual bool Save(QString filename = "");
 
-    //! \brief Add machine to this profiles machlist
+    //! \brief Add device to this profiles machlist
     void AddMachine(Machine *m);
 
-    //! \brief Remove machine from this profiles machlist
+    //! \brief Remove device from this profiles machlist
     void DelMachine(Machine *m);
 
-    //! \brief Loads all machine (summary) data belonging to this profile
+    //! \brief Loads all device (summary) data belonging to this profile
     void LoadMachineData(ProgressDialog *progress);
 
-    //! \brief Unloads all machine (summary) data for this profile to free up memory;
+    //! \brief Unloads all device (summary) data for this profile to free up memory;
     void UnloadMachineData();
 
     //! \brief Barf because data format has changed. This does a purge of CPAP data for machine *m
@@ -96,50 +96,50 @@ class Profile : public Preferences
     //! \brief Add Day record to Profile Day list
     Day *addDay(QDate date);
 
-    //! \brief Get Day record if data available for date and machine type, else return nullptr
+    //! \brief Get Day record if data available for date and device type, else return nullptr
     Day *GetDay(QDate date, MachineType type = MT_UNKNOWN);
 
     //! \brief Same as GetDay but does not open the summaries
     Day *FindDay(QDate date, MachineType type = MT_UNKNOWN);
 
-    //! \brief Get Day record if data available for date and machine type,
+    //! \brief Get Day record if data available for date and device type,
     //         and has enabled session data, else return nullptr
     Day *GetGoodDay(QDate date, MachineType type);
 
     //! \breif Same as GetGoodDay but does not open the summaries
     Day *FindGoodDay(QDate date, MachineType type);
 
-    //! \brief Returns a list of all machines of type t
+    //! \brief Returns a list of all devices of type t
     QList<Machine *> GetMachines(MachineType t = MT_UNKNOWN);
 
-    //! \brief Returns the machine of type t used on date, nullptr if none..
+    //! \brief Returns the device of type t used on date, nullptr if none..
     Machine *GetMachine(MachineType t, QDate date);
 
-    //! \brief return the first machine of type t
+    //! \brief return the first device of type t
     Machine *GetMachine(MachineType t);
 
     //! \brief Returns true if this profile stores this variable identified by key
     bool contains(QString key) { return p_preferences.contains(key); }
 
 
-    //! \brief Get all days records of machine type between start and end dates
+    //! \brief Get all days records of device type between start and end dates
     QList<Day *> getDays(MachineType mt, QDate start, QDate end);
 
-    //! \brief Returns a count of all days (with data) of machine type, between start and end dates
+    //! \brief Returns a count of all days (with data) of device type, between start and end dates
     int countDays(MachineType mt = MT_UNKNOWN, QDate start = QDate(), QDate end = QDate());
 
-    //! \brief Returns a count of all compliant days of machine type between start and end dates
+    //! \brief Returns a count of all compliant days of device type between start and end dates
     int countCompliantDays(MachineType mt, QDate start, QDate end);
 
-    //! \brief Returns a count of all event entries for code, matching machine type between start an end dates
+    //! \brief Returns a count of all event entries for code, matching device type between start an end dates
     EventDataType calcCount(ChannelID code, MachineType mt = MT_CPAP, QDate start = QDate(),
                             QDate end = QDate());
 
-    //! \brief Returns a sum of all event data for Channel code, matching machine type between start an end dates
+    //! \brief Returns a sum of all event data for Channel code, matching device type between start an end dates
     double calcSum(ChannelID code, MachineType mt = MT_CPAP, QDate start = QDate(),
                    QDate end = QDate());
 
-    //! \brief Returns a sum of all session durations for machine type, between start and end dates
+    //! \brief Returns a sum of all session durations for device type, between start and end dates
     EventDataType calcHours(MachineType mt = MT_CPAP, QDate start = QDate(), QDate end = QDate());
 
     //! \brief Calculates Channel Average (Sums and counts all events, returning the sum divided by the count.)
@@ -166,7 +166,7 @@ class Profile : public Preferences
     bool hasChannel(ChannelID code);
 
 
-    //! \brief Looks up if any machines report channel is available
+    //! \brief Looks up if any devices report channel is available
     bool channelAvailable(ChannelID code);
 
 
@@ -178,27 +178,27 @@ class Profile : public Preferences
     EventDataType calcSettingsMax(ChannelID code, MachineType mt = MT_CPAP, QDate start = QDate(),
                                   QDate end = QDate());
 
-    //! \brief Calculates the time channel code spends above threshold value for machine type, between start and end dates
+    //! \brief Calculates the time channel code spends above threshold value for device type, between start and end dates
     EventDataType calcAboveThreshold(ChannelID code, EventDataType threshold, MachineType mt = MT_CPAP,
                                      QDate start = QDate(), QDate end = QDate());
 
-    //! \brief Calculates the time channel code spends below threshold value for machine type, between start and end dates
+    //! \brief Calculates the time channel code spends below threshold value for device type, between start and end dates
     EventDataType calcBelowThreshold(ChannelID code, EventDataType threshold, MachineType mt = MT_CPAP,
                                      QDate start = QDate(), QDate end = QDate());
 
 
     Day * findSessionDay(Session * session);
 
-    //! \brief Looks for the first date containing a day record matching machinetype
+    //! \brief Looks for the first date containing a day record matching devicetype
     QDate FirstDay(MachineType mt = MT_UNKNOWN);
 
-    //! \brief Looks for the last date containing a day record matching machinetype
+    //! \brief Looks for the last date containing a day record matching devicetype
     QDate LastDay(MachineType mt = MT_UNKNOWN);
 
-    //! \brief Looks for the first date containing a day record with enabled sessions matching machinetype
+    //! \brief Looks for the first date containing a day record with enabled sessions matching devicetype
     QDate FirstGoodDay(MachineType mt = MT_UNKNOWN);
 
-    //! \brief Looks for the last date containing a day record with enabled sessions matching machinetype
+    //! \brief Looks for the last date containing a day record with enabled sessions matching devicetype
     QDate LastGoodDay(MachineType mt = MT_UNKNOWN);
 
     //! \brief Returns this profiles data folder

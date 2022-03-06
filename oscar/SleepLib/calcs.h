@@ -149,7 +149,7 @@ int calcAHIGraph(Session *session);
 //! \brief Calculates AHI for a session between start & end (a support function for the sliding window graph)
 EventDataType calcAHI(Session *session, qint64 start = -1, qint64 end = -1);
 
-//! \brief Scans for leaks over Redline and flags as large leaks, unless machine provided them already
+//! \brief Scans for leaks over Redline and flags as large leaks, unless device provided them already
 void flagLargeLeaks(Session *session);
 
 //! \brief Leaks calculations for PRS1

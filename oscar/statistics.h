@@ -83,7 +83,7 @@ struct StatisticsRow {
         return SC_UNDEFINED;
     }
 
-    //! \brief Look up machine type
+    //! \brief Look up device type
     MachineType lookupType(QString type)
     {
         if (type.compare("cpap", Qt::CaseInsensitive)==0) {
@@ -104,7 +104,7 @@ struct StatisticsRow {
     QString value(QDate start, QDate end);
 };
 
-//! \class Prescription (Machine) setting
+//! \class Prescription (device) setting
 class RXItem {
 public:
     RXItem() {

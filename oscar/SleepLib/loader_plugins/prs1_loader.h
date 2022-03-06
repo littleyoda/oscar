@@ -104,9 +104,9 @@ protected:
     int summary_duration;
     int m_sessionid_base;  // base for inferring session ID from filename
 
-    //! \brief Translate the PRS1-specific machine mode to the importable vendor-neutral enum.
+    //! \brief Translate the PRS1-specific device mode to the importable vendor-neutral enum.
     CPAPMode importMode(int mode);
-    //! \brief Parse all the chunks in a single machine session
+    //! \brief Parse all the chunks in a single device session
     bool ParseSession(void);
 
     //! \brief Cache a single slice from a summary or compliance chunk.
@@ -211,16 +211,16 @@ class PRS1Loader : public CPAPLoader
     //! \brief Returns the path of the P-Series folder (whatever case) if present on the card
     QString GetPSeriesPath(const QString & path);
 
-    //! \brief Returns the path for each machine detected on an SD card, from oldest to newest
+    //! \brief Returns the path for each device detected on an SD card, from oldest to newest
     QStringList FindMachinesOnCard(const QString & cardPath);
 
-    //! \brief Opens the SD folder structure for this machine, scans for data files and imports any new sessions
+    //! \brief Opens the SD folder structure for this device, scans for data files and imports any new sessions
     int OpenMachine(const QString & path);
 
     //! \brief Finds the P0,P1,... session paths and property pathname and returns the base (10 or 16) of the session filenames
     int FindSessionDirsAndProperties(const QString & path, QStringList & paths, QString & propertyfile);
 
-    //! \brief Reads the model number from the property file, evaluates its capabilities, and returns true if the machine is supported
+    //! \brief Reads the model number from the property file, evaluates its capabilities, and returns true if the device is supported
     bool CreateMachineFromProperties(QString propertyfile);
 
     //! \brief Scans the given directories for session data and create an import task for each logical session.

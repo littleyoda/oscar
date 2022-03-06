@@ -345,7 +345,7 @@ border-radius: 0px;</string>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="welcomePage">
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -599,17 +599,17 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
              </property>
              <item>
               <property name="text">
-               <string>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</string>
+               <string notr="true">CMS50D+/E/F, Pulox PO-200/300</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>CMS50D+/E/F, Pulox PO-200/300</string>
+               <string notr="true">CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>ChoiceMMed MD300W1</string>
+               <string notr="true">ChoiceMMed MD300W1</string>
               </property>
              </item>
             </widget>
@@ -1470,7 +1470,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</string>
+                 <string>I started this oximeter recording at (or near) the same time as a session on my CPAP device.</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
