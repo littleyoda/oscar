@@ -35,6 +35,8 @@ ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMAS11_SmartStop,
          RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort, RMAS11_PtView;
 
+Channel_ID RMAS1x_EasyBreathe, RMAS1x_RiseEnable, RMAS1x_RiseTime, RMAS1x_Cycle, RMSA1x_Trigger, RMSA1x_TiMax, RMSA1x_TiMin;
+
 const QString STR_ResMed_AirSense10 = "AirSense 10";
 const QString STR_ResMed_AirSense11 = "AirSense 11";
 const QString STR_ResMed_AirCurve10 = "AirCurve 10";
@@ -217,6 +219,34 @@ void ResmedLoader::initChannels()
 
     chan->addOption(0, QObject::tr("Advanced"));
     chan->addOption(1, QObject::tr("Simple"));
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_EasyBreathe = 0xe211, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_EasyBreathe", QObject::tr("EasyBreathe"), QObject::tr("EasyBreathe"), QObject::tr("EasyBreathe"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_RiseEnable = 0xe212, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_RiseEnable", QObject::tr("RiseEnable"), QObject::tr("RiseEnable"), QObject::tr("RiseEnable"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_RiseTime = 0xe213, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_RiseTime", QObject::tr("RiseTime"), QObject::tr("RiseTime"), QObject::tr("RiseTime"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Cycle = 0xe214, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_Cycle", QObject::tr("Cycle"), QObject::tr("Cycle"), QObject::tr("Cycle"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Trigger = 0xe215, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_Trigger", QObject::tr("Trigger"), QObject::tr("Trigger"), QObject::tr("Trigger"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMax = 0xe216, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
+
+    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMin = 0xe217, SETTING, MT_CPAP, SESSION,
+        "RMAS1x_TiMin", QObject::tr("TiMin"), QObject::tr("TiMin"), QObject::tr("TiMin"), "", LOOKUP, Qt::black));
+    chan->addOption(0, "0");
 
     // Setup ResMeds signal name translation map
     setupResMedTranslationMap();

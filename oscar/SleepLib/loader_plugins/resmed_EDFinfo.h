@@ -145,7 +145,15 @@ public:
         s_SmartStop  = -1;
         s_Comfort = -1;
 
-        ramp_pressure = -1;
+        s_RampPressure = -1;
+
+        s_EasyBreathe = -1;
+        s_RiseEnable = -1;
+        s_RiseTime = -1;
+        s_Cycle = -1;
+        s_Trigger = -1;
+        s_TiMax = -1;
+        s_TiMin = -1;
 
         date=QDate();
     }
@@ -208,7 +216,7 @@ public:
     EventDataType tgtipap95;
     EventDataType tgtipapmax;
 
-    EventDataType ramp_pressure;
+    EventDataType s_RampPressure;
     QDate date;
 
     EventDataType s_RampTime;
@@ -229,6 +237,14 @@ public:
     int s_SmartStart;
     int s_SmartStop;
     int s_Comfort;
+
+    int s_EasyBreathe;
+    int s_RiseEnable;
+    int s_RiseTime;
+    int s_Cycle;
+    int s_Trigger;
+    int s_TiMax;
+    int s_TiMin;
 
 };
 
