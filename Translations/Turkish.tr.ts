@@ -55,10 +55,6 @@
         <translation>Üzgünüz, Sürüm Notları bulunamadı.</translation>
     </message>
     <message>
-        <source>OSCAR %1</source>
-        <translation type="vanished">OSCAR %1</translation>
-    </message>
-    <message>
         <location filename="../oscar/aboutdialog.cpp" line="133"/>
         <source>Important:</source>
         <translation>Önemli:</translation>
@@ -373,10 +369,6 @@
         <translation>Bilinmeyen Seans</translation>
     </message>
     <message>
-        <source>Machine Settings</source>
-        <translation type="vanished">Cihaz Ayarları</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1271"/>
         <source>Model %1 - %2</source>
         <translation>Model %1 - %2</translation>
@@ -385,10 +377,6 @@
         <location filename="../oscar/daily.cpp" line="1276"/>
         <source>PAP Mode: %1</source>
         <translation>PAP Modu: %1</translation>
-    </message>
-    <message>
-        <source>99.5%</source>
-        <translation type="vanished">% 99.5</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1396"/>
@@ -424,14 +412,6 @@
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
         <translation>10 Olay Tipinden 10 uncu</translation>
-    </message>
-    <message>
-        <source>This CPAP machine does NOT record detailed data</source>
-        <translation type="vanished">Bu CPAP cihazı detaylı veri kaydı YAPMIYOR</translation>
-    </message>
-    <message>
-        <source>Sorry, this machine only provides compliance data.</source>
-        <translation type="vanished">Üzgünüz, bu cihaz sadece uyum verisini sunmaktadır.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1808"/>
@@ -547,10 +527,6 @@
         <location filename="../oscar/daily.cpp" line="1785"/>
         <source>Zero hours??</source>
         <translation>Sıfır saat??</translation>
-    </message>
-    <message>
-        <source>BRICK :(</source>
-        <translation type="vanished">TUĞLA :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1790"/>
@@ -779,10 +755,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="vanished">Bu Cihaz Kaydı bu profile aktarılamaz.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>Günlük kayıtlar mevcut içerik ile çakışıyor.</translation>
@@ -966,10 +938,6 @@
         <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>&amp;Advanced</source>
         <translation>&amp;İleri</translation>
-    </message>
-    <message>
-        <source>Purge ALL Machine Data</source>
-        <translation type="vanished">TÜM Cihaz Verisini Sil</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2517"/>
@@ -1437,30 +1405,6 @@
         <translation>Eğer bunu okuyorsanız yeniden başlatma komutu çalışmamış demektir. Manüel olarak kendinizin yapması gerkecek.</translation>
     </message>
     <message>
-        <source>Are you sure you want to rebuild all CPAP data for the following machine:
-
-</source>
-        <translation type="vanished">Bu cihaz için tüm CPAP verisini yeniden inşa etmek istediğinize emin misiniz:
-
-</translation>
-    </message>
-    <message>
-        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
-        <translation type="vanished">Bir sebepten ötürü OSCAR&apos;ın şu cihazlar için alınmış herhangi bir yedeklemesi mevcut değildir:</translation>
-    </message>
-    <message>
-        <source>OSCAR does not have any backups for this machine!</source>
-        <translation type="vanished">OSCAR&apos;ın bu cihaz için herhangi bir yedeklemesi yok!</translation>
-    </message>
-    <message>
-        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
-        <translation type="vanished">&lt;i&gt;Bu cihazdaki verileriniz için &lt;b&gt;kendi&lt;/b&gt; yedeklemelerinizi&lt;/i&gt; yapmadıysanız &lt;font size=+2&gt; bu cihazın verisini &lt;b&gt;kalıcı olarak&lt;/b!&gt; kaybedeceksiniz!&lt;/font&gt;</translation>
-    </message>
-    <message>
-        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
-        <translation type="vanished">OSCAR&apos;ın bu cihaz için olan veri tabanını &lt;font size=+2&gt; yok etmek&lt;/font&gt; üzeresiniz:&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="1996"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>Bir dosya izni hatası temizleme işleminin başarısızlıkla sonlanmasına neden oldu; bu klasörü manüel olarak silmeniz gerekecek:</translation>
@@ -1585,10 +1529,6 @@
         <translation>Dahili yedekleme mevcut olmadığından, kendi yedeklemenizden geri yüklemeniz gerekecektir.</translation>
     </message>
     <message>
-        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
-        <translation type="vanished">Kendi yedeklemelerinizden  şimdi içe aktarma yapmak ister misiniz? (aktarım yapana kadar bu cihaz için görülebilir veriniz olmayacaktır)</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="1929"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Önlem olarak, yedekleme klasörü yerinde bırakılacaktır.</translation>
@@ -1682,12 +1622,6 @@
         <location filename="../oscar/mainwindow.cpp" line="744"/>
         <source>Up to date</source>
         <translation>Güncel</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Machine Data at
-
-%1</source>
-        <translation type="vanished">%1&apos;de herhangi bir geçerli Cihaz Verisi bulunamadı</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="918"/>
@@ -2046,10 +1980,6 @@
         <translation>Açık Kaynak Kodlu CPAP Analiz Raporlayıcısına Hoş Geldiniz</translation>
     </message>
     <message>
-        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
-        <translation type="vanished">Bu yazılım, CPAP cihazlarınız ve ilgili ekipmanlarınız tarafından üretilen verileri gözden geçirmenize yardımcı olmak için tasarlanmıştır.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.cpp" line="118"/>
         <source>PLEASE READ CAREFULLY</source>
         <translation>LÜTFEN DİKKATLE OKUYUN</translation>
@@ -2320,10 +2250,6 @@ Kitle
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;ÖNCELİKLE bu gruplardan Oksimetrenizi seçin:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</source>
-        <translation type="vanished">CMS50Fv3.7+/H/I, CMS50D+v4.6, Pulox PO-400/500</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="648"/>
         <source>CMS50E/F users, when importing directly, please don&apos;t select upload on your device until OSCAR prompts you to.</source>
         <translation>CMS50E/F kullanıcıları, doğrudan içe aktarım gerçekleştirirken, lütfen OSCAR size belirtene kadar cihazınızda yükleme seçeneğini seçmeyin.</translation>
@@ -2435,10 +2361,6 @@ Kitle
         <translation>Oksimetremin dahili saati tarafından bildirilen zamanı kullanmak istiyorum.</translation>
     </message>
     <message>
-        <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
-        <translation type="vanished">Bu oksimetre kaydını CPAP cihazımdaki bir seans ile aynı (veya ona yakın) zamanda başlattım.</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="1534"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: Syncing to CPAP session starting time will always be more accurate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Not: CPAP seansı başlangıç zamanına senkronizasyon her zaman daha doğru olacaktır.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2467,14 +2389,6 @@ Kitle
         <location filename="../oscar/oximeterimport.ui" line="1774"/>
         <source>&amp;Information Page</source>
         <translation>&amp;Bilgi Sayfası</translation>
-    </message>
-    <message>
-        <source>CMS50D+/E/F, Pulox PO-200/300</source>
-        <translation type="vanished">CMS50D+/E/F, Pulox PO-200/300</translation>
-    </message>
-    <message>
-        <source>ChoiceMMed MD300W1</source>
-        <translation type="vanished">ChoiceMMed MD300W1</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="688"/>
@@ -2882,20 +2796,6 @@ Kitle
         <translation>Kısa Seansları Yoksay</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bu süreden daha kısa olan seanslar gösterilmeyecektir&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="311"/>
         <source>Day Split Time</source>
         <translation>Gün Ayırım Zamanı</translation>
@@ -2931,14 +2831,6 @@ p, li { white-space: pre-wrap; }
         <translation> saat</translation>
     </message>
     <message>
-        <source>Enable/disable experimental event flagging enhancements. 
-It allows detecting borderline events, and some the machine missed.
-This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="vanished">Deneysel olay işaretleme geliştirmelerini etkinleştirin / devre dışı bırakın.
-Sınırda yer alan olayların ve cihazın kaçırdığı bazı olayların algılanmasını sağlar.
-İçe aktarmadan önce bu seçeneğin etkinleştirilmesi gerekir, aksi takdirde temizleme gereklidir.</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
         <source>Flow Restriction</source>
         <translation>Akım Kısıtlaması</translation>
@@ -2949,18 +2841,6 @@ Sınırda yer alan olayların ve cihazın kaçırdığı bazı olayların algıl
 A value of 20% works well for detecting apneas. </source>
         <translation>Hava akışının medyan değere göre kısıtlanma yüzdesi. 
 Apne tespiti için genellikle 20% değeri işe yarar. </translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Özel işaretleme, makine tarafından kaçırılan olayları tespit etmek için deneysel bir yöntemdir. AHI içerisinde &lt;span style=&quot; text-decoration: underline;&quot;&gt;yer almazlar.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1116"/>
@@ -2980,10 +2860,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../oscar/preferencesdialog.ui" line="1155"/>
         <source>Event Duration</source>
         <translation>Olay Süresi</translation>
-    </message>
-    <message>
-        <source>Allow duplicates near machine events.</source>
-        <translation type="vanished">Cihaz olaylarına yakın kopyalara izin ver.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1220"/>
@@ -3038,8 +2914,8 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation>Kaçak grafiğinde kaçak kırmızı çizgisinin gösterilip gösterilmeyeceği</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1822"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1901"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1816"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1895"/>
         <source>Search</source>
         <translation>Ara</translation>
     </message>
@@ -3052,10 +2928,6 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <location filename="../oscar/preferencesdialog.ui" line="1109"/>
         <source>Show in Event Breakdown Piechart</source>
         <translation>Olay Dökümü Dilim Grafiğinde Göster</translation>
-    </message>
-    <message>
-        <source>Resync Machine Detected Events (Experimental)</source>
-        <translation type="vanished">Cihaz Tarafından Tespit Edilen Olayları Tekrar Senkronize Et (Deneysel)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1732"/>
@@ -3095,7 +2967,7 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation>Bu değerin altındaki küçük oksimetri veri parçaları atılacaktır.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1957"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1951"/>
         <source>&amp;General</source>
         <translation>&amp;Genel</translation>
     </message>
@@ -3165,18 +3037,6 @@ Varsayılan değer 60 dakikadır .. Bu değerde bırakılması kesinlikle öneri
         <translation>Onay istemeden içe aktar</translation>
     </message>
     <message>
-        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
-
-The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
-
-If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="vanished">Bu ölçüm CPAP cihazı tarafından Toplam Kaçak verisinin sağlanmasını gerektirir. (Ör, PRS1; ama ResMed&apos;de bunlar zaten mevcut)
-
-Burada kullanılan İstemsiz Kaçak hesaplamaları doğrusaldır, maske hava salınım eğrisini modellemezler.
-
-Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler seçin. Yeterince yakın olacaktır.</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
         <translation>Mevcut Değilse İstemsiz Kaçakları Hesapla</translation>
@@ -3232,11 +3092,6 @@ Birden fazla değişik maske kullanıyorsanız,bunun yerine ortalama değerler s
         <location filename="../oscar/preferencesdialog.ui" line="787"/>
         <source>Seconds</source>
         <translation>Saniye</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="272"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="475"/>
@@ -3354,29 +3209,29 @@ as this is the only value available on summary-only days.</source>
         <translation>Maksimum Hesapl</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1971"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1965"/>
         <source>General Settings</source>
         <translation>Genel Ayarlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2712"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2706"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
         <translation>Günlük görünüm gezinme düğmeleri, veri kayıtları olmayan günleri atlayacak</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2715"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2709"/>
         <source>Skip over Empty Days</source>
         <translation>Boş Günleri Atla</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1992"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1986"/>
         <source>Allow use of multiple CPU cores where available to improve performance. 
 Mainly affects the importer.</source>
         <translation>Eğer mevcutsa, performansı iyileştirmek için birden fazla işlemci çekirdeği kullanımına izin ver. 
 Özellikle içe aktarıcıya etki eder.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1996"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1990"/>
         <source>Enable Multithreading</source>
         <translation>Multithreading&apos;i Etkinleştir</translation>
     </message>
@@ -3384,6 +3239,11 @@ Mainly affects the importer.</source>
         <location filename="../oscar/preferencesdialog.ui" line="575"/>
         <source>Bypass the login screen and load the most recent User Profile</source>
         <translation>Giriş ekranını atlayın ve en son Kullanıcı Profilini yükleyin</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="272"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="484"/>
@@ -3421,24 +3281,35 @@ Mainly affects the importer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1799"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1779"/>
+        <source> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method do &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1793"/>
         <source>Events</source>
         <translation>Olaylar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1852"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1931"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1846"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1925"/>
         <source>Reset &amp;Defaults</source>
         <translation>Sıfırla&amp;Varsayılanlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1865"/>
-        <location filename="../oscar/preferencesdialog.ui" line="1944"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1859"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1938"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;Just because you can, does not mean it&apos;s good practice.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Uyarı: &lt;/span&gt;Yapabiliyor olmanız, iyi bir uygulama örneği olduğu anlamına gelmez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1878"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1872"/>
         <source>Waveforms</source>
         <translation>Dalga formları</translation>
     </message>
@@ -3502,21 +3373,6 @@ Eğer küçük bir SSD (solid state disk) içeren yeni bir bilgisayarınız vars
         <translation>Seans Verisini Sıkıştır (OSCAR&apos;ın verisini küçültür, ancak gün değiştirme yavaşlar.)</translation>
     </message>
     <message>
-        <source>This maintains a backup of SD-card data for ResMed machines, 
-
-ResMed S9 series machines delete high resolution data older than 7 days, 
-and graph data older than 30 days..
-
-OSCAR can keep a copy of this data if you ever need to reinstall. 
-(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="vanished">Bu seçim ResMed cihazları için SD kartının bir yedeğini saklar, 
-ResMed S9 serisi cihazlar 7 günden eski yüksek çözünürlülüklü veriyi,
-ve 30 günden eski grafik verisini silerler..
-
-OSCAR, eğer tekrar kurulum gerçekleştirmeye ihtiyacınız olursa, bu verinin bir kopyasını saklayabilir.
-(Boş disk yerinizin kısıtlı olması veya grafik verilerini önemsememeniz haricinde şiddetle tavsiye edilir)</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="608"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Özet verilerini önceden yükleyerek OSCAR&apos;ın başlatılmasını biraz yavaşlatır, ancak daha sonra genel görünüm gezinmesini ve başka birkaç hesaplamayı hızlandırır.&lt;/p&gt;&lt;p&gt; Eğer sahip olduğunuz veri miktarı fazlaysa, bu seçeneği kapalı tutmak mantıklı olabilir, ancak genel görünümde &lt;span style=&quot; font-style:italic;&quot;&gt;herşeyi&lt;/span&gt; görmek istiyorsanız, her halukarda bu verinin yüklenmesi gerekecektir.&lt;/p&gt;&lt;p&gt;Bu seçeneğin, her zaman için sadece talep olduğunda yüklenen dalga formu ve olay verisini etkilemediğini unutmayın.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -3532,127 +3388,119 @@ OSCAR, eğer tekrar kurulum gerçekleştirmeye ihtiyacınız olursa, bu verinin 
         <translation>20 cmH2O</translation>
     </message>
     <message>
-        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
-        <translation type="vanished">Bu deneysel seçenek OSCAR&apos;ın olay işaretleme sistemini kullanarak cihaz tarafından tespit edilen olayların konumlarını iyileştirmeye çalışır.</translation>
-    </message>
-    <message>
-        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
-        <translation type="vanished">Cihaz tarafından tespit edilen henüz tanımlanamamış olayları işaretle.</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2003"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1997"/>
         <source>Show Remove Card reminder notification on OSCAR shutdown</source>
         <translation>OSCAR kapatılırken Kartı Çıkar hatırlatıcısını göster</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2111"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2105"/>
         <source>Check for new version every</source>
         <translation>Yeni sürüm varlığını bu aralıkla kontrol et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2134"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2128"/>
         <source>days.</source>
         <translation>gün.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2164"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2158"/>
         <source>Last Checked For Updates: </source>
         <translation>Güncellemelerin En Son Kontrol Edildiği Tarih: </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2177"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2171"/>
         <source>TextLabel</source>
         <translation>YazıEtiketi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2202"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2196"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
         <translation>Test sürümlerinden haberdar olmak istiyorum. (Lütfen sadece ileri kullanıcılar.)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2245"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2239"/>
         <source>&amp;Appearance</source>
         <translation>&amp;Görünüm</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2274"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2268"/>
         <source>Graph Settings</source>
         <translation>Grafik Ayarları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2290"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2284"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bir profil yüklendiğinde hangi sekmenin açılacağı. (Not: Eğer OSCAR başlangıçta bir profil yüklemeyecek şekilde ayarlanmışsa, Profil varsayılan ayardır)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2548"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2542"/>
         <source>Bar Tops</source>
         <translation>Bar Üstleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2553"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2547"/>
         <source>Line Chart</source>
         <translation>Çizgi Grafik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2643"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2637"/>
         <source>Overview Linecharts</source>
         <translation>Çizgi Grafikleri Gözden Geçir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2042"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2036"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
         <translation>OSCAR&apos;ın grafiklerinde görselleştirme sorunları yaşıyorsanız bunu varsayılan ayardan (Desktop OpenGL) değiştirmeyi deneyin.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2588"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2582"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek,duyarlı çiftyönlü dokunmatik yüzeylerde görüntü büyütülmüş iken kaydırmayı kolaylaştırır&lt;/p&gt;&lt;p&gt;50 ms tavsiye edilen değerdir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2482"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2476"/>
         <source>How long you want the tooltips to stay visible.</source>
         <translation>Yardım kutularının görünür halde kalmalarını istediğiniz süre.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2470"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2464"/>
         <source>Scroll Dampening</source>
         <translation>Kaydırma Sönümlemesi</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2460"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2454"/>
         <source>Tooltip Timeout</source>
         <translation>Yardım Kutusu Zaman Aşımı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2567"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2561"/>
         <source>Default display height of graphs in pixels</source>
         <translation>Grafiklerin piksel cinsinden varsayılan gösterim yükseklikleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2540"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2534"/>
         <source>Graph Tooltips</source>
         <translation>Grafik Yardım Kutuları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2416"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2410"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
         <translation>Dalgaformu işaretleyicilerinin görsel olarak gösterim yöntemi.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2421"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2415"/>
         <source>Standard Bars</source>
         <translation>Standart Çubuklar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2426"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2420"/>
         <source>Top Markers</source>
         <translation>Üst İşaretleyiciler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2374"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2368"/>
         <source>Graph Height</source>
         <translation>Grafik Yüksekliği</translation>
     </message>
@@ -3670,14 +3518,6 @@ OSCAR, eğer tekrar kurulum gerçekleştirmeye ihtiyacınız olursa, bu verinin 
         <location filename="../oscar/preferencesdialog.ui" line="618"/>
         <source>Automatically load last used profile on start-up</source>
         <translation>Başlangıçta en son kullanılan kullanıcı profilini otomatik olarak yükle</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR&apos;ın geliştiricileri tarafından henüz test edilmemiş bir cihazdan veri içe aktarımı gerçekleştirirken uyarı ver.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Warn when importing data from an untested machine</source>
-        <translation type="vanished">Test edilmemiş bir cihazdan veri içe aktarımı yaparken uyar</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="645"/>
@@ -3700,132 +3540,111 @@ OSCAR, eğer tekrar kurulum gerçekleştirmeye ihtiyacınız olursa, bu verinin 
         <translation>Maskenizin 4 cmH20 basınçta hava tahliye miktarı</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Not: &lt;/span&gt;Özet tasarımındaki sınırlamalar nedeniyle, ResMed makineleri bu ayarların değiştirilmesine izin vermemektedir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1539"/>
         <source>Oximetry Settings</source>
         <translation>Oksimetri Ayarları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1779"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method do &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2010"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2004"/>
         <source>Always save screenshots in the OSCAR Data folder</source>
         <translation>Ekran görüntülerini her zaman OSCAR Veri klasörüne kaydet</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2064"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2058"/>
         <source>Check For Updates</source>
         <translation>Güncellemeleri Kontrol Et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2079"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2073"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
         <translation>OSCAR&apos;ın bir deneme sürümünü kullanmaktasınız. Deneme sürümleri otomatik olarak yedi günde bir güncelleme kontrolü yaparlar. Bu aralığı yedi günden daha kısa bir süreye ayarlayabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2096"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2090"/>
         <source>Automatically check for updates</source>
         <translation>Güncellemeleri otomatik olarak kontrol et</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2118"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2112"/>
         <source>How often OSCAR should check for updates.</source>
         <translation>OSCAR&apos;ın hangi sıklıkta güncellemeleri kontrol edeceği.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2199"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2193"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation>Eğer yeni özellikleri ve hata ayıklamalarını test etmek ilginizi çekiyorsa buraya klikleyin.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2215"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2209"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
         <translation>Eğer OSCAR&apos;ın erken deneme sürümlerinin test edilmesine yardımcı olmak istiyorsanız, OSCAR&apos;ı test etmekle ilgili Wiki sayfasına bakınız.  OSCAR&apos;ı test etmek isteyen, OSCAR&apos;ın geliştirilmesine yardımcı olmak ve mevcut veya yeni dillere çeviriler konusunda katkıda bulunmak isteyen herkesi aramıza davet ediyoruz.. https://www.sleepfiles.com/OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2280"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2274"/>
         <source>On Opening</source>
         <translation>Açılışta</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2293"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2297"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2287"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2291"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2302"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2341"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2296"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2335"/>
         <source>Welcome</source>
         <translation>Hoş Geldiniz</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2307"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2346"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2301"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2340"/>
         <source>Daily</source>
         <translation>Günlük</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2317"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2356"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2311"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2350"/>
         <source>Statistics</source>
         <translation>İstatistikler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2325"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2319"/>
         <source>Switch Tabs</source>
         <translation>Sekmeleri Değiştir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2336"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2330"/>
         <source>No change</source>
         <translation>Değişiklik yok</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2364"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2358"/>
         <source>After Import</source>
         <translation>İçe Aktarım Sonrası</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2390"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2384"/>
         <source>Overlay Flags</source>
         <translation>İşaretleri Çakıştır</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2400"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2394"/>
         <source>Line Thickness</source>
         <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2436"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2430"/>
         <source>The pixel thickness of line plots</source>
         <translation>Çizgi grafiklerinin piksel kalınlığı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2662"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2656"/>
         <source>Other Visual Settings</source>
         <translation>Diğer Görsel Ayarlar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2668"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2662"/>
         <source>Anti-Aliasing applies smoothing to graph plots.. 
 Certain plots look more attractive with this on. 
 This also affects printed reports.
@@ -3838,66 +3657,62 @@ Yazılı raporlara da etkisi mevcuttur.
 Deneyin ve beğenip beğenmediğinizi görün.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2675"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2669"/>
         <source>Use Anti-Aliasing</source>
         <translation>Anti-Aliasing Kullan</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2682"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2676"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
         <translation>Bazı grafikleri daha &quot;köşeli&quot; hale sokar.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2685"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2679"/>
         <source>Square Wave Plots</source>
         <translation>Kare Dalga Grafikleri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2692"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2686"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
         <translation>Pixmap önbellekleme bir grafik hızlandırma tekniğidir. Platformunuzdaki grafik görüntüleme alanında yazı karakteri çizimi ile ilgili sorunlara neden olabilir.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2695"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2689"/>
         <source>Use Pixmap Caching</source>
         <translation>Pixmap Önbelleklemesi Kullan</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2702"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2696"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu özellikler yakın bir zamanda budanmıştır. Daha sonra tekrar eklenecektir. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2705"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2699"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
         <translation>Animasyonlar &amp;&amp; Süslemeler</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2722"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2716"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
         <translation>yAksı skalasını yAksı etiketlerine çift klikleyerek değiştirmeye izin verip vermeme</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2725"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2719"/>
         <source>Allow YAxis Scaling</source>
         <translation>YAksı Ölçeklemesine İzin Ver</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2732"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2726"/>
         <source>Whether to include device serial number on device settings changes report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation type="vanished">Cihaz ayar değişiklikleri raporuna cihazın seri numarasını ekleyip eklememe</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2735"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2729"/>
         <source>Include Serial Number</source>
         <translation>Seri Numarasını Ekle</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2036"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2030"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation>Grafik Motoru (Tekrardan Başlatmayı Gerektirir)</translation>
     </message>
@@ -3917,101 +3732,74 @@ Deneyin ve beğenip beğenmediğinizi görün.</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SpO&apos;yu İşaretle&lt;span style=&quot; vertical-align:sub;&quot;&gt;2&lt;/span&gt; Desaturasyon Altı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method do &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP machine, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:7.84158pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oksimetri ve CPAP verisi senkronize ediliyor&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SPO2Review&apos;dan (.spoR dosyalarından) veya seri aktarma yöntemiyle içe aktarılan CMS50 verileri, senkronize edebilmek için gerekli olan doğru zaman mührüne sahip &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;değildir&lt;/span&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Canlı gösterim modu (seri kablo kullanarak) CMS50 oksimetreleri ile doğru bir şekilde senkronizasyon sağlamak için bir yöntemdir ancak CPAP saatindeki kaymaya karşı etkisi yoktur.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Eğer Oksimetrenizi kayıt modunu CPAP makineniz ile&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;tam olarak &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;aynı anda başlatırsanız da senkronizasyon sağlayabilirsiniz. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Seri içe alma işlemi başlangıç zamanını önceki gecenin ilk CPAP seansından alır. (Önce CPAP verisini içe aktarmayı unutmayın!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2742"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2736"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
         <translation>Raporları siyah beyaz yazdır, renkli olmayan yazıcılarda daha okunabilir olabilir</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2745"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2739"/>
         <source>Print reports in black and white (monochrome)</source>
         <translation>Raporları siyah beyaz yazdır (monokrom)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2777"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2771"/>
         <source>Fonts (Application wide settings)</source>
         <translation>Yazı Karakterleri (Tüm uygulamada geçerli)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2811"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2805"/>
         <source>Font</source>
         <translation>Yazı Karakteri</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2829"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2823"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2847"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2841"/>
         <source>Bold  </source>
         <translation>Kalın  </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2868"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2862"/>
         <source>Italic</source>
         <translation>İtalik</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2881"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2875"/>
         <source>Application</source>
         <translation>Uygulama</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2945"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2939"/>
         <source>Graph Text</source>
         <translation>Grafik Yazısı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3006"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3000"/>
         <source>Graph Titles</source>
         <translation>Grafik Başlıkları</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3067"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3061"/>
         <source>Big  Text</source>
         <translation>Büyük  Yazı</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3133"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3127"/>
         <location filename="../oscar/preferencesdialog.cpp" line="466"/>
         <location filename="../oscar/preferencesdialog.cpp" line="598"/>
         <source>Details</source>
         <translation>Detaylar</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3165"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3159"/>
         <source>&amp;Cancel</source>
         <translation>&amp;İptal</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3172"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3166"/>
         <source>&amp;Ok</source>
         <translation>&amp;Ok</translation>
     </message>
@@ -4075,16 +3863,12 @@ p, li { white-space: pre-wrap; }
         <translation>Bu kanalın varsayılan çizim/olay/veri rengini değiştirmek için çift tıklayın.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2312"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2351"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2306"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2345"/>
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
         <translation>Genel Bakış</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;&lt;b&gt;Lütfen Dikkat::&lt;/b&gt;OSCARI&apos;n gelişmiş seans bölme özellikleri  ayarlarının ve özet verilerinin depolanma biçimindeki bir sınırlama nedeniyle &lt;b&gt;ResMed&lt;/b&gt; cihazlarında kullanılamamaktadır, ve dolayısıyla bu profil için devre dışı bırakılmışlardır. &lt;/p&gt;&lt;p&gt;ResMed makinelerinde, günler, ResMed&apos;in ticari yazılımında olduğu gibi, &lt;b&gt;öğleden itibaren bölünecektir.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="66"/>
@@ -4250,12 +4034,6 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <translation>Bunu yapmak istediğinizden gerçekten emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1284"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="1289"/>
-        <source>%1 %2</source>
-        <translation>%1 %2</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Flag</source>
         <translation>İşaret</translation>
@@ -4276,14 +4054,6 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <translation>Her zaman Küçük</translation>
     </message>
     <message>
-        <source>No CPAP machines detected</source>
-        <translation type="vanished">CPAP cihazı tespit edilmedi</translation>
-    </message>
-    <message>
-        <source>Will you be using a ResMed brand machine?</source>
-        <translation type="vanished">ResMed marka bir cihaz kullanacak mısınız?</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="294"/>
         <source>Never</source>
         <translation>Asla</translation>
@@ -4292,10 +4062,6 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <location filename="../oscar/preferencesdialog.cpp" line="1164"/>
         <source>This may not be a good idea</source>
         <translation>Bu iyi bir fikir olmayabilir</translation>
-    </message>
-    <message>
-        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="vanished">ResMed S9 makineleri  SD kartınızdan 7 ve 30 günden eski bazı verileri rutin olarak siler (çözünlürlüğe bağlı).</translation>
     </message>
 </context>
 <context>
@@ -4664,10 +4430,6 @@ Bunu şimdi yapmak ister misiniz?</translation>
         <translation>oz</translation>
     </message>
     <message>
-        <source>Kg</source>
-        <translation type="vanished">Kg</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>cmH2O</source>
         <translation>cmH2O</translation>
@@ -4844,10 +4606,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>Breaths/min</source>
         <translation>Soluk/dk</translation>
-    </message>
-    <message>
-        <source>?</source>
-        <translation type="vanished">?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="690"/>
@@ -5513,10 +5271,6 @@ TTIA: %1</translation>
         <translation>Seriler</translation>
     </message>
     <message>
-        <source>Machine</source>
-        <translation type="vanished">Cihaz</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Channel</source>
         <translation>Kanal</translation>
@@ -5748,47 +5502,11 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="vanished">İçe aktarılan veriler tamamıyla doğru olmayabilir, dolayısıyla geliştiriciler OSCAR&apos;ın bu veriyi doğru bir şekilde işlediğinden emin olmak için bu cihazın SD kartının ve buna denk gelen klinisyen tarafından üretilen pdf raporunun birer kopyasına ihtiyaç duymaktalar.</translation>
-    </message>
-    <message>
-        <source>Non Data Capable Machine</source>
-        <translation type="vanished">Veri Özelliğine Sahip Olmayan Cihaz</translation>
-    </message>
-    <message>
-        <source>Your %1 CPAP machine (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="vanished">%1 CPAP cihazınız (Model %2) maalesef veri üretebilen bir model değildir.</translation>
-    </message>
-    <message>
-        <source>Your %1 CPAP machine (Model %2) has not been tested yet.</source>
-        <translation type="vanished">%1 CPAP cihazınız (Model %2) henüz test edilmdi.</translation>
-    </message>
-    <message>
-        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="vanished">Diğer cihazlar ile benzerlik gösterdiği için çalışma ihtimali olmakla birlikte, geliştiriciler cihazın OSCAR ile kullanılabilir olduğundan emin olmak için bu cihazın SD kartının .zip&apos;li bir kopyasına ve eşlik eden klinisyence üretilmiş pdf raporuna ihtiyaç duymaktadırlar.</translation>
-    </message>
-    <message>
-        <source>Sorry, your %1 CPAP machine (%2) is not supported yet.</source>
-        <translation type="vanished">Üzgünüz, %1 CPAP cihazınız (%2) henüz desteklenmemektedir.</translation>
-    </message>
-    <message>
-        <source>The developers need a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="vanished">Geliştiriciler bu cihazın OSCAR ile çalışabilir hale getirilebilmesi için,  SD kartının .zip&apos;li bir kopyasına ve eşlik eden klinisyence üretilmiş .pdf raporlarına ihtiyaç duymaktadırlar.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="852"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>Hazırlanıyor...</translation>
-    </message>
-    <message>
-        <source>Machine Unsupported</source>
-        <translation type="vanished">Cihaz Desteklenmiyor</translation>
-    </message>
-    <message>
-        <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
-        <translation type="vanished">OSCAR&apos;ın bu cihaz için sadece kullanım süresi ve bazı çok basit ayarları takip edebileceğini üzülerek bildiririz.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="877"/>
@@ -5809,10 +5527,6 @@ TTIA: %1</translation>
         <location filename="../oscar/mainwindow.cpp" line="2333"/>
         <source>Finishing up...</source>
         <translation>Bitiriliyor...</translation>
-    </message>
-    <message>
-        <source>Machine Untested</source>
-        <translation type="vanished">Test Edilmemiş Cihaz</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
@@ -5886,10 +5600,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="943"/>
         <source>model %1</source>
         <translation>model %1</translation>
-    </message>
-    <message>
-        <source>DreamStation 2</source>
-        <translation type="vanished">DreamStation 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="946"/>
@@ -6061,10 +5771,6 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Whether or not machine shows AHI via built-in display.</source>
-        <translation type="vanished">Cihazın AHI&apos;yi dahili ekranı üzerinden gösterip göstermediği.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
         <source>Ramp Type</source>
@@ -6144,10 +5850,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3024"/>
         <source>Auto-Trial Duration</source>
         <translation>Otomatik-Deneme Süresi</translation>
-    </message>
-    <message>
-        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
-        <translation type="vanished">Deneme sürecinde cihazın Auto-CPAP modunda kalacağı ve sonrasında CPAP moduna döneceği gün sayısı</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3026"/>
@@ -6284,28 +5986,16 @@ TTIA: %1</translation>
         <translation>Otomatik Açılma</translation>
     </message>
     <message>
-        <source>A few breaths automatically starts machine</source>
-        <translation type="vanished">Birkaç kez nefes alıp verme ile cihaz otomatik olarak çalışmaya başlar</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2965"/>
         <source>Auto Off</source>
         <translation>Otomatik Kapanma</translation>
     </message>
     <message>
-        <source>Machine automatically switches off</source>
-        <translation type="vanished">Cihaz otomatik olarak kapanır</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2974"/>
         <source>Mask Alert</source>
         <translation>Maske Uyarısı</translation>
-    </message>
-    <message>
-        <source>Whether or not machine allows Mask checking.</source>
-        <translation type="vanished">Cihazın Maske kontrolüne izin verip vermediği.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
@@ -6327,10 +6017,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
         <source>Breathing Not Detected</source>
         <translation>Solunum Tespit Edilemedi</translation>
-    </message>
-    <message>
-        <source>A period during a session where the machine could not detect flow.</source>
-        <translation type="vanished">Seans esnasında cihazın akımı tesbit edemediği bir dönem.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3051"/>
@@ -6375,10 +6061,6 @@ TTIA: %1</translation>
         <translation>OSCAR Geçiş Aracı&apos;nı çalıştırmalısınız</translation>
     </message>
     <message>
-        <source>&lt;i&gt;Your old machine data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.&lt;/i&gt;</source>
-        <translation type="vanished">&lt;i&gt; Daha önceki bir veri aktarımı sırasında bu yedekleme özelliğinin tercihlerde devre dışı bırakılmış olması durumu haricinde, eski cihaz verileriniz yeniden oluşturulmalıdır. &lt;/i&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="482"/>
         <source>Launching Windows Explorer failed</source>
         <translation>Windows Gezgini Başlatılamadı</translation>
@@ -6407,10 +6089,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/profiles.cpp" line="552"/>
         <source>OSCAR does not yet have any automatic card backups stored for this device.</source>
         <translation>OSCAR&apos;ın henüz bu cihaz için kaydedilmiş otomatik kart yedeklemesi yok.</translation>
-    </message>
-    <message>
-        <source>This means you will need to import this machine data again afterwards from your own backups or data card.</source>
-        <translation type="vanished">Bu, daha sonra kendi yedeklemelerinizden veya veri kartınızdan bu cihaz verilerini tekrar içe aktarmanız gerekeceği anlamına gelir.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="553"/>
@@ -6468,17 +6146,9 @@ TTIA: %1</translation>
         <translation>Dosya yöneticinizi kullanarak profil klasörünüzün bir kopyasını alın, sonrasında OSCAR&apos;ı tekrar başlatın ve yükseltme işlemini tamamlayın.</translation>
     </message>
     <message>
-        <source>Machine Database Changes</source>
-        <translation type="vanished">Cihaz Veritabanı Değişiklikleri</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
         <translation>Yükseltmeyi gerçekleştirdikten sonra bu profili daha önceki versiyonla &lt;font size=+1&gt;kullanamazsınız&lt;/font&gt;.</translation>
-    </message>
-    <message>
-        <source>The machine data folder needs to be removed manually.</source>
-        <translation type="vanished">Cihazın veri klasörünün manüel olarak silinmesi gereklidir.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="574"/>
@@ -6779,17 +6449,9 @@ TTIA: %1</translation>
         <translation>Hava yolu tıkanması sebebiyle oluşan bir apne</translation>
     </message>
     <message>
-        <source>Hypopnea</source>
-        <translation type="vanished">Hipopne</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>A partially obstructed airway</source>
         <translation>Kısmi olarak tıkanmış bir hava yolu</translation>
-    </message>
-    <message>
-        <source>Unclassified Apnea</source>
-        <translation type="vanished">Sınıflandırılamayan Apne</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="753"/>
@@ -6798,17 +6460,9 @@ TTIA: %1</translation>
         <translation>UA</translation>
     </message>
     <message>
-        <source>Vibratory Snore</source>
-        <translation type="vanished">Titreşimli Horlama</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>A vibratory snore</source>
         <translation>Titreşimli bir horlama</translation>
-    </message>
-    <message>
-        <source>A vibratory snore as detcted by a System One machine</source>
-        <translation type="vanished">System One cihazı tarafından tespit edilen titreşimli horlama</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
@@ -6821,21 +6475,9 @@ TTIA: %1</translation>
         <translation>Kapalı bir hava yolunu tespit etmek için &apos;yollanan&apos; basınç darbesi.</translation>
     </message>
     <message>
-        <source>A large mask leak affecting machine performance.</source>
-        <translation type="vanished">Cihazın performansını etkileyecek seviyede bir maske kaçağı.</translation>
-    </message>
-    <message>
-        <source>Non Responding Event</source>
-        <translation type="vanished">Cevap Vermeyen Olay</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
         <translation>Basınç artışına cevap vermeyen tipte bir solunumsal olay.</translation>
-    </message>
-    <message>
-        <source>Expiratory Puff</source>
-        <translation type="vanished">Nefes Verici Üfleme</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
@@ -6846,18 +6488,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake feature will reduce pressure when waking is detected.</source>
         <translation>SensAwake özelliği uyandığınızı fark ettiğinde basıncı düşürür.</translation>
-    </message>
-    <message>
-        <source>User Flag #1</source>
-        <translation type="vanished">Kullanıcı İşareti #1</translation>
-    </message>
-    <message>
-        <source>User Flag #2</source>
-        <translation type="vanished">Kullanıcı İşareti #2</translation>
-    </message>
-    <message>
-        <source>User Flag #3</source>
-        <translation type="vanished">Kullanıcı İşareti #3</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
@@ -6880,17 +6510,9 @@ TTIA: %1</translation>
         <translation>Kalp ritmini gösteren optik bir foto-pletismogram</translation>
     </message>
     <message>
-        <source>Pulse Change</source>
-        <translation type="vanished">Nabız Değişikliği</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>A sudden (user definable) change in heart rate</source>
         <translation>Kalp hızında ani (kullanıcı tarafından tarif edilebilen) değişiklik</translation>
-    </message>
-    <message>
-        <source>SpO2 Drop</source>
-        <translation type="vanished">SpO2 Düşmesi</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
@@ -6906,10 +6528,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="226"/>
         <source>Breathing flow rate waveform</source>
         <translation>Nefes alma akım hızı dalga formu</translation>
-    </message>
-    <message>
-        <source>L/min</source>
-        <translation type="vanished">L/dk</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="229"/>
@@ -7028,18 +6646,10 @@ TTIA: %1</translation>
         <translation>EPAP Ayarı</translation>
     </message>
     <message>
-        <source>Cheyne Stokes Respiration</source>
-        <translation type="vanished">Cheyne Stokes Solunumu</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="785"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>CSR</source>
         <translation>CSR</translation>
-    </message>
-    <message>
-        <source>Periodic Breathing</source>
-        <translation type="vanished">Peiyodik Solunum</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
@@ -7047,21 +6657,9 @@ TTIA: %1</translation>
         <translation>Anormal bir Periyodik Solunum süreci</translation>
     </message>
     <message>
-        <source>Clear Airway</source>
-        <translation type="vanished">Açık Havayolu (Clear Airway)</translation>
-    </message>
-    <message>
-        <source>Obstructive</source>
-        <translation type="vanished">Tıkayıcı</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance.</source>
         <translation>Solunum Eforuna Bağlı Uyanma: Nefes alıp vermede uyanma veya uyku bozukluğu ile sonuçlanan bir kısıtlama.</translation>
-    </message>
-    <message>
-        <source>Leak Flag</source>
-        <translation type="vanished">Kaçak İşareti (Leak Flag)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
@@ -7151,10 +6749,6 @@ TTIA: %1</translation>
         <translation>Maks Kaçak</translation>
     </message>
     <message>
-        <source>Apnea Hypopnea Index</source>
-        <translation type="vanished">Apne Hipopne Indeksi</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Graph showing running AHI for the past hour</source>
         <translation>Geçen saate ait AHI&apos;yi gösteren grafik</translation>
@@ -7183,10 +6777,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
         <source>Median Leaks</source>
         <translation>Median Kaçak</translation>
-    </message>
-    <message>
-        <source>Respiratory Disturbance Index</source>
-        <translation type="vanished">Solunum Bozukluğu İndeksi (Respiratory Disturbance Index)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
@@ -7228,14 +6818,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="121"/>
         <source>Couldn&apos;t parse Channels.xml, OSCAR cannot continue and is exiting.</source>
         <translation>Channels.xml çözümlenemedi, OSCAR devam edemeyecek ve kapanıyor.</translation>
-    </message>
-    <message>
-        <source>Apnea</source>
-        <translation type="vanished">Apne</translation>
-    </message>
-    <message>
-        <source>An apnea reportred by your CPAP machine.</source>
-        <translation type="vanished">CPAP cihazınız tarafından bildirilmiş olan bir apne.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
@@ -7641,10 +7223,6 @@ TTIA: %1</translation>
         <translation>Bu klasörü kullanmak istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <source>Don&apos;t forget to place your datacard back in your CPAP machine</source>
-        <translation type="vanished">Veri kartınızı CPAP makinenize geri koymayı unutmayın</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>OSCAR Reminder</source>
         <translation>OSCAR Hatırlatıcısı</translation>
@@ -7853,10 +7431,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
         <source>Auto Bi-Level (Variable PS)</source>
         <translation>Oto Bi-Level (Değişken PS)</translation>
-    </message>
-    <message>
-        <source>99.5%</source>
-        <translation type="vanished">99.5%</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
@@ -8359,10 +7933,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>SmartStart</translation>
     </message>
     <message>
-        <source>Machine auto starts by breathing</source>
-        <translation type="vanished">Cihaz nefes almayla birlikte otomatik olarak başlar</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>Smart Start</source>
         <translation>Smart Start</translation>
@@ -8480,10 +8050,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>SmartStop (Akıllı Sonlanma)</translation>
     </message>
     <message>
-        <source>Machine auto stops by breathing</source>
-        <translation type="vanished">Cihaz nefes almaya göre otomatik olarak durur</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
         <source>Smart Stop</source>
         <translation>Smart Stop (Akıllı Sonlanma)</translation>
@@ -8497,14 +8063,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="218"/>
         <source>Advanced</source>
         <translation>Gelişmiş</translation>
-    </message>
-    <message>
-        <source>Your ResMed CPAP machine (Model %1) has not been tested yet.</source>
-        <translation type="vanished">ResMed CPAP cihazınız (Model %1) henüz test edilmemiştir.</translation>
-    </message>
-    <message>
-        <source>It seems similar enough to other machines that it might work, but the developers would like a .zip copy of this machine&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="vanished">Diğer cihazlar ile benzerlik gösterdiği için çalışma ihtimali olmakla birlikte, geliştiriciler cihazın OSCAR ile kullanılabilir olduğundan emin olmak için bu cihazın SD kartının .zip&apos;li bir kopyasına ihtiyaç duymaktadırlar.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1213"/>
@@ -8757,13 +8315,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
     </message>
 </context>
 <context>
-    <name>Report</name>
-    <message>
-        <source>about:blank</source>
-        <translation type="vanished">hakkında:boş</translation>
-    </message>
-</context>
-<context>
     <name>SessionBar</name>
     <message>
         <location filename="../oscar/sessionbar.cpp" line="247"/>
@@ -8787,10 +8338,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This device Record cannot be imported in this profile.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="vanished">Bu Cihaz Kaydı bu profile aktarılamaz.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
@@ -9088,10 +8635,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>OSCAR ücretsiz bir açık kaynak kodlu CPAP raporlama yazılımıdır</translation>
     </message>
     <message>
-        <source>Changes to Machine Settings</source>
-        <translation type="vanished">Cihaz Ayarlarındaki Değişiklikler</translation>
-    </message>
-    <message>
         <location filename="../oscar/statistics.cpp" line="1062"/>
         <source>No data found?!?</source>
         <translation>Hiç veri bulunmadı?!?</translation>
@@ -9162,10 +8705,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>Basınç Ayarları</translation>
     </message>
     <message>
-        <source>Machine Information</source>
-        <translation type="vanished">Cihaz Bilgisi</translation>
-    </message>
-    <message>
         <location filename="../oscar/statistics.cpp" line="923"/>
         <source>First Use</source>
         <translation>İlk Kullanım</translation>
@@ -9219,10 +8758,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;Uyarı: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD Kartları &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;bilgisayarınıza yerleştirilmeden önce &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;kilitlenmelidir&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Bazı işletim sistemleri karta izin almadan endeks dostaları yazabilirler, ki bu durumda kart cpap cihazınız tarafından okunamaz hale gelebilir.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
         <translation>Öncelikle Dosya-&gt;Seçenekler bölümünü kontrol etmeniz iyi bir fikir olabilir,</translation>
@@ -9231,10 +8766,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
         <translation>içe aktarımı etkileyebilecek bazı seçenekler mevcut olduğundan.</translation>
-    </message>
-    <message>
-        <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation type="vanished">Bir ResMed cihazı tespit edildiğinde bazı seçeneklerin zorunlu hale geldiğini unutmayın</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
@@ -9272,10 +8803,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>%1 saat, %2 dakika ve %3 saniye</translation>
     </message>
     <message>
-        <source>Your machine was on for %1.</source>
-        <translation type="vanished">Cihazınız %1 çalıştı.</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="196"/>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
         <translation>&lt;font color = red&gt;Maskenizi sadece %1 taktınız.&lt;/font&gt;</translation>
@@ -9306,17 +8833,9 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <translation>AHI değeriniz %1 olup %3 günlük ortalama değeriniz olan %4&apos;ün %2 idi.</translation>
     </message>
     <message>
-        <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation type="vanished">CPAP cihazınız sabit olarak %1 %2 hava kullandı</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="262"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
         <translation>Basıncınız seansın %3%&apos;ünde %1 %2&apos;nin altındaydı.</translation>
-    </message>
-    <message>
-        <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation type="vanished">CPAP cihazınız %1-%2 %3 sabit hava kullandı.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="285"/>
@@ -9333,10 +8852,6 @@ silmeniz, ve daha sonra bu grafiği tekrar açılır pencere haline getrimenzi g
         <location filename="../oscar/welcome.cpp" line="296"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>EPAP basıncınız seansın %3%&apos;ünde %1 %2&apos;nin altındaydı.</translation>
-    </message>
-    <message>
-        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="vanished">Cihazınız seansın %4%&apos;ünde %1-%2 %3&apos;ün altındaydı.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
