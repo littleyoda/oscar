@@ -137,6 +137,10 @@
         <translation>結束</translation>
     </message>
     <message>
+        <source>99.5%</source>
+        <translation type="vanished">99.5%</translation>
+    </message>
+    <message>
         <location filename="../oscar/daily.cpp" line="1026"/>
         <source>Oximetry Sessions</source>
         <translation>血氧飽和度監測時段</translation>
@@ -234,6 +238,14 @@
         <translation>移至最近一天的數據資料</translation>
     </message>
     <message>
+        <source>Machine Settings</source>
+        <translation type="vanished">機器處方設定值</translation>
+    </message>
+    <message>
+        <source>Sorry, this machine only provides compliance data.</source>
+        <translation type="vanished">歹勢，此機器僅提供醫囑數據資料。</translation>
+    </message>
+    <message>
         <location filename="../oscar/daily.ui" line="1326"/>
         <source>B.M.I.</source>
         <translation>身體質量指數</translation>
@@ -317,6 +329,10 @@
         <location filename="../oscar/daily.cpp" line="288"/>
         <source>events</source>
         <translation>重點事件</translation>
+    </message>
+    <message>
+        <source>BRICK :(</source>
+        <translation type="vanished">崩潰 Orz</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1491"/>
@@ -745,6 +761,10 @@
 <context>
     <name>FPIconLoader</name>
     <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="vanished">無法在此個人檔案中匯入此设备的记录。</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="232"/>
         <source>Import Error</source>
         <translation>匯入出错</translation>
@@ -1046,6 +1066,10 @@
         <translation>匯入瑞斯迈&amp;M系列PAP資料</translation>
     </message>
     <message>
+        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
+        <translation type="vanished">由於某種原因，OSCAR没有以下设备的任何備份:</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.ui" line="2797"/>
         <source>Daily Sidebar</source>
         <translation>每日侧边栏</translation>
@@ -1109,6 +1133,10 @@
         <location filename="../oscar/mainwindow.cpp" line="1879"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>由於没有可用的内部備份可供重建使用，請自行從備份中还原。</translation>
+    </message>
+    <message>
+        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
+        <translation type="vanished">您希望立即從備份匯入吗？(完成匯入，才能有資料顯示)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="810"/>
@@ -1218,6 +1246,14 @@
         <location filename="../oscar/mainwindow.cpp" line="2591"/>
         <source>Export review is not yet implemented</source>
         <translation>匯出检查不可用</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to rebuild all CPAP data for the following machine:
+
+</source>
+        <translation type="vanished">確定要重建以下设备的所有CPAP資料吗:
+
+</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2863"/>
@@ -1457,6 +1493,14 @@
         <translation>列印&amp;報告</translation>
     </message>
     <message>
+        <source>Couldn&apos;t find any valid Machine Data at
+
+%1</source>
+        <translation type="vanished">此处没有有效的PAP資料
+
+%1</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.ui" line="2858"/>
         <source>Export for Review</source>
         <translation>匯出查看</translation>
@@ -1587,6 +1631,10 @@
         <location filename="../oscar/mainwindow.ui" line="2548"/>
         <source>&amp;Preferences</source>
         <translation>&amp;参数設定</translation>
+    </message>
+    <message>
+        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
+        <translation type="vanished">您將要&lt;font size=+2&gt;删除以下设备的&lt;/font&gt;OSCAR資料库:&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1941"/>
@@ -2012,6 +2060,10 @@
         <location filename="../oscar/newprofile.ui" line="386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Biological (birth) gender is sometimes needed to enhance the accuracy of a few calculations, feel free to leave this blank and skip any of them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可以留空或者跳过這一步，但提供出生日期和性别可以提高計算的准确性。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
+        <translation type="vanished">這款應用程式用於协助读取用於治療睡眠障碍的各种CPAP的資料.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="114"/>
@@ -2564,6 +2616,10 @@ Index</source>
         <translation>檢測到多重療程</translation>
     </message>
     <message>
+        <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
+        <translation type="vanished">开启血氧儀记录的時間和开启CPAP的時間一致（或相近）.</translation>
+    </message>
+    <message>
         <location filename="../oscar/oximeterimport.ui" line="835"/>
         <source>Record attached to computer overnight (provides plethysomogram)</source>
         <translation>整晚连入电脑记录(提供体描仪)</translation>
@@ -2884,6 +2940,20 @@ Index</source>
         <translation>天.</translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;療程將會比這個稍短並且不會顯示&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="684"/>
         <source>Here you can set the &lt;b&gt;upper&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
         <translation>在此可以為%1波形設定&lt;b&gt;更高的&lt;/b&gt; 閥值来進行某些計算</translation>
@@ -2921,6 +2991,10 @@ A value of 20% works well for detecting apneas. </source>
         <translation>療程儲存選項</translation>
     </message>
     <message>
+        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
+        <translation type="vanished">顯示已標記但仍未被识别的事件.</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="3000"/>
         <source>Graph Titles</source>
         <translation>圖表标题</translation>
@@ -2931,6 +3005,18 @@ A value of 20% works well for detecting apneas. </source>
         <translation>归零</translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;自訂標記是一個檢測被機器忽略的事件实验方法。它们&lt;span style=&quot; text-decoration: underline;&quot;&gt;不&lt;/span&gt;包含於 AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="795"/>
         <source>A data re/decompression proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
@@ -2938,6 +3024,14 @@ Are you sure you want to make these changes?</source>
         <translation>应用這些變更需要資料重新/解压缩过程。此操作可能需要几分鐘才能完成。
 
 确实要進行這些變更吗？</translation>
+    </message>
+    <message>
+        <source>Enable/disable experimental event flagging enhancements. 
+It allows detecting borderline events, and some the machine missed.
+This option must be enabled before import, otherwise a purge is required.</source>
+        <translation type="vanished">激活/停用（实验性）突出事件標記。
+允许檢測边缘事件以及设备遗漏事件
+這個選項必須在匯入前激活，否则需要清除缓存。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
@@ -2999,6 +3093,10 @@ Are you sure you want to make these changes?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="803"/>
         <source>Data Reindex Required</source>
         <translation>重建資料索引</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
+        <translation type="vanished">&lt;p&gt;&lt;b&gt;請注意：&lt;/b&gt;OSCAR的進階療程分割功能由於其設定和摘要資料的儲存方式的限制而無法用於ResMed设备，因此它们已针对该個人檔案被停用。&lt;/p&gt;&lt;p&gt;在ResMed设备上，日期將在中午分开，和在ResMed的商业應用程式的設定相同。&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2464"/>
@@ -3254,6 +3352,10 @@ Try it and see if you like it.</source>
         <translation>查询</translation>
     </message>
     <message>
+        <source>Resync Machine Detected Events (Experimental)</source>
+        <translation type="vanished">重新同步PAP檢測到的事件(试验性功能)</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1462"/>
         <source>Time Weighted average of Indice</source>
         <translation>時間加权平均值指數</translation>
@@ -3267,6 +3369,10 @@ Try it and see if you like it.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2709"/>
         <source>Skip over Empty Days</source>
         <translation>跳过無資料的日期</translation>
+    </message>
+    <message>
+        <source>Allow duplicates near machine events.</source>
+        <translation type="vanished">允许多重记录趋近機器事件資料。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2410"/>
@@ -3369,6 +3475,10 @@ as this is the only value available on summary-only days.</source>
         <translation>双击變更這個區塊/標記/資料的預設颜色.</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;由於總结设计限制，ResMed機器不支持變更這些設定。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1200"/>
         <source>AHI/Hour Graph Time Window</source>
         <translation>AHI/小時 圖形時間窗</translation>
@@ -3456,11 +3566,6 @@ This option must be enabled before import, otherwise a purge is required.</sourc
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1022"/>
         <source>Resync Device Detected Events (Experimental)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3623,6 +3728,18 @@ Mainly affects the importer.</source>
         <translation>任務条置顶</translation>
     </message>
     <message>
+        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
+
+The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
+
+If you use a few different masks, pick average values instead. It should still be close enough.</source>
+        <translation type="vanished">這一計算需要PAP记录的總漏氣量)
+
+非意識漏氣量的計算是線性的，因為没有面罩排氣曲線可参考.
+
+如果你佩戴不同的面罩，請選取平均值，值应足够接近.</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="463"/>
         <source>This makes OSCAR&apos;s data take around half as much space.
 But it makes import and day changing take longer.. 
@@ -3677,6 +3794,10 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation>注意:預設选用線性計算法。如果變更資料需重新計算.</translation>
     </message>
     <message>
+        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
+        <translation type="vanished">ResMed S9设备會定期從SD卡内删除7天和30天以内的資料（取决於分辨率）。</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1297"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
         <translation>注意使用時間低於4個小時的日期。</translation>
@@ -3727,6 +3848,21 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2319"/>
         <source>Switch Tabs</source>
         <translation>切换标签</translation>
+    </message>
+    <message>
+        <source>This maintains a backup of SD-card data for ResMed machines, 
+
+ResMed S9 series machines delete high resolution data older than 7 days, 
+and graph data older than 30 days..
+
+OSCAR can keep a copy of this data if you ever need to reinstall. 
+(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
+        <translation type="vanished">保留ResMed设备SD卡資料的備份，
+ResMed S9系列设备删除超过7天的高分辨率資料，
+以及超过30天的圖表資料。
+
+如果您需要重新安装，OSCAR可以保留此資料的副本。
+（强烈推荐，除非你的磁盘空間不足或者不关心圖形資料）</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3159"/>
@@ -3826,6 +3962,11 @@ OSCAR可以本地從此压缩備份目录匯入..
         <location filename="../oscar/preferencesdialog.ui" line="972"/>
         <source>Custom CPAP User Event Flagging</source>
         <translation>自訂PAP使用者事件</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1619"/>
@@ -4491,6 +4632,10 @@ Are you sure you want to make these changes?</source>
         <translation>大量漏氣</translation>
     </message>
     <message>
+        <source>Kg</source>
+        <translation type="vanished">公斤</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="768"/>
         <source>O2</source>
         <translation>氧氣</translation>
@@ -4990,6 +5135,10 @@ Are you sure you want to make these changes?</source>
         <translation>&amp;保存</translation>
     </message>
     <message>
+        <source>99.5%</source>
+        <translation type="vanished">90% {99.5%?}</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
         <translation type="unfinished"></translation>
@@ -5067,6 +5216,10 @@ Are you sure you want to make these changes?</source>
         <translation>壓力上升</translation>
     </message>
     <message>
+        <source>L/min</source>
+        <translation type="vanished">升/分鐘</translation>
+    </message>
+    <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="387"/>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="719"/>
         <location filename="../oscar/SleepLib/common.cpp" line="673"/>
@@ -5139,6 +5292,10 @@ Are you sure you want to make these changes?</source>
         <translation>使用</translation>
     </message>
     <message>
+        <source>Respiratory Disturbance Index</source>
+        <translation type="vanished">呼吸紊乱指數</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>cmH2O</source>
         <translation>厘米水柱</translation>
@@ -5152,6 +5309,10 @@ Are you sure you want to make these changes?</source>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="1128"/>
         <source>Bedtime: %1</source>
         <translation>睡眠時間:%1</translation>
+    </message>
+    <message>
+        <source>Hypopnea</source>
+        <translation type="vanished">低通氣</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="689"/>
@@ -5217,9 +5378,17 @@ Are you sure you want to make these changes?</source>
         <translation>正在扫描檔案</translation>
     </message>
     <message>
+        <source>Clear Airway</source>
+        <translation type="vanished">开放氣道</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
         <source>Heart rate in beats per minute</source>
         <translation>心臟每分鐘的跳動次数</translation>
+    </message>
+    <message>
+        <source>A large mask leak affecting machine performance.</source>
+        <translation type="vanished">大量漏氣影响PAP性能.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="340"/>
@@ -5522,6 +5691,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>晨起感觉</translation>
     </message>
     <message>
+        <source>Pulse Change</source>
+        <translation type="vanished">脈搏變化</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2876"/>
         <source>Disconnected</source>
         <translation>断开</translation>
@@ -5537,6 +5710,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="241"/>
         <source>Minute Vent.</source>
         <translation>分鐘通氣率.</translation>
+    </message>
+    <message>
+        <source>SpO2 Drop</source>
+        <translation type="vanished">血氧飽和度降低</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="149"/>
@@ -5584,6 +5761,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>A vibratory snore</source>
         <translation>一次振動打鼾</translation>
+    </message>
+    <message>
+        <source>Vibratory Snore</source>
+        <translation type="vanished">振動打鼾</translation>
     </message>
     <message>
         <location filename="../oscar/main.cpp" line="524"/>
@@ -5743,9 +5924,17 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Machine Unsupported</source>
+        <translation type="vanished">不支持的机型</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="216"/>
         <source>A relative assessment of the pulse strength at the monitoring site</source>
         <translation>脈搏的强度的相关评估</translation>
+    </message>
+    <message>
+        <source>Machine</source>
+        <translation type="vanished">機器</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="972"/>
@@ -5812,6 +6001,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/common.cpp" line="674"/>
         <source>Minutes</source>
         <translation>分鐘</translation>
+    </message>
+    <message>
+        <source>Periodic Breathing</source>
+        <translation type="vanished">周期性呼吸</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2607"/>
@@ -5978,6 +6171,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>VPAP全自動</translation>
     </message>
     <message>
+        <source>Apnea Hypopnea Index</source>
+        <translation type="vanished">呼吸中止指數</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="320"/>
         <source>Physical Height</source>
         <translation>身高</translation>
@@ -5996,6 +6193,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="247"/>
         <source>Patient Triggered Breaths</source>
         <translation>患者出发的呼吸</translation>
+    </message>
+    <message>
+        <source>This means you will need to import this machine data again afterwards from your own backups or data card.</source>
+        <translation type="vanished">這意味着您需要自行由您的記錄或者資料卡中匯入資料.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="379"/>
@@ -6078,6 +6279,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/profiles.cpp" line="483"/>
         <source>Could not find explorer.exe in path to launch Windows Explorer.</source>
         <translation>未找到视窗浏览器的可执行檔案.</translation>
+    </message>
+    <message>
+        <source>Machine automatically switches off</source>
+        <translation type="vanished">PAP自動關閉</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2877"/>
@@ -6206,6 +6411,10 @@ Please Rebuild CPAP Data</source>
         <location filename="../oscar/SleepLib/common.cpp" line="728"/>
         <source>Event Flags</source>
         <translation>呼吸事件</translation>
+    </message>
+    <message>
+        <source>A few breaths automatically starts machine</source>
+        <translation type="vanished">自動開啟機器在几次呼吸后</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="345"/>
@@ -6338,6 +6547,10 @@ Start: %2</source>
         <translation>重要提示:</translation>
     </message>
     <message>
+        <source>Machine auto starts by breathing</source>
+        <translation type="vanished">呼吸触发啟動</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
         <source>An optical Photo-plethysomogram showing heart rhythm</source>
         <translation>光学探测顯示心率</translation>
@@ -6404,6 +6617,10 @@ Start: %2
         <translation>地址</translation>
     </message>
     <message>
+        <source>Leak Flag</source>
+        <translation type="vanished">漏氣标志</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="250"/>
         <source>Leak Rate</source>
         <translation>漏氣率</translation>
@@ -6444,6 +6661,10 @@ Start: %2
         <translation>吸氣壓力</translation>
     </message>
     <message>
+        <source>Whether or not machine allows Mask checking.</source>
+        <translation type="vanished">是否允许PAP進行面罩检查.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
         <source>Number of Awakenings</source>
         <translation>觉醒次数</translation>
@@ -6457,6 +6678,10 @@ Start: %2
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2798"/>
         <source>Intellipap pressure relief level.</source>
         <translation>Intellipap 壓力释放水平.</translation>
+    </message>
+    <message>
+        <source>Non Responding Event</source>
+        <translation type="vanished">未回應事件</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
@@ -6562,6 +6787,10 @@ TTIA: %1</source>
         <translation>患者出发的呼吸百分比</translation>
     </message>
     <message>
+        <source>Non Data Capable Machine</source>
+        <translation type="vanished">没有使用機器的資料</translation>
+    </message>
+    <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="998"/>
         <source>Days: %1</source>
         <translation>天数:%1</translation>
@@ -6570,6 +6799,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="213"/>
         <source>Plethysomogram</source>
         <translation>体积描述术</translation>
+    </message>
+    <message>
+        <source>Unclassified Apnea</source>
+        <translation type="vanished">未分類的呼吸中止</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
@@ -6657,6 +6890,10 @@ TTIA: %1</source>
         <translation>上升時間</translation>
     </message>
     <message>
+        <source>Cheyne Stokes Respiration</source>
+        <translation type="vanished">潮式呼吸</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>SmartStart</source>
         <translation>自啟動</translation>
@@ -6725,6 +6962,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
         <source>Time in Deep Sleep</source>
         <translation>深層睡眠時長</translation>
+    </message>
+    <message>
+        <source>Obstructive</source>
+        <translation type="vanished">阻塞性</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="145"/>
@@ -6818,6 +7059,18 @@ TTIA: %1</source>
         <translation>&amp;删除</translation>
     </message>
     <message>
+        <source>User Flag #1</source>
+        <translation type="vanished">使用者標記#1</translation>
+    </message>
+    <message>
+        <source>User Flag #2</source>
+        <translation type="vanished">使用者標記#2</translation>
+    </message>
+    <message>
+        <source>User Flag #3</source>
+        <translation type="vanished">使用者標記#3</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="598"/>
         <source>OSCAR will now start the import wizard so you can reinstall your %1 data.</source>
         <translation>OSCAR现在將啟動匯入小幫手，以便您可以重新安装%1資料。</translation>
@@ -6852,6 +7105,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="232"/>
         <source>Mask Pressure</source>
         <translation>面罩壓力</translation>
+    </message>
+    <message>
+        <source>A vibratory snore as detcted by a System One machine</source>
+        <translation type="vanished">振動打鼾可被System One偵測到</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="367"/>
@@ -7020,6 +7277,14 @@ TTIA: %1</source>
         <translation>更高的吸氣壓力</translation>
     </message>
     <message>
+        <source>Don&apos;t forget to place your datacard back in your CPAP machine</source>
+        <translation type="vanished">請拔出内存卡，插入PAP</translation>
+    </message>
+    <message>
+        <source>The machine data folder needs to be removed manually.</source>
+        <translation type="vanished">數據資料夾需要手動移除.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="300"/>
         <source>Summary Only</source>
         <translation>仅有概要資訊</translation>
@@ -7099,6 +7364,10 @@ Hours: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <source>Sessions</source>
         <translation>療程</translation>
+    </message>
+    <message>
+        <source>A period during a session where the machine could not detect flow.</source>
+        <translation type="vanished">機器無法檢測流量的療程期間。</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
@@ -7464,6 +7733,10 @@ Hours: %1</source>
         <translation>使用檔案管理器复制個人檔案目录，然后重新啟動oscar並完成升级过程。</translation>
     </message>
     <message>
+        <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
+        <translation type="vanished">OSCAR只能跟踪该機器的使用時間和基本的設定。</translation>
+    </message>
+    <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="322"/>
         <source>%1 (%2 day): </source>
         <translation>%1 (%2 天): </translation>
@@ -7507,6 +7780,10 @@ Hours: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="257"/>
         <source>Expiratory Time</source>
         <translation>呼氣時間</translation>
+    </message>
+    <message>
+        <source>Expiratory Puff</source>
+        <translation type="vanished">嘴部呼吸</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="272"/>
@@ -7987,6 +8264,10 @@ Hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Machine Database Changes</source>
+        <translation type="vanished">資料库變更</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2786"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2788"/>
         <source>SmartFlex Mode</source>
@@ -8316,6 +8597,13 @@ Hours: %1</source>
     </message>
 </context>
 <context>
+    <name>Report</name>
+    <message>
+        <source>about:blank</source>
+        <translation type="vanished">关於:空白</translation>
+    </message>
+</context>
+<context>
     <name>SessionBar</name>
     <message>
         <location filename="../oscar/sessionbar.cpp" line="247"/>
@@ -8330,6 +8618,10 @@ Hours: %1</source>
 </context>
 <context>
     <name>SleepStyleLoader</name>
+    <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="vanished">無法在此個人檔案中匯入此设备的记录。</translation>
+    </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="213"/>
         <source>Import Error</source>
@@ -8675,6 +8967,10 @@ Hours: %1</source>
         <translation>日期: %1 AHI: %2</translation>
     </message>
     <message>
+        <source>Machine Information</source>
+        <translation type="vanished">機器資訊</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="536"/>
         <source>CPAP Statistics</source>
         <translation>CPAP統計值</translation>
@@ -8729,9 +9025,17 @@ Hours: %1</source>
         <translation>低於</translation>
     </message>
     <message>
+        <source>Your CPAP machine used a constant %1 %2 of air</source>
+        <translation type="vanished">您的呼吸器使用固定%1 %2加壓空氣</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="317"/>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
         <translation>平均漏氣為 %1 %2，即 %3 您的 %5 天 %4 平均值。</translation>
+    </message>
+    <message>
+        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;請確認 PAP 專用記憶卡的覆寫保護已開啟&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;特別是在插入其它電腦裝置之前&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;有些作業系統會在偵測到連接媒體時，自動寫入索引檔案且無預設提示通知，此類型系統寫入動作可能導致呼吸器將無法辨識讀取記憶卡&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="127"/>
@@ -8784,6 +9088,10 @@ Hours: %1</source>
         <translation>有些至關重要的偏好選項會影響資料匯入.</translation>
     </message>
     <message>
+        <source>Your machine was on for %1.</source>
+        <translation type="vanished">呼吸器使用時間為 %1。</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="226"/>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
         <translation>您的 AHI 相等於%1, 即 %2 您的 %3 天 %4 的平均值。</translation>
@@ -8834,6 +9142,10 @@ Hours: %1</source>
         <translation>統計數據</translation>
     </message>
     <message>
+        <source>Your machine used a constant %1-%2 %3 of air.</source>
+        <translation type="vanished">您的呼吸機使用固定 %1 %2 %3 加壓空氣。</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.ui" line="185"/>
         <source>CPAP Importer</source>
         <translation>CPAP 導入器</translation>
@@ -8847,6 +9159,10 @@ Hours: %1</source>
         <location filename="../oscar/welcome.ui" line="299"/>
         <source>Overview</source>
         <translation>綜合概況</translation>
+    </message>
+    <message>
+        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
+        <translation type="vanished">呼吸器使用時數低於 %1-%2 %3 ，持續時間%4% 。</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="211"/>
@@ -8878,6 +9194,10 @@ Hours: %1</source>
         <location filename="../oscar/welcome.cpp" line="297"/>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>吸氣壓力低於 %1 %2，持續時間 %3%。</translation>
+    </message>
+    <message>
+        <source>Note that some preferences are forced when a ResMed machine is detected</source>
+        <translation type="vanished">請注意，在偵測到 ResMed 設備時某些偏好選項會直接套用</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="192"/>

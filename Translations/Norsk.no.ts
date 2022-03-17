@@ -57,6 +57,10 @@
         <translation>Beklager, kunne ikke finne Utgivelsesnotater.</translation>
     </message>
     <message>
+        <source>OSCAR %1</source>
+        <translation type="vanished">OSCAR %1</translation>
+    </message>
+    <message>
         <location filename="../oscar/aboutdialog.cpp" line="133"/>
         <source>Important:</source>
         <translation>Viktig:</translation>
@@ -366,6 +370,10 @@
         <translation>Ukjente sessjoner</translation>
     </message>
     <message>
+        <source>Machine Settings</source>
+        <translation type="vanished">Maskininnstillinger</translation>
+    </message>
+    <message>
         <location filename="../oscar/daily.cpp" line="1271"/>
         <source>Model %1 - %2</source>
         <translation>Modell %1 - %2</translation>
@@ -374,6 +382,10 @@
         <location filename="../oscar/daily.cpp" line="1276"/>
         <source>PAP Mode: %1</source>
         <translation>PAP-modus: %1%1</translation>
+    </message>
+    <message>
+        <source>99.5%</source>
+        <translation type="obsolete">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1396"/>
@@ -409,6 +421,10 @@
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, this machine only provides compliance data.</source>
+        <translation type="vanished">Beklager, denne maskinen tilbyr kun complicance data.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1808"/>
@@ -529,6 +545,10 @@
         <location filename="../oscar/daily.cpp" line="1785"/>
         <source>Zero hours??</source>
         <translation>Null timer??</translation>
+    </message>
+    <message>
+        <source>BRICK :(</source>
+        <translation type="vanished">ØDELAGT :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1790"/>
@@ -757,6 +777,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="vanished">Dette maskinopptaket kan ikke bli importert i denne profilen.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>Denne dagens opptak overlapper med allerede eksiterende innhold.</translation>
@@ -940,6 +964,10 @@
         <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>&amp;Advanced</source>
         <translation>&amp;Avansert</translation>
+    </message>
+    <message>
+        <source>Purge ALL Machine Data</source>
+        <translation type="vanished">Tøm all maskindata</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2517"/>
@@ -1397,6 +1425,22 @@
         <translation>Hvis du kan lese dette, fungerte ikke omstartkommandoen. Du må gjøre det selv manuelt.</translation>
     </message>
     <message>
+        <source>Are you sure you want to rebuild all CPAP data for the following machine:
+
+</source>
+        <translation type="vanished">Er du sikker på at du vil gjenoppbygge alle CPAP-data for følgende maskin:
+
+</translation>
+    </message>
+    <message>
+        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
+        <translation type="vanished">Av en eller annen grunn har OSCAR ingen sikkerhetskopier for følgende maskin:</translation>
+    </message>
+    <message>
+        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
+        <translation type="vanished">Du er i ferd med å &lt;font size =+2&gt;utslette&lt;/font&gt; OSCARs maskindatabase for følgende maskin:&lt;/p&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.cpp" line="1996"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>En filtillatelsesfeil gjorde at renseprosessen mislyktes; Du må slette følgende mappe manuelt:</translation>
@@ -1547,9 +1591,21 @@
         <translation>Fordi det ikke er noen interne sikkerhetskopier å gjenoppbygge fra, må du gjenopprette fra din egen.</translation>
     </message>
     <message>
+        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
+        <translation type="vanished">Vil du importere fra dine egne sikkerhetskopier nå? (du vil ikke ha noen data synlige for denne maskinen før du gjør det)</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.cpp" line="1929"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Merk som en forholdsregel at sikkerhetskopimappen blir liggende igjen.</translation>
+    </message>
+    <message>
+        <source>OSCAR does not have any backups for this machine!</source>
+        <translation type="vanished">OSCAR har ingen sikkerhetskopier for denne maskinen!</translation>
+    </message>
+    <message>
+        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
+        <translation type="vanished">Om du ikke har tatt &lt;i&gt;din &lt;b&gt;egen&lt;b&gt; sikkerhetskopi for ALLE dine data for denne maskinen&lt;/i&gt;, &lt;font size=+2&gt;så vil du miste denne maskinens data &lt;b&gt;permanent&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1941"/>
@@ -1604,6 +1660,12 @@
         <location filename="../oscar/mainwindow.cpp" line="744"/>
         <source>Up to date</source>
         <translation>Oppdatert</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid Machine Data at
+
+%1</source>
+        <translation type="vanished">Kunne ikke finne noe gyldig maskindata på %1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="918"/>
@@ -1980,6 +2042,10 @@
         <location filename="../oscar/newprofile.cpp" line="111"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
         <translation>Velkommen til åpen kildekode CPAP analyse og rapportering</translation>
+    </message>
+    <message>
+        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
+        <translation type="vanished">Denne programvare er utviklet for å hjelpe deg med å revidere data produsert av din CPAP-maskin og relatert utstyr.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="118"/>
@@ -2382,6 +2448,14 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1774"/>
         <source>&amp;Information Page</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CMS50D+/E/F, Pulox PO-200/300</source>
+        <translation type="vanished">CMS50D+/E/F, Pulox PO-200/300</translation>
+    </message>
+    <message>
+        <source>ChoiceMMed MD300W1</source>
+        <translation type="vanished">ChoiceMMed MD300W1</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="688"/>
@@ -2789,6 +2863,20 @@ Index</source>
         <translation>Ignorer korte økter</translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Økter i kortere varighet enn dette vil ikke vises&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="311"/>
         <source>Day Split Time</source>
         <translation>Dagdeletid</translation>
@@ -2824,6 +2912,14 @@ Index</source>
         <translation> timer</translation>
     </message>
     <message>
+        <source>Enable/disable experimental event flagging enhancements. 
+It allows detecting borderline events, and some the machine missed.
+This option must be enabled before import, otherwise a purge is required.</source>
+        <translation type="vanished">Aktiver / deaktiver forbedringer for eksperimentell hendelsesflagging.
+Det gjør det mulig å oppdage grensehendelser, og noen savnet maskinen.
+Dette alternativet må være aktivert før import, ellers er det nødvendig med en rensing.</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
         <source>Flow Restriction</source>
         <translation>Strømningsbegrensning</translation>
@@ -2834,6 +2930,18 @@ Index</source>
 A value of 20% works well for detecting apneas. </source>
         <translation>Prosent av begrensning i luftstrøm fra medianverdien.
 En verdi på 20% fungerer bra for å oppdage apné. </translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Egendefinert flagging er en eksperimentell metode for å oppdage hendelser som maskinen savner. De er&lt;span style=&quot; text-decoration: underline;&quot;&gt;ikke&lt;/span&gt; inkludert i AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1116"/>
@@ -2853,6 +2961,10 @@ En verdi på 20% fungerer bra for å oppdage apné. </translation>
         <location filename="../oscar/preferencesdialog.ui" line="1155"/>
         <source>Event Duration</source>
         <translation>Hendelsesvarighet</translation>
+    </message>
+    <message>
+        <source>Allow duplicates near machine events.</source>
+        <translation type="vanished">Tillat duplikater nær maskinhendelser.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1220"/>
@@ -2921,6 +3033,10 @@ Standardinnstillingen er 60 minutter .. Anbefaler på det sterkeste at den blir 
         <location filename="../oscar/preferencesdialog.ui" line="1109"/>
         <source>Show in Event Breakdown Piechart</source>
         <translation>Vis i kakediagrammet for hendelsesoppsummering</translation>
+    </message>
+    <message>
+        <source>Resync Machine Detected Events (Experimental)</source>
+        <translation type="vanished">Resynkroniser maskinoppdagede hendelser (eksperimentell)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1732"/>
@@ -3090,6 +3206,11 @@ Standardinnstillingen er 60 minutter .. Anbefaler på det sterkeste at den blir 
         <location filename="../oscar/preferencesdialog.ui" line="780"/>
         <source>Hours</source>
         <translation>Timer</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1354"/>
@@ -3283,9 +3404,33 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <translation>Komprimere øktdata (gjør OSCAR-data mindre, men dagen endres langsommere.)</translation>
     </message>
     <message>
+        <source>This maintains a backup of SD-card data for ResMed machines, 
+
+ResMed S9 series machines delete high resolution data older than 7 days, 
+and graph data older than 30 days..
+
+OSCAR can keep a copy of this data if you ever need to reinstall. 
+(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
+        <translation type="vanished">Dette opprettholder en sikkerhetskopi av SD-kortdata for ResMed-maskiner,
+
+ResMed S9-serie maskiner sletter data med høy oppløsning eldre enn 7 dager,
+og grafdata eldre enn 30 dager ..
+
+OSCAR kan beholde en kopi av disse dataene hvis du noen gang trenger å installere på nytt.
+(Sterkt anbefalt, med mindre du har lite diskplass eller ikke bryr deg om grafdataene)</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="608"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gjør OSCAR litt tregere ved å forhåndslaste alle oppsummeringsdataene på forhånd, noe som øker oversikten og noen få andre beregninger senere. &lt;/p&gt;&lt;p&gt;Hvis du har en stor mengde data, kan det være verdt å holde dette slått av, men hvis du vanligvis vil se &lt;span style=&quot; font-style:italic;&quot;&gt;alt&lt;/span&gt;oversikt må all sammendragsdata likevel lastes inn uansett. &lt;/p&gt;&lt;p&gt;Merk at denne innstillingen ikke påvirker bølgeform- og hendelsesdata, som alltid etterspørres etter behov.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gi et varsel når du importerer data fra en hvilken som helst maskinemodell som ennå ikke er testet av OSCAR-utviklere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Warn when importing data from an untested machine</source>
+        <translation type="vanished">Advarsel når du importerer data fra en ikke-testet maskin</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="645"/>
@@ -3296,6 +3441,18 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <location filename="../oscar/preferencesdialog.ui" line="648"/>
         <source>Warn when previously unseen data is encountered</source>
         <translation>Advarsel når det oppdages tidligere usett data</translation>
+    </message>
+    <message>
+        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
+
+The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
+
+If you use a few different masks, pick average values instead. It should still be close enough.</source>
+        <translation type="vanished">Denne beregningen krever at Total Leaks data skal leveres av CPAP-maskinen. (F.eks. PRS1, men ikke ResMed, som allerede har disse)
+
+Utilsiktede lekkasjeberegninger som brukes her er lineære, de modellerer ikke maskeventilkurven.
+
+Hvis du bruker noen forskjellige masker, velger du gjennomsnittsverdier i stedet. Det skal fortsatt være nær nok.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
@@ -3316,6 +3473,14 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <location filename="../oscar/preferencesdialog.ui" line="948"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
         <translation>Merk: En lineær beregningsmetode brukes. Endring av disse verdiene krever en ny beregning.</translation>
+    </message>
+    <message>
+        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
+        <translation type="vanished">Dette eksperimentelle alternativet prøver å bruke OSCARs hendelsesflaggingssystem for å forbedre maskinoppdaget hendelsesposisjonering.</translation>
+    </message>
+    <message>
+        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
+        <translation type="vanished">Vis flagg for maskinoppdagede hendelser som ikke har blitt identifisert ennå.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1997"/>
@@ -3381,6 +3546,10 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <location filename="../oscar/preferencesdialog.ui" line="2637"/>
         <source>Overview Linecharts</source>
         <translation>Oversikt Linjediagrammer</translation>
+    </message>
+    <message>
+        <source>Whether to include machine serial number on machine settings changes report</source>
+        <translation type="vanished">Om maskinens serienummer skal inkluderes i rapporten om endringer i maskininnstillinger</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2729"/>
@@ -3473,6 +3642,10 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <location filename="../oscar/preferencesdialog.ui" line="1398"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cumulative Indices&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Merk: &lt;/span&gt;På grunn av begrensede designbegrensninger støtter ikke ResMed-maskiner endring av disse innstillingene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1539"/>
@@ -3700,11 +3873,6 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1142"/>
         <source>Allow duplicates near device events.</source>
         <translation type="unfinished"></translation>
@@ -3854,6 +4022,14 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <location filename="../oscar/preferencesdialog.cpp" line="665"/>
         <source>Double click to change the default color for this channel plot/flag/data.</source>
         <translation>Dobbeltklikk for å endre standardfargen for dette kanalplottet / flagget / dataene.</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
+        <translation type="vanished">&lt;p&gt;&lt;b&gt; Merk:&lt;/b&gt; OSCARs avanserte øktdelingsfunksjoner er ikke mulig med &lt;b&gt;ResMed&lt;/b&gt; maskiner på grunn av en begrensning i måten deres innstillinger og sammendragsdata er lagret på, og derfor de har blitt deaktivert for denne profilen.&lt;/p&gt;&lt;p&gt; På ResMed-maskiner vil dager&lt;b&gt; deles ved middagstid&lt;/b&gt; som i ResMeds kommersielle programvare.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>%1 %2</source>
+        <translation type="vanished">%1 %2</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2306"/>
@@ -4047,6 +4223,14 @@ Vil du gjøre dette nå?</translation>
         <translation>Alltid mindre</translation>
     </message>
     <message>
+        <source>No CPAP machines detected</source>
+        <translation type="vanished">Ingen CPAP-maskiner oppdaget</translation>
+    </message>
+    <message>
+        <source>Will you be using a ResMed brand machine?</source>
+        <translation type="vanished">Vil du bruke en ResMed-maskin?</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="294"/>
         <source>Never</source>
         <translation>Aldri</translation>
@@ -4055,6 +4239,10 @@ Vil du gjøre dette nå?</translation>
         <location filename="../oscar/preferencesdialog.cpp" line="1164"/>
         <source>This may not be a good idea</source>
         <translation>Dette er kanskje ikke en god idé</translation>
+    </message>
+    <message>
+        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
+        <translation type="vanished">ResMed S9-maskiner sletter rutinemessig visse data fra SD-kortet ditt eldre enn 7 og 30 dager (avhengig av oppløsning).</translation>
     </message>
 </context>
 <context>
@@ -4423,6 +4611,10 @@ Vil du gjøre dette nå?</translation>
         <translation>oz</translation>
     </message>
     <message>
+        <source>Kg</source>
+        <translation type="vanished">Kg</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>cmH2O</source>
         <translation>cmH2O</translation>
@@ -4594,6 +4786,10 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>Breaths/min</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation type="vanished">?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="690"/>
@@ -5257,6 +5453,10 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Series</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Machine</source>
+        <translation type="vanished">Maskin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="827"/>
@@ -6376,6 +6576,10 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>SpO2 Drop</source>
+        <translation type="vanished">SpO2 dropp</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
         <translation type="unfinished"></translation>
@@ -6389,6 +6593,10 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="226"/>
         <source>Breathing flow rate waveform</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>L/min</source>
+        <translation type="vanished">L/min</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="229"/>
@@ -7416,6 +7624,10 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>99.5%</source>
+        <translation type="obsolete">90% {99.5%?}</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
         <source>varies</source>
         <translation type="unfinished"></translation>
@@ -8292,6 +8504,13 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
 </context>
 <context>
+    <name>Report</name>
+    <message>
+        <source>about:blank</source>
+        <translation type="vanished">about:blank</translation>
+    </message>
+</context>
+<context>
     <name>SessionBar</name>
     <message>
         <location filename="../oscar/sessionbar.cpp" line="247"/>
@@ -8315,6 +8534,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This device Record cannot be imported in this profile.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="obsolete">Dette maskinopptaket kan ikke bli importert i denne profilen.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
@@ -8612,6 +8835,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>OSCAR er fri åpen kildekode CPAP-rapportprogramvare</translation>
     </message>
     <message>
+        <source>Changes to Machine Settings</source>
+        <translation type="vanished">Endringer i maskininnstillinger</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="1062"/>
         <source>No data found?!?</source>
         <translation>Ingen data funnet?!?</translation>
@@ -8682,6 +8909,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Trykkinnstillinger</translation>
     </message>
     <message>
+        <source>Machine Information</source>
+        <translation type="vanished">Maskininformasjon</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="923"/>
         <source>First Use</source>
         <translation>Første bruk</translation>
@@ -8735,6 +8966,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD-kort må være låst &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;før de settes inn i din datamaskin.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Noen operativsystemer skriver indeksfiler til kortet uten å spørre, noe som kan gjøre kortet ditt uleselig av cpap-maskinen din.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
         <translation>Det ville være en god idé å sjekke Fil-&gt; Innstillinger først,</translation>
@@ -8743,6 +8978,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
         <translation>ettersom det er noen alternativer som påvirker import.</translation>
+    </message>
+    <message>
+        <source>Note that some preferences are forced when a ResMed machine is detected</source>
+        <translation type="vanished">Merk at noen preferanser blir tvunget når en ResMed-maskin blir oppdaget</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
@@ -8780,6 +9019,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>%1 timer, %2 minutter og %3 sekunder</translation>
     </message>
     <message>
+        <source>Your machine was on for %1.</source>
+        <translation type="vanished">Din maskin var på for %1.</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="196"/>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
         <translation>&lt;font color = red&gt;Du hadde kun masken på i %1.&lt;/font&gt;</translation>
@@ -8810,9 +9053,17 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Du hadde en AHI på %1, som er %2 ditt %3 dagers gjennomsnitt på %4.</translation>
     </message>
     <message>
+        <source>Your CPAP machine used a constant %1 %2 of air</source>
+        <translation type="vanished">CPAP-maskinen din brukte konstant %1 %2 med luft</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="262"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
         <translation>Trykket var under %1 %2 for %3 av tiden.</translation>
+    </message>
+    <message>
+        <source>Your machine used a constant %1-%2 %3 of air.</source>
+        <translation type="vanished">Din maskin brukte konstant %1-%2 %3 med luft.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="285"/>
@@ -8829,6 +9080,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="296"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>Ditt EPAP-trykk var under %1 %2 for %3 av tiden.</translation>
+    </message>
+    <message>
+        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
+        <translation type="vanished">Din maskin var under %1-%2 %3 for %4 av tiden.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>

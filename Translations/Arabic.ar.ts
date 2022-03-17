@@ -55,6 +55,10 @@
         <translation>عفوا، لا يمكن تحديد موقع ملاحظات الإصدار.</translation>
     </message>
     <message>
+        <source>OSCAR %1</source>
+        <translation type="vanished">OSCAR %1</translation>
+    </message>
+    <message>
         <location filename="../oscar/aboutdialog.cpp" line="133"/>
         <source>Important:</source>
         <translation>مهم:</translation>
@@ -369,6 +373,10 @@
         <translation>جلسة غير معروفة</translation>
     </message>
     <message>
+        <source>Machine Settings</source>
+        <translation type="vanished">إعدادات الجهاز</translation>
+    </message>
+    <message>
         <location filename="../oscar/daily.cpp" line="1271"/>
         <source>Model %1 - %2</source>
         <translation>النموذج %1 - %2</translation>
@@ -377,6 +385,10 @@
         <location filename="../oscar/daily.cpp" line="1276"/>
         <source>PAP Mode: %1</source>
         <translation>وضع PAP: %1</translation>
+    </message>
+    <message>
+        <source>99.5%</source>
+        <translation type="obsolete">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1396"/>
@@ -412,6 +424,10 @@
         <location filename="../oscar/daily.cpp" line="1649"/>
         <source>10 of 10 Event Types</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorry, this machine only provides compliance data.</source>
+        <translation type="vanished">عذرًا ، لا يوفر هذا الجهاز سوى بيانات التوافق.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1808"/>
@@ -527,6 +543,10 @@
         <location filename="../oscar/daily.cpp" line="1785"/>
         <source>Zero hours??</source>
         <translation>ساعات الصفر؟</translation>
+    </message>
+    <message>
+        <source>BRICK :(</source>
+        <translation type="vanished">قالب طوب :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1790"/>
@@ -755,6 +775,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="vanished">لا يمكن استيراد سجل الجهاز في ملف التعريف هذا.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>تتداخل سجلات اليوم مع المحتوى الموجود بالفعل.</translation>
@@ -938,6 +962,10 @@
         <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>&amp;Advanced</source>
         <translation>المتقدمة</translation>
+    </message>
+    <message>
+        <source>Purge ALL Machine Data</source>
+        <translation type="vanished">تطهير جميع بيانات الجهاز</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2517"/>
@@ -1480,6 +1508,22 @@
         <translation>إذا كنت تستطيع قراءة هذا ، فلن يعمل أمر إعادة التشغيل. سيكون عليك القيام بذلك بنفسك يدويًا.</translation>
     </message>
     <message>
+        <source>Are you sure you want to rebuild all CPAP data for the following machine:
+
+</source>
+        <translation type="vanished">هل تريد بالتأكيد إعادة إنشاء جميع بيانات CPAP للجهاز التالي:
+
+</translation>
+    </message>
+    <message>
+        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
+        <translation type="vanished">لسبب ما ، لا يحتوي OSCAR على أي نسخ احتياطية للجهاز التالي:</translation>
+    </message>
+    <message>
+        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
+        <translation type="vanished">أنت على وشك &lt;font size = + 2&gt; طمس &lt;/font&gt; قاعدة بيانات الجهاز الخاصة بـ OSCAR للجهاز التالي: &lt;/ p&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.cpp" line="1996"/>
         <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
         <translation>تسبب خطأ إذن الملف في فشل عملية التطهير؛ سيكون عليك حذف المجلد التالي يدويًا:</translation>
@@ -1565,9 +1609,21 @@
         <translation>نظرًا لعدم وجود نسخ احتياطية داخلية لإعادة الإنشاء منها ، سيتعين عليك الاستعادة من جهازك.</translation>
     </message>
     <message>
+        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
+        <translation type="vanished">هل ترغب في الاستيراد من النسخ الاحتياطية الخاصة بك الآن؟ (لن يكون لديك بيانات مرئية لهذا الجهاز حتى تقوم بذلك)</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.cpp" line="1929"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>لاحظ كإجراء وقائي ، سيتم ترك مجلد النسخ الاحتياطي في مكانه.</translation>
+    </message>
+    <message>
+        <source>OSCAR does not have any backups for this machine!</source>
+        <translation type="vanished">ليس لدى OSCAR أي نسخ احتياطية لهذا الجهاز!</translation>
+    </message>
+    <message>
+        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
+        <translation type="vanished">ما لم تقم بعمل نسخ احتياطية خاصة بك لجميع بياناتك لهذا الجهاز ، فستفقد بيانات هذا الجهاز بشكل دائم!</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1941"/>
@@ -1616,6 +1672,14 @@
         <location filename="../oscar/mainwindow.cpp" line="744"/>
         <source>Up to date</source>
         <translation>حتى الآن</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t find any valid Machine Data at
+
+%1</source>
+        <translation type="vanished">تعذر العثور على أي بيانات صالحة عن الجهاز على
+
+%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="918"/>
@@ -1982,6 +2046,10 @@
         <location filename="../oscar/newprofile.cpp" line="111"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
         <translation>مرحبًا بكم في مراسل تحليل CPAP مفتوح المصدر (OSCAR)</translation>
+    </message>
+    <message>
+        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
+        <translation type="vanished">تم تصميم هذا البرنامج لمساعدتك في مراجعة البيانات التي تنتجها أجهزة CPAP والأجهزة ذات الصلة.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="118"/>
@@ -2363,6 +2431,10 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1457"/>
         <source>I want to use the time reported by my oximeter&apos;s built in clock.</source>
         <translation>أرغب في استخدام الوقت الذي تم الإبلاغ عنه بواسطة مقياس التأكسج الخاص بي المدمج في الساعة.</translation>
+    </message>
+    <message>
+        <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
+        <translation type="vanished">لقد بدأت في تسجيل مقياس التأكسج هذا (أو بالقرب منه) في نفس الوقت كجلسة على جهاز CPAP الخاص بي.</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1534"/>
@@ -2800,6 +2872,20 @@ Index</source>
         <translation>تجاهل الجلسات القصيرة</translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;لن يتم عرض الجلسات الأقصر من المدة&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="311"/>
         <source>Day Split Time</source>
         <translation>يوم سبليت الوقت</translation>
@@ -2825,9 +2911,66 @@ Index</source>
         <translation>ضغط النسخ الاحتياطي لبطاقة SD (الاستيراد الأول أبطأ ، ولكن يجعل النسخ الاحتياطية أصغر)</translation>
     </message>
     <message>
+        <location filename="../oscar/preferencesdialog.ui" line="475"/>
+        <source>This maintains a backup of SD-card data for ResMed devices, 
+
+ResMed S9 series devices delete high resolution data older than 7 days, 
+and graph data older than 30 days..
+
+OSCAR can keep a copy of this data if you ever need to reinstall. 
+(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="635"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="638"/>
+        <source>Warn when importing data from an untested device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="659"/>
         <source>&amp;CPAP</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="803"/>
+        <source>This calculation requires Total Leaks data to be provided by the CPAP device. (Eg, PRS1, but not ResMed, which has these already)
+
+The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
+
+If you use a few different masks, pick average values instead. It should still be close enough.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="967"/>
+        <source>Enable/disable experimental event flagging enhancements. 
+It allows detecting borderline events, and some the device missed.
+This option must be enabled before import, otherwise a purge is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1019"/>
+        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve device detected event positioning.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1022"/>
+        <source>Resync Device Detected Events (Experimental)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1142"/>
+        <source>Allow duplicates near device events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1190"/>
+        <source>Show flags for device detected events that haven&apos;t been identified yet.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1297"/>
@@ -2840,6 +2983,14 @@ Index</source>
         <translation> ساعات</translation>
     </message>
     <message>
+        <source>Enable/disable experimental event flagging enhancements. 
+It allows detecting borderline events, and some the machine missed.
+This option must be enabled before import, otherwise a purge is required.</source>
+        <translation type="vanished">تمكين / تعطيل تحسينات الإبلاغ عن الحدث التجريبي.
+انها تسمح للكشف عن أحداث الشريط الحدودي ، وبعض آلة غاب.
+يجب تمكين هذا الخيار قبل الاستيراد ، وإلا فالتطهير مطلوب.</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
         <source>Flow Restriction</source>
         <translation>تقييد التدفق</translation>
@@ -2850,6 +3001,18 @@ Index</source>
 A value of 20% works well for detecting apneas. </source>
         <translation>النسبة المئوية للقيود المفروضة على تدفق الهواء من القيمة المتوسطة.
 قيمة 20 ٪ تعمل بشكل جيد للكشف عن انقطاع النفس. </translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;وضع علامة مخصصة هي طريقة تجريبية للكشف عن الأحداث التي فاتتها الآلة. هم انهم&lt;span style=&quot; text-decoration: underline;&quot;&gt;ليس&lt;/span&gt; المدرجة في AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1116"/>
@@ -2869,6 +3032,10 @@ A value of 20% works well for detecting apneas. </source>
         <location filename="../oscar/preferencesdialog.ui" line="1155"/>
         <source>Event Duration</source>
         <translation>مدة الحدث</translation>
+    </message>
+    <message>
+        <source>Allow duplicates near machine events.</source>
+        <translation type="vanished">السماح بالتكرارات بالقرب من أحداث الجهاز.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1220"/>
@@ -2937,6 +3104,10 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="1109"/>
         <source>Show in Event Breakdown Piechart</source>
         <translation>تظهر في مخطط انهيار مخطط الأحداث</translation>
+    </message>
+    <message>
+        <source>Resync Machine Detected Events (Experimental)</source>
+        <translation type="vanished">الأحداث التي تم اكتشافها في آلة إعادة المزامنة (تجريبية)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1732"/>
@@ -3116,6 +3287,11 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="875"/>
         <source>Your masks vent rate at 4 cmH2O pressure</source>
         <translation>تنفيس الأقنعة الخاصة بك عند ضغط 4 cmH2O</translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1354"/>
@@ -3304,9 +3480,33 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation>ضغط بيانات الجلسة (يجعل بيانات OSCAR أصغر ، لكن تغيير اليوم يكون أبطأ.)</translation>
     </message>
     <message>
+        <source>This maintains a backup of SD-card data for ResMed machines, 
+
+ResMed S9 series machines delete high resolution data older than 7 days, 
+and graph data older than 30 days..
+
+OSCAR can keep a copy of this data if you ever need to reinstall. 
+(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
+        <translation type="vanished">هذا يحتفظ بنسخة احتياطية من بيانات بطاقة SD لأجهزة ResMed ،
+
+تحذف ماكينات سلسلة ResMed S9 بيانات عالية الدقة يزيد عمرها عن 7 أيام ،
+وبيانات الرسم البياني الأقدم من 30 يومًا ..
+
+يمكن لـ OSCAR الاحتفاظ بنسخة من هذه البيانات إذا احتجت إلى إعادة التثبيت.
+(موصى به للغاية ، إلا إذا كانت لديك مساحة قصيرة على القرص أو لا تهتم ببيانات الرسم البياني)</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="608"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;يجعل تشغيل OSCAR أبطأ قليلاً ، عن طريق التحميل المسبق لجميع بيانات الملخص مقدمًا ، مما يسرع من استعراض النظرة العامة وبعض الحسابات الأخرى لاحقًا. إذا كان لديك كمية كبيرة من البيانات ، فقد يكون من المفيد إيقاف تشغيل هذا الخيار ، ولكن إذا كنت ترغب عادةً في العرض&lt;span style=&quot; font-style:italic;&quot;&gt;كل شىء&lt;/span&gt;في نظرة عامة ، لا يزال يتعين تحميل جميع البيانات الموجزة على أي حال. &lt;/p&gt; &lt;p&gt; لاحظ أن هذا الإعداد لا يؤثر على شكل الموجة وبيانات الأحداث ، والتي يتم تحميلها دائمًا حسب الحاجة.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
+        <translation type="vanished">يحاول هذا الخيار التجريبي استخدام نظام الإبلاغ عن الأحداث الخاص بـ OSCAR لتحسين وضع الحدث الذي تم اكتشافه بواسطة الجهاز.</translation>
+    </message>
+    <message>
+        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
+        <translation type="vanished">إظهار علامات الأحداث التي تم اكتشافها بواسطة الجهاز والتي لم يتم تحديدها بعد.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1997"/>
@@ -3436,6 +3636,14 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation>تحميل آخر ملف تعريف مستخدم تلقائيًا عند بدء التشغيل</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;قم بتوفير تنبيه عند استيراد البيانات من أي طراز آلة لم يتم اختباره من قبل مطوري OSCAR.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Warn when importing data from an untested machine</source>
+        <translation type="vanished">التحذير عند استيراد البيانات من جهاز لم يتم اختباره</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="645"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;قدم تنبيهًا عند استيراد البيانات التي تختلف بطريقة أو بأخرى عن أي شيء سبق لمطوري OSCAR رؤيته.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -3444,6 +3652,18 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <location filename="../oscar/preferencesdialog.ui" line="648"/>
         <source>Warn when previously unseen data is encountered</source>
         <translation>التحذير عند مواجهة بيانات لم يتم رؤيتها من قبل</translation>
+    </message>
+    <message>
+        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
+
+The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
+
+If you use a few different masks, pick average values instead. It should still be close enough.</source>
+        <translation type="vanished">يتطلب هذا الحساب توفير بيانات إجمالي التسريبات بواسطة جهاز CPAP. (على سبيل المثال ، PRS1 ، ولكن ليس ResMed ، التي لديها بالفعل)
+
+حسابات التسرب غير المقصود المستخدمة هنا خطية ، فهي لا تصمم منحنى تنفيس القناع.
+
+إذا كنت تستخدم بعض الأقنعة المختلفة ، فاختر متوسط القيم بدلاً من ذلك. يجب أن تظل قريبة بما فيه الكفاية.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
@@ -3474,6 +3694,10 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <location filename="../oscar/preferencesdialog.ui" line="1398"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cumulative Indices&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ملحوظة:&lt;/span&gt;نظرًا لقيود التصميم الموجزة ، لا تدعم أجهزة ResMed تغيير هذه الإعدادات.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1539"/>
@@ -3654,6 +3878,10 @@ Try it and see if you like it.</source>
         <translation>السماح لتوسيع نطاق المحور ص</translation>
     </message>
     <message>
+        <source>Whether to include machine serial number on machine settings changes report</source>
+        <translation type="vanished">سواء لتضمين الرقم التسلسلي للجهاز في تقرير تغييرات إعدادات الجهاز</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="2729"/>
         <source>Include Serial Number</source>
         <translation>تشمل الرقم التسلسلي</translation>
@@ -3662,68 +3890,6 @@ Try it and see if you like it.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2030"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation>محرك الرسومات (يتطلب إعادة التشغيل)</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="475"/>
-        <source>This maintains a backup of SD-card data for ResMed devices, 
-
-ResMed S9 series devices delete high resolution data older than 7 days, 
-and graph data older than 30 days..
-
-OSCAR can keep a copy of this data if you ever need to reinstall. 
-(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="635"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="638"/>
-        <source>Warn when importing data from an untested device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="803"/>
-        <source>This calculation requires Total Leaks data to be provided by the CPAP device. (Eg, PRS1, but not ResMed, which has these already)
-
-The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
-
-If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="967"/>
-        <source>Enable/disable experimental event flagging enhancements. 
-It allows detecting borderline events, and some the device missed.
-This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1019"/>
-        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve device detected event positioning.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1022"/>
-        <source>Resync Device Detected Events (Experimental)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1076"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1142"/>
-        <source>Allow duplicates near device events.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1190"/>
-        <source>Show flags for device detected events that haven&apos;t been identified yet.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1486"/>
@@ -3873,6 +4039,10 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
         <translation>نظرة عامة</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
+        <translation type="vanished">&lt;p&gt;&lt;b&gt;يرجى الملاحظة:&lt;/b&gt;قدرات تقسيم جلسة OSCAR المتقدمة غير ممكنة&lt;b&gt;ResMed&lt;/b&gt;آلات بسبب وجود قيود في طريقة تخزين إعداداتها وبيانات الملخص ، وبالتالي تم تعطيلها لهذا الملف الشخصي.&lt;/p&gt;&lt;p&gt;على أجهزة ResMed ، سيتم تقسيم الأيام عند الظهر كما هو الحال في برنامج ResMed التجاري.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="66"/>
@@ -4038,6 +4208,10 @@ Would you like do this now?</source>
         <translation>هل أنت متأكد أنك تريد فعل ذلك؟</translation>
     </message>
     <message>
+        <source>%1 %2</source>
+        <translation type="obsolete">%1 %2</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Flag</source>
         <translation>علم</translation>
@@ -4058,6 +4232,14 @@ Would you like do this now?</source>
         <translation>دائما الصغرى</translation>
     </message>
     <message>
+        <source>No CPAP machines detected</source>
+        <translation type="vanished">لم يتم الكشف عن آلات CPAP</translation>
+    </message>
+    <message>
+        <source>Will you be using a ResMed brand machine?</source>
+        <translation type="vanished">هل ستستخدم آلة العلامة التجارية ResMed؟</translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="294"/>
         <source>Never</source>
         <translation>أبدا</translation>
@@ -4066,6 +4248,10 @@ Would you like do this now?</source>
         <location filename="../oscar/preferencesdialog.cpp" line="1164"/>
         <source>This may not be a good idea</source>
         <translation>قد لا تكون هذه فكرة جيدة</translation>
+    </message>
+    <message>
+        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
+        <translation type="vanished">تقوم أجهزة ResMed S9 بحذف بيانات معينة بشكل روتيني من بطاقة SD الخاصة بك التي تزيد مدتها عن 7 و 30 يومًا (حسب الدقة).</translation>
     </message>
 </context>
 <context>
@@ -4434,6 +4620,10 @@ Would you like do this now?</source>
         <translation>أوقية</translation>
     </message>
     <message>
+        <source>Kg</source>
+        <translation type="vanished">كلغ</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="672"/>
         <source>cmH2O</source>
         <translation>cmH2O</translation>
@@ -4609,6 +4799,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>Breaths/min</source>
         <translation>الأنفاس / دقيقة</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation type="vanished">?</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="690"/>
@@ -5274,6 +5468,10 @@ TTIA: %1</source>
         <translation>سلسلة</translation>
     </message>
     <message>
+        <source>Machine</source>
+        <translation type="vanished">آلة</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Channel</source>
         <translation>قناة</translation>
@@ -5505,11 +5703,23 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Non Data Capable Machine</source>
+        <translation type="vanished">آلة غير قادرة على البيانات</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="852"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>يستعد...</translation>
+    </message>
+    <message>
+        <source>Machine Unsupported</source>
+        <translation type="vanished">الجهاز غير مدعوم</translation>
+    </message>
+    <message>
+        <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
+        <translation type="vanished">نأسف للإبلاغ بأن OSCAR يمكنه فقط تتبع ساعات الاستخدام والإعدادات الأساسية جدًا لهذا الجهاز.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="877"/>
@@ -5530,6 +5740,10 @@ TTIA: %1</source>
         <location filename="../oscar/mainwindow.cpp" line="2333"/>
         <source>Finishing up...</source>
         <translation>الانتهاء من ...</translation>
+    </message>
+    <message>
+        <source>Machine Untested</source>
+        <translation type="vanished">آلة لم تختبر</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
@@ -5774,6 +5988,10 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Whether or not machine shows AHI via built-in display.</source>
+        <translation type="vanished">ما إذا كان الجهاز يعرض AHI أم لا عبر شاشة مدمجة.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2992"/>
         <source>Ramp Type</source>
@@ -5853,6 +6071,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3024"/>
         <source>Auto-Trial Duration</source>
         <translation>مدة المحاكمة التلقائية</translation>
+    </message>
+    <message>
+        <source>The number of days in the Auto-CPAP trial period, after which the machine will revert to CPAP</source>
+        <translation type="vanished">عدد الأيام في الفترة التجريبية Auto-CPAP ، وبعدها يعود الجهاز إلى CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3026"/>
@@ -5989,16 +6211,28 @@ TTIA: %1</source>
         <translation>تشغيل تلقائي</translation>
     </message>
     <message>
+        <source>A few breaths automatically starts machine</source>
+        <translation type="vanished">وهناك عدد قليل من الأنفاس يبدأ الجهاز تلقائيا</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2965"/>
         <source>Auto Off</source>
         <translation>إيقاف السيارات</translation>
     </message>
     <message>
+        <source>Machine automatically switches off</source>
+        <translation type="vanished">الجهاز يغلق تلقائيا</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2974"/>
         <source>Mask Alert</source>
         <translation>تنبيه قناع</translation>
+    </message>
+    <message>
+        <source>Whether or not machine allows Mask checking.</source>
+        <translation type="vanished">أم لا يسمح الجهاز فحص القناع.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
@@ -6020,6 +6254,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
         <source>Breathing Not Detected</source>
         <translation>التنفس لم يتم كشفه</translation>
+    </message>
+    <message>
+        <source>A period during a session where the machine could not detect flow.</source>
+        <translation type="vanished">فترة خلال الجلسة حيث لم يتمكن الجهاز من اكتشاف التدفق.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3051"/>
@@ -6064,6 +6302,10 @@ TTIA: %1</source>
         <translation>يجب عليك تشغيل أداة ترحيل OSCAR</translation>
     </message>
     <message>
+        <source>&lt;i&gt;Your old machine data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.&lt;/i&gt;</source>
+        <translation type="vanished">&lt;i&gt;يجب إعادة إنشاء بيانات الجهاز القديم شريطة ألا يتم تعطيل ميزة النسخ الاحتياطي هذه في التفضيلات أثناء عملية استيراد بيانات سابقة.&lt;/i&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="482"/>
         <source>Launching Windows Explorer failed</source>
         <translation>فشل بدء تشغيل مستكشف Windows</translation>
@@ -6092,6 +6334,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/profiles.cpp" line="552"/>
         <source>OSCAR does not yet have any automatic card backups stored for this device.</source>
         <translation>لا يوجد لدى الأداة OSCAR أي نسخ احتياطية للبطاقات تلقائيًا مخزنة لهذا الجهاز.</translation>
+    </message>
+    <message>
+        <source>This means you will need to import this machine data again afterwards from your own backups or data card.</source>
+        <translation type="vanished">هذا يعني أنك ستحتاج إلى استيراد بيانات الجهاز هذه مرة أخرى بعد ذلك من النسخ الاحتياطية أو بطاقة البيانات الخاصة بك.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="553"/>
@@ -6149,9 +6395,17 @@ TTIA: %1</source>
         <translation>استخدم مدير الملفات لديك لإنشاء نسخة أو دليل ملف التعريف الخاص بك ، ثم بعد ذلك ، أعد تشغيل OSCAR وإكمال عملية الترقية.</translation>
     </message>
     <message>
+        <source>Machine Database Changes</source>
+        <translation type="vanished">تغييرات قاعدة بيانات الجهاز</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
         <translation>بمجرد الترقية ، لا يمكنك &lt;font size = + 1&gt; &lt;/font&gt; استخدام هذا الملف الشخصي مع الإصدار السابق بعد الآن.</translation>
+    </message>
+    <message>
+        <source>The machine data folder needs to be removed manually.</source>
+        <translation type="vanished">يجب إزالة مجلد بيانات الجهاز يدويًا.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="574"/>
@@ -6326,9 +6580,17 @@ TTIA: %1</source>
         <translation>انقطاع النفس الناجم عن انسداد مجرى الهواء</translation>
     </message>
     <message>
+        <source>Hypopnea</source>
+        <translation type="vanished">ضعف التنفس</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>A partially obstructed airway</source>
         <translation>مجرى الهواء عرقلة جزئيا</translation>
+    </message>
+    <message>
+        <source>Unclassified Apnea</source>
+        <translation type="vanished">انقطاع النفس غير المصنف</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="753"/>
@@ -6337,9 +6599,17 @@ TTIA: %1</source>
         <translation>UA</translation>
     </message>
     <message>
+        <source>Vibratory Snore</source>
+        <translation type="vanished">الشخير الاهتزازي</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>A vibratory snore</source>
         <translation>شخير اهتزازي</translation>
+    </message>
+    <message>
+        <source>A vibratory snore as detcted by a System One machine</source>
+        <translation type="vanished">شخير اهتزازي كما تم اكتشافه بواسطة جهاز System One</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2799"/>
@@ -6352,9 +6622,21 @@ TTIA: %1</source>
         <translation>نبضة ضغط &quot;تتعرض لضغوط&quot; لاكتشاف مجرى الهواء المغلق.</translation>
     </message>
     <message>
+        <source>A large mask leak affecting machine performance.</source>
+        <translation type="vanished">تسرب كبير للقناع يؤثر على أداء الماكينة.</translation>
+    </message>
+    <message>
+        <source>Non Responding Event</source>
+        <translation type="vanished">حدث غير مستجيب</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>A type of respiratory event that won&apos;t respond to a pressure increase.</source>
         <translation>وهناك نوع من الحدث التنفسي الذي لن يستجيب لزيادة الضغط.</translation>
+    </message>
+    <message>
+        <source>Expiratory Puff</source>
+        <translation type="vanished">الزفير النفخة</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
@@ -6365,6 +6647,18 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake feature will reduce pressure when waking is detected.</source>
         <translation>ميزة SensAwake ستقلل الضغط عند اكتشاف الاستيقاظ.</translation>
+    </message>
+    <message>
+        <source>User Flag #1</source>
+        <translation type="vanished">علم المستخدم رقم 1</translation>
+    </message>
+    <message>
+        <source>User Flag #2</source>
+        <translation type="vanished">علم المستخدم رقم 2</translation>
+    </message>
+    <message>
+        <source>User Flag #3</source>
+        <translation type="vanished">علم المستخدم رقم 3</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="204"/>
@@ -6387,9 +6681,17 @@ TTIA: %1</source>
         <translation>رسم ضوئي بصري ضوئي يظهر إيقاع القلب</translation>
     </message>
     <message>
+        <source>Pulse Change</source>
+        <translation type="vanished">تغيير النبض</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>A sudden (user definable) change in heart rate</source>
         <translation>تغيير مفاجئ (يمكن تعريف المستخدم) في معدل ضربات القلب</translation>
+    </message>
+    <message>
+        <source>SpO2 Drop</source>
+        <translation type="vanished">SpO2 إسقاط</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
@@ -6405,6 +6707,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="226"/>
         <source>Breathing flow rate waveform</source>
         <translation>معدل تدفق التنفس الموجي</translation>
+    </message>
+    <message>
+        <source>L/min</source>
+        <translation type="vanished">لتر / دقيقة</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="229"/>
@@ -6523,6 +6829,10 @@ TTIA: %1</source>
         <translation>إعداد EPAP</translation>
     </message>
     <message>
+        <source>Cheyne Stokes Respiration</source>
+        <translation type="vanished">شايان ستوكس التنفس</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>An abnormal period of Cheyne Stokes Respiration</source>
         <translation>فترة غير طبيعية من شايان ستوكس تنفس</translation>
@@ -6534,9 +6844,21 @@ TTIA: %1</source>
         <translation>CSR</translation>
     </message>
     <message>
+        <source>Periodic Breathing</source>
+        <translation type="vanished">التنفس الدوري</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>An abnormal period of Periodic Breathing</source>
         <translation>فترة غير طبيعية من التنفس الدوري</translation>
+    </message>
+    <message>
+        <source>Clear Airway</source>
+        <translation type="vanished">واضح مجرى الهواء</translation>
+    </message>
+    <message>
+        <source>Obstructive</source>
+        <translation type="vanished">المعوق</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
@@ -6552,6 +6874,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance.</source>
         <translation>الجهد التنفسي المتعلق بالإثارة: وجود قيود في التنفس تسبب إما إيقاظًا أو اضطرابًا في النوم.</translation>
+    </message>
+    <message>
+        <source>Leak Flag</source>
+        <translation type="vanished">تسرب العلم</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
@@ -6641,6 +6967,10 @@ TTIA: %1</source>
         <translation>ماكس تسرب</translation>
     </message>
     <message>
+        <source>Apnea Hypopnea Index</source>
+        <translation type="vanished">تشغيل مؤشر توقف التنفس أثناء التنفس</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Graph showing running AHI for the past hour</source>
         <translation>رسم بياني يظهر أنه يركض AHI للساعة الماضية</translation>
@@ -6669,6 +6999,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="281"/>
         <source>Median Leaks</source>
         <translation>تسرب متوسط</translation>
+    </message>
+    <message>
+        <source>Respiratory Disturbance Index</source>
+        <translation type="vanished">تشغيل مؤشر اضطراب الجهاز التنفسي</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
@@ -7226,6 +7560,10 @@ TTIA: %1</source>
         <translation>هل أنت متأكد أنك تريد استخدام هذا المجلد؟</translation>
     </message>
     <message>
+        <source>Don&apos;t forget to place your datacard back in your CPAP machine</source>
+        <translation type="vanished">لا تنسَ أن تضع بطاقة بياناتك في جهاز CPAP</translation>
+    </message>
+    <message>
         <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>OSCAR Reminder</source>
         <translation>أوسكار تذكير</translation>
@@ -7431,6 +7769,10 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="310"/>
         <source>Auto Bi-Level (Variable PS)</source>
         <translation>ثنائية المستوى التلقائي (متغير PS)</translation>
+    </message>
+    <message>
+        <source>99.5%</source>
+        <translation type="obsolete">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
@@ -7932,6 +8274,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation></translation>
     </message>
     <message>
+        <source>Machine auto starts by breathing</source>
+        <translation type="vanished">يبدأ تشغيل الآلة عن طريق التنفس</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>Smart Start</source>
         <translation>البداية الذكية</translation>
@@ -8339,6 +8685,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>This Machine Record cannot be imported in this profile.</source>
+        <translation type="obsolete">لا يمكن استيراد سجل الجهاز في ملف التعريف هذا.</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>The Day records overlap with already existing content.</source>
         <translation type="unfinished">تتداخل سجلات اليوم مع المحتوى الموجود بالفعل.</translation>
@@ -8634,6 +8984,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>OSCAR هو برنامج تقرير CPAP مفتوح المصدر مجاني</translation>
     </message>
     <message>
+        <source>Changes to Machine Settings</source>
+        <translation type="vanished">التغييرات في إعدادات الجهاز</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="1062"/>
         <source>No data found?!?</source>
         <translation>لاتوجد بيانات؟!؟</translation>
@@ -8704,6 +9058,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>إعدادات الضغط</translation>
     </message>
     <message>
+        <source>Machine Information</source>
+        <translation type="vanished">معلومات الجهاز</translation>
+    </message>
+    <message>
         <location filename="../oscar/statistics.cpp" line="923"/>
         <source>First Use</source>
         <translation>اول استخدام</translation>
@@ -8757,6 +9115,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;تحذير: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;بطاقات ResMed S9 SD تحتاج إلى أن تكون مؤمنة &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;قبل الإدراج في جهاز الكمبيوتر الخاص بك.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;تكتب بعض أنظمة التشغيل ملفات الفهرس إلى البطاقة دون أن تطلب ، مما قد يجعل بطاقتك غير قابلة للقراءة بواسطة جهاز cpap.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
         <translation>سيكون من الجيد التحقق من ملف&gt; تفضيلات أولاً ،</translation>
@@ -8765,6 +9127,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
         <translation>لأن هناك بعض الخيارات التي تؤثر على الاستيراد.</translation>
+    </message>
+    <message>
+        <source>Note that some preferences are forced when a ResMed machine is detected</source>
+        <translation type="vanished">لاحظ أنه يتم فرض بعض التفضيلات عند اكتشاف جهاز ResMed</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
@@ -8802,6 +9168,10 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>%1 ساعات ،%2 دقيقة و %3 ثواني</translation>
     </message>
     <message>
+        <source>Your machine was on for %1.</source>
+        <translation type="vanished">تم تشغيل الجهاز لـ %1.</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="196"/>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
         <translation>&apos;&apos;&lt;font color = red&gt;كان لديك القناع فقط على%1.&lt;/font&gt;</translation>
@@ -8832,9 +9202,17 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>كان لديك AHI من %1 ، وهو %2 الخاص بك متوسط %3 أيام %4.</translation>
     </message>
     <message>
+        <source>Your CPAP machine used a constant %1 %2 of air</source>
+        <translation type="vanished">استخدم جهاز CPAP ثابتًا %1 %2 من الهواء</translation>
+    </message>
+    <message>
         <location filename="../oscar/welcome.cpp" line="262"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
         <translation>كان ضغطك أقل من %1 %2 لـ %3٪ من الوقت.</translation>
+    </message>
+    <message>
+        <source>Your machine used a constant %1-%2 %3 of air.</source>
+        <translation type="vanished">يستخدم الجهاز ثابتًا من %1 - %2 %3 من الهواء.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="285"/>
@@ -8851,6 +9229,10 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="296"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>كان ضغط EPAP أقل من %1 %2 لـ %3٪ من الوقت.</translation>
+    </message>
+    <message>
+        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
+        <translation type="vanished">كان جهازك أقل من %1 - %2 %3 لـ %4٪ من الوقت.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
