@@ -1281,12 +1281,12 @@ void PreferencesDialog::on_waveView_doubleClicked(const QModelIndex &index)
 
 void PreferencesDialog::on_maskLeaks4Slider_valueChanged(int value)
 {
-    ui->maskLeaks4Label->setText(tr("%1 %2").arg(value/10.0f, 5,'f',1).arg(STR_UNIT_LPM));
+    ui->maskLeaks4Label->setText(QString("%1 %2").arg(value/10.0f, 5,'f',1).arg(STR_UNIT_LPM));
 }
 
 void PreferencesDialog::on_maskLeaks20Slider_valueChanged(int value)
 {
-    ui->maskLeaks20Label->setText(tr("%1 %2").arg(value/10.0f, 5,'f',1).arg(STR_UNIT_LPM));
+    ui->maskLeaks20Label->setText(QString("%1 %2").arg(value/10.0f, 5,'f',1).arg(STR_UNIT_LPM));
 }
 
 void PreferencesDialog::on_calculateUnintentionalLeaks_toggled(bool)
