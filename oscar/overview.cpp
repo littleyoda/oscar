@@ -25,9 +25,8 @@
 
 
 // Features enabled by conditional compilation.
-
-
-
+#define ENABLE_GENERAL_MODIFICATION_OF_CALENDARS
+#define ENABLE_START_END_WIDGET_DISPLAY_ACTUAL_GRAPH_RANGE
 
 #include <QCalendarWidget>
 #include <QTextCharFormat>
@@ -596,9 +595,9 @@ void Overview::on_XBoundsChanged(qint64 start,qint64 end)
         chartsEmpty.clear();
         updateGraphCombo();
     }
-
-
-
+    #if defined(ENABLE_START_END_WIDGET_DISPLAY_ACTUAL_GRAPH_RANGE)
+    setRange(displayStartDate,displayEndDate, false);
+    #endif
 }
 
 void Overview::dateStart_currentPageChanged(int year, int month)
@@ -721,13 +720,12 @@ void Overview::on_rangeCombo_activated(int index)
     if (start < p_profile->FirstDay()) { start = p_profile->FirstDay(); }
 
     customMode = (index == 8) ;
-
-
+    #if !defined(ENABLE_GENERAL_MODIFICATION_OF_CALENDARS)
     ui->dateStartLabel->setEnabled(customMode);
     ui->dateEndLabel->setEnabled(customMode);
     ui->dateEnd->setEnabled(customMode);
     ui->dateStart->setEnabled(customMode);
-
+    #endif
 
 
     p_profile->general->setLastOverviewRange(index);  // type of range in last use
