@@ -50,7 +50,7 @@ void ResmedLoader::LogUnexpectedMessage(const QString & message)
     m_importMutex.unlock();
 }
 
-static const QVector<int> AS11TestedModels {39420, 39423, 0};
+static const QVector<int> AS11TestedModels {39420, 39421, 39423, 39485, 0};
 
 ResmedLoader::ResmedLoader() {
 #ifndef UNITTEST_MODE
