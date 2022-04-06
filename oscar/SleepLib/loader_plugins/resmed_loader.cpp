@@ -3212,18 +3212,18 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             code = CPAP_Pressure;
 //          es.physical_maximum = 25;
 //          es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, true);
         } else if (matchSignal(CPAP_IPAP, es.label)) {
             code = CPAP_IPAP;
 //          es.physical_maximum = 25;
 //          es.physical_minimum = 4;
-            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, true);
         } else if (matchSignal(CPAP_EPAP, es.label)) { // Expiratory Pressure
             code = CPAP_EPAP;
 //          es.physical_maximum = 25;
 //          es.physical_minimum = 4;
 
-            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
+            ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, true);
         }  else if (matchSignal(CPAP_MinuteVent,es.label)) {
             code = CPAP_MinuteVent;
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
