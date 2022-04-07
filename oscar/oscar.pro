@@ -534,10 +534,12 @@ gcc | clang {
 
     message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
 
-    greaterThan(COMPILER_MAJOR, 10) : {
-        QMAKE_CFLAGS += -Wno-error=stringop-overread
-        QMAKE_CXXFLAGS += -Wno-error=stringop-overread
-        message("Removing stringop-overread error")
+    equals($$QMAKE_CXX, "gcc") : {
+        greaterThan(COMPILER_MAJOR, 10) : {
+            QMAKE_CFLAGS += -Wno-error=stringop-overread
+            QMAKE_CXXFLAGS += -Wno-error=stringop-overread
+            message("Removing stringop-overread error")
+        }
     }
 
 }
