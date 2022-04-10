@@ -534,7 +534,8 @@ gcc | clang {
 
     message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
 
-    equals($$QMAKE_CXX, "gcc") : {
+##  equals($$QMAKE_CXX, "gcc") : {   // guwess what! the name is really "g++"
+    gcc {
         greaterThan(COMPILER_MAJOR, 10) : {
             QMAKE_CFLAGS += -Wno-error=stringop-overread
             QMAKE_CXXFLAGS += -Wno-error=stringop-overread
