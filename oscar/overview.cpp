@@ -24,6 +24,10 @@
 #endif
 
 
+// Features enabled by conditional compilation.
+#define ENABLE_GENERAL_MODIFICATION_OF_CALENDARS
+#define ENABLE_START_END_WIDGET_DISPLAY_ACTUAL_GRAPH_RANGE
+
 #include <QCalendarWidget>
 #include <QTextCharFormat>
 #include <QDebug>
@@ -94,10 +98,9 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     ui->dateStart->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
     ui->dateEnd->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
     ui->dateEnd->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
+    samePage=true;
 
     // Connect the signals to update which days have CPAP data when the month is changed
-    connect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
-    connect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
     QVBoxLayout *framelayout = new QVBoxLayout;
     ui->graphArea->setLayout(framelayout);
 
@@ -171,6 +174,8 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
 
     GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
 
+    connect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
+    connect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
     connect(GraphView, SIGNAL(updateCurrentTime(double)), this, SLOT(on_LineCursorUpdate(double)));
     connect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     connect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
@@ -484,31 +489,39 @@ void Overview::RedrawGraphs()
 }
 
 // Updates calendar format and profile data.
-void Overview::UpdateCalendarDay(QDateEdit *dateedit, QDate date)
+void Overview::UpdateCalendarDay(QDateEdit *dateedit, QDate date,bool startDateWidget)
 {
     QCalendarWidget *calendar = dateedit->calendarWidget();
-    QTextCharFormat bold;
-    QTextCharFormat cpapcol;
-    QTextCharFormat normal;
-    QTextCharFormat oxiday;
-    bold.setFontWeight(QFont::Bold);
-    cpapcol.setForeground(QBrush(Qt::blue, Qt::SolidPattern));
-    cpapcol.setFontWeight(QFont::Bold);
-    oxiday.setForeground(QBrush(Qt::red, Qt::SolidPattern));
-    oxiday.setFontWeight(QFont::Bold);
     bool hascpap = p_profile->FindDay(date, MT_CPAP) != nullptr;
     bool hasoxi = p_profile->FindDay(date, MT_OXIMETER) != nullptr;
-    //bool hasjournal=p_profile->GetDay(date,MT_JOURNAL)!=nullptr;
+
+    QTextCharFormat normal;
+    normal.setForeground(QBrush(Qt::blue, Qt::SolidPattern));
+    normal.setFontWeight(QFont::Bold);
+    if (startDateWidget) {
+        // reduce font size if range can not be reached
+        if (date > uiEndDate) {
+            normal.setFontWeight(QFont::Light);
+        }
+    } else if (date < uiStartDate) {
+        // reduce font size if range can not be reached
+        normal.setFontWeight(QFont::Light);
+    }
 
     if (hascpap) {
         if (hasoxi) {
-            calendar->setDateTextFormat(date, oxiday);
+            normal.setForeground(QBrush(Qt::red, Qt::SolidPattern));
+            calendar->setDateTextFormat(date, normal);
         } else {
-            calendar->setDateTextFormat(date, cpapcol);
+            normal.setForeground(QBrush(Qt::blue, Qt::SolidPattern));
+            calendar->setDateTextFormat(date, normal);
         }
     } else if (p_profile->GetDay(date)) {
-        calendar->setDateTextFormat(date, bold);
+        calendar->setDateTextFormat(date, normal);
     } else {
+        // is invalid.
+        normal.setForeground(QBrush(Qt::gray, Qt::SolidPattern));
+        normal.setFontWeight(QFont::Light);
         calendar->setDateTextFormat(date, normal);
     }
 
@@ -519,6 +532,11 @@ void Overview::SetXBounds(qint64 start, qint64 end, short group , bool refresh )
 {
      GraphView->SetXBounds( start , end ,group,refresh);
 }
+
+void Overview::SetXBounds(QDate & start, QDate&  end, short group , bool refresh ) {
+    SetXBounds(convertDateToStartTime(start),convertDateToEndTime(end),group,refresh);
+}
+
 
 void Overview::on_XBoundsChanged(qint64 start,qint64 end)
 {
@@ -577,6 +595,9 @@ void Overview::on_XBoundsChanged(qint64 start,qint64 end)
         chartsEmpty.clear();
         updateGraphCombo();
     }
+    #if defined(ENABLE_START_END_WIDGET_DISPLAY_ACTUAL_GRAPH_RANGE)
+    setRange(displayStartDate,displayEndDate, false);
+    #endif
 }
 
 void Overview::dateStart_currentPageChanged(int year, int month)
@@ -586,7 +607,7 @@ void Overview::dateStart_currentPageChanged(int year, int month)
 
     for (int i = 1; i <= dom; i++) {
         d = QDate(year, month, i);
-        UpdateCalendarDay(ui->dateStart, d);
+        UpdateCalendarDay(ui->dateStart, d,true /*startWidget*/);
     }
 }
 
@@ -594,42 +615,43 @@ void Overview::dateEnd_currentPageChanged(int year, int month)
 {
     QDate d(year, month, 1);
     int dom = d.daysInMonth();
-
     for (int i = 1; i <= dom; i++) {
         d = QDate(year, month, i);
-        UpdateCalendarDay(ui->dateEnd, d);
+        UpdateCalendarDay(ui->dateEnd, d,false /* not startWidget*/);
     }
 }
 
 
 void Overview::on_dateEnd_dateChanged(const QDate &date)
 {
-    qint64 d1 = qint64(QDateTime(ui->dateStart->date(), QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    qint64 d2 = qint64(QDateTime(date, QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    SetXBounds(d1, d2);
-    ui->dateStart->setMaximumDate(date);
+    QDate d2(date);
     if (customMode) {
-        p_profile->general->setCustomOverviewRangeEnd(date);
+        p_profile->general->setCustomOverviewRangeEnd(d2);
+    }
+    setRange(uiStartDate,d2, true);
+    if ( (uiStartDate.month() ==uiEndDate.month()) && (uiStartDate.year() ==uiEndDate.year()) ) {
+        dateEnd_currentPageChanged(uiEndDate.year(),uiEndDate.month());
     }
 }
 
 void Overview::on_dateStart_dateChanged(const QDate &date)
 {
-    qint64 d1 = qint64(QDateTime(date, QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    qint64 d2 = qint64(QDateTime(ui->dateEnd->date(), QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;
-    SetXBounds(d1, d2);
-    ui->dateEnd->setMinimumDate(date);
+    QDate d1(date);
     if (customMode) {
-        p_profile->general->setCustomOverviewRangeStart(date);
+        p_profile->general->setCustomOverviewRangeStart(d1);
+    }
+    setRange(d1, uiEndDate, true);
+    if ( (uiStartDate.month() ==uiEndDate.month()) && (uiStartDate.year() ==uiEndDate.year()) ) {
+        dateStart_currentPageChanged(uiStartDate.year(),uiStartDate.month());
     }
 }
 
 // Zoom to 100% button clicked or called back from 100% zoom in popup menu
 void Overview::on_zoomButton_clicked()
 {
-    qint64 d1 = qint64(QDateTime(ui->dateStart->date(), QTime(0, 10, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;  // GTS why UTC?
-    qint64 d2 = qint64(QDateTime(ui->dateEnd->date(), QTime(23, 0, 0)/*, Qt::UTC*/).toTime_t()) * 1000L;  // Interesting: start date set to 10 min after midnight, ending at 11 pm
-    SetXBounds(d1, d2);
+    // the Current behaviour is to zoom back to the last range created by on_rangeCombo_activation
+    // This change preserves OSCAR behaviour
+    on_rangeCombo_activated(p_profile->general->lastOverviewRange());  // type of range in last use
 }
 
 void Overview::ResetGraphLayout()
@@ -647,15 +669,6 @@ void Overview::ResetGraphOrder(int type)
 // Process new range selection from combo button
 void Overview::on_rangeCombo_activated(int index)
 {
-    // Block signal so that graphs are not updated for these.
-    ui->dateEnd->blockSignals(true);
-    ui->dateStart->blockSignals(true);
-    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
-    ui->dateEnd->setMaximumDate(p_profile->LastDay());
-    // these signals will be reenabled in setRange.
-    //ui->dateEnd->blockSignals(false);
-    //ui->dateStart->blockSignals(false);
-
     // Exclude Journal in calculating the last day
     QDate end = p_profile->LastDay(MT_CPAP);
     end = max(end, p_profile->LastDay(MT_OXIMETER));
@@ -697,13 +710,6 @@ void Overview::on_rangeCombo_activated(int index)
             p_profile->general->setCustomOverviewRangeEnd(end);
             index=8;
             ui->rangeCombo->setCurrentIndex(index);
-        } else if (customMode) {      // last mode was custom.
-            // Reset Custom Range to current range in calendar widget
-            // Custom mode MUST be initialized to false when the Custom Instance is created.
-            start = ui->dateStart->date();
-            end = ui->dateEnd->date();
-            p_profile->general->setCustomOverviewRangeStart(start);
-            p_profile->general->setCustomOverviewRangeEnd(end);
         } else {
             // have a change in RangeCombo selection. Use last saved values.
             start = p_profile->general->customOverviewRangeStart() ;
@@ -714,10 +720,12 @@ void Overview::on_rangeCombo_activated(int index)
     if (start < p_profile->FirstDay()) { start = p_profile->FirstDay(); }
 
     customMode = (index == 8) ;
+    #if !defined(ENABLE_GENERAL_MODIFICATION_OF_CALENDARS)
     ui->dateStartLabel->setEnabled(customMode);
     ui->dateEndLabel->setEnabled(customMode);
     ui->dateEnd->setEnabled(customMode);
     ui->dateStart->setEnabled(customMode);
+    #endif
 
 
     p_profile->general->setLastOverviewRange(index);  // type of range in last use
@@ -743,9 +751,6 @@ void Overview::on_rangeCombo_activated(int index)
     progress->close();
     delete progress;
 
-    // first and last dates for ANY machine type
-    //uiStartDate=start;
-    //uiEndDate=end;
     setRange(start, end);
 }
 
@@ -754,17 +759,40 @@ void Overview::on_rangeCombo_activated(int index)
 // 2. optionally also changes display range for graphs.
 void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
 {
+
+    // first setting of the date (setDate) will cause pageChanged to be executed.
+    // The pageChanged processing requires access to the other ui's date.
+    // so save them to memory before the first call.
+    uiStartDate =start;
+    uiEndDate = end;
+
+    //bool nextSamePage= start.daysTo(end)<=31;
+    bool nextSamePage= (start.year() == end.year() && start.month() == end.month()) ; 
+    if (samePage>0 ||nextSamePage) {
+        // The widgets do not signal pageChanged on opening - since the page hasn't changed.
+        // however the highlighting may need to be changed.
+        // The following forces a page change signal when calendar widget is opened.
+        ui->dateStart->calendarWidget()->setCurrentPage(1970,1);
+        ui->dateEnd->calendarWidget()->setCurrentPage(1970,1);
+        samePage=nextSamePage;
+    }
+
     ui->dateEnd->blockSignals(true);
     ui->dateStart->blockSignals(true);
 
-    ui->dateStart->setMaximumDate(end);
-    ui->dateEnd->setMinimumDate(start);
-    ui->dateStart->setDate(start);
+    // Calling these methods for the first time trigger pageChange actions.
     ui->dateEnd->setDate(end);
+    ui->dateEnd->setMinimumDate(start);
+
+    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
+    ui->dateEnd->setMaximumDate(p_profile->LastDay());
+
+    ui->dateStart->setDate(start);
+    ui->dateStart->setMaximumDate(end);
 
     ui->dateEnd->blockSignals(false);
     ui->dateStart->blockSignals(false);
-    if (updateGraphs) this->on_zoomButton_clicked();  // Click on zoom-out to 100% button
+    if (updateGraphs) SetXBounds(uiStartDate,uiEndDate);
     updateGraphCombo();
 }
 
