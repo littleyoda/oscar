@@ -537,16 +537,16 @@ gcc | clang {
 }
 
 ##  equals($$QMAKE_CXX, "gcc") : {   // guess what! the name is really "g++"
-gcc {
-    message("Detected compiler type gcc")
+equals(QMAKE_CXX, g++) {
+    message("Detected compiler  g++")
     greaterThan(COMPILER_MAJOR, 10) : {
         QMAKE_CFLAGS += -Wno-error=stringop-overread
         QMAKE_CXXFLAGS += -Wno-error=stringop-overread
         message("Making stringop-overread a non-error")
     }
 }
-clang {
-    message("Detected comiler type clang")
+equals(QMAKE_CXX, clang++) {
+    message("Detected compiler clang++")
 }
 
 
