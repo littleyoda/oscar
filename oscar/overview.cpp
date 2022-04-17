@@ -7,16 +7,19 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define NEWSTUFF
+
 #define xDEBUG_FUNCTIONS
 #ifdef DEBUG_FUNCTIONS
 #include <QRegularExpression>
 #define DEBUGQ  qDebug()
 #define DEBUGL  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGF  qDebug()<< QString("%1[%2]%3").arg( QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) ).arg(__LINE__).arg(__func__)
+#define DEBUGT  qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")
 #define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-#define DEBUGT qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") 
-
 #define O( XX ) " " #XX ":" << XX
+#define Q( XX ) << #XX ":" << XX
+#define R( XX )
 #define OO( XX , YY ) " " #XX ":" << YY
 #define NAME( id) schema::channel[ id ].label()
 #define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
@@ -74,7 +77,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
 
     // Set Date controls locale to 4 digit years
     QLocale locale = QLocale::system();
-    QString shortformat = locale.dateFormat(QLocale::ShortFormat);
+    shortformat = locale.dateFormat(QLocale::ShortFormat);
 
     if (!shortformat.toLower().contains("yyyy")) {
         shortformat.replace("yy", "yyyy");
@@ -173,6 +176,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     GraphView->LoadSettings("Overview"); //no trans
 
     GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
+	dateErrorDisplay = new DateErrorDisplay(this);
 
     connect(ui->dateStart->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateStart_currentPageChanged(int, int)));
     connect(ui->dateEnd->calendarWidget(), SIGNAL(currentPageChanged(int, int)), this, SLOT(dateEnd_currentPageChanged(int, int)));
@@ -196,6 +200,11 @@ Overview::~Overview()
     GraphView->SaveSettings("Overview");//no trans
 
     delete ui;
+	delete dateErrorDisplay;
+    delete icon_on ;
+    delete icon_off ;
+    delete icon_up_down ;
+    delete icon_warning ;
 }
 
 void Overview::ResetFont()
@@ -235,12 +244,10 @@ void Overview::on_summaryChartEmpty(gSummaryChart*sc,qint64 firstI,qint64 lastI,
     if (empty) {
         // on next range change allow empty flag to be recalculated
         chartsEmpty.insert(sc,graph);
-        //DEBUGF << graph->name() << "Chart is Empty" << "Range" << convertTimeToDate(firstI) << convertTimeToDate(lastI);
     } else {
         // The chart has some entry with data.
         chartsEmpty.remove(sc);
         updateGraphCombo();
-        //DEBUGF << graph->name() << "Chart is enabled with range:" << convertTimeToDate(firstI) << "==>" << convertTimeToDate(lastI) ;
     }
     Q_UNUSED(firstI);
     Q_UNUSED(lastI);
@@ -322,11 +329,8 @@ void Overview::CreateAllGraphs() {
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
             } 
-            if (sc== nullptr) {
-                //DEBUGF << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype() << "IGNORED";
-            } else {
+            if (sc!= nullptr) {
                 sc ->reCalculate();
-                //DEBUGF << "Channel" << name << "type" << chan->type() << "machine type" << chan->machtype() << OO(Empty,sc->isEmpty());
             }
         } // if showInOverview()
     } // for chit
@@ -549,12 +553,6 @@ void Overview::on_XBoundsChanged(qint64 start,qint64 end)
         // Only occurs when custom mode is switched to/from a latest mode. custom mode to/from last week.
         // All other displays expand the existing range.
         // reset all empty flags to not empty 
-        if (displayStartDate>maxRangeEndDate) {
-            //DEBUGF << "Two ranges" O(displayStartDate) <<">" << O(maxRangeEndDate);
-        }
-        if (minRangeStartDate>displayEndDate) {
-            //DEBUGF << "Two ranges" O(minRangeStartDate) <<">" << O(displayEndDate);
-        }
         largerRange=true;
         chartsEmpty = QHash<gSummaryChart*, gGraph*>( chartsToBeMonitored );
         minRangeStartDate = displayStartDate;
@@ -562,22 +560,12 @@ void Overview::on_XBoundsChanged(qint64 start,qint64 end)
     } else {
         // new range overlaps with old range
         if (displayStartDate<minRangeStartDate) {
-            //DEBUGF << "Start lower" <<O(minRangeStartDate)<< ">" <<O(displayStartDate);
             largerRange=true;
             minRangeStartDate = displayStartDate;
         }
         if (displayEndDate>maxRangeEndDate) {
-            //DEBUGF << "End Higher" <<O(maxRangeEndDate)<< "<" <<O(displayEndDate);
             largerRange=true;
             maxRangeEndDate   = displayEndDate;
-        }
-    }
-    if (!largerRange) {
-        if (displayStartDate<minRangeStartDate ) {
-            //DEBUGF << "ERROR" <<O(minRangeStartDate)<< "==" <<O(displayStartDate);
-        } 
-        if (displayEndDate>maxRangeEndDate) {
-            //DEBUGF << "ERROR" <<O(maxRangeEndDate)<< "==" <<O(displayEndDate);
         }
     }
 
@@ -624,6 +612,10 @@ void Overview::dateEnd_currentPageChanged(int year, int month)
 
 void Overview::on_dateEnd_dateChanged(const QDate &date)
 {
+	if (date<uiStartDate) {
+		dateErrorDisplay->error(false,date);
+		return;
+	}
     QDate d2(date);
     if (customMode) {
         p_profile->general->setCustomOverviewRangeEnd(d2);
@@ -636,6 +628,11 @@ void Overview::on_dateEnd_dateChanged(const QDate &date)
 
 void Overview::on_dateStart_dateChanged(const QDate &date)
 {
+	if (date>uiEndDate) {
+		// change date back to last date.
+		dateErrorDisplay->error(true,date);
+		return;
+    }
     QDate d1(date);
     if (customMode) {
         p_profile->general->setCustomOverviewRangeStart(d1);
@@ -653,6 +650,7 @@ void Overview::on_zoomButton_clicked()
     // This change preserves OSCAR behaviour
     on_rangeCombo_activated(p_profile->general->lastOverviewRange());  // type of range in last use
 }
+
 
 void Overview::ResetGraphLayout()
 {
@@ -732,7 +730,7 @@ void Overview::on_rangeCombo_activated(int index)
 
     // Ensure that all summary files are available and update version numbers if required
     int size = start.daysTo(end);
-    qDebug() << "Overview range combo from" << start << "to" << end << "with" << size << "days";
+    // qDebug() << "Overview range combo from" << start << "to" << end << "with" << size << "days";
     QDate dateback = end;
     CProgressBar * progress = new CProgressBar (QObject::tr("Loading summaries"), mainwin, size);
     for (int i=1; i < size; ++i) {
@@ -754,11 +752,100 @@ void Overview::on_rangeCombo_activated(int index)
     setRange(start, end);
 }
 
+
+DateErrorDisplay::DateErrorDisplay (Overview* overview)
+	:	m_overview(overview) 
+{
+	m_visible=false;
+	m_timer = new QTimer();
+	connect(m_timer, SIGNAL(timeout()),this, SLOT(timerDone()));
+};
+
+DateErrorDisplay::~DateErrorDisplay() {
+	disconnect(m_timer, SIGNAL(timeout()),this, SLOT(timerDone()));
+	delete m_timer;
+};
+
+void DateErrorDisplay::cancel() {
+	m_visible=false;
+	m_timer->stop();
+};
+
+void DateErrorDisplay::timerDone() {
+	m_visible=false;
+	m_overview->resetUiDates();
+	m_overview->graphView()->m_parent_tooltip->cancel();
+};
+
+int Overview::calculatePixels(bool startDate,ToolTipAlignment& align) {
+	// Center error message over start and end dates combined.
+	// Other allignement were tested but this is the best for this problem.
+	Q_UNUSED(startDate);
+	int space=4;
+	align=TT_AlignCenter;
+	return ((4*space) + ui->label_3->width() + ui->rangeCombo->width() + ui->dateStartLabel->width()  +ui->dateStart->width() );
+}
+
+void DateErrorDisplay::error(bool startDate,const QDate& dateEntered) {
+	m_startDate =m_overview->uiStartDate;
+	m_endDate =m_overview->uiEndDate;
+	ToolTipAlignment align=TT_AlignCenter;
+
+
+	QString dateFormatted =dateEntered.toString(m_overview->shortformat);
+
+	QString txt = QString(tr("ERROR\nThe start date MUST be before the end date"));
+	txt.append("\n");
+	if (startDate) {
+		txt.append(tr("The entered start date %1 is after the end date %2").arg(dateFormatted).arg(m_endDate.toString(m_overview->shortformat)));
+		txt.append(tr("\nHint: Change the end date first"));
+	} else {
+		txt.append(tr("The entered end date %1 ").arg(dateFormatted));
+		txt.append(tr("is before the start date %1").arg(m_startDate.toString(m_overview->shortformat)));
+		txt.append(tr("\nHint: Change the start date first"));
+	}
+
+	gGraphView* gv=m_overview->graphView();
+
+	int pixelsFromLeft = m_overview->calculatePixels(startDate,align);
+	int pixelsAboveBottom = 0;
+	int warningDurationMS =4000;
+	int resetUiDatesTimerDelayMS =1000;
+	//QFont* font=mediumfont;
+	QFont* font=defaultfont;
+
+	gv->m_parent_tooltip->display(gv,txt,pixelsAboveBottom,pixelsFromLeft, align, warningDurationMS , font);
+
+	m_timer->setInterval( resetUiDatesTimerDelayMS );
+	m_timer->setSingleShot(true);
+	m_timer->start();
+
+};
+
+void Overview::resetUiDates() {
+    ui->dateStart->blockSignals(true);
+    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
+    ui->dateStart->setMaximumDate(p_profile->LastDay());
+    ui->dateStart->setDate(uiStartDate);
+    ui->dateStart->blockSignals(false);
+
+    ui->dateEnd->blockSignals(true);
+    ui->dateEnd->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
+    ui->dateEnd->setMaximumDate(p_profile->LastDay());
+    ui->dateEnd->setDate(uiEndDate);
+    ui->dateEnd->blockSignals(false);
+}
+
 // Saves dates in UI, clicks zoom button, and updates combo box
 // 1. Updates the dates in the start / end date boxs
 // 2. optionally also changes display range for graphs.
 void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
 {
+
+	if (start>end) {
+		// this is an ERROR and shold NEVER occur.
+		return;
+	}
 
     // first setting of the date (setDate) will cause pageChanged to be executed.
     // The pageChanged processing requires access to the other ui's date.
@@ -777,21 +864,7 @@ void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
         samePage=nextSamePage;
     }
 
-    ui->dateEnd->blockSignals(true);
-    ui->dateStart->blockSignals(true);
-
-    // Calling these methods for the first time trigger pageChange actions.
-    ui->dateEnd->setDate(end);
-    ui->dateEnd->setMinimumDate(start);
-
-    ui->dateStart->setMinimumDate(p_profile->FirstDay());  // first and last dates for ANY machine type
-    ui->dateEnd->setMaximumDate(p_profile->LastDay());
-
-    ui->dateStart->setDate(start);
-    ui->dateStart->setMaximumDate(end);
-
-    ui->dateEnd->blockSignals(false);
-    ui->dateStart->blockSignals(false);
+	resetUiDates();
     if (updateGraphs) SetXBounds(uiStartDate,uiEndDate);
     updateGraphCombo();
 }

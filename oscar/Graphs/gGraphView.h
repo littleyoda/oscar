@@ -240,10 +240,12 @@ class gToolTip : public QObject
     virtual void paint(QPainter &paint); //actually paints it.
 
     //! \brief Close the tooltip early.
-    void cancel();
+    virtual void cancel();
 
     //! \brief Returns true if the tooltip is currently visible
-    bool visible() { return m_visible; }
+    virtual bool visible() { return m_visible; }
+
+    virtual QRect calculateRect(QPainter &painter);
 
   protected:
     gGraphView *m_graphview;
@@ -254,13 +256,35 @@ class gToolTip : public QObject
     bool m_visible;
     int m_spacer;
     QImage m_image;
-    bool m_invalidate;
     ToolTipAlignment m_alignment;
+    QFont* m_font=defaultfont;
 
   protected slots:
 
     //! \brief Timeout to hide tooltip, and redraw without it.
-    void timerDone();
+    virtual void timerDone();
+};
+
+class gParentToolTip : public gToolTip
+{
+	Q_OBJECT
+  public:
+	gParentToolTip(gGraphView *graphview);
+	~gParentToolTip();
+	virtual void display(gGraphView* gv,QString text,int verticalOffset, int alignOffset , ToolTipAlignment align = TT_AlignCenter, int timeout = 0,QFont *font = defaultfont) ;
+	virtual void cancel();
+	virtual bool visible();
+    virtual QRect calculateRect(QPainter &painter);
+	virtual void paint(QPainter &paint,int width,int height) ;
+  private:
+	int m_verticalOffset;
+	int m_alignOffset;
+	int m_width;
+	int m_height;
+	bool m_parent_visible;
+	int m_timeout;
+  protected slots:
+	virtual void timerDone();
 };
 
 struct SelectionHistoryItem {
@@ -425,6 +449,7 @@ class gGraphView
 
     gGraph *m_selected_graph;
     gToolTip *m_tooltip;
+    gParentToolTip *m_parent_tooltip;
     QTimer *timer;
 
     //! \brief Add the Text information to the Text Drawing Queue (called by gGraphs renderText method)

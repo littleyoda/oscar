@@ -11,10 +11,12 @@
 #ifdef DEBUG_FUNCTIONS
 #include <QRegularExpression>
 #define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
 #define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
+#define DEBUGF  qDebug()<< QString("%1[%2]%3").arg( QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) ).arg(__LINE__).arg(__func__)
 
 #define O( XX ) " " #XX ":" << XX
+#define Q( XX ) << #XX ":" << XX
+#define R( XX ) 
 #define OO( XX , YY ) " " #XX ":" << YY
 #define NAME( id) schema::channel[ id ].label()
 #define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
@@ -139,10 +141,8 @@ void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int t
     if (timer->isActive()) {
         timer->stop();
     }
-
     timer->setSingleShot(true);
     timer->start(timeout);
-    m_invalidate = true;
 }
 
 void gToolTip::cancel()
@@ -151,17 +151,14 @@ void gToolTip::cancel()
     timer->stop();
 }
 
-void gToolTip::paint(QPainter &painter)     //actually paints it.
+QRect gToolTip::calculateRect(QPainter &painter) 
 {
-    if (!m_visible) { return; }
-
     int x = m_pos.x();
     int y = m_pos.y();
 
     QRect rect(x, y, 0, 0);
 
-    painter.setFont(*defaultfont);
-
+    painter.setFont(*m_font);
     rect = painter.boundingRect(rect, Qt::AlignCenter, m_text);
 
     int w = rect.width() + m_spacer * 2;
@@ -201,19 +198,25 @@ void gToolTip::paint(QPainter &painter)     //actually paints it.
         rect.setTop(rect.top()-bot);
         rect.setBottom(m_graphview->height());
     }
+	return rect;
+}
 
+void gToolTip::paint(QPainter &painter)     //actually paints it.
+{
+    if (!m_visible) { return; }
+	QRect a_rect=calculateRect(painter);
 
     QBrush brush(QColor(255, 255, 128, 230));
     brush.setStyle(Qt::SolidPattern);
     painter.setBrush(brush);
     painter.setPen(QColor(0, 0, 0, 255));
 
-    painter.drawRoundedRect(rect, 5, 5);
+    painter.drawRoundedRect(a_rect, 5, 5);
     painter.setBrush(Qt::black);
 
-    painter.setFont(*defaultfont);
+    painter.setFont(*m_font);
 
-    painter.drawText(rect, Qt::AlignCenter, m_text);
+    painter.drawText(a_rect, Qt::AlignCenter, m_text);
 }
 
 void gToolTip::timerDone()
@@ -222,6 +225,88 @@ void gToolTip::timerDone()
     m_graphview->redraw();
     m_graphview->resetMouse();
 }
+
+/* Parent tool tip
+   Allow the parent (overview or daily) to add tooltip or short messages to the user.
+   The basic problem is that the parent does not know the current dimensions of the graph view.
+   the parent does have knowledge of the location of fixed widgets which makes it possible to
+   locate tool tips in an appropiate location.
+*/
+gParentToolTip::gParentToolTip(gGraphView *graphview)
+	: gToolTip(graphview) {
+	m_parent_visible=false;
+}
+
+gParentToolTip::~gParentToolTip() {
+}
+
+void gParentToolTip::display(gGraphView* gv,QString text, int verticalOffset, int alignOffset, ToolTipAlignment align , int timeout ,QFont *font ) {
+	m_text=text;
+	m_verticalOffset=verticalOffset;
+	m_alignOffset=alignOffset;
+	m_alignment=align;
+	m_timeout=timeout;
+	m_font=font;
+	m_parent_visible=true;
+	gv->timedRedraw(0);
+};
+
+
+QRect gParentToolTip::calculateRect(QPainter&  painter ) {
+    QRect rect(0, 0, 0, 0);
+    painter.setFont(*m_font);
+    rect = painter.boundingRect(rect, m_alignment, m_text);
+
+	// update space arround text
+	int space=2*m_spacer;
+	rect.setHeight(space+rect.height());
+	rect.setWidth(space+rect.width());
+
+	rect.moveTo(m_alignOffset,m_height-(m_verticalOffset+rect.height()));
+
+	// move rect accounding to alignment. default is left.
+
+	if (m_alignment == TT_AlignRight) {
+		// move rect left by width of rect. if <0 use 0;
+		rect.moveLeft(rect.left()-rect.width());
+	} else if (m_alignment == TT_AlignCenter) {
+		//	left by 1/2 width of rect. if < 0 then use 0
+		rect.moveLeft(rect.left()-rect.width()/2);
+	}
+
+	if (rect.top()<0) {rect.setTop(0);};
+	if (rect.left()<0) {rect.setLeft(0);};
+
+	return rect;
+}
+
+void gParentToolTip::paint(QPainter &painter,int width,int height) {
+	if (!m_parent_visible) {return ;};
+	m_width=width;
+	m_height=height;
+	gToolTip::display(m_text, 0, 0,m_alignment, m_timeout);
+	gToolTip::paint(painter);
+};
+
+void gParentToolTip::timerDone() {
+	gToolTip::timerDone();
+	if (m_parent_visible) {
+		m_graphview->timedRedraw(0);
+	}
+	m_parent_visible=false;
+};
+
+void gParentToolTip::cancel() {
+	gToolTip::cancel();
+	m_parent_visible=false;
+};
+
+bool gParentToolTip::visible() {
+	return gToolTip::visible() && m_parent_visible;
+};
+
+
+
 
 #ifdef ENABLE_THREADED_DRAWING
 
@@ -359,6 +444,7 @@ gGraphView::gGraphView(QWidget *parent, gGraphView *shared, QWidget *caller)
     masterlock = new QSemaphore(m_idealthreads);
 #endif
     m_tooltip = new gToolTip(this);
+    m_parent_tooltip = new gParentToolTip(this);
     /*for (int i=0;i<m_idealthreads;i++) {
         gThread * gt=new gThread(this);
         m_threads.push_back(gt);
@@ -634,6 +720,7 @@ gGraphView::~gGraphView()
     }
 
     delete m_tooltip;
+    delete m_parent_tooltip;
     m_graphs.clear();
 }
 
@@ -1499,6 +1586,7 @@ void gGraphView::paintGL()
     AppSetting->usePixmapCaching() ? DrawTextQueCached(painter) :DrawTextQue(painter);
 
     m_tooltip->paint(painter);
+    m_parent_tooltip->paint(painter,width(), height() );
 
 #ifdef DEBUG_EFFICIENCY
     const int rs = 20;
