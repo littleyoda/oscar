@@ -72,6 +72,7 @@ public:
         rms9_mode = -1;
         set_pressure = -1;
         epap = -1;
+        epapAuto = -1;
         max_pressure = -1;
         min_pressure = -1;
         max_epap = -1;
@@ -173,6 +174,7 @@ public:
     EventDataType max_pressure;
     EventDataType min_pressure;
     EventDataType epap;
+    EventDataType epapAuto;
     EventDataType max_ps;
     EventDataType min_ps;
     EventDataType ps;

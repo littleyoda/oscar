@@ -35,7 +35,7 @@ ChannelID RMS9_EPR, RMS9_EPRLevel, RMS9_Mode, RMS9_SmartStart, RMS9_HumidStatus,
          RMS9_PtAccess, RMS9_Mask, RMS9_ABFilter, RMS9_ClimateControl, RMS9_TubeType, RMAS11_SmartStop,
          RMS9_Temp, RMS9_TempEnable, RMS9_RampEnable, RMAS1x_Comfort, RMAS11_PtView;
 
-Channel_ID RMAS1x_EasyBreathe, RMAS1x_RiseEnable, RMAS1x_RiseTime, RMAS1x_Cycle, RMSA1x_Trigger, RMSA1x_TiMax, RMSA1x_TiMin;
+ChannelID RMAS1x_EasyBreathe, RMAS1x_RiseEnable, RMAS1x_RiseTime, RMAS1x_Cycle, RMAS1x_Trigger, RMAS1x_TiMax, RMAS1x_TiMin;
 
 const QString STR_ResMed_AirSense10 = "AirSense 10";
 const QString STR_ResMed_AirSense11 = "AirSense 11";
@@ -1456,24 +1456,24 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 
                 // Settings.CPAP.Starting Pressure
                 if ((R.rms9_mode == 0) && (sig = str.lookupLabel("S.C.StartPress"))) {
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // Settings.Adaptive Starting Pressure? 
                 if ( (R.rms9_mode == 1) && ((sig = str.lookupLabel("S.AS.StartPress")) || (sig = str.lookupLabel("S.A.StartPress"))) ) {
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 // mode 11 = APAP for her?
                 if ( (R.rms9_mode == 11) && (sig = str.lookupLabel("S.AFH.StartPress"))) {
-                        R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                        R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((R.mode == MODE_BILEVEL_FIXED) && (sig = str.lookupLabel("S.BL.StartPress"))) {
                     // Bilevel Starting Pressure
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if (((R.mode == MODE_ASV) || (R.mode == MODE_ASV_VARIABLE_EPAP) ||
                      (R.mode == MODE_BILEVEL_AUTO_FIXED_PS)) && (sig = str.lookupLabel("S.VA.StartPress"))) {
                     // Bilevel Starting Pressure
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
             }
 
@@ -1575,10 +1575,13 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if (R.mode == MODE_AVAPS) {
                 if ((sig = str.lookupLabel("S.i.StartPress"))) {
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.i.EPAP"))) {
                     R.min_epap = R.max_epap = R.epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                }
+                if ((sig = str.lookupLabel("S.i.EPAPAuto"))) {
+                    R.epapAuto = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.i.MinPS"))) {
                     R.min_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -1592,20 +1595,21 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 if ((sig = str.lookupLabel("S.i.MaxPS"))) {
                     R.max_ps = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
-                if ( (R.epap >= 0) && (R.max_epap == R.epap) ) {
+                if ( (R.epap >= 0) && (R.epapAuto == 0) ) {
                     R.max_ipap = R.epap + R.max_ps;
                     R.min_ipap = R.epap + R.min_ps;
                 } else {
                     R.max_ipap = R.max_epap + R.max_ps;
                     R.min_ipap = R.min_epap + R.min_ps;
                 }
-//              qDebug() << "AVAPS mode; Ramp" << R.ramp_pressure << "Min EPAP" << R.min_epap <<
-//                          "Max EPAP" << R.max_epap << "Min PS" << R.min_ps << "Max PS" << R.max_ps <<
-//                          "Min IPAP" << R.min_ipap << "Max_IPAP" << R.max_ipap;
+                qDebug() << "AVAPS mode; Ramp" << R.s_RampPressure << "Fixed EPAP" << ((R.epapAuto == 0) ? "True" : "False") <<
+                            "EPAP" << R.epap << "Min EPAP" << R.min_epap <<
+                            "Max EPAP" << R.max_epap << "Min PS" << R.min_ps << "Max PS" << R.max_ps <<
+                            "Min IPAP" << R.min_ipap << "Max_IPAP" << R.max_ipap;
             }
             if (R.mode == MODE_ASV) {
                 if ((sig = str.lookupLabel("S.AV.StartPress"))) {
-                    R.ramp_pressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_RampPressure = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                 }
                 if ((sig = str.lookupLabel("S.AV.EPAP"))) {
                     R.min_epap = R.max_epap = R.epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -1622,7 +1626,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if (R.mode == MODE_ASV_VARIABLE_EPAP) {
                 if ((sig = str.lookupLabel("S.AA.StartPress"))) {
                     EventDataType sp = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-                    R.ramp_pressure = sp;
+                    R.s_RampPressure = sp;
                 }
                 if ((sig = str.lookupLabel("S.AA.MinEPAP"))) {
                     R.min_epap = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -1860,7 +1864,28 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            }
+            } 
+            if ((sig = str.lookupLabel("S.EasyBreathe"))) {
+                R.s_EasyBreathe = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.RiseEnable"))) {
+                R.s_RiseEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.RiseTime"))) {
+                R.s_RiseTime = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.Cycle"))) {
+                R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.Trigger"))) {
+                R.s_Trigger = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.TiMax"))) {
+                R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
+            if ((sig = str.lookupLabel("S.TiMin"))) {
+                R.s_TiMin = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+            } 
             if ( R.min_pressure == 0 ) {
                 qDebug() << "Min Pressure is zero on" << date.toString();
             }
@@ -2392,8 +2417,8 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.s_RampTime >= 0) {
                 sess->settings[CPAP_RampTime] = R.s_RampTime;
             }
-            if (R.ramp_pressure >= 0) {
-                sess->settings[CPAP_RampPressure] = R.ramp_pressure;
+            if (R.s_RampPressure >= 0) {
+                sess->settings[CPAP_RampPressure] = R.s_RampPressure;
             }
         }
     }
