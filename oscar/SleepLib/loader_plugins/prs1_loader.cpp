@@ -141,6 +141,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "960P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "961P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "960T",    5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },  // omits "(System One 60 Series)" on official reports
+    { "961TCA",  5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },
     { "900X110", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X120", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X150", 5, 3, "DreamStation BiPAP autoSV" },
