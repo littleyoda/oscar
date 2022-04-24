@@ -271,10 +271,12 @@ class gParentToolTip : public gToolTip
   public:
 	gParentToolTip(gGraphView *graphview);
 	~gParentToolTip();
+        using gToolTip::display;
 	virtual void display(gGraphView* gv,QString text,int verticalOffset, int alignOffset , ToolTipAlignment align = TT_AlignCenter, int timeout = 0,QFont *font = defaultfont) ;
 	virtual void cancel();
 	virtual bool visible();
     virtual QRect calculateRect(QPainter &painter);
+        using gToolTip::paint;
 	virtual void paint(QPainter &paint,int width,int height) ;
   private:
 	int m_verticalOffset;
