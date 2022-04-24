@@ -164,7 +164,7 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Apnea         = 0x1004, FLAG,        MT_CPAP, SESSION, "Apnea",
             QObject::tr("Unclassified Apnea (UA)"), QObject::tr("An apnea that couldn't be determined as Central or Obstructive."),QObject::tr("UA"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("dark green")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_AllApnea      = 0x1010, FLAG,        MT_CPAP, SESSION, "AllApnea",
-            QObject::tr("Apnea (A)"), QObject::tr("An apnea reportred by your CPAP device."),QObject::tr("A"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#40c0ff")));
+            QObject::tr("Apnea (A)"), QObject::tr("An apnea reported by your CPAP device."),QObject::tr("A"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#40c0ff")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_FlowLimit     = 0x1005, FLAG,        MT_CPAP, SESSION, "FlowLimit",
             QObject::tr("Flow Limitation (FL)"), QObject::tr("A restriction in breathing from normal, causing a flattening of the flow waveform."), QObject::tr("FL"), STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#404040")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RERA          = 0x1006, FLAG,        MT_CPAP, SESSION, "RERA",
