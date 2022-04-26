@@ -7,21 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define xDEBUG_FUNCTIONS
-#ifdef DEBUG_FUNCTIONS
-#include <QRegularExpression>
-#define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-#define DEBUGF  qDebug()<< QString("%1[%2]%3").arg( QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) ).arg(__LINE__).arg(__func__)
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
 
-#define O( XX ) " " #XX ":" << XX
-#define Q( XX ) << #XX ":" << XX
-#define R( XX ) 
-#define OO( XX , YY ) " " #XX ":" << YY
-#define NAME( id) schema::channel[ id ].label()
-#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
-#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
-#endif
 
 #include "Graphs/gGraphView.h"
 
@@ -198,13 +186,13 @@ QRect gToolTip::calculateRect(QPainter &painter)
         rect.setTop(rect.top()-bot);
         rect.setBottom(m_graphview->height());
     }
-	return rect;
+    return rect;
 }
 
 void gToolTip::paint(QPainter &painter)     //actually paints it.
 {
     if (!m_visible) { return; }
-	QRect a_rect=calculateRect(painter);
+    QRect a_rect=calculateRect(painter);
 
     QBrush brush(QColor(255, 255, 128, 230));
     brush.setStyle(Qt::SolidPattern);
@@ -233,22 +221,22 @@ void gToolTip::timerDone()
    locate tool tips in an appropiate location.
 */
 gParentToolTip::gParentToolTip(gGraphView *graphview)
-	: gToolTip(graphview) {
-	m_parent_visible=false;
+        : gToolTip(graphview) {
+        m_parent_visible=false;
 }
 
 gParentToolTip::~gParentToolTip() {
 }
 
 void gParentToolTip::display(gGraphView* gv,QString text, int verticalOffset, int alignOffset, ToolTipAlignment align , int timeout ,QFont *font ) {
-	m_text=text;
-	m_verticalOffset=verticalOffset;
-	m_alignOffset=alignOffset;
-	m_alignment=align;
-	m_timeout=timeout;
-	m_font=font;
-	m_parent_visible=true;
-	gv->timedRedraw(0);
+    m_text=text;
+    m_verticalOffset=verticalOffset;
+    m_alignOffset=alignOffset;
+    m_alignment=align;
+    m_timeout=timeout;
+    m_font=font;
+    m_parent_visible=true;
+    gv->timedRedraw(0);
 };
 
 
@@ -257,52 +245,52 @@ QRect gParentToolTip::calculateRect(QPainter&  painter ) {
     painter.setFont(*m_font);
     rect = painter.boundingRect(rect, m_alignment, m_text);
 
-	// update space arround text
-	int space=2*m_spacer;
-	rect.setHeight(space+rect.height());
-	rect.setWidth(space+rect.width());
+    // update space arround text
+    int space=2*m_spacer;
+    rect.setHeight(space+rect.height());
+    rect.setWidth(space+rect.width());
 
-	rect.moveTo(m_alignOffset,m_height-(m_verticalOffset+rect.height()));
+    rect.moveTo(m_alignOffset,m_height-(m_verticalOffset+rect.height()));
 
-	// move rect accounding to alignment. default is left.
+    // move rect accounding to alignment. default is left.
 
-	if (m_alignment == TT_AlignRight) {
-		// move rect left by width of rect. if <0 use 0;
-		rect.moveLeft(rect.left()-rect.width());
-	} else if (m_alignment == TT_AlignCenter) {
-		//	left by 1/2 width of rect. if < 0 then use 0
-		rect.moveLeft(rect.left()-rect.width()/2);
-	}
+    if (m_alignment == TT_AlignRight) {
+        // move rect left by width of rect. if <0 use 0;
+        rect.moveLeft(rect.left()-rect.width());
+    } else if (m_alignment == TT_AlignCenter) {
+        //  left by 1/2 width of rect. if < 0 then use 0
+        rect.moveLeft(rect.left()-rect.width()/2);
+    }
 
-	if (rect.top()<0) {rect.setTop(0);};
-	if (rect.left()<0) {rect.setLeft(0);};
+    if (rect.top()<0) {rect.setTop(0);};
+    if (rect.left()<0) {rect.setLeft(0);};
 
-	return rect;
+    return rect;
 }
 
 void gParentToolTip::paint(QPainter &painter,int width,int height) {
-	if (!m_parent_visible) {return ;};
-	m_width=width;
-	m_height=height;
-	gToolTip::display(m_text, 0, 0,m_alignment, m_timeout);
-	gToolTip::paint(painter);
+    if (!m_parent_visible) {return ;};
+    m_width=width;
+    m_height=height;
+    gToolTip::display(m_text, 0, 0,m_alignment, m_timeout);
+    gToolTip::paint(painter);
 };
 
 void gParentToolTip::timerDone() {
-	gToolTip::timerDone();
-	if (m_parent_visible) {
-		m_graphview->timedRedraw(0);
-	}
-	m_parent_visible=false;
+    gToolTip::timerDone();
+    if (m_parent_visible) {
+        m_graphview->timedRedraw(0);
+    }
+    m_parent_visible=false;
 };
 
 void gParentToolTip::cancel() {
-	gToolTip::cancel();
-	m_parent_visible=false;
+    gToolTip::cancel();
+    m_parent_visible=false;
 };
 
 bool gParentToolTip::visible() {
-	return gToolTip::visible() && m_parent_visible;
+    return gToolTip::visible() && m_parent_visible;
 };
 
 
@@ -560,7 +548,6 @@ void gGraphView::popoutGraph()
             dock->resize(width(),0);
          //   QScrollArea
         }
-
         //////// Create dock widget and resize dock to hold new widget
         QDockWidget * newDockWidget = new QDockWidget(dock);
         newDockWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -2061,8 +2048,8 @@ void MinMaxWidget::onMaxChanged(double d)
 }
 void MinMaxWidget::onResetClicked()
 {
-    int tmp = graph->zoomY();
-    graph->setZoomY(0);
+    ZoomyScaling tmp = graph->zoomY();
+    graph->setZoomY(ZS_AUTO_FIT);
     EventDataType miny = graph->MinY(),
                   maxy = graph->MaxY();
 
@@ -2084,15 +2071,16 @@ void MinMaxWidget::onResetClicked()
     graph->setZoomY(tmp);
 }
 
-void MinMaxWidget::onComboChanged(int idx)
+void MinMaxWidget::onComboChanged(int _idx)
 {
-    minbox->setEnabled(idx == 2);
-    maxbox->setEnabled(idx == 2);
-    reset->setEnabled(idx == 2);
+    ZoomyScaling idx = static_cast<ZoomyScaling>(_idx) ;
+    minbox->setEnabled(idx == ZS_OVERRIDE);
+    maxbox->setEnabled(idx == ZS_OVERRIDE);
+    reset->setEnabled(idx == ZS_OVERRIDE);
 
     graph->setZoomY(idx);
 
-    if (idx == 2) {
+    if (idx == ZS_OVERRIDE) {
         if (qAbs(graph->rec_maxy - graph->rec_miny) < 0.0001) {
             onResetClicked();
         }
@@ -2106,9 +2094,9 @@ void MinMaxWidget::createLayout()
     layout->setSpacing(4);
 
     combobox = new QComboBox(this);
-    combobox->addItem(tr("Auto-Fit"), 0);
-    combobox->addItem(tr("Defaults"), 1);
-    combobox->addItem(tr("Override"), 2);
+    combobox->addItem(tr("Auto-Fit"), ZS_AUTO_FIT);
+    combobox->addItem(tr("Defaults"), ZS_DEFAULT);
+    combobox->addItem(tr("Override"), ZS_OVERRIDE);
     combobox->setToolTip(tr("The Y-Axis scaling mode, 'Auto-Fit' for automatic scaling, 'Defaults' for settings according to manufacturer, and 'Override' to choose your own."));
     connect(combobox, SIGNAL(activated(int)), this, SLOT(onComboChanged(int)));
 
@@ -3533,7 +3521,7 @@ void gGraphView::SaveSettings(QString title)
         out << graph->visible();
         out << graph->RecMinY();
         out << graph->RecMaxY();
-        out << graph->zoomY();
+        out << (short)graph->zoomY();   // the return type of zoomY was changed from a short to an enum (int) so much type cast it here
         out << (bool)graph->isPinned();
 
         gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(graph, LT_LineChart));
@@ -3663,7 +3651,7 @@ bool gGraphView::LoadSettings(QString title)
             g->setVisible(vis);
             g->setRecMinY(recminy);
             g->setRecMaxY(recmaxy);
-            g->setZoomY(zoomy);
+            g->setZoomY(static_cast<ZoomyScaling>(zoomy));
             g->setPinned(pinned);
 
             if (gvversion >= 4) {

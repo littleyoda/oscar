@@ -112,6 +112,12 @@ class gLineChart: public Layer
     //! \brief Returns Maximum Y-axis value for this layer
     virtual EventDataType Maxy();
 
+    //! \brief Returns Minimum Y-axis value for this layer
+    virtual EventDataType actualMinY() {return m_actual_min_y;};
+
+    //! \brief Returns Maximum Y-axis value for this layer
+    virtual EventDataType actualMaxY() {return m_actual_max_y;};
+
     //! \brief Returns true if all subplots contain no data
     virtual bool isEmpty();
 
@@ -164,6 +170,7 @@ class gLineChart: public Layer
     bool m_report_empty;
     bool m_square_plot;
     bool m_disable_accel;
+    EventDataType m_actual_min_y=0,m_actual_max_y=0;
 
     //! \brief Used by accelerated waveform plots. Must be >= Screen Resolution (or at least graph width)
     static const int max_drawlist_size = 10000;
