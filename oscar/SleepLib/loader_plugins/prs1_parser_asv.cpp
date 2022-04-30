@@ -10,11 +10,6 @@
 #include "prs1_parser.h"
 #include "prs1_loader.h"
 
-static QString hex(int i)
-{
-    return QString("0x") + QString::number(i, 16).toUpper();
-}
-
 //********************************************************************************************
 // MARK: -
 // MARK: 50 and 60 Series
@@ -664,7 +659,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 elapsed = data[pos];
                 this->AddEvent(new PRS1FlowLimitationEvent(t - elapsed, 0));
                 break;
-            case 0x0a:  // Vibratory Snore, note this is 0x9 in F5V3
+            case 0x0a:  // Vibratory Snore, note this is 0xb in F5V2 and 0x9 in F5V3
                 // VS events are instantaneous flags with no duration, drawn on the official waveform.
                 // The current thinking is that these are the snores that cause a change in auto-titrating
                 // pressure. The snoring statistic above seems to be a total count. It's unclear whether
@@ -672,7 +667,7 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
                 // no data bytes
                 this->AddEvent(new PRS1VibratorySnoreEvent(t, 0));
                 break;
-            case 0x0b:  // Periodic Breathing, note this is 0xa in F5V3
+            case 0x0b:  // Periodic Breathing, note this is 0xc in F5V2 and 0xa in F5V3
                 // PB events are reported some time after they conclude, and they do have a reported duration.
                 duration = 2 * (data[pos] | (data[pos+1] << 8));  // confirmed to double in F5V0
                 elapsed = data[pos+2];
@@ -721,12 +716,13 @@ bool PRS1DataChunk::ParseEventsF5V1(void)
 
 const QVector<PRS1ParsedEventType> ParsedEventsF5V2 = {
     PRS1EPAPSetEvent::TYPE,
+    PRS1PressurePulseEvent::TYPE,
     PRS1TimedBreathEvent::TYPE,
     PRS1ObstructiveApneaEvent::TYPE,
-    //PRS1ClearAirwayEvent::TYPE,  // not yet seen
+    PRS1ClearAirwayEvent::TYPE,
     PRS1HypopneaEvent::TYPE,
     PRS1FlowLimitationEvent::TYPE,
-    //PRS1VibratorySnoreEvent::TYPE,  // not yet seen
+    PRS1VibratorySnoreEvent::TYPE,
     PRS1PeriodicBreathingEvent::TYPE,
     //PRS1LargeLeakEvent::TYPE,  // not yet seen
     PRS1IPAPAverageEvent::TYPE,
@@ -751,7 +747,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
     }
     const unsigned char * data = (unsigned char *)this->m_data.constData();
     int chunk_size = this->m_data.size();
-    static const QMap<int,int> event_sizes = { {0,4}, {1,2}, {3,4}, {8,3}, {9,4}, {0xa,3}, {0xb,5}, {0xc,5}, {0xd,5}, {0xe,0xd}, {0xf,5}, {0x10,5}, {0x11,2}, {0x12,6} };
+    static const QMap<int,int> event_sizes = { {0,4}, {1,2}, {8,3}, {9,4}, {0xa,3}, {0xb,2}, {0xc,5}, {0xd,5}, {0xe,0xd}, {0xf,5}, {0x10,5}, {0x11,2}, {0x12,6} };
 
     if (chunk_size < 1) {
         // This does occasionally happen in F0V6.
@@ -780,51 +776,20 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
         }
         startpos = pos;
         if (code != 0 && code != 0x12) {  // These two codes have no timestamp  TODO: verify this applies to F5V012
-            t += data[pos] /*| (data[pos+1] << 8)*/;  // TODO: Is this really only 1 byte?
-            if (data[pos+1] != 0) qWarning() << this->sessionid << "nonzero time? byte" << hex(startpos);
-            CHECK_VALUE(data[pos+1], 0);
+            t += data[pos] | (data[pos+1] << 8);
             pos += 2;
         }
 
         switch (code) {
-/*
-        case 0x00: // Unknown (ASV Pressure value)
-            DUMP_EVENT();
-            // offset?
-            data0 = data[pos++];
-
-            if (!data[pos - 1]) { // WTH???
-                data1 = data[pos++];
-            }
-
-            if (!data[pos - 1]) {
-                //data2 = data[pos++];
-                pos++;
-            }
-
-            break;
-
-        case 0x01: // Unknown
-            DUMP_EVENT();
-            this->AddEvent(new PRS1UnknownValueEvent(code, t, 0, 0.1F));
-            break;
-*/
+            //case 0x00:  // never seen on F5V2
+            //case 0x01:  // never seen on F5V2
             case 0x02:  // Pressure adjustment
                 this->AddEvent(new PRS1EPAPSetEvent(t, data[pos++], GAIN));
                 break;
-/*
-        case 0x03: // BIPAP Pressure
-            DUMP_EVENT();
-            qDebug() << "0x03 Observed in ASV data!!????";
-
-            data0 = data[pos++];
-            data1 = data[pos++];
-            //            data0/=10.0;
-            //            data1/=10.0;
-            //            session->AddEvent(new Event(t,CPAP_EAP, 0, data, 1));
-            //            session->AddEvent(new Event(t,CPAP_IAP, 0, &data1, 1));
-            break;
-*/
+            case 0x03:  // Pressure Pulse
+                duration = data[pos];  // TODO: is this a duration?
+                this->AddEvent(new PRS1PressurePulseEvent(t, duration));
+                break;
             case 0x04:  // Timed Breath
                 // TB events have a duration in 0.1s, based on the review of pressure waveforms.
                 // TODO: Ideally the starting time here would be adjusted here, but PRS1ParsedEvents
@@ -839,15 +804,13 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 elapsed = data[pos];
                 this->AddEvent(new PRS1ObstructiveApneaEvent(t - elapsed, 0));
                 break;
-/*
-        case 0x06:
-            DUMP_EVENT();
-            //code=CPAP_ClearAirway;
-            data0 = data[pos++];
-            this->AddEvent(new PRS1ClearAirwayEvent(t - data0, data0));
-            break;
-*/
-
+            case 0x06:  // Clear Airway Apnea
+                // CA events are instantaneous flags with no duration: reviewing waveforms
+                // shows that the time elapsed between the flag and reporting often includes
+                // non-apnea breathing.
+                elapsed = data[pos];
+                this->AddEvent(new PRS1ClearAirwayEvent(t - elapsed, 0));
+                break;
             case 0x07:  // Hypopnea
                 // NOTE: No additional (unknown) first byte as in F5V3 0x07, but see below.
                 // This seems closer to F5V3 0x0d or 0x0e.
@@ -862,21 +825,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 elapsed = data[pos];  // based on sample waveform, the hypopnea is over after this
                 this->AddEvent(new PRS1HypopneaEvent(t - elapsed, 0));
                 break;
-/*
-        case 0x09: // ASV Codes
-            DUMP_EVENT();
-            / *
-            if (this->familyVersion<2) {
-                //code=CPAP_FlowLimit;
-                data0 = data[pos++];
-
-                this->AddEvent(new PRS1FlowLimitationEvent(t - data0, data0));
-            } else {
-            * /
-                data0 = data[pos++];
-                data1 = data[pos++];
-            break;
-*/
+            //case 0x09:  // never seen on F5V2
             case 0x0a:  // Flow Limitation, note this is 0x9 in F5V1 and 0x8 in F5V3
                 // TODO: We should revisit whether this is elapsed or duration once (if)
                 // we start calculating flow limitations ourselves. Flow limitations aren't
@@ -884,35 +833,21 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 elapsed = data[pos];
                 this->AddEvent(new PRS1FlowLimitationEvent(t - elapsed, 0));
                 break;
-/*
-        case 0x0b: // Cheyne Stokes
-            DUMP_EVENT();
-            data0 = ((unsigned char *)data)[pos + 1] << 8 | ((unsigned char *)data)[pos];
-            //data0*=2;
-            pos += 2;
-            data1 = ((unsigned char *)data)[pos]; //|data[pos+1] << 8
-            pos += 1;
-            //tt-=delta;
-            this->AddEvent(new PRS1PeriodicBreathingEvent(t - data1, data0));
-            break;
-*/
+            case 0x0b:  // Vibratory Snore, note this is 0xa in F5V1 and 0x9 in F5V3
+                // VS events are instantaneous flags with no duration, drawn on the official waveform.
+                // The current thinking is that these are the snores that cause a change in auto-titrating
+                // pressure. The snoring statistic above seems to be a total count. It's unclear whether
+                // the trigger for pressure change is severity or count or something else.
+                // no data bytes
+                this->AddEvent(new PRS1VibratorySnoreEvent(t, 0));
+                break;
             case 0x0c:  // Periodic Breathing, note this is 0xb in F5V1 and 0xa in F5V3
                 // PB events are reported some time after they conclude, and they do have a reported duration.
                 duration = 2 * (data[pos] | (data[pos+1] << 8));  // confirmed to double in F5V0
                 elapsed = data[pos+2];
                 this->AddEvent(new PRS1PeriodicBreathingEvent(t - elapsed - duration, duration));
                 break;
-/*
-        case 0x0d:
-            DUMP_EVENT();
-
-                data0 = (data[pos + 1] << 8 | data[pos]);
-                data0 *= 2;
-                pos += 2;
-                data1 = data[pos++];
-                //tt = t - qint64(data1) * 1000L;
-            break;
-*/
+            //case 0x0d:  // never seen on F5V2
             case 0x0e:  // Statistics, note this was 0x0d in F5V0 and F5V1
                 // These appear every 2 minutes, so presumably summarize the preceding period.
                 this->AddEvent(new PRS1IPAPAverageEvent(t, data[pos+0], GAIN));        // 00=IPAP
@@ -928,53 +863,6 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
                 this->AddEvent(new PRS1LeakEvent(t, data[pos+0xa]));                   // 0A=Leak (average?) new to F5V1 (originally found in F5V3)
                 this->AddEvent(new PRS1IntervalBoundaryEvent(t));
                 break;
-/*
-        case 0x0f:
-            DUMP_EVENT();
-            qDebug() << "0x0f Observed in ASV data!!????";
-
-            data0 = data[pos + 1] << 8 | data[pos];
-            pos += 2;
-            data1 = data[pos]; //|data[pos+1] << 8
-            pos += 1;
-            //tt -= qint64(data1) * 1000L;
-            //session->AddEvent(new Event(tt,cpapcode, 0, data, 2));
-            break;
-
-        case 0x10: // Unknown
-            DUMP_EVENT();
-            data0 = data[pos + 1] << 8 | data[pos];
-            pos += 2;
-            data1 = data[pos++];
-
-            this->AddEvent(new PRS1LargeLeakEvent(t - data1, data0));
-
-//            qDebug() << "0x10 Observed in ASV data!!????";
-//            data0 = data[pos++]; // << 8) | data[pos];
-//            data1 = data[pos++];
-//            data2 = data[pos++];
-            //session->AddEvent(new Event(t,cpapcode, 0, data, 3));
-            break;
-        case 0x11: // Not Leak Rate
-            DUMP_EVENT();
-            qDebug() << "0x11 Observed in ASV data!!????";
-            //if (!Code[24]) {
-            //   Code[24]=new EventList(cpapcode,EVL_Event);
-            //}
-            //Code[24]->AddEvent(t,data[pos++]);
-            break;
-
-
-        case 0x12: // Summary
-            DUMP_EVENT();
-            qDebug() << "0x12 Observed in ASV data!!????";
-            data0 = data[pos++];
-            data1 = data[pos++];
-            //data2 = data[pos + 1] << 8 | data[pos];
-            pos += 2;
-            //session->AddEvent(new Event(t,cpapcode, 0, data,3));
-            break;
-*/
             default:
                 DUMP_EVENT();
                 UNEXPECTED_VALUE(code, "known event code");

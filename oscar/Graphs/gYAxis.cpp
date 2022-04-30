@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include "Graphs/gYAxis.h"
 
 #include <QDebug>
@@ -19,6 +22,7 @@
 #include "SleepLib/profiles.h"
 
 #include <QFontMetrics>
+
 
 gXGrid::gXGrid(QColor col)
     : Layer(NoChannel)
@@ -306,7 +310,7 @@ bool gYAxis::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
     int y = event->y();
 
     if (!graph->units().isEmpty()) {
-        graph->ToolTip(graph->units(), x+10, y+10, TT_AlignLeft);
+        graph->ToolTip(graph->unitsTooltip(), x+10, y+10, TT_AlignLeft);
         //   graph->redraw();
     }
 
@@ -316,14 +320,8 @@ bool gYAxis::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 bool gYAxis::mouseDoubleClickEvent(QMouseEvent *event, gGraph *graph)
 {
     if (graph) {
-        //        int x=event->x();
-        //        int y=event->y();
-        short z = (graph->zoomY() + 1) % gGraph::maxZoomY;
-        graph->setZoomY(z);
-        qDebug() << "Mouse double clicked for" << graph->name() << z;
+        graph->mouseDoubleClickYAxis(event);
     }
-
-    Q_UNUSED(event);
     return false;
 }
 

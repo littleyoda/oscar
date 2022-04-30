@@ -713,12 +713,11 @@ void PRS1DataChunk::ParseHumidifierSetting60Series(unsigned char humid1, unsigne
     } else if (this->familyVersion == 2) {
         // F5V2
         if (tubepresent) {
-            CHECK_VALUES(tubetemp, 0, 3);
+            // all tube temperatures seen
             if (tubetemp) {
-                CHECK_VALUE(tubehumidlevel, 1);
+                CHECK_VALUES(tubehumidlevel, 1, 3);
             }
         }
-        CHECK_VALUE(humidsystemone, false);
         CHECK_VALUE(humidclassic, false);
     }
 }

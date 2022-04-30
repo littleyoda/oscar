@@ -143,34 +143,10 @@ some messages from Apnea Board.
 //#define MAP_LOG_EVENTS
 //#define ENABLE_UNEVEN_MACHINE_MIN_MAX_TEST
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+/ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 // Define Display macros to enhance displays
 
 
-#define DEBUGQ  qDebug()
-#define DEBUGT  qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-
-#include <QRegularExpression>
-#define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define TIMEO( DD , XX ) " " #DD ":"  << QDateTime::fromMSecsSinceEpoch( XX ).time().toString("hh:mm:ss.zzz")
-#define TIME( XX ) QDateTime::fromMSecsSinceEpoch( XX ).time().toString("hh:mm:ss.zzz")
-#define O( XX ) " " #XX ":" << XX
-#define OO( XX , YY ) " " #XX ":" << YY
-#define FULLNAME( id) schema::channel[ id ].fullname()
-#define PLACE  (QString(basename( __FILE__)).remove(QRegularExpression("\\..*$"))) << __LINE__
-
-#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch( XX ).toString("dd MMM yyyy hh:mm:ss.zzz")
-#define DATE( XX ) QDateTime::fromMSecsSinceEpoch( XX ).toString("dd MMM yyyy")
-#define DATEO( XX ) " " #XX ":"  << QDateTime::fromMSecsSinceEpoch( XX ).toString("dd MMM yyyy")
-#define TIME2( XX ) " " #XX ":" <<  XX << QDateTime::fromMSecsSinceEpoch( XX ).time().toString("hh:mm:ss.zzz")
-#define NAME( id) schema::channel[ id ].label()
-
-//#define ENABLE_TEST_NODATA      // no valid samples.
-//#define ENABLE_TEST_SINGLE      // a single value.
-//#define ENABLE_TEST_CPAP        // change all values to a single value.
-//#define ENABLE_TEST_SAWTOOTH    // change all sample  time and value to a sawtooth
 #endif
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -179,6 +155,9 @@ some messages from Apnea Board.
 #else
     #define test_data(A,B,C,D,E,F,G,H)
 #endif
+
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -553,7 +532,6 @@ void RecalcMAP::updateTimesValues(qint64 d1,qint64 d2, int key,PressureInfo & in
 
 //! \brief Updates Time At Pressure from session *sess
 void RecalcMAP::updateTimes(PressureInfo & info) {
-    //DEBUGF <<DATETIME(sessStartTime) << "CALLED" <<TIME(sessStartTime) <<TIME(sessEndTime);
     qint64 d1,d2;
     qint64 minx=0,maxx=0;
     //qint64 prevSessDuration=info.totalDuration;
@@ -1080,7 +1058,6 @@ void MinutesAtPressure::setEnabled(gGraph &graph) {
         } else {
             value &= pressureGraphLC->m_flags_enabled[ch];
         }
-        //DEBUGF << FULLNAME(ch) << O(value);
         m_enabled[ch]=value;
     }
 };

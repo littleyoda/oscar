@@ -7,19 +7,8 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define xDEBUG_FUNCTIONS
-#ifdef DEBUG_FUNCTIONS
-#include <QRegularExpression>
-#define DEBUG   qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGF  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-
-#define O( XX ) " " #XX ":" << XX
-#define OO( XX , YY ) " " #XX ":" << YY
-#define NAME( id) schema::channel[ id ].label()
-#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
-#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
-#endif
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
 
 #include <math.h>
 #include <QLabel>

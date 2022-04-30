@@ -2078,6 +2078,14 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // TODO: Confirm that 4 is 12HT and update ParseTubingTypeV3.
                 this->ParseTubingTypeV3(data[pos]);
                 break;
+            case 0x48:  // ??? Seen on DreamStation 2 non-Advanced (410)
+                // Appears between 0x2C and 0x2E, but the only values we've seen other than 0 is
+                // 1, which doesn't seem to be like a reasonable pressure (for ramp pressure) nor
+                // a boolean setting, which tends to be 0x80.
+                CHECK_VALUE(len, 1);
+                CHECK_VALUES(data[pos], 0, 1);
+                //this->AddEvent(new PRS1UnknownDataEvent(QByteArray((const char*) data, size), pos, len));
+                break;
             case 0x4a:  // Patient controls access, specific to DreamStation 2.
                 CHECK_VALUE(len, 1);
                 CHECK_VALUES(data[pos], 0, 0x80);

@@ -230,6 +230,10 @@ public:
         Q_UNUSED(graph);
         return false;
     }
+
+	virtual EventDataType actualMinY() {return 0;};
+	virtual EventDataType actualMaxY() {return 0;};
+
 };
 
 /*! \class LayerGroup

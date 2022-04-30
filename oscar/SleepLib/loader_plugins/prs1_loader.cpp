@@ -132,6 +132,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X130", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
+    { "410X150C", 0, 6, "DreamStation 2 CPAP" },
     { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
     { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "521X120C", 0, 6, "DreamStation 2 Auto CPAP Advanced with P-Flex" },  // inferred from 501X120 and presence of "P-Flex" on bottom label
@@ -141,6 +142,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "960P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "961P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "960T",    5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },  // omits "(System One 60 Series)" on official reports
+    { "961TCA",  5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },
     { "900X110", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X120", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X150", 5, 3, "DreamStation BiPAP autoSV" },

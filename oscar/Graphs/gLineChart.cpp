@@ -7,6 +7,10 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
+
 #include "Graphs/gLineChart.h"
 
 #include <QString>
@@ -275,6 +279,7 @@ skipcheck:
         }
     }
 }
+
 EventDataType gLineChart::Miny()
 {
     if (m_codes.size() == 0) return 0;
@@ -373,6 +378,7 @@ QString gLineChart::getMetaString(qint64 time)
 // Time Domain Line Chart
 void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 {
+    EventDataType actual_min_y, actual_max_y;
     QRectF rect = region.boundingRect();
     rect.translate(0.0f, 0.001f);
     // TODO: Just use QRect directly.
@@ -395,6 +401,8 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
         return;
     }
 
+    actual_min_y = INT_MAX;
+    actual_max_y = -INT_MAX;
 
     top++;
 
@@ -551,6 +559,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                 painter.setPen(QPen(QBrush(color), lineThickness, Qt::DotLine));
                 EventDataType y=top + height + 1 - ((dot.value - miny) * ymult);
                 painter.drawLine(left + 1, y, left + 1 + width, y);
+                DEBUGF NAME(dot.code) Q(dot.type) QQ(y,(int)y) Q(ratioX) O(QLine(left + 1, y, left + 1 + width, y)) Q(legendx) O(dot.value) ;
 
             }
         }
@@ -742,6 +751,8 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                             time += rate;
                             // This is much faster than QVector access.
                             data = *ptr * gain;
+                            if (actual_min_y>data) { actual_min_y=data; }
+                            if (actual_max_y<data) { actual_max_y=data; }
 
                             // Scale the time scale X to pixel scale X
                             px = ((time - minx) * xmult);
@@ -822,6 +833,8 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                             time += rate;
 
                             data = (*ptr + el.offset()) * gain;
+                            if (actual_min_y>data) { actual_min_y=data; }
+                            if (actual_max_y<data) { actual_max_y=data; }
 
                             px = xst + ((time - minx) * xmult); // Scale the time scale X to pixel scale X
                             py = yst - ((data - miny) * ymult); // Same for Y scale, with precomputed gain
@@ -880,6 +893,8 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
                     time = start + *tptr++;
                     data = (*dptr++ + el.offset()) * gain;
+                    if (actual_min_y>data) { actual_min_y=data; }
+                    if (actual_max_y<data) { actual_max_y=data; }
 
                     idx++;
 
@@ -897,75 +912,44 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                     // Unrolling square plot outside of loop to gain a minor speed improvement.
                     EventStoreType *eptr = dptr + siz;
 
-                    if (square_plot) {
-                        for (; dptr < eptr; dptr++) {
-                            time = start + *tptr++;
-                            data = gain * (*dptr + el.offset());
+                    for (; dptr < eptr; dptr++) {
+                        time = start + *tptr++;
+                        data = gain * (*dptr + el.offset());
+                        if (actual_min_y>data) { actual_min_y=data; }
+                        if (actual_max_y<data) { actual_max_y=data; }
 
-                            px = xst + ((time - minx) * xmult); // Scale the time scale X to pixel scale X
-                            py = yst - ((data - miny) * ymult); // Same for Y scale without precomputed gain
+                        px = xst + ((time - minx) * xmult); // Scale the time scale X to pixel scale X
+                        py = yst - ((data - miny) * ymult); // Same for Y scale without precomputed gain
 
-                            // Horizontal lines are easy to cap
-                            if (py == lastpy) {
-                                // Cap px to left margin
-                                if (lastpx < xst) { lastpx = xst; }
+                        // Horizontal lines are easy to cap
+                        if (py == lastpy) {
+                            // Cap px to left margin
+                            if (lastpx < xst) { lastpx = xst; }
 
-                                // Cap px to right margin
-                                if (px > xst + width) { px = xst + width; }
-
-//                                lines.append(QLine(lastpx, lastpy, px, lastpy));
-//                                lines.append(QLine(px, lastpy, px, py));
-                            } // else {
-                                // Letting the scissor do the dirty work for non horizontal lines
-                                // This really should be changed, as it might be cause that weird
-                                // display glitch on Linux..
-
-                                lines.append(QLine(lastpx, lastpy, px, lastpy));
-                                lines.append(QLine(px, lastpy, px, py));
-//                            }
-
-                            lastpx = px;
-                            lastpy = py;
-
-                            if (time > maxx) {
-                                done = true; // Let this iteration finish.. (This point will be in far clipping)
-                                break;
-                            }
+                            // Cap px to right margin
+                            if (px > xst + width) { px = xst + width; }
                         }
-                    } else {
-                        for (; dptr < eptr; dptr++) {
-                            //for (int i=0;i<siz;i++) {
-                            time = start + *tptr++;
-                            data = gain * (*dptr + el.offset());
+                        //else {
+                            // Letting the scissor do the dirty work for non horizontal lines
+                            // This really should be changed, as it might be cause that weird
+                            // display glitch on Linux..
+                        //}
+                        if (square_plot) {
+                            lines.append(QLine(lastpx, lastpy, px, lastpy));
+                            lines.append(QLine(px, lastpy, px, py));
+                        } else {
+                            lines.append(QLine(lastpx, lastpy, px, py));
+                        }
 
-                            px = xst + ((time - minx) * xmult); // Scale the time scale X to pixel scale X
-                            py = yst - ((data - miny) * ymult); // Same for Y scale without precomputed gain
+                        lastpx = px;
+                        lastpy = py;
 
-                            // Horizontal lines are easy to cap
-                            if (py == lastpy) {
-                                // Cap px to left margin
-                                if (lastpx < xst) { lastpx = xst; }
-
-                                // Cap px to right margin
-                                if (px > xst + width) { px = xst + width; }
-
-                              //  lines.append(QLine(lastpx, lastpy, px, py));
-                            } //else {
-                                // Letting the scissor do the dirty work for non horizontal lines
-                                // This really should be changed, as it might be cause that weird
-                                // display glitch on Linux..
-                                lines.append(QLine(lastpx, lastpy, px, py));
-                            //}
-
-                            lastpx = px;
-                            lastpy = py;
-
-                            if (time > maxx) { // Past right edge, abort further drawing..
-                                done = true;
-                                break;
-                            }
+                        if (time > maxx) { // Past right edge, abort further drawing..
+                            done = true;
+                            break;
                         }
                     }
+
                     if (w.printing() && AppSetting->monochromePrinting()) {
                         painter.setPen(QPen(Qt::black, lineThickness + 0.5));
                     } else {
@@ -1127,9 +1111,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
         double f = double(cnt) / hours; // / (sum / 3600.0);
         QString txt = QObject::tr("Duration %1:%2:%3").arg(h,2,10,QChar('0')).arg(m,2,10,QChar('0')).arg(s,2,10,QChar('0')) + " "+
-                QObject::tr("AHI %1").arg(f,0,'f',2);// +" " +
-//                QObject::tr("Events %1").arg(cnt) + " " +
-//                QObject::tr("Hours %1").arg(hours,0,'f',2);
+        QObject::tr("AHI %1").arg(f,0,'f',2);// +" "
 
         if (linecursormode) txt+=lasttext;
 
@@ -1138,4 +1120,9 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
 
    // painter.setRenderHint(QPainter::Antialiasing, false);
+
+if (actual_max_y>0) {
+    m_actual_min_y=actual_min_y;
+    m_actual_max_y=actual_max_y;
+}
 }

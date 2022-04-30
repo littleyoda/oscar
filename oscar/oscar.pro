@@ -527,7 +527,6 @@ message("CXXFLAGS pre-mods $$QMAKE_CXXFLAGS ")
 QMAKE_CFLAGS += -Werror
 QMAKE_CXXFLAGS += -Werror
 
-
 gcc | clang {
     COMPILER_VERSION = $$system($$QMAKE_CXX " -dumpversion")
     COMPILER_MAJOR = $$split(COMPILER_VERSION, ".")
@@ -536,25 +535,28 @@ gcc | clang {
     message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
 }
 
-##  equals($$QMAKE_CXX, "gcc") : {   // guess what! the name is really "g++"
-equals(QMAKE_CXX, g++) {
-    message("Detected compiler  g++")
+gcc:!clang {
+    message("Building for $$QMAKE_HOST.os")
     greaterThan(COMPILER_MAJOR, 10) : {
         QMAKE_CFLAGS += -Wno-error=stringop-overread
         QMAKE_CXXFLAGS += -Wno-error=stringop-overread
         message("Making stringop-overread a non-error")
     }
 }
-equals(QMAKE_CXX, clang++) {
-    message("Detected compiler clang++")
-}
 
+clang {
+    message("Building for $$QMAKE_HOST.os")
+	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
+	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+	message("Making deprecated-copy a non-error")
+}
 
 # Make deprecation warnings just warnings
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
 
 message("CXXFLAGS post-mods $$QMAKE_CXXFLAGS ")
+message("CXXFLAGS_WARN_ON $$QMAKE_CXXFLAGS_WARN_ON")
 
 lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
     QMAKE_CFLAGS += -Wno-error=strict-aliasing
