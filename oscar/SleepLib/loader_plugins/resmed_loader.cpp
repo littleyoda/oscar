@@ -220,32 +220,39 @@ void ResmedLoader::initChannels()
     chan->addOption(0, QObject::tr("Advanced"));
     chan->addOption(1, QObject::tr("Simple"));
 
-    channel.add(GRP_CPAP, chan = new Channel(RMAS1x_EasyBreathe = 0xe211, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_EasyBreathe", QObject::tr("EasyBreathe"), QObject::tr("EasyBreathe"), QObject::tr("EasyBreathe"), "", LOOKUP, Qt::black));
-    chan->addOption(0, "0");
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, STR_TR_On);
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_RiseEnable = 0xe212, SETTING, MT_CPAP, SESSION,
         "RMAS1x_RiseEnable", QObject::tr("RiseEnable"), QObject::tr("RiseEnable"), QObject::tr("RiseEnable"), "", LOOKUP, Qt::black));
-    chan->addOption(0, "0");
+    chan->addOption(0, STR_TR_Off);
+    chan->addOption(1, "Enabled");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_RiseTime = 0xe213, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_RiseTime", QObject::tr("RiseTime"), QObject::tr("RiseTime"), QObject::tr("RiseTime"), "", LOOKUP, Qt::black));
-    chan->addOption(0, "0");
+        "RMAS1x_RiseTime", QObject::tr("RiseTime"), QObject::tr("RiseTime"), QObject::tr("RiseTime"), "", INTEGER, Qt::black));
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Cycle = 0xe214, SETTING, MT_CPAP, SESSION,
         "RMAS1x_Cycle", QObject::tr("Cycle"), QObject::tr("Cycle"), QObject::tr("Cycle"), "", LOOKUP, Qt::black));
-    chan->addOption(0, "0");
+    chan->addOption(0, "Very Low");
+    chan->addOption(1, "Low");
+    chan->addOption(2, "Med");
+    chan->addOption(3, "High");
+    chan->addOption(4, "Very High");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Trigger = 0xe215, SETTING, MT_CPAP, SESSION,
         "RMAS1x_Trigger", QObject::tr("Trigger"), QObject::tr("Trigger"), QObject::tr("Trigger"), "", LOOKUP, Qt::black));
-    chan->addOption(0, "0");
+    chan->addOption(0, "Very Low");
+    chan->addOption(1, "Low");
+    chan->addOption(2, "Med");
+    chan->addOption(3, "High");
+    chan->addOption(4, "Very High");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMax = 0xe216, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", LOOKUP, Qt::black));
+        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", INTEGER?, Qt::black));
     chan->addOption(0, "0");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMin = 0xe217, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_TiMin", QObject::tr("TiMin"), QObject::tr("TiMin"), QObject::tr("TiMin"), "", LOOKUP, Qt::black));
+        "RMAS1x_TiMin", QObject::tr("TiMin"), QObject::tr("TiMin"), QObject::tr("TiMin"), "", INTEGER, Qt::black));
     chan->addOption(0, "0");
 
     // Setup ResMeds signal name translation map
