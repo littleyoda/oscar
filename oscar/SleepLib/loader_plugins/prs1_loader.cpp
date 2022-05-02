@@ -88,6 +88,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
     { "551P", 0, 2, "REMstar Auto (System One)" },
+    { "552P", 0, 3, "REMstar Auto (System One)" },
     { "650P", 0, 2, "BiPAP Pro (System One)" },
     { "750P", 0, 2, "BiPAP Auto (System One)" },
 
