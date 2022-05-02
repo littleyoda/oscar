@@ -134,6 +134,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     
     { "410X150C", 0, 6, "DreamStation 2 CPAP" },
     { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
+    { "520X130C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "521X120C", 0, 6, "DreamStation 2 Auto CPAP Advanced with P-Flex" },  // inferred from 501X120 and presence of "P-Flex" on bottom label
 
