@@ -68,6 +68,38 @@ CryptoResult decrypt_aes256_gcm(const QByteArray & key,
     return result;
 }
 
+CryptoResult encrypt_aes256_gcm(const QByteArray & key,
+                                const QByteArray & iv, const QByteArray & plaintext,
+                                QByteArray & ciphertext, QByteArray & tag)
+{
+    CryptoResult result = OK;
+    ciphertext.clear();
+    try {
+        const std::vector<uint8_t> botan_key(key.begin(), key.end());
+        const std::vector<uint8_t> botan_iv(iv.begin(), iv.end());
+
+        Botan::secure_vector<uint8_t> botan_message(plaintext.begin(), plaintext.end());
+
+        std::unique_ptr<Botan::Cipher_Mode> enc = Botan::Cipher_Mode::create("AES-256/GCM", Botan::ENCRYPTION);
+        enc->set_key(botan_key);
+        enc->start(botan_iv);
+        enc->finish(botan_message);
+        //qDebug() << QString::fromStdString(Botan::hex_encode(botan_message.data(), botan_message.size()));
+
+        size_t tag_size = enc->tag_size();
+        QByteArray message((char*) botan_message.data(), botan_message.size());
+        tag = message.right(tag_size);
+        ciphertext = message.left(message.size() - tag_size);
+    }
+    catch (std::exception& e) {
+        // Make sure no Botan exceptions leak out and terminate the application.
+        qWarning() << "Unexpected exception in encrypt_aes256_gcm:" << e.what();
+        result = UnknownError;
+    }
+    return result;
+
+}
+
 CryptoResult pbkdf2_sha256(const QByteArray & passphrase, const QByteArray & salt, int iterations, QByteArray & key)
 {
     CryptoResult result = OK;

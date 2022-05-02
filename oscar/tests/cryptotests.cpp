@@ -85,6 +85,25 @@ void CryptoTests::testAES256GCM()
     }
 }
 
+void CryptoTests::testAES256GCMencrypt()
+{
+    QByteArray empty;
+    for (int i = 0; i < s_AES256GCMVectorCount; i++) {
+        const AES256GCMVector_t* v = &s_AES256GCMVectors[i];
+        QByteArray key = QByteArray::fromHex(v->key);
+        QByteArray plaintext = QByteArray::fromHex(v->p);
+        QByteArray iv = QByteArray::fromHex(v->iv);
+        QByteArray expected_ciphertext = QByteArray::fromHex(v->c);
+        QByteArray expected_tag = QByteArray::fromHex(v->tag);
+
+        QByteArray ciphertext;
+        QByteArray tag;
+        CryptoResult result = encrypt_aes256_gcm(key, iv, plaintext, ciphertext, tag);
+        Q_ASSERT(result == OK);
+        Q_ASSERT(ciphertext == expected_ciphertext);
+        Q_ASSERT(tag == expected_tag);
+    }
+}
 
 void CryptoTests::testPBKDF2_SHA256()
 {

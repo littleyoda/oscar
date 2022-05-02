@@ -365,12 +365,23 @@ bool PRDS2File::decryptData()
 
     if (error) {
         if (error == InvalidTag) {
-            // This has been observed where the tag is zero and the data appears truncated.
-            qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            static const QByteArray s_zero_tag(16, 0);
+            if (m_payload_tag == s_zero_tag) {
+                // This has been observed where the tag is zero and the data appears truncated.
+                // Decrypt and ignore the tag. Rely on the decrypted payload's CRC for integrity.
+                qWarning() << name() << "DS2 payload has zero tag, recovering data";
+                error = encrypt_aes256_gcm(m_payload_key, m_iv, ciphertext, plaintext, m_payload_tag);
+                if (error) {
+                    qWarning() << "*** DS2 unexpected exception decrypting" << name();
+                }
+            } else {
+                qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            }
         } else {
             qWarning() << "*** DS2 unexpected exception decrypting" << name();
         }
-    } else {
+    }
+    if (!error) {
         m_payload.setData(plaintext);
         m_payload.open(QIODevice::ReadOnly);
         valid = true;
