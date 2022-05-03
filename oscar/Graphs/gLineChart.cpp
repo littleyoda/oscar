@@ -401,8 +401,8 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
         return;
     }
 
-    actual_min_y = INT_MAX;
-    actual_max_y = -INT_MAX;
+    actual_min_y = (EventDataType)INT_MAX;
+    actual_max_y = -(EventDataType)INT_MAX;
 
     top++;
 
