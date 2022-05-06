@@ -1430,6 +1430,9 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 case 11:    
                     mode = MODE_APAP; // For her is a special apap
                     break;
+                case 10:
+                    mode = MODE_UNKNOWN;    // it's PAC, whatever that is
+                    break;
                 case 9:    
                     mode = MODE_AVAPS;
                     break;
@@ -1872,27 +1875,47 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             if ((sig = str.lookupLabel("S.Tube"))) {
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             } 
-            if ((sig = str.lookupLabel("S.EasyBreathe"))) {
-                R.s_EasyBreathe = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.RiseEnable"))) {
-                R.s_RiseEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.RiseTime"))) {
-                R.s_RiseTime = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.Cycle"))) {
-                R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.Trigger"))) {
-                R.s_Trigger = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.TiMax"))) {
-                R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
-            if ((sig = str.lookupLabel("S.TiMin"))) {
-                R.s_TiMin = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
-            } 
+            if ((R.rms9_mode >= 2) && (R.rms9_mode <= 5)) {     // S, ST, or T modes
+                if (R.rms9_mode == 3) {     S mode only
+                    if ((sig = str.lookupLabel("S.EasyBreathe"))) {
+                        R.s_EasyBreathe = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    } 
+                }
+                if ((sig = str.lookupLabel("S.RiseEnable"))) {
+                    R.s_RiseEnable = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+                if ((sig = str.lookupLabel("S.RiseTime"))) {
+                 R.s_RiseTime = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+                if ((R.rms9_mode ==3) || (R.rms9_mode ==4)) {       // S or ST mode
+                    if ((sig = str.lookupLabel("S.Cycle"))) {
+                       R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    } 
+                    if ((sig = str.lookupLabel("S.Trigger"))) {
+                        R.s_Trigger = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    } 
+                    if ((sig = str.lookupLabel("S.TiMax"))) {
+                        R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    } 
+                    if ((sig = str.lookupLabel("S.TiMin"))) {
+                        R.s_TiMin = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    } 
+                }
+            }
+            if (R.rms9_mode == 6) {     // vAuto mode
+                if ((sig = str.lookupLabel("S.Cycle"))) {
+                   R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+                if ((sig = str.lookupLabel("S.Trigger"))) {
+                    R.s_Trigger = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+                if ((sig = str.lookupLabel("S.TiMax"))) {
+                    R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+                if ((sig = str.lookupLabel("S.TiMin"))) {
+                    R.s_TiMin = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                } 
+            }
             if ( R.min_pressure == 0 ) {
                 qDebug() << "Min Pressure is zero on" << date.toString();
             }
