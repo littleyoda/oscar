@@ -22,6 +22,9 @@ CryptoResult decrypt_aes256(const QByteArray & key, const QByteArray & ciphertex
 CryptoResult decrypt_aes256_gcm(const QByteArray & key,
                                 const QByteArray & iv, const QByteArray & ciphertext, const QByteArray & tag,
                                 QByteArray & plaintext);
+CryptoResult encrypt_aes256_gcm(const QByteArray & key,
+                                const QByteArray & iv, const QByteArray & plaintext,
+                                QByteArray & ciphertext, QByteArray & tag);
 CryptoResult pbkdf2_sha256(const QByteArray & passphrase, const QByteArray & salt, int iterations, QByteArray & key);
 
 #endif // CRYPTO_H

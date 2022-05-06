@@ -88,6 +88,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
     { "551P", 0, 2, "REMstar Auto (System One)" },
+    { "552P", 0, 3, "REMstar Auto (System One)" },
     { "650P", 0, 2, "BiPAP Pro (System One)" },
     { "750P", 0, 2, "BiPAP Auto (System One)" },
 
@@ -134,6 +135,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     
     { "410X150C", 0, 6, "DreamStation 2 CPAP" },
     { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
+    { "520X130C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "521X120C", 0, 6, "DreamStation 2 Auto CPAP Advanced with P-Flex" },  // inferred from 501X120 and presence of "P-Flex" on bottom label
 
@@ -364,12 +366,23 @@ bool PRDS2File::decryptData()
 
     if (error) {
         if (error == InvalidTag) {
-            // This has been observed where the tag is zero and the data appears truncated.
-            qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            static const QByteArray s_zero_tag(16, 0);
+            if (m_payload_tag == s_zero_tag) {
+                // This has been observed where the tag is zero and the data appears truncated.
+                // Decrypt and ignore the tag. Rely on the decrypted payload's CRC for integrity.
+                qWarning() << name() << "DS2 payload has zero tag, recovering data";
+                error = encrypt_aes256_gcm(m_payload_key, m_iv, ciphertext, plaintext, m_payload_tag);
+                if (error) {
+                    qWarning() << "*** DS2 unexpected exception decrypting" << name();
+                }
+            } else {
+                qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            }
         } else {
             qWarning() << "*** DS2 unexpected exception decrypting" << name();
         }
-    } else {
+    }
+    if (!error) {
         m_payload.setData(plaintext);
         m_payload.open(QIODevice::ReadOnly);
         valid = true;

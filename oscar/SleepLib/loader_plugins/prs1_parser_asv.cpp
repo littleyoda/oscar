@@ -208,12 +208,12 @@ bool PRS1DataChunk::ParseSettingsF5V012(const unsigned char* data, int /*size*/)
     cpapmode = PRS1_MODE_ASV;
     this->AddEvent(new PRS1ParsedSettingEvent(PRS1_SETTING_CPAP_MODE, (int) cpapmode));
 
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MIN, imin_epap));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MAX, imax_epap));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, imin_epap + imin_ps));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, imax_pressure));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, imin_ps));
-    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MIN, imin_epap, GAIN));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_EPAP_MAX, imax_epap, GAIN));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MIN, imin_epap + imin_ps, GAIN));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_IPAP_MAX, imax_pressure, GAIN));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MIN, imin_ps, GAIN));
+    this->AddEvent(new PRS1PressureSettingEvent(PRS1_SETTING_PS_MAX, imax_ps, GAIN));
 
     //CHECK_VALUE(data[0x07], 1, 2);  // 1 = backup breath rate "Auto"; 2 = fixed BPM, see below
     //CHECK_VALUE(data[0x08], 0);     // backup "Breath Rate" in mode 2
@@ -755,7 +755,7 @@ bool PRS1DataChunk::ParseEventsF5V2(void)
         return false;
     }
 
-    // F5V3 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
+    // F5V2 uses a gain of 0.125 rather than 0.1 to allow for a maximum value of 30 cmH2O
     static const float GAIN = 0.125;  // TODO: this should be parameterized somewhere more logical
     bool ok = true;
     int pos = 0, startpos;

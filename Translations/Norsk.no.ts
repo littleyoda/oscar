@@ -2211,71 +2211,71 @@
         <translation>Grafer</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
         <translation>Respiratory Disturbance Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
         <translation>Apnea Hypoapnea Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>Bruk</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>Bruk (timer)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>Økt-tider</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>Total tid i apné</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Total tid i apné (Minutter)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
         <translation>Body Mass Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>Hvordan du følte deg (0-10)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>Vis alle grafer</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>Skjul alle grafer</translation>
     </message>
@@ -8351,17 +8351,17 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Vennligst vent...</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation type="unfinished"></translation>
     </message>

@@ -546,9 +546,11 @@ gcc:!clang {
 
 clang {
     message("Building for $$QMAKE_HOST.os")
-	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
-	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
-	message("Making deprecated-copy a non-error")
+    greaterThan(COMPILER_MAJOR, 9) : {
+    	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    	message("Making deprecated-copy a non-error")
+    }
 }
 
 # Make deprecation warnings just warnings
