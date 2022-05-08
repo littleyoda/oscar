@@ -248,7 +248,7 @@ void ResmedLoader::initChannels()
     chan->addOption(4, "Very High");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMax = 0xe216, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", INTEGER?, Qt::black));
+        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", INTEGER, Qt::black));
     chan->addOption(0, "0");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMin = 0xe217, SETTING, MT_CPAP, SESSION,
@@ -1876,7 +1876,8 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 R.s_Tube = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
             } 
             if ((R.rms9_mode >= 2) && (R.rms9_mode <= 5)) {     // S, ST, or T modes
-                if (R.rms9_mode == 3) {     S mode only
+                qDebug() << "BiLevel Mode found" << R.rms9_mode;
+                if (R.rms9_mode == 3) {     // S mode only
                     if ((sig = str.lookupLabel("S.EasyBreathe"))) {
                         R.s_EasyBreathe = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     } 
@@ -1903,11 +1904,14 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 }
             }
             if (R.rms9_mode == 6) {     // vAuto mode
+                qDebug() << vAuto mode found" << 6;
                 if ((sig = str.lookupLabel("S.Cycle"))) {
-                   R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    qDebug() << "Cycle" << R.s_Cycle;
                 } 
                 if ((sig = str.lookupLabel("S.Trigger"))) {
                     R.s_Trigger = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    qDebug() << "Trigger" << R.s_Trigger;
                 } 
                 if ((sig = str.lookupLabel("S.TiMax"))) {
                     R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
@@ -3670,6 +3674,9 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_MaskPressure] = QStringList { "Mask Pres", "MaskPress.2s" };
 //  resmed_codes[CPAP_RespEvent] = QStringList {"Resp Event" };
     resmed_codes[CPAP_Pressure] = QStringList { "Therapy Pres", "Press.2s" };   // Un problemo... IPAP also uses Press.2s.. check the mode :/
+
+
+    // STR signals
     resmed_codes[CPAP_IPAP] = QStringList { "Insp Pres", "IPAP", "S.BL.IPAP" };
     resmed_codes[CPAP_EPAP] = QStringList { "Exp Pres", "EprPress.2s", "EPAP", "S.BL.EPAP", "EPRPress.2s" };
     resmed_codes[CPAP_EPAPHi] = QStringList { "Max EPAP" };
@@ -3696,8 +3703,6 @@ void setupResMedTranslationMap()
     resmed_codes[CPAP_Apnea] = QStringList { "Apnea" };
     resmed_codes[CPAP_RERA] = QStringList { "Arousal" };
     resmed_codes[CPAP_ClearAirway] = QStringList { "Central apnea" };
-
-    // STR signals
     resmed_codes[CPAP_Mode] = QStringList { "Mode", "Modus", "Funktion", "\xE6\xA8\xA1\xE5\xBC\x8F", "Mod" };
     resmed_codes[RMS9_SetPressure] = QStringList { "Set Pressure", "Eingest. Druck", "Ingestelde druk", "\xE8\xAE\xBE\xE5\xAE\x9A\xE5\x8E\x8B\xE5\x8A\x9B", "Pres. prescrite", "Inställt tryck", "InstÃ¤llt tryck", "S.C.Press", "Basıncı Ayarl" };
     resmed_codes[RMS9_EPR] = QStringList { "EPR", "\xE5\x91\xBC\xE6\xB0\x94\xE9\x87\x8A\xE5\x8E\x8B\x28\x45\x50" };
