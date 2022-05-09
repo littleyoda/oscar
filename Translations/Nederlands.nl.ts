@@ -2269,7 +2269,7 @@ AK: Waar staat dat Welkomst-/Startscherm???
         <translation>Grafieken</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2278,36 +2278,36 @@ Hypopneu
 Index (AHI)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>Gebruik</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>Gebruik
 (uren)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>Totale tijd in apneu</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Totale tijd in apneu
 (minuten)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>Sessietijden</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2316,7 +2316,7 @@ Verstorings
 Index (RDI)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
@@ -2326,24 +2326,24 @@ Index
 (BMI)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>Hoe U zich voelde
 (0-10)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation>10 van 10 grafieken</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>Alle grafieken zichtbaar</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>Verberg alle grafieken</translation>
     </message>
@@ -8760,17 +8760,17 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
         <translation>Gebruiks-statistieken</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation>%1 grafieken</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation>%1 van %2 grafieken</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation>Samenvattingen laden</translation>
     </message>

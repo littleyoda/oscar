@@ -521,11 +521,11 @@ DISTFILES += help/default.css \
     help/index.qhcp
 }
 
+message("CXXFLAGS pre-mods $$QMAKE_CXXFLAGS ")
 
 # Always treat warnings as errors, even (especially!) in release
 QMAKE_CFLAGS += -Werror
 QMAKE_CXXFLAGS += -Werror
-
 
 gcc | clang {
     COMPILER_VERSION = $$system($$QMAKE_CXX " -dumpversion")
@@ -533,18 +533,32 @@ gcc | clang {
     COMPILER_MAJOR = $$first(COMPILER_MAJOR)
 
     message("$$QMAKE_CXX major version $$COMPILER_MAJOR")
+}
 
+gcc:!clang {
+    message("Building for $$QMAKE_HOST.os")
     greaterThan(COMPILER_MAJOR, 10) : {
         QMAKE_CFLAGS += -Wno-error=stringop-overread
         QMAKE_CXXFLAGS += -Wno-error=stringop-overread
-        message("Removing stringop-overread error")
+        message("Making stringop-overread a non-error")
     }
+}
 
+clang {
+    message("Building for $$QMAKE_HOST.os")
+    greaterThan(COMPILER_MAJOR, 9) : {
+    	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    	message("Making deprecated-copy a non-error")
+    }
 }
 
 # Make deprecation warnings just warnings
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+
+message("CXXFLAGS post-mods $$QMAKE_CXXFLAGS ")
+message("CXXFLAGS_WARN_ON $$QMAKE_CXXFLAGS_WARN_ON")
 
 lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
     QMAKE_CFLAGS += -Wno-error=strict-aliasing

@@ -21,7 +21,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation
 // BEFORE making a release
-const int prs1_data_version = 20;
+const int prs1_data_version = 21;
 //
 //********************************************************************************************
 const QString prs1_class_name = STR_MACH_PRS1;

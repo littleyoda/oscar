@@ -2119,12 +2119,12 @@
         <translation>结束:</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>使用</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2133,12 +2133,12 @@ Index</source>
 指数</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>显示所有图表</translation>
     </message>
@@ -2153,7 +2153,7 @@ Index</source>
         <translation>下拉以查看要打开/关闭的图表列表。</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>使用
@@ -2170,7 +2170,7 @@ Index</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>感觉如何
@@ -2197,7 +2197,7 @@ Index</source>
         <translation>上个月</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2211,7 +2211,7 @@ Index</source>
         <translation>前六个月</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
@@ -2220,7 +2220,7 @@ Index</source>
 指数</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>会话时间</translation>
     </message>
@@ -2250,7 +2250,7 @@ Index</source>
         <translation>切换视图</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>隐藏所有图表</translation>
     </message>
@@ -2260,12 +2260,12 @@ Index</source>
         <translation>前两个月</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>呼吸暂停总时间</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>呼吸暂停总时间
@@ -7772,17 +7772,17 @@ TTIA: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation type="unfinished"></translation>
     </message>

@@ -35,6 +35,8 @@ void DestroyGraphGlobals();
 
 const int mouse_movement_threshold = 6;
 
+enum ZoomyScaling {ZS_AUTO_FIT =0 , ZS_DEFAULT =1  , ZS_OVERRIDE =2};
+
 float CatmullRomSpline(float p0, float p1, float p2, float p3, float t = 0.5);
 
 inline void GetTextExtent(QString text, int &width, int &height, QFont *font)
@@ -163,6 +165,9 @@ class gGraph : public QObject
 
     //! \brief Returns the measurement Units the Y scale is referring to
     QString units() { return m_units; }
+
+    //! \brief Returns the measurement Units the Y scale is referring to  plus tooltip. 
+    QString unitsTooltip() ;
 
     //! \brief Sets the measurement Units the Y scale is referring to
     void setUnits(const QString units) { m_units = units; }
@@ -303,9 +308,14 @@ class gGraph : public QObject
     bool isSnapshot() { return m_snapshot; }
     void setSnapshot(bool b) { m_snapshot = b; }
 
+    // returns if graph is a daily line chart with Dynamic Scaling mode enabled.
+    bool isDynamicScalingEnabled();
+
     short left, right, top, bottom; // dirty magin hacks..
 
     Layer *getLineChart();
+    Layer *m_lineChart_layer =nullptr ;
+    bool dynamicScalingOn =false;
     QTimer *timer;
 
     // This gets set to true to force a redraw of the yAxis tickers when graphs are resized.
@@ -318,10 +328,8 @@ class gGraph : public QObject
     gGraphView *graphView() { return m_graphview; }
     short m_marginleft, m_marginright, m_margintop, m_marginbottom;
 
-    inline short zoomY() { return m_zoomY; }
-    void setZoomY(short zoom);
-
-    static const short maxZoomY = 2;
+    inline ZoomyScaling zoomY() { return m_zoomY; }
+    void setZoomY(ZoomyScaling zoomy);
 
     inline qint64 selectedDuration() const { return m_selectedDuration; }
     inline QString selDurString() const { return m_selDurString; }
@@ -330,6 +338,8 @@ class gGraph : public QObject
     void setBlockSelect(bool b) { m_block_select = b; }
 
     inline bool printing() const { return m_printing; }
+
+    void mouseDoubleClickYAxis(QMouseEvent *event);
 
   protected:
     //! \brief Mouse Wheel events
@@ -352,6 +362,8 @@ class gGraph : public QObject
 
     //! \brief Key Pressed event
     virtual void keyReleaseEvent(QKeyEvent *event);
+
+    void dynamicScaling(EventDataType &miny, EventDataType &maxy);
 
     void cancelSelection() {
         m_selecting_area = false;
@@ -389,7 +401,7 @@ class gGraph : public QObject
     bool m_showTitle;
     bool m_printing;
     bool m_pinned;
-    short m_zoomY;
+    ZoomyScaling m_zoomY;
     bool m_block_select;
     QRect m_rect;
 
@@ -401,6 +413,8 @@ class gGraph : public QObject
     QString m_selDurString;
 
     bool m_snapshot;
+    EventDataType m_saved_minY=0;
+    EventDataType m_saved_maxY=0;
 
   protected slots:
     //! \brief Deselects any highlights, and schedules a main gGraphView redraw

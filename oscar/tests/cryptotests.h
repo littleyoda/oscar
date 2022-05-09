@@ -14,6 +14,7 @@ class CryptoTests : public QObject
 private slots:
     void testAES256();
     void testAES256GCM();
+    void testAES256GCMencrypt();
     void testPBKDF2_SHA256();
     void testPRS1Benchmarks();
 };

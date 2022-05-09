@@ -16,6 +16,7 @@
 #endif
 #include <QHBoxLayout>
 #include <QDateEdit>
+#include <QTimer>
 #include "SleepLib/profiles.h"
 #include "Graphs/gGraphView.h"
 #include "Graphs/gSummaryChart.h"
@@ -26,6 +27,27 @@ class Overview;
 }
 
 class Report;
+class Overview;
+
+class DateErrorDisplay:QObject {
+	Q_OBJECT
+public:
+    DateErrorDisplay (Overview* overview) ;
+    ~DateErrorDisplay() ;
+	bool visible() {return m_visible;};
+    void cancel();
+	void error(bool startDate,const QDate& date);
+protected:
+
+private:
+	QTimer* m_timer;
+    bool m_visible=false;
+    Overview* m_overview;
+	QDate m_startDate;
+	QDate m_endDate;
+private slots:
+    void timerDone();
+};
 
 enum YTickerType { YT_Number, YT_Time, YT_Weight };
 
@@ -35,6 +57,7 @@ enum YTickerType { YT_Number, YT_Time, YT_Weight };
     */
 class Overview : public QWidget
 {
+	friend class DateErrorDisplay;
     Q_OBJECT
 
   public:
@@ -103,8 +126,6 @@ class Overview : public QWidget
     //! \brief Updates the calendar highlighting when changing to a new month
     void dateEnd_currentPageChanged(int year, int month);
 
-    //void on_printDailyButton_clicked();
-
     void on_rangeCombo_activated(int index);
 
     void on_graphCombo_activated(int index);
@@ -143,6 +164,10 @@ class Overview : public QWidget
     void disconnectgSummaryCharts() ;
     void SetXBounds(qint64 minx, qint64 maxx, short group = 0, bool refresh = true);
     void SetXBounds(QDate & start, QDate&  end, short group =0 , bool refresh  = true);
+	void resetUiDates();
+	DateErrorDisplay* dateErrorDisplay;
+	int calculatePixels(bool startDate,ToolTipAlignment& align);
+	QString shortformat;
 
     // Start and of dates of the current graph display
     QDate displayStartDate;
@@ -165,5 +190,8 @@ class Overview : public QWidget
     bool samePage;
 
 };
+
+
+
 
 #endif // OVERVIEW_H

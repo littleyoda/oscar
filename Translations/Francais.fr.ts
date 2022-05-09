@@ -2144,12 +2144,12 @@
         <translation>Fin :</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>Utilisation</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2158,12 +2158,12 @@ troubles
 respiratoires</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation>Graphique 10 de 10</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>Afficher les graphiques</translation>
     </message>
@@ -2173,7 +2173,7 @@ respiratoires</translation>
         <translation>Réinitialiser à la durée choisie</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>Temps total en apnée</translation>
     </message>
@@ -2183,7 +2183,7 @@ respiratoires</translation>
         <translation>Dérouler pour voir la liste des graphiques à activer.</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>Utilisation (heures)</translation>
@@ -2194,7 +2194,7 @@ respiratoires</translation>
         <translation>3 derniers mois</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Temps total en apnée 
@@ -2206,7 +2206,7 @@ respiratoires</translation>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>Sensation
@@ -2233,7 +2233,7 @@ respiratoires</translation>
         <translation>Mois dernier</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2247,7 +2247,7 @@ Hypopnée</translation>
         <translation>6 derniers mois</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
@@ -2256,7 +2256,7 @@ de masse
 corporelle</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>Durée session</translation>
     </message>
@@ -2291,7 +2291,7 @@ corporelle</translation>
         <translation>Activer les graphiques</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>Cacher les graphiques</translation>
     </message>
@@ -8046,17 +8046,17 @@ Heures : %1</translation>
         <translation>Réglages EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation>Graphique %1</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation>Graphique %1 de %2</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation>Chargement des résumés</translation>
     </message>

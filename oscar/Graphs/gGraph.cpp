@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
+
 #include "Graphs/gGraph.h"
 
 #include <QLabel>
@@ -131,6 +134,7 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
       m_units(units),
       m_visible(true)
 {
+    // DEBUGF Q(name) Q(title) QQ("UNITS",units) Q(height) Q(group);
     if (height == 0) {
         height = AppSetting->graphHeight();
         Q_UNUSED(height)
@@ -153,7 +157,7 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
     min_x = min_y = 0;
     rec_miny = rec_maxy = 0;
     rphysmax_y = rphysmin_y = 0;
-    m_zoomY = 0;
+    m_zoomY = ZS_AUTO_FIT;
     m_selectedDuration = 0;
 
     if (graphview) {
@@ -281,9 +285,23 @@ void gGraph::setDay(Day *day)
     // ResetBounds();
 }
 
-void gGraph::setZoomY(short zoom)
-{
-    m_zoomY = zoom;
+void gGraph::setZoomY(ZoomyScaling zoomy) {
+    m_zoomY = zoomy;
+    dynamicScalingOn =false;
+    timedRedraw(0);
+}
+
+void gGraph::mouseDoubleClickYAxis(QMouseEvent * ) {
+    if ( isDynamicScalingEnabled() ) {
+        dynamicScalingOn = !dynamicScalingOn;
+    } else {
+        dynamicScalingOn =false;
+        if (m_zoomY == ZS_AUTO_FIT ) {
+            m_zoomY = ZS_DEFAULT;
+        } else if (m_zoomY == ZS_DEFAULT) {
+            m_zoomY = ZS_AUTO_FIT ;
+        }
+    }
     timedRedraw(0);
 }
 
@@ -564,22 +582,67 @@ void gGraph::ToolTip(QString text, int x, int y, ToolTipAlignment align, int tim
     m_graphview->m_tooltip->display(text, x, y, align, timeout);
 }
 
+bool gGraph::isDynamicScalingEnabled() {
+    return ((m_lineChart_layer!=nullptr) && AppSetting->allowYAxisScaling() );
+}
+
+QString gGraph::unitsTooltip() {
+    if (isDynamicScalingEnabled()) {
+        if(dynamicScalingOn) {
+            if (zoomY() == ZS_AUTO_FIT ) {
+                return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: Return to AUTO-FIT Scaling"));
+            } else if (zoomY() == ZS_DEFAULT ) {
+                return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: Return to DEFAULT Scaling"));
+            } else {
+                return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: Return to OVERRIDE Scaling"));
+            }
+        } else {
+            return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: For Dynamic Scaling"));
+        }
+    } else {
+        if (zoomY() == ZS_AUTO_FIT ) {
+            return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: Select DEFAULT Scaling"));
+        } else if (zoomY() == ZS_DEFAULT ) {
+            return QString("%1%2%3").arg(m_units).arg("\n").arg(tr("Double click Y-axis: Select AUTO-FIT Scaling"));
+        }
+    }
+    return m_units;
+}
+
+void gGraph::dynamicScaling(EventDataType &miny, EventDataType &maxy) {
+    // Have new Dynamic mode;
+    miny = m_lineChart_layer->actualMinY();
+    maxy = m_lineChart_layer->actualMaxY();
+    EventDataType diff= (maxy-miny);
+    maxy += diff*0.08;      // more space at top for event ticks.
+    miny -= diff*0.04;
+    if (m_saved_minY!=m_lineChart_layer->actualMinY() || m_saved_maxY!=m_lineChart_layer->actualMaxY()  ) {
+        // DEBUGF O(m_name) Q(m_saved_minY) QQ("==>",m_lineChart_layer->actualMinY() ) QQ("==>",miny) Q(m_saved_maxY) QQ("==>",m_lineChart_layer->actualMaxY()  )  QQ("==>",maxy);
+        m_saved_minY=m_lineChart_layer->actualMinY();
+        m_saved_maxY=m_lineChart_layer->actualMaxY();
+    }
+}
+
 // YAxis Autoscaling code
 void gGraph::roundY(EventDataType &miny, EventDataType &maxy)
 {
-
-    if (zoomY() == 2) {
+    if (dynamicScalingOn) {
+        dynamicScaling(miny, maxy) ;
+        if (maxy > miny) return;
+    };
+    if (zoomY() == ZS_OVERRIDE) {    // Have override mode
+        // set min and max to override values.
         miny = rec_miny;
         maxy = rec_maxy;
-        if (maxy > miny) return;
-    } else if (zoomY() ==1) {
+        if (maxy > miny) return; // Not Autoscaling
+    } else if (zoomY() ==ZS_DEFAULT) {  // Have Default mode
+        // set min and max to physical Min / max values.
         miny = physMinY();
         maxy = physMaxY();
-        if (maxy > miny) return;
+        if (maxy > miny) return; // Not Autoscaling
     }
     miny = MinY();
     maxy = MaxY();
-
     int m, t;
     bool ymin_good = false, ymax_good = false;
 
@@ -685,6 +748,11 @@ void gGraph::AddLayer(Layer *l, LayerPosition position, short width, short heigh
     l->setPos(x, y);
     l->addref();
     m_layers.push_back(l);
+
+    if (l->layerType()==LT_LineChart) {
+        m_lineChart_layer = dynamic_cast<gLineChart *>(l);
+    }
+
 }
 
 void gGraph::dataChanged()
@@ -1111,24 +1179,6 @@ void gGraph::mouseDoubleClickEvent(QMouseEvent *event)
             layer->mouseDoubleClickEvent(event, this);
         }
     }
-
-    //int w=m_lastbounds.width()-(m_marginleft+left+right+m_marginright);
-    //int h=m_lastbounds.height()-(bottom+m_marginbottom);
-    //int x2=m_graphview->pointClicked().x(),y2=m_graphview->pointClicked().y();
-    //    if ((m_graphview->horizTravel()<mouse_movement_threshold) && (x>left+m_marginleft && x<w+m_marginleft+left && y>top+m_margintop && y<h)) { // normal click in main area
-    //        if (event->button() & Qt::RightButton) {
-    //            ZoomX(1.66,x);  // Zoon out
-    //            return;
-    //        } else if (event->button() & Qt::LeftButton) {
-    //            ZoomX(0.75/2.0,x); // zoom in.
-    //            return;
-    //        }
-    //    } else {
-    // Propagate the events to graph Layers
-    //    }
-    //mousePressEvent(event);
-    //mouseReleaseEvent(event);
-    //qDebug() << m_title << "Double Clicked" << event->x() << event->y();
 }
 void gGraph::keyPressEvent(QKeyEvent *event)
 {
@@ -1416,16 +1466,14 @@ void gGraph::SetMaxY(EventDataType v)
 
 Layer *gGraph::getLineChart()
 {
-    gLineChart *lc;
-
+    if (m_lineChart_layer) return m_lineChart_layer;
     for (auto & layer : m_layers) {
-        lc = dynamic_cast<gLineChart *>(layer);
-
-        if (lc) { return lc; }
+        Layer *tmp = dynamic_cast<gLineChart *>(layer);
+        if (tmp) m_lineChart_layer = tmp;
     }
-
     return nullptr;
 }
+
 int gGraph::minHeight()
 {
     int minheight = m_min_height;

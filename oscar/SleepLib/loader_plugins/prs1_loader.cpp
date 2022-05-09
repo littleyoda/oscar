@@ -88,6 +88,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "550P", 0, 2, "REMstar Auto (System One)" },
     { "550P", 0, 3, "REMstar Auto (System One)" },
     { "551P", 0, 2, "REMstar Auto (System One)" },
+    { "552P", 0, 3, "REMstar Auto (System One)" },
     { "650P", 0, 2, "BiPAP Pro (System One)" },
     { "750P", 0, 2, "BiPAP Auto (System One)" },
 
@@ -132,7 +133,9 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "700X130", 0, 6, "DreamStation Auto BiPAP" },
     { "700X150", 0, 6, "DreamStation Auto BiPAP" },
     
+    { "410X150C", 0, 6, "DreamStation 2 CPAP" },
     { "520X110C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // based on bottom label, boot screen says "Advanced Auto CPAP"
+    { "520X130C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "521X120C", 0, 6, "DreamStation 2 Auto CPAP Advanced with P-Flex" },  // inferred from 501X120 and presence of "P-Flex" on bottom label
 
@@ -141,6 +144,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "960P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "961P",    5, 1, "BiPAP autoSV Advanced (System One 60 Series)" },
     { "960T",    5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },  // omits "(System One 60 Series)" on official reports
+    { "961TCA",  5, 2, "BiPAP autoSV Advanced 30 (System One 60 Series)" },
     { "900X110", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X120", 5, 3, "DreamStation BiPAP autoSV" },
     { "900X150", 5, 3, "DreamStation BiPAP autoSV" },
@@ -362,12 +366,23 @@ bool PRDS2File::decryptData()
 
     if (error) {
         if (error == InvalidTag) {
-            // This has been observed where the tag is zero and the data appears truncated.
-            qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            static const QByteArray s_zero_tag(16, 0);
+            if (m_payload_tag == s_zero_tag) {
+                // This has been observed where the tag is zero and the data appears truncated.
+                // Decrypt and ignore the tag. Rely on the decrypted payload's CRC for integrity.
+                qWarning() << name() << "DS2 payload has zero tag, recovering data";
+                error = encrypt_aes256_gcm(m_payload_key, m_iv, ciphertext, plaintext, m_payload_tag);
+                if (error) {
+                    qWarning() << "*** DS2 unexpected exception decrypting" << name();
+                }
+            } else {
+                qWarning() << name() << "DS2 payload doesn't match tag, skipping";
+            }
         } else {
             qWarning() << "*** DS2 unexpected exception decrypting" << name();
         }
-    } else {
+    }
+    if (!error) {
         m_payload.setData(plaintext);
         m_payload.open(QIODevice::ReadOnly);
         valid = true;

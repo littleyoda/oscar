@@ -195,7 +195,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1050"/>
         <source> i </source>
-        <translation type="unfinished"></translation>
+        <translation> i </translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1184"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1111"/>
         <source>Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskininställningar</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1271"/>
@@ -345,17 +345,17 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP device does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här CPAP-maskinen sparar inga detaljerade data</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1788"/>
         <source>no data :(</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen data :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1789"/>
         <source>Sorry, this device only provides compliance data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyvärr, den här maskinen sparar bara compliance-data.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1811"/>
@@ -777,7 +777,7 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskin-data kan inte importeras till denna profil.</translation>
     </message>
     <message>
         <source>This Machine Record cannot be imported in this profile.</source>
@@ -1031,7 +1031,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2495"/>
         <source>Purge ALL Device Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensa ALLA Maskindata</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2517"/>
@@ -1455,32 +1455,34 @@
         <source>Are you sure you want to rebuild all CPAP data for the following device:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker att du vill återskapa alla CPAP-data för följande maskiner:
+
+</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1861"/>
         <source>For some reason, OSCAR does not have any backups for the following device:</source>
-        <translation type="unfinished"></translation>
+        <translation>Av någon anledning, så har inte OSCAR någon säkerhetskopia för följande maskiner:</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1880"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this device until you do)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du återställa från din egen backup nu? (du kommer inte att se några data förrän du gör så)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1931"/>
         <source>OSCAR does not have any backups for this device!</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR har ingen backup för den här maskinen!</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1932"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this device&lt;/i&gt;, &lt;font size=+2&gt;you will lose this device&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Såvida du inte har gjort &lt;i&gt;din &lt;b&gt;egen&lt;/b&gt; säkerhetskopia för ALLA dina data från den här maskinen&lt;/i&gt;, &lt;font size=+2&gt;så förlorar du den här maskinens data &lt;b&gt;permanent&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1938"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s device database for the following device:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Du är på väg att &lt;font size=+2&gt;radera/förstöra&lt;/font&gt; OSCAR&apos;s maskin-databas för följande maskiner:&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2347"/>
@@ -1563,7 +1565,9 @@
         <source>Couldn&apos;t find any valid Device Data at
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hittade inga giltiga maskindata på 
+
+%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1087"/>
@@ -2079,7 +2083,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="113"/>
         <source>This software is being designed to assist you in reviewing the data produced by your CPAP Devices and related equipment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna programvara är utformad för att hjälpa dig att granska sömndata som sparats av din CPAP-maskin och av annan tillhörande utrustning.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>
@@ -2220,7 +2224,7 @@
         <translation>Grafer</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2229,7 +2233,7 @@ Störnings (Disturbance)
 Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2238,36 +2242,36 @@ Hypopnea
 Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>Compliance</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>Användning
 (timmar)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>Antal perioder</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>Apné - total tid</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Sammanlagd tid med andningsstillestånd
 (Minuter)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
@@ -2276,24 +2280,24 @@ Mass
 Index</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>Hur du känner dig
 (0-10)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation>10 av 10 diagram</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>Visa alla grafer</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>Dölj alla grafer</translation>
     </message>
@@ -2526,7 +2530,7 @@ Index</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1473"/>
         <source>I started this oximeter recording at (or near) the same time as a session on my CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jag startade denna pulsoximeter-inspelning samtidigt (eller nära den tid) som jag startade min CPAP-maskin.</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1502"/>
@@ -2926,7 +2930,13 @@ and graph data older than 30 days..
 
 OSCAR can keep a copy of this data if you ever need to reinstall. 
 (Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta innebär backup av SD-kortdata för ResMed maskiner, 
+
+ResMed&apos;s S9 maskiner raderar högupplösta data äldre än 7 dagar, 
+och grafdata äldre än 30 dagar.. 
+
+OSCAR kan behålla en kopia av dessa uppgifter om du behöver installera om. 
+(Starkt rekommenderat, om du inte har ont om diskutrymme eller inte bryr dig om grafdata)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="484"/>
@@ -3057,7 +3067,7 @@ Standardvärdet är 60 minuter. Rekommenderas starkt att använda detta värde.<
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed devices do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Notera: &lt;/span&gt;.&lt;/p&gt;På grund av begränsningar i ResMed&apos;s konstruktion så stöds inte ändringar av dessa inställningar &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1779"/>
@@ -3068,7 +3078,13 @@ Standardvärdet är 60 minuter. Rekommenderas starkt att använda detta värde.<
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Syncroniserar Oximeter och CPAP Data&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 data importeerad från SpO2Review (från .spoR filer) eller serial import metoden gör &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;inte&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; har korrekt tidsstämpel som behövs för att synca.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&quot;Live view mode&quot; (via en seriell kabel) är en väg att uppnå korrekt synkning med CMS50 pulsoximeter, men räknar inte med cpap:ens tids-driftt.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Om du startar din pulsoxymeters inspelning på &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exakt &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samma tid som du startar din CPAP, så kan du uppnå bra synkning. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Seriell-import metoden tar din starttid från sista nattens CPAP-data. (Kom ihåg att importera CPAP-data först.!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2686"/>
@@ -3210,7 +3226,7 @@ eftersom det är det enda värdet som finns på bara-översikts dagar.</translat
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging är en experimentell metod för att detektera händelser missade av maskinen. Dom är &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;inte&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; inräknade i AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1405"/>
@@ -3281,7 +3297,7 @@ eftersom det är det enda värdet som finns på bara-översikts dagar.</translat
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="272"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessioner med kortaretid än detta visas inte&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="601"/>
@@ -3301,12 +3317,12 @@ eftersom det är det enda värdet som finns på bara-översikts dagar.</translat
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="635"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ger en varning när du importerar data från en maskinmodell som ännu inte har testats av OSCAR-utvecklarna. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="638"/>
         <source>Warn when importing data from an untested device</source>
-        <translation type="unfinished"></translation>
+        <translation>Varna när du importerar data från en otestad maskin</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="803"/>
@@ -3315,29 +3331,35 @@ eftersom det är det enda värdet som finns på bara-översikts dagar.</translat
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
 
 If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här beräkningen kräver att totalt läckage-data skapas av CPAP-maskinen.  (T.ex. PRS1, men inte ResMed, som redan har detta)
+
+Beräkningen för oönskat läckage som görs här är linjär och används inte för maskläckage-kurvan.
+
+Om du använder några olika masker, plocka medelvärden istället. Det bör fortfarande vara tillräckligt nära.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="967"/>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the device missed.
 This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera/inaktivera experimentella händelseflaggningar. 
+Det gör att man hittar gränsfallshändelser och en del av de maskinen missat. 
+Detta alternativ måste aktiveras innan import, annars behövs en rensning.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1019"/>
         <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve device detected event positioning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta experimentella alternativ använder OSCAR&apos;s flaggningssystem för att förbättra programmets funktion.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1022"/>
         <source>Resync Device Detected Events (Experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Återsynka detekterade händelser (Experimentell)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1142"/>
         <source>Allow duplicates near device events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt dubbletter nära maskinhändelser.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1184"/>
@@ -3347,7 +3369,7 @@ This option must be enabled before import, otherwise a purge is required.</sourc
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1190"/>
         <source>Show flags for device detected events that haven&apos;t been identified yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa flagga för händelser som inte blivit identifierade än.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1193"/>
@@ -3573,7 +3595,7 @@ OSCAR kan behålla en kopia av dessa uppgifter om du behöver installera om.
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2726"/>
         <source>Whether to include device serial number on device settings changes report</source>
-        <translation type="unfinished"></translation>
+        <translation>Huruvida man ska inkludera maskinens serienummer i rapporten om ändringar av maskininställningar</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2771"/>
@@ -4130,17 +4152,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="66"/>
         <source>No CPAP devices detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen CPAP maskin hittades</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="67"/>
         <source>Will you be using a ResMed brand device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommer du att använda en ResMed maskin?</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="74"/>
         <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; devices due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed devices, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Observera:&lt;/b&gt;OSCARs avancerade data-uppdelningsfunktioner är inte möjliga med &lt;b&gt;ResMed&lt;/b&gt;-maskiner på grund av en begränsning av hur deras inställningar och sammanfattningsdata lagras och de har därför blivit inaktiverade för denna profil.&lt;/p&gt;&lt;p&gt;På ResMed-maskiner kommer dagar &lt;b&gt;att delas vid middagstid dvs, kl.12.00&lt;/b&gt;, precis som i ResMeds kommersiella programvara.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="528"/>
@@ -4260,7 +4282,7 @@ Vill du göra det nu?</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 devices routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="unfinished"></translation>
+        <translation>ResMed S9 maskiner tar rutinmässigt bort vissa data från ditt SD-kort äldre än 7 och 30 dagar (beroende på upplösning).</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1166"/>
@@ -4847,12 +4869,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="671"/>
         <source>kg</source>
-        <translation type="unfinished"></translation>
+        <translation>kg</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="684"/>
         <source>l/min</source>
-        <translation type="unfinished"></translation>
+        <translation>l/minut</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="685"/>
@@ -5323,7 +5345,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="700"/>
@@ -5628,53 +5650,53 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den importerade datan kanske inte är helt korrekt, därför vill gärna utvecklarna få tillgång till en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="161"/>
         <source>Non Data Capable Device</source>
-        <translation type="unfinished"></translation>
+        <translation>EJ data-kapabel maskin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
         <source>Your %1 CPAP Device (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din %1 CPAP maskin (Modell %2) är tyvärr inte kapabel till att spara data.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="163"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jag är ledsen att rapportera att OSCAR endast kan spåra timmar av användning och endast grundläggande inställningar för den här maskinen.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="175"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="442"/>
         <source>Device Untested</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna maskin är otestad</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
         <source>Your %1 CPAP Device (Model %2) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din %1 CPAP maskin (Modell %2) har inte blivit testad än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
         <source>It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det ser tillräckligt lika ut som andra maskiner så det kan fungera, men utvecklarna vill ändå få tillgång till en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="185"/>
         <source>Device Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinen stöds inte</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
         <source>Sorry, your %1 CPAP Device (%2) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledsen, men din %1 CPAP maskin (%2) stöds inte än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
         <source>The developers need a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklarna behöver en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
@@ -5987,17 +6009,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2955"/>
         <source>A few breaths automatically starts device</source>
-        <translation type="unfinished"></translation>
+        <translation>Några få andetag startar maskinen automatiskt</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2964"/>
         <source>Device automatically switches off</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinen stängs av automatiskt</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2973"/>
         <source>Whether or not device allows Mask checking.</source>
-        <translation type="unfinished"></translation>
+        <translation>Huruvida maskinen har mask-kontroll eller inte.</translation>
     </message>
     <message>
         <source>Whether or not machine shows AHI via built-in display.</source>
@@ -6117,7 +6139,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3050"/>
         <source>A period during a session where the device could not detect flow.</source>
-        <translation type="unfinished"></translation>
+        <translation>En period under en session då maskinen inte kunde detektera flöde.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3064"/>
@@ -6255,12 +6277,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>Whether or not device shows AHI via built-in display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om maskinen visar AHI på displayen eller inte.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3025"/>
         <source>The number of days in the Auto-CPAP trial period, after which the device will revert to CPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Antalet dagar som maskinen är i Auto-Trial läge innan den återgår till CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
@@ -6335,7 +6357,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="549"/>
         <source>&lt;i&gt;Your old device data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Dina gamla maskindata bör regenereras förutsatt att denna backup funktion inte har inaktiverats i inställningarna under en tidigare dataimport.&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="552"/>
@@ -6364,7 +6386,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="561"/>
         <source>Device Database Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskindatabas Förändringar</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="572"/>
@@ -6374,7 +6396,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="573"/>
         <source>The device data folder needs to be removed manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinens data-katalog måste raderas manuellt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="591"/>
@@ -6408,7 +6430,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="553"/>
         <source>This means you will need to import this device data again afterwards from your own backups or data card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta innebär att du kommer att behöva importera denna maskindata igen efteråt från dina egna säkerhetskopior eller minneskort.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
@@ -6608,7 +6630,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>Don&apos;t forget to place your datacard back in your CPAP device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kom ihåg att sätta tillbaka ditt minneskort i CPAP:en</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="468"/>
@@ -7358,42 +7380,42 @@ orsakar antingen ett uppvaknande eller en sömnstörning.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>Cheyne Stokes Respiration (CSR)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cheyne Stokes Andning (CSR)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>Periodic Breathing (PB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Periodisk andning (PB)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>Clear Airway (CA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Central Apne (CA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Obstructive Apnea (OA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstruktiv Apne (OA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>Hypopnea (H)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hypopné (H)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Unclassified Apnea (UA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ospecifierat andningsuppehåll (UA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>Apnea (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apne (A)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>An apnea reportred by your CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>En apne rapporterad av din CPAP maskin.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
@@ -7404,53 +7426,53 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>Flow Limitation (FL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flödesbegränsning (FL)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>RERA (RE)</source>
-        <translation type="unfinished"></translation>
+        <translation>RERA (RE)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>Vibratory Snore (VS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Snarkning (VS)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
         <source>A vibratory snore as detcted by a System One device</source>
-        <translation type="unfinished"></translation>
+        <translation>En snarkning som registrerats av en Philips System One maskin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <source>Leak Flag (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Läckage-flagga (LF)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>A large mask leak affecting device performance.</source>
-        <translation type="unfinished"></translation>
+        <translation>En stor mask läcka som påverkar maskinens prestanda.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>Large Leak (LL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Stor läcka (LL)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>Non Responding Event (NR)</source>
-        <translation type="unfinished"></translation>
+        <translation>En händelse som inte reagerats på (NR)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
         <source>Expiratory Puff (EP)</source>
-        <translation type="unfinished"></translation>
+        <translation>Utandningspuff (EP)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake (SA)</source>
-        <translation type="unfinished"></translation>
+        <translation>SensAwake (SA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
@@ -7462,27 +7484,27 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
         <source>User Flag #1 (UF1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarflagga #1 (UF1)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="197"/>
         <source>User Flag #2 (UF2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarflagga #2 (UF2)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="200"/>
         <source>User Flag #3 (UF3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarflagga #3 (UF3)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>Pulse Change (PC)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsförändringar (PC)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>SpO2 Drop (SD)</source>
-        <translation type="unfinished"></translation>
+        <translation>SpO2 nedgång (SD)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="232"/>
@@ -7521,7 +7543,7 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Apnea Hypopnea Index (AHI)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apnea Hypopnea Index (AHI)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
@@ -7560,7 +7582,7 @@ Orsakar en plattare form på andningskurvan.</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>Respiratory Disturbance Index (RDI)</source>
-        <translation type="unfinished"></translation>
+        <translation>Andningsstörningsindex (RDI)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="288"/>
@@ -8269,7 +8291,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>Device auto starts by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinen startar automatiskt då man andas</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
@@ -8279,7 +8301,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
         <source>Device auto stops by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskinen autostannar av andningen</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
@@ -8289,12 +8311,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="443"/>
         <source>Your ResMed CPAP device (Model %1) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din ResMed CPAP maskin (Modell %1) är inte testad än.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="444"/>
         <source>It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det ser tillräckligt lika ut som från andra maskiner så det kan fungera, men utvecklarna vill ändå få tillgång till en kopia av den här maskinens SD-kort och PDF-rapport från matchande kliniskt program för att säkerställa att OSCAR hanterar datan korrekt.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
@@ -8618,17 +8640,17 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Användningsstatistik</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation>%1 Diagram</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation>%1 av %2 Diagram</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation>Laddar sammanfattningar</translation>
     </message>
@@ -8790,7 +8812,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskin-data kan inte importeras till denna profil.</translation>
     </message>
     <message>
         <source>This Machine Record cannot be imported in this profile.</source>
@@ -8919,12 +8941,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="917"/>
         <source>Device Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskininformation</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="976"/>
         <source>Changes to Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändringar av maskininställningar</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1064"/>
@@ -9220,7 +9242,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.ui" line="580"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap device.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;Varning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD-kort behöver skrivskyddas &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;före insättning i datorns kortläsare.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Vissa operativsystem skriver små indexfiler till minneskortet utan att fråga först, vilket gör kortet oläsligt för din CPAP.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9243,7 +9265,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
         <source>Note that some preferences are forced when a ResMed device is detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Observera att vissa inställningar är givna när en ResMed-maskin detekteras</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="163"/>
@@ -9350,22 +9372,22 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="195"/>
         <source>Your device was on for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din maskin var på i %1.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="257"/>
         <source>Your CPAP device used a constant %1 %2 of air</source>
-        <translation type="unfinished"></translation>
+        <translation>Din CPAP maskin använde %1 %2 i tryck</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="270"/>
         <source>Your device used a constant %1-%2 %3 of air.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din maskin använde %1-%2 %3 i tryck.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="277"/>
         <source>Your device was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din maskin var under %1-%2 %3 i %4% av tiden.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="317"/>

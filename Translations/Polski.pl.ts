@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl_PL" sourcelanguage="en_US">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1050"/>
         <source> i </source>
-        <translation type="unfinished"></translation>
+        <translation> i </translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1062"/>
@@ -448,7 +448,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1111"/>
         <source>Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia aparatu</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1249"/>
@@ -488,7 +488,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1708"/>
         <source>This CPAP device does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>To urządzenie CPAP NIE rejestruje szczegółowych danych</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1779"/>
@@ -547,12 +547,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1788"/>
         <source>no data :(</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak danych</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1789"/>
         <source>Sorry, this device only provides compliance data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Niestety ten aparat dostarcza tylko danych o zgodności.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2394"/>
@@ -777,7 +777,7 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten zapis z aparatu nie moze być zaimportowany do tego profilu.</translation>
     </message>
     <message>
         <source>This Machine Record cannot be imported in this profile.</source>
@@ -963,7 +963,7 @@
     <message>
         <location filename="../oscar/mainwindow.ui" line="2495"/>
         <source>Purge ALL Device Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyczyść wszystkie dane aparatu</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2863"/>
@@ -1414,7 +1414,9 @@
         <source>Couldn&apos;t find any valid Device Data at
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę znaleźć odpowiednich danych w
+
+%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1057"/>
@@ -1441,32 +1443,34 @@
         <source>Are you sure you want to rebuild all CPAP data for the following device:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Na pewno chcesz przebudować wszystkie dane dla :
+
+</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1861"/>
         <source>For some reason, OSCAR does not have any backups for the following device:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z pewnych powodów OSCAR nie ma żadnych kopii zapasowych dla:</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1880"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this device until you do)</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy chcesz importować z własnych kopii zapasowych teraz? (nie będziesz widział żadnych danych z tego aparatu dopóki nie importujesz)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1931"/>
         <source>OSCAR does not have any backups for this device!</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR nie ma żadnych plików zapasowych dla tego aparatu!</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1932"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this device&lt;/i&gt;, &lt;font size=+2&gt;you will lose this device&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopóki nie utworzysz &lt;i&gt;swoich &lt;b&gt;własnych &lt;/b&gt; kopii zapasowych WSZYSTKICH danych dla tego aparatu&lt;/i&gt;, &lt;font size=+2&gt;utracisz wszwszystkie dane tego aparatu &lt;b&gt;trwale&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1938"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s device database for the following device:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuwasz &lt;font size=+2&gt;bezpowrotnie&lt;/font&gt; bazę danych dla aparatu:&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2244"/>
@@ -2066,7 +2070,7 @@
     <message>
         <location filename="../oscar/newprofile.cpp" line="113"/>
         <source>This software is being designed to assist you in reviewing the data produced by your CPAP Devices and related equipment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten program jest przeznaczony do pomocy w ocenie danych z aparatu CPAP i akcesoriów.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="119"/>
@@ -2217,7 +2221,7 @@
         <translation>Wykresy</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="261"/>
+        <location filename="../oscar/overview.cpp" line="266"/>
         <source>Respiratory
 Disturbance
 Index</source>
@@ -2226,7 +2230,7 @@ Zaburzeń
 Oddechowych</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="263"/>
+        <location filename="../oscar/overview.cpp" line="268"/>
         <source>Apnea
 Hypopnea
 Index</source>
@@ -2235,36 +2239,36 @@ Niedotlenienie
 Bezdech</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage</source>
         <translation>Użycie</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="270"/>
+        <location filename="../oscar/overview.cpp" line="275"/>
         <source>Usage
 (hours)</source>
         <translation>Użycie
 (godziny)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="274"/>
+        <location filename="../oscar/overview.cpp" line="279"/>
         <source>Session Times</source>
         <translation>Czasy sesji</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea</source>
         <translation>Całkowity czas bezdechu</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="283"/>
+        <location filename="../oscar/overview.cpp" line="288"/>
         <source>Total Time in Apnea
 (Minutes)</source>
         <translation>Całkowity czas bezdechu
 (minuty)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="335"/>
+        <location filename="../oscar/overview.cpp" line="340"/>
         <source>Body
 Mass
 Index</source>
@@ -2273,24 +2277,24 @@ Masy
 Ciała (BMI)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="341"/>
+        <location filename="../oscar/overview.cpp" line="346"/>
         <source>How you felt
 (0-10)</source>
         <translation>Jak się czułeś
 (0-10)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="463"/>
+        <location filename="../oscar/overview.cpp" line="468"/>
         <source>10 of 10 Charts</source>
         <translation>10 z 10 wykresów</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="803"/>
+        <location filename="../oscar/overview.cpp" line="831"/>
         <source>Show all graphs</source>
         <translation>Pokaż wszystkie wykresy</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="816"/>
+        <location filename="../oscar/overview.cpp" line="844"/>
         <source>Hide all graphs</source>
         <translation>Ukryj wszystkie wykresy</translation>
     </message>
@@ -2504,7 +2508,7 @@ Ciała (BMI)</translation>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1473"/>
         <source>I started this oximeter recording at (or near) the same time as a session on my CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wystartowałem pulsoksymetr o niemal tym samym czasie co aparat CPAP.</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1502"/>
@@ -2933,17 +2937,23 @@ and graph data older than 30 days..
 
 OSCAR can keep a copy of this data if you ever need to reinstall. 
 (Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="unfinished"></translation>
+        <translation>To obsługuje kopię zapasową danych aparatów ResMed,
+
+Aparaty ResMed S9 usuwają dokładniejsze dane starsze niż 7 dni,
+oraz dane wykresów starsze niz 30 dni.
+
+OSCAR może zachować te dane jeśli kiedyś będziesz reinstalował.
+(Rekomendowane, o ile nie masz za mało miejsca albo nie dbasz o dane wykresów)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="635"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wyświetl ostrzeżenie przy imporcie danych z aparatu nie testowanego przez deweloperów OSCARa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="638"/>
         <source>Warn when importing data from an untested device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostrzegaj przed importem danych z nie testowanego aparatu</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="659"/>
@@ -2957,34 +2967,40 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
 
 If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>Te obliczenia wymagają danych o wycieku całkowitym dostarczonych pzez aparat CPAP (np. PRS1, ale nie ResMed które już to mają)
+
+Obliczenia niezamierzonych wycieków są liniowe, nie uwzględniają krzywej wentylacji maski.
+
+Jeżeli używasz kilku różnych masek, wybierz wartosć średnią. Powinno wystarczyć.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="967"/>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the device missed.
 This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącz/wyłącz eksperymentalne wzmocnienie oznaczanie zdarzeń.
+Pozwala to na wykrycie zdarzeń granicznychi takich, które przegapił aparat.
+Ta opcja musi być włączona przed importem, w innym przypadku wymagane jest czyszczenie danych.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1019"/>
         <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve device detected event positioning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta eksperymentalna opcja próbuje użyć systemu flagowania OSCAR by poprawić pozycjonowanie zdarzeń wykrytych przez aparat.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1022"/>
         <source>Resync Device Detected Events (Experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Resynchronizuj zdarzenia wykryte przez aparat (eksperymentalne)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1142"/>
         <source>Allow duplicates near device events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozwalaj na duplikaty zdarzeń bliskich .</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1190"/>
         <source>Show flags for device detected events that haven&apos;t been identified yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż flagi zdarzeń wykrytych przez aparat które dotąd nie zostały zidentyfikowane.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1297"/>
@@ -3835,17 +3851,17 @@ Spróbuj i zdecyduj.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="272"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;śesje trwające krócej nie będą wyświetlane&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Flagowanie przez użytkownika jest eksperymentalną metodą wykrywania zdarzeń pominiętych przez urządzenie.Są one &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; włączone do AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed devices do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Z uwagi na ograniczenia, aparaty ResMed nie obsługują zmiany tych ustawień.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1779"/>
@@ -3856,7 +3872,13 @@ Spróbuj i zdecyduj.</translation>
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Synchronizowanie danych oksymetrii i CPAP&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Dane CMS50 importowane z SpO2Review (from .spoR files) lub serial import  &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;nie&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; mają właściwego znacznika czasowego potrzebnego do synchronizacji.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Tryb Live view (z użyciem kabla serial) jest jedynym sposobem do uzyskania właściwej synchronizacji pulsoksymetrów CMS50 oximeters, ale nie uwzględnia niedokładności zegara urządzenia CPAP.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Jeżeli właczysz pulsoksymetr &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;równocześnie &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;z aparatem CPAP, to możesz uzyskać synchronizację. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Import przez usb pobiera czas startu z ostatniej sesji - pamiętaj, najpierw wgraj dane z karty SD!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2036"/>
@@ -3866,7 +3888,7 @@ Spróbuj i zdecyduj.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2726"/>
         <source>Whether to include device serial number on device settings changes report</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy zaimportować nr seryjny urządzenia w raporcie zmian ustawień urządzenia</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2771"/>
@@ -4105,7 +4127,7 @@ Na pewno chcesz dokonać tych zmian?</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
         <source>ResMed S9 devices routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparaty ResMed S9 rutynowo usuwają określone dane z karty SD starsze niż 7 i 30 dni (zależnie od rozdzielczości).</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1166"/>
@@ -4181,17 +4203,17 @@ Restartować teraz?</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="66"/>
         <source>No CPAP devices detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie wykryto aparatu CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="67"/>
         <source>Will you be using a ResMed brand device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy będziesz używał aparatu ResMed?</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="74"/>
         <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; devices due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed devices, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Uwaga:&lt;/b&gt; zaawansowane dzielenie sesji nie jest możliwe dla aparatów ResMed z uwagi na ograniczenia w przechowywaniu danych i ustawień, i dlatego w tym profilu są wyłączone.&lt;/p&gt;&lt;p&gt;Dni będą dzielone w południe, jak w komercyjnym oprogramowaniu.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1164"/>
@@ -5432,12 +5454,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="671"/>
         <source>kg</source>
-        <translation type="unfinished"></translation>
+        <translation>kg</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="684"/>
         <source>l/min</source>
-        <translation type="unfinished"></translation>
+        <translation>l/min</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
@@ -5664,53 +5686,53 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="152"/>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dane zaimportowanie mogą nie być dokładne dlatego deweloperzy chcieliby kopię .zip Twoich plików danych z karty SD, dla pewności, ze OSCAR prawidłowo obsługuje dane.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="161"/>
         <source>Non Data Capable Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat nie zbierający danych</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="162"/>
         <source>Your %1 CPAP Device (Model %2) is unfortunately not a data capable model.</source>
-        <translation type="unfinished"></translation>
+        <translation>Twoje urządzenier CPAP %1 (model %2) nie udostępnia zgodnych danych.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="163"/>
         <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Niestety OSCAR może śledzić tylko czas działania i podstawowe ustawienia tego aparatu.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="175"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="442"/>
         <source>Device Untested</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat nie testowany</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="176"/>
         <source>Your %1 CPAP Device (Model %2) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Twoje urządzenie CPAP %1 (model %2) nie zostało jeszcze przetestowane.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="177"/>
         <source>It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wydaje się na tyle podobny do innych urządzeń, że może działać, ale programiści chcieliby mieć kopię .zip karty SD tego urządzenia i pasujące raporty .pdf lekarza, aby upewnić się, że działa z OSCAR.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="185"/>
         <source>Device Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat nie wspierany</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="186"/>
         <source>Sorry, your %1 CPAP Device (%2) is not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przepraszamy, Twój aparat %1 (%2) nie jest jeszcze wspierany.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/importcontext.cpp" line="187"/>
         <source>The developers need a .zip copy of this device&apos;s SD card and matching clinician .pdf reports to make it work with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deweloperzy potrzebują kopii .zip karty SD oraz odpowiadającej kopii .pdf badań lekarskich, aby mogły one współpracować z OSCARem.</translation>
     </message>
     <message>
         <source>The imported data may not be entirely accurate, so the developers would like a .zip copy of this machine&apos;s SD card and matching clinician .pdf reports to make sure OSCAR is handling the data correctly.</source>
@@ -5957,7 +5979,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="549"/>
         <source>&lt;i&gt;Your old device data should be regenerated provided this backup feature has not been disabled in preferences during a previous data import.&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Twoje stare dane z aparatu powinny być zregenerowane ponieważ ta cecha kopii zapasowej nie została wyłączona w preferencjach podczas poprzedniego importu.&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="552"/>
@@ -5971,7 +5993,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="553"/>
         <source>This means you will need to import this device data again afterwards from your own backups or data card.</source>
-        <translation type="unfinished"></translation>
+        <translation>To oznacza, że potrzebujesz ponownie zaimportować dane urządzenia z zapasu lub karty danych.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="556"/>
@@ -5991,7 +6013,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="561"/>
         <source>Device Database Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmiany bazy danych aparatów</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="572"/>
@@ -6001,7 +6023,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="573"/>
         <source>The device data folder needs to be removed manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder danych urządzenia musi być usunięty ręcznie.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="591"/>
@@ -6181,17 +6203,17 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="155"/>
         <source>Cheyne Stokes Respiration (CSR)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddech Cheyne-Stokes&apos;a (CSR)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="157"/>
         <source>Periodic Breathing (PB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddychanie okresowe (PB)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="159"/>
         <source>Clear Airway (CA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Centralne (CA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
@@ -6607,113 +6629,113 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="161"/>
         <source>Obstructive Apnea (OA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezdech obturacyjny (OA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="163"/>
         <source>Hypopnea (H)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spłycony oddech (H)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="165"/>
         <source>Unclassified Apnea (UA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezdech niesklasyfikowany (UA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>Apnea (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>bezdech (a)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="167"/>
         <source>An apnea reportred by your CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezdech zaraportowany przez aparat.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="169"/>
         <source>Flow Limitation (FL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ograniczenie przepływu (FL)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="171"/>
         <source>RERA (RE)</source>
-        <translation type="unfinished"></translation>
+        <translation>RERA (RE)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>Vibratory Snore (VS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Chrapanie z wibracją (VS)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
         <source>A vibratory snore as detcted by a System One device</source>
-        <translation type="unfinished"></translation>
+        <translation>Chrapanie z wibracją wykryte przez aparat System One</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <source>Leak Flag (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flaga wycieku (LF)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>A large mask leak affecting device performance.</source>
-        <translation type="unfinished"></translation>
+        <translation>Duży wyciek wpływający na efektywność działania aparatu.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="182"/>
         <source>Large Leak (LL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Duży wyciek (LL)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="185"/>
         <source>Non Responding Event (NR)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdarzenie nie odpowiadające (NR)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="188"/>
         <source>Expiratory Puff (EP)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pufnięcie wydechowe (EP)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="191"/>
         <source>SensAwake (SA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Przebudzenie sensoryczne (SA)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="194"/>
         <source>User Flag #1 (UF1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flaga użytkownika #1 (UF1)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="197"/>
         <source>User Flag #2 (UF2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flaga użytkownika #2 (UF2)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="200"/>
         <source>User Flag #3 (UF3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flaga użytkownika #3(UF3)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>Pulse Change (PC)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmiany pulsu (PC)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="222"/>
         <source>SpO2 Drop (SD)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spadek SpO2 (SD)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
         <source>Apnea Hypopnea Index (AHI)</source>
-        <translation type="unfinished"></translation>
+        <translation>Indeks bezdechów i spłycenia oddechu (AHI)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="284"/>
         <source>Respiratory Disturbance Index (RDI)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaźnik zaburzeń oddychania (RDI)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
@@ -6964,7 +6986,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="284"/>
         <source>Don&apos;t forget to place your datacard back in your CPAP device</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie zapomnij włożyć swojej karty SD ponownie do aparatu CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="468"/>
@@ -7537,12 +7559,12 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="443"/>
         <source>Your ResMed CPAP device (Model %1) has not been tested yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Twój aparat ResMed (model %1) nie był dotąd testowany.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="444"/>
         <source>It seems similar enough to other devices that it might work, but the developers would like a .zip copy of this device&apos;s SD card to make sure it works with OSCAR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wygląda to dość podobnie do innych aparatów by mogło działać, ale deweloperzy chcieliby kopię (.zip) karty SD z tego aparatu by upewnić się, że działa w OSCAR.</translation>
     </message>
     <message>
         <source>Machine auto starts by breathing</source>
@@ -7878,17 +7900,17 @@ Proszę przebuduj dane CPAP</translation>
         <translation>Ustawianie ciśnienia wydechowego (EPAP)</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="453"/>
+        <location filename="../oscar/overview.cpp" line="458"/>
         <source>%1 Charts</source>
         <translation>%1 Wykresów</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="454"/>
+        <location filename="../oscar/overview.cpp" line="459"/>
         <source>%1 of %2 Charts</source>
         <translation>%1 z %2 Wykresów</translation>
     </message>
     <message>
-        <location filename="../oscar/overview.cpp" line="729"/>
+        <location filename="../oscar/overview.cpp" line="737"/>
         <source>Loading summaries</source>
         <translation>Ładowanie podsumowań</translation>
     </message>
@@ -7900,7 +7922,7 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="832"/>
@@ -8330,32 +8352,32 @@ Proszę przebuduj dane CPAP</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2955"/>
         <source>A few breaths automatically starts device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilka oddechów automatycznie włącza aparat</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2964"/>
         <source>Device automatically switches off</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat wyłącza się automatycznie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2973"/>
         <source>Whether or not device allows Mask checking.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy aparat pokazuje alarm maski.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>Whether or not device shows AHI via built-in display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy aparat pokazuje AHI.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3025"/>
         <source>The number of days in the Auto-CPAP trial period, after which the device will revert to CPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilość dni w okresie próbnym auto-CPAP, po którym aparat wróci do trybu CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3050"/>
         <source>A period during a session where the device could not detect flow.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przez pewien czas sesji aparat nie wykrył przepływu.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3064"/>
@@ -8647,7 +8669,7 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>Device auto starts by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat sam startuje przez rozpoczęcie oddychania</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
@@ -8666,7 +8688,7 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
         <source>Device auto stops by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat wyłącza się sam przez oddychanie</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="216"/>
@@ -8786,7 +8808,7 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten zapis z aparatu nie moze być zaimportowany do tego profilu.</translation>
     </message>
     <message>
         <source>This Machine Record cannot be imported in this profile.</source>
@@ -8915,12 +8937,12 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/statistics.cpp" line="917"/>
         <source>Device Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informacje o aparacie</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="976"/>
         <source>Changes to Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmiany ustawień urządzenia</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1398"/>
@@ -9211,7 +9233,7 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/welcome.ui" line="580"/>
         <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap device.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight:600;&quot;&gt;UWAGA: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Karty SD z aparatów ResMed S9 muszą być zablokowane &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;przed włożeniem do komputera.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Niektóre systemy operacyjne dopisują pliki indeksu na karcie bez pytania, co może uczynić kartę nieczytelną dla aparatu CPAP.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
@@ -9230,7 +9252,7 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
         <source>Note that some preferences are forced when a ResMed device is detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Zauważ, że kilka opcji jest wymuszonych po wykryciu aparatu ResMed</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="163"/>
@@ -9265,22 +9287,22 @@ wyskakujące okienko, usunąć je, a następnie otworzyć ponownie ten wykres.</
     <message>
         <location filename="../oscar/welcome.cpp" line="195"/>
         <source>Your device was on for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat działał przez %1.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="257"/>
         <source>Your CPAP device used a constant %1 %2 of air</source>
-        <translation type="unfinished"></translation>
+        <translation>Twój aparat podawał stałe ciśnienie %1 %2</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="270"/>
         <source>Your device used a constant %1-%2 %3 of air.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten aparat podawał stałe %1-%2 %3 powietrza.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="277"/>
         <source>Your device was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparat był poniżej %1-%2 %3 przez %4% czasu.</translation>
     </message>
     <message>
         <source>Your machine was on for %1.</source>
