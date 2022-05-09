@@ -138,6 +138,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "520X130C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "520X150C", 0, 6, "DreamStation 2 Auto CPAP Advanced" },  // from user report
     { "521X120C", 0, 6, "DreamStation 2 Auto CPAP Advanced with P-Flex" },  // inferred from 501X120 and presence of "P-Flex" on bottom label
+    { "521X140C", 0, 6, "DreamStation 2 avec GSM + Humidificateur" },  // from brochure
 
     { "950P",    5, 0, "BiPAP AutoSV Advanced System One" },
     { "951P",    5, 0, "BiPAP AutoSV Advanced System One" },
