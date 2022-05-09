@@ -418,19 +418,23 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
         QList<ViatomFile::Record> dedup;
         bool all_are_duplicated = true;
 
-        CHECK_VALUE(records.size() % 2, 0);
-        for (int i = 0; i < records.size(); i += 2) {
-            auto & a = records.at(i);
-            auto & b = records.at(i+1);
-            if (a.spo2 != b.spo2
-                || a.hr != b.hr
-                || a.oximetry_invalid != b.oximetry_invalid
-                || a.motion != b.motion
-                || a.vibration != b.vibration) {
-                all_are_duplicated = false;
-                break;
+        if ((records.size() % 2) != 0) {
+            // An odd number of samples inherently can't be all duplicates.
+            all_are_duplicated = false;
+        } else {
+            for (int i = 0; i < records.size(); i += 2) {
+                auto & a = records.at(i);
+                auto & b = records.at(i+1);
+                if (a.spo2 != b.spo2
+                    || a.hr != b.hr
+                    || a.oximetry_invalid != b.oximetry_invalid
+                    || a.motion != b.motion
+                    || a.vibration != b.vibration) {
+                    all_are_duplicated = false;
+                    break;
+                }
+                dedup.append(a);
             }
-            dedup.append(a);
         }
         if (m_sig == 5) {
             // Confirm that CheckMe O2 Max is a true 2s sample rate.
