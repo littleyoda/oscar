@@ -116,6 +116,7 @@ void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int t
     m_alignment = align;
 
     m_text = text;
+    // for testing add mouse position to tooltip. QString("%1:(%2,%3)").arg(text).arg(m_graphview->currentMousePos().x()).arg(m_graphview->currentMousePos().y());
     m_visible = true;
     // TODO: split multiline here
     //calcSize(m_text,tw,th);
@@ -139,53 +140,62 @@ void gToolTip::cancel()
     timer->stop();
 }
 
-QRect gToolTip::calculateRect(QPainter &painter) 
+QRect gToolTip::calculateRect(QPainter &painter)
 {
     int x = m_pos.x();
     int y = m_pos.y();
 
+    // calcualte size of tooltip
     QRect rect(x, y, 0, 0);
-
     painter.setFont(*m_font);
     rect = painter.boundingRect(rect, Qt::AlignCenter, m_text);
 
+    //  Set preffered locations
+    rect.moveTo(m_pos);
+
+    // Add borders arround text area
+
+    // add space around rectangle horizontilally left & right sides.
     int w = rect.width() + m_spacer * 2;
-    int xx = rect.x() - m_spacer;
-
-    if (xx < 0) { xx = 0; }
-
-    rect.setLeft(xx);
-    rect.setTop(rect.y() - 15);
     rect.setWidth(w);
 
-    int z = rect.x() + rect.width();
+    // add space around rectangle vertically
+    int h = rect.height() + m_spacer * 2;
+    rect.setHeight(h);
 
-    if (z > m_graphview->width() - 10) {
-        rect.setLeft(m_graphview->width() - 2 - rect.width());
-        rect.setRight(m_graphview->width() - 2);
+    /*
+    now must verify that the tooltip must fit inti the display area.
+    if part of the display can not be displayed (outside the bounding rectangle of the graph then
+    the tool tip will be moved to fit.
+    If the tooltip is too big . (does not fit) then preference is giver to the top and left sides.
+    the following checks are executed in the order.
+    1) do right side
+    2) do left side
+    3) do bottom
+    4) do top.
+    these checks are independant of alignment requirements.
+    */
+
+    // get display area
+    QRect displayRect = m_graphview->geometry();
+    int right   = displayRect.right() -2; // allow tooltip border to be displayed
+    int left    = displayRect.left();
+    int top     = displayRect.top();
+    int bottom  = displayRect.bottom();
+
+    if (rect.right() > right ) {
+        rect.moveRight(right);
+    }
+    if (rect.left() < left ) {
+        rect.moveLeft(left);
+    }
+    if (rect.bottom() > bottom ) {
+        rect.moveBottom(bottom);
+    }
+    if (rect.top() < top ) {
+        rect.moveTop(top);
     }
 
-    int h = rect.height();
-
-    if (rect.y() < 0) {
-        rect.setY(0);
-        rect.setHeight(h);
-    }
-
-    if (m_alignment == TT_AlignRight) {
-        rect.moveTopRight(m_pos);
-        if ((x-w) < 0) {
-            rect.moveLeft(0);
-        }
-    } else if (m_alignment == TT_AlignLeft) {
-        rect.moveTopLeft(m_pos);
-    }
-
-    int bot = rect.bottom() - m_graphview->height();
-    if (bot > 0) {
-        rect.setTop(rect.top()-bot);
-        rect.setBottom(m_graphview->height());
-    }
     return rect;
 }
 
