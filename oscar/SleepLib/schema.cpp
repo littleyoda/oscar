@@ -172,7 +172,7 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore        = 0x1007, FLAG,        MT_CPAP, SESSION, "VSnore",
             QObject::tr("Vibratory Snore (VS)"), QObject::tr("A vibratory snore"), QObject::tr("VS"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore2       = 0x1008, FLAG,        MT_CPAP, SESSION, "VSnore2",
-            QObject::tr("Vibratory Snore (VS2) "),QObject::tr("A vibratory snore as detcted by a System One device"),QObject::tr("VS2"),      STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
+            QObject::tr("Vibratory Snore (VS2) "),QObject::tr("A vibratory snore as detected by a System One device"),QObject::tr("VS2"),      STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
     // This Large Leak record is just a flag marker, used by Intellipap for one
     schema::channel.add(GRP_CPAP, new Channel(CPAP_LeakFlag      = 0x100a, FLAG,        MT_CPAP, SESSION, "LeakFlag",
             QObject::tr("Leak Flag (LF)"), QObject::tr("A large mask leak affecting device performance."), QObject::tr("LF"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("light gray")));
