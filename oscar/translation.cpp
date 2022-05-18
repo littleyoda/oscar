@@ -53,7 +53,7 @@ void initTranslations()
     langNames["fi"] = "Suomen kieli";
     langNames["fr"] = "Français";
     langNames["he"] = "\xd7\xa2\xd7\x91\xd7\xa8\xd7\x99\xd7\xaa";
-    langNames["hu"] = "Magyar nyelv";
+    langNames["hu"] = "Magyar";
 	langNames["ko"] = "\xed\x95\x9c\xea\xb5\xad\xec\x96\xb4";
     langNames["nl"] = "Nederlands";
     langNames["pt"] = "Português";
