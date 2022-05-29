@@ -551,34 +551,37 @@
         <location filename="../oscar/overview.cpp" line="797"/>
         <source>ERROR
 The start date MUST be before the end date</source>
-        <translation type="unfinished"></translation>
+        <translation>VIRHE
+Aloituspäivä PITÄÄ olla ennen lopetuspäivää</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="800"/>
         <source>The entered start date %1 is after the end date %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Annettu aloituspäivä %1 on lopetuspäivän %2 jälkeen</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="801"/>
         <source>
 Hint: Change the end date first</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Vihje: Muuta lopetuspäivä ensin</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="803"/>
         <source>The entered end date %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Annettu lopetuspäivä %1 </translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="804"/>
         <source>is before the start date %1</source>
-        <translation type="unfinished"></translation>
+        <translation>on ennen aloituspäivämäärää %1</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="805"/>
         <source>
 Hint: Change the start date first</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Vihje: Muuta aloituspäivä ensin</translation>
     </message>
 </context>
 <context>
@@ -3317,7 +3320,7 @@ koska tämä on ainoa arvo saatavilla yhteenvetopäiville.</translation>
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { välilyönti: pre -kääre; }
+        <translation> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { välilyönti: pre -kääre; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style= &quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Oksimetrian ja CPAP-tietojen synkronointi&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot; &gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;SpO2Reviewsta (.spoR-tiedostoista) tai sarjatuontimenetelmällä tuodut CMS50-tiedot &lt;/span&gt;&lt;span style=&quot; font- family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;ei&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; &quot;&gt; on oikea synkronointia varten tarvittava aikaleima.&lt;/span&gt;&lt;/p&gt;
@@ -4681,7 +4684,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2905"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2906"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
@@ -4812,7 +4815,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="734"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2826"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="105"/>
         <source>CPAP</source>
         <translation>CPAP</translation>
@@ -4824,7 +4827,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="736"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
         <source>Bi-Level</source>
         <translation>Bi-Level</translation>
     </message>
@@ -4866,7 +4869,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="744"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2831"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="112"/>
         <source>ASV</source>
         <translation>ASV</translation>
@@ -4884,8 +4887,8 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="748"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2917"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2891"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
         <source>Humidifier</source>
         <translation>Kostutin</translation>
     </message>
@@ -4955,7 +4958,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="763"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2817"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2818"/>
         <source>PP</source>
         <translation>PP</translation>
     </message>
@@ -4988,7 +4991,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="769"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2834"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2835"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="219"/>
         <source>PC</source>
         <translation>PC</translation>
@@ -5306,8 +5309,8 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="821"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2821"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2823"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2824"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="101"/>
         <source>Mode</source>
         <translation>Moodi</translation>
@@ -5565,18 +5568,18 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="868"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="869"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="225"/>
         <source>Getting Ready...</source>
         <translation>Valmistautuu...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="893"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="894"/>
         <source>Scanning Files...</source>
         <translation>Skannaa tiedostoja...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="901"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="902"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="731"/>
         <location filename="../oscar/mainwindow.cpp" line="2311"/>
         <source>Importing Sessions...</source>
@@ -5597,506 +5600,506 @@ TTIA: %1</translation>
         <translation>Testaamattomat tiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2825"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2826"/>
         <source>CPAP-Check</source>
         <translation>CPAP-tarkistus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2827"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
         <source>AutoCPAP</source>
         <translation>AutoCPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>Auto-Trial</source>
         <translation>Automaattinen-kokeilu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2830"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2831"/>
         <source>AutoBiLevel</source>
         <translation>Automaattinen Bi-taso</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2834"/>
         <source>S/T</source>
         <translation>S/T</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2835"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
         <source>S/T - AVAPS</source>
         <translation>S/T - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
         <source>PC - AVAPS</source>
         <translation>PC - AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2851"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2852"/>
         <source>Flex</source>
         <translation>Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2863"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2866"/>
         <source>Flex Lock</source>
         <translation>Joustava lukko</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2864"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2865"/>
         <source>Whether Flex settings are available to you.</source>
         <translation>Ovatko joustavat asetukset saatavilla.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
         <source>Amount of time it takes to transition from EPAP to IPAP, the higher the number the slower the transition</source>
         <translation>Kuinka kauan kestää EPAP:ista siirtyä IPAP:iin. Mitä suurempi luku, sitä hitaaampi muutos.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2879"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2880"/>
         <source>Rise Time Lock</source>
         <translation>Nosta aikalukkoa</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2880"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2881"/>
         <source>Whether Rise Time settings are available to you.</source>
         <translation>Ovatko aikalukkoasetukset muutettavissa.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2881"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2882"/>
         <source>Rise Lock</source>
         <translation>Kasvata lukkoa</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2904"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2905"/>
         <source>Passover</source>
         <translation>Kostuttimen lämmityksen ohitus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2925"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
         <source>Target Time</source>
         <translation>Tavoiteaika</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
         <source>PRS1 Humidifier Target Time</source>
         <translation>PRS1 kostuttimen tavoiteaika</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2927"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2928"/>
         <source>Hum. Tgt Time</source>
         <translation>Kostuttimen tavoiteaika</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2934"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2935"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
         <source>Mask Resistance Setting</source>
         <translation>Maskin vastusasetukset</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2936"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2937"/>
         <source>Mask Resist.</source>
         <translation>Maskin vastus.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <source>Hose Diam.</source>
         <translation>Letkun paksuus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2947"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2948"/>
         <source>15mm</source>
         <translation>15 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2952"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
         <source>Tubing Type Lock</source>
         <translation>Letkutyypin lukko</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2953"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
         <source>Whether tubing type settings are available to you.</source>
         <translation>Voiko letkutyypin lukkoasetuksia muuttaa.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2954"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2955"/>
         <source>Tube Lock</source>
         <translation>Latkulukko</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2961"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
         <source>Mask Resistance Lock</source>
         <translation>Maskin vastuksen lukko</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
         <source>Whether mask resistance settings are available to you.</source>
         <translation>Voiko maskin vastuksen asetuksia muuttaa.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2963"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2964"/>
         <source>Mask Res. Lock</source>
         <translation>Maskin vastuksen lukko</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
         <source>A few breaths automatically starts device</source>
         <translation>Muutama hengitys käynnistää laitteen automaattisesti</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
         <source>Device automatically switches off</source>
         <translation>Laite sammuu automaattisesti</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2989"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
         <source>Whether or not device allows Mask checking.</source>
         <translation>Salliiko laite maskin tarkistuksen.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3006"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3008"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3009"/>
         <source>Ramp Type</source>
         <translation>Viiveen tyyppi</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3007"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3008"/>
         <source>Type of ramp curve to use.</source>
         <translation>Käytettävän viivekäyrän tyyppi.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3010"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3011"/>
         <source>Linear</source>
         <translation>Suora</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3011"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
         <source>SmartRamp</source>
         <translation>Älykäs viive</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
         <source>Ramp+</source>
         <translation>Viive+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3016"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3017"/>
         <source>Backup Breath Mode</source>
         <translation>Backup-hengitys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3017"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3018"/>
         <source>The kind of backup breath rate in use: none (off), automatic, or fixed</source>
         <translation>Backup-hengityksen taso käytössä: ei mitään (pois), automaattinen, tai vakio</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3018"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3019"/>
         <source>Breath Rate</source>
         <translation>Hengitysnopeus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3022"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3023"/>
         <source>Fixed</source>
         <translation>Vakio</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3026"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3027"/>
         <source>Fixed Backup Breath BPM</source>
         <translation>Vakio backup hengityksen BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3027"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3028"/>
         <source>Minimum breaths per minute (BPM) below which a timed breath will be initiated</source>
         <translation>Minimihengitys per minuutti (BPM), jonka alapuolella aloitetaan ajoitettu hengitys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3028"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3029"/>
         <source>Breath BPM</source>
         <translation>Hengityksen BPM</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3033"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3034"/>
         <source>Timed Inspiration</source>
         <translation>Ajoitettu siirtyminen</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3034"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3035"/>
         <source>The time that a timed breath will provide IPAP before transitioning to EPAP</source>
         <translation>Aika, jonka ajoitettu hengitys antaa IPAP: n ennen siirtymistä EPAP: iin</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3035"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
         <source>Timed Insp.</source>
         <translation>Ajoitettu siirtyminen</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3040"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3041"/>
         <source>Auto-Trial Duration</source>
         <translation>Automaattisen kokeilun kesto</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3042"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3043"/>
         <source>Auto-Trial Dur.</source>
         <translation>Auto-koeajan kesto</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3047"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3048"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3050"/>
         <source>EZ-Start</source>
         <translation>EZ-käynnistys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3048"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
         <source>Whether or not EZ-Start is enabled</source>
         <translation>EZ-käynnistys sallittu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3056"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3057"/>
         <source>Variable Breathing</source>
         <translation>Muuttuva hengitys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3057"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3058"/>
         <source>UNCONFIRMED: Possibly variable breathing, which are periods of high deviation from the peak inspiratory flow trend</source>
         <translation>VAHVISTAMATON: Mahdollisesti muuttuva hengitys, jolloin ajanjaksot poikkeavat suuresti hengitysteiden huippuhengityksen trendistä</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3066"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3067"/>
         <source>A period during a session where the device could not detect flow.</source>
         <translation>Ajanjakso käytön aikana, jolloin laite ei pystynyt havaitsemaan virtausta.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3080"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3082"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3081"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3083"/>
         <source>Peak Flow</source>
         <translation>Huippuvirtaus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3081"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3082"/>
         <source>Peak flow during a 2-minute interval</source>
         <translation>Huippuvirtaus 2 minuutin välein</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2946"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2947"/>
         <source>22mm</source>
         <translation>22 mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="884"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="885"/>
         <source>Backing Up Files...</source>
         <translation>Tiedostojen varmuuskopiointi...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="959"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="960"/>
         <source>model %1</source>
         <translation>malli %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="962"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="963"/>
         <source>unknown model</source>
         <translation>tuntematon malli</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2841"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2840"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2842"/>
         <source>Flex Mode</source>
         <translation>Flex Mode</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2840"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2841"/>
         <source>PRS1 pressure relief mode.</source>
         <translation>PRS1 paineenalennustoiminto.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>C-Flex</source>
         <translation>C-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <source>C-Flex+</source>
         <translation>C-Flex+</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
         <source>A-Flex</source>
         <translation>A-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2848"/>
         <source>P-Flex</source>
         <translation>P-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2848"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2872"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2874"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2849"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2873"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2875"/>
         <source>Rise Time</source>
         <translation>Nousuaika</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2849"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2850"/>
         <source>Bi-Flex</source>
         <translation>Bi-Flex</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2855"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2858"/>
         <source>Flex Level</source>
         <translation>Flex taso</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
         <source>PRS1 pressure relief setting.</source>
         <translation>PRS1 paineenalennuksen asetus.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2888"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="141"/>
         <source>Humidifier Status</source>
         <translation>Kostuttimen tila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2890"/>
         <source>PRS1 humidifier connected?</source>
         <translation>PRS1 kostutin kytketty?</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2892"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2893"/>
         <source>Disconnected</source>
         <translation>Irroitettu</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2893"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2894"/>
         <source>Connected</source>
         <translation>Yhdistetty</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2897"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
         <source>Humidification Mode</source>
         <translation>Kostutustila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2898"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2899"/>
         <source>PRS1 Humidification Mode</source>
         <translation>PRS1 kostutustila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2899"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2900"/>
         <source>Humid. Mode</source>
         <translation>Kostutustila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2901"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2902"/>
         <source>Fixed (Classic)</source>
         <translation>Vakio (klassinen)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2902"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2903"/>
         <source>Adaptive (System One)</source>
         <translation>Adaptiivinen (System One)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2903"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2904"/>
         <source>Heated Tube</source>
         <translation>Lämmitetty letku</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2909"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
         <source>Tube Temperature</source>
         <translation>Letkun lämpötila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2910"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
         <source>PRS1 Heated Tube Temperature</source>
         <translation>PRS1 lämmitetyn letkun lämpötila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2911"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2912"/>
         <source>Tube Temp.</source>
         <translation>Letkun lämpötila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2918"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2919"/>
         <source>PRS1 Humidifier Setting</source>
         <translation>PRS1 kostutuksen asetukset</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2942"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
         <source>Hose Diameter</source>
         <translation>Letkun halkaisija</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2943"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2944"/>
         <source>Diameter of primary CPAP hose</source>
         <translation>CPAP ensiöletkun halkaisija</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2948"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2949"/>
         <source>12mm</source>
         <translation>12mm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2970"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2972"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2971"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2973"/>
         <source>Auto On</source>
         <translation>Automaatti päälle</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2979"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2981"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2980"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2982"/>
         <source>Auto Off</source>
         <translation>Automaatti pois</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2988"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2990"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2989"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2991"/>
         <source>Mask Alert</source>
         <translation>Maskihälytys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2997"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3000"/>
         <source>Show AHI</source>
         <translation>Näytä AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2998"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2999"/>
         <source>Whether or not device shows AHI via built-in display.</source>
         <translation>Näyttääkö laite AHI:n sisäänrakennetun näytön kautta.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3041"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3042"/>
         <source>The number of days in the Auto-CPAP trial period, after which the device will revert to CPAP</source>
         <translation>Auto-CPAP -kokeilujakson päivien lukumäärä, jonka jälkeen laite palaa CPAP-tilaan</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3065"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3066"/>
         <source>Breathing Not Detected</source>
         <translation>Hengitystä ei löydy</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3067"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3068"/>
         <source>BND</source>
         <translation>BND</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3072"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3073"/>
         <source>Timed Breath</source>
         <translation>Ajoitettu hengitys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3073"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3074"/>
         <source>Machine Initiated Breath</source>
         <translation>Laitteella aloitettu hengitys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3074"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3075"/>
         <source>TB</source>
         <translation>TB</translation>
     </message>
@@ -6397,12 +6400,12 @@ TTIA: %1</translation>
         <translation>Värähtelevä kuorsaus</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2815"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
         <source>Pressure Pulse</source>
         <translation>Painesykäys</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2816"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2817"/>
         <source>A pulse of pressure &apos;pinged&apos; to detect a closed airway.</source>
         <translation>Painesykäys käytetään havaitsemaan tukkeutunutta hengitystietä.</translation>
     </message>
@@ -6681,6 +6684,11 @@ TTIA: %1</translation>
         <translation>Rajoitettu hengitys normaalista, mikä aiheuttaa virtausaaltomuodon litistymisen.</translation>
     </message>
     <message>
+        <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
+        <source>A vibratory snore as detected by a System One device</source>
+        <translation>System One -laitteen havaitsema värisevä kuorsaus</translation>
+    </message>
+    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="232"/>
         <source>Mask Pressure (High frequency)</source>
         <translation>Maskin paine (korkea taajuus)</translation>
@@ -6766,7 +6774,7 @@ TTIA: %1</translation>
         <translation>CPAP-käyttöjakso sisältää vain yhteenvetotiedot</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2822"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2823"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="303"/>
         <source>PAP Mode</source>
         <translation>PAP-moodi</translation>
@@ -6810,11 +6818,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="173"/>
         <source>Vibratory Snore (VS)</source>
         <translation>Tärisevä kuorsaus (VS)</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/schema.cpp" line="175"/>
-        <source>A vibratory snore as detcted by a System One device</source>
-        <translation>System One -laitteen havaitsema tärisevä kuorsaus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="178"/>
@@ -8011,7 +8014,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <translation>Kostuttimen tila</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2919"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2920"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="147"/>
         <source>Humid. Level</source>
         <translation>Kost. taso</translation>
@@ -8134,8 +8137,8 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="855"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2930"/>
-        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3021"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2931"/>
+        <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3022"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
@@ -8957,32 +8960,32 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="593"/>
         <source>Double click Y-axis: Return to AUTO-FIT Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoisnapsauta Y-akselia: Palauta AUTOMAATTINEN skaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="595"/>
         <source>Double click Y-axis: Return to DEFAULT Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoisnapsauta Y-akselia: Palauta OLETUSskaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="597"/>
         <source>Double click Y-axis: Return to OVERRIDE Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoinsnapsauta Y-akselia: Palauta OHITA skaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="600"/>
         <source>Double click Y-axis: For Dynamic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoisnapsauta Y-akselia: DYNAAMINEN skaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="604"/>
         <source>Double click Y-axis: Select DEFAULT Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoisnapsauta Y-akselia: Valitse OLETUS skaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="606"/>
         <source>Double click Y-axis: Select AUTO-FIT Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaksoisnapsauta Y-akselia: Valitse AUTOMAATTINEN skaalaus</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraph.cpp" line="864"/>

@@ -1993,7 +1993,7 @@ void MainWindow::purgeMachine(Machine * mach)
         p_profile->StoreMachines();
     } else {
         QMessageBox::warning(this, STR_MessageBox_Error,
-            tr("A file permission error casued the purge process to fail; you will have to delete the following folder manually:") +
+            tr("A file permission error caused the purge process to fail; you will have to delete the following folder manually:") +
             "\n\n" + QDir::toNativeSeparators(mach->getDataPath()), QMessageBox::Ok, QMessageBox::Ok);
 
         if (overview) 
