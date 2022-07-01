@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QTextCharFormat>
 #include <QPalette>
 #include <QTextBlock>
@@ -2644,6 +2647,7 @@ void Daily::on_graphCombo_activated(int index)
 
         g=GraphView->findGraphTitle(s);
         g->setVisible(b);
+        ui->graphCombo->showPopup();
     }
     ui->graphCombo->setCurrentIndex(0);
 
@@ -2749,6 +2753,7 @@ void Daily::on_eventsCombo_activated(int index)
         bool b = !chan->enabled();
         chan->setEnabled(b);
         ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+        ui->eventsCombo->showPopup();
     }
 
     ui->eventsCombo->setCurrentIndex(0);
