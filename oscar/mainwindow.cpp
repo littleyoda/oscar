@@ -2553,9 +2553,15 @@ void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
 
 void MainWindow::on_actionShowPersonalData_toggled(bool visible)
 {
-    AppSetting->setShowPersonalData(visible);
-    if (!setupRunning)
-        GenerateStatistics();
+    // This uses the Prefs routines, which require p_profile to be set
+    if ( p_profile != nullptr ) {
+        AppSetting->setShowPersonalData(visible);
+        if ( ! setupRunning )
+            GenerateStatistics();
+    } else {
+        QMessageBox::information(this, "OSCAR", tr("You must select and open the profile you wish to modify"),
+                    QMessageBox::Ok);
+    }
 }
 
 #include "SleepLib/journal.h"
