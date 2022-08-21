@@ -83,6 +83,7 @@ bool operator <(const ValueCount &a, const ValueCount &b);
 
 const float ounce_convert = 28.3495231F; // grams
 const float pound_convert = ounce_convert * 16;
+const float gram_ounce_convert = 0.0352754; // ounces in a gram
 
 QString weightString(float kg, UnitSystem us = US_Undefined);
 

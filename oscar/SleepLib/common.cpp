@@ -283,7 +283,7 @@ QString weightString(float kg, UnitSystem us)
     if (us == US_Metric) {
         return QString("%1kg").arg(kg, 0, 'f', 2);
     } else if (us == US_English) {
-        int oz = (kg * 1000.0) / (float)ounce_convert;
+        int oz = (kg * 1000.0) * (float)gram_ounce_convert;
         int lb = oz / 16.0;
         oz = oz % 16;
         return QString("%1lb %2oz").arg(lb, 0, 10).arg(oz);
