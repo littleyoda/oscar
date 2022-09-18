@@ -563,6 +563,27 @@ MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & selectedPath)
     return MachineInfo();
 }
 
+void PrismaLoader::ImportDataDir(QDir& dataDir, QSet<SessionID>& sessions, QHash<SessionID, QString>& eventFiles, QHash<SessionID, QString>& signalFiles) {
+    dataDir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks);
+    dataDir.setSorting(QDir::Name);
+
+    if (dataDir.exists()) {
+        for (auto & inputFile : dataDir.entryInfoList()) {
+            QString fileName = inputFile.fileName().toLower();
+            if (fileName.startsWith("event_") && fileName.endsWith(".xml")) {
+                SessionID sid = fileName.mid(6,fileName.size()-4-6).toLong();
+                sessions += sid;
+                eventFiles[sid] = inputFile.canonicalFilePath();
+            }
+            if (inputFile.fileName().toLower().startsWith("signal_") && inputFile.fileName().toLower().endsWith(".wmedf")) {
+                SessionID sid = fileName.mid(7,fileName.size()-6-7).toLong();
+                sessions += sid;
+                signalFiles[sid] = inputFile.canonicalFilePath();
+            }
+        }
+    }
+}
+
 // TODO AXT PrismaSmart specific, extract it into a parser class with the config files
 void PrismaLoader::ScanFiles(const MachineInfo& info, const QString & machinePath)
 {
@@ -588,33 +609,13 @@ void PrismaLoader::ScanFiles(const MachineInfo& info, const QString & machinePat
         dayDir.setFilter(QDir::NoDotAndDotDot | QDir::Dirs | QDir::NoSymLinks);
         dayDir.setSorting(QDir::Name);
         QFileInfoList subDirs = dayDir.entryInfoList();
-        QDir dataDir;
 
         if (subDirs.size() == 0) {
-            dataDir = dayDir;
-        } else if (subDirs.size() == 1) {
-            dataDir = QDir(subDirs.at(0).canonicalFilePath());
+            ImportDataDir(dayDir, sessions, eventFiles, signalFiles);
         } else {
-            qWarning() << "PrismaLoader: Directory structure not recognized!";
-            continue;
-        }
-
-        dataDir.setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks);
-        dataDir.setSorting(QDir::Name);
-
-        if (dataDir.exists()) {
-            for (auto & inputFile : dataDir.entryInfoList()) {
-                QString fileName = inputFile.fileName().toLower();
-                if (fileName.startsWith("event_") && fileName.endsWith(".xml")) {
-                    SessionID sid = fileName.mid(6,fileName.size()-4-6).toLong();
-                    sessions += sid;
-                    eventFiles[sid] = inputFile.canonicalFilePath();
-                }
-                if (inputFile.fileName().toLower().startsWith("signal_") && inputFile.fileName().toLower().endsWith(".wmedf")) {
-                    SessionID sid = fileName.mid(7,fileName.size()-6-7).toLong();
-                    sessions += sid;
-                    signalFiles[sid] = inputFile.canonicalFilePath();
-                }
+            for (auto & dataDirInfo: subDirs) {
+                QDir dataDir(dataDirInfo.canonicalFilePath());
+                ImportDataDir(dataDir, sessions, eventFiles, signalFiles);
             }
         }
     }

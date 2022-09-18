@@ -11,6 +11,7 @@
 #define PRISMA_LOADER_H
 #include "SleepLib/machine_loader.h"
 #include "SleepLib/loader_plugins/edfparser.h"
+#include <QDir>
 
 #ifdef UNITTEST_MODE
 #define private public
@@ -187,6 +188,8 @@ class PrismaLoader : public CPAPLoader
   protected:
 
     MachineInfo PeekInfoFromConfig(const QString & selectedPath);
+
+    void ImportDataDir(QDir& dataDir, QSet<SessionID>& sessions, QHash<SessionID, QString>& eventFiles, QHash<SessionID, QString>& signalFiles);
 
     //! \brief Scans the given directories for session data and create an import task for each logical session.
     void ScanFiles(const MachineInfo& info, const QString & path);
