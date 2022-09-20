@@ -45,9 +45,9 @@
 //********************************************************************************************
 
 // parameters
-ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0;
+ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_EEPAP_Min = 0, Prisma_EEPAP_Max = 0, Prisma_HumidifierLevel = 0, Prisma_Warning = 0;
 // waveforms
-ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0;
+ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0, Prisma_EEPAP = 0;
 // events
 ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_eSO = 0, Prisma_eMO = 0, Prisma_eS = 0, Prisma_eF = 0, Prisma_DeepSleep = 0;
 
@@ -157,36 +157,148 @@ void PrismaImport::run()
 
     // set session parameters
     auto parameters = eventFile->getParameters();
-    // TODO AXT: extract
-    switch(parameters[PRISMA_MODE]) {
-        case PRISMA_MODE_CPAP:
-            session->settings[CPAP_Mode] = (int)MODE_CPAP;
-            session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_CPAP;
-        break;
-        case PRISMA_MODE_APAP:
-            session->settings[CPAP_Mode] = (int)MODE_APAP;
-            switch (parameters[PRISMA_APAP_DYNAMIC])
-            {
-                case PRISMA_APAP_MODE_STANDARD:
-                    session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_STD;
-                break;
-                case PRISMA_APAP_MODE_DYNAMIC:
-                    session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_DYN;
-                break;
-            }
 
-        break;
+    // TODO AXT: extract
+    if (parameters.contains(PRISMA_SMART_MODE)) {
+        switch(parameters[PRISMA_SMART_MODE]) {
+            case PRISMA_MODE_CPAP:
+                session->settings[CPAP_Mode] = (int)MODE_CPAP;
+                session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_CPAP;
+            break;
+            case PRISMA_MODE_APAP:
+                session->settings[CPAP_Mode] = (int)MODE_APAP;
+                switch (parameters[PRISMA_SMART_APAP_DYNAMIC])
+                {
+                    case PRISMA_APAP_MODE_STANDARD:
+                        session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_STD;
+                    break;
+                    case PRISMA_APAP_MODE_DYNAMIC:
+                        session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_DYN;
+                    break;
+                }
+
+            break;
+        }
+        session->settings[CPAP_PressureMin] = parameters[PRISMA_SMART_PRESSURE] / 100;
+        session->settings[CPAP_PressureMax] = parameters[PRISMA_SMART_PRESSURE_MAX] / 100;
+        session->settings[Prisma_SoftPAP] = parameters[PRISMA_SMART_SOFTPAP];
+        session->settings[Prisma_PSoft] = parameters[PRISMA_SMART_PSOFT] / 100.0;
+        session->settings[Prisma_PSoft_Min] = parameters[PRISMA_SMART_PSOFT_MIN] / 100;
+        session->settings[Prisma_AutoStart] = parameters[PRISMA_SMART_AUTOSTART];
+
+        session->settings[Prisma_Softstart_Time] = parameters[PRISMA_SMART_SOFTSTART_TIME];
+        session->settings[Prisma_Softstart_TimeMax] = parameters[PRISMA_SMART_SOFTSTART_TIME_MAX];
+
+        if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
+            session->settings[Prisma_TubeType] = parameters[PRISMA_SMART_TUBE_TYPE] / 10.0;
+        }
+
+        session->settings[Prisma_PMaxOA] = parameters[PRISMA_SMART_PMAXOA] / 100;
+
+        // session->settings[Prisma_HumidifierLevel] = parameters[PRISMA_SMART_HUMIDLEVEL];
     }
-    session->settings[CPAP_PressureMin] = parameters[PRISMA_PRESSURE] / 100;
-    session->settings[CPAP_PressureMax] = parameters[PRISMA_PRESSURE_MAX] / 100;
-    session->settings[Prisma_SoftPAP] = parameters[PRISMA_SOFTPAP];
-    session->settings[Prisma_PSoft] = parameters[PRISMA_PSOFT] / 100.0;
-    session->settings[Prisma_PSoft_Min] = parameters[PRISMA_PSOFT_MIN] / 100;
-    session->settings[Prisma_AutoStart] = parameters[PRISMA_AUTOSTART] / 100;
-    session->settings[Prisma_Softstart_Time] = parameters[PRISMA_SOFTSTART_TIME];
-    session->settings[Prisma_Softstart_TimeMax] = parameters[PRISMA_SOFTSTART_TIME_MAX];
-    session->settings[Prisma_TubeType] = parameters[PRISMA_TUBE_TYPE];
-    session->settings[Prisma_PMaxOA] = parameters[PRISMA_PMAXOA] / 100;
+
+    bool found = true;
+    if (parameters.contains(PRISMA_LINE_MODE)) {
+        switch(parameters[PRISMA_LINE_MODE]) {
+            case PRISMA_MODE_AUTO_ST:
+                //TODO AXT
+                // session->settings[CPAP_Mode] = (int)MODE_BILEVEL_AUTO_VARIABLE_PS;
+                session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_AUTO_ST;
+
+                session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
+                session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
+                session->settings[CPAP_EPAP] = parameters[PRISMA_LINE_EPAP] / 100.0;
+                session->settings[CPAP_IPAP] = parameters[PRISMA_LINE_IPAP] / 100.0;
+                session->settings[CPAP_IPAPHi] = parameters[PRISMA_LINE_IPAP_MAX] / 100.0;
+                /*
+                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1125" NewValue="400"/>	param_SoftStartPress
+                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1140" NewValue="500"/>	param_PdiffNorm
+                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1141" NewValue="500"/>	param_PdiffMax
+                */
+                session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
+                session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
+
+                if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
+                    session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
+                }
+
+                session->settings[Prisma_Warning] = 2;
+            break;
+            case PRISMA_MODE_ACSV:
+                session->settings[CPAP_Mode] = (int)MODE_ASV;
+                // session->settings[CPAP_Mode] = (int)MODE_ASV_VARIABLE_EPAP;
+                session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_ACSV;
+                session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
+                session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
+                session->settings[CPAP_EPAP] = parameters[PRISMA_LINE_EPAP] / 100.0;
+                session->settings[CPAP_PSMin] = parameters[PRISMA_LINE_PDIFF_NORM] / 100.0;
+                session->settings[CPAP_PSMax] = parameters[PRISMA_LINE_PDIFF_MAX] / 100.0;
+                session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
+                session->settings[Prisma_Softstart_Pressure] = parameters[PRISMA_LINE_SOFT_START_PRESS] / 100.0;
+                if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
+                    session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
+                }
+
+                session->settings[Prisma_Warning] = 2;
+            break;
+
+            case PRISMA_MODE_APAP:
+                session->settings[CPAP_Mode] = (int)MODE_APAP;
+                switch (parameters[PRISMA_LINE_APAP_DYNAMIC])
+                {
+                    case PRISMA_APAP_MODE_STANDARD:
+                        session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_STD;
+                    break;
+                    case PRISMA_APAP_MODE_DYNAMIC:
+                        session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_APAP_DYN;
+                    break;
+                }
+                session->settings[CPAP_PressureMin] = parameters[PRISMA_LINE_EPAP] / 100.0;
+                session->settings[CPAP_PressureMax] = parameters[PRISMA_LINE_IPAP] / 100.0;
+                session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
+                session->settings[Prisma_SoftPAP] = parameters[PRISMA_LINE_SOFT_PAP_LEVEL];
+                session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
+                session->settings[Prisma_Softstart_Pressure] = parameters[PRISMA_LINE_SOFT_START_PRESS] / 100.0;
+                if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
+                    session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
+                }
+            break;
+
+            default:
+                found = false;
+            break;
+        }
+
+
+        if (!found) {
+            session->settings[Prisma_Warning] = 1;
+        }
+
+
+
+
+    }
+
+/*    PRISMA_LINE_TI = 1011,
+    PRISMA_LINE_TE = 1012,
+    PRISMA_LINE_TARGET_VOLUME = 1016,
+    PRISMA_LINE_IPAP_SPEED = 1017,
+    PRISMA_LINE_HUMIDLEVEL = 1083,
+    PRISMA_LINE_AUTOSTART = 1084,
+    PRISMA_LINE_TUBE_TYPE = 1091,
+    PRISMA_LINE_BACTERIUMFILTER = 1092,
+    PRISMA_LINE_SOFT_PAP_LEVEL = 1123,
+    PRISMA_LINE_SOFT_START_PRESS = 1125,
+    PRISMA_LINE_SOFT_START_TIME = 1127,
+    PRISMA_LINE_EEPAP_MIN = 1138,
+    PRISMA_LINE_EEPAP_MAX = 1139,
+    PRISMA_LINE_PDIFF_NORM = 1140,
+    PRISMA_LINE_PDIFF_MAX = 1141,
+    PRISMA_LINE_IPAP_MAX = 1199,
+    PRISMA_LINE_IPAP = 1200,
+    PRISMA_LINE_EPAP = 1201,
+  */
 
     // add waveforms
     // common
@@ -213,10 +325,8 @@ void PrismaImport::run()
     // AddWaveform(CPAP_RespRate, "BreathFrequency");
     // AddWaveform(CPAP_TidalVolume, "BreathVolume");
     // AddWaveform(CPAP_IE, "InspExpirRel");
-
     // AddWaveform(OXI_Pulse, "HeartFrequency");
     // AddWaveform(OXI_SPO2, "SpO2");
-
     // AddWaveform(CPAP_LeakTotal, QString("TotalLeakage"));
     // AddWaveform(CPAP_Test1, QString("RSBI"));
 
@@ -543,6 +653,7 @@ MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & selectedPath)
         info.modelnumber=configObj["devid"].toString();
         info.model = s_PrismaModelInfo.Name(info.modelnumber);
         info.serial = devObj["sn"].toString();
+        info.series = devObj["hwversion"].toString();
         // TODO AXT load props
         info.properties["cica"] = "mica";
         return info;
@@ -650,9 +761,13 @@ void PrismaLoader::initChannels()
         QObject::tr("PAP Mode"),
         QObject::tr("PAP Mode"),
         "", LOOKUP, Qt::green));
+    chan->addOption(PRISMA_COMBINED_MODE_UNKNOWN, QObject::tr("UNKNOWN"));
     chan->addOption(PRISMA_COMBINED_MODE_CPAP, QObject::tr("CPAP"));
     chan->addOption(PRISMA_COMBINED_MODE_APAP_STD, QObject::tr("APAP (std)"));
     chan->addOption(PRISMA_COMBINED_MODE_APAP_DYN, QObject::tr("APAP (dyn)"));
+    chan->addOption(PRISMA_COMBINED_MODE_AUTO_S, QObject::tr("Auto S"));
+    chan->addOption(PRISMA_COMBINED_MODE_AUTO_ST, QObject::tr("Auto S/T"));
+    chan->addOption(PRISMA_COMBINED_MODE_ACSV, QObject::tr("AcSV"));
 
     channel.add(GRP_CPAP, chan = new Channel(Prisma_SoftPAP=0xe401, SETTING,  MT_CPAP,  SESSION,
         "Prisma_SoftPAP",
@@ -668,13 +783,13 @@ void PrismaLoader::initChannels()
         "Prisma_PSoft", QObject::tr("PSoft"),
         QObject::tr("PSoft"),
         QObject::tr("PSoft"),
-        STR_UNIT_CMH2O, LOOKUP, Qt::green));
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
     channel.add(GRP_CPAP, new Channel(Prisma_PSoft_Min=0xe403, SETTING,  MT_CPAP,  SESSION,
         "Prisma_PSoft_Min", QObject::tr("PSoftMin"),
         QObject::tr("PSoftMin"),
         QObject::tr("PSoftMin"),
-        STR_UNIT_CMH2O, LOOKUP, Qt::green));
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
     channel.add(GRP_CPAP, chan = new Channel(Prisma_AutoStart=0xe404, SETTING,  MT_CPAP,  SESSION,
         "Prisma_AutoStart", QObject::tr("AutoStart"),
@@ -696,17 +811,49 @@ void PrismaLoader::initChannels()
         QObject::tr("Softstart_TimeMax"),
         STR_UNIT_Minutes, LOOKUP, Qt::green));
 
-    channel.add(GRP_CPAP, new Channel(Prisma_TubeType=0xe407, SETTING,  MT_CPAP,  SESSION,
-        "Prisma_TubeType", QObject::tr("TubeType"),
-        QObject::tr("TubeType"),
-        QObject::tr("TubeType"),
-        STR_UNIT_CM, LOOKUP, Qt::green));
+    channel.add(GRP_CPAP, new Channel(Prisma_Softstart_Pressure=0xe407, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_Softstart_Pressure", QObject::tr("Softstart_Pressure"),
+        QObject::tr("Softstart_Pressure"),
+        QObject::tr("Softstart_Pressure"),
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
     channel.add(GRP_CPAP, new Channel(Prisma_PMaxOA=0xe408, SETTING,  MT_CPAP,  SESSION,
         "Prisma_PMaxOA", QObject::tr("PMaxOA"),
         QObject::tr("PMaxOA"),
         QObject::tr("PMaxOA"),
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
+
+    channel.add(GRP_CPAP, new Channel(Prisma_EEPAP_Min=0xe409, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_EEPAPMin", QObject::tr("EEPAPMin"),
+        QObject::tr("EEPAPMin"),
+        QObject::tr("EEPAPMin"),
         STR_UNIT_CMH2O, LOOKUP, Qt::green));
+
+    channel.add(GRP_CPAP, new Channel(Prisma_EEPAP_Max=0xe40a, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_EEPAPMax", QObject::tr("EEPAPMax"),
+        QObject::tr("EEPAPMax"),
+        QObject::tr("EEPAPMax"),
+        STR_UNIT_CMH2O, LOOKUP, Qt::green));
+
+    channel.add(GRP_CPAP, new Channel(Prisma_HumidifierLevel=0xe40b, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_HumidLevel", QObject::tr("HumidifierLevel"),
+        QObject::tr("HumidifierLevel"),
+        QObject::tr("HumidifierLevel"),
+        "", DEFAULT, Qt::green));
+
+    channel.add(GRP_CPAP, new Channel(Prisma_TubeType=0xe40c, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_TubeType", QObject::tr("TubeType"),
+        QObject::tr("TubeType"),
+        QObject::tr("TubeType"),
+        STR_UNIT_CM, DEFAULT, Qt::green));
+
+    channel.add(GRP_CPAP, chan = new Channel(Prisma_Warning=0xe40d, SETTING,  MT_CPAP,  SESSION,
+        "Prisma_Warning", QObject::tr("Warning"),
+        QObject::tr("Warning"),
+        QObject::tr("Warning"),
+        "", LOOKUP, Qt::green));
+    chan->addOption(1, "Mode is not supported yet");
+    chan->addOption(2, "Mode partially supported");
 
 
     channel.add(GRP_CPAP, chan = new Channel(Prisma_ObstructLevel=0xe440, WAVEFORM,  MT_CPAP,   SESSION,
