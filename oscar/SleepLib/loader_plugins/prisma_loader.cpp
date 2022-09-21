@@ -49,7 +49,7 @@ ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_PSoft = 0, Prisma_PSoft_Mi
 // waveforms
 ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0, Prisma_EEPAP = 0;
 // events
-ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_eSO = 0, Prisma_eMO = 0, Prisma_eS = 0, Prisma_eF = 0, Prisma_DeepSleep = 0;
+ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_eSO = 0, Prisma_eMO = 0, Prisma_eS = 0, Prisma_eF = 0, Prisma_DeepSleep = 0, Prisma_TimedBreath = 0;
 
 QString PrismaLoader::PresReliefLabel() { return QString("SoftPAP: "); }
 ChannelID PrismaLoader::PresReliefMode() { return Prisma_SoftPAP; }
@@ -205,19 +205,16 @@ void PrismaImport::run()
                 //TODO AXT
                 // session->settings[CPAP_Mode] = (int)MODE_BILEVEL_AUTO_VARIABLE_PS;
                 session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_AUTO_ST;
-
                 session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
                 session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
                 session->settings[CPAP_EPAP] = parameters[PRISMA_LINE_EPAP] / 100.0;
                 session->settings[CPAP_IPAP] = parameters[PRISMA_LINE_IPAP] / 100.0;
                 session->settings[CPAP_IPAPHi] = parameters[PRISMA_LINE_IPAP_MAX] / 100.0;
-                /*
-                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1125" NewValue="400"/>	param_SoftStartPress
-                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1140" NewValue="500"/>	param_PdiffNorm
-                <DeviceEvent  DeviceEventID="0" Time="0" ParameterID="1141" NewValue="500"/>	param_PdiffMax
-                */
-                session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
+                session->settings[CPAP_PSMin] = parameters[PRISMA_LINE_PDIFF_NORM] / 100.0;
+                session->settings[CPAP_PSMax] = parameters[PRISMA_LINE_PDIFF_MAX] / 100.0;
+                session->settings[Prisma_Softstart_Pressure] = parameters[PRISMA_LINE_SOFT_START_PRESS] / 100.0;
                 session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
+                session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
 
                 if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
                     session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
@@ -232,10 +229,13 @@ void PrismaImport::run()
                 session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
                 session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
                 session->settings[CPAP_EPAP] = parameters[PRISMA_LINE_EPAP] / 100.0;
+                session->settings[CPAP_IPAP] = parameters[PRISMA_LINE_IPAP] / 100.0;
+                session->settings[CPAP_IPAPHi] = parameters[PRISMA_LINE_IPAP_MAX] / 100.0;
                 session->settings[CPAP_PSMin] = parameters[PRISMA_LINE_PDIFF_NORM] / 100.0;
                 session->settings[CPAP_PSMax] = parameters[PRISMA_LINE_PDIFF_MAX] / 100.0;
                 session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
                 session->settings[Prisma_Softstart_Pressure] = parameters[PRISMA_LINE_SOFT_START_PRESS] / 100.0;
+                session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
                 if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
                     session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
                 }
@@ -320,7 +320,7 @@ void PrismaImport::run()
     // prisma line
     AddWaveform(CPAP_EPAP, QString("EPAPsoll"));
     AddWaveform(CPAP_IPAP, QString("IPAPsoll"));
-    // AddWaveform(CPAP_EEPAP, QString("EEPAPsoll"));
+    AddWaveform(CPAP_EEPAP, QString("EEPAPsoll"));
 
     // AddWaveform(CPAP_RespRate, "BreathFrequency");
     // AddWaveform(CPAP_TidalVolume, "BreathVolume");
@@ -356,6 +356,7 @@ void PrismaImport::run()
     AddEvents(Prisma_eF, PRISMA_EVENT_EPOCH_FLOW_LIMITATION);
     AddEvents(Prisma_eS, PRISMA_EVENT_EPOCH_SNORE);
     AddEvents(Prisma_DeepSleep, PRISMA_EVENT_EPOCH_DEEPSLEEP);
+    AddEvents(Prisma_TimedBreath, PRISMA_EVENT_TIMED_BREATH);
 
     session->SetChanged(true);
     loader->context()->AddSession(session);
@@ -827,13 +828,13 @@ void PrismaLoader::initChannels()
         "Prisma_EEPAPMin", QObject::tr("EEPAPMin"),
         QObject::tr("EEPAPMin"),
         QObject::tr("EEPAPMin"),
-        STR_UNIT_CMH2O, LOOKUP, Qt::green));
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
     channel.add(GRP_CPAP, new Channel(Prisma_EEPAP_Max=0xe40a, SETTING,  MT_CPAP,  SESSION,
         "Prisma_EEPAPMax", QObject::tr("EEPAPMax"),
         QObject::tr("EEPAPMax"),
         QObject::tr("EEPAPMax"),
-        STR_UNIT_CMH2O, LOOKUP, Qt::green));
+        STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
     channel.add(GRP_CPAP, new Channel(Prisma_HumidifierLevel=0xe40b, SETTING,  MT_CPAP,  SESSION,
         "Prisma_HumidLevel", QObject::tr("HumidifierLevel"),
@@ -852,8 +853,8 @@ void PrismaLoader::initChannels()
         QObject::tr("Warning"),
         QObject::tr("Warning"),
         "", LOOKUP, Qt::green));
-    chan->addOption(1, "Mode is not supported yet");
-    chan->addOption(2, "Mode partially supported");
+    chan->addOption(1, "Mode is not supported yet, please send sample data.");
+    chan->addOption(2, "Mode partially supported, please send sample data.");
 
 
     channel.add(GRP_CPAP, chan = new Channel(Prisma_ObstructLevel=0xe440, WAVEFORM,  MT_CPAP,   SESSION,
@@ -969,6 +970,16 @@ void PrismaLoader::initChannels()
         QObject::tr("DS"),
         STR_UNIT_Percentage, DEFAULT, QColor("light blue")));
     chan->setEnabled(false);
+
+
+    channel.add(GRP_CPAP, chan = new Channel(Prisma_TimedBreath = 0xe44d, FLAG,  MT_CPAP,   SESSION,
+        "Prisma_TB",
+        QObject::tr("TimedBreath"),
+        // TODO AXT add desc
+        QObject::tr("TimedBreath"),
+        QObject::tr("TB"),
+        STR_UNIT_Percentage, DEFAULT, QColor("purple")));
+
 
 }
 
