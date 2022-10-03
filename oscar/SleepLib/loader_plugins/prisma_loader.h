@@ -30,6 +30,8 @@ const QString prisma_class_name = STR_MACH_Prisma;
 
 //********************************************************************************************
 
+// NOTE: Prisma Smart and Prisma Line devices use distinct parameter id-s, but the correct solution
+// would be to transform these, into separate enums / parsers.
 enum Prisma_Parameters {
     PRISMA_SMART_MODE = 6,
     PRISMA_SMART_PRESSURE = 9,
@@ -70,12 +72,16 @@ enum Prisma_Parameters {
 
 };
 
+// NOTE: Modes should be reverse engineered. Based on the samples we had, for now I didn't saw any overlap,
+// so I assumed, the mode settings is generic between the two device lines. If you run into an overlap, the
+// above mentioned parsers should be introduced. Enum values are coming from the prisma data files.
 enum Prisma_Mode {
+    // Prisma Smart
     PRISMA_MODE_CPAP = 1,
     PRISMA_MODE_APAP = 2,
 
+    // Prisma Line
     PRISMA_MODE_ACSV = 3,
-
     PRISMA_MODE_AUTO_S = 9,
     PRISMA_MODE_AUTO_ST = 10,
 };
@@ -91,6 +97,9 @@ enum Prisma_SoftPAP_Mode {
     Prisma_SoftPAP_STANDARD = 2
 };
 
+// NOTE: This enum represents a "virtual mode" which combines the main mode of the device with the APAP submode,
+// if it makes sense. The reason for this is, that we can see the Standard and Dynamic APAP modes on the statistics
+// page. Enum values are internal to the loader. We use -1 to indicate a mode that is not recognized.
 enum Prisma_Combined_Mode {
     PRISMA_COMBINED_MODE_CPAP = 1,
     PRISMA_COMBINED_MODE_APAP_STD = 2,
@@ -131,6 +140,7 @@ enum Prisma_Event_Type {
 
 //********************************************************************************************
 
+// Prisma WMEDF differs from the original EDF, by introducing 8 bit signal data channels.
 class WMEDFInfo : public EDFInfo {
     virtual bool ParseSignalData();
 

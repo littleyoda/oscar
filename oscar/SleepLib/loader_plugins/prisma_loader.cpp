@@ -45,11 +45,24 @@
 //********************************************************************************************
 
 // parameters
-ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_EEPAP_Min = 0, Prisma_EEPAP_Max = 0, Prisma_HumidifierLevel = 0, Prisma_Warning = 0;
+ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_EEPAP_Min = 0, Prisma_EEPAP_Max = 0, Prisma_HumidifierLevel = 0;
+
 // waveforms
 ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0, Prisma_EEPAP = 0;
+
 // events
-ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_eSO = 0, Prisma_eMO = 0, Prisma_eS = 0, Prisma_eF = 0, Prisma_DeepSleep = 0, Prisma_TimedBreath = 0;
+ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_DeepSleep = 0, Prisma_TimedBreath = 0;
+
+// epoch events
+// The device evaluates 2 minute long epochs, and catagorizes them based on the events that occur during that epoch.
+//   eSO: Severe Obstruction
+//   eMO: Mild Obstruction
+//    eS: Snore
+//    eF: Flattening/Flow limitation
+ChannelID Prisma_eSO = 0, Prisma_eMO = 0, Prisma_eS = 0, Prisma_eF = 0;
+
+// this "virtual" config setting is used to indicate, if the selected Prisma Mode is not fully supported.
+ChannelID Prisma_Warning = 0;
 
 QString PrismaLoader::PresReliefLabel() { return QString("SoftPAP: "); }
 ChannelID PrismaLoader::PresReliefMode() { return Prisma_SoftPAP; }
@@ -81,6 +94,8 @@ bool WMEDFInfo::ParseSignalData() {
     for (int recNo = 0; recNo < edfHdr.num_data_records; recNo++) {
         for (auto & sig : edfsignals) {
             for (int j=0;j<sig.sampleCnt;j++) {
+                // The reserved field indicates if the channel is 8 or 16 bit.
+                // 8bit channels can be both signed and unsigned
                 if (sig.reserved == "#1") {
                     if (sig.digital_minimum >= 0)
                     {
@@ -195,6 +210,7 @@ void PrismaImport::run()
 
         session->settings[Prisma_PMaxOA] = parameters[PRISMA_SMART_PMAXOA] / 100;
 
+        // TODO
         // session->settings[Prisma_HumidifierLevel] = parameters[PRISMA_SMART_HUMIDLEVEL];
     }
 
@@ -202,8 +218,11 @@ void PrismaImport::run()
     if (parameters.contains(PRISMA_LINE_MODE)) {
         switch(parameters[PRISMA_LINE_MODE]) {
             case PRISMA_MODE_AUTO_ST:
-                //TODO AXT
-                // session->settings[CPAP_Mode] = (int)MODE_BILEVEL_AUTO_VARIABLE_PS;
+                // TODO AXT
+                // Was not sure which mode this should be mapped, maybe we need to intorudce new modes
+                // Setting/parameter mapping should be reviewed and tested
+                // session->settings[CPAP_Mode] = (int)MODE_BILEVEL_AUTO_VARIABLE_PS; ???
+
                 session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_AUTO_ST;
                 session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
                 session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
@@ -215,16 +234,17 @@ void PrismaImport::run()
                 session->settings[Prisma_Softstart_Pressure] = parameters[PRISMA_LINE_SOFT_START_PRESS] / 100.0;
                 session->settings[Prisma_Softstart_Time] = parameters[PRISMA_LINE_SOFT_START_TIME];
                 session->settings[Prisma_AutoStart] = parameters[PRISMA_LINE_AUTOSTART];
-
                 if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
                     session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
                 }
-
+                // Indicate partial support
                 session->settings[Prisma_Warning] = 2;
             break;
+
             case PRISMA_MODE_ACSV:
+                // TODO AXT: its possible that based on PDIFF setting we should choose between MODE_ASV
+                // and MODE_ASV_VARIABLE_EPAP here
                 session->settings[CPAP_Mode] = (int)MODE_ASV;
-                // session->settings[CPAP_Mode] = (int)MODE_ASV_VARIABLE_EPAP;
                 session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_ACSV;
                 session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
                 session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
@@ -239,7 +259,7 @@ void PrismaImport::run()
                 if (parameters.contains(PRISMA_SMART_TUBE_TYPE)) {
                     session->settings[Prisma_TubeType] = parameters[PRISMA_LINE_TUBE_TYPE] / 10.0;
                 }
-
+                // Indicate partial support
                 session->settings[Prisma_Warning] = 2;
             break;
 
@@ -272,6 +292,7 @@ void PrismaImport::run()
 
 
         if (!found) {
+            // Indicate mode not supported
             session->settings[Prisma_Warning] = 1;
         }
 
@@ -280,36 +301,18 @@ void PrismaImport::run()
 
     }
 
-/*    PRISMA_LINE_TI = 1011,
-    PRISMA_LINE_TE = 1012,
-    PRISMA_LINE_TARGET_VOLUME = 1016,
-    PRISMA_LINE_IPAP_SPEED = 1017,
-    PRISMA_LINE_HUMIDLEVEL = 1083,
-    PRISMA_LINE_AUTOSTART = 1084,
-    PRISMA_LINE_TUBE_TYPE = 1091,
-    PRISMA_LINE_BACTERIUMFILTER = 1092,
-    PRISMA_LINE_SOFT_PAP_LEVEL = 1123,
-    PRISMA_LINE_SOFT_START_PRESS = 1125,
-    PRISMA_LINE_SOFT_START_TIME = 1127,
-    PRISMA_LINE_EEPAP_MIN = 1138,
-    PRISMA_LINE_EEPAP_MAX = 1139,
-    PRISMA_LINE_PDIFF_NORM = 1140,
-    PRISMA_LINE_PDIFF_MAX = 1141,
-    PRISMA_LINE_IPAP_MAX = 1199,
-    PRISMA_LINE_IPAP = 1200,
-    PRISMA_LINE_EPAP = 1201,
-  */
-
     // add waveforms
-    // common
+    // common waveforms, these exists on all prisma devices
     AddWaveform(CPAP_MaskPressure, QString("Pressure"));
     AddWaveform(CPAP_FlowRate, QString("RespFlow"));
     AddWaveform(CPAP_Leak, QString("LeakFlowBreath"));
     AddWaveform(Prisma_ObstructLevel, QString("ObstructLevel"));
+    // NOTE: this is a bitfield indicating the device current stauts breaht in, breath out, leakage
+    // only can be used for debugging, consider removing it, or adding better support for displaying it
     AddWaveform(Prisma_SPRStatus, QString("SPRStatus"));
 
-    //prisma smart
-    // AddWaveform(CPAP_Pressure, QString("CPAPPressure"));
+    // prisma smart
+    // waweforms specific for prisma smart / soft devices
     AddWaveform(CPAP_EPAP, QString("EPAP"));
     AddWaveform(CPAP_IPAP, QString("IPAP"));
     AddWaveform(Prisma_rMVFluctuation, QString("rMVFluctuation"));
@@ -317,10 +320,15 @@ void PrismaImport::run()
     AddWaveform(Prisma_PressureMeasured, QString("PressureMeasured"));
     AddWaveform(Prisma_FlowFull, QString("FlowFull"));
 
+    // The CPAPPressure exitst but is not used
+    // AddWaveform(CPAP_Pressure, QString("CPAPPressure"));
+
     // prisma line
     AddWaveform(CPAP_EPAP, QString("EPAPsoll"));
     AddWaveform(CPAP_IPAP, QString("IPAPsoll"));
     AddWaveform(CPAP_EEPAP, QString("EEPAPsoll"));
+
+    // Channels that exist on varous Prisma Line devices, but are not handled yet
 
     // AddWaveform(CPAP_RespRate, "BreathFrequency");
     // AddWaveform(CPAP_TidalVolume, "BreathVolume");
@@ -328,8 +336,6 @@ void PrismaImport::run()
     // AddWaveform(OXI_Pulse, "HeartFrequency");
     // AddWaveform(OXI_SPO2, "SpO2");
     // AddWaveform(CPAP_LeakTotal, QString("TotalLeakage"));
-    // AddWaveform(CPAP_Test1, QString("RSBI"));
-
     // 20A, 25ST
     //  MV.txt
     //  rAMV.txt
@@ -429,6 +435,7 @@ PrismaEventFile::PrismaEventFile(QByteArray &buffer) {
 
 //********************************************************************************************
 
+// NOTE: was created for PrismaSmart, should be extended to support PrismaLines as they stabilize
 struct PrismaTestedModel
 {
     QString deviceId;
@@ -528,7 +535,6 @@ int PrismaLoader::Open(const QString & selectedPath)
     emit updateMessage(QObject::tr("Scanning Files..."));
     QCoreApplication::processEvents();
 
-
     if (prismaSmartConfigFile.exists()) // TODO AXT || !configFile.isReadable() fails
     {
         // TODO AXT extract
@@ -541,6 +547,10 @@ int PrismaLoader::Open(const QString & selectedPath)
     }
     else if (prismaLineConfigFile.exists())
     {
+        // TODO AXT: this is just a quick hack to load the zipped therapy files for the
+        // Prisma Line devices. This should be extracted into a loader class, like the
+        // PrismaEventFile. If this extraction is done, then loading the machine info
+        // could become much easier.
         QSet<SessionID> sessions;
         QHash<SessionID, QString> eventFiles;
         QHash<SessionID, QString> signalFiles;
@@ -655,11 +665,14 @@ MachineInfo PrismaLoader::PeekInfoFromConfig(const QString & selectedPath)
         info.model = s_PrismaModelInfo.Name(info.modelnumber);
         info.serial = devObj["sn"].toString();
         info.series = devObj["hwversion"].toString();
-        // TODO AXT load props
+        // TODO AXT load propserties here,
+        // we should use these to set the physical limits of the device
         info.properties["cica"] = "mica";
         return info;
     } else if (prismaLineConfigFile.exists()) {
-        // TODO AXT add loader
+        // TODO AXT prismaLine machine info loader not supported at all at this time
+        // first extract the therapy data loader in PrismaLoader::Open(), it will help
+        // to solve this issue too
         if (!prismaLineConfigFile.open(QIODevice::ReadOnly)) {
             return MachineInfo();
         }
