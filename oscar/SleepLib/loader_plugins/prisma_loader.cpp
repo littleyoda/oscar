@@ -558,11 +558,11 @@ int PrismaLoader::Open(const QString & selectedPath)
 
         QFile prismaLineTherapyFile(selectedPath + QDir::separator() + PRISMA_LINE_THERAPY_FILE);
         if (!prismaLineTherapyFile.exists()) { // TODO AXT || !configFile.isReadable() fails
-            qDebug() << "Prisma line therapy file error" << prismaLineTherapyFile;
+            qDebug() << "Prisma line therapy file error" << prismaLineTherapyFile.fileName();
             return 0;
         }
         if (!prismaLineTherapyFile.open(QIODevice::ReadOnly)) {
-            qDebug() << "Prisma line therapy file not readable" << prismaLineTherapyFile;
+            qDebug() << "Prisma line therapy file not readable" << prismaLineTherapyFile.fileName();
             return 0;
         }
         QByteArray therapyData = prismaLineTherapyFile.readAll();
