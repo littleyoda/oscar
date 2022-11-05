@@ -2078,7 +2078,7 @@ bool PRS1DataChunk::ParseSettingsF0V6(const unsigned char* data, int size)
                 // TODO: Confirm that 4 is 12HT and update ParseTubingTypeV3.
                 this->ParseTubingTypeV3(data[pos]);
                 break;
-            case 0x48:  // ??? Seen on DreamStation 2 non-Advanced (410)
+            case 0x48:  // ??? Seen on DreamStation 2 non-Advanced (410) but not either Advanced (420 or 520)
                 // Appears between 0x2C (ramp time) and 0x2E (flex mode), with a value of 0-4.
                 CHECK_VALUE(len, 1);
                 if (data[pos] > 4) {

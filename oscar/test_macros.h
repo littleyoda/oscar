@@ -38,74 +38,75 @@ To turn off the the test macros.
 #include <QRegularExpression>
 #include <QFileInfo>
 
-#define DEBUGL  qDebug()	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
-//example:  
-//12361: Debug: "gGraphView[572]"
+#define DEBUGQ  qDebug().noquote()
+#define DEBUGL  DEBUGQ	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
+#define DEBUGF  DEBUGQ	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGT  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
+#define DEBUGTF DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 
-
-#define DEBUGF  qDebug()	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-//example:  
-//12361: Debug: "gGraphView[572]popoutGraph"
-
-
-#define DEBUGT  qDebug()	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
-//example:  
-//12645: Debug: "06:00:18.284 gGraphView[622]" 
-
-#define DEBUGTF qDebug()	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-//example:  
-//12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph" 
-
-// Macros to display variables
+                                    // Do nothing
+#define Z( EXPRESSION ) 			/* comment out display of variable */
+#define ZZ( A ,EXPRESSION ) 		/* comment out display of variable */
+                                    // Macros to display variables
 #define O( EXPRESSION ) 			<<  EXPRESSION
-
-// return values from functions donr't work - QQ macro instead
-#define Q( VALUE ) 			<<  "" #VALUE ":" << VALUE
-//example:
-
-// 
+#define Q( VALUE ) 			        <<  "" #VALUE ":" << VALUE
 #define QQ( TEXT , EXPRESSION) 		<<  #TEXT ":" << EXPRESSION
-//example:
+//#define Q( VALUE ) 			        <<  QString("%1:%2").arg( ""  #VALUE).arg(VALUE)
+//#define QQ( TEXT , EXPRESSION) 		<<  QString("%1:%2").arg( ""  #TEXT).arg(VALUE)
 
-#define NAME( SCHEMECODE ) 			<<  schema::channel[ SCHEMECODE  ].label()
-//example:
+#define NAME( SCHEMACODE ) 			<<  schema::channel[ SCHEMACODE  ].label()
+#define FULLNAME( SCHEMACODE ) 		<<  schema::channel[ SCHEMAcODE  ].fullname()
 
-#define FULLNAME( SCHEMECODE ) 		<<  schema::channel[ SCHEMEcODE  ].fullname()
-//example:
-
-//display the date of an epoch time stamp "qint64"
+                                    //display the date of an epoch time stamp "qint64"
 #define DATE( EPOCH ) 			<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy")
-
-//display the date and Time of an epoch time stamp "qint64"
+                                    //display the date and Time of an epoch time stamp "qint64"
 #define DATETIME( EPOCH ) 		<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy hh:mm:ss.zzz")
 
-/*
-sample Lines.
 
-code
-DEBUGF Q(name) Q(title) QQ("UNITS",units) Q(height) Q(group);
-output
-00791: Debug: "gGraph[137]gGraph" name: "RespRate" title: "Respiratory Rate" "UNITS": "Rate of breaths per minute" height: 180 group: 0
-
-
-DEBUGTF Q(newname);
-12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph" newname: "Pressure - Friday, April 15, 2022"
+#ifdef __clang__
+    #define COMPILER O(QString("clang++:%1").arg(__clang_version__) );
+#elif __GNUC_VERSION__
+    #define COMPILER O(QString("GNUC++:%1").arg("GNUC").arg(__GNUC_VERSION__)) ;
+#else
+    #define COMPILER 
+#endif
 
 
-DEBUGF NAME(dot.code) Q(dot.type) QQ(y,(int)y) Q(ratioX) O(QLine(left + 1, y, left + 1 + width, y)) Q(legendx) O(dot.value) ;
-92 00917: Debug: "gLineChart[568]paint" "Pressure" dot.type: 4 y: 341 ratioX: 1 QLine(QPoint(91,341),QPoint(464,341)) legendx: 463 12.04
 
+#if 0
+//example:  DEBUGL;
+//12361: Debug: "gGraphView[572]"
 
-*/
+//example:  DEBUGF;
+//12361: Debug: "gGraphView[572]popoutGraph"
+
+//example:  DEBUGT;
+//12645: Debug: "06:00:18.284 gGraphView[622]" 
+
+//example:  DEBUGTF;
+//12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph" 
+
+//example:  DEBUGF Q(name) Q(title) QQ("UNITS",units) Q(height) Q(group);
+//00791: Debug: "gGraph[137]gGraph" name: "RespRate" title: "Respiratory Rate" "UNITS": "Rate of breaths per minute" height: 180 group: 0
+
+//example:  DEBUGTF Q(newname);
+//12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph" newname:"Pressure - Friday, April 15, 2022"
+
+//example:  DEBUGF NAME(dot.code) Q(dot.type) QQ(y,(int)y) Q(ratioX) O(QLine(left + 1, y, left + 1 + width, y)) Q(legendx) O(dot.value) ;
+//92 00917: Debug: "gLineChart[568]paint" "Pressure" dot.type: 4 y: 341 ratioX: 1 QLine(QPoint(91,341),QPoint(464,341)) legendx: 463 12.04
+#endif
 
 #else
 // Turn debugging off.  macros expands to white space
 
+#define DEBUGQ 
 #define DEBUGL
 #define DEBUGF
 #define DEBUGT
 #define DEBUGTF
 
+#define Z( XX )
+#define ZZ( XX , YY)
 #define O( XX )
 #define Q( XX )
 #define QQ( XX , YY )
@@ -113,6 +114,7 @@ DEBUGF NAME(dot.code) Q(dot.type) QQ(y,(int)y) Q(ratioX) O(QLine(left + 1, y, le
 #define FULLNAME( id)
 #define DATE( XX )
 #define DATETIME( XX )
+#define COMPILER 
 
 #endif
 #endif

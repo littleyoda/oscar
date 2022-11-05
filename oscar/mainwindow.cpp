@@ -1993,7 +1993,7 @@ void MainWindow::purgeMachine(Machine * mach)
         p_profile->StoreMachines();
     } else {
         QMessageBox::warning(this, STR_MessageBox_Error,
-            tr("A file permission error casued the purge process to fail; you will have to delete the following folder manually:") +
+            tr("A file permission error caused the purge process to fail; you will have to delete the following folder manually:") +
             "\n\n" + QDir::toNativeSeparators(mach->getDataPath()), QMessageBox::Ok, QMessageBox::Ok);
 
         if (overview) 
@@ -2553,9 +2553,15 @@ void MainWindow::on_actionDaily_Calendar_toggled(bool visible)
 
 void MainWindow::on_actionShowPersonalData_toggled(bool visible)
 {
-    AppSetting->setShowPersonalData(visible);
-    if (!setupRunning)
-        GenerateStatistics();
+    // This uses the Prefs routines, which require p_profile to be set
+    if ( p_profile != nullptr ) {
+        AppSetting->setShowPersonalData(visible);
+        if ( ! setupRunning )
+            GenerateStatistics();
+    } else {
+        QMessageBox::information(this, "OSCAR", tr("You must select and open the profile you wish to modify"),
+                    QMessageBox::Ok);
+    }
 }
 
 #include "SleepLib/journal.h"

@@ -7,25 +7,8 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define NEWSTUFF
-
-#define xDEBUG_FUNCTIONS
-#ifdef DEBUG_FUNCTIONS
-#include <QRegularExpression>
-#define DEBUGQ  qDebug()
-#define DEBUGL  qDebug()<<QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__
-#define DEBUGF  qDebug()<< QString("%1[%2]%3").arg( QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) ).arg(__LINE__).arg(__func__)
-#define DEBUGT  qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")
-#define DEBUGTF qDebug()<<QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz") << QString(basename( __FILE__)).remove(QRegularExpression("\\..*$")) << __LINE__ << __func__
-#define O( XX ) " " #XX ":" << XX
-#define Q( XX ) << #XX ":" << XX
-#define R( XX )
-#define OO( XX , YY ) " " #XX ":" << YY
-#define NAME( id) schema::channel[ id ].label()
-#define DATE( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy")
-#define DATETIME( XX ) QDateTime::fromMSecsSinceEpoch(XX).toString("dd MMM yyyy hh:mm:ss.zzz")
-#endif
-
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
 
 // Features enabled by conditional compilation.
 #define ENABLE_GENERAL_MODIFICATION_OF_CALENDARS
@@ -890,6 +873,7 @@ void Overview::on_graphCombo_activated(int index)
 
         g = GraphView->findGraphTitle(s);
         g->setVisible(b);
+        ui->graphCombo->showPopup();
     }
     ui->graphCombo->setCurrentIndex(0);
     updateCube();
@@ -939,3 +923,4 @@ void Overview::on_toggleVisibility_clicked(bool checked)
     GraphView->updateScale();
     GraphView->redraw();
 }
+

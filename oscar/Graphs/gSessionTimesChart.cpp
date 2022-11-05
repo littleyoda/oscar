@@ -350,6 +350,7 @@ void gSummaryChart::populate(Day * day, int idx)
     auto & slices = cache[idx];
 
     float hours = day->hours(m_machtype);
+    if ((hours==0) && (m_machtype != MT_CPAP)) hours = day->hours();
     float base = 0;
 
     for (auto & item : calcitems) {
@@ -1323,3 +1324,4 @@ QString gAHIChart::tooltipData(Day *day, int idx)
     }
     return QString("\n%1: %2").arg(STR_TR_AHI).arg(float(total) / hour,0,'f',2)+txt;
 }
+

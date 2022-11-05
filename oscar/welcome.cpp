@@ -179,6 +179,7 @@ QString Welcome::GenerateCPAPHTML()
             QString daystring;
             if (daysto == 1) daystring += tr("last night");
             else if (daysto == 2) daystring += tr("1 day ago");
+            else if (daysto == 0) daystring += tr("today");
             else daystring += tr("%2 days ago").arg(daysto-1);
 
             html += tr("was %1 (on %2)").arg(daystring).arg(date.toString(Qt::SystemLocaleLongDate)) + "<br/>";

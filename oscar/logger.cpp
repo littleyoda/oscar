@@ -23,23 +23,26 @@ void MyOutputHandler(QtMsgType type, const QMessageLogContext &context, const QS
         return;
     }
 
-    QString msg, typestr;
+    QString msg, typestr, contextstr;
+#ifdef VERBOSE_LOGGING
+    contextstr = QString(context.file) + " " + context.function + ":" + QString::number(context.line) + " ";
+#endif
 
     switch (type) {
     case QtWarningMsg:
-        typestr = QString("Warning: ");
+        typestr = QString("Warning:  ") + contextstr;
         break;
 
     case QtFatalMsg:
-        typestr = QString("Fatal: ");
+        typestr = QString("Fatal:    ") + contextstr;
         break;
 
     case QtCriticalMsg:
-        typestr = QString("Critical: ");
+        typestr = QString("Critical: ") + contextstr;
         break;
 
     default:
-        typestr = QString("Debug: ");
+        typestr = QString("Debug:    ") + contextstr;
         break;
     }
 

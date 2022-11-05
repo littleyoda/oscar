@@ -138,6 +138,7 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_EPAP          = 0x110E, WAVEFORM,    MT_CPAP, SESSION, "EPAP",           STR_TR_EPAP,                    QObject::tr("Expiratory Pressure"),            STR_TR_EPAP,                 STR_UNIT_CMH2O,        DEFAULT,    QColor("green")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_EPAPLo        = 0x111C, WAVEFORM,    MT_CPAP, SESSION, "EPAPLo",         STR_TR_EPAPLo,                  QObject::tr("Lower Expiratory Pressure"),      STR_TR_EPAPLo,               STR_UNIT_CMH2O,        DEFAULT,    QColor("light blue")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_EPAPHi        = 0x111D, WAVEFORM,    MT_CPAP, SESSION, "EPAPHi",         STR_TR_EPAPHi,                  QObject::tr("Higher Expiratory Pressure"),     STR_TR_EPAPHi,               STR_UNIT_CMH2O,        DEFAULT,    QColor("aqua")));
+    schema::channel.add(GRP_CPAP, new Channel(CPAP_EEPAP         = 0x11A7, WAVEFORM,    MT_CPAP, SESSION, "EEPAP",          STR_TR_EEPAP,                   QObject::tr("End Expiratory Pressure"),        STR_TR_EEPAP,                STR_UNIT_CMH2O,        DEFAULT,    QColor("purple")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PS            = 0x110F, WAVEFORM,    MT_CPAP, SESSION, "PS",             STR_TR_PS,                      QObject::tr("Pressure Support"),               STR_TR_PS,                   STR_UNIT_CMH2O,        DEFAULT,    QColor("grey")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PSMin         = 0x111A, SETTING,     MT_CPAP, SESSION, "PSMin",          QObject::tr("PS Min") ,         QObject::tr("Pressure Support Minimum"),       QObject::tr("PS Min"),       STR_UNIT_CMH2O,        DEFAULT,    QColor("dark cyan")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_PSMax         = 0x111B, SETTING,     MT_CPAP, SESSION, "PSMax",          QObject::tr("PS Max"),          QObject::tr("Pressure Support Maximum"),       QObject::tr("PS Max"),       STR_UNIT_CMH2O,        DEFAULT,    QColor("dark magenta")));
@@ -172,7 +173,7 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore        = 0x1007, FLAG,        MT_CPAP, SESSION, "VSnore",
             QObject::tr("Vibratory Snore (VS)"), QObject::tr("A vibratory snore"), QObject::tr("VS"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore2       = 0x1008, FLAG,        MT_CPAP, SESSION, "VSnore2",
-            QObject::tr("Vibratory Snore (VS2) "),QObject::tr("A vibratory snore as detcted by a System One device"),QObject::tr("VS2"),      STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
+            QObject::tr("Vibratory Snore (VS2) "),QObject::tr("A vibratory snore as detected by a System One device"),QObject::tr("VS2"),      STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
     // This Large Leak record is just a flag marker, used by Intellipap for one
     schema::channel.add(GRP_CPAP, new Channel(CPAP_LeakFlag      = 0x100a, FLAG,        MT_CPAP, SESSION, "LeakFlag",
             QObject::tr("Leak Flag (LF)"), QObject::tr("A large mask leak affecting device performance."), QObject::tr("LF"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("light gray")));

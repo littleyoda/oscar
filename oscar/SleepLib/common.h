@@ -83,6 +83,7 @@ bool operator <(const ValueCount &a, const ValueCount &b);
 
 const float ounce_convert = 28.3495231F; // grams
 const float pound_convert = ounce_convert * 16;
+const float gram_ounce_convert = 0.0352754; // ounces in a gram
 
 QString weightString(float kg, UnitSystem us = US_Undefined);
 
@@ -162,6 +163,7 @@ const QString STR_MACH_SleepStyle = "SleepStyle";
 const QString STR_MACH_MSeries = "MSeries";
 const QString STR_MACH_CMS50 = "CMS50";
 const QString STR_MACH_ZEO = "Zeo";
+const QString STR_MACH_Prisma = "Prisma";
 
 const QString STR_PREF_Language = "Language";
 
@@ -249,6 +251,7 @@ extern QString STR_TR_CPAP;    // Constant Positive Airway Pressure
 extern QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 extern QString STR_TR_BiLevel; // Another name for BiPAP
 extern QString STR_TR_EPAP;    // Expiratory Positive Airway Pressure
+extern QString STR_TR_EEPAP;    // Expiratory Positive Airway Pressure
 extern QString STR_TR_EPAPLo;  // Expiratory Positive Airway Pressure, Low
 extern QString STR_TR_EPAPHi;  // Expiratory Positive Airway Pressure, High
 extern QString STR_TR_IPAP;    // Inspiratory Positive Airway Pressure

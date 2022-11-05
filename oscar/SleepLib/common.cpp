@@ -283,7 +283,7 @@ QString weightString(float kg, UnitSystem us)
     if (us == US_Metric) {
         return QString("%1kg").arg(kg, 0, 'f', 2);
     } else if (us == US_English) {
-        int oz = (kg * 1000.0) / (float)ounce_convert;
+        int oz = (kg * 1000.0) * (float)gram_ounce_convert;
         int lb = oz / 16.0;
         oz = oz % 16;
         return QString("%1lb %2oz").arg(lb, 0, 10).arg(oz);
@@ -526,6 +526,7 @@ QString STR_TR_CPAP;    // Constant Positive Airway Pressure
 QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 QString STR_TR_BiLevel; // Another name for BiPAP
 QString STR_TR_EPAP;    // Expiratory Positive Airway Pressure
+QString STR_TR_EEPAP;    // End Expiratory Positive Airway Pressure
 QString STR_TR_EPAPLo;  // Expiratory Positive Airway Pressure, Low
 QString STR_TR_EPAPHi;  // Expiratory Positive Airway Pressure, High
 QString STR_TR_IPAP;    // Inspiratory Positive Airway Pressure
@@ -735,6 +736,7 @@ void initializeStrings()
     STR_TR_BIPAP = QObject::tr("BiPAP");  // Bi-Level Positive Airway Pressure
     STR_TR_BiLevel = QObject::tr("Bi-Level"); // Another name for BiPAP
     STR_TR_EPAP = QObject::tr("EPAP");    // Expiratory Positive Airway Pressure
+    STR_TR_EEPAP = QObject::tr("EEPAP");    // Expiratory Positive Airway Pressure
     STR_TR_EPAPLo = QObject::tr("Min EPAP"); // Lower Expiratory Positive Airway Pressure
     STR_TR_EPAPHi = QObject::tr("Max EPAP"); // Higher Expiratory Positive Airway Pressure
     STR_TR_IPAP = QObject::tr("IPAP");    // Inspiratory Positive Airway Pressure

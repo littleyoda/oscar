@@ -96,6 +96,20 @@ bool EDFInfo::Open(const QString & name)
     return true;
 }
 
+bool EDFInfo::Open(const QByteArray &data)
+{
+    fileData = data;
+    if (fileData.size() <= EDFHeaderSize) {
+        fileData.clear();;
+        qDebug() << "EDFInfo::Open() buffer too short";
+        return false;
+    }
+    // TODO AXT
+    filename = "bytearray";
+    return true;
+}
+
+
 QDateTime EDFInfo::getStartDT( QString dateTimeStr )
 {
 //  edfHdr.startdate_orig = QDateTime::fromString(QString::fromLatin1(hdrPtr->datetime, 16), "dd.MM.yyHH.mm.ss");
@@ -146,14 +160,15 @@ bool EDFInfo::parseHeader( EDFHeaderRaw *hdrPtr )
     }
     edfHdr.reserved44=QString::fromLatin1(hdrPtr->reserved, 44).trimmed();
     edfHdr.num_data_records = QString::fromLatin1(hdrPtr->num_data_records, 8).toLong(&ok);
-    if ( (! ok) || (edfHdr.num_data_records < 1) ) {
-#ifdef EDF_DEBUG
-        qWarning() << "EDFInfo::Parse() Bad data record count " << filename;
-//      sleep(1);
-#endif
-        fileData.clear();
-        return false;
-    }
+// TODO AXT
+//    if ( (! ok) || (edfHdr.num_data_records < 1) ) {
+//#ifdef EDF_DEBUG
+//        qWarning() << "EDFInfo::Parse() Bad data record count " << filename;
+// //      sleep(1);
+//#endif
+//        fileData.clear();
+//        return false;
+//    }
     edfHdr.duration_Seconds = QString::fromLatin1(hdrPtr->dur_data_records, 8).toDouble(&ok);
     if (!ok) {
 #ifdef EDF_DEBUG
@@ -250,6 +265,12 @@ bool EDFInfo::Parse() {
         return false;
     }
 
+    bool ret = ParseSignalData();
+    fileData.clear();
+    return ret;
+}
+
+bool EDFInfo::ParseSignalData() {
     // Now check the file isn't truncated before allocating space for the values
     long allocsize = 0;
     for (auto & sig : edfsignals) {
@@ -265,7 +286,6 @@ bool EDFInfo::Parse() {
         fileData.clear();
         return false;
     }
-
     // allocate the arrays for the signal values
     for (auto & sig : edfsignals) {
         long samples = sig.sampleCnt * edfHdr.num_data_records;
@@ -289,7 +309,7 @@ bool EDFInfo::Parse() {
             }
         }
     }
-    fileData.clear();
+
     return true;
 }
 
