@@ -257,7 +257,7 @@ In verband met de koppeling met Bladwijzers, lijkt me &apos;Notities&apos; beter
     <message>
         <location filename="../oscar/daily.ui" line="1492"/>
         <source>Flags</source>
-        <translation>Markeringen</translation>
+        <translation>Incident markeringen</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1544"/>
@@ -3091,7 +3091,7 @@ anders is het geen AHI/uur meer.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="706"/>
         <source>CPAP Clock Drift</source>
-        <translation>Correctie afwijking klok CPAP</translation>
+        <translation>Correctie afwijking CPAP-klok</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="502"/>
@@ -3316,7 +3316,7 @@ Werkt vooral bij importeren.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1193"/>
         <source>Enable Unknown Events Channels</source>
-        <translation>Zet de kanalen van onbekende gebeurtenissen aan</translation>
+        <translation>Kanalen van onbekende gebeurtenissen aan</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1323"/>
@@ -3554,7 +3554,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2637"/>
         <source>Overview Linecharts</source>
-        <translation>Overzicht lijngrafieken</translation>
+        <translation>Soort grafieken in overzicht</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2582"/>
@@ -3569,7 +3569,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2384"/>
         <source>Overlay Flags</source>
-        <translation>Markeringen</translation>
+        <translation>Incident markeringen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2410"/>
@@ -3581,7 +3581,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2415"/>
         <source>Standard Bars</source>
-        <translation>Standaardbalken</translation>
+        <translation>Lange markeringen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2368"/>
@@ -3636,7 +3636,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
-        <translation>Bereken de onbedoelde lekkage als deze niet door het apparaat gegeven wordt</translation>
+        <translation>Bereken de onbedoelde lekkage als deze niet gegeven wordt</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="906"/>
@@ -3656,7 +3656,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2454"/>
         <source>Tooltip Timeout</source>
-        <translation>Tooltip timeout</translation>
+        <translation>Tijdsduur tooltips</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2534"/>
@@ -3666,7 +3666,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2420"/>
         <source>Top Markers</source>
-        <translation>Top markeringen</translation>
+        <translation>Aanduiding aan bovenzijde</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="423"/>
@@ -3681,7 +3681,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="618"/>
         <source>Automatically load last used profile on start-up</source>
-        <translation>Laadt automatisch het laatste profiel bij opstarten</translation>
+        <translation>Laad automatisch het laatste profiel bij opstarten</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="645"/>
@@ -3775,7 +3775,7 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2319"/>
         <source>Switch Tabs</source>
-        <translation>Wissel tabbladen</translation>
+        <translation>Kies tabbladen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2330"/>
