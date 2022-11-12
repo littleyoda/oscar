@@ -37,7 +37,9 @@ void SummaryChart::SetDay(Day * nullday)
     Layer::SetDay(day);
 
     m_values.clear();
+#ifdef USE_GT_SESSIONS
     m_times.clear();
+#endif
     m_days.clear();
     m_hours.clear();
     m_goodcodes.clear();
@@ -50,7 +52,7 @@ void SummaryChart::SetDay(Day * nullday)
 
 
     int dn;
-    EventDataType tmp, tmp2, total;
+    EventDataType tmp, total;
     ChannelID code;
     CPAPMode cpapmode = (CPAPMode)(int)p_profile->calcSettingsMax(CPAP_Mode, MT_CPAP,
                         p_profile->FirstDay(MT_CPAP), p_profile->LastDay(MT_CPAP));
@@ -111,19 +113,21 @@ void SummaryChart::SetDay(Day * nullday)
     }
 
     m_fday = 0;
-    qint64 tt, zt;
+    qint64 tt;
     m_empty = true;
 
+    #ifdef USE_GT_SESSIONS
     if (m_graphtype == GT_SESSIONS) {
         // No point drawing anything if no real data on record
         if (p_profile->countDays(MT_CPAP, p_profile->FirstDay(MT_CPAP), p_profile->LastDay(MT_CPAP)) == 0) {
             return;
         }
     }
+    bool first = true;
+    #endif
 
     int suboffset;
     SummaryType type;
-    bool first = true;
 
     // For each day in the main profile daylist
 
@@ -149,7 +153,10 @@ void SummaryChart::SetDay(Day * nullday)
         //////////////////////////////////////////////////////////
         // Setup for Sessions Time display chart
         //////////////////////////////////////////////////////////
+        #ifdef USE_GT_SESSIONS
         if (m_graphtype == GT_SESSIONS) {
+            qint64 zt;
+            EventDataType tmp2;
             // Turn all legends on
             for (int i = 0; i < m_codes.size(); i++) {
                 m_goodcodes[i] = true;
@@ -211,7 +218,9 @@ void SummaryChart::SetDay(Day * nullday)
                 m_hours[dn] = total;
                 m_empty = false;
             }
-        } else {
+        } else
+        #endif
+        {
             //////////////////////////////////////////////////////////////////////////////
             // Data Channel summary charts
             //////////////////////////////////////////////////////////////////////////////
@@ -460,7 +469,7 @@ void SummaryChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     EventDataType total;
 
     int daynum = 0;
-    EventDataType h, tmp, tmp2;
+    EventDataType h, tmp;
 
 
     l_offset = (minx) % 86400000L;
@@ -617,6 +626,7 @@ void SummaryChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                 }
             }
 
+            #ifdef USE_GT_SESSIONS
             if (graphtype == GT_SESSIONS) {
                 int j;
                 auto times = m_times.find(zd);
@@ -643,7 +653,7 @@ void SummaryChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                 }
 
                 for (j = 0; j < np; j++) {
-                    tmp2 = times.value()[j] - miny;
+                    EventDataType tmp2 = times.value()[j] - miny;
                     py = top + height - (tmp2 * ymult);
 
                     tmp = d.value()[j]; // length
@@ -674,7 +684,9 @@ void SummaryChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                 total_val += hours;
                 total_hours += hours;
                 total_days++;
-            } else {
+            } else
+            #endif
+            {
                 if (!d.value().contains(0)) {
                     goto jumpnext;
                 }
@@ -1102,6 +1114,7 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
             //EventDataType val;
             QString val;
 
+            #ifdef USE_GT_SESSIONS
             if (m_graphtype == GT_SESSIONS) {
                 if (m_type[0] == ST_HOURS) {
 
@@ -1129,7 +1142,9 @@ bool SummaryChart::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                 v = m_times[zd][lastt] + m_values[zd][lastt];
                 strTooltip += "\r\n"+QString(QObject::tr("Waketime: %1")).arg(formatTime(v, false, false, true));
 
-            } else if (m_graphtype == GT_BAR) {
+            } else
+            #endif
+            if (m_graphtype == GT_BAR) {
                 if (m_type[0] == ST_HOURS) {
                     int t = d.value()[0] * 3600.0;
                     int h = t / 3600;

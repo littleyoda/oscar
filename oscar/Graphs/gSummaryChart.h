@@ -14,12 +14,32 @@
 #include "gGraphView.h"
 #include "gXAxis.h"
 
+
+
 /*! \enum GraphType
     \value GT_BAR   Display as a BarGraph
     \value GT_LINE  Display as a line plot
-    \value GT_SESSIONS Display type for session times chart
     */
-enum GraphType { GT_BAR, GT_LINE, GT_POINTS, GT_SESSIONS };
+// \value GT_SESSIONS Display type for session times chart
+/*
+The following in a conjecture, since I can not test NON-CPAP data.
+BMI, Weight  and Zombie graphs are the only NON-CPAP charts in Overview.
+
+Currently there are 4 graphs types, one of which is not used.
+GT_BAR			Used by CPAP graph to make bar graphs for each day
+GT_LINE			? Used for making a line ?
+GT_POINT		? Used to display points instead of lines ?
+GT_SESSION		?? NOT USED.  It will be conditionally compiled out.
+
+BMI, Weight  and Zombie graphs current use GT_LINE and not GT_BAR
+The Overview Linecharts preference allows points to be displayed instead of lines.
+*/
+#define USE_GT_SESSIONS_OFF
+enum GraphType { GT_BAR, GT_LINE, GT_POINTS
+#ifdef USE_GT_SESSIONS
+, GT_SESSIONS
+#endif
+};
 
 
 /*! \class SummaryChart
@@ -80,7 +100,9 @@ class SummaryChart: public Layer
         layer->m_type = m_type;
         layer->m_typeval = m_typeval;
         layer->m_values = m_values;
+#ifdef USE_GT_SESSIONS
         layer->m_times = m_times;
+#endif
         layer->m_hours = m_hours;
         layer->m_days = m_days;
 
@@ -116,7 +138,9 @@ class SummaryChart: public Layer
     QVector<SummaryType> m_type;
     QVector<EventDataType> m_typeval;
     QHash<int, QMap<short, EventDataType> > m_values;
+#ifdef USE_GT_SESSIONS
     QHash<int, QMap<short, EventDataType> > m_times;
+#endif
     QHash<int, EventDataType> m_hours;
     QHash<int, Day *> m_days;
 
