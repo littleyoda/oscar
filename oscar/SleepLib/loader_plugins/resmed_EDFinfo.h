@@ -242,11 +242,11 @@ public:
 
     int s_EasyBreathe;
     int s_RiseEnable;
-    int s_RiseTime;
+    EventDataType s_RiseTime;
     int s_Cycle;
     int s_Trigger;
-    int s_TiMax;
-    int s_TiMin;
+    EventDataType s_TiMax;
+    EventDataType s_TiMin;
 
 };
 

@@ -1904,7 +1904,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 }
             }
             if (R.rms9_mode == 6) {     // vAuto mode
-                qDebug() << vAuto mode found" << 6;
+                qDebug() << "vAuto mode found" << 6;
                 if ((sig = str.lookupLabel("S.Cycle"))) {
                     R.s_Cycle = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
                     qDebug() << "Cycle" << R.s_Cycle;
@@ -1915,9 +1915,11 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
                 } 
                 if ((sig = str.lookupLabel("S.TiMax"))) {
                     R.s_TiMax = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    qDebug() << QString("TiMax %1").arg( R.s_TiMax, 0, 'f', 1);
                 } 
                 if ((sig = str.lookupLabel("S.TiMin"))) {
                     R.s_TiMin = EventDataType(sig->dataArray[rec]) * sig->gain + sig->offset;
+                    qDebug() << QString("TiMin %1").arg( R.s_TiMin, 0, 'f', 1);
                 } 
             }
             if ( R.min_pressure == 0 ) {
@@ -2406,6 +2408,10 @@ void StoreSettings(Session * sess, STRRecord & R)
             if (R.min_epap >= 0) sess->settings[CPAP_EPAPLo] = R.min_epap;
             if (R.max_ipap >= 0) sess->settings[CPAP_IPAPHi] = R.max_ipap;
             if (R.ps >= 0) sess->settings[CPAP_PS] = R.ps;
+            if (R.s_Cycle >= 0) sess->settings[ RMAS1x_Cycle ] = R.s_Cycle;
+            if (R.s_Trigger >= 0) sess->settings[ RMAS1x_Trigger ] = R.s_Trigger;
+            if (R.s_TiMax >= 0) sess->settings[ RMAS1x_TiMax ] = R.s_TiMax;
+            if (R.s_TiMin >= 0) sess->settings[ RMAS1x_TiMin ] = R.s_TiMin;
         } else if (R.mode == MODE_ASV) {
             if (R.epap >= 0) sess->settings[CPAP_EPAP] = R.epap;
             if (R.min_ps >= 0) sess->settings[CPAP_PSMin] = R.min_ps;
