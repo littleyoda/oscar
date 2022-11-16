@@ -29,7 +29,11 @@
 #include "Graphs/gXAxis.h"
 #include "Graphs/gLineChart.h"
 #include "Graphs/gYAxis.h"
+#include "Graphs/gSessionTimesChart.h"
 #include "Graphs/gPressureChart.h"
+#include "Graphs/gAHIChart.h"
+#include "Graphs/gUsageChart.h"
+#include "Graphs/gTTIAChart.h"
 #include "cprogressbar.h"
 
 #include "mainwindow.h"
@@ -263,7 +267,8 @@ void Overview::CreateAllGraphs() {
     //chartsToBeMonitored.insert(ahi,AHI);
 
     UC = createGraph(STR_GRAPH_Usage, tr("Usage"), tr("Usage\n(hours)"));
-    UC->AddLayer(uc = new gUsageChart());
+    uc = new gUsageChart();
+    UC->AddLayer(uc);
     //chartsToBeMonitored.insert(uc,UC);
 
     STG = createGraph("New Session", tr("Session Times"), tr("Session Times"),  YT_Time);
@@ -311,30 +316,34 @@ void Overview::CreateAllGraphs() {
                 sc->addCalc(code, ST_CPH, schema::channel[code].defaultColor());
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
-            } 
+            }
             if (sc!= nullptr) {
                 sc ->reCalculate();
             }
         } // if showInOverview()
     } // for chit
-    // Note The following don not use gSummaryChart. They use SummaryChart instead. and can not be monitored.
+    #ifndef REMOVE_FITNESS
+    /* To enable these changes:   change the REMOTE_FITNESS define in appsettings.h */
+
+    // Note The following do not use gSummaryChart. They use gOverviewGraph instead. and can not be monitored.
     WEIGHT = createGraph(STR_GRAPH_Weight, STR_TR_Weight, STR_TR_Weight, YT_Weight);
-    weight = new SummaryChart("Weight", GT_LINE);
+    weight = new gOverviewGraph("Weight", GT_LINE);
     weight->setMachineType(MT_JOURNAL);
     weight->addSlice(Journal_Weight, QColor("black"), ST_SETAVG);
     WEIGHT->AddLayer(weight);
 
     BMI = createGraph(STR_GRAPH_BMI, STR_TR_BMI, tr("Body\nMass\nIndex"));
-    bmi = new SummaryChart("BMI", GT_LINE);
+    bmi = new gOverviewGraph("BMI", GT_LINE);
     bmi->setMachineType(MT_JOURNAL);
     bmi->addSlice(Journal_BMI, QColor("black"), ST_SETAVG);
     BMI->AddLayer(bmi);
 
     ZOMBIE = createGraph(STR_GRAPH_Zombie, STR_TR_Zombie, tr("How you felt\n(0-10)"));
-    zombie = new SummaryChart("Zombie", GT_LINE);
+    zombie = new gOverviewGraph("Zombie", GT_LINE);
     zombie->setMachineType(MT_JOURNAL);
     zombie->addSlice(Journal_ZombieMeter, QColor("black"), ST_SETAVG);
     ZOMBIE->AddLayer(zombie);
+    #endif
 
     connectgSummaryCharts();
 }
@@ -532,10 +541,10 @@ void Overview::on_XBoundsChanged(qint64 start,qint64 end)
 
     bool largerRange=false;
     if (displayStartDate>maxRangeEndDate || minRangeStartDate>displayEndDate) {
-        // have non-overlaping ranges 
+        // have non-overlaping ranges
         // Only occurs when custom mode is switched to/from a latest mode. custom mode to/from last week.
         // All other displays expand the existing range.
-        // reset all empty flags to not empty 
+        // reset all empty flags to not empty
         largerRange=true;
         chartsEmpty = QHash<gSummaryChart*, gGraph*>( chartsToBeMonitored );
         minRangeStartDate = displayStartDate;
@@ -737,7 +746,7 @@ void Overview::on_rangeCombo_activated(int index)
 
 
 DateErrorDisplay::DateErrorDisplay (Overview* overview)
-	:	m_overview(overview) 
+	:	m_overview(overview)
 {
 	m_visible=false;
 	m_timer = new QTimer();
@@ -837,7 +846,7 @@ void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
     uiEndDate = end;
 
     //bool nextSamePage= start.daysTo(end)<=31;
-    bool nextSamePage= (start.year() == end.year() && start.month() == end.month()) ; 
+    bool nextSamePage= (start.year() == end.year() && start.month() == end.month()) ;
     if (samePage>0 ||nextSamePage) {
         // The widgets do not signal pageChanged on opening - since the page hasn't changed.
         // however the highlighting may need to be changed.

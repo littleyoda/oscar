@@ -19,8 +19,10 @@
 #include <QTimer>
 #include "SleepLib/profiles.h"
 #include "Graphs/gGraphView.h"
+#ifndef REMOVE_FITNESS
+#include "Graphs/gOverviewGraph.h"
+#endif
 #include "Graphs/gSummaryChart.h"
-#include "Graphs/gSessionTimesChart.h"
 
 namespace Ui {
 class Overview;
@@ -96,8 +98,10 @@ class Overview : public QWidget
     gGraph *createGraph(QString code, QString name, QString units = "", YTickerType yttype = YT_Number);
     gGraph *AHI, *AHIHR, *UC, *FL, *SA, *US, *PR, *LK, *NPB, *SET, *SES, *RR, *MV, *TV, *PTB, *PULSE, *SPO2, *NLL,
            *WEIGHT, *ZOMBIE, *BMI, *TGMV, *TOTLK, *STG, *SN, *TTIA;
-    SummaryChart *bc, *sa, *us, *pr,  *set, *ses,  *ptb, *pulse, *spo2,
+#ifndef REMOVE_FITNESS
+    gOverviewGraph *bc, *sa, *us, *pr,  *set, *ses,  *ptb, *pulse, *spo2,
                  *weight, *zombie, *bmi, *ahihr, *tgmv, *totlk;
+#endif
 
     gSummaryChart * stg, *uc, *ahi, * pres, *lk, *npb, *rr, *mv, *tv, *nll, *sn, *ttia;
 
@@ -173,7 +177,7 @@ class Overview : public QWidget
     QDate displayStartDate;
     QDate displayEndDate;
 
-    // min / max dates of the graph Range 
+    // min / max dates of the graph Range
     QDate minRangeStartDate;
     QDate maxRangeEndDate;
 

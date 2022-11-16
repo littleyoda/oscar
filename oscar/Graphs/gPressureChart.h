@@ -10,7 +10,7 @@
 #ifndef GPRESSURECHART_H
 #define GPRESSURECHART_H
 
-#include "gSessionTimesChart.h"
+#include "gSummaryChart.h"
 
 class gPressureChart : public gSummaryChart
 {
