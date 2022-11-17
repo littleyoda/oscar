@@ -34,7 +34,9 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     m_graphTooltips = initPref(STR_AS_GraphTooltips, true).toBool();
     m_usePixmapCaching = initPref(STR_AS_UsePixmapCaching, false).toBool();
     m_odt = (OverlayDisplayType)initPref(STR_AS_OverlayType, (int)ODT_Bars).toInt();
+#ifndef REMOVE_FITNESS
     m_olm = (OverviewLinechartModes)initPref(STR_AS_OverviewLinechartMode, (int)OLC_Bartop).toInt();
+#endif
     m_lineThickness=initPref(STR_AS_LineThickness, 1.0).toFloat();
     m_lineCursorMode = initPref(STR_AS_LineCursorMode, true).toBool();
     initPref(STR_AS_RightSidebarVisible, false);

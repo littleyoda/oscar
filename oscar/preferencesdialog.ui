@@ -2632,7 +2632,7 @@ Mainly affects the importer.</string>
                 </layout>
                </item>
                <item row="5" column="0">
-                <widget class="QLabel" name="label_47">
+                <widget class="QLabel" name="overviewLinechartsLabel">
                  <property name="text">
                   <string>Overview Linecharts</string>
                  </property>

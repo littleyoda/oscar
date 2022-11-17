@@ -136,7 +136,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     // Remove Incomplete Extras Tab
     //ui->tabWidget->removeTab(3);
 
-    ZombieMeterMoved=false;
     BookmarksChanged=false;
 
     lastcpapday=nullptr;
@@ -503,6 +502,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     ui->splitter->setVisible(false);
 
+#ifndef REMOVE_FITNESS
+    ZombieMeterMoved=false;
+
     if (p_profile->general->unitSystem()==US_English) {
         ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
         ui->weightSpinBox->setDecimals(0);
@@ -513,6 +515,12 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         ui->weightSpinBox->setDecimals(1);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     }
+#else // REMOVE_FITNESS
+        // hide the parent widget to make the gridlayout invisible
+        QWidget *myparent ;
+        myparent = ui->gridLayout->parentWidget();
+        if(myparent) myparent->hide();
+#endif
 
     GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
     GraphView->setEmptyText(STR_Empty_NoData);
@@ -926,9 +934,12 @@ void Daily::on_ReloadDay()
        // GraphView->fadeOut();
         Unload(previous_date);
     }
+
     unload_time=time.restart();
     //bool fadedir=previous_date < ui->calendar->selectedDate();
+#ifndef REMOVE_FITNESS
     ZombieMeterMoved=false;
+#endif
     Load(ui->calendar->selectedDate());
     load_time=time.restart();
 
@@ -936,6 +947,9 @@ void Daily::on_ReloadDay()
     GraphView->redraw();
     ui->calButton->setText(ui->calendar->selectedDate().toString(MedDateFormat));
     ui->calendar->setFocus(Qt::ActiveWindowFocusReason);
+
+#ifndef REMOVE_FITNESS
+    ZombieMeterMoved=false;
 
     if (p_profile->general->unitSystem()==US_English) {
         ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
@@ -947,6 +961,7 @@ void Daily::on_ReloadDay()
         ui->weightSpinBox->setDecimals(1);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     }
+#endif
     this->setCursor(Qt::ArrowCursor);
     other_time=time.restart();
 
@@ -1882,6 +1897,7 @@ void Daily::Load(QDate date)
     //sl.append(tr("Starts"));
     //sl.append(tr("Notes"));
     ui->bookmarkTable->setHorizontalHeaderLabels(sl);
+#ifndef REMOVE_FITNESS
     ui->ZombieMeter->blockSignals(true);
     ui->weightSpinBox->blockSignals(true);
     ui->ouncesSpinBox->blockSignals(true);
@@ -1895,16 +1911,18 @@ void Daily::Load(QDate date)
     ui->BMI->display(0);
     ui->BMI->setVisible(false);
     ui->BMIlabel->setVisible(false);
+#endif
     ui->toggleGraphs->setVisible(false);
     ui->toggleEvents->setVisible(false);
 
     BookmarksChanged=false;
     Session *journal=GetJournalSession(date);
     if (journal) {
-        bool ok;
         if (journal->settings.contains(Journal_Notes))
             ui->JournalNotes->setHtml(journal->settings[Journal_Notes].toString());
 
+#ifndef REMOVE_FITNESS
+        bool ok;
         if (journal->settings.contains(Journal_Weight)) {
             double kg=journal->settings[Journal_Weight].toDouble(&ok);
 
@@ -1947,6 +1965,7 @@ void Daily::Load(QDate date)
             ui->ZombieMeter->setValue(journal->settings[Journal_ZombieMeter].toDouble(&ok));
             ui->ZombieMeter->blockSignals(false);
         }
+#endif
 
         if (journal->settings.contains(Bookmark_Start)) {
             QVariantList start=journal->settings[Bookmark_Start].toList();
@@ -1984,6 +2003,7 @@ void Daily::Load(QDate date)
 
 void Daily::UnitsChanged()
 {
+#ifndef REMOVE_FITNESS
     double kg;
     if (p_profile->general->unitSystem()==US_English) {
         kg=ui->weightSpinBox->value();
@@ -2005,6 +2025,7 @@ void Daily::UnitsChanged()
         ui->ouncesSpinBox->setVisible(false);
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     }
+#endif
 }
 
 void Daily::clearLastDay()
@@ -2491,6 +2512,7 @@ void Daily::on_removeBookmarkButton_clicked()
     }
     mainwin->updateFavourites();
 }
+#ifndef REMOVE_FITNESS
 void Daily::on_ZombieMeter_valueChanged(int action)
 {
     Q_UNUSED(action);
@@ -2503,6 +2525,7 @@ void Daily::on_ZombieMeter_valueChanged(int action)
     journal->SetChanged(true);
     mainwin->updateOverview();
 }
+#endif
 
 void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
 {
@@ -2510,6 +2533,7 @@ void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
     update_Bookmarks();
 }
 
+#ifndef REMOVE_FITNESS
 void Daily::on_weightSpinBox_valueChanged(double arg1)
 {
     // This is called if up/down arrows are used, in which case editingFinished is
@@ -2596,6 +2620,7 @@ void Daily::on_ouncesSpinBox_editingFinished()
     // This is functionally identical to the weightSpinBox_editingFinished, so just call that
     this->on_weightSpinBox_editingFinished();
 }
+#endif
 
 QString Daily::GetDetailsText()
 {

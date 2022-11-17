@@ -290,13 +290,18 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->updateCheckEvery->setValue(AppSetting->updateCheckFrequency());
     if (AppSetting->updatesLastChecked().isValid()) {
         RefreshLastChecked();
-    } else { 
+    } else {
         ui->updateLastChecked->setText(tr("Never"));
     }
 #endif
 
     ui->overlayFlagsCombo->setCurrentIndex(AppSetting->overlayType());
+    #ifndef REMOVE_FITNESS
     ui->overviewLinecharts->setCurrentIndex(AppSetting->overviewLinechartMode());
+    #else
+    ui->overviewLinecharts->hide();
+    ui->overviewLinechartsLabel->hide();
+    #endif
 
     ui->ahiGraphWindowSize->setEnabled(false);
     ui->ahiGraphWindowSize->setValue(profile->cpap->AHIWindow());
@@ -883,7 +888,9 @@ bool PreferencesDialog::Save()
     profile->cpap->setClockDrift(s);
 
     AppSetting->setOverlayType((OverlayDisplayType)ui->overlayFlagsCombo->currentIndex());
+    #ifndef REMOVE_FITNESS
     AppSetting->setOverviewLinechartMode((OverviewLinechartModes)ui->overviewLinecharts->currentIndex());
+    #endif
 
     profile->oxi->setSpO2DropPercentage(ui->spo2Drop->value());
     profile->oxi->setSpO2DropDuration(ui->spo2DropTime->value());
