@@ -3359,9 +3359,9 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
             ToTimeDelta(sess, edf, es, code, samples, duration, 0, 0, square);
         } else if (matchSignal(CPAP_IE, es.label)) { //I:E ratio
             code = CPAP_IE;
-//          es.gain /= 100.0;
-//          es.physical_maximum /= 100.0;
-//          es.physical_minimum /= 100.0;
+            es.gain /= 100.0;
+            es.physical_maximum /= 100.0;
+            es.physical_minimum /= 100.0;
 //          qDebug() << "IE Gain, Max, Min" << es.gain << es.physical_maximum << es.physical_minimum;
 //          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
 //          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
@@ -3476,7 +3476,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         tt += rate * startpos;
     }
 // Likewise for the values that the device computes for us, but 20 seconds
-    if ((code == CPAP_MinuteVent) || (code == CPAP_RespRate) || (code == CPAP_TidalVolume)) {
+    if ( (code == CPAP_MinuteVent) || (code == CPAP_RespRate) || (code == CPAP_TidalVolume) ||
+         (code == CPAP_Ti) || (code == CPAP_Te) || (code == CPAP_IE) ) {
         startpos = 10; // Shave the first 20 seconds of computed data
         tt += rate * startpos;
     }

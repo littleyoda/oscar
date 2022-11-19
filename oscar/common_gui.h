@@ -29,6 +29,7 @@ const QString STR_GRAPH_PTB = "PTB";
 const QString STR_GRAPH_RespEvent = "RespEvent";
 const QString STR_GRAPH_Ti = "Ti";
 const QString STR_GRAPH_Te = "Te";
+const QString STR_GRAPH_IE = "I:E";
 const QString STR_GRAPH_SleepStage = "SleepStage";
 const QString STR_GRAPH_Inclination = "Inclination";
 const QString STR_GRAPH_Orientation = "Orientation";
