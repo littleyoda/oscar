@@ -252,7 +252,7 @@ void init()
     schema::channel[CPAP_Leak].setLowerThreshold(24.0);
 
     schema::channel.add(GRP_CPAP, new Channel(CPAP_IE                = 0x1109, WAVEFORM,    MT_CPAP,  SESSION, "IE",
-            QObject::tr("I:E Ratio"), QObject::tr("Ratio between Inspiratory and Expiratory time"), QObject::tr("I:E Ratio"), STR_UNIT_Ratio,    DEFAULT,    QColor("dark red")));
+            QObject::tr("I/E Value"), QObject::tr("Ratio between Inspiratory and Expiratory time"), QObject::tr("I/E Value"), STR_UNIT_Ratio,    DEFAULT,    QColor("dark red")));
 
     schema::channel.add(GRP_CPAP, new Channel(CPAP_Te                = 0x110A, WAVEFORM,    MT_CPAP,  SESSION, STR_GRAPH_Te,
             QObject::tr("Expiratory Time"), QObject::tr("Time taken to breathe out"), QObject::tr("Exp. Time"),          STR_UNIT_Seconds,  DEFAULT,    QColor("dark green")));
