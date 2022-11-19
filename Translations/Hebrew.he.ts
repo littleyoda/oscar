@@ -32,7 +32,7 @@
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="36"/>
         <source>Show data folder</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג את מחיצת הנתונים</translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="40"/>
@@ -75,12 +75,12 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="880"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">קובץ נתוני אוקסימטר לא קיים:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.cpp" line="886"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">כשל בפתיחת קובץ אוקסימטר:</translation>
     </message>
 </context>
 <context>
@@ -98,12 +98,12 @@
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="548"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">קובץ נתוני אוקסימטר לא קיים:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="554"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">כשל בפתיחת קובץ אוקסימטר:</translation>
     </message>
 </context>
 <context>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../oscar/checkupdates.cpp" line="250"/>
         <source>Checking for newer OSCAR versions</source>
-        <translation type="unfinished"></translation>
+        <translation>בודק האם גירסה חדשה זמינה</translation>
     </message>
 </context>
 <context>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="551"/>
         <source>Show or hide the calender</source>
-        <translation>הראה או הסתר את לוח השנה</translation>
+        <translation>הצג או הסתר את לוח השנה</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="614"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1050"/>
         <source> i </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1106"/>
@@ -186,17 +186,17 @@
     <message>
         <location filename="../oscar/daily.ui" line="1196"/>
         <source>I&apos;m feeling ...</source>
-        <translation type="unfinished"></translation>
+        <translation>ההרגשה שלי...</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1219"/>
         <source>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</source>
-        <translation type="unfinished"></translation>
+        <translation>משקל גוף משמש לחישוב BMI</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1492"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>דגלים</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1544"/>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../oscar/daily.ui" line="1569"/>
         <source>Show/hide available graphs.</source>
-        <translation type="unfinished"></translation>
+        <translation>החלף נראות גרפים.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="1084"/>
@@ -301,12 +301,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1521"/>
         <source>Unable to display Pie Chart on this system</source>
-        <translation type="unfinished"></translation>
+        <translation>אין אפשרות להציג גרף עוגה</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1725"/>
         <source>This CPAP device does NOT record detailed data</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר לא רושם נתונים מפורטים</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1796"/>
@@ -369,27 +369,28 @@
     <message>
         <location filename="../oscar/daily.cpp" line="307"/>
         <source>UF1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="308"/>
         <source>UF2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="372"/>
         <source>Time at Pressure</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="812"/>
         <source>Session Start Times</source>
-        <translation type="unfinished"></translation>
+        <translation>זמני התחלת שימוש</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="813"/>
         <source>Session End Times</source>
-        <translation type="unfinished"></translation>
+        <translation>זמני סיום שימוש</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1019"/>
@@ -404,97 +405,98 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1053"/>
         <source>Unknown Session</source>
-        <translation type="unfinished"></translation>
+        <translation>שימוש כללי</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1062"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>משך</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1082"/>
         <source>Click to %1 this session.</source>
-        <translation type="unfinished"></translation>
+        <translation>ללחוץ כדי %1 שימוש זה.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1082"/>
         <source>disable</source>
-        <translation type="unfinished"></translation>
+        <translation>להסתיר</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1082"/>
         <source>enable</source>
-        <translation type="unfinished"></translation>
+        <translation>לכלול</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1098"/>
         <source>%1 Session #%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 שימוש %2</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1099"/>
         <source>%1h %2m %3s</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1127"/>
         <source>Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות המכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1296"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
-        <translation type="unfinished"></translation>
+        <translation>(חסרות הגדרות מצב ולחץ: מראה של אתמול)</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1666"/>
         <source>10 of 10 Event Types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2411"/>
         <source>This bookmark is in a currently disabled area..</source>
-        <translation type="unfinished"></translation>
+        <translation>סימניה באזור שכרגע מוסתר.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2740"/>
         <source>10 of 10 Graphs</source>
+        <translatorcomment>What is this for?</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1287"/>
         <source>Model %1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation>מודל %1 - %2</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1292"/>
         <source>PAP Mode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מצב פאפ: %1</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1413"/>
         <source>This day just contains summary data, only limited information is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>עבור יום זה קיימים רק נתוני סיכום.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1423"/>
         <source>Total time in apnea</source>
-        <translation type="unfinished"></translation>
+        <translation>סה&quot;כ זמן בדום נשימה</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1433"/>
         <source>Time over leak redline</source>
-        <translation type="unfinished"></translation>
+        <translation>משך חריגה מרמת דליפה תקינה</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1439"/>
         <source>Total ramp time</source>
-        <translation type="unfinished"></translation>
+        <translation>סה&quot;כ זמן ראמפ</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1443"/>
         <source>Time outside of ramp</source>
-        <translation type="unfinished"></translation>
+        <translation>זמן מחוץ לראמפ</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1484"/>
@@ -509,7 +511,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1825"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>לא קיימים נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1039"/>
@@ -529,17 +531,17 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1805"/>
         <source>no data :(</source>
-        <translation type="unfinished"></translation>
+        <translation>חסרים נתונים :(</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1806"/>
         <source>Sorry, this device only provides compliance data.</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר לא רושם נתונים מפורטים.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1828"/>
         <source>No data is available for this day.</source>
-        <translation type="unfinished"></translation>
+        <translation>אין נתונים ליום זה.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="2124"/>
@@ -558,34 +560,36 @@
         <location filename="../oscar/overview.cpp" line="780"/>
         <source>ERROR
 The start date MUST be before the end date</source>
-        <translation type="unfinished"></translation>
+        <translation>תאריך התחלה חייבת להיות לפני תאריך סיום</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="783"/>
         <source>The entered start date %1 is after the end date %2</source>
-        <translation type="unfinished"></translation>
+        <translation>תאריך התחלה %1 הוא אחרי תאריך סיום %2</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="784"/>
         <source>
 Hint: Change the end date first</source>
-        <translation type="unfinished"></translation>
+        <translation>
+כדאי קודם לשנות את תאריך הסיום</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="786"/>
         <source>The entered end date %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>תאריך סיום %1 </translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="787"/>
         <source>is before the start date %1</source>
-        <translation type="unfinished"></translation>
+        <translation>לפני תאריך התחלה %1</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="788"/>
         <source>
 Hint: Change the start date first</source>
-        <translation type="unfinished"></translation>
+        <translation>
+כדאי קודם לשנות את תאריך ההתחלה</translation>
     </message>
 </context>
 <context>
@@ -791,17 +795,17 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="232"/>
         <source>Import Error</source>
-        <translation type="unfinished"></translation>
+        <translation>שגיאה ביבוא</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>אי אפשר לייבא את הרשומה לתוך הפרופיל הנוכחי.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="233"/>
         <source>The Day records overlap with already existing content.</source>
-        <translation type="unfinished"></translation>
+        <translation>כבר קיימים נתונים לאותו יום.</translation>
     </message>
 </context>
 <context>
@@ -809,72 +813,72 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/help.ui" line="91"/>
         <source>Hide this message</source>
-        <translation type="unfinished"></translation>
+        <translation>הסתר</translation>
     </message>
     <message>
         <location filename="../oscar/help.ui" line="196"/>
         <source>Search Topic:</source>
-        <translation type="unfinished"></translation>
+        <translation>חפש:</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="59"/>
         <source>Help Files are not yet available for %1 and will display in %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>עדיין חסר עזרה בשפה %1. מציג בשפה %2.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="69"/>
         <source>Help files do not appear to be present.</source>
-        <translation type="unfinished"></translation>
+        <translation>חסר קובץ טקסט עזרה.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="85"/>
         <source>HelpEngine did not set up correctly</source>
-        <translation type="unfinished"></translation>
+        <translation>כשל באיתחול HelpEngine</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="100"/>
         <source>HelpEngine could not register documentation correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>HelpEngine לא הצליחה לרשום את קובץ התיעוד.</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="111"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>תוכן</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="112"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>אינדקס</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="116"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>חיפוש</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="126"/>
         <source>No documentation available</source>
-        <translation type="unfinished"></translation>
+        <translation>תיעוד לא קיים</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="214"/>
         <source>Please wait a bit.. Indexing still in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>עדיין מכין את קובץ העזרה</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="240"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>לא</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="241"/>
         <source>%1 result(s) for &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 תוצאות עבור %2</translation>
     </message>
     <message>
         <location filename="../oscar/help.cpp" line="242"/>
         <source>clear</source>
-        <translation type="unfinished"></translation>
+        <translation>נקה</translation>
     </message>
 </context>
 <context>
@@ -882,12 +886,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="166"/>
         <source>Could not find the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation>קובץ נתוני אוקסימטר לא קיים:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.cpp" line="172"/>
         <source>Could not open the oximeter file:</source>
-        <translation type="unfinished"></translation>
+        <translation>כשל בפתיחת קובץ אוקסימטר:</translation>
     </message>
 </context>
 <context>
@@ -900,33 +904,33 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="588"/>
         <source>Report Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>סוג דוח</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="595"/>
         <location filename="../oscar/mainwindow.ui" line="2890"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>רגיל</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="605"/>
         <source>Monthly</source>
-        <translation type="unfinished"></translation>
+        <translation>חודשי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="612"/>
         <source>Date Range</source>
-        <translation type="unfinished"></translation>
+        <translation>תאריכים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="912"/>
         <source>Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>מסכים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="939"/>
         <source>Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>פרופילים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="983"/>
@@ -961,7 +965,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2338"/>
         <source>Records</source>
-        <translation type="unfinished"></translation>
+        <translation>רשומות</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2426"/>
@@ -971,7 +975,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2455"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>פתרונות</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2489"/>
@@ -991,22 +995,22 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2558"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>יציאה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2566"/>
         <source>Show Daily view</source>
-        <translation type="unfinished"></translation>
+        <translation>מבט יומי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2577"/>
         <source>Show Overview view</source>
-        <translation type="unfinished"></translation>
+        <translation>מבט על</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2615"/>
         <source>&amp;About OSCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;אודות OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2623"/>
@@ -1021,12 +1025,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2645"/>
         <source>Reset Graph &amp;Heights</source>
-        <translation type="unfinished"></translation>
+        <translation>איפוס &amp;גובה הגרפים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2648"/>
         <source>Reset sizes of graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>איפוס גודל הגרפים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2661"/>
@@ -1081,22 +1085,22 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2708"/>
         <source>Show Right Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג סרגל ימני</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2716"/>
         <source>View S&amp;tatistics</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;סטטיסטיקה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2719"/>
         <source>View Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>סטטיסטיקה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2722"/>
         <source>Show Statistics view</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג סטטיסטיקה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2735"/>
@@ -1106,12 +1110,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2750"/>
         <source>Change &amp;Language</source>
-        <translation type="unfinished"></translation>
+        <translation>שינוי &amp;שפה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2755"/>
         <source>Change &amp;Data Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>שינוי &amp;מחיצת נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2760"/>
@@ -1151,47 +1155,47 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2879"/>
         <source>Show &amp;Pie Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג גרף &amp;עוגה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2882"/>
         <source>Show Pie Chart on Daily page</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג גרף עוגה במסך היומי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2893"/>
         <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="unfinished"></translation>
+        <translation>סדר גרפים רגיל - טוב לרוב המקרים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2898"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>מתקדם</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2901"/>
         <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation>סדר גרפים מתקדם - טוב ל ASV, AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2912"/>
         <source>Show Personal Data</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג נתונים אישיים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2920"/>
         <source>Check For &amp;Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>בדוק האם גירסה &amp;חדשה זמינה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2797"/>
         <source>Daily Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>סרגל צד יומי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2540"/>
         <source>&amp;Import CPAP Card Data</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ייבוא נתוני כרטיס סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2765"/>
@@ -1201,22 +1205,22 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2800"/>
         <source>Show Daily Left Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג סרגל יומי שמאלי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2814"/>
         <source>Daily Calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>לוח יומי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2817"/>
         <source>Show Daily Calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג לוח יומי</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2825"/>
         <source>Backup &amp;Journal</source>
-        <translation type="unfinished"></translation>
+        <translation>גיבוי יומן</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2833"/>
@@ -1226,17 +1230,17 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2853"/>
         <source>CSV Export Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>אשף יצוא CSV</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2858"/>
         <source>Export for Review</source>
-        <translation type="unfinished"></translation>
+        <translation>יצוא לבדיקה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2863"/>
         <source>Report an Issue</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2397"/>
@@ -1246,7 +1250,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2401"/>
         <source>Exp&amp;ort Data</source>
-        <translation type="unfinished"></translation>
+        <translation>יצוא &amp;נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2422"/>
@@ -1306,12 +1310,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2637"/>
         <source>Show Debug Pane</source>
-        <translation>הראה חלון דיבוג</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2653"/>
         <source>Take &amp;Screenshot</source>
-        <translation>&amp;תמונת מסך</translation>
+        <translation>&amp;צילום מסך</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2669"/>
@@ -1341,7 +1345,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2705"/>
         <source>Right &amp;Sidebar</source>
-        <translation>תצוגת צד &amp;ימני</translation>
+        <translation>תצוגת סרגל &amp;ימני</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2730"/>
@@ -1367,7 +1371,7 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="540"/>
         <location filename="../oscar/mainwindow.cpp" line="2200"/>
         <source>Welcome</source>
-        <translation>ברוך הבא</translation>
+        <translation>כניסה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="107"/>
@@ -1387,87 +1391,91 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="268"/>
         <source>Help Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג עזרה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="522"/>
         <source>Loading profile &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>מציג פרופיל &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="561"/>
         <source>%1 (Profile: %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (פרופיל: %2)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="742"/>
         <source>Imported %1 CPAP session(s) from
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>נקראו %1 רשומות שימוש מ-
+
+%2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="742"/>
         <source>Import Success</source>
-        <translation type="unfinished"></translation>
+        <translation>הייבוא הצליח</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="744"/>
         <source>Already up to date with CPAP data at
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>כבר מעודכן בנתונים ב-
+
+%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="744"/>
         <source>Up to date</source>
-        <translation type="unfinished"></translation>
+        <translation>מעודכן</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="746"/>
         <source>Import Problem</source>
-        <translation type="unfinished"></translation>
+        <translation>בעיה בייבוא נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="810"/>
         <location filename="../oscar/mainwindow.cpp" line="1876"/>
         <source>Please wait, importing from backup folder(s)...</source>
-        <translation type="unfinished"></translation>
+        <translation>רק רגע, מייבא מחיצות גיבוי...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="911"/>
         <source>Please insert your CPAP data card...</source>
-        <translation type="unfinished"></translation>
+        <translation>להכניס את כרטיס הנתונים...</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="918"/>
         <source>Choose a folder</source>
-        <translation type="unfinished"></translation>
+        <translation>לבחור מחיצה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="997"/>
         <source>No profile has been selected for Import.</source>
-        <translation type="unfinished"></translation>
+        <translation>אף פרופיל לא נבחר.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1005"/>
         <source>Import is already running in the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>ייבוא כבר רץ ברקע.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1046"/>
         <source>A %1 file structure for a %2 was located at:</source>
-        <translation type="unfinished"></translation>
+        <translation>נתונים מתאימים ל-%1 %2 נמצאו ב:</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1048"/>
         <source>A %1 file structure was located at:</source>
-        <translation type="unfinished"></translation>
+        <translation>נתונים מתאימים ל-%1 נמצאו ב:</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1053"/>
         <source>CPAP Data Located</source>
-        <translation type="unfinished"></translation>
+        <translation>נמצאו נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1996"/>
@@ -1478,52 +1486,52 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="2347"/>
         <location filename="../oscar/mainwindow.cpp" line="2351"/>
         <source>There was a problem opening %1 Data File: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>כשל בפתיחת קובץ %1: %2</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2350"/>
         <source>%1 Data Import of %2 file(s) complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ייבוא של קבצים %2 הצליח</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2352"/>
         <source>%1 Import Partial Success</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 הצלחה חלקית בייבוא הנתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2354"/>
         <source>%1 Data Import complete</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 הסתיים ייבוא הנתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1013"/>
         <source>Would you like to import from this location?</source>
-        <translation type="unfinished"></translation>
+        <translation>לייבא נתונים מפה?</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1057"/>
         <source>Specify</source>
-        <translation type="unfinished"></translation>
+        <translation>בחירה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1088"/>
         <source>Import Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>תזכורת לייבא נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1353"/>
         <source>Please open a profile first.</source>
-        <translation type="unfinished"></translation>
+        <translation>קודם לבחור פרופיל.</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1474"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>כשל בשמירת צילום מסך לקובץ &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1476"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>צילום מסך נשמר לקובץ &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2259"/>
@@ -1553,12 +1561,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1103"/>
         <source>Find your CPAP data card</source>
-        <translation type="unfinished"></translation>
+        <translation>לבחור את כרטיס הנתונים</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1464"/>
         <source>Choose where to save screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>איפה לשמור את צילום המסך</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1464"/>
@@ -1601,7 +1609,7 @@ Hint: Change the start date first</source>
         <source>Couldn&apos;t find any valid Device Data at
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>אין נתונים תקינים ב-%1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1851"/>
@@ -1678,12 +1686,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2575"/>
         <source>%1&apos;s Journal</source>
-        <translation type="unfinished"></translation>
+        <translation>היומן של %1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2577"/>
         <source>Choose where to save journal</source>
-        <translation type="unfinished"></translation>
+        <translation>איפה לשמור את היומן</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2577"/>
@@ -1735,12 +1743,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="2816"/>
         <source>OSCAR Information</source>
-        <translation type="unfinished"></translation>
+        <translation>אודות התוכנה</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1343"/>
         <source>Bookmarks</source>
-        <translation type="unfinished">סימניות</translation>
+        <translation>סימניות</translation>
     </message>
 </context>
 <context>
@@ -1841,12 +1849,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.ui" line="54"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="155"/>
         <source>Very weak password protection and not recommended if security is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>מנגנון הסיסמה בתוכנה מספקת רמת הגנת מידע מאוד חלשה.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="243"/>
@@ -1871,7 +1879,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.ui" line="367"/>
         <source>It&apos;s totally ok to fib or skip this, but your rough age is needed to enhance accuracy of certain calculations.</source>
-        <translation type="unfinished"></translation>
+        <translation>לא חובה, אבל משהו בערך יכול לדייק חלק מהחישובים.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="370"/>
@@ -1886,7 +1894,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.ui" line="389"/>
         <source>Gender</source>
-        <translation>מגדר</translation>
+        <translation>מין</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="402"/>
@@ -1906,12 +1914,12 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.ui" line="462"/>
         <source>Metric</source>
-        <translation type="unfinished"></translation>
+        <translation>ס&quot;מ</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="467"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>רגל ואינצ</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.ui" line="480"/>
@@ -2026,7 +2034,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.cpp" line="111"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR - תוכנה להצגת נתוני סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="113"/>
@@ -2041,42 +2049,42 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.cpp" line="118"/>
         <source>PLEASE READ CAREFULLY</source>
-        <translation type="unfinished"></translation>
+        <translation>חשוב!!!</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="119"/>
         <source>OSCAR is intended merely as a data viewer, and definitely not a substitute for competent medical guidance from your Doctor.</source>
-        <translation type="unfinished"></translation>
+        <translation>התוכנה בכלל איננה תחליף לייעוץ רפואי מוסמך! היא מיועדת להצגת נתונים בלבד.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="122"/>
         <source>Accuracy of any data displayed is not and can not be guaranteed.</source>
-        <translation type="unfinished"></translation>
+        <translation>אין כל אחראיות לגבי נכונות מה שמוצג בתוכנה זו.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="124"/>
         <source>Any reports generated are for PERSONAL USE ONLY, and NOT IN ANY WAY fit for compliance or medical diagnostic purposes.</source>
-        <translation type="unfinished"></translation>
+        <translation>כל מה שמוצג על ידי תוכנה זו הוא לשימושך האישי בלבד, לא למעקב אחרי הטיפול, לא לצורכי אבחון ולא לשום צורך רפואי אחר.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="127"/>
         <source>The authors will not be held liable for &lt;u&gt;anything&lt;/u&gt; related to the use or misuse of this software.</source>
-        <translation type="unfinished"></translation>
+        <translation>מייצרי התוכנה לא יהיו אחראיים לכל תוצאה שהיא הקשורה לשימוש, שימוש לרעה, או אי-שימוש בתוכנה.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="131"/>
         <source>Use of this software is entirely at your own risk.</source>
-        <translation type="unfinished"></translation>
+        <translation>השימוש בתוכנה זו היא לגמרי על אחראיות המשתמש.</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="134"/>
         <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="157"/>
         <source>Please provide a username for this profile</source>
-        <translation type="unfinished"></translation>
+        <translation>שם של משתמש הפרופיל הזה</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="167"/>
@@ -2101,7 +2109,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/newprofile.cpp" line="455"/>
         <source>&amp;Close this window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;סגור</translation>
     </message>
 </context>
 <context>
@@ -2159,7 +2167,7 @@ Hint: Change the start date first</source>
     <message>
         <location filename="../oscar/overview.ui" line="127"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation>תמונת מצב</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="135"/>
@@ -2219,13 +2227,14 @@ Index</source>
     <message>
         <location filename="../oscar/overview.cpp" line="278"/>
         <source>Total Time in Apnea</source>
-        <translation type="unfinished"></translation>
+        <translation>סה&quot;כ זמן בדום נשימה</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="278"/>
         <source>Total Time in Apnea
 (Minutes)</source>
-        <translation type="unfinished"></translation>
+        <translation>סה&quot;כ זמן בדום נשימה
+(דקות)</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="256"/>
@@ -2255,17 +2264,18 @@ Index</source>
     <message>
         <location filename="../oscar/overview.cpp" line="455"/>
         <source>10 of 10 Charts</source>
+        <translatorcomment>NO IDEA WHAT THIS MEANS</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="888"/>
         <source>Show all graphs</source>
-        <translation>הראה את כל הגרפים</translation>
+        <translation>הצג את כל הגרפים</translation>
     </message>
     <message>
         <location filename="../oscar/overview.cpp" line="901"/>
         <source>Hide all graphs</source>
-        <translation>הסתר כל הגרפים</translation>
+        <translation>הסתר את כל הגרפים</translation>
     </message>
 </context>
 <context>
@@ -2400,7 +2410,7 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1101"/>
         <location filename="../oscar/oximeterimport.ui" line="1353"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">משך</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1399"/>
@@ -2811,7 +2821,7 @@ Index</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="29"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>העדפות</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="70"/>
@@ -2993,7 +3003,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="1816"/>
         <location filename="../oscar/preferencesdialog.ui" line="1895"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">חיפוש</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1518"/>
@@ -3008,7 +3018,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1725"/>
         <source>Pulse</source>
-        <translation type="unfinished">דופק</translation>
+        <translation>דופק</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1690"/>
@@ -3040,7 +3050,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1951"/>
         <source>&amp;General</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;כללי</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1965"/>
@@ -3118,7 +3128,7 @@ as this is the only value available on summary-only days.</source>
         <location filename="../oscar/preferencesdialog.ui" line="1409"/>
         <location filename="../oscar/preferencesdialog.ui" line="1472"/>
         <source>Median</source>
-        <translation type="unfinished">חציון</translation>
+        <translation>חציון</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1414"/>
@@ -3183,7 +3193,7 @@ as this is the only value available on summary-only days.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2239"/>
         <source>&amp;Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;תצוגה</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2384"/>
@@ -3351,12 +3361,12 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="780"/>
         <source>Hours</source>
-        <translation type="unfinished">שעות</translation>
+        <translation>שעות</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="787"/>
         <source>Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>שניות</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
@@ -3586,19 +3596,19 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <location filename="../oscar/preferencesdialog.ui" line="2287"/>
         <location filename="../oscar/preferencesdialog.ui" line="2291"/>
         <source>Profile</source>
-        <translation type="unfinished">פרופיל</translation>
+        <translation>פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2296"/>
         <location filename="../oscar/preferencesdialog.ui" line="2335"/>
         <source>Welcome</source>
-        <translation type="unfinished">ברוך הבא</translation>
+        <translation>כניסה</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2301"/>
         <location filename="../oscar/preferencesdialog.ui" line="2340"/>
         <source>Daily</source>
-        <translation type="unfinished">יומי</translation>
+        <translation>יומי</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2306"/>
@@ -3606,13 +3616,13 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <location filename="../oscar/preferencesdialog.cpp" line="463"/>
         <location filename="../oscar/preferencesdialog.cpp" line="594"/>
         <source>Overview</source>
-        <translation type="unfinished">מבט על</translation>
+        <translation>מבט על</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2311"/>
         <location filename="../oscar/preferencesdialog.ui" line="2350"/>
         <source>Statistics</source>
-        <translation type="unfinished">סטטיסטיקה</translation>
+        <translation>סטטיסטיקה</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2319"/>
@@ -3787,12 +3797,12 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2805"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>גופן</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2823"/>
         <source>Size</source>
-        <translation type="unfinished">גודל</translation>
+        <translation>גודל</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2841"/>
@@ -3807,34 +3817,34 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2875"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>כללי</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2939"/>
         <source>Graph Text</source>
-        <translation type="unfinished"></translation>
+        <translation>גרפים</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3000"/>
         <source>Graph Titles</source>
-        <translation type="unfinished"></translation>
+        <translation>כותרות הגרפים</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3061"/>
         <source>Big  Text</source>
-        <translation type="unfinished"></translation>
+        <translation>טקסט גדול</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3127"/>
         <location filename="../oscar/preferencesdialog.cpp" line="466"/>
         <location filename="../oscar/preferencesdialog.cpp" line="598"/>
         <source>Details</source>
-        <translation type="unfinished">פרטים</translation>
+        <translation>פרטים</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3159"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;בטל</translation>
+        <translation>&amp;בטל</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3166"/>
@@ -3864,7 +3874,7 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="66"/>
         <source>No CPAP devices detected</source>
-        <translation type="unfinished"></translation>
+        <translation>לא נמצא מכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="67"/>
@@ -3879,24 +3889,24 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="294"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>אף פעם</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="461"/>
         <location filename="../oscar/preferencesdialog.cpp" line="592"/>
         <source>Name</source>
-        <translation type="unfinished">שם</translation>
+        <translation>שם</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="462"/>
         <location filename="../oscar/preferencesdialog.cpp" line="593"/>
         <source>Color</source>
-        <translation type="unfinished">צבע</translation>
+        <translation>צבע</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="464"/>
         <source>Flag Type</source>
-        <translation type="unfinished"></translation>
+        <translation>סוג דגל</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="465"/>
@@ -3907,12 +3917,12 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="482"/>
         <source>CPAP Events</source>
-        <translation type="unfinished"></translation>
+        <translation>ארועי סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="483"/>
         <source>Oximeter Events</source>
-        <translation type="unfinished"></translation>
+        <translation>ארועי אוקסימטר</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="484"/>
@@ -3927,7 +3937,7 @@ Try it and see if you like it.</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="486"/>
         <source>Unknown Events</source>
-        <translation type="unfinished"></translation>
+        <translation>אירועים אחרים</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="528"/>
@@ -4039,14 +4049,16 @@ Are you sure you want to make these changes?</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="810"/>
         <source>Restart Required</source>
-        <translation type="unfinished">נחוץ אתחול</translation>
+        <translation>נחוץ אתחול</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="811"/>
         <source>One or more of the changes you have made will require this application to be restarted, in order for these changes to come into effect.
 
 Would you like do this now?</source>
-        <translation type="unfinished"></translation>
+        <translation>כדי להחיל את השינויים, התוכנה צריכה לאתחל מחדש.
+
+לאתחל עכשיו?</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1165"/>
@@ -4101,22 +4113,22 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/profileselector.ui" line="198"/>
         <source>Version</source>
-        <translation type="unfinished">גרסה</translation>
+        <translation>גרסה</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="215"/>
         <source>&amp;Open Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;פתח פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="226"/>
         <source>&amp;Edit Profile</source>
-        <translation type="unfinished">&amp;ערוך פרופיל</translation>
+        <translation>&amp;ערוך פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="240"/>
         <source>&amp;New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>פרופיל &amp;חדש</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="258"/>
@@ -4131,37 +4143,37 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/profileselector.ui" line="328"/>
         <source>Destroy Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>מחק פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="90"/>
         <source>Profile</source>
-        <translation type="unfinished">פרופיל</translation>
+        <translation>פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="91"/>
         <source>Ventilator Brand</source>
-        <translation type="unfinished"></translation>
+        <translation>יצרן המכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="92"/>
         <source>Ventilator Model</source>
-        <translation type="unfinished"></translation>
+        <translation>מודל</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="93"/>
         <source>Other Data</source>
-        <translation type="unfinished"></translation>
+        <translation>נתונים נוספים</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="94"/>
         <source>Last Imported</source>
-        <translation type="unfinished"></translation>
+        <translation>ייבוא אחרון</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="95"/>
         <source>Name</source>
-        <translation type="unfinished">שם</translation>
+        <translation>שם</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="170"/>
@@ -4172,7 +4184,7 @@ Would you like do this now?</source>
         <location filename="../oscar/profileselector.cpp" line="233"/>
         <location filename="../oscar/profileselector.cpp" line="367"/>
         <source>Enter Password for %1</source>
-        <translation type="unfinished">הזן סיסמה עבור %1</translation>
+        <translation>הזן סיסמה עבור %1</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.cpp" line="249"/>
@@ -4337,7 +4349,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/SleepLib/progressdialog.cpp" line="57"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>עצור</translation>
     </message>
 </context>
 <context>
@@ -4459,7 +4471,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="383"/>
         <source>Min %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">מינימום %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="694"/>
@@ -4550,17 +4562,17 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="743"/>
         <source>Min IPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>IPAP מינימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="744"/>
         <source>Max IPAP</source>
-        <translation type="unfinished">IPAP מקסימלי</translation>
+        <translation>IPAP מקסימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="828"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>מכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="855"/>
@@ -4648,7 +4660,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="676"/>
         <source>Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">שניות</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="677"/>
@@ -4713,12 +4725,12 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="694"/>
         <source>Question</source>
-        <translation type="unfinished">שאלה</translation>
+        <translation>שאלה</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="697"/>
         <source>Information</source>
-        <translation type="unfinished">מידע</translation>
+        <translation>מידע</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="698"/>
@@ -4733,7 +4745,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="701"/>
         <source>No Data Available</source>
-        <translation type="unfinished"></translation>
+        <translation>אין נתונים</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="703"/>
@@ -4758,7 +4770,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="711"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;בטל</translation>
+        <translation>&amp;בטל</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="712"/>
@@ -4798,7 +4810,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="724"/>
         <source>Profile</source>
-        <translation type="unfinished">פרופיל</translation>
+        <translation>פרופיל</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="728"/>
@@ -4842,12 +4854,12 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="740"/>
         <source>Min EPAP</source>
-        <translation type="unfinished">EPAP מינימלי</translation>
+        <translation>EPAP מינימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="741"/>
         <source>Max EPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>EPAP מקסימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="742"/>
@@ -4871,7 +4883,7 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="747"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="314"/>
         <source>AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="748"/>
@@ -4919,7 +4931,7 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="758"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
         <source>SA</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="759"/>
@@ -5074,13 +5086,14 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="793"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Insp. Time</source>
-        <translation>משך נשימה</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="794"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Exp. Time</source>
-        <translation>משך נשיפה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="795"/>
@@ -5125,33 +5138,38 @@ TTIA: %1</source>
         <location filename="../oscar/SleepLib/common.cpp" line="802"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Minute Vent.</source>
-        <translatorcomment>https://he.wikipedia.org/wiki/%D7%A4%D7%99%D7%96%D7%99%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%94_%D7%A9%D7%9C_%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA_%D7%94%D7%A0%D7%A9%D7%99%D7%9E%D7%94</translatorcomment>
-        <translation>אוורור דקתי</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum
+https://he.wikipedia.org/wiki/%D7%A4%D7%99%D7%96%D7%99%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%94_%D7%A9%D7%9C_%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA_%D7%94%D7%A0%D7%A9%D7%99%D7%9E%D7%94</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="803"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
         <source>Tidal Volume</source>
-        <translatorcomment>https://he.wikipedia.org/wiki/%D7%A4%D7%99%D7%96%D7%99%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%94_%D7%A9%D7%9C_%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA_%D7%94%D7%A0%D7%A9%D7%99%D7%9E%D7%94</translatorcomment>
-        <translation>נפח חלופי</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum
+https://he.wikipedia.org/wiki/%D7%A4%D7%99%D7%96%D7%99%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%94_%D7%A9%D7%9C_%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA_%D7%94%D7%A0%D7%A9%D7%99%D7%9E%D7%94</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="804"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
         <source>Resp. Rate</source>
-        <translation>קצב נשימה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="805"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2804"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Snore</source>
-        <translation>נחירה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="806"/>
         <source>Leak</source>
-        <translation>דליפה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="807"/>
@@ -5161,13 +5179,13 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="808"/>
         <source>Large Leak</source>
-        <translation type="unfinished"></translation>
+        <translation>דליפה גדולה</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="809"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>LL</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="810"/>
@@ -5183,19 +5201,22 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="812"/>
         <source>MaskPressure</source>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
         <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="813"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
         <source>Flow Rate</source>
-        <translation>קצב זרימה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
         <source>Sleep Stage</source>
-        <translation>שלב שינה</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="815"/>
@@ -5244,7 +5265,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Series</source>
-        <translation type="unfinished"></translation>
+        <translation>סדרה</translation>
     </message>
     <message>
         <source>Machine</source>
@@ -5370,12 +5391,12 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="858"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>כן</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="859"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>לא</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="861"/>
@@ -5390,7 +5411,7 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="863"/>
         <source>Med</source>
-        <translation type="unfinished">חציון</translation>
+        <translation>חציון</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="865"/>
@@ -5417,7 +5438,8 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="721"/>
         <source>Pressure</source>
-        <translation>לחץ</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="723"/>
@@ -5437,7 +5459,8 @@ TTIA: %1</source>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="729"/>
         <source>Event Flags</source>
-        <translation>דגלי אירועים</translation>
+        <translatorcomment>Keep chart titles in English so they can be posted to an English forum</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/preferences.cpp" line="37"/>
@@ -5657,12 +5680,12 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="377"/>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="380"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">משך</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="379"/>
         <source>Events</source>
-        <translation type="unfinished">אירועים</translation>
+        <translation>אירועים</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="394"/>
@@ -5754,7 +5777,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="264"/>
         <source>Machine Information</source>
-        <translation type="unfinished">מידע מכונה</translation>
+        <translation>מידע על המכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1534"/>
@@ -5849,44 +5872,44 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="268"/>
         <source>CMS50D+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.cpp" line="268"/>
         <source>CMS50E/F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="40"/>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>Contec</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="40"/>
         <source>CMS50</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>CMS50F3.7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="42"/>
         <source>CMS50F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="78"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>Fisher &amp; Paykel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.h" line="78"/>
         <source>ICON</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2717"/>
@@ -5903,7 +5926,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2786"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2788"/>
         <source>SmartFlex Mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2787"/>
@@ -5941,17 +5964,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2806"/>
         <source>SN</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="78"/>
         <source>DeVilbiss</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="78"/>
         <source>Intellipap</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.h" line="86"/>
@@ -5961,27 +5984,27 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="40"/>
         <source>ChoiceMMed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/md300w1_loader.h" line="40"/>
         <source>MD300</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="67"/>
         <source>Respironics</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/mseries_loader.h" line="67"/>
         <source>M-Series</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="187"/>
         <source>System One</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2694"/>
@@ -6393,48 +6416,48 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2826"/>
         <source>CPAP-Check</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2828"/>
         <source>AutoCPAP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2829"/>
         <source>Auto-Trial</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2831"/>
         <source>AutoBiLevel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2833"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2834"/>
         <source>S/T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
         <source>S/T - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
         <source>PC - AVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2840"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2842"/>
         <source>Flex Mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2841"/>
@@ -6444,22 +6467,22 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2845"/>
         <source>C-Flex</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <source>C-Flex+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2847"/>
         <source>A-Flex</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2848"/>
         <source>P-Flex</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2849"/>
@@ -6471,18 +6494,18 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2850"/>
         <source>Bi-Flex</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2852"/>
         <source>Flex</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2858"/>
         <source>Flex Level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2857"/>
@@ -6492,7 +6515,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2905"/>
         <source>Passover</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2926"/>
@@ -6573,12 +6596,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3012"/>
         <source>SmartRamp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3013"/>
         <source>Ramp+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3017"/>
@@ -6644,7 +6667,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3048"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3050"/>
         <source>EZ-Start</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3049"/>
@@ -6805,7 +6828,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3068"/>
         <source>BND</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3073"/>
@@ -6821,12 +6844,12 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="993"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3075"/>
         <source>TB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.h" line="187"/>
         <source>Philips Respironics</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="535"/>
@@ -6851,43 +6874,43 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="101"/>
         <source>CPAP Mode</source>
-        <translation type="unfinished">אופן עבודה סיפאפ</translation>
+        <translation>אופן עבודה סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="111"/>
         <source>VPAPauto</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="113"/>
         <source>ASVAuto</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="114"/>
         <source>iVAPS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="115"/>
         <source>PAC</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="116"/>
         <source>Auto for Her</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="120"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1028"/>
         <source>EPR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="120"/>
         <source>ResMed Exhale Pressure Relief</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
@@ -6913,7 +6936,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="204"/>
         <source>Response</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
@@ -6938,7 +6961,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
         <source>SmartStart</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="135"/>
@@ -7009,12 +7032,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="177"/>
         <source>Essentials</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="179"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="183"/>
@@ -7024,39 +7047,39 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="186"/>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="207"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="794"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="206"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="107"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="110"/>
         <source>BiPAP-T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="108"/>
         <source>BiPAP-S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="109"/>
         <source>BiPAP-S/T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
         <source>SmartStop</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="210"/>
@@ -7066,12 +7089,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="219"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="218"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="1213"/>
@@ -7083,90 +7106,90 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2931"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3022"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="189"/>
         <source>Mask</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="189"/>
         <source>ResMed Mask Setting</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="191"/>
         <source>Pillows</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="192"/>
         <source>Full Face</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="193"/>
         <source>Nasal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="197"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1039"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>Ramp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="197"/>
         <source>Ramp Enable</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.h" line="92"/>
         <source>ResMed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.h" line="93"/>
         <source>S9</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.h" line="126"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="98"/>
         <source>EPR: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="39"/>
         <source>Somnopose</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/somnopose_loader.h" line="39"/>
         <source>Somnopose Software</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
         <source>Weinmann</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
         <source>SOMNOsoft2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="40"/>
         <source>Zeo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/zeo_loader.h" line="40"/>
         <source>Personal Sleep Coach</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/machine.cpp" line="694"/>
@@ -7196,7 +7219,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/progressdialog.cpp" line="15"/>
         <source>Please Wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>רק רגע...</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="134"/>
@@ -7241,7 +7264,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>PS Min</source>
-        <translation type="unfinished">PS מינימלי</translation>
+        <translation>PS מינימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
@@ -7251,7 +7274,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
         <source>PS Max</source>
-        <translation type="unfinished">PS מקסימלי</translation>
+        <translation>PS מקסימלי</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="144"/>
@@ -7352,7 +7375,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/common.cpp" line="787"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="156"/>
         <source>CSR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="158"/>
@@ -7390,7 +7413,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/common.cpp" line="755"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="166"/>
         <source>UA</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="166"/>
@@ -7420,7 +7443,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="179"/>
         <source>LF</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
@@ -7492,7 +7515,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="223"/>
         <source>SD</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
@@ -7781,7 +7804,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="172"/>
         <source>RERA (RE)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
@@ -7892,7 +7915,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
         <source>Height</source>
-        <translation type="unfinished">גובה</translation>
+        <translation>גובה</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
@@ -7902,7 +7925,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
         <source>Notes</source>
-        <translation type="unfinished">הערות</translation>
+        <translation>הערות</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
@@ -7942,7 +7965,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="329"/>
         <source>Journal</source>
-        <translation type="unfinished">יומן</translation>
+        <translation>יומן</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
@@ -8047,7 +8070,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="346"/>
         <source>Zeo ZQ</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="346"/>
@@ -8057,7 +8080,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="346"/>
         <source>ZEO ZQ</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="357"/>
@@ -8338,76 +8361,76 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/reports.cpp" line="40"/>
         <source>There are no graphs visible to print</source>
-        <translation type="unfinished">אין גרפים נראים להדפסה</translation>
+        <translation>אין גרפים נראים להדפסה</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="55"/>
         <source>Would you like to show bookmarked areas in this report?</source>
-        <translation type="unfinished">האם ברצונך להראות אזורים מסומנים בדו&quot;ח הזה?</translation>
+        <translation>האם ברצונך להראות אזורים מסומנים בדו&quot;ח הזה?</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="99"/>
         <source>Printing %1 Report</source>
-        <translation type="unfinished">מדפיס דו&quot;ח %1</translation>
+        <translation>מדפיס דו&quot;ח %1</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="133"/>
         <source>%1 Report</source>
-        <translation type="unfinished">דו&quot;ח %1</translation>
+        <translation>דו&quot;ח %1</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="191"/>
         <source>: %1 hours, %2 minutes, %3 seconds
 </source>
-        <translation type="unfinished">: %1 שעות, %2 דקות, %3 שניות
+        <translation>: %1 שעות, %2 דקות, %3 שניות
 </translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="244"/>
         <source>RDI	%1
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="246"/>
         <source>AHI	%1
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="279"/>
         <source>AI=%1 HI=%2 CAI=%3 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="285"/>
         <source>REI=%1 VSI=%2 FLI=%3 PB/CSR=%4%%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="289"/>
         <source>UAI=%1 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="291"/>
         <source>NRI=%1 LKI=%2 EPI=%3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="294"/>
         <source>AI=%1 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="362"/>
         <source>Reporting from %1 to %2</source>
-        <translation type="unfinished">מדווח מ %1 עד %2</translation>
+        <translation>מדווח מ %1 עד %2</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="427"/>
         <source>Entire Day&apos;s Flow Waveform</source>
-        <translation type="unfinished">צורת גל ליום שלם</translation>
+        <translation>צורת גל ליום שלם</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="429"/>
@@ -8417,12 +8440,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/reports.cpp" line="439"/>
         <source>Entire Day</source>
-        <translation type="unfinished">יום שלם</translation>
+        <translation>יום שלם</translation>
     </message>
     <message>
         <location filename="../oscar/reports.cpp" line="564"/>
         <source>Page %1 of %2</source>
-        <translation type="unfinished">דף %1 מתוך %2</translation>
+        <translation>דף %1 מתוך %2</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="360"/>
@@ -8477,7 +8500,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/dreem_loader.h" line="37"/>
         <source>Dreem</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.cpp" line="93"/>
@@ -8492,12 +8515,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
         <source>Viatom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/viatom_loader.h" line="40"/>
         <source>Viatom Software</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/checkupdates.cpp" line="152"/>
@@ -8574,7 +8597,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="88"/>
         <source>SleepStyle</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/aboutdialog.cpp" line="81"/>
@@ -8617,12 +8640,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/sessionbar.cpp" line="247"/>
         <source>%1h %2m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/sessionbar.cpp" line="290"/>
         <source>No Sessions Present</source>
-        <translation type="unfinished"></translation>
+        <translation>אין רשומות שימושים</translation>
     </message>
 </context>
 <context>
@@ -8630,17 +8653,17 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="213"/>
         <source>Import Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">שגיאה ביבוא</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>This device Record cannot be imported in this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">אי אפשר לייבא את הרשומה לתוך הפרופיל הנוכחי.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>The Day records overlap with already existing content.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">כבר קיימים נתונים לאותו יום.</translation>
     </message>
 </context>
 <context>
@@ -8648,69 +8671,69 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="536"/>
         <source>CPAP Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>סטטיסטיקות סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="539"/>
         <location filename="../oscar/statistics.cpp" line="1397"/>
         <source>CPAP Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>שימוש במכשיר סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="540"/>
         <source>Average Hours per Night</source>
-        <translation type="unfinished"></translation>
+        <translation>משך שימוש ממוצע ללילה (שעות)</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="543"/>
         <source>Therapy Efficacy</source>
-        <translation type="unfinished"></translation>
+        <translation>אפקטיביות הטיפול</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="556"/>
         <source>Leak Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>נתוני דליפה</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="561"/>
         <source>Pressure Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>נתוני לחץ</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="586"/>
         <source>Oximeter Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>נתוני אוקסימטריה</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="590"/>
         <source>Blood Oxygen Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>נתוני ריווי חמצן</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="595"/>
         <source>Pulse Rate</source>
-        <translation type="unfinished">דופק</translation>
+        <translation>דופק</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="606"/>
         <source>%1 Median</source>
-        <translation type="unfinished"></translation>
+        <translation>חציון %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="607"/>
         <location filename="../oscar/statistics.cpp" line="608"/>
         <source>Average %1</source>
-        <translation type="unfinished">ממוצע %1</translation>
+        <translation>ממוצע %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="610"/>
         <source>Min %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מינימום %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="611"/>
         <source>Max %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מקסימום %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="612"/>
@@ -8769,27 +8792,27 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="923"/>
         <source>First Use</source>
-        <translation type="unfinished">שימוש ראשון</translation>
+        <translation>שימוש ראשון</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="924"/>
         <source>Last Use</source>
-        <translation type="unfinished">שימוש אחרון</translation>
+        <translation>שימוש אחרון</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="984"/>
         <source>Days</source>
-        <translation type="unfinished">ימים</translation>
+        <translation>ימים</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="988"/>
         <source>Pressure Relief</source>
-        <translation type="unfinished"></translation>
+        <translation>הפחתת לחץ</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="990"/>
         <source>Pressure Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות לחץ</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="541"/>
@@ -8804,12 +8827,12 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="917"/>
         <source>Device Information</source>
-        <translation type="unfinished"></translation>
+        <translation>אודות המכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="976"/>
         <source>Changes to Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>היסטוריית הגדרות המכשיר</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1062"/>
@@ -8824,37 +8847,37 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1164"/>
         <source>Most Recent</source>
-        <translation type="unfinished">אחרון</translation>
+        <translation>שימוש אחרון</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1165"/>
         <source>Last Week</source>
-        <translation type="unfinished">שבוע אחרון</translation>
+        <translation>שבוע אחרון</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1166"/>
         <source>Last 30 Days</source>
-        <translation type="unfinished">30 ימים אחרונים</translation>
+        <translation>30 ימים אחרונים</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1167"/>
         <source>Last 6 Months</source>
-        <translation type="unfinished">ששה חודשים אחרונים</translation>
+        <translation>ששה חודשים אחרונים</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1168"/>
         <source>Last Year</source>
-        <translation type="unfinished">שנה אחרונה</translation>
+        <translation>שנה אחרונה</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1172"/>
         <source>Last Session</source>
-        <translation type="unfinished"></translation>
+        <translation>שימוש אחרון</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1217"/>
         <source>Details</source>
-        <translation type="unfinished">פרטים</translation>
+        <translation>פרטים</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1231"/>
@@ -8869,7 +8892,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1240"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ימי נתוני %2, מ-%3 ועד %4</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1398"/>
@@ -8991,7 +9014,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1631"/>
         <source>Best RX Setting</source>
-        <translation type="unfinished">הגדרות המרשם הטובות ביותר</translation>
+        <translation>הגדרות המרשם הטובות ביותר</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1634"/>
@@ -9014,7 +9037,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1643"/>
         <source>Worst RX Setting</source>
-        <translation type="unfinished">הגדרות המרשם הגרועות ביותר</translation>
+        <translation>הגדרות המרשם הגרועות ביותר</translation>
     </message>
 </context>
 <context>
@@ -9022,37 +9045,37 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.ui" line="127"/>
         <source>Welcome to the Open Source CPAP Analysis Reporter</source>
-        <translation type="unfinished"></translation>
+        <translation>OSCAR - תוכנה להצגת נתוני סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="142"/>
         <source>What would you like to do?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">אפשרויות</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="185"/>
         <source>CPAP Importer</source>
-        <translation type="unfinished"></translation>
+        <translation>ייבוא נתוני סיפאפ</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="223"/>
         <source>Oximetry Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>אשף אוקסימטריה</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="261"/>
         <source>Daily View</source>
-        <translation type="unfinished"></translation>
+        <translation>מבט יומי</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="299"/>
         <source>Overview</source>
-        <translation type="unfinished">מבט על</translation>
+        <translation>מבט על</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="337"/>
         <source>Statistics</source>
-        <translation type="unfinished">סטטיסטיקה</translation>
+        <translation>סטטיסטיקה</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="580"/>
@@ -9077,37 +9100,37 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="163"/>
         <source>First import can take a few minutes.</source>
-        <translation type="unfinished">יבוא ראשון יכול לקחת כמה דקות.</translation>
+        <translation>יבוא ראשון יכול לקחת כמה דקות.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="176"/>
         <source>The last time you used your %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>השימוש האחרון ב-%1...</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="180"/>
         <source>last night</source>
-        <translation type="unfinished"></translation>
+        <translation>אמש</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="182"/>
         <source>today</source>
-        <translation type="unfinished"></translation>
+        <translation>היום</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="183"/>
         <source>%2 days ago</source>
-        <translation type="unfinished"></translation>
+        <translation>לפני %2 ימים</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="185"/>
         <source>was %1 (on %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>היה %1 (ב-%2)</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="193"/>
         <source>%1 hours, %2 minutes and %3 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 שעות, %2 דקות, ו %3 שניות</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="197"/>
@@ -9117,32 +9140,32 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/welcome.cpp" line="210"/>
         <source>under</source>
-        <translation type="unfinished"></translation>
+        <translation>מתחת ל</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="211"/>
         <source>over</source>
-        <translation type="unfinished"></translation>
+        <translation>גבוה מה</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="212"/>
         <source>reasonably close to</source>
-        <translation type="unfinished"></translation>
+        <translation>קרוב ל</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="213"/>
         <source>equal to</source>
-        <translation type="unfinished"></translation>
+        <translation>שווה ל</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="227"/>
         <source>You had an AHI of %1, which is %2 your %3 day average of %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>ה-AHI היה %1, %2ממוצע של %4 על פני %3 ימים.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="263"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ האוויר היה מתחת ל-%1 %2 במשך %3% מהזמן.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="286"/>
@@ -9153,47 +9176,47 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="289"/>
         <location filename="../oscar/welcome.cpp" line="298"/>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ IPAP היה מתחת ל-%1 %2 במשך %3% מהזמן.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="297"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ EPAP היה מתחת ל-%1 %2 במשך %3% מהזמן.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>לפני יום</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="196"/>
         <source>Your device was on for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר פעל במשך %1.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="258"/>
         <source>Your CPAP device used a constant %1 %2 of air</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר השתמש באפן קבוע ב-%1 %2 אוויר</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="271"/>
         <source>Your device used a constant %1-%2 %3 of air.</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר השתמש באפן קבוע ב-%2-%1 %3 אוויר.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="278"/>
         <source>Your device was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>המכשיר פעל מתחת ל-%2-%1 %3 במשך %4% מהזמן.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="318"/>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
-        <translation type="unfinished"></translation>
+        <translation>דליפות: %1 %2, שהם %3 מתוך הממוצע ל-%4 ימים: %5.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="324"/>
         <source>No CPAP data has been imported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>יש לייבא נתונים.</translation>
     </message>
 </context>
 <context>

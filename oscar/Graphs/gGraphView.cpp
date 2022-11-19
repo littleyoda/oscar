@@ -38,8 +38,10 @@
 #include "mainwindow.h"
 #include "Graphs/glcommon.h"
 #include "Graphs/gLineChart.h"
+#ifndef REMOVE_FITNESS
+#include "Graphs/gOverviewGraph.h"
+#endif
 #include "Graphs/gSummaryChart.h"
-#include "Graphs/gSessionTimesChart.h"
 #include "Graphs/gYAxis.h"
 #include "Graphs/gFlagsLine.h"
 #include "SleepLib/profiles.h"
@@ -2199,11 +2201,18 @@ void gGraphView::populateMenu(gGraph * graph)
     font.setPointSize(font.pointSize() + 3);
 
     gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(graph,LT_LineChart));
-    SummaryChart * sc = dynamic_cast<SummaryChart *>(findLayer(graph,LT_SummaryChart));
+    #ifndef REMOVE_FITNESS
+    gOverviewGraph * sc = dynamic_cast<gOverviewGraph *>(findLayer(graph,LT_SummaryChart));
+    #endif
     gSummaryChart * stg = dynamic_cast<gSummaryChart *>(findLayer(graph,LT_Overview));
 
     limits_menu->clear();
-    if (lc || sc || stg) {
+    #ifndef REMOVE_FITNESS
+    if (lc || sc || stg )
+    #else
+    if (lc || stg )
+    #endif
+    {
         QWidgetAction * widget = new QWidgetAction(this);
         MinMaxWidget * minmax = new MinMaxWidget(graph, this);
 

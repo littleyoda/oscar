@@ -18,7 +18,12 @@
 
 class Preferences;
 
+#define REMOVE_FITNESS
+/* valid values are REMOVE_FITNESS or REMOVE_FITNESS_OFF */
+
+#ifndef REMOVE_FITNESS
 enum OverviewLinechartModes { OLC_Bartop, OLC_Lines };
+#endif
 
 
 // ApplicationWideSettings Strings
@@ -33,7 +38,9 @@ const QString STR_AS_ShowPieChart = "EnablePieChart";
 const QString STR_AS_Animations = "AnimationsAndTransitions";
 const QString STR_AS_SquareWave = "SquareWavePlots";
 const QString STR_AS_OverlayType = "OverlayType";
+#ifndef REMOVE_FITNESS
 const QString STR_AS_OverviewLinechartMode = "OverviewLinechartMode";
+#endif
 const QString STR_AS_UsePixmapCaching = "UsePixmapCaching";
 const QString STR_AS_AllowYAxisScaling = "AllowYAxisScaling";
 const QString STR_AS_IncludeSerial = "IncludeSerial";
@@ -82,7 +89,9 @@ public:
   float m_lineThickness;
 
   OverlayDisplayType m_odt;
+#ifndef REMOVE_FITNESS
   OverviewLinechartModes m_olm;
+#endif
   QString m_profileName, m_language;
 
   QString versionString() const { return getPref(STR_PREF_VersionString).toString(); }
@@ -137,8 +146,10 @@ public:
   bool rightSidebarVisible() const { return getPref(STR_AS_RightSidebarVisible).toBool(); }
   //! \brief Returns the type of overlay flags (which are displayed over the Flow Waveform)
   inline OverlayDisplayType overlayType() const { return m_odt; }
+#ifndef REMOVE_FITNESS
   //! \brief Returns the display type of Overview pages linechart
   inline OverviewLinechartModes overviewLinechartMode() const { return m_olm; }
+#endif
   bool userEventPieChart() const { return getPref(STR_CS_UserEventPieChart).toBool(); }
   bool showSerialNumbers() const { return getPref(STR_US_ShowSerialNumbers).toBool(); }
   int openTabAtStart() const { return getPref(STR_US_OpenTabAtStart).toInt(); }
@@ -187,7 +198,9 @@ public:
   //! \brief Sets whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   void setGraphTooltips(bool b) { setPref(STR_AS_GraphTooltips, m_graphTooltips=b); }
   //! \brief Sets the type of overlay flags (which are displayed over the Flow Waveform)
+#ifndef REMOVE_FITNESS
   void setOverviewLinechartMode(OverviewLinechartModes olm) { setPref(STR_AS_OverviewLinechartMode, (int)(m_olm=olm)); }
+#endif
   //! \brief Set the pen width of line plots.
   void setLineThickness(float size) { setPref(STR_AS_LineThickness, m_lineThickness=size); }
   //! \brief Sets whether to display Line Cursor

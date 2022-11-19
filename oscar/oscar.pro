@@ -280,6 +280,12 @@ SOURCES += \
     Graphs/gspacer.cpp \
     Graphs/gStatsLine.cpp \
     Graphs/gSummaryChart.cpp \
+    Graphs/gAHIChart.cpp \
+    Graphs/gTTIAChart.cpp \
+    Graphs/gUsageChart.cpp \
+    Graphs/gSessionTimesChart.cpp \
+    Graphs/gPressureChart.cpp \
+    Graphs/gOverviewGraph.cpp \
     Graphs/gXAxis.cpp \
     Graphs/gYAxis.cpp \
     Graphs/layer.cpp \
@@ -323,8 +329,6 @@ SOURCES += \
     SleepLib/xmlreplay.cpp \
     SleepLib/serialoximeter.cpp \
     SleepLib/loader_plugins/md300w1_loader.cpp \
-    Graphs/gSessionTimesChart.cpp \
-    Graphs/gPressureChart.cpp \
     logger.cpp \
     SleepLib/machine_common.cpp \
     SleepLib/loader_plugins/weinmann_loader.cpp \
@@ -382,6 +386,12 @@ HEADERS  += \
     Graphs/gspacer.h \
     Graphs/gStatsLine.h \
     Graphs/gSummaryChart.h \
+    Graphs/gAHIChart.h \
+    Graphs/gTTIAChart.h \
+    Graphs/gUsageChart.h \
+    Graphs/gSessionTimesChart.h \
+    Graphs/gPressureChart.h \
+    Graphs/gOverviewGraph.h \
     Graphs/gXAxis.h \
     Graphs/gYAxis.h \
     Graphs/layer.h \
@@ -428,8 +438,6 @@ HEADERS  += \
     SleepLib/xmlreplay.h \
     SleepLib/serialoximeter.h \
     SleepLib/loader_plugins/md300w1_loader.h \
-    Graphs/gSessionTimesChart.h \
-    Graphs/gPressureChart.h \
     logger.h \
     SleepLib/loader_plugins/weinmann_loader.h \
     Graphs/gdailysummary.h \

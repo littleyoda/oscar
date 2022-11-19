@@ -10,7 +10,6 @@
 #ifndef DAILY_H
 #define DAILY_H
 
-
 #include <QMenu>
 #include <QAction>
 #include <QWidget>
@@ -25,11 +24,11 @@
 
 #include "SleepLib/profiles.h"
 #include "mainwindow.h"
-#include "Graphs/gSummaryChart.h"
 #include "Graphs/gGraphView.h"
 #include "Graphs/gLineChart.h"
 #include "sessionbar.h"
 #include "mytextbrowser.h"
+
 
 namespace Ui {
     class Daily;
@@ -230,17 +229,18 @@ private slots:
         */
     void on_bookmarkTable_itemChanged(QTableWidgetItem *item);
 
+    void on_graphCombo_activated(int index);
 
+    void on_toggleGraphs_clicked(bool checked);
+
+
+#ifndef REMOVE_FITNESS
     /*! \fn on_ouncesSpinBox_valueChanged(int arg1);
         \brief Called when the zombie slider has been moved.. Updates the BMI dislpay and journal objects.
 
         Also Refreshes the Overview charts
         */
     void on_ZombieMeter_valueChanged(int value);
-
-    void on_graphCombo_activated(int index);
-
-    void on_toggleGraphs_clicked(bool checked);
 
     /*! \fn on_weightSpinBox_editingFinished();
         \brief Called when weight has changed.. Updates the BMI dislpay and journal objects.
@@ -260,6 +260,7 @@ private slots:
     void on_ouncesSpinBox_valueChanged(int arg1);
 
     void on_weightSpinBox_valueChanged(double arg1);
+#endif
 
     void doToggleSession(Session *);
 
@@ -354,7 +355,9 @@ private:
 
     gLineChart *leakchart;
 
+#ifndef REMOVE_FITNESS
     bool ZombieMeterMoved;
+#endif
     bool BookmarksChanged;
 
 };

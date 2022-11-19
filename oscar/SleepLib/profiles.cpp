@@ -1087,7 +1087,11 @@ int CleanupProfile(Profile *prof)
                 << STR_AS_AntiAliasing << STR_AS_LineThickness << STR_AS_UsePixmapCaching
                 << STR_AS_SquareWave << STR_AS_RightPanelWidth << STR_US_TooltipTimeout
                 << STR_AS_Animations << STR_AS_AllowYAxisScaling << STR_AS_GraphTooltips
-                << STR_CS_UserEventPieChart << STR_AS_OverlayType << STR_AS_OverviewLinechartMode;
+                << STR_CS_UserEventPieChart << STR_AS_OverlayType
+                #ifndef REMOVE_FITNESS
+                << STR_AS_OverviewLinechartMode
+                #endif
+                ;
 
     int cnt = 0;
     for (auto & prf :migrateList) {
