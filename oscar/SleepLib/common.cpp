@@ -464,6 +464,7 @@ QString STR_UNIT_CMH2O;
 QString STR_UNIT_Hours;
 QString STR_UNIT_Minutes;
 QString STR_UNIT_Seconds;
+QString STR_UNIT_milliSeconds;
 QString STR_UNIT_h;
 QString STR_UNIT_m;
 QString STR_UNIT_s;
@@ -674,6 +675,7 @@ void initializeStrings()
     STR_UNIT_Hours = QObject::tr("Hours");
     STR_UNIT_Minutes = QObject::tr("Minutes");
     STR_UNIT_Seconds = QObject::tr("Seconds");
+    STR_UNIT_milliSeconds = QObject::tr("milliSeconds");
     STR_UNIT_h = QObject::tr("h"); // hours shortform
     STR_UNIT_m = QObject::tr("m"); // minutes shortform
     STR_UNIT_s = QObject::tr("s"); // seconds shortform

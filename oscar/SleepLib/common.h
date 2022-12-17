@@ -187,6 +187,7 @@ extern QString STR_UNIT_CMH2O;
 extern QString STR_UNIT_Hours;
 extern QString STR_UNIT_Minutes;
 extern QString STR_UNIT_Seconds;
+extern QString STR_UNIT_milliSeconds;
 extern QString STR_UNIT_h; // (h)ours, (m)inutes, (s)econds
 extern QString STR_UNIT_m;
 extern QString STR_UNIT_s;

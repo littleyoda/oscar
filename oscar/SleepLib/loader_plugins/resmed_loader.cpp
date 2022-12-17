@@ -229,7 +229,7 @@ void ResmedLoader::initChannels()
     chan->addOption(1, "Enabled");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_RiseTime = 0xe213, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_RiseTime", QObject::tr("RiseTime"), QObject::tr("RiseTime"), QObject::tr("RiseTime"), "", INTEGER, Qt::black));
+        "RMAS1x_RiseTime", QObject::tr("RiseTime"), QObject::tr("RiseTime"), QObject::tr("RiseTime"), STR_UNIT_milliSeconds, INTEGER, Qt::black));
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_Cycle = 0xe214, SETTING, MT_CPAP, SESSION,
         "RMAS1x_Cycle", QObject::tr("Cycle"), QObject::tr("Cycle"), QObject::tr("Cycle"), "", LOOKUP, Qt::black));
@@ -248,11 +248,11 @@ void ResmedLoader::initChannels()
     chan->addOption(4, "Very High");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMax = 0xe216, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), "", INTEGER, Qt::black));
+        "RMAS1x_TiMax", QObject::tr("TiMax"), QObject::tr("TiMax"), QObject::tr("TiMax"), STR_UNIT_Seconds, DOUBLE, Qt::black));
     chan->addOption(0, "0");
 
     channel.add(GRP_CPAP, chan = new Channel(RMAS1x_TiMin = 0xe217, SETTING, MT_CPAP, SESSION,
-        "RMAS1x_TiMin", QObject::tr("TiMin"), QObject::tr("TiMin"), QObject::tr("TiMin"), "", INTEGER, Qt::black));
+        "RMAS1x_TiMin", QObject::tr("TiMin"), QObject::tr("TiMin"), QObject::tr("TiMin"), STR_UNIT_Seconds, DOUBLE, Qt::black));
     chan->addOption(0, "0");
 
     // Setup ResMeds signal name translation map
@@ -3505,7 +3505,9 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
                 if (forceDebug)
 //                  qDebug() << "New EventList:" << channel.channels[code]->code() << QDateTime::fromMSecsSinceEpoch(tt).toString();
                     qDebug() << "New EventList:" << QString::number(code, 16) << QDateTime::fromMSecsSinceEpoch(tt).toString();
+
                 el->AddEvent(tt, last);
+
                 if (forceDebug && ((code == CPAP_Pressure) || (code == CPAP_IPAP) || (code == CPAP_EPAP)) )
                     qDebug() << "First Event:" << tmp << QDateTime::fromMSecsSinceEpoch(tt).toString() << "Pos:" << (sptr-1) - es.dataArray;
                 tt += rate;
