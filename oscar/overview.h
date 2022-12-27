@@ -23,6 +23,11 @@
 #include "Graphs/gOverviewGraph.h"
 #endif
 #include "Graphs/gSummaryChart.h"
+#include "backupFiles.h"
+
+#include <QRegularExpression>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class Overview;
@@ -140,6 +145,8 @@ class Overview : public QWidget
     void on_RangeUpdate(double minx, double maxx);
     void setGraphText ();
 
+    void on_backup_clicked();
+
   private:
     void CreateAllGraphs();
     void timedUpdateOverview(int ms=0);
@@ -193,6 +200,7 @@ class Overview : public QWidget
     // Are start and end widgets displaying the same month.
     bool samePage;
 
+    BackupFiles* backupFiles=nullptr;
 };
 
 

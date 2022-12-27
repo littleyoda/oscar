@@ -260,6 +260,13 @@ QToolButton:pressed {
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="backup">
+        <property name="text">
+         <string>Backup</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="graphCombo">
         <property name="toolTip">
          <string>Drop down to see list of graphs to switch on/off.</string>

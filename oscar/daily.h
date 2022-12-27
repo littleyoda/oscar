@@ -28,6 +28,7 @@
 #include "Graphs/gLineChart.h"
 #include "sessionbar.h"
 #include "mytextbrowser.h"
+#include "backupFiles.h"
 
 
 namespace Ui {
@@ -272,6 +273,8 @@ private slots:
 
     void on_splitter_2_splitterMoved(int pos, int index);
 
+    void on_backup_clicked();
+
 protected:
     virtual void showEvent(QShowEvent *);
 
@@ -360,6 +363,7 @@ private:
 #endif
     bool BookmarksChanged;
 
+    BackupFiles* backupFiles=nullptr;
 };
 
 #endif // DAILY_H

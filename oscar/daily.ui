@@ -1558,6 +1558,13 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="backup">
+            <property name="text">
+             <string>Backup</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QComboBox" name="graphCombo">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
