@@ -37,13 +37,13 @@ private:
     const QRegularExpression* parseDescriptionsRe;
 };
 
-class BackupFiles : public QWidget
+class SaveGraphLayoutSettings : public QWidget
 {
 	Q_OBJECT
 public:
-    explicit BackupFiles(QString title , QWidget* parent) ;
-    ~BackupFiles();
-    void backupMenu(gGraphView* graphView);
+    explicit SaveGraphLayoutSettings(QString title , QWidget* parent) ;
+    ~SaveGraphLayoutSettings();
+    void menu(gGraphView* graphView);
 protected:
     QIcon*  m_icon_exit         = new QIcon(":/icons/exit.png");
     QIcon*  m_icon_delete       = new QIcon(":/icons/trash_can.png");

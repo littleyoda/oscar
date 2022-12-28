@@ -23,7 +23,7 @@
 #include "Graphs/gOverviewGraph.h"
 #endif
 #include "Graphs/gSummaryChart.h"
-#include "backupFiles.h"
+#include "saveGraphLayoutSettings.h"
 
 #include <QRegularExpression>
 #include <QListWidget>
@@ -200,7 +200,7 @@ class Overview : public QWidget
     // Are start and end widgets displaying the same month.
     bool samePage;
 
-    BackupFiles* backupFiles=nullptr;
+    SaveGraphLayoutSettings* saveGraphLayoutSettings=nullptr;
 };
 
 

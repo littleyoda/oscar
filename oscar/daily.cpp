@@ -541,7 +541,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     ui->JournalNotes->installEventFilter(this);
 //    qDebug() << "Finished making new Daily object";
 //    sleep(3);
-    backupFiles=nullptr;
+    saveGraphLayoutSettings=nullptr;
 }
 
 Daily::~Daily()
@@ -564,7 +564,7 @@ Daily::~Daily()
     delete ui;
     delete icon_on;
     delete icon_off;
-    if (backupFiles!=nullptr) delete backupFiles;
+    if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
 }
 
 void Daily::showEvent(QShowEvent *)
@@ -2853,11 +2853,11 @@ void Daily::on_splitter_2_splitterMoved(int, int)
 }
 
 void Daily::on_backup_clicked() {
-    if (!backupFiles) {
-        backupFiles= new BackupFiles("daily",this);
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("daily",this);
     }
-    if (backupFiles) {
-        backupFiles->backupMenu(GraphView);
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->menu(GraphView);
     }
 }
 

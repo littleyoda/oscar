@@ -171,7 +171,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     connect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     connect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
     connect(GraphView, SIGNAL(XBoundsChanged(qint64 ,qint64)), this, SLOT(on_XBoundsChanged(qint64 ,qint64)));
-    backupFiles=nullptr;
+    saveGraphLayoutSettings=nullptr;
 }
 
 Overview::~Overview()
@@ -193,7 +193,7 @@ Overview::~Overview()
     delete icon_off ;
     delete icon_up_down ;
     delete icon_warning ;
-    if (backupFiles!=nullptr) delete backupFiles;
+    if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
 }
 
 void Overview::ResetFont()
@@ -936,11 +936,11 @@ void Overview::on_toggleVisibility_clicked(bool checked)
 }
 
 void Overview::on_backup_clicked() {
-    if (!backupFiles) {
-        backupFiles= new BackupFiles("overview",this);
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("overview",this);
     }
-    if (backupFiles) {
-        backupFiles->backupMenu(GraphView);
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->menu(GraphView);
     }
 }
 

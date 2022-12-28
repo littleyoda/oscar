@@ -18,10 +18,11 @@
 #include <QPixmap>
 #include <QSize>
 #include "SleepLib/profiles.h"
-#include "backupFiles.h"
+#include "saveGraphLayoutSettings.h"
 
 
-BackupFiles::BackupFiles(QString title,QWidget* parent) : parent(parent),title(title)
+
+SaveGraphLayoutSettings::SaveGraphLayoutSettings(QString title,QWidget* parent) : parent(parent),title(title)
 {
     // Initialize directory accesses to profile files.
     QString dirname = p_profile->Get("{DataFolder}/");
@@ -54,7 +55,7 @@ BackupFiles::BackupFiles(QString title,QWidget* parent) : parent(parent),title(t
     parseFilenameRe = new QRegularExpression(QString("^(%1[.](backup(\\d*)))[.]shg$").arg(title));
 }
 
-BackupFiles::~BackupFiles()
+SaveGraphLayoutSettings::~SaveGraphLayoutSettings()
 {
     backupDialog->disconnect(backupaddFullBtn,     SIGNAL(clicked()), this, SLOT (addFull_feature()  ));
     backupDialog->disconnect(backupAddBtn,    SIGNAL(clicked()), this, SLOT (add_feature()  ));
@@ -76,7 +77,7 @@ BackupFiles::~BackupFiles()
     delete parseFilenameRe;
 }
 
-void BackupFiles::createMenu() {
+void SaveGraphLayoutSettings::createMenu() {
     styleOn=        calculateStyle(true,false);
     styleOff=       calculateStyle(false,false);
     styleExitBtn=calculateStyle(true,true);
@@ -185,7 +186,7 @@ void BackupFiles::createMenu() {
 
 };
 
-bool BackupFiles::confirmAction(QString name,QString question,QIcon* icon) {
+bool SaveGraphLayoutSettings::confirmAction(QString name,QString question,QIcon* icon) {
     QMessageBox msgBox;
     msgBox.setText(question);
     if (icon!=nullptr) {
@@ -207,7 +208,7 @@ bool BackupFiles::confirmAction(QString name,QString question,QIcon* icon) {
 
 }
 
-QString BackupFiles::calculateStyle(bool on,bool exitBtn){
+QString SaveGraphLayoutSettings::calculateStyle(bool on,bool exitBtn){
         QString btnStyle=QString("QPushButton{%1%2}").arg(on
             ?"color: black;background-color:white;"
             :"color: darkgray;background-color:#e8e8e8 ;"
@@ -231,12 +232,12 @@ QString BackupFiles::calculateStyle(bool on,bool exitBtn){
         return btnStyle;
 }
 
-void BackupFiles::looksOn(QPushButton* button,bool on){
+void SaveGraphLayoutSettings::looksOn(QPushButton* button,bool on){
     button->setEnabled(on);
     button->setStyleSheet(on?styleOn:styleOff);
 }
 
-void BackupFiles::enableButtons(bool enable) {
+void SaveGraphLayoutSettings::enableButtons(bool enable) {
     looksOn(backupUpdateBtn,enable);
     looksOn(backupRestoreBtn,enable);
     looksOn(backupDeleteBtn,enable);
@@ -250,7 +251,7 @@ void BackupFiles::enableButtons(bool enable) {
     }
 }
 
-void BackupFiles::update_feature() {
+void SaveGraphLayoutSettings::update_feature() {
     if(!graphView) return;
     QListWidgetItem *	item=backuplist->currentItem();
     if (!item) return;
@@ -260,7 +261,7 @@ void BackupFiles::update_feature() {
     graphView->SaveSettings(name);
 };
 
-void BackupFiles::restore_feature() {
+void SaveGraphLayoutSettings::restore_feature() {
     if(!graphView) return;
     QListWidgetItem *	item=backuplist->currentItem();
     if (!item) return;
@@ -270,16 +271,16 @@ void BackupFiles::restore_feature() {
     exit();
 };
 
-void BackupFiles::rename_feature() {
+void SaveGraphLayoutSettings::rename_feature() {
     if(!graphView) return;
     QListWidgetItem *	item=backuplist->currentItem();
     if (!item) return;
     backuplist->editItem(item);
-    // BackupFiles::itemChanged(QListWidgetItem *item) is called when edit changes the entry.
+    // SaveGraphLayoutSettings::itemChanged(QListWidgetItem *item) is called when edit changes the entry.
     // itemChanged will update the description map
 }
 
-void BackupFiles::delete_feature() {
+void SaveGraphLayoutSettings::delete_feature() {
     if(!graphView) return;
     QListWidgetItem *	item=backuplist->currentItem();
     if (!item) return;
@@ -296,7 +297,7 @@ void BackupFiles::delete_feature() {
     enableButtons(true);
 }
 
-void BackupFiles::addFull_feature() {
+void SaveGraphLayoutSettings::addFull_feature() {
     QMessageBox msgBox;
     msgBox.setText(tr("Maximum number of Backups exceeded."));
     msgBox.setStandardButtons(QMessageBox::Cancel);
@@ -311,7 +312,7 @@ void BackupFiles::addFull_feature() {
     msgBox.exec();
 }
 
-void BackupFiles::add_feature() {
+void SaveGraphLayoutSettings::add_feature() {
     if(!graphView) return;
 
     QString backupName = QString("%2%3").arg("backup").arg(unusedBackupNum,backupNumMaxLength,10,QLatin1Char('0'));
@@ -328,7 +329,7 @@ void BackupFiles::add_feature() {
     }
 }
 
-void BackupFiles::itemChanged(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemChanged(QListWidgetItem *item)
 {
     QString backupName=item->data(backupFileName).toString();
     QString desc= item->text();
@@ -356,12 +357,12 @@ void BackupFiles::itemChanged(QListWidgetItem *item)
     item->setText(desc);
 }
 
-void BackupFiles::itemSelectionChanged()
+void SaveGraphLayoutSettings::itemSelectionChanged()
 {
     enableButtons(true);
 }
 
-int BackupFiles::backupNum(QString backupName) {
+int SaveGraphLayoutSettings::backupNum(QString backupName) {
     QRegularExpressionMatch match = backupFileNumRe->match(backupName);
     int value=-1;
     if (match.hasMatch()) {
@@ -370,7 +371,7 @@ int BackupFiles::backupNum(QString backupName) {
     return value;
 }
 
-QListWidgetItem* BackupFiles::updateFileList(QString find) {
+QListWidgetItem* SaveGraphLayoutSettings::updateFileList(QString find) {
     Q_UNUSED(find);
     QListWidgetItem* ret=nullptr;
     enableButtons(false);
@@ -423,11 +424,11 @@ QListWidgetItem* BackupFiles::updateFileList(QString find) {
 }
 
 
-void BackupFiles::exit() {
+void SaveGraphLayoutSettings::exit() {
     backupDialog->close();
 }
 
-void BackupFiles::backupMenu(gGraphView* graphView) {
+void SaveGraphLayoutSettings::menu(gGraphView* graphView) {
     this->graphView=graphView;
     updateFileList();
     backupDialog->raise();
@@ -567,31 +568,31 @@ switch (ret) {
     backupDialog->disconnect(backuplist, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(itemEntered(QListWidgetItem*)   ));
 
 
-void BackupFiles::itemActivated(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemActivated(QListWidgetItem *item)
 {
     Q_UNUSED( item );
     DEBUGF Q( item->text() );
 }
 
-void BackupFiles::itemDoubleClicked(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemDoubleClicked(QListWidgetItem *item)
 {
     Q_UNUSED( item );
     DEBUGF Q( item->text() );
 }
 
-void BackupFiles::itemClicked(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemClicked(QListWidgetItem *item)
 {
     Q_UNUSED( item );
     DEBUGF Q( item->text() );
 }
 
-void BackupFiles::itemEntered(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemEntered(QListWidgetItem *item)
 {
     Q_UNUSED( item );
     DEBUGF Q( item->text() );
 }
 
-void BackupFiles::itemPressed(QListWidgetItem *item)
+void SaveGraphLayoutSettings::itemPressed(QListWidgetItem *item)
 {
     Q_UNUSED( item );
     DEBUGF Q( item->text() );

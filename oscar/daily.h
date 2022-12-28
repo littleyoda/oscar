@@ -28,7 +28,7 @@
 #include "Graphs/gLineChart.h"
 #include "sessionbar.h"
 #include "mytextbrowser.h"
-#include "backupFiles.h"
+#include "saveGraphLayoutSettings.h"
 
 
 namespace Ui {
@@ -363,7 +363,7 @@ private:
 #endif
     bool BookmarksChanged;
 
-    BackupFiles* backupFiles=nullptr;
+    SaveGraphLayoutSettings* saveGraphLayoutSettings=nullptr;
 };
 
 #endif // DAILY_H
