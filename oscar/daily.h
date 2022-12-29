@@ -273,7 +273,7 @@ private slots:
 
     void on_splitter_2_splitterMoved(int pos, int index);
 
-    void on_backup_clicked();
+    void on_layout_clicked();
 
 protected:
     virtual void showEvent(QShowEvent *);

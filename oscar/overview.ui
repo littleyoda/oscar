@@ -260,9 +260,16 @@ QToolButton:pressed {
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="backup">
+       <widget class="QPushButton" name="layout">
         <property name="text">
-         <string>Backup</string>
+         <string>Layout</string>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+        </property>
+        <property name="toolTip">
+         <string>Save and Restore graph layout settings</string>
         </property>
        </widget>
       </item>

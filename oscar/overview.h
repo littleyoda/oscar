@@ -145,7 +145,7 @@ class Overview : public QWidget
     void on_RangeUpdate(double minx, double maxx);
     void setGraphText ();
 
-    void on_backup_clicked();
+    void on_layout_clicked();
 
   private:
     void CreateAllGraphs();

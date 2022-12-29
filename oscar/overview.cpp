@@ -935,7 +935,7 @@ void Overview::on_toggleVisibility_clicked(bool checked)
     GraphView->redraw();
 }
 
-void Overview::on_backup_clicked() {
+void Overview::on_layout_clicked() {
     if (!saveGraphLayoutSettings) {
         saveGraphLayoutSettings= new SaveGraphLayoutSettings("overview",this);
     }
