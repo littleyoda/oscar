@@ -3513,13 +3513,20 @@ void gGraphView::SaveDefaultSettings() {
     m_default_graphs = m_graphs;
 }
 
-const quint32 gvmagic = 0x41756728;
+const quint32 gvmagic = 0x41756728;   //'Aug('
 const quint16 gvversion = 4;
 
-void gGraphView::SaveSettings(QString title)
+QString gGraphView::settingsFilename (QString title,QString folderName, QString ext) {
+    if (folderName.size()==0) {
+        folderName = p_profile->Get("{DataFolder}/");
+    }
+    return folderName+title.toLower()+ext;
+}
+
+void gGraphView::SaveSettings(QString title,QString folderName)
 {
     qDebug() << "Saving" << title << "settings";
-    QString filename = p_profile->Get("{DataFolder}/") + title.toLower() + ".shg";
+    QString filename=settingsFilename(title,folderName) ;
     QFile f(filename);
     f.open(QFile::WriteOnly);
     QDataStream out(&f);
@@ -3571,9 +3578,10 @@ template <class T> inline void hashMerge(T & a, const T & b)
 }
 
 
-bool gGraphView::LoadSettings(QString title)
+bool gGraphView::LoadSettings(QString title,QString folderName)
 {
-    QString filename = p_profile->Get("{DataFolder}/") + title.toLower() + ".shg";
+    //qDebug() << "Loading" << title << "settings";
+    QString filename=settingsFilename (title,folderName) ;
     QFile f(filename);
 
     if (!f.exists()) {

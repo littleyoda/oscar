@@ -65,5 +65,6 @@
         <file>icons/restore.png</file>
         <file>icons/trash_can.png</file>
         <file>icons/update.png</file>
+        <file>icons/cog.png</file>
     </qresource>
 </RCC>

@@ -396,11 +396,13 @@ class gGraphView
     //! \brief Supplies time range to all graph objects in linked group, refreshing if requested
     void SetXBounds(qint64 minx, qint64 maxx, short group = 0, bool refresh = true);
 
+    QString settingsFilename (QString title,QString folderName="" ,QString ext=".shg");
+
     //! \brief Saves the current graph order, heights, min & Max Y values to disk
-    void SaveSettings(QString title);
+    void SaveSettings(QString title,QString folderName="");
 
     //! \brief Loads the current graph order, heights, min & max Y values from disk
-    bool LoadSettings(QString title);
+    bool LoadSettings(QString title,QString folderName="");
 
     //! \brief Saves the current (initial) graph order, heights, min & Max Y values for future recovery
     void SaveDefaultSettings();
