@@ -269,7 +269,7 @@ QToolButton:pressed {
           <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
         </property>
         <property name="toolTip">
-         <string>Save and Restore graph layout settings</string>
+         <string>Save and Restore Graph Layout Settings</string>
         </property>
        </widget>
       </item>

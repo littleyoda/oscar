@@ -16,9 +16,11 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QPushButton>
-
+#include <QLabel>
+#include <QMessageBox>
 #include <QRegularExpression>
 #include <QDir>
+
 #include "Graphs/gGraphView.h"
 
 class DescriptionMap
@@ -35,7 +37,7 @@ private:
     QString filename;
     QMap <QString,QString> descriptions;
     const QRegularExpression* parseDescriptionsRe;
-    QChar delimiter = QChar(177);
+    const QChar delimiter = QChar(':');
 };
 
 class SaveGraphLayoutSettings : public QWidget
@@ -46,19 +48,35 @@ public:
     ~SaveGraphLayoutSettings();
     void menu(gGraphView* graphView);
 protected:
+    QIcon*  m_icon_return       = new QIcon(":/icons/return.png");
+    QIcon*  m_icon_help         = new QIcon(":/icons/question_mark.png");
     QIcon*  m_icon_exit         = new QIcon(":/icons/exit.png");
     QIcon*  m_icon_delete       = new QIcon(":/icons/trash_can.png");
     QIcon*  m_icon_update       = new QIcon(":/icons/update.png");
     QIcon*  m_icon_restore      = new QIcon(":/icons/restore.png");
     QIcon*  m_icon_rename       = new QIcon(":/icons/rename.png");
     QIcon*  m_icon_add          = new QIcon(":/icons/plus.png");
-    QIcon*  m_icon_addFull      = new QIcon(":/icons/brick-wall.png");
 
 private:
-    const static int fileNumMaxLength=3;
-    const static int maxFiles=20;     // Max supported design limited is 1000 - based on layoutName has has 3 numeric digits fileNumMaxLength=3.
-    const static int maxDescriptionLen=80;
-    const QString baseName=QString("layout");
+    const static int fileNumMaxLength = 3;
+    const static int maxFiles = 30;     // Max supported design limited is 1000 10**fileNumMaxLength(3).
+    const static int iconWidthMessageBox = 50;
+    const static int maxDescriptionLen = 80;
+    const QString fileBaseName = QString("layout");
+    const int fileNameRole = Qt::UserRole;
+    int   fontSizeIncrease = 0;
+    int   horizontalWidthAdjustment=60;     // this seem to make menu size changes work. Testing says it is 60 but what causes it is unknown.
+
+    QSize minMenuListSize = QSize(0,0);
+    QSize minMenuDialogSize = QSize(0,0);
+
+    QSize dialogListDiff = QSize(0,0);
+    QSize menuDialogSize = QSize(0,0);
+    QSize menuListSize = QSize(0,0);
+    void  initminMenuListSize();
+    QSize calculateMenuDialogSize();
+    QSize maxSize(const QSize AA , const QSize BB ) ;
+    bool  sizeEqual(const QSize AA , const QSize BB ) ;
 
     const QRegularExpression* singleLineRe;
     const QRegularExpression* fileNumRe;
@@ -67,10 +85,11 @@ private:
 
     QWidget*            parent;
     const   QString     title;
-    gGraphView*         graphView=nullptr;
+    gGraphView*         graphView = nullptr;
+    QFont       menuListFont;
 
     QDialog*     menuDialog;
-    QListWidget* menulist;
+    QListWidget* menuList;
 
     QPushButton* menuAddFullBtn;   // Must be first item for workaround.
     QPushButton* menuAddBtn;
@@ -79,31 +98,59 @@ private:
     QPushButton* menuUpdateBtn;
     QPushButton* menuRenameBtn;
     QPushButton* menuExitBtn;
+    QPushButton* menuHelpBtn;
+
 
     QVBoxLayout* menuLayout;
-    QHBoxLayout* menuLayout1;
-    QVBoxLayout* menuLayout2;
+    QHBoxLayout* menuLayoutButtons;
 
-    QDir*   dir=nullptr;
+    void         createHelp();
+    void         helpDestructor();
+    QString      helpInfo();
+    QDialog*     helpDialog=nullptr;
+    QPushButton* helpInfoExitBtn=nullptr;
+    QPushButton* helpExitBtn=nullptr;
+    int          helpFontSizeIncrease = 0;
+    QHBoxLayout* helpLayoutButtons = nullptr;
+
+
+
+    QDir*   dir = nullptr;
     QString dirName;
     int     nextNumToUse;
-    QListWidgetItem* updateFileList(QString find=QString());
+    QListWidgetItem* updateFileList(QString find = QString());
+    QListWidgetItem* widestItem=nullptr;
     QString styleOn;
     QString styleOff;
-    QString styleExitBtn;
+    QString styleExit;
     QString styleMessageBox;
     QString styleDialog;
-    QString calculateStyle(bool on,bool border);
+
+    QString calculateButtonStyle(bool on,bool border);
     void    looksOn(QPushButton* button,bool on);
     DescriptionMap* descriptionMap;
-    bool    confirmAction(QString name,QString question,QIcon* icon);
+    bool    confirmAction(QString name,QString question,QIcon* icon,
+                QMessageBox::StandardButtons flags = (QMessageBox::Cancel|QMessageBox::Yes) , 
+                QMessageBox::StandardButton adefault = QMessageBox::Cancel, 
+                QMessageBox::StandardButton success = QMessageBox::Yes 
+                );
+    bool    verifyItem(QListWidgetItem* item,QString name,QIcon* icon) ;
+
+    const QString calculateStyleMessageBox( QFont* font, QString& s1, QString& s2);
+
+    void     displaywidgets(QWidget* widget);
+    QSize    calculateParagraphSize(QString& text,QFont& font, QString& );
 
     void    createMenu();
+    void    createStyleSheets();
     void    createSaveFolder();
-    void    enableButtons(bool enable);
-    void    add_featurertn();
+    QPushButton*  newBtnRtn(QHBoxLayout*, QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
+    QPushButton*  menuBtn(                QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
+    QPushButton*  helpBtn(                QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
 
-    const int fileNameRole = Qt::UserRole;
+    void    manageButtonApperance();
+    void    resizeMenu();
+
     int     fileNum(QString fileName);
     void    writeSettings(QString filename);
     void    loadSettings(QString filename);
@@ -113,10 +160,13 @@ public slots:
 private slots:
     void    add_feature();
     void    addFull_feature();
-    void    update_feature();
     void    restore_feature();
-    void    delete_feature();
     void    rename_feature();
+    void    update_feature();
+    void    help_feature();
+    void    help_off_feature();
+    void    help_exit_feature();
+    void    delete_feature();
     void    exit();
 
     void    itemChanged(QListWidgetItem *item);

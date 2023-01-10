@@ -255,8 +255,8 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
-    overview.cpp \
     saveGraphLayoutSettings.cpp \
+    overview.cpp \
     common_gui.cpp \
     cprogressbar.cpp \
     daily.cpp \
@@ -362,8 +362,8 @@ QMAKE_EXTRA_COMPILERS += optimize
 
 HEADERS  += \
     checkupdates.h \
-    overview.h \
     saveGraphLayoutSettings.h \
+    overview.h \
     common_gui.h \
     cprogressbar.h \
     daily.h \
