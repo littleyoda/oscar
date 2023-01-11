@@ -262,20 +262,27 @@ void SaveGraphLayoutSettings::helpDestructor() {
 QString SaveGraphLayoutSettings::helpInfo() {
 
 return QString( tr("\
-    <b><center>Button Description</center></b>\
     <p style=\"color:black;\"> \
+    <b><center>Button Description</center></b>\
       <table width=\"100%\">\
-        <tr><td>Add    </td>        <td> Creates a new saved Setting item. The default descripton is the currenti date.<br>\
+        <tr><td>Add    </td>        <td> Creates a new saved Setting item. The default description is the current date.<br>\
                                          The description may be changed by the User.<br>\
                                          The Add button will be greyed out when maximum number of saved layouts is reached.</td></tr>\
+                                         <br>\
         <tr><td><i><u>Other Buttons</u> </i></td> \
                                     <td> These buttons will be greyed out when no items are selected</td></tr>\
-        <tr><td>Restore</td>        <td> Loads the current graph layout setting with the swlected saved settings then returns. </td></tr>\
+                                         <br>\
+        <tr><td>Restore</td>        <td> Loads the current graph layout setting with the selected saved settings then returns. </td></tr>\
+                                         <br>\
         <tr><td>Rename </td>        <td> Allows the user to modify the description of the selected saved session.\
                                          Same as a double click on the item.</td></tr>\
-        <tr><td>Update </td>        <td> Saves the current graph layout setting to the selected saved settings.<br>Prompts for confirmation.</td></tr>\
+                                         <br>\
+        <tr><td>Update </td>        <td> Saves the current graph layout setting to the selected saved setting.<br>Prompts for confirmation.</td></tr>\
+                                         <br>\
         <tr><td>Delete </td>        <td> Deletes  the selected graph layout setting. <br>Prompts for confirmation.</td></tr>\
+                                         <br>\
         <tr><td>Exit </td>          <td> (Red circle with a white \"X.\") Returns to OSCAR menu.</td></tr>\
+                                         <br>\
     </table> \
         <center><b>Graph Layout Settings</b></center>\
     <table width=\"100%\"  > \
@@ -283,7 +290,7 @@ return QString( tr("\
         <tr>                        <td>* Height Options  </td><td>* Event Flags </td><td>* Plots Enabled </td><td>* Dotted Lines</td>\
     </table> \
         <center><b>General Information</b></center>\
-    </table> \
+    <table> \
         <tr><td>*</td>               <td> Maximum description size = 80 characters.</td>\
         <tr><td>*</td>               <td> Maximum Saved Graph Layout Settings = 30 </td>\
         <tr><td>*</td>               <td> Saved Graprhg Layout Setting are available for all user profiles</td>\
