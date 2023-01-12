@@ -396,6 +396,12 @@ void done()
     schema::channel.channels.clear();
     schema::channel.groups.clear();
 
+    // ahiChannels did not get cleared since day1 OSCAR when a reset was required.
+    // when reset occured then the Overview AHI graph would should an addtional set of channels.
+    // this fix just clears the variable that stores ahi data.
+    // probelm #59  https://gitlab.com/pholy/OSCAR-code/-/issues/59
+    ahiChannels.clear();
+
     schema_initialized = false;
 }
 
