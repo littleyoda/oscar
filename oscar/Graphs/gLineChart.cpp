@@ -1086,8 +1086,12 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     double sum = 0;
     int cnt = 0;
 
-    // Draw the linechart overlays
-    if (m_day && (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))) {
+    //Draw the linechart overlays (Event flags) independant of line Cursor mode
+    //The problem was that turning lineCUrsor mode off (or  Control L) also stopped flag event on most daily graphs.
+    // The user didn't know what trigger the problem. Best quess is that Control L was typed by mistable.
+    // this fix allows flag events to be normally displayed when the line Cursor mode is off.
+    //was if (m_day /*&& (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))*/) 
+    if (m_day) {
         bool blockhover = false;
         for (auto fit=flags.begin(), end=flags.end(); fit != end; ++fit) {
             code = fit.key();
