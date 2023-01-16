@@ -78,7 +78,8 @@ SaveGraphLayoutSettings::~SaveGraphLayoutSettings()
 void SaveGraphLayoutSettings::createSaveFolder() {
     // Insure that the save folder exists
     // Get the directory name for the save files
-    QString layoutFileFolder = "savedGraphLayoutSettings/";
+    //QString layoutFileFolder = "savedGraphLayoutSettings/";
+    QString layoutFileFolder = "layoutSettings/";
 
     #if 0
     // home directory for the current  profile.
@@ -223,21 +224,13 @@ void SaveGraphLayoutSettings::createHelp() {
     QFont helpInfoLabelFont = helpInfoFont;
     helpInfoLabelFont.setPointSize(fontSizeIncrease+ helpInfoFont.pointSize());
 
-
-    //QHBoxLayout* helpLayoutButtons;
-    //QLabel*      helpInfoHeaderLabel;
-    //QFont        helpInfoFont;
-    //QVBoxLayout* helpLayout;
-
-
     QLabel* helpInfoHeaderLabel = new QLabel("helpInfoHeaderLabel",parent);
-    helpInfoHeaderLabel->setText(QString( tr("<h4><center>Help Menu - Manage Graph Layout Settings</center></h4>")));
+    helpInfoHeaderLabel->setText(QString( tr("<h4>Help Menu - Manage Layout Settings</h4>")));
     helpInfoHeaderLabel->setFont(helpInfoLabelFont);
 
     QLabel* helpInfoLabel = new QLabel("helpInfo",parent);
     helpInfoLabel->setFont(helpInfoFont);
     helpInfoLabel->setText(helpInfo()) ;
-
 
     helpLayoutButtons = new QHBoxLayout();
     helpLayoutButtons->addWidget(helpInfoHeaderLabel);
@@ -260,47 +253,70 @@ void SaveGraphLayoutSettings::helpDestructor() {
 }
 
 QString SaveGraphLayoutSettings::helpInfo() {
-
 return QString( tr("\
-    <p style=\"color:black;\"> \
-    <b><center>Button Description</center></b>\
-      <table width=\"100%\">\
-        <tr><td>Add    </td>        <td> Creates a new saved Setting item. The default description is the current date.<br>\
-                                         The description may be changed by the User.<br>\
-                                         The Add button will be greyed out when maximum number of saved layouts is reached.</td></tr>\
-                                         <br>\
-        <tr><td><i><u>Other Buttons</u> </i></td> \
-                                    <td> These buttons will be greyed out when no items are selected</td></tr>\
-                                         <br>\
-        <tr><td>Restore</td>        <td> Loads the current graph layout setting with the selected saved settings then returns. </td></tr>\
-                                         <br>\
-        <tr><td>Rename </td>        <td> Allows the user to modify the description of the selected saved session.\
-                                         Same as a double click on the item.</td></tr>\
-                                         <br>\
-        <tr><td>Update </td>        <td> Saves the current graph layout setting to the selected saved setting.<br>Prompts for confirmation.</td></tr>\
-                                         <br>\
-        <tr><td>Delete </td>        <td> Deletes  the selected graph layout setting. <br>Prompts for confirmation.</td></tr>\
-                                         <br>\
-        <tr><td>Exit </td>          <td> (Red circle with a white \"X.\") Returns to OSCAR menu.</td></tr>\
-                                         <br>\
-    </table> \
-        <center><b>Graph Layout Settings</b></center>\
-    <table width=\"100%\"  > \
-        <tr>                        <td>* Name            </td><td>* Order       </td><td>* Pinning       </td><td>* Height</td>\
-        <tr>                        <td>* Height Options  </td><td>* Event Flags </td><td>* Plots Enabled </td><td>* Dotted Lines</td>\
-    </table> \
-        <center><b>General Information</b></center>\
-    <table> \
-        <tr><td>*</td>               <td> Maximum description size = 80 characters.</td>\
-        <tr><td>*</td>               <td> Maximum Saved Graph Layout Settings = 30 </td>\
-        <tr><td>*</td>               <td> Saved Graprhg Layout Setting are available for all user profiles</td>\
-        <tr><td>*</td>               <td> Graph Layout Settings only impact how graphs are displayed. <br>\
-                                          They do not contains any other data.</td>\
-        <tr><td>*</td>               <td> The Escape key \"esc\" will always exit a dialog menu - like this help or the layout menu</td>\
-    </table> \
-  </p>\
+     <p style=\"color:black;\">  \
+      This feature manages the saving and restoring of Layout Settings.\
+      <br>\
+      Layout Settings control the layout of a graph or chart.\
+      <br>\
+      Different Layouts Settings can be saved and later restored.\
+      <br>\
+     </p>\
+     <table width=\"100%\"> \
+        <tr><td><b>Button</b></td> \
+            <td><b>Description</b></td></tr> \
+        <tr><td valign=\"top\">Add</td> \
+			<td>Creates a copy of the current Layout Settings. <br> \
+				The default description is the current date. <br> \
+				The description may be changed. <br> \
+				The Add button will be greyed out when maximum number is reached.</td></tr> \
+                <br> \
+        <tr><td><i><u>Other Buttons</u> </i></td>  \
+            <td>Greyed out when there are no selections</td></tr> \
+        <tr><td>Restore</td> \
+			<td>Loads the Layout Settings from the selection. Automatically exits. </td></tr> \
+        <tr><td>Rename </td>         \
+			<td>Modify the description of the selection. Same as a double click.</td></tr> \
+        <tr><td valign=\"top\">Update</td><td> Saves the current Layout Settings to the selection.<br> \
+		        Prompts for confirmation.</td></tr> \
+        <tr><td valign=\"top\">Delete</td> \
+			<td>Deletes the selecton. <br> \
+			    Prompts for confirmation.</td></tr> \
+        <tr><td><i><u>Control</u> </i></td>  \
+            <td></td></tr> \
+        <tr><td>Exit </td> \
+			<td>(Red circle with a white \"X\".) Returns to OSCAR menu.</td></tr> \
+        <tr><td>Return</td> \
+			<td>Next to Exit icon. Only in Help Menu. Returns to Layout menu.</td></tr> \
+        <tr><td>Escape Key</td> \
+			<td>Exit the Help or Layout menu.</td></tr> \
+      </table>  \
+      <p><b>Layout Settings</b></p> \
+      <table width=\"100%\">  \
+        <tr> \
+			<td>* Name</td> \
+			<td>* Pinning</td> \
+			<td>* Plots Enabled </td> \
+			<td>* Height</td> \
+		</tr> \
+        <tr> \
+			<td>* Order</td> \
+			<td>* Event Flags</td> \
+			<td>* Dotted Lines</td> \
+			<td>* Height Options</td> \
+		</tr> \
+      </table>  \
+      <p><b>General Information</b></p> \
+	  <ul style=margin-left=\"20\"; >  \
+		<li> Maximum description size = 80 characters.	</li>  \
+		<li> Maximum Saved Layout Settings = 30.	</li>  \
+		<li> Saved Layout Settings can be accessed by all profiles.  \
+		<li> Layout Settings only control the layout of a graph or chart. <br>  \
+             They do not contain any other data. <br> \
+             They do not control if a graph is displayed or not. </li> \
+		<li> Layout Settings for daily and overview are managed independantly. </li>\
+	  </ul>   \
 "));
-
 }
 
 const QString  SaveGraphLayoutSettings::calculateStyleMessageBox(QFont* font , QString& s1, QString& s2) {
