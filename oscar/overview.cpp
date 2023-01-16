@@ -310,6 +310,11 @@ void Overview::CreateAllGraphs() {
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
             } else if (chan->type() == schema::WAVEFORM) {
+                if ((code==CPAP_AHI)||(code==CPAP_Pressure) ) {
+                    DEBUGF O("SKIPPING") NAME(code) Q(code);
+                    //skip if channel is for AHI.
+                    continue;
+                }
                 sc= new gSummaryChart(code, chan->machtype());
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
