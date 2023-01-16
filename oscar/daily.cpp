@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QTextCharFormat>
@@ -602,6 +602,7 @@ void Daily::Link_clicked(const QUrl &url)
 
         // Reload day
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="toggleoxisession") { // Enable/Disable Oximetry session
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
@@ -614,6 +615,7 @@ void Daily::Link_clicked(const QUrl &url)
 
         // Reload day
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="togglestagesession") { // Enable/Disable Sleep Stage session
         day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
@@ -622,6 +624,7 @@ void Daily::Link_clicked(const QUrl &url)
         if (!sess) return;
         sess->setEnabled(!sess->enabled());
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
     } else  if (code=="togglepositionsession") { // Enable/Disable Position session
         day=p_profile->GetDay(previous_date,MT_POSITION);
         if (!day) return;
@@ -629,6 +632,7 @@ void Daily::Link_clicked(const QUrl &url)
         if (!sess) return;
         sess->setEnabled(!sess->enabled());
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
     } else if (code=="cpap")  {
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (day) {
