@@ -1687,9 +1687,10 @@ void Daily::Load(QDate date)
     ui->eventsCombo->addItem(*icon_up_down, tr("10 of 10 Event Types"), 0); // Translation used only for spacing
     for (int i=0; i < available.size(); ++i) {
         ChannelID code = available.at(i);
+        int comboxBoxIndex = i+1;
         schema::Channel & chan = schema::channel[code];
         ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
-        ui->eventsCombo->setItemData(i, chan.fullname(), Qt::ToolTipRole);
+        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
     }
     setFlagText();
 
