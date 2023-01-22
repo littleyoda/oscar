@@ -299,7 +299,11 @@ const QString STR_OS_SPO2DropDuration = "SPO2DropDuration";
 const QString STR_OS_SPO2DropPercentage = "SPO2DropPercentage";
 const QString STR_OS_PulseChangeDuration = "PulseChangeDuration";
 const QString STR_OS_PulseChangeBPM = "PulseChangeBPM";
+
 const QString STR_OS_SkipOxiIntroScreen = "SkipOxiIntroScreen";
+const QString STR_OS_oxiDesaturationThreshold = "oxiDesaturationThreshold";
+const QString STR_OS_flagPulseAbove = "flagPulseAbove";
+const QString STR_OS_flagPulseBelow = "flagPulseBelow";
 
 
 // CPAPSettings Strings
@@ -489,6 +493,10 @@ class OxiSettings : public PrefSettings
         initPref(STR_OS_PulseChangeDuration, 8.0);
         initPref(STR_OS_PulseChangeBPM, 5.0);
         initPref(STR_OS_SkipOxiIntroScreen, false);
+
+        initPref(STR_OS_oxiDesaturationThreshold, 88);
+        initPref(STR_OS_flagPulseAbove, 130);
+        initPref(STR_OS_flagPulseBelow, 40);
     }
 
     bool oximetryEnabled() const { return getPref(STR_OS_EnableOximetry).toBool(); }
@@ -501,6 +509,10 @@ class OxiSettings : public PrefSettings
     double pulseChangeDuration() const { return getPref(STR_OS_PulseChangeDuration).toDouble(); }
     double pulseChangeBPM() const { return getPref(STR_OS_PulseChangeBPM).toDouble(); }
     bool skipOxiIntroScreen() const { return getPref(STR_OS_SkipOxiIntroScreen).toBool(); }
+
+    double  oxiDesaturationThreshold() const { return getPref(STR_OS_oxiDesaturationThreshold).toDouble(); }
+    double  flagPulseAbove() const { return getPref(STR_OS_flagPulseAbove).toDouble(); }
+    double  flagPulseBelow() const { return getPref(STR_OS_flagPulseBelow).toDouble(); }
 
 
     void setOximetryEnabled(bool enabled) { setPref(STR_OS_EnableOximetry, enabled); }
@@ -517,6 +529,9 @@ class OxiSettings : public PrefSettings
     void setPulseChangeDuration(double duration) {
         setPref(STR_OS_PulseChangeDuration, duration);
     }
+    void setOxiDesaturationThreshold(double value) { setPref(STR_OS_oxiDesaturationThreshold, value); }
+    void setFlagPulseAbove(double value) { setPref(STR_OS_flagPulseAbove, value); }
+    void setFlagPulseBelow(double value) { setPref(STR_OS_flagPulseBelow, value); }
 };
 
 /*! \class CPAPSettings

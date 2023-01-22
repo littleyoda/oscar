@@ -203,12 +203,9 @@ void init()
     // Oximetry
     schema::channel.add(GRP_OXI, new Channel(OXI_Pulse           = 0x1800, WAVEFORM,    MT_OXIMETER, SESSION, STR_GRAPH_Oxi_Pulse,
             QObject::tr("Pulse Rate"),                    QObject::tr("Heart rate in beats per minute"), QObject::tr("Pulse Rate"), STR_UNIT_BPM,     DEFAULT,    QColor("red")));
-    schema::channel[OXI_Pulse].setLowerThreshold(40);
-    schema::channel[OXI_Pulse].setUpperThreshold(130);
 
     schema::channel.add(GRP_OXI, new Channel(OXI_SPO2            = 0x1801, WAVEFORM,    MT_OXIMETER, SESSION, STR_GRAPH_Oxi_SPO2,
             QString("SpO2 %"), QObject::tr("Blood-oxygen saturation percentage"), QString("SpO2"),       STR_UNIT_Percentage,          DEFAULT,    QColor("blue")));
-    schema::channel[OXI_SPO2].setLowerThreshold(88);
 
     schema::channel.add(GRP_OXI, new Channel(OXI_Plethy          = 0x1802, WAVEFORM,    MT_OXIMETER, SESSION, STR_GRAPH_Oxi_Plethy,
             QObject::tr("Plethysomogram"), QObject::tr("An optical Photo-plethysomogram showing heart rhythm"), QObject::tr("Plethy"),     STR_UNIT_Hz,           DEFAULT,    QColor("#404040")));
