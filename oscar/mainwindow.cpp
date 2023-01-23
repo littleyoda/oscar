@@ -7,6 +7,10 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLED
+#include <test_macros.h>
+
+
 #include <QHostInfo>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -132,6 +136,7 @@ QString MainWindow::getMainWindowTitle()
 void MainWindow::SetupGUI()
 {
     setupRunning = true;
+
     setWindowTitle(getMainWindowTitle());
 
 #ifdef Q_OS_MAC
@@ -233,11 +238,17 @@ void MainWindow::SetupGUI()
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
 
+    bool oldState = ui->actionShowPersonalData->blockSignals(true);
     ui->actionShowPersonalData->setChecked(AppSetting->showPersonalData());
+    ui->actionShowPersonalData->blockSignals(oldState);
 
+    oldState = ui->actionPie_Chart->blockSignals(true);
     ui->actionPie_Chart->setChecked(AppSetting->showPieChart());
+    ui->actionPie_Chart->blockSignals(oldState);
 
+    oldState = ui->actionDaily_Calendar->blockSignals(true);
     ui->actionDaily_Calendar->setChecked(AppSetting->calendarVisible());
+    ui->actionDaily_Calendar->blockSignals(oldState);
 
     on_tabWidget_currentChanged(0);
 
