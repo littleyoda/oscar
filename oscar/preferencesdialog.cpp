@@ -820,11 +820,6 @@ bool PreferencesDialog::Save()
         }
     }
 
-    schema::channel[OXI_SPO2].setLowerThreshold(ui->oxiDesaturationThreshold->value());
-    schema::channel[OXI_Pulse].setLowerThreshold(ui->flagPulseBelow->value());
-    schema::channel[OXI_Pulse].setUpperThreshold(ui->flagPulseAbove->value());
-
-
     AppSetting->setUserEventPieChart(ui->showUserFlagsInPie->isChecked());
     profile->session->setLockSummarySessions(ui->LockSummarySessionSplitting->isChecked());
     profile->session->setWarnOnUntestedMachine(ui->warnOnUntestedMachine->isChecked());
@@ -986,6 +981,7 @@ bool PreferencesDialog::Save()
 
     p_pref->Save();
     profile->Save();
+    profile->refrehOxiChannelsPref();
 
     if (recompress_events) {
         mainwin->recompressEvents();

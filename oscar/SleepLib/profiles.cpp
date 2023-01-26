@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QString>
 #include <QDateTime>
 #include <QDir>
@@ -2101,7 +2104,7 @@ void Profile::loadChannels()
 
         if (chan->isNull()) {
             qDebug() << "loadChannels has no idea about channel" << name;
-            if (in.atEnd()) return;
+            if (in.atEnd()) break;
             continue;
         }
         chan->setEnabled(enabled);
@@ -2122,8 +2125,14 @@ void Profile::loadChannels()
         chan->setUpperThresholdColor(upperThresholdColor);
 
         chan->setShowInOverview(showOverview);
-        if (in.atEnd()) return;
+        if (in.atEnd()) break;
     }
-
     f.close();
+    refrehOxiChannelsPref();
 }
+
+void Profile::refrehOxiChannelsPref() {
+    schema::channel[OXI_Pulse].setLowerThreshold(oxi->flagPulseBelow());
+    schema::channel[OXI_Pulse].setUpperThreshold(oxi->flagPulseAbove());
+    schema::channel[OXI_SPO2].setLowerThreshold(oxi->oxiDesaturationThreshold());
+};

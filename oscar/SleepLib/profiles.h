@@ -216,6 +216,7 @@ class Profile : public Preferences
 
     void loadChannels();
     void saveChannels();
+    void refrehOxiChannelsPref();
 
 
     bool is_first_day;
