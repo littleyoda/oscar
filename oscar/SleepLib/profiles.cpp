@@ -2128,10 +2128,10 @@ void Profile::loadChannels()
         if (in.atEnd()) break;
     }
     f.close();
-    refrehOxiChannelsPref();
+    resetOxiChannelPref();
 }
 
-void Profile::refrehOxiChannelsPref() {
+void Profile::resetOxiChannelPref() {
     schema::channel[OXI_Pulse].setLowerThreshold(oxi->flagPulseBelow());
     schema::channel[OXI_Pulse].setUpperThreshold(oxi->flagPulseAbove());
     schema::channel[OXI_SPO2].setLowerThreshold(oxi->oxiDesaturationThreshold());

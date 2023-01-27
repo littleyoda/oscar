@@ -1608,6 +1608,9 @@ as this is the only value available on summary-only days.</string>
                 </item>
                 <item row="1" column="1">
                  <widget class="QSpinBox" name="flagPulseAbove">
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
                   <property name="suffix">
                    <string> bpm</string>
                   </property>
@@ -1672,7 +1675,7 @@ as this is the only value available on summary-only days.</string>
                  </widget>
                 </item>
                 <item row="1" column="2">
-                 <widget class="QDoubleSpinBox" name="spo2DropTime">
+                 <widget class="QDoubleSpinBox" name="spo2DropDuration">
                   <property name="toolTip">
                    <string>Minimum duration of drop in oxygen saturation</string>
                   </property>
@@ -1701,7 +1704,7 @@ as this is the only value available on summary-only days.</string>
                  </widget>
                 </item>
                 <item row="3" column="2">
-                 <widget class="QDoubleSpinBox" name="pulseChangeTime">
+                 <widget class="QDoubleSpinBox" name="pulseChangeDuration">
                   <property name="toolTip">
                    <string>Minimum duration of pulse change event.</string>
                   </property>
@@ -1757,6 +1760,19 @@ as this is the only value available on summary-only days.</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="4" column="0" >
+              <widget class="QPushButton" name="resetOxiMetryDefaults">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Reset &amp;Defaults</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

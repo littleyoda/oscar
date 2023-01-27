@@ -93,6 +93,8 @@ class PreferencesDialog : public QDialog
 
     void on_calculateUnintentionalLeaks_toggled(bool arg1);
 
+    void on_resetOxiMetryDefaults_clicked();
+
 private:
     void InitChanInfo();
     void InitWaveInfo();

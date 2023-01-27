@@ -136,9 +136,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->flagPulseBelow->setValue(profile->oxi->flagPulseBelow());
 
     ui->spo2Drop->setValue(profile->oxi->spO2DropPercentage());
-    ui->spo2DropTime->setValue(profile->oxi->spO2DropDuration());
+    ui->spo2DropDuration->setValue(profile->oxi->spO2DropDuration());
     ui->pulseChange->setValue(profile->oxi->pulseChangeBPM());
-    ui->pulseChangeTime->setValue(profile->oxi->pulseChangeDuration());
+    ui->pulseChangeDuration->setValue(profile->oxi->pulseChangeDuration());
     ui->oxiDiscardThreshold->setValue(profile->oxi->oxiDiscardThreshold());
 
     ui->eventIndexCombo->setCurrentIndex(profile->general->calculateRDI() ? 1 : 0);
@@ -889,9 +889,9 @@ bool PreferencesDialog::Save()
     #endif
 
     profile->oxi->setSpO2DropPercentage(ui->spo2Drop->value());
-    profile->oxi->setSpO2DropDuration(ui->spo2DropTime->value());
+    profile->oxi->setSpO2DropDuration(ui->spo2DropDuration->value());
     profile->oxi->setPulseChangeBPM(ui->pulseChange->value());
-    profile->oxi->setPulseChangeDuration(ui->pulseChangeTime->value());
+    profile->oxi->setPulseChangeDuration(ui->pulseChangeDuration->value());
     profile->oxi->setOxiDiscardThreshold(ui->oxiDiscardThreshold->value());
 
     profile->oxi->setOxiDesaturationThreshold(ui->oxiDesaturationThreshold->value());
@@ -981,7 +981,7 @@ bool PreferencesDialog::Save()
 
     p_pref->Save();
     profile->Save();
-    profile->refrehOxiChannelsPref();
+    profile->resetOxiChannelPref();
 
     if (recompress_events) {
         mainwin->recompressEvents();
@@ -1211,6 +1211,42 @@ void PreferencesDialog::on_resetChannelDefaults_clicked()
         saveWaveInfo();
         InitChanInfo();
     }
+}
+
+void PreferencesDialog::on_resetOxiMetryDefaults_clicked()
+{
+
+    if (QMessageBox::question(this, STR_MessageBox_Warning, QObject::tr("Are you sure you want to reset all your oximetry settings to defaults?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+
+            // reset ui with defaul values
+            ui->spo2Drop->setValue(           profile->oxi->defaultValue_OS_SPO2DropPercentage);
+            ui->spo2DropDuration->setValue(   profile->oxi->defaultValue_OS_SPO2DropDuration);
+            ui->pulseChange->setValue(        profile->oxi->defaultValue_OS_PulseChangeBPM);
+            ui->pulseChangeDuration->setValue(profile->oxi->defaultValue_OS_PulseChangeDuration);
+
+            ui->oxiDiscardThreshold->setValue(profile->oxi->defaultValue_OS_OxiDiscardThreshold);
+            ui->oxiDesaturationThreshold->setValue(  profile->oxi->defaultValue_OS_oxiDesaturationThreshold);
+            ui->flagPulseAbove->setValue(     profile->oxi->defaultValue_OS_flagPulseAbove );
+            ui->flagPulseBelow->setValue(     profile->oxi->defaultValue_OS_flagPulseBelow );
+
+            if (Save() ) {
+                // comment accept out to return to the preference tab
+                // other wise the preference tab will close and return
+                accept();
+            }
+        } else {
+            // restore values changed
+            ui->spo2Drop->setValue(profile->oxi->spO2DropPercentage());
+            ui->spo2DropDuration->setValue(profile->oxi->spO2DropDuration());
+            ui->pulseChange->setValue(profile->oxi->pulseChangeBPM());
+            ui->pulseChangeDuration->setValue(profile->oxi->pulseChangeDuration());
+
+            ui->oxiDiscardThreshold->setValue(profile->oxi->oxiDiscardThreshold());
+            ui->oxiDesaturationThreshold->setValue(profile->oxi->defaultValue_OS_oxiDesaturationThreshold);
+            ui->flagPulseAbove->setValue( profile->oxi->defaultValue_OS_flagPulseAbove );
+            ui->flagPulseBelow->setValue(  profile->oxi->defaultValue_OS_flagPulseBelow );
+        }
+
 }
 
 void PreferencesDialog::on_createSDBackups_clicked(bool checked)

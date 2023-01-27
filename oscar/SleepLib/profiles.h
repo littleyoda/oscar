@@ -216,7 +216,7 @@ class Profile : public Preferences
 
     void loadChannels();
     void saveChannels();
-    void refrehOxiChannelsPref();
+    void resetOxiChannelPref();
 
 
     bool is_first_day;
@@ -295,16 +295,16 @@ const QString STR_OS_EnableOximetry = "EnableOximetry";
 const QString STR_OS_DefaultDevice = "DefaultOxiDevice";
 const QString STR_OS_SyncOximeterClock = "SyncOximeterClock";
 const QString STR_OS_OximeterType = "OximeterType";
-const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
+const QString STR_OS_SkipOxiIntroScreen = "SkipOxiIntroScreen";
+
 const QString STR_OS_SPO2DropDuration = "SPO2DropDuration";
 const QString STR_OS_SPO2DropPercentage = "SPO2DropPercentage";
 const QString STR_OS_PulseChangeDuration = "PulseChangeDuration";
 const QString STR_OS_PulseChangeBPM = "PulseChangeBPM";
-
-const QString STR_OS_SkipOxiIntroScreen = "SkipOxiIntroScreen";
 const QString STR_OS_oxiDesaturationThreshold = "oxiDesaturationThreshold";
 const QString STR_OS_flagPulseAbove = "flagPulseAbove";
 const QString STR_OS_flagPulseBelow = "flagPulseBelow";
+const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
 
 
 // CPAPSettings Strings
@@ -484,37 +484,52 @@ class OxiSettings : public PrefSettings
     OxiSettings(Profile *profile)
       : PrefSettings(profile)
     {
-        initPref(STR_OS_EnableOximetry, false);
+
+        // Intialized non-user changable item - set during import of data?
+        initPref(STR_OS_EnableOximetry, false); 
         initPref(STR_OS_DefaultDevice, QString());
         initPref(STR_OS_SyncOximeterClock, true);
         initPref(STR_OS_OximeterType, 0);
-        initPref(STR_OS_OxiDiscardThreshold, 0.0);
-        initPref(STR_OS_SPO2DropDuration, 8.0);
-        initPref(STR_OS_SPO2DropPercentage, 3.0);
-        initPref(STR_OS_PulseChangeDuration, 8.0);
-        initPref(STR_OS_PulseChangeBPM, 5.0);
-        initPref(STR_OS_SkipOxiIntroScreen, false);
+        initPref(STR_OS_SkipOxiIntroScreen, false); 
 
-        initPref(STR_OS_oxiDesaturationThreshold, 88);
-        initPref(STR_OS_flagPulseAbove, 130);
-        initPref(STR_OS_flagPulseBelow, 40);
+        // Initialize Changeable via GUI parameters with default values
+        initPref(STR_OS_SPO2DropDuration, defaultValue_OS_SPO2DropDuration);
+        initPref(STR_OS_SPO2DropPercentage, defaultValue_OS_SPO2DropPercentage);
+        initPref(STR_OS_PulseChangeDuration, defaultValue_OS_PulseChangeDuration);
+        initPref(STR_OS_PulseChangeBPM, defaultValue_OS_PulseChangeBPM);
+
+        initPref(STR_OS_OxiDiscardThreshold, defaultValue_OS_OxiDiscardThreshold);
+        initPref(STR_OS_oxiDesaturationThreshold, defaultValue_OS_oxiDesaturationThreshold);
+        initPref(STR_OS_flagPulseAbove, defaultValue_OS_flagPulseAbove);
+        initPref(STR_OS_flagPulseBelow, defaultValue_OS_flagPulseBelow);
+
     }
+
+    const double defaultValue_OS_SPO2DropDuration = 8.0;
+    const double defaultValue_OS_SPO2DropPercentage = 3.0;
+    const double defaultValue_OS_PulseChangeDuration = 8.0;
+    const double defaultValue_OS_PulseChangeBPM = 5.0;
+
+    const double defaultValue_OS_OxiDiscardThreshold = 0.0;
+    const double defaultValue_OS_oxiDesaturationThreshold = 88.0;
+    const double defaultValue_OS_flagPulseAbove = 99.0;
+    const double defaultValue_OS_flagPulseBelow = 40.0;
 
     bool oximetryEnabled() const { return getPref(STR_OS_EnableOximetry).toBool(); }
     QString defaultDevice() const { return getPref(STR_OS_DefaultDevice).toString(); }
     bool syncOximeterClock() const { return getPref(STR_OS_SyncOximeterClock).toBool(); }
     int oximeterType() const { return getPref(STR_OS_OximeterType).toInt(); }
-    double oxiDiscardThreshold() const { return getPref(STR_OS_OxiDiscardThreshold).toDouble(); }
+    bool skipOxiIntroScreen() const { return getPref(STR_OS_SkipOxiIntroScreen).toBool(); }
+
     double spO2DropDuration() const { return getPref(STR_OS_SPO2DropDuration).toDouble(); }
     double spO2DropPercentage() const { return getPref(STR_OS_SPO2DropPercentage).toDouble(); }
     double pulseChangeDuration() const { return getPref(STR_OS_PulseChangeDuration).toDouble(); }
     double pulseChangeBPM() const { return getPref(STR_OS_PulseChangeBPM).toDouble(); }
-    bool skipOxiIntroScreen() const { return getPref(STR_OS_SkipOxiIntroScreen).toBool(); }
 
+    double oxiDiscardThreshold() const { return getPref(STR_OS_OxiDiscardThreshold).toDouble(); }
     double  oxiDesaturationThreshold() const { return getPref(STR_OS_oxiDesaturationThreshold).toDouble(); }
     double  flagPulseAbove() const { return getPref(STR_OS_flagPulseAbove).toDouble(); }
     double  flagPulseBelow() const { return getPref(STR_OS_flagPulseBelow).toDouble(); }
-
 
     void setOximetryEnabled(bool enabled) { setPref(STR_OS_EnableOximetry, enabled); }
     void setDefaultDevice(QString name) { setPref(STR_OS_DefaultDevice, name); }
