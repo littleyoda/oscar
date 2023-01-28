@@ -541,6 +541,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     ui->JournalNotes->installEventFilter(this);
 //    qDebug() << "Finished making new Daily object";
 //    sleep(3);
+    saveGraphLayoutSettings=nullptr;
 }
 
 Daily::~Daily()
@@ -563,6 +564,7 @@ Daily::~Daily()
     delete ui;
     delete icon_on;
     delete icon_off;
+    if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
 }
 
 void Daily::showEvent(QShowEvent *)
@@ -600,6 +602,7 @@ void Daily::Link_clicked(const QUrl &url)
 
         // Reload day
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="toggleoxisession") { // Enable/Disable Oximetry session
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
@@ -612,6 +615,7 @@ void Daily::Link_clicked(const QUrl &url)
 
         // Reload day
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
   //      webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-i);
     } else  if (code=="togglestagesession") { // Enable/Disable Sleep Stage session
         day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
@@ -620,6 +624,7 @@ void Daily::Link_clicked(const QUrl &url)
         if (!sess) return;
         sess->setEnabled(!sess->enabled());
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
     } else  if (code=="togglepositionsession") { // Enable/Disable Position session
         day=p_profile->GetDay(previous_date,MT_POSITION);
         if (!day) return;
@@ -627,6 +632,7 @@ void Daily::Link_clicked(const QUrl &url)
         if (!sess) return;
         sess->setEnabled(!sess->enabled());
         LoadDate(previous_date);
+        mainwin->getOverview()->graphView()->dataChanged();
     } else if (code=="cpap")  {
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (day) {
@@ -1681,9 +1687,10 @@ void Daily::Load(QDate date)
     ui->eventsCombo->addItem(*icon_up_down, tr("10 of 10 Event Types"), 0); // Translation used only for spacing
     for (int i=0; i < available.size(); ++i) {
         ChannelID code = available.at(i);
+        int comboxBoxIndex = i+1;
         schema::Channel & chan = schema::channel[code];
         ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
-        ui->eventsCombo->setItemData(i, chan.fullname(), Qt::ToolTipRole);
+        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
     }
     setFlagText();
 
@@ -2849,3 +2856,13 @@ void Daily::on_splitter_2_splitterMoved(int, int)
 //  qDebug() << "Left Panel width set to " << size;
     AppSetting->setDailyPanelWidth(size);
 }
+
+void Daily::on_layout_clicked() {
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("daily",this);
+    }
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->menu(GraphView);
+    }
+}
+

@@ -17,10 +17,10 @@ When only these macos are used then debugging is disabled.
 SO for production code rename TEST_MACROS_ENABLED to TEST_MACROS_ENABLEDoff
 
 ###########################################
-The the following to source cpp files 
+The the following to source cpp files
 to turn on the debug macros for use.
 
-#define TEST_MACROS_ENABLED 
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 To turn off the the test macros.
@@ -38,11 +38,13 @@ To turn off the the test macros.
 #include <QRegularExpression>
 #include <QFileInfo>
 
-#define DEBUGQ  qDebug().noquote()
-#define DEBUGL  DEBUGQ	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
-#define DEBUGF  DEBUGQ	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-#define DEBUGT  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
-#define DEBUGTF DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGQ   qDebug().noquote()
+#define DEBUGW   qWarning().noquote()
+#define DEBUGL   DEBUGQ	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
+#define DEBUGF   DEBUGQ	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGFW  DEBUGW	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGT   DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
+#define DEBUGTF  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 
                                     // Do nothing
 #define Z( EXPRESSION ) 			/* comment out display of variable */
@@ -68,7 +70,7 @@ To turn off the the test macros.
 #elif __GNUC_VERSION__
     #define COMPILER O(QString("GNUC++:%1").arg("GNUC").arg(__GNUC_VERSION__)) ;
 #else
-    #define COMPILER 
+    #define COMPILER
 #endif
 
 
@@ -81,10 +83,10 @@ To turn off the the test macros.
 //12361: Debug: "gGraphView[572]popoutGraph"
 
 //example:  DEBUGT;
-//12645: Debug: "06:00:18.284 gGraphView[622]" 
+//12645: Debug: "06:00:18.284 gGraphView[622]"
 
 //example:  DEBUGTF;
-//12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph" 
+//12645: Debug: "06:00:18.284 gGraphView[622]popoutGraph"
 
 //example:  DEBUGF Q(name) Q(title) QQ("UNITS",units) Q(height) Q(group);
 //00791: Debug: "gGraph[137]gGraph" name: "RespRate" title: "Respiratory Rate" "UNITS": "Rate of breaths per minute" height: 180 group: 0
@@ -99,9 +101,11 @@ To turn off the the test macros.
 #else
 // Turn debugging off.  macros expands to white space
 
-#define DEBUGQ 
+#define DEBUGQ
+#define DEBUGW
 #define DEBUGL
 #define DEBUGF
+#define DEBUGFW
 #define DEBUGT
 #define DEBUGTF
 
@@ -114,7 +118,7 @@ To turn off the the test macros.
 #define FULLNAME( id)
 #define DATE( XX )
 #define DATETIME( XX )
-#define COMPILER 
+#define COMPILER
 
 #endif
 #endif

@@ -260,6 +260,20 @@ QToolButton:pressed {
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="layout">
+        <property name="text">
+         <string>Layout</string>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+        </property>
+        <property name="toolTip">
+         <string>Save and Restore Graph Layout Settings</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="graphCombo">
         <property name="toolTip">
          <string>Drop down to see list of graphs to switch on/off.</string>

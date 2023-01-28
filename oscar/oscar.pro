@@ -255,6 +255,8 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
+    saveGraphLayoutSettings.cpp \
+    overview.cpp \
     common_gui.cpp \
     cprogressbar.cpp \
     daily.cpp \
@@ -262,7 +264,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     newprofile.cpp \
-    overview.cpp \
     preferencesdialog.cpp \
 #    psettings.cpp \
     reports.cpp \
@@ -361,13 +362,14 @@ QMAKE_EXTRA_COMPILERS += optimize
 
 HEADERS  += \
     checkupdates.h \
+    saveGraphLayoutSettings.h \
+    overview.h \
     common_gui.h \
     cprogressbar.h \
     daily.h \
     exportcsv.h \
     mainwindow.h \
     newprofile.h \
-    overview.h \
     preferencesdialog.h \
 #    psettings.h \
     reports.h \

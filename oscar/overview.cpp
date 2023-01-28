@@ -171,6 +171,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     connect(GraphView, SIGNAL(updateRange(double,double)), this, SLOT(on_RangeUpdate(double,double)));
     connect(GraphView, SIGNAL(GraphsChanged()), this, SLOT(updateGraphCombo()));
     connect(GraphView, SIGNAL(XBoundsChanged(qint64 ,qint64)), this, SLOT(on_XBoundsChanged(qint64 ,qint64)));
+    saveGraphLayoutSettings=nullptr;
 }
 
 Overview::~Overview()
@@ -192,6 +193,7 @@ Overview::~Overview()
     delete icon_off ;
     delete icon_up_down ;
     delete icon_warning ;
+    if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
 }
 
 void Overview::ResetFont()
@@ -308,6 +310,11 @@ void Overview::CreateAllGraphs() {
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
             } else if (chan->type() == schema::WAVEFORM) {
+                if ((code==CPAP_AHI)||(code==CPAP_Pressure) ) {
+                    DEBUGF O("SKIPPING") NAME(code) Q(code);
+                    //skip if channel is for AHI.
+                    continue;
+                }
                 sc= new gSummaryChart(code, chan->machtype());
                 G->AddLayer(sc);
                 chartsToBeMonitored.insert(sc,G);
@@ -932,4 +939,15 @@ void Overview::on_toggleVisibility_clicked(bool checked)
     GraphView->updateScale();
     GraphView->redraw();
 }
+
+void Overview::on_layout_clicked() {
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("overview",this);
+    }
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->menu(GraphView);
+    }
+}
+
+
 

@@ -130,9 +130,10 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->showLeakRedline->setChecked(profile->cpap->showLeakRedline());
     ui->leakRedlineSpinbox->setValue(profile->cpap->leakRedline());
 
-    ui->oxiDesaturationThreshold->setValue(schema::channel[OXI_SPO2].lowerThreshold());
-    ui->flagPulseAbove->setValue(schema::channel[OXI_Pulse].upperThreshold());
-    ui->flagPulseBelow->setValue(schema::channel[OXI_Pulse].lowerThreshold());
+    //change initialization from hard coded in schema to profile data.
+    ui->oxiDesaturationThreshold->setValue(profile->oxi->oxiDesaturationThreshold());
+    ui->flagPulseAbove->setValue(profile->oxi->flagPulseAbove());
+    ui->flagPulseBelow->setValue(profile->oxi->flagPulseBelow());
 
     ui->spo2Drop->setValue(profile->oxi->spO2DropPercentage());
     ui->spo2DropTime->setValue(profile->oxi->spO2DropDuration());
@@ -819,11 +820,6 @@ bool PreferencesDialog::Save()
         }
     }
 
-    schema::channel[OXI_SPO2].setLowerThreshold(ui->oxiDesaturationThreshold->value());
-    schema::channel[OXI_Pulse].setLowerThreshold(ui->flagPulseBelow->value());
-    schema::channel[OXI_Pulse].setUpperThreshold(ui->flagPulseAbove->value());
-
-
     AppSetting->setUserEventPieChart(ui->showUserFlagsInPie->isChecked());
     profile->session->setLockSummarySessions(ui->LockSummarySessionSplitting->isChecked());
     profile->session->setWarnOnUntestedMachine(ui->warnOnUntestedMachine->isChecked());
@@ -897,6 +893,10 @@ bool PreferencesDialog::Save()
     profile->oxi->setPulseChangeBPM(ui->pulseChange->value());
     profile->oxi->setPulseChangeDuration(ui->pulseChangeTime->value());
     profile->oxi->setOxiDiscardThreshold(ui->oxiDiscardThreshold->value());
+
+    profile->oxi->setOxiDesaturationThreshold(ui->oxiDesaturationThreshold->value());
+    profile->oxi->setFlagPulseAbove(ui->flagPulseAbove->value());
+    profile->oxi->setFlagPulseBelow(ui->flagPulseBelow->value());
 
     profile->cpap->setAHIWindow(ui->ahiGraphWindowSize->value());
     profile->cpap->setAHIReset(ui->ahiGraphZeroReset->isChecked());
@@ -981,6 +981,7 @@ bool PreferencesDialog::Save()
 
     p_pref->Save();
     profile->Save();
+    profile->refrehOxiChannelsPref();
 
     if (recompress_events) {
         mainwin->recompressEvents();
