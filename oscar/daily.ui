@@ -1402,6 +1402,11 @@ QSlider::handle:horizontal  {
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="searchTab">
+        <attribute name="title">
+         <string>Search</string>
+        </attribute>
+       </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="layoutWidget">

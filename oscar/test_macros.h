@@ -56,8 +56,10 @@ To turn off the the test macros.
 //#define Q( VALUE ) 			        <<  QString("%1:%2").arg( ""  #VALUE).arg(VALUE)
 //#define QQ( TEXT , EXPRESSION) 		<<  QString("%1:%2").arg( ""  #TEXT).arg(VALUE)
 
-#define NAME( SCHEMACODE ) 			<<  schema::channel[ SCHEMACODE  ].label()
-#define FULLNAME( SCHEMACODE ) 		<<  schema::channel[ SCHEMAcODE  ].fullname()
+//#define NAME( SCHEMACODE ) 			<<  schema::channel[ SCHEMACODE  ].label()
+#define NAME( SCHEMACODE )           <<  QString(("%1:0x%2")).arg(schema::channel[ SCHEMACODE  ].label()).arg( QString::number(SCHEMACODE,16).toUpper() )
+#define FULLNAME( SCHEMACODE ) 		 <<  schema::channel[ SCHEMACODE  ].fullname()
+
 
                                     //display the date of an epoch time stamp "qint64"
 #define DATE( EPOCH ) 			<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy")
@@ -120,6 +122,48 @@ To turn off the the test macros.
 #define DATETIME( XX )
 #define COMPILER
 
-#endif
-#endif
+#endif  // TEST_MACROS_ENABLED
+#ifdef TEST_ROUTIMES_ENABLED
+This is prototype 
+class testRoutines : public QWidget
+{
+Q_OBJECT     
+public:
+typedef enum {debugDisplay = 0, returnQTextEdit} findClassMode;
+QWidget* findQTextEditdisplaywidgets(QWidget* widget,findClassMode mode=findClassMode::debugDisplay,QString name="",int recurseCount=0) {
+         return findQTextEditdisplaywidgets(widget,findClassMode::debugDisplay,"",0);
+}
+private:
+QWidget* findQTextEditdisplaywidgets(QWidget* widget,findClassMode mode,QString objectName,int recurseCount) {
+        QString indent;
+        if (!widget) return nullptr;
+        if (mode==debugDisplay) {
+            if (recurseCount==0) {
+                DEBUGF O("===================================================");
+            }
+            indent = QString("%1").arg("",(recurseCount*4),QLatin1Char(' '));
+        }
+        recurseCount++;
+        if (recurseCount>10) return nullptr;
+        if (mode==debugDisplay) {
+            DEBUGF O(indent) O(widget) ;
+        } else if (mode==returnQTextEdit){
+            if(QTextEdit* te = dynamic_cast<QTextEdit*>(widget)) {
+                return widget ;
+            };
+        }
+        const QList<QObject*> list = widget->children();
+        for (int i = 0; i < list.size(); ++i) {
+            QWidget *next_widget = dynamic_cast<QWidget*>(list.at(i));
+            if (!next_widget) continue;
+            QWidget* found=findQTextEditdisplaywidgets(next_widget,mode,objectName,recurseCount);
+            if (found) return found;
+        }
+        if (mode==debugDisplay && recurseCount==1) DEBUGF O("===================================================");
+        return nullptr;
+    }
+}
+#endif  // TEST_ROUTIMES_ENABLED
+
+#endif  // TEST_MACROS_ENABLED_ONCE
 

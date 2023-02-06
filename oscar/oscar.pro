@@ -255,11 +255,12 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
+    dailySearchTab.cpp \
+    daily.cpp \
     saveGraphLayoutSettings.cpp \
     overview.cpp \
     common_gui.cpp \
     cprogressbar.cpp \
-    daily.cpp \
     exportcsv.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -362,11 +363,12 @@ QMAKE_EXTRA_COMPILERS += optimize
 
 HEADERS  += \
     checkupdates.h \
+    dailySearchTab.h \
+    daily.h \
     saveGraphLayoutSettings.h \
     overview.h \
     common_gui.h \
     cprogressbar.h \
-    daily.h \
     exportcsv.h \
     mainwindow.h \
     newprofile.h \

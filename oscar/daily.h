@@ -36,6 +36,7 @@ namespace Ui {
 }
 
 class MainWindow;
+class DailySearchTab;
 
 
 /*! \class Daily
@@ -315,9 +316,10 @@ private:
 
     void setGraphText();
     void setFlagText();
+    DailySearchTab* dailySearchTab = nullptr;
 
 
-    QString getLeftAHI (Day * day);
+    //QString getLeftAHI (Day * day);
     QString getSessionInformation(Day *);
     QString getMachineSettings(Day *);
     QString getStatisticsInfo(Day *);
@@ -325,7 +327,7 @@ private:
     QString getOximeterInformation(Day *);
     QString getEventBreakdown(Day *);
     QString getPieChart(float values, Day *);
-    QString getIndicesAndPie(Day *, float hours, bool isBrick);
+    //QString getIndicesAndPie(Day *, float hours, bool isBrick);
     QString getSleepTime(Day *);
     QString getLeftSidebar (bool honorPieChart);
 

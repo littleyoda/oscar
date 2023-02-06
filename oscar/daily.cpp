@@ -29,6 +29,7 @@
 
 #include "daily.h"
 #include "ui_daily.h"
+#include "dailySearchTab.h"
 
 #include "common_gui.h"
 #include "SleepLib/profiles.h"
@@ -542,6 +543,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 //    qDebug() << "Finished making new Daily object";
 //    sleep(3);
     saveGraphLayoutSettings=nullptr;
+    dailySearchTab = new DailySearchTab(this,ui->searchTab,ui->tabWidget);
 }
 
 Daily::~Daily()
@@ -565,6 +567,7 @@ Daily::~Daily()
     delete icon_on;
     delete icon_off;
     if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
+    delete dailySearchTab;
 }
 
 void Daily::showEvent(QShowEvent *)
