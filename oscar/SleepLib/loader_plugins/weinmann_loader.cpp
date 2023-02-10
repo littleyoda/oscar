@@ -152,7 +152,7 @@ int WeinmannLoader::Open(const QString & dirpath)
 
     unsigned char *p = weekco;
     for (int c=0; c < wccount; ++c) {
-        int year = QString().sprintf("%02i%02i", p[0], p[1]).toInt();
+        int year = QString().asprintf("%02i%02i", p[0], p[1]).toInt();
         int month = p[2];
         int day = p[3];
         int hour = p[5];
@@ -206,7 +206,7 @@ int WeinmannLoader::Open(const QString & dirpath)
 
     //int c = index[DayComplianceCount];
     for (int i=0; i < 5; i++) {
-        int year = QString().sprintf("%02i%02i", p[0], p[1]).toInt();
+        int year = QString().asprintf("%02i%02i", p[0], p[1]).toInt();
         int month = p[2];
         int day = p[3];
         int hour = p[5];
@@ -250,7 +250,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         sess->really_set_last(qint64(ts+dur) * 1000L);
         sessions[ts] = sess;
 
-//        qDebug() << date << ts << dur << QString().sprintf("%02i:%02i:%02i", dur / 3600, dur/60 % 60, dur % 60);
+//        qDebug() << date << ts << dur << QString().asprintf("%02i:%02i:%02i", dur / 3600, dur/60 % 60, dur % 60);
 
         p += 0xd6;
     }

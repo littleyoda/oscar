@@ -45,7 +45,7 @@ DailySearchTab::DailySearchTab(Daily* daily , QWidget* searchTabWidget  , QTabWi
 {
     icon_on = new QIcon(":/icons/session-on.png");
     icon_off = new QIcon(":/icons/session-off.png");
-    
+
 
     #if 0
     // method of find the daily tabWidgets works for english.

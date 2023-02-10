@@ -296,7 +296,7 @@ void OximeterImport::on_directImportButton_clicked()
        //   item->setData(Qt::UserRole+2, duration);
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 
-            item = new QTableWidgetItem(QString(). sprintf("%02i:%02i:%02i", h,m,s));
+            item = new QTableWidgetItem( QString().asprintf("%02i:%02i:%02i", h,m,s));
             ui->tableOxiSessions->setItem(i, 1, item);
             item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 
@@ -740,17 +740,17 @@ void OximeterImport::updateLiveDisplay()
         pulse = (*(oximodule->oxirec))[size].pulse;
         spo2 = (*(oximodule->oxirec))[size].spo2;
         if (pulse > 0) {
-            ui->pulseDisplay->display(QString().sprintf("%3i", pulse));
+            ui->pulseDisplay->display(QString().asprintf("%3i", pulse));
         } else {
             ui->pulseDisplay->display("---");
         }
         if (spo2 > 0) {
-            ui->spo2Display->display(QString().sprintf("%2i", spo2));
+            ui->spo2Display->display(QString().asprintf("%2i", spo2));
         } else {
             ui->spo2Display->display("--");
         }
 
-        ui->lcdDuration->display(QString().sprintf("%02i:%02i:%02i",hours, minutes, seconds));
+        ui->lcdDuration->display(QString().asprintf("%02i:%02i:%02i",hours, minutes, seconds));
 
     }
 }
@@ -1089,7 +1089,7 @@ void OximeterImport::chooseSession()
         int  m = (duration / 60) % 60;
         int  s = duration % 60;
  
-        item = new QTableWidgetItem(QString(). sprintf("%02i:%02i:%02i", h,m,s));
+        item = new QTableWidgetItem( QString().asprintf("%02i:%02i:%02i", h,m,s));
         ui->tableOxiSessions->setItem(row, 1, item);
         item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 

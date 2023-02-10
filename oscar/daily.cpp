@@ -1445,7 +1445,7 @@ QString Daily::getStatisticsInfo(Day * day)
             int s = ttia % 60;
             if (ttia > 0) {
                 html+="<tr><td colspan=3 align='left' bgcolor='white'><b>"+tr("Total time in apnea") +
-                       QString("</b></td><td colspan=2 bgcolor='white'>%1</td></tr>").arg(QString().sprintf("%02i:%02i:%02i",h,m,s));
+                       QString("</b></td><td colspan=2 bgcolor='white'>%1</td></tr>").arg(QString().asprintf("%02i:%02i:%02i",h,m,s));
             }
 
         }
@@ -1517,7 +1517,7 @@ QString Daily::getSleepTime(Day * day)
             .arg(date.date().toString(Qt::SystemLocaleShortDate))
             .arg(date.toString("HH:mm:ss"))
             .arg(date2.toString("HH:mm:ss"))
-            .arg(QString().sprintf("%02i:%02i:%02i",h,m,s));
+            .arg(QString().asprintf("%02i:%02i:%02i",h,m,s));
     html+="</table>\n";
 //    html+="<hr/>";
 

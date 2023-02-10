@@ -83,7 +83,7 @@ void gTTIAChart::populate(Day *day, int idx)
     int h = ttia / 3600;
     int m = int(ttia) / 60 % 60;
     int s = int(ttia) % 60;
-    slices.append(SummaryChartSlice(&calcitems[0], ttia / 60.0, ttia / 60.0, QObject::tr("\nTTIA: %1").arg(QString().sprintf("%02i:%02i:%02i",h,m,s)), QColor(255,147,150)));
+    slices.append(SummaryChartSlice(&calcitems[0], ttia / 60.0, ttia / 60.0, QObject::tr("\nTTIA: %1").arg( QString().asprintf("%02i:%02i:%02i",h,m,s)) , QColor(255,147,150)));
 }
 
 QString gTTIAChart::tooltipData(Day *, int idx)

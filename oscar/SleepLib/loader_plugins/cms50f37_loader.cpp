@@ -448,9 +448,9 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
             // COMMAND_GET_SESSION_TIME --- the date part
         case 0x07: // 7,80,80,80,94,8e,88,92
 
-            year = QString().sprintf("%02i%02i",buffer.at(idx+4), buffer.at(idx+5)).toInt();
-            month = QString().sprintf("%02i", buffer.at(idx+6)).toInt();
-            day = QString().sprintf("%02i", buffer.at(idx+7)).toInt();
+            year = QString().asprintf("%02i%02i",buffer.at(idx+4), buffer.at(idx+5)).toInt();
+            month = QString().asprintf("%02i", buffer.at(idx+6)).toInt();
+            day = QString().asprintf("%02i", buffer.at(idx+7)).toInt();
 
             if ( year == 0 ) {
                 imp_date = QDate::currentDate();
@@ -503,7 +503,7 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
 
             // COMMAND_GET_SESSION_TIME
         case 0x12: // 12,80,80,80,82,a6,92,80
-            tmpstr = QString().sprintf("%02i:%02i:%02i",buffer.at(idx+4), buffer.at(idx+5), buffer.at(idx+6));
+            tmpstr = QString().asprintf("%02i:%02i:%02i",buffer.at(idx+4), buffer.at(idx+5), buffer.at(idx+6));
             imp_time = QTime::fromString(tmpstr, "HH:mm:ss");
             qDebug() << "cms50f37 - pB: tmpStr:" << tmpstr << " impTime: " << imp_time;
 
@@ -640,7 +640,7 @@ void CMS50F37Loader::sendCommand(quint8 c)
 
     QString out;
     for (int i=0;i < 9;i++) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString().asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -656,7 +656,7 @@ void CMS50F37Loader::sendCommand(quint8 c, quint8 c2)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString().asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -673,7 +673,7 @@ void CMS50F37Loader::eraseSession(int user, int session)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString().asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Erase Session: Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -711,7 +711,7 @@ void CMS50F37Loader::setDeviceID(const QString & newid)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString().asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - setDeviceID: Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {

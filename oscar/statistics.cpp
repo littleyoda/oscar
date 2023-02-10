@@ -48,7 +48,7 @@ QString formatTime(float time)
     int seconds = time * 3600.0;
     int minutes = (seconds / 60) % 60;
     //seconds %= 60;
-    return QString().sprintf("%02i:%02i", hours, minutes); //,seconds);
+    return QString().asprintf("%02i:%02i", hours, minutes); //,seconds);
 }
 
 

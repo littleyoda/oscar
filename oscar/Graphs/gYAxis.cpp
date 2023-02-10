@@ -343,9 +343,9 @@ const QString gYAxisTime::Format(EventDataType v, int dp)
         pm[0] = 0;
     }
 
-    if (dp > 2) { return QString().sprintf("%02i:%02i:%02i%s", h, m, s, pm); }
+    if (dp > 2) { return QString().asprintf("%02i:%02i:%02i%s", h, m, s, pm) ; }
 
-    return QString().sprintf("%i:%02i%s", h, m, pm);
+    return QString().asprintf("%i:%02i%s", h, m, pm) ;
 }
 
 const QString gYAxisWeight::Format(EventDataType v, int dp)
