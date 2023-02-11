@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 // Features enabled by conditional compilation.
@@ -39,10 +39,10 @@
 #include "mainwindow.h"
 extern MainWindow *mainwin;
 
-
 qint64 convertDateToTimeRtn(const QDate &date,int hours,int min,int sec) {
     return QDateTime(date).addSecs(((hours*60+min)*60)+sec).toMSecsSinceEpoch();
 }
+
 qint64 convertDateToStartTime(const QDate &date) {
     return convertDateToTimeRtn(date,0,10,0);
 }

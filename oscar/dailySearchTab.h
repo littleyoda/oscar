@@ -13,8 +13,10 @@
 #include <QDate>
 #include <QTextDocument>
 #include <QList>
+#include <QFrame>
 #include <QWidget>
 #include <QTabWidget>
+#include <QMap>
 #include "SleepLib/common.h"
 
 class QWidget ;
@@ -53,56 +55,76 @@ private:
 
     const int     dateRole = Qt::UserRole;
     const int     valueRole = 1+Qt::UserRole;
+    const int     opCodeRole = 3+Qt::UserRole;
     const int     passDisplayLimit = 30;
 
     Daily*        daily;
     QWidget*      parent;
     QWidget*      searchTabWidget;
     QTabWidget*   dailyTabWidget;
+    QFrame  *     innerCriteriaFrame;
+
     QVBoxLayout*  searchTabLayout;
     QHBoxLayout*  criteriaLayout;
+    QHBoxLayout*  innerCriteriaLayout;
     QHBoxLayout*  searchLayout;
-    QHBoxLayout*  statusLayout;
     QHBoxLayout*  summaryLayout;
-    QLabel*       criteriaOperation;
-    QLabel*       introduction;
-    QComboBox*    selectCommand;
-    QLabel*       selectLabel;
-    QLabel*       statusA;
-    QLabel*       statusB;
-    QLabel*       statusC;
-    QLabel*       summaryStatsA;
-    QLabel*       summaryStatsB;
-    QLabel*       summaryStatsC;
-    QDoubleSpinBox* enterDouble;
-    QSpinBox*     enterInteger;
-    QLineEdit*    enterString;
+
+    QPushButton*  helpInfo;
+    bool          helpMode=false;
+    int           selectOperationOpCode = 0;
+
+    QComboBox*    selectOperationCombo;
+    QPushButton*  selectOperationButton;
+    QComboBox*    selectCommandCombo;
+    QPushButton*  selectCommandButton;
+    QPushButton*  selectMatch;
+    QLabel*       selectUnits;
+    QLabel*       statusProgress;
+    QLabel*       summaryProgress;
+    QLabel*       summaryFound;
+    QLabel*       summaryMinMax;
+    QDoubleSpinBox* selectDouble;
+    QSpinBox*     selectInteger;
+    QLineEdit*    selectString;
     QPushButton*  startButton;
-    QPushButton*  continueButton;
     QTableWidget* guiDisplayTable;
-    QIcon*        icon_on;
-    QIcon*        icon_off;
+    QTableWidgetItem* horizontalHeader0;
+    QTableWidgetItem* horizontalHeader1;
+    QIcon*        m_icon_selected;
+    QIcon*        m_icon_notSelected;
+    QIcon*        m_icon_configure;
+    QIcon*        m_icon_restore;
+    QIcon*        m_icon_plus;
+    QMap <QString,qint32> opCodeMap;
+
 
     void        createUi();
     void        delayedCreateUi();
 
-    void        search(QDate date, bool star);
-    void        findall(QDate date, bool start);
+    void        search(QDate date);
     bool        find(QDate& , Day* day);
-    EventDataType calculateAhi(Day* day);
-
-    void        selectAligment(bool withParameters);
-    void        displayStatistics();
-    void        addItem(QDate date, QString value);
     void        criteriaChanged();
     void        endOfPass();
-    QString     introductionStr();
+    void        displayStatistics();
 
+
+    void        addItem(QDate date, QString value);
+    void        setCommandPopupEnabled(bool );
+    void        setOperationPopupEnabled(bool );
+    void        setOperation( );
+
+    QString     opCodeStr(int);
+    QString     helpStr();
     QString     centerLine(QString line);
     QString     formatTime (quint32) ;
     QString     convertRichText2Plain (QString rich);
+    EventDataType calculateAhi(Day* day);
+    bool        compare(double,double );
+    bool        compare(int,int );
     
     bool        createUiFinished=false;
+    bool        startButtonMode=true;
     int         searchType;
     int         nextTab;
 
@@ -117,22 +139,30 @@ private:
     int         daysFound;
     int         passFound;
 
-    enum minMax {none=0,minDouble,maxDouble,minInteger,maxInteger};
-    enum minMaxUnit {noUnit=0,time=1};
+    enum minMax {none=0,Double,Integer,timeInteger};
+    QString     extraStr(int ivalue, double dvalue);
     bool        minMaxValid;
-    minMaxUnit  minMaxUnit;
     minMax      minMaxMode;
-    quint32     minMaxInteger;
-    double      minMaxDouble;
+
+    quint32     minInteger;
+    quint32     maxInteger;
+
+    double      maxDouble;
+    double      minDouble;
 
     QTextDocument richText;
 
+
 public slots:
 private slots:
-    void on_itemActivated(QTableWidgetItem *item);
+    void on_itemClicked(QTableWidgetItem *item);
     void on_startButton_clicked();
-    void on_continueButton_clicked();
-    void on_selectCommand_activated(int);
+    void on_selectMatch_clicked();
+    void on_selectCommandButton_clicked();
+    void on_selectCommandCombo_activated(int);
+    void on_selectOperationButton_clicked();
+    void on_selectOperationCombo_activated(int);
+    void on_helpInfo_clicked();
     void on_dailyTabWidgetCurrentChanged(int);
     void on_intValueChanged(int);
     void on_doubleValueChanged(double);
