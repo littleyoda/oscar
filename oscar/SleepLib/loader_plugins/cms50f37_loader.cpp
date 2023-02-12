@@ -29,6 +29,16 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
 using namespace std;
 
 #include "cms50f37_loader.h"
@@ -541,7 +551,7 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
 
             break;
         default:
-            qDebug() << "cms50f37 - pB: unknown cms50F result?" << hex << (int)res;
+            qDebug() << "cms50f37 - pB: unknown cms50F result?" << QTHEX << (int)res;
             break;
         }
 

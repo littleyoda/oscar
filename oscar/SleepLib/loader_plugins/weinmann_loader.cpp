@@ -17,6 +17,17 @@
 
 #include "weinmann_loader.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
+
 Weinmann::Weinmann(Profile *profile, MachineID id)
     : CPAP(profile, id)
 {
@@ -74,7 +85,7 @@ int WeinmannLoader::ParseIndex(QFile & wmdata)
             int val = e.attribute("val").toInt(&ok);
             if (ok) {
                 index[e.attribute("name")] = val;
-                qDebug() << e.attribute("name") << "=" << hex << val;
+                qDebug() << e.attribute("name") << "=" << QTHEX << val;
             }
         }
         n = n.nextSibling();

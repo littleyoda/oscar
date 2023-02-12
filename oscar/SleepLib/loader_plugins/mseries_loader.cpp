@@ -12,6 +12,16 @@
 
 #include "mseries_loader.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
 
 MSeries::MSeries(Profile *profile, MachineID id)
     : CPAP(profile, id)
@@ -238,7 +248,7 @@ int MSeriesLoader::Open(const QString & path)
         dt = QDateTime::fromTime_t(ts);
         date = dt.date();
         time = dt.time();
-        qDebug() << "New Sparse Chunk" << chk << dt << hex << ts;
+        qDebug() << "New Sparse Chunk" << chk << dt << QTHEX << ts;
 
         cb += 4;
         quint8 sum = 0;
@@ -265,7 +275,7 @@ int MSeriesLoader::Open(const QString & path)
         dt = QDateTime::fromTime_t(ts);
         date = dt.date();
         time = dt.time();
-        qDebug() << "Details New Data Chunk" << cnt << dt << hex << ts;
+        qDebug() << "Details New Data Chunk" << cnt << dt << QTHEX << ts;
 
         cb += 4;
 
@@ -349,7 +359,7 @@ int MSeriesLoader::Open(const QString & path)
         dt = QDateTime::fromTime_t(ts);
         date = dt.date();
         time = dt.time();
-        //qDebug() << "Summary Data Chunk" << cnt << dt << hex << ts;
+        //qDebug() << "Summary Data Chunk" << cnt << dt << QTHEX << ts;
         cb += 4;
 
         while (cb < endcard) {
@@ -364,7 +374,7 @@ int MSeriesLoader::Open(const QString & path)
             u2 = (cb[2] << 8 | cb[3]) & 0x7ff; // 0xBX XX??
             ts = st + u1 * 60;
             dt = QDateTime::fromTime_t(ts);
-            //qDebug() << "Summary Sub Chunk" << dt << u1 << u2 << hex << ts;
+            //qDebug() << "Summary Sub Chunk" << dt << u1 << u2 << QTHEX << ts;
             cb += 4;
 
             if (cb[0] == 0xff) { break; }
