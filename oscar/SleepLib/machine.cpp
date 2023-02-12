@@ -706,7 +706,7 @@ bool Machine::Load(ProgressDialog *progress)
         progress->setProgressValue(0);
         QApplication::processEvents();
 
-        QTime time;
+        QElapsedTimer time;
         time.start();
         dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
 
@@ -899,7 +899,7 @@ const int summaryxml_version=1;
 
 bool Machine::LoadSummary(ProgressDialog * progress)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
     QString filename = getDataPath() + summaryFileName + ".gz";
 

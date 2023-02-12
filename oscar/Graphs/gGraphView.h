@@ -26,6 +26,7 @@
 #include <QDoubleSpinBox>
 #include <QToolButton>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QGestureEvent>
 #include <QPinchGesture>
 
@@ -103,7 +104,7 @@ public:
     QFont m_font;
     QString m_text;
     Qt::Alignment m_alignment;
-    QTime time;
+    QElapsedTimer time;
 protected slots:
     void doRedraw();
 
@@ -717,7 +718,7 @@ class gGraphView
 
     QPixmapCache pixmapcache;
 
-    QTime horizScrollTime, vertScrollTime;
+    QElapsedTimer horizScrollTime, vertScrollTime;
     QMenu * context_menu;
     QAction * pin_action;
     QAction * popout_action;

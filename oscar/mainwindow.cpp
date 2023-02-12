@@ -17,6 +17,7 @@
 #include <QResource>
 #include <QProgressBar>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QSettings>
 #include <QPixmap>
 #include <QDesktopWidget>
@@ -914,7 +915,7 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     // Create dialog
@@ -1041,7 +1042,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
 

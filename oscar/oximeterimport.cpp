@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QDesktopServices>
+#include <QElapsedTimer>
 
 #include "Graphs/gYAxis.h"
 #include "Graphs/gXAxis.h"
@@ -190,7 +191,7 @@ SerialOximeter * OximeterImport::detectOximeter()
 
     ui->progressBar->setMaximum(PORTSCAN_TIMEOUT);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     oximodule = nullptr;

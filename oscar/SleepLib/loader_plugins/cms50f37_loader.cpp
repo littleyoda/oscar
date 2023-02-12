@@ -194,7 +194,7 @@ QString CMS50F37Loader::getUser()
 
     sendCommand(COMMAND_GET_USER_INFO);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -210,7 +210,7 @@ QString CMS50F37Loader::getVendor()
 
     sendCommand(COMMAND_GET_OXIMETER_VENDOR);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -227,7 +227,7 @@ QString CMS50F37Loader::getModel()
     modelsegments = 0;
     sendCommand(COMMAND_GET_OXIMETER_MODEL);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -260,7 +260,7 @@ QString CMS50F37Loader::getDeviceID()
 
     sendCommand(COMMAND_GET_OXIMETER_DEVICEID);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -275,7 +275,7 @@ int CMS50F37Loader::getUserCount()  // for future use, check, then add select us
     userCount = -1;
     sendCommand(COMMAND_GET_USER_COUNT);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -290,7 +290,7 @@ int CMS50F37Loader::getSessionCount()
     session_count = -1;
     sendCommand(COMMAND_GET_SESSION_COUNT);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -304,7 +304,7 @@ int CMS50F37Loader::getOximeterInfo()
 {
     device_info = -1;
     sendCommand(COMMAND_GET_OXIMETER_INFO);
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -321,7 +321,7 @@ int CMS50F37Loader::getDuration(int session)
     duration = -1;
     sendCommand(COMMAND_GET_SESSION_DURATION, session);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -338,7 +338,7 @@ QDateTime CMS50F37Loader::getDateTime(int session)
     imp_date = QDate();
     imp_time = QTime();
     sendCommand(COMMAND_GET_SESSION_TIME, session);
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -681,7 +681,7 @@ void CMS50F37Loader::eraseSession(int user, int session)
     }
 
     int z = timectr;
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -721,7 +721,7 @@ void CMS50F37Loader::setDeviceID(const QString & newid)
     // Supposed to return 0x04 command, so reset devid..
     devid = QString();
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -745,7 +745,7 @@ void CMS50F37Loader::syncClock()
         qDebug() << "cms50f37 - Couldn't write date bytes to CMS50F";
     }
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();

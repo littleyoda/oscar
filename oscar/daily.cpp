@@ -15,6 +15,7 @@
 #include <QTextBlock>
 #include <QColorDialog>
 #include <QSpacerItem>
+#include <QElapsedTimer>
 #include <QBuffer>
 #include <QPixmap>
 #include <QMessageBox>
@@ -934,7 +935,7 @@ void Daily::on_ReloadDay()
     }
     inReload = true;
     graphView()->releaseKeyboard();
-    QTime time;
+    QElapsedTimer time;
     time_t unload_time, load_time, other_time;
     time.start();
 
