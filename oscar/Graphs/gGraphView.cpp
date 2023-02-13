@@ -47,6 +47,65 @@
 #include "SleepLib/profiles.h"
 #include "overview.h"
 
+
+#if 0
+/*
+from qt 4.8
+int QGraphicsSceneWheelEvent::delta() const
+Returns the distance that the wheel is rotated, in eighths (1/8s) of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+int QWheelEvent::delta () const
+Returns the distance that the wheel is rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event.
+
+Example:
+
+ void MyWidget::wheelEvent(QWheelEvent *event)
+ {
+     int numDegrees = event->delta() / 8;
+     int numSteps = numDegrees / 15;
+
+     if ( isEventHorizontal(event) )  {
+         scrollHorizontally(numSteps);
+     } else {
+         scrollVertically(numSteps);
+     }
+     event->accept();
+ }
+
+
+ from qt 5.15
+Returns the relative amount that the wheel was rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user. angleDelta().y() provides the angle through which the common vertical mouse wheel was rotated since the previous event. angleDelta().x() provides the angle through which the horizontal mouse wheel was rotated, if the mouse has a horizontal wheel; otherwise it stays at zero. Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture; that will also appear in angleDelta().x().
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event. But to provide a more native feel, you should prefer pixelDelta() on platforms where it's available.
+*/
+#endif
+
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define wheelEventPos( id )   id ->position()
+    #define wheelEventX( id )     id ->position().x()
+    #define wheelEventY( id )     id ->position().y()
+    #define wheelEventDelta( id ) id ->angleDelta().y()
+
+    #define isWheelEventVertical( id )  id ->angleDelta().x()==0
+    #define isWheelEventHorizontal( id )  id ->angleDelta().y()==0
+#else
+    #define wheelEventPos( id )   id ->pos()
+    #define wheelEventX( id )     id ->x()
+    #define wheelEventY( id )     id ->y()
+    #define wheelEventDelta( id ) id ->delta()
+
+    #define isWheelEventVertical( id )  id ->orientation() == Qt::Vertical
+    #define isWheelEventHorizontal( id )  id ->orientation() == Qt::Horizontal
+#endif
+
 extern MainWindow *mainwin;
 
 #include <QApplication>
@@ -3065,7 +3124,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
     if (event->modifiers() == Qt::NoModifier) {
         int scrollDampening = AppSetting->scrollDampening();
 
-        if (event->orientation() == Qt::Vertical) { // Vertical Scrolling
+        if (isWheelEventVertical(event)) { // Vertical Scrolling
             if (horizScrollTime.elapsed() < scrollDampening) {
                 return;
             }
@@ -3088,7 +3147,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
     gGraph *graph = nullptr;
     int group = 0;
     //int x = event->x();
-    int y = event->y();
+    int y = wheelEventY(event);
 
     float h, py = 0, pinned_height = 0;
 
@@ -3172,7 +3231,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
         double xx = (graph->max_x - graph->min_x);
         double zoom = 240.0;
 
-        int delta = event->delta();
+        int delta = wheelEventDelta(event);
 
         if (delta > 0) {
             graph->min_x -= (xx / zoom) * (float)abs(delta);
