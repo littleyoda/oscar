@@ -52,27 +52,24 @@ private:
     const int          TW_BOOKMARK   =  3;
     const int          TW_SEARCH     =  4;
 
-
     const int     dateRole = Qt::UserRole;
     const int     valueRole = 1+Qt::UserRole;
-    const int     opCodeRole = 3+Qt::UserRole;
     const int     passDisplayLimit = 30;
 
     Daily*        daily;
     QWidget*      parent;
     QWidget*      searchTabWidget;
     QTabWidget*   dailyTabWidget;
-    QFrame  *     innerCriteriaFrame;
 
     QVBoxLayout*  searchTabLayout;
     QHBoxLayout*  criteriaLayout;
+    QFrame  *     innerCriteriaFrame;
     QHBoxLayout*  innerCriteriaLayout;
+
     QHBoxLayout*  searchLayout;
     QHBoxLayout*  summaryLayout;
 
     QPushButton*  helpInfo;
-    bool          helpMode=false;
-    int           selectOperationOpCode = 0;
 
     QComboBox*    selectOperationCombo;
     QPushButton*  selectOperationButton;
@@ -80,25 +77,33 @@ private:
     QPushButton*  selectCommandButton;
     QPushButton*  selectMatch;
     QLabel*       selectUnits;
+
     QLabel*       statusProgress;
+
     QLabel*       summaryProgress;
     QLabel*       summaryFound;
     QLabel*       summaryMinMax;
+
     QDoubleSpinBox* selectDouble;
     QSpinBox*     selectInteger;
     QLineEdit*    selectString;
     QPushButton*  startButton;
+
     QTableWidget* guiDisplayTable;
     QTableWidgetItem* horizontalHeader0;
     QTableWidgetItem* horizontalHeader1;
+
+
     QIcon*        m_icon_selected;
     QIcon*        m_icon_notSelected;
     QIcon*        m_icon_configure;
-    QIcon*        m_icon_restore;
-    QIcon*        m_icon_plus;
+
     QMap <QString,qint32> opCodeMap;
+    QString     opCodeStr(int);
+    int         selectOperationOpCode = 0;
 
 
+    bool        helpMode=false;
     void        createUi();
     void        delayedCreateUi();
 
@@ -114,13 +119,11 @@ private:
     void        setOperationPopupEnabled(bool );
     void        setOperation( );
 
-    QString     opCodeStr(int);
     QString     helpStr();
     QString     centerLine(QString line);
-    QString     formatTime (quint32) ;
+    QString     formatTime (qint32) ;
     QString     convertRichText2Plain (QString rich);
     EventDataType calculateAhi(Day* day);
-    bool        compare(double,double );
     bool        compare(int,int );
     
     bool        createUiFinished=false;
@@ -139,13 +142,19 @@ private:
     int         daysFound;
     int         passFound;
 
-    enum minMax {none=0,Double,Integer,timeInteger};
-    QString     extraStr(int ivalue, double dvalue);
-    bool        minMaxValid;
-    minMax      minMaxMode;
+    enum ValueMode { notUsed , minutesToMs ,hoursToMs, hundredths , whole , string};
 
-    quint32     minInteger;
-    quint32     maxInteger;
+    ValueMode   valueMode;
+    qint32     selectValue=0;
+
+    bool        minMaxValid;
+    qint32     minInteger;
+    qint32     maxInteger;
+    void        updateValues(qint32);
+
+    QString     valueToString(int value, QString empty = "");
+    qint32     foundValue;
+    QString     foundString;
 
     double      maxDouble;
     double      minDouble;
@@ -155,7 +164,7 @@ private:
 
 public slots:
 private slots:
-    void on_itemClicked(QTableWidgetItem *item);
+    void on_dateItemClicked(QTableWidgetItem *item);
     void on_startButton_clicked();
     void on_selectMatch_clicked();
     void on_selectCommandButton_clicked();
