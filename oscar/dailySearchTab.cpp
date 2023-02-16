@@ -8,7 +8,7 @@
  * for more details. */
 
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QWidget>
@@ -34,15 +34,17 @@
 #define OT_DISABLED_SESSIONS 1
 #define OT_NOTES             2
 #define OT_NOTES_STRING      3
-#define OT_BOOK_MARKS        4
-#define OT_AHI               5
-#define OT_SHORT_SESSIONS    6
-#define OT_SESSIONS_QTY      7
-#define OT_DAILY_USAGE       8
-#define OT_BMI               9
+#define OT_BOOKMARKS         4
+#define OT_BOOKMARKS_STRING  5
+#define OT_AHI               6
+#define OT_SESSION_LENGTH    7
+#define OT_SESSIONS_QTY      8
+#define OT_DAILY_USAGE       9
+#define OT_BMI               10
 
 
-// DO NOT CHANGH THESE VALUES - they impact compare operations.
+//DO NOT CHANGH THESE VALUES - they impact compare operations.
+//enums DO NOT WORK because due to switch statements
 #define OP_NONE              0
 #define OP_LT                1
 #define OP_GT                2
@@ -59,8 +61,6 @@ DailySearchTab::DailySearchTab(Daily* daily , QWidget* searchTabWidget  , QTabWi
     m_icon_selected      = new QIcon(":/icons/checkmark.png");
     m_icon_notSelected   = new QIcon(":/icons/empty_box.png");
     m_icon_configure     = new QIcon(":/icons/cog.png");
-    m_icon_restore       = new QIcon(":/icons/restore.png");
-    m_icon_plus          = new QIcon(":/icons/plus.png");
 
     #if 0
     // method of find the daily tabWidgets works for english.
@@ -88,9 +88,9 @@ DailySearchTab::DailySearchTab(Daily* daily , QWidget* searchTabWidget  , QTabWi
     daily->connect(selectMatch,         SIGNAL(clicked()), this, SLOT(on_selectMatch_clicked()) );
     daily->connect(startButton,         SIGNAL(clicked()), this, SLOT(on_startButton_clicked()) );
     daily->connect(helpInfo   ,         SIGNAL(clicked()), this, SLOT(on_helpInfo_clicked()) );
-    daily->connect(guiDisplayTable,     SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
-    daily->connect(guiDisplayTable,     SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
-    daily->connect(guiDisplayTable,     SIGNAL(itemActivated(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
+    daily->connect(guiDisplayTable,     SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
+    daily->connect(guiDisplayTable,     SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
+    daily->connect(guiDisplayTable,     SIGNAL(itemActivated(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
     daily->connect(dailyTabWidget,      SIGNAL(currentChanged(int)), this, SLOT(on_dailyTabWidgetCurrentChanged(int)   ));
 }
 
@@ -105,15 +105,13 @@ DailySearchTab::~DailySearchTab() {
     daily->disconnect(selectOperationButton,  SIGNAL(clicked()), this, SLOT(on_selectOperationButton_clicked()) );
     daily->disconnect(selectMatch,       SIGNAL(clicked()), this, SLOT(on_selectMatch_clicked()) );
     daily->disconnect(helpInfo   ,       SIGNAL(clicked()), this, SLOT(on_helpInfo_clicked()) );
-    daily->disconnect(guiDisplayTable,   SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
-    daily->disconnect(guiDisplayTable,   SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
-    daily->disconnect(guiDisplayTable,   SIGNAL(itemActivated(QTableWidgetItem*)), this, SLOT(on_itemClicked(QTableWidgetItem*)   ));
+    daily->disconnect(guiDisplayTable,   SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
+    daily->disconnect(guiDisplayTable,   SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
+    daily->disconnect(guiDisplayTable,   SIGNAL(itemActivated(QTableWidgetItem*)), this, SLOT(on_dateItemClicked(QTableWidgetItem*)   ));
     daily->disconnect(startButton,       SIGNAL(clicked()), this, SLOT(on_startButton_clicked()) );
     delete m_icon_selected;
     delete m_icon_notSelected;
     delete m_icon_configure ;
-    delete m_icon_restore ;
-    delete m_icon_plus ;
 };
 
 void    DailySearchTab::createUi() {
@@ -268,6 +266,7 @@ void    DailySearchTab::createUi() {
         horizontalHeader1->setText("INFORMATION\nRestores & Bookmark tab");
 
         guiDisplayTable->horizontalHeader()->hide();
+        //guiDisplayTable->setStyleSheet("QTableWidget::item { padding: 1px }");
 }
 
 void DailySearchTab::delayedCreateUi() {
@@ -277,11 +276,12 @@ void DailySearchTab::delayedCreateUi() {
 
         selectCommandCombo->clear();
         selectCommandCombo->addItem(tr("Notes"),OT_NOTES);
-        selectCommandCombo->addItem(tr("Notes containng"),OT_NOTES_STRING);
-        selectCommandCombo->addItem(tr("BookMarks"),OT_BOOK_MARKS);
+        selectCommandCombo->addItem(tr("Notes containing"),OT_NOTES_STRING);
+        selectCommandCombo->addItem(tr("BookMarks"),OT_BOOKMARKS);
+        selectCommandCombo->addItem(tr("BookMarks containing"),OT_BOOKMARKS_STRING);
         selectCommandCombo->addItem(tr("AHI "),OT_AHI);
         selectCommandCombo->addItem(tr("Daily Duration"),OT_DAILY_USAGE);
-        selectCommandCombo->addItem(tr("Session Duration" ),OT_SHORT_SESSIONS);
+        selectCommandCombo->addItem(tr("Session Duration" ),OT_SESSION_LENGTH);
         selectCommandCombo->addItem(tr("Disabled Sessions"),OT_DISABLED_SESSIONS);
         selectCommandCombo->addItem(tr("Number of Sessions"),OT_SESSIONS_QTY);
         selectCommandCombo->insertSeparator(selectCommandCombo->count());  // separate from events
@@ -311,7 +311,7 @@ void DailySearchTab::delayedCreateUi() {
         if (!day) return;
 
         // the following is copied from daily.
-        quint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
+        qint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
         if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
         QList<ChannelID> available;
         available.append(day->getSortedMachineChannels(chans));
@@ -329,15 +329,6 @@ void    DailySearchTab::on_helpInfo_clicked() {
         helpInfo->setText(helpStr());
 }
 
-bool    DailySearchTab::compare(double aa ,double bb) {
-        int request = selectOperationOpCode;
-        int mode=0;
-        if (aa <bb ) mode |= OP_LT;
-        if (aa >bb ) mode |= OP_GT;
-        if (aa ==bb ) mode |= OP_EQ;
-        return ( (mode & request)!=0);
-};
-
 bool    DailySearchTab::compare(int aa , int bb) {
         int request = selectOperationOpCode;
         int mode=0;
@@ -347,6 +338,26 @@ bool    DailySearchTab::compare(int aa , int bb) {
         return ( (mode & request)!=0);
 };
 
+QString DailySearchTab::valueToString(int value, QString defaultValue) {
+        switch (valueMode) {
+            case hundredths :
+                return QString("%1").arg( (double(value)/100.0),0,'f',2);
+            break;
+            case hoursToMs:
+            case minutesToMs:
+                return formatTime(value);
+            break;
+            case whole:
+                QString().setNum(value);
+            break;
+            case string:
+                return foundString;
+            break;
+            default:
+            break;
+        }
+        return defaultValue;
+}
 
 void    DailySearchTab::on_selectOperationCombo_activated(int index) {
         QString text = selectOperationCombo->itemText(index);
@@ -370,7 +381,8 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
         selectUnits->hide();
         selectOperationButton->hide();
 
-        minMaxMode = none;
+        valueMode = notUsed;
+        selectValue = 0;
 
         // workaround for combo box alignmnet and sizing.
         // copy selections to a pushbutton. hide combobox and show pushButton. Pushbutton activation can show popup.
@@ -380,7 +392,7 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
 
         // get item selected
         int item = selectCommandCombo->itemData(index).toInt();
-        searchType = OT_NONE;
+        searchType = item;
         bool hasParameters=true;
         switch (item) {
             case OT_NONE :
@@ -391,49 +403,54 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 horizontalHeader1->setText("Jumps to Details tab");
                 nextTab = TW_DETAILED ;
                 hasParameters=false;
-                searchType = item;
                 break;
             case OT_NOTES :
                 horizontalHeader1->setText("Note\nJumps to Notes tab");
                 nextTab = TW_NOTES ;
                 hasParameters=false;
-                searchType = item;
+                valueMode = string;
                 break;
-            case OT_BOOK_MARKS :
+            case OT_BOOKMARKS :
                 horizontalHeader1->setText("Jumps to Bookmark tab");
                 nextTab = TW_BOOKMARK ;
                 hasParameters=false;
-                searchType = item;
+                break;
+            case OT_BOOKMARKS_STRING :
+                horizontalHeader1->setText("Jumps to Bookmark tab");
+                nextTab = TW_BOOKMARK ;
+                selectString->clear();
+                selectString->show();
+                selectOperationOpCode = OP_CONTAINS;
+                valueMode = string;
                 break;
             case OT_NOTES_STRING :
                 horizontalHeader1->setText("Note\nJumps to Notes tab");
                 nextTab = TW_NOTES ;
-                searchType = item;
                 selectString->clear();
                 selectString->show();
                 selectOperationOpCode = OP_CONTAINS;
-                selectOperationButton->show();
+                valueMode = string;
                 break;
             case OT_AHI :
                 horizontalHeader1->setText("AHI\nJumps to Details tab");
                 nextTab = TW_DETAILED ;
-                searchType = item;
                 selectDouble->setRange(0,999);
                 selectDouble->setValue(5.0);
                 selectDouble->setDecimals(2);
                 selectDouble->show();
                 selectOperationOpCode = OP_GT;
-                selectOperationButton->show();
-                minMaxMode = Double;
+
+                // QString.number(calculateAhi()*100.0).toInt();
+                valueMode = hundredths;
                 break;
-            case OT_SHORT_SESSIONS :
-                horizontalHeader1->setText("Duration Shortest Session\nJumps to Details tab");
+            case OT_SESSION_LENGTH :
+                horizontalHeader1->setText("Session Duration\nJumps to Details tab");
                 nextTab = TW_DETAILED ;
-                searchType = item;
                 selectDouble->setRange(0,9999);
                 selectDouble->setDecimals(2);
                 selectDouble->setValue(5);
                 selectDouble->show();
+
                 selectUnits->setText(" Miniutes");
                 selectUnits->show();
 
@@ -441,23 +458,22 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 selectOperationOpCode = OP_LT;
                 selectOperationButton->show();
 
-                minMaxMode = timeInteger;
+                valueMode = minutesToMs;
                 break;
             case OT_SESSIONS_QTY :
                 horizontalHeader1->setText("Number of Sessions\nJumps to Details tab");
                 nextTab = TW_DETAILED ;
-                searchType = item;
                 selectInteger->setRange(0,999);
                 selectInteger->setValue(1);
                 selectOperationButton->show();
                 selectOperationOpCode = OP_GT;
-                minMaxMode = Integer;
+
+                valueMode = whole;
                 selectInteger->show();
                 break;
             case OT_DAILY_USAGE :
                 horizontalHeader1->setText("Daily Duration\nJumps to Details tab");
                 nextTab = TW_DETAILED ;
-                searchType = item;
                 selectDouble->setRange(0,999);
                 selectUnits->setText(" Hours");
                 selectUnits->show();
@@ -466,7 +482,9 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 selectOperationOpCode = OP_LT;
                 selectDouble->setValue(p_profile->cpap->complianceHours());
                 selectDouble->show();
-                minMaxMode = timeInteger;
+
+                valueMode = hoursToMs;
+                selectInteger->setValue((int)selectDouble->value()*3600000.0);   //convert to ms
                 break;
             default:
                 // Have an Event 
@@ -476,12 +494,10 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 selectInteger->setValue(0);
                 selectOperationOpCode = OP_GT;
                 selectOperationButton->show();
-                minMaxMode = Integer;
+                valueMode = whole;
                 selectInteger->show();
-                searchType = item;      //item is channel id which is >= 0x1000
                 break;
         }
-        selectOperationButton->setText(opCodeStr(selectOperationOpCode));
 
         if (searchType == OT_NONE) {
             statusProgress->show();
@@ -499,6 +515,19 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
             startButtonMode=true;
             on_startButton_clicked();
             return;
+        }
+}
+
+void DailySearchTab::updateValues(qint32 value) {
+        foundValue = value;
+        if (!minMaxValid ) {
+            minMaxValid = true;
+            minInteger = value;
+            maxInteger = value;
+        } else if (  value < minInteger ) {
+            minInteger = value;
+        } else if (  value > maxInteger ) {
+            maxInteger = value;
         }
 }
 
@@ -524,16 +553,32 @@ bool DailySearchTab::find(QDate& date,Day* day)
                 Session* journal=daily->GetJournalSession(date);
                 if (journal && journal->settings.contains(Journal_Notes)) {
                     QString jcontents = convertRichText2Plain(journal->settings[Journal_Notes].toString());
-                    extra = jcontents.trimmed().left(40);
+                    foundString = jcontents.trimmed().left(40);
                     found=true;
                 }
                 }
                 break;
-            case OT_BOOK_MARKS :
+            case OT_BOOKMARKS :
                 {
                 Session* journal=daily->GetJournalSession(date);
                 if (journal && journal->settings.contains(Bookmark_Start)) {
                     found=true;
+                }
+                }
+                break;
+            case OT_BOOKMARKS_STRING :
+                {
+                Session* journal=daily->GetJournalSession(date);
+                if (journal && journal->settings.contains(Bookmark_Notes)) {
+                    QStringList notes = journal->settings[Bookmark_Notes].toStringList();
+                    QString findStr = selectString->text();
+                    for (   const auto & note : notes) {
+                        if (note.contains(findStr,Qt::CaseInsensitive) ) {
+                           found=true;
+                           foundString = note.trimmed().left(40);
+                           break;
+                        }
+                    }
                 }
                 }
                 break;
@@ -545,69 +590,53 @@ bool DailySearchTab::find(QDate& date,Day* day)
                     QString findStr = selectString->text();
                     if (jcontents.contains(findStr,Qt::CaseInsensitive) ) {
                        found=true;
-                       extra = jcontents.trimmed().left(40);
+                       foundString = jcontents.trimmed().left(40);
                     }
                 }
                 }
                 break;
             case OT_AHI :   
                 {
-                EventDataType ahi = calculateAhi(day);
-                EventDataType limit = selectDouble->value();
-                if (!minMaxValid ) {
-                    minMaxValid = true;
-                    minDouble = ahi;
-                    maxDouble = ahi;
-                } else if (  ahi < minDouble ) {
-                    minDouble = ahi;
-                } else if (  ahi > maxDouble ) {
-                    maxDouble = ahi;
-                }
-                if (compare (ahi , limit) ) {
-                       found=true;
-                       extra = QString::number(ahi,'f', 2);
-                }
+                EventDataType dahi =calculateAhi(day);
+                dahi += 0.005;  
+                dahi *= 100.0;  
+                int ahi = (int)dahi;
+                updateValues(ahi);
+                found = compare (ahi , selectValue);
                 }
                 break;
-            case OT_SHORT_SESSIONS :
+            case OT_SESSION_LENGTH :
                 {
+                bool valid=false;
+                qint64 value;
                 QList<Session *> sessions = day->getSessions(MT_CPAP);
                 for (auto & sess : sessions) {
+                    //qint64 msF = sess->realFirst();
+                    //qint64 msL = sess->realLast();
+                    //DEBUGFW O(day->date()) QQ("sessionLength",ms) Q(selectValue); //  Q(msF) Q(msL) ;
+                    //found a session with negative length. Session.cpp has real end time before realstart time.
                     qint64 ms = sess->length();
-                    double minutes= ((double)ms)/60000.0;
-                    if (!minMaxValid ) {
-                        minMaxValid = true;
-                        minInteger = ms;
-                        maxInteger = ms;
-                    } else if (  ms < minInteger ) {
-                        minInteger = ms;
-                    } else if (  ms > maxInteger ) {
-                        maxInteger = ms;
+                    updateValues(ms);
+                    if (compare (ms , selectValue) ) {
+                        found =true;
                     }
-                    if (compare (minutes , selectDouble->value()) ) {
-                        found=true;
-                        extra = formatTime(ms);
+                    if (!valid) {
+                        valid=true;
+                        value=ms;
+                    } else if (compare (ms , value) ) {
+                        value=ms;
                     }
                 }
+                // use best / lowest  daily value that meets criteria
+                updateValues(value);
                 }
                 break;
             case OT_SESSIONS_QTY :
                 {
                 QList<Session *> sessions = day->getSessions(MT_CPAP);
-                quint32 size = sessions.size();
-                if (!minMaxValid ) {
-                    minMaxValid = true;
-                    minInteger = size;
-                    maxInteger = size;
-                } else if (  size < minInteger ) {
-                    minInteger = size;
-                } else if (  size > maxInteger ) {
-                    maxInteger = size;
-                }
-                if (compare (size , selectInteger->value()) ) {
-                    found=true;
-                    extra = QString::number(size);
-                }
+                qint32 size = sessions.size();
+                updateValues(size);
+                found=compare (size , selectValue);
                 }
                 break;
             case OT_DAILY_USAGE :
@@ -617,39 +646,16 @@ bool DailySearchTab::find(QDate& date,Day* day)
                 for (auto & sess : sessions) {
                     sum += sess->length();
                 }
-                double hours= ((double)sum)/3600000.0;
-                if (!minMaxValid ) {
-                    minMaxValid = true;
-                    minInteger = sum;
-                    maxInteger = sum;
-                } else if (  sum < minInteger ) {
-                    minInteger = sum;
-                } else if (  sum > maxInteger ) {
-                    maxInteger = sum;
-                }
-                if (compare (hours , selectDouble->value() ) ) {
-                    found=true;
-                    extra = formatTime(sum);
-                }
+                updateValues(sum);
+                found=compare (sum , selectValue);
                 }
                 break;
             default : 
                 {
-                quint32 count = day->count(searchType);
+                qint32 count = day->count(searchType);
                 if (count<=0) break;
-                if (!minMaxValid ) {
-                    minMaxValid = true;
-                    minInteger = count;
-                    maxInteger = count;
-                } else if (  count < minInteger ) {
-                    minInteger = count;
-                } else if (  count > maxInteger ) {
-                    maxInteger = count;
-                }
-                if (compare (count , selectInteger->value()) ) {
-                    found=true;
-                    extra = QString::number(count);
-                }
+                updateValues(count);
+                found=compare (count , selectValue);
                 }
                 break;
             case OT_NONE :
@@ -657,7 +663,7 @@ bool DailySearchTab::find(QDate& date,Day* day)
                 break;
         }
         if (found) {
-            addItem(date , extra );
+            addItem(date , valueToString(foundValue,"------") );
             return true;
         }
         return false;
@@ -669,6 +675,7 @@ void DailySearchTab::search(QDate date)
         for (int index=0; index<guiDisplayTable->rowCount();index++) {
             guiDisplayTable->setRowHidden(index,true);
         }
+        foundString.clear();
         passFound=0;
         int count = 0;
         int no_data = 0;
@@ -752,12 +759,12 @@ void    DailySearchTab::endOfPass() {
             startButton->setEnabled(false);
             guiDisplayTable->horizontalHeader()->hide();
         }
-        
+
         displayStatistics();
 }
 
 
-void    DailySearchTab::on_itemClicked(QTableWidgetItem *item)
+void    DailySearchTab::on_dateItemClicked(QTableWidgetItem *item)
 {
         // a date is clicked
         // load new date
@@ -857,20 +864,6 @@ void    DailySearchTab::on_dailyTabWidgetCurrentChanged(int ) {
         delayedCreateUi();
 }
 
-QString DailySearchTab::extraStr(int ivalue, double dvalue) {
-        switch (minMaxMode) {
-            case timeInteger:
-                    return QString(formatTime(ivalue));
-            case Integer:
-                    return QString("%1").arg(ivalue);
-            case Double:
-                    return QString("%1").arg(dvalue,0,'f',1);
-            default:
-                break;
-        }
-        return "";
-}
-
 void    DailySearchTab::displayStatistics() {
         QString extra;
         // display days searched
@@ -883,7 +876,7 @@ void    DailySearchTab::displayStatistics() {
         // display associated value 
         extra ="";
         if (minMaxValid) {
-            extra = QString("%1/%2").arg(extraStr(minInteger,minDouble)).arg(extraStr(maxInteger,maxDouble));
+            extra = QString("%1/%2").arg(valueToString(minInteger)).arg(valueToString(maxInteger));
         }
         if (extra.size()>0) {
             summaryMinMax->setText(extra);
@@ -895,6 +888,27 @@ void    DailySearchTab::displayStatistics() {
 
 void    DailySearchTab::criteriaChanged() {
         // setup before start button
+
+        if (valueMode != notUsed ) {
+            selectOperationButton->setText(opCodeStr(selectOperationOpCode));
+            selectOperationButton->show();
+        }
+        switch (valueMode) {
+            case hundredths :
+                selectValue = (int)(selectDouble->value()*100.0);   //convert to hundreths of AHI.
+            break;
+            case minutesToMs:
+                selectValue = (int)(selectDouble->value()*60000.0);   //convert to ms
+            break;
+            case hoursToMs:
+                selectValue = (int)(selectDouble->value()*3600000.0);   //convert to ms
+            break;
+            case whole:
+                selectValue = selectInteger->value();;
+            break;
+            default:
+            break;
+        }
 
         selectCommandCombo->hide();
         selectCommandButton->show();
@@ -955,13 +969,12 @@ QString DailySearchTab::helpStr() {
     return tr("Help Information");
 }
 
-QString DailySearchTab::formatTime (quint32 ms) {
-        ms += 500; // round to nearest second
-        quint32 hours = ms / 3600000;
+QString DailySearchTab::formatTime (qint32 ms) {
+        qint32 hours = ms / 3600000;
         ms = ms % 3600000;
-        quint32 minutes = ms / 60000;
+        qint32 minutes = ms / 60000;
         ms = ms % 60000;
-        quint32 seconds = ms /1000;
+        qint32 seconds = ms /1000;
         return QString("%1h %2m %3s").arg(hours).arg(minutes).arg(seconds); 
 }
 
@@ -972,17 +985,6 @@ QString DailySearchTab::convertRichText2Plain (QString rich) {
 
 QString DailySearchTab::opCodeStr(int opCode) {
 //selectOperationButton->setText(QChar(0x2208));   // use either 0x220B or 0x2208
-
-
-//#define OP_NONE              0      // 
-//#define OP_GT                1      // only bit 1   
-//#define OP_LT                2      // only bit 2
-//#define OP_NE                3      // bit 1 && bit 2 but not bit 3
-//#define OP_EQ                4      // only bit 3
-//#define OP_GE                5      // bit 1 && bit 3 but not bit 2
-//#define OP_LE                6      // bit 2 && bit 3 but not bit 1 
-//#define OP_ALL               7      // all bits set
-//#define OP_CONTAINS          0x101  // No bits set
         switch (opCode) {
             case OP_GT : return "> ";
             case OP_GE : return ">=";
@@ -998,11 +1000,11 @@ QString DailySearchTab::opCodeStr(int opCode) {
 EventDataType  DailySearchTab::calculateAhi(Day* day) {
         if (!day) return 0.0;
         // copied from daily.cpp
-        double  tmphours=day->hours(MT_CPAP);
-        if (tmphours<=0) return 0;
+        double  hours=day->hours(MT_CPAP);
+        if (hours<=0) return 0;
         EventDataType  ahi=day->count(AllAhiChannels);
         if (p_profile->general->calculateRDI()) ahi+=day->count(CPAP_RERA);
-        ahi/=tmphours;
+        ahi/=hours;
         return ahi;
 }
 
