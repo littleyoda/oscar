@@ -688,3 +688,30 @@ void gSummaryChart::paint(QPainter &painter, gGraph &graph, const QRegion &regio
     }
 
 }
+
+QString gSummaryChart::durationInHoursToHhMmSs(double duration) {
+    return durationInSecondsToHhMmSs(duration * 3600);
+}
+
+QString gSummaryChart::durationInMinutesToHhMmSs(double duration) {
+    return durationInSecondsToHhMmSs(duration * 60);
+}
+
+QString gSummaryChart::durationInSecondsToHhMmSs(double duration) {
+    // ensure that a negative duration is supported (could potentially occur when start and end occur in different timezones without compensation)
+    double duration_abs = abs(duration);
+    int seconds_abs = static_cast<int>(0.5 + duration_abs);
+    int daily_hours_abs = seconds_abs / 3600;
+    QString result;
+    if (daily_hours_abs < 24) {
+        result = QTime(0,0,0,0).addSecs(seconds_abs).toString("hh:mm:ss");
+    } else {
+        result = QString::number(daily_hours_abs + seconds_abs % 86400 / 3600) + ":" + QTime(0, 0, 0, 0).addSecs(seconds_abs).toString("mm:ss");
+    }
+
+    if (duration == duration_abs) {
+        return result;
+    } else {
+        return "-" + result;
+    }
+}

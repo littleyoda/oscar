@@ -27,7 +27,7 @@ extern MainWindow * mainwin;
 
 QString gUsageChart::tooltipData(Day * day, int)
 {
-    return QObject::tr("\nHours: %1").arg(day->hours(m_machtype), 0, 'f', 2);
+    return QObject::tr("\nLength: %1").arg(durationInHoursToHhMmSs(day->hours(m_machtype)));
 }
 
 void gUsageChart::populate(Day *day, int idx)
@@ -94,7 +94,7 @@ void gUsageChart::afterDraw(QPainter &, gGraph &graph, QRectF rect)
         }
 
         QString txt = QObject::tr("%1 low usage, %2 no usage, out of %3 days (%4% compliant.) Length: %5 / %6 / %7").
-                arg(incompdays).arg(nousedays).arg(totaldays).arg(comp,0,'f',1).arg(calc.min, 0, 'f', 2).arg(mid, 0, 'f', 2).arg(calc.max, 0, 'f', 2);;
+                arg(incompdays).arg(nousedays).arg(totaldays).arg(comp,0,'f',1).arg(durationInHoursToHhMmSs(calc.min)).arg(durationInHoursToHhMmSs(mid)).arg(durationInHoursToHhMmSs(calc.max));
         graph.renderText(txt, rect.left(), rect.top()-5*graph.printScaleY(), 0);
     }
 }
