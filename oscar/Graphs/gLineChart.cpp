@@ -508,9 +508,9 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     height -= 2;
 
     int num_points = 0;
-    int visible_points = 0;
+    //int visible_points = 0;
     int total_points = 0;
-    int total_visible = 0;
+    //int total_visible = 0;
     bool square_plot, accel;
     qint64 clockdrift = qint64(p_profile->cpap->clockDrift()) * 1000L;
     qint64 drift = 0;
@@ -671,7 +671,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                     double ZR = ZD / sr;
                     double ZQ = ZR / XR;
                     double ZW = ZR / (width * ZQ);
-                    visible_points += ZR * ZQ;
+                    //visible_points += ZR * ZQ;
 
 //                    if (accel && n > 0) {
 //                        sam = 1;
@@ -700,7 +700,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                         maxz = 0;
                     }
 
-                    total_visible += visible_points;
+                    //total_visible += visible_points;
                 } else {
                     sam = 1;
                 }
@@ -1083,7 +1083,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     extras.push_back(CPAP_UserFlag1);
     extras.push_back(CPAP_UserFlag2);
 
-    double sum = 0;
+    //double sum = 0;
     int cnt = 0;
 
     //Draw the linechart overlays (Event flags) independant of line Cursor mode
@@ -1102,7 +1102,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
             if (lob->hover()) blockhover = true; // did it render a hover over?
 
             if (ahilist.contains(code)) {
-                sum += lob->sum();
+                //sum += lob->sum();
                 cnt += lob->count();
             }
         }

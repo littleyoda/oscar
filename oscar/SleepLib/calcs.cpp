@@ -322,16 +322,16 @@ void FlowParser::calcPeaks(EventDataType *input, int samples)
 
     EventDataType zeroline = 0;
 
-    double rate = m_flow->rate();
+    // double rate = m_flow->rate();
 
-    double flowstart = m_flow->first();
-    double time; //, lasttime;
+    // double flowstart = m_flow->first();
+    //double time; //, lasttime;
 
     //double peakmax = flowstart,
     //double peakmin = flowstart;
 
     // lasttime =
-    time = flowstart;
+    // time = flowstart;
     breaths.clear();
 
     // Estimate storage space needed using typical average breaths per minute.
@@ -407,7 +407,7 @@ void FlowParser::calcPeaks(EventDataType *input, int samples)
         }
 
         //lasttime = time;
-        time += rate;
+        // time += rate;
         lastc = c;
         //lastk = k;
     }
@@ -1476,7 +1476,7 @@ int calcSPO2Drop(Session *session)
     auto it = session->eventlist.find(OXI_SPO2);
     if (it == session->eventlist.end()) { return 0; }
 
-    EventDataType val, val2, change, tmp;
+    EventDataType val, val2, change ; // , tmp;
     qint64 time, time2;
     qint64 window = p_profile->oxi->spO2DropDuration();
     window *= 1000;
@@ -1494,7 +1494,7 @@ int calcSPO2Drop(Session *session)
     //int rp=0;
     int min;
     int cnt = 0;
-    tmp = 0;
+    // tmp = 0;
 
     qint64 start = 0;
 
@@ -1514,7 +1514,7 @@ int calcSPO2Drop(Session *session)
 
             if (time > start + 3600000) { break; } // just look at the first hour
 
-            tmp += val;
+            // tmp += val;
             cnt++;
         }
     }

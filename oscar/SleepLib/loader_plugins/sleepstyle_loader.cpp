@@ -870,6 +870,7 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
     quint16 unknownIndex;
 
     int totalrecs = 0;
+    Q_UNUSED( totalrecs );
 
     do {
         // Read timestamp for session and check for end of data signal

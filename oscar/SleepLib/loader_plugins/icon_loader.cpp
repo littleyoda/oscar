@@ -932,6 +932,7 @@ bool FPIconLoader::OpenDetail(Machine *mach, const QString & filename)
     quint8 recs;
 
     int totalrecs = 0;
+    Q_UNUSED( totalrecs );
 
     do {
         in >> ts;

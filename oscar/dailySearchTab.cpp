@@ -8,7 +8,7 @@
  * for more details. */
 
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 #include <QWidget>
@@ -608,7 +608,7 @@ bool DailySearchTab::find(QDate& date,Day* day)
             case OT_SESSION_LENGTH :
                 {
                 bool valid=false;
-                qint64 value;
+                qint64 value=0;
                 QList<Session *> sessions = day->getSessions(MT_CPAP);
                 for (auto & sess : sessions) {
                     //qint64 msF = sess->realFirst();
@@ -628,7 +628,7 @@ bool DailySearchTab::find(QDate& date,Day* day)
                     }
                 }
                 // use best / lowest  daily value that meets criteria
-                updateValues(value);
+                if (valid) updateValues(value);
                 }
                 break;
             case OT_SESSIONS_QTY :

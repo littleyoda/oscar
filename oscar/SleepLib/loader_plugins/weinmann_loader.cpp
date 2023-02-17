@@ -372,6 +372,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         EventList * FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
 //        EventList * VS = sess->AddEventList(CPAP_VSnore, EVL_Event);
         quint64 tt = ti;
+        Q_UNUSED (tt);
         quint64 step = sess->length() / ci.event_recs;
         unsigned char *p = &ev[ci.event_start];
         for (quint32 j=0; j < ci.event_recs; ++j) {

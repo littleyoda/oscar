@@ -750,7 +750,6 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
     QTreeWidgetItem *root=nullptr;
     QHash<ChannelID,QTreeWidgetItem *> mcroot;
     QHash<ChannelID,int> mccnt;
-    int total_events=0;
 
     qint64 drift=0, clockdrift=p_profile->cpap->clockDrift()*1000L;
 
@@ -777,7 +776,6 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
             if (mcroot.find(code)==mcroot.end()) {
                 int cnt=day->count(code);
                 if (!cnt) continue; // If no events than don't bother showing..
-                total_events+=cnt;
                 QString st=schema::channel[code].fullname();
                 if (st.isEmpty())  {
                     st=QString("Fixme %1").arg(code);
@@ -845,9 +843,7 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
             end->addChild(item);
         }
     }
-    //tree->insertTopLevelItem(cnt++,new QTreeWidgetItem(QStringList("[Total Events ("+QString::number(total_events)+")]")));
     tree->sortByColumn(0,Qt::AscendingOrder);
-    //tree->expandAll();
 }
 
 void Daily::UpdateCalendarDay(QDate date)
