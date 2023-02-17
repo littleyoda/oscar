@@ -1325,12 +1325,13 @@ void Statistics::printReport(QWidget * parent) {
 #endif
 
     printer.setPrintRange(QPrinter::AllPages);
-    printer.setOrientation(QPrinter::Portrait);
+    printer.setPageOrientation(QPageLayout::Portrait);
     printer.setFullPage(false);     // Print only on printable area of page and not in non-printable margins
-    printer.setNumCopies(1);
+    printer.setCopyCount(1);
 
     QMarginsF minMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
-    printer.setPageMargins(fmax(10,minMargins.left()), fmax(10,minMargins.top()), fmax(10,minMargins.right()), fmax(12,minMargins.bottom()), QPrinter::Millimeter);
+
+    printer.setPageMargins( QMarginsF( fmax(10,minMargins.left()), fmax(10,minMargins.top()), fmax(10,minMargins.right()), fmax(12,minMargins.bottom())), QPageLayout::Millimeter);
     QMarginsF setMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
     qDebug () << "Min margins" << minMargins << "Set margins" << setMargins << "millimeters";
 

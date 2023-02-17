@@ -7,12 +7,16 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QMessageBox>
 #include <QtPrintSupport/qprinter.h>
 #include <QtPrintSupport/qprintdialog.h>
 #include <QTextDocument>
 #include <QApplication>
 #include <cmath>
+#include <QPageLayout>
 
 #include "reports.h"
 #include "mainwindow.h"
@@ -30,6 +34,7 @@ Report::Report()
 void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 {
     if (!gv) { return; }
+
 
     Session *journal = nullptr;
     //QDate d=QDate::currentDate();
@@ -78,10 +83,10 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
     printer->setOutputFileName(filename);
 #endif
     printer->setPrintRange(QPrinter::AllPages);
-    printer->setOrientation(QPrinter::Portrait);
+    printer->setPageOrientation(QPageLayout::Portrait);
     printer->setFullPage(false); // This has nothing to do with scaling
-    printer->setNumCopies(1);
-    printer->setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+    printer->setCopyCount(1);
+    printer->setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
     QPrintDialog dialog(printer);
 #ifdef Q_OS_MAC
     // QTBUG-17913
@@ -104,9 +109,8 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
     GLint gw;
     gw = 2048; // Rough guess.. No GL_MAX_RENDERBUFFER_SIZE in mingw.. :(
-
     //QSizeF pxres=printer->paperSize(QPrinter::DevicePixel);
-    QRect prect = printer->pageRect();
+    QRect prect = printer->pageLayout().paintRectPixels( printer->resolution() ) ;
     float ratio = float(prect.height()) / float(prect.width());
     float virt_width = gw;
     float virt_height = virt_width * ratio;
