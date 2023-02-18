@@ -42,6 +42,7 @@
 
 #include "common_gui.h"
 #include "version.h"
+#include "SleepLib/appsettings.h"       // defines for REMSTAR_M_SUPPORT
 
 
 // Custom loaders that don't autoscan..

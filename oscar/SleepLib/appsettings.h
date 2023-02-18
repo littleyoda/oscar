@@ -25,6 +25,7 @@ class Preferences;
 enum OverviewLinechartModes { OLC_Bartop, OLC_Lines };
 #endif
 
+#define REMSTAR_M_SUPPORTdisabled
 
 // ApplicationWideSettings Strings
 const QString STR_CS_UserEventPieChart = "UserEventPieChart";

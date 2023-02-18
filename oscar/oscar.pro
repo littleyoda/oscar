@@ -551,23 +551,26 @@ gcc | clang {
 
 gcc:!clang {
     message("Building for $$QMAKE_HOST.os")
-    greaterThan(COMPILER_MAJOR, 10) : {
-        QMAKE_CFLAGS += -Wno-error=stringop-overread
-        QMAKE_CXXFLAGS += -Wno-error=stringop-overread
-        message("Making stringop-overread a non-error")
-    }
+    # this section removedi. stringop-overread was only trigger by mseries_loader:: OPen method
+    #greaterThan(COMPILER_MAJOR, 10) : {
+    #    QMAKE_CFLAGS += -Wno-error=stringop-overread
+    #    QMAKE_CXXFLAGS += -Wno-error=stringop-overread
+    #    message("Making stringop-overread a non-error")
+    #}
 }
 
 clang {
     message("Building for $$QMAKE_HOST.os")
-    greaterThan(COMPILER_MAJOR, 9) : {
-    	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
-    	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
-    	message("Making deprecated-copy a non-error")
-    }
+    # this section removedi. all deprecated-copy  errors have been removed
+    #greaterThan(COMPILER_MAJOR, 9) : {
+    #	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    #	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    #	message("Making deprecated-copy a non-error")
+    #}
 }
 
 # Make deprecation warnings just warnings
+# these two  removed. all deprecated-declarations errors have been removed
 QMAKE_CFLAGS += -Wno-error=deprecated-declarations
 QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
 

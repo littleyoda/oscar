@@ -7,10 +7,11 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#include "mseries_loader.h"
+#ifdef REMSTAR_M_SUPPORT
+
 #include <QDir>
 #include <QProgressBar>
-
-#include "mseries_loader.h"
 
 // The qt5.15 obsolescence of hex requires this change.
 // this solution to QT's obsolescence is only used in debug statements
@@ -499,3 +500,4 @@ void MSeriesLoader::Register()
     //InitModelMap();
     mseries_initialized = true;
 }
+#endif // REMSTAR_M_SUPPORT

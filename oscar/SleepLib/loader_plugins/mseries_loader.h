@@ -13,6 +13,9 @@
 #ifndef MSERIES_LOADER_H
 #define MSERIES_LOADER_H
 
+#include "SleepLib/appsettings.h"
+#ifdef REMSTAR_M_SUPPORT
+
 #include "SleepLib/machine.h"
 #include "SleepLib/machine_loader.h"
 #include "SleepLib/profiles.h"
@@ -74,4 +77,5 @@ class MSeriesLoader : public MachineLoader
     quint32 epoch;
 };
 
+#endif // REMSTAR_M_SUPPORT
 #endif // MSERIES_LOADER_H
