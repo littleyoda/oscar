@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLED
+#include <test_macros.h>
+
 #include <QApplication>
 #include <QString>
 #include <QDateTime>
@@ -28,6 +31,15 @@
 
 #ifdef DEBUG_EFFICIENCY
 #include <QElapsedTimer>  // only available in 4.8 and later
+#endif
+
+
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTCOMBINE insert
+    //idmap.insert(hash);
+#else
+    #define QTCOMBINE unite
+    //idmap.unite(hash);
 #endif
 
 
@@ -1891,7 +1903,7 @@ bool parseIdentFile( QString path, MachineInfo * info, QHash<QString, QString> &
         while (!f.atEnd()) {
            QString line = f.readLine().trimmed();
            QHash<QString, QString> hash = parseIdentLine( line, info );
-           idmap.unite(hash);
+           idmap.QTCOMBINE(hash);
         }
 
         f.close();
@@ -1906,19 +1918,19 @@ void scanProductObject( QJsonObject product, MachineInfo *info, QHash<QString, Q
         info->serial = product["SerialNumber"].toString();
         hash1["SerialNumber"] = product["SerialNumber"].toString();
         if (idmap)
-            idmap->unite(hash1);
+            idmap->QTCOMBINE(hash1);
     }
     if (product.contains("ProductCode")) {
         info->modelnumber = product["ProductCode"].toString();
         hash2["ProductCode"] = info->modelnumber;
         if (idmap)
-            idmap->unite(hash2);
+            idmap->QTCOMBINE(hash2);
     }
     if (product.contains("ProductName")) {
         info->model = product["ProductName"].toString();
         hash3["ProductName"] = info->model;
         if (idmap)
-            idmap->unite(hash3);
+            idmap->QTCOMBINE(hash3);
         int idx = info->model.indexOf("11");
         info->series = info->model.left(idx+2);
     }
