@@ -112,6 +112,7 @@ enum PRTimeModes { //:short
 struct MachineInfo {
     MachineInfo() { type = MT_UNKNOWN; version = 0; cap=0; }
     MachineInfo(const MachineInfo & /*copy*/) = default;
+    ~MachineInfo() {};
 
     MachineInfo(MachineType type, quint32 cap, QString loadername, QString brand, QString model, QString modelnumber, QString serial, QString series, QDateTime lastimported, int version, QDate purgeDate = QDate()) :
         type(type), cap(cap), loadername(loadername), brand(brand), model(model), modelnumber(modelnumber), serial(serial), series(series), lastimported(lastimported), version(version), purgeDate(purgeDate) {}

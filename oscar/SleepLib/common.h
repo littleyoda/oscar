@@ -68,6 +68,7 @@ struct ValueCount {
         :value(val), count(cnt), p(pp) {}
 
     ValueCount(const ValueCount &copy) = default;
+    ~ValueCount() {};
     EventDataType value;
     qint64 count;
     double p;
