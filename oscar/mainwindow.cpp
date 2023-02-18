@@ -38,6 +38,7 @@
 #include <QScreen>
 #include <QStorageInfo>
 #include <cmath>
+#include <QRandomGenerator>
 
 #include "common_gui.h"
 #include "version.h"
@@ -257,7 +258,7 @@ void MainWindow::SetupGUI()
     ui->actionImport_RemStar_MSeries_Data->setVisible(false);
 #endif
 
-    qsrand(QDateTime::currentDateTime().toTime_t());
+    QRandomGenerator(QDateTime::currentDateTime().toTime_t());
 
     QList<int> a;
 

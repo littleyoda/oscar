@@ -159,7 +159,7 @@ void Profile::addLock()
     QFile lockfile(p_path+"lockfile");
     lockfile.open(QFile::WriteOnly);
     QByteArray ba;
-    ba.append(QHostInfo::localHostName());
+    ba.append(QHostInfo::localHostName().toUtf8());
     lockfile.write(ba);
     lockfile.close();
 }
