@@ -947,7 +947,11 @@ void gGraphView::DrawTextQue(QPainter &painter)
         if (q.angle == 0) {
             painter.drawText(q.x, q.y, q.text);
         } else {
-            w = painter.fontMetrics().horizontalAdvance(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else 
+                w = painter.fontMetrics().width(q.text);
+            #endif 
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.x, q.y);
@@ -972,7 +976,11 @@ void gGraphView::DrawTextQue(QPainter &painter)
         if (q.angle == 0) {
             painter.drawText(q.rect, q.flags, q.text);
         } else {
-            w = painter.fontMetrics().horizontalAdvance(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else 
+                w = painter.fontMetrics().width(q.text);
+            #endif 
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.rect.x(), q.rect.y());
@@ -1013,7 +1021,11 @@ void gGraphView::DrawTextQueCached(QPainter &painter)
         if (!QPixmapCache::find(hstr, &pm)) {
 
             QFontMetrics fm(*q.font);
-            w = fm.horizontalAdvance(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else 
+                w = painter.fontMetrics().width(q.text);
+            #endif 
             h = fm.height()+buf;
 
             pm = QPixmap(w, h);
