@@ -803,45 +803,6 @@ void DescriptionMap::load() {
 
 
 #if 0
-Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?
-
-QMessageBox msgBox; msgBox.setText(tr("Confirm?"));
-QAbstractButton* pButtonYes = msgBox.addButton(tr("Yeah!"), QMessageBox::YesRole);
-pButtonNo=msgBox.addButton(tr("Nope"), QMessageBox::NoRole);
-btn.setIcon(const QIcon &icon);
-
-msgBox.exec();
-
-if (msgBox.clickedButton()==pButtonYes) {
-
-
-QIcon groupIcon( style()->standardIcon( QStyle::SP_DirClosedIcon ) )
-https://www.pythonguis.com/faq/built-in-qicons-pyqt/
-
-QMessageBox msgBox;
-msgBox.setText("The document has been modified.");
-msgBox.setInformativeText("Do you want to save your changes?");
-msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-msgBox.setDefaultButton(QMessageBox::Save);
-int ret = msgBox.exec();
-switch (ret) {
-  case QMessageBox::Save:
-      // Save was clicked
-      break;
-  case QMessageBox::Discard:
-      // Don't Save was clicked
-      break;
-  case QMessageBox::Cancel:
-      // Cancel was clicked
-      break;
-  default:
-      // should never be reached
-      break;
-}
-
-
-
-// Reminders For testing
 
     Different languages unicodes to test. optained from translation files
 
@@ -854,63 +815,6 @@ switch (ret) {
     已成功删除 عذرا ، لا يمكن تحديد موقع ملف.  删除
     Toon gegevensmap
     عذرا ، لا يمكن تحديد موقع ملف.
-
-
-    menuDialog->connect(menuList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(itemActivated(QListWidgetItem*)   ));
-    menuDialog->connect(menuList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(itemDoubleClicked(QListWidgetItem*)   ));
-    menuDialog->connect(menuList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)   ));
-    menuDialog->connect(menuList, SIGNAL(itemEntered(QListWidgetItem*)), this, SLOT(itemEntered(QListWidgetItem*)   ));
-    menuDialog->connect(menuList, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(itemEntered(QListWidgetItem*)   ));
-
-
-
-    menuDialog->disconnect(menuList, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(itemActivated(QListWidgetItem*)   ));
-    menuDialog->disconnect(menuList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(itemDoubleClicked(QListWidgetItem*)   ));
-    menuDialog->disconnect(menuList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)   ));
-    menuDialog->disconnect(menuList, SIGNAL(itemEntered(QListWidgetItem*)), this, SLOT(itemEntered(QListWidgetItem*)   ));
-    menuDialog->disconnect(menuList, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(itemEntered(QListWidgetItem*)   ));
-
-
-void SaveGraphLayoutSettings::itemActivated(QListWidgetItem *item)
-{
-    Q_UNUSED( item );
-    DEBUGF Q( item->text() );
-}
-
-void SaveGraphLayoutSettings::itemDoubleClicked(QListWidgetItem *item)
-{
-    Q_UNUSED( item );
-    DEBUGF Q( item->text() );
-}
-
-void SaveGraphLayoutSettings::itemClicked(QListWidgetItem *item)
-{
-    Q_UNUSED( item );
-    DEBUGF Q( item->text() );
-}
-
-void SaveGraphLayoutSettings::itemEntered(QListWidgetItem *item)
-{
-    Q_UNUSED( item );
-    DEBUGF Q( item->text() );
-}
-
-void SaveGraphLayoutSettings::itemPressed(QListWidgetItem *item)
-{
-    Q_UNUSED( item );
-    DEBUGF Q( item->text() );
-}
-
-//private_slots:
-    void    itemActivated(QListWidgetItem *item);
-    void    itemDoubleClicked(QListWidgetItem *item);
-    void    itemClicked(QListWidgetItem *item);
-    void    itemEntered(QListWidgetItem *item);
-    void    itemPressed(QListWidgetItem *item);
-
-
-
-
 
 #endif
 
