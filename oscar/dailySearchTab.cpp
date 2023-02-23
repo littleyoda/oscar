@@ -348,7 +348,7 @@ QString DailySearchTab::valueToString(int value, QString defaultValue) {
                 return formatTime(value);
             break;
             case whole:
-                QString().setNum(value);
+                return QString().setNum(value);
             break;
             case string:
                 return foundString;
