@@ -13,6 +13,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QProgressBar>
 #include <QMessageBox>
 #include <QAbstractButton>
 #include <QPixmap>
@@ -136,6 +137,7 @@ void    DailySearchTab::createUi() {
         summaryProgress = new QLabel(this);
         summaryFound    = new QLabel(this);
         summaryMinMax   = new QLabel(this);
+        guiProgressBar  = new QProgressBar(this);
         guiDisplayTable = new QTableWidget(this);
 
         searchTabLayout ->addWidget(helpButton);
@@ -171,6 +173,7 @@ void    DailySearchTab::createUi() {
         summaryLayout   ->addWidget(summaryMinMax);
         searchTabLayout ->addLayout(summaryLayout);
 
+        searchTabLayout ->addWidget(guiProgressBar);
         searchTabLayout ->addWidget(guiDisplayTable);
         // End of UI creatation
 
@@ -181,9 +184,10 @@ void    DailySearchTab::createUi() {
         searchTabWidget ->setFont(baseFont);
 
         helpButton    ->setFont(baseFont);
-        helpButton    ->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-        helpButton    ->setStyleSheet("QPushButton { border:none ;}");
+        //helpButton    ->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+        //helpButton    ->setStyleSheet(QString("QPushButton:flat {border: none }"));
         //helpButton    ->setStyleSheet(" text-align:left ; padding: 4;border: 1px");
+
         helpInfo      ->setText(helpStr());
         helpInfo      ->setFont(baseFont);
         helpInfo      ->setStyleSheet(" text-align:left ; padding: 4;border: 1px");
@@ -478,7 +482,8 @@ QString DailySearchTab::valueToString(int value, QString defaultValue) {
             case minutesToMs:
                 return formatTime(value);
             break;
-            case whole:
+            case displayWhole:
+            case opWhole:
                 return QString().setNum(value);
             break;
             case displayString:
@@ -513,13 +518,7 @@ void    DailySearchTab::on_selectOperationCombo_activated(int index) {
 void    DailySearchTab::on_selectCommandCombo_activated(int index) {
         // here to select new search criteria
         // must reset all variables and label, button, etc
-
-        selectDouble->hide();
-        selectDouble->setDecimals(3);
-        selectInteger->hide();
-        selectString->hide();
-        selectUnits->hide();
-        selectOperationButton->hide();
+        on_clearButton_clicked() ;
 
         valueMode = notUsed;
         selectValue = 0;
@@ -544,7 +543,7 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 horizontalHeader1->setText(tr("Number Disabled Session\nJumps to Notes"));
                 nextTab = TW_DETAILED ;
                 selectInteger->setValue(0);
-                setSelectOperation(OP_GT,whole);
+                setSelectOperation(OP_NO_PARMS,displayWhole);
                 break;
             case OT_NOTES :
                 horizontalHeader1->setText(tr("Note\nJumps to Notes"));
@@ -586,7 +585,7 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
             case OT_SESSIONS_QTY :
                 horizontalHeader1->setText(tr("Number of Sessions\nJumps to Details"));
                 nextTab = TW_DETAILED ;
-                setSelectOperation(OP_GT,whole);
+                setSelectOperation(OP_GT,opWhole);
                 selectInteger->setRange(0,999);
                 selectInteger->setValue(1);
                 break;
@@ -601,7 +600,7 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 // Have an Event 
                 horizontalHeader1->setText(tr("Number of events\nJumps to Events"));
                 nextTab = TW_EVENTS ;
-                setSelectOperation(OP_GT,whole);
+                setSelectOperation(OP_GT,opWhole);
                 selectInteger->setValue(0);
                 break;
         }
@@ -784,6 +783,8 @@ bool DailySearchTab::find(QDate& date,Day* day)
 
 void DailySearchTab::search(QDate date)
 {
+        guiProgressBar->show();
+        statusProgress->show();
         guiDisplayTable->clearContents();
         for (int index=0; index<guiDisplayTable->rowCount();index++) {
             guiDisplayTable->setRowHidden(index,true);
@@ -806,6 +807,7 @@ void DailySearchTab::search(QDate date)
                 break;
             }
             daysSearched++;
+            guiProgressBar->setValue(daysSearched);
             if (date.isValid()) {
                 // use date
                 // find and add
@@ -976,8 +978,9 @@ void    DailySearchTab::setSelectOperation(OpCode opCode,ValueMode mode)  {
                 selectDouble->setRange(0,9999);
                 selectDouble->show();
                 break;
-            case whole:
+            case opWhole:
                 selectInteger->show();
+            case displayWhole:
             break;
             case opString:
                 selectOperationButton->show();
@@ -1026,6 +1029,8 @@ void    DailySearchTab::on_clearButton_clicked()
         summaryFound->hide();
         summaryMinMax->hide();
 
+
+        guiProgressBar->hide();
         // clear display table && hide
         guiDisplayTable->horizontalHeader()->hide();
         for (int index=0; index<guiDisplayTable->rowCount();index++) {
@@ -1040,8 +1045,7 @@ void    DailySearchTab::on_startButton_clicked()
         if (startButtonMode) {
             // have start mode
             // must set up search from the latest date and go to the first date.
-            // set up variables for multiple passes.
-            //startButton->setText("Continue Search");
+
             search (lastDate );
             startButtonMode=false;
         } else {
@@ -1115,7 +1119,8 @@ void    DailySearchTab::criteriaChanged() {
             case hoursToMs:
                 selectValue = (int)(selectDouble->value()*3600000.0);   //convert to ms
             break;
-            case whole:
+            case displayWhole:
+            case opWhole:
                 selectValue = selectInteger->value();;
             break;
             case opString:
@@ -1156,6 +1161,14 @@ void    DailySearchTab::criteriaChanged() {
         daysSearched=0;
         startButtonMode=true;
 
+        //initialize progress bar.
+        guiProgressBar->hide();
+        guiProgressBar->setMinimum(0);
+        guiProgressBar->setMaximum(daysTotal);
+        guiProgressBar->setTextVisible(true);
+        //guiProgressBar->setTextVisible(false);
+        guiProgressBar->setMaximumHeight(15);
+        guiProgressBar->reset();
 }
 
 // inputs  character string.

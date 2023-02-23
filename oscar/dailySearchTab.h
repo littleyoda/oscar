@@ -20,6 +20,7 @@
 #include "SleepLib/common.h"
 
 class QWidget ;
+class QProgressBar ;
 class QHBoxLayout ;
 class QVBoxLayout ;
 class QPushButton ;
@@ -57,7 +58,7 @@ private:
     const int     passDisplayLimit = 30;
     const int     stringDisplayLen = 80;
 
-enum ValueMode { invalidValueMode, notUsed , minutesToMs ,hoursToMs, hundredths , whole , opString, displayString};
+enum ValueMode { invalidValueMode, notUsed , minutesToMs ,hoursToMs, hundredths , opWhole , displayWhole , opString, displayString};
 
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
@@ -102,6 +103,7 @@ enum OpCode {
     QPushButton*  startButton;
     QPushButton*  clearButton;
 
+    QProgressBar* guiProgressBar;
     QTableWidget* guiDisplayTable;
     QTableWidgetItem* horizontalHeader0;
     QTableWidgetItem* horizontalHeader1;
