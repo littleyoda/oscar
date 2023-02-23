@@ -1154,13 +1154,20 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
         }
 
 
+        bool found=false;
         for (int i = 0; i < w.selectedFiles().size(); i++) {
             Q_FOREACH(MachineLoader * loader, loaders) {
                 if (loader->Detect(w.selectedFiles().at(i))) {
+                    found=true;
                     datacards.append(ImportPath(w.selectedFiles().at(i), loader));
                     break;
                 }
             }
+        }
+        if (!found) {
+            QMessageBox msgBox ( QMessageBox::Information , tr("OSCAR Information") , tr("No supported data was found") , QMessageBox::Ok ) ;
+            msgBox.setInformativeText(w.selectedFiles().at(0));
+            msgBox.exec();
         }
     }
     
