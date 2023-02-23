@@ -55,6 +55,17 @@ private:
     const int     dateRole = Qt::UserRole;
     const int     valueRole = 1+Qt::UserRole;
     const int     passDisplayLimit = 30;
+    const int     stringDisplayLen = 80;
+
+enum ValueMode { invalidValueMode, notUsed , minutesToMs ,hoursToMs, hundredths , whole , opString, displayString};
+
+enum OpCode {
+    //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
+    // start of fixed codes
+    OP_INVALID , OP_LT , OP_GT , OP_NE , OP_EQ , OP_LE , OP_GE , OP_END_NUMERIC ,
+    // end of fixed codes
+    OP_CONTAINS , OP_WILDCARD , OP_NO_PARMS };
+
 
     Daily*        daily;
     QWidget*      parent;
@@ -69,7 +80,8 @@ private:
     QHBoxLayout*  searchLayout;
     QHBoxLayout*  summaryLayout;
 
-    QPushButton*  helpInfo;
+    QPushButton*  helpButton;
+    QLabel*       helpInfo;
 
     QComboBox*    selectOperationCombo;
     QPushButton*  selectOperationButton;
@@ -88,6 +100,7 @@ private:
     QSpinBox*     selectInteger;
     QLineEdit*    selectString;
     QPushButton*  startButton;
+    QPushButton*  clearButton;
 
     QTableWidget* guiDisplayTable;
     QTableWidgetItem* horizontalHeader0;
@@ -98,9 +111,9 @@ private:
     QIcon*        m_icon_notSelected;
     QIcon*        m_icon_configure;
 
-    QMap <QString,qint32> opCodeMap;
-    QString     opCodeStr(int);
-    int         selectOperationOpCode = 0;
+    QMap <QString,OpCode> opCodeMap;
+    QString     opCodeStr(OpCode);
+    OpCode      selectOperationOpCode = OP_INVALID;
 
 
     bool        helpMode=false;
@@ -114,7 +127,7 @@ private:
     void        displayStatistics();
 
 
-    void        addItem(QDate date, QString value);
+    void        addItem(QDate date, QString value, Qt::Alignment alignment);
     void        setCommandPopupEnabled(bool );
     void        setOperationPopupEnabled(bool );
     void        setOperation( );
@@ -123,8 +136,11 @@ private:
     QString     centerLine(QString line);
     QString     formatTime (qint32) ;
     QString     convertRichText2Plain (QString rich);
+    QRegExp     searchPatterToRegex (QString wildcard);
+
     EventDataType calculateAhi(Day* day);
     bool        compare(int,int );
+    bool        compare(QString aa , QString bb);
     
     bool        createUiFinished=false;
     bool        startButtonMode=true;
@@ -142,7 +158,7 @@ private:
     int         daysFound;
     int         passFound;
 
-    enum ValueMode { notUsed , minutesToMs ,hoursToMs, hundredths , whole , string};
+    void        setSelectOperation(OpCode opCode,ValueMode mode) ;
 
     ValueMode   valueMode;
     qint32     selectValue=0;
@@ -166,12 +182,13 @@ public slots:
 private slots:
     void on_dateItemClicked(QTableWidgetItem *item);
     void on_startButton_clicked();
+    void on_clearButton_clicked();
     void on_selectMatch_clicked();
     void on_selectCommandButton_clicked();
     void on_selectCommandCombo_activated(int);
     void on_selectOperationButton_clicked();
     void on_selectOperationCombo_activated(int);
-    void on_helpInfo_clicked();
+    void on_helpButton_clicked();
     void on_dailyTabWidgetCurrentChanged(int);
     void on_intValueChanged(int);
     void on_doubleValueChanged(double);
