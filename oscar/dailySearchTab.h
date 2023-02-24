@@ -60,6 +60,8 @@ private:
 
 enum ValueMode { invalidValueMode, notUsed , minutesToMs ,hoursToMs, hundredths , opWhole , displayWhole , opString, displayString};
 
+enum SearchTopic { ST_NONE, ST_DISABLED_SESSIONS, ST_NOTES, ST_NOTES_STRING, ST_BOOKMARKS, ST_BOOKMARKS_STRING, ST_AHI, ST_SESSION_LENGTH, ST_SESSIONS_QTY, ST_DAILY_USAGE, ST_EVENT };
+
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
     // start of fixed codes
@@ -133,6 +135,7 @@ enum OpCode {
     void        setCommandPopupEnabled(bool );
     void        setOperationPopupEnabled(bool );
     void        setOperation( );
+    void        hideResults();
 
     QString     helpStr();
     QString     centerLine(QString line);
@@ -146,8 +149,9 @@ enum OpCode {
     
     bool        createUiFinished=false;
     bool        startButtonMode=true;
-    int         searchType;
+    SearchTopic searchTopic;
     int         nextTab;
+    int         channelId;
 
     QDate       firstDate ;
     QDate       lastDate ;
