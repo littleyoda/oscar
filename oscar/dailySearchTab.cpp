@@ -247,7 +247,7 @@ void    DailySearchTab::createUi() {
         guiDisplayTable->setColumnWidth(0, 30/*iconWidthPlus*/ + QFontMetrics(baseFont).size(Qt::TextSingleLine , "WWW MMM 99 2222").width());
 
 
-        horizontalHeader0->setText(tr("DATE\nClick date to Restore"));
+        horizontalHeader0->setText(tr("DATE\nJumps to Date"));
         horizontalHeader1->setText("");
 
 }
@@ -521,57 +521,57 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 setSelectOperation( OP_INVALID ,notUsed);
                 break;
             case ST_DISABLED_SESSIONS :
-                horizontalHeader1->setText(tr("Number Disabled Session\nJumps to Notes"));
+                horizontalHeader1->setText(tr("Number Disabled Session\nJumps to Date's Details "));
                 nextTab = TW_DETAILED ;
                 selectInteger->setValue(0);
                 setSelectOperation(OP_NO_PARMS,displayWhole);
                 break;
             case ST_NOTES :
-                horizontalHeader1->setText(tr("Note\nJumps to Notes"));
+                horizontalHeader1->setText(tr("Note\nJumps to Date's Notes"));
                 nextTab = TW_NOTES ;
                 setSelectOperation( OP_NO_PARMS ,displayString);
                 break;
             case ST_BOOKMARKS :
-                horizontalHeader1->setText(tr("Jumps to Bookmark"));
+                horizontalHeader1->setText(tr("Jumps to Date's Bookmark"));
                 nextTab = TW_BOOKMARK ;
                 setSelectOperation( OP_NO_PARMS ,displayString);
                 break;
             case ST_BOOKMARKS_STRING :
-                horizontalHeader1->setText(tr("Jumps to Bookmark"));
+                horizontalHeader1->setText(tr("Jumps to Date's Bookmark"));
                 nextTab = TW_BOOKMARK ;
                 //setSelectOperation(OP_CONTAINS,opString);
                 setSelectOperation(OP_WILDCARD,opString);
                 selectString->clear();
                 break;
             case ST_NOTES_STRING :
-                horizontalHeader1->setText(tr("Note\nJumps to Notes"));
+                horizontalHeader1->setText(tr("Note\nJumps to Date's Notes"));
                 nextTab = TW_NOTES ;
                 //setSelectOperation(OP_CONTAINS,opString);
                 setSelectOperation(OP_WILDCARD,opString);
                 selectString->clear();
                 break;
             case ST_AHI :
-                horizontalHeader1->setText(tr("AHI\nJumps to Details"));
+                horizontalHeader1->setText(tr("AHI\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setSelectOperation(OP_GT,hundredths);
                 selectDouble->setValue(5.0);
                 break;
             case ST_SESSION_LENGTH :
-                horizontalHeader1->setText(tr("Session Duration\nJumps to Details"));
+                horizontalHeader1->setText(tr("Session Duration\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setSelectOperation(OP_LT,minutesToMs);
                 selectDouble->setValue(5.0);
                 selectInteger->setValue((int)selectDouble->value()*60000.0);   //convert to ms
                 break;
             case ST_SESSIONS_QTY :
-                horizontalHeader1->setText(tr("Number of Sessions\nJumps to Details"));
+                horizontalHeader1->setText(tr("Number of Sessions\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setSelectOperation(OP_GT,opWhole);
                 selectInteger->setRange(0,999);
                 selectInteger->setValue(2);
                 break;
             case ST_DAILY_USAGE :
-                horizontalHeader1->setText(tr("Daily Duration\nJumps to Details"));
+                horizontalHeader1->setText(tr("Daily Duration\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setSelectOperation(OP_LT,hoursToMs);
                 selectDouble->setValue(p_profile->cpap->complianceHours());
@@ -579,7 +579,7 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 break;
             case ST_EVENT:
                 // Have an Event
-                horizontalHeader1->setText(tr("Number of events\nJumps to Events"));
+                horizontalHeader1->setText(tr("Number of events\nJumps to Date's Events"));
                 nextTab = TW_EVENTS ;
                 setSelectOperation(OP_GT,opWhole);
                 selectInteger->setValue(0);
@@ -1177,8 +1177,8 @@ QString DailySearchTab::helpStr() {
 "'\\*' matchs '*' \t '\\?' matches '?' \t '\\\\' matches '\\' \n"
 "\n"
 "Result Table\n"
-"Column One: Date of match. Clicking loads the date and checkbox marked.\n"
-"Column two: Information. Clicking loads the date, checkbox marked, jumps to a tab.\n"
+"Column One: Date of match. Clicking opens the date and checkbox marked.\n"
+"Column two: Information. Clicking opens the date, checkbox marked, Jumps to a tab.\n"
 ) );
 }
 
