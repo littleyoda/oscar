@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 #include <QTextCharFormat>
@@ -580,10 +580,26 @@ void Daily::showEvent(QShowEvent *)
 //    sleep(3);
 }
 
+bool Daily::rejectToggleSessionEnable( Session*sess) {
+    if (!sess) return true;
+    bool enabled=sess->enabled();
+    if (enabled ) {
+           QMessageBox mbox(QMessageBox::Warning, tr("Disable Warning"),
+                tr("Disabling a session will remove this session data \nfrom all  graphs, reports and statistics." 
+                "\n\n" 
+                "The Search tab can find disabled sessions"
+                "\n\n" 
+                "Continue ?"),
+                QMessageBox::Yes | QMessageBox::No , this);
+            if (mbox.exec() != QMessageBox::Yes ) return true;
+    };
+    sess->setEnabled(!enabled);
+    return false;
+}
+
 void Daily::doToggleSession(Session * sess)
 {
-    sess->setEnabled(!sess->enabled());
-
+    if (rejectToggleSessionEnable( sess) ) return;
     LoadDate(previous_date);
     mainwin->getOverview()->graphView()->dataChanged();
 }
@@ -599,10 +615,8 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (!day) return;
         Session *sess=day->find(sid, MT_CPAP);
-        if (!sess)
-            return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
 
         // Reload day
         LoadDate(previous_date);
@@ -612,10 +626,8 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
         if (!day) return;
         Session *sess=day->find(sid, MT_OXIMETER);
-        if (!sess)
-            return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
 
         // Reload day
         LoadDate(previous_date);
@@ -625,16 +637,14 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
         if (!day) return;
         Session *sess=day->find(sid, MT_SLEEPSTAGE);
-        if (!sess) return;
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
         LoadDate(previous_date);
         mainwin->getOverview()->graphView()->dataChanged();
     } else  if (code=="togglepositionsession") { // Enable/Disable Position session
         day=p_profile->GetDay(previous_date,MT_POSITION);
         if (!day) return;
         Session *sess=day->find(sid, MT_POSITION);
-        if (!sess) return;
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
         LoadDate(previous_date);
         mainwin->getOverview()->graphView()->dataChanged();
     } else if (code=="cpap")  {
@@ -1122,6 +1132,9 @@ QString Daily::getSessionInformation(Day * day)
                     .arg(fd.date().toString(Qt::SystemLocaleShortDate))
                     .arg(fd.toString("HH:mm:ss"))
                     .arg(ld.toString("HH:mm:ss"));
+
+
+
 #ifdef SESSION_DEBUG
             for (int i=0; i< sess->session_files.size(); ++i) {
                 html+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(sess->session_files[i].section("/",-1));

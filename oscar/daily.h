@@ -264,6 +264,8 @@ private slots:
     void on_weightSpinBox_valueChanged(double arg1);
 #endif
 
+    bool rejectToggleSessionEnable(Session * sess);
+
     void doToggleSession(Session *);
 
     void on_eventsCombo_activated(int index);
