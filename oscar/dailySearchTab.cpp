@@ -250,6 +250,7 @@ void    DailySearchTab::createUi() {
         horizontalHeader0->setText(tr("DATE\nJumps to Date"));
         horizontalHeader1->setText("");
 
+        on_clearButton_clicked();
 }
 
 void DailySearchTab::delayedCreateUi() {
