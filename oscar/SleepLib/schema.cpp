@@ -169,7 +169,7 @@ void init()
     schema::channel.add(GRP_CPAP, new Channel(CPAP_FlowLimit     = 0x1005, FLAG,        MT_CPAP, SESSION, "FlowLimit",
             QObject::tr("Flow Limitation (FL)"), QObject::tr("A restriction in breathing from normal, causing a flattening of the flow waveform."), QObject::tr("FL"), STR_UNIT_EventsPerHour,    DEFAULT,    QColor("#404040")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_RERA          = 0x1006, FLAG,        MT_CPAP, SESSION, "RERA",
-            QObject::tr("RERA (RE)"),QObject::tr("Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance."), QObject::tr("RE"),       STR_UNIT_EventsPerHour,    DEFAULT,    COLOR_Gold));
+            QObject::tr("RERA (RE)"),QObject::tr("Respiratory Effort Related Arousal: A restriction in breathing that causes an either an awakening or sleep disturbance."), QObject::tr("RE"),       STR_UNIT_EventsPerHour,    DEFAULT,    COLOR_Gold));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore        = 0x1007, FLAG,        MT_CPAP, SESSION, "VSnore",
             QObject::tr("Vibratory Snore (VS)"), QObject::tr("A vibratory snore"), QObject::tr("VS"),       STR_UNIT_EventsPerHour,    DEFAULT,    QColor("red")));
     schema::channel.add(GRP_CPAP, new Channel(CPAP_VSnore2       = 0x1008, FLAG,        MT_CPAP, SESSION, "VSnore2",
