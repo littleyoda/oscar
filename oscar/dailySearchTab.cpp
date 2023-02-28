@@ -1189,7 +1189,7 @@ QString DailySearchTab::formatTime (qint32 ms) {
         qint32 minutes = ms / 60000;
         ms = ms % 60000;
         qint32 seconds = ms /1000;
-        return QString(tr("%1h %2m %3s")).arg(hours).arg(minutes).arg(seconds);
+        return QString("%1:%2:%3").arg(hours).arg(minutes,2,10,QLatin1Char('0')).arg(seconds,2,10,QLatin1Char('0'));
 }
 
 QString DailySearchTab::convertRichText2Plain (QString rich) {
