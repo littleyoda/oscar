@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <cmath>
 #include <QVector>
 #include "SleepLib/profiles.h"
@@ -161,6 +164,15 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
 
     if (!m_day) { return; }
 
+    qint64 minx,maxx,dur;
+    g.graphView()->GetXBounds(minx,maxx);
+    dur = maxx - minx;
+    QString text= QString("%1 -> %2     %3: %4 ").
+        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
+        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
+        arg(QObject::tr("Selection Length")).
+        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz"))  ;
+    g.renderText(text, left , top -5 );
 
     QVector<gFlagsLine *> visflags;
 
