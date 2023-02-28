@@ -8,7 +8,7 @@
  * for more details. */
 
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QWidget>
@@ -266,6 +266,7 @@ void DailySearchTab::delayedCreateUi() {
         selectCommandCombo->addItem(tr("AHI "),ST_AHI);
         selectCommandCombo->addItem(tr("Daily Duration"),ST_DAILY_USAGE);
         selectCommandCombo->addItem(tr("Session Duration" ),ST_SESSION_LENGTH);
+        selectCommandCombo->addItem(tr("Days Skipped"),ST_DAYS_SKIPPED);
         selectCommandCombo->addItem(tr("Disabled Sessions"),ST_DISABLED_SESSIONS);
         selectCommandCombo->addItem(tr("Number of Sessions"),ST_SESSIONS_QTY);
         selectCommandCombo->insertSeparator(selectCommandCombo->count());  // separate from events
@@ -521,6 +522,11 @@ void    DailySearchTab::on_selectCommandCombo_activated(int index) {
                 nextTab = TW_NONE ;
                 setSelectOperation( OP_INVALID ,notUsed);
                 break;
+            case ST_DAYS_SKIPPED :
+                horizontalHeader1->setText(tr("No Data\nJumps to Date's Details "));
+                nextTab = TW_DETAILED ;
+                setSelectOperation(OP_NO_PARMS,notUsed);
+                break;
             case ST_DISABLED_SESSIONS :
                 horizontalHeader1->setText(tr("Number Disabled Session\nJumps to Date's Details "));
                 nextTab = TW_DETAILED ;
@@ -612,12 +618,16 @@ void DailySearchTab::updateValues(qint32 value) {
 }
 
 
-bool DailySearchTab::find(QDate& date,Day* day)
+void DailySearchTab::find(QDate& date)
 {
-        if (!day) return false;
         bool found=false;
         Qt::Alignment alignment=Qt::AlignCenter;
+        Day* day = p_profile->GetDay(date);
+        if ( (!day) && (searchTopic != ST_DAYS_SKIPPED)) { daysSkipped++; return;};
         switch (searchTopic) {
+            case ST_DAYS_SKIPPED :
+                found=!day;
+                break;
             case ST_DISABLED_SESSIONS :
                 {
                 qint32 numDisabled=0;
@@ -629,11 +639,6 @@ bool DailySearchTab::find(QDate& date,Day* day)
                     }
                 }
                 updateValues(numDisabled);
-                //if (found) {
-                    //QString displayStr= QString("%1/%2").arg(numDisabled).arg(sessions.size());
-                    //addItem(date , displayStr,alignment );
-                    //return true;
-                //}
                 }
                 break;
             case ST_NOTES :
@@ -668,7 +673,6 @@ bool DailySearchTab::find(QDate& date,Day* day)
                     QStringList notes = journal->settings[Bookmark_Notes].toStringList();
                     QString findStr = selectString->text();
                     for (   const auto & note : notes) {
-                        //if (note.contains(findStr,Qt::CaseInsensitive) )
                         if (compare(findStr , note))
                         {
                            found=true;
@@ -752,18 +756,22 @@ bool DailySearchTab::find(QDate& date,Day* day)
                 }
                 break;
             case ST_NONE :
-                return false;
                 break;
         }
         if (found) {
             addItem(date , valueToString(foundValue,"------"),alignment );
-            return true;
+            passFound++;
+            daysFound++;
         }
-        return false;
+        return ;
 };
 
 void DailySearchTab::search(QDate date)
 {
+        if (!date.isValid()) {
+            qWarning() << "DailySearchTab::find invalid date." << date;
+            return;
+        }
         guiProgressBar->show();
         statusProgress->show();
         guiDisplayTable->clearContents();
@@ -772,47 +780,16 @@ void DailySearchTab::search(QDate date)
         }
         foundString.clear();
         passFound=0;
-        int count = 0;
-        int no_data = 0;
-        Day*day;
-        while (true) {
-            count++;
+        while (date >= earliestDate) {
             nextDate = date;
-            if (passFound >= passDisplayLimit) {
-                break;
-            }
-            if (date < firstDate) {
-                break;
-            }
-            if (date > lastDate) {
-                break;
-            }
-            daysSearched++;
-            guiProgressBar->setValue(daysSearched);
-            if (date.isValid()) {
-                // use date
-                // find and add
-                //daysSearched++;
-                day= p_profile->GetDay(date);
-                if (day) {
-                    if (find(date, day) ) {
-                        passFound++;
-                        daysFound++;
-                    }
-                } else {
-                    no_data++;
-                    daysSkipped++;
-                    // Skip day. maybe no sleep or sdcard was no inserted.
-                }
-            } else {
-                qWarning() << "DailySearchTab::search invalid date." << date;
-                break;
-            }
+            if (passFound >= passDisplayLimit)  break; 
+
+            find(date);
+            guiProgressBar->setValue(++daysProcessed);
             date=date.addDays(-1);
         }
         endOfPass();
         return ;
-
 };
 
 void DailySearchTab::addItem(QDate date, QString value,Qt::Alignment alignment) {
@@ -838,7 +815,7 @@ void DailySearchTab::addItem(QDate date, QString value,Qt::Alignment alignment) 
 void    DailySearchTab::endOfPass() {
         startButtonMode=false;      // display Continue;
         QString display;
-        if ((passFound >= passDisplayLimit) && (daysSearched<daysTotal)) {
+        if ((passFound >= passDisplayLimit) && (daysProcessed<daysTotal)) {
             statusProgress->setText(centerLine(tr("More to Search")));
             statusProgress->show();
             startButton->setEnabled(true);
@@ -862,9 +839,6 @@ void    DailySearchTab::endOfPass() {
 
 void    DailySearchTab::on_dateItemClicked(QTableWidgetItem *item)
 {
-        // a date is clicked
-        // load new date
-        // change tab
         int row = item->row();
         int col = item->column();
         guiDisplayTable->setCurrentItem(item,QItemSelectionModel::Clear);
@@ -1021,36 +995,24 @@ void    DailySearchTab::on_clearButton_clicked()
         selectUnits->hide();
 
         hideResults();
-
-
-
-
-
-
 }
 
 void    DailySearchTab::on_startButton_clicked()
 {
         if (startButtonMode) {
-            // have start mode
-            // must set up search from the latest date and go to the first date.
-
-            search (lastDate );
+            search (latestDate );
             startButtonMode=false;
         } else {
-            // have continue search mode;
             search (nextDate );
         }
 }
 
 void    DailySearchTab::on_intValueChanged(int ) {
-        //Turn off highlighting by deslecting edit capabilities
         selectInteger->findChild<QLineEdit*>()->deselect();
         criteriaChanged();
 }
 
 void    DailySearchTab::on_doubleValueChanged(double ) {
-        //Turn off highlighting by deslecting edit capabilities
         selectDouble->findChild<QLineEdit*>()->deselect();
         criteriaChanged();
 }
@@ -1060,7 +1022,7 @@ void    DailySearchTab::on_textEdited(QString ) {
 }
 
 void    DailySearchTab::on_dailyTabWidgetCurrentChanged(int ) {
-        // Any time a tab is changed - then the day information should be valid.
+        // Any time a tab (daily, events , notes, bookmarks, seatch) is changed 
         // so finish updating the ui display.
         delayedCreateUi();
 }
@@ -1071,7 +1033,7 @@ void    DailySearchTab::displayStatistics() {
 
         // display days searched
         QString skip= daysSkipped==0?"":QString(tr(" Skip:%1")).arg(daysSkipped);
-        summaryProgress->setText(centerLine(QString(tr("Searched %1/%2%3 days.")).arg(daysSearched).arg(daysTotal).arg(skip) ));
+        summaryProgress->setText(centerLine(QString(tr("%1/%2%3 days.")).arg(daysProcessed).arg(daysTotal).arg(skip) ));
 
         // display days found
         summaryFound->setText(centerLine(QString(tr("Found %1.")).arg(daysFound) ));
@@ -1135,12 +1097,12 @@ void    DailySearchTab::criteriaChanged() {
         maxInteger = 0;
         minDouble = 0.0;
         maxDouble = 0.0;
-        firstDate = p_profile->FirstDay(MT_CPAP);
-        lastDate = p_profile->LastDay(MT_CPAP);
-        daysTotal= 1+firstDate.daysTo(lastDate);
+        earliestDate = p_profile->FirstDay(MT_CPAP);
+        latestDate = p_profile->LastDay(MT_CPAP);
+        daysTotal= 1+earliestDate.daysTo(latestDate);
         daysFound=0;
         daysSkipped=0;
-        daysSearched=0;
+        daysProcessed=0;
         startButtonMode=true;
 
         //initialize progress bar.
@@ -1189,6 +1151,7 @@ QString DailySearchTab::formatTime (qint32 ms) {
         qint32 minutes = ms / 60000;
         ms = ms % 60000;
         qint32 seconds = ms /1000;
+        //return QString(tr("%1h %2m %3s")).arg(hours).arg(minutes).arg(seconds);
         return QString("%1:%2:%3").arg(hours).arg(minutes,2,10,QLatin1Char('0')).arg(seconds,2,10,QLatin1Char('0'));
 }
 

@@ -39,7 +39,7 @@ class DailySearchTab : public QWidget
 {
 	Q_OBJECT
 public:
-    DailySearchTab ( Daily* daily , QWidget* , QTabWidget* ) ;
+    DailySearchTab ( Daily* daily , QWidget* ,  QTabWidget* ) ;
     ~DailySearchTab();
 
 private:
@@ -58,9 +58,9 @@ private:
     const int     passDisplayLimit = 30;
     const int     stringDisplayLen = 80;
 
-enum ValueMode { invalidValueMode, notUsed , minutesToMs ,hoursToMs, hundredths , opWhole , displayWhole , opString, displayString};
+enum ValueMode { invalidValueMode , notUsed , minutesToMs  , hoursToMs , hundredths , opWhole , displayWhole , opString , displayString};
 
-enum SearchTopic { ST_NONE, ST_DISABLED_SESSIONS, ST_NOTES, ST_NOTES_STRING, ST_BOOKMARKS, ST_BOOKMARKS_STRING, ST_AHI, ST_SESSION_LENGTH, ST_SESSIONS_QTY, ST_DAILY_USAGE, ST_EVENT };
+enum SearchTopic { ST_NONE = 0 , ST_DAYS_SKIPPED = 1 , ST_DISABLED_SESSIONS = 2 , ST_NOTES = 3 , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE, ST_EVENT };
 
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
@@ -125,7 +125,7 @@ enum OpCode {
     void        delayedCreateUi();
 
     void        search(QDate date);
-    bool        find(QDate& , Day* day);
+    void        find(QDate&);
     void        criteriaChanged();
     void        endOfPass();
     void        displayStatistics();
@@ -146,21 +146,21 @@ enum OpCode {
     EventDataType calculateAhi(Day* day);
     bool        compare(int,int );
     bool        compare(QString aa , QString bb);
-    
+
     bool        createUiFinished=false;
     bool        startButtonMode=true;
     SearchTopic searchTopic;
     int         nextTab;
     int         channelId;
 
-    QDate       firstDate ;
-    QDate       lastDate ;
+    QDate       earliestDate ;
+    QDate       latestDate ;
     QDate       nextDate;
 
-    // 
+    //
     int         daysTotal;
     int         daysSkipped;
-    int         daysSearched;
+    int         daysProcessed;
     int         daysFound;
     int         passFound;
 
