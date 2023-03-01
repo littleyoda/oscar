@@ -400,7 +400,7 @@ int MSeriesLoader::Open(const QString & path)
         QString a;
 
         for (int i = 0; i < 0x13; i++) {
-            a += QString().asprintf("%02X ", cb[i]);
+            a += QString::asprintf("%02X ", cb[i]);
         }
 
         a += " " + date.toString() + " " + time.toString();

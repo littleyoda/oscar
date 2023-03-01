@@ -921,8 +921,7 @@ void gGraph::mouseMoveEvent(QMouseEvent *event)
             if (d > 1) {
                 m_selDurString = tr("%1 days").arg(floor(d));
             } else {
-
-                m_selDurString.asprintf("%02i:%02i:%02i:%03i", h, m, s, ms);
+                m_selDurString=QString::asprintf("%02i:%02i:%02i:%03i", h, m, s, ms);
             }
 
             ToolTipAlignment align = x >= x2 ? TT_AlignLeft : TT_AlignRight;

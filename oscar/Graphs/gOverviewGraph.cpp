@@ -957,7 +957,7 @@ jumpnext:
         if (type == ST_HOURS) {
             int h = f;
             int m = int(f * 60) % 60;
-            val.asprintf("%02i:%02i", h, m);
+            val = QString::asprintf("%02i:%02i", h, m);
             ishours = true;
         } else {
             val = QString::number(f, 'f', 2);
@@ -1048,9 +1048,9 @@ QString formatTime(EventDataType v, bool show_seconds = false, bool duration = f
     }
 
     if (show_seconds) {
-        return QString().asprintf("%i:%02i:%02i%s", h, m, s, pm);
+        return QString::asprintf("%i:%02i:%02i%s", h, m, s, pm);
     } else {
-        return QString().asprintf("%i:%02i%s", h, m, pm);
+        return QString::asprintf("%i:%02i%s", h, m, pm);
     }
 }
 
@@ -1120,7 +1120,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     int h = t / 3600;
                     int m = (t / 60) % 60;
                     //int s=t % 60;
-                    val.asprintf("%02i:%02i", h, m);
+                    val = QString::asprintf("%02i:%02i", h, m);
                 } else {
                     val = QString::number(d.value()[0], 'f', 2);
                 }
@@ -1147,7 +1147,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     int h = t / 3600;
                     int m = (t / 60) % 60;
                     //int s=t % 60;
-                    val.asprintf("%02i:%02i", h, m);
+                    val = QString::asprintf("%02i:%02i", h, m);
                 } else {
                     val = QString::number(d.value()[0], 'f', 2);
                 }

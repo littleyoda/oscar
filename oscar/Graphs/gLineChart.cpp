@@ -425,7 +425,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
 //#define DEBUG_AUTOSCALER
 #ifdef DEBUG_AUTOSCALER
-    QString a = QString().asprintf("%.2f - %.2f",miny, maxy);
+    QString a = QString::asprintf("%.2f - %.2f",miny, maxy);
     w.renderText(a,width/2,top-5);
 #endif
 

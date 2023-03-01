@@ -101,7 +101,7 @@ void Session::setEnabled(bool b)
 
 QString Session::eventFile() const
 {
-    return s_machine->getEventsPath()+QString().asprintf("%08lx.001", s_session);
+    return s_machine->getEventsPath()+QString::asprintf("%08lx.001", s_session);
 }
 
 //const int max_pack_size=128;
@@ -136,7 +136,7 @@ bool Session::Destroy()
 {
     QDir dir;
     QString base;
-    base.asprintf("%08lx", s_session);
+    base=QString::asprintf("%08lx", s_session);
 
     QString summaryfile = s_machine->getSummariesPath() + base + ".000";
     QString eventfile = s_machine->getEventsPath() + base + ".001";
@@ -311,7 +311,7 @@ bool Session::StoreSummary()
         return false;
     }
 
-    QString filename = s_machine->getSummariesPath() + QString().asprintf("%08lx.000", s_session) ;
+    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session) ;
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -388,7 +388,7 @@ bool Session::LoadSummary()
 //    static int sumcnt = 0;
 
     if (s_summary_loaded) return true;
-    QString filename = s_machine->getSummariesPath() + QString().asprintf("%08lx.000", s_session);
+    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session);
 
     if (filename.isEmpty()) {
         qDebug() << "Empty summary filename";
@@ -669,7 +669,7 @@ bool Session::StoreEvents()
     QString path = s_machine->getEventsPath();
     QDir dir;
     dir.mkpath(path);
-    QString filename = path+ QString().asprintf("%08lx.001", s_session) ;
+    QString filename = path+ QString::asprintf("%08lx.001", s_session) ;
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
