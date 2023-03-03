@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QTextCharFormat>
@@ -1007,13 +1007,7 @@ void Daily::ResetGraphOrder(int type)
     }
 
     // Enable all graphs (make them not hidden)
-    for (int i=1;i<ui->graphCombo->count();i++) {
-        // If disabled, emulate a click to enable the graph
-        if (!ui->graphCombo->itemData(i,Qt::UserRole).toBool()) {
-//            qDebug() << "resetting graph" << i;
-            Daily::on_graphCombo_activated(i);
-        }
-    }
+    showAllGraphs(true);
 
     // Mark all events as active
     for (int i=1;i<ui->eventsCombo->count();i++) {
@@ -2691,25 +2685,31 @@ void Daily::setFlagText () {
     ui->eventsCombo->setItemText(0, flagsText);
 }
 
+void Daily::showAllGraphs(bool show) {
+    //Skip over first button - label for comboBox
+    for (int i=1;i<ui->graphCombo->count();i++) {
+        showGraph(i,show);
+    }
+    setGraphText();
+}
+
+void Daily::showGraph(int index,bool b) {
+    QString graphName = ui->graphCombo->itemText(index);
+    ui->graphCombo->setItemData(index,b,Qt::UserRole);
+    ui->graphCombo->setItemIcon(index, b ? *icon_on : *icon_off);
+    gGraph* graph=GraphView->findGraphTitle(graphName);
+    if (graph) graph->setVisible(b);
+}
+
 void Daily::on_graphCombo_activated(int index)
 {
-    if (index<0)
-        return;
-
-    gGraph *g;
-    QString s;
-    s=ui->graphCombo->currentText();
+    if (index<0) return;
     if (index > 0) {
         bool b=!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
-        ui->graphCombo->setItemData(index,b,Qt::UserRole);
-        ui->graphCombo->setItemIcon(index, b ? *icon_on : *icon_off);
-
-        g=GraphView->findGraphTitle(s);
-        g->setVisible(b);
+        showGraph(index,b);
         ui->graphCombo->showPopup();
     }
     ui->graphCombo->setCurrentIndex(0);
-
     setGraphText();
     updateCube();
     GraphView->updateScale();

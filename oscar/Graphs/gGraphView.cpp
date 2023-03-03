@@ -3541,7 +3541,7 @@ void gGraphView::resetGraphOrder(bool pinFirst, const QList<QString> graphOrder)
         QString nextGraph = graphOrder.at(i);
         auto it = m_graphsbyname.find(nextGraph);
         if (it == m_graphsbyname.end()) {
-            qDebug() << "resetGraphOrder could not find" << nextGraph;
+            // qDebug() << "resetGraphOrder could not find" << nextGraph;
             continue;  // should not happen
         }
         gGraph * graph = it.value();
@@ -3552,7 +3552,7 @@ void gGraphView::resetGraphOrder(bool pinFirst, const QList<QString> graphOrder)
     }
     // If we didn't find everything, append anything extra we have
     for (int i = 0; i < old_graphs.size(); i++) {
-        qDebug() << "resetGraphOrder added leftover" << old_graphs.at(i)->name();
+        // qDebug() << "resetGraphOrder added leftover" << old_graphs.at(i)->name();
         new_graphs.append(old_graphs.at(i));
     }
 

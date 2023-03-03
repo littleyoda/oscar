@@ -139,6 +139,8 @@ public:
 
     //void populateSessionWidget();
 
+    void showAllGraphs(bool show);
+    void showGraph(int index,bool b);
 
 public slots:
     void on_LineCursorUpdate(double time);
