@@ -585,10 +585,10 @@ bool Daily::rejectToggleSessionEnable( Session*sess) {
     bool enabled=sess->enabled();
     if (enabled ) {
            QMessageBox mbox(QMessageBox::Warning, tr("Disable Warning"),
-                tr("Disabling a session will remove this session data \nfrom all  graphs, reports and statistics." 
-                "\n\n" 
+                tr("Disabling a session will remove this session data \nfrom all  graphs, reports and statistics."
+                "\n\n"
                 "The Search tab can find disabled sessions"
-                "\n\n" 
+                "\n\n"
                 "Continue ?"),
                 QMessageBox::Yes | QMessageBox::No , this);
             if (mbox.exec() != QMessageBox::Yes ) return true;
@@ -2660,8 +2660,19 @@ void Daily::setGraphText () {
     }
     ui->graphCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString graphText;
-    if (numOff == 0) graphText = QObject::tr("%1 Graphs").arg(numTotal);
-    else             graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+    int lastIndex = ui->graphCombo->count()-1;  // account for hideshow button
+    if (numOff == 0) {
+        // all graphs are shown
+        graphText = QObject::tr("%1 Graphs").arg(numTotal);
+        ui->graphCombo->setItemText(lastIndex,STR_HIDE_ALL);
+    } else {
+        // some graphs are hidden
+        graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+        if (numOff == numTotal) {
+            // all graphs are hidden
+            ui->graphCombo->setItemText(lastIndex,STR_SHOW_ALL);
+        }
+    }
     ui->graphCombo->setItemText(0, graphText);
 }
 
@@ -2687,26 +2698,38 @@ void Daily::setFlagText () {
 
 void Daily::showAllGraphs(bool show) {
     //Skip over first button - label for comboBox
-    for (int i=1;i<ui->graphCombo->count();i++) {
+    int lastIndex = ui->graphCombo->count()-1;
+    for (int i=1;i<lastIndex;i++) {
         showGraph(i,show);
     }
     setGraphText();
+    updateCube();
+    GraphView->updateScale();
+    GraphView->redraw();
 }
 
-void Daily::showGraph(int index,bool b) {
+void Daily::showGraph(int index,bool show, bool updateGraph) {
+    ui->graphCombo->setItemData(index,show,Qt::UserRole);
+    ui->graphCombo->setItemIcon(index, show ? *icon_on : *icon_off);
+    if (!updateGraph) return;
     QString graphName = ui->graphCombo->itemText(index);
-    ui->graphCombo->setItemData(index,b,Qt::UserRole);
-    ui->graphCombo->setItemIcon(index, b ? *icon_on : *icon_off);
     gGraph* graph=GraphView->findGraphTitle(graphName);
-    if (graph) graph->setVisible(b);
+    if (graph) graph->setVisible(show);
 }
 
 void Daily::on_graphCombo_activated(int index)
 {
     if (index<0) return;
+    int lastIndex = ui->graphCombo->count()-1;
     if (index > 0) {
-        bool b=!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
-        showGraph(index,b);
+        bool nextOn =!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
+        if ( index == lastIndex ) {
+            // user just pressed hide show button - toggle sates of the button and apply the new state
+            showAllGraphs(nextOn);
+            showGraph(index,nextOn,false);
+        } else {
+            showGraph(index,nextOn,true);
+        }
         ui->graphCombo->showPopup();
     }
     ui->graphCombo->setCurrentIndex(0);
@@ -2761,20 +2784,6 @@ void Daily::on_toggleGraphs_clicked(bool /*checked*/)
     else
         qDebug() << "ToggleGraphs clicked with non-null graphCombo ptr";
     return;
-/*
-    for (int i=0;i<ui->graphCombo->count();i++) {
-        s=ui->graphCombo->itemText(i);
-        ui->graphCombo->setItemIcon(i,*icon);
-        ui->graphCombo->setItemData(i,!checked,Qt::UserRole);
-    }
-    for (int i=0;i<GraphView->size();i++) {
-        (*GraphView)[i]->setVisible(!checked);
-    }
-
-    updateCube();
-    GraphView->updateScale();
-    GraphView->redraw();
-    */
 }
 
 void Daily::updateGraphCombo()
@@ -2794,8 +2803,8 @@ void Daily::updateGraphCombo()
             ui->graphCombo->addItem(*icon_off,g->title(),false);
         }
     }
-
     ui->graphCombo->setCurrentIndex(0);
+    ui->graphCombo->addItem(*icon_on,STR_HIDE_ALL,true);
     setGraphText();
     updateCube();
 }
@@ -2819,48 +2828,6 @@ void Daily::on_eventsCombo_activated(int index)
     setFlagText();
     GraphView->redraw();
 }
-
-void Daily::on_toggleEvents_clicked(bool /*checked*/)
-{
-    QString s;
-    //QIcon *icon=checked ? icon_on : icon_off;
-
-    if (ui->toggleEvents == nullptr )
-        qDebug() << "ToggleEvents clicked with null toggleEvents ptr";
-    else
-        qDebug() << "ToggleEvents clicked with non-null toggleEvents ptr";
-    return;
-/*
-    ui->toggleEvents->setArrowType(checked ? Qt::DownArrow : Qt::UpArrow);
-    ui->toggleEvents->setToolTip(checked ? tr("Hide all events") : tr("Show all events"));
-//    ui->toggleEvents->blockSignals(true);
-//    ui->toggleEvents->setChecked(false);
-//    ui->toggleEvents->blockSignals(false);
-
-    for (int i=0;i<ui->eventsCombo->count();i++) {
-//        s=ui->eventsCombo->itemText(i);
-        ui->eventsCombo->setItemIcon(i,*icon);
-        ChannelID code = ui->eventsCombo->itemData(i).toUInt();
-        schema::channel[code].setEnabled(checked);
-    }
-
-    updateCube();
-    GraphView->redraw();
-    */
-}
-
-//void Daily::on_sessionWidget_itemSelectionChanged()
-//{
-//    int row = ui->sessionWidget->currentRow();
-//    QTableWidgetItem *item = ui->sessionWidget->item(row, 0);
-//    if (item) {
-//        QDate date = item->data(Qt::UserRole).toDate();
-//        LoadDate(date);
-//        qDebug() << "Clicked.. changing date to" << date;
-
-//       // ui->sessionWidget->setCurrentItem(item);
-//    }
-//}
 
 void Daily::on_splitter_2_splitterMoved(int, int)
 {

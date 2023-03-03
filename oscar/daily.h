@@ -140,7 +140,9 @@ public:
     //void populateSessionWidget();
 
     void showAllGraphs(bool show);
-    void showGraph(int index,bool b);
+    void showGraph(int index,bool show, bool updateGraph=true);
+    QString STR_HIDE_ALL =QString(tr("Hide All"));
+    QString STR_SHOW_ALL =QString(tr("Show All"));
 
 public slots:
     void on_LineCursorUpdate(double time);
@@ -271,8 +273,6 @@ private slots:
     void doToggleSession(Session *);
 
     void on_eventsCombo_activated(int index);
-
-    void on_toggleEvents_clicked(bool checked);
 
     void updateGraphCombo();
 
