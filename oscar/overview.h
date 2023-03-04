@@ -139,8 +139,6 @@ class Overview : public QWidget
 
     void on_graphCombo_activated(int index);
 
-    void on_toggleVisibility_clicked(bool checked);
-
     void on_LineCursorUpdate(double time);
     void on_RangeUpdate(double minx, double maxx);
     void setGraphText ();

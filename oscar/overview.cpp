@@ -77,8 +77,6 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
         shortformat.replace("yy", "yyyy");
     }
 
-    ui->toggleVisibility->setVisible(false);    /* get rid of tiny triangle that disables data display */
-
     ui->dateStart->setDisplayFormat(shortformat);
     ui->dateEnd->setDisplayFormat(shortformat);
 
@@ -907,44 +905,12 @@ void Overview::on_graphCombo_activated(int index)
 void Overview::updateCube()
 {
     if ((GraphView->visibleGraphs() == 0)) {
-        ui->toggleVisibility->setArrowType(Qt::UpArrow);
-        ui->toggleVisibility->setToolTip(tr("Show all graphs"));
-        ui->toggleVisibility->blockSignals(true);
-        ui->toggleVisibility->setChecked(true);
-        ui->toggleVisibility->blockSignals(false);
-
         if (ui->graphCombo->count() > 0) {
             GraphView->setEmptyText(STR_Empty_NoGraphs);
-
         } else {
             GraphView->setEmptyText(STR_Empty_NoData);
         }
-    } else {
-        ui->toggleVisibility->setArrowType(Qt::DownArrow);
-        ui->toggleVisibility->setToolTip(tr("Hide all graphs"));
-        ui->toggleVisibility->blockSignals(true);
-        ui->toggleVisibility->setChecked(false);
-        ui->toggleVisibility->blockSignals(false);
     }
-}
-
-void Overview::on_toggleVisibility_clicked(bool checked)
-{
-    gGraph *g;
-    QString s;
-    QIcon *icon = checked ? icon_off : icon_on;
-
-    for (int i = 0; i < ui->graphCombo->count(); i++) {
-        s = ui->graphCombo->itemText(i);
-        ui->graphCombo->setItemIcon(i, *icon);
-        ui->graphCombo->setItemData(i, !checked, Qt::UserRole);
-        g = GraphView->findGraphTitle(s);
-        g->setVisible(!checked);
-    }
-
-    updateCube();
-    GraphView->updateScale();
-    GraphView->redraw();
 }
 
 void Overview::on_layout_clicked() {
