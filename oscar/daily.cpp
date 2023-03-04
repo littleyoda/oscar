@@ -1008,17 +1008,7 @@ void Daily::ResetGraphOrder(int type)
 
     // Enable all graphs (make them not hidden)
     showAllGraphs(true);
-
-    // Mark all events as active
-    for (int i=1;i<ui->eventsCombo->count();i++) {
-        // If disabled, emulate a click to enable the event
-        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
-        schema::Channel * chan = &schema::channel[code];
-        if (!chan->enabled()) {
-//            qDebug() << "resetting event" << i;
-            Daily::on_eventsCombo_activated(i);
-        }
-    }
+    showAllEvents(true);
 
     // Reset graph heights (and repaint)
     ResetGraphLayout();
@@ -1683,23 +1673,8 @@ void Daily::Load(QDate date)
     bool isBrick=false;
 
     updateGraphCombo();
-    ui->eventsCombo->clear();
 
-    quint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
-    if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
-
-    QList<ChannelID> available;
-    if (day) available.append(day->getSortedMachineChannels(chans));
-
-    ui->eventsCombo->addItem(*icon_up_down, tr("10 of 10 Event Types"), 0); // Translation used only for spacing
-    for (int i=0; i < available.size(); ++i) {
-        ChannelID code = available.at(i);
-        int comboxBoxIndex = i+1;
-        schema::Channel & chan = schema::channel[code];
-        ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
-        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
-    }
-    setFlagText();
+    updateEventsCombo(day);
 
     if (!cpap) {
         GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
@@ -1926,9 +1901,6 @@ void Daily::Load(QDate date)
     ui->BMI->setVisible(false);
     ui->BMIlabel->setVisible(false);
 #endif
-    ui->toggleGraphs->setVisible(false);
-    ui->toggleEvents->setVisible(false);
-
     BookmarksChanged=false;
     Session *journal=GetJournalSession(date);
     if (journal) {
@@ -2664,13 +2636,13 @@ void Daily::setGraphText () {
     if (numOff == 0) {
         // all graphs are shown
         graphText = QObject::tr("%1 Graphs").arg(numTotal);
-        ui->graphCombo->setItemText(lastIndex,STR_HIDE_ALL);
+        ui->graphCombo->setItemText(lastIndex,STR_HIDE_ALL_GRAPHS);
     } else {
         // some graphs are hidden
         graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
         if (numOff == numTotal) {
             // all graphs are hidden
-            ui->graphCombo->setItemText(lastIndex,STR_SHOW_ALL);
+            ui->graphCombo->setItemText(lastIndex,STR_SHOW_ALL_GRAPHS);
         }
     }
     ui->graphCombo->setItemText(0, graphText);
@@ -2680,7 +2652,8 @@ void Daily::setFlagText () {
     int numOff = 0;
     int numTotal = 0;
 
-    for (int i=1; i < ui->eventsCombo->count(); ++i) {
+    int lastIndex = ui->eventsCombo->count()-1;  // account for hideshow button
+    for (int i=1; i < lastIndex; ++i) {
         numTotal++;
         ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
         schema::Channel * chan = &schema::channel[code];
@@ -2691,8 +2664,14 @@ void Daily::setFlagText () {
 
     ui->eventsCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString flagsText;
-    if (numOff == 0) flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
-    else             flagsText = QObject::tr("%1 of %2 Event Types").arg(numTotal-numOff).arg(numTotal);
+    if (numOff == 0) {
+        flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
+        ui->eventsCombo->setItemText(lastIndex,STR_HIDE_ALL_EVENTS);
+    } else {
+        int numOn=numTotal-numOff;
+        flagsText = QObject::tr("%1 of %2 Event Types").arg(numOn).arg(numTotal);
+        if (numOn==0) ui->eventsCombo->setItemText(lastIndex,STR_SHOW_ALL_EVENTS);
+    }
     ui->eventsCombo->setItemText(0, flagsText);
 }
 
@@ -2743,13 +2722,6 @@ void Daily::updateCube()
 {
     //brick..
     if ((GraphView->visibleGraphs()==0)) {
-        ui->toggleGraphs->setVisible(false);
-//        ui->toggleGraphs->setArrowType(Qt::UpArrow);
-//        ui->toggleGraphs->setToolTip(tr("Show all graphs"));
-//        ui->toggleGraphs->blockSignals(true);
-//        ui->toggleGraphs->setChecked(true);
-//        ui->toggleGraphs->blockSignals(false);
-
         if (ui->graphCombo->count() > 0) {
             GraphView->setEmptyText(STR_Empty_NoGraphs);
         } else {
@@ -2764,34 +2736,16 @@ void Daily::updateCube()
                     GraphView->setEmptyText(STR_Empty_SummaryOnly);
             }
         }
-    } else {
-        ui->toggleGraphs->setVisible(false);
-//        ui->toggleGraphs->setArrowType(Qt::DownArrow);
-//        ui->toggleGraphs->setToolTip(tr("Hide all graphs"));
-//        ui->toggleGraphs->blockSignals(true);
-//        ui->toggleGraphs->setChecked(false);
-//        ui->toggleGraphs->blockSignals(false);
     }
 }
 
-
-void Daily::on_toggleGraphs_clicked(bool /*checked*/)
-{
-    //QString s;
-    //QIcon *icon=checked ? icon_off : icon_on;
-    if (ui->graphCombo == nullptr )
-        qDebug() << "ToggleGraphs clicked with null graphCombo ptr";
-    else
-        qDebug() << "ToggleGraphs clicked with non-null graphCombo ptr";
-    return;
-}
 
 void Daily::updateGraphCombo()
 {
     ui->graphCombo->clear();
     gGraph *g;
 
-    ui->graphCombo->addItem(*icon_up_down, tr("10 of 10 Graphs"), true); // Translation only to define space required
+    ui->graphCombo->addItem(*icon_up_down, "", true);   // text updated in setGRaphText
 
     for (int i=0;i<GraphView->size();i++) {
         g=(*GraphView)[i];
@@ -2803,10 +2757,48 @@ void Daily::updateGraphCombo()
             ui->graphCombo->addItem(*icon_off,g->title(),false);
         }
     }
+    ui->graphCombo->addItem(*icon_on,STR_HIDE_ALL_GRAPHS,true);
     ui->graphCombo->setCurrentIndex(0);
-    ui->graphCombo->addItem(*icon_on,STR_HIDE_ALL,true);
     setGraphText();
     updateCube();
+}
+
+void Daily::updateEventsCombo(Day* day) {
+
+    quint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
+    if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
+
+    QList<ChannelID> available;
+    if (day) available.append(day->getSortedMachineChannels(chans));
+
+    ui->eventsCombo->clear();
+    ui->eventsCombo->addItem(*icon_up_down, "", 0);   // text updated in setflagText
+    for (int i=0; i < available.size(); ++i) {
+        ChannelID code = available.at(i);
+        int comboxBoxIndex = i+1;
+        schema::Channel & chan = schema::channel[code];
+        ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
+        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
+    }
+    ui->eventsCombo->addItem(*icon_on,"" , Qt::ToolTipRole);
+    ui->eventsCombo->setCurrentIndex(0);
+    setFlagText();
+}
+
+void Daily::showAllEvents(bool show) {
+    // Mark all events as active
+    int lastIndex = ui->eventsCombo->count()-1;  // account for hideshow button
+    for (int i=1;i<lastIndex;i++) {
+        // If disabled, emulate a click to enable the event
+        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
+        schema::Channel * chan = &schema::channel[code];
+        if (chan->enabled()!=show) {
+            Daily::on_eventsCombo_activated(i);
+        }
+    }
+    ui->eventsCombo->setItemData(lastIndex,show,Qt::UserRole);
+    ui->eventsCombo->setCurrentIndex(0);
+    setFlagText();
 }
 
 void Daily::on_eventsCombo_activated(int index)
@@ -2814,13 +2806,19 @@ void Daily::on_eventsCombo_activated(int index)
     if (index<0)
         return;
 
+    int lastIndex = ui->eventsCombo->count()-1;
     if (index > 0) {
-        ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
-        schema::Channel * chan = &schema::channel[code];
+        if ( index == lastIndex ) {
+            bool nextOn =!ui->eventsCombo->itemData(index,Qt::UserRole).toBool();
+            showAllEvents(nextOn);
+        } else {
+            ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
+            schema::Channel * chan = &schema::channel[code];
 
-        bool b = !chan->enabled();
-        chan->setEnabled(b);
-        ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+            bool b = !chan->enabled();
+            chan->setEnabled(b);
+            ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+        }
         ui->eventsCombo->showPopup();
     }
 

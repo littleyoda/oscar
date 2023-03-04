@@ -141,8 +141,13 @@ public:
 
     void showAllGraphs(bool show);
     void showGraph(int index,bool show, bool updateGraph=true);
-    QString STR_HIDE_ALL =QString(tr("Hide All"));
-    QString STR_SHOW_ALL =QString(tr("Show All"));
+    void showAllEvents(bool show);
+    void showEvent(int index,bool show, bool updateEvent=true);
+    void updateEventsCombo(Day*);
+    QString STR_HIDE_ALL_EVENTS =QString(tr("Hide All Events"));
+    QString STR_SHOW_ALL_EVENTS =QString(tr("Show All Events"));
+    QString STR_HIDE_ALL_GRAPHS =QString(tr("Hide All Graphs"));
+    QString STR_SHOW_ALL_GRAPHS =QString(tr("Show All Graphs"));
 
 public slots:
     void on_LineCursorUpdate(double time);
@@ -236,9 +241,6 @@ private slots:
     void on_bookmarkTable_itemChanged(QTableWidgetItem *item);
 
     void on_graphCombo_activated(int index);
-
-    void on_toggleGraphs_clicked(bool checked);
-
 
 #ifndef REMOVE_FITNESS
     /*! \fn on_ouncesSpinBox_valueChanged(int arg1);
