@@ -199,6 +199,11 @@ class Overview : public QWidget
     bool samePage;
 
     SaveGraphLayoutSettings* saveGraphLayoutSettings=nullptr;
+    QString STR_HIDE_ALL_GRAPHS =QString(tr("Hide All Graphs"));
+    QString STR_SHOW_ALL_GRAPHS =QString(tr("Show All Graphs"));
+    void showGraph(int index,bool show, bool updateGraph);
+    void showAllGraphs(bool show);
+
 };
 
 
