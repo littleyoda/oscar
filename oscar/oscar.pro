@@ -571,8 +571,8 @@ clang {
 
 # Make deprecation warnings just warnings
 # these two  removed. all deprecated-declarations errors have been removed
-QMAKE_CFLAGS += -Wno-error=deprecated-declarations
-QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+#QMAKE_CFLAGS += -Wno-error=deprecated-declarations
+#QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
 
 message("CXXFLAGS post-mods $$QMAKE_CXXFLAGS ")
 message("CXXFLAGS_WARN_ON $$QMAKE_CXXFLAGS_WARN_ON")
@@ -585,6 +585,10 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
 # Create a debug GUI build by adding "CONFIG+=memdebug" to your qmake command
 memdebug {
     CONFIG += debug
+    ## there is an error in qt. qlist.h uses an implicitly defined operator=
+    ## allow this for debug
+    QMAKE_CFLAGS += -Wno-error=deprecated-copy
+    QMAKE_CXXFLAGS += -Wno-error=deprecated-copy
     !win32 {  # add memory checking on Linux and macOS debug builds
         QMAKE_CFLAGS += -g -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
         lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
