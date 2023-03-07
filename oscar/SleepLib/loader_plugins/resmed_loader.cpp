@@ -3392,7 +3392,8 @@ void ResmedLoader::ToTimeDelta(Session *sess, ResMedEDFInfo &edf, EDFSignal &es,
         tt += rate * startpos;
     }
 // Likewise for the values that the device computes for us, but 20 seconds
-    if ((code == CPAP_MinuteVent) || (code == CPAP_RespRate) || (code == CPAP_TidalVolume)) {
+    if ((code == CPAP_MinuteVent) || (code == CPAP_RespRate) ||
+            (code == CPAP_TidalVolume) || (code == CPAP_Ti) || (code == CPAP_Te) ) {
         startpos = 10; // Shave the first 20 seconds of computed data
         tt += rate * startpos;
     }
