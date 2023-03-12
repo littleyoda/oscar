@@ -74,7 +74,7 @@ void gFlagsGroup::SetDay(Day *d)
     }
 
 
-    quint32 z = schema::FLAG | schema::SPAN;
+    quint32 z = schema::FLAG | schema::SPAN | schema::MINOR_FLAG;
     if (p_profile->general->showUnknownFlags()) z |= schema::UNKNOWN;
     availableChans = d->getSortedMachineChannels(z);
 
