@@ -114,23 +114,6 @@ void gFlagsGroup::SetDay(Day *d)
 
 
     cnt = lvisible.size();
-
-//    for (int i = 0; i < layers.size(); i++) {
-//        gFlagsLine *f = dynamic_cast<gFlagsLine *>(layers[i]);
-
-//        if (!f) { continue; }
-
-//        bool e = f->isEmpty();
-
-//        if (!e || f->isAlwaysVisible()) {
-//            lvisible.push_back(f);
-
-//            if (!e) {
-//                cnt++;
-//            }
-//        }
-//    }
-
     m_empty = (cnt == 0);
 
     if (m_empty) {
@@ -141,6 +124,7 @@ void gFlagsGroup::SetDay(Day *d)
 
     m_barh = 0;
 }
+
 bool gFlagsGroup::isEmpty()
 {
     if (m_day) {
@@ -164,16 +148,6 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
 
     if (!m_day) { return; }
 
-    qint64 minx,maxx,dur;
-    g.graphView()->GetXBounds(minx,maxx);
-    dur = maxx - minx;
-    QString text= QString("%1 -> %2     %3: %4 ").
-        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
-        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
-        arg(QObject::tr("Selection Length")).
-        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz"))  ;
-    g.renderText(text, left , top -5 );
-
     QVector<gFlagsLine *> visflags;
 
     for (const auto & flagsline : lvisible) {
@@ -184,6 +158,29 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
     int vis = visflags.size();
     m_barh = float(height) / float(vis);
     float linetop = top;
+
+    qint64 minx,maxx,dur;
+    g.graphView()->GetXBounds(minx,maxx);
+    dur = maxx - minx;
+    #if 0
+    // debug for minimum size for event flags.  adding required height for enabled events , number eventTypes , height of an event bar
+   QString text= QString("%1 -> %2     %3: %4 H:%5 Vis:%6 barH:%7").
+        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
+        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
+        arg(QObject::tr("Selection Length")).
+        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz"))
+        .arg(height)
+        .arg(vis)
+        .arg(m_barh)
+        ;
+    #else
+    QString text= QString("%1 -> %2       %3: %4").
+        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
+        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
+        arg(QObject::tr("Selection Length")).
+        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz")) ;
+    #endif
+    g.renderText(text, left , top -5 );
 
     QColor barcol;
 
@@ -289,7 +286,6 @@ void gFlagsLine::paint(QPainter &painter, gGraph &w, const QRegion &region)
     double xmult = width / xx;
 
     schema::Channel & chan = schema::channel[m_code];
-
     GetTextExtent(chan.label(), m_lx, m_ly);
 
     // Draw text label

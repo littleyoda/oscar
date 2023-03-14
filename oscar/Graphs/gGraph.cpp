@@ -1199,7 +1199,7 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
 void gGraph::wheelEvent(QWheelEvent *event)
 {
-    qDebug() << m_title << "Wheel" << wheelEventX(event) << wheelEventY(event) << wheelEventDelta(event);
+    //qDebug() << m_title << "Wheel" << wheelEventX(event) << wheelEventY(event) << wheelEventDelta(event);
     //int y=event->pos().y();
     if ( isWheelEventHorizontal(event) ) {
 
@@ -1535,10 +1535,16 @@ int gGraph::minHeight()
 {
     int minheight = m_min_height;
 
-//    int top = 0;
-//    int center = 0;
-//    int bottom = 0;
     for (const auto & layer : m_layers) {
+        // caution.
+        // The logical around this area of code does not work.
+        // This assumes that one layer has the total height for the graph.
+        // this is not the case.
+        // for exaple the xaxis layer contains part of the total height
+        // and so does the graph area.
+        // what about the top margin for text .
+        // There are some layers that do not contribute to the minimum height.
+
         int mh = layer->minimumHeight();
         mh += m_margintop + m_marginbottom;
         if (mh > minheight) minheight = mh;

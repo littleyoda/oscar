@@ -393,8 +393,7 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
 
     if (session_length < ignore_sessions) {
         // keep the session to save importing it again, but don't add it to the day record this time
-        qDebug() << s->session() << "Ignoring short session <" << ignore_sessions
-            << "["+QDateTime::fromMSecsSinceEpoch(s->first()).toString("MMM dd, yyyy hh:mm:ss")+"]";
+        // qDebug() << s->session() << "Ignoring short session <" << ignore_sessions << "["+QDateTime::fromMSecsSinceEpoch(s->first()).toString("MMM dd, yyyy hh:mm:ss")+"]";
         return true;
     }
 
