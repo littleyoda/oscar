@@ -350,6 +350,7 @@ private:
     QMenu *show_graph_menu;
 
     gGraphView *GraphView,*snapGV;
+    gGraph* sleepFlags;
     MyScrollBar *scrollbar;
     QHBoxLayout *layout;
     QLabel *emptyToggleArea;

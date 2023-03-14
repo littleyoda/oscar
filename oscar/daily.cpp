@@ -235,7 +235,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 //    SG->AddLayer(new gDailySummary());
 
     graphlist[STR_GRAPH_SleepFlags] = SF = new gGraph(STR_GRAPH_SleepFlags, GraphView, STR_TR_EventFlags, STR_TR_EventFlags, default_height);
+    sleepFlags = SF;
     SF->setPinned(true);
+
 
     //============================================
     // Create graphs from 'interesting' CPAP codes
@@ -2662,17 +2664,33 @@ void Daily::setFlagText () {
             numOff++;
     }
 
+    int numOn=numTotal;
     ui->eventsCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString flagsText;
     if (numOff == 0) {
         flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
         ui->eventsCombo->setItemText(lastIndex,STR_HIDE_ALL_EVENTS);
     } else {
-        int numOn=numTotal-numOff;
+        numOn-=numOff;
         flagsText = QObject::tr("%1 of %2 Event Types").arg(numOn).arg(numTotal);
         if (numOn==0) ui->eventsCombo->setItemText(lastIndex,STR_SHOW_ALL_EVENTS);
     }
+
     ui->eventsCombo->setItemText(0, flagsText);
+    if (numOn==0) numOn=1;  // always have an area showing in graph.
+    float barHeight = QFontMetrics(*defaultfont).capHeight() + QFontMetrics(*defaultfont).descent() ;
+    float fontHeight = QFontMetrics(*defaultfont).height() ;
+
+    float flagGroupHeight = barHeight * numOn;      // space for graphs
+    // account for ispace above and below events bars
+    flagGroupHeight += fontHeight *2 ; // for axis font Height & vertical markers
+    flagGroupHeight += fontHeight  ; // top margin
+    flagGroupHeight += 4  ; // padding
+
+    DEBUGFW Q(sleepFlags->name()) Q(sleepFlags->title()) Q(flagGroupHeight) Q(barHeight) Q(numOn) Q(numOff);
+    sleepFlags->setMinHeight(flagGroupHeight);      // set minimum height so height is enforced.
+    sleepFlags->setHeight(flagGroupHeight);         // set height so height is adjusted when eventtypes are removed from display
+
 }
 
 void Daily::showAllGraphs(bool show) {
