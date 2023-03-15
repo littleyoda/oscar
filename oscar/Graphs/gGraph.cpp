@@ -833,6 +833,7 @@ double gGraph::currentTime() const
 {
     return m_graphview->currentTime();
 }
+
 double gGraph::screenToTime(int xpos)
 {
     double w = m_rect.width() - left - right;
@@ -1010,18 +1011,6 @@ void gGraph::mousePressEvent(QMouseEvent *event)
                 return;
             }
     }
-
-    /*
-    int w=m_lastbounds.width()-(right+m_marginright);
-    //int h=m_lastbounds.height()-(bottom+m_marginbottom);
-    //int x2,y2;
-    double xx=max_x-min_x;
-    //double xmult=xx/w;
-    if (x>left+m_marginleft && x<m_lastbounds.width()-(right+m_marginright) && y>top+m_margintop && y<m_lastbounds.height()-(bottom+m_marginbottom)) { // main area
-        x-=left+m_marginleft;
-        y-=top+m_margintop;
-    }*/
-    //qDebug() << m_title << "Clicked" << x << y << left << right << top << bottom << m_width << m_height;
 }
 
 void gGraph::mouseReleaseEvent(QMouseEvent *event)
@@ -1125,6 +1114,15 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
     if ((m_graphview->horizTravel() < mouse_movement_threshold) && (x > left && x < w + left
             && y > top && y < h)) {
+        if ((event->modifiers() & Qt::ShiftModifier) != 0) {
+            qint64 zz = (qint64)screenToTime(x);
+            qint64 zz_min,zz_max;
+            // set range 3 before and 20 second after.
+            zz_min = zz - 180000; // before ms
+            zz_max = zz + 20000;  // after ms
+            m_graphview->SetXBounds(zz_min, zz_max, m_group);
+            return;
+        }
         // normal click in main area
         if (!m_blockzoom) {
             double zoom;
