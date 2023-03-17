@@ -346,8 +346,8 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     gGraph *FRW = graphlist[schema::channel[CPAP_FlowRate].code()];
     FRW->AddLayer(l);
-
-
+    l -> setMinimumHeight(80);      // set the layer height to 80. or about 130 graph height.
+    
 //    FRW->AddLayer(AddOXI(new gLineOverlayBar(OXI_SPO2Drop, COLOR_SPO2Drop, STR_TR_O2)));
 
     bool square=AppSetting->squareWavePlots();
