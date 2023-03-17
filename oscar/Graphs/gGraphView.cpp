@@ -1851,8 +1851,11 @@ void gGraphView::mouseMoveEvent(QMouseEvent *event)
         float h = m_graphs[m_sizer_index]->height();
         h += my / m_scaleY;
 
-        if (h > m_graphs[m_sizer_index]->minHeight()) {
-            m_graphs[m_sizer_index]->setHeight(h);
+        gGraph* graph = m_graphs[m_sizer_index];
+        int minHeight = graph-> minHeight();
+        if (h < minHeight) { h = minHeight; }   // past minimum height - reset to to minimum 
+        if ((h > minHeight) || ( graph->height() > minHeight)) {
+            graph->setHeight(h);
             m_sizer_point.setX(x);
             m_sizer_point.setY(y);
             updateScrollBar();
