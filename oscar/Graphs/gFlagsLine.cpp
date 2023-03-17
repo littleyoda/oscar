@@ -9,6 +9,8 @@
 
 #define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
+#define BAR_TITLE_BAR_DEBUGoff
+
 
 #include <cmath>
 #include <QVector>
@@ -132,6 +134,19 @@ bool gFlagsGroup::isEmpty()
             return false;
     }
     return true;
+}
+
+void gFlagsGroup::refreshConfiguration(gGraph* graph)
+{
+   int numOn=0;
+    for (const auto & flagsline : lvisible) {
+        if (schema::channel[flagsline->code()].enabled()) numOn++;
+    }
+    if (numOn==0) numOn=1;  // always have an area showing in graph.
+    float barHeight = QFontMetrics(*defaultfont).capHeight() + QFontMetrics(*defaultfont).descent() ;
+    int height (barHeight * numOn);
+    setMinimumHeight (height);
+    graph->setHeight (height);
 }
 
 void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)

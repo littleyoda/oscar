@@ -37,6 +37,7 @@ namespace Ui {
 
 class MainWindow;
 class DailySearchTab;
+class gFlagsGroup;
 
 
 /*! \class Daily
@@ -351,6 +352,7 @@ private:
 
     gGraphView *GraphView,*snapGV;
     gGraph* sleepFlags;
+    gFlagsGroup* sleepFlagsGroup;
     MyScrollBar *scrollbar;
     QHBoxLayout *layout;
     QLabel *emptyToggleArea;

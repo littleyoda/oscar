@@ -115,6 +115,7 @@ class gFlagsGroup: public LayerGroup
     QVector<gFlagsLine *> &visibleLayers() { return lvisible; }
 
     void alwaysVisible(ChannelID code) { m_alwaysvisible.push_back(code); }
+    void refreshConfiguration(gGraph* graph) ;
 
     virtual Layer * Clone() {
         gFlagsGroup * layer = new gFlagsGroup();  //ouchie..
@@ -144,6 +145,7 @@ class gFlagsGroup: public LayerGroup
     QList<ChannelID> availableChans;
 
     QVector<gFlagsLine *> lvisible;
+    QVector<gFlagsLine *> visflags;
     float m_barh;
     bool m_empty;
     bool m_rebuild_cpap;

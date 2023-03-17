@@ -316,14 +316,12 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     // Add event flags to the event flags graph
     gFlagsGroup *fg=new gFlagsGroup();
+    sleepFlagsGroup = fg;
     SF->AddLayer(fg);
 
     SF->setBlockZoom(true);
     SF->AddLayer(new gShadowArea());
-
     SF->AddLayer(new gLabelArea(fg),LayerLeft,gYAxis::Margin);
-
-    //SF->AddLayer(new gFooBar(),LayerBottom,0,1);
     SF->AddLayer(new gXAxis(COLOR_Text,false),LayerBottom,0,gXAxis::Margin);
 
 
@@ -333,7 +331,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     QStringList skipgraph;
     skipgraph.push_back(STR_GRAPH_EventBreakdown);
     skipgraph.push_back(STR_GRAPH_SleepFlags);
-//    skipgraph.push_back(STR_GRAPH_DailySummary);
     skipgraph.push_back(STR_GRAPH_TAP);
 
     QHash<QString, gGraph *>::iterator it;
@@ -348,8 +345,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     l=new gLineChart(CPAP_FlowRate,false,false);
 
     gGraph *FRW = graphlist[schema::channel[CPAP_FlowRate].code()];
-
-    // Then the graph itself
     FRW->AddLayer(l);
 
 
@@ -2677,20 +2672,7 @@ void Daily::setFlagText () {
     }
 
     ui->eventsCombo->setItemText(0, flagsText);
-    if (numOn==0) numOn=1;  // always have an area showing in graph.
-    float barHeight = QFontMetrics(*defaultfont).capHeight() + QFontMetrics(*defaultfont).descent() ;
-    float fontHeight = QFontMetrics(*defaultfont).height() ;
-
-    float flagGroupHeight = barHeight * numOn;      // space for graphs
-    // account for ispace above and below events bars
-    flagGroupHeight += fontHeight *2 ; // for axis font Height & vertical markers
-    flagGroupHeight += fontHeight  ; // top margin
-    flagGroupHeight += 4  ; // padding
-
-    DEBUGFW Q(sleepFlags->name()) Q(sleepFlags->title()) Q(flagGroupHeight) Q(barHeight) Q(numOn) Q(numOff);
-    sleepFlags->setMinHeight(flagGroupHeight);      // set minimum height so height is enforced.
-    sleepFlags->setHeight(flagGroupHeight);         // set height so height is adjusted when eventtypes are removed from display
-
+    sleepFlagsGroup->refreshConfiguration(sleepFlags); // need to know display changes before painting.
 }
 
 void Daily::showAllGraphs(bool show) {

@@ -202,7 +202,8 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
         qDebug() << "Trying to duplicate " << name << " when a graph with the same name already exists";
         name+="-1";
     }
-    m_min_height = 60;
+    m_min_height = 60;      // this is the graphs minimum height.- does not consider the graphs layer height requirements. 
+    m_defaultLayerMinHeight = 25;   // this is the minimum requirements for the layer height. can be chnaged by a layer. // not changable
     m_width = 0;
 
     m_layers.clear();
@@ -1531,24 +1532,14 @@ Layer *gGraph::getLineChart()
 
 int gGraph::minHeight()
 {
-    int minheight = m_min_height;
-
+    // adjust graph height for centerLayer (ploting area) required height.
+    int adjustment  = top + bottom;    //adjust graph minimun to layer minimum
+    int minlayerheight = m_min_height  - adjustment;
     for (const auto & layer : m_layers) {
-        // caution.
-        // The logical around this area of code does not work.
-        // This assumes that one layer has the total height for the graph.
-        // this is not the case.
-        // for exaple the xaxis layer contains part of the total height
-        // and so does the graph area.
-        // what about the top margin for text .
-        // There are some layers that do not contribute to the minimum height.
-
-        int mh = layer->minimumHeight();
-        mh += m_margintop + m_marginbottom;
-        if (mh > minheight) minheight = mh;
+        if (layer->position() != LayerCenter) continue;
+        minlayerheight = max(max (m_defaultLayerMinHeight,layer->minimumHeight()),minlayerheight);
     }
-    // layers need to set their own too..
-    return minheight;
+    return minlayerheight + adjustment; // adjust layer min to graph minimum
 }
 
 int GetXHeight(QFont *font)

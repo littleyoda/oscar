@@ -404,6 +404,7 @@ class gGraph : public QObject
     ZoomyScaling m_zoomY;
     bool m_block_select;
     QRect m_rect;
+    int m_defaultLayerMinHeight;
 
     qint64 m_selectedDuration;
 
