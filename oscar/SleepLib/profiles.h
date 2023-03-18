@@ -752,7 +752,7 @@ class UserSettings : public PrefSettings
       : PrefSettings(profile)
     {
         initPref(STR_US_UnitSystem, US_Metric);
-        initPref(STR_US_EventWindowSize, 4.0);
+        setPref(STR_US_EventWindowSize, 3.0);
         m_skipEmptyDays = initPref(STR_US_SkipEmptyDays, true).toBool();
         initPref(STR_US_RebuildCache, false); // FIXME: jedimark: can't remember...
         m_calculateRDI = initPref(STR_US_CalculateRDI, false).toBool();

@@ -145,7 +145,6 @@ class gFlagsGroup: public LayerGroup
     QList<ChannelID> availableChans;
 
     QVector<gFlagsLine *> lvisible;
-    QVector<gFlagsLine *> visflags;
     float m_barh;
     bool m_empty;
     bool m_rebuild_cpap;

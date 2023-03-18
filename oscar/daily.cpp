@@ -832,8 +832,8 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
     }
 
     if (day->hasMachine(MT_CPAP) || day->hasMachine(MT_OXIMETER) || day->hasMachine(MT_POSITION)) {
-        QTreeWidgetItem * start = new QTreeWidgetItem(QStringList(tr("Session Start Times")));
-        QTreeWidgetItem * end = new QTreeWidgetItem(QStringList(tr("Session End Times")));
+        QTreeWidgetItem * start = new QTreeWidgetItem(QStringList(tr("Session Start Times")),eventTypeStart);
+        QTreeWidgetItem * end = new QTreeWidgetItem(QStringList(tr("Session End Times")),eventTypeEnd);
         tree->insertTopLevelItem(cnt++ , start);
         tree->insertTopLevelItem(cnt++ , end);
         for (QList<Session *>::iterator s=day->begin(); s!=day->end(); ++s) {
@@ -2225,28 +2225,35 @@ void Daily::on_RangeUpdate(double minx, double /*maxx*/)
 }
 
 
-void Daily::on_treeWidget_itemClicked(QTreeWidgetItem *item, int column)
+void Daily::on_treeWidget_itemClicked(QTreeWidgetItem *item, int )
 {
-    Q_UNUSED(column);
+    if (!item) return;
+    QTreeWidgetItem* parent = item->parent();
+    if (!parent) return;
+    gGraph *g=GraphView->findGraph(STR_GRAPH_SleepFlags);
+    if (!g) return;
     QDateTime d;
     if (!item->data(0,Qt::UserRole).isNull()) {
-        qint64 winsize=qint64(p_profile->general->eventWindowSize())*60000L;
-        qint64 t=item->data(0,Qt::UserRole).toLongLong();
+        int eventType = parent->type();
+        qint64 time = item->data(0,Qt::UserRole).toLongLong();
 
-        double st=t-(winsize/2);
-        double et=t+(winsize/2);
+        // for events display 3 minutes before and 20 seconds after
+        // for start time skip abit before graph
+        // for end   time skip abut after graph
 
-        gGraph *g=GraphView->findGraph(STR_GRAPH_SleepFlags);
-        if (!g) return;
-        if (st<g->rmin_x) {
-            st=g->rmin_x;
-            et=st+winsize;
+        qint64 period = qint64(p_profile->general->eventWindowSize())*60000L;  // eventwindowsize units  minutes
+        qint64 small  = period/10; 
+
+        qint64 start,end;
+        if (eventType == eventTypeStart ) {
+            start = time - small;
+            end = time + period;
+        } else {
+            start = time - period;
+            end   = time + small;
         }
-        if (et>g->rmax_x) {
-            et=g->rmax_x;
-            st=et-winsize;
-        }
-        GraphView->SetXBounds(st,et);
+
+        GraphView->SetXBounds(start,end);
     }
 }
 

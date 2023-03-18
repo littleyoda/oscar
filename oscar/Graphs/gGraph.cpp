@@ -1116,12 +1116,12 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
     if ((m_graphview->horizTravel() < mouse_movement_threshold) && (x > left && x < w + left
             && y > top && y < h)) {
         if ((event->modifiers() & Qt::ShiftModifier) != 0) {
-            qint64 zz = (qint64)screenToTime(x);
-            qint64 zz_min,zz_max;
-            // set range 3 before and 20 second after.
-            zz_min = zz - 180000; // before ms
-            zz_max = zz + 20000;  // after ms
-            m_graphview->SetXBounds(zz_min, zz_max, m_group);
+            qint64 time = (qint64)screenToTime(x);
+            qint64 period =qint64(p_profile->general->eventWindowSize())*60000L;  // eventwindowsize units  minutes
+            qint64 small  =period/10;
+            qint64 start = time - period;
+            qint64 end   = time + small;
+            m_graphview->SetXBounds(start, end);
             return;
         }
         // normal click in main area

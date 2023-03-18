@@ -177,7 +177,7 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
     qint64 minx,maxx,dur;
     g.graphView()->GetXBounds(minx,maxx);
     dur = maxx - minx;
-    #if 0
+    #if BAR_TITLE_BAR_DEBUG
     // debug for minimum size for event flags.  adding required height for enabled events , number eventTypes , height of an event bar
    QString text= QString("%1 -> %2     %3: %4 H:%5 Vis:%6 barH:%7").
         arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).

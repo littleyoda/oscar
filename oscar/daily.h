@@ -369,6 +369,9 @@ private:
 
     gLineChart *leakchart;
 
+    const int eventTypeStart = QTreeWidgetItem::UserType+1;
+    const int eventTypeEnd   = QTreeWidgetItem::UserType+2;
+
 #ifndef REMOVE_FITNESS
     bool ZombieMeterMoved;
 #endif
