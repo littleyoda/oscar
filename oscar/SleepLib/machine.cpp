@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QApplication>
 #include <QDir>
 #include <QDebug>
@@ -414,7 +417,6 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
         dit = day.insert(date, profile->addDay(date));
     }
     dd = dit.value();
-
     dd->addSession(s);
 
     if (combine_next_day) {

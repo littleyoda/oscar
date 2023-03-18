@@ -8,6 +8,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include "session.h"
 #include "version.h"
 #include <cmath>

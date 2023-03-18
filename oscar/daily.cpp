@@ -837,16 +837,17 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
         tree->insertTopLevelItem(cnt++ , start);
         tree->insertTopLevelItem(cnt++ , end);
         for (QList<Session *>::iterator s=day->begin(); s!=day->end(); ++s) {
-            QDateTime st = QDateTime::fromMSecsSinceEpoch((*s)->first()); // Localtime
-            QDateTime et = QDateTime::fromMSecsSinceEpoch((*s)->last()); // Localtime
+            Session* sess = *s;
+            if ( (sess->type() != MT_CPAP) && (sess->type() != MT_OXIMETER) && (sess->type() != MT_POSITION)) continue;
+            QDateTime st = QDateTime::fromMSecsSinceEpoch(sess->first()); // Localtime
+            QDateTime et = QDateTime::fromMSecsSinceEpoch(sess->last()); // Localtime
 
             QTreeWidgetItem * item = new QTreeWidgetItem(QStringList(st.toString("HH:mm:ss")));
-            item->setData(0,Qt::UserRole, (*s)->first());
+            item->setData(0,Qt::UserRole, sess->first());
             start->addChild(item);
 
-
             item = new QTreeWidgetItem(QStringList(et.toString("HH:mm:ss")));
-            item->setData(0,Qt::UserRole, (*s)->last());
+            item->setData(0,Qt::UserRole, sess->last());
             end->addChild(item);
         }
     }
