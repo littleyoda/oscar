@@ -127,6 +127,7 @@ class gFlagsGroup: public LayerGroup
     void CloneInto(gFlagsGroup * layer) {
         layer->m_alwaysvisible = m_alwaysvisible;
         layer->availableChans = availableChans;
+        layer->m_sessions = m_sessions;
 
         for (int i=0; i<lvisible.size(); i++) {
             layer->lvisible.append(dynamic_cast<gFlagsLine *>(lvisible.at(i)->Clone()));
@@ -139,15 +140,16 @@ class gFlagsGroup: public LayerGroup
 
   protected:
     virtual bool mouseMoveEvent(QMouseEvent *event, gGraph *graph);
-
     QList<ChannelID> m_alwaysvisible;
-
     QList<ChannelID> availableChans;
-
-    QVector<gFlagsLine *> lvisible;
+    QList<Session*> m_sessions;
+    qint64 m_start  ;
+    qint64 m_duration ;
+    QVector<gFlagsLine*> lvisible;
     float m_barh;
     bool m_empty;
     bool m_rebuild_cpap;
+    int sessionBarHeight();
 };
 
 #endif // GFLAGSLINE_H

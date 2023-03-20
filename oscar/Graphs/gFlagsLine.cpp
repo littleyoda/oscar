@@ -75,6 +75,10 @@ void gFlagsGroup::SetDay(Day *d)
         return;
     }
 
+    m_sessions = d->getSessions(MT_CPAP);
+    m_start  =   d->first(MT_CPAP);
+    m_duration = d->last(MT_CPAP) - m_start;
+    if (m_duration<=0) m_duration = 1; // avoid divide by zero
 
     quint32 z = schema::FLAG | schema::SPAN | schema::MINOR_FLAG;
     if (p_profile->general->showUnknownFlags()) z |= schema::UNKNOWN;
@@ -138,30 +142,35 @@ bool gFlagsGroup::isEmpty()
 
 void gFlagsGroup::refreshConfiguration(gGraph* graph)
 {
-   int numOn=0;
+    int numOn=0;
     for (const auto & flagsline : lvisible) {
         if (schema::channel[flagsline->code()].enabled()) numOn++;
     }
     if (numOn==0) numOn=1;  // always have an area showing in graph.
     float barHeight = QFontMetrics(*defaultfont).capHeight() + QFontMetrics(*defaultfont).descent() ;
     int height (barHeight * numOn);
+    height += sessionBarHeight();
     setMinimumHeight (height);
     graph->setHeight (height);
 }
 
+int  gFlagsGroup::sessionBarHeight() {
+     static const int m_sessionHeight = 7;
+     return (m_sessions.size()>1 ) ? m_sessionHeight : 0;
+};
+
 void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
 {
+    if (!m_visible) { return; }
+    if (!m_day) { return; }
+
     QRectF outline(region.boundingRect());
     outline.translate(0.0f, 0.001f);
 
     int left = region.boundingRect().left()+1;
-    int top = region.boundingRect().top()+1;
+    int top = region.boundingRect().top()+1 ;
     int width = region.boundingRect().width();
     int height = region.boundingRect().height();
-
-    if (!m_visible) { return; }
-
-    if (!m_day) { return; }
 
     QVector<gFlagsLine *> visflags;
 
@@ -170,13 +179,15 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
             visflags.push_back(flagsline);
     }
 
+    int sheight = (m_sessions.size()>1?sessionBarHeight():0);
     int vis = visflags.size();
-    m_barh = float(height) / float(vis);
-    float linetop = top;
+    m_barh = float(height-sheight) / float(vis);
+    float linetop = top+sheight-2;
 
     qint64 minx,maxx,dur;
     g.graphView()->GetXBounds(minx,maxx);
     dur = maxx - minx;
+
     #if BAR_TITLE_BAR_DEBUG
     // debug for minimum size for event flags.  adding required height for enabled events , number eventTypes , height of an event bar
    QString text= QString("%1 -> %2     %3: %4 H:%5 Vis:%6 barH:%7").
@@ -217,6 +228,17 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
         visflags[i]->m_rect = rect;
         visflags[i]->paint(painter, g, QRegion(rect));
         linetop += m_barh;
+    }
+
+    // graph each session at top
+    if (m_sessions.size()>1 ) {
+        QRect sessBox(0,g.top,0,sessionBarHeight());
+        double adjustment = width/(double)m_duration;
+        for (const auto & sess : m_sessions) {
+            sessBox.setX(left + (sess->first()-m_start)*adjustment);
+            sessBox.setWidth(   sess->length() * adjustment);
+            painter.fillRect(sessBox, QBrush(Qt::gray));
+        }
     }
 
     painter.setPen(COLOR_Outline);
