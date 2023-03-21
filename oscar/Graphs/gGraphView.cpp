@@ -169,8 +169,11 @@ w+=m_spacer*2;
 h+=m_spacer*2; */
 //}
 
-void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int timeout)
+void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int timeout,bool alwaysShow)
 {
+    if (!alwaysShow && !AppSetting->graphTooltips())  {
+        return;
+    }
     if (timeout <= 0) {
         timeout = AppSetting->tooltipTimeout();
     }
@@ -343,7 +346,7 @@ void gParentToolTip::paint(QPainter &painter,int width,int height) {
     if (!m_parent_visible) {return ;};
     m_width=width;
     m_height=height;
-    gToolTip::display(m_text, 0, 0,m_alignment, m_timeout);
+    gToolTip::display(m_text, 0, 0,m_alignment, m_timeout,true);
     gToolTip::paint(painter);
 };
 

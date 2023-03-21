@@ -235,7 +235,7 @@ class gToolTip : public QObject
     /*! \fn virtual void display(QString text, int x, int y, int timeout=2000);
         \brief Set the tooltips display message, position, and timeout value
         */
-    virtual void display(QString text, int x, int y, ToolTipAlignment align = TT_AlignCenter, int timeout = 0);
+    virtual void display(QString text, int x, int y, ToolTipAlignment align = TT_AlignCenter, int timeout = 0,bool alwaysShow=false);
 
     //! \brief Draw the tooltip
     virtual void paint(QPainter &paint); //actually paints it.
