@@ -19,7 +19,7 @@
 #include <QPixmap>
 #include <QSize>
 #include <QChar>
-#include <QtGui>
+// Never include this does not work with other platforms. include <QtGui>
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
@@ -94,8 +94,7 @@ DailySearchTab::~DailySearchTab() {
 
 void    DailySearchTab::createUi() {
 
-        QFont baseFont =*defaultfont;
-        baseFont.setPointSize(1+baseFont.pointSize());
+        QFont baseFont = this->font();
         searchTabWidget ->setFont(baseFont);
 
         searchTabLayout  = new QVBoxLayout(searchTabWidget);
@@ -108,7 +107,7 @@ void    DailySearchTab::createUi() {
         searchTabLayout  ->setContentsMargins(4, 4, 4, 4);
 
         helpButton        = new QPushButton(this);
-        helpInfo        = new QLabel(this);
+        helpText        = new QTextEdit(this);
         selectMatch     = new QPushButton(this);
         selectUnits     = new QLabel(this);
         selectCommandCombo   = new QComboBox(this);
@@ -128,7 +127,7 @@ void    DailySearchTab::createUi() {
         guiDisplayTable = new QTableWidget(this);
 
         searchTabLayout ->addWidget(helpButton);
-        searchTabLayout ->addWidget(helpInfo);
+        searchTabLayout ->addWidget(helpText);
 
         innerCriteriaLayout  ->addWidget(selectCommandCombo);
         innerCriteriaLayout  ->addWidget(selectCommandButton);
@@ -171,11 +170,12 @@ void    DailySearchTab::createUi() {
         searchTabWidget ->setFont(baseFont);
         helpButton    ->setFont(baseFont);
 
-        helpInfo      ->setText(helpStr());
-        helpInfo      ->setFont(baseFont);
-        helpInfo      ->setStyleSheet(" text-align:left ; padding: 4;border: 1px");
+        helpText      ->setFont(baseFont);
+        helpText      ->setReadOnly(true);
+        helpText      ->setLineWrapMode(QTextEdit::NoWrap);
         helpMode      = true;
         on_helpButton_clicked();
+        helpText      ->setText(helpStr());
 
         selectMatch->setText(tr("Match:"));
         selectMatch->setIcon(*m_icon_configure);
@@ -315,10 +315,10 @@ void DailySearchTab::delayedCreateUi() {
 void    DailySearchTab::on_helpButton_clicked() {
         helpMode = !helpMode;
         if (helpMode) {
-            helpButton->setText(tr("Click HERE to close help"));
-            helpInfo ->setVisible(true);
+            helpButton->setText(tr("Click HERE to close Help"));
+            helpText ->setVisible(true);
         } else {
-            helpInfo ->setVisible(false);
+            helpText ->setVisible(false);
             helpButton->setText(tr("Help"));
         }
 }
@@ -1121,28 +1121,71 @@ QString DailySearchTab::centerLine(QString line) {
         return QString( "<center>%1</center>").arg(line).replace("\n","<br>");
 }
 
-QString DailySearchTab::helpStr() {
-        return (tr (
-"Finds days that match specified criteria.\t Searches from last day to first day\n"
-"\n"
-"Click on the Match Button to start.\t\t Next choose the match topic to run\n"
-"\n"
-"Different topics use different operations \t numberic, character, or none. \n"
-"Numberic  Operations:\t >. >=, <, <=, ==, !=.\n"
-"Character Operations:\t '*?' for wildcard \t" u8"\u2208" " for Normal matching\n"
-"Click on the operation to change\n"
-"Any White Space will match any white space in the target.\n"
-"Space is always ignored at the start or end.\n"
-"\n"
-"Wildcards use 3 characters: '*' asterisk, '?' Question Mark '\\' baclspace.\n"
-"'*' matches any number of characters.\t '?' matches a single character. \n;"
-"'\\' the next character is matched.\t Allowing '*' and '?' to be matched \n"
-"'\\*' matchs '*' \t '\\?' matches '?' \t '\\\\' matches '\\' \n"
-"\n"
-"Result Table\n"
-"Column One: Date of match. Clicking opens the date and checkbox marked.\n"
-"Column two: Information. Clicking opens the date, checkbox marked, Jumps to a tab.\n"
-) );
+QString DailySearchTab::helpStr() 
+{
+    QStringList str;
+    str.append(tr("Finds days that match specified criteria."));
+    str.append("\n");
+    str.append(tr("  Searches from last day to first day."));
+    str.append("\n");
+    str.append("\n");
+    str.append(tr("First click on Match Button then select topic."));
+    str.append("\n");
+    str.append(tr("  Then click on the operation to modify it."));
+    str.append("\n");
+    str.append(tr("  or update the value"));
+    str.append("\n");
+    str.append(tr("Topics without operations will automatically start."));
+    str.append("\n");
+    str.append("\n");
+    str.append(tr("Compare Operations: numberic or character. "));
+    str.append("\n");
+    str.append(tr("  Numberic  Operations: "));
+    str.append("   >  ,  >=  ,  <  ,  <=  ,  ==  ,  != ");
+    str.append("\n");
+    str.append(tr("  Character Operations: "));
+    str.append("   ==  ,  *? ");
+    str.append("\n");
+    str.append("\n");
+    str.append(tr("Summary Line"));
+    str.append("\n");
+    str.append(tr("  Left:Summary - Number of Day searched"));
+    str.append("\n");
+    str.append(tr("  Center:Number of Items Found"));
+    str.append("\n");
+    str.append(tr("  Right:Minimum/Maximum for item searched"));
+    str.append("\n");
+    str.append(tr("Result Table"));
+    str.append("\n");
+    str.append(tr("  Column One: Date of match. Click selects date."));
+    str.append("\n");
+    str.append(tr("  Column two: Information. Click selects date."));
+    str.append("\n");
+    str.append(tr("    Then Jumps the appropiate tab."));
+    str.append("\n");
+    str.append("\n");
+    str.append(tr("Wildcard Pattern Matching:"));
+    str.append(" *? ");
+    str.append("\n");
+    str.append(tr("  Wildcards use 3 characters:"));
+    str.append("\n");
+    str.append(tr("  Asterisk"));
+    str.append(" *  ");
+    str.append("   ");
+    str.append(tr(" Question Mark"));
+    str.append(" ? ");
+    str.append("   ");
+    str.append(tr(" Backslash."));
+    str.append(" \\ ");
+    str.append("\n");
+    str.append(tr("  Asterisk matches any number of characters."));
+    str.append("\n");
+    str.append(tr("  Question Mark matches a single character."));
+    str.append("\n");
+    str.append(tr("  Backslash matches next character."));
+    str.append("\n");
+    QString result =str.join("");
+    return result;
 }
 
 QString DailySearchTab::formatTime (qint32 ms) {

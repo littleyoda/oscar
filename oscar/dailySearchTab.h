@@ -17,6 +17,7 @@
 #include <QWidget>
 #include <QTabWidget>
 #include <QMap>
+#include <QTextEdit>
 #include "SleepLib/common.h"
 
 class QWidget ;
@@ -84,7 +85,8 @@ enum OpCode {
     QHBoxLayout*  summaryLayout;
 
     QPushButton*  helpButton;
-    QLabel*       helpInfo;
+    //QLabel*       helpInfo;
+    QTextEdit*    helpText;
 
     QComboBox*    selectOperationCombo;
     QPushButton*  selectOperationButton;
