@@ -44,6 +44,8 @@ struct StatisticsRow {
         calc=copy.calc;
         type=copy.type;
     }
+    StatisticsRow& operator=(const StatisticsRow&) = default;
+    ~StatisticsRow() {};
     QString src;
     StatCalcType calc;
     MachineType type;

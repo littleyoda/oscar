@@ -40,6 +40,8 @@ struct Filter {
         param2 = copy.param2;
         param3 = copy.param3;
     }
+    Filter& operator=(const Filter &copy) = default;
+    ~Filter() {};
 
     FilterType type;
     EventDataType param1;

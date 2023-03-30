@@ -879,6 +879,8 @@ struct Period {
         end=copy.end;
         header=copy.header;
     }
+    Period& operator=(const Period&) = default;
+    ~Period() {};
     QDate start;
     QDate end;
     QString header;

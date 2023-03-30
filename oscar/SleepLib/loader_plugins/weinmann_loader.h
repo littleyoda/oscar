@@ -66,6 +66,7 @@ struct CompInfo
         pres_start(ps), pres_size(pl),
         amv_start(ms), amv_size(ml),
         event_start(es), event_recs(er) {}
+    CompInfo& operator=(const CompInfo & other) = default;
     Session * session;
     QDateTime time;
     quint32 flow_start;

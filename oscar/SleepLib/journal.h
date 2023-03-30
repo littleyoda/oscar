@@ -25,6 +25,7 @@ public:
         end = copy.end;
         notes = copy.notes;
     }
+    Bookmark& operator=(const Bookmark & other) = default;
     Bookmark(qint64 start, qint64 end, QString notes):
     start(start), end(end), notes(notes) {}
 
