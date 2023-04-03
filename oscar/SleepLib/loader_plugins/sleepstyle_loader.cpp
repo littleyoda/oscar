@@ -924,7 +924,8 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
 //fastleak        EventList *LK = sess->AddEventList(CPAP_LeakTotal, EVL_Event, 1);
         EventList *PR = sess->AddEventList(CPAP_Pressure, EVL_Event, 0.1F);
-        EventList *A = sess->AddEventList(CPAP_AllApnea, EVL_Event);
+        EventList *OA = sess->AddEventList(CPAP_Obstructive, EVL_Event);
+        EventList *CA = sess->AddEventList(CPAP_ClearAirway, EVL_Event);
         EventList *H =  sess->AddEventList(CPAP_Hypopnea, EVL_Event);
         EventList *FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
         EventList *SA = sess->AddEventList(CPAP_SensAwake, EVL_Event);
@@ -966,8 +967,8 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
                 bitmask = 1;
                 for (int k = 0; k < 6; k++) {  // There are 6 flag sets per 2 minutes
                     // TODO: Modify if all four channels are to be reported separately
-                    if (a1 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
-                    if (a2 & bitmask) {  A->AddEvent(ti+60000, 0); } // Grouped by F&P as A
+                    if (a1 & bitmask) { OA->AddEvent(ti+60000, 0); } // Grouped by F&P as A
+                    if (a2 & bitmask) { CA->AddEvent(ti+60000, 0); } // Grouped by F&P as A
                     if (a3 & bitmask) {  H->AddEvent(ti+60000, 0); } // Grouped by F&P as H
                     if (a4 & bitmask) {  H->AddEvent(ti+60000, 0); } // Grouped by F&P as H
                     if (a5 & bitmask) { FL->AddEvent(ti+60000, 0); }

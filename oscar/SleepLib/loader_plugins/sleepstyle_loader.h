@@ -21,7 +21,7 @@
 //********************************************************************************************
 // Please INCREMENT the following value when making changes to this loaders implementation.
 //
-const int sleepstyle_data_version = 1;
+const int sleepstyle_data_version = 2;
 //
 //********************************************************************************************
 
