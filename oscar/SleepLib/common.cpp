@@ -185,6 +185,21 @@ QString getGraphicsEngine()
     return gfxEngine;
 }
 
+QString getCompilerVersion()
+{
+    #ifdef __clang_version__
+        return QString("clang++:%1").arg(__clang_version__);
+    #elif defined(__MINGW64__)
+        return QString("MINGW64:%1").arg(__VERSION__);
+    #elif defined(__MINGW32__)
+        return QString("MINGW32:%1").arg(__VERSION__);
+    #elif defined (__GNUG__) or defined (__GNUC__)
+        return QString("GNU C++:%1").arg(__VERSION__);
+    #else
+        return QString();
+    #endif
+}
+
 QStringList buildInfo;
 
 QStringList makeBuildInfo (QString forcedEngine){
@@ -194,6 +209,10 @@ QStringList makeBuildInfo (QString forcedEngine){
     buildInfo << (QObject::tr("Operating system:") + " " + QSysInfo::prettyProductName());
     buildInfo << (QObject::tr("Graphics Engine:") + " " + getOpenGLVersionString());
     buildInfo << (QObject::tr("Graphics Engine type:") + " " + getGraphicsEngine());
+    QString compiler = getCompilerVersion();
+    if (compiler.length() >0 )
+        buildInfo << (QObject::tr("Compiler:") + " " + compiler);
+
     if (forcedEngine != "")
         buildInfo << forcedEngine;
 
