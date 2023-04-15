@@ -546,6 +546,8 @@ QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 QString STR_TR_BiLevel; // Another name for BiPAP
 QString STR_TR_EPAP;    // Expiratory Positive Airway Pressure
 QString STR_TR_EEPAP;    // End Expiratory Positive Airway Pressure
+QString STR_TR_EEPAPLo;  // End-Expiratory Positive Airway Pressure, Low
+QString STR_TR_EEPAPHi;  // End-Expiratory Positive Airway Pressure, High
 QString STR_TR_EPAPLo;  // Expiratory Positive Airway Pressure, Low
 QString STR_TR_EPAPHi;  // Expiratory Positive Airway Pressure, High
 QString STR_TR_IPAP;    // Inspiratory Positive Airway Pressure
@@ -755,7 +757,9 @@ void initializeStrings()
     STR_TR_BIPAP = QObject::tr("BiPAP");  // Bi-Level Positive Airway Pressure
     STR_TR_BiLevel = QObject::tr("Bi-Level"); // Another name for BiPAP
     STR_TR_EPAP = QObject::tr("EPAP");    // Expiratory Positive Airway Pressure
-    STR_TR_EEPAP = QObject::tr("EEPAP");    // Expiratory Positive Airway Pressure
+    STR_TR_EEPAP = QObject::tr("EEPAP");    // End-Expiratory Positive Airway Pressure
+    STR_TR_EEPAPLo = QObject::tr("Min EEPAP");    // Lower End-Expiratory Positive Airway Pressure
+    STR_TR_EEPAPHi = QObject::tr("Max EEPAP");    // Higher End-Expiratory Positive Airway Pressure
     STR_TR_EPAPLo = QObject::tr("Min EPAP"); // Lower Expiratory Positive Airway Pressure
     STR_TR_EPAPHi = QObject::tr("Max EPAP"); // Higher Expiratory Positive Airway Pressure
     STR_TR_IPAP = QObject::tr("IPAP");    // Inspiratory Positive Airway Pressure

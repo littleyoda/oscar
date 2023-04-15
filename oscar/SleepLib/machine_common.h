@@ -95,7 +95,7 @@ const quint32 PAP_SplitNight              = 0x8000;  // Split night capabilities
     \brief CPAP Machines mode of operation
   */
 enum CPAPMode { //:short
-    MODE_UNKNOWN = 0, MODE_CPAP, MODE_APAP, MODE_BILEVEL_FIXED, MODE_BILEVEL_AUTO_FIXED_PS, MODE_BILEVEL_AUTO_VARIABLE_PS, MODE_ASV, MODE_ASV_VARIABLE_EPAP, MODE_AVAPS
+    MODE_UNKNOWN = 0, MODE_CPAP, MODE_APAP, MODE_BILEVEL_FIXED, MODE_BILEVEL_AUTO_FIXED_PS, MODE_BILEVEL_AUTO_VARIABLE_PS, MODE_ASV, MODE_ASV_VARIABLE_EPAP, MODE_AVAPS, MODE_TRILEVEL_AUTO_VARIABLE_PDIFF
 };
 
 /*! \enum PRTypes
@@ -150,7 +150,7 @@ extern ChannelID AllAhiChannels;
 extern QVector<ChannelID> ahiChannels;
 
 extern ChannelID NoChannel, SESSION_ENABLED, CPAP_SummaryOnly;
-extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_EEPAP,
+extern ChannelID CPAP_IPAP, CPAP_IPAPLo, CPAP_IPAPHi, CPAP_EPAP, CPAP_EPAPLo, CPAP_EPAPHi, CPAP_EEPAP, CPAP_EEPAPLo, CPAP_EEPAPHi,
        CPAP_Pressure, CPAP_PS, CPAP_PSMin, CPAP_PSMax,
        CPAP_Mode, CPAP_AHI,
        CPAP_PressureMin, CPAP_PressureMax, CPAP_Ramp, CPAP_RampTime, CPAP_RampPressure, CPAP_Obstructive,

@@ -220,6 +220,18 @@ void gPressureChart::populate(Day * day, int idx)
         }
         addSlice(CPAP_IPAPHi);
 
+    } else if (mode == MODE_TRILEVEL_AUTO_VARIABLE_PDIFF) {
+        addSlice(CPAP_EEPAPLo);
+        if (!day->summaryOnly()) {
+            ChannelID eepap = CPAP_EEPAP;
+            ChannelID ipap = CPAP_IPAP;
+            addSlice(eepap, ST_MID);
+            addSlice(eepap, ST_90P);
+            addSlice(ipap, ST_MID);
+            addSlice(ipap, ST_90P);
+        }
+        addSlice(CPAP_IPAPHi);
+
     } else if (mode == MODE_ASV) {
         addSlice(CPAP_EPAP);
         if (!day->summaryOnly()) {
