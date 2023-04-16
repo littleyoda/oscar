@@ -57,10 +57,6 @@
         <translation>Beklager, kunne ikke finne Utgivelsesnotater.</translation>
     </message>
     <message>
-        <source>OSCAR %1</source>
-        <translation type="vanished">OSCAR %1</translation>
-    </message>
-    <message>
         <location filename="../oscar/aboutdialog.cpp" line="133"/>
         <source>Important:</source>
         <translation>Viktig:</translation>
@@ -255,14 +251,6 @@
         <translation type="unfinished">Søk</translation>
     </message>
     <message>
-        <source>Flags</source>
-        <translation type="vanished">Flagg</translation>
-    </message>
-    <message>
-        <source>Graphs</source>
-        <translation type="vanished">Grafer</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="1495"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
@@ -383,10 +371,6 @@
         <translation>Ukjente sessjoner</translation>
     </message>
     <message>
-        <source>Machine Settings</source>
-        <translation type="vanished">Maskininnstillinger</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1303"/>
         <source>Model %1 - %2</source>
         <translation>Modell %1 - %2</translation>
@@ -395,10 +379,6 @@
         <location filename="../oscar/daily.cpp" line="1308"/>
         <source>PAP Mode: %1</source>
         <translation>PAP-modus: %1%1</translation>
-    </message>
-    <message>
-        <source>99.5%</source>
-        <translation type="obsolete">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1429"/>
@@ -429,10 +409,6 @@
         <location filename="../oscar/daily.cpp" line="1537"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation>Kan ikke vise kakediagram på dette systemet</translation>
-    </message>
-    <message>
-        <source>Sorry, this machine only provides compliance data.</source>
-        <translation type="vanished">Beklager, denne maskinen tilbyr kun complicance data.</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1827"/>
@@ -565,10 +541,6 @@ Continue ?</source>
         <translation>Null timer??</translation>
     </message>
     <message>
-        <source>BRICK :(</source>
-        <translation type="vanished">ØDELAGT :(</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1809"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Klag til din fabrikant av ustyret!</translation>
@@ -687,7 +659,7 @@ Jumps to Date</source>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="318"/>
-        <source>Click HERE to close help</source>
+        <source>Click HERE to close Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -786,14 +758,128 @@ Jumps to Date&apos;s Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1125"/>
-        <source>Finds days that match specified criteria.	 Searches from last day to first day
-
-Click on the Match Button to start.		 Next choose the match topic to run
-
-Different topics use different operations 	 numberic, character, or none. 
-Numberic  Operations:	 &gt;. &gt;=, &lt;, &lt;=, ==, !=.
-Character Operations:	 &apos;*?&apos; for wildcard 	</source>
+        <location filename="../oscar/dailySearchTab.cpp" line="1127"/>
+        <source>Finds days that match specified criteria.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1129"/>
+        <source>  Searches from last day to first day.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1132"/>
+        <source>First click on Match Button then select topic.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1134"/>
+        <source>  Then click on the operation to modify it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1136"/>
+        <source>  or update the value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1138"/>
+        <source>Topics without operations will automatically start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1141"/>
+        <source>Compare Operations: numberic or character. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1143"/>
+        <source>  Numberic  Operations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1146"/>
+        <source>  Character Operations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1150"/>
+        <source>Summary Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1152"/>
+        <source>  Left:Summary - Number of Day searched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1154"/>
+        <source>  Center:Number of Items Found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1156"/>
+        <source>  Right:Minimum/Maximum for item searched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1158"/>
+        <source>Result Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1160"/>
+        <source>  Column One: Date of match. Click selects date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1162"/>
+        <source>  Column two: Information. Click selects date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1164"/>
+        <source>    Then Jumps the appropiate tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1167"/>
+        <source>Wildcard Pattern Matching:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1170"/>
+        <source>  Wildcards use 3 characters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1172"/>
+        <source>  Asterisk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1175"/>
+        <source> Question Mark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1178"/>
+        <source> Backslash.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1181"/>
+        <source>  Asterisk matches any number of characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1183"/>
+        <source>  Question Mark matches a single character.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1185"/>
+        <source>  Backslash matches next character.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1049,10 +1135,6 @@ Hint: Change the start date first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="vanished">Dette maskinopptaket kan ikke bli importert i denne profilen.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="243"/>
         <source>The Day records overlap with already existing content.</source>
         <translation>Denne dagens opptak overlapper med allerede eksiterende innhold.</translation>
@@ -1237,10 +1319,6 @@ Hint: Change the start date first</source>
         <translation>&amp;Avansert</translation>
     </message>
     <message>
-        <source>Purge ALL Machine Data</source>
-        <translation type="vanished">Tøm all maskindata</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="2465"/>
         <source>Rebuild CPAP Data</source>
         <translation>Gjenoppbygg-CPAP-data</translation>
@@ -1404,18 +1482,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.ui" line="2830"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>Vis kakediagramm på daglig visning</translation>
-    </message>
-    <message>
-        <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="vanished">Standard grafrekkefølge, bra for CPAP, APAP, Bi-Level</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="vanished">Avansert</translation>
-    </message>
-    <message>
-        <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="vanished">Avansert grafrekkefølge, bra for AVS, AVAPS</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2860"/>
@@ -1713,26 +1779,6 @@ Hint: Change the start date first</source>
         <translation>Hvis du kan lese dette, fungerte ikke omstartkommandoen. Du må gjøre det selv manuelt.</translation>
     </message>
     <message>
-        <source>Are you sure you want to rebuild all CPAP data for the following machine:
-
-</source>
-        <translation type="vanished">Er du sikker på at du vil gjenoppbygge alle CPAP-data for følgende maskin:
-
-</translation>
-    </message>
-    <message>
-        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
-        <translation type="vanished">Av en eller annen grunn har OSCAR ingen sikkerhetskopier for følgende maskin:</translation>
-    </message>
-    <message>
-        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
-        <translation type="vanished">Du er i ferd med å &lt;font size =+2&gt;utslette&lt;/font&gt; OSCARs maskindatabase for følgende maskin:&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
-        <translation type="vanished">En filtillatelsesfeil gjorde at renseprosessen mislyktes; Du må slette følgende mappe manuelt:</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="2073"/>
         <source>No help is available.</source>
         <translation>Ingen hjelp er tilgjengelig.</translation>
@@ -1878,21 +1924,9 @@ Hint: Change the start date first</source>
         <translation>Fordi det ikke er noen interne sikkerhetskopier å gjenoppbygge fra, må du gjenopprette fra din egen.</translation>
     </message>
     <message>
-        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
-        <translation type="vanished">Vil du importere fra dine egne sikkerhetskopier nå? (du vil ikke ha noen data synlige for denne maskinen før du gjør det)</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="1956"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>Merk som en forholdsregel at sikkerhetskopimappen blir liggende igjen.</translation>
-    </message>
-    <message>
-        <source>OSCAR does not have any backups for this machine!</source>
-        <translation type="vanished">OSCAR har ingen sikkerhetskopier for denne maskinen!</translation>
-    </message>
-    <message>
-        <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this machine&lt;/i&gt;, &lt;font size=+2&gt;you will lose this machine&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
-        <translation type="vanished">Om du ikke har tatt &lt;i&gt;din &lt;b&gt;egen&lt;b&gt; sikkerhetskopi for ALLE dine data for denne maskinen&lt;/i&gt;, &lt;font size=+2&gt;så vil du miste denne maskinens data &lt;b&gt;permanent&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="1968"/>
@@ -1947,12 +1981,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="764"/>
         <source>Up to date</source>
         <translation>Oppdatert</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t find any valid Machine Data at
-
-%1</source>
-        <translation type="vanished">Kunne ikke finne noe gyldig maskindata på %1</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="938"/>
@@ -2347,10 +2375,6 @@ Hint: Change the start date first</source>
         <translation>Velkommen til åpen kildekode CPAP analyse og rapportering</translation>
     </message>
     <message>
-        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
-        <translation type="vanished">Denne programvare er utviklet for å hjelpe deg med å revidere data produsert av din CPAP-maskin og relatert utstyr.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.cpp" line="118"/>
         <source>PLEASE READ CAREFULLY</source>
         <translation>VENNLIGST LES NØYE</translation>
@@ -2499,10 +2523,6 @@ Hint: Change the start date first</source>
         <translation>Resett visning for å velge fra til dato</translation>
     </message>
     <message>
-        <source>Toggle Graph Visibility</source>
-        <translation type="vanished">Graf synlighet</translation>
-    </message>
-    <message>
         <location filename="../oscar/overview.ui" line="230"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
@@ -2575,14 +2595,6 @@ Index</source>
         <source>How you felt
 (0-10)</source>
         <translation>Hvordan du følte deg (0-10)</translation>
-    </message>
-    <message>
-        <source>Show all graphs</source>
-        <translation type="vanished">Vis alle grafer</translation>
-    </message>
-    <message>
-        <source>Hide all graphs</source>
-        <translation type="vanished">Skjul alle grafer</translation>
     </message>
     <message>
         <location filename="../oscar/overview.h" line="202"/>
@@ -2763,14 +2775,6 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1774"/>
         <source>&amp;Information Page</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CMS50D+/E/F, Pulox PO-200/300</source>
-        <translation type="vanished">CMS50D+/E/F, Pulox PO-200/300</translation>
-    </message>
-    <message>
-        <source>ChoiceMMed MD300W1</source>
-        <translation type="vanished">ChoiceMMed MD300W1</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="688"/>
@@ -3178,20 +3182,6 @@ Index</source>
         <translation>Ignorer korte økter</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Økter i kortere varighet enn dette vil ikke vises&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="311"/>
         <source>Day Split Time</source>
         <translation>Dagdeletid</translation>
@@ -3227,14 +3217,6 @@ p, li { white-space: pre-wrap; }
         <translation> timer</translation>
     </message>
     <message>
-        <source>Enable/disable experimental event flagging enhancements. 
-It allows detecting borderline events, and some the machine missed.
-This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="vanished">Aktiver / deaktiver forbedringer for eksperimentell hendelsesflagging.
-Det gjør det mulig å oppdage grensehendelser, og noen savnet maskinen.
-Dette alternativet må være aktivert før import, ellers er det nødvendig med en rensing.</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
         <source>Flow Restriction</source>
         <translation>Strømningsbegrensning</translation>
@@ -3245,18 +3227,6 @@ Dette alternativet må være aktivert før import, ellers er det nødvendig med 
 A value of 20% works well for detecting apneas. </source>
         <translation>Prosent av begrensning i luftstrøm fra medianverdien.
 En verdi på 20% fungerer bra for å oppdage apné. </translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Egendefinert flagging er en eksperimentell metode for å oppdage hendelser som maskinen savner. De er&lt;span style=&quot; text-decoration: underline;&quot;&gt;ikke&lt;/span&gt; inkludert i AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1116"/>
@@ -3276,10 +3246,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../oscar/preferencesdialog.ui" line="1155"/>
         <source>Event Duration</source>
         <translation>Hendelsesvarighet</translation>
-    </message>
-    <message>
-        <source>Allow duplicates near machine events.</source>
-        <translation type="vanished">Tillat duplikater nær maskinhendelser.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1220"/>
@@ -3348,10 +3314,6 @@ Standardinnstillingen er 60 minutter .. Anbefaler på det sterkeste at den blir 
         <location filename="../oscar/preferencesdialog.ui" line="1109"/>
         <source>Show in Event Breakdown Piechart</source>
         <translation>Vis i kakediagrammet for hendelsesoppsummering</translation>
-    </message>
-    <message>
-        <source>Resync Machine Detected Events (Experimental)</source>
-        <translation type="vanished">Resynkroniser maskinoppdagede hendelser (eksperimentell)</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1735"/>
@@ -3720,33 +3682,9 @@ Hvis du har en ny datamaskin med en liten solid state-disk, er dette et godt alt
         <translation>Komprimere øktdata (gjør OSCAR-data mindre, men dagen endres langsommere.)</translation>
     </message>
     <message>
-        <source>This maintains a backup of SD-card data for ResMed machines, 
-
-ResMed S9 series machines delete high resolution data older than 7 days, 
-and graph data older than 30 days..
-
-OSCAR can keep a copy of this data if you ever need to reinstall. 
-(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="vanished">Dette opprettholder en sikkerhetskopi av SD-kortdata for ResMed-maskiner,
-
-ResMed S9-serie maskiner sletter data med høy oppløsning eldre enn 7 dager,
-og grafdata eldre enn 30 dager ..
-
-OSCAR kan beholde en kopi av disse dataene hvis du noen gang trenger å installere på nytt.
-(Sterkt anbefalt, med mindre du har lite diskplass eller ikke bryr deg om grafdataene)</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="608"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gjør OSCAR litt tregere ved å forhåndslaste alle oppsummeringsdataene på forhånd, noe som øker oversikten og noen få andre beregninger senere. &lt;/p&gt;&lt;p&gt;Hvis du har en stor mengde data, kan det være verdt å holde dette slått av, men hvis du vanligvis vil se &lt;span style=&quot; font-style:italic;&quot;&gt;alt&lt;/span&gt;oversikt må all sammendragsdata likevel lastes inn uansett. &lt;/p&gt;&lt;p&gt;Merk at denne innstillingen ikke påvirker bølgeform- og hendelsesdata, som alltid etterspørres etter behov.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any machine model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gi et varsel når du importerer data fra en hvilken som helst maskinemodell som ennå ikke er testet av OSCAR-utviklere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Warn when importing data from an untested machine</source>
-        <translation type="vanished">Advarsel når du importerer data fra en ikke-testet maskin</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="645"/>
@@ -3757,18 +3695,6 @@ OSCAR kan beholde en kopi av disse dataene hvis du noen gang trenger å installe
         <location filename="../oscar/preferencesdialog.ui" line="648"/>
         <source>Warn when previously unseen data is encountered</source>
         <translation>Advarsel når det oppdages tidligere usett data</translation>
-    </message>
-    <message>
-        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
-
-The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
-
-If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="vanished">Denne beregningen krever at Total Leaks data skal leveres av CPAP-maskinen. (F.eks. PRS1, men ikke ResMed, som allerede har disse)
-
-Utilsiktede lekkasjeberegninger som brukes her er lineære, de modellerer ikke maskeventilkurven.
-
-Hvis du bruker noen forskjellige masker, velger du gjennomsnittsverdier i stedet. Det skal fortsatt være nær nok.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
@@ -3789,14 +3715,6 @@ Hvis du bruker noen forskjellige masker, velger du gjennomsnittsverdier i stedet
         <location filename="../oscar/preferencesdialog.ui" line="948"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
         <translation>Merk: En lineær beregningsmetode brukes. Endring av disse verdiene krever en ny beregning.</translation>
-    </message>
-    <message>
-        <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve machine detected event positioning.</source>
-        <translation type="vanished">Dette eksperimentelle alternativet prøver å bruke OSCARs hendelsesflaggingssystem for å forbedre maskinoppdaget hendelsesposisjonering.</translation>
-    </message>
-    <message>
-        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
-        <translation type="vanished">Vis flagg for maskinoppdagede hendelser som ikke har blitt identifisert ennå.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2013"/>
@@ -3862,10 +3780,6 @@ Hvis du bruker noen forskjellige masker, velger du gjennomsnittsverdier i stedet
         <location filename="../oscar/preferencesdialog.ui" line="2653"/>
         <source>Overview Linecharts</source>
         <translation>Oversikt Linjediagrammer</translation>
-    </message>
-    <message>
-        <source>Whether to include machine serial number on machine settings changes report</source>
-        <translation type="vanished">Om maskinens serienummer skal inkluderes i rapporten om endringer i maskininnstillinger</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2745"/>
@@ -3958,10 +3872,6 @@ Hvis du bruker noen forskjellige masker, velger du gjennomsnittsverdier i stedet
         <location filename="../oscar/preferencesdialog.ui" line="1398"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cumulative Indices&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Merk: &lt;/span&gt;På grunn av begrensede designbegrensninger støtter ikke ResMed-maskiner endring av disse innstillingene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1539"/>
@@ -4340,14 +4250,6 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <translation>Dobbeltklikk for å endre standardfargen for dette kanalplottet / flagget / dataene.</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;&lt;b&gt; Merk:&lt;/b&gt; OSCARs avanserte øktdelingsfunksjoner er ikke mulig med &lt;b&gt;ResMed&lt;/b&gt; maskiner på grunn av en begrensning i måten deres innstillinger og sammendragsdata er lagret på, og derfor de har blitt deaktivert for denne profilen.&lt;/p&gt;&lt;p&gt; På ResMed-maskiner vil dager&lt;b&gt; deles ved middagstid&lt;/b&gt; som i ResMeds kommersielle programvare.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>%1 %2</source>
-        <translation type="vanished">%1 %2</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="2322"/>
         <location filename="../oscar/preferencesdialog.ui" line="2361"/>
         <location filename="../oscar/preferencesdialog.cpp" line="469"/>
@@ -4539,14 +4441,6 @@ Vil du gjøre dette nå?</translation>
         <translation>Alltid mindre</translation>
     </message>
     <message>
-        <source>No CPAP machines detected</source>
-        <translation type="vanished">Ingen CPAP-maskiner oppdaget</translation>
-    </message>
-    <message>
-        <source>Will you be using a ResMed brand machine?</source>
-        <translation type="vanished">Vil du bruke en ResMed-maskin?</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="295"/>
         <source>Never</source>
         <translation>Aldri</translation>
@@ -4555,10 +4449,6 @@ Vil du gjøre dette nå?</translation>
         <location filename="../oscar/preferencesdialog.cpp" line="1172"/>
         <source>This may not be a good idea</source>
         <translation>Dette er kanskje ikke en god idé</translation>
-    </message>
-    <message>
-        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="vanished">ResMed S9-maskiner sletter rutinemessig visse data fra SD-kortet ditt eldre enn 7 og 30 dager (avhengig av oppløsning).</translation>
     </message>
 </context>
 <context>
@@ -4912,26 +4802,22 @@ Vil du gjøre dette nå?</translation>
         <translation>Des</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
         <source>ft</source>
         <translation>ft</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
         <source>lb</source>
         <translation>lb</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
         <source>oz</source>
         <translation>oz</translation>
     </message>
     <message>
-        <source>Kg</source>
-        <translation type="vanished">Kg</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
         <source>cmH2O</source>
         <translation>cmH2O</translation>
     </message>
@@ -4980,7 +4866,7 @@ Vil du gjøre dette nå?</translation>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="377"/>
         <location filename="../oscar/Graphs/gUsageChart.cpp" line="45"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="693"/>
         <source>Hours</source>
         <translation>Timer</translation>
     </message>
@@ -4988,12 +4874,6 @@ Vil du gjøre dette nå?</translation>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="383"/>
         <source>Min %1</source>
         <translation>Min %1</translation>
-    </message>
-    <message>
-        <source>
-Hours: %1</source>
-        <translation type="vanished">
-Timer: %1</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gUsageChart.cpp" line="30"/>
@@ -5049,87 +4929,83 @@ TTIA: %1</source>
 TTIA: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
         <source>Minutes</source>
         <translation>Minutter</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
         <source>Seconds</source>
         <translation>Sekunder</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
         <source>h</source>
         <translation>h</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
         <source>s</source>
         <translation>s</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="700"/>
         <source>Events/hr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>bpm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="705"/>
         <source>Litres</source>
         <translation>Liter</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="706"/>
         <source>ml</source>
         <translation>ml</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="707"/>
         <source>Breaths/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>?</source>
-        <translation type="vanished">?</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
         <source>Severity (0-1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
         <source>Degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2920"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="865"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="866"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="867"/>
@@ -5137,127 +5013,127 @@ TTIA: %1</translation>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
         <source>Information</source>
         <translation>Informasjon</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
         <source>Please Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
         <source>Graphs Switched Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="705"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
         <source>Sessions Switched Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
         <source>&amp;Yes</source>
         <translation>&amp;Ja</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="729"/>
         <source>&amp;No</source>
         <translation>&amp;Nei</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="730"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Avbryt</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="712"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="731"/>
         <source>&amp;Destroy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="732"/>
         <source>&amp;Save</source>
         <translation>&amp;Lagre</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
         <source>BMI</source>
         <translation>BMI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="317"/>
         <source>Weight</source>
         <translation>Vekt</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
         <source>Zombie</source>
         <translation>Zombie</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
         <source>Pulse Rate</source>
         <translation type="unfinished">Puls</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="720"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
         <source>Plethy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
         <source>Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
         <source>Daily</source>
         <translation>Daglig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="725"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
         <source>Overview</source>
         <translation>Oversikt</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="726"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
         <source>Oximetry</source>
         <translation type="unfinished">Oximetry</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
         <source>Oximeter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="729"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
         <source>Event Flags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="732"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="779"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2841"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
@@ -5265,499 +5141,504 @@ TTIA: %1</translation>
         <translation>CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
         <source>BiPAP</source>
         <translation>BiPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>Bi-Level</source>
         <translation type="unfinished">Bi-Level</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
         <source>EPAP</source>
         <translation>EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
         <source>EEPAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
         <source>Min EPAP</source>
         <translation>Min EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="741"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
         <source>Max EPAP</source>
         <translation>Maks EPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
         <source>IPAP</source>
         <translation>IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
         <source>Min IPAP</source>
         <translation>Min IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
         <source>Max IPAP</source>
         <translation>Maks IPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
         <source>APAP</source>
         <translation>APAP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="746"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
         <source>ASV</source>
         <translation>ASV</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
         <source>AVAPS</source>
         <translation>AVAPS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
         <source>ST/ASV</source>
         <translation>ST/ASV</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2905"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2932"/>
         <source>Humidifier</source>
         <translation>Fukter</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="164"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="753"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="162"/>
         <source>OA</source>
         <translation>OA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="168"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="775"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="160"/>
         <source>CA</source>
         <translation>CA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="170"/>
         <source>FL</source>
         <translation>FL</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
         <source>SA</source>
         <translation>SA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
         <source>LE</source>
         <translation>LE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>EP</source>
         <translation>EP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
         <source>VS</source>
         <translation>VS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
         <source>VS2</source>
         <translation>VS2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
         <source>RERA</source>
         <translation>RERA</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
         <source>PP</source>
         <translation>PP</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="172"/>
         <source>RE</source>
         <translation>RE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="787"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
         <source>NR</source>
         <translation>NR</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="788"/>
         <source>NRI</source>
         <translation>NRI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="789"/>
         <source>O2</source>
         <translation>O2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2849"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>PC</source>
         <translation>PC</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
         <source>UF1</source>
         <translation>UF1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <source>UF2</source>
         <translation>UF2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="201"/>
         <source>UF3</source>
         <translation>UF3</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
         <source>PS</source>
         <translation>PS</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>AHI</source>
         <translation>AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
         <source>RDI</source>
         <translation>RDI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
         <source>AI</source>
         <translation>AI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
         <source>HI</source>
         <translation>HI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="781"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
         <source>UAI</source>
         <translation>UAI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
         <source>CAI</source>
         <translation>CAI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
         <source>FLI</source>
         <translation>FLI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
         <source>REI</source>
         <translation>REI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
         <source>EPI</source>
         <translation>EPI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="788"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="158"/>
         <source>PB</source>
         <translation>PB</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
         <source>IE</source>
         <translation>IE</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Insp. Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Exp. Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Resp. Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
         <source>Flow Limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1023"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1024"/>
         <source>SensAwake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="818"/>
         <source>Pat. Trig. Breath</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="819"/>
         <source>Tgt. Min. Vent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="820"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
         <source>Target Vent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Minute Vent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="822"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
         <source>Tidal Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Resp. Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2804"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
         <source>Snore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Leak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Leaks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Large Leak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="809"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>LL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
         <source>Total Leaks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
         <source>Unintentional Leaks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
         <source>MaskPressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Flow Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="333"/>
         <source>Sleep Stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
         <source>Usage</source>
         <translation type="unfinished">Bruk</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
         <source>Sessions</source>
         <translation>Økter</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
         <source>Pr. Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="701"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="720"/>
         <source>No Data Available</source>
         <translation>Ingen data tilgjengelig</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="221"/>
         <source>App key:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="209"/>
         <source>Operating system:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="207"/>
         <source>Built with Qt %1 on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="210"/>
         <source>Graphics Engine:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="196"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="211"/>
         <source>Graphics Engine type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="214"/>
+        <source>Compiler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
         <source>Software Engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="663"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
         <source>ANGLE / OpenGLES</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="664"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
         <source>Desktop OpenGL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
         <source> m</source>
         <translation> m</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
         <source> cm</source>
         <translation> cm</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
         <source>kg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
         <source>l/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
         <source>Only Settings and Compliance Data Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
         <source>Summary Data Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="819"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
         <source>Bookmarks</source>
         <translation>Bokmerker</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="774"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
@@ -5766,202 +5647,198 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
         <source>Model</source>
         <translation>Modell</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
         <source>Brand</source>
         <translation>Merke</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
         <source>Serial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
         <source>Series</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Machine</source>
-        <translation type="vanished">Maskin</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
         <source>Channel</source>
         <translation>Kanal</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
         <source>Settings</source>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
         <source>Inclination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
         <source>Orientation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
         <source>Motion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
         <source>DOB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
         <source>Phone</source>
         <translation>Telefon</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="840"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
         <source>Email</source>
         <translation>Epost</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="841"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="860"/>
         <source>Patient ID</source>
         <translation type="unfinished">PasientID</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="861"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
         <source>Bedtime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="864"/>
         <source>Wake-up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
         <source>Mask Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="866"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="129"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="206"/>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="126"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="867"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="868"/>
         <source>Ready</source>
         <translation>Klar</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="870"/>
         <source>First</source>
         <translation>Første</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="871"/>
         <source>Last</source>
         <translation>Siste</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="872"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="854"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="873"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>End</source>
         <translation>Slutt</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="874"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="192"/>
         <source>On</source>
         <translation>På</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="875"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="792"/>
         <source>Off</source>
         <translation>Av</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="877"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="878"/>
         <source>No</source>
         <translation>Nei</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="861"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="880"/>
         <source>Min</source>
         <translation>Min</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="862"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="881"/>
         <source>Max</source>
         <translation>Maks</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="882"/>
         <source>Med</source>
         <translation>Med</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="884"/>
         <source>Average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="866"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="885"/>
         <source>Median</source>
         <translation>Median</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="224"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="867"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="886"/>
         <source>Avg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="222"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="868"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="887"/>
         <source>W-Avg</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7028,7 +6905,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="209"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1040"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1041"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>Ramp</source>
         <translation type="unfinished"></translation>
@@ -7089,7 +6966,7 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="166"/>
         <source>UA</source>
         <translation type="unfinished"></translation>
@@ -7150,10 +7027,6 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SpO2 Drop</source>
-        <translation type="vanished">SpO2 dropp</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="220"/>
         <source>A sudden (user definable) drop in blood oxygen saturation</source>
         <translation type="unfinished"></translation>
@@ -7167,10 +7040,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Breathing flow rate waveform</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>L/min</source>
-        <translation type="vanished">L/min</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="227"/>
@@ -7244,7 +7113,7 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
         <source>ratio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7294,7 +7163,7 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="787"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="156"/>
         <source>CSR</source>
         <translation type="unfinished"></translation>
@@ -7977,7 +7846,7 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
         <source>Question</source>
         <translation>Spørsmål</translation>
     </message>
@@ -8203,10 +8072,6 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/schema.cpp" line="308"/>
         <source>Auto Bi-Level (Variable PS)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>99.5%</source>
-        <translation type="obsolete">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1537"/>
@@ -8648,7 +8513,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
         <source>EPR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8664,7 +8529,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="140"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1035"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
         <source>EPR Level</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8847,7 +8712,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="876"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
         <source>Auto</source>
@@ -8884,12 +8749,12 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="118"/>
         <source>Weinmann</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="118"/>
         <source>SOMNOsoft2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9030,23 +8895,23 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1021"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1022"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1023"/>
         <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
         <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1035"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
         <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1047"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1048"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9091,13 +8956,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.h" line="223"/>
         <source>Prisma Smart</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Report</name>
-    <message>
-        <source>about:blank</source>
-        <translation type="vanished">about:blank</translation>
     </message>
 </context>
 <context>
@@ -9243,10 +9101,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="obsolete">Dette maskinopptaket kan ikke bli importert i denne profilen.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="214"/>
         <source>The Day records overlap with already existing content.</source>
         <translation type="unfinished">Denne dagens opptak overlapper med allerede eksiterende innhold.</translation>
@@ -9261,7 +9115,7 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="539"/>
-        <location filename="../oscar/statistics.cpp" line="1398"/>
+        <location filename="../oscar/statistics.cpp" line="1400"/>
         <source>CPAP Usage</source>
         <translation>CPAP bruk</translation>
     </message>
@@ -9372,162 +9226,162 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Denne rapporten ble forberedt på %1 av OSCAR %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="917"/>
+        <location filename="../oscar/statistics.cpp" line="919"/>
         <source>Device Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="976"/>
+        <location filename="../oscar/statistics.cpp" line="978"/>
         <source>Changes to Device Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1399"/>
+        <location filename="../oscar/statistics.cpp" line="1401"/>
         <source>Days Used: %1</source>
         <translation>Dager brukt: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1400"/>
+        <location filename="../oscar/statistics.cpp" line="1402"/>
         <source>Low Use Days: %1</source>
         <translation>Dager med lav bruk: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1401"/>
+        <location filename="../oscar/statistics.cpp" line="1403"/>
         <source>Compliance: %1%</source>
         <translation>Samsvar: %1%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1425"/>
+        <location filename="../oscar/statistics.cpp" line="1427"/>
         <source>Days AHI of 5 or greater: %1</source>
         <translation>Dager med AHI på 5 eller mer: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1432"/>
+        <location filename="../oscar/statistics.cpp" line="1434"/>
         <source>Best AHI</source>
         <translation>Beste AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1436"/>
-        <location filename="../oscar/statistics.cpp" line="1448"/>
+        <location filename="../oscar/statistics.cpp" line="1438"/>
+        <location filename="../oscar/statistics.cpp" line="1450"/>
         <source>Date: %1 AHI: %2</source>
         <translation>Dato: %1 AHI: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1442"/>
+        <location filename="../oscar/statistics.cpp" line="1444"/>
         <source>Worst AHI</source>
         <translation>Verste AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1479"/>
+        <location filename="../oscar/statistics.cpp" line="1481"/>
         <source>Best Flow Limitation</source>
         <translation>Beste flytbegrensning</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1483"/>
-        <location filename="../oscar/statistics.cpp" line="1496"/>
+        <location filename="../oscar/statistics.cpp" line="1485"/>
+        <location filename="../oscar/statistics.cpp" line="1498"/>
         <source>Date: %1 FL: %2</source>
         <translation>Dato %1 FL: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1489"/>
+        <location filename="../oscar/statistics.cpp" line="1491"/>
         <source>Worst Flow Limtation</source>
         <translation>Verste flytbegrensning</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1501"/>
+        <location filename="../oscar/statistics.cpp" line="1503"/>
         <source>No Flow Limitation on record</source>
         <translation>Ingen flytbegrensning registrert</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1522"/>
+        <location filename="../oscar/statistics.cpp" line="1524"/>
         <source>Worst Large Leaks</source>
         <translation>Verste store lekkasjer</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1530"/>
+        <location filename="../oscar/statistics.cpp" line="1532"/>
         <source>Date: %1 Leak: %2%</source>
         <translation>Dato: %1 Lekkasje: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1536"/>
+        <location filename="../oscar/statistics.cpp" line="1538"/>
         <source>No Large Leaks on record</source>
         <translation>Ingen store lekkasjer registrert</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1559"/>
+        <location filename="../oscar/statistics.cpp" line="1561"/>
         <source>Worst CSR</source>
         <translation>Verste CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1567"/>
+        <location filename="../oscar/statistics.cpp" line="1569"/>
         <source>Date: %1 CSR: %2%</source>
         <translation>Dato: %1 CSR: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1572"/>
+        <location filename="../oscar/statistics.cpp" line="1574"/>
         <source>No CSR on record</source>
         <translation>Ingen CSR registrert</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1589"/>
+        <location filename="../oscar/statistics.cpp" line="1591"/>
         <source>Worst PB</source>
         <translation>Verste PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1597"/>
+        <location filename="../oscar/statistics.cpp" line="1599"/>
         <source>Date: %1 PB: %2%</source>
         <translation>Dato: %1 PB: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1602"/>
+        <location filename="../oscar/statistics.cpp" line="1604"/>
         <source>No PB on record</source>
         <translation>Ingen PB registrert</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1610"/>
+        <location filename="../oscar/statistics.cpp" line="1612"/>
         <source>Want more information?</source>
         <translation>Vil du ha mer informasjon?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1611"/>
+        <location filename="../oscar/statistics.cpp" line="1613"/>
         <source>OSCAR needs all summary data loaded to calculate best/worst data for individual days.</source>
         <translation>OSCAR trenger all sammendragsdata lastet for å beregne beste/verste data for individuelle dager.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1612"/>
+        <location filename="../oscar/statistics.cpp" line="1614"/>
         <source>Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.</source>
         <translation>Aktiver avmerkingsboksen pre-last oppsummering i preferanser for å sikre at disse dataene er tilgjengelige.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1632"/>
+        <location filename="../oscar/statistics.cpp" line="1634"/>
         <source>Best RX Setting</source>
         <translation>Beste RX innstilling</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1635"/>
-        <location filename="../oscar/statistics.cpp" line="1647"/>
+        <location filename="../oscar/statistics.cpp" line="1637"/>
+        <location filename="../oscar/statistics.cpp" line="1649"/>
         <source>Date: %1 - %2</source>
         <translation>Dato: %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1638"/>
-        <location filename="../oscar/statistics.cpp" line="1650"/>
+        <location filename="../oscar/statistics.cpp" line="1640"/>
+        <location filename="../oscar/statistics.cpp" line="1652"/>
         <source>AHI: %1</source>
         <translation>AHI: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1639"/>
-        <location filename="../oscar/statistics.cpp" line="1651"/>
+        <location filename="../oscar/statistics.cpp" line="1641"/>
+        <location filename="../oscar/statistics.cpp" line="1653"/>
         <source>Total Hours: %1</source>
         <translation>Totale timer: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1644"/>
+        <location filename="../oscar/statistics.cpp" line="1646"/>
         <source>Worst RX Setting</source>
         <translation>Verste RX innstilling</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1164"/>
+        <location filename="../oscar/statistics.cpp" line="1166"/>
         <source>Most Recent</source>
         <translation>Senest</translation>
     </message>
@@ -9542,90 +9396,82 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>OSCAR er fri åpen kildekode CPAP-rapportprogramvare</translation>
     </message>
     <message>
-        <source>Changes to Machine Settings</source>
-        <translation type="vanished">Endringer i maskininnstillinger</translation>
-    </message>
-    <message>
-        <location filename="../oscar/statistics.cpp" line="1062"/>
+        <location filename="../oscar/statistics.cpp" line="1064"/>
         <source>No data found?!?</source>
         <translation>Ingen data funnet?!?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1064"/>
+        <location filename="../oscar/statistics.cpp" line="1066"/>
         <source>Oscar has no data to report :(</source>
         <translation>Oscar har ingen data å rapportere :(</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1165"/>
+        <location filename="../oscar/statistics.cpp" line="1167"/>
         <source>Last Week</source>
         <translation>Siste uke</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1166"/>
+        <location filename="../oscar/statistics.cpp" line="1168"/>
         <source>Last 30 Days</source>
         <translation>Siste 30 dager</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1167"/>
+        <location filename="../oscar/statistics.cpp" line="1169"/>
         <source>Last 6 Months</source>
         <translation>Siste 6 måneder</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1168"/>
+        <location filename="../oscar/statistics.cpp" line="1170"/>
         <source>Last Year</source>
         <translation>Siste år</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1172"/>
+        <location filename="../oscar/statistics.cpp" line="1174"/>
         <source>Last Session</source>
         <translation>Siste økt</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1217"/>
+        <location filename="../oscar/statistics.cpp" line="1219"/>
         <source>Details</source>
         <translation>Detaljer</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1231"/>
+        <location filename="../oscar/statistics.cpp" line="1233"/>
         <source>No %1 data available.</source>
         <translation>Ingen %1 data tilgjengelig.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1234"/>
+        <location filename="../oscar/statistics.cpp" line="1236"/>
         <source>%1 day of %2 Data on %3</source>
         <translation>%1 dag av %2 data på %3</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1240"/>
+        <location filename="../oscar/statistics.cpp" line="1242"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
         <translation>%1 dager av %2 data, mellom %3 og %4</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="984"/>
+        <location filename="../oscar/statistics.cpp" line="986"/>
         <source>Days</source>
         <translation>Dager</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="988"/>
+        <location filename="../oscar/statistics.cpp" line="990"/>
         <source>Pressure Relief</source>
         <translation>Trykkavlastning</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="990"/>
+        <location filename="../oscar/statistics.cpp" line="992"/>
         <source>Pressure Settings</source>
         <translation>Trykkinnstillinger</translation>
     </message>
     <message>
-        <source>Machine Information</source>
-        <translation type="vanished">Maskininformasjon</translation>
-    </message>
-    <message>
-        <location filename="../oscar/statistics.cpp" line="923"/>
+        <location filename="../oscar/statistics.cpp" line="925"/>
         <source>First Use</source>
         <translation>Første bruk</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="924"/>
+        <location filename="../oscar/statistics.cpp" line="926"/>
         <source>Last Use</source>
         <translation>Siste bruk</translation>
     </message>
@@ -9673,10 +9519,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SD-kort må være låst &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;før de settes inn i din datamaskin.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Noen operativsystemer skriver indeksfiler til kortet uten å spørre, noe som kan gjøre kortet ditt uleselig av cpap-maskinen din.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="160"/>
         <source>It would be a good idea to check File-&gt;Preferences first,</source>
         <translation>Det ville være en god idé å sjekke Fil-&gt; Innstillinger først,</translation>
@@ -9685,10 +9527,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
         <translation>ettersom det er noen alternativer som påvirker import.</translation>
-    </message>
-    <message>
-        <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation type="vanished">Merk at noen preferanser blir tvunget når en ResMed-maskin blir oppdaget</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="162"/>
@@ -9731,10 +9569,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>%1 timer, %2 minutter og %3 sekunder</translation>
     </message>
     <message>
-        <source>Your machine was on for %1.</source>
-        <translation type="vanished">Din maskin var på for %1.</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="197"/>
         <source>&lt;font color = red&gt;You only had the mask on for %1.&lt;/font&gt;</source>
         <translation>&lt;font color = red&gt;Du hadde kun masken på i %1.&lt;/font&gt;</translation>
@@ -9765,17 +9599,9 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Du hadde en AHI på %1, som er %2 ditt %3 dagers gjennomsnitt på %4.</translation>
     </message>
     <message>
-        <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation type="vanished">CPAP-maskinen din brukte konstant %1 %2 med luft</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="263"/>
         <source>Your pressure was under %1 %2 for %3% of the time.</source>
         <translation>Trykket var under %1 %2 for %3 av tiden.</translation>
-    </message>
-    <message>
-        <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation type="vanished">Din maskin brukte konstant %1-%2 %3 med luft.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="286"/>
@@ -9792,10 +9618,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/welcome.cpp" line="297"/>
         <source>Your EPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>Ditt EPAP-trykk var under %1 %2 for %3 av tiden.</translation>
-    </message>
-    <message>
-        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="vanished">Din maskin var under %1-%2 %3 for %4 av tiden.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="181"/>

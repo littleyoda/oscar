@@ -137,10 +137,6 @@
         <translation>結束</translation>
     </message>
     <message>
-        <source>99.5%</source>
-        <translation type="vanished">99.5%</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.cpp" line="1055"/>
         <source>Oximetry Sessions</source>
         <translation>血氧飽和度監測時段</translation>
@@ -154,10 +150,6 @@
         <location filename="../oscar/daily.ui" line="1407"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">記號</translation>
     </message>
     <message>
         <location filename="../oscar/daily.ui" line="968"/>
@@ -242,14 +234,6 @@
         <translation>移至最近一天的數據資料</translation>
     </message>
     <message>
-        <source>Machine Settings</source>
-        <translation type="vanished">機器處方設定值</translation>
-    </message>
-    <message>
-        <source>Sorry, this machine only provides compliance data.</source>
-        <translation type="vanished">歹勢，此機器僅提供醫囑數據資料。</translation>
-    </message>
-    <message>
         <location filename="../oscar/daily.ui" line="1326"/>
         <source>B.M.I.</source>
         <translation>身體質量指數</translation>
@@ -268,10 +252,6 @@
         <location filename="../oscar/daily.ui" line="861"/>
         <source>Events</source>
         <translation>重點事件</translation>
-    </message>
-    <message>
-        <source>Graphs</source>
-        <translation type="vanished">圖表</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1052"/>
@@ -342,10 +322,6 @@
         <location filename="../oscar/daily.cpp" line="298"/>
         <source>events</source>
         <translation>重點事件</translation>
-    </message>
-    <message>
-        <source>BRICK :(</source>
-        <translation type="vanished">崩潰 Orz</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1524"/>
@@ -681,7 +657,7 @@ Jumps to Date</source>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="318"/>
-        <source>Click HERE to close help</source>
+        <source>Click HERE to close Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -780,14 +756,128 @@ Jumps to Date&apos;s Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1125"/>
-        <source>Finds days that match specified criteria.	 Searches from last day to first day
-
-Click on the Match Button to start.		 Next choose the match topic to run
-
-Different topics use different operations 	 numberic, character, or none. 
-Numberic  Operations:	 &gt;. &gt;=, &lt;, &lt;=, ==, !=.
-Character Operations:	 &apos;*?&apos; for wildcard 	</source>
+        <location filename="../oscar/dailySearchTab.cpp" line="1127"/>
+        <source>Finds days that match specified criteria.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1129"/>
+        <source>  Searches from last day to first day.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1132"/>
+        <source>First click on Match Button then select topic.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1134"/>
+        <source>  Then click on the operation to modify it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1136"/>
+        <source>  or update the value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1138"/>
+        <source>Topics without operations will automatically start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1141"/>
+        <source>Compare Operations: numberic or character. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1143"/>
+        <source>  Numberic  Operations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1146"/>
+        <source>  Character Operations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1150"/>
+        <source>Summary Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1152"/>
+        <source>  Left:Summary - Number of Day searched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1154"/>
+        <source>  Center:Number of Items Found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1156"/>
+        <source>  Right:Minimum/Maximum for item searched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1158"/>
+        <source>Result Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1160"/>
+        <source>  Column One: Date of match. Click selects date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1162"/>
+        <source>  Column two: Information. Click selects date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1164"/>
+        <source>    Then Jumps the appropiate tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1167"/>
+        <source>Wildcard Pattern Matching:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1170"/>
+        <source>  Wildcards use 3 characters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1172"/>
+        <source>  Asterisk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1175"/>
+        <source> Question Mark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1178"/>
+        <source> Backslash.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1181"/>
+        <source>  Asterisk matches any number of characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1183"/>
+        <source>  Question Mark matches a single character.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1185"/>
+        <source>  Backslash matches next character.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1032,10 +1122,6 @@ Hint: Change the start date first</source>
 </context>
 <context>
     <name>FPIconLoader</name>
-    <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="vanished">無法在此個人檔案中匯入此设备的记录。</translation>
-    </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/icon_loader.cpp" line="242"/>
         <source>Import Error</source>
@@ -1338,10 +1424,6 @@ Hint: Change the start date first</source>
         <translation>匯入瑞斯迈&amp;M系列PAP資料</translation>
     </message>
     <message>
-        <source>For some reason, OSCAR does not have any backups for the following machine:</source>
-        <translation type="vanished">由於某種原因，OSCAR没有以下设备的任何備份:</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="2745"/>
         <source>Daily Sidebar</source>
         <translation>每日侧边栏</translation>
@@ -1350,10 +1432,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="1956"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>請注意：請將備份資料夾保留在合适的位置。</translation>
-    </message>
-    <message>
-        <source>A file permission error casued the purge process to fail; you will have to delete the following folder manually:</source>
-        <translation type="vanished">檔案权限錯誤導致清除过程失败; 您必須手動删除以下資料夾:</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2642"/>
@@ -1404,10 +1482,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="1906"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>由於没有可用的内部備份可供重建使用，請自行從備份中还原。</translation>
-    </message>
-    <message>
-        <source>Would you like to import from your own backups now? (you will have no data visible for this machine until you do)</source>
-        <translation type="vanished">您希望立即從備份匯入吗？(完成匯入，才能有資料顯示)</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.cpp" line="830"/>
@@ -1535,14 +1609,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.cpp" line="2624"/>
         <source>Export review is not yet implemented</source>
         <translation>匯出检查不可用</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to rebuild all CPAP data for the following machine:
-
-</source>
-        <translation type="vanished">確定要重建以下设备的所有CPAP資料吗:
-
-</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2811"/>
@@ -1781,14 +1847,6 @@ Hint: Change the start date first</source>
         <translation>列印&amp;報告</translation>
     </message>
     <message>
-        <source>Couldn&apos;t find any valid Machine Data at
-
-%1</source>
-        <translation type="vanished">此处没有有效的PAP資料
-
-%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="2806"/>
         <source>Export for Review</source>
         <translation>匯出查看</translation>
@@ -1941,10 +1999,6 @@ Hint: Change the start date first</source>
         <translation>&amp;参数設定</translation>
     </message>
     <message>
-        <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s machine database for the following machine:&lt;/p&gt;</source>
-        <translation type="vanished">您將要&lt;font size=+2&gt;删除以下设备的&lt;/font&gt;OSCAR資料库:&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.cpp" line="1968"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>您 &lt;b&gt;確定&lt;/b&gt; 要繼續吗?</translation>
@@ -1988,18 +2042,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.ui" line="2830"/>
         <source>Show Pie Chart on Daily page</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Standard graph order, good for CPAP, APAP, Bi-Level</source>
-        <translation type="vanished">標準圖表類型，適用於CPAP, APAP, Bi-Level模式</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="vanished">進階</translation>
-    </message>
-    <message>
-        <source>Advanced graph order, good for ASV, AVAPS</source>
-        <translation type="vanished">進階圖表類型，適用於ASV, AVAPS模式</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2860"/>
@@ -2367,10 +2409,6 @@ Hint: Change the start date first</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可以留空或者跳过這一步，但提供出生日期和性别可以提高計算的准确性。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>This software is being designed to assist you in reviewing the data produced by your CPAP machines and related equipment.</source>
-        <translation type="vanished">這款應用程式用於协助读取用於治療睡眠障碍的各种CPAP的資料.</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.ui" line="114"/>
         <source>User Information</source>
         <translation>使用者資訊</translation>
@@ -2436,14 +2474,6 @@ Index</source>
         <translation>呼吸
 紊乱
 指數</translation>
-    </message>
-    <message>
-        <source>10 of 10 Charts</source>
-        <translation type="vanished">10個中的10個圖表</translation>
-    </message>
-    <message>
-        <source>Show all graphs</source>
-        <translation type="vanished">顯示所有圖表</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="181"/>
@@ -2561,10 +2591,6 @@ Index</source>
         <translation>快照</translation>
     </message>
     <message>
-        <source>Toggle Graph Visibility</source>
-        <translation type="vanished">切換視圖</translation>
-    </message>
-    <message>
         <location filename="../oscar/overview.ui" line="230"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
@@ -2573,10 +2599,6 @@ Index</source>
         <location filename="../oscar/overview.ui" line="237"/>
         <source>Save and Restore Graph Layout Settings</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide all graphs</source>
-        <translation type="vanished">隐藏所有圖表</translation>
     </message>
     <message>
         <location filename="../oscar/overview.ui" line="97"/>
@@ -2933,10 +2955,6 @@ Index</source>
         <translation>檢測到多重療程</translation>
     </message>
     <message>
-        <source>I started this oximeter recording at (or near) the same time as a session on my CPAP machine.</source>
-        <translation type="vanished">开启血氧儀记录的時間和开启CPAP的時間一致（或相近）.</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="835"/>
         <source>Record attached to computer overnight (provides plethysomogram)</source>
         <translation>整晚連入電腦記錄(提供體積描記圖)</translation>
@@ -3257,20 +3275,6 @@ Index</source>
         <translation>天.</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;療程將會比這個稍短並且不會顯示&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-style:italic;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="690"/>
         <source>Here you can set the &lt;b&gt;upper&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
         <translation>在此可以為%1波形設定&lt;b&gt;更高的&lt;/b&gt; 閥值来進行某些計算</translation>
@@ -3308,10 +3312,6 @@ A value of 20% works well for detecting apneas. </source>
         <translation>療程儲存選項</translation>
     </message>
     <message>
-        <source>Show flags for machine detected events that haven&apos;t been identified yet.</source>
-        <translation type="vanished">顯示已標記但仍未被识别的事件.</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="3016"/>
         <source>Graph Titles</source>
         <translation>圖表标题</translation>
@@ -3322,18 +3322,6 @@ A value of 20% works well for detecting apneas. </source>
         <translation>归零</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the machine. They are &lt;span style=&quot; text-decoration: underline;&quot;&gt;not&lt;/span&gt; included in AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;自訂標記是一個檢測被機器忽略的事件实验方法。它们&lt;span style=&quot; text-decoration: underline;&quot;&gt;不&lt;/span&gt;包含於 AHI.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.cpp" line="801"/>
         <source>A data re/decompression proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
@@ -3341,14 +3329,6 @@ Are you sure you want to make these changes?</source>
         <translation>应用這些變更需要資料重新/解压缩过程。此操作可能需要几分鐘才能完成。
 
 确实要進行這些變更吗？</translation>
-    </message>
-    <message>
-        <source>Enable/disable experimental event flagging enhancements. 
-It allows detecting borderline events, and some the machine missed.
-This option must be enabled before import, otherwise a purge is required.</source>
-        <translation type="vanished">激活/停用（实验性）突出事件標記。
-允许檢測边缘事件以及设备遗漏事件
-這個選項必須在匯入前激活，否则需要清除缓存。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1058"/>
@@ -3411,10 +3391,6 @@ This option must be enabled before import, otherwise a purge is required.</sourc
         <location filename="../oscar/preferencesdialog.cpp" line="809"/>
         <source>Data Reindex Required</source>
         <translation>重建資料索引</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; machines due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed machines, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;&lt;b&gt;請注意：&lt;/b&gt;OSCAR的進階療程分割功能由於其設定和摘要資料的儲存方式的限制而無法用於ResMed设备，因此它们已针对该個人檔案被停用。&lt;/p&gt;&lt;p&gt;在ResMed设备上，日期將在中午分开，和在ResMed的商业應用程式的設定相同。&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2480"/>
@@ -3675,10 +3651,6 @@ Try it and see if you like it.</source>
         <translation>查询</translation>
     </message>
     <message>
-        <source>Resync Machine Detected Events (Experimental)</source>
-        <translation type="vanished">重新同步PAP檢測到的事件(试验性功能)</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1462"/>
         <source>Time Weighted average of Indice</source>
         <translation>時間加权平均值指數</translation>
@@ -3692,10 +3664,6 @@ Try it and see if you like it.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2725"/>
         <source>Skip over Empty Days</source>
         <translation>跳过無資料的日期</translation>
-    </message>
-    <message>
-        <source>Allow duplicates near machine events.</source>
-        <translation type="vanished">允许多重记录趋近機器事件資料。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2426"/>
@@ -3796,10 +3764,6 @@ as this is the only value available on summary-only days.</source>
         <location filename="../oscar/preferencesdialog.cpp" line="671"/>
         <source>Double click to change the default color for this channel plot/flag/data.</source>
         <translation>双击變更這個區塊/標記/資料的預設颜色.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;Due to summary design limitations, ResMed machines do not support changing these settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;由於總结设计限制，ResMed機器不支持變更這些設定。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1200"/>
@@ -4057,18 +4021,6 @@ Mainly affects the importer.</source>
         <translation>任務条置顶</translation>
     </message>
     <message>
-        <source>This calculation requires Total Leaks data to be provided by the CPAP machine. (Eg, PRS1, but not ResMed, which has these already)
-
-The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
-
-If you use a few different masks, pick average values instead. It should still be close enough.</source>
-        <translation type="vanished">這一計算需要PAP记录的總漏氣量)
-
-非意識漏氣量的計算是線性的，因為没有面罩排氣曲線可参考.
-
-如果你佩戴不同的面罩，請選取平均值，值应足够接近.</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="463"/>
         <source>This makes OSCAR&apos;s data take around half as much space.
 But it makes import and day changing take longer.. 
@@ -4123,10 +4075,6 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation>注意:預設选用線性計算法。如果變更資料需重新計算.</translation>
     </message>
     <message>
-        <source>ResMed S9 machines routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
-        <translation type="vanished">ResMed S9设备會定期從SD卡内删除7天和30天以内的資料（取决於分辨率）。</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="1297"/>
         <source>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</source>
         <translation>注意使用時間低於4個小時的日期。</translation>
@@ -4177,21 +4125,6 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2335"/>
         <source>Switch Tabs</source>
         <translation>切换标签</translation>
-    </message>
-    <message>
-        <source>This maintains a backup of SD-card data for ResMed machines, 
-
-ResMed S9 series machines delete high resolution data older than 7 days, 
-and graph data older than 30 days..
-
-OSCAR can keep a copy of this data if you ever need to reinstall. 
-(Highly recomended, unless your short on disk space or don&apos;t care about the graph data)</source>
-        <translation type="vanished">保留ResMed设备SD卡資料的備份，
-ResMed S9系列设备删除超过7天的高分辨率資料，
-以及超过30天的圖表資料。
-
-如果您需要重新安装，OSCAR可以保留此資料的副本。
-（强烈推荐，除非你的磁盘空間不足或者不关心圖形資料）</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="3175"/>
@@ -4795,162 +4728,167 @@ Are you sure you want to make these changes?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="168"/>
         <source>A</source>
         <translation>未分类</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="752"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="164"/>
         <source>H</source>
         <translation>低通氣</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
         <source>P</source>
         <translation>壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="677"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
         <source>h</source>
         <translation>小時</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="192"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="207"/>
         <source>Built with Qt %1 on %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="194"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="209"/>
         <source>Operating system:</source>
         <translation>運行系統：</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="195"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="210"/>
         <source>Graphics Engine:</source>
         <translation>圖形引擎：</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="196"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="211"/>
         <source>Graphics Engine type:</source>
         <translation>圖形引擎種類：</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="202"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="214"/>
+        <source>Compiler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/common.cpp" line="221"/>
         <source>App key:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="663"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="682"/>
         <source>ANGLE / OpenGLES</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="666"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
         <source> m</source>
         <translation> 米</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="667"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
         <source> cm</source>
         <translation> 厘米</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="672"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
         <source>kg</source>
         <translation>千克</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="678"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
         <source>m</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="679"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
         <source>s</source>
         <translation>秒</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
         <source>Hz</source>
         <translation>赫茲</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
         <source>EEPAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="766"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="311"/>
         <source>AVAPS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="791"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
         <source>UF1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="773"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <source>UF2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="201"/>
         <source>UF3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
         <source>AI</source>
         <translation>呼吸中止</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="775"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="160"/>
         <source>CA</source>
         <translation>中枢性</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="779"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="189"/>
         <source>EP</source>
         <translation>呼氣壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="170"/>
         <source>FL</source>
         <translation>氣流受限</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="668"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
         <source>in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
         <source>HI</source>
         <translation>低通氣指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="787"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="156"/>
         <source>CSR</source>
         <translation>陳施氏呼吸</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="792"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
         <source>IE</source>
         <translation>呼吸</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
         <source>LE</source>
         <translation>漏氣率</translation>
     </message>
@@ -4960,167 +4898,163 @@ Are you sure you want to make these changes?</source>
         <translation>漏氣标志</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="809"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="183"/>
         <source>LL</source>
         <translation>大量漏氣</translation>
     </message>
     <message>
-        <source>Kg</source>
-        <translation type="vanished">公斤</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="770"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="789"/>
         <source>O2</source>
         <translation>氧氣</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="753"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="772"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="162"/>
         <source>OA</source>
         <translation>阻塞性</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="768"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="787"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="186"/>
         <source>NR</source>
         <translation>未影響事件</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="788"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="158"/>
         <source>PB</source>
         <translation>周期性呼吸</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="771"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="790"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2849"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="217"/>
         <source>PC</source>
         <translation>混合面罩</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="878"/>
         <source>No</source>
         <translation>不</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="784"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2832"/>
         <source>PP</source>
         <translation>最高壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="685"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
         <source>l/min</source>
         <translation>升/分鐘</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="702"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
         <source>Only Settings and Compliance Data Available</source>
         <translation>僅限設定及順應性數據可用</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="704"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
         <source>Summary Data Only</source>
         <translation>僅限概要數據</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="776"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
         <source>PS</source>
         <translation>壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="828"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
         <source>Device</source>
         <translation>設備</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
         <source>Motion</source>
         <translation>動作</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="874"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="192"/>
         <source>On</source>
         <translation>开启</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="172"/>
         <source>RE</source>
         <translation>呼吸作用</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="758"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="192"/>
         <source>SA</source>
         <translation>呼吸中止</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="774"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="166"/>
         <source>UA</source>
         <translation>未知中止</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="780"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
         <source>VS</source>
         <translation>打鼾指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="669"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
         <source>ft</source>
         <translation>英尺</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="670"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="689"/>
         <source>lb</source>
         <translation>磅</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="687"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="706"/>
         <source>ml</source>
         <translation>毫升</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="680"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
         <source>ms</source>
         <translation>毫秒</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="671"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
         <source>oz</source>
         <translation>盎司</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="729"/>
         <source>&amp;No</source>
         <translation>&amp;不</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="777"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="273"/>
         <source>AHI</source>
         <translation>呼吸中止指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="746"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="765"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2846"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
         <source>ASV</source>
         <translation>适应性支持通氣模式</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="734"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="321"/>
         <source>BMI</source>
         <translation>体重指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
         <source>CAI</source>
         <translation>中枢性中止指數</translation>
     </message>
@@ -5138,13 +5072,13 @@ Are you sure you want to make these changes?</source>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="222"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="868"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="887"/>
         <source>W-Avg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="224"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="867"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="886"/>
         <source>Avg</source>
         <translation>平均</translation>
     </message>
@@ -5154,12 +5088,12 @@ Are you sure you want to make these changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="837"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
         <source>DOB</source>
         <translation>生日</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="786"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
         <source>EPI</source>
         <translation>呼氣壓力指數</translation>
     </message>
@@ -5170,12 +5104,12 @@ Are you sure you want to make these changes?</source>
         <translation>十二月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
         <source>FLI</source>
         <translation>氣流受限指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="854"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="873"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="324"/>
         <source>End</source>
         <translation>結束</translation>
@@ -5205,7 +5139,7 @@ Are you sure you want to make these changes?</source>
         <translation>六月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="788"/>
         <source>NRI</source>
         <translation>未影響事件指數</translation>
     </message>
@@ -5216,7 +5150,7 @@ Are you sure you want to make these changes?</source>
         <translation>三月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="862"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="881"/>
         <source>Max</source>
         <translation>最大</translation>
     </message>
@@ -5227,12 +5161,12 @@ Are you sure you want to make these changes?</source>
         <translation>五月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="882"/>
         <source>Med</source>
         <translation>中間值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="861"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="880"/>
         <source>Min</source>
         <translation>最小</translation>
     </message>
@@ -5249,24 +5183,24 @@ Are you sure you want to make these changes?</source>
         <translation>十月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="856"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="875"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="792"/>
         <source>Off</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="778"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="282"/>
         <source>RDI</source>
         <translation>呼吸紊乱指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="785"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
         <source>REI</source>
         <translation>呼吸作用指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="781"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
         <source>UAI</source>
         <translation>未知中止指數</translation>
     </message>
@@ -5277,18 +5211,18 @@ Are you sure you want to make these changes?</source>
         <translation>九月</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="782"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="176"/>
         <source>VS2</source>
         <translation>打鼾指數2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="877"/>
         <source>Yes</source>
         <translation>是的</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="684"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
         <source>bpm</source>
         <translation>次每分鐘</translation>
     </message>
@@ -5298,18 +5232,18 @@ Are you sure you want to make these changes?</source>
         <translation>脑波</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
         <source>&amp;Yes</source>
         <translation>&amp;是</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="118"/>
         <source>APAP</source>
         <translation>全自動正压通氣</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="754"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="779"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2841"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="117"/>
@@ -5317,49 +5251,49 @@ Are you sure you want to make these changes?</source>
         <translation>持续氣道正压通氣</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="876"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2945"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="3036"/>
         <source>Auto</source>
         <translation>自動</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="698"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
         <source>Busy</source>
         <translation>忙</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="759"/>
         <source>Min EPAP</source>
         <translation>呼氣壓力最小值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="738"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="757"/>
         <source>EPAP</source>
         <translation>呼氣壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="861"/>
         <source>Date</source>
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="762"/>
         <source>Min IPAP</source>
         <translation>吸氣壓力最小值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="761"/>
         <source>IPAP</source>
         <translation>吸氣壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="871"/>
         <source>Last</source>
         <translation>最近一次</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="806"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
         <source>Leak</source>
         <translation>漏氣率</translation>
     </message>
@@ -5374,7 +5308,7 @@ Are you sure you want to make these changes?</source>
         <translation>中間值.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="842"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="774"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2836"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2838"/>
@@ -5383,23 +5317,23 @@ Are you sure you want to make these changes?</source>
         <translation>模式</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="855"/>
         <source>Name</source>
         <translation>姓名</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="867"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="764"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="783"/>
         <source>RERA</source>
         <translation>呼吸努力相关性觉醒</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="209"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1040"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1041"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
         <source>Ramp</source>
         <translation>斜坡啟動</translation>
@@ -5410,13 +5344,13 @@ Are you sure you want to make these changes?</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="795"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="261"/>
         <source>Resp. Event</source>
         <translation>呼吸時間</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="289"/>
         <source>Inclination</source>
         <translation>侧卧</translation>
@@ -5467,13 +5401,9 @@ Are you sure you want to make these changes?</source>
         <translation>管径</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="732"/>
         <source>&amp;Save</source>
         <translation>&amp;保存</translation>
-    </message>
-    <message>
-        <source>99.5%</source>
-        <translation type="vanished">90% {99.5%?}</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1537"/>
@@ -5501,12 +5431,12 @@ Are you sure you want to make these changes?</source>
         <translation>治療壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="755"/>
         <source>BiPAP</source>
         <translation>双水平氣道正压通氣</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="825"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
         <source>Brand</source>
         <translation>品牌</translation>
     </message>
@@ -5527,23 +5457,23 @@ Are you sure you want to make these changes?</source>
         <translation>呼氣壓力释放: </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="723"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="742"/>
         <source>Daily</source>
         <translation>日常</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="840"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="859"/>
         <source>Email</source>
         <translation>电子邮件</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="714"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2920"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="851"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="870"/>
         <source>First</source>
         <translation>第一次</translation>
     </message>
@@ -5553,18 +5483,14 @@ Are you sure you want to make these changes?</source>
         <translation>壓力上升</translation>
     </message>
     <message>
-        <source>L/min</source>
-        <translation type="vanished">升/分鐘</translation>
-    </message>
-    <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="377"/>
         <location filename="../oscar/Graphs/gUsageChart.cpp" line="45"/>
-        <location filename="../oscar/SleepLib/common.cpp" line="674"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="693"/>
         <source>Hours</source>
         <translation>小時</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="807"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
         <source>Leaks</source>
         <translation>漏氣率</translation>
     </message>
@@ -5581,7 +5507,7 @@ Are you sure you want to make these changes?</source>
         <translation>最小: </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="843"/>
         <source>Model</source>
         <translation>型式</translation>
     </message>
@@ -5596,12 +5522,12 @@ Are you sure you want to make these changes?</source>
         <translation>備註</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="857"/>
         <source>Phone</source>
         <translation>电话号码</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="868"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
@@ -5611,29 +5537,25 @@ Are you sure you want to make these changes?</source>
         <translation>呼吸中止總時間:</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="805"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="824"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2804"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="236"/>
         <source>Snore</source>
         <translation>打鼾</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="853"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="872"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="323"/>
         <source>Start</source>
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="834"/>
         <source>Usage</source>
         <translation>使用</translation>
     </message>
     <message>
-        <source>Respiratory Disturbance Index</source>
-        <translation type="vanished">呼吸紊乱指數</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="673"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
         <source>cmH2O</source>
         <translation>厘米水柱</translation>
     </message>
@@ -5648,16 +5570,12 @@ Are you sure you want to make these changes?</source>
         <translation>睡眠時間:%1</translation>
     </message>
     <message>
-        <source>Hypopnea</source>
-        <translation type="vanished">低通氣</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="690"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="709"/>
         <source>ratio</source>
         <translation>比率</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="803"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="822"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="233"/>
         <source>Tidal Volume</source>
         <translation>呼吸容量</translation>
@@ -5716,17 +5634,9 @@ Are you sure you want to make these changes?</source>
         <translation>正在扫描檔案</translation>
     </message>
     <message>
-        <source>Clear Airway</source>
-        <translation type="vanished">开放氣道</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
         <source>Heart rate in beats per minute</source>
         <translation>心臟每分鐘的跳動次数</translation>
-    </message>
-    <message>
-        <source>A large mask leak affecting machine performance.</source>
-        <translation type="vanished">大量漏氣影响PAP性能.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="338"/>
@@ -5994,7 +5904,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>正在查找str.edf檔案...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="799"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="818"/>
         <source>Pat. Trig. Breath</source>
         <translation>患者触发呼吸</translation>
     </message>
@@ -6009,7 +5919,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>斜坡升压期間</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="705"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
         <source>Sessions Switched Off</source>
         <translation>關閉療程</translation>
     </message>
@@ -6029,29 +5939,21 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>晨起感觉</translation>
     </message>
     <message>
-        <source>Pulse Change</source>
-        <translation type="vanished">脈搏變化</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2907"/>
         <source>Disconnected</source>
         <translation>断开</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="814"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="333"/>
         <source>Sleep Stage</source>
         <translation>睡眠階段</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="802"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="821"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="239"/>
         <source>Minute Vent.</source>
         <translation>分鐘通氣率.</translation>
-    </message>
-    <message>
-        <source>SpO2 Drop</source>
-        <translation type="vanished">血氧飽和度降低</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="150"/>
@@ -6334,10 +6236,6 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>一次振動打鼾</translation>
     </message>
     <message>
-        <source>Vibratory Snore</source>
-        <translation type="vanished">振動打鼾</translation>
-    </message>
-    <message>
         <location filename="../oscar/main.cpp" line="525"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation>由於没有選取資料資料夾，OSCAR將退出。</translation>
@@ -6411,19 +6309,19 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>(%1% 依從性, 定义為 &gt; %2 小時)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="804"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="823"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="242"/>
         <source>Resp. Rate</source>
         <translation>呼吸速率</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="793"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="258"/>
         <source>Insp. Time</source>
         <translation>吸氣時間</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="794"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="255"/>
         <source>Exp. Time</source>
         <translation>呼氣時間</translation>
@@ -6495,17 +6393,9 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>程式開發者希望閣下能提供一份醫療報告及相應的數據卡原始數據，以完善OSCAR的功能。</translation>
     </message>
     <message>
-        <source>Machine Unsupported</source>
-        <translation type="vanished">不支持的机型</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="214"/>
         <source>A relative assessment of the pulse strength at the monitoring site</source>
         <translation>脈搏的强度的相关评估</translation>
-    </message>
-    <message>
-        <source>Machine</source>
-        <translation type="vanished">機器</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gSessionTimesChart.cpp" line="224"/>
@@ -6547,7 +6437,7 @@ popout window, delete it, then pop out this graph again.</source>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="801"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="820"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="267"/>
         <source>Target Vent.</source>
         <translation>目標通氣率.</translation>
@@ -6569,13 +6459,9 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>最小:%1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="675"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
         <source>Minutes</source>
         <translation>分鐘</translation>
-    </message>
-    <message>
-        <source>Periodic Breathing</source>
-        <translation type="vanished">周期性呼吸</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2779"/>
@@ -6635,13 +6521,13 @@ popout window, delete it, then pop out this graph again.</source>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="132"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
         <source>EPR</source>
         <translation>呼氣壓力释放</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="140"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1035"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
         <source>EPR Level</source>
         <translation>呼氣壓力释放水平</translation>
     </message>
@@ -6728,7 +6614,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="811"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
         <source>Unintentional Leaks</source>
         <translation>無意識漏氣量</translation>
     </message>
@@ -6741,10 +6627,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="123"/>
         <source>VPAPauto</source>
         <translation>VPAP全自動</translation>
-    </message>
-    <message>
-        <source>Apnea Hypopnea Index</source>
-        <translation type="vanished">呼吸中止指數</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="318"/>
@@ -6765,10 +6647,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="245"/>
         <source>Patient Triggered Breaths</source>
         <translation>患者出发的呼吸</translation>
-    </message>
-    <message>
-        <source>This means you will need to import this machine data again afterwards from your own backups or data card.</source>
-        <translation type="vanished">這意味着您需要自行由您的記錄或者資料卡中匯入資料.</translation>
     </message>
     <message>
         <location filename="../oscar/Graphs/gLineOverlay.cpp" line="379"/>
@@ -6823,7 +6701,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>页码 %1 到 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="686"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="705"/>
         <source>Litres</source>
         <translation>升</translation>
     </message>
@@ -6833,7 +6711,7 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>手動</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="866"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="885"/>
         <source>Median</source>
         <translation>中值</translation>
     </message>
@@ -6851,10 +6729,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/SleepLib/profiles.cpp" line="486"/>
         <source>Could not find explorer.exe in path to launch Windows Explorer.</source>
         <translation>未找到视窗浏览器的可执行檔案.</translation>
-    </message>
-    <message>
-        <source>Machine automatically switches off</source>
-        <translation type="vanished">PAP自動關閉</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2908"/>
@@ -6900,19 +6774,19 @@ Please Rebuild CPAP Data</source>
         <translation>包含自然漏氣在内的面罩漏氣率</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="720"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="739"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
         <source>Plethy</source>
         <translation>足够的</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="798"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1023"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1024"/>
         <source>SensAwake</source>
         <translation>觉醒</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="767"/>
         <source>ST/ASV</source>
         <translation>自发/定時 ASV</translation>
     </message>
@@ -6927,22 +6801,22 @@ Please Rebuild CPAP Data</source>
         <translation>%1報告</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="817"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="836"/>
         <source>Pr. Relief</source>
         <translation>壓力释放</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="703"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="722"/>
         <source>Graphs Switched Off</source>
         <translation>關閉圖表</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="826"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
         <source>Serial</source>
         <translation>串号</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
         <source>Series</source>
         <translation>系列</translation>
     </message>
@@ -6959,7 +6833,7 @@ Please Rebuild CPAP Data</source>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="735"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="317"/>
         <source>Weight</source>
         <translation>体重</translation>
@@ -6975,7 +6849,7 @@ Please Rebuild CPAP Data</source>
         <translation>PRS1 壓力释放設定.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="833"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="852"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="286"/>
         <source>Orientation</source>
         <translation>定位</translation>
@@ -6986,13 +6860,9 @@ Please Rebuild CPAP Data</source>
         <translation>自啟動</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="729"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="748"/>
         <source>Event Flags</source>
         <translation>呼吸事件</translation>
-    </message>
-    <message>
-        <source>A few breaths automatically starts machine</source>
-        <translation type="vanished">自動開啟機器在几次呼吸后</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="343"/>
@@ -7005,13 +6875,13 @@ Please Rebuild CPAP Data</source>
         <translation>正在移轉摘要檔案位置</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="717"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="736"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="322"/>
         <source>Zombie</source>
         <translation>呆瓜</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="819"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="838"/>
         <source>Bookmarks</source>
         <translation>標記簇</translation>
     </message>
@@ -7054,7 +6924,7 @@ Please Rebuild CPAP Data</source>
         <translation>氣道开放情况下的呼吸中止</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="796"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="815"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="264"/>
         <source>Flow Limitation</source>
         <translation>氣流受限</translation>
@@ -7111,7 +6981,7 @@ Start: %2</source>
         <translation>壓力 %1 超过 %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="813"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="832"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="224"/>
         <source>Flow Rate</source>
         <translation>氣流速率</translation>
@@ -7125,10 +6995,6 @@ Start: %2</source>
         <location filename="../oscar/SleepLib/profiles.cpp" line="559"/>
         <source>Important:</source>
         <translation>重要提示:</translation>
-    </message>
-    <message>
-        <source>Machine auto starts by breathing</source>
-        <translation type="vanished">呼吸触发啟動</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="211"/>
@@ -7187,18 +7053,14 @@ Start: %2
         <translation>湿度</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="724"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="743"/>
         <source>Profile</source>
         <translation>個人檔案</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="839"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="858"/>
         <source>Address</source>
         <translation>地址</translation>
-    </message>
-    <message>
-        <source>Leak Flag</source>
-        <translation type="vanished">漏氣标志</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="248"/>
@@ -7216,7 +7078,7 @@ Start: %2
         <translation>加热管路温度啟用</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="691"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="710"/>
         <source>Severity (0-1)</source>
         <translation>嚴重程度 (0-1)</translation>
     </message>
@@ -7246,10 +7108,6 @@ Start: %2
         <translation>吸氣壓力</translation>
     </message>
     <message>
-        <source>Whether or not machine allows Mask checking.</source>
-        <translation type="vanished">是否允许PAP進行面罩检查.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="336"/>
         <source>Number of Awakenings</source>
         <translation>觉醒次数</translation>
@@ -7263,10 +7121,6 @@ Start: %2
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2798"/>
         <source>Intellipap pressure relief level.</source>
         <translation>Intellipap 壓力释放水平.</translation>
-    </message>
-    <message>
-        <source>Non Responding Event</source>
-        <translation type="vanished">未回應事件</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="279"/>
@@ -7314,17 +7168,17 @@ Start: %2
         <translation>面罩關閉</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="741"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="760"/>
         <source>Max EPAP</source>
         <translation>呼氣壓力最大值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="763"/>
         <source>Max IPAP</source>
         <translation>吸氣壓力最大值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="844"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="863"/>
         <source>Bedtime</source>
         <translation>睡眠時間</translation>
     </message>
@@ -7334,7 +7188,7 @@ Start: %2
         <translation>呼氣壓力 %1 吸氣壓力%2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="721"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="740"/>
         <source>Pressure</source>
         <translation>壓力</translation>
     </message>
@@ -7345,7 +7199,7 @@ Start: %2
         <translation>自動開啟</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="884"/>
         <source>Average</source>
         <translation>平均</translation>
     </message>
@@ -7372,10 +7226,6 @@ TTIA: %1</source>
         <translation>患者出发的呼吸百分比</translation>
     </message>
     <message>
-        <source>Non Data Capable Machine</source>
-        <translation type="vanished">没有使用機器的資料</translation>
-    </message>
-    <message>
         <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1009"/>
         <source>Days: %1</source>
         <translation>天数:%1</translation>
@@ -7386,10 +7236,6 @@ TTIA: %1</source>
         <translation>体积描述术</translation>
     </message>
     <message>
-        <source>Unclassified Apnea</source>
-        <translation type="vanished">未分類的呼吸中止</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="195"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="198"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="201"/>
@@ -7397,7 +7243,7 @@ TTIA: %1</source>
         <translation>由OSCAR的流量波形處理器檢測到的使用者自訂事件。</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="662"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
         <source>Software Engine</source>
         <translation>應用程式引擎</translation>
     </message>
@@ -7407,7 +7253,7 @@ TTIA: %1</source>
         <translation>自動双水平</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="699"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
         <source>Please Note</source>
         <translation>請留言</translation>
     </message>
@@ -7437,7 +7283,7 @@ TTIA: %1</source>
         <translation>呼氣壓力释放水平</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="797"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
         <source>Flow Limit</source>
         <translation>氣流受限</translation>
     </message>
@@ -7463,12 +7309,12 @@ Length: %1</source>
         <translation>正在載入摘要資料</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="697"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="716"/>
         <source>Information</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="718"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="205"/>
         <source>Pulse Rate</source>
         <translation>脈搏</translation>
@@ -7479,10 +7325,6 @@ Length: %1</source>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2889"/>
         <source>Rise Time</source>
         <translation>吸氣氣壓上升時間</translation>
-    </message>
-    <message>
-        <source>Cheyne Stokes Respiration</source>
-        <translation type="vanished">潮式呼吸</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="147"/>
@@ -7505,7 +7347,7 @@ Length: %1</source>
         <translation>温度测量啟用</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="676"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="695"/>
         <source>Seconds</source>
         <translation>秒</translation>
     </message>
@@ -7515,7 +7357,7 @@ Length: %1</source>
         <translation>%1 (%2 天): </translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="664"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="683"/>
         <source>Desktop OpenGL</source>
         <translation>桌面OpenGL</translation>
     </message>
@@ -7525,7 +7367,7 @@ Length: %1</source>
         <translation>快照 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="846"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="865"/>
         <source>Mask Time</source>
         <translation>面罩使用時間</translation>
     </message>
@@ -7540,7 +7382,7 @@ Length: %1</source>
         <translation>眼動睡眠時長</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="848"/>
         <source>Channel</source>
         <translation>通道</translation>
     </message>
@@ -7553,10 +7395,6 @@ Length: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="341"/>
         <source>Time in Deep Sleep</source>
         <translation>深層睡眠時長</translation>
-    </message>
-    <message>
-        <source>Obstructive</source>
-        <translation type="vanished">阻塞性</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="146"/>
@@ -7582,10 +7420,6 @@ Length: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="342"/>
         <source>Time to Sleep</source>
         <translation>睡眠時長</translation>
-    </message>
-    <message>
-        <source>Respiratory Effort Related Arousal: An restriction in breathing that causes an either an awakening or sleep disturbance.</source>
-        <translation type="vanished">呼吸努力指數與觉醒有关：呼吸限制會導致觉醒或者睡眠障碍.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="153"/>
@@ -7619,7 +7453,7 @@ Length: %1</source>
         <translation>如果您过往的資料已经丢失，請手動將所有的 Journal_XXXXXXX 資料夾内的檔案拷贝到此.</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="730"/>
         <source>&amp;Cancel</source>
         <translation>&amp;取消</translation>
     </message>
@@ -7630,36 +7464,24 @@ Length: %1</source>
         <translation>最小呼氣壓力%1 最大吸氣壓力%2 壓力 %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="732"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="751"/>
         <source>Default</source>
         <translation>預設</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="688"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="707"/>
         <source>Breaths/min</source>
         <translation>呼吸次数/分鐘</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="692"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="711"/>
         <source>Degrees</source>
         <translation>度</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="712"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="731"/>
         <source>&amp;Destroy</source>
         <translation>&amp;删除</translation>
-    </message>
-    <message>
-        <source>User Flag #1</source>
-        <translation type="vanished">使用者標記#1</translation>
-    </message>
-    <message>
-        <source>User Flag #2</source>
-        <translation type="vanished">使用者標記#2</translation>
-    </message>
-    <message>
-        <source>User Flag #3</source>
-        <translation type="vanished">使用者標記#3</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="601"/>
@@ -7696,10 +7518,6 @@ Length: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="230"/>
         <source>Mask Pressure</source>
         <translation>面罩壓力</translation>
-    </message>
-    <message>
-        <source>A vibratory snore as detcted by a System One machine</source>
-        <translation type="vanished">振動打鼾可被System One偵測到</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="368"/>
@@ -7858,7 +7676,7 @@ Length: %1</source>
         <translation>正在给EDF檔案編輯目录...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="694"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="713"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
@@ -7883,14 +7701,6 @@ Length: %1</source>
         <translation>更高的吸氣壓力</translation>
     </message>
     <message>
-        <source>Don&apos;t forget to place your datacard back in your CPAP machine</source>
-        <translation type="vanished">請拔出内存卡，插入PAP</translation>
-    </message>
-    <message>
-        <source>The machine data folder needs to be removed manually.</source>
-        <translation type="vanished">數據資料夾需要手動移除.</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="298"/>
         <source>Summary Only</source>
         <translation>仅有概要資訊</translation>
@@ -7901,16 +7711,16 @@ Length: %1</source>
         <translation>標記結束</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="737"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="756"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2844"/>
         <source>Bi-Level</source>
         <translation>双水平</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="847"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="866"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="129"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="206"/>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="125"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="126"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
@@ -7920,7 +7730,7 @@ Length: %1</source>
         <translation>整理中...</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="681"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="700"/>
         <source>Events/hr</source>
         <translation>事件/小時</translation>
     </message>
@@ -7955,25 +7765,15 @@ Length: %1</source>
         <translation>扫描檔案...</translation>
     </message>
     <message>
-        <source>
-Hours: %1</source>
-        <translation type="vanished">
-小時：%1</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2854"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2856"/>
         <source>Flex Mode</source>
         <translation>Flex模式</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="816"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="835"/>
         <source>Sessions</source>
         <translation>療程</translation>
-    </message>
-    <message>
-        <source>A period during a session where the machine could not detect flow.</source>
-        <translation type="vanished">機器無法檢測流量的療程期間。</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2994"/>
@@ -7987,12 +7787,12 @@ Hours: %1</source>
         <translation>呼氣壓力 %1 吸氣壓力 %2 %3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="830"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="849"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="725"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="744"/>
         <source>Overview</source>
         <translation>總覽</translation>
     </message>
@@ -8087,7 +7887,7 @@ Hours: %1</source>
         <translation>壓力支持最小值</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="808"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="827"/>
         <source>Large Leak</source>
         <translation>大量漏氣</translation>
     </message>
@@ -8097,12 +7897,12 @@ Hours: %1</source>
         <translation>依據 str.edf 計時</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="845"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="864"/>
         <source>Wake-up</source>
         <translation>醒</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="696"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="715"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="865"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="866"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="867"/>
@@ -8125,7 +7925,7 @@ Hours: %1</source>
         <translation>最大壓力</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="812"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="831"/>
         <source>MaskPressure</source>
         <translation>面罩壓力</translation>
     </message>
@@ -8150,7 +7950,7 @@ Hours: %1</source>
         <translation>OSCAR不會變更此資料夾，將會創建一個新資料夾。</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="810"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="829"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="276"/>
         <source>Total Leaks</source>
         <translation>總漏氣量</translation>
@@ -8204,10 +8004,6 @@ Hours: %1</source>
         <location filename="../oscar/SleepLib/schema.cpp" line="174"/>
         <source>Vibratory Snore (VS)</source>
         <translation>震動式打鼾 (VS)</translation>
-    </message>
-    <message>
-        <source>A vibratory snore as detcted by a System One device</source>
-        <translation type="vanished">振動打鼾可被System One偵測到</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="179"/>
@@ -8342,10 +8138,6 @@ Hours: %1</source>
         <translation>使用檔案管理器复制個人檔案目录，然后重新啟動oscar並完成升级过程。</translation>
     </message>
     <message>
-        <source>I&apos;m sorry to report that OSCAR can only track hours of use and very basic settings for this machine.</source>
-        <translation type="vanished">OSCAR只能跟踪该機器的使用時間和基本的設定。</translation>
-    </message>
-    <message>
         <location filename="../oscar/Graphs/gSummaryChart.cpp" line="311"/>
         <source>%1 (%2 day): </source>
         <translation>%1 (%2 天): </translation>
@@ -8391,10 +8183,6 @@ Hours: %1</source>
         <translation>呼氣時間</translation>
     </message>
     <message>
-        <source>Expiratory Puff</source>
-        <translation type="vanished">嘴部呼吸</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="270"/>
         <source>Maximum Leak</source>
         <translation>最大漏氣率</translation>
@@ -8425,17 +8213,17 @@ Hours: %1</source>
         <translation>体重指數</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="726"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="745"/>
         <source>Oximetry</source>
         <translation>血氧测定</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="728"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="747"/>
         <source>Oximeter</source>
         <translation>血氧儀</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="701"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="720"/>
         <source>No Data Available</source>
         <translation>無可用資料</translation>
     </message>
@@ -8875,10 +8663,6 @@ Hours: %1</source>
         <translation>2分鐘內氣流峰值間距</translation>
     </message>
     <message>
-        <source>Machine Database Changes</source>
-        <translation type="vanished">資料库變更</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2786"/>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2788"/>
         <source>SmartFlex Mode</source>
@@ -8911,7 +8695,7 @@ Hours: %1</source>
         <translation>顯示AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="800"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="819"/>
         <source>Tgt. Min. Vent</source>
         <translation>目標 分鐘 通氣</translation>
     </message>
@@ -8936,7 +8720,7 @@ Hours: %1</source>
         <translation>療程: %1 / %2 / %3 长度: %4 / %5 / %6 最长: %7 / %8 / %9</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="750"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="769"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2905"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2932"/>
         <source>Humidifier</source>
@@ -8948,7 +8732,7 @@ Hours: %1</source>
         <translation>壓力释放： %1</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/common.cpp" line="841"/>
+        <location filename="../oscar/SleepLib/common.cpp" line="860"/>
         <source>Patient ID</source>
         <translation>患者编号</translation>
     </message>
@@ -9050,23 +8834,23 @@ Hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1021"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1022"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1023"/>
         <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1029"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
         <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1035"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
         <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1047"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1048"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9106,12 +8890,12 @@ Hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="118"/>
         <source>Weinmann</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="117"/>
+        <location filename="../oscar/SleepLib/loader_plugins/weinmann_loader.h" line="118"/>
         <source>SOMNOsoft2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9207,13 +8991,6 @@ Hours: %1</source>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.h" line="223"/>
         <source>Prisma Smart</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Report</name>
-    <message>
-        <source>about:blank</source>
-        <translation type="vanished">关於:空白</translation>
     </message>
 </context>
 <context>
@@ -9349,10 +9126,6 @@ Hours: %1</source>
 <context>
     <name>SleepStyleLoader</name>
     <message>
-        <source>This Machine Record cannot be imported in this profile.</source>
-        <translation type="vanished">無法在此個人檔案中匯入此设备的记录。</translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="213"/>
         <source>Import Error</source>
         <translation>匯入出錯</translation>
@@ -9371,17 +9144,17 @@ Hours: %1</source>
 <context>
     <name>Statistics</name>
     <message>
-        <location filename="../oscar/statistics.cpp" line="984"/>
+        <location filename="../oscar/statistics.cpp" line="986"/>
         <source>Days</source>
         <translation>天数</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1489"/>
+        <location filename="../oscar/statistics.cpp" line="1491"/>
         <source>Worst Flow Limtation</source>
         <translation>最差淺慢呼吸</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1522"/>
+        <location filename="../oscar/statistics.cpp" line="1524"/>
         <source>Worst Large Leaks</source>
         <translation>最差大漏氣</translation>
     </message>
@@ -9391,13 +9164,13 @@ Hours: %1</source>
         <translation>血氧儀統計值</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1530"/>
+        <location filename="../oscar/statistics.cpp" line="1532"/>
         <source>Date: %1 Leak: %2%</source>
         <translation>日期: %1 Leak: %2%</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="539"/>
-        <location filename="../oscar/statistics.cpp" line="1398"/>
+        <location filename="../oscar/statistics.cpp" line="1400"/>
         <source>CPAP Usage</source>
         <translation>CPAP使用情况</translation>
     </message>
@@ -9407,7 +9180,7 @@ Hours: %1</source>
         <translation>血氧飽和度</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1602"/>
+        <location filename="../oscar/statistics.cpp" line="1604"/>
         <source>No PB on record</source>
         <translation>無周期性呼吸資料</translation>
     </message>
@@ -9417,17 +9190,17 @@ Hours: %1</source>
         <translation>% 在 %1 時間中</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1166"/>
+        <location filename="../oscar/statistics.cpp" line="1168"/>
         <source>Last 30 Days</source>
         <translation>最近三十天</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1610"/>
+        <location filename="../oscar/statistics.cpp" line="1612"/>
         <source>Want more information?</source>
         <translation>更多資訊?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1399"/>
+        <location filename="../oscar/statistics.cpp" line="1401"/>
         <source>Days Used: %1</source>
         <translation>天数:%1</translation>
     </message>
@@ -9437,50 +9210,50 @@ Hours: %1</source>
         <translation>%1 指數</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="917"/>
+        <location filename="../oscar/statistics.cpp" line="919"/>
         <source>Device Information</source>
         <translation>裝置信息</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="976"/>
+        <location filename="../oscar/statistics.cpp" line="978"/>
         <source>Changes to Device Settings</source>
         <translation>更改至裝置設定</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1635"/>
-        <location filename="../oscar/statistics.cpp" line="1647"/>
+        <location filename="../oscar/statistics.cpp" line="1637"/>
+        <location filename="../oscar/statistics.cpp" line="1649"/>
         <source>Date: %1 - %2</source>
         <translation>日期：%1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1638"/>
-        <location filename="../oscar/statistics.cpp" line="1650"/>
+        <location filename="../oscar/statistics.cpp" line="1640"/>
+        <location filename="../oscar/statistics.cpp" line="1652"/>
         <source>AHI: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1639"/>
-        <location filename="../oscar/statistics.cpp" line="1651"/>
+        <location filename="../oscar/statistics.cpp" line="1641"/>
+        <location filename="../oscar/statistics.cpp" line="1653"/>
         <source>Total Hours: %1</source>
         <translation>總小時數：%1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1644"/>
+        <location filename="../oscar/statistics.cpp" line="1646"/>
         <source>Worst RX Setting</source>
         <translation>最差治療方案设定</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1632"/>
+        <location filename="../oscar/statistics.cpp" line="1634"/>
         <source>Best RX Setting</source>
         <translation>最佳治療方案设定</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1234"/>
+        <location filename="../oscar/statistics.cpp" line="1236"/>
         <source>%1 day of %2 Data on %3</source>
         <translation>%1 天在 %2 中的資料在 %3</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1567"/>
+        <location filename="../oscar/statistics.cpp" line="1569"/>
         <source>Date: %1 CSR: %2%</source>
         <translation>日期: %1 CSR: %2%</translation>
     </message>
@@ -9530,32 +9303,32 @@ Hours: %1</source>
         <translation>OSCAR是一個免費的開源CPAP彙整程序</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1062"/>
+        <location filename="../oscar/statistics.cpp" line="1064"/>
         <source>No data found?!?</source>
         <translation>沒有找到數據！</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1064"/>
+        <location filename="../oscar/statistics.cpp" line="1066"/>
         <source>Oscar has no data to report :(</source>
         <translation>OSCAR找不到數據:(</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1164"/>
+        <location filename="../oscar/statistics.cpp" line="1166"/>
         <source>Most Recent</source>
         <translation>最近</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1611"/>
+        <location filename="../oscar/statistics.cpp" line="1613"/>
         <source>OSCAR needs all summary data loaded to calculate best/worst data for individual days.</source>
         <translation>OSCAR需要加載所總要數據來評估每日狀況最好/最差的數據。</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1612"/>
+        <location filename="../oscar/statistics.cpp" line="1614"/>
         <source>Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.</source>
         <translation>請在属性選單中選中預調取彙總資訊選項。</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="990"/>
+        <location filename="../oscar/statistics.cpp" line="992"/>
         <source>Pressure Settings</source>
         <translation>壓力設定</translation>
     </message>
@@ -9565,7 +9338,7 @@ Hours: %1</source>
         <translation>電話:%1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1589"/>
+        <location filename="../oscar/statistics.cpp" line="1591"/>
         <source>Worst PB</source>
         <translation>最差周期性呼吸</translation>
     </message>
@@ -9580,7 +9353,7 @@ Hours: %1</source>
         <translation>名字: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1167"/>
+        <location filename="../oscar/statistics.cpp" line="1169"/>
         <source>Last 6 Months</source>
         <translation>最近六個月</translation>
     </message>
@@ -9596,17 +9369,17 @@ Hours: %1</source>
         <translation>平均 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1231"/>
+        <location filename="../oscar/statistics.cpp" line="1233"/>
         <source>No %1 data available.</source>
         <translation>%1 資料可用.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="924"/>
+        <location filename="../oscar/statistics.cpp" line="926"/>
         <source>Last Use</source>
         <translation>最近一次</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="988"/>
+        <location filename="../oscar/statistics.cpp" line="990"/>
         <source>Pressure Relief</source>
         <translation>壓力释放</translation>
     </message>
@@ -9622,32 +9395,32 @@ Hours: %1</source>
         <translation>脈搏</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="923"/>
+        <location filename="../oscar/statistics.cpp" line="925"/>
         <source>First Use</source>
         <translation>首次</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1559"/>
+        <location filename="../oscar/statistics.cpp" line="1561"/>
         <source>Worst CSR</source>
         <translation>最差的潮式呼吸</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1442"/>
+        <location filename="../oscar/statistics.cpp" line="1444"/>
         <source>Worst AHI</source>
         <translation>最高的AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1165"/>
+        <location filename="../oscar/statistics.cpp" line="1167"/>
         <source>Last Week</source>
         <translation>上週</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1168"/>
+        <location filename="../oscar/statistics.cpp" line="1170"/>
         <source>Last Year</source>
         <translation>去年</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1479"/>
+        <location filename="../oscar/statistics.cpp" line="1481"/>
         <source>Best Flow Limitation</source>
         <translation>最好淺慢呼吸</translation>
     </message>
@@ -9657,49 +9430,45 @@ Hours: %1</source>
         <translation>地址:</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1217"/>
+        <location filename="../oscar/statistics.cpp" line="1219"/>
         <source>Details</source>
         <translation>詳細資料</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1501"/>
+        <location filename="../oscar/statistics.cpp" line="1503"/>
         <source>No Flow Limitation on record</source>
         <translation>無淺慢呼吸記錄</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1240"/>
+        <location filename="../oscar/statistics.cpp" line="1242"/>
         <source>%1 days of %2 Data, between %3 and %4</source>
         <translation>%1 天的在 %2中的資料,在%3 和 %4 之間</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1536"/>
+        <location filename="../oscar/statistics.cpp" line="1538"/>
         <source>No Large Leaks on record</source>
         <translation>無大漏氣記錄</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1597"/>
+        <location filename="../oscar/statistics.cpp" line="1599"/>
         <source>Date: %1 PB: %2%</source>
         <translation>日期: %1 PB: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1432"/>
+        <location filename="../oscar/statistics.cpp" line="1434"/>
         <source>Best AHI</source>
         <translation>最低AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1172"/>
+        <location filename="../oscar/statistics.cpp" line="1174"/>
         <source>Last Session</source>
         <translation>上一個療程</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1436"/>
-        <location filename="../oscar/statistics.cpp" line="1448"/>
+        <location filename="../oscar/statistics.cpp" line="1438"/>
+        <location filename="../oscar/statistics.cpp" line="1450"/>
         <source>Date: %1 AHI: %2</source>
         <translation>日期: %1 AHI: %2</translation>
-    </message>
-    <message>
-        <source>Machine Information</source>
-        <translation type="vanished">機器資訊</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="536"/>
@@ -9707,23 +9476,23 @@ Hours: %1</source>
         <translation>CPAP統計值</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1401"/>
+        <location filename="../oscar/statistics.cpp" line="1403"/>
         <source>Compliance: %1%</source>
         <translation>依從: %1%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1483"/>
-        <location filename="../oscar/statistics.cpp" line="1496"/>
+        <location filename="../oscar/statistics.cpp" line="1485"/>
+        <location filename="../oscar/statistics.cpp" line="1498"/>
         <source>Date: %1 FL: %2</source>
         <translation>日期: %1 FL: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1425"/>
+        <location filename="../oscar/statistics.cpp" line="1427"/>
         <source>Days AHI of 5 or greater: %1</source>
         <translation>AHI大於5的天数: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1400"/>
+        <location filename="../oscar/statistics.cpp" line="1402"/>
         <source>Low Use Days: %1</source>
         <translation>低使用天数:%1</translation>
     </message>
@@ -9733,7 +9502,7 @@ Hours: %1</source>
         <translation>漏氣統計值</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1572"/>
+        <location filename="../oscar/statistics.cpp" line="1574"/>
         <source>No CSR on record</source>
         <translation>無潮式呼吸记录</translation>
     </message>
@@ -9756,17 +9525,9 @@ Hours: %1</source>
         <translation>低於</translation>
     </message>
     <message>
-        <source>Your CPAP machine used a constant %1 %2 of air</source>
-        <translation type="vanished">您的呼吸器使用固定%1 %2加壓空氣</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.cpp" line="318"/>
         <source>Your average leaks were %1 %2, which is %3 your %4 day average of %5.</source>
         <translation>平均漏氣為 %1 %2，即 %3 您的 %5 天 %4 平均值。</translation>
-    </message>
-    <message>
-        <source>&lt;span style=&quot; font-weight:600;&quot;&gt;Warning: &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;ResMed S9 SDCards need to be locked &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;before inserting into your computer.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;Some operating systems write index files to the card without asking, which can render your card unreadable by your cpap machine.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;span style=&quot; font-weight:600;&quot;&gt;注意：&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;請確認 PAP 專用記憶卡的覆寫保護已開啟&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;特別是在插入其它電腦裝置之前&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;&lt;br&gt;有些作業系統會在偵測到連接媒體時，自動寫入索引檔案且無預設提示通知，此類型系統寫入動作可能導致呼吸器將無法辨識讀取記憶卡&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.ui" line="127"/>
@@ -9817,10 +9578,6 @@ Hours: %1</source>
         <location filename="../oscar/welcome.cpp" line="161"/>
         <source>as there are some options that affect import.</source>
         <translation>有些至關重要的偏好選項會影響資料匯入.</translation>
-    </message>
-    <message>
-        <source>Your machine was on for %1.</source>
-        <translation type="vanished">呼吸器使用時間為 %1。</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="227"/>
@@ -9878,10 +9635,6 @@ Hours: %1</source>
         <translation>統計數據</translation>
     </message>
     <message>
-        <source>Your machine used a constant %1-%2 %3 of air.</source>
-        <translation type="vanished">您的呼吸機使用固定 %1 %2 %3 加壓空氣。</translation>
-    </message>
-    <message>
         <location filename="../oscar/welcome.ui" line="185"/>
         <source>CPAP Importer</source>
         <translation>CPAP 導入器</translation>
@@ -9895,10 +9648,6 @@ Hours: %1</source>
         <location filename="../oscar/welcome.ui" line="299"/>
         <source>Overview</source>
         <translation>綜合概況</translation>
-    </message>
-    <message>
-        <source>Your machine was under %1-%2 %3 for %4% of the time.</source>
-        <translation type="vanished">呼吸器使用時數低於 %1-%2 %3 ，持續時間%4% 。</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="212"/>
@@ -9930,10 +9679,6 @@ Hours: %1</source>
         <location filename="../oscar/welcome.cpp" line="298"/>
         <source>Your IPAP pressure was under %1 %2 for %3% of the time.</source>
         <translation>吸氣壓力低於 %1 %2，持續時間 %3%。</translation>
-    </message>
-    <message>
-        <source>Note that some preferences are forced when a ResMed machine is detected</source>
-        <translation type="vanished">請注意，在偵測到 ResMed 設備時某些偏好選項會直接套用</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="193"/>
