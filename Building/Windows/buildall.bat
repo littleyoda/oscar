@@ -36,6 +36,13 @@ IF NOT exist "%basedir%\Building" 	(
 	call :notfound2 OSCAR-code: "%basedir%"
 	goto :endProgram)
 set baseBuildName=%basedir%\build-oscar-win
+set OSCARPRO=%basedir%\oscar\oscar.pro
+set requiredOutSideOscar=
+IF %doOutSide%==1 (
+	set baseBuildName=%parentdir%\build-oscar-win
+	set OSCARPRO=%basedir%\OSCAR_QT.pro
+	set requiredOutSideOscar=oscar\
+	)
 ::: Construct name of our build directory
 ::: Build Directory can be based on the directories the QtCreator uses for either OSCAR_QT.pro or oscar.pro
 ::: For OSCAR_QT.pro  is at parentDir\OSCAR-code\OCASR_QT.pro the build will be at  parentDir\BuildDir
@@ -49,9 +56,8 @@ if NOT "%requestQtPath%"=="" (set QtPath=%requestQtPath%)
 IF NOT exist %QtPath%\nul (
 	call :configError InvalidPath to Qt. QtPath:%QtPath%
 	echo The QtPath can be added as a parameter to %~nx0
-
 	call :helpInfo
-	goto :endProgram
+	goto :endProgram 
 	)
 	
 set foundQtVersion=
@@ -131,11 +137,12 @@ exit /b
 
 :::============================================
 :sub1
-	FOR /F %%i in ("%1\Installer\") do (call :sub2  %%i )
-	FOR /F %%i in ("%1\Release\") do (call :sub2  %%i  	)
+	FOR /F %%i in ("%1\%requiredOutSideOscar%Installer\") do (call :sub2  %%i )
+	FOR /F %%i in ("%1\%requiredOutSideOscar%Release\") do (call :sub2  %%i  	)
 goto :eof
 :sub2
-	FOR  %%k in ("%1\*.exe") do (call :sub3 %%k  	)
+::	echo PLACE 2 %1
+	FOR  %%k in ("%1*.exe") do (call :sub3 %%k  	)
 goto :eof
 :sub3
 	echo %~t1  %1
@@ -163,7 +170,8 @@ goto :eof
 :parse
 set do32=0
 set do64=0
-set doBrokenGl=0
+set doBrokenGl=0	
+set doOutSide=1
 set useExistingBuild=0
 set skipCompile=0
 set skipDeploy=0
@@ -175,14 +183,16 @@ set arg=%1
 ::: echo ^<%arg%^>
 IF "%arg%"=="32"   (set do32=1 & GOTO :endLoop )
 IF "%arg%"=="64"   (set do64=1 & GOTO :endLoop )
-IF /I "%arg%"=="brokenGl"   (set doBrokenGl=1 & GOTO :endLoop )
+IF /I "%arg:~0,2%"=="br"   (set doBrokenGl=1 & GOTO :endLoop )
 IF /I "%arg:~0,5%"=="SKIPD" (set skipDeploy=1 & GOTO :endLoop )
 IF /I "%arg:~0,5%"=="SKIPC" (
 	set useExistingBuild=1
 	set skipCompile=1
 	GOTO :endLoop )
-IF /I "%arg:~0,4%"=="SKIP" (set useExistingBuild=1 & GOTO :endLoop )
-IF /I "%arg:~0,3%"=="ver" ( echo on & GOTO :endLoop )
+IF /I "%arg:~0,2%"=="OU" (set doOutSide=1 & GOTO :endLoop )
+echo windows cmd.exe workaround 1>nul
+IF /I "%arg:~0,2%"=="re" (set useExistingBuild=1 & GOTO :endLoop )
+IF /I "%arg:~0,2%"=="ve" ( echo on & GOTO :endLoop )
 IF exist %arg%\Tools\nul IF exist %arg%\Licenses\nul (	
 	set requestQtPath=%arg%
 	GOTO :endLoop)
@@ -298,13 +308,13 @@ if %skipCompile%==1 goto :doDeploy
 
 if NOT exist %buildDir%\Makefile goto :createMakefile
 if %useExistingBuild%==1 goto :skipMakefile
-if NOT exist ..\oscar\oscar.pro {
+if NOT exist %OSCARPRO% {
 	call :buildOneError 24 notfound oscar.pro is not found.
 	goto :endBuildOne)
 
 :createMakefile
 echo Creating Oscar's Makefile	
-%QtVersionCompilerDir%\bin\qmake.exe ..\oscar\oscar.pro -spec win32-g++ %extraparams% >qmake.log 2>&1 || (
+%QtVersionCompilerDir%\bin\qmake.exe %OSCARPRO% -spec win32-g++ %extraparams% >qmake.log 2>&1 || (
 	call :buildOneError 25 Failed to create Makefile part1
 	type qmake.log
 	goto :endBuildOne)
@@ -355,18 +365,21 @@ echo The %~nx0 has parameters to configure the default options.
 echo %~nx0 can be executed from the File Manager
 echo Parameter can be added using a short cut and adding parameters to the shortcut's target.
 echo _	
-echo options        Description
-echo brokenGl       Builds the brokenGL versions of OSCAR
+echo OPTIONS        DESCRIPTION
+echo br[okenGl]     Builds the brokenGL versions of OSCAR
 echo 32             Builds just 32 bit versions
 echo 64             Builds just 64 bit versions
-echo QtPath         Overrides the default path (C:\Qt) to QT's installation - contains Tools, License, ... folders
+echo ^<QtPath^>       Overrides the default path (C:\Qt) to QT's installation - contains Tools, License, ... folders
+echo ou[tside]      Default: Build is located outside of git repository. Same as building with OSCAR_QT.pro
+echo in[side]       Build is located inside of git repository. Same as building with oscar.pro
+echo he[lp]         Display this help message
 echo _	
-echo The offical builds of OSCAR should not use the following options. These facilate development
-echo skip           Skips recreating Makefile, but executes make in existing build folder
-echo skipCompile    Skips all compiling. Leaves build folder untouched.
-echo skipDeploy     Skip calling deploy.bat. Does not create Release or install versions.
-echo verbose        Start verbose logging
-echo help           Display this help message
+echo The offical builds of OSCAR should not use the following options. These facilate development and testing
+echo re[make]       Skips recreating Makefile, but executes make in existing build folder
+echo skipC[ompile]  Skips all compiling. Leaves build folder untouched.
+echo skipD[eploy]   Skip calling deploy.bat. Does not create Release or install versions.
+echo ve[rbose]      Start verbose logging
 echo _
-echo Anything       Displays invalid parameter message and help message then exits.
+echo ^<Anything^>     Displays invalid parameter message and help message then exits.
 goto :eof
+
