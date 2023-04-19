@@ -21,7 +21,18 @@
 ::: additional files, run WinDeployQt, and create an installer.
 :::
 @echo off
+echo Executing %~nx0 %*
 setlocal
+set doSkipInstall=0
+set	suffixParam=%1
+if "%1"=="skipInstall" (
+		set doSkipInstall=1
+		set	suffixParam=%2
+	) else (
+		if "%2"=="skipInstall" set doSkipInstall=1
+	)
+
+echo doSkipInstall = %doSkipInstall%
 set errDescription=
 set errvalue=0
 ::: Current Directory is the shadowBuildDir
@@ -36,7 +47,7 @@ set toolDir=%parentDir%\OSCAR-code\Building\Windows
 set sourceDir=%parentDir%\OSCAR-code\oscar
 
 echo tooldir is %toolDir%
-::echo parentDir is %parentDir%
+::echo p	arentDir is %parentDir%
 :: echo sourceDir is %sourceDir%
 echo shadowBuildDir is %shadowBuildDir%
 if NOT exist %shadowBuildDir%\OSCAR.exe  (
@@ -68,7 +79,7 @@ set path=%git:~0,-1%\usr\bin;%path%
 
 ::: Now have gawk. -- do not delete this line.
 ::: Now copy the base installation control file
-copy %toolDir%\buildInstall.iss %shadowBuildDir% 		1>nul
+copy %toolDir%\buildInstall.iss %shadowBuildDir%   1>nul
 if NOT %ERRORLEVEL%==0 (
 	call :err 45  %ERRORLEVEL% failure to copy %toolDir%\buildInstall.iss to %shadowBuildDir%
 	goto :endProgram
@@ -95,7 +106,7 @@ if NOT %ERRORLEVEL%==0 (
 echo %shadowBuildDir% | gawk -f %toolDir%\getBuildInfo.awk >>%shadowBuildDir%\buildInfo.iss
 if NOT %ERRORLEVEL%==0 (
 	call :err 63	& goto :endProgram)
-echo #define MySuffix "%1" >>%shadowBuildDir%\buildinfo.iss
+echo #define MySuffix "%suffixParam%" >>%shadowBuildDir%\buildinfo.iss
 if NOT %ERRORLEVEL%==0 (
 	call :err 64	& goto :endProgram)
 :::echo #define MySourceDir "%sourcedir%" >>%shadowBuildDir%\buildinfo.iss
@@ -142,9 +153,11 @@ windeployqt.exe --force --compiler-runtime --no-translations --verbose 1 OSCAR.e
 ::::For unknown reasons, Win64 build copies the .ts files into the release dir/ectory, while Win32 does not
 if exist Translations\*.ts del /q Translations\*.ts
 
+
 ::: Create installer
-echo Creating OSCAR Installation Exec
 cd ..
+IF %doSkipInstall%==1 goto :endProgram
+echo Creating OSCAR Installation Exec
 "%ProgramFiles(x86)%\Inno Setup 6\iscc" /Q BuildInstall.iss 		|| (call :err 88	& goto :endProgram)
 if NOT exist %shadowBuildDir%\Installer\OSCAR*.exe  (call :err 89	& goto :endProgram)
 :endProgram
@@ -167,7 +180,9 @@ exit /b %errvalue%
 where gawk  > temp.txt 2>nul
 set er=%errorlevel%
 set gawk=<temp.txt
-if %er%==0 (del temp.txt && goto :eof)
+if %er%==0 (
+	del temp.txt
+	goto :eof)
 :: get location of Git command - then find where Git was downloaded.
 where Git > temp.txt 2>nul
 set er=%errorlevel%

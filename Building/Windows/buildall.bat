@@ -57,7 +57,7 @@ IF NOT exist %QtPath%\nul (
 	call :configError InvalidPath to Qt. QtPath:%QtPath%
 	echo The QtPath can be added as a parameter to %~nx0
 	call :helpInfo
-	goto :endProgram 
+	goto :endProgram
 	)
 	
 set foundQtVersion=
@@ -177,6 +177,7 @@ set skipCompile=0
 set skipDeploy=0
 set requestQtPath=
 set toggleEcho="off"
+set skipInstallCommand=
 :parseLoop
 IF "%1"=="" GOTO :exitParseLoop
 set arg=%1
@@ -191,6 +192,9 @@ IF /I "%arg:~0,5%"=="SKIPC" (
 	GOTO :endLoop )
 IF /I "%arg:~0,2%"=="OU" (set doOutSide=1 & GOTO :endLoop )
 echo windows cmd.exe workaround 1>nul
+IF /I "%arg:~0,5%"=="SKIPI" (
+	set skipInstallCommand=skipInstall
+	GOTO :endLoop )
 IF /I "%arg:~0,2%"=="re" (set useExistingBuild=1 & GOTO :endLoop )
 IF /I "%arg:~0,2%"=="ve" ( echo on & GOTO :endLoop )
 IF exist %arg%\Tools\nul IF exist %arg%\Licenses\nul (	
@@ -338,7 +342,7 @@ mingw32-make.exe -j8 >make.log 2>&1 || (
 if %skipDeploy%==1 goto :endBuildOne
 
 echo Deploying and Creating Installation Exec in %cd%
-call "%~dp0\deploy.bat"
+call "%~dp0\deploy.bat" %skipInstallCommand%
 set buildErrorLevel=%ERRORLEVEL%
 
 
@@ -382,4 +386,7 @@ echo ve[rbose]      Start verbose logging
 echo _
 echo ^<Anything^>     Displays invalid parameter message and help message then exits.
 goto :eof
+
+
+
 
