@@ -45,7 +45,7 @@
 //********************************************************************************************
 
 // parameters
-ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_BiSoft = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_EEPAP_Min = 0, Prisma_EEPAP_Max = 0, Prisma_HumidifierLevel = 0;
+ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_BiSoft = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_HumidifierLevel = 0;
 
 // waveforms
 ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0, Prisma_EEPAP = 0;
@@ -266,8 +266,8 @@ void PrismaImport::run()
                 // and MODE_ASV_VARIABLE_EPAP here
                 session->settings[CPAP_Mode] = (int)MODE_ASV;
                 session->settings[Prisma_Mode] = (int)PRISMA_COMBINED_MODE_ACSV;
-                session->settings[Prisma_EEPAP_Min] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
-                session->settings[Prisma_EEPAP_Max] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
+                session->settings[CPAP_EEPAPLo] = parameters[PRISMA_LINE_EEPAP_MIN] / 100.0;
+                session->settings[CPAP_EEPAPHi] = parameters[PRISMA_LINE_EEPAP_MAX] / 100.0;
                 session->settings[CPAP_EPAP] = parameters[PRISMA_LINE_EPAP] / 100.0;
                 session->settings[CPAP_IPAP] = parameters[PRISMA_LINE_IPAP] / 100.0;
                 session->settings[CPAP_IPAPHi] = parameters[PRISMA_LINE_IPAP_MAX] / 100.0;
@@ -857,14 +857,14 @@ void PrismaLoader::initChannels()
         QObject::tr("PMaxOA"),
         STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
-    channel.add(GRP_CPAP, new Channel(Prisma_EEPAP_Min=0xe409, SETTING,  MT_CPAP,  SESSION,
-        "Prisma_EEPAPMin", QObject::tr("EEPAPMin"),
+    channel.add(GRP_CPAP, new Channel(CPAP_EEPAPLo=0xe409, SETTING,  MT_CPAP,  SESSION,
+        "CPAP_EEPAPLo", QObject::tr("EEPAPMin"),
         QObject::tr("EEPAPMin"),
         QObject::tr("EEPAPMin"),
         STR_UNIT_CMH2O, DEFAULT, Qt::green));
 
-    channel.add(GRP_CPAP, new Channel(Prisma_EEPAP_Max=0xe40a, SETTING,  MT_CPAP,  SESSION,
-        "Prisma_EEPAPMax", QObject::tr("EEPAPMax"),
+    channel.add(GRP_CPAP, new Channel(CPAP_EEPAPHi=0xe40a, SETTING,  MT_CPAP,  SESSION,
+        "CPAP_EEPAPHi", QObject::tr("EEPAPMax"),
         QObject::tr("EEPAPMax"),
         QObject::tr("EEPAPMax"),
         STR_UNIT_CMH2O, DEFAULT, Qt::green));
