@@ -62,7 +62,7 @@ QString htmlLeftSessionInfo;
 QString htmlLeftFooter;
 
 extern ChannelID PRS1_PeakFlow;
-extern ChannelID Prisma_ObstructLevel, Prisma_rMVFluctuation, Prisma_rRMV, Prisma_PressureMeasured, Prisma_FlowFull, Prisma_SPRStatus;
+extern ChannelID Prisma_ObstructLevel, Prisma_rMVFluctuation, Prisma_rRMV, Prisma_PressureMeasured, Prisma_FlowFull;
 
 // This was Sean Stangl's idea.. but I couldn't apply that patch.
 inline QString channelInfo(ChannelID code) {
@@ -89,7 +89,7 @@ const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull, STR_GRAPH_SPRStatus
+                                           STR_GRAPH_FlowFull
                                           };
 
 // Advanced graph order
@@ -99,7 +99,7 @@ const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull, STR_GRAPH_SPRStatus
+                                           STR_GRAPH_FlowFull
                                           };
 
 // CPAP modes that should have Advanced graphs
@@ -250,7 +250,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, PRS1_PeakFlow, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
         /*  CPAP_IE, */   ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Movement, CPAP_Test1,
-        Prisma_ObstructLevel, Prisma_rRMV, Prisma_rMVFluctuation, Prisma_PressureMeasured, Prisma_FlowFull, Prisma_SPRStatus
+        Prisma_ObstructLevel, Prisma_rRMV, Prisma_rMVFluctuation, Prisma_PressureMeasured, Prisma_FlowFull
     };
 
     // Create graphs from the cpap code list
@@ -405,7 +405,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     graphlist[schema::channel[Prisma_rRMV].code()]->AddLayer(new gLineChart(Prisma_rRMV, square));
     graphlist[schema::channel[Prisma_rMVFluctuation].code()]->AddLayer(new gLineChart(Prisma_rMVFluctuation, square));
     graphlist[schema::channel[Prisma_FlowFull].code()]->AddLayer(new gLineChart(Prisma_FlowFull, square));
-    graphlist[schema::channel[Prisma_SPRStatus].code()]->AddLayer(new gLineChart(Prisma_SPRStatus, square));
 
     graphlist[schema::channel[CPAP_Test1].code()]->AddLayer(new gLineChart(CPAP_Test1, square));
     //graphlist[schema::channel[CPAP_Test2].code()]->AddLayer(new gLineChart(CPAP_Test2, square));

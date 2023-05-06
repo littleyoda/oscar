@@ -48,7 +48,7 @@
 ChannelID Prisma_Mode = 0, Prisma_SoftPAP = 0, Prisma_BiSoft = 0, Prisma_PSoft = 0, Prisma_PSoft_Min = 0, Prisma_AutoStart = 0, Prisma_Softstart_Time = 0, Prisma_Softstart_TimeMax = 0, Prisma_Softstart_Pressure = 0, Prisma_TubeType = 0, Prisma_PMaxOA = 0, Prisma_HumidifierLevel = 0;
 
 // waveforms
-ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_SPRStatus = 0, Prisma_EEPAP = 0;
+ChannelID Prisma_ObstructLevel = 0, Prisma_rMVFluctuation = 0, Prisma_rRMV= 0, Prisma_PressureMeasured = 0, Prisma_FlowFull = 0, Prisma_EEPAP = 0;
 
 // events
 ChannelID Prisma_Artifact = 0, Prisma_CriticalLeak = 0, Prisma_DeepSleep = 0, Prisma_TimedBreath = 0;
@@ -327,9 +327,6 @@ void PrismaImport::run()
     AddWaveform(CPAP_FlowRate, QString("RespFlow"));
     AddWaveform(CPAP_Leak, QString("LeakFlowBreath"));
     AddWaveform(Prisma_ObstructLevel, QString("ObstructLevel"));
-    // NOTE: this is a bitfield indicating the device current stauts breaht in, breath out, leakage
-    // only can be used for debugging, consider removing it, or adding better support for displaying it
-    AddWaveform(Prisma_SPRStatus, QString("SPRStatus"));
 
     // prisma smart
     // waweforms specific for prisma smart / soft devices
@@ -941,12 +938,13 @@ void PrismaLoader::initChannels()
         QObject::tr("Full flow"),
         STR_UNIT_Unknown, DEFAULT, QColor("black")));
 
-    channel.add(GRP_CPAP, new Channel(Prisma_SPRStatus=0xe445, WAVEFORM,  MT_CPAP,   SESSION,
-        "Prisma_SPRStatus",
-        QObject::tr("SPRStatus"),
-        QObject::tr("SPRStatus"),
-        QObject::tr("SPRStatus"),
-        STR_UNIT_Unknown, DEFAULT, QColor("black")));
+    //Note: removed the channel, but keeping this code here, because of the channel id allocation, maybe we will bring it back in the future
+    //channel.add(GRP_CPAP, new Channel(Prisma_SPRStatus=0xe445, WAVEFORM,  MT_CPAP,   SESSION,
+    //    "Prisma_SPRStatus",
+    //    QObject::tr("SPRStatus"),
+    //    QObject::tr("SPRStatus"),
+    //    QObject::tr("SPRStatus"),
+    //    STR_UNIT_Unknown, DEFAULT, QColor("black")));
 
 
     channel.add(GRP_CPAP, new Channel(Prisma_Artifact=0xe446, SPAN,  MT_CPAP,   SESSION,
