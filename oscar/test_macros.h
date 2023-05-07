@@ -45,6 +45,7 @@ To turn off the the test macros.
 #define DEBUGFW  DEBUGW	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGT   DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
 #define DEBUGTF  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGTFW  DEBUGW	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 
                                     // Do nothing
 #define Z( EXPRESSION ) 			/* comment out display of variable */
@@ -110,6 +111,7 @@ To turn off the the test macros.
 #define DEBUGFW
 #define DEBUGT
 #define DEBUGTF
+#define DEBUGTFW
 
 #define Z( XX )
 #define ZZ( XX , YY)
