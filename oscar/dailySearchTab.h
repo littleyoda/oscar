@@ -1,7 +1,6 @@
 /* search  GUI Headers
  *
  * Copyright (c) 2019-2022 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -12,26 +11,30 @@
 
 #include <QDate>
 #include <QTextDocument>
+#include <QListWidgetItem>
 #include <QList>
-#include <QFrame>
 #include <QWidget>
+#include <QPushButton>
 #include <QTabWidget>
 #include <QMap>
 #include <QTextEdit>
 #include "SleepLib/common.h"
 
+class GPushButton;
 class QWidget ;
+class QDialog ;
+class QComboBox ;
+class QListWidget ;
 class QProgressBar ;
 class QHBoxLayout ;
 class QVBoxLayout ;
-class QPushButton ;
 class QLabel ;
-class QComboBox ;
 class QDoubleSpinBox ;
 class QSpinBox ;
 class QLineEdit ;
 class QTableWidget ;
 class QTableWidgetItem ;
+class QSizeF ;
 
 class Day;  //forward declaration.
 class Daily;  //forward declaration.
@@ -75,43 +78,44 @@ enum OpCode {
     QWidget*      parent;
     QWidget*      searchTabWidget;
     QTabWidget*   dailyTabWidget;
-
     QVBoxLayout*  searchTabLayout;
-    QHBoxLayout*  criteriaLayout;
-    QFrame  *     innerCriteriaFrame;
-    QHBoxLayout*  innerCriteriaLayout;
 
-    QHBoxLayout*  searchLayout;
-    QHBoxLayout*  summaryLayout;
+    QTableWidget* controlTable;
+
+    // Command command Widget
+    QWidget*      commandWidget;
+    QHBoxLayout*  commandLayout;
 
     QPushButton*  helpButton;
-    //QLabel*       helpInfo;
     QTextEdit*    helpText;
 
-    QComboBox*    selectOperationCombo;
-    QPushButton*  selectOperationButton;
-    QComboBox*    selectCommandCombo;
-    QPushButton*  selectCommandButton;
-    QPushButton*  selectMatch;
-    QLabel*       selectUnits;
+    QProgressBar* guiProgressBar;
 
+    // control Widget
+    QPushButton*  matchButton;
+    QPushButton*  clearButton;
+
+    QWidget*      summaryWidget;
+    QHBoxLayout*  summaryLayout;
+
+    // Command Widget
+    QListWidget*  commandList;
+    // command Widget
+    QPushButton*  commandButton;
+    QComboBox*    operationCombo;
+    QPushButton*  operationButton;
+    QLabel*       selectUnits;
+    QDoubleSpinBox* selectDouble;
+    QSpinBox*     selectInteger;
+    QLineEdit*    selectString;
+
+    // Trigger  Widget
+    QPushButton*  startButton;
     QLabel*       statusProgress;
 
     QLabel*       summaryProgress;
     QLabel*       summaryFound;
     QLabel*       summaryMinMax;
-
-    QDoubleSpinBox* selectDouble;
-    QSpinBox*     selectInteger;
-    QLineEdit*    selectString;
-    QPushButton*  startButton;
-    QPushButton*  clearButton;
-
-    QProgressBar* guiProgressBar;
-    QTableWidget* guiDisplayTable;
-    QTableWidgetItem* horizontalHeader0;
-    QTableWidgetItem* horizontalHeader1;
-
 
     QIcon*        m_icon_selected;
     QIcon*        m_icon_notSelected;
@@ -119,31 +123,41 @@ enum OpCode {
 
     QMap <QString,OpCode> opCodeMap;
     QString     opCodeStr(OpCode);
-    OpCode      selectOperationOpCode = OP_INVALID;
+    OpCode      operationOpCode = OP_INVALID;
 
 
     bool        helpMode=false;
+    QString     helpString = helpStr();
     void        createUi();
-    void        delayedCreateUi();
+    void        populateControl();
+    QSize       setText(QPushButton*,QString);
+    QSize       setText(QLabel*,QString);
+    QSize       textsize(QFont font ,QString text);
 
     void        search(QDate date);
     void        find(QDate&);
     void        criteriaChanged();
     void        endOfPass();
     void        displayStatistics();
+    void        setResult(int row,int column,QDate date,QString value);
 
 
     void        addItem(QDate date, QString value, Qt::Alignment alignment);
     void        setCommandPopupEnabled(bool );
     void        setOperationPopupEnabled(bool );
     void        setOperation( );
-    void        hideResults();
+    void        hideResults(bool);
+    void        connectUi(bool);
+
 
     QString     helpStr();
     QString     centerLine(QString line);
     QString     formatTime (qint32) ;
     QString     convertRichText2Plain (QString rich);
     QRegExp     searchPatterToRegex (QString wildcard);
+    QListWidgetItem*     calculateMaxSize(QString str,int topic);
+    float       commandListItemMaxWidth = 0;
+    float       commandListItemHeight = 0;
 
     EventDataType calculateAhi(Day* day);
     bool        compare(int,int );
@@ -151,6 +165,7 @@ enum OpCode {
 
     bool        createUiFinished=false;
     bool        startButtonMode=true;
+    bool        commandPopupEnabled=false;
     SearchTopic searchTopic;
     int         nextTab;
     int         channelId;
@@ -166,7 +181,7 @@ enum OpCode {
     int         daysFound;
     int         passFound;
 
-    void        setSelectOperation(OpCode opCode,ValueMode mode) ;
+    void        setoperation(OpCode opCode,ValueMode mode) ;
 
     ValueMode   valueMode;
     qint32     selectValue=0;
@@ -188,19 +203,44 @@ enum OpCode {
 
 public slots:
 private slots:
-    void on_dateItemClicked(QTableWidgetItem *item);
     void on_startButton_clicked();
     void on_clearButton_clicked();
-    void on_selectMatch_clicked();
-    void on_selectCommandButton_clicked();
-    void on_selectCommandCombo_activated(int);
-    void on_selectOperationButton_clicked();
-    void on_selectOperationCombo_activated(int);
+    void on_matchButton_clicked();
     void on_helpButton_clicked();
-    void on_dailyTabWidgetCurrentChanged(int);
+
+    void on_commandButton_clicked();
+    void on_operationButton_clicked();
+
+    void on_commandList_activated(QListWidgetItem* item);
+    void on_operationCombo_activated(int index);
+
     void on_intValueChanged(int);
     void on_doubleValueChanged(double);
     void on_textEdited(QString);
+
+    void on_activated(GPushButton*);
+};
+
+
+class GPushButton : public QPushButton
+{
+	Q_OBJECT
+public:
+    GPushButton (int,int,QDate,DailySearchTab* parent); 
+    virtual ~GPushButton(); 
+    int row() { return _row;};
+    int column() { return _column;};
+    QDate date() { return _date;};
+    void setDate(QDate date) {_date=date;};
+private:
+    const DailySearchTab* _parent;
+    const int _row;
+    const int _column;
+    QDate _date;
+signals:
+    void activated(GPushButton*);
+public slots:
+    void on_clicked();
 };
 
 #endif // SEARCHDAILY_H
