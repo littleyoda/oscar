@@ -27,6 +27,7 @@
 #include <unordered_map>
 
 #include "resvent_loader.h"
+#include "assert.h"
 
 #ifdef DEBUG_EFFICIENCY
 #include <QElapsedTimer>  // only available in 4.8
@@ -227,7 +228,11 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
     while (!f.atEnd()) {
         QString line = f.readLine().trimmed();
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         const auto elems = line.split(",", Qt::SkipEmptyParts);
+#else
+        const auto elems = line.split(",", QString::SkipEmptyParts);
+#endif
         if (elems.size() != 4) {
             continue;
         }
