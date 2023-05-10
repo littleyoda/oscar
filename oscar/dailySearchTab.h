@@ -89,7 +89,7 @@ enum OpCode {
     QPushButton*  helpButton;
     QTextEdit*    helpText;
 
-    QProgressBar* guiProgressBar;
+    QProgressBar* progressBar;
 
     // control Widget
     QPushButton*  matchButton;
