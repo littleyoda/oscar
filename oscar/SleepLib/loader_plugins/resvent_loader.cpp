@@ -278,13 +278,13 @@ struct WaveFileData {
 
 EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
     if (name == "Press") {
-        return session->AddEventList(CPAP_Pressure, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_Pressure, EVL_Event);
     }
     else if (name == "IPAP") {
-        return session->AddEventList(CPAP_IPAP, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_IPAP, EVL_Event);
     }
     else if (name == "EPAP") {
-        return session->AddEventList(CPAP_EPAP, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_EPAP, EVL_Event);
     }
     else if (name == "Leak") {
         return session->AddEventList(CPAP_Leak, EVL_Event);
