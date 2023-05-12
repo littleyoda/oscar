@@ -27,7 +27,6 @@
 #include <unordered_map>
 
 #include "resvent_loader.h"
-#include "assert.h"
 
 #ifdef DEBUG_EFFICIENCY
 #include <QElapsedTimer>  // only available in 4.8
@@ -108,7 +107,7 @@ MachineInfo ResventLoader::PeekInfo(const QString & path)
         QString line = f.readLine().trimmed();
 
         const auto elems = line.split("=");
-        assert(elems.size() == 2);
+        Q_ASSERT(elems.size() == 2);
 
         if (elems[0] == "models") {
             info.model = elems[1];
@@ -241,8 +240,8 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
         const auto date_time_elems = elems.at(1).split("=");
         const auto duration_elems = elems.at(2).split("=");
 
-        assert(event_type_elems.size() == 2);
-        assert(date_time_elems.size() == 2);
+        Q_ASSERT(event_type_elems.size() == 2);
+        Q_ASSERT(date_time_elems.size() == 2);
         const auto event_type = static_cast<EventType>(std::stoi(event_type_elems[1].toStdString()));
         const auto date_time = QDateTime::fromTime_t(std::stoi(date_time_elems[1].toStdString()));
         const auto duration = std::stoi(duration_elems[1].toStdString());
@@ -279,13 +278,13 @@ struct WaveFileData {
 
 EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
     if (name == "Press") {
-        return session->AddEventList(CPAP_Pressure, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_Pressure, EVL_Event);
     }
     else if (name == "IPAP") {
-        return session->AddEventList(CPAP_IPAP, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_IPAP, EVL_Event);
     }
     else if (name == "EPAP") {
-        return session->AddEventList(CPAP_EPAP, EVL_Event);
+        return nullptr;//session->AddEventList(CPAP_EPAP, EVL_Event);
     }
     else if (name == "Leak") {
         return session->AddEventList(CPAP_Leak, EVL_Event);
@@ -317,7 +316,7 @@ EventList* GetEventList(const QString& name, Session* session, float sample_rate
     }
     else {
         // Not supported
-        assert(false);
+        Q_ASSERT(false);
         return nullptr;
     }
 }
@@ -334,7 +333,7 @@ QString ReadDescriptionName(QFile& f) {
     constexpr int kNameSize = 9;
     std::array<char, kNameSize> name;
     const auto readed = f.read(name.data(), kNameSize - 1);
-    assert(readed == kNameSize - 1);
+    Q_ASSERT(readed == kNameSize - 1);
 
     return QString(name.data());
 }
@@ -513,7 +512,7 @@ UsageData ReadUsage(const QString& session_folder_path, const QString& usage_num
         QString line = f.readLine().trimmed();
 
         const auto elems = line.split("=");
-        assert(elems.size() == 2);
+        Q_ASSERT(elems.size() == 2);
 
         if (elems[0] == "secStart") {
             usage_data.start_time = QDateTime::fromTime_t(std::stoi(elems[1].toStdString()));
