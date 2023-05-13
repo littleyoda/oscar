@@ -3590,8 +3590,8 @@ void gGraphView::SaveDefaultSettings() {
     m_default_graphs = m_graphs;
 }
 
-const quint32 gvmagic = 0x41756728;   //'Aug('
-const quint16 gvversion = 5;    // version 5 has same format as 4, used to override settings in shg files on upgrade to version 5.
+const quint32 gVmagic = 0x41756728;   //'Aug('
+const quint16 gVversion = 5;    // version 5 has same format as 4, used to override settings in shg files on upgrade to version 5.
 
 QString gGraphView::settingsFilename (QString title,QString folderName, QString ext) {
     if (folderName.size()==0) {
@@ -3599,6 +3599,19 @@ QString gGraphView::settingsFilename (QString title,QString folderName, QString 
     }
     return folderName+title.toLower()+ext;
 }
+
+/* This note is for the save and restore settings.
+* all versions prior to 4 were sleepyHead versions and have never been used.
+* The layouts (version 4 and 5) are identical 
+* The rollback to a gVversion should always work.
+* So new addtions to the saved configuration must be placed at the end of the file. 
+* the SHG file will then be
+*   SHG FILE HEADER - Must never change
+*   SHG VERSION 4(5) changes - for all graphs 
+*   SHG VERSION 6 changes - for all graphs 
+*   SHG VERSION 7 changes - for all graphs 
+*   ...
+*/
 
 void gGraphView::SaveSettings(QString title,QString folderName)
 {
@@ -3610,8 +3623,8 @@ void gGraphView::SaveSettings(QString title,QString folderName)
     out.setVersion(QDataStream::Qt_4_6);
     out.setByteOrder(QDataStream::LittleEndian);
 
-    out << (quint32)gvmagic;
-    out << (quint16)gvversion;
+    out << (quint32)gVmagic;
+    out << (quint16)gVversion;
 
     out << (qint16)size();
 
@@ -3636,9 +3649,13 @@ void gGraphView::SaveSettings(QString title,QString folderName)
         } else {
             out << (quint32)LT_Other;
         }
-
-
     }
+    #if 0
+    // add changes for additional settings
+    for (auto & graph : m_graphs) {
+        
+    }
+    #endif
 
     f.close();
 }
@@ -3675,17 +3692,17 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
 
     in >> t1;
 
-    if (t1 != gvmagic) {
-        qDebug() << "gGraphView" << title << "settings magic doesn't match" << t1 << gvmagic;
+    if (t1 != gVmagic) {
+        qDebug() << "gGraphView" << title << "settings magic doesn't match" << t1 << gVmagic;
         return false;
     }
 
     in >> version;
 
-    //The first version of OSCAR 1.0.0-release started at gvversion 4. and the OSCAR 1.4.0 still uses gvversion 4
+    //The first version of OSCAR 1.0.0-release started at gVversion 4. and the OSCAR 1.4.0 still uses gVversion 4
     // This section of code is being simplified  to remove dependances on lower version.
 
-    //if (version < gvversion) {
+    //if (version < gVversion) {
         //qDebug() << "gGraphView" << title << "settings will be upgraded.";
     //}
 
@@ -3749,17 +3766,32 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
 
                     // the following check forces the flowRate graph to have a Zero dotted line enabled when the the current version changes from 4 to 5
                     // still allows the end user user to to remove the zero dotted line.
-                    // currently this would be executed on each graphview version (gvVersion) change
+                    // currently this would be executed on each graphview version (gVversion) change
                     // could be changed.
-                    if (version!=gvversion ) {
-                        if (lc->code()==CPAP_FlowRate) {
-                            lc->m_dot_enabled[lc->code()][Calc_Zero] = true;
-                        }
+                    // This is a one time change.
+                    if (version==4 && gVversion>4) {
+                        lc->resetGraphViewSettings();
                     }
                 }
             }
         }
     }
+    // Do this for gVersion 5
+    #if 0
+    // Version 5 had no changes
+    if (version>=gVversion) 
+    for (int i = 0; i < numGraphs; i++) {
+    }
+    #endif
+
+    // Do this for gVersion 6 ...
+    #if 0
+    // repeat this for each additional version change
+    // this for the next additions to the saved information.
+    if (version>=gVversion) 
+    for (int i = 0; i < numGraphs; i++) {
+    }
+    #endif
 
     if (neworder.size() == m_graphs.size()) {
         m_graphs = neworder;

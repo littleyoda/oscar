@@ -161,6 +161,7 @@ class gLineChart: public Layer
         layer->lasttime = lasttime;
     }
 
+    virtual void resetGraphViewSettings();
 
   protected:
     //! \brief Mouse moved over this layers area (shows the hover-over tooltips here)

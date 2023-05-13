@@ -57,6 +57,15 @@ QColor darken(QColor color, float p)
     return QColor(r,g,b, color.alpha());
 }
 
+void gLineChart::resetGraphViewSettings() {
+    if (m_code==CPAP_FlowRate) {
+        m_dot_enabled[m_code][Calc_Zero] = true;
+    }
+    else if (m_code==CPAP_Leak) {
+        m_dot_enabled[m_code][Calc_UpperThresh] = true;
+    }
+}
+
 gLineChart::gLineChart(ChannelID code, bool square_plot, bool disable_accel)
     : Layer(code), m_square_plot(square_plot), m_disable_accel(disable_accel)
 {
@@ -65,9 +74,7 @@ gLineChart::gLineChart(ChannelID code, bool square_plot, bool disable_accel)
     lines.reserve(50000);
     lasttime = 0;
     m_layertype = LT_LineChart;
-    if (code==CPAP_FlowRate) {
-        m_dot_enabled[code][Calc_Zero] = true;
-    }
+    resetGraphViewSettings();
 }
 
 gLineChart::~gLineChart()
@@ -1127,8 +1134,9 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
    // painter.setRenderHint(QPainter::Antialiasing, false);
 
-if (actual_max_y>0) {
-    m_actual_min_y=actual_min_y;
-    m_actual_max_y=actual_max_y;
-}
+    if (actual_max_y>0) {
+        m_actual_min_y=actual_min_y;
+        m_actual_max_y=actual_max_y;
+    }
+
 }
