@@ -8,7 +8,7 @@
  * for more details. */
 
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include "test_macros.h"
 
 #include "Graphs/gLineChart.h"
@@ -28,7 +28,6 @@
 
 QDataStream & operator<<(QDataStream & stream, const DottedLine & dot)
 {
-    if(dot.code==CPAP_FlowRate) DEBUGFW O("SAVING") NAME(dot.code) Q(dot.type)  Q(dot.value) Q(dot.available) Q(dot.visible) ;
     stream << dot.code;
     stream << dot.type;
     stream << dot.value;
@@ -45,7 +44,6 @@ QDataStream & operator>>(QDataStream & stream, DottedLine & dot)
     stream >> dot.visible;
     stream >> dot.available;
     dot.type = (ChannelCalcType)tmp;
-    if(dot.code==CPAP_FlowRate) DEBUGFW O("RESTORED") NAME(dot.code) Q(dot.type)  Q(dot.value) Q(dot.available) Q(dot.visible) ;
     return stream;
 }
 
@@ -67,27 +65,13 @@ gLineChart::gLineChart(ChannelID code, bool square_plot, bool disable_accel)
     lines.reserve(50000);
     lasttime = 0;
     m_layertype = LT_LineChart;
-    #if 1
     if (code==CPAP_FlowRate) {
         m_dot_enabled[code][Calc_Zero] = true;
-        bool val = m_dot_enabled[code][Calc_Zero];
-        DEBUGFW NAME(code) O("ENABLED calc_zero in constructor") Q(val);;
-        //if(code==CPAP_FlowRate) {
-            //DEBUGFW Q(m_dot_enabled[code][Calc_Zero] );
-            //#DEBUGTFW NAME(code) O(code) Q(type) Q(value) Q(available) Q(visible) QQ("type:Calc_Zero",Calc_Zero);
-        //}
     }
-    #endif
 }
 
 gLineChart::~gLineChart()
 {
-    #if 1
-    if (code()==CPAP_FlowRate) {
-        bool val = m_dot_enabled[code()][Calc_Zero];
-        DEBUGFW NAME(code()) O("ENABLED calc_zero in constructor") Q(val);
-    }
-    #endif
     for (auto fit = flags.begin(), end=flags.end(); fit != end; ++fit) {
         // destroy any overlay bar from previous day
         delete fit.value();
@@ -268,7 +252,6 @@ skipcheck:
     if (m_codes[0] == CPAP_Leak) {
         addDotLine(DottedLine(CPAP_Leak, Calc_UpperThresh, schema::channel[CPAP_Leak].calc[Calc_UpperThresh].enabled));
     } else if (m_codes[0] == CPAP_FlowRate) {
-        if(m_codes[0]==CPAP_FlowRate) DEBUGTFW O("calling AddDotLines with DottedLines Zero");
         addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
     } else if (m_codes[0] == OXI_Pulse) {
         addDotLine(DottedLine(OXI_Pulse, Calc_UpperThresh, schema::channel[OXI_Pulse].calc[Calc_UpperThresh].enabled));
