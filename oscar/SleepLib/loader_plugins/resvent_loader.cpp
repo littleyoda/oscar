@@ -61,6 +61,7 @@ constexpr int kDescriptionHeaderSize = 0x20;
 constexpr int kChunkDurationInSecOffset = 0x10;
 constexpr int kDescriptionCountOffset = 0x12;
 constexpr int kDescriptionSamplesByChunk = 0x1e;
+constexpr double kDefaultGain = 0.01;
 
 bool ResventLoader::Detect(const QString & givenpath)
 {
@@ -278,13 +279,13 @@ struct WaveFileData {
 
 EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
     if (name == "Press") {
-        return nullptr;//session->AddEventList(CPAP_Pressure, EVL_Event);
+        return session->AddEventList(CPAP_Pressure, EVL_Event);
     }
     else if (name == "IPAP") {
-        return nullptr;//session->AddEventList(CPAP_IPAP, EVL_Event);
+        return session->AddEventList(CPAP_IPAP, EVL_Event);
     }
     else if (name == "EPAP") {
-        return nullptr;//session->AddEventList(CPAP_EPAP, EVL_Event);
+        return session->AddEventList(CPAP_EPAP, EVL_Event);
     }
     else if (name == "Leak") {
         return session->AddEventList(CPAP_Leak, EVL_Event);
@@ -309,10 +310,10 @@ EventList* GetEventList(const QString& name, Session* session, float sample_rate
         return nullptr;
     }
     else if (name == "Pressure") {
-        return session->AddEventList(CPAP_MaskPressure, EVL_Waveform, 0.01, 0.0, 0.0, 0.0, 1000.0 / sample_rate);
+        return session->AddEventList(CPAP_MaskPressure, EVL_Waveform, kDefaultGain, 0.0, 0.0, 0.0, 1000.0 / sample_rate);
     }
     else if (name == "Flow") {
-        return session->AddEventList(CPAP_FlowRate, EVL_Waveform, 0.01, 0.0, 0.0, 0.0, 1000.0 / sample_rate);
+        return session->AddEventList(CPAP_FlowRate, EVL_Waveform, kDefaultGain, 0.0, 0.0, 0.0, 1000.0 / sample_rate);
     }
     else {
         // Not supported
@@ -397,7 +398,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
 
                     int offset = 0;
                     std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value);
+                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value * kDefaultGain);
                         offset += 1000.0 / sample_rate;
                     });
                 }
@@ -417,7 +418,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
             if (wave_form.event_list) {
                 int offset = 0;
                 std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value);
+                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value * kDefaultGain);
                     offset += 1000.0 / wave_form.sample_rate;
                 });
             }
