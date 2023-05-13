@@ -952,9 +952,9 @@ void gGraphView::DrawTextQue(QPainter &painter)
         } else {
             #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
                 w = painter.fontMetrics().horizontalAdvance(q.text);
-            #else 
+            #else
                 w = painter.fontMetrics().width(q.text);
-            #endif 
+            #endif
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.x, q.y);
@@ -981,9 +981,9 @@ void gGraphView::DrawTextQue(QPainter &painter)
         } else {
             #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
                 w = painter.fontMetrics().horizontalAdvance(q.text);
-            #else 
+            #else
                 w = painter.fontMetrics().width(q.text);
-            #endif 
+            #endif
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.rect.x(), q.rect.y());
@@ -1026,9 +1026,9 @@ void gGraphView::DrawTextQueCached(QPainter &painter)
             QFontMetrics fm(*q.font);
             #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
                 w = painter.fontMetrics().horizontalAdvance(q.text);
-            #else 
+            #else
                 w = painter.fontMetrics().width(q.text);
-            #endif 
+            #endif
             h = fm.height()+buf;
 
             pm = QPixmap(w, h);
@@ -1856,7 +1856,7 @@ void gGraphView::mouseMoveEvent(QMouseEvent *event)
 
         gGraph* graph = m_graphs[m_sizer_index];
         int minHeight = graph-> minHeight();
-        if (h < minHeight) { h = minHeight; }   // past minimum height - reset to to minimum 
+        if (h < minHeight) { h = minHeight; }   // past minimum height - reset to to minimum
         if ((h > minHeight) || ( graph->height() > minHeight)) {
             graph->setHeight(h);
             m_sizer_point.setX(x);
@@ -3591,7 +3591,7 @@ void gGraphView::SaveDefaultSettings() {
 }
 
 const quint32 gvmagic = 0x41756728;   //'Aug('
-const quint16 gvversion = 4;
+const quint16 gvversion = 5;    // version 5 has same format as 4, used to override settings in shg files on upgrade to version 5.
 
 QString gGraphView::settingsFilename (QString title,QString folderName, QString ext) {
     if (folderName.size()==0) {
@@ -3682,73 +3682,55 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
 
     in >> version;
 
-    if (version < gvversion) {
-        qDebug() << "gGraphView" << title << "settings will be upgraded.";
-    }
+    //The first version of OSCAR 1.0.0-release started at gvversion 4. and the OSCAR 1.4.0 still uses gvversion 4
+    // This section of code is being simplified  to remove dependances on lower version.
 
-    qint16 siz;
-    in >> siz;
+    //if (version < gvversion) {
+        //qDebug() << "gGraphView" << title << "settings will be upgraded.";
+    //}
+
+    qint16 numGraphs;
     QString name;
     float hght;
     bool vis;
     EventDataType recminy, recmaxy;
     bool pinned;
-
     short zoomy = 0;
-
     QList<gGraph *> neworder;
     QHash<QString, gGraph *>::iterator gi;
 
-    for (int i = 0; i < siz; i++) {
+    in >> numGraphs;
+    for (int i = 0; i < numGraphs; i++) {
         in >> name;
         in >> hght;
         in >> vis;
         in >> recminy;
         in >> recmaxy;
 //qDebug() << "Loading graph" << title << name;
-        if (gvversion >= 1) {
-            in >> zoomy;
-        }
+        in >> zoomy;
 
-        if (gvversion >= 2) {
-            in >> pinned;
-        }
-
+        in >> pinned;
         QHash<ChannelID, bool> flags_enabled;
         QHash<ChannelID, bool> plots_enabled;
         QHash<ChannelID, QHash<quint32, bool> > dot_enabled;
 
         // Warning: Do not break the follow section up!!!
         quint32 layertype;
-        if (gvversion >= 4) {
-            in >> layertype;
-            if (layertype == LT_LineChart) {
-                in >> flags_enabled;
-                in >> plots_enabled;
-                in >> dot_enabled;
-            }
+        in >> layertype;
+        if (layertype == LT_LineChart) {
+            in >> flags_enabled;
+            in >> plots_enabled;
+            in >> dot_enabled;
         }
 
         gGraph *g = nullptr;
-
-        if (version <= 2) {
-            continue;
-//            // Names were stored as translated strings, so look up title instead.
-//            g = nullptr;
-//            for (int z=0; z<m_graphs.size(); ++z) {
-//                if (m_graphs[z]->title() == name) {
-//                    g = m_graphs[z];
-//                    break;
-//                }
-//            }
+        gi = m_graphsbyname.find(name);
+        if (gi == m_graphsbyname.end()) {
+            qDebug() << "Graph" << name << "has been renamed or removed";
         } else {
-            gi = m_graphsbyname.find(name);
-            if (gi == m_graphsbyname.end()) {
-                qDebug() << "Graph" << name << "has been renamed or removed";
-            } else {
-                g = gi.value();
-            }
+            g = gi.value();
         }
+
         if (g) {
             neworder.push_back(g);
             g->setHeight(hght);
@@ -3758,17 +3740,24 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
             g->setZoomY(static_cast<ZoomyScaling>(zoomy));
             g->setPinned(pinned);
 
-            if (gvversion >= 4) {
-                if (layertype == LT_LineChart) {
-                    gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
-                    if (lc) {
-                        hashMerge(lc->m_flags_enabled, flags_enabled);
-                        hashMerge(lc->m_enabled, plots_enabled);
-                        hashMerge(lc->m_dot_enabled, dot_enabled);
+            if (layertype == LT_LineChart) {
+                gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
+                if (lc) {
+                    hashMerge(lc->m_flags_enabled, flags_enabled);
+                    hashMerge(lc->m_enabled, plots_enabled);
+                    hashMerge(lc->m_dot_enabled, dot_enabled);
+
+                    // the following check forces the flowRate graph to have a Zero dotted line enabled when the the current version changes from 4 to 5
+                    // still allows the end user user to to remove the zero dotted line.
+                    // currently this would be executed on each graphview version (gvVersion) change
+                    // could be changed.
+                    if (version!=gvversion ) {
+                        if (lc->code()==CPAP_FlowRate) {
+                            lc->m_dot_enabled[lc->code()][Calc_Zero] = true;
+                        }
                     }
                 }
             }
-
         }
     }
 
