@@ -21,10 +21,10 @@
 #include <QDirIterator>
 #include <QFile>
 #include <QDebug>
+#include <QVector>
+#include <QMap>
 #include <QStringList>
 #include <cmath>
-#include <array>
-#include <unordered_map>
 
 #include "resvent_loader.h"
 
@@ -133,8 +133,8 @@ MachineInfo ResventLoader::PeekInfo(const QString & path)
     return info;
 }
 
-std::vector<QDate> GetSessionsDate(const QString& dirpath) {
-    std::vector<QDate> sessions_date;
+QVector<QDate> GetSessionsDate(const QString& dirpath) {
+    QVector<QDate> sessions_date;
 
     const auto records_path = dirpath + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventRecordFolder;
     QDir records_folder(records_path);
@@ -191,22 +191,22 @@ struct UsageData {
     qint32 countBreath = 0;
 };
 
-void UpdateEvents(EventType event_type, const std::unordered_map<EventType, std::vector<EventData>>& events, Session* session) {
-    static std::unordered_map<EventType, unsigned int> mapping {{EventType::ObstructiveApnea, CPAP_Obstructive},
-                                                               {EventType::CentralApnea, CPAP_Apnea},
-                                                               {EventType::Hypopnea, CPAP_Hypopnea},
-                                                               {EventType::FlowLimitation, CPAP_FlowLimit},
-                                                               {EventType::RERA, CPAP_RERA},
-                                                               {EventType::PeriodicBreathing, CPAP_PB},
-                                                               {EventType::Snore, CPAP_Snore}};
+void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>>& events, Session* session) {
+    static QMap<EventType, unsigned int> mapping {{EventType::ObstructiveApnea, CPAP_Obstructive},
+                                                 {EventType::CentralApnea, CPAP_Apnea},
+                                                 {EventType::Hypopnea, CPAP_Hypopnea},
+                                                 {EventType::FlowLimitation, CPAP_FlowLimit},
+                                                 {EventType::RERA, CPAP_RERA},
+                                                 {EventType::PeriodicBreathing, CPAP_PB},
+                                                 {EventType::Snore, CPAP_Snore}};
     const auto it_events = events.find(event_type);
     const auto it_mapping = mapping.find(event_type);
     if (it_events == events.cend() || it_mapping == mapping.cend()) {
         return;
     }
 
-    EventList* event_list  = session->AddEventList(it_mapping->second, EVL_Event);
-    std::for_each(it_events->second.cbegin(), it_events->second.cend(), [&](const EventData& event_data){
+    EventList* event_list  = session->AddEventList(it_mapping.value(), EVL_Event);
+    std::for_each(it_events.value().cbegin(), it_events.value().cend(), [&](const EventData& event_data){
         event_list->AddEvent(event_data.date_time.toMSecsSinceEpoch() + kDateTimeOffset, event_data.duration);
     });
 }
@@ -221,7 +221,7 @@ QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
 void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage) {
     const auto event_file_path = session_folder_path + QDir::separator() + "EV" + usage.number;
 
-    std::unordered_map<EventType, std::vector<EventData>> events;
+    QMap<EventType, QVector<EventData>> events;
     QFile f(event_file_path);
     f.open(QIODevice::ReadOnly | QIODevice::Text);
     f.seek(4);
@@ -250,13 +250,13 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
         events[event_type].push_back(EventData{event_type, date_time, duration});
     }
 
-    static std::vector<EventType> mapping {EventType::ObstructiveApnea,
-                                          EventType::CentralApnea,
-                                          EventType::Hypopnea,
-                                          EventType::FlowLimitation,
-                                          EventType::RERA,
-                                          EventType::PeriodicBreathing,
-                                          EventType::Snore};
+    static QVector<EventType> mapping {EventType::ObstructiveApnea,
+                                      EventType::CentralApnea,
+                                      EventType::Hypopnea,
+                                      EventType::FlowLimitation,
+                                      EventType::RERA,
+                                      EventType::PeriodicBreathing,
+                                      EventType::Snore};
 
     std::for_each(mapping.cbegin(), mapping.cend(), [&](EventType event_type){
         UpdateEvents(event_type, events, session);
@@ -339,7 +339,7 @@ QString ReadDescriptionName(QFile& f) {
     return QString(name.data());
 }
 
-void ReadWaveFormsHeaders(QFile& f, std::vector<ChunkData>& wave_forms, Session* session, const UsageData& usage) {
+void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const UsageData& usage) {
     f.seek(kChunkDurationInSecOffset);
     const auto chunk_duration_in_sec = read_from_file<uint16_t>(f);
     f.seek(kDescriptionCountOffset);
@@ -365,7 +365,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
 
     const auto wave_files = session_folder.entryList(QStringList() << "P" + usage.number + "_*", QDir::Files, QDir::Name);
 
-    std::vector<ChunkData> wave_forms;
+    QVector<ChunkData> wave_forms;
     bool initialized = false;
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
         // W01_ file
@@ -382,7 +382,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                                       return lhs.samples_by_chunk < rhs.samples_by_chunk;
                                   })->samples_by_chunk);
         while (!f.atEnd()) {
-            for (unsigned int i = 0; i < wave_forms.size(); i++) {
+            for (int i = 0; i < wave_forms.size(); i++) {
                 const auto& wave_form = wave_forms[i].event_list;
                 const auto samples_by_chunk_actual = wave_forms[i].samples_by_chunk;
                 auto& start_time_current = wave_forms[i].start_time;
@@ -409,8 +409,8 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
         }
     });
 
-    std::vector<qint16> chunk;
-    for (unsigned int i = 0; i < wave_forms.size(); i++) {
+    QVector<qint16> chunk;
+    for (int i = 0; i < wave_forms.size(); i++) {
         const auto& wave_form = wave_forms[i];
         const auto expected_samples = usage.start_time.msecsTo(usage.end_time) / 1000.0 * wave_form.sample_rate;
         if (wave_form.total_samples_by_chunk < expected_samples) {
@@ -431,7 +431,7 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
 
     const auto wave_files = session_folder.entryList(QStringList() << "W" + usage.number + "_*", QDir::Files, QDir::Name);
 
-    std::vector<ChunkData> wave_forms;
+    QVector<ChunkData> wave_forms;
     bool initialized = false;
 
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
@@ -445,11 +445,11 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
         }
         f.seek(kMainHeaderSize + wave_forms.size() * kDescriptionHeaderSize);
 
-        std::vector<qint16> chunk(std::max_element(wave_forms.cbegin(), wave_forms.cend(), [](const ChunkData& lhs, const ChunkData& rhs){
-                                      return lhs.samples_by_chunk < rhs.samples_by_chunk;
-                                  })->samples_by_chunk);
+        QVector<qint16> chunk(std::max_element(wave_forms.cbegin(), wave_forms.cend(), [](const ChunkData& lhs, const ChunkData& rhs){
+                                  return lhs.samples_by_chunk < rhs.samples_by_chunk;
+                              })->samples_by_chunk);
         while (!f.atEnd()) {
-            for (unsigned int i = 0; i < wave_forms.size(); i++) {
+            for (int i = 0; i < wave_forms.size(); i++) {
                 const auto& wave_form = wave_forms[i].event_list;
                 const auto samples_by_chunk_actual = wave_forms[i].samples_by_chunk;
                 auto& start_time_current = wave_forms[i].start_time;
@@ -472,8 +472,8 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
         }
     });
 
-    std::vector<qint16> chunk;
-    for (unsigned int i = 0; i < wave_forms.size(); i++) {
+    QVector<qint16> chunk;
+    for (int i = 0; i < wave_forms.size(); i++) {
         const auto& wave_form = wave_forms[i];
         const auto expected_samples = usage.start_time.msecsTo(usage.end_time) / 1000.0 * wave_form.sample_rate;
         if (wave_form.total_samples_by_chunk < expected_samples) {
@@ -550,11 +550,11 @@ UsageData ReadUsage(const QString& session_folder_path, const QString& usage_num
     return usage_data;
 }
 
-std::vector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
+QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
     QDir session_folder(session_folder_path);
 
     const auto stat_files = session_folder.entryList(QStringList() << "STAT*", QDir::Files, QDir::Name);
-    std::vector<UsageData> usage_data;
+    QVector<UsageData> usage_data;
     std::for_each(stat_files.cbegin(), stat_files.cend(), [&](const QString& stat_file){
         if (stat_file.size() != 6) {
             return;
