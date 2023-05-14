@@ -399,7 +399,7 @@ gGraph *Overview::createGraph(QString code, QString name, QString units, YTicker
 
     switch (yttype) {
     case YT_Time:
-        yt = new gYAxisTime(true); // Time scale
+        yt = new gYAxisTime(false); // Time scale false=24hourFormat
         break;
 
     case YT_Weight:
