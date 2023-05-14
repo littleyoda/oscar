@@ -332,7 +332,8 @@ struct ChunkData {
 
 QString ReadDescriptionName(QFile& f) {
     constexpr int kNameSize = 9;
-    std::array<char, kNameSize> name;
+    QVector<char> name(kNameSize);
+
     const auto readed = f.read(name.data(), kNameSize - 1);
     Q_ASSERT(readed == kNameSize - 1);
 
