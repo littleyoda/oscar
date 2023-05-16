@@ -5,16 +5,16 @@ This document is intended to be a brief description of how to install the necess
 
 On my computers, I have QT installed in E:\\QT and the OSCAR code base in E:\\oscar\\oscar-code. On another computer, they are on the F: drive. All references in the deploy.bat file are relative, so it should run with Oscar-code installed at any location.
 
-**Required Programs**
+## Required Programs
 
 The following programs and files are required to create Windows installers:
 
 -   Inno Setup 6.0.3 from <http://www.jrsoftware.org/isdl.php>. Download and install innosetup-qsp-6.0.3.exe.
-    
+   
 -   GIT for windows, from <https://gitforwindows.org/>. GIT for Windows adds itself to your path.
-    
+   
 -   QT Open Source edition from <https://www.qt.io/download>. I use the latest patch version in the 5.12 LTS series -- version 5.12.8 at the date this was last updated. More recent versions in the 5.12 series should also work.
-    
+   
 
 **Installing Inno Setup 6**
 
@@ -29,7 +29,7 @@ Run the installer, accepting options to install inno script studio (for possible
 Go to <https://gitforwindows.org/> and click on the Download button. Run the installer, which presents lots of options:
 
 -   Select whichever editor you desire.
--   Select “Use Git from the command line and also from 3rd-party software.” 
+-   Select “Use Git from the command line and also from 3rd-party software.”
 -   Select “Use the OpenSSL library.”
 -   Select “Checkout Windows-style, commit Unix-style line endings.”
 -   Select “Use Windows’ default console window.” I find the Windows default console to be satisfactory on Windows 10.
@@ -49,26 +49,116 @@ Go to QT at <https://www.qt.io/download> and download the Open Source edition of
 -   Click Next to download meta information (this takes a while).
 
 -   Choose your installation directory (I picked E:\\Qt, but there are no dependencies on where QT is located)
-    
+   
 -   Select components:
 
-    -   In QT 5.12.*x*:
+   -   In QT 5.12.*x*:
 
-        -   MinGW 7.3.0 32-bit
+   -   MinGW 7.3.0 32-bit
 -   MinGW 7.3.0 64-bit
-        -	Sources
-		-	QT Debug Information Files
-	
+   -   Sources
+   -   QT Debug Information Files
+   
 -   In Developer and Designer Tools:
-    
-    -   QT Creator 4.11.2 CDB Debug
-    -   Debugging Tools for Windows
-    -   MinGW 7.3.0 32-bit
-    -   MinGW 7.3.0 64-bit
+   
+   -   QT Creator 4.11.2 CDB Debug
+   -   Debugging Tools for Windows
+   -   MinGW 7.3.0 32-bit
+   -   MinGW 7.3.0 64-bit
 
 And complete the installation (this also takes a while).
 
-**Getting Started Developing Oscar in QT Creator**
+## Start Developing using batch files
+
+-   Batch files buildall.bat and deploy.bat are used.
+-   buildall.bat creates a build folder, compiles and executes deploy.bat
+-   Supports both 32 and 64 bit version with an option to build brokenGl
+-   buildall.bat supports command Line options
+-   deploy.bat creates a Release version and an Install version.
+-   deploy.bat is also used by QtCreator
+-   The release folder contains OSCAR.exe and all other files necessary to run OSCAR
+-   The install folder contains the installable version of OSCAR...exe
+-   Lists the release and install versions of OSCAR in the build folder.
+
+### Validate the installed software.
+
+-   Verify Qt
+   -   \<QtVersion\> will be in the form N.N.N or 5.15.2
+   -   For example: if Qt is installed at C:\\Qt then
+   -   The \<QtFolder\> must contain the following folders: \<QtVersion\> Tools
+   -   -   \<QtFolder\> is C:\\Qt
+- Verify Git and Inno are installed
+   -   Note: Inno is used to create the Install version of OSCAR.
+
+#### Examples use the following assumptions
+-   Inno installed:
+   -   "C:\\Program Files (x86)\\Inno Setup 6"
+-   Git installed:
+   -   "C:\\Program Files\\Git"
+-   Qtinstalled:
+   -   "C:\\Qt"
+-   OSCAR installed:
+   -   "C:\\OSCAR"
+
+### Building Commands
+
+-  Build install version for OSCAR for 32 and 64 bit versions
+    -   C:\\OSCAR\OSCAR-code\\Building\\Windows\buildall.bat C:\\Qt
+-   Build install version for OSCAR for 64 bit version
+    -   C:\\OSCAR\OSCAR-code\\Building\\Windows\buildall.bat C:\\Qt 64
+-   Build Just release version for OSCAR for 64 bit version
+    -   C:\\OSCAR\OSCAR-code\\Building\\Windows\buildall.bat C:\\Qt 64 skipInstall
+-   Build release version for OSCAR for 64 bit version - without deleting build folder first
+    -   C:\\OSCAR\OSCAR-code\\Building\\Windows\buildall.bat C:\\Qt 64 skipInstall remake
+-   The current folder is not used by the buildall.bat
+-   There is a pause when the build completes.
+-   This insure that the user has a chance to read the build results.
+-   Allows using windows shortcuts to build OSCAR and see results.
+
+### Windows Shortcuts
+-   Windows shortcuts can be used to execute the build commands or run OSCAR.
+-   Create shortcut to buildall.bat
+-   rename shortcut to indicate its function
+-   edit the short cut property and add options to the Target
+-   Create a shortcut to release version of OSCAR.exe
+-   For offical OSCAR release should not use remake or skipInsall options
+-   Should add skipInstall options for developement, testing, verification
+-   Suggestion is to create the following shortcut example.
+   -   use options  <qtfolder> 64 skipInstall
+   -   - name: OSCAR Fresh build
+   -   use options  <qtfolder> 64 skipInstall remake
+   -   - name: OSCAR quick rebuild
+   -   Create Shortcut to release version of OSCAR.exe   (not the install version)
+   -   - name: RUN OSCAR
+
+    
+### Buildall.bat options.
+-   A full list of options can be displayed using the help option.
+    **32**   Build 32 bit versions
+   
+    **64**   Build 64 bit versions
+   
+    32 and 64 bit version are built if both 32 and 64 are used or both not used
+    **brokenGL** (special option) to build brokenGL version
+   
+    **make**   The default option. removes and re-creates the build folder.
+   
+    **remake**   Execute Make in the existing build folder. Does not re-create the Makefile. Should not be used for Offical OSCAR release
+   
+    **skipInstall** skips creating the Install version saving both time and disk space
+   
+    **skipDeploy** skips executing the deploy.bat script. just compiles oscar.
+
+There is a pause when the build completes. This insure that the user has a chance to read the build results.
+This also allows building using windows shortcuts.
+1) create a shortcut to buildall.bat
+   edit shortcut's property add the necessary options: C:\\Qt 64 remake skipInstall
+2) create and shortcut for the make option.
+3) create a shortcut to the **release** version of OSCAR.exe
+
+
+
+## Start Developing Oscar in QT Creator
 
 In browser, log into your account at gitlab.com. Select the Oscar project at https://gitlab.com/pholy/OSCAR-code. Clone a copy of the repository to a location on your computer.
 
