@@ -58,10 +58,13 @@ QColor darken(QColor color, float p)
 }
 
 void gLineChart::resetGraphViewSettings() {
+    #if !defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+    // always turn zero red line on as default value.
     if (m_code==CPAP_FlowRate) {
         m_dot_enabled[m_code][Calc_Zero] = true;
-    }
-    else if (m_code==CPAP_Leak) {
+    } else
+    #endif
+    if (m_code==CPAP_Leak) {
         m_dot_enabled[m_code][Calc_UpperThresh] = true;
     }
 }
@@ -259,13 +262,19 @@ skipcheck:
     if (m_codes[0] == CPAP_Leak) {
         addDotLine(DottedLine(CPAP_Leak, Calc_UpperThresh, schema::channel[CPAP_Leak].calc[Calc_UpperThresh].enabled));
     } else if (m_codes[0] == CPAP_FlowRate) {
-        addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
+        //addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
+        addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, false ));
+        #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+            //on set day force red line on.
+            m_dot_enabled[m_code][Calc_Zero] = true;
+        #endif
     } else if (m_codes[0] == OXI_Pulse) {
         addDotLine(DottedLine(OXI_Pulse, Calc_UpperThresh, schema::channel[OXI_Pulse].calc[Calc_UpperThresh].enabled));
         addDotLine(DottedLine(OXI_Pulse, Calc_LowerThresh, schema::channel[OXI_Pulse].calc[Calc_LowerThresh].enabled));
     } else if (m_codes[0] == OXI_SPO2) {
         addDotLine(DottedLine(OXI_SPO2, Calc_LowerThresh, schema::channel[OXI_SPO2].calc[Calc_LowerThresh].enabled));
     }
+
 
 
     if (m_day) {
@@ -1099,7 +1108,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     //The problem was that turning lineCUrsor mode off (or  Control L) also stopped flag event on most daily graphs.
     // The user didn't know what trigger the problem. Best quess is that Control L was typed by mistable.
     // this fix allows flag events to be normally displayed when the line Cursor mode is off.
-    //was if (m_day /*&& (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))*/) 
+    //was if (m_day /*&& (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))*/)
     if (m_day) {
         bool blockhover = false;
         for (auto fit=flags.begin(), end=flags.end(); fit != end; ++fit) {

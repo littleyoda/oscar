@@ -2309,6 +2309,12 @@ void gGraphView::populateMenu(gGraph * graph)
 
             if (!lc->m_enabled[dot.code]) continue;
 
+            #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+            // if red line is always on then there is no need for the button to turn it on /off
+            // skip creating UI to change value.   or turn enabled off.
+            if (lc->code() == CPAP_FlowRate && dot.type == Calc_Zero) continue;
+            #endif
+
             schema::Channel &chan = schema::channel[dot.code];
 
             if (dot.available) {
@@ -3602,14 +3608,14 @@ QString gGraphView::settingsFilename (QString title,QString folderName, QString 
 
 /* This note is for the save and restore settings.
 * all versions prior to 4 were sleepyHead versions and have never been used.
-* The layouts (version 4 and 5) are identical 
+* The layouts (version 4 and 5) are identical
 * The rollback to a gVversion should always work.
-* So new addtions to the saved configuration must be placed at the end of the file. 
+* So new addtions to the saved configuration must be placed at the end of the file.
 * the SHG file will then be
 *   SHG FILE HEADER - Must never change
-*   SHG VERSION 4(5) changes - for all graphs 
-*   SHG VERSION 6 changes - for all graphs 
-*   SHG VERSION 7 changes - for all graphs 
+*   SHG VERSION 4(5) changes - for all graphs
+*   SHG VERSION 6 changes - for all graphs
+*   SHG VERSION 7 changes - for all graphs
 *   ...
 */
 
@@ -3653,7 +3659,7 @@ void gGraphView::SaveSettings(QString title,QString folderName)
     #if 0
     // add changes for additional settings
     for (auto & graph : m_graphs) {
-        
+
     }
     #endif
 
@@ -3779,7 +3785,7 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
     // Do this for gVersion 5
     #if 0
     // Version 5 had no changes
-    if (version>=gVversion) 
+    if (version>=gVversion)
     for (int i = 0; i < numGraphs; i++) {
     }
     #endif
@@ -3788,7 +3794,7 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
     #if 0
     // repeat this for each additional version change
     // this for the next additions to the saved information.
-    if (version>=gVversion) 
+    if (version>=gVversion)
     for (int i = 0; i < numGraphs; i++) {
     }
     #endif
