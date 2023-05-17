@@ -66,6 +66,7 @@ To turn off the the test macros.
 #define DATE( EPOCH ) 			<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy")
                                     //display the date and Time of an epoch time stamp "qint64"
 #define DATETIME( EPOCH ) 		<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy hh:mm:ss.zzz")
+#define IF( EXPRESSION )    if (EXPRESSION )
 
 
 #ifdef __clang__
@@ -123,6 +124,7 @@ To turn off the the test macros.
 #define DATE( XX )
 #define DATETIME( XX )
 #define COMPILER
+#define IF( XX )
 
 #endif  // TEST_MACROS_ENABLED
 #ifdef TEST_ROUTIMES_ENABLED

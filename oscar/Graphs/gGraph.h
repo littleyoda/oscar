@@ -101,7 +101,6 @@ class gGraph : public QObject
     //! \brief Set the height element. (relative to the total of all heights)
     void setHeight(float height) {
         m_height = height;
-        invalidate_yAxisImage = true;
     }
 
     //! \brief Return minimum height this graph is allowed to (considering layer preferences too)
@@ -318,8 +317,7 @@ class gGraph : public QObject
     bool dynamicScalingOn =false;
     QTimer *timer;
 
-    // This gets set to true to force a redraw of the yAxis tickers when graphs are resized.
-    bool invalidate_yAxisImage;
+    // This gets set to true to force a redraw of the xAxis tickers when graphs are resized.
     bool invalidate_xAxisImage;
 
     //! \brief Returns a Vector reference containing all this graphs layers

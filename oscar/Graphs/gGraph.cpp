@@ -238,7 +238,6 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
     m_pinned = false;
     m_lastx23 = 0;
 
-    invalidate_yAxisImage = true;
     invalidate_xAxisImage = true;
 
     m_block_select = false;
@@ -1321,7 +1320,6 @@ void gGraph::DrawTextQue(QPainter &painter)
 void gGraph::resize(int width, int height)
 {
     invalidate_xAxisImage = true;
-    invalidate_yAxisImage = true;
 
     Q_UNUSED(width);
     Q_UNUSED(height);

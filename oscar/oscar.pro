@@ -255,6 +255,8 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
+    Graphs/gGraph.cpp \
+    Graphs/gGraphView.cpp \
     dailySearchTab.cpp \
     daily.cpp \
     saveGraphLayoutSettings.cpp \
@@ -273,8 +275,6 @@ SOURCES += \
     version.cpp \
     Graphs/gFlagsLine.cpp \
     Graphs/gFooBar.cpp \
-    Graphs/gGraph.cpp \
-    Graphs/gGraphView.cpp \
     Graphs/glcommon.cpp \
     Graphs/gLineChart.cpp \
     Graphs/gLineOverlay.cpp \
