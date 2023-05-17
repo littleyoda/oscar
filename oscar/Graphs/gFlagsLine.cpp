@@ -151,7 +151,7 @@ void gFlagsGroup::refreshConfiguration(gGraph* graph)
     int height (barHeight * numOn);
     height += sessionBarHeight();
     setMinimumHeight (height);
-    graph->setHeight (height);
+    if (graph->height()<height) graph->setHeight (height);
 }
 
 int  gFlagsGroup::sessionBarHeight() {
