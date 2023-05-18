@@ -47,7 +47,7 @@ set toolDir=%parentDir%\OSCAR-code\Building\Windows
 set sourceDir=%parentDir%\OSCAR-code\oscar
 
 echo tooldir is %toolDir%
-::echo p	arentDir is %parentDir%
+::echo parentDir is %parentDir%
 :: echo sourceDir is %sourceDir%
 echo shadowBuildDir is %shadowBuildDir%
 if NOT exist %shadowBuildDir%\OSCAR.exe  (
