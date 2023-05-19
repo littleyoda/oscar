@@ -585,7 +585,7 @@ bool Daily::rejectToggleSessionEnable( Session*sess) {
                 "\n\n"
                 "The Search tab can find disabled sessions"
                 "\n\n"
-                "Continue ?"),
+                "Continue to disable session?"),
                 QMessageBox::Yes | QMessageBox::No , this);
             if (mbox.exec() != QMessageBox::Yes ) return true;
     };
