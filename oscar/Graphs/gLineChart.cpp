@@ -223,7 +223,7 @@ skipcheck:
         if (!m_flags_enabled.contains(code)) {
             bool b = false;
 
-            if (((m_codes[0] == CPAP_FlowRate) || ((m_codes[0] == CPAP_MaskPressureHi))) && (schema::channel[code].machtype() == MT_CPAP)) b = true;
+            if (((m_codes[0] == CPAP_FlowRate) ||((m_codes[0] == CPAP_MaskPressureHi))) && (schema::channel[code].machtype() == MT_CPAP)) b = true;
             if ((m_codes[0] == CPAP_Leak) && (code == CPAP_LargeLeak)) b = true;
             m_flags_enabled[code] = b;
         }
@@ -250,20 +250,21 @@ skipcheck:
 
     for (const auto & code : m_codes) {
         const schema::Channel & chan = schema::channel[code];
-        addDotLine(DottedLine(code, Calc_Max,chan.calc[Calc_Max].enabled));
+        if (code != CPAP_FlowRate) {
+            addDotLine(DottedLine(code, Calc_Max,chan.calc[Calc_Max].enabled));
+        }
         if ((code != CPAP_FlowRate) && (code != CPAP_MaskPressure) && (code != CPAP_MaskPressureHi)) {
             addDotLine(DottedLine(code, Calc_Perc,chan.calc[Calc_Perc].enabled));
             addDotLine(DottedLine(code, Calc_Middle, chan.calc[Calc_Middle].enabled));
         }
-        if ((code != CPAP_Snore) && (code != CPAP_FlowLimit) && (code != CPAP_RDI) && (code != CPAP_AHI)) {
+        if ((code != CPAP_FlowRate) && (code != CPAP_Snore) && (code != CPAP_FlowLimit) && (code != CPAP_RDI) && (code != CPAP_AHI)) {
             addDotLine(DottedLine(code, Calc_Min, chan.calc[Calc_Min].enabled));
         }
     }
     if (m_codes[0] == CPAP_Leak) {
         addDotLine(DottedLine(CPAP_Leak, Calc_UpperThresh, schema::channel[CPAP_Leak].calc[Calc_UpperThresh].enabled));
     } else if (m_codes[0] == CPAP_FlowRate) {
-        //addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
-        addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, false ));
+        addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
         #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
             //on set day force red line on.
             m_dot_enabled[m_code][Calc_Zero] = true;

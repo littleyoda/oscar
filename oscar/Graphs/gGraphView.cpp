@@ -2312,7 +2312,8 @@ void gGraphView::populateMenu(gGraph * graph)
             #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
             // if red line is always on then there is no need for the button to turn it on /off
             // skip creating UI to change value.   or turn enabled off.
-            if (lc->code() == CPAP_FlowRate && dot.type == Calc_Zero) continue;
+            //if (lc->code() == CPAP_FlowRate && dot.type == Calc_Zero) continue;
+            if (lc->code() == CPAP_FlowRate) continue;
             #endif
 
             schema::Channel &chan = schema::channel[dot.code];
