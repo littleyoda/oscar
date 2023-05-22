@@ -238,7 +238,11 @@ void MainWindow::SetupGUI()
     ui->tabWidget->setCurrentWidget(profileSelector);   // setting this to daily shows the cube during loading..
     ui->tabWidget->setTabEnabled(1, false);             // this should be the Statistics tab
 
-    ui->toolBox->setCurrentIndex(0);
+    // toolbox is the right sidebar that contain the Navigation, bookmark , and Records tabs.
+    // Navigation has offset 0
+    // Bookmarks  has offset 1
+    // Records    has offset 2
+    ui->toolBox->setCurrentIndex(2);    
     bool b = AppSetting->rightSidebarVisible();
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
