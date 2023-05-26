@@ -21,7 +21,7 @@
 
 //! \brief Type of calculation on one statistics row
 enum StatCalcType {
-    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI, SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW
+    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI, SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING
 };
 
 /*! \struct StatisticsRow
@@ -166,10 +166,6 @@ class Statistics : public QObject
   public:
     explicit Statistics(QObject *parent = 0);
 
-    void loadRXChanges();
-    void saveRXChanges();
-    void updateRXChanges();
-
     QString GenerateHTML();
 
     QString UpdateRecordsBox();
@@ -178,6 +174,10 @@ class Statistics : public QObject
 
 
   protected:
+    void loadRXChanges();
+    void saveRXChanges();
+    void updateRXChanges();
+
     QString getUserInfo();
     QString getRDIorAHIText();
 

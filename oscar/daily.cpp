@@ -578,10 +578,15 @@ void Daily::showEvent(QShowEvent *)
 
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
+    if (!AppSetting->allowDisableSessions()) {
+       QMessageBox mbox(QMessageBox::Warning, tr("Disable Session"), tr(" Disabling Sessions is not enabled"), QMessageBox::Ok  , this);
+            mbox.exec();
+            return true;
+    }
     bool enabled=sess->enabled();
     if (enabled ) {
-           QMessageBox mbox(QMessageBox::Warning, tr("Disable Warning"),
-                tr("Disabling a session will remove this session data \nfrom all  graphs, reports and statistics."
+           QMessageBox mbox(QMessageBox::Warning, tr("Disable Session"),
+                tr("Disabling a session will remove this session \nfrom all graphs, reports and statistics."
                 "\n\n"
                 "The Search tab can find disabled sessions"
                 "\n\n"

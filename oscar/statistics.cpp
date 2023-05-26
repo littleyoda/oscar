@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QApplication>
 #include <QFile>
 #include <QDataStream>
@@ -534,6 +537,8 @@ Statistics::Statistics(QObject *parent) :
     QObject(parent)
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
+    if (AppSetting->allowDisableSessions())
+        rows.push_back(StatisticsRow(tr("Warning: Disabled session data is excluded in this report"),SC_WARNING,MT_CPAP));
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
@@ -601,7 +606,7 @@ Statistics::Statistics(QObject *parent) :
     // These are for formatting the headers for the first column
     int percentile=trunc(p_profile->general->prefCalcPercentile());                    // Pholynyk, 10Mar2016
     char perCentStr[20];
-    snprintf(perCentStr, 20, "%d%% %%1", percentile);          // 
+    snprintf(perCentStr, 20, "%d%% %%1", percentile);          //
     calcnames[SC_UNDEFINED] = "";
     calcnames[SC_MEDIAN] = tr("%1 Median");
     calcnames[SC_AVG] = tr("Average %1");
@@ -656,7 +661,6 @@ QString Statistics::getUserInfo () {
 }
 
 const QString table_width = "width='100%'";
-
 // Create the page header in HTML.  Includes everything from <head> through <body>
 QString Statistics::generateHeader(bool onScreen)
 {
@@ -886,6 +890,7 @@ struct Period {
     QString header;
 };
 
+const QString warning_color="#ff8888";
 const QString heading_color="#ffffff";
 const QString subheading_color="#e0e0e0";
 //const int rxthresh = 5;
@@ -1251,6 +1256,10 @@ QString Statistics::GenerateCPAPUsage()
                     arg(subheading_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else if (row.calc == SC_UNDEFINED) {
+            continue;
+        } else if (row.calc == SC_WARNING) {
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+1'>%3</font></th></tr>").
+                        arg(warning_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else {
             ChannelID id = schema::channel[row.src].id();
