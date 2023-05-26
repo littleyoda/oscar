@@ -219,6 +219,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->allowYAxisScaling->setChecked(AppSetting->allowYAxisScaling());
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
+    ui->allowDisableSessions->setChecked(AppSetting->allowDisableSessions());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -831,6 +832,7 @@ bool PreferencesDialog::Save()
     AppSetting->setAllowYAxisScaling(ui->allowYAxisScaling->isChecked());
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
+    AppSetting->setAllowDisableSessions(ui->allowDisableSessions->isChecked());
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());

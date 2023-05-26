@@ -2757,6 +2757,16 @@ Try it and see if you like it.</string>
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="allowDisableSessions">
+                 <property name="toolTip">
+                  <string>Allow sessions to be disabled.\nDisabled Session are not used for graphing or Statistics.</string>
+                 </property>
+                 <property name="text">
+                  <string>Allow Disable Sessions</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
