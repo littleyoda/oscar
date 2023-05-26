@@ -36,6 +36,7 @@
 #include "profiles.h"
 #include <algorithm>
 #include "SleepLib/schema.h"
+//#include "SleepLib/session.h"
 #include "SleepLib/day.h"
 #include "mainwindow.h"
 
@@ -164,7 +165,7 @@ bool Machine::saveSessionInfo()
         Session * sess = s.value();
         if (sess->s_first != 0) {
             out << (quint32) sess->session();
-            out << (bool)(sess->enabled());
+            out << (quint8)(sess->enabled(true));
         } else {
             qWarning() << "Machine::SaveSessionInfo discarding session" << sess->s_session
                        << "["+QDateTime::fromTime_t(sess->s_session).toString("MMM dd, yyyy hh:mm:ss")+"]"
@@ -197,9 +198,11 @@ bool Machine::loadSessionInfo()
             Session * sess = s.value();
             QHash<ChannelID, QVariant>::iterator it = sess->settings.find(SESSION_ENABLED);
 
-            bool b = true;
+            quint8 b = true;
+            b &= 0x1;
             if (it != sess->settings.end()) {
                 b = it.value().toBool();
+            } else {
             }
             sess->setEnabled(b);        // Extract from session settings and save..
         }
@@ -233,11 +236,12 @@ bool Machine::loadSessionInfo()
     in >> size;
 
     quint32 sid;
-    bool b;
+    quint8 b;
 
     for (int i=0; i< size; ++i) {
         in >> sid;
         in >> b;
+        b &= 0x1;
 
         s = sessionlist.find(sid);
 
@@ -625,7 +629,7 @@ void Machine::setInfo(MachineInfo inf)
 }
 
 const QString Machine::getDataPath()
-{    
+{
     // TODO: Rework the underlying database so that file storage doesn't rely on consistent presence or absence of the serial number.
     m_dataPath = p_pref->Get("{home}/Profiles/")+profile->user->userName()+"/"+info.loadername + "_"
                  + (info.serial.isEmpty() ? hexid() : info.serial) + "/";
@@ -1023,7 +1027,7 @@ bool Machine::LoadSummary(ProgressDialog * progress)
 //      if ((cnt % 100) == 0) {
 //          progress->setValue(cnt);
 //          //QApplication::processEvents();
-//      } 
+//      }
 *****************************************************************/
         Session * sess = it.value();
         if ( ! AddSession(sess, true)) {
@@ -1084,7 +1088,7 @@ bool Machine::SaveSummaryCache()
         el.setAttribute("id", (quint32)sess->session());
         el.setAttribute("first", sess->realFirst());
         el.setAttribute("last", sess->realLast());
-        el.setAttribute("enabled", sess->enabled() ? "1" : "0");
+        el.setAttribute("enabled", sess->enabled(true) ? "1" : "0");
         el.setAttribute("events", sess->summaryOnly() ? "0" : "1");
 
         QHash<ChannelID, QVector<EventList *> >::iterator ev;

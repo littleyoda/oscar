@@ -1413,6 +1413,8 @@ void MainWindow::on_action_Preferences_triggered()
         if (profileSelector)
             profileSelector->updateProfileList();
 
+        GenerateStatistics();
+
 // These attempts to update calendar after a change to application font do NOT work, and I can find no QT documentation suggesting
 // that changing the font after Calendar is created is even possible.
 //        qDebug() << "application font family set to" << QApplication::font().family() << "and font" << QApplication::font();

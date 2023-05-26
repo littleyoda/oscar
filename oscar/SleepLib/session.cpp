@@ -91,6 +91,12 @@ void Session::TrashEvents()
     eventlist.squeeze();
 }
 
+bool Session::enabled(bool realValues) const
+{
+    if (!AppSetting->allowDisableSessions() && !realValues) return true;
+    return s_enabled;
+}
+
 void Session::setEnabled(bool b)
 {
     s_enabled = b;
@@ -282,7 +288,7 @@ bool Session::Store(QString path)
 //    in >> s_summaryOnly;
 //
 //    s_enabled = 1;
-//} 
+//}
 
 QDataStream & operator>>(QDataStream & in, SessionSlice & slice)
 {
@@ -1066,7 +1072,7 @@ void Session::updateCountSummary(ChannelID code)
 {
     QHash<ChannelID, QVector<EventList *> >::iterator ev = eventlist.find(code);
 
-    if (ev == eventlist.end()) { 
+    if (ev == eventlist.end()) {
         qDebug() << "No events for channel (hex)" << QString::number(code, 16);
         return;
     }
@@ -1560,7 +1566,7 @@ bool Session::channelDataExists(ChannelID id)
 }
 bool Session::channelExists(ChannelID id)
 {
-    if ( ! enabled()) { 
+    if ( ! enabled()) {
         return false;
     }
 
@@ -1577,7 +1583,7 @@ bool Session::channelExists(ChannelID id)
             return false;
         }
 
-        if (q.value() == 0) { 
+        if (q.value() == 0) {
             return false;
         }
     }

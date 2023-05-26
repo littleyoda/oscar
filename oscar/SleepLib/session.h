@@ -113,7 +113,7 @@ class Session
     }
 
     //! \brief Returns whether or not session is being used.
-    inline bool enabled() const { return s_enabled; }
+    bool enabled(bool realValues=false) const;
 
     //! \brief Sets whether or not session is being used.
     void setEnabled(bool b);
@@ -362,7 +362,7 @@ class Session
     EventDataType calcMiddle(ChannelID code);
     EventDataType calcMax(ChannelID code);
     EventDataType calcPercentile(ChannelID code);
-    
+
     //! \brief Returns true if the channel has events loaded, or a record of a count for when they are not
     bool channelExists(ChannelID name);
 
@@ -417,15 +417,6 @@ class Session
     //! \brief Completely purges Session from memory and disk.
     bool Destroy();
 
-    void wipeSummary() {
-        s_first = s_last = 0;
-        s_enabled = true;
-        m_cph.clear();
-        m_sum.clear();
-        m_cnt.clear();
-    }
-
-
     QString eventFile() const;
 
     //! \brief Returns DeviceType for this session
@@ -433,7 +424,7 @@ class Session
 
 
 
-#ifdef SESSION_DEBUG 
+#ifdef SESSION_DEBUG
     QStringList session_files;
 #endif
 
@@ -456,7 +447,7 @@ protected:
 
     bool s_summary_loaded;
     bool s_events_loaded;
-    bool s_enabled;
+    quint8 s_enabled;
 
     // for debugging
     bool destroyed;
