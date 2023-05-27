@@ -578,10 +578,16 @@ void Daily::showEvent(QShowEvent *)
 
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
-    if (!AppSetting->allowDisableSessions()) {
-       QMessageBox mbox(QMessageBox::Warning, tr("Disable Session"), tr(" Disabling Sessions is not enabled"), QMessageBox::Ok  , this);
+    if (AppSetting->complianceMode()) 
+    {
+       #if 0
+       QMessageBox mbox(QMessageBox::Warning, 
+            tr("Disable Session"), i
+            tr(" Disabling Sessions is not valid in Compilance Mode"),
+            QMessageBox::Ok  , this);
             mbox.exec();
-            return true;
+       #endif
+       return true;
     }
     bool enabled=sess->enabled();
     if (enabled ) {

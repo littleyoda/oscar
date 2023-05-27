@@ -293,7 +293,7 @@ void MainWindow::SetupGUI()
 #endif
     setupRunning = false;
 
-    m_allowDisableSessions = AppSetting->allowDisableSessions();
+    m_complianceMode = AppSetting->complianceMode();
 }
 
 void MainWindow::logMessage(QString msg)
@@ -1401,8 +1401,8 @@ void MainWindow::on_action_Preferences_triggered()
         setApplicationFont();
 
 
-        if (m_allowDisableSessions != AppSetting->allowDisableSessions() ) {
-            m_allowDisableSessions = AppSetting->allowDisableSessions();
+        if (m_complianceMode != AppSetting->complianceMode() ) {
+            m_complianceMode = AppSetting->complianceMode();
             reloadProfile();
         };
 
