@@ -404,6 +404,7 @@ private:
 //    gGraphView *SnapshotGraph;
     QString bookmarkFilter;
     bool m_restartRequired;
+    bool m_allowDisableSessions = false;
     volatile bool m_inRecalculation;
 
     void PopulatePurgeMenu();

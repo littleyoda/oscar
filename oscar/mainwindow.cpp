@@ -292,6 +292,8 @@ void MainWindow::SetupGUI()
     ui->tabWidget->addTab(help, tr("Help Browser"));
 #endif
     setupRunning = false;
+
+    m_allowDisableSessions = AppSetting->allowDisableSessions();
 }
 
 void MainWindow::logMessage(QString msg)
@@ -1397,6 +1399,12 @@ void MainWindow::on_action_Preferences_triggered()
         // Apply any updates from preference changes (notably fonts)
 
         setApplicationFont();
+
+
+        if (m_allowDisableSessions != AppSetting->allowDisableSessions() ) {
+            m_allowDisableSessions = AppSetting->allowDisableSessions();
+            reloadProfile();
+        };
 
         if (daily) {
             daily->RedrawGraphs();

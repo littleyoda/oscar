@@ -311,7 +311,9 @@ void DailySearchTab::populateControl() {
         commandList->addItem(calculateMaxSize(tr("Daily Duration"),ST_DAILY_USAGE));
         commandList->addItem(calculateMaxSize(tr("Session Duration" ),ST_SESSION_LENGTH));
         commandList->addItem(calculateMaxSize(tr("Days Skipped"),ST_DAYS_SKIPPED));
-        commandList->addItem(calculateMaxSize(tr("Disabled Sessions"),ST_DISABLED_SESSIONS));
+        if ( AppSetting->allowDisableSessions() ) {
+            commandList->addItem(calculateMaxSize(tr("Disabled Sessions"),ST_DISABLED_SESSIONS));
+        }
         commandList->addItem(calculateMaxSize(tr("Number of Sessions"),ST_SESSIONS_QTY));
         //commandList->insertSeparator(commandList->count());  // separate from events
 
