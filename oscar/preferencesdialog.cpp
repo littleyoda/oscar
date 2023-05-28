@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QLabel>
 #include <QColorDialog>
 #include <QMessageBox>
@@ -220,6 +223,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
     ui->clinicalMode->setChecked(AppSetting->clinicalMode());
+    // clinicalMode and allowDisabledSessions are radio buttons and must be set to opposite values. Once clinicalMode is used.
+    // Radio Buttons illustrate the operating mode.
+    ui->allowDisabledSessions->setChecked(!AppSetting->clinicalMode());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -262,7 +268,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->cacheSessionData->setChecked(AppSetting->cacheSessions());
     ui->preloadSummaries->setChecked(profile->session->preloadSummaries());
     ui->animationsAndTransitionsCheckbox->setChecked(AppSetting->animations());
-    ui->complianceCheckBox->setChecked(profile->cpap->showComplianceInfo());
     ui->complianceHours->setValue(profile->cpap->complianceHours());
 
     ui->prefCalcMiddle->setCurrentIndex(profile->general->prefCalcMiddle());
@@ -858,7 +863,6 @@ bool PreferencesDialog::Save()
     profile->cpap->setShowLeakRedline(ui->showLeakRedline->isChecked());
     profile->cpap->setLeakRedline(ui->leakRedlineSpinbox->value());
 
-    profile->cpap->setShowComplianceInfo(ui->complianceCheckBox->isChecked());
     profile->cpap->setComplianceHours(ui->complianceHours->value());
 
     if (ui->graphHeight->value() != AppSetting->graphHeight()) {

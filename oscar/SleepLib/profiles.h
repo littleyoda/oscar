@@ -309,7 +309,6 @@ const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
 
 // CPAPSettings Strings
 const QString STR_CS_ComplianceHours = "ComplianceHours";
-const QString STR_CS_ShowCompliance = "ShowCompliance";
 const QString STR_CS_ShowLeaksMode = "ShowLeaksMode";
 const QString STR_CS_MaskStartDate = "MaskStartDate";
 const QString STR_CS_MaskDescription = "MaskDescription";
@@ -560,7 +559,6 @@ class CPAPSettings : public PrefSettings
       : PrefSettings(profile)
     {
         m_complianceHours = initPref(STR_CS_ComplianceHours, 4.0f).toFloat();
-        initPref(STR_CS_ShowCompliance, true);
         initPref(STR_CS_ShowLeaksMode, 0);
         // TODO: jedimark: Check if this date is initiliazed yet
         initPref(STR_CS_MaskStartDate, QDate());
@@ -597,7 +595,6 @@ class CPAPSettings : public PrefSettings
 
     //Getters
     double complianceHours() const { return m_complianceHours; }
-    bool showComplianceInfo() const { return getPref(STR_CS_ShowCompliance).toBool(); }
     int leakMode() const { return getPref(STR_CS_ShowLeaksMode).toInt(); }
     QDate maskStartDate() const { return getPref(STR_CS_MaskStartDate).toDate(); }
     QString maskDescription() const { return getPref(STR_CS_MaskDescription).toString(); }
@@ -635,7 +632,6 @@ class CPAPSettings : public PrefSettings
     void setNotes(QString notes) { setPref(STR_CS_Notes, notes); }
     void setDateDiagnosed(QDate date) { setPref(STR_CS_DateDiagnosed, date); }
     void setComplianceHours(EventDataType hours) { setPref(STR_CS_ComplianceHours, m_complianceHours=hours); }
-    void setShowComplianceInfo(bool b) { setPref(STR_CS_ShowCompliance, b); }
     void setLeakMode(int leakmode) { setPref(STR_CS_ShowLeaksMode, (int)leakmode); }
     void setMaskStartDate(QDate date) { setPref(STR_CS_MaskStartDate, date); }
     void setMaskType(MaskType masktype) { setPref(STR_CS_MaskType, (int)masktype); }

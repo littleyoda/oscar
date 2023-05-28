@@ -559,10 +559,6 @@ void gOverviewGraph::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
     float compliance_hours = 0;
 
-    if (p_profile->cpap->showComplianceInfo()) {
-        compliance_hours = p_profile->cpap->complianceHours();
-    }
-
     int incompliant = 0;
     Day *day;
     EventDataType hours;
@@ -1007,15 +1003,6 @@ jumpnext:
         }
     }*/
     a += QString(QObject::tr("Days: %1")).arg(total_days, 0);
-
-    if (p_profile->cpap->showComplianceInfo()) {
-        if (ishours && incompliant > 0) {
-            a += " "+QString(QObject::tr("Low Usage Days: %1")).arg(incompliant, 0)+
-                 " "+QString(QObject::tr("(%1% compliant, defined as > %2 hours)")).
-                    arg((1.0 / daynum) * (total_days - incompliant) * 100.0, 0, 'f', 2).arg(compliance_hours, 0, 'f', 1);
-        }
-    }
-
 
     //GetTextExtent(a,x,y);
     //legendx-=30+x;

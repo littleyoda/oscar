@@ -1201,13 +1201,6 @@ A value of 20% works well for detecting apneas. </string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="complianceCheckBox">
-                 <property name="text">
-                  <string>Compliance defined as</string>
-                 </property>
-                </widget>
-               </item>
                <item row="6" column="2">
                 <widget class="QSpinBox" name="ahiGraphWindowSize">
                  <property name="sizePolicy">
@@ -1282,31 +1275,6 @@ Defaults to 60 minutes.. Highly recommend it's left at this value.</string>
                  </property>
                  <property name="decimals">
                   <number>1</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2" colspan="2">
-                <widget class="QDoubleSpinBox" name="complianceHours">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</string>
-                 </property>
-                 <property name="suffix">
-                  <string> hours</string>
-                 </property>
-                 <property name="decimals">
-                  <number>1</number>
-                 </property>
-                 <property name="maximum">
-                  <double>8.000000000000000</double>
-                 </property>
-                 <property name="value">
-                  <double>4.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -1510,6 +1478,172 @@ as this is the only value available on summary-only days.</string>
              </spacer>
             </item>
            </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="ClinicalTab">
+         <attribute name="title">
+          <string>Clinical</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_Z12">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="visible" stdset="0">
+           <bool>false</bool>
+          </property>
+          <item>
+           <widget class="QGroupBox" name="clinicalGroupBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="title">
+             <string>Clinical Settings</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_Z2">
+             <property name="leftMargin">
+              <number>4</number>
+             </property>
+             <property name="topMargin">
+              <number>8</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
+             <property name="spacing">
+              <number>5</number>
+             </property>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_56">
+               <property name="text">
+                <string>Compliance defined as</string>
+               </property>
+               <property name="toolTip">
+                <string>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="3">
+              <spacer name="verticalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="4" column="0">
+              <widget class="QPushButton" name="resetClinicalDefaults">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Reset &amp;Defaults</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QGroupBox" name="groupBox_Z4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>Select  Oscar Operating Mode </string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="0">
+                 <widget class="QRadioButton" name="clinicalMode">
+                  <property name="text">
+                   <string>Clinical Mode</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                  <property name="toolTip">
+                   <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QRadioButton" name="allowDisabledSessions">
+                  <property name="text">
+                   <string>Allow Disabled Sessions</string>
+                  </property>
+                  <property name="toolTip">
+                   <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDoubleSpinBox" name="complianceHours">
+               <property name="suffix">
+                <string> Hours</string>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <double>8.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>4.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="textEdit">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="html">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Changing the Oscar Operating Mode requires a reload of the user's profile.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Data will be saved and restored.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -2753,16 +2887,6 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="text">
                   <string>Print reports in black and white (monochrome)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="clinicalMode">
-                 <property name="toolTip">
-                  <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
-                 </property>
-                 <property name="text">
-                  <string>Clinical Mode</string>
                  </property>
                 </widget>
                </item>
