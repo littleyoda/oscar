@@ -293,7 +293,7 @@ void MainWindow::SetupGUI()
 #endif
     setupRunning = false;
 
-    m_complianceMode = AppSetting->complianceMode();
+    m_clinicalMode = AppSetting->clinicalMode();
 }
 
 void MainWindow::logMessage(QString msg)
@@ -1401,8 +1401,8 @@ void MainWindow::on_action_Preferences_triggered()
         setApplicationFont();
 
 
-        if (m_complianceMode != AppSetting->complianceMode() ) {
-            m_complianceMode = AppSetting->complianceMode();
+        if (m_clinicalMode != AppSetting->clinicalMode() ) {
+            m_clinicalMode = AppSetting->clinicalMode();
             reloadProfile();
         };
 

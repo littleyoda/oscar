@@ -2757,12 +2757,12 @@ Try it and see if you like it.</string>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="complianceMode">
+                <widget class="QCheckBox" name="clinicalMode">
                  <property name="toolTip">
-                  <string>Allow sessions to be disabled.\nDisabled Session are not used for graphing or Statistics.</string>
+                  <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
                  </property>
                  <property name="text">
-                  <string>Compliance Mode</string>
+                  <string>Clinical Mode</string>
                  </property>
                 </widget>
                </item>

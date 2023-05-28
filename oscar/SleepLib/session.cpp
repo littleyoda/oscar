@@ -93,7 +93,7 @@ void Session::TrashEvents()
 
 bool Session::enabled(bool realValues) const
 {
-    if (AppSetting->complianceMode() && !realValues) return true;
+    if (AppSetting->clinicalMode() && !realValues) return true;
     return s_enabled;
 }
 

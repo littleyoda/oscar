@@ -578,7 +578,7 @@ void Daily::showEvent(QShowEvent *)
 
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
-    if (AppSetting->complianceMode()) 
+    if (AppSetting->clinicalMode()) 
     {
        #if 0
        QMessageBox mbox(QMessageBox::Warning, 

@@ -198,7 +198,7 @@ void Statistics::updateRXChanges()
             continue;
 
         if (day->first() == 0) {  // Ignore invalid dates
-            qDebug() << "Statistics::updateRXChanges ignoring day with first=0";
+            //qDebug() << "Statistics::updateRXChanges ignoring day with first=0";
             continue;
         }
 
@@ -537,7 +537,7 @@ Statistics::Statistics(QObject *parent) :
     QObject(parent)
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
-    if (!AppSetting->complianceMode())
+    if (!AppSetting->clinicalMode())
         rows.push_back(StatisticsRow(tr("Warning: Disabled session data is excluded in this report"),SC_WARNING,MT_CPAP));
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
