@@ -1543,7 +1543,7 @@ as this is the only value available on summary-only days.</string>
               </widget>
              </item>
              <item row="3" column="0" colspan="3">
-              <spacer name="verticalSpacer_6">
+              <spacer name="verticalSpacer_61">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -1582,7 +1582,7 @@ as this is the only value available on summary-only days.</string>
                <property name="title">
                 <string>Select  Oscar Operating Mode </string>
                </property>
-               <layout class="QGridLayout" name="gridLayout_5">
+               <layout class="QGridLayout" name="gridLayout_51">
                 <item row="0" column="0">
                  <widget class="QRadioButton" name="clinicalMode">
                   <property name="toolTip">
