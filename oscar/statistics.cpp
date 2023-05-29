@@ -538,7 +538,7 @@ Statistics::Statistics(QObject *parent) :
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
     if (!AppSetting->clinicalMode())
-        rows.push_back(StatisticsRow(tr("Warning: Disabled session data is excluded in this report"),SC_WARNING,MT_CPAP));
+        rows.push_back(StatisticsRow(tr("Permissive Mode Warning: Disabled session data is excluded in this report"),SC_WARNING,MT_CPAP));
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));

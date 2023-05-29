@@ -223,9 +223,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
     ui->clinicalMode->setChecked(AppSetting->clinicalMode());
-    // clinicalMode and allowDisabledSessions are radio buttons and must be set to opposite values. Once clinicalMode is used.
+    // clinicalMode and permissiveMode are radio buttons and must be set to opposite values. Once clinicalMode is used.
     // Radio Buttons illustrate the operating mode.
-    ui->allowDisabledSessions->setChecked(!AppSetting->clinicalMode());
+    ui->permissiveMode->setChecked(!AppSetting->clinicalMode());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES

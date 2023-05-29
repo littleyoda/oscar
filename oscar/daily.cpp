@@ -578,29 +578,7 @@ void Daily::showEvent(QShowEvent *)
 
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
-    if (AppSetting->clinicalMode()) 
-    {
-       #if 0
-       QMessageBox mbox(QMessageBox::Warning, 
-            tr("Disable Session"), i
-            tr(" Disabling Sessions is not valid in Compilance Mode"),
-            QMessageBox::Ok  , this);
-            mbox.exec();
-       #endif
-       return true;
-    }
-    bool enabled=sess->enabled();
-    if (enabled ) {
-           QMessageBox mbox(QMessageBox::Warning, tr("Disable Session"),
-                tr("Disabling a session will remove this session \nfrom all graphs, reports and statistics."
-                "\n\n"
-                "The Search tab can find disabled sessions"
-                "\n\n"
-                "Continue to disable session?"),
-                QMessageBox::Yes | QMessageBox::No , this);
-            if (mbox.exec() != QMessageBox::Yes ) return true;
-    };
-    sess->setEnabled(!enabled);
+    sess->setEnabled(!sess->enabled());
     return false;
 }
 

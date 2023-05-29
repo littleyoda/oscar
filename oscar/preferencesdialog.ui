@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>942</width>
-    <height>726</height>
+    <height>737</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -63,7 +63,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="importTab">
          <attribute name="title">
@@ -1231,6 +1231,7 @@ Defaults to 60 minutes.. Highly recommend it's left at this value.</string>
                 <widget class="QCheckBox" name="showLeakRedline">
                  <property name="font">
                   <font>
+                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -1533,11 +1534,11 @@ as this is the only value available on summary-only days.</string>
              </property>
              <item row="2" column="0">
               <widget class="QLabel" name="label_56">
-               <property name="text">
-                <string>Compliance defined as</string>
-               </property>
                <property name="toolTip">
                 <string>Regard days with under this usage as &quot;incompliant&quot;. 4 hours is usually considered compliant.</string>
+               </property>
+               <property name="text">
+                <string>Compliance defined as</string>
                </property>
               </widget>
              </item>
@@ -1584,6 +1585,9 @@ as this is the only value available on summary-only days.</string>
                <layout class="QGridLayout" name="gridLayout_5">
                 <item row="0" column="0">
                  <widget class="QRadioButton" name="clinicalMode">
+                  <property name="toolTip">
+                   <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
+                  </property>
                   <property name="text">
                    <string>Clinical Mode</string>
                   </property>
@@ -1593,18 +1597,15 @@ as this is the only value available on summary-only days.</string>
                   <property name="checked">
                    <bool>false</bool>
                   </property>
-                  <property name="toolTip">
-                   <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
-                  </property>
                  </widget>
                 </item>
                 <item row="1" column="0">
-                 <widget class="QRadioButton" name="allowDisabledSessions">
-                  <property name="text">
-                   <string>Allow Disabled Sessions</string>
-                  </property>
+                 <widget class="QRadioButton" name="permissiveMode">
                   <property name="toolTip">
-                   <string>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</string>
+                   <string>permissive Mode allows disabled sessions.\nDisabled Session are used for graphing and Statistics.</string>
+                  </property>
+                  <property name="text">
+                   <string>Permissive Mode</string>
                   </property>
                  </widget>
                 </item>
@@ -1640,8 +1641,18 @@ as this is the only value available on summary-only days.</string>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Changing the Oscar Operating Mode requires a reload of the user's profile.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Data will be saved and restored.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clinical Mode: &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Reports what is on the data card, all of it including any and all data deselected in the Permissive mode. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Basically replicates the reports and data stored on the devices data card. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This includes pap devices, oximeters, etc. Compliance reports fall under this mode. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.&lt;br /&gt;&lt;br /&gt;Permissive Mode:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Allows user to select which data sets/ sessions to be used for calculations and display. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Additional charts and calculations may be available that are not available from the vendor data. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Changing the Oscar Operating Mode:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Requires a reload of the user's profile. Data will be saved and restored.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -1742,11 +1753,11 @@ p, li { white-space: pre-wrap; }
                 </item>
                 <item row="1" column="1">
                  <widget class="QSpinBox" name="flagPulseAbove">
-                  <property name="maximum">
-                   <number>150</number>
-                  </property>
                   <property name="suffix">
                    <string> bpm</string>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                  </widget>
                 </item>
@@ -1895,7 +1906,7 @@ p, li { white-space: pre-wrap; }
                </property>
               </spacer>
              </item>
-             <item row="4" column="0" >
+             <item row="4" column="0">
               <widget class="QPushButton" name="resetOxiMetryDefaults">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -1926,8 +1937,11 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
             <property name="html">
-             <string> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; font-weight:600;&quot;&gt;Syncing Oximetry and CPAP Data&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;CMS50 data imported from SpO2Review (from .spoR files) or the serial import method do &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt; have the correct timestamp needed to sync.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
@@ -2231,6 +2245,7 @@ Mainly affects the importer.</string>
               <widget class="QCheckBox" name="automaticallyCheckUpdates">
                <property name="font">
                 <font>
+                 <weight>50</weight>
                  <italic>false</italic>
                  <bold>false</bold>
                  <underline>false</underline>
@@ -2948,6 +2963,7 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="font">
                   <font>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -2966,6 +2982,7 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="font">
                   <font>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -2984,6 +3001,7 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="font">
                   <font>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -3005,6 +3023,7 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="font">
                   <font>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -3270,6 +3289,7 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="font">
                   <font>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
