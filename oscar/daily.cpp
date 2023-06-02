@@ -587,6 +587,7 @@ void Daily::doToggleSession(Session * sess)
     if (rejectToggleSessionEnable( sess) ) return;
     LoadDate(previous_date);
     mainwin->getOverview()->graphView()->dataChanged();
+    mainwin->GenerateStatistics();
 }
 
 void Daily::Link_clicked(const QUrl &url)
