@@ -16,12 +16,47 @@
 #include <QPainter>
 #include <QHash>
 #include <QList>
+
+
 #include "SleepLib/schema.h"
 #include "SleepLib/machine.h"
 
+
+class DisabledInfo
+{
+public:
+    QString display(int);
+    void update(QDate latest, QDate earliest) ;
+private:
+    int totalDays ;
+    int daysNoData ;
+    int daysOutOfCompliance ;
+    int daysInCompliance ;
+    int numDisabledsessions ;
+    int numDaysWithDisabledsessions ;
+    int maxDurationOfaDisabledsession ;
+    int numDaysDisabledSessionChangedCompliance ;
+    int totalDurationOfDisabledSessions ;
+    void clear () {
+        totalDays = 0;
+        daysNoData = 0;
+        daysOutOfCompliance = 0;
+        daysInCompliance = 0;
+        numDisabledsessions = 0;
+        numDaysWithDisabledsessions = 0;
+        maxDurationOfaDisabledsession = 0;
+        numDaysDisabledSessionChangedCompliance = 0;
+        totalDurationOfDisabledSessions = 0;
+    };
+
+};
+
+
+
+
 //! \brief Type of calculation on one statistics row
 enum StatCalcType {
-    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI, SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING
+    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI, SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_WARNING2
 };
 
 /*! \struct StatisticsRow
@@ -172,6 +207,7 @@ class Statistics : public QObject
 
     static void printReport(QWidget *parent = nullptr);
 
+    void updateDisabledInfo();
 
   protected:
     void loadRXChanges();
@@ -198,6 +234,7 @@ class Statistics : public QObject
 
     QList<QDate> record_best_ahi;
     QList<QDate> record_worst_ahi;
+    DisabledInfo disabledInfo;
 
   signals:
 
