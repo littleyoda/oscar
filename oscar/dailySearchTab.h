@@ -80,7 +80,14 @@ enum OpCode {
     QTabWidget*   dailyTabWidget;
     QVBoxLayout*  searchTabLayout;
 
-    QTableWidget* controlTable;
+    QTableWidget* resultTable;
+
+    // start Widget
+    QWidget*      startWidget;
+    QHBoxLayout*  startLayout;
+    QPushButton*  startButton;
+    QPushButton*  matchButton;
+    QPushButton*  clearButton;
 
     // Command command Widget
     QWidget*      commandWidget;
@@ -92,8 +99,6 @@ enum OpCode {
     QProgressBar* progressBar;
 
     // control Widget
-    QPushButton*  matchButton;
-    QPushButton*  clearButton;
 
     QWidget*      summaryWidget;
     QHBoxLayout*  summaryLayout;
@@ -109,13 +114,9 @@ enum OpCode {
     QSpinBox*     selectInteger;
     QLineEdit*    selectString;
 
-    // Trigger  Widget
-    QPushButton*  startButton;
-    QLabel*       statusProgress;
-
-    QLabel*       summaryProgress;
-    QLabel*       summaryFound;
-    QLabel*       summaryMinMax;
+    QPushButton*  summaryProgress;
+    QPushButton*  summaryFound;
+    QPushButton*  summaryMinMax;
 
     QIcon*        m_icon_selected;
     QIcon*        m_icon_notSelected;
@@ -147,6 +148,7 @@ enum OpCode {
     void        setOperationPopupEnabled(bool );
     void        setOperation( );
     void        hideResults(bool);
+    void        hideCommand(bool showcommand=false);
     void        connectUi(bool);
 
 

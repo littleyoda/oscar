@@ -29,8 +29,8 @@
 #include "SleepLib/profiles.h"
 #include "daily.h"
 
-enum DS_COL { DS_COL_LEFT=0, DS_COL_MID, DS_COL_RIGHT, DS_COL_MAX };
-enum DS_ROW{ DS_ROW_CTL=0, DS_ROW_CMD, DS_ROW_LIST, DS_ROW_PROGRESS, DS_ROW_SUMMARY, DS_ROW_HEADER, DS_ROW_DATA };
+enum DS_COL { DS_COL_LEFT=0, DS_COL_RIGHT, DS_COL_MAX };
+enum DS_ROW{ DS_ROW_HEADER, DS_ROW_DATA };
 #define DS_ROW_MAX         (passDisplayLimit+DS_ROW_DATA)
 
 
@@ -56,7 +56,6 @@ enum DS_ROW{ DS_ROW_CTL=0, DS_ROW_CMD, DS_ROW_LIST, DS_ROW_PROGRESS, DS_ROW_SUMM
 DailySearchTab::DailySearchTab(Daily* daily , QWidget* searchTabWidget  , QTabWidget* dailyTabWidget)  :
                         daily(daily) , parent(daily) , searchTabWidget(searchTabWidget) ,dailyTabWidget(dailyTabWidget)
 {
-    //DEBUGFW Q(this->font());
     m_icon_selected      = new QIcon(":/icons/checkmark.png");
     m_icon_notSelected   = new QIcon(":/icons/empty_box.png");
     m_icon_configure     = new QIcon(":/icons/cog.png");
@@ -75,21 +74,21 @@ void    DailySearchTab::createUi() {
 
         searchTabLayout  = new QVBoxLayout(searchTabWidget);
 
-        controlTable     = new QTableWidget(DS_ROW_MAX,DS_COL_MAX,searchTabWidget);
-        commandWidget    = new QWidget(this);
+        resultTable      = new QTableWidget(DS_ROW_MAX,DS_COL_MAX,searchTabWidget);
+
+        helpButton       = new QPushButton(searchTabWidget);
+        helpText         = new QTextEdit(searchTabWidget);
+
+        startWidget      = new QWidget(searchTabWidget);
+        startLayout      = new QHBoxLayout;
+        matchButton      = new QPushButton( startWidget);
+        clearButton      = new QPushButton( startWidget);
+        startButton      = new QPushButton( startWidget);
+
+
+        commandWidget    = new QWidget(searchTabWidget);
         commandLayout    = new QHBoxLayout();
-
-        summaryWidget    = new QWidget(this);
-        summaryLayout    = new QHBoxLayout();
-
-        helpButton       = new QPushButton(this);
-        helpText         = new QTextEdit(this);
-        matchButton      = new QPushButton(this);
-        clearButton      = new QPushButton(this);
-
-        commandList      = new QListWidget(controlTable);
         commandButton    = new QPushButton(commandWidget);
-
         operationCombo   = new QComboBox(commandWidget);
         operationButton  = new QPushButton(commandWidget);
         selectDouble     = new QDoubleSpinBox(commandWidget);
@@ -97,14 +96,28 @@ void    DailySearchTab::createUi() {
         selectString     = new QLineEdit(commandWidget);
         selectUnits      = new QLabel(commandWidget);
 
-        startButton      = new QPushButton(this);
-        statusProgress   = new QLabel(this);
-        summaryProgress  = new QLabel(this);
-        summaryFound     = new QLabel(this);
-        summaryMinMax    = new QLabel(this);
-        progressBar      = new QProgressBar(this);
+        commandList      = new QListWidget(resultTable);
+
+        summaryWidget    = new QWidget(searchTabWidget);
+        summaryLayout    = new QHBoxLayout();
+        summaryProgress  = new QPushButton(summaryWidget);
+        summaryFound     = new QPushButton(summaryWidget);
+        summaryMinMax    = new QPushButton(summaryWidget);
+        progressBar      = new QProgressBar(searchTabWidget);
 
         populateControl();
+
+        searchTabLayout->setContentsMargins(0, 0, 0, 0);
+        searchTabLayout->addSpacing(2);
+        searchTabLayout->setMargin(2);
+
+        startLayout->addWidget(matchButton);
+        startLayout->addWidget(clearButton);
+        startLayout->addWidget(startButton);
+        startLayout->addStretch(0);
+        startLayout->addSpacing(2);
+        startLayout->setMargin(2);
+        startWidget->setLayout(startLayout);
 
         commandLayout->addWidget(commandButton);
         commandLayout->addWidget(operationCombo);
@@ -128,38 +141,34 @@ void    DailySearchTab::createUi() {
         summaryWidget->setLayout(summaryLayout);
 
 
-        controlTable->setCellWidget(DS_ROW_CTL,DS_COL_LEFT,matchButton);
-        controlTable->setCellWidget(DS_ROW_CTL,DS_COL_MID,clearButton);
-        controlTable->setCellWidget(DS_ROW_CTL,DS_COL_RIGHT,startButton);
-
-        controlTable->setCellWidget(DS_ROW_LIST,DS_COL_LEFT,commandList);
-        controlTable->setCellWidget(DS_ROW_CMD,DS_COL_LEFT,commandWidget);
-
-        controlTable->setCellWidget( DS_ROW_SUMMARY , 0 ,summaryWidget);
-        controlTable->setCellWidget( DS_ROW_PROGRESS , 0 , progressBar);
-        
-        controlTable->setRowHeight(DS_ROW_LIST,commandList->size().height());
-        //controlTable->setRowHeight(DS_ROW_PROGRESS,progressBar->size().height());
-
-        controlTable->setSpan( DS_ROW_CMD ,DS_COL_LEFT,1,3);
-        controlTable->setSpan( DS_ROW_LIST ,DS_COL_LEFT,1,3);
-        controlTable->setSpan( DS_ROW_SUMMARY ,DS_COL_LEFT,1,3);
-        controlTable->setSpan( DS_ROW_PROGRESS ,DS_COL_LEFT,1,3);
-        for (int index = DS_ROW_HEADER; index<DS_ROW_MAX;index++) {
-            controlTable->setSpan(index,DS_COL_MID,1,2);
-        }
+        QString styleSheetWidget = QString("border: 1px solid black; padding:none;");
+        startWidget->setStyleSheet(styleSheetWidget);
 
         searchTabLayout ->addWidget(helpButton);
         searchTabLayout ->addWidget(helpText);
-        searchTabLayout ->addWidget(controlTable);
+        searchTabLayout ->addWidget(startWidget);
+        searchTabLayout ->addWidget(commandWidget);
+        searchTabLayout ->addWidget(commandList);
+        searchTabLayout ->addWidget(progressBar);
+        searchTabLayout ->addWidget(summaryWidget);
+        searchTabLayout ->addWidget(resultTable);
 
         // End of UI creatation
         //Setup each BUtton / control item
 
         QString styleButton=QString(
             "QPushButton { color: black; border: 1px solid black; padding: 5px ;background-color:white; }"
-            "QPushButton:disabled { color: #333333; border: 1px solid #333333; background-color: #dddddd;}"
+            "QPushButton:disabled { background-color: #EEEEFF;}"
+            //"QPushButton:disabled { color: #333333; border: 1px solid #333333; background-color: #dddddd;}"
             );
+        QSizePolicy sizePolicyEP = QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+        QSizePolicy sizePolicyEE = QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+        QSizePolicy sizePolicyEM = QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+        QSizePolicy sizePolicyMM = QSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+        QSizePolicy sizePolicyMxMx = QSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+        Q_UNUSED (sizePolicyEP);
+        Q_UNUSED (sizePolicyMM);
+        Q_UNUSED (sizePolicyMxMx);
 
         helpText->setReadOnly(true);
         helpText->setLineWrapMode(QTextEdit::NoWrap);
@@ -168,7 +177,7 @@ void    DailySearchTab::createUi() {
         size.rwidth()  += 35 ; // scrollbar 
         helpText->setText(helpString);
         helpText->setMinimumSize(textsize(this->font(),helpString));
-        helpText->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+        helpText->setSizePolicy( sizePolicyEE );
 
         helpButton->setStyleSheet( styleButton );
         // helpButton->setText(tr("Help"));
@@ -177,16 +186,17 @@ void    DailySearchTab::createUi() {
 
         matchButton->setIcon(*m_icon_configure);
         matchButton->setStyleSheet( styleButton );
-        setText(matchButton,tr("Match"));
-
         clearButton->setStyleSheet( styleButton );
+        startButton->setStyleSheet( styleButton );
+        //matchButton->setSizePolicy( sizePolicyEE);
+        //clearButton->setSizePolicy( sizePolicyEE);
+        //startButton->setSizePolicy( sizePolicyEE);
+        //startWidget->setSizePolicy( sizePolicyEM);
+        setText(matchButton,tr("Match"));
         setText(clearButton,tr("Clear"));
 
-        startButton->setStyleSheet( styleButton );
-        //setText(startButton,tr("Start Search"));
-        //startButton->setEnabled(false);
 
-        //setText(commandButton,(tr("Select Match")));
+        commandButton->setStyleSheet("border:none;");
 
         //float height = float(1+commandList->count())*commandListItemHeight ;
         float height = float(commandList->count())*commandListItemHeight ;
@@ -197,7 +207,6 @@ void    DailySearchTab::createUi() {
         setText(operationButton,"");
         operationButton->setStyleSheet("border:none;");
         operationButton->hide();
-        operationCombo->hide();
         operationCombo->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
         setOperationPopupEnabled(false);
 
@@ -207,44 +216,32 @@ void    DailySearchTab::createUi() {
         selectUnits->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
         setText(selectUnits,"");
 
-        commandButton->setStyleSheet("border: 1px solid black; padding: 5px ;");
-        operationButton->setStyleSheet("border: 1px solid black; padding: 5px ;");
-        selectUnits->setStyleSheet("border: 1px solid white; padding: 5px ;");
-        selectDouble->setButtonSymbols(QAbstractSpinBox::NoButtons);
-        selectInteger->setButtonSymbols(QAbstractSpinBox::NoButtons);
-        selectDouble->setStyleSheet("border: 1px solid black; padding: 5px ;");
-        // clears arrows on spinbox selectDouble->setStyleSheet("border: 1px solid black; padding: 5px ;");
-        // clears arrows on spinbox selectInteger->setStyleSheet("border: 1px solid black; padding: 5px ;");
-        commandWidget->setStyleSheet("border: 1px solid black; padding: 5px ;");
-
-        progressBar->setValue(0);
-        //progressBar->setStyleSheet("border: 0px solid black; padding: 0px ;");
-        //progressBar->setStyleSheet("color: black; background-color #666666 ;");
-
         progressBar->setStyleSheet(
             "QProgressBar{border: 1px solid black; text-align: center;}"
             "QProgressBar::chunk { border: none; background-color: #ccddFF; } ");
-        summaryProgress->setStyleSheet("padding:5px;background-color: #ffffff;" );
-        summaryFound->setStyleSheet("padding:5px;background-color: #f0f0f0;" );
-        summaryMinMax->setStyleSheet("padding:5px;background-color: #ffffff;" );
 
-        controlTable->horizontalHeader()->hide();   // hides numbers above each column
-        //controlTable->verticalHeader()->hide();   // hides numbers before each row.
-        controlTable->horizontalHeader()->setStretchLastSection(true);
+
+        //QString styleLabel=QString( "QLabel { color: black; border: 1px solid black; padding: 5px ;background-color:white; }");
+        summaryProgress->setStyleSheet( styleButton );
+        summaryFound->setStyleSheet( styleButton );
+        summaryMinMax->setStyleSheet( styleButton );
+        summaryProgress->setSizePolicy( sizePolicyEM ) ;
+        summaryFound->setSizePolicy( sizePolicyEM ) ;
+        summaryMinMax->setSizePolicy( sizePolicyEM ) ;
+
+        resultTable->horizontalHeader()->hide();   // hides numbers above each column
+        resultTable->horizontalHeader()->setStretchLastSection(true);
         // get rid of selection coloring
-        controlTable->setStyleSheet("QTableView{background-color: white; selection-background-color: white; }");
+        resultTable->setStyleSheet("QTableView{background-color: white; selection-background-color: white; }");
 
         float width = 14/*styleSheet:padding+border*/ + QFontMetrics(this->font()).size(Qt::TextSingleLine ,"WWW MMM 99 2222").width();
-        controlTable->setColumnWidth(DS_COL_LEFT, width);
+        resultTable->setColumnWidth(DS_COL_LEFT, width);
 
         width = 30/*iconWidthPlus*/+QFontMetrics(this->font()).size(Qt::TextSingleLine ,clearButton->text()).width();
         //width = clearButton->width();
-        controlTable->setColumnWidth(DS_COL_MID, width);
-        controlTable->setShowGrid(false);
+        resultTable->setShowGrid(false);
 
-        searchTabLayout->setContentsMargins(4, 4, 4, 4);
 
-        //DEBUGFW Q(QWidget::logicalDpiX()) Q(QWidget::logicalDpiY()) Q(QWidget::physicalDpiX()) Q(QWidget::physicalDpiY());
         setResult(DS_ROW_HEADER,0,QDate(),tr("DATE\nJumps to Date"));
         on_clearButton_clicked();
 }
@@ -292,7 +289,6 @@ QListWidgetItem* DailySearchTab::calculateMaxSize(QString str,int topic) {  //ca
     float percentX = scaleX/100.0;
     float width = QFontMetricsF(this->font()).size(Qt::TextSingleLine , str).width();
     width += 30 ; // account for scrollbar width;
-    //DEBUGFW Q(scaleX) Q(percentX) Q(width) Q(width*percentX);
     commandListItemMaxWidth = max (commandListItemMaxWidth, (width*percentX));
     commandListItemHeight = QFontMetricsF(this->font()).size(Qt::TextSingleLine , str).height();
     QListWidgetItem* item = new QListWidgetItem(str);
@@ -362,14 +358,13 @@ void DailySearchTab::populateControl() {
 void    DailySearchTab::on_helpButton_clicked() {
         helpMode = !helpMode;
         if (helpMode) {
-            //DEBUGFW Q(textsize(helpText->font(),helpString)) Q(controlTable->size());
-            controlTable->setMinimumSize(QSize(50,200)+textsize(helpText->font(),helpString));
-            controlTable->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+            resultTable->setMinimumSize(QSize(50,200)+textsize(helpText->font(),helpString));
+            resultTable->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
             //setText(helpButton,tr("Click HERE to close Help"));
             helpButton->setText(tr("Click HERE to close Help"));
             helpText ->show();
         } else {
-            controlTable->setMinimumWidth(250);
+            resultTable->setMinimumWidth(250);
             helpText ->hide();
             //setText(helpButton,tr("Help"));
             helpButton->setText(tr("Help"));
@@ -638,44 +633,45 @@ void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
                 setoperation(OP_GT,hundredths);
                 setText(selectUnits,tr(" EventsPerHour"));
                 selectDouble->setValue(5.0);
+                selectDouble->setSingleStep(0.1);
                 break;
             case ST_SESSION_LENGTH :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Session Duration\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setoperation(OP_LT,minutesToMs);
-                setText(selectUnits,tr(" Minutes"));
                 selectDouble->setValue(5.0);
+                setText(selectUnits,tr(" Minutes"));
+                selectDouble->setSingleStep(0.1);
                 selectInteger->setValue((int)selectDouble->value()*60000.0);   //convert to ms
                 break;
             case ST_SESSIONS_QTY :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Number of Sessions\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setoperation(OP_GT,opWhole);
-                setText(selectUnits,tr(" Sessions"));
                 selectInteger->setRange(0,999);
                 selectInteger->setValue(2);
+                 setText(selectUnits,tr(" Sessions"));
                 break;
             case ST_DAILY_USAGE :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Daily Duration\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
                 setoperation(OP_LT,hoursToMs);
-                setText(selectUnits,tr(" Hours"));
                 selectDouble->setValue(p_profile->cpap->complianceHours());
+                selectDouble->setSingleStep(0.1);
                 selectInteger->setValue((int)selectDouble->value()*3600000.0);   //convert to ms
+                setText(selectUnits,tr(" Hours"));
                 break;
             case ST_EVENT:
                 // Have an Event
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Number of events\nJumps to Date's Events"));
                 nextTab = TW_EVENTS ;
                 setoperation(OP_GT,opWhole);
-                setText(selectUnits,tr(" Events"));
                 selectInteger->setValue(0);
+                setText(selectUnits,tr(" Events"));
                 break;
         }
         criteriaChanged();
         if (operationOpCode == OP_NO_PARMS ) {
-            operationButton->hide();
-            operationCombo->hide();
             // auto start searching
             setText(startButton,tr("Automatic start"));
             startButtonMode=true;
@@ -694,14 +690,14 @@ void DailySearchTab::setResult(int row,int column,QDate date,QString text) {
         return;
     } 
 
-    QWidget* header = controlTable->cellWidget(row,column);
+    QWidget* header = resultTable->cellWidget(row,column);
     GPushButton* item;
     if (header == nullptr) {
         item = new GPushButton(row,column,date,this);
         //item->setStyleSheet("QPushButton {text-align: left;vertical-align:top;}");
         item->setStyleSheet(
             "QPushButton { text-align: left;color: black; border: 1px solid black; padding: 5px ;background-color:white; }" );
-        controlTable->setCellWidget(row,column,item);
+        resultTable->setCellWidget(row,column,item);
     } else {
         item = dynamic_cast<GPushButton *>(header);
         if (item == nullptr) {
@@ -712,7 +708,7 @@ void DailySearchTab::setResult(int row,int column,QDate date,QString text) {
     }
     if (row == DS_ROW_HEADER) {
         QSize size=setText(item,text);
-        controlTable->setRowHeight(DS_ROW_HEADER,8/*margins*/+size.height());
+        resultTable->setRowHeight(DS_ROW_HEADER,8/*margins*/+size.height());
     } else {
         item->setIcon(*m_icon_notSelected);
         if (column == 0) {
@@ -722,9 +718,9 @@ void DailySearchTab::setResult(int row,int column,QDate date,QString text) {
         }
     }
     if ( row == DS_ROW_DATA )  {
-        controlTable->setRowHidden(DS_ROW_HEADER,false);
+        resultTable->setRowHidden(DS_ROW_HEADER,false);
     }
-    controlTable->setRowHidden(row,false);
+    resultTable->setRowHidden(row,false);
 }
 
 void DailySearchTab::updateValues(qint32 value) {
@@ -921,43 +917,45 @@ void    DailySearchTab::endOfPass() {
         startButtonMode=false;      // display Continue;
         QString display;
         if ((passFound >= passDisplayLimit) && (daysProcessed<daysTotal)) {
-            //setText(statusProgress,centerLine(tr("More to Search")));
-            //statusProgress->show();
             startButton->setEnabled(true);
             setText(startButton,(tr("Continue Search")));
         } else if (daysFound>0) {
-            //setText(statusProgress,centerLine(tr("End of Search")));
-            //statusProgress->show();
             startButton->setEnabled(false);
             setText(startButton,tr("End of Search"));
         } else {
-            //setText(statusProgress,centerLine(tr("No Matches")));
-            //statusProgress->show();
             startButton->setEnabled(false);
-            //setText(startButton,(tr("End of Search")));
             setText(startButton,tr("No Matches"));
         }
 
         displayStatistics();
 }
 
+void    DailySearchTab::hideCommand(bool showButton) {
+        //operationCombo->hide();
+        //operationCombo->clear();
+        operationButton->hide();
+        selectDouble->hide();
+        selectInteger->hide();
+        selectString->hide();
+        selectUnits->hide();
+        commandWidget->setVisible(showButton); 
+        commandButton->setVisible(showButton);
+};
 
 void    DailySearchTab::setCommandPopupEnabled(bool on) {
-        DEBUGFW;
         if (on) {
             commandPopupEnabled=true;
-            controlTable->setRowHidden(DS_ROW_CMD,true);
-            controlTable->setRowHidden(DS_ROW_LIST,false);
+            hideCommand();
+            commandList->show();
             hideResults(true);
         } else {
             commandPopupEnabled=false;
-            controlTable->setRowHidden(DS_ROW_LIST,true);
-            controlTable->setRowHidden(DS_ROW_CMD,false);
+            commandList->hide();
+            hideCommand(true/*show button*/);
         }
 }
 
 void    DailySearchTab::on_operationButton_clicked() {
-        DEBUGFW;
         if (operationOpCode == OP_CONTAINS ) {
             operationOpCode = OP_WILDCARD;
         } else if (operationOpCode == OP_WILDCARD) {
@@ -973,13 +971,11 @@ void    DailySearchTab::on_operationButton_clicked() {
 
 
 void    DailySearchTab::on_matchButton_clicked() {
-        DEBUGFW;
         setCommandPopupEnabled(!commandPopupEnabled);
 }
 
 void    DailySearchTab::on_commandButton_clicked()
 {
-        DEBUGFW;
         setCommandPopupEnabled(true);
 }
 
@@ -996,7 +992,6 @@ void    DailySearchTab::setOperationPopupEnabled(bool on) {
             operationCombo->hide();
             operationButton->show();
         }
-
 }
 
 void    DailySearchTab::setoperation(OpCode opCode,ValueMode mode)  {
@@ -1011,6 +1006,7 @@ void    DailySearchTab::setoperation(OpCode opCode,ValueMode mode)  {
             selectDouble->setRange(0,999);
             selectDouble->setDecimals(2);
             selectInteger->setRange(0,999);
+            selectDouble->setSingleStep(0.1);
         }
         switch (valueMode) {
             case hundredths :
@@ -1018,10 +1014,12 @@ void    DailySearchTab::setoperation(OpCode opCode,ValueMode mode)  {
                 selectDouble->show();
             break;
             case hoursToMs:
+                setText(selectUnits,tr(" Hours"));
                 selectUnits->show();
                 selectDouble->show();
                 break;
             case minutesToMs:
+                setText(selectUnits,tr(" Minutes"));
                 selectUnits->show();
                 selectDouble->setRange(0,9999);
                 selectDouble->show();
@@ -1048,13 +1046,14 @@ void    DailySearchTab::setoperation(OpCode opCode,ValueMode mode)  {
 }
 
 void    DailySearchTab::hideResults(bool hide) {
-        controlTable->setRowHidden(DS_ROW_SUMMARY,hide);
-        controlTable->setRowHidden(DS_ROW_PROGRESS,hide);
         if (hide) {
             for (int index = DS_ROW_HEADER; index<DS_ROW_MAX;index++) {
-                controlTable->setRowHidden(index,true);
+                resultTable->setRowHidden(index,true);
             }
         }
+        progressBar->setMinimumHeight(matchButton->height());
+        progressBar->setVisible(!hide);
+        summaryWidget->setVisible(!hide);
 }
 
 QSize   DailySearchTab::textsize(QFont font ,QString text) {
@@ -1063,7 +1062,6 @@ QSize   DailySearchTab::textsize(QFont font ,QString text) {
 
 void    DailySearchTab::on_clearButton_clicked()
 {
-        DEBUGFW;
         searchTopic = ST_NONE;
         // make these button text back to start.
         startButton->setText(tr("Start Search"));
@@ -1074,12 +1072,11 @@ void    DailySearchTab::on_clearButton_clicked()
         //Reset Select area
         commandList->hide();
         setCommandPopupEnabled(false);
-        setText(commandButton,(tr("Select Match")));
+        setText(commandButton,"");
         commandButton->show();
 
         operationCombo->hide();
         setOperationPopupEnabled(false);
-        operationCombo->hide();
         operationButton->hide();
         selectDouble->hide();
         selectInteger->hide();
@@ -1094,10 +1091,7 @@ void    DailySearchTab::on_clearButton_clicked()
 
 void    DailySearchTab::on_startButton_clicked()
 {
-        DEBUGFW;
         hideResults(false);
-        startButton->setEnabled(false);
-        setText(startButton,tr("Searchng"));
         if (startButtonMode) {
             search (latestDate );
             startButtonMode=false;
@@ -1126,10 +1120,10 @@ void    DailySearchTab::displayStatistics() {
 
         // display days searched
         QString skip= daysSkipped==0?"":QString(tr(" Skip:%1")).arg(daysSkipped);
-        setText(summaryProgress,centerLine(QString(tr("%1/%2%3 days.")).arg(daysProcessed).arg(daysTotal).arg(skip) ));
+        setText(summaryProgress,centerLine(QString(tr("%1/%2%3 days")).arg(daysProcessed).arg(daysTotal).arg(skip) ));
 
         // display days found
-        setText(summaryFound,centerLine(QString(tr("Found %1.")).arg(daysFound) ));
+        setText(summaryFound,centerLine(QString(tr("Found %1 ")).arg(daysFound) ));
 
         // display associated value
         extra ="";
@@ -1181,8 +1175,6 @@ void    DailySearchTab::criteriaChanged() {
         startButtonMode=true;
         startButton->setEnabled( true);
 
-        setText(statusProgress,centerLine(" ----- "));
-        statusProgress->clear();
         hideResults(true);
 
         minMaxValid = false;
@@ -1203,8 +1195,8 @@ void    DailySearchTab::criteriaChanged() {
         progressBar->setMinimum(0);
         progressBar->setMaximum(daysTotal);
         progressBar->setTextVisible(true);
-        //progressBar->setMinimumHeight(commandListItemHeight);
-        //progressBar->setMaximumHeight(commandListItemHeight);
+        progressBar->setMinimumHeight(commandListItemHeight);
+        progressBar->setMaximumHeight(commandListItemHeight);
         progressBar->reset();
 }
 
@@ -1307,7 +1299,7 @@ QString DailySearchTab::opCodeStr(OpCode opCode) {
             case OP_LE : return "<=";
             case OP_EQ : return "==";
             case OP_NE : return "!=";
-            case OP_CONTAINS : return QChar(0x2208);    // or use 0x220B
+            case OP_CONTAINS : return "==";    // or use 0x220B
             case OP_WILDCARD : return "*?";
             case OP_INVALID:
             case OP_END_NUMERIC:
@@ -1331,7 +1323,6 @@ EventDataType  DailySearchTab::calculateAhi(Day* day) {
 void    DailySearchTab::on_activated(GPushButton* item ) {
         int row=item->row();
         int col=item->column();
-        // DEBUGFW Q(row) Q(item->column()) Q(item->date()) Q(item->text());
         if (row<DS_ROW_DATA) return;
         if (row>=DS_ROW_MAX) return;
         row-=DS_ROW_DATA;
@@ -1351,10 +1342,11 @@ GPushButton::GPushButton (int row,int column,QDate date,DailySearchTab* parent) 
 
 GPushButton::~GPushButton()
 {
-        //these disconnects trigger a crash during exit  or profile change. - anytime daily is destroyed.
+        //the following disconnects trigger a crash during exit  or profile change. - anytime daily is destroyed.
         //disconnect(this, SIGNAL(clicked()), this, SLOT(on_clicked()));
         //disconnect(this, SIGNAL(activated(GPushButton*)), _parent, SLOT(on_activated(GPushButton*)));
 };
+
 void GPushButton::on_clicked() {
         emit activated(this);
 };
