@@ -245,10 +245,11 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
         case 0:
             return QString(QObject::tr("Warning: As Permissive mode is set (Preferences/Clinical), some sessions are excluded from this report"));
         case 1:
-            return QString(QObject::tr("Total disabled sessions: %1, found in %2 days, of which %3 days would have caused compliance failures")
+            return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") //, of which %3 days would have caused compliance failures")
                 .arg(numDisabledsessions)
                 .arg(numDaysWithDisabledsessions)
-                .arg(numDaysDisabledSessionChangedCompliance) );
+                //.arg(numDaysDisabledSessionChangedCompliance)
+                );
         case 2:
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
                 .arg(maxDurationOfaDisabledsession)
