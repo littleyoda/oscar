@@ -252,71 +252,102 @@ void SaveGraphLayoutSettings::helpDestructor() {
 }
 
 QString SaveGraphLayoutSettings::helpInfo() {
-return QString( tr("\
-     <p style=\"color:black;\">  \
-      This feature manages the saving and restoring of Layout Settings.\
-      <br>\
-      Layout Settings control the layout of a graph or chart.\
-      <br>\
-      Different Layouts Settings can be saved and later restored.\
-      <br>\
-     </p>\
-     <table width=\"100%\"> \
-        <tr><td><b>Button</b></td> \
-            <td><b>Description</b></td></tr> \
-        <tr><td valign=\"top\">Add</td> \
-			<td>Creates a copy of the current Layout Settings. <br> \
-				The default description is the current date. <br> \
-				The description may be changed. <br> \
-				The Add button will be greyed out when maximum number is reached.</td></tr> \
-                <br> \
-        <tr><td><i><u>Other Buttons</u> </i></td>  \
-            <td>Greyed out when there are no selections</td></tr> \
-        <tr><td>Restore</td> \
-			<td>Loads the Layout Settings from the selection. Automatically exits. </td></tr> \
-        <tr><td>Rename </td>         \
-			<td>Modify the description of the selection. Same as a double click.</td></tr> \
-        <tr><td valign=\"top\">Update</td><td> Saves the current Layout Settings to the selection.<br> \
-		        Prompts for confirmation.</td></tr> \
-        <tr><td valign=\"top\">Delete</td> \
-			<td>Deletes the selecton. <br> \
-			    Prompts for confirmation.</td></tr> \
-        <tr><td><i><u>Control</u> </i></td>  \
-            <td></td></tr> \
-        <tr><td>Exit </td> \
-			<td>(Red circle with a white \"X\".) Returns to OSCAR menu.</td></tr> \
-        <tr><td>Return</td> \
-			<td>Next to Exit icon. Only in Help Menu. Returns to Layout menu.</td></tr> \
-        <tr><td>Escape Key</td> \
-			<td>Exit the Help or Layout menu.</td></tr> \
-      </table>  \
-      <p><b>Layout Settings</b></p> \
-      <table width=\"100%\">  \
-        <tr> \
-			<td>* Name</td> \
-			<td>* Pinning</td> \
-			<td>* Plots Enabled </td> \
-			<td>* Height</td> \
-		</tr> \
-        <tr> \
-			<td>* Order</td> \
-			<td>* Event Flags</td> \
-			<td>* Dotted Lines</td> \
-			<td>* Height Options</td> \
-		</tr> \
-      </table>  \
-      <p><b>General Information</b></p> \
-	  <ul style=margin-left=\"20\"; >  \
-		<li> Maximum description size = 80 characters.	</li>  \
-		<li> Maximum Saved Layout Settings = 30.	</li>  \
-		<li> Saved Layout Settings can be accessed by all profiles.  \
-		<li> Layout Settings only control the layout of a graph or chart. <br>  \
-             They do not contain any other data. <br> \
-             They do not control if a graph is displayed or not. </li> \
-		<li> Layout Settings for daily and overview are managed independantly. </li>\
-	  </ul>   \
-"));
-}
+QStringList strList;
+    strList<<QString("<p style=\"color:black;\">")
+<<QString(tr("This feature manages the saving and restoring of Layout Settings."))
+    <<QString("<br>")
+<<QString(tr("Layout Settings control the layout of a graph or chart."))
+    <<QString("<br>")
+<<QString(tr("Different Layouts Settings can be saved and later restored."))
+    <<QString("<br> </p> <table width=\"100%\"> <tr><td><b>")
+<<QString(tr("Button"))
+    <<QString("</b></td> <td><b>")
+<<QString(tr("Description"))
+    <<QString("</b></td></tr> <tr><td valign=\"top\">")
+<<QString(tr("Add"))
+    <<QString("</td> <td>")
+<<QString(tr("Creates a copy of the current Layout Settings."))
+    <<QString("<br>")
+<<QString(tr("The default description is the current date."))
+    <<QString("<br>")
+<<QString(tr("The description may be changed."))
+    <<QString("<br>")
+<<QString(tr("The Add button will be greyed out when maximum number is reached."))
+    <<QString("</td></tr> <br> <tr><td><i><u>")
+<<QString(tr("Other Buttons"))
+    <<QString("</u> </i></td>  <td>")
+<<QString(tr("Greyed out when there are no selections"))
+    <<QString("</td></tr> <tr><td>")
+<<QString(tr("Restore"))
+    <<QString("</td> <td>")
+<<QString(tr("Loads the Layout Settings from the selection. Automatically exits. io"))
+    <<QString("</td></tr> <tr><td>")
+<<QString(tr("Rename"))
+    <<QString("</td><td>")
+<<QString(tr("Modify the description of the selection. Same as a double click.io"))
+    <<QString("</td></tr> <tr><td valign=\"top\">")
+<<QString(tr("Update"))
+    <<QString("</td><td>")
+<<QString(tr("Saves the current Layout Settings to the selection."))
+    <<QString("<br>")
+<<QString(tr("Prompts for confirmation."))
+    <<QString("</td></tr> <tr><td valign=\"top\">")
+<<QString(tr("Delete"))
+    <<QString("</td> <td>")
+<<QString(tr("Deletes the selecton."))
+    <<QString("<br>")
+<<QString(tr("Prompts for confirmation."))
+    <<QString("</td></tr> <tr><td><i><u>")
+<<QString(tr("Control"))
+    <<QString("</u> </i></td> <td></td></tr> <tr><td>")
+<<QString(tr("Exit"))
+    <<QString("</td> <td>")
+<<QString(tr("(Red circle with a white \"X\".) Returns to OSCAR menu."))
+    <<QString("</td></tr> <tr><td>")
+<<QString(tr("Return"))
+    <<QString("</td> <td>")
+<<QString(tr("Next to Exit icon. Only in Help Menu. Returns to Layout menu."))
+    <<QString("</td></tr> <tr><td>")
+<<QString(tr("Escape Key"))
+    <<QString("</td> <td>")
+<<QString(tr("Exit the Help or Layout menu."))
+    <<QString("</td></tr> </table> <p><b>")
+<<QString(tr("Layout Settings"))
+    <<QString("</b></p> <table width=\"100%\"> <tr> <td>")
+<<QString(tr("* Name"))
+    <<QString("</td> <td>")
+<<QString(tr("* Pinning"))
+    <<QString("</td> <td>")
+<<QString(tr("* Plots Enabled"))
+    <<QString("</td> <td>")
+<<QString(tr("* Height"))
+    <<QString("</td> </tr> <tr> <td>")
+<<QString(tr("* Order"))
+    <<QString("</td> <td>")
+<<QString(tr("* Event Flags"))
+    <<QString("</td> <td>")
+<<QString(tr("* Dotted Lines"))
+    <<QString("</td> <td>")
+<<QString(tr("* Height Options"))
+    <<QString("</td> </tr> </table> <p><b>")
+<<QString(tr("General Information"))
+    <<QString("</b></p> <ul style=margin-left=\"20\"; > <li>")
+<<QString(tr("Maximum description size = 80 characters.	"))
+    <<QString("</li> <li>")
+<<QString(tr("Maximum Saved Layout Settings = 30.	"))
+    <<QString("</li> <li>")
+<<QString(tr("Saved Layout Settings can be accessed by all profiles."))
+    <<QString("<li>")
+<<QString(tr("Layout Settings only control the layout of a graph or chart."))
+    <<QString("<br>")
+<<QString(tr("They do not contain any other data."))
+    <<QString("<br>")
+<<QString(tr("They do not control if a graph is displayed or not."))
+    <<QString("</li> <li>")
+<<QString(tr("Layout Settings for daily and overview are managed independantly."))
+    <<QString("</li> </ul>");
+return strList.join("\n");
+};
 
 const QString  SaveGraphLayoutSettings::calculateStyleMessageBox(QFont* font , QString& s1, QString& s2) {
     QFontMetrics fm = QFontMetrics(*font);
