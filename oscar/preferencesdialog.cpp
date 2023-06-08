@@ -42,6 +42,25 @@ typedef QMessageBox::StandardButtons StandardButtons;
 
 QHash<schema::ChanType, QString> channeltype;
 
+
+QString PreferencesDialog::clinicalHelp() {
+    QStringList str; str
+    <<tr("Clinical Mode:")
+    <<tr("Reports what is on the data card, all of it including any and all data deselected in the Permissive mode.")
+    <<tr("Basically replicates the reports and data stored on the devices data card.")
+    <<tr("This includes pap devices, oximeters, etc. Compliance reports fall under this mode.")
+    <<tr("Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.")
+    <<""
+    <<tr("Permissive Mode:")
+    <<tr("Allows user to select which data sets/ sessions to be used for calculations and display.")
+    <<tr("Additional charts and calculations may be available that are not available from the vendor data.")
+    <<""
+    <<tr("Changing the Oscar Operating Mode:")
+    <<tr("Requires a reload of the user's profile. Data will be saved and restored.")
+    <<"";
+    return str.join("\n");
+}
+
 PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     QDialog(parent, Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
     ui(new Ui::PreferencesDialog),
@@ -223,6 +242,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
     ui->clinicalMode->setChecked(AppSetting->clinicalMode());
+    ui->clinicalTextEdit->setPlainText(clinicalHelp());
     // clinicalMode and permissiveMode are radio buttons and must be set to opposite values. Once clinicalMode is used.
     // Radio Buttons illustrate the operating mode.
     ui->permissiveMode->setChecked(!AppSetting->clinicalMode());

@@ -245,7 +245,9 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
     switch (type) {
         default :
         case 0:
-            return QString(QObject::tr("Permissive mode is set (Preferences/Clinical), disabled sessions are excluded from this report"));
+            //return QString(QObject::tr("Permissive mode is set (Preferences/Clinical), disabled sessions are excluded from this report"));
+            //return QString(QObject::tr("Permissive mode allows disabled sessions"));
+            return QString(QObject::tr("Permissive Mode"));
         case 1:
             if (numDisabledsessions>0) {
                 return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") .arg(numDisabledsessions) .arg(numDaysWithDisabledsessions));
@@ -254,8 +256,7 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
             }
         case 2:
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
-                .arg(maxDurationOfaDisabledsession)
-                .arg(totalDurationOfDisabledSessions));
+                .arg(maxDurationOfaDisabledsession) .arg(totalDurationOfDisabledSessions));
     }
 }
 
