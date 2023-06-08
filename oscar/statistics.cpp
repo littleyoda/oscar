@@ -174,40 +174,42 @@ void DisabledInfo::update(QDate latestDate, QDate earliestDate)
 {
     clear();
     if (AppSetting->clinicalMode()) return;
-    qint64 complianceLimit = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
+    qint64 complianceHours = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
     totalDays = 1+earliestDate.daysTo(latestDate);
     for (QDate date = latestDate ; date >= earliestDate ; date=date.addDays(-1) ) {
         Day* day = p_profile->GetDay(date);
         if (!day) { daysNoData++; continue;};
+        // find basic statistics for a day
         int numDisabled=0;
         qint64 sessLength = 0;
         qint64 dayLength = 0;
-        qint64 complianceLength = 0;
-        //qint64 disableLength = 0;
+        qint64 enabledLength = 0;
         QList<Session *> sessions = day->getSessions(MT_CPAP,true);
         for (auto & sess : sessions) {
             sessLength = sess->length();
             dayLength += sessLength;
-            if (!sess->enabled(true)) {
+            if (sess->enabled(true)) {
+                enabledLength += sessLength;
+            } else {
                 numDisabled ++;
-                numDisabledsessions ++;
-                //disableLength += sessLength;
                 totalDurationOfDisabledSessions += sessLength;
                 if (maxDurationOfaDisabledsession < sessLength) maxDurationOfaDisabledsession = sessLength;
-            } else {
-                complianceLength += sess->length();
             }
         }
-        if ( complianceLimit <= complianceLength ) {
+        // calculate stats for all days
+        // calculate if compliance for a day changed.
+        if ( complianceHours <= enabledLength ) {
             daysInCompliance ++;
         } else {
-            if (complianceLimit < dayLength ) {
+            if (complianceHours < dayLength ) {
                 numDaysDisabledSessionChangedCompliance++;
             } else {
                 daysOutOfCompliance ++;
             }
         }
+        // update disabled info for all days
         if ( numDisabled > 0 ) {
+            numDisabledsessions += numDisabled;
             numDaysWithDisabledsessions++;
         };
     }
@@ -236,20 +238,20 @@ void DisabledInfo::update(QDate latestDate, QDate earliestDate)
 QString DisabledInfo::display(int type)
 {
 /*
-Warning: As Permissive mode is set (Preferences/Clinical), some sessions are excluded from this report, as follows:
-Total disabled sessions: xx, found in yy days, of which zz days would have caused compliance failures.
+Permissive mode: some sessions are excluded from this report, as follows:
+Total disabled sessions: xx, found in yy days.
 Duration of longest disabled session: aa minutes, Total duration of all disabled sessions: bb minutes.
 */
     switch (type) {
         default :
         case 0:
-            return QString(QObject::tr("Warning: As Permissive mode is set (Preferences/Clinical), some sessions are excluded from this report"));
+            return QString(QObject::tr("Permissive mode is set (Preferences/Clinical), disabled sessions are excluded from this report"));
         case 1:
-            return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") //, of which %3 days would have caused compliance failures")
-                .arg(numDisabledsessions)
-                .arg(numDaysWithDisabledsessions)
-                //.arg(numDaysDisabledSessionChangedCompliance)
-                );
+            if (numDisabledsessions>0) {
+                return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") .arg(numDisabledsessions) .arg(numDaysWithDisabledsessions));
+            } else {
+                return QString(QObject::tr("Total disabled sessions: %1") .arg(numDisabledsessions) );
+            }
         case 2:
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
                 .arg(maxDurationOfaDisabledsession)
@@ -633,7 +635,9 @@ Statistics::Statistics(QObject *parent) :
         updateDisabledInfo();
         rows.push_back(StatisticsRow(disabledInfo.display(0),SC_WARNING ,MT_CPAP));
         rows.push_back(StatisticsRow(disabledInfo.display(1),SC_WARNING2,MT_CPAP));
-        rows.push_back(StatisticsRow(disabledInfo.display(2),SC_WARNING2,MT_CPAP));
+        if (disabledInfo.size()>0) {
+            rows.push_back(StatisticsRow(disabledInfo.display(2),SC_WARNING2,MT_CPAP));
+        }
     }
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
@@ -986,7 +990,7 @@ struct Period {
     QString header;
 };
 
-const QString warning_color="#ff8888";
+const QString warning_color="#ffffff";
 const QString heading_color="#ffffff";
 const QString subheading_color="#e0e0e0";
 //const int rxthresh = 5;
@@ -1354,11 +1358,13 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_UNDEFINED) {
             continue;
         } else if (row.calc == SC_WARNING) {
-                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+1'>%3</font></th></tr>").
+                //html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><font size='+1'>%3</font></td></tr>").
+                //        arg(warning_color).arg(periods.size()+1).arg(row.src);
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
                         arg(warning_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else if (row.calc == SC_WARNING2) {
-                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'>%3</font></th></tr>").
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
                         arg(warning_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else {

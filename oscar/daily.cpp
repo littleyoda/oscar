@@ -578,6 +578,11 @@ void Daily::showEvent(QShowEvent *)
 
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
+    if (AppSetting->clinicalMode()) {
+       QMessageBox mbox(QMessageBox::Warning, tr("Disable Session"), tr(" Disabling Sessions requires the Permissive Mode"), QMessageBox::Ok  , this);
+            mbox.exec();
+            return true;
+    }
     sess->setEnabled(!sess->enabled());
     return false;
 }

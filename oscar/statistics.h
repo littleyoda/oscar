@@ -27,6 +27,7 @@ class DisabledInfo
 public:
     QString display(int);
     void update(QDate latest, QDate earliest) ;
+    int size() {return numDisabledsessions;};
 private:
     int totalDays ;
     int daysNoData ;

@@ -130,7 +130,6 @@ QColor brighten(QColor, float f);
 
 void SessionBar::mousePressEvent(QMouseEvent *ev)
 {
-    if ( AppSetting->clinicalMode() ) return;
     SegType mn = min();
     SegType mx = max();
 
@@ -173,7 +172,6 @@ void SessionBar::mousePressEvent(QMouseEvent *ev)
 
 void SessionBar::mouseMoveEvent(QMouseEvent *ev)
 {
-    if ( AppSetting->clinicalMode() ) return;
     SegType mn = min();
     SegType mx = max();
 

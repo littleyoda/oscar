@@ -1210,69 +1210,33 @@ QString DailySearchTab::centerLine(QString line) {
 
 QString DailySearchTab::helpStr() 
 {
-    QStringList str;
-    str.append(tr("Finds days that match specified criteria."));
-    str.append("\n");
-    str.append(tr("  Searches from last day to first day."));
-    str.append("\n");
-    str.append("\n");
-    str.append(tr("First click on Match Button then select topic."));
-    str.append("\n");
-    str.append(tr("  Then click on the operation to modify it."));
-    str.append("\n");
-    str.append(tr("  or update the value"));
-    str.append("\n");
-    str.append(tr("Topics without operations will automatically start."));
-    str.append("\n");
-    str.append("\n");
-    str.append(tr("Compare Operations: numberic or character. "));
-    str.append("\n");
-    str.append(tr("  Numberic  Operations: "));
-    str.append("   >  ,  >=  ,  <  ,  <=  ,  ==  ,  != ");
-    str.append("\n");
-    str.append(tr("  Character Operations: "));
-    str.append("   ==  ,  *? ");
-    str.append("\n");
-    str.append("\n");
-    str.append(tr("Summary Line"));
-    str.append("\n");
-    str.append(tr("  Left:Summary - Number of Day searched"));
-    str.append("\n");
-    str.append(tr("  Center:Number of Items Found"));
-    str.append("\n");
-    str.append(tr("  Right:Minimum/Maximum for item searched"));
-    str.append("\n");
-    str.append(tr("Result Table"));
-    str.append("\n");
-    str.append(tr("  Column One: Date of match. Click selects date."));
-    str.append("\n");
-    str.append(tr("  Column two: Information. Click selects date."));
-    str.append("\n");
-    str.append(tr("    Then Jumps the appropiate tab."));
-    str.append("\n");
-    str.append("\n");
-    str.append(tr("Wildcard Pattern Matching:"));
-    str.append(" *? ");
-    str.append("\n");
-    str.append(tr("  Wildcards use 3 characters:"));
-    str.append("\n");
-    str.append(tr("  Asterisk"));
-    str.append(" *  ");
-    str.append("   ");
-    str.append(tr(" Question Mark"));
-    str.append(" ? ");
-    str.append("   ");
-    str.append(tr(" Backslash."));
-    str.append(" \\ ");
-    str.append("\n");
-    str.append(tr("  Asterisk matches any number of characters."));
-    str.append("\n");
-    str.append(tr("  Question Mark matches a single character."));
-    str.append("\n");
-    str.append(tr("  Backslash matches next character."));
-    str.append("\n");
-    QString result =str.join("");
-    return result;
+    QStringList str; str
+    <<tr("Finds days that match specified criteria.") <<"\n"
+    <<tr("  Searches from last day to first day.") <<"\n" <<"\n"
+    <<tr("First click on Match Button then select topic.") <<"\n"
+    <<tr("  Then click on the operation to modify it.") <<"\n"
+    <<tr("  or update the value") <<"\n"
+    <<tr("Topics without operations will automatically start.") <<"\n" <<"\n"
+    <<tr("Compare Operations: numberic or character. ") <<"\n"
+    <<tr("  Numberic  Operations: ") <<"   >  ,  >=  ,  <  ,  <=  ,  ==  ,  != " <<"\n"
+    <<tr("  Character Operations: ") <<"   ==  ,  *? " <<"\n" <<"\n"
+    <<tr("Summary Line") <<"\n"
+    <<tr("  Left:Summary - Number of Day searched") <<"\n"
+    <<tr("  Center:Number of Items Found") <<"\n"
+    <<tr("  Right:Minimum/Maximum for item searched") <<"\n"
+    <<tr("Result Table") <<"\n"
+    <<tr("  Column One: Date of match. Click selects date.") <<"\n"
+    <<tr("  Column two: Information. Click selects date.") <<"\n"
+    <<tr("    Then Jumps the appropiate tab.") <<"\n" <<"\n"
+    <<tr("Wildcard Pattern Matching:") <<" *? " <<"\n"
+    <<tr("  Wildcards use 3 characters:") <<"\n"
+    <<tr("  Asterisk") <<" *  " <<"   "
+    <<tr(" Question Mark") <<" ? " <<"   "
+    <<tr(" Backslash.") <<" \\ " <<"\n"
+    <<tr("  Asterisk matches any number of characters.") <<"\n"
+    <<tr("  Question Mark matches a single character.") <<"\n"
+    <<tr("  Backslash matches next character.") <<"\n";
+    return str.join("");
 }
 
 QString DailySearchTab::formatTime (qint32 ms) {
