@@ -173,7 +173,7 @@ void Statistics::updateDisabledInfo()
 void DisabledInfo::update(QDate latestDate, QDate earliestDate)
 {
     clear();
-    if (AppSetting->clinicalMode()) return;
+    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) ||  (AppSetting->clinicalMode())  )return;
     qint64 complianceHours = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
     totalDays = 1+earliestDate.daysTo(latestDate);
     for (QDate date = latestDate ; date >= earliestDate ; date=date.addDays(-1) ) {
