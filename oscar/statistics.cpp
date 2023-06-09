@@ -187,6 +187,7 @@ void DisabledInfo::update(QDate latestDate, QDate earliestDate)
         QList<Session *> sessions = day->getSessions(MT_CPAP,true);
         for (auto & sess : sessions) {
             sessLength = sess->length();
+            //if (sessLength<0) sessLength=0; // some sessions have negative length. Sould solve this issue
             dayLength += sessLength;
             if (sess->enabled(true)) {
                 enabledLength += sessLength;
@@ -241,6 +242,7 @@ QString DisabledInfo::display(int type)
 Permissive mode: some sessions are excluded from this report, as follows:
 Total disabled sessions: xx, found in yy days.
 Duration of longest disabled session: aa minutes, Total duration of all disabled sessions: bb minutes.
++tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
 */
     switch (type) {
         default :
@@ -256,7 +258,7 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
             }
         case 2:
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
-                .arg(maxDurationOfaDisabledsession) .arg(totalDurationOfDisabledSessions));
+                .arg(maxDurationOfaDisabledsession, 0, 'f', 1) .arg(totalDurationOfDisabledSessions, 0, 'f', 1));
     }
 }
 

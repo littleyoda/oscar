@@ -35,9 +35,9 @@ private:
     int daysInCompliance ;
     int numDisabledsessions ;
     int numDaysWithDisabledsessions ;
-    int maxDurationOfaDisabledsession ;
     int numDaysDisabledSessionChangedCompliance ;
-    int totalDurationOfDisabledSessions ;
+    double maxDurationOfaDisabledsession ;
+    double totalDurationOfDisabledSessions ;
     void clear () {
         totalDays = 0;
         daysNoData = 0;
