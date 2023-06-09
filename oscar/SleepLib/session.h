@@ -132,7 +132,8 @@ class Session
 
     //! \brief Return the millisecond length of this session
     qint64 length() {
-        return s_last - s_first;
+        qint64 duration=s_last - s_first;
+        return duration<0?0:duration;
 //        qint64 t;
 //        int size = m_slices.size();
 //        if (size == 0) {
