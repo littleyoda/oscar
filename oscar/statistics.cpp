@@ -173,7 +173,7 @@ void Statistics::updateDisabledInfo()
 void DisabledInfo::update(QDate latestDate, QDate earliestDate)
 {
     clear();
-    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) ||  (AppSetting->clinicalMode())  )return;
+    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) || (p_profile->cpap->clinicalMode()) ) return;
     qint64 complianceHours = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
     totalDays = 1+earliestDate.daysTo(latestDate);
     for (QDate date = latestDate ; date >= earliestDate ; date=date.addDays(-1) ) {
@@ -632,7 +632,7 @@ Statistics::Statistics(QObject *parent) :
     QObject(parent)
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
-    if (!AppSetting->clinicalMode()) {
+    if (!p_profile->cpap->clinicalMode()) {
         updateDisabledInfo();
         rows.push_back(StatisticsRow(disabledInfo.display(0),SC_WARNING ,MT_CPAP));
         rows.push_back(StatisticsRow(disabledInfo.display(1),SC_WARNING2,MT_CPAP));

@@ -292,8 +292,6 @@ void MainWindow::SetupGUI()
     ui->tabWidget->addTab(help, tr("Help Browser"));
 #endif
     setupRunning = false;
-
-    m_clinicalMode = AppSetting->clinicalMode();
 }
 
 void MainWindow::logMessage(QString msg)
@@ -478,6 +476,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
             return false;
         }
     }
+
     prof = profileSelector->SelectProfile(profileName, skippassword);  // asks for the password and updates stuff in profileSelector tab
     if (!prof) {
         return false;
@@ -486,6 +485,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     // Check Lockfile
     QString lockhost = prof->checkLock();
+
 
     if (!lockhost.isEmpty()) {
         if (lockhost.compare(QHostInfo::localHostName()) != 0) {
@@ -502,7 +502,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     }
 
     p_profile = prof;
-
     ProgressDialog * progress = new ProgressDialog(this);
 
     progress->setMessage(QObject::tr("Loading profile \"%1\"...").arg(profileName));
@@ -545,6 +544,15 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     }
 
     p_profile->LoadMachineData(progress);
+
+
+    if (!p_profile->LastDay(MT_CPAP).isValid() ) { // quick test if new profile or not. 
+        // Override default value of clinicalMode if new profile.
+        // Allows permissiveMode (not clinicalMode) to be the default value for existing profiles.
+        p_profile->cpap->setClinicalMode(true);
+    }
+    m_clinicalMode = p_profile->cpap->clinicalMode();
+
     progress->setMessage(tr("Loading profile \"%1\"").arg(profileName));
 
     // Show the logo?
@@ -627,6 +635,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
             }
             break;
     }
+
 
     progress->close();
     delete progress;
@@ -1401,8 +1410,8 @@ void MainWindow::on_action_Preferences_triggered()
         setApplicationFont();
 
 
-        if (m_clinicalMode != AppSetting->clinicalMode() ) {
-            m_clinicalMode = AppSetting->clinicalMode();
+        if (m_clinicalMode != p_profile->cpap->clinicalMode() ) {
+            m_clinicalMode = p_profile->cpap->clinicalMode(); ;
             reloadProfile();
         };
 

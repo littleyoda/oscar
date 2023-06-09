@@ -93,7 +93,7 @@ void Session::TrashEvents()
 
 bool Session::enabled(bool realValues) const
 {
-    if (AppSetting->clinicalMode() && !realValues) return true;
+    if (p_profile->cpap->clinicalMode() && !realValues) return true;
     return s_enabled;
 }
 

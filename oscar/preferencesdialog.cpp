@@ -241,11 +241,12 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->allowYAxisScaling->setChecked(AppSetting->allowYAxisScaling());
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
-    ui->clinicalMode->setChecked(AppSetting->clinicalMode());
+    ui->complianceHours->setValue(profile->cpap->complianceHours());
+    ui->clinicalMode->setChecked(profile->cpap->clinicalMode());
     ui->clinicalTextEdit->setPlainText(clinicalHelp());
     // clinicalMode and permissiveMode are radio buttons and must be set to opposite values. Once clinicalMode is used.
     // Radio Buttons illustrate the operating mode.
-    ui->permissiveMode->setChecked(!AppSetting->clinicalMode());
+    ui->permissiveMode->setChecked(!profile->cpap->clinicalMode());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -288,7 +289,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->cacheSessionData->setChecked(AppSetting->cacheSessions());
     ui->preloadSummaries->setChecked(profile->session->preloadSummaries());
     ui->animationsAndTransitionsCheckbox->setChecked(AppSetting->animations());
-    ui->complianceHours->setValue(profile->cpap->complianceHours());
 
     ui->prefCalcMiddle->setCurrentIndex(profile->general->prefCalcMiddle());
     ui->prefCalcMax->setCurrentIndex(profile->general->prefCalcMax());
@@ -857,7 +857,7 @@ bool PreferencesDialog::Save()
     AppSetting->setAllowYAxisScaling(ui->allowYAxisScaling->isChecked());
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
-    AppSetting->setClinicalMode(ui->clinicalMode->isChecked());
+    p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());

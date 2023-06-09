@@ -309,6 +309,7 @@ const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
 
 // CPAPSettings Strings
 const QString STR_CS_ComplianceHours = "ComplianceHours";
+const QString STR_CS_ClinicalMode = "ClinicalMode";
 const QString STR_CS_ShowLeaksMode = "ShowLeaksMode";
 const QString STR_CS_MaskStartDate = "MaskStartDate";
 const QString STR_CS_MaskDescription = "MaskDescription";
@@ -559,6 +560,7 @@ class CPAPSettings : public PrefSettings
       : PrefSettings(profile)
     {
         m_complianceHours = initPref(STR_CS_ComplianceHours, 4.0f).toFloat();
+        m_clinicalMode = initPref(STR_CS_ClinicalMode, false).toBool();
         initPref(STR_CS_ShowLeaksMode, 0);
         // TODO: jedimark: Check if this date is initiliazed yet
         initPref(STR_CS_MaskStartDate, QDate());
@@ -595,6 +597,7 @@ class CPAPSettings : public PrefSettings
 
     //Getters
     double complianceHours() const { return m_complianceHours; }
+    bool clinicalMode() const { return m_clinicalMode; }
     int leakMode() const { return getPref(STR_CS_ShowLeaksMode).toInt(); }
     QDate maskStartDate() const { return getPref(STR_CS_MaskStartDate).toDate(); }
     QString maskDescription() const { return getPref(STR_CS_MaskDescription).toString(); }
@@ -632,6 +635,7 @@ class CPAPSettings : public PrefSettings
     void setNotes(QString notes) { setPref(STR_CS_Notes, notes); }
     void setDateDiagnosed(QDate date) { setPref(STR_CS_DateDiagnosed, date); }
     void setComplianceHours(EventDataType hours) { setPref(STR_CS_ComplianceHours, m_complianceHours=hours); }
+    void setClinicalMode(bool mode) { setPref(STR_CS_ClinicalMode, m_clinicalMode=mode); }
     void setLeakMode(int leakmode) { setPref(STR_CS_ShowLeaksMode, (int)leakmode); }
     void setMaskStartDate(QDate date) { setPref(STR_CS_MaskStartDate, date); }
     void setMaskType(MaskType masktype) { setPref(STR_CS_MaskType, (int)masktype); }
@@ -659,7 +663,7 @@ class CPAPSettings : public PrefSettings
     int m_clock_drift;
     double m_4cmH2OLeaks, m_20cmH2OLeaks;
     bool m_userEventFlagging, m_userEventDuplicates, m_calcUnintentionalLeaks, m_resyncFromUserFlagging, m_ahiReset;
-    bool m_showLeakRedline;
+    bool m_showLeakRedline, m_clinicalMode;
 
     EventDataType m_leakRedLine, m_complianceHours, m_ahiWindow;
 
