@@ -990,22 +990,20 @@ struct Period {
         // adds date range to header.
         // replaces the following
         // periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
-        QDate start;
         if (month) {
             // note add days or addmonths returns the start of the next day or the next month.
             // must subtract one day for Month.
-            start = qMax(last.addMonths(advance).addDays(-1),first);;
+            first = qMax(last.addMonths(advance).addDays(+1),first);;
         } else {
-            start = qMax(last.addDays(advance),first);
+            first = qMax(last.addDays(advance),first);
         }
-        name = name + "<br>"  + start.toString(Qt::SystemLocaleShortDate) ;
-        //name = name + "<br>"  + start.toString(Qt::RFC2822Date) ;
+        name = name + "<br>"  + first.toString(Qt::SystemLocaleShortDate) ;
         if (advance!=0) {
-            //name =  name + " - "  +  last.toString(Qt::RFC2822Date);
             name =  name + " - "  +  last.toString(Qt::SystemLocaleShortDate);
         }
+        DEBUGFW Q(first) Q(last) Q(month) Q(first.daysTo(last)) Q(advance) O(name);
         this->header = name;
-        this->start = start ;
+        this->start = first ;
         this->end = last ;
     }
     Period& operator=(const Period&) = default;
@@ -1289,6 +1287,7 @@ QString Statistics::GenerateCPAPUsage()
         if (row.calc == SC_HEADING) {  // All sections begin with a heading
             last = p_profile->LastGoodDay(row.type);
             first = p_profile->FirstGoodDay(row.type);
+            //last = p_profile->general->statReportStart();
 
             // Clear the periods (columns)
             periods.clear();
@@ -1534,14 +1533,25 @@ QString Statistics::UpdateRecordsBox()
         /////////////////////////////////////////////////////////////////////////////////////
         /// Compliance and usage information
         /////////////////////////////////////////////////////////////////////////////////////
+        int realTotal = 1+first.daysTo(last);
         int totaldays = p_profile->countDays(MT_CPAP, first, last);
         int compliant = p_profile->countCompliantDays(MT_CPAP, first, last);
+        int lowUsed = totaldays - compliant;
+        int daysSkipped = realTotal -(compliant+lowUsed);
 
-        float comperc = (100.0 / float(totaldays)) * float(compliant);
+        //float comperc = (100.0 / float(totaldays)) * float(compliant);
+        float comperc = (100.0 / float(realTotal)) * float(compliant);
+        html += "<b>"+tr("Period:")+"</b>  ";
+        html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br><br>";
 
         html += "<b>"+tr("CPAP Usage")+"</b><br>";
+        if (realTotal != totaldays) {
+            html += tr("Total Days: %1").arg(realTotal) + "<br>";
+            html += tr("No Data Days: %1").arg(daysSkipped) + "<br>";
+        }
         html += tr("Days Used: %1").arg(totaldays) + "<br>";
-        html += tr("Low Use Days: %1").arg(totaldays - compliant) + "<br>";
+        html += tr("Low Use Days: %1").arg(lowUsed) + "<br>";
+        //html += tr("compliant Days: %1").arg(compliant) + "<br>";
         html += tr("Compliance: %1%").arg(comperc, 0, 'f', 1)  + "<br>";
 
         /////////////////////////////////////////////////////////////////////////////////////
