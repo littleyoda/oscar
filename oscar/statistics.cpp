@@ -1302,7 +1302,7 @@ QString Statistics::GenerateCPAPUsage()
             } else {            // STAT_MODE_RANGE
                 first = p_profile->general->statReportRangeStart();
                 last = p_profile->general->statReportRangeEnd();
-                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" -<br/>"+last.toString(MedDateFormat)));
+                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" - "+last.toString(MedDateFormat)));
             }
 
             int days = p_profile->countDays(row.type, first, last);
@@ -1338,16 +1338,16 @@ QString Statistics::GenerateCPAPUsage()
 
             if (value == 0) {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("No %1 data available.").arg(machine));
+                        arg(tr("Database has No %1 data available.").arg(machine));
             } else if (value == 1) {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("%1 day of %2 Data on %3")
+                        arg(tr("Database has %1 day of %2 Data on %3")
                             .arg(value)
                             .arg(machine)
                             .arg(last.toString(MedDateFormat)));
             } else {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("%1 days of %2 Data, between %3 and %4")
+                        arg(tr("Database has %1 days of %2 Data, between %3 and %4")
                             .arg(value)
                             .arg(machine)
                             .arg(first.toString(MedDateFormat))
