@@ -1290,10 +1290,10 @@ QString Statistics::GenerateCPAPUsage()
                         s = first;
                     }
                     if (p_profile->countDays(row.type, s, l) > 0) {
-                        periods.push_back(Period(s, l, s.toString("MMMM")));
+                        periods.push_back(Period(s, l, s.toString("MMMM yyyy")));
                         j++;
                     }
-                    l = s.addDays(-1);
+                   l = s.addDays(-1);
                 } while ((l > first) && (j < number_periods));
 
                 for (; j < number_periods; ++j) {
