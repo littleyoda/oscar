@@ -44,27 +44,34 @@ QString lookupLanguageName(QString language)
 void initTranslations()
 {
     // Add any languages with need for a special character set to this list
-    langNames["ar"] = "\xd8\xb9\xd8\xb1\xd8\xa8\xd9\x8a";
-    langNames["bg"] = "\xd0\xb1\xd1\x8a\xd0\xbb\xd0\xb3\xd0\xb0\xd1\x80\xd1\x81\xd0\xba\xd0\xb8";
-    langNames["el"] = "\xce\x95\xce\xbb\xce\xbb\xce\xb7\xce\xbd\xce\xb9\xce\xba\xce\xac";
+    langNames["af"] = "Afrikaans";
+    langNames["ar"] = "\xd8\xb9\xd8\xb1\xd8\xa8\xd9\x8a (Arabic)";
+    langNames["bg"] = "\xd0\xb1\xd1\x8a\xd0\xbb\xd0\xb3\xd0\xb0\xd1\x80\xd1\x81\xd0\xba\xd0\xb8 (Bulgarian)";
+    langNames["da"] = "Dansk";
+    langNames["de"] = "Deutsch";
+    langNames["el"] = "\xce\x95\xce\xbb\xce\xbb\xce\xb7\xce\xbd\xce\xb9\xce\xba\xce\xac (Greek)";
     langNames["en_UK"] = "English (UK)";
     langNames["es"] = "Español";
     langNames["es_MX"] = "Español (Mexico)";
     langNames["fi"] = "Suomen kieli";
+    langNames["fil"] = "Filipino";
     langNames["fr"] = "Français";
-    langNames["he"] = "\xd7\xa2\xd7\x91\xd7\xa8\xd7\x99\xd7\xaa";
+    langNames["he"] = "\xd7\xa2\xd7\x91\xd7\xa8\xd7\x99\xd7\xaa (Hebrew)";
     langNames["hu"] = "Magyar";
-    langNames["ja"] = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
-	langNames["ko"] = "\xed\x95\x9c\xea\xb5\xad\xec\x96\xb4";
+    langNames["it"] = "Italiano";
+    langNames["ja"] = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e (Japanese)";
+    langNames["ko"] = "\xed\x95\x9c\xea\xb5\xad\xec\x96\xb4 (Korean)";
     langNames["nl"] = "Nederlands";
+    langNames["no"] = "Norsk";
+    langNames["pl"] = "Polski";
     langNames["pt"] = "Português";
     langNames["pt_BR"] = "Português (Brazil)";
     langNames["ro"] = "Românește";
-    langNames["ru"] = "\xd1\x80\xd1\x83\xd1\x81\xd1\x81\xd0\xba\xd0\xb8\xd0\xb9";
-    langNames["th"] = "\xe0\xb8\xa0\xe0\xb8\xb2\xe0\xb8\xa9\xe0\xb8\xb2\xe0\xb9\x84\xe0\xb8\x97\xe0\xb8\xa2";
+    langNames["ru"] = "\xd1\x80\xd1\x83\xd1\x81\xd1\x81\xd0\xba\xd0\xb8\xd0\xb9 (Russian)";
+    langNames["th"] = "\xe0\xb8\xa0\xe0\xb8\xb2\xe0\xb8\xa9\xe0\xb8\xb2\xe0\xb9\x84\xe0\xb8\x97\xe0\xb8\xa2 (Thai)";
     langNames["tr"] = "Türkçe";
-    langNames["zh_CN"] = "\xe5\x8d\x8e\xe8\xaf\xad\xe7\xae\x80\xe4\xbd\x93\xe5\xad\x97 \x2d \xe4\xb8\xad\xe5\x9b\xbd";
-    langNames["zh_TW"] = "\xe8\x8f\xaf\xe8\xaa\x9e\xe6\xad\xa3\xe9\xab\x94\xe5\xad\x97 \x2d \xe8\x87\xba\xe7\x81\xa3";
+    langNames["zh_CN"] = "\xe5\x8d\x8e\xe8\xaf\xad\xe7\xae\x80\xe4\xbd\x93\xe5\xad\x97 \x2d \xe4\xb8\xad\xe5\x9b\xbd (Chinese Simpl)";
+    langNames["zh_TW"] = "\xe8\x8f\xaf\xe8\xaa\x9e\xe6\xad\xa3\xe9\xab\x94\xe5\xad\x97 \x2d \xe8\x87\xba\xe7\x81\xa3 (Chinese Trad)";
 
     langNames[DefaultLanguage]="English (US)";
 
@@ -132,7 +139,7 @@ void initTranslations()
     if (language.isEmpty() || !langNames.contains(language)) {
         QDialog langsel(nullptr, Qt::CustomizeWindowHint | Qt::WindowTitleHint);
         QFont font;
-        font.setPointSize(20);
+        font.setPointSize(12);
         langsel.setFont(font);
         langsel.setWindowTitle("Language / Taal / Sprache / Langue / \xe8\xaf\xad\xe8\xa8\x80 / ... ");
         QHBoxLayout lang_layout(&langsel);

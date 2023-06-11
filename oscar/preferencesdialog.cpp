@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QLabel>
 #include <QColorDialog>
 #include <QMessageBox>
@@ -38,6 +41,25 @@ typedef QMessageBox::StandardButton StandardButton;
 typedef QMessageBox::StandardButtons StandardButtons;
 
 QHash<schema::ChanType, QString> channeltype;
+
+
+QString PreferencesDialog::clinicalHelp() {
+    QStringList str; str
+    <<tr("Clinical Mode:")
+    <<tr("Reports what is on the data card, all of it including any and all data deselected in the Permissive mode.")
+    <<tr("Basically replicates the reports and data stored on the devices data card.")
+    <<tr("This includes pap devices, oximeters, etc. Compliance reports fall under this mode.")
+    <<tr("Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.")
+    <<""
+    <<tr("Permissive Mode:")
+    <<tr("Allows user to select which data sets/ sessions to be used for calculations and display.")
+    <<tr("Additional charts and calculations may be available that are not available from the vendor data.")
+    <<""
+    <<tr("Changing the Oscar Operating Mode:")
+    <<tr("Requires a reload of the user's profile. Data will be saved and restored.")
+    <<"";
+    return str.join("\n");
+}
 
 PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     QDialog(parent, Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
@@ -136,9 +158,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->flagPulseBelow->setValue(profile->oxi->flagPulseBelow());
 
     ui->spo2Drop->setValue(profile->oxi->spO2DropPercentage());
-    ui->spo2DropTime->setValue(profile->oxi->spO2DropDuration());
+    ui->spo2DropDuration->setValue(profile->oxi->spO2DropDuration());
     ui->pulseChange->setValue(profile->oxi->pulseChangeBPM());
-    ui->pulseChangeTime->setValue(profile->oxi->pulseChangeDuration());
+    ui->pulseChangeDuration->setValue(profile->oxi->pulseChangeDuration());
     ui->oxiDiscardThreshold->setValue(profile->oxi->oxiDiscardThreshold());
 
     ui->eventIndexCombo->setCurrentIndex(profile->general->calculateRDI() ? 1 : 0);
@@ -219,6 +241,12 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->allowYAxisScaling->setChecked(AppSetting->allowYAxisScaling());
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
+    ui->complianceHours->setValue(profile->cpap->complianceHours());
+    ui->clinicalMode->setChecked(profile->cpap->clinicalMode());
+    ui->clinicalTextEdit->setPlainText(clinicalHelp());
+    // clinicalMode and permissiveMode are radio buttons and must be set to opposite values. Once clinicalMode is used.
+    // Radio Buttons illustrate the operating mode.
+    ui->permissiveMode->setChecked(!profile->cpap->clinicalMode());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -261,8 +289,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->cacheSessionData->setChecked(AppSetting->cacheSessions());
     ui->preloadSummaries->setChecked(profile->session->preloadSummaries());
     ui->animationsAndTransitionsCheckbox->setChecked(AppSetting->animations());
-    ui->complianceCheckBox->setChecked(profile->cpap->showComplianceInfo());
-    ui->complianceHours->setValue(profile->cpap->complianceHours());
 
     ui->prefCalcMiddle->setCurrentIndex(profile->general->prefCalcMiddle());
     ui->prefCalcMax->setCurrentIndex(profile->general->prefCalcMax());
@@ -831,6 +857,7 @@ bool PreferencesDialog::Save()
     AppSetting->setAllowYAxisScaling(ui->allowYAxisScaling->isChecked());
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
+    p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());
@@ -856,7 +883,6 @@ bool PreferencesDialog::Save()
     profile->cpap->setShowLeakRedline(ui->showLeakRedline->isChecked());
     profile->cpap->setLeakRedline(ui->leakRedlineSpinbox->value());
 
-    profile->cpap->setShowComplianceInfo(ui->complianceCheckBox->isChecked());
     profile->cpap->setComplianceHours(ui->complianceHours->value());
 
     if (ui->graphHeight->value() != AppSetting->graphHeight()) {
@@ -889,9 +915,9 @@ bool PreferencesDialog::Save()
     #endif
 
     profile->oxi->setSpO2DropPercentage(ui->spo2Drop->value());
-    profile->oxi->setSpO2DropDuration(ui->spo2DropTime->value());
+    profile->oxi->setSpO2DropDuration(ui->spo2DropDuration->value());
     profile->oxi->setPulseChangeBPM(ui->pulseChange->value());
-    profile->oxi->setPulseChangeDuration(ui->pulseChangeTime->value());
+    profile->oxi->setPulseChangeDuration(ui->pulseChangeDuration->value());
     profile->oxi->setOxiDiscardThreshold(ui->oxiDiscardThreshold->value());
 
     profile->oxi->setOxiDesaturationThreshold(ui->oxiDesaturationThreshold->value());
@@ -981,7 +1007,7 @@ bool PreferencesDialog::Save()
 
     p_pref->Save();
     profile->Save();
-    profile->refrehOxiChannelsPref();
+    profile->resetOxiChannelPref();
 
     if (recompress_events) {
         mainwin->recompressEvents();
@@ -1211,6 +1237,42 @@ void PreferencesDialog::on_resetChannelDefaults_clicked()
         saveWaveInfo();
         InitChanInfo();
     }
+}
+
+void PreferencesDialog::on_resetOxiMetryDefaults_clicked()
+{
+
+    if (QMessageBox::question(this, STR_MessageBox_Warning, QObject::tr("Are you sure you want to reset all your oximetry settings to defaults?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+
+            // reset ui with defaul values
+            ui->spo2Drop->setValue(           profile->oxi->defaultValue_OS_SPO2DropPercentage);
+            ui->spo2DropDuration->setValue(   profile->oxi->defaultValue_OS_SPO2DropDuration);
+            ui->pulseChange->setValue(        profile->oxi->defaultValue_OS_PulseChangeBPM);
+            ui->pulseChangeDuration->setValue(profile->oxi->defaultValue_OS_PulseChangeDuration);
+
+            ui->oxiDiscardThreshold->setValue(profile->oxi->defaultValue_OS_OxiDiscardThreshold);
+            ui->oxiDesaturationThreshold->setValue(  profile->oxi->defaultValue_OS_oxiDesaturationThreshold);
+            ui->flagPulseAbove->setValue(     profile->oxi->defaultValue_OS_flagPulseAbove );
+            ui->flagPulseBelow->setValue(     profile->oxi->defaultValue_OS_flagPulseBelow );
+
+            if (Save() ) {
+                // comment accept out to return to the preference tab
+                // other wise the preference tab will close and return
+                accept();
+            }
+        } else {
+            // restore values changed
+            ui->spo2Drop->setValue(profile->oxi->spO2DropPercentage());
+            ui->spo2DropDuration->setValue(profile->oxi->spO2DropDuration());
+            ui->pulseChange->setValue(profile->oxi->pulseChangeBPM());
+            ui->pulseChangeDuration->setValue(profile->oxi->pulseChangeDuration());
+
+            ui->oxiDiscardThreshold->setValue(profile->oxi->oxiDiscardThreshold());
+            ui->oxiDesaturationThreshold->setValue(profile->oxi->defaultValue_OS_oxiDesaturationThreshold);
+            ui->flagPulseAbove->setValue( profile->oxi->defaultValue_OS_flagPulseAbove );
+            ui->flagPulseBelow->setValue(  profile->oxi->defaultValue_OS_flagPulseBelow );
+        }
+
 }
 
 void PreferencesDialog::on_createSDBackups_clicked(bool checked)

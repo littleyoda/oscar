@@ -185,6 +185,21 @@ QString getGraphicsEngine()
     return gfxEngine;
 }
 
+QString getCompilerVersion()
+{
+    #ifdef __clang_version__
+        return QString("clang++:%1").arg(__clang_version__);
+    #elif defined(__MINGW64__)
+        return QString("MINGW64:%1").arg(__VERSION__);
+    #elif defined(__MINGW32__)
+        return QString("MINGW32:%1").arg(__VERSION__);
+    #elif defined (__GNUG__) or defined (__GNUC__)
+        return QString("GNU C++:%1").arg(__VERSION__);
+    #else
+        return QString();
+    #endif
+}
+
 QStringList buildInfo;
 
 QStringList makeBuildInfo (QString forcedEngine){
@@ -194,6 +209,10 @@ QStringList makeBuildInfo (QString forcedEngine){
     buildInfo << (QObject::tr("Operating system:") + " " + QSysInfo::prettyProductName());
     buildInfo << (QObject::tr("Graphics Engine:") + " " + getOpenGLVersionString());
     buildInfo << (QObject::tr("Graphics Engine type:") + " " + getGraphicsEngine());
+    QString compiler = getCompilerVersion();
+    if (compiler.length() >0 )
+        buildInfo << (QObject::tr("Compiler:") + " " + compiler);
+
     if (forcedEngine != "")
         buildInfo << forcedEngine;
 
@@ -528,6 +547,8 @@ QString STR_TR_BIPAP;   // Bi-Level Positive Airway Pressure
 QString STR_TR_BiLevel; // Another name for BiPAP
 QString STR_TR_EPAP;    // Expiratory Positive Airway Pressure
 QString STR_TR_EEPAP;    // End Expiratory Positive Airway Pressure
+QString STR_TR_EEPAPLo;  // End-Expiratory Positive Airway Pressure, Low
+QString STR_TR_EEPAPHi;  // End-Expiratory Positive Airway Pressure, High
 QString STR_TR_EPAPLo;  // Expiratory Positive Airway Pressure, Low
 QString STR_TR_EPAPHi;  // Expiratory Positive Airway Pressure, High
 QString STR_TR_IPAP;    // Inspiratory Positive Airway Pressure
@@ -738,7 +759,9 @@ void initializeStrings()
     STR_TR_BIPAP = QObject::tr("BiPAP");  // Bi-Level Positive Airway Pressure
     STR_TR_BiLevel = QObject::tr("Bi-Level"); // Another name for BiPAP
     STR_TR_EPAP = QObject::tr("EPAP");    // Expiratory Positive Airway Pressure
-    STR_TR_EEPAP = QObject::tr("EEPAP");    // Expiratory Positive Airway Pressure
+    STR_TR_EEPAP = QObject::tr("EEPAP");    // End-Expiratory Positive Airway Pressure
+    STR_TR_EEPAPLo = QObject::tr("Min EEPAP");    // Lower End-Expiratory Positive Airway Pressure
+    STR_TR_EEPAPHi = QObject::tr("Max EEPAP");    // Higher End-Expiratory Positive Airway Pressure
     STR_TR_EPAPLo = QObject::tr("Min EPAP"); // Lower Expiratory Positive Airway Pressure
     STR_TR_EPAPHi = QObject::tr("Max EPAP"); // Higher Expiratory Positive Airway Pressure
     STR_TR_IPAP = QObject::tr("IPAP");    // Inspiratory Positive Airway Pressure

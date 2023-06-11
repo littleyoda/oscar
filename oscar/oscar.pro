@@ -255,11 +255,14 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
+    Graphs/gGraph.cpp \
+    Graphs/gGraphView.cpp \
+    dailySearchTab.cpp \
+    daily.cpp \
     saveGraphLayoutSettings.cpp \
     overview.cpp \
     common_gui.cpp \
     cprogressbar.cpp \
-    daily.cpp \
     exportcsv.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -272,8 +275,6 @@ SOURCES += \
     version.cpp \
     Graphs/gFlagsLine.cpp \
     Graphs/gFooBar.cpp \
-    Graphs/gGraph.cpp \
-    Graphs/gGraphView.cpp \
     Graphs/glcommon.cpp \
     Graphs/gLineChart.cpp \
     Graphs/gLineOverlay.cpp \
@@ -319,6 +320,7 @@ SOURCES += \
     SleepLib/loader_plugins/somnopose_loader.cpp \
     SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
+    SleepLib/loader_plugins/resvent_loader.cpp \
     zip.cpp \
     SleepLib/thirdparty/miniz.c \
     csv.cpp \
@@ -362,11 +364,12 @@ QMAKE_EXTRA_COMPILERS += optimize
 
 HEADERS  += \
     checkupdates.h \
+    dailySearchTab.h \
+    daily.h \
     saveGraphLayoutSettings.h \
     overview.h \
     common_gui.h \
     cprogressbar.h \
-    daily.h \
     exportcsv.h \
     mainwindow.h \
     newprofile.h \
@@ -424,6 +427,7 @@ HEADERS  += \
     SleepLib/loader_plugins/somnopose_loader.h \
     SleepLib/loader_plugins/viatom_loader.h \
     SleepLib/loader_plugins/zeo_loader.h \
+    SleepLib/loader_plugins/resvent_loader.h \
     SleepLib/thirdparty/botan_all.h \
     SleepLib/thirdparty/botan_windows.h \
     SleepLib/thirdparty/botan_linux.h \
@@ -549,25 +553,28 @@ gcc | clang {
 
 gcc:!clang {
     message("Building for $$QMAKE_HOST.os")
-    greaterThan(COMPILER_MAJOR, 10) : {
-        QMAKE_CFLAGS += -Wno-error=stringop-overread
-        QMAKE_CXXFLAGS += -Wno-error=stringop-overread
-        message("Making stringop-overread a non-error")
-    }
+    # this section removedi. stringop-overread was only trigger by mseries_loader:: OPen method
+    #greaterThan(COMPILER_MAJOR, 10) : {
+    #    QMAKE_CFLAGS += -Wno-error=stringop-overread
+    #    QMAKE_CXXFLAGS += -Wno-error=stringop-overread
+    #    message("Making stringop-overread a non-error")
+    #}
 }
 
 clang {
     message("Building for $$QMAKE_HOST.os")
-    greaterThan(COMPILER_MAJOR, 9) : {
-    	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
-    	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
-    	message("Making deprecated-copy a non-error")
-    }
+    # this section removedi. all deprecated-copy  errors have been removed
+    #greaterThan(COMPILER_MAJOR, 9) : {
+    #	QMAKE_CFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    #	QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+    #	message("Making deprecated-copy a non-error")
+    #}
 }
 
 # Make deprecation warnings just warnings
-QMAKE_CFLAGS += -Wno-error=deprecated-declarations
-QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
+# these two  removed. all deprecated-declarations errors have been removed
+#QMAKE_CFLAGS += -Wno-error=deprecated-declarations
+#QMAKE_CXXFLAGS += -Wno-error=deprecated-declarations
 
 message("CXXFLAGS post-mods $$QMAKE_CXXFLAGS ")
 message("CXXFLAGS_WARN_ON $$QMAKE_CXXFLAGS_WARN_ON")
@@ -580,6 +587,10 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {
 # Create a debug GUI build by adding "CONFIG+=memdebug" to your qmake command
 memdebug {
     CONFIG += debug
+    ## there is an error in qt. qlist.h uses an implicitly defined operator=
+    ## allow this for debug
+    QMAKE_CFLAGS += -Wno-error=deprecated-copy
+    QMAKE_CXXFLAGS += -Wno-error=deprecated-copy
     !win32 {  # add memory checking on Linux and macOS debug builds
         QMAKE_CFLAGS += -g -Werror -fsanitize=address -fno-omit-frame-pointer -fno-common -fsanitize-address-use-after-scope
         lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,9) {

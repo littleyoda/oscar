@@ -327,6 +327,7 @@ bool gYAxis::mouseDoubleClickEvent(QMouseEvent *event, gGraph *graph)
 
 const QString gYAxisTime::Format(EventDataType v, int dp)
 {
+    // it seems that v is the total duration of the sleep from 12 noon
     int h = int(v) % 24;
     int m = int(v * 60) % 60;
     int s = int(v * 3600) % 60;
@@ -337,15 +338,15 @@ const QString gYAxisTime::Format(EventDataType v, int dp)
 
         h >= 12 ? pm[0] = 'a' : pm[0] = 'p';
         h %= 12;
-
         if (h == 0) { h = 12; }
     } else {
+        h < 12 ? h+=12 : h-=12;
         pm[0] = 0;
     }
 
-    if (dp > 2) { return QString().sprintf("%02i:%02i:%02i%s", h, m, s, pm); }
+    if (dp > 2) { return QString::asprintf("%02i:%02i:%02i%s", h, m, s, pm) ; }
 
-    return QString().sprintf("%i:%02i%s", h, m, pm);
+    return QString::asprintf("%i:%02i%s", h, m, pm) ;
 }
 
 const QString gYAxisWeight::Format(EventDataType v, int dp)

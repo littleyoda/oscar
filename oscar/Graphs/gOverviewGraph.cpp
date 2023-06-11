@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include "test_macros.h"
+
 #include <math.h>
 #include <QLabel>
 #include <QDateTime>
@@ -556,10 +559,6 @@ void gOverviewGraph::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
     float compliance_hours = 0;
 
-    if (p_profile->cpap->showComplianceInfo()) {
-        compliance_hours = p_profile->cpap->complianceHours();
-    }
-
     int incompliant = 0;
     Day *day;
     EventDataType hours;
@@ -954,7 +953,7 @@ jumpnext:
         if (type == ST_HOURS) {
             int h = f;
             int m = int(f * 60) % 60;
-            val.sprintf("%02i:%02i", h, m);
+            val = QString::asprintf("%02i:%02i", h, m);
             ishours = true;
         } else {
             val = QString::number(f, 'f', 2);
@@ -1005,15 +1004,6 @@ jumpnext:
     }*/
     a += QString(QObject::tr("Days: %1")).arg(total_days, 0);
 
-    if (p_profile->cpap->showComplianceInfo()) {
-        if (ishours && incompliant > 0) {
-            a += " "+QString(QObject::tr("Low Usage Days: %1")).arg(incompliant, 0)+
-                 " "+QString(QObject::tr("(%1% compliant, defined as > %2 hours)")).
-                    arg((1.0 / daynum) * (total_days - incompliant) * 100.0, 0, 'f', 2).arg(compliance_hours, 0, 'f', 1);
-        }
-    }
-
-
     //GetTextExtent(a,x,y);
     //legendx-=30+x;
     //w.renderText(a,px+24,py+5);
@@ -1045,9 +1035,9 @@ QString formatTime(EventDataType v, bool show_seconds = false, bool duration = f
     }
 
     if (show_seconds) {
-        return QString().sprintf("%i:%02i:%02i%s", h, m, s, pm);
+        return QString::asprintf("%i:%02i:%02i%s", h, m, s, pm);
     } else {
-        return QString().sprintf("%i:%02i%s", h, m, pm);
+        return QString::asprintf("%i:%02i%s", h, m, pm);
     }
 }
 
@@ -1117,7 +1107,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     int h = t / 3600;
                     int m = (t / 60) % 60;
                     //int s=t % 60;
-                    val.sprintf("%02i:%02i", h, m);
+                    val = QString::asprintf("%02i:%02i", h, m);
                 } else {
                     val = QString::number(d.value()[0], 'f', 2);
                 }
@@ -1144,7 +1134,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                     int h = t / 3600;
                     int m = (t / 60) % 60;
                     //int s=t % 60;
-                    val.sprintf("%02i:%02i", h, m);
+                    val = QString::asprintf("%02i:%02i", h, m);
                 } else {
                     val = QString::number(d.value()[0], 'f', 2);
                 }

@@ -10,6 +10,7 @@
 #ifndef MD300W1LOADER_H
 #define MD300W1LOADER_H
 
+#include <QElapsedTimer>
 #include "SleepLib/serialoximeter.h"
 
 const QString md300w1_class_name = "MD300W1";
@@ -69,7 +70,7 @@ protected:
     EventList *PULSE;
     EventList *SPO2;
 
-    QTime m_time;
+    QElapsedTimer m_time;
 
     QByteArray buffer;
 

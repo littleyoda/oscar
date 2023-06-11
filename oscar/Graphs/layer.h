@@ -81,7 +81,10 @@ class Layer
     virtual void deselect() { }
 
     //! \brief Override to set the minimum allowed height for this layer
-    virtual int minimumHeight() { return 0; }
+    virtual void setMinimumHeight(int height) { m_minimumHeight=height; }
+
+    //! \brief Override to set the minimum allowed height for this layer
+    virtual int minimumHeight() { return  m_minimumHeight; }
 
     //! \brief Override to set the minimum allowed width for this layer
     virtual int minimumWidth() { return 0; }
@@ -188,6 +191,7 @@ class Layer
     bool m_mouseover;
     volatile bool m_recalculating;
     LayerType m_layertype;
+    int  m_minimumHeight=0;
 public:
 
 //    //! \brief A vector containing all this layers custom drawing buffers

@@ -101,8 +101,8 @@ void gSessionTimesChart::afterDraw(QPainter & /*painter */, gGraph &graph, QRect
 
     QString txt = QObject::tr("Sessions: %1 / %2 / %3 Length: %4 / %5 / %6 Longest: %7 / %8 / %9")
             .arg(calc1.min, 0, 'f', 2).arg(mid1, 0, 'f', 2).arg(calc1.max, 0, 'f', 2)
-            .arg(calc.min, 0, 'f', 2).arg(mid, 0, 'f', 2).arg(calc.max, 0, 'f', 2)
-            .arg(calc2.min, 0, 'f', 2).arg(midlongest, 0, 'f', 2).arg(calc2.max, 0, 'f', 2);
+            .arg(durationInHoursToHhMmSs(calc.min)).arg(durationInHoursToHhMmSs(mid)).arg(durationInHoursToHhMmSs(calc.max))
+            .arg(durationInHoursToHhMmSs(calc2.min)).arg(durationInHoursToHhMmSs(midlongest)).arg(durationInHoursToHhMmSs(calc2.max));
     graph.renderText(txt, rect.left(), rect.top()-5*graph.printScaleY(), 0);
 }
 
@@ -216,9 +216,10 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
                         float s1 = float(splittime.secsTo(st)) / 3600.0;
 
                         float s2 = double(slice.end - slice.start) / 3600000.0;
+                        float s2_display = double(slice.end - slice.start) / 1000.0;
 
                         QColor col = (slice.status == MaskOn) ? goodcolor : Qt::black;
-                        QString txt = QObject::tr("%1\nLength: %3\nStart: %2\n").arg(datestr).arg(st.time().toString("hh:mm:ss")).arg(s2,0,'f',2);
+                        QString txt = QObject::tr("%1\nLength: %3\nStart: %2\n").arg(datestr).arg(st.time().toString("hh:mm:ss")).arg(durationInSecondsToHhMmSs(s2_display));
 
                         txt += (slice.status == MaskOn) ? QObject::tr("Mask On") : QObject::tr("Mask Off");
                         slices.append(SummaryChartSlice(&calcitems[0], s1, s2, txt, col));
@@ -231,7 +232,7 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
 
                     float s2 = sess->hours();
 
-                    QString txt = QObject::tr("%1\nLength: %3\nStart: %2").arg(datestr).arg(st.time().toString("hh:mm:ss")).arg(s2,0,'f',2);
+                    QString txt = QObject::tr("%1\nLength: %3\nStart: %2").arg(datestr).arg(st.time().toString("hh:mm:ss")).arg(durationInHoursToHhMmSs(s2));
 
                     slices.append(SummaryChartSlice(&calcitems[0], s1, s2, txt, goodcolor));
                 }

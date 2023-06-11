@@ -16,6 +16,7 @@
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <QTextEdit>
 #include "SleepLib/profiles.h"
 
 namespace Ui {
@@ -53,6 +54,7 @@ class PreferencesDialog : public QDialog
     //! \brief Save the current preferences, called when Ok button is clicked on.
     bool Save();
 
+    QString clinicalHelp();
 #ifndef NO_CHECKUPDATES
     //! \brief Updates the date text of the last time updates where checked
     void RefreshLastChecked();
@@ -92,6 +94,8 @@ class PreferencesDialog : public QDialog
     void on_maskLeaks20Slider_valueChanged(int value);
 
     void on_calculateUnintentionalLeaks_toggled(bool arg1);
+
+    void on_resetOxiMetryDefaults_clicked();
 
 private:
     void InitChanInfo();

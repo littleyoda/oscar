@@ -29,6 +29,16 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
 using namespace std;
 
 #include "cms50f37_loader.h"
@@ -194,7 +204,7 @@ QString CMS50F37Loader::getUser()
 
     sendCommand(COMMAND_GET_USER_INFO);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -210,7 +220,7 @@ QString CMS50F37Loader::getVendor()
 
     sendCommand(COMMAND_GET_OXIMETER_VENDOR);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -227,7 +237,7 @@ QString CMS50F37Loader::getModel()
     modelsegments = 0;
     sendCommand(COMMAND_GET_OXIMETER_MODEL);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -260,7 +270,7 @@ QString CMS50F37Loader::getDeviceID()
 
     sendCommand(COMMAND_GET_OXIMETER_DEVICEID);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -275,7 +285,7 @@ int CMS50F37Loader::getUserCount()  // for future use, check, then add select us
     userCount = -1;
     sendCommand(COMMAND_GET_USER_COUNT);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -290,7 +300,7 @@ int CMS50F37Loader::getSessionCount()
     session_count = -1;
     sendCommand(COMMAND_GET_SESSION_COUNT);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -304,7 +314,7 @@ int CMS50F37Loader::getOximeterInfo()
 {
     device_info = -1;
     sendCommand(COMMAND_GET_OXIMETER_INFO);
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -321,7 +331,7 @@ int CMS50F37Loader::getDuration(int session)
     duration = -1;
     sendCommand(COMMAND_GET_SESSION_DURATION, session);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -338,7 +348,7 @@ QDateTime CMS50F37Loader::getDateTime(int session)
     imp_date = QDate();
     imp_time = QTime();
     sendCommand(COMMAND_GET_SESSION_TIME, session);
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -448,9 +458,9 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
             // COMMAND_GET_SESSION_TIME --- the date part
         case 0x07: // 7,80,80,80,94,8e,88,92
 
-            year = QString().sprintf("%02i%02i",buffer.at(idx+4), buffer.at(idx+5)).toInt();
-            month = QString().sprintf("%02i", buffer.at(idx+6)).toInt();
-            day = QString().sprintf("%02i", buffer.at(idx+7)).toInt();
+            year = QString::asprintf("%02i%02i",buffer.at(idx+4), buffer.at(idx+5)).toInt();
+            month = QString::asprintf("%02i", buffer.at(idx+6)).toInt();
+            day = QString::asprintf("%02i", buffer.at(idx+7)).toInt();
 
             if ( year == 0 ) {
                 imp_date = QDate::currentDate();
@@ -503,7 +513,7 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
 
             // COMMAND_GET_SESSION_TIME
         case 0x12: // 12,80,80,80,82,a6,92,80
-            tmpstr = QString().sprintf("%02i:%02i:%02i",buffer.at(idx+4), buffer.at(idx+5), buffer.at(idx+6));
+            tmpstr = QString::asprintf("%02i:%02i:%02i",buffer.at(idx+4), buffer.at(idx+5), buffer.at(idx+6));
             imp_time = QTime::fromString(tmpstr, "HH:mm:ss");
             qDebug() << "cms50f37 - pB: tmpStr:" << tmpstr << " impTime: " << imp_time;
 
@@ -541,7 +551,7 @@ void CMS50F37Loader::processBytes(QByteArray bytes)
 
             break;
         default:
-            qDebug() << "cms50f37 - pB: unknown cms50F result?" << hex << (int)res;
+            qDebug() << "cms50f37 - pB: unknown cms50F result?" << QTHEX << (int)res;
             break;
         }
 
@@ -640,7 +650,7 @@ void CMS50F37Loader::sendCommand(quint8 c)
 
     QString out;
     for (int i=0;i < 9;i++) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString::asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -656,7 +666,7 @@ void CMS50F37Loader::sendCommand(quint8 c, quint8 c2)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString::asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -673,7 +683,7 @@ void CMS50F37Loader::eraseSession(int user, int session)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString::asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - Erase Session: Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -681,7 +691,7 @@ void CMS50F37Loader::eraseSession(int user, int session)
     }
 
     int z = timectr;
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -711,7 +721,7 @@ void CMS50F37Loader::setDeviceID(const QString & newid)
 
     QString out;
     for (int i=0; i < 9; ++i) 
-    	out += QString().sprintf("%02X ",cmd[i]);
+       out += QString::asprintf("%02X ",cmd[i]);
     qDebug() << "cms50f37 - setDeviceID: Write:" << out;
 
     if (serial.write((char *)cmd, 9) == -1) {
@@ -721,7 +731,7 @@ void CMS50F37Loader::setDeviceID(const QString & newid)
     // Supposed to return 0x04 command, so reset devid..
     devid = QString();
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();
@@ -745,7 +755,7 @@ void CMS50F37Loader::syncClock()
         qDebug() << "cms50f37 - Couldn't write date bytes to CMS50F";
     }
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
     do {
         QApplication::processEvents();

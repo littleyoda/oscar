@@ -12,6 +12,16 @@
 #include "prs1_loader.h"
 #include "rawdata.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
 
 const PRS1ParsedEventType PRS1TidalVolumeEvent::TYPE;
 const PRS1ParsedEventType PRS1SnoresAtPressureEvent::TYPE;
@@ -975,7 +985,7 @@ PRS1DataChunk* PRS1DataChunk::ParseNext(RawDataDevice & f, PRS1Loader* loader)
         // Make sure the calculated CRC over the entire chunk (header and data) matches the stored CRC.
         if (chunk->calcCrc != chunk->storedCrc) {
             // Corrupt data block, warn about it.
-            qWarning() << chunk->m_path << "@" << chunk->m_filepos << "block CRC calc" << hex << chunk->calcCrc << "!= stored" << hex << chunk->storedCrc;
+            qWarning() << chunk->m_path << "@" << chunk->m_filepos << "block CRC calc" << QTHEX << chunk->calcCrc << "!= stored" << QTHEX << chunk->storedCrc;
             
             // TODO: When this happens, it's usually because the chunk was truncated and another chunk header
             // exists within the blockSize bytes. In theory it should be possible to rewing and resync by
@@ -1023,12 +1033,12 @@ bool PRS1DataChunk::ReadHeader(RawDataDevice & f)
 
         // Do a few early sanity checks before any variable-length header data.
         if (this->blockSize == 0) {
-            qWarning() << this->m_path << "@" << hex << this->m_filepos << "blocksize 0, skipping remainder of file";
+            qWarning() << this->m_path << "@" << QTHEX << this->m_filepos << "blocksize 0, skipping remainder of file";
             break;
         }
         if (this->fileVersion < 2 || this->fileVersion > 3) {
             if (this->m_filepos > 0) {
-                qWarning() << this->m_path << "@" << hex << this->m_filepos << "corrupt PRS1 header, skipping remainder of file";
+                qWarning() << this->m_path << "@" << QTHEX << this->m_filepos << "corrupt PRS1 header, skipping remainder of file";
             } else {
                 qWarning() << this->m_path << "unsupported PRS1 header version" << this->fileVersion;
             }

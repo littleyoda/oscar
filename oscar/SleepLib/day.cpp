@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QMultiMap>
 
 #include <algorithm>
@@ -839,7 +842,7 @@ ChannelID Day::getPressureChannelID() {
     // And why would ASV or AVAPS have Pressure channels?
     QList<ChannelID> preferredIDs = { CPAP_Pressure, CPAP_PressureSet, CPAP_IPAP, CPAP_IPAPSet };
     if (cpapmode == MODE_ASV || cpapmode == MODE_ASV_VARIABLE_EPAP || cpapmode == MODE_AVAPS ||
-        cpapmode == MODE_BILEVEL_FIXED || cpapmode == MODE_BILEVEL_AUTO_FIXED_PS || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
+        cpapmode == MODE_BILEVEL_FIXED || cpapmode == MODE_BILEVEL_AUTO_FIXED_PS || cpapmode == MODE_BILEVEL_AUTO_VARIABLE_PS || cpapmode == MODE_TRILEVEL_AUTO_VARIABLE_PDIFF) {
         preferredIDs = { CPAP_IPAP, CPAP_IPAPSet, CPAP_Pressure, CPAP_PressureSet };
     }
 
@@ -1492,7 +1495,9 @@ QString Day::getCPAPModeStr()
 //        return QObject::tr("Auto Bi-Level (Fixed PS)");
 //    } else if (mode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
 //        return QObject::tr("Auto Bi-Level (Variable PS)");
-//    }  else if (mode == MODE_ASV) {
+//    } else if (mode == MODE_TRILEVEL_AUTO_VARIABLE_PDIFF) {
+//        return QObject::tr("Auto TriLevel (Variable PDIFF)");
+//    }   else if (mode == MODE_ASV) {
 //        return QObject::tr("ASV Fixed EPAP");
 //    } else if (mode == MODE_ASV_VARIABLE_EPAP) {
 //        return QObject::tr("ASV Variable EPAP");
@@ -1600,6 +1605,11 @@ QString Day::getPressureSettings()
     } else if (mode == MODE_BILEVEL_AUTO_VARIABLE_PS) {
         return QObject::tr("Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)").arg(validPressure(settings_min(CPAP_EPAPLo))).
                 arg(validPressure(settings_max(CPAP_IPAPHi))).
+                arg(validPressure(settings_min(CPAP_PSMin))).
+                arg(validPressure(settings_max(CPAP_PSMax))).arg(units);
+    } else if (mode == MODE_TRILEVEL_AUTO_VARIABLE_PDIFF) {
+        return QObject::tr("Min EEPAP %1 Max EEPAP %2 PDIFF %3-%4 (%5)").arg(validPressure(settings_min(CPAP_EEPAPLo))).
+                arg(validPressure(settings_max(CPAP_EEPAPHi))).
                 arg(validPressure(settings_min(CPAP_PSMin))).
                 arg(validPressure(settings_max(CPAP_PSMax))).arg(units);
     } else if (mode == MODE_ASV) {

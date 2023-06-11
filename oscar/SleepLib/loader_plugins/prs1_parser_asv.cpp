@@ -10,6 +10,17 @@
 #include "prs1_parser.h"
 #include "prs1_loader.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
+
 //********************************************************************************************
 // MARK: -
 // MARK: 50 and 60 Series
@@ -1245,7 +1256,7 @@ bool PRS1DataChunk::ParseSettingsF5V3(const unsigned char* data, int size)
                 break;
             default:
                 UNEXPECTED_VALUE(code, "known setting");
-                qDebug() << "Unknown setting:" << hex << code << "in" << this->sessionid << "at" << pos;
+                qDebug() << "Unknown setting:" << QTHEX << code << "in" << this->sessionid << "at" << pos;
                 this->AddEvent(new PRS1UnknownDataEvent(QByteArray((const char*) data, size), pos, len));
                 break;
         }

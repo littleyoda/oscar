@@ -26,6 +26,7 @@
 #include <QDoubleSpinBox>
 #include <QToolButton>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QGestureEvent>
 #include <QPinchGesture>
 
@@ -103,7 +104,7 @@ public:
     QFont m_font;
     QString m_text;
     Qt::Alignment m_alignment;
-    QTime time;
+    QElapsedTimer time;
 protected slots:
     void doRedraw();
 
@@ -234,7 +235,7 @@ class gToolTip : public QObject
     /*! \fn virtual void display(QString text, int x, int y, int timeout=2000);
         \brief Set the tooltips display message, position, and timeout value
         */
-    virtual void display(QString text, int x, int y, ToolTipAlignment align = TT_AlignCenter, int timeout = 0);
+    virtual void display(QString text, int x, int y, ToolTipAlignment align = TT_AlignCenter, int timeout = 0,bool alwaysShow=false);
 
     //! \brief Draw the tooltip
     virtual void paint(QPainter &paint); //actually paints it.
@@ -717,7 +718,7 @@ class gGraphView
 
     QPixmapCache pixmapcache;
 
-    QTime horizScrollTime, vertScrollTime;
+    QElapsedTimer horizScrollTime, vertScrollTime;
     QMenu * context_menu;
     QAction * pin_action;
     QAction * popout_action;

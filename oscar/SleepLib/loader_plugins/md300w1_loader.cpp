@@ -194,7 +194,7 @@ bool MD300W1Loader::readDATFile(const QString & path)
     int gap;
     for (int pos = 0; pos < n; ++pos) {
         int i = 3 + (pos * 11);
-        QString datestr = QString().sprintf("%02d/%02d/%02d %02d:%02d:%02d",
+        QString datestr = QString::asprintf("%02d/%02d/%02d %02d:%02d:%02d",
                 (unsigned char)data.at(i+4),(unsigned char)data.at(i+5),(unsigned char)data.at(i+3),
                 (unsigned char)data.at(i+6),(unsigned char)data.at(i+7),(unsigned char)data.at(i+8));
         // Ensure date is correct first to ensure DST is handled correctly

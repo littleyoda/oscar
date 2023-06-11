@@ -18,6 +18,7 @@
 #include "SleepLib/day.h"
 #include "Graphs/gLineOverlay.h"
 
+#define ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE
 enum DottedLineCalc {
     DLC_Zero, DLC_Min, DLC_Mid, DLC_Perc, DLC_Max, DLC_UpperThresh, DLC_LowerThresh
 };
@@ -161,6 +162,7 @@ class gLineChart: public Layer
         layer->lasttime = lasttime;
     }
 
+    virtual void resetGraphViewSettings();
 
   protected:
     //! \brief Mouse moved over this layers area (shows the hover-over tooltips here)

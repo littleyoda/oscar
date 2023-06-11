@@ -31,6 +31,7 @@ public:
     ChannelCalc(const ChannelCalc & /*copy*/) = default;
     ChannelCalc(ChannelID code, ChannelCalcType type, QColor color, bool enabled):
         code(code), type(type), color(color), enabled(enabled) {}
+    ~ChannelCalc() {};
 
     QString label();
 

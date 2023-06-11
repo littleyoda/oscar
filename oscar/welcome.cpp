@@ -247,6 +247,9 @@ QString Welcome::GenerateCPAPHTML()
             if (day->channelHasData(CPAP_EPAPSet)) {
                 epapDataChanID = CPAP_EPAPSet;
             }
+            if (day->channelHasData(CPAP_EEPAP)) {
+                epapDataChanID = CPAP_EEPAP;
+            }
 
             if (pressChanID == NoChannel) {
                 qWarning() << "Unable to find pressure channel for welcome summary!";
@@ -295,6 +298,12 @@ QString Welcome::GenerateCPAPHTML()
                 EventDataType epap = day->percentile(epapDataChanID, perc/100.0);
 
                 html += tr("Your EPAP pressure was under %1 %2 for %3% of the time.").arg(epap).arg(schema::channel[epapDataChanID].units()).arg(perc)+"<br/>";
+                html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
+            } else if (cpapmode == MODE_TRILEVEL_AUTO_VARIABLE_PDIFF){
+                EventDataType ipap = day->percentile(pressChanID, perc/100.0);
+                EventDataType eepap = day->percentile(epapDataChanID, perc/100.0);
+
+                html += tr("Your EEPAP pressure was under %1 %2 for %3% of the time.").arg(eepap).arg(schema::channel[epapDataChanID].units()).arg(perc)+"<br/>";
                 html += tr("Your IPAP pressure was under %1 %2 for %3% of the time.").arg(ipap).arg(schema::channel[pressChanID].units()).arg(perc);
             }
             html += "<br/>";

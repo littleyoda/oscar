@@ -7,6 +7,11 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+#define BAR_TITLE_BAR_DEBUGoff
+
+
 #include <cmath>
 #include <QVector>
 #include "SleepLib/profiles.h"
@@ -70,8 +75,12 @@ void gFlagsGroup::SetDay(Day *d)
         return;
     }
 
+    m_sessions = d->getSessions(MT_CPAP);
+    m_start  =   d->first(MT_CPAP);
+    m_duration = d->last(MT_CPAP) - m_start;
+    if (m_duration<=0) m_duration = 1; // avoid divide by zero
 
-    quint32 z = schema::FLAG | schema::SPAN;
+    quint32 z = schema::FLAG | schema::SPAN | schema::MINOR_FLAG;
     if (p_profile->general->showUnknownFlags()) z |= schema::UNKNOWN;
     availableChans = d->getSortedMachineChannels(z);
 
@@ -111,23 +120,6 @@ void gFlagsGroup::SetDay(Day *d)
 
 
     cnt = lvisible.size();
-
-//    for (int i = 0; i < layers.size(); i++) {
-//        gFlagsLine *f = dynamic_cast<gFlagsLine *>(layers[i]);
-
-//        if (!f) { continue; }
-
-//        bool e = f->isEmpty();
-
-//        if (!e || f->isAlwaysVisible()) {
-//            lvisible.push_back(f);
-
-//            if (!e) {
-//                cnt++;
-//            }
-//        }
-//    }
-
     m_empty = (cnt == 0);
 
     if (m_empty) {
@@ -138,6 +130,7 @@ void gFlagsGroup::SetDay(Day *d)
 
     m_barh = 0;
 }
+
 bool gFlagsGroup::isEmpty()
 {
     if (m_day) {
@@ -147,20 +140,37 @@ bool gFlagsGroup::isEmpty()
     return true;
 }
 
+void gFlagsGroup::refreshConfiguration(gGraph* graph)
+{
+    int numOn=0;
+    for (const auto & flagsline : lvisible) {
+        if (schema::channel[flagsline->code()].enabled()) numOn++;
+    }
+    if (numOn==0) numOn=1;  // always have an area showing in graph.
+    float barHeight = QFontMetrics(*defaultfont).capHeight() + QFontMetrics(*defaultfont).descent() ;
+    int height (barHeight * numOn);
+    height += sessionBarHeight();
+    setMinimumHeight (height);
+    if (graph->height()<height) graph->setHeight (height);
+}
+
+int  gFlagsGroup::sessionBarHeight() {
+     static const int m_sessionHeight = 7;
+     return (m_sessions.size()>1 ) ? m_sessionHeight : 0;
+};
+
 void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
 {
+    if (!m_visible) { return; }
+    if (!m_day) { return; }
+
     QRectF outline(region.boundingRect());
     outline.translate(0.0f, 0.001f);
 
     int left = region.boundingRect().left()+1;
-    int top = region.boundingRect().top()+1;
+    int top = region.boundingRect().top()+1 ;
     int width = region.boundingRect().width();
     int height = region.boundingRect().height();
-
-    if (!m_visible) { return; }
-
-    if (!m_day) { return; }
-
 
     QVector<gFlagsLine *> visflags;
 
@@ -169,9 +179,34 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
             visflags.push_back(flagsline);
     }
 
+    int sheight = (m_sessions.size()>1?sessionBarHeight():0);
     int vis = visflags.size();
-    m_barh = float(height) / float(vis);
-    float linetop = top;
+    m_barh = float(height-sheight) / float(vis);
+    float linetop = top+sheight-2;
+
+    qint64 minx,maxx,dur;
+    g.graphView()->GetXBounds(minx,maxx);
+    dur = maxx - minx;
+
+    #if BAR_TITLE_BAR_DEBUG
+    // debug for minimum size for event flags.  adding required height for enabled events , number eventTypes , height of an event bar
+   QString text= QString("%1 -> %2     %3: %4 H:%5 Vis:%6 barH:%7").
+        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
+        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
+        arg(QObject::tr("Selection Length")).
+        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz"))
+        .arg(height)
+        .arg(vis)
+        .arg(m_barh)
+        ;
+    #else
+    QString text= QString("%1 -> %2       %3: %4").
+        arg(QDateTime::fromMSecsSinceEpoch(minx).time().toString()).
+        arg(QDateTime::fromMSecsSinceEpoch(maxx).time().toString()).
+        arg(QObject::tr("Selection Length")).
+        arg(QTime(0,0).addMSecs(dur).toString("H:mm:ss.zzz")) ;
+    #endif
+    g.renderText(text, left , top -5 );
 
     QColor barcol;
 
@@ -193,6 +228,17 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
         visflags[i]->m_rect = rect;
         visflags[i]->paint(painter, g, QRegion(rect));
         linetop += m_barh;
+    }
+
+    // graph each session at top
+    if (m_sessions.size()>1 ) {
+        QRect sessBox(0,g.top,0,sessionBarHeight());
+        double adjustment = width/(double)m_duration;
+        for (const auto & sess : m_sessions) {
+            sessBox.setX(left + (sess->first()-m_start)*adjustment);
+            sessBox.setWidth(   sess->length() * adjustment);
+            painter.fillRect(sessBox, QBrush(Qt::gray));
+        }
     }
 
     painter.setPen(COLOR_Outline);
@@ -277,7 +323,6 @@ void gFlagsLine::paint(QPainter &painter, gGraph &w, const QRegion &region)
     double xmult = width / xx;
 
     schema::Channel & chan = schema::channel[m_code];
-
     GetTextExtent(chan.label(), m_lx, m_ly);
 
     // Draw text label

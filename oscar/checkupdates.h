@@ -12,6 +12,7 @@
 
 #include <QNetworkAccessManager>
 #include <QMainWindow>
+#include <QElapsedTimer>
 #include <QProgressDialog>
 
 /*! \class CheckUpdates
@@ -44,7 +45,7 @@ class CheckUpdates : public QMainWindow
   private:
     QNetworkAccessManager *manager;
 
-    QTime readTimer;
+    QElapsedTimer readTimer;
     float elapsedTime;
 
     QString msg;                // Message to show to user

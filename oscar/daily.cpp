@@ -15,6 +15,7 @@
 #include <QTextBlock>
 #include <QColorDialog>
 #include <QSpacerItem>
+#include <QElapsedTimer>
 #include <QBuffer>
 #include <QPixmap>
 #include <QMessageBox>
@@ -29,6 +30,7 @@
 
 #include "daily.h"
 #include "ui_daily.h"
+#include "dailySearchTab.h"
 
 #include "common_gui.h"
 #include "SleepLib/profiles.h"
@@ -60,7 +62,7 @@ QString htmlLeftSessionInfo;
 QString htmlLeftFooter;
 
 extern ChannelID PRS1_PeakFlow;
-extern ChannelID Prisma_ObstructLevel, Prisma_rMVFluctuation, Prisma_rRMV, Prisma_PressureMeasured, Prisma_FlowFull, Prisma_SPRStatus;
+extern ChannelID Prisma_ObstructLevel, Prisma_rMVFluctuation, Prisma_rRMV, Prisma_PressureMeasured, Prisma_FlowFull;
 
 // This was Sean Stangl's idea.. but I couldn't apply that patch.
 inline QString channelInfo(ChannelID code) {
@@ -87,7 +89,7 @@ const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull, STR_GRAPH_SPRStatus
+                                           STR_GRAPH_FlowFull
                                           };
 
 // Advanced graph order
@@ -97,7 +99,7 @@ const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull, STR_GRAPH_SPRStatus
+                                           STR_GRAPH_FlowFull
                                           };
 
 // CPAP modes that should have Advanced graphs
@@ -233,7 +235,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 //    SG->AddLayer(new gDailySummary());
 
     graphlist[STR_GRAPH_SleepFlags] = SF = new gGraph(STR_GRAPH_SleepFlags, GraphView, STR_TR_EventFlags, STR_TR_EventFlags, default_height);
+    sleepFlags = SF;
     SF->setPinned(true);
+
 
     //============================================
     // Create graphs from 'interesting' CPAP codes
@@ -312,14 +316,12 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     // Add event flags to the event flags graph
     gFlagsGroup *fg=new gFlagsGroup();
+    sleepFlagsGroup = fg;
     SF->AddLayer(fg);
 
     SF->setBlockZoom(true);
     SF->AddLayer(new gShadowArea());
-
     SF->AddLayer(new gLabelArea(fg),LayerLeft,gYAxis::Margin);
-
-    //SF->AddLayer(new gFooBar(),LayerBottom,0,1);
     SF->AddLayer(new gXAxis(COLOR_Text,false),LayerBottom,0,gXAxis::Margin);
 
 
@@ -329,7 +331,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     QStringList skipgraph;
     skipgraph.push_back(STR_GRAPH_EventBreakdown);
     skipgraph.push_back(STR_GRAPH_SleepFlags);
-//    skipgraph.push_back(STR_GRAPH_DailySummary);
     skipgraph.push_back(STR_GRAPH_TAP);
 
     QHash<QString, gGraph *>::iterator it;
@@ -344,11 +345,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     l=new gLineChart(CPAP_FlowRate,false,false);
 
     gGraph *FRW = graphlist[schema::channel[CPAP_FlowRate].code()];
-
-    // Then the graph itself
     FRW->AddLayer(l);
-
-
+    l -> setMinimumHeight(80);      // set the layer height to 80. or about 130 graph height.
+    
 //    FRW->AddLayer(AddOXI(new gLineOverlayBar(OXI_SPO2Drop, COLOR_SPO2Drop, STR_TR_O2)));
 
     bool square=AppSetting->squareWavePlots();
@@ -406,7 +405,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     graphlist[schema::channel[Prisma_rRMV].code()]->AddLayer(new gLineChart(Prisma_rRMV, square));
     graphlist[schema::channel[Prisma_rMVFluctuation].code()]->AddLayer(new gLineChart(Prisma_rMVFluctuation, square));
     graphlist[schema::channel[Prisma_FlowFull].code()]->AddLayer(new gLineChart(Prisma_FlowFull, square));
-    graphlist[schema::channel[Prisma_SPRStatus].code()]->AddLayer(new gLineChart(Prisma_SPRStatus, square));
 
     graphlist[schema::channel[CPAP_Test1].code()]->AddLayer(new gLineChart(CPAP_Test1, square));
     //graphlist[schema::channel[CPAP_Test2].code()]->AddLayer(new gLineChart(CPAP_Test2, square));
@@ -542,6 +540,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 //    qDebug() << "Finished making new Daily object";
 //    sleep(3);
     saveGraphLayoutSettings=nullptr;
+    dailySearchTab = new DailySearchTab(this,ui->searchTab,ui->tabWidget);
 }
 
 Daily::~Daily()
@@ -565,6 +564,7 @@ Daily::~Daily()
     delete icon_on;
     delete icon_off;
     if (saveGraphLayoutSettings!=nullptr) delete saveGraphLayoutSettings;
+    delete dailySearchTab;
 }
 
 void Daily::showEvent(QShowEvent *)
@@ -576,12 +576,23 @@ void Daily::showEvent(QShowEvent *)
 //    sleep(3);
 }
 
+bool Daily::rejectToggleSessionEnable( Session*sess) {
+    if (!sess) return true;
+    if (p_profile->cpap->clinicalMode()) {
+       QMessageBox mbox(QMessageBox::Warning, tr("Clinical Mode"), tr(" Disabling Sessions requires the Permissive Mode"), QMessageBox::Ok  , this);
+            mbox.exec();
+            return true;
+    }
+    sess->setEnabled(!sess->enabled());
+    return false;
+}
+
 void Daily::doToggleSession(Session * sess)
 {
-    sess->setEnabled(!sess->enabled());
-
+    if (rejectToggleSessionEnable( sess) ) return;
     LoadDate(previous_date);
     mainwin->getOverview()->graphView()->dataChanged();
+    mainwin->GenerateStatistics();
 }
 
 void Daily::Link_clicked(const QUrl &url)
@@ -595,10 +606,8 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_CPAP);
         if (!day) return;
         Session *sess=day->find(sid, MT_CPAP);
-        if (!sess)
-            return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
 
         // Reload day
         LoadDate(previous_date);
@@ -608,10 +617,8 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_OXIMETER);
         if (!day) return;
         Session *sess=day->find(sid, MT_OXIMETER);
-        if (!sess)
-            return;
 //        int i=webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical)-webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
 
         // Reload day
         LoadDate(previous_date);
@@ -621,16 +628,14 @@ void Daily::Link_clicked(const QUrl &url)
         day=p_profile->GetDay(previous_date,MT_SLEEPSTAGE);
         if (!day) return;
         Session *sess=day->find(sid, MT_SLEEPSTAGE);
-        if (!sess) return;
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
         LoadDate(previous_date);
         mainwin->getOverview()->graphView()->dataChanged();
     } else  if (code=="togglepositionsession") { // Enable/Disable Position session
         day=p_profile->GetDay(previous_date,MT_POSITION);
         if (!day) return;
         Session *sess=day->find(sid, MT_POSITION);
-        if (!sess) return;
-        sess->setEnabled(!sess->enabled());
+        if (rejectToggleSessionEnable( sess) ) return;
         LoadDate(previous_date);
         mainwin->getOverview()->graphView()->dataChanged();
     } else if (code=="cpap")  {
@@ -746,7 +751,6 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
     QTreeWidgetItem *root=nullptr;
     QHash<ChannelID,QTreeWidgetItem *> mcroot;
     QHash<ChannelID,int> mccnt;
-    int total_events=0;
 
     qint64 drift=0, clockdrift=p_profile->cpap->clockDrift()*1000L;
 
@@ -773,7 +777,6 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
             if (mcroot.find(code)==mcroot.end()) {
                 int cnt=day->count(code);
                 if (!cnt) continue; // If no events than don't bother showing..
-                total_events+=cnt;
                 QString st=schema::channel[code].fullname();
                 if (st.isEmpty())  {
                     st=QString("Fixme %1").arg(code);
@@ -823,27 +826,26 @@ void Daily::UpdateEventsTree(QTreeWidget *tree,Day *day)
     }
 
     if (day->hasMachine(MT_CPAP) || day->hasMachine(MT_OXIMETER) || day->hasMachine(MT_POSITION)) {
-        QTreeWidgetItem * start = new QTreeWidgetItem(QStringList(tr("Session Start Times")));
-        QTreeWidgetItem * end = new QTreeWidgetItem(QStringList(tr("Session End Times")));
+        QTreeWidgetItem * start = new QTreeWidgetItem(QStringList(tr("Session Start Times")),eventTypeStart);
+        QTreeWidgetItem * end = new QTreeWidgetItem(QStringList(tr("Session End Times")),eventTypeEnd);
         tree->insertTopLevelItem(cnt++ , start);
         tree->insertTopLevelItem(cnt++ , end);
         for (QList<Session *>::iterator s=day->begin(); s!=day->end(); ++s) {
-            QDateTime st = QDateTime::fromMSecsSinceEpoch((*s)->first()); // Localtime
-            QDateTime et = QDateTime::fromMSecsSinceEpoch((*s)->last()); // Localtime
+            Session* sess = *s;
+            if ( (sess->type() != MT_CPAP) && (sess->type() != MT_OXIMETER) && (sess->type() != MT_POSITION)) continue;
+            QDateTime st = QDateTime::fromMSecsSinceEpoch(sess->first()); // Localtime
+            QDateTime et = QDateTime::fromMSecsSinceEpoch(sess->last()); // Localtime
 
             QTreeWidgetItem * item = new QTreeWidgetItem(QStringList(st.toString("HH:mm:ss")));
-            item->setData(0,Qt::UserRole, (*s)->first());
+            item->setData(0,Qt::UserRole, sess->first());
             start->addChild(item);
 
-
             item = new QTreeWidgetItem(QStringList(et.toString("HH:mm:ss")));
-            item->setData(0,Qt::UserRole, (*s)->last());
+            item->setData(0,Qt::UserRole, sess->last());
             end->addChild(item);
         }
     }
-    //tree->insertTopLevelItem(cnt++,new QTreeWidgetItem(QStringList("[Total Events ("+QString::number(total_events)+")]")));
     tree->sortByColumn(0,Qt::AscendingOrder);
-    //tree->expandAll();
 }
 
 void Daily::UpdateCalendarDay(QDate date)
@@ -931,7 +933,7 @@ void Daily::on_ReloadDay()
     }
     inReload = true;
     graphView()->releaseKeyboard();
-    QTime time;
+    QElapsedTimer time;
     time_t unload_time, load_time, other_time;
     time.start();
 
@@ -997,24 +999,8 @@ void Daily::ResetGraphOrder(int type)
     }
 
     // Enable all graphs (make them not hidden)
-    for (int i=1;i<ui->graphCombo->count();i++) {
-        // If disabled, emulate a click to enable the graph
-        if (!ui->graphCombo->itemData(i,Qt::UserRole).toBool()) {
-//            qDebug() << "resetting graph" << i;
-            Daily::on_graphCombo_activated(i);
-        }
-    }
-
-    // Mark all events as active
-    for (int i=1;i<ui->eventsCombo->count();i++) {
-        // If disabled, emulate a click to enable the event
-        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
-        schema::Channel * chan = &schema::channel[code];
-        if (!chan->enabled()) {
-//            qDebug() << "resetting event" << i;
-            Daily::on_eventsCombo_activated(i);
-        }
-    }
+    showAllGraphs(true);
+    showAllEvents(true);
 
     // Reset graph heights (and repaint)
     ResetGraphLayout();
@@ -1122,6 +1108,9 @@ QString Daily::getSessionInformation(Day * day)
                     .arg(fd.date().toString(Qt::SystemLocaleShortDate))
                     .arg(fd.toString("HH:mm:ss"))
                     .arg(ld.toString("HH:mm:ss"));
+
+
+
 #ifdef SESSION_DEBUG
             for (int i=0; i< sess->session_files.size(); ++i) {
                 html+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(sess->session_files[i].section("/",-1));
@@ -1442,7 +1431,7 @@ QString Daily::getStatisticsInfo(Day * day)
             int s = ttia % 60;
             if (ttia > 0) {
                 html+="<tr><td colspan=3 align='left' bgcolor='white'><b>"+tr("Total time in apnea") +
-                       QString("</b></td><td colspan=2 bgcolor='white'>%1</td></tr>").arg(QString().sprintf("%02i:%02i:%02i",h,m,s));
+                       QString("</b></td><td colspan=2 bgcolor='white'>%1</td></tr>").arg(QString::asprintf("%02i:%02i:%02i",h,m,s));
             }
 
         }
@@ -1514,7 +1503,7 @@ QString Daily::getSleepTime(Day * day)
             .arg(date.date().toString(Qt::SystemLocaleShortDate))
             .arg(date.toString("HH:mm:ss"))
             .arg(date2.toString("HH:mm:ss"))
-            .arg(QString().sprintf("%02i:%02i:%02i",h,m,s));
+            .arg(QString::asprintf("%02i:%02i:%02i",h,m,s));
     html+="</table>\n";
 //    html+="<hr/>";
 
@@ -1676,23 +1665,8 @@ void Daily::Load(QDate date)
     bool isBrick=false;
 
     updateGraphCombo();
-    ui->eventsCombo->clear();
 
-    quint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
-    if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
-
-    QList<ChannelID> available;
-    if (day) available.append(day->getSortedMachineChannels(chans));
-
-    ui->eventsCombo->addItem(*icon_up_down, tr("10 of 10 Event Types"), 0); // Translation used only for spacing
-    for (int i=0; i < available.size(); ++i) {
-        ChannelID code = available.at(i);
-        int comboxBoxIndex = i+1;
-        schema::Channel & chan = schema::channel[code];
-        ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
-        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
-    }
-    setFlagText();
+    updateEventsCombo(day);
 
     if (!cpap) {
         GraphView->setEmptyImage(QPixmap(":/icons/logo-md.png"));
@@ -1919,9 +1893,6 @@ void Daily::Load(QDate date)
     ui->BMI->setVisible(false);
     ui->BMIlabel->setVisible(false);
 #endif
-    ui->toggleGraphs->setVisible(false);
-    ui->toggleEvents->setVisible(false);
-
     BookmarksChanged=false;
     Session *journal=GetJournalSession(date);
     if (journal) {
@@ -2249,28 +2220,35 @@ void Daily::on_RangeUpdate(double minx, double /*maxx*/)
 }
 
 
-void Daily::on_treeWidget_itemClicked(QTreeWidgetItem *item, int column)
+void Daily::on_treeWidget_itemClicked(QTreeWidgetItem *item, int )
 {
-    Q_UNUSED(column);
+    if (!item) return;
+    QTreeWidgetItem* parent = item->parent();
+    if (!parent) return;
+    gGraph *g=GraphView->findGraph(STR_GRAPH_SleepFlags);
+    if (!g) return;
     QDateTime d;
     if (!item->data(0,Qt::UserRole).isNull()) {
-        qint64 winsize=qint64(p_profile->general->eventWindowSize())*60000L;
-        qint64 t=item->data(0,Qt::UserRole).toLongLong();
+        int eventType = parent->type();
+        qint64 time = item->data(0,Qt::UserRole).toLongLong();
 
-        double st=t-(winsize/2);
-        double et=t+(winsize/2);
+        // for events display 3 minutes before and 20 seconds after
+        // for start time skip abit before graph
+        // for end   time skip abut after graph
 
-        gGraph *g=GraphView->findGraph(STR_GRAPH_SleepFlags);
-        if (!g) return;
-        if (st<g->rmin_x) {
-            st=g->rmin_x;
-            et=st+winsize;
+        qint64 period = qint64(p_profile->general->eventWindowSize())*60000L;  // eventwindowsize units  minutes
+        qint64 small  = period/10; 
+
+        qint64 start,end;
+        if (eventType == eventTypeStart ) {
+            start = time - small;
+            end = time + period;
+        } else {
+            start = time - period;
+            end   = time + small;
         }
-        if (et>g->rmax_x) {
-            et=g->rmax_x;
-            st=et-winsize;
-        }
-        GraphView->SetXBounds(st,et);
+
+        GraphView->SetXBounds(start,end);
     }
 }
 
@@ -2653,8 +2631,19 @@ void Daily::setGraphText () {
     }
     ui->graphCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString graphText;
-    if (numOff == 0) graphText = QObject::tr("%1 Graphs").arg(numTotal);
-    else             graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+    int lastIndex = ui->graphCombo->count()-1;  // account for hideshow button
+    if (numOff == 0) {
+        // all graphs are shown
+        graphText = QObject::tr("%1 Graphs").arg(numTotal);
+        ui->graphCombo->setItemText(lastIndex,STR_HIDE_ALL_GRAPHS);
+    } else {
+        // some graphs are hidden
+        graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+        if (numOff == numTotal) {
+            // all graphs are hidden
+            ui->graphCombo->setItemText(lastIndex,STR_SHOW_ALL_GRAPHS);
+        }
+    }
     ui->graphCombo->setItemText(0, graphText);
 }
 
@@ -2662,7 +2651,8 @@ void Daily::setFlagText () {
     int numOff = 0;
     int numTotal = 0;
 
-    for (int i=1; i < ui->eventsCombo->count(); ++i) {
+    int lastIndex = ui->eventsCombo->count()-1;  // account for hideshow button
+    for (int i=1; i < lastIndex; ++i) {
         numTotal++;
         ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
         schema::Channel * chan = &schema::channel[code];
@@ -2671,32 +2661,59 @@ void Daily::setFlagText () {
             numOff++;
     }
 
+    int numOn=numTotal;
     ui->eventsCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString flagsText;
-    if (numOff == 0) flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
-    else             flagsText = QObject::tr("%1 of %2 Event Types").arg(numTotal-numOff).arg(numTotal);
+    if (numOff == 0) {
+        flagsText = (QObject::tr("%1 Event Types")+"       ").arg(numTotal);
+        ui->eventsCombo->setItemText(lastIndex,STR_HIDE_ALL_EVENTS);
+    } else {
+        numOn-=numOff;
+        flagsText = QObject::tr("%1 of %2 Event Types").arg(numOn).arg(numTotal);
+        if (numOn==0) ui->eventsCombo->setItemText(lastIndex,STR_SHOW_ALL_EVENTS);
+    }
+
     ui->eventsCombo->setItemText(0, flagsText);
+    sleepFlagsGroup->refreshConfiguration(sleepFlags); // need to know display changes before painting.
+}
+
+void Daily::showAllGraphs(bool show) {
+    //Skip over first button - label for comboBox
+    int lastIndex = ui->graphCombo->count()-1;
+    for (int i=1;i<lastIndex;i++) {
+        showGraph(i,show);
+    }
+    setGraphText();
+    updateCube();
+    GraphView->updateScale();
+    GraphView->redraw();
+}
+
+void Daily::showGraph(int index,bool show, bool updateGraph) {
+    ui->graphCombo->setItemData(index,show,Qt::UserRole);
+    ui->graphCombo->setItemIcon(index, show ? *icon_on : *icon_off);
+    if (!updateGraph) return;
+    QString graphName = ui->graphCombo->itemText(index);
+    gGraph* graph=GraphView->findGraphTitle(graphName);
+    if (graph) graph->setVisible(show);
 }
 
 void Daily::on_graphCombo_activated(int index)
 {
-    if (index<0)
-        return;
-
-    gGraph *g;
-    QString s;
-    s=ui->graphCombo->currentText();
+    if (index<0) return;
+    int lastIndex = ui->graphCombo->count()-1;
     if (index > 0) {
-        bool b=!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
-        ui->graphCombo->setItemData(index,b,Qt::UserRole);
-        ui->graphCombo->setItemIcon(index, b ? *icon_on : *icon_off);
-
-        g=GraphView->findGraphTitle(s);
-        g->setVisible(b);
+        bool nextOn =!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
+        if ( index == lastIndex ) {
+            // user just pressed hide show button - toggle sates of the button and apply the new state
+            showAllGraphs(nextOn);
+            showGraph(index,nextOn,false);
+        } else {
+            showGraph(index,nextOn,true);
+        }
         ui->graphCombo->showPopup();
     }
     ui->graphCombo->setCurrentIndex(0);
-
     setGraphText();
     updateCube();
     GraphView->updateScale();
@@ -2707,13 +2724,6 @@ void Daily::updateCube()
 {
     //brick..
     if ((GraphView->visibleGraphs()==0)) {
-        ui->toggleGraphs->setVisible(false);
-//        ui->toggleGraphs->setArrowType(Qt::UpArrow);
-//        ui->toggleGraphs->setToolTip(tr("Show all graphs"));
-//        ui->toggleGraphs->blockSignals(true);
-//        ui->toggleGraphs->setChecked(true);
-//        ui->toggleGraphs->blockSignals(false);
-
         if (ui->graphCombo->count() > 0) {
             GraphView->setEmptyText(STR_Empty_NoGraphs);
         } else {
@@ -2728,48 +2738,16 @@ void Daily::updateCube()
                     GraphView->setEmptyText(STR_Empty_SummaryOnly);
             }
         }
-    } else {
-        ui->toggleGraphs->setVisible(false);
-//        ui->toggleGraphs->setArrowType(Qt::DownArrow);
-//        ui->toggleGraphs->setToolTip(tr("Hide all graphs"));
-//        ui->toggleGraphs->blockSignals(true);
-//        ui->toggleGraphs->setChecked(false);
-//        ui->toggleGraphs->blockSignals(false);
     }
 }
 
-
-void Daily::on_toggleGraphs_clicked(bool /*checked*/)
-{
-    //QString s;
-    //QIcon *icon=checked ? icon_off : icon_on;
-    if (ui->graphCombo == nullptr )
-        qDebug() << "ToggleGraphs clicked with null graphCombo ptr";
-    else
-        qDebug() << "ToggleGraphs clicked with non-null graphCombo ptr";
-    return;
-/*
-    for (int i=0;i<ui->graphCombo->count();i++) {
-        s=ui->graphCombo->itemText(i);
-        ui->graphCombo->setItemIcon(i,*icon);
-        ui->graphCombo->setItemData(i,!checked,Qt::UserRole);
-    }
-    for (int i=0;i<GraphView->size();i++) {
-        (*GraphView)[i]->setVisible(!checked);
-    }
-
-    updateCube();
-    GraphView->updateScale();
-    GraphView->redraw();
-    */
-}
 
 void Daily::updateGraphCombo()
 {
     ui->graphCombo->clear();
     gGraph *g;
 
-    ui->graphCombo->addItem(*icon_up_down, tr("10 of 10 Graphs"), true); // Translation only to define space required
+    ui->graphCombo->addItem(*icon_up_down, "", true);   // text updated in setGRaphText
 
     for (int i=0;i<GraphView->size();i++) {
         g=(*GraphView)[i];
@@ -2781,10 +2759,48 @@ void Daily::updateGraphCombo()
             ui->graphCombo->addItem(*icon_off,g->title(),false);
         }
     }
-
+    ui->graphCombo->addItem(*icon_on,STR_HIDE_ALL_GRAPHS,true);
     ui->graphCombo->setCurrentIndex(0);
     setGraphText();
     updateCube();
+}
+
+void Daily::updateEventsCombo(Day* day) {
+
+    quint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
+    if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
+
+    QList<ChannelID> available;
+    if (day) available.append(day->getSortedMachineChannels(chans));
+
+    ui->eventsCombo->clear();
+    ui->eventsCombo->addItem(*icon_up_down, "", 0);   // text updated in setflagText
+    for (int i=0; i < available.size(); ++i) {
+        ChannelID code = available.at(i);
+        int comboxBoxIndex = i+1;
+        schema::Channel & chan = schema::channel[code];
+        ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
+        ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
+    }
+    ui->eventsCombo->addItem(*icon_on,"" , Qt::ToolTipRole);
+    ui->eventsCombo->setCurrentIndex(0);
+    setFlagText();
+}
+
+void Daily::showAllEvents(bool show) {
+    // Mark all events as active
+    int lastIndex = ui->eventsCombo->count()-1;  // account for hideshow button
+    for (int i=1;i<lastIndex;i++) {
+        // If disabled, emulate a click to enable the event
+        ChannelID code = ui->eventsCombo->itemData(i, Qt::UserRole).toUInt();
+        schema::Channel * chan = &schema::channel[code];
+        if (chan->enabled()!=show) {
+            Daily::on_eventsCombo_activated(i);
+        }
+    }
+    ui->eventsCombo->setItemData(lastIndex,show,Qt::UserRole);
+    ui->eventsCombo->setCurrentIndex(0);
+    setFlagText();
 }
 
 void Daily::on_eventsCombo_activated(int index)
@@ -2792,13 +2808,19 @@ void Daily::on_eventsCombo_activated(int index)
     if (index<0)
         return;
 
+    int lastIndex = ui->eventsCombo->count()-1;
     if (index > 0) {
-        ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
-        schema::Channel * chan = &schema::channel[code];
+        if ( index == lastIndex ) {
+            bool nextOn =!ui->eventsCombo->itemData(index,Qt::UserRole).toBool();
+            showAllEvents(nextOn);
+        } else {
+            ChannelID code = ui->eventsCombo->itemData(index, Qt::UserRole).toUInt();
+            schema::Channel * chan = &schema::channel[code];
 
-        bool b = !chan->enabled();
-        chan->setEnabled(b);
-        ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+            bool b = !chan->enabled();
+            chan->setEnabled(b);
+            ui->eventsCombo->setItemIcon(index,b ? *icon_on : *icon_off);
+        }
         ui->eventsCombo->showPopup();
     }
 
@@ -2806,48 +2828,6 @@ void Daily::on_eventsCombo_activated(int index)
     setFlagText();
     GraphView->redraw();
 }
-
-void Daily::on_toggleEvents_clicked(bool /*checked*/)
-{
-    QString s;
-    //QIcon *icon=checked ? icon_on : icon_off;
-
-    if (ui->toggleEvents == nullptr )
-        qDebug() << "ToggleEvents clicked with null toggleEvents ptr";
-    else
-        qDebug() << "ToggleEvents clicked with non-null toggleEvents ptr";
-    return;
-/*
-    ui->toggleEvents->setArrowType(checked ? Qt::DownArrow : Qt::UpArrow);
-    ui->toggleEvents->setToolTip(checked ? tr("Hide all events") : tr("Show all events"));
-//    ui->toggleEvents->blockSignals(true);
-//    ui->toggleEvents->setChecked(false);
-//    ui->toggleEvents->blockSignals(false);
-
-    for (int i=0;i<ui->eventsCombo->count();i++) {
-//        s=ui->eventsCombo->itemText(i);
-        ui->eventsCombo->setItemIcon(i,*icon);
-        ChannelID code = ui->eventsCombo->itemData(i).toUInt();
-        schema::channel[code].setEnabled(checked);
-    }
-
-    updateCube();
-    GraphView->redraw();
-    */
-}
-
-//void Daily::on_sessionWidget_itemSelectionChanged()
-//{
-//    int row = ui->sessionWidget->currentRow();
-//    QTableWidgetItem *item = ui->sessionWidget->item(row, 0);
-//    if (item) {
-//        QDate date = item->data(Qt::UserRole).toDate();
-//        LoadDate(date);
-//        qDebug() << "Clicked.. changing date to" << date;
-
-//       // ui->sessionWidget->setCurrentItem(item);
-//    }
-//}
 
 void Daily::on_splitter_2_splitterMoved(int, int)
 {

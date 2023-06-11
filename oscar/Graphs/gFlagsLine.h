@@ -64,9 +64,6 @@ class gFlagsLine: public Layer
     //! \brief Drawing code to add the flags and span markers to the Vertex buffers.
     virtual void paint(QPainter &painter, gGraph &w, const QRegion &region);
 
-    void setTotalLines(int i) { total_lines = i; }
-    void setLineNum(int i) { line_num = i; }
-
     virtual Layer * Clone() {
         gFlagsLine * layer = new gFlagsLine(NoChannel);  //ouchie..
         Layer::CloneInto(layer);
@@ -76,8 +73,6 @@ class gFlagsLine: public Layer
 
     void CloneInto(gFlagsLine * layer ) {
         layer->m_always_visible = m_always_visible;
-        layer->total_lines = total_lines;
-        layer->line_num = line_num;
         layer->m_lx = m_lx;
         layer->m_ly = m_ly;
     }
@@ -87,7 +82,6 @@ class gFlagsLine: public Layer
     virtual bool mouseMoveEvent(QMouseEvent *event, gGraph *graph);
 
     bool m_always_visible;
-    int total_lines, line_num;
     int m_lx, m_ly;
 
 };
@@ -117,16 +111,11 @@ class gFlagsGroup: public LayerGroup
     //! Returns true if none of the gFlagLine objects contain any data for this day
     virtual bool isEmpty();
 
-    //! Returns the count of visible flag line entries
-    int count() { return lvisible.size(); }
-
-    //! Returns the height in pixels of each bar
-    int barHeight() { return m_barh; }
-
     //! Returns a list of Visible gFlagsLine layers to draw
     QVector<gFlagsLine *> &visibleLayers() { return lvisible; }
 
     void alwaysVisible(ChannelID code) { m_alwaysvisible.push_back(code); }
+    void refreshConfiguration(gGraph* graph) ;
 
     virtual Layer * Clone() {
         gFlagsGroup * layer = new gFlagsGroup();  //ouchie..
@@ -138,6 +127,7 @@ class gFlagsGroup: public LayerGroup
     void CloneInto(gFlagsGroup * layer) {
         layer->m_alwaysvisible = m_alwaysvisible;
         layer->availableChans = availableChans;
+        layer->m_sessions = m_sessions;
 
         for (int i=0; i<lvisible.size(); i++) {
             layer->lvisible.append(dynamic_cast<gFlagsLine *>(lvisible.at(i)->Clone()));
@@ -150,15 +140,16 @@ class gFlagsGroup: public LayerGroup
 
   protected:
     virtual bool mouseMoveEvent(QMouseEvent *event, gGraph *graph);
-
     QList<ChannelID> m_alwaysvisible;
-
     QList<ChannelID> availableChans;
-
-    QVector<gFlagsLine *> lvisible;
+    QList<Session*> m_sessions;
+    qint64 m_start  ;
+    qint64 m_duration ;
+    QVector<gFlagsLine*> lvisible;
     float m_barh;
     bool m_empty;
     bool m_rebuild_cpap;
+    int sessionBarHeight();
 };
 
 #endif // GFLAGSLINE_H

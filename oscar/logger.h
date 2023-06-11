@@ -7,6 +7,7 @@
 #include <QMutex>
 #include <QWaitCondition>
 #include <QTime>
+#include <QElapsedTimer>
 
 void initializeLogger();
 void shutdownLogger();
@@ -41,7 +42,7 @@ signals:
     void outputLog(QString);
 protected:
     volatile bool running;
-    QTime logtime;
+    QElapsedTimer logtime;
     bool connected;
     class QFile* m_logFile;
     class QTextStream* m_logStream;

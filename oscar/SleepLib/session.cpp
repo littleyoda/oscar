@@ -8,6 +8,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include "session.h"
 #include "version.h"
 #include <cmath>
@@ -88,6 +91,12 @@ void Session::TrashEvents()
     eventlist.squeeze();
 }
 
+bool Session::enabled(bool realValues) const
+{
+    if (p_profile->cpap->clinicalMode() && !realValues) return true;
+    return s_enabled;
+}
+
 void Session::setEnabled(bool b)
 {
     s_enabled = b;
@@ -101,7 +110,7 @@ void Session::setEnabled(bool b)
 
 QString Session::eventFile() const
 {
-    return s_machine->getEventsPath()+QString().sprintf("%08lx.001", s_session);
+    return s_machine->getEventsPath()+QString::asprintf("%08lx.001", s_session);
 }
 
 //const int max_pack_size=128;
@@ -136,7 +145,7 @@ bool Session::Destroy()
 {
     QDir dir;
     QString base;
-    base.sprintf("%08lx", s_session);
+    base=QString::asprintf("%08lx", s_session);
 
     QString summaryfile = s_machine->getSummariesPath() + base + ".000";
     QString eventfile = s_machine->getEventsPath() + base + ".001";
@@ -279,7 +288,7 @@ bool Session::Store(QString path)
 //    in >> s_summaryOnly;
 //
 //    s_enabled = 1;
-//} 
+//}
 
 QDataStream & operator>>(QDataStream & in, SessionSlice & slice)
 {
@@ -311,7 +320,7 @@ bool Session::StoreSummary()
         return false;
     }
 
-    QString filename = s_machine->getSummariesPath() + QString().sprintf("%08lx.000", s_session);
+    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session) ;
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -388,7 +397,7 @@ bool Session::LoadSummary()
 //    static int sumcnt = 0;
 
     if (s_summary_loaded) return true;
-    QString filename = s_machine->getSummariesPath() + QString().sprintf("%08lx.000", s_session);
+    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session);
 
     if (filename.isEmpty()) {
         qDebug() << "Empty summary filename";
@@ -669,7 +678,7 @@ bool Session::StoreEvents()
     QString path = s_machine->getEventsPath();
     QDir dir;
     dir.mkpath(path);
-    QString filename = path+QString().sprintf("%08lx.001", s_session);
+    QString filename = path+ QString::asprintf("%08lx.001", s_session) ;
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -1063,7 +1072,7 @@ void Session::updateCountSummary(ChannelID code)
 {
     QHash<ChannelID, QVector<EventList *> >::iterator ev = eventlist.find(code);
 
-    if (ev == eventlist.end()) { 
+    if (ev == eventlist.end()) {
         qDebug() << "No events for channel (hex)" << QString::number(code, 16);
         return;
     }
@@ -1557,7 +1566,7 @@ bool Session::channelDataExists(ChannelID id)
 }
 bool Session::channelExists(ChannelID id)
 {
-    if ( ! enabled()) { 
+    if ( ! enabled()) {
         return false;
     }
 
@@ -1574,7 +1583,7 @@ bool Session::channelExists(ChannelID id)
             return false;
         }
 
-        if (q.value() == 0) { 
+        if (q.value() == 0) {
             return false;
         }
     }

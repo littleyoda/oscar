@@ -47,6 +47,65 @@
 #include "SleepLib/profiles.h"
 #include "overview.h"
 
+
+#if 0
+/*
+from qt 4.8
+int QGraphicsSceneWheelEvent::delta() const
+Returns the distance that the wheel is rotated, in eighths (1/8s) of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+int QWheelEvent::delta () const
+Returns the distance that the wheel is rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event.
+
+Example:
+
+ void MyWidget::wheelEvent(QWheelEvent *event)
+ {
+     int numDegrees = event->delta() / 8;
+     int numSteps = numDegrees / 15;
+
+     if ( isEventHorizontal(event) )  {
+         scrollHorizontally(numSteps);
+     } else {
+         scrollVertically(numSteps);
+     }
+     event->accept();
+ }
+
+
+ from qt 5.15
+Returns the relative amount that the wheel was rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user. angleDelta().y() provides the angle through which the common vertical mouse wheel was rotated since the previous event. angleDelta().x() provides the angle through which the horizontal mouse wheel was rotated, if the mouse has a horizontal wheel; otherwise it stays at zero. Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture; that will also appear in angleDelta().x().
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event. But to provide a more native feel, you should prefer pixelDelta() on platforms where it's available.
+*/
+#endif
+
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define wheelEventPos( id )   id ->position()
+    #define wheelEventX( id )     id ->position().x()
+    #define wheelEventY( id )     id ->position().y()
+    #define wheelEventDelta( id ) id ->angleDelta().y()
+
+    #define isWheelEventVertical( id )  id ->angleDelta().x()==0
+    #define isWheelEventHorizontal( id )  id ->angleDelta().y()==0
+#else
+    #define wheelEventPos( id )   id ->pos()
+    #define wheelEventX( id )     id ->x()
+    #define wheelEventY( id )     id ->y()
+    #define wheelEventDelta( id ) id ->delta()
+
+    #define isWheelEventVertical( id )  id ->orientation() == Qt::Vertical
+    #define isWheelEventHorizontal( id )  id ->orientation() == Qt::Horizontal
+#endif
+
 extern MainWindow *mainwin;
 
 #include <QApplication>
@@ -110,8 +169,11 @@ w+=m_spacer*2;
 h+=m_spacer*2; */
 //}
 
-void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int timeout)
+void gToolTip::display(QString text, int x, int y, ToolTipAlignment align, int timeout,bool alwaysShow)
 {
+    if (!alwaysShow && !AppSetting->graphTooltips())  {
+        return;
+    }
     if (timeout <= 0) {
         timeout = AppSetting->tooltipTimeout();
     }
@@ -284,7 +346,7 @@ void gParentToolTip::paint(QPainter &painter,int width,int height) {
     if (!m_parent_visible) {return ;};
     m_width=width;
     m_height=height;
-    gToolTip::display(m_text, 0, 0,m_alignment, m_timeout);
+    gToolTip::display(m_text, 0, 0,m_alignment, m_timeout,true);
     gToolTip::paint(painter);
 };
 
@@ -888,7 +950,11 @@ void gGraphView::DrawTextQue(QPainter &painter)
         if (q.angle == 0) {
             painter.drawText(q.x, q.y, q.text);
         } else {
-            w = painter.fontMetrics().width(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else
+                w = painter.fontMetrics().width(q.text);
+            #endif
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.x, q.y);
@@ -913,7 +979,11 @@ void gGraphView::DrawTextQue(QPainter &painter)
         if (q.angle == 0) {
             painter.drawText(q.rect, q.flags, q.text);
         } else {
-            w = painter.fontMetrics().width(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else
+                w = painter.fontMetrics().width(q.text);
+            #endif
             h = painter.fontMetrics().xHeight() + 2;
 
             painter.translate(q.rect.x(), q.rect.y());
@@ -954,7 +1024,11 @@ void gGraphView::DrawTextQueCached(QPainter &painter)
         if (!QPixmapCache::find(hstr, &pm)) {
 
             QFontMetrics fm(*q.font);
-            w = fm.width(q.text);
+            #if (QT_VERSION >= QT_VERSION_CHECK(5,11,0))
+                w = painter.fontMetrics().horizontalAdvance(q.text);
+            #else
+                w = painter.fontMetrics().width(q.text);
+            #endif
             h = fm.height()+buf;
 
             pm = QPixmap(w, h);
@@ -1780,8 +1854,11 @@ void gGraphView::mouseMoveEvent(QMouseEvent *event)
         float h = m_graphs[m_sizer_index]->height();
         h += my / m_scaleY;
 
-        if (h > m_graphs[m_sizer_index]->minHeight()) {
-            m_graphs[m_sizer_index]->setHeight(h);
+        gGraph* graph = m_graphs[m_sizer_index];
+        int minHeight = graph-> minHeight();
+        if (h < minHeight) { h = minHeight; }   // past minimum height - reset to to minimum
+        if ((h > minHeight) || ( graph->height() > minHeight)) {
+            graph->setHeight(h);
             m_sizer_point.setX(x);
             m_sizer_point.setY(y);
             updateScrollBar();
@@ -2231,6 +2308,13 @@ void gGraphView::populateMenu(gGraph * graph)
             const DottedLine & dot = lc->m_dotlines[i];
 
             if (!lc->m_enabled[dot.code]) continue;
+
+            #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+            // if red line is always on then there is no need for the button to turn it on /off
+            // skip creating UI to change value.   or turn enabled off.
+            //if (lc->code() == CPAP_FlowRate && dot.type == Calc_Zero) continue;
+            if (lc->code() == CPAP_FlowRate) continue;
+            #endif
 
             schema::Channel &chan = schema::channel[dot.code];
 
@@ -3065,7 +3149,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
     if (event->modifiers() == Qt::NoModifier) {
         int scrollDampening = AppSetting->scrollDampening();
 
-        if (event->orientation() == Qt::Vertical) { // Vertical Scrolling
+        if (isWheelEventVertical(event)) { // Vertical Scrolling
             if (horizScrollTime.elapsed() < scrollDampening) {
                 return;
             }
@@ -3088,7 +3172,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
     gGraph *graph = nullptr;
     int group = 0;
     //int x = event->x();
-    int y = event->y();
+    int y = wheelEventY(event);
 
     float h, py = 0, pinned_height = 0;
 
@@ -3172,7 +3256,7 @@ void gGraphView::wheelEvent(QWheelEvent *event)
         double xx = (graph->max_x - graph->min_x);
         double zoom = 240.0;
 
-        int delta = event->delta();
+        int delta = wheelEventDelta(event);
 
         if (delta > 0) {
             graph->min_x -= (xx / zoom) * (float)abs(delta);
@@ -3470,7 +3554,7 @@ void gGraphView::resetGraphOrder(bool pinFirst, const QList<QString> graphOrder)
         QString nextGraph = graphOrder.at(i);
         auto it = m_graphsbyname.find(nextGraph);
         if (it == m_graphsbyname.end()) {
-            qDebug() << "resetGraphOrder could not find" << nextGraph;
+            // qDebug() << "resetGraphOrder could not find" << nextGraph;
             continue;  // should not happen
         }
         gGraph * graph = it.value();
@@ -3481,7 +3565,7 @@ void gGraphView::resetGraphOrder(bool pinFirst, const QList<QString> graphOrder)
     }
     // If we didn't find everything, append anything extra we have
     for (int i = 0; i < old_graphs.size(); i++) {
-        qDebug() << "resetGraphOrder added leftover" << old_graphs.at(i)->name();
+        // qDebug() << "resetGraphOrder added leftover" << old_graphs.at(i)->name();
         new_graphs.append(old_graphs.at(i));
     }
 
@@ -3513,8 +3597,8 @@ void gGraphView::SaveDefaultSettings() {
     m_default_graphs = m_graphs;
 }
 
-const quint32 gvmagic = 0x41756728;   //'Aug('
-const quint16 gvversion = 4;
+const quint32 gVmagic = 0x41756728;   //'Aug('
+const quint16 gVversion = 5;    // version 5 has same format as 4, used to override settings in shg files on upgrade to version 5.
 
 QString gGraphView::settingsFilename (QString title,QString folderName, QString ext) {
     if (folderName.size()==0) {
@@ -3522,6 +3606,19 @@ QString gGraphView::settingsFilename (QString title,QString folderName, QString 
     }
     return folderName+title.toLower()+ext;
 }
+
+/* This note is for the save and restore settings.
+* all versions prior to 4 were sleepyHead versions and have never been used.
+* The layouts (version 4 and 5) are identical
+* The rollback to a gVversion should always work.
+* So new addtions to the saved configuration must be placed at the end of the file.
+* the SHG file will then be
+*   SHG FILE HEADER - Must never change
+*   SHG VERSION 4(5) changes - for all graphs
+*   SHG VERSION 6 changes - for all graphs
+*   SHG VERSION 7 changes - for all graphs
+*   ...
+*/
 
 void gGraphView::SaveSettings(QString title,QString folderName)
 {
@@ -3533,8 +3630,8 @@ void gGraphView::SaveSettings(QString title,QString folderName)
     out.setVersion(QDataStream::Qt_4_6);
     out.setByteOrder(QDataStream::LittleEndian);
 
-    out << (quint32)gvmagic;
-    out << (quint16)gvversion;
+    out << (quint32)gVmagic;
+    out << (quint16)gVversion;
 
     out << (qint16)size();
 
@@ -3559,9 +3656,13 @@ void gGraphView::SaveSettings(QString title,QString folderName)
         } else {
             out << (quint32)LT_Other;
         }
-
+    }
+    #if 0
+    // add changes for additional settings
+    for (auto & graph : m_graphs) {
 
     }
+    #endif
 
     f.close();
 }
@@ -3598,80 +3699,62 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
 
     in >> t1;
 
-    if (t1 != gvmagic) {
-        qDebug() << "gGraphView" << title << "settings magic doesn't match" << t1 << gvmagic;
+    if (t1 != gVmagic) {
+        qDebug() << "gGraphView" << title << "settings magic doesn't match" << t1 << gVmagic;
         return false;
     }
 
     in >> version;
 
-    if (version < gvversion) {
-        qDebug() << "gGraphView" << title << "settings will be upgraded.";
-    }
+    //The first version of OSCAR 1.0.0-release started at gVversion 4. and the OSCAR 1.4.0 still uses gVversion 4
+    // This section of code is being simplified  to remove dependances on lower version.
 
-    qint16 siz;
-    in >> siz;
+    //if (version < gVversion) {
+        //qDebug() << "gGraphView" << title << "settings will be upgraded.";
+    //}
+
+    qint16 numGraphs;
     QString name;
     float hght;
     bool vis;
     EventDataType recminy, recmaxy;
     bool pinned;
-
     short zoomy = 0;
-
     QList<gGraph *> neworder;
     QHash<QString, gGraph *>::iterator gi;
 
-    for (int i = 0; i < siz; i++) {
+    in >> numGraphs;
+    for (int i = 0; i < numGraphs; i++) {
         in >> name;
         in >> hght;
         in >> vis;
         in >> recminy;
         in >> recmaxy;
 //qDebug() << "Loading graph" << title << name;
-        if (gvversion >= 1) {
-            in >> zoomy;
-        }
+        in >> zoomy;
 
-        if (gvversion >= 2) {
-            in >> pinned;
-        }
-
+        in >> pinned;
         QHash<ChannelID, bool> flags_enabled;
         QHash<ChannelID, bool> plots_enabled;
         QHash<ChannelID, QHash<quint32, bool> > dot_enabled;
 
         // Warning: Do not break the follow section up!!!
         quint32 layertype;
-        if (gvversion >= 4) {
-            in >> layertype;
-            if (layertype == LT_LineChart) {
-                in >> flags_enabled;
-                in >> plots_enabled;
-                in >> dot_enabled;
-            }
+        in >> layertype;
+        if (layertype == LT_LineChart) {
+            in >> flags_enabled;
+            in >> plots_enabled;
+            in >> dot_enabled;
         }
 
         gGraph *g = nullptr;
-
-        if (version <= 2) {
-            continue;
-//            // Names were stored as translated strings, so look up title instead.
-//            g = nullptr;
-//            for (int z=0; z<m_graphs.size(); ++z) {
-//                if (m_graphs[z]->title() == name) {
-//                    g = m_graphs[z];
-//                    break;
-//                }
-//            }
+        gi = m_graphsbyname.find(name);
+        if (gi == m_graphsbyname.end()) {
+            qDebug() << "Graph" << name << "has been renamed or removed";
         } else {
-            gi = m_graphsbyname.find(name);
-            if (gi == m_graphsbyname.end()) {
-                qDebug() << "Graph" << name << "has been renamed or removed";
-            } else {
-                g = gi.value();
-            }
+            g = gi.value();
         }
+
         if (g) {
             neworder.push_back(g);
             g->setHeight(hght);
@@ -3681,19 +3764,41 @@ bool gGraphView::LoadSettings(QString title,QString folderName)
             g->setZoomY(static_cast<ZoomyScaling>(zoomy));
             g->setPinned(pinned);
 
-            if (gvversion >= 4) {
-                if (layertype == LT_LineChart) {
-                    gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
-                    if (lc) {
-                        hashMerge(lc->m_flags_enabled, flags_enabled);
-                        hashMerge(lc->m_enabled, plots_enabled);
-                        hashMerge(lc->m_dot_enabled, dot_enabled);
+            if (layertype == LT_LineChart) {
+                gLineChart * lc = dynamic_cast<gLineChart *>(findLayer(g, LT_LineChart));
+                if (lc) {
+                    hashMerge(lc->m_flags_enabled, flags_enabled);
+                    hashMerge(lc->m_enabled, plots_enabled);
+                    hashMerge(lc->m_dot_enabled, dot_enabled);
+
+                    // the following check forces the flowRate graph to have a Zero dotted line enabled when the the current version changes from 4 to 5
+                    // still allows the end user user to to remove the zero dotted line.
+                    // currently this would be executed on each graphview version (gVversion) change
+                    // could be changed.
+                    // This is a one time change.
+                    if (version==4 && gVversion>4) {
+                        lc->resetGraphViewSettings();
                     }
                 }
             }
-
         }
     }
+    // Do this for gVersion 5
+    #if 0
+    // Version 5 had no changes
+    if (version>=gVversion)
+    for (int i = 0; i < numGraphs; i++) {
+    }
+    #endif
+
+    // Do this for gVersion 6 ...
+    #if 0
+    // repeat this for each additional version change
+    // this for the next additions to the saved information.
+    if (version>=gVversion)
+    for (int i = 0; i < numGraphs; i++) {
+    }
+    #endif
 
     if (neworder.size() == m_graphs.size()) {
         m_graphs = neworder;

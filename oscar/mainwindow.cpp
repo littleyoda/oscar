@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 
@@ -17,6 +17,7 @@
 #include <QResource>
 #include <QProgressBar>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QSettings>
 #include <QPixmap>
 #include <QDesktopWidget>
@@ -37,9 +38,13 @@
 #include <QScreen>
 #include <QStorageInfo>
 #include <cmath>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QRandomGenerator>
+#endif
 
 #include "common_gui.h"
 #include "version.h"
+#include "SleepLib/appsettings.h"       // defines for REMSTAR_M_SUPPORT
 
 
 // Custom loaders that don't autoscan..
@@ -233,7 +238,11 @@ void MainWindow::SetupGUI()
     ui->tabWidget->setCurrentWidget(profileSelector);   // setting this to daily shows the cube during loading..
     ui->tabWidget->setTabEnabled(1, false);             // this should be the Statistics tab
 
-    ui->toolBox->setCurrentIndex(0);
+    // toolbox is the right sidebar that contain the Navigation, bookmark , and Records tabs.
+    // Navigation has offset 0
+    // Bookmarks  has offset 1
+    // Records    has offset 2
+    ui->toolBox->setCurrentIndex(2);    
     bool b = AppSetting->rightSidebarVisible();
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
@@ -256,7 +265,11 @@ void MainWindow::SetupGUI()
     ui->actionImport_RemStar_MSeries_Data->setVisible(false);
 #endif
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QRandomGenerator(QDateTime::currentDateTime().toTime_t());
+#else
     qsrand(QDateTime::currentDateTime().toTime_t());
+#endif
 
     QList<int> a;
 
@@ -463,6 +476,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
             return false;
         }
     }
+
     prof = profileSelector->SelectProfile(profileName, skippassword);  // asks for the password and updates stuff in profileSelector tab
     if (!prof) {
         return false;
@@ -471,6 +485,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     // Check Lockfile
     QString lockhost = prof->checkLock();
+
 
     if (!lockhost.isEmpty()) {
         if (lockhost.compare(QHostInfo::localHostName()) != 0) {
@@ -487,7 +502,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     }
 
     p_profile = prof;
-
     ProgressDialog * progress = new ProgressDialog(this);
 
     progress->setMessage(QObject::tr("Loading profile \"%1\"...").arg(profileName));
@@ -530,6 +544,15 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     }
 
     p_profile->LoadMachineData(progress);
+
+
+    if (!p_profile->LastDay(MT_CPAP).isValid() ) { // quick test if new profile or not. 
+        // Override default value of clinicalMode if new profile.
+        // Allows permissiveMode (not clinicalMode) to be the default value for existing profiles.
+        p_profile->cpap->setClinicalMode(true);
+    }
+    m_clinicalMode = p_profile->cpap->clinicalMode();
+
     progress->setMessage(tr("Loading profile \"%1\"").arg(profileName));
 
     // Show the logo?
@@ -612,6 +635,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
             }
             break;
     }
+
 
     progress->close();
     delete progress;
@@ -914,7 +938,7 @@ QList<ImportPath> MainWindow::detectCPAPCards()
     QString lastpath = (*p_profile)[STR_PREF_LastCPAPPath].toString();
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     // Create dialog
@@ -1041,7 +1065,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
 
     QList<MachineLoader *>loaders = GetLoaders(MT_CPAP);
 
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
 
@@ -1145,13 +1169,20 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
         }
 
 
+        bool found=false;
         for (int i = 0; i < w.selectedFiles().size(); i++) {
             Q_FOREACH(MachineLoader * loader, loaders) {
                 if (loader->Detect(w.selectedFiles().at(i))) {
+                    found=true;
                     datacards.append(ImportPath(w.selectedFiles().at(i), loader));
                     break;
                 }
             }
+        }
+        if (!found) {
+            QMessageBox msgBox ( QMessageBox::Information , tr("OSCAR Information") , tr("No supported data was found") , QMessageBox::Ok ) ;
+            msgBox.setInformativeText(w.selectedFiles().at(0));
+            msgBox.exec();
         }
     }
     
@@ -1378,6 +1409,12 @@ void MainWindow::on_action_Preferences_triggered()
 
         setApplicationFont();
 
+
+        if (m_clinicalMode != p_profile->cpap->clinicalMode() ) {
+            m_clinicalMode = p_profile->cpap->clinicalMode(); ;
+            reloadProfile();
+        };
+
         if (daily) {
             daily->RedrawGraphs();
         }
@@ -1392,6 +1429,8 @@ void MainWindow::on_action_Preferences_triggered()
 
         if (profileSelector)
             profileSelector->updateProfileList();
+
+        GenerateStatistics();
 
 // These attempts to update calendar after a change to application font do NOT work, and I can find no QT documentation suggesting
 // that changing the font after Calendar is created is even possible.

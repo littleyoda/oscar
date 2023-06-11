@@ -28,6 +28,18 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
+
 using namespace std;
 
 #include "cms50_loader.h"
@@ -302,7 +314,7 @@ int CMS50Loader::doImportMode()
             m_startTime = QDateTime(oda,oti);
 
             oxisessions[m_startTime] = oxirec;
-            qDebug() << "Session start (according to CMS50)" << m_startTime << hex << buffer.at(idx + 1) << buffer.at(idx + 2) << ":" << dec << hour << minute ;
+            qDebug() << "Session start (according to CMS50)" << m_startTime << QTHEX << buffer.at(idx + 1) << buffer.at(idx + 2) << ":" << QTDEC << hour << minute ;
 
             cb_reset = 1;
 

@@ -160,6 +160,7 @@ public:
     }
     
     STRRecord(const STRRecord & /*copy*/) = default;
+    ~STRRecord() {};    // required to get rid of warning
 
 // All the data members
 

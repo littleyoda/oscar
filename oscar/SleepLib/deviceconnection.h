@@ -291,6 +291,7 @@ public:
     friend class QXmlStreamWriter & operator<<(QXmlStreamWriter & xml, const SerialPortInfo & info);
     friend class QXmlStreamReader & operator>>(QXmlStreamReader & xml, SerialPortInfo & info);
     bool operator==(const SerialPortInfo & other) const;
+    SerialPortInfo& operator=(const SerialPortInfo & other) = default;
 
 protected:
     SerialPortInfo(const class QSerialPortInfo & other);

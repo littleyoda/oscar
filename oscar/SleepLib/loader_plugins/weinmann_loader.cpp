@@ -17,6 +17,17 @@
 
 #include "weinmann_loader.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
+
 Weinmann::Weinmann(Profile *profile, MachineID id)
     : CPAP(profile, id)
 {
@@ -74,7 +85,7 @@ int WeinmannLoader::ParseIndex(QFile & wmdata)
             int val = e.attribute("val").toInt(&ok);
             if (ok) {
                 index[e.attribute("name")] = val;
-                qDebug() << e.attribute("name") << "=" << hex << val;
+                qDebug() << e.attribute("name") << "=" << QTHEX << val;
             }
         }
         n = n.nextSibling();
@@ -152,7 +163,7 @@ int WeinmannLoader::Open(const QString & dirpath)
 
     unsigned char *p = weekco;
     for (int c=0; c < wccount; ++c) {
-        int year = QString().sprintf("%02i%02i", p[0], p[1]).toInt();
+        int year = QString::asprintf("%02i%02i", p[0], p[1]).toInt();
         int month = p[2];
         int day = p[3];
         int hour = p[5];
@@ -206,7 +217,7 @@ int WeinmannLoader::Open(const QString & dirpath)
 
     //int c = index[DayComplianceCount];
     for (int i=0; i < 5; i++) {
-        int year = QString().sprintf("%02i%02i", p[0], p[1]).toInt();
+        int year = QString::asprintf("%02i%02i", p[0], p[1]).toInt();
         int month = p[2];
         int day = p[3];
         int hour = p[5];
@@ -250,7 +261,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         sess->really_set_last(qint64(ts+dur) * 1000L);
         sessions[ts] = sess;
 
-//        qDebug() << date << ts << dur << QString().sprintf("%02i:%02i:%02i", dur / 3600, dur/60 % 60, dur % 60);
+//        qDebug() << date << ts << dur << QString::asprintf("%02i:%02i:%02i", dur / 3600, dur/60 % 60, dur % 60);
 
         p += 0xd6;
     }
@@ -361,6 +372,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         EventList * FL = sess->AddEventList(CPAP_FlowLimit, EVL_Event);
 //        EventList * VS = sess->AddEventList(CPAP_VSnore, EVL_Event);
         quint64 tt = ti;
+        Q_UNUSED (tt);
         quint64 step = sess->length() / ci.event_recs;
         unsigned char *p = &ev[ci.event_start];
         for (quint32 j=0; j < ci.event_recs; ++j) {

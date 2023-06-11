@@ -24,6 +24,64 @@
 
 extern MainWindow *mainwin;
 
+#if 0
+/*
+from qt 4.8
+int QGraphicsSceneWheelEvent::delta() const
+Returns the distance that the wheel is rotated, in eighths (1/8s) of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+int QWheelEvent::delta () const
+Returns the distance that the wheel is rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user.
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event.
+
+Example:
+
+ void MyWidget::wheelEvent(QWheelEvent *event)
+ {
+     int numDegrees = event->delta() / 8;
+     int numSteps = numDegrees / 15;
+
+     if ( isWheelEventHorizontal(event) )  {
+         scrollHorizontally(numSteps);
+     } else {
+         scrollVertically(numSteps);
+     }
+     event->accept();
+ }
+
+
+ from qt 5.15
+Returns the relative amount that the wheel was rotated, in eighths of a degree. A positive value indicates that the wheel was rotated forwards away from the user; a negative value indicates that the wheel was rotated backwards toward the user. angleDelta().y() provides the angle through which the common vertical mouse wheel was rotated since the previous event. angleDelta().x() provides the angle through which the horizontal mouse wheel was rotated, if the mouse has a horizontal wheel; otherwise it stays at zero. Some mice allow the user to tilt the wheel to perform horizontal scrolling, and some touchpads support a horizontal scrolling gesture; that will also appear in angleDelta().x().
+
+Most mouse types work in steps of 15 degrees, in which case the delta value is a multiple of 120; i.e., 120 units * 1/8 = 15 degrees.
+
+However, some mice have finer-resolution wheels and send delta values that are less than 120 units (less than 15 degrees). To support this possibility, you can either cumulatively add the delta values from events until the value of 120 is reached, then scroll the widget, or you can partially scroll the widget in response to each wheel event. But to provide a more native feel, you should prefer pixelDelta() on platforms where it's available.
+*/
+#endif
+
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define wheelEventPos( id )   id ->position()
+    #define wheelEventX( id )     id ->position().x()
+    #define wheelEventY( id )     id ->position().y()
+    #define wheelEventDelta( id ) id ->angleDelta().y()
+
+    #define isWheelEventVertical( id )  id ->angleDelta().x()==0
+    #define isWheelEventHorizontal( id )  id ->angleDelta().y()==0
+#else
+    #define wheelEventPos( id )   id ->pos()
+    #define wheelEventX( id )     id ->x()
+    #define wheelEventY( id )     id ->y()
+    #define wheelEventDelta( id ) id ->delta()
+
+    #define isWheelEventVertical( id )  id ->orientation() == Qt::Vertical
+    #define isWheelEventHorizontal( id )  id ->orientation() == Qt::Horizontal
+#endif
+
 // Graph globals.
 QFont *defaultfont = nullptr;
 QFont *mediumfont = nullptr;
@@ -144,7 +202,8 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
         qDebug() << "Trying to duplicate " << name << " when a graph with the same name already exists";
         name+="-1";
     }
-    m_min_height = 60;
+    m_min_height = 60;      // this is the graphs minimum height.- does not consider the graphs layer height requirements. 
+    m_defaultLayerMinHeight = 25;   // this is the minimum requirements for the layer height. can be chnaged by a layer. // not changable
     m_width = 0;
 
     m_layers.clear();
@@ -179,7 +238,6 @@ gGraph::gGraph(QString name, gGraphView *graphview, QString title, QString units
     m_pinned = false;
     m_lastx23 = 0;
 
-    invalidate_yAxisImage = true;
     invalidate_xAxisImage = true;
 
     m_block_select = false;
@@ -775,6 +833,7 @@ double gGraph::currentTime() const
 {
     return m_graphview->currentTime();
 }
+
 double gGraph::screenToTime(int xpos)
 {
     double w = m_rect.width() - left - right;
@@ -863,8 +922,7 @@ void gGraph::mouseMoveEvent(QMouseEvent *event)
             if (d > 1) {
                 m_selDurString = tr("%1 days").arg(floor(d));
             } else {
-
-                m_selDurString.sprintf("%02i:%02i:%02i:%03i", h, m, s, ms);
+                m_selDurString=QString::asprintf("%02i:%02i:%02i:%03i", h, m, s, ms);
             }
 
             ToolTipAlignment align = x >= x2 ? TT_AlignLeft : TT_AlignRight;
@@ -953,18 +1011,6 @@ void gGraph::mousePressEvent(QMouseEvent *event)
                 return;
             }
     }
-
-    /*
-    int w=m_lastbounds.width()-(right+m_marginright);
-    //int h=m_lastbounds.height()-(bottom+m_marginbottom);
-    //int x2,y2;
-    double xx=max_x-min_x;
-    //double xmult=xx/w;
-    if (x>left+m_marginleft && x<m_lastbounds.width()-(right+m_marginright) && y>top+m_margintop && y<m_lastbounds.height()-(bottom+m_marginbottom)) { // main area
-        x-=left+m_marginleft;
-        y-=top+m_margintop;
-    }*/
-    //qDebug() << m_title << "Clicked" << x << y << left << right << top << bottom << m_width << m_height;
 }
 
 void gGraph::mouseReleaseEvent(QMouseEvent *event)
@@ -1068,6 +1114,15 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
     if ((m_graphview->horizTravel() < mouse_movement_threshold) && (x > left && x < w + left
             && y > top && y < h)) {
+        if ((event->modifiers() & Qt::ShiftModifier) != 0) {
+            qint64 time = (qint64)screenToTime(x);
+            qint64 period =qint64(p_profile->general->eventWindowSize())*60000L;  // eventwindowsize units  minutes
+            qint64 small  =period/10;
+            qint64 start = time - period;
+            qint64 end   = time + small;
+            m_graphview->SetXBounds(start, end);
+            return;
+        }
         // normal click in main area
         if (!m_blockzoom) {
             double zoom;
@@ -1142,23 +1197,23 @@ void gGraph::mouseReleaseEvent(QMouseEvent *event)
 
 void gGraph::wheelEvent(QWheelEvent *event)
 {
-    qDebug() << m_title << "Wheel" << event->x() << event->y() << event->delta();
+    //qDebug() << m_title << "Wheel" << wheelEventX(event) << wheelEventY(event) << wheelEventDelta(event);
     //int y=event->pos().y();
-    if (event->orientation() == Qt::Horizontal) {
+    if ( isWheelEventHorizontal(event) ) {
 
         return;
     }
 
-    int x = event->pos().x() - m_graphview->titleWidth; //(left+m_marginleft);
+    int x = wheelEventPos( event).x() - m_graphview->titleWidth; //(left+m_marginleft);
 
-    if (event->delta() > 0) {
+    if (wheelEventDelta(event) > 0) {
         ZoomX(0.75, x);
     } else {
         ZoomX(1.5, x);
     }
 
-    int y = event->pos().y();
-    x = event->pos().x();
+    int y = wheelEventPos(event).y();
+    x = wheelEventPos(event).x();
 
     for (const auto & layer : m_layers) {
         if (layer->m_rect.contains(x, y)) {
@@ -1265,7 +1320,6 @@ void gGraph::DrawTextQue(QPainter &painter)
 void gGraph::resize(int width, int height)
 {
     invalidate_xAxisImage = true;
-    invalidate_yAxisImage = true;
 
     Q_UNUSED(width);
     Q_UNUSED(height);
@@ -1476,18 +1530,14 @@ Layer *gGraph::getLineChart()
 
 int gGraph::minHeight()
 {
-    int minheight = m_min_height;
-
-//    int top = 0;
-//    int center = 0;
-//    int bottom = 0;
+    // adjust graph height for centerLayer (ploting area) required height.
+    int adjustment  = top + bottom;    //adjust graph minimun to layer minimum
+    int minlayerheight = m_min_height  - adjustment;
     for (const auto & layer : m_layers) {
-        int mh = layer->minimumHeight();
-        mh += m_margintop + m_marginbottom;
-        if (mh > minheight) minheight = mh;
+        if (layer->position() != LayerCenter) continue;
+        minlayerheight = max(max (m_defaultLayerMinHeight,layer->minimumHeight()),minlayerheight);
     }
-    // layers need to set their own too..
-    return minheight;
+    return minlayerheight + adjustment; // adjust layer min to graph minimum
 }
 
 int GetXHeight(QFont *font)

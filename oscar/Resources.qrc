@@ -66,6 +66,8 @@
         <file>icons/update.png</file>
         <file>icons/cog.png</file>
         <file>icons/question_mark.png</file>
-        <file>icons/return.png</file>
+        <file>icons/checkmark.png</file>
+        <file>icons/empty_box.png</file>
+        <file>icons/resvent.png</file>
     </qresource>
 </RCC>

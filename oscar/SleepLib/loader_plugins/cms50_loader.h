@@ -10,6 +10,7 @@
 #ifndef CMS50LOADER_H
 #define CMS50LOADER_H
 
+#include <QElapsedTimer>
 #include "SleepLib/serialoximeter.h"
 
 const QString cms50_class_name = "CMS50";
@@ -73,7 +74,7 @@ protected:
     EventList *PULSE;
     EventList *SPO2;
 
-    QTime m_time;
+    QElapsedTimer m_time;
 
     QByteArray buffer;
 

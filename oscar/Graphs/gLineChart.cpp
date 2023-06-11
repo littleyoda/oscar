@@ -47,7 +47,6 @@ QDataStream & operator>>(QDataStream & stream, DottedLine & dot)
     return stream;
 }
 
-
 QColor darken(QColor color, float p)
 {
     int r = qMin(int(color.red() * p), 255);
@@ -58,6 +57,18 @@ QColor darken(QColor color, float p)
     return QColor(r,g,b, color.alpha());
 }
 
+void gLineChart::resetGraphViewSettings() {
+    #if !defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+    // always turn zero red line on as default value.
+    if (m_code==CPAP_FlowRate) {
+        m_dot_enabled[m_code][Calc_Zero] = true;
+    } else
+    #endif
+    if (m_code==CPAP_Leak) {
+        m_dot_enabled[m_code][Calc_UpperThresh] = true;
+    }
+}
+
 gLineChart::gLineChart(ChannelID code, bool square_plot, bool disable_accel)
     : Layer(code), m_square_plot(square_plot), m_disable_accel(disable_accel)
 {
@@ -66,7 +77,9 @@ gLineChart::gLineChart(ChannelID code, bool square_plot, bool disable_accel)
     lines.reserve(50000);
     lasttime = 0;
     m_layertype = LT_LineChart;
+    resetGraphViewSettings();
 }
+
 gLineChart::~gLineChart()
 {
     for (auto fit = flags.begin(), end=flags.end(); fit != end; ++fit) {
@@ -210,7 +223,7 @@ skipcheck:
         if (!m_flags_enabled.contains(code)) {
             bool b = false;
 
-            if (((m_codes[0] == CPAP_FlowRate) || ((m_codes[0] == CPAP_MaskPressureHi))) && (schema::channel[code].machtype() == MT_CPAP)) b = true;
+            if (((m_codes[0] == CPAP_FlowRate) ||((m_codes[0] == CPAP_MaskPressureHi))) && (schema::channel[code].machtype() == MT_CPAP)) b = true;
             if ((m_codes[0] == CPAP_Leak) && (code == CPAP_LargeLeak)) b = true;
             m_flags_enabled[code] = b;
         }
@@ -237,12 +250,14 @@ skipcheck:
 
     for (const auto & code : m_codes) {
         const schema::Channel & chan = schema::channel[code];
-        addDotLine(DottedLine(code, Calc_Max,chan.calc[Calc_Max].enabled));
+        if (code != CPAP_FlowRate) {
+            addDotLine(DottedLine(code, Calc_Max,chan.calc[Calc_Max].enabled));
+        }
         if ((code != CPAP_FlowRate) && (code != CPAP_MaskPressure) && (code != CPAP_MaskPressureHi)) {
             addDotLine(DottedLine(code, Calc_Perc,chan.calc[Calc_Perc].enabled));
             addDotLine(DottedLine(code, Calc_Middle, chan.calc[Calc_Middle].enabled));
         }
-        if ((code != CPAP_Snore) && (code != CPAP_FlowLimit) && (code != CPAP_RDI) && (code != CPAP_AHI)) {
+        if ((code != CPAP_FlowRate) && (code != CPAP_Snore) && (code != CPAP_FlowLimit) && (code != CPAP_RDI) && (code != CPAP_AHI)) {
             addDotLine(DottedLine(code, Calc_Min, chan.calc[Calc_Min].enabled));
         }
     }
@@ -250,12 +265,17 @@ skipcheck:
         addDotLine(DottedLine(CPAP_Leak, Calc_UpperThresh, schema::channel[CPAP_Leak].calc[Calc_UpperThresh].enabled));
     } else if (m_codes[0] == CPAP_FlowRate) {
         addDotLine(DottedLine(CPAP_FlowRate, Calc_Zero, schema::channel[CPAP_FlowRate].calc[Calc_Zero].enabled));
+        #if defined(ENABLE_ALWAYS_ON_ZERO_RED_LINE_FLOW_RATE)
+            //on set day force red line on.
+            m_dot_enabled[m_code][Calc_Zero] = true;
+        #endif
     } else if (m_codes[0] == OXI_Pulse) {
         addDotLine(DottedLine(OXI_Pulse, Calc_UpperThresh, schema::channel[OXI_Pulse].calc[Calc_UpperThresh].enabled));
         addDotLine(DottedLine(OXI_Pulse, Calc_LowerThresh, schema::channel[OXI_Pulse].calc[Calc_LowerThresh].enabled));
     } else if (m_codes[0] == OXI_SPO2) {
         addDotLine(DottedLine(OXI_SPO2, Calc_LowerThresh, schema::channel[OXI_SPO2].calc[Calc_LowerThresh].enabled));
     }
+
 
 
     if (m_day) {
@@ -425,7 +445,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
 //#define DEBUG_AUTOSCALER
 #ifdef DEBUG_AUTOSCALER
-    QString a = QString().sprintf("%.2f - %.2f",miny, maxy);
+    QString a = QString::asprintf("%.2f - %.2f",miny, maxy);
     w.renderText(a,width/2,top-5);
 #endif
 
@@ -508,9 +528,9 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     height -= 2;
 
     int num_points = 0;
-    int visible_points = 0;
+    //int visible_points = 0;
     int total_points = 0;
-    int total_visible = 0;
+    //int total_visible = 0;
     bool square_plot, accel;
     qint64 clockdrift = qint64(p_profile->cpap->clockDrift()) * 1000L;
     qint64 drift = 0;
@@ -559,7 +579,6 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                 painter.setPen(QPen(QBrush(color), lineThickness, Qt::DotLine));
                 EventDataType y=top + height + 1 - ((dot.value - miny) * ymult);
                 painter.drawLine(left + 1, y, left + 1 + width, y);
-                DEBUGF NAME(dot.code) Q(dot.type) QQ(y,(int)y) Q(ratioX) O(QLine(left + 1, y, left + 1 + width, y)) Q(legendx) O(dot.value) ;
 
             }
         }
@@ -671,7 +690,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                     double ZR = ZD / sr;
                     double ZQ = ZR / XR;
                     double ZW = ZR / (width * ZQ);
-                    visible_points += ZR * ZQ;
+                    //visible_points += ZR * ZQ;
 
 //                    if (accel && n > 0) {
 //                        sam = 1;
@@ -700,7 +719,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
                         maxz = 0;
                     }
 
-                    total_visible += visible_points;
+                    //total_visible += visible_points;
                 } else {
                     sam = 1;
                 }
@@ -1083,14 +1102,14 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
     extras.push_back(CPAP_UserFlag1);
     extras.push_back(CPAP_UserFlag2);
 
-    double sum = 0;
+    //double sum = 0;
     int cnt = 0;
 
     //Draw the linechart overlays (Event flags) independant of line Cursor mode
     //The problem was that turning lineCUrsor mode off (or  Control L) also stopped flag event on most daily graphs.
     // The user didn't know what trigger the problem. Best quess is that Control L was typed by mistable.
     // this fix allows flag events to be normally displayed when the line Cursor mode is off.
-    //was if (m_day /*&& (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))*/) 
+    //was if (m_day /*&& (AppSetting->lineCursorMode() || (m_codes[0]==CPAP_FlowRate))*/)
     if (m_day) {
         bool blockhover = false;
         for (auto fit=flags.begin(), end=flags.end(); fit != end; ++fit) {
@@ -1102,7 +1121,7 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
             if (lob->hover()) blockhover = true; // did it render a hover over?
 
             if (ahilist.contains(code)) {
-                sum += lob->sum();
+                //sum += lob->sum();
                 cnt += lob->count();
             }
         }
@@ -1125,8 +1144,9 @@ void gLineChart::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
    // painter.setRenderHint(QPainter::Antialiasing, false);
 
-if (actual_max_y>0) {
-    m_actual_min_y=actual_min_y;
-    m_actual_max_y=actual_max_y;
-}
+    if (actual_max_y>0) {
+        m_actual_min_y=actual_min_y;
+        m_actual_max_y=actual_max_y;
+    }
+
 }

@@ -68,7 +68,9 @@ enum Prisma_Parameters {
     PRISMA_LINE_EPAP = 1201,
     // PRISMA_LINE_ALARM_LEAK_ACTIVE = 1202,
     // PRISMA_LINE_ALARM_DISCONNECTION_ACTIVE = 1203,
-    PRISMA_LINE_APAP_DYNAMIC = 1209
+    PRISMA_LINE_APAP_DYNAMIC = 1209,
+    PRISMA_LINE_EXTRA_OBSTRUCTION_PROTECTION = 1154, // BiSoft off = 0, BiSoft1 = 2, BiSoft2 = 3, TriLevel = 1
+    PRISMA_LINE_AUTO_PDIFF = 1219
 
 };
 
@@ -95,6 +97,13 @@ enum Prisma_SoftPAP_Mode {
     Prisma_SoftPAP_OFF = 0,
     Prisma_SoftPAP_SLIGHT = 1,
     Prisma_SoftPAP_STANDARD = 2
+};
+
+enum Prisma_BiSoft_Mode {
+    Prisma_BiSoft_Off = 0,
+    Prisma_BiSoft_1 = 2,
+    Prisma_BiSoft_2 = 3,
+    Prisma_TriLevel = 1,
 };
 
 // NOTE: This enum represents a "virtual mode" which combines the main mode of the device with the APAP submode,

@@ -238,6 +238,10 @@ protected:
     //! \brief Mouse Button was released over this area. (jumps to daily view here)
     virtual bool mouseReleaseEvent(QMouseEvent *event, gGraph *graph);
 
+    QString durationInHoursToHhMmSs(double duration);
+    QString durationInMinutesToHhMmSs(double duration);
+    QString durationInSecondsToHhMmSs(double duration);
+
     QString m_label;
     MachineType m_machtype;
     bool m_empty;

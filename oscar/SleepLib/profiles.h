@@ -216,7 +216,7 @@ class Profile : public Preferences
 
     void loadChannels();
     void saveChannels();
-    void refrehOxiChannelsPref();
+    void resetOxiChannelPref();
 
 
     bool is_first_day;
@@ -295,21 +295,21 @@ const QString STR_OS_EnableOximetry = "EnableOximetry";
 const QString STR_OS_DefaultDevice = "DefaultOxiDevice";
 const QString STR_OS_SyncOximeterClock = "SyncOximeterClock";
 const QString STR_OS_OximeterType = "OximeterType";
-const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
+const QString STR_OS_SkipOxiIntroScreen = "SkipOxiIntroScreen";
+
 const QString STR_OS_SPO2DropDuration = "SPO2DropDuration";
 const QString STR_OS_SPO2DropPercentage = "SPO2DropPercentage";
 const QString STR_OS_PulseChangeDuration = "PulseChangeDuration";
 const QString STR_OS_PulseChangeBPM = "PulseChangeBPM";
-
-const QString STR_OS_SkipOxiIntroScreen = "SkipOxiIntroScreen";
 const QString STR_OS_oxiDesaturationThreshold = "oxiDesaturationThreshold";
 const QString STR_OS_flagPulseAbove = "flagPulseAbove";
 const QString STR_OS_flagPulseBelow = "flagPulseBelow";
+const QString STR_OS_OxiDiscardThreshold = "OxiDiscardThreshold";
 
 
 // CPAPSettings Strings
 const QString STR_CS_ComplianceHours = "ComplianceHours";
-const QString STR_CS_ShowCompliance = "ShowCompliance";
+const QString STR_CS_ClinicalMode = "ClinicalMode";
 const QString STR_CS_ShowLeaksMode = "ShowLeaksMode";
 const QString STR_CS_MaskStartDate = "MaskStartDate";
 const QString STR_CS_MaskDescription = "MaskDescription";
@@ -484,37 +484,52 @@ class OxiSettings : public PrefSettings
     OxiSettings(Profile *profile)
       : PrefSettings(profile)
     {
-        initPref(STR_OS_EnableOximetry, false);
+
+        // Intialized non-user changable item - set during import of data?
+        initPref(STR_OS_EnableOximetry, false); 
         initPref(STR_OS_DefaultDevice, QString());
         initPref(STR_OS_SyncOximeterClock, true);
         initPref(STR_OS_OximeterType, 0);
-        initPref(STR_OS_OxiDiscardThreshold, 0.0);
-        initPref(STR_OS_SPO2DropDuration, 8.0);
-        initPref(STR_OS_SPO2DropPercentage, 3.0);
-        initPref(STR_OS_PulseChangeDuration, 8.0);
-        initPref(STR_OS_PulseChangeBPM, 5.0);
-        initPref(STR_OS_SkipOxiIntroScreen, false);
+        initPref(STR_OS_SkipOxiIntroScreen, false); 
 
-        initPref(STR_OS_oxiDesaturationThreshold, 88);
-        initPref(STR_OS_flagPulseAbove, 130);
-        initPref(STR_OS_flagPulseBelow, 40);
+        // Initialize Changeable via GUI parameters with default values
+        initPref(STR_OS_SPO2DropDuration, defaultValue_OS_SPO2DropDuration);
+        initPref(STR_OS_SPO2DropPercentage, defaultValue_OS_SPO2DropPercentage);
+        initPref(STR_OS_PulseChangeDuration, defaultValue_OS_PulseChangeDuration);
+        initPref(STR_OS_PulseChangeBPM, defaultValue_OS_PulseChangeBPM);
+
+        initPref(STR_OS_OxiDiscardThreshold, defaultValue_OS_OxiDiscardThreshold);
+        initPref(STR_OS_oxiDesaturationThreshold, defaultValue_OS_oxiDesaturationThreshold);
+        initPref(STR_OS_flagPulseAbove, defaultValue_OS_flagPulseAbove);
+        initPref(STR_OS_flagPulseBelow, defaultValue_OS_flagPulseBelow);
+
     }
+
+    const double defaultValue_OS_SPO2DropDuration = 8.0;
+    const double defaultValue_OS_SPO2DropPercentage = 3.0;
+    const double defaultValue_OS_PulseChangeDuration = 8.0;
+    const double defaultValue_OS_PulseChangeBPM = 5.0;
+
+    const double defaultValue_OS_OxiDiscardThreshold = 0.0;
+    const double defaultValue_OS_oxiDesaturationThreshold = 88.0;
+    const double defaultValue_OS_flagPulseAbove = 99.0;
+    const double defaultValue_OS_flagPulseBelow = 40.0;
 
     bool oximetryEnabled() const { return getPref(STR_OS_EnableOximetry).toBool(); }
     QString defaultDevice() const { return getPref(STR_OS_DefaultDevice).toString(); }
     bool syncOximeterClock() const { return getPref(STR_OS_SyncOximeterClock).toBool(); }
     int oximeterType() const { return getPref(STR_OS_OximeterType).toInt(); }
-    double oxiDiscardThreshold() const { return getPref(STR_OS_OxiDiscardThreshold).toDouble(); }
+    bool skipOxiIntroScreen() const { return getPref(STR_OS_SkipOxiIntroScreen).toBool(); }
+
     double spO2DropDuration() const { return getPref(STR_OS_SPO2DropDuration).toDouble(); }
     double spO2DropPercentage() const { return getPref(STR_OS_SPO2DropPercentage).toDouble(); }
     double pulseChangeDuration() const { return getPref(STR_OS_PulseChangeDuration).toDouble(); }
     double pulseChangeBPM() const { return getPref(STR_OS_PulseChangeBPM).toDouble(); }
-    bool skipOxiIntroScreen() const { return getPref(STR_OS_SkipOxiIntroScreen).toBool(); }
 
+    double oxiDiscardThreshold() const { return getPref(STR_OS_OxiDiscardThreshold).toDouble(); }
     double  oxiDesaturationThreshold() const { return getPref(STR_OS_oxiDesaturationThreshold).toDouble(); }
     double  flagPulseAbove() const { return getPref(STR_OS_flagPulseAbove).toDouble(); }
     double  flagPulseBelow() const { return getPref(STR_OS_flagPulseBelow).toDouble(); }
-
 
     void setOximetryEnabled(bool enabled) { setPref(STR_OS_EnableOximetry, enabled); }
     void setDefaultDevice(QString name) { setPref(STR_OS_DefaultDevice, name); }
@@ -545,7 +560,7 @@ class CPAPSettings : public PrefSettings
       : PrefSettings(profile)
     {
         m_complianceHours = initPref(STR_CS_ComplianceHours, 4.0f).toFloat();
-        initPref(STR_CS_ShowCompliance, true);
+        m_clinicalMode = initPref(STR_CS_ClinicalMode, false).toBool();
         initPref(STR_CS_ShowLeaksMode, 0);
         // TODO: jedimark: Check if this date is initiliazed yet
         initPref(STR_CS_MaskStartDate, QDate());
@@ -582,7 +597,7 @@ class CPAPSettings : public PrefSettings
 
     //Getters
     double complianceHours() const { return m_complianceHours; }
-    bool showComplianceInfo() const { return getPref(STR_CS_ShowCompliance).toBool(); }
+    bool clinicalMode() const { return m_clinicalMode; }
     int leakMode() const { return getPref(STR_CS_ShowLeaksMode).toInt(); }
     QDate maskStartDate() const { return getPref(STR_CS_MaskStartDate).toDate(); }
     QString maskDescription() const { return getPref(STR_CS_MaskDescription).toString(); }
@@ -620,7 +635,7 @@ class CPAPSettings : public PrefSettings
     void setNotes(QString notes) { setPref(STR_CS_Notes, notes); }
     void setDateDiagnosed(QDate date) { setPref(STR_CS_DateDiagnosed, date); }
     void setComplianceHours(EventDataType hours) { setPref(STR_CS_ComplianceHours, m_complianceHours=hours); }
-    void setShowComplianceInfo(bool b) { setPref(STR_CS_ShowCompliance, b); }
+    void setClinicalMode(bool mode) { setPref(STR_CS_ClinicalMode, m_clinicalMode=mode); }
     void setLeakMode(int leakmode) { setPref(STR_CS_ShowLeaksMode, (int)leakmode); }
     void setMaskStartDate(QDate date) { setPref(STR_CS_MaskStartDate, date); }
     void setMaskType(MaskType masktype) { setPref(STR_CS_MaskType, (int)masktype); }
@@ -648,7 +663,7 @@ class CPAPSettings : public PrefSettings
     int m_clock_drift;
     double m_4cmH2OLeaks, m_20cmH2OLeaks;
     bool m_userEventFlagging, m_userEventDuplicates, m_calcUnintentionalLeaks, m_resyncFromUserFlagging, m_ahiReset;
-    bool m_showLeakRedline;
+    bool m_showLeakRedline, m_clinicalMode;
 
     EventDataType m_leakRedLine, m_complianceHours, m_ahiWindow;
 
@@ -737,7 +752,7 @@ class UserSettings : public PrefSettings
       : PrefSettings(profile)
     {
         initPref(STR_US_UnitSystem, US_Metric);
-        initPref(STR_US_EventWindowSize, 4.0);
+        setPref(STR_US_EventWindowSize, 3.0);
         m_skipEmptyDays = initPref(STR_US_SkipEmptyDays, true).toBool();
         initPref(STR_US_RebuildCache, false); // FIXME: jedimark: can't remember...
         m_calculateRDI = initPref(STR_US_CalculateRDI, false).toBool();

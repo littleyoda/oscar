@@ -36,6 +36,8 @@ namespace Ui {
 }
 
 class MainWindow;
+class DailySearchTab;
+class gFlagsGroup;
 
 
 /*! \class Daily
@@ -138,6 +140,15 @@ public:
 
     //void populateSessionWidget();
 
+    void showAllGraphs(bool show);
+    void showGraph(int index,bool show, bool updateGraph=true);
+    void showAllEvents(bool show);
+    void showEvent(int index,bool show, bool updateEvent=true);
+    void updateEventsCombo(Day*);
+    QString STR_HIDE_ALL_EVENTS =QString(tr("Hide All Events"));
+    QString STR_SHOW_ALL_EVENTS =QString(tr("Show All Events"));
+    QString STR_HIDE_ALL_GRAPHS =QString(tr("Hide All Graphs"));
+    QString STR_SHOW_ALL_GRAPHS =QString(tr("Show All Graphs"));
 
 public slots:
     void on_LineCursorUpdate(double time);
@@ -232,9 +243,6 @@ private slots:
 
     void on_graphCombo_activated(int index);
 
-    void on_toggleGraphs_clicked(bool checked);
-
-
 #ifndef REMOVE_FITNESS
     /*! \fn on_ouncesSpinBox_valueChanged(int arg1);
         \brief Called when the zombie slider has been moved.. Updates the BMI dislpay and journal objects.
@@ -263,11 +271,11 @@ private slots:
     void on_weightSpinBox_valueChanged(double arg1);
 #endif
 
+    bool rejectToggleSessionEnable(Session * sess);
+
     void doToggleSession(Session *);
 
     void on_eventsCombo_activated(int index);
-
-    void on_toggleEvents_clicked(bool checked);
 
     void updateGraphCombo();
 
@@ -315,9 +323,10 @@ private:
 
     void setGraphText();
     void setFlagText();
+    DailySearchTab* dailySearchTab = nullptr;
 
 
-    QString getLeftAHI (Day * day);
+    //QString getLeftAHI (Day * day);
     QString getSessionInformation(Day *);
     QString getMachineSettings(Day *);
     QString getStatisticsInfo(Day *);
@@ -325,7 +334,7 @@ private:
     QString getOximeterInformation(Day *);
     QString getEventBreakdown(Day *);
     QString getPieChart(float values, Day *);
-    QString getIndicesAndPie(Day *, float hours, bool isBrick);
+    //QString getIndicesAndPie(Day *, float hours, bool isBrick);
     QString getSleepTime(Day *);
     QString getLeftSidebar (bool honorPieChart);
 
@@ -342,6 +351,8 @@ private:
     QMenu *show_graph_menu;
 
     gGraphView *GraphView,*snapGV;
+    gGraph* sleepFlags;
+    gFlagsGroup* sleepFlagsGroup;
     MyScrollBar *scrollbar;
     QHBoxLayout *layout;
     QLabel *emptyToggleArea;
@@ -357,6 +368,9 @@ private:
     Day * lastcpapday;
 
     gLineChart *leakchart;
+
+    const int eventTypeStart = QTreeWidgetItem::UserType+1;
+    const int eventTypeEnd   = QTreeWidgetItem::UserType+2;
 
 #ifndef REMOVE_FITNESS
     bool ZombieMeterMoved;

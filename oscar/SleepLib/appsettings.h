@@ -25,6 +25,7 @@ class Preferences;
 enum OverviewLinechartModes { OLC_Bartop, OLC_Lines };
 #endif
 
+#define REMSTAR_M_SUPPORTdisabled
 
 // ApplicationWideSettings Strings
 const QString STR_CS_UserEventPieChart = "UserEventPieChart";
@@ -136,6 +137,7 @@ public:
   bool includeSerial() const { return getPref(STR_AS_IncludeSerial).toBool(); }
   //! \brief Whether to print reports in black and white, which can be more legible on non-color printers
   bool monochromePrinting() const { return getPref(STR_AS_MonochromePrinting).toBool(); }
+  //! \Allow disabling of sessions
   //! \brief Whether to show graph tooltips
   inline bool graphTooltips() const { return m_graphTooltips; }
   //! \brief Pen width of line plots

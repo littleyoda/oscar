@@ -257,7 +257,8 @@ void ExportCSV::on_exportButton_clicked()
                 int h = time / 3600;
                 int m = int(time / 60) % 60;
                 int s = int(time) % 60;
-                data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
+                data += sep + QString::asprintf("%02i:%02i:%02i", h, m, s);
+
                 float ahi = day->calcAHI();
                 data += sep + QString::number(ahi, 'f', 3);
 
@@ -301,7 +302,7 @@ void ExportCSV::on_exportButton_clicked()
                     int h = time / 3600;
                     int m = int(time / 60) % 60;
                     int s = int(time) % 60;
-                    data += sep + QString().sprintf("%02i:%02i:%02i", h, m, s);
+                    data += sep + QString::asprintf("%02i:%02i:%02i", h, m, s);
 
                     float ahi = sess->count(AllAhiChannels);
                                 //sess->count(CPAP_AllApnea) + sess->count(CPAP_Obstructive) + sess->count(CPAP_Hypopnea)

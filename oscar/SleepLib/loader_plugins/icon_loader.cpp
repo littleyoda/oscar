@@ -15,6 +15,16 @@
 
 #include "icon_loader.h"
 
+// The qt5.15 obsolescence of hex requires this change.
+// this solution to QT's obsolescence is only used in debug statements
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define QTHEX     Qt::hex
+    #define QTDEC     Qt::dec
+#else
+    #define QTHEX     hex
+    #define QTDEC     dec
+#endif
+
 const QString FPHCARE = "FPHCARE";
 
 FPIcon::FPIcon(Profile *profile, MachineID id)
@@ -681,7 +691,7 @@ bool FPIconLoader::OpenFLW(Machine *mach, const QString & filename)
     } while (p < end);
 
     if (endMarker != 0x7fff) {
-        qDebug() << fname << "waveform does not end with the corrent marker" << hex << endMarker;
+        qDebug() << fname << "waveform does not end with the corrent marker" << QTHEX << endMarker;
     }
 
     if (sess) {
@@ -922,6 +932,7 @@ bool FPIconLoader::OpenDetail(Machine *mach, const QString & filename)
     quint8 recs;
 
     int totalrecs = 0;
+    Q_UNUSED( totalrecs );
 
     do {
         in >> ts;

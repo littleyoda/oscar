@@ -94,8 +94,13 @@ int SomnoposeLoader::OpenFile(const QString & filename)
         return -1;
     }
 
-    QDateTime epoch(QDate(2001, 1, 1));
-    qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time=0;
+     #if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+         QDateTime epoch(QDate(2001, 1, 1).startOfDay(Qt::OffsetFromUTC));
+         qint64 ep = epoch.toMSecsSinceEpoch() , time=0;
+     #else
+        QDateTime epoch(QDate(2001, 1, 1));
+        qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time=0;
+    #endif
     qDebug() << "Epoch starts at" << epoch.toString();
 
     double timestamp, orientation=0, inclination=0, movement=0;

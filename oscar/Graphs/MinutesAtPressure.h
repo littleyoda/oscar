@@ -23,6 +23,7 @@ public:
     PressureInfo();
     PressureInfo(ChannelID code, qint64 minTime, qint64 maxTime) ;
     PressureInfo(PressureInfo &copy) = default;
+    ~PressureInfo() {} ;
 
     void AddChannel(ChannelID c);
     void AddChannels(QList<ChannelID> & chans);
@@ -272,3 +273,4 @@ public:
 };
 
 #endif // MINUTESATPRESSURE_H
+

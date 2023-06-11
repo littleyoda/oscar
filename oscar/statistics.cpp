@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QApplication>
 #include <QFile>
 #include <QDataStream>
@@ -48,7 +51,7 @@ QString formatTime(float time)
     int seconds = time * 3600.0;
     int minutes = (seconds / 60) % 60;
     //seconds %= 60;
-    return QString().sprintf("%02i:%02i", hours, minutes); //,seconds);
+    return QString::asprintf("%02i:%02i", hours, minutes); //,seconds);
 }
 
 
@@ -162,6 +165,103 @@ bool rxAHILessThan(const RXItem * rx1, const RXItem * rx2)
     return (double(rx1->ahi) / rx1->hours) < (double(rx2->ahi) / rx2->hours);
 }
 
+void Statistics::updateDisabledInfo()
+{
+    disabledInfo.update( p_profile->LastDay(MT_CPAP), p_profile->FirstDay(MT_CPAP) );
+}
+
+void DisabledInfo::update(QDate latestDate, QDate earliestDate)
+{
+    clear();
+    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) || (p_profile->cpap->clinicalMode()) ) return;
+    qint64 complianceHours = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
+    totalDays = 1+earliestDate.daysTo(latestDate);
+    for (QDate date = latestDate ; date >= earliestDate ; date=date.addDays(-1) ) {
+        Day* day = p_profile->GetDay(date);
+        if (!day) { daysNoData++; continue;};
+        // find basic statistics for a day
+        int numDisabled=0;
+        qint64 sessLength = 0;
+        qint64 dayLength = 0;
+        qint64 enabledLength = 0;
+        QList<Session *> sessions = day->getSessions(MT_CPAP,true);
+        for (auto & sess : sessions) {
+            sessLength = sess->length();
+            //if (sessLength<0) sessLength=0; // some sessions have negative length. Sould solve this issue
+            dayLength += sessLength;
+            if (sess->enabled(true)) {
+                enabledLength += sessLength;
+            } else {
+                numDisabled ++;
+                totalDurationOfDisabledSessions += sessLength;
+                if (maxDurationOfaDisabledsession < sessLength) maxDurationOfaDisabledsession = sessLength;
+            }
+        }
+        // calculate stats for all days
+        // calculate if compliance for a day changed.
+        if ( complianceHours <= enabledLength ) {
+            daysInCompliance ++;
+        } else {
+            if (complianceHours < dayLength ) {
+                numDaysDisabledSessionChangedCompliance++;
+            } else {
+                daysOutOfCompliance ++;
+            }
+        }
+        // update disabled info for all days
+        if ( numDisabled > 0 ) {
+            numDisabledsessions += numDisabled;
+            numDaysWithDisabledsessions++;
+        };
+    }
+    // convect ms to minutes
+    maxDurationOfaDisabledsession/=60000 ;
+    totalDurationOfDisabledSessions/=60000 ;
+    #if 0
+    DEBUGQ;
+    DEBUGQ;
+    DEBUGFW Q(p_profile->cpap->complianceHours()) ;
+    DEBUGFW Q( totalDays ) ;
+    DEBUGQ;
+    DEBUGFW Q( daysNoData ) ;
+    DEBUGFW Q( daysInCompliance ) ;
+    DEBUGFW Q( daysOutOfCompliance ) ;
+    DEBUGFW Q( numDaysDisabledSessionChangedCompliance ) ;
+    DEBUGQ;
+    DEBUGFW Q( numDisabledsessions ) ;
+    DEBUGFW Q( maxDurationOfaDisabledsession) O("minutes");
+    DEBUGFW Q( totalDurationOfDisabledSessions) O("minutes") ;
+    DEBUGFW Q( numDaysWithDisabledsessions ) ;
+    #endif
+
+};
+
+QString DisabledInfo::display(int type)
+{
+/*
+Permissive mode: some sessions are excluded from this report, as follows:
+Total disabled sessions: xx, found in yy days.
+Duration of longest disabled session: aa minutes, Total duration of all disabled sessions: bb minutes.
++tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+*/
+    switch (type) {
+        default :
+        case 0:
+            //return QString(QObject::tr("Permissive mode is set (Preferences/Clinical), disabled sessions are excluded from this report"));
+            //return QString(QObject::tr("Permissive mode allows disabled sessions"));
+            return QString(QObject::tr("Permissive Mode"));
+        case 1:
+            if (numDisabledsessions>0) {
+                return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") .arg(numDisabledsessions) .arg(numDaysWithDisabledsessions));
+            } else {
+                return QString(QObject::tr("Total disabled sessions: %1") .arg(numDisabledsessions) );
+            }
+        case 2:
+            return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
+                .arg(maxDurationOfaDisabledsession, 0, 'f', 1) .arg(totalDurationOfDisabledSessions, 0, 'f', 1));
+    }
+}
+
 void Statistics::updateRXChanges()
 {
     // Set conditional progress bar.
@@ -195,7 +295,7 @@ void Statistics::updateRXChanges()
             continue;
 
         if (day->first() == 0) {  // Ignore invalid dates
-            qDebug() << "Statistics::updateRXChanges ignoring day with first=0";
+            //qDebug() << "Statistics::updateRXChanges ignoring day with first=0";
             continue;
         }
 
@@ -534,6 +634,14 @@ Statistics::Statistics(QObject *parent) :
     QObject(parent)
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
+    if (!p_profile->cpap->clinicalMode()) {
+        updateDisabledInfo();
+        rows.push_back(StatisticsRow(disabledInfo.display(0),SC_WARNING ,MT_CPAP));
+        rows.push_back(StatisticsRow(disabledInfo.display(1),SC_WARNING2,MT_CPAP));
+        if (disabledInfo.size()>0) {
+            rows.push_back(StatisticsRow(disabledInfo.display(2),SC_WARNING2,MT_CPAP));
+        }
+    }
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
@@ -601,7 +709,7 @@ Statistics::Statistics(QObject *parent) :
     // These are for formatting the headers for the first column
     int percentile=trunc(p_profile->general->prefCalcPercentile());                    // Pholynyk, 10Mar2016
     char perCentStr[20];
-    snprintf(perCentStr, 20, "%d%% %%1", percentile);          // 
+    snprintf(perCentStr, 20, "%d%% %%1", percentile);          //
     calcnames[SC_UNDEFINED] = "";
     calcnames[SC_MEDIAN] = tr("%1 Median");
     calcnames[SC_AVG] = tr("Average %1");
@@ -656,7 +764,6 @@ QString Statistics::getUserInfo () {
 }
 
 const QString table_width = "width='100%'";
-
 // Create the page header in HTML.  Includes everything from <head> through <body>
 QString Statistics::generateHeader(bool onScreen)
 {
@@ -879,11 +986,34 @@ struct Period {
         end=copy.end;
         header=copy.header;
     }
+    Period(QDate first,QDate last, int advance , bool month,QString name) {
+        // adds date range to header.
+        // replaces the following
+        // periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
+        QDate start;
+        if (month) {
+            // note add days or addmonths returns the start of the next day or the next month.
+            // must subtract one day for Month.
+            start = qMax(last.addMonths(advance).addDays(-1),first);;
+        } else {
+            start = qMax(last.addDays(advance),first);
+        }
+        name = name + "<br>"  + start.toString("ddMMMyy") ;
+        if (advance!=0) {
+            name =  name + " - "  +  last.toString("ddMMMyy");
+        }
+        this->header = name;
+        this->start = start ;
+        this->end = last ;
+    }
+    Period& operator=(const Period&) = default;
+    ~Period() {};
     QDate start;
     QDate end;
     QString header;
 };
 
+const QString warning_color="#ffffff";
 const QString heading_color="#ffffff";
 const QString subheading_color="#e0e0e0";
 //const int rxthresh = 5;
@@ -1161,11 +1291,13 @@ QString Statistics::GenerateCPAPUsage()
             // Clear the periods (columns)
             periods.clear();
             if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
-                periods.push_back(Period(last,last,tr("Most Recent")));
-                periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
-                periods.push_back(Period(qMax(last.addDays(-29),first), last, tr("Last 30 Days")));
-                periods.push_back(Period(qMax(last.addMonths(-6), first), last, tr("Last 6 Months")));
-                periods.push_back(Period(qMax(last.addMonths(-12), first), last, tr("Last Year")));
+                // note add days or addmonths returns the start of the next day or the next month.
+                // must subtract one day for each. Month executed in Period method
+                periods.push_back(Period(first,last, 0, false ,tr("Most Recent")));
+                periods.push_back(Period(first,last, -6, false ,tr("Last Week")));
+                periods.push_back(Period(first,last, -29,false, tr("Last 30 Days")));
+                periods.push_back(Period(first,last, -6,true, tr("Last 6 Months")));
+                periods.push_back(Period(first,last, -12,true,tr("Last Year")));
             } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
 
@@ -1180,10 +1312,10 @@ QString Statistics::GenerateCPAPUsage()
                         s = first;
                     }
                     if (p_profile->countDays(row.type, s, l) > 0) {
-                        periods.push_back(Period(s, l, s.toString("MMMM")));
+                        periods.push_back(Period(s, l, s.toString("MMMM<br>yyyy")));
                         j++;
                     }
-                    l = s.addDays(-1);
+                   l = s.addDays(-1);
                 } while ((l > first) && (j < number_periods));
 
                 for (; j < number_periods; ++j) {
@@ -1192,7 +1324,7 @@ QString Statistics::GenerateCPAPUsage()
             } else {            // STAT_MODE_RANGE
                 first = p_profile->general->statReportRangeStart();
                 last = p_profile->general->statReportRangeEnd();
-                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" -<br/>"+last.toString(MedDateFormat)));
+                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" - "+last.toString(MedDateFormat)));
             }
 
             int days = p_profile->countDays(row.type, first, last);
@@ -1228,16 +1360,16 @@ QString Statistics::GenerateCPAPUsage()
 
             if (value == 0) {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("No %1 data available.").arg(machine));
+                        arg(tr("Database has No %1 data available.").arg(machine));
             } else if (value == 1) {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("%1 day of %2 Data on %3")
+                        arg(tr("Database has %1 day of %2 Data on %3")
                             .arg(value)
                             .arg(machine)
                             .arg(last.toString(MedDateFormat)));
             } else {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
-                        arg(tr("%1 days of %2 Data, between %3 and %4")
+                        arg(tr("Database has %1 days of %2 Data, between %3 and %4")
                             .arg(value)
                             .arg(machine)
                             .arg(first.toString(MedDateFormat))
@@ -1249,6 +1381,16 @@ QString Statistics::GenerateCPAPUsage()
                     arg(subheading_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else if (row.calc == SC_UNDEFINED) {
+            continue;
+        } else if (row.calc == SC_WARNING) {
+                //html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><font size='+1'>%3</font></td></tr>").
+                //        arg(warning_color).arg(periods.size()+1).arg(row.src);
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
+                        arg(warning_color).arg(periods.size()+1).arg(row.src);
+            continue;
+        } else if (row.calc == SC_WARNING2) {
+                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
+                        arg(warning_color).arg(periods.size()+1).arg(row.src);
             continue;
         } else {
             ChannelID id = schema::channel[row.src].id();
@@ -1325,12 +1467,13 @@ void Statistics::printReport(QWidget * parent) {
 #endif
 
     printer.setPrintRange(QPrinter::AllPages);
-    printer.setOrientation(QPrinter::Portrait);
+    printer.setPageOrientation(QPageLayout::Portrait);
     printer.setFullPage(false);     // Print only on printable area of page and not in non-printable margins
-    printer.setNumCopies(1);
+    printer.setCopyCount(1);
 
     QMarginsF minMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
-    printer.setPageMargins(fmax(10,minMargins.left()), fmax(10,minMargins.top()), fmax(10,minMargins.right()), fmax(12,minMargins.bottom()), QPrinter::Millimeter);
+
+    printer.setPageMargins( QMarginsF( fmax(10,minMargins.left()), fmax(10,minMargins.top()), fmax(10,minMargins.right()), fmax(12,minMargins.bottom())), QPageLayout::Millimeter);
     QMarginsF setMargins = printer.pageLayout().margins(QPageLayout::Millimeter);
     qDebug () << "Min margins" << minMargins << "Set margins" << setMargins << "millimeters";
 

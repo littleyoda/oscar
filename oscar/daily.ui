@@ -1402,6 +1402,11 @@ QSlider::handle:horizontal  {
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="searchTab">
+        <attribute name="title">
+         <string>Search</string>
+        </attribute>
+       </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -1471,44 +1476,6 @@ QSlider::handle:horizontal  {
            <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="toggleEvents">
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
- background: transparent;
- border-radius: 8px;
- border: 2px solid transparent;
-}
-
-QToolButton:hover {
- border: 2px solid #456789;
-}
-
-QToolButton:pressed {
- border: 2px solid #456789;
- background-color: #89abcd;
-}</string>
-            </property>
-            <property name="text">
-             <string>Flags</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>false</bool>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::DownArrow</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QComboBox" name="eventsCombo">
             <property name="maxVisibleItems">
              <number>12</number>
@@ -1521,41 +1488,6 @@ QToolButton:pressed {
              <enum>QLayout::SetMaximumSize</enum>
             </property>
            </layout>
-          </item>
-          <item>
-           <widget class="QToolButton" name="toggleGraphs">
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
- background: transparent;
- border-radius: 8px;
- border: 2px solid transparent;
-}
-
-QToolButton:hover {
- border: 2px solid #456789;
-}
-
-QToolButton:pressed {
- border: 2px solid #456789;
- background-color: #89abcd;
-}</string>
-            </property>
-            <property name="text">
-             <string>Graphs</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>false</bool>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::DownArrow</enum>
-            </property>
-           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="layout">

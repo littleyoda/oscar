@@ -68,7 +68,7 @@ void gTTIAChart::afterDraw(QPainter &, gGraph &graph, QRectF rect)
             break;
         }
 
-        txtlist.append(QString("%1 %2 / %3 / %4").arg(QObject::tr("TTIA:")).arg(calc.min, 0, 'f', 2).arg(mid, 0, 'f', 2).arg(calc.max, 0, 'f', 2));
+        txtlist.append(QString("%1 %2 / %3 / %4").arg(QObject::tr("TTIA:")).arg(durationInMinutesToHhMmSs(calc.min)).arg(durationInMinutesToHhMmSs(mid)).arg(durationInMinutesToHhMmSs(calc.max)));
     }
     QString txt = txtlist.join(", ");
     graph.renderText(txt, rect.left(), rect.top()-5*graph.printScaleY(), 0);
@@ -80,10 +80,7 @@ void gTTIAChart::populate(Day *day, int idx)
 //    float ttia = day->sum(CPAP_AllApnea) + day->sum(CPAP_Obstructive) + day->sum(CPAP_ClearAirway) + day->sum(CPAP_Apnea) + day->sum(CPAP_Hypopnea);
     float ttia = day->sum(AllAhiChannels);
 
-    int h = ttia / 3600;
-    int m = int(ttia) / 60 % 60;
-    int s = int(ttia) % 60;
-    slices.append(SummaryChartSlice(&calcitems[0], ttia / 60.0, ttia / 60.0, QObject::tr("\nTTIA: %1").arg(QString().sprintf("%02i:%02i:%02i",h,m,s)), QColor(255,147,150)));
+    slices.append(SummaryChartSlice(&calcitems[0], ttia / 60.0, ttia / 60.0, QObject::tr("\nTTIA: %1").arg(durationInSecondsToHhMmSs(ttia)), QColor(255,147,150)));
 }
 
 QString gTTIAChart::tooltipData(Day *, int idx)

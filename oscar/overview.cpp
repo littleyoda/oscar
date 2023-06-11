@@ -41,8 +41,15 @@ extern MainWindow *mainwin;
 
 
 qint64 convertDateToTimeRtn(const QDate &date,int hours,int min,int sec) {
-    return QDateTime(date).addSecs(((hours*60+min)*60)+sec).toMSecsSinceEpoch();
+    // date.startOfDay was introduced in 5.14.  ubuntu 22.04 LTS used QT5.15
+    #if QT_VERSION > QT_VERSION_CHECK(5,15,0)
+        return date.startOfDay().addSecs(((hours*60+min)*60)+sec).toMSecsSinceEpoch();
+    #else
+        // this version works in QT 5.12
+        return QDateTime(date).addSecs(((hours*60+min)*60)+sec).toMSecsSinceEpoch();
+    #endif
 }
+
 qint64 convertDateToStartTime(const QDate &date) {
     return convertDateToTimeRtn(date,0,10,0);
 }
@@ -69,8 +76,6 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     if (!shortformat.toLower().contains("yyyy")) {
         shortformat.replace("yy", "yyyy");
     }
-
-    ui->toggleVisibility->setVisible(false);    /* get rid of tiny triangle that disables data display */
 
     ui->dateStart->setDisplayFormat(shortformat);
     ui->dateEnd->setDisplayFormat(shortformat);
@@ -394,7 +399,7 @@ gGraph *Overview::createGraph(QString code, QString name, QString units, YTicker
 
     switch (yttype) {
     case YT_Time:
-        yt = new gYAxisTime(true); // Time scale
+        yt = new gYAxisTime(false); // Time scale false=24hourFormat
         break;
 
     case YT_Weight:
@@ -454,12 +459,25 @@ void Overview::setGraphText () {
             if (!g->visible()) {
                 numOff++;
             }
+            //DEBUGFW  Q(numTotal) Q(numOff)  Q(g->name());
         }
     }
     ui->graphCombo->setItemIcon(0, numOff ? *icon_warning : *icon_up_down);
     QString graphText;
-    if (numOff == 0) graphText = QObject::tr("%1 Charts").arg(numTotal);
-    else             graphText = QObject::tr("%1 of %2 Charts").arg(numTotal-numOff).arg(numTotal);
+    int lastIndex = ui->graphCombo->count()-1;
+
+    if (numOff == 0) {
+        // all graphs are shown
+        graphText = QObject::tr("%1 Graphs").arg(numTotal);
+        ui->graphCombo->setItemText(lastIndex,STR_HIDE_ALL_GRAPHS);
+    } else {
+        // some graphs are hidden
+        graphText = QObject::tr("%1 of %2 Graphs").arg(numTotal-numOff).arg(numTotal);
+        if (numOff == numTotal) {
+            // all graphs are hidden
+            ui->graphCombo->setItemText(lastIndex,STR_SHOW_ALL_GRAPHS);
+        }
+    }
     ui->graphCombo->setItemText(0, graphText);
 }
 
@@ -468,7 +486,7 @@ void Overview::updateGraphCombo()
     ui->graphCombo->clear();
     gGraph *g;
 
-    ui->graphCombo->addItem(*icon_up_down, tr("10 of 10 Charts"), true); // Translation only to define space required
+    ui->graphCombo->addItem(*icon_up_down, "", true); 
     for (int i = 0; i < GraphView->size(); i++) {
         g = (*GraphView)[i];
 
@@ -480,7 +498,7 @@ void Overview::updateGraphCombo()
             ui->graphCombo->addItem(*icon_off, g->title(), false);
         }
     }
-
+    ui->graphCombo->addItem(*icon_on,STR_HIDE_ALL_GRAPHS,true);
     ui->graphCombo->setCurrentIndex(0);
     setGraphText();
     updateCube();
@@ -868,29 +886,40 @@ void Overview::setRange(QDate& start, QDate& end, bool updateGraphs/*zoom*/)
     updateGraphCombo();
 }
 
+void Overview::showGraph(int index,bool show, bool updateGraph) {
+    ui->graphCombo->setItemData(index,show,Qt::UserRole);
+    ui->graphCombo->setItemIcon(index, show ? *icon_on : *icon_off);
+    if (!updateGraph) return;
+    QString graphName = ui->graphCombo->itemText(index);
+    gGraph* graph=GraphView->findGraphTitle(graphName);
+    if (graph) graph->setVisible(show);
+}
+
+void Overview::showAllGraphs(bool show) {
+    //Skip over first button - label for comboBox
+    int lastIndex = ui->graphCombo->count()-1;
+    for (int i=1;i<lastIndex;i++) {
+        showGraph(i,show,true);
+    }
+}
+
+
 void Overview::on_graphCombo_activated(int index)
 {
-    if (index < 0) {
-        return;
-    }
-
-    if (index > 0 ) {
-        gGraph *g;
-        QString s;
-        s = ui->graphCombo->currentText();
-        bool b = !ui->graphCombo->itemData(index, Qt::UserRole).toBool();
-        ui->graphCombo->setItemData(index, b, Qt::UserRole);
-
-        if (b) {
-            ui->graphCombo->setItemIcon(index, *icon_on);
+   if (index<0) return;
+    if (index > 0) {
+        bool nextOn =!ui->graphCombo->itemData(index,Qt::UserRole).toBool();
+        int lastIndex = ui->graphCombo->count()-1;
+        if ( index == lastIndex ) {
+            // user just pressed hide show button - toggle states of the button and apply the new state
+            showAllGraphs(nextOn);
+            showGraph(index,nextOn,false);
         } else {
-            ui->graphCombo->setItemIcon(index, *icon_off);
+            showGraph(index,nextOn,true);
         }
-
-        g = GraphView->findGraphTitle(s);
-        g->setVisible(b);
         ui->graphCombo->showPopup();
     }
+
     ui->graphCombo->setCurrentIndex(0);
     updateCube();
     setGraphText();
@@ -900,44 +929,12 @@ void Overview::on_graphCombo_activated(int index)
 void Overview::updateCube()
 {
     if ((GraphView->visibleGraphs() == 0)) {
-        ui->toggleVisibility->setArrowType(Qt::UpArrow);
-        ui->toggleVisibility->setToolTip(tr("Show all graphs"));
-        ui->toggleVisibility->blockSignals(true);
-        ui->toggleVisibility->setChecked(true);
-        ui->toggleVisibility->blockSignals(false);
-
         if (ui->graphCombo->count() > 0) {
             GraphView->setEmptyText(STR_Empty_NoGraphs);
-
         } else {
             GraphView->setEmptyText(STR_Empty_NoData);
         }
-    } else {
-        ui->toggleVisibility->setArrowType(Qt::DownArrow);
-        ui->toggleVisibility->setToolTip(tr("Hide all graphs"));
-        ui->toggleVisibility->blockSignals(true);
-        ui->toggleVisibility->setChecked(false);
-        ui->toggleVisibility->blockSignals(false);
     }
-}
-
-void Overview::on_toggleVisibility_clicked(bool checked)
-{
-    gGraph *g;
-    QString s;
-    QIcon *icon = checked ? icon_off : icon_on;
-
-    for (int i = 0; i < ui->graphCombo->count(); i++) {
-        s = ui->graphCombo->itemText(i);
-        ui->graphCombo->setItemIcon(i, *icon);
-        ui->graphCombo->setItemData(i, !checked, Qt::UserRole);
-        g = GraphView->findGraphTitle(s);
-        g->setVisible(!checked);
-    }
-
-    updateCube();
-    GraphView->updateScale();
-    GraphView->redraw();
 }
 
 void Overview::on_layout_clicked() {

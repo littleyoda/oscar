@@ -225,41 +225,6 @@ QToolButton:pressed {
        <layout class="QHBoxLayout" name="dateLayout"/>
       </item>
       <item>
-       <widget class="QToolButton" name="toggleVisibility">
-        <property name="toolTip">
-         <string>Toggle Graph Visibility</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QToolButton {
- background: transparent;
- border-radius: 8px;
- border: 2px solid transparent;
-}
-
-QToolButton:hover {
- border: 2px solid #456789;
-}
-
-QToolButton:pressed {
- border: 2px solid #456789;
- background-color: #89abcd;
-}</string>
-        </property>
-        <property name="text">
-         <string notr="true">...</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-        <property name="arrowType">
-         <enum>Qt::DownArrow</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="layout">
         <property name="text">
          <string>Layout</string>

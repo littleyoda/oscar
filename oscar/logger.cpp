@@ -193,7 +193,11 @@ void LogThread::run()
         while (connected && m_logFile && !buffer.isEmpty()) {
             QString msg = buffer.takeFirst();
             if (m_logStream) {
-                *m_logStream << msg << endl;
+                #if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+                    *m_logStream << msg << Qt::endl;
+                #else
+                    *m_logStream << msg << endl;
+                #endif
             }
             emit outputLog(msg);
         }
