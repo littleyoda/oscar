@@ -986,6 +986,26 @@ struct Period {
         end=copy.end;
         header=copy.header;
     }
+    Period(QDate first,QDate last, int advance , bool month,QString name) {
+        // adds date range to header.
+        // replaces the following
+        // periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
+        QDate start;
+        if (month) {
+            // note add days or addmonths returns the start of the next day or the next month.
+            // must subtract one day for Month.
+            start = qMax(last.addMonths(advance).addDays(-1),first);;
+        } else {
+            start = qMax(last.addDays(advance),first);
+        }
+        name = name + "<br>"  + start.toString("ddMMMyy") ;
+        if (advance!=0) {
+            name =  name + " - "  +  last.toString("ddMMMyy");
+        }
+        this->header = name;
+        this->start = start ;
+        this->end = last ;
+    }
     Period& operator=(const Period&) = default;
     ~Period() {};
     QDate start;
@@ -1271,11 +1291,13 @@ QString Statistics::GenerateCPAPUsage()
             // Clear the periods (columns)
             periods.clear();
             if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
-                periods.push_back(Period(last,last,tr("Most Recent")));
-                periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
-                periods.push_back(Period(qMax(last.addDays(-29),first), last, tr("Last 30 Days")));
-                periods.push_back(Period(qMax(last.addMonths(-6), first), last, tr("Last 6 Months")));
-                periods.push_back(Period(qMax(last.addMonths(-12), first), last, tr("Last Year")));
+                // note add days or addmonths returns the start of the next day or the next month.
+                // must subtract one day for each. Month executed in Period method
+                periods.push_back(Period(first,last, 0, false ,tr("Most Recent")));
+                periods.push_back(Period(first,last, -6, false ,tr("Last Week")));
+                periods.push_back(Period(first,last, -29,false, tr("Last 30 Days")));
+                periods.push_back(Period(first,last, -6,true, tr("Last 6 Months")));
+                periods.push_back(Period(first,last, -12,true,tr("Last Year")));
             } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
 
@@ -1290,7 +1312,7 @@ QString Statistics::GenerateCPAPUsage()
                         s = first;
                     }
                     if (p_profile->countDays(row.type, s, l) > 0) {
-                        periods.push_back(Period(s, l, s.toString("MMMM yyyy")));
+                        periods.push_back(Period(s, l, s.toString("MMMM<br>yyyy")));
                         j++;
                     }
                    l = s.addDays(-1);
