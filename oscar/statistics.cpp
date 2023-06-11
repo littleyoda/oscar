@@ -1771,7 +1771,7 @@ QString Statistics::UpdateRecordsBox()
 
 
         if (list.size() >= 2) {
-            html += "<b>"+tr("Best RX Setting")+"</b><br>";
+            html += "<b>"+tr("Best Device Setting")+"</b><br>";
             const RXItem & rxbest = *list.at(0);
             html += QString("<a href='overview=%1,%2'>").arg(rxbest.start.toString(Qt::ISODate)).arg(rxbest.end.toString(Qt::ISODate)) +
                 tr("Date: %1 - %2").arg(rxbest.start.toString(Qt::SystemLocaleShortDate)).arg(rxbest.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
@@ -1783,7 +1783,7 @@ QString Statistics::UpdateRecordsBox()
             html += QString("%1").arg(formatRelief(rxbest.relief)) + "<br>";
             html += "<br>";
 
-            html += "<b>"+tr("Worst RX Setting")+"</b><br>";
+            html += "<b>"+tr("Worst Device Setting")+"</b><br>";
             const RXItem & rxworst = *list.at(list.size() -1);
             html += QString("<a href='overview=%1,%2'>").arg(rxworst.start.toString(Qt::ISODate)).arg(rxworst.end.toString(Qt::ISODate)) +
                     tr("Date: %1 - %2").arg(rxworst.start.toString(Qt::SystemLocaleShortDate)).arg(rxworst.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
