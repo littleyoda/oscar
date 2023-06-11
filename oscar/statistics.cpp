@@ -998,9 +998,11 @@ struct Period {
         } else {
             start = qMax(last.addDays(advance),first);
         }
-        name = name + "<br>"  + start.toString("ddMMMyy") ;
+        name = name + "<br>"  + start.toString(Qt::SystemLocaleShortDate) ;
+        //name = name + "<br>"  + start.toString(Qt::RFC2822Date) ;
         if (advance!=0) {
-            name =  name + " - "  +  last.toString("ddMMMyy");
+            //name =  name + " - "  +  last.toString(Qt::RFC2822Date);
+            name =  name + " - "  +  last.toString(Qt::SystemLocaleShortDate);
         }
         this->header = name;
         this->start = start ;
