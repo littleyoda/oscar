@@ -986,24 +986,29 @@ struct Period {
         end=copy.end;
         header=copy.header;
     }
-    Period(QDate first,QDate last, int advance , bool month,QString name) {
+    Period(QDate first,QDate last,bool& finished, int advance , bool month,QString name) {
+        if (finished) return;
         // adds date range to header.
         // replaces the following
         // periods.push_back(Period(qMax(last.addDays(-6), first), last, tr("Last Week")));
+        QDate next;
         if (month) {
             // note add days or addmonths returns the start of the next day or the next month.
-            // must subtract one day for Month.
-            first = qMax(last.addMonths(advance).addDays(+1),first);;
+            // must shorten one day for Month.
+            next = last.addMonths(advance).addDays(+1);
         } else {
-            first = qMax(last.addDays(advance),first);
+            next = last.addDays(advance);
         }
-        name = name + "<br>"  + first.toString(Qt::SystemLocaleShortDate) ;
+        if (next<=first) {
+            finished = true;
+            next = first;
+        }
+        name = name + "<br>"  + next.toString(Qt::SystemLocaleShortDate) ;
         if (advance!=0) {
             name =  name + " - "  +  last.toString(Qt::SystemLocaleShortDate);
         }
-        DEBUGFW Q(first) Q(last) Q(month) Q(first.daysTo(last)) Q(advance) O(name);
         this->header = name;
-        this->start = first ;
+        this->start = next ;
         this->end = last ;
     }
     Period& operator=(const Period&) = default;
@@ -1293,12 +1298,13 @@ QString Statistics::GenerateCPAPUsage()
             periods.clear();
             if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
                 // note add days or addmonths returns the start of the next day or the next month.
-                // must subtract one day for each. Month executed in Period method
-                periods.push_back(Period(first,last, 0, false ,tr("Most Recent")));
-                periods.push_back(Period(first,last, -6, false ,tr("Last Week")));
-                periods.push_back(Period(first,last, -29,false, tr("Last 30 Days")));
-                periods.push_back(Period(first,last, -6,true, tr("Last 6 Months")));
-                periods.push_back(Period(first,last, -12,true,tr("Last Year")));
+                // must shorten one day for each. Month executed in Period method
+                bool finished = false;  // used to detect end of data - when less than a year of data.
+                periods.push_back(Period(first,last,finished, 0, false ,tr("Most Recent")));
+                periods.push_back(Period(first,last,finished, -6, false ,tr("Last Week")));
+                periods.push_back(Period(first,last,finished, -29,false, tr("Last 30 Days")));
+                periods.push_back(Period(first,last,finished, -3,true, tr("Last 3 Months")));
+                periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
             } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
 
@@ -1400,12 +1406,15 @@ QString Statistics::GenerateCPAPUsage()
             }
             name = calcnames[row.calc].arg(schema::channel[id].fullname());
         }
+        // Defined percentages for columns for diffent modes.
         QString line;
         int np = periods.size();
         int width;
+        // both create header column and 5 data columns for a total of 100
         int dataWidth = 14;
         int headerWidth = 30;
         if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
+            // both create header column and 13  data columns for a total of 100
             dataWidth = 6;
             headerWidth = 22;
         }
