@@ -561,8 +561,15 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     // Should really create welcome and statistics here, but they need redoing later anyway to kill off webkit
     ui->tabWidget->setCurrentIndex(AppSetting->openTabAtStart());
 
-    ui->statStartDate->setDate(p_profile->FirstDay());
-    ui->statEndDate->setDate(p_profile->LastDay());
+    QDate first = p_profile->FirstDay();
+    QDate last = p_profile->LastDay();
+    ui->statStartDate->setDate(first);
+    ui->statEndDate->setDate(last);
+    p_profile->general->setStatReportRangeStart(first);
+    p_profile->general->setStatReportRangeEnd(last);
+    p_profile->general->setStatReportDate(last);
+    p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
+    set_reportModeStandard_mode();
     GenerateStatistics();
     PopulatePurgeMenu();
 
@@ -583,7 +590,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     ui->tabWidget->setTabEnabled(3, !noMachines);       // overview, STR_TR_Overview);
     ui->tabWidget->setTabEnabled(4, !noMachines);       // statistics, STR_TR_Statistics);
 
-    set_reportModeStandard_mode() ;
 
     progress->close();
     delete progress;
@@ -2442,7 +2448,7 @@ void MainWindow::set_reportModeStandard_mode()
             ui->statStartDate->setVisible(false);
             ui->statEnableEndDisplay->setVisible(true);
             if (p_profile) {
-                ui->statEndDate->setDate(p_profile->general->statReportStart());
+                ui->statEndDate->setDate(p_profile->general->statReportDate());
             }
             }
             break;
@@ -2453,7 +2459,7 @@ void MainWindow::set_reportModeStandard_mode()
 
             ui->statEnableEndDisplay->setVisible(true);
             if (p_profile) {
-                ui->statEndDate->setDate(p_profile->general->statReportStart());
+                ui->statEndDate->setDate(p_profile->general->statReportDate());
             }
             break;
         case STAT_MODE_RANGE:
@@ -2503,7 +2509,7 @@ void MainWindow::on_statEndDate_dateChanged(const QDate &date)
     if (p_profile->general->statReportMode() == STAT_MODE_RANGE ) {
         p_profile->general->setStatReportRangeEnd(date);
     } else {
-        p_profile->general->setStatReportStart(date);
+        p_profile->general->setStatReportDate(date);
     };
     GenerateStatistics();
 }
