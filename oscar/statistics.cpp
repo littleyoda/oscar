@@ -1331,6 +1331,9 @@ QString Statistics::GenerateCPAPUsage()
             } else {            // STAT_MODE_RANGE
                 first = p_profile->general->statReportRangeStart();
                 last = p_profile->general->statReportRangeEnd();
+                if (first > last) {
+                    first=last;
+                }
                 periods.push_back(Period(first,last,first.toString(MedDateFormat)+" - "+last.toString(MedDateFormat)));
             }
 
