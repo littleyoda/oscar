@@ -1303,7 +1303,7 @@ QString Statistics::GenerateCPAPUsage()
                 periods.push_back(Period(first,last,finished, 0, false ,tr("Most Recent")));
                 periods.push_back(Period(first,last,finished, -6, false ,tr("Last Week")));
                 periods.push_back(Period(first,last,finished, -29,false, tr("Last 30 Days")));
-                periods.push_back(Period(first,last,finished, -3,true, tr("Last 3 Months")));
+                periods.push_back(Period(first,last,finished, -6,true, tr("Last 6 Months")));
                 periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
             } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
