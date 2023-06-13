@@ -117,7 +117,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //        systraymenu->addAction(tr("Check for &Updates"), this, SLOT(on_actionCheck_for_Updates_triggered()));
         systraymenu->addSeparator();
         systraymenu->addAction(tr("E&xit"), this, SLOT(close()));
-        
+
 //      systraymenu = nullptr;
     } else { // if not available, the messages will popup in the taskbar
         qDebug() << "No System Tray menues";
@@ -190,37 +190,6 @@ void MainWindow::SetupGUI()
     ui->statEndDate->calendarWidget()->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     ui->statEndDate->calendarWidget()->setFirstDayOfWeek(dow);
 
-    ui->statEndDate->setVisible(false);
-    ui->statStartDate->setVisible(false);
-
-//    ui->reportModeRange->setVisible(false);
-    int srm = 0;
-    if (p_profile) {
-        srm = p_profile->general->statReportMode();
-    }
-
-    switch(srm) {
-        case 0:
-            ui->reportModeStandard->setChecked(true);
-            break;
-        case 1:
-            ui->reportModeMonthly->setChecked(true);
-            break;
-        case 2:
-            ui->reportModeRange->setChecked(true);
-            ui->statEndDate->setVisible(true);
-            ui->statStartDate->setVisible(true);
-            break;
-        default:
-            if (p_profile) {
-                p_profile->general->setStatReportMode(0);
-            }
-            break;
-    }
-    if (!AppSetting->showDebug()) {
-        ui->logText->hide();
-    }
-
 #ifdef Q_OS_MAC
     //p_profile->appearance->setAntiAliasing(false);
 #endif
@@ -242,7 +211,7 @@ void MainWindow::SetupGUI()
     // Navigation has offset 0
     // Bookmarks  has offset 1
     // Records    has offset 2
-    ui->toolBox->setCurrentIndex(2);    
+    ui->toolBox->setCurrentIndex(2);
     bool b = AppSetting->rightSidebarVisible();
     ui->action_Sidebar_Toggle->setChecked(b);
     ui->toolBox->setVisible(b);
@@ -286,6 +255,12 @@ void MainWindow::SetupGUI()
     ui->action_Frequently_Asked_Questions->setVisible(false);
     ui->actionReport_a_Bug->setVisible(false);  // remove this once we actually implement it
     ui->actionExport_Review->setVisible(false);  // remove this once we actually implement it
+
+    set_reportModeStandard_mode() ;
+    if (!AppSetting->showDebug()) {
+        ui->logText->hide();
+    }
+
 
 #ifndef helpless
     help = new Help(this);
@@ -414,7 +389,7 @@ void MainWindow::PopulatePurgeMenu()
         Machine *mach = machines.at(i);
         addMachineToMenu(mach, ui->menu_Rebuild_CPAP_Data);
     }
-    
+
     // Add any imported device (except the built-in journal) to the purge menu.
     machines = p_profile->GetMachines();
     for (int i=0; i < machines.size(); ++i) {
@@ -545,8 +520,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     p_profile->LoadMachineData(progress);
 
-
-    if (!p_profile->LastDay(MT_CPAP).isValid() ) { // quick test if new profile or not. 
+    if (!p_profile->LastDay(MT_CPAP).isValid() ) { // quick test if new profile or not.
         // Override default value of clinicalMode if new profile.
         // Allows permissiveMode (not clinicalMode) to be the default value for existing profiles.
         p_profile->cpap->setClinicalMode(true);
@@ -561,8 +535,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     QApplication::processEvents();
 
-    ui->statStartDate->setDate(p_profile->FirstDay());
-    ui->statEndDate->setDate(p_profile->LastDay());
 
     // Reload everything profile related
     if (daily) {
@@ -588,6 +560,9 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     // Should really create welcome and statistics here, but they need redoing later anyway to kill off webkit
     ui->tabWidget->setCurrentIndex(AppSetting->openTabAtStart());
+
+    ui->statStartDate->setDate(p_profile->FirstDay());
+    ui->statEndDate->setDate(p_profile->LastDay());
     GenerateStatistics();
     PopulatePurgeMenu();
 
@@ -608,34 +583,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     ui->tabWidget->setTabEnabled(3, !noMachines);       // overview, STR_TR_Overview);
     ui->tabWidget->setTabEnabled(4, !noMachines);       // statistics, STR_TR_Statistics);
 
-    int srm = 0;
-    if (p_profile) {
-        srm = p_profile->general->statReportMode();
-    }
-
-    switch (srm) {
-        case 0:
-            ui->reportModeStandard->setChecked(true);
-            ui->statEndDate->setVisible(false);
-            ui->statStartDate->setVisible(false);
-            break;
-        case 1:
-            ui->reportModeMonthly->setChecked(true);
-            ui->statEndDate->setVisible(false);
-            ui->statStartDate->setVisible(false);
-            break;
-        case 2:
-            ui->reportModeRange->setChecked(true);
-            ui->statEndDate->setVisible(true);
-            ui->statStartDate->setVisible(true);
-            break;
-        default:
-            if (p_profile) {
-                p_profile->general->setStatReportMode(0);
-            }
-            break;
-    }
-
+    set_reportModeStandard_mode() ;
 
     progress->close();
     delete progress;
@@ -883,14 +831,14 @@ QStringList getDriveList()
 #endif
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
         if (storage.isValid() && storage.isReady()) {
-#ifdef DEBUG_SDCARD            
+#ifdef DEBUG_SDCARD
             if (storage.fileSystemType() != "tmpfs") {      // Don't show all the Linux tmpfs mount points!
                 qDebug() << "Device:" << storage.device();
                 qDebug() << "    Path:" << storage.rootPath();
                 qDebug() << "    Name:" << storage.name();     // ...
                 qDebug() << "    FS Type:" << storage.fileSystemType();
             }
-#endif            
+#endif
             if (storage.fileSystemType() == VFAT) {
                 qDebug() << "Adding" << storage.name() << "on" << storage.rootPath() << "to drivelist";
                 drivelist.append(storage.rootPath());
@@ -918,7 +866,7 @@ QStringList getDriveList()
             drivelist.append("CROSTINI");
         }
     }
-#endif    
+#endif
     return drivelist;
 }
 
@@ -1185,7 +1133,7 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
             msgBox.exec();
         }
     }
-    
+
     return datacards;
 }
 
@@ -1733,7 +1681,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
 
     if (QProcess::startDetached("/usr/bin/open", args)) {
         QApplication::instance()->exit();
-    } else { 
+    } else {
         QMessageBox::warning(nullptr, STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
@@ -1760,7 +1708,7 @@ void MainWindow::RestartApplication(bool force_login, QString cmdline)
         QApplication::instance()->exit();
 
 //        ::exit(0);
-    } else { 
+    } else {
         QMessageBox::warning(nullptr,  STR_MessageBox_Error,
             tr("If you can read this, the restart command didn't work. You will have to do it yourself manually."), QMessageBox::Ok);
     }
@@ -1983,7 +1931,7 @@ void MainWindow::on_actionPurgeMachine(QAction *action)
                                   "<font size=+2>you will lose this device's data <b>permanently</b>!</font>") + "</p>";
     }
 
-    if (QMessageBox::question(this, STR_MessageBox_Warning, 
+    if (QMessageBox::question(this, STR_MessageBox_Warning,
             "<p><b>"+STR_MessageBox_Warning+":</b> "  +
             tr("You are about to <font size=+2>obliterate</font> OSCAR's device database for the following device:</p>") +
             "<p><font size=+2>" + machname + "</font></p>" +
@@ -2046,14 +1994,14 @@ void MainWindow::purgeMachine(Machine * mach)
             tr("A file permission error caused the purge process to fail; you will have to delete the following folder manually:") +
             "\n\n" + QDir::toNativeSeparators(mach->getDataPath()), QMessageBox::Ok, QMessageBox::Ok);
 
-        if (overview) 
+        if (overview)
             overview->ReloadGraphs();
 
         if (daily) {
             daily->clearLastDay(); // otherwise Daily will crash
             daily->ReloadGraphs();
         }
-        if (welcome) 
+        if (welcome)
             welcome->refreshPage();
 
         //GenerateStatistics();
@@ -2061,7 +2009,7 @@ void MainWindow::purgeMachine(Machine * mach)
     }
 
 
-    if (overview) 
+    if (overview)
         overview->ReloadGraphs();
     QFile rxcache(p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" ));
     rxcache.remove();
@@ -2369,7 +2317,7 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
             QCoreApplication::processEvents();
         }
         QString name = loader.loaderName();
-        
+
         ImportUI importui(p_profile);
         ImportContext* ctx = new ProfileImportContext(p_profile);
         loader.SetContext(ctx);
@@ -2424,21 +2372,14 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
 
 void MainWindow::GenerateStatistics()
 {
-    QDate first = p_profile->FirstDay();
-    QDate last = p_profile->LastDay();
-    ui->statStartDate->setMinimumDate(first);
-    ui->statStartDate->setMaximumDate(last);
-
-    ui->statEndDate->setMinimumDate(first);
-    ui->statEndDate->setMaximumDate(last);
-
     Statistics stats;
     QString htmlStats = stats.GenerateHTML();
     QString htmlRecords = stats.UpdateRecordsBox();
 
-    bool brange = (p_profile->general->statReportMode() == 2);
-    ui->statEndDate->setVisible(brange);
-    ui->statStartDate->setVisible(brange);
+    set_reportModeStandard_mode() ;
+    if (!AppSetting->showDebug()) {
+        ui->logText->hide();
+    }
 
     updateFavourites();
 
@@ -2479,22 +2420,70 @@ void MainWindow::on_statisticsButton_clicked()
     }
 }
 
+void MainWindow::set_reportModeStandard_mode()
+{
+    int mode = STAT_MODE_STANDARD;
+    if (p_profile) {
+        mode = p_profile->general->statReportMode();
+
+        QDate first = p_profile->FirstDay();
+        QDate last = p_profile->LastDay();
+        ui->statStartDate->setMinimumDate(first);
+        ui->statStartDate->setMaximumDate(last);
+        ui->statEndDate->setMinimumDate(first);
+        ui->statEndDate->setMaximumDate(last);
+    }
+    switch (mode) {
+        default:
+        case STAT_MODE_STANDARD:
+            {
+            ui->reportModeStandard->setChecked(true);
+            ui->statEndDate->setVisible(true);
+            ui->statStartDate->setVisible(false);
+            ui->statEnableEndDisplay->setVisible(true);
+            if (p_profile) {
+                ui->statEndDate->setDate(p_profile->general->statReportStart());
+            }
+            }
+            break;
+        case STAT_MODE_MONTHLY:
+            ui->statStartDate->setVisible(false);
+            ui->statEndDate->setVisible(true);
+            ui->reportModeMonthly->setChecked(true);
+
+            ui->statEnableEndDisplay->setVisible(true);
+            if (p_profile) {
+                ui->statEndDate->setDate(p_profile->general->statReportStart());
+            }
+            break;
+        case STAT_MODE_RANGE:
+            ui->reportModeRange->setChecked(true);
+            ui->statStartDate->setVisible(true);
+            ui->statEndDate->setVisible(true);
+            ui->statEnableEndDisplay->setVisible(false);
+            if (p_profile) {
+                ui->statStartDate->setDate( p_profile->general->statReportRangeStart());
+                ui->statEndDate->setDate( p_profile->general->statReportRangeEnd());
+            }
+            break;
+    }
+    return;
+};
+
 void MainWindow::on_reportModeMonthly_clicked()
 {
-    ui->statStartDate->setVisible(false);
-    ui->statEndDate->setVisible(false);
-    if (p_profile->general->statReportMode() != 1) {
-        p_profile->general->setStatReportMode(1);
+    if (p_profile->general->statReportMode() != STAT_MODE_MONTHLY) {
+        p_profile->general->setStatReportMode(STAT_MODE_MONTHLY);
+        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }
 
 void MainWindow::on_reportModeStandard_clicked()
 {
-    ui->statStartDate->setVisible(false);
-    ui->statEndDate->setVisible(false);
-    if (p_profile->general->statReportMode() != 0) {
-        p_profile->general->setStatReportMode(0);
+    if (p_profile->general->statReportMode() != STAT_MODE_STANDARD) {
+        p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
+        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }
@@ -2502,17 +2491,20 @@ void MainWindow::on_reportModeStandard_clicked()
 
 void MainWindow::on_reportModeRange_clicked()
 {
-    ui->statStartDate->setVisible(true);
-    ui->statEndDate->setVisible(true);
-    if (p_profile->general->statReportMode() != 2) {
-        p_profile->general->setStatReportMode(2);
+    if (p_profile->general->statReportMode() != STAT_MODE_RANGE) {
+        p_profile->general->setStatReportMode(STAT_MODE_RANGE);
+        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }
 
 void MainWindow::on_statEndDate_dateChanged(const QDate &date)
 {
-    p_profile->general->setStatReportRangeEnd(date);
+    if (p_profile->general->statReportMode() == STAT_MODE_RANGE ) {
+        p_profile->general->setStatReportRangeEnd(date);
+    } else {
+        p_profile->general->setStatReportStart(date);
+    };
     GenerateStatistics();
 }
 
@@ -2545,7 +2537,7 @@ void MainWindow::on_actionPurgeCurrentDaysOximetry_triggered()
             sess->Destroy();
             delete sess;
         }
-        
+
         // We have to update the summary cache for the affected device(s),
         // otherwise OSCAR will still think this day has oximetry data at next launch.
         for (auto & mach : machines) {
@@ -2660,12 +2652,12 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         QString cardPath = QDir(datacard.path).canonicalPath();
         QString filename;
         QString prefix;
-        
+
         // Loop until a valid folder is selected or the user cancels. Disallow the SD card itself!
         while (true) {
             // Note: macOS ignores this and points to OSCAR's most recently used directory for saving.
             QString folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-            
+
             MachineInfo info = datacard.loader->PeekInfo(datacard.path);
             QString infostr;
             if (!info.modelnumber.isEmpty()) {
@@ -2681,7 +2673,7 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
             if (filename.isEmpty()) {
                 return;  // aborted
             }
-            
+
             // Try again if the selected filename is within the SD card itself.
             QString selectedPath = QFileInfo(filename).dir().canonicalPath();
             if (selectedPath.startsWith(cardPath)) {
@@ -2698,14 +2690,14 @@ void MainWindow::on_actionCreate_Card_zip_triggered()
         if (!filename.toLower().endsWith(".zip")) {
             filename += ".zip";
         }
-        
+
         qDebug() << "Create zip of SD card:" << cardPath;
 
         ZipFile z;
         bool ok = z.Open(filename);
         if (ok) {
             ProgressDialog * prog = new ProgressDialog(this);
-            
+
             // Very full cards can sometimes take nearly a minute to scan,
             // so display the progress dialog immediately.
             prog->setMessage(tr("Calculating size..."));
@@ -2754,7 +2746,7 @@ void MainWindow::on_actionCreate_Log_zip_triggered()
     if (!filename.toLower().endsWith(".zip")) {
         filename += ".zip";
     }
-    
+
     qDebug() << "Create zip of OSCAR diagnostic logs:" << filename;
 
     ZipFile z;
@@ -2807,7 +2799,7 @@ void MainWindow::on_actionCreate_OSCAR_Data_zip_triggered()
     if (!filename.toLower().endsWith(".zip")) {
         filename += ".zip";
     }
-    
+
     qDebug() << "Create zip of OSCAR data folder:" << filename;
 
     QDir oscarData(GetAppData());

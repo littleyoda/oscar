@@ -368,6 +368,7 @@ const QString STR_US_PrefCalcPercentile = "PrefCalcPercentile";
 const QString STR_US_PrefCalcMax = "PrefCalcMax";
 const QString STR_US_ShowUnknownFlags = "ShowUnknownFlags";
 const QString STR_US_StatReportMode = "StatReportMode";
+const QString STR_US_StatReportStart = "StatReportStart";
 const QString STR_US_StatReportRangeStart = "StatReportRangeStart";
 const QString STR_US_StatReportRangeEnd = "StatReportRangeEnd";
 const QString STR_US_LastOverviewRange = "LastOverviewRange";
@@ -486,11 +487,11 @@ class OxiSettings : public PrefSettings
     {
 
         // Intialized non-user changable item - set during import of data?
-        initPref(STR_OS_EnableOximetry, false); 
+        initPref(STR_OS_EnableOximetry, false);
         initPref(STR_OS_DefaultDevice, QString());
         initPref(STR_OS_SyncOximeterClock, true);
         initPref(STR_OS_OximeterType, 0);
-        initPref(STR_OS_SkipOxiIntroScreen, false); 
+        initPref(STR_OS_SkipOxiIntroScreen, false);
 
         // Initialize Changeable via GUI parameters with default values
         initPref(STR_OS_SPO2DropDuration, defaultValue_OS_SPO2DropDuration);
@@ -760,6 +761,7 @@ class UserSettings : public PrefSettings
         m_prefCalcPercentile = initPref(STR_US_PrefCalcPercentile, (double)95.0).toDouble();
         m_prefCalcMax = initPref(STR_US_PrefCalcMax, (int)0).toInt();
         initPref(STR_US_StatReportMode, 0);
+        initPref(STR_US_StatReportStart, QDate(1,1,2000));
         initPref(STR_US_StatReportRangeStart, QDate(1,1,2000));
         initPref(STR_US_StatReportRangeEnd, QDate(1,1,2000));
         m_showUnownFlags = initPref(STR_US_ShowUnknownFlags, false).toBool();
@@ -775,6 +777,7 @@ class UserSettings : public PrefSettings
     inline double prefCalcPercentile() const { return m_prefCalcPercentile; }
     inline int prefCalcMax() const { return m_prefCalcMax; }
     int statReportMode() const { return getPref(STR_US_StatReportMode).toInt(); }
+    QDate statReportStart() const { return getPref(STR_US_StatReportStart).toDate(); }
     QDate statReportRangeStart() const { return getPref(STR_US_StatReportRangeStart).toDate(); }
     QDate statReportRangeEnd() const { return getPref(STR_US_StatReportRangeEnd).toDate(); }
     inline bool showUnknownFlags() const { return m_showUnownFlags; }
@@ -791,6 +794,7 @@ class UserSettings : public PrefSettings
     void setPrefCalcPercentile(double p) { setPref(STR_US_PrefCalcPercentile, m_prefCalcPercentile=p); }
     void setPrefCalcMax(int i) { setPref(STR_US_PrefCalcMax, m_prefCalcMax=i); }
     void setStatReportMode(int i) { setPref(STR_US_StatReportMode, i); }
+    void setStatReportStart(QDate i) { setPref(STR_US_StatReportStart, i); }
     void setStatReportRangeStart(QDate i) { setPref (STR_US_StatReportRangeStart, i); }
     void setStatReportRangeEnd(QDate i) { setPref (STR_US_StatReportRangeEnd, i); }
     void setShowUnknownFlags(bool b) { setPref(STR_US_ShowUnknownFlags, m_showUnownFlags=b); }

@@ -167,7 +167,12 @@ bool rxAHILessThan(const RXItem * rx1, const RXItem * rx2)
 
 void Statistics::updateDisabledInfo()
 {
-    disabledInfo.update( p_profile->LastDay(MT_CPAP), p_profile->FirstDay(MT_CPAP) );
+    QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
+    QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
+    if (lastcpap > p_profile->general->statReportStart() ) {
+        lastcpap = p_profile->general->statReportStart();
+    }
+    disabledInfo.update( lastcpap, firstcpap );
 }
 
 void DisabledInfo::update(QDate latestDate, QDate earliestDate)
@@ -217,23 +222,6 @@ void DisabledInfo::update(QDate latestDate, QDate earliestDate)
     // convect ms to minutes
     maxDurationOfaDisabledsession/=60000 ;
     totalDurationOfDisabledSessions/=60000 ;
-    #if 0
-    DEBUGQ;
-    DEBUGQ;
-    DEBUGFW Q(p_profile->cpap->complianceHours()) ;
-    DEBUGFW Q( totalDays ) ;
-    DEBUGQ;
-    DEBUGFW Q( daysNoData ) ;
-    DEBUGFW Q( daysInCompliance ) ;
-    DEBUGFW Q( daysOutOfCompliance ) ;
-    DEBUGFW Q( numDaysDisabledSessionChangedCompliance ) ;
-    DEBUGQ;
-    DEBUGFW Q( numDisabledsessions ) ;
-    DEBUGFW Q( maxDurationOfaDisabledsession) O("minutes");
-    DEBUGFW Q( totalDurationOfDisabledSessions) O("minutes") ;
-    DEBUGFW Q( numDaysWithDisabledsessions ) ;
-    #endif
-
 };
 
 QString DisabledInfo::display(int type)
@@ -1069,6 +1057,9 @@ QString Statistics::GenerateMachineList()
 //qDebug() << "Device" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
             QDate d1 = m->FirstDay();
             QDate d2 = m->LastDay();
+            if (d2 > p_profile->general->statReportStart() ) {
+                d2 = p_profile->general->statReportStart();
+            }
             QString mn = m->modelnumber();
             html += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
                     .arg(m->brand())
@@ -1143,6 +1134,9 @@ QString Statistics::GenerateRXChanges()
     while (it.hasPrevious()) {
         it.previous();
         const RXItem & rx = it.value();
+        if (rx.start > p_profile->general->statReportStart() ) continue;
+        QDate rxend=rx.end;
+        if (rxend > p_profile->general->statReportStart() ) rxend = p_profile->general->statReportStart();
 
         QString color;
 
@@ -1161,7 +1155,7 @@ QString Statistics::GenerateRXChanges()
         html += QString("<tr %4 bgcolor='%1' onmouseover='ChangeColor(this, \"#dddddd\");' onmouseout='ChangeColor(this, \"%1\");' onclick='alert(\"overview=%2,%3\");'>")
                 .arg(color)
                 .arg(rx.start.toString(Qt::ISODate))
-                .arg(rx.end.toString(Qt::ISODate))
+                .arg(rxend.toString(Qt::ISODate))
                 .arg(datarowclass);
 
         double ahi = rdi ? (double(rx.rdi) / rx.hours) : (double(rx.ahi) /rx.hours);
@@ -1175,7 +1169,7 @@ QString Statistics::GenerateRXChanges()
                                                            .arg(rx.machine->serial());
 
         html += QString("<td>%1</td>").arg(rx.start.toString(MedDateFormat))+
-                QString("<td>%1</td>").arg(rx.end.toString(MedDateFormat))+
+                QString("<td>%1</td>").arg(rxend.toString(MedDateFormat))+
                 QString("<td>%1</td>").arg(rx.days)+
                 QString("<td>%1</td>").arg(ahi, 0, 'f', 2)+
                 QString("<td>%1</td>").arg(fli, 0, 'f', 2)+
@@ -1238,19 +1232,9 @@ QString Statistics::GenerateCPAPUsage()
     // Find first and last days with valid CPAP data
     QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
     QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
-
-    // Get dates for standard report (last week, month, 6 months, year)
-    QDate cpapweek = lastcpap.addDays(-6);
-    QDate cpapmonth = lastcpap.addDays(-29);
-    QDate cpap6month = lastcpap.addMonths(-6);
-    QDate cpapyear = lastcpap.addMonths(-12);
-
-    // but not before the first available date of course
-    if (cpapweek   < firstcpap) { cpapweek   = firstcpap; }
-    if (cpapmonth  < firstcpap) { cpapmonth  = firstcpap; }
-    if (cpap6month < firstcpap) { cpap6month = firstcpap; }
-    if (cpapyear   < firstcpap) { cpapyear   = firstcpap; }
-
+    if (lastcpap > p_profile->general->statReportStart() ) {
+        lastcpap = p_profile->general->statReportStart();
+    }
 
     QString ahitxt = getRDIorAHIText();
 
@@ -1292,7 +1276,9 @@ QString Statistics::GenerateCPAPUsage()
         if (row.calc == SC_HEADING) {  // All sections begin with a heading
             last = p_profile->LastGoodDay(row.type);
             first = p_profile->FirstGoodDay(row.type);
-            //last = p_profile->general->statReportStart();
+            if (last > p_profile->general->statReportStart() ) {
+                last = p_profile->general->statReportStart();
+            }
 
             // Clear the periods (columns)
             periods.clear();
@@ -1332,7 +1318,7 @@ QString Statistics::GenerateCPAPUsage()
                 first = p_profile->general->statReportRangeStart();
                 last = p_profile->general->statReportRangeEnd();
                 if (first > last) {
-                    first=last;
+                    first = last;
                 }
                 periods.push_back(Period(first,last,first.toString(MedDateFormat)+" - "+last.toString(MedDateFormat)));
             }
@@ -1365,6 +1351,9 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
             QDate last=p_profile->LastGoodDay(row.type);
+            if (last > p_profile->general->statReportStart() ) {
+                last = p_profile->general->statReportStart();
+            }
             QString & machine = machinenames[row.type];
             int value=p_profile->countDays(row.type, first, last);
 
@@ -1541,6 +1530,9 @@ QString Statistics::UpdateRecordsBox()
     if (cpap) {
         QDate first = p_profile->FirstGoodDay(MT_CPAP);
         QDate last = p_profile->LastGoodDay(MT_CPAP);
+        if (last > p_profile->general->statReportStart() ) {
+            last = p_profile->general->statReportStart();
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// Compliance and usage information
@@ -1579,7 +1571,7 @@ QString Statistics::UpdateRecordsBox()
             int baddays = 0;
 
             for (QDate date = first; date <= last; date = date.addDays(1)) {
-                Day * day = p_profile->GetGoodDay(date, MT_CPAP);
+                Day * day = p_profile->GetDay(date, MT_CPAP);
                 if (!day) continue;
 
                 float ahi = day->calcAHI();
@@ -1624,7 +1616,7 @@ QString Statistics::UpdateRecordsBox()
 
             ahilist.clear();
             for (QDate date = first; date <= last; date = date.addDays(1)) {
-                Day * day = p_profile->GetGoodDay(date, MT_CPAP);
+                Day * day = p_profile->GetDay(date, MT_CPAP);
                 if (!day) continue;
 
                 float val = 0;
@@ -1676,7 +1668,7 @@ QString Statistics::UpdateRecordsBox()
 
             ahilist.clear();
             for (QDate date = first; date <= last; date = date.addDays(1)) {
-                Day * day = p_profile->GetGoodDay(date, MT_CPAP);
+                Day * day = p_profile->GetDay(date, MT_CPAP);
                 if (!day) continue;
 
                 float leak = day->calcPON(CPAP_LargeLeak);
@@ -1714,7 +1706,7 @@ QString Statistics::UpdateRecordsBox()
             if (p_profile->hasChannel(CPAP_CSR)) {
                 ahilist.clear();
                 for (QDate date = first; date <= last; date = date.addDays(1)) {
-                    Day * day = p_profile->GetGoodDay(date, MT_CPAP);
+                    Day * day = p_profile->GetDay(date, MT_CPAP);
                     if (!day) continue;
 
                     float leak = day->calcPON(CPAP_CSR);
@@ -1744,7 +1736,7 @@ QString Statistics::UpdateRecordsBox()
             if (p_profile->hasChannel(CPAP_PB)) {
                 ahilist.clear();
                 for (QDate date = first; date <= last; date = date.addDays(1)) {
-                    Day * day = p_profile->GetGoodDay(date, MT_CPAP);
+                    Day * day = p_profile->GetDay(date, MT_CPAP);
                     if (!day) continue;
 
                     float leak = day->calcPON(CPAP_PB);

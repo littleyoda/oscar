@@ -38,6 +38,7 @@ private:
     int numDaysDisabledSessionChangedCompliance ;
     double maxDurationOfaDisabledsession ;
     double totalDurationOfDisabledSessions ;
+public:
     void clear () {
         totalDays = 0;
         daysNoData = 0;
@@ -236,6 +237,7 @@ class Statistics : public QObject
     QList<QDate> record_best_ahi;
     QList<QDate> record_worst_ahi;
     DisabledInfo disabledInfo;
+
 
   signals:
 
