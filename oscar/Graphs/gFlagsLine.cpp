@@ -231,7 +231,7 @@ void gFlagsGroup::paint(QPainter &painter, gGraph &g, const QRegion &region)
     }
 
     // graph each session at top
-    if (m_sessions.size()>1 ) {
+    if ( AppSetting->eventFlagSessionBar() && m_sessions.size()>1 ) {
         QRect sessBox(0,g.top,0,sessionBarHeight());
         double adjustment = width/(double)m_duration;
         for (const auto & sess : m_sessions) {

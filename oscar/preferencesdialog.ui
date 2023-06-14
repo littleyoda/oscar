@@ -2888,6 +2888,16 @@ Try it and see if you like it.</string>
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="eventFlagSessionBar">
+                 <property name="toolTip">
+                  <string>For multiple sessions, displays a thin gray line for each session at the top of the Event Flag graph.</string>
+                 </property>
+                 <property name="text">
+                  <string>Enables SessionBar in Event Flags Graph</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
