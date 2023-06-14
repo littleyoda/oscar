@@ -169,8 +169,8 @@ void Statistics::updateDisabledInfo()
 {
     QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
     QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
-    if (lastcpap > p_profile->general->statReportStart() ) {
-        lastcpap = p_profile->general->statReportStart();
+    if (lastcpap > p_profile->general->statReportDate() ) {
+        lastcpap = p_profile->general->statReportDate();
     }
     disabledInfo.update( lastcpap, firstcpap );
 }
@@ -1057,8 +1057,8 @@ QString Statistics::GenerateMachineList()
 //qDebug() << "Device" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
             QDate d1 = m->FirstDay();
             QDate d2 = m->LastDay();
-            if (d2 > p_profile->general->statReportStart() ) {
-                d2 = p_profile->general->statReportStart();
+            if (d2 > p_profile->general->statReportDate() ) {
+                d2 = p_profile->general->statReportDate();
             }
             QString mn = m->modelnumber();
             html += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
@@ -1134,9 +1134,9 @@ QString Statistics::GenerateRXChanges()
     while (it.hasPrevious()) {
         it.previous();
         const RXItem & rx = it.value();
-        if (rx.start > p_profile->general->statReportStart() ) continue;
+        if (rx.start > p_profile->general->statReportDate() ) continue;
         QDate rxend=rx.end;
-        if (rxend > p_profile->general->statReportStart() ) rxend = p_profile->general->statReportStart();
+        if (rxend > p_profile->general->statReportDate() ) rxend = p_profile->general->statReportDate();
 
         QString color;
 
@@ -1232,8 +1232,8 @@ QString Statistics::GenerateCPAPUsage()
     // Find first and last days with valid CPAP data
     QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
     QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
-    if (lastcpap > p_profile->general->statReportStart() ) {
-        lastcpap = p_profile->general->statReportStart();
+    if (lastcpap > p_profile->general->statReportDate() ) {
+        lastcpap = p_profile->general->statReportDate();
     }
 
     QString ahitxt = getRDIorAHIText();
@@ -1276,8 +1276,8 @@ QString Statistics::GenerateCPAPUsage()
         if (row.calc == SC_HEADING) {  // All sections begin with a heading
             last = p_profile->LastGoodDay(row.type);
             first = p_profile->FirstGoodDay(row.type);
-            if (last > p_profile->general->statReportStart() ) {
-                last = p_profile->general->statReportStart();
+            if (last > p_profile->general->statReportDate() ) {
+                last = p_profile->general->statReportDate();
             }
 
             // Clear the periods (columns)
@@ -1351,8 +1351,8 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
             QDate last=p_profile->LastGoodDay(row.type);
-            if (last > p_profile->general->statReportStart() ) {
-                last = p_profile->general->statReportStart();
+            if (last > p_profile->general->statReportDate() ) {
+                last = p_profile->general->statReportDate();
             }
             QString & machine = machinenames[row.type];
             int value=p_profile->countDays(row.type, first, last);
@@ -1530,8 +1530,8 @@ QString Statistics::UpdateRecordsBox()
     if (cpap) {
         QDate first = p_profile->FirstGoodDay(MT_CPAP);
         QDate last = p_profile->LastGoodDay(MT_CPAP);
-        if (last > p_profile->general->statReportStart() ) {
-            last = p_profile->general->statReportStart();
+        if (last > p_profile->general->statReportDate() ) {
+            last = p_profile->general->statReportDate();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////

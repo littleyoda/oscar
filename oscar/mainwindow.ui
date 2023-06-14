@@ -564,6 +564,9 @@
              </item>
              <item>
               <widget class="QRadioButton" name="reportModeStandard">
+               <property name="toolTip">
+                <string>Show Standard Report</string>
+               </property>
                <property name="text">
                 <string>Standard</string>
                </property>
@@ -574,6 +577,9 @@
              </item>
              <item>
               <widget class="QRadioButton" name="reportModeMonthly">
+               <property name="toolTip">
+                <string>Show Monthly Report</string>
+               </property>
                <property name="text">
                 <string>Monthly</string>
                </property>
@@ -581,6 +587,9 @@
              </item>
              <item>
               <widget class="QRadioButton" name="reportModeRange">
+               <property name="toolTip">
+                <string>Show Range Report</string>
+               </property>
                <property name="text">
                 <string>Date Range</string>
                </property>
@@ -607,13 +616,9 @@
              </item>
              <item>
               <widget class="QLabel" name="statEnableEndDisplay">
-               <property name="text">
-                <string>Report Date</string>
+               <property name="toolTip">
+                <string>Select Report Date</string>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="statEnableEndDisplay">
                <property name="text">
                 <string>Report Date</string>
                </property>
