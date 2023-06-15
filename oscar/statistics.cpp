@@ -1530,38 +1530,31 @@ QString Statistics::UpdateRecordsBox()
     if (cpap) {
         QDate first = p_profile->FirstGoodDay(MT_CPAP);
         QDate last = p_profile->LastGoodDay(MT_CPAP);
-        if (last > p_profile->general->statReportDate() ) {
-            last = p_profile->general->statReportDate();
-        }
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// Compliance and usage information
         /////////////////////////////////////////////////////////////////////////////////////
-        int realTotal = 1+first.daysTo(last);
-        int totaldays = p_profile->countDays(MT_CPAP, first, last);
+        int totalDays = 1+first.daysTo(last);
+        int daysUsed = p_profile->countDays(MT_CPAP, first, last);
+        int daysSkipped = totalDays - daysUsed;
         int compliant = p_profile->countCompliantDays(MT_CPAP, first, last);
-        int lowUsed = totaldays - compliant;
-        int daysSkipped = realTotal -(compliant+lowUsed);
-
-        //float comperc = (100.0 / float(totaldays)) * float(compliant);
-        float comperc = (100.0 / float(realTotal)) * float(compliant);
-        html += "<b>"+tr("Period:")+"</b>  ";
-        html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br><br>";
+        int lowUsed = daysUsed - compliant;
+        float comperc = (100.0 / float(totalDays)) * float(compliant);
 
         html += "<b>"+tr("CPAP Usage")+"</b><br>";
-        if (realTotal != totaldays) {
-            html += tr("Total Days: %1").arg(realTotal) + "<br>";
-            html += tr("No Data Days: %1").arg(daysSkipped) + "<br>";
+        html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br>";
+        if (daysSkipped > 0) {
+            html += tr("Total Days: %1").arg(totalDays) + "<br>";
+            html += tr("Days Not Used: %1").arg(daysSkipped) + "<br>";
         }
-        html += tr("Days Used: %1").arg(totaldays) + "<br>";
-        html += tr("Low Use Days: %1").arg(lowUsed) + "<br>";
-        //html += tr("compliant Days: %1").arg(compliant) + "<br>";
+        html += tr("Days Used: %1").arg(daysUsed) + "<br>";
+        html += tr("Days %1 %2 Hours: %3").arg("&gt;=")  .arg(p_profile->cpap->complianceHours(),0,'f',1) .arg(compliant) + "<br>";
+        html += tr("Days %1 %2 Hours: %3").arg("&lt;").arg(p_profile->cpap->complianceHours(),0,'f',1) .arg(lowUsed) + "<br>";
         html += tr("Compliance: %1%").arg(comperc, 0, 'f', 1)  + "<br>";
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// AHI Records
         /////////////////////////////////////////////////////////////////////////////////////
-
         if (p_profile->session->preloadSummaries()) {
             const int show_records = 5;
             QMultiMap<float, QDate>::iterator it;
