@@ -241,7 +241,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->allowYAxisScaling->setChecked(AppSetting->allowYAxisScaling());
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
-    ui->eventFlagSessionBar->setChecked(AppSetting->eventFlagSessionBar());
+    ui->eventFlagSessionBar->setChecked(profile->appearance->eventFlagSessionBar());
     ui->complianceHours->setValue(profile->cpap->complianceHours());
     ui->clinicalMode->setChecked(profile->cpap->clinicalMode());
     ui->clinicalTextEdit->setPlainText(clinicalHelp());
@@ -858,7 +858,7 @@ bool PreferencesDialog::Save()
     AppSetting->setAllowYAxisScaling(ui->allowYAxisScaling->isChecked());
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
-    AppSetting->setEventFlagSessionBar(ui->eventFlagSessionBar->isChecked());
+    p_profile->appearance->setEventFlagSessionBar(ui->eventFlagSessionBar->isChecked());
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 

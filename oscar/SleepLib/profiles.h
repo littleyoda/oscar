@@ -355,6 +355,8 @@ const QString STR_IS_LockSummarySessions = "LockSummarySessions";
 const QString STR_IS_WarnOnUntestedMachine = "WarnOnUntestedMachine";
 const QString STR_IS_WarnOnUnexpectedData = "WarnOnUnexpectedData";
 
+//Apperance Settings
+const QString STR_AS_EventFlagSessionBar = "EventFlagSessionBar";
 
 // UserSettings Strings
 const QString STR_US_UnitSystem = "UnitSystem";
@@ -739,8 +741,16 @@ class AppearanceSettings : public PrefSettings
     AppearanceSettings(Profile *profile)
       : PrefSettings(profile)
     {
-
+        m_eventFlagSessionBar = initPref(STR_AS_EventFlagSessionBar, false).toBool();
     }
+
+    //Getters
+    bool eventFlagSessionBar() const { return m_eventFlagSessionBar; }
+
+    //Setters
+    void setEventFlagSessionBar(bool b) { setPref(STR_AS_EventFlagSessionBar, m_eventFlagSessionBar = b); }
+
+    bool m_eventFlagSessionBar;
 };
 
 /*! \class UserSettings
