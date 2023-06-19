@@ -3378,7 +3378,8 @@ bool ResmedLoader::LoadPLD(Session *sess, const QString & path)
 //          qDebug() << "IE count, data..." << es.sampleCnt << es.dataArray[0] << es.dataArray[1] << es.dataArray[2] << es.dataArray[3] << es.dataArray[4];
 //          a = sess->AddEventList(code, EVL_Waveform, es.gain, es.offset, 0, 0, rate);
 //          a->AddWaveform(edf.startdate, es.dataArray, samples, duration);
-            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
+//  Fix ToTimeDelta to store inverse of edf data - also fix labels and tool tip
+//            ToTimeDelta(sess,edf,es, code,samples,duration,0,0, square);
         } else if (matchSignal(CPAP_Ti, es.label)) {
             code = CPAP_Ti;
             // There are TWO of these with the same label on 36037, 36039, 36377 and others
