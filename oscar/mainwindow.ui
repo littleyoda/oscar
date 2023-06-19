@@ -606,9 +606,11 @@
                <property name="currentSection">
                 <enum>QDateTimeEdit::MonthSection</enum>
                </property>
+               <!--   this cause oscar to crash on start up with linus 20.04.o4
                <property name="displayFormat">
                 <string>Qt::SystemLocaleShortDate</string>
                </property>
+               -->
                <property name="calendarPopup">
                 <bool>true</bool>
                </property>
@@ -635,14 +637,16 @@
                <property name="currentSection">
                 <enum>QDateTimeEdit::MonthSection</enum>
                </property>
+               <!--   this cause oscar to crash on start up with linus 20.04.o4
                <property name="displayFormat">
                 <string>Qt::SystemLocaleShortDate</string>
                </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
+               -->
                <property name="currentSectionIndex">
                 <number>1</number>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
