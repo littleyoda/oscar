@@ -178,9 +178,6 @@ void MainWindow::SetupGUI()
     m_restartRequired = false;
     // Initialize Status Bar objects
 
-    QTextCharFormat format = ui->statStartDate->calendarWidget()->weekdayTextFormat(Qt::Saturday);
-    format.setForeground(QBrush(Qt::black, Qt::SolidPattern));
-    Qt::DayOfWeek dow=firstDayOfWeekFromLocale();
     init_reportModeUi() ;
 
 #ifdef Q_OS_MAC
@@ -2415,6 +2412,9 @@ void MainWindow::on_statisticsButton_clicked()
 
 void MainWindow::init_reportModeUi() 
 {
+    QTextCharFormat format = ui->statStartDate->calendarWidget()->weekdayTextFormat(Qt::Saturday);
+    format.setForeground(QBrush(Qt::black, Qt::SolidPattern));
+    Qt::DayOfWeek dow=firstDayOfWeekFromLocale();
     ui->statStartDate->blockSignals(true);
     ui->statEndDate->blockSignals(true);
     ui->statStartDate->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
