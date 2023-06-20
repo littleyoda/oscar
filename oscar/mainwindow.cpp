@@ -181,14 +181,7 @@ void MainWindow::SetupGUI()
     QTextCharFormat format = ui->statStartDate->calendarWidget()->weekdayTextFormat(Qt::Saturday);
     format.setForeground(QBrush(Qt::black, Qt::SolidPattern));
     Qt::DayOfWeek dow=firstDayOfWeekFromLocale();
-    ui->statStartDate->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
-    ui->statStartDate->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
-    ui->statStartDate->calendarWidget()->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-    ui->statStartDate->calendarWidget()->setFirstDayOfWeek(dow);
-    ui->statEndDate->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
-    ui->statEndDate->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
-    ui->statEndDate->calendarWidget()->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-    ui->statEndDate->calendarWidget()->setFirstDayOfWeek(dow);
+    init_reportModeUi() ;
 
 #ifdef Q_OS_MAC
     //p_profile->appearance->setAntiAliasing(false);
@@ -256,7 +249,7 @@ void MainWindow::SetupGUI()
     ui->actionReport_a_Bug->setVisible(false);  // remove this once we actually implement it
     ui->actionExport_Review->setVisible(false);  // remove this once we actually implement it
 
-    set_reportModeStandard_mode() ;
+    reset_reportModeUi() ;
     if (!AppSetting->showDebug()) {
         ui->logText->hide();
     }
@@ -563,13 +556,10 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
 
     QDate first = p_profile->FirstDay();
     QDate last = p_profile->LastDay();
-    ui->statStartDate->setDate(first);
-    ui->statEndDate->setDate(last);
     p_profile->general->setStatReportRangeStart(first);
     p_profile->general->setStatReportRangeEnd(last);
     p_profile->general->setStatReportDate(last);
     p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
-    set_reportModeStandard_mode();
     GenerateStatistics();
     PopulatePurgeMenu();
 
@@ -2378,14 +2368,11 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
 
 void MainWindow::GenerateStatistics()
 {
+    reset_reportModeUi() ;
+
     Statistics stats;
     QString htmlStats = stats.GenerateHTML();
     QString htmlRecords = stats.UpdateRecordsBox();
-
-    set_reportModeStandard_mode() ;
-    if (!AppSetting->showDebug()) {
-        ui->logText->hide();
-    }
 
     updateFavourites();
 
@@ -2426,9 +2413,27 @@ void MainWindow::on_statisticsButton_clicked()
     }
 }
 
-void MainWindow::set_reportModeStandard_mode()
+void MainWindow::init_reportModeUi() 
+{
+    ui->statStartDate->blockSignals(true);
+    ui->statEndDate->blockSignals(true);
+    ui->statStartDate->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
+    ui->statStartDate->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
+    ui->statStartDate->calendarWidget()->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    ui->statStartDate->calendarWidget()->setFirstDayOfWeek(dow);
+    ui->statEndDate->calendarWidget()->setWeekdayTextFormat(Qt::Saturday, format);
+    ui->statEndDate->calendarWidget()->setWeekdayTextFormat(Qt::Sunday, format);
+    ui->statEndDate->calendarWidget()->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    ui->statEndDate->calendarWidget()->setFirstDayOfWeek(dow);
+    ui->statStartDate->blockSignals(false);
+    ui->statEndDate->blockSignals(false);
+}
+
+void MainWindow::reset_reportModeUi()
 {
     int mode = STAT_MODE_STANDARD;
+    ui->statStartDate->blockSignals(true);
+    ui->statEndDate->blockSignals(true);
     if (p_profile) {
         mode = p_profile->general->statReportMode();
 
@@ -2438,6 +2443,9 @@ void MainWindow::set_reportModeStandard_mode()
         ui->statStartDate->setMaximumDate(last);
         ui->statEndDate->setMinimumDate(first);
         ui->statEndDate->setMaximumDate(last);
+        if (!p_profile->general->statReportDate().isValid()) {
+            p_profile->general->setStatReportDate(last);
+        }
     }
     switch (mode) {
         default:
@@ -2473,6 +2481,8 @@ void MainWindow::set_reportModeStandard_mode()
             }
             break;
     }
+    ui->statStartDate->blockSignals(false);
+    ui->statEndDate->blockSignals(false);
     return;
 };
 
@@ -2480,7 +2490,6 @@ void MainWindow::on_reportModeMonthly_clicked()
 {
     if (p_profile->general->statReportMode() != STAT_MODE_MONTHLY) {
         p_profile->general->setStatReportMode(STAT_MODE_MONTHLY);
-        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }
@@ -2489,7 +2498,6 @@ void MainWindow::on_reportModeStandard_clicked()
 {
     if (p_profile->general->statReportMode() != STAT_MODE_STANDARD) {
         p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
-        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }
@@ -2499,7 +2507,6 @@ void MainWindow::on_reportModeRange_clicked()
 {
     if (p_profile->general->statReportMode() != STAT_MODE_RANGE) {
         p_profile->general->setStatReportMode(STAT_MODE_RANGE);
-        set_reportModeStandard_mode();
         GenerateStatistics();
     }
 }

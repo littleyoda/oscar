@@ -318,7 +318,8 @@ class MainWindow : public QMainWindow
 
     void on_reportModeStandard_clicked();
 
-    void set_reportModeStandard_mode();
+    void init_reportModeUi();
+    void reset_reportModeUi();
 
     void on_actionRebuildCPAP(QAction *action);
 
