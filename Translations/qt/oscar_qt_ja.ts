@@ -16,15 +16,16 @@
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation>よっしゃー</translation>
+        <translatorcomment>I believe this is a better fit.</translatorcomment>
+        <translation>了解</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>いいえ</translation>
+        <translation>&amp;N いいえ</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>はい</translation>
+        <translation>&amp;Y はい</translation>
     </message>
     <message>
         <source>Help</source>
@@ -72,7 +73,7 @@
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>ノー・トゥ・オール</translation>
+        <translation>&amp;o すべてに対していいえ</translation>
     </message>
     <message>
         <source>Save All</source>
@@ -84,7 +85,7 @@
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>イエス・トゥ・オール</translation>
+        <translation>&amp;A すべてはい</translation>
     </message>
 </context>
 </TS>
