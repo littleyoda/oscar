@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #ifdef UNITTEST_MODE
 #include "tests/AutoTest.h"
 #endif
@@ -289,6 +292,7 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setApplicationName(getAppName());
     QCoreApplication::setOrganizationName(getDeveloperName());
     QCoreApplication::setOrganizationDomain(getDeveloperDomain());
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QSettings settings;
 
