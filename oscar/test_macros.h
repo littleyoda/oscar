@@ -43,6 +43,8 @@ To turn off the the test macros.
 #define DEBUGL   DEBUGQ	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
 #define DEBUGF   DEBUGQ	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGFW  DEBUGW	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+//#define DEBUGFW  qCritical().noquote()<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGFC  qCritical().noquote()<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGT   DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
 #define DEBUGTF  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGTFW  DEBUGW	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
@@ -113,6 +115,7 @@ To turn off the the test macros.
 #define DEBUGT
 #define DEBUGTF
 #define DEBUGTFW
+#define DEBUGFC
 
 #define Z( XX )
 #define ZZ( XX , YY)

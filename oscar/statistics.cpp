@@ -26,6 +26,7 @@
 #include "cprogressbar.h"
 #include "SleepLib/common.h"
 #include "version.h"
+#include "SleepLib/profiles.h"
 
 extern MainWindow *mainwin;
 
@@ -1892,4 +1893,19 @@ QString StatisticsRow::value(QDate start, QDate end)
     }
 
     return value;
+}
+
+QDate lastdate;
+QDate firstdate;
+void Statistics::updateReportDate() {
+    if (p_profile) {
+        QDate last = p_profile->LastDay();
+        QDate first = p_profile->FirstDay();
+        if (last == lastdate  && first == firstdate) return;
+        p_profile->general->setStatReportRangeStart(first);
+        p_profile->general->setStatReportRangeEnd(last);
+        p_profile->general->setStatReportDate(last);
+        lastdate = last;
+        firstdate = first;
+    }
 }

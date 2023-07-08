@@ -551,11 +551,6 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     // Should really create welcome and statistics here, but they need redoing later anyway to kill off webkit
     ui->tabWidget->setCurrentIndex(AppSetting->openTabAtStart());
 
-    QDate first = p_profile->FirstDay();
-    QDate last = p_profile->LastDay();
-    p_profile->general->setStatReportRangeStart(first);
-    p_profile->general->setStatReportRangeEnd(last);
-    p_profile->general->setStatReportDate(last);
     p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
     GenerateStatistics();
     PopulatePurgeMenu();
@@ -2431,6 +2426,7 @@ void MainWindow::init_reportModeUi()
 
 void MainWindow::reset_reportModeUi()
 {
+    Statistics::updateReportDate();
     int mode = STAT_MODE_STANDARD;
     ui->statStartDate->blockSignals(true);
     ui->statEndDate->blockSignals(true);
@@ -2443,9 +2439,6 @@ void MainWindow::reset_reportModeUi()
         ui->statStartDate->setMaximumDate(last);
         ui->statEndDate->setMinimumDate(first);
         ui->statEndDate->setMaximumDate(last);
-        if (!p_profile->general->statReportDate().isValid()) {
-            p_profile->general->setStatReportDate(last);
-        }
     }
     switch (mode) {
         default:

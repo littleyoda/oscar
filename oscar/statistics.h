@@ -211,6 +211,8 @@ class Statistics : public QObject
 
     void updateDisabledInfo();
 
+    static void updateReportDate();
+
   protected:
     void loadRXChanges();
     void saveRXChanges();
