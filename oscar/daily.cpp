@@ -579,7 +579,7 @@ void Daily::showEvent(QShowEvent *)
 bool Daily::rejectToggleSessionEnable( Session*sess) {
     if (!sess) return true;
     if (p_profile->cpap->clinicalMode()) {
-       QMessageBox mbox(QMessageBox::Warning, tr("Clinical Mode"), tr(" Disabling Sessions requires the Permissive Mode"), QMessageBox::Ok  , this);
+       QMessageBox mbox(QMessageBox::Warning, tr("Clinical Mode"), tr(" Disabling Sessions requires Permissive Mode be set in OSCAR Preferences in the Clinical tab."), QMessageBox::Ok  , this);
             mbox.exec();
             return true;
     }
