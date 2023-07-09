@@ -1663,7 +1663,7 @@ as this is the only value available on summary-only days.</string>
           <item>
            <widget class="QGroupBox" name="oximetryGroupBox">
             <property name="title">
-             <string>Oximetry Settings</string>
+             <string>Oximetry Settings - Not Currently Funcyional</string>
             </property>
             <property name="checkable">
              <bool>false</bool>
