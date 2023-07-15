@@ -99,7 +99,7 @@ QMAKE_EXTRA_TARGETS += gitinfotarget
 
 QMAKE_TARGET_PRODUCT = OSCAR
 QMAKE_TARGET_COMPANY = The OSCAR Team
-QMAKE_TARGET_COPYRIGHT = © 2019-2022 The OSCAR Team
+QMAKE_TARGET_COPYRIGHT = © 2019-2023 The OSCAR Team
 QMAKE_TARGET_DESCRIPTION = "OpenSource CPAP Analysis Reporter"
 _VERSION_FILE = $$cat(./VERSION)
 VERSION = $$section(_VERSION_FILE, '"', 1, 1)
@@ -110,7 +110,7 @@ RC_ICONS = ./icons/logo.ico
 
 macx  {
   QMAKE_TARGET_BUNDLE_PREFIX = "org.oscar-team"
-# QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+# QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
   LIBS             += -lz
   ICON              = icons/OSCAR.icns
 } else:haiku {

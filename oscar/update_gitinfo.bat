@@ -27,7 +27,7 @@ if errorlevel 1 goto GitFail
 :GitFail
 :GitDone
 
-@echo Update_gtinfo.bat: GIT_BRANCH=%GIT_BRANCH%, GIT_REVISION=%GIT_REVISION%, GIT_TAG=%GIT_TAG%
+@echo Update_gitinfo.bat: GIT_BRANCH=%GIT_BRANCH%, GIT_REVISION=%GIT_REVISION%, GIT_TAG=%GIT_TAG%
 
 echo // This is an auto generated file > %DIR%git_info.new
 
