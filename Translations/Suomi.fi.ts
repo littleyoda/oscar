@@ -292,12 +292,12 @@
     <message>
         <location filename="../oscar/daily.cpp" line="582"/>
         <source>Clinical Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliininen tila</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="582"/>
         <source> Disabling Sessions requires the Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation> Käyttökertojen poistaminen käytöstä edellyttää sallivaa tilaa</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="667"/>
@@ -608,7 +608,7 @@ Jatketaanko ?</translation>
         <location filename="../oscar/dailySearchTab.cpp" line="617"/>
         <source>Bookmark
 Jumps to Date&apos;s Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Siirtyy päivämäärän kirjanmerkkiin</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1067"/>
@@ -626,12 +626,12 @@ Mene päivään</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="195"/>
         <source>Match</source>
-        <translation type="unfinished"></translation>
+        <translation>Sopii yhteen</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="302"/>
         <source>Notes</source>
-        <translation>Huomautukset</translation>
+        <translation>Huom</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="303"/>
@@ -681,7 +681,7 @@ Mene päivään</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="364"/>
         <source>Click HERE to close Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Napsauta TÄTÄ sulkeaksesi helpin</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="370"/>
@@ -724,7 +724,7 @@ Menee päivän yksityiskohtiin</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="634"/>
         <source> EventsPerHour</source>
-        <translation type="unfinished"></translation>
+        <translation> Tapahtumaa tunnissa</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="639"/>
@@ -737,7 +737,7 @@ Menee päivän yksityiskohtiin</translation>
         <location filename="../oscar/dailySearchTab.cpp" line="643"/>
         <location filename="../oscar/dailySearchTab.cpp" line="1022"/>
         <source> Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation> Minuuttia</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="648"/>
@@ -749,7 +749,7 @@ Menee päivän yksityiskohtiin</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="653"/>
         <source> Sessions</source>
-        <translation type="unfinished"></translation>
+        <translation> Käyttökertaa</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="656"/>
@@ -762,7 +762,7 @@ Menee päivän yksityiskohtiin</translation>
         <location filename="../oscar/dailySearchTab.cpp" line="662"/>
         <location filename="../oscar/dailySearchTab.cpp" line="1017"/>
         <source> Hours</source>
-        <translation type="unfinished"></translation>
+        <translation> Tuntia</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="666"/>
@@ -774,7 +774,7 @@ Menee päivän tapahtumien yksityiskohtiin</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="670"/>
         <source> Events</source>
-        <translation type="unfinished"></translation>
+        <translation> Tapahtumaa</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="676"/>
@@ -812,137 +812,137 @@ Menee päivän tapahtumien yksityiskohtiin</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1123"/>
         <source>%1/%2%3 days</source>
-        <translation type="unfinished">%1 päivää {1/%2%3 ?}</translation>
+        <translation>%1/%2%3 päivää</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1126"/>
         <source>Found %1 </source>
-        <translation type="unfinished">Löytyi %1. {1 ?}</translation>
+        <translation>Löytyi %1 </translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1214"/>
         <source>Finds days that match specified criteria.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsii päivät, jotka vastaavat määritettyjä ehtoja.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1215"/>
         <source>  Searches from last day to first day.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Haut viimeisestä päivästä ensimmäiseen päivään.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1216"/>
         <source>First click on Match Button then select topic.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napsauta ensin Match-painiketta ja valitse sitten aihe.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1217"/>
         <source>  Then click on the operation to modify it.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Napsauta sitten toimintoa muokataksesi sitä.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1218"/>
         <source>  or update the value</source>
-        <translation type="unfinished"></translation>
+        <translation>  tai päivitä arvo</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1219"/>
         <source>Topics without operations will automatically start.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiheet ilman toimintoja käynnistyvät automaattisesti.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1220"/>
         <source>Compare Operations: numberic or character. </source>
-        <translation type="unfinished"></translation>
+        <translation>Vertaa toiminnot: numero tai merkki. </translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1221"/>
         <source>  Numberic  Operations: </source>
-        <translation type="unfinished"></translation>
+        <translation>  Numeeriset operaatiot: </translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1222"/>
         <source>  Character Operations: </source>
-        <translation type="unfinished"></translation>
+        <translation>  Merkkioperaatiot: </translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1223"/>
         <source>Summary Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Summarivi</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1224"/>
         <source>  Left:Summary - Number of Day searched</source>
-        <translation type="unfinished"></translation>
+        <translation>  Jäljellä:Summa - etsittyjen päivien lukumäärä</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1225"/>
         <source>  Center:Number of Items Found</source>
-        <translation type="unfinished"></translation>
+        <translation>  Keskellä:Löydettyjen kohteiden lukumäärä</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1226"/>
         <source>  Right:Minimum/Maximum for item searched</source>
-        <translation type="unfinished"></translation>
+        <translation>  Oikealla:Minimi/Maksimi etsittäville kohteille</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1227"/>
         <source>Result Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulostaulu</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1228"/>
         <source>  Column One: Date of match. Click selects date.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Sarake 1: Päivä. Napsautus valitsee päivän.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1229"/>
         <source>  Column two: Information. Click selects date.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Sarake 2: Tiedot. Napsautus valitsee päivän.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1230"/>
         <source>    Then Jumps the appropiate tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>    Sitten hyppää sopivaan välilehteen.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1231"/>
         <source>Wildcard Pattern Matching:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jokerimerkkien sovitus:</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1232"/>
         <source>  Wildcards use 3 characters:</source>
-        <translation type="unfinished"></translation>
+        <translation>  Jokerimerkit käytä 3 merkkiä:</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1233"/>
         <source>  Asterisk</source>
-        <translation type="unfinished"></translation>
+        <translation>  Tähti</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1234"/>
         <source> Question Mark</source>
-        <translation type="unfinished"></translation>
+        <translation> Kysymysmerkki</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1235"/>
         <source> Backslash.</source>
-        <translation type="unfinished"></translation>
+        <translation> Takakenoviiva.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1236"/>
         <source>  Asterisk matches any number of characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Tähti vastaa mitä tahansa määrää merkkejä.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1237"/>
         <source>  Question Mark matches a single character.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Kysymysmerkki vastaa yhtä merkkiä.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1238"/>
         <source>  Backslash matches next character.</source>
-        <translation type="unfinished"></translation>
+        <translation>  Takakenoviiva vastaa seuraavaa merkkiä.</translation>
     </message>
     <message>
         <source>Found %1.</source>
@@ -1305,7 +1305,7 @@ Vihje: Muuta aloituspäivä ensin</translation>
     <message>
         <location filename="../oscar/mainwindow.ui" line="568"/>
         <source>Show Standard Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä standardiraportti</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="571"/>
@@ -1315,7 +1315,7 @@ Vihje: Muuta aloituspäivä ensin</translation>
     <message>
         <location filename="../oscar/mainwindow.ui" line="581"/>
         <source>Show Monthly Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä kuukausiraportti</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="584"/>
@@ -1325,7 +1325,7 @@ Vihje: Muuta aloituspäivä ensin</translation>
     <message>
         <location filename="../oscar/mainwindow.ui" line="591"/>
         <source>Show Range Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä aikaväliraportti</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="594"/>
@@ -1335,12 +1335,12 @@ Vihje: Muuta aloituspäivä ensin</translation>
     <message>
         <location filename="../oscar/mainwindow.ui" line="622"/>
         <source>Select Report Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse raportin päivä</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="625"/>
         <source>Report Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportoi päivä</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1009"/>
@@ -4051,42 +4051,42 @@ Vaikuttaa eniten tuontitoimintoihin.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1487"/>
         <source>Clinical</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliininen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1514"/>
         <source>Clinical Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliiniset asetukset</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1583"/>
         <source>Select  Oscar Operating Mode </source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta Oscarin toimintamoodi </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1589"/>
         <source>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliininen tila ei salli käytöstä poistettuja istuntoja.\nPoistettuja istuntoja ei käytetä kaavioiden tai tilastojen luomiseen.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1592"/>
         <source>Clinical Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliininen tila</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1605"/>
         <source>permissive Mode allows disabled sessions.\nDisabled Session are used for graphing and Statistics.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salliva tila sallii käytöstä poistetut istunnot.\nPoistettua istuntoa käytetään kuvaamiseen ja tilastoihin.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1608"/>
         <source>Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Salliva tila</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1618"/>
         <source> Hours</source>
-        <translation type="unfinished"></translation>
+        <translation> Tuntia</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1666"/>
@@ -4105,7 +4105,16 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Synkronoi oksimetrin ja CPAP-laitteen tiedot&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50-tiedot tuotu SpO2Reviewistä (tiedostoista .spoR) tai sarjatuontitavassa &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;ei&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; ole oikeita aikaleimoja tietojen synkronointiin.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Reaaliaikainen näyttötila (käyttää sarjaportin kaapelia) on yksi tapa saada täsmällinen synkronointi CMS50.oksimetreihin, mutta ei ota huomioon CPAP-laitteen kellon poikkeamaa.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Jos käynnistät oksimetrin tallennuistilassa &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;täsmällisesti &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;samaan aikaan kuin käynnistät CPAP-laitteen, voit saada tietojen synkronoinnin. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Sarjamuotoinen tietojen tuonti ottaa aloitusajan viime yön ensimmäisestä CPAP-käyttökerrasta. (Muista tuoda ensin CPAP-laitteen unitiedot!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2150"/>
@@ -4309,12 +4318,12 @@ Se voi aiheuttaa ongelmia fonttien piirtämisen kanssa kaaviokuvissa nyt käytö
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2893"/>
         <source>For multiple sessions, displays a thin gray line for each session at the top of the Event Flag graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>Useita käyttökertoja varten näyttää ohuen harmaan viivan kullekin käyttökerralle Tapahtumalippu-kaavion yläosassa.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2896"/>
         <source>Enables SessionBar in Event Flags Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Ottaa käyttöön käyttökertapalkin tapahtumalippujen kaaviossa</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2928"/>
@@ -4607,52 +4616,52 @@ Oletko varma että haluat jatkaa?</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="48"/>
         <source>Clinical Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliininen tila:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="49"/>
         <source>Reports what is on the data card, all of it including any and all data deselected in the Permissive mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportoi, mitä datakortilla on, kaikki mukaan lukien kaikki tiedot, joiden valinta on poistettu sallitussa tilassa.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Basically replicates the reports and data stored on the devices data card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toistaa periaatteessa laitteen tietokortille tallennetut raportit ja tiedot.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="51"/>
         <source>This includes pap devices, oximeters, etc. Compliance reports fall under this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä sisältää pap-laitteet, oksimetrit jne. Vaatimustenmukaisuusraportit kuuluvat tähän tilaan.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="52"/>
         <source>Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaatimustenmukaisuusraportit sisältävät aina kaikki tiedot valitulta noudattamisjaksolta, vaikka ne muutoin olisi poistettu.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="54"/>
         <source>Permissive Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Salliva tila:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="55"/>
         <source>Allows user to select which data sets/ sessions to be used for calculations and display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Antaa käyttäjän valita, mitä tietojoukkoja/käyttökertoja otetaan laskelmiin ja näyttöön.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="56"/>
         <source>Additional charts and calculations may be available that are not available from the vendor data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saatavilla voi olla muita kaavioita ja laskelmia, jotka eivät ole saatavissa toimittajan tiedoista.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="58"/>
         <source>Changing the Oscar Operating Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oscar-käyttötilan vaihtaminen:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="59"/>
         <source>Requires a reload of the user&apos;s profile. Data will be saved and restored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Edellyttää käyttäjän profiilin uudelleenlatausta. Tiedot tallennetaan ja palautetaan.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="73"/>
@@ -5183,7 +5192,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="699"/>
         <source>milliSeconds</source>
-        <translation type="unfinished"></translation>
+        <translation>millisekuntia</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="700"/>
@@ -5411,12 +5420,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="763"/>
         <source>Min EEPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimi EEPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="764"/>
         <source>Max EEPAP</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimi EEPAP</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="765"/>
@@ -5837,7 +5846,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="214"/>
         <source>Compiler:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kääntäjä:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="684"/>
@@ -6218,7 +6227,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="806"/>
         <source>Pressure relief during exhalation</source>
-        <translation type="unfinished"></translation>
+        <translation>Paineen helpotus uloshengityksen aikana</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="810"/>
@@ -6228,13 +6237,13 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="815"/>
         <source>Softstart pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeäkäynnistyspaine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="816"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="853"/>
         <source>Pressure during soft start period</source>
-        <translation type="unfinished"></translation>
+        <translation>Paine pehmeän käynnistyksen aikana</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="817"/>
@@ -6244,12 +6253,12 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="822"/>
         <source>Softstart minimum pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeän käynnistyksen minimipaine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="823"/>
         <source>Minimum pressure during soft start period</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimipaine pehmeän käynnistyksen aikana</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="824"/>
@@ -6260,157 +6269,157 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="829"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="831"/>
         <source>Auto start</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattinen käynnistys</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="830"/>
         <source>Automatically turn on the device by breathing</source>
-        <translation type="unfinished"></translation>
+        <translation>Käynnistä laite automaattisesti hengittämällä</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="838"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="840"/>
         <source>Softstart time</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeä käynnistyksen aika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="839"/>
         <source>Lenght of soft start period</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeän käynnistysjakson pituus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="845"/>
         <source>Soft start maximum time</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeän käynnistyksen maksimiaika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="846"/>
         <source>Maximum lenght of soft start period</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeän käynnistysjakson enimmäispituus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="847"/>
         <source>Soft start max. time</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeä käynnistys maksimiaika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="852"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="854"/>
         <source>Soft start pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Pehmeän käynnistyksen paine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="874"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="143"/>
         <source>Higher End Expiratory Pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Korkeampi uloshengityspaine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="880"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="881"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="882"/>
         <source>Humidifier level</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilmankostuttimen taso</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="887"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="888"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="889"/>
         <source>Tube type</source>
-        <translation type="unfinished"></translation>
+        <translation>Letkun tyyppi</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="904"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="906"/>
         <source>Obstruction level</source>
-        <translation type="unfinished"></translation>
+        <translation>Estetaso</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="905"/>
         <source>Obstruction level in percentage</source>
-        <translation type="unfinished"></translation>
+        <translation>Esteaste prosentteina</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="913"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="915"/>
         <source>rRMVFluctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>rRMV vaihtelu</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="914"/>
         <source>Relative respiratory minute volume fluctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Suhteellinen hengitysminuuttitilavuuden vaihtelu</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="923"/>
         <source>Relative respiratory minute volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Suhteellinen hengitysminuuttitilavuus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="929"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="930"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="931"/>
         <source>Measured pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitattu paine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="936"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="937"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="938"/>
         <source>Full flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Täysi virtaus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="952"/>
         <source>Artefact</source>
-        <translation type="unfinished"></translation>
+        <translation>Artifakti</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="953"/>
         <source>Irregularity in measured data, that doesn&apos;t represents a breathing event (e.g swallowing, coughing, or speaking)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittaustietojen epäsäännöllisyys, joka ei edusta hengitystapahtumaa (esim. nieleminen, yskiminen tai puhuminen)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="991"/>
         <source>Epoch (2 mins) with Flow Limitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Epokki (2 min) virtausrajoituksella</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="998"/>
         <source>Deep Sleep</source>
-        <translation type="unfinished"></translation>
+        <translation>Syvä uni</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="999"/>
         <source>Deep sleep, stable respiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Syvä uni, vakaa hengitys</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1007"/>
         <source>Timed breath</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajastettu hengitys</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1014"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1015"/>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1016"/>
         <source>BiSoft Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>BiSoft-tila</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1019"/>
         <source>BiSoft 1</source>
-        <translation type="unfinished"></translation>
+        <translation>BiSoft 1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1020"/>
         <source>BiSoft 2</source>
-        <translation type="unfinished"></translation>
+        <translation>BiSoft 2</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="1021"/>
         <source>TriLevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolmitaso</translation>
     </message>
     <message>
         <source>AutoStart</source>
@@ -6445,7 +6454,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="867"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="142"/>
         <source>Lower End Expiratory Pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Uloshengityksen alempi paine</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="873"/>
@@ -6508,7 +6517,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="960"/>
         <source>Mask leakage is above a critical treshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskin vuoto ylittää kriittisen tason</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="961"/>
@@ -6524,7 +6533,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="967"/>
         <source>Epoch (2 mins) with Mild Obstruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Epokki (2 min) lievällä tukkeella</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="974"/>
@@ -6535,7 +6544,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="975"/>
         <source>Epoch (2 mins) with Severe Obstruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Epokki (2 min) vakavalla esteellä</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="982"/>
@@ -6546,7 +6555,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="983"/>
         <source>Epoch (2 mins) with Snoring</source>
-        <translation type="unfinished"></translation>
+        <translation>Epokki (2 min) kuorsauksella</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="990"/>
@@ -7665,7 +7674,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="170"/>
         <source>An apnea reported by your CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>CPAP-laitteesi ilmoittama apnea.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="172"/>
@@ -7872,7 +7881,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="254"/>
         <source>I/E Value</source>
-        <translation type="unfinished"></translation>
+        <translation>I/E-arvo</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="275"/>
@@ -8539,7 +8548,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1611"/>
         <source>Min EEPAP %1 Max EEPAP %2 PDIFF %3-%4 (%5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimi EEPAP %1 Maksimi EEPAP %2 PDIFF %3-%4 (%5)</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/day.cpp" line="1616"/>
@@ -9000,32 +9009,32 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="239"/>
         <source>RiseEnable</source>
-        <translation type="unfinished"></translation>
+        <translation>Nousu käyttöön</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="244"/>
         <source>RiseTime</source>
-        <translation type="unfinished"></translation>
+        <translation>Nousun aika</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="247"/>
         <source>Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kierto</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="255"/>
         <source>Trigger</source>
-        <translation type="unfinished"></translation>
+        <translation>Liipaisin</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="263"/>
         <source>TiMax</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimi Ti</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="267"/>
         <source>TiMin</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimi Ti</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="492"/>
@@ -9275,22 +9284,22 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="240"/>
         <source>Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Salliva tila</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="243"/>
         <source>Total disabled sessions: %1, found in %2 days</source>
-        <translation type="unfinished"></translation>
+        <translation>Pois käytöstä poistettuja käyttökertoja yhteensä: %1, löydetty %2 päivässä</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="245"/>
         <source>Total disabled sessions: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytöstä poistettuja käyttökertoja yhteensä: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="248"/>
         <source>Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pisimmän käytöstä poistetun käyttökerran kesto: %1 minuuttia, Kaikkien käytöstä poistettujen käyttökertojen kokonaiskesto: %2 minuuttia.</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="256"/>
@@ -9449,12 +9458,12 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="58"/>
         <source>Resvent/Hoffrichter</source>
-        <translation type="unfinished"></translation>
+        <translation>Resvent/Hoffrichter</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="58"/>
         <source>iBreeze/Point3</source>
-        <translation type="unfinished"></translation>
+        <translation>iBreeze/Point3</translation>
     </message>
 </context>
 <context>
@@ -9553,203 +9562,203 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="257"/>
         <source>This feature manages the saving and restoring of Layout Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä ominaisuus hallitsee asetteluasetusten tallentamista ja palauttamista.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="259"/>
         <source>Layout Settings control the layout of a graph or chart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetteluasetukset ohjaavat kaavion tai kaavion asettelua.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="261"/>
         <source>Different Layouts Settings can be saved and later restored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erilaiset asetteluasetukset voidaan tallentaa ja palauttaa myöhemmin.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="263"/>
         <source>Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Painike</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="265"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaus</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="269"/>
         <source>Creates a copy of the current Layout Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo kopion nykyisistä asetteluasetuksista.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="271"/>
         <source>The default description is the current date.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletuskuvaus on nykyinen päivämäärä.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="273"/>
         <source>The description may be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaus voi muuttua.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="275"/>
         <source>The Add button will be greyed out when maximum number is reached.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää-painike näkyy harmaana, kun enimmäismäärä on saavutettu.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="277"/>
         <source>Other Buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Muut painikkeet</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="279"/>
         <source>Greyed out when there are no selections</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmaana, kun valintoja ei ole</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="283"/>
         <source>Loads the Layout Settings from the selection. Automatically exits. io</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa asetteluasetukset valinnasta. Poistuu automaattisesti. io</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="287"/>
         <source>Modify the description of the selection. Same as a double click.io</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa valinnan kuvausta. Sama kuin kaksoisnapsautus.io</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="291"/>
         <source>Saves the current Layout Settings to the selection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallentaa nykyiset asetteluasetukset valintaan.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="293"/>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="299"/>
         <source>Prompts for confirmation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pyydä vahvistusta.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="297"/>
         <source>Deletes the selecton.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poistaa valinnan.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="301"/>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolli</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="303"/>
         <source>Exit</source>
-        <translation type="unfinished">Poistu</translation>
+        <translation>Poistu</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="305"/>
         <source>(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>(Punainen ympyrä, jossa valkoinen &quot;X&quot;.) Palaa OSCAR-valikkoon.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="307"/>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Palaa</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="309"/>
         <source>Next to Exit icon. Only in Help Menu. Returns to Layout menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poistu-kuvakkeen vieressä. Vain Ohje-valikossa. Palaa Asettelu-valikkoon.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="311"/>
         <source>Escape Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Escape-painike</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="313"/>
         <source>Exit the Help or Layout menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poistu Ohje- tai Asettelu-valikosta.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="315"/>
         <source>Layout Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetteluasetukset</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="317"/>
         <source>* Name</source>
-        <translation type="unfinished"></translation>
+        <translation>* Nimi</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="319"/>
         <source>* Pinning</source>
-        <translation type="unfinished"></translation>
+        <translation>* Kiinnittäminen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="321"/>
         <source>* Plots Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>* Plots käytössä</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="323"/>
         <source>* Height</source>
-        <translation type="unfinished"></translation>
+        <translation>* Korkeus</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="325"/>
         <source>* Order</source>
-        <translation type="unfinished"></translation>
+        <translation>* Järjestys</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="327"/>
         <source>* Event Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>* Tapahtumaliput</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="329"/>
         <source>* Dotted Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>* Pisteviivat</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="331"/>
         <source>* Height Options</source>
-        <translation type="unfinished"></translation>
+        <translation>* Korkeusvalinnat</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="333"/>
         <source>General Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Yleistiedot</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="335"/>
         <source>Maximum description size = 80 characters.	</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvauksen enimmäiskoko = 80 merkkiä.	</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="337"/>
         <source>Maximum Saved Layout Settings = 30.	</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennettujen asetteluasetusten enimmäismäärä = 30.	</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="339"/>
         <source>Saved Layout Settings can be accessed by all profiles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaikki profiilit voivat käyttää tallennettuja asetteluasetuksia.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="341"/>
         <source>Layout Settings only control the layout of a graph or chart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetteluasetukset hallitsevat vain kaavion tai kaavion asettelua.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="343"/>
         <source>They do not contain any other data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eivät sisällä muita tietoja.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="345"/>
         <source>They do not control if a graph is displayed or not.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eivät hallitse, näytetäänkö kaavio vai ei.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="347"/>
         <source>Layout Settings for daily and overview are managed independantly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivittäisiä ja yleiskatsauksen asetteluasetuksia hallitaan itsenäisesti.</translation>
     </message>
     <message>
         <source>     &lt;p style=&quot;color:black;&quot;&gt;        This feature manages the saving and restoring of Layout Settings.      &lt;br&gt;      Layout Settings control the layout of a graph or chart.      &lt;br&gt;      Different Layouts Settings can be saved and later restored.      &lt;br&gt;     &lt;/p&gt;     &lt;table width=&quot;100%&quot;&gt;         &lt;tr&gt;&lt;td&gt;&lt;b&gt;Button&lt;/b&gt;&lt;/td&gt;             &lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Add&lt;/td&gt; 			&lt;td&gt;Creates a copy of the current Layout Settings. &lt;br&gt; 				The default description is the current date. &lt;br&gt; 				The description may be changed. &lt;br&gt; 				The Add button will be greyed out when maximum number is reached.&lt;/td&gt;&lt;/tr&gt;                 &lt;br&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Other Buttons&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;Greyed out when there are no selections&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Restore&lt;/td&gt; 			&lt;td&gt;Loads the Layout Settings from the selection. Automatically exits. &lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Rename &lt;/td&gt;         			&lt;td&gt;Modify the description of the selection. Same as a double click.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Update&lt;/td&gt;&lt;td&gt; Saves the current Layout Settings to the selection.&lt;br&gt; 		        Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Delete&lt;/td&gt; 			&lt;td&gt;Deletes the selecton. &lt;br&gt; 			    Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Control&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Exit &lt;/td&gt; 			&lt;td&gt;(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Return&lt;/td&gt; 			&lt;td&gt;Next to Exit icon. Only in Help Menu. Returns to Layout menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Escape Key&lt;/td&gt; 			&lt;td&gt;Exit the Help or Layout menu.&lt;/td&gt;&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;Layout Settings&lt;/b&gt;&lt;/p&gt;       &lt;table width=&quot;100%&quot;&gt;          &lt;tr&gt; 			&lt;td&gt;* Name&lt;/td&gt; 			&lt;td&gt;* Pinning&lt;/td&gt; 			&lt;td&gt;* Plots Enabled &lt;/td&gt; 			&lt;td&gt;* Height&lt;/td&gt; 		&lt;/tr&gt;         &lt;tr&gt; 			&lt;td&gt;* Order&lt;/td&gt; 			&lt;td&gt;* Event Flags&lt;/td&gt; 			&lt;td&gt;* Dotted Lines&lt;/td&gt; 			&lt;td&gt;* Height Options&lt;/td&gt; 		&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;General Information&lt;/b&gt;&lt;/p&gt; 	  &lt;ul style=margin-left=&quot;20&quot;; &gt;  		&lt;li&gt; Maximum description size = 80 characters.	&lt;/li&gt;  		&lt;li&gt; Maximum Saved Layout Settings = 30.	&lt;/li&gt;  		&lt;li&gt; Saved Layout Settings can be accessed by all profiles.  		&lt;li&gt; Layout Settings only control the layout of a graph or chart. &lt;br&gt;               They do not contain any other data. &lt;br&gt;              They do not control if a graph is displayed or not. &lt;/li&gt; 		&lt;li&gt; Layout Settings for daily and overview are managed independantly. &lt;/li&gt;	  &lt;/ul&gt;   </source>
@@ -9766,7 +9775,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="512"/>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="539"/>
         <source>No Item Selected</source>
-        <translation>Kohdetta ei ole valittu.</translation>
+        <translation>Kohdetta ei ole valittu</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="495"/>
@@ -9942,27 +9951,27 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="1362"/>
         <source>Database has No %1 data available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietokannassa ei ole %1 tietoa saatavilla.</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1365"/>
         <source>Database has %1 day of %2 Data on %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietokannassa on %1 päivää %2:stä %3</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1371"/>
         <source>Database has %1 days of %2 Data, between %3 and %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietokannassa on %1 päivää %2 tietoa, välillä %3 ja %4</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1547"/>
         <source>Total Days: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Päiviä kaikkiaan: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1548"/>
         <source>Days Not Used: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei käytettyjä päiviä: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1550"/>
@@ -9973,17 +9982,17 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
         <location filename="../oscar/statistics.cpp" line="1551"/>
         <location filename="../oscar/statistics.cpp" line="1552"/>
         <source>Days %1 %2 Hours: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Päiviä %1 %2 Tuntia: %3</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1783"/>
         <source>Best Device Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Parhaimmat laiteasetukset</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1795"/>
         <source>Worst Device Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Huonoimmat laiteasetukset</translation>
     </message>
     <message>
         <source>Low Use Days: %1</source>
@@ -10387,7 +10396,7 @@ ponnahdusikkuna, poista se ja avaa sitten tämä kaavio uudelleen.</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="306"/>
         <source>Your EEPAP pressure was under %1 %2 for %3% of the time.</source>
-        <translation type="unfinished"></translation>
+        <translation>EEPAP-paineesi oli alle %1 %2 ja se on %3 % ajasta.</translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="327"/>
