@@ -1,7 +1,7 @@
 /* CheckUpdates
  *
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
- * Copyright (c) 2020-2022 OSCAR Team
+ * Copyright (c) 2020-2023 OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -64,7 +64,7 @@ QString platformStr()
     return platform;
 }
 
-static const QString OSCAR_Version_File = "http://www.sleepfiles.com/OSCAR/versions/versions.xml";
+static const QString OSCAR_Version_File = "https://www.sleepfiles.com/OSCAR/versions/versions.xml";
 
 static QString versionXML;
 
@@ -279,8 +279,8 @@ void CheckUpdates::replyFinished(QNetworkReply *reply)
 //      qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
 //      qDebug() << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime().toString();
 //      qDebug() << reply->header(QNetworkRequest::ContentLengthHeader).toULongLong();
-//      qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-//      qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+      qDebug() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+      qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
 
         versionXML = reply->readAll().toLower();
         reply->deleteLater();
