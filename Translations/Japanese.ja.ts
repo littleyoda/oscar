@@ -336,7 +336,7 @@
     <message>
         <location filename="../oscar/daily.cpp" line="1049"/>
         <source>Oximetry Sessions</source>
-        <translation>酸素濃度計セッション</translation>
+        <translation>オキシメトリーセッション</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1069"/>
@@ -1466,7 +1466,7 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.ui" line="2644"/>
         <source>Reset Graph &amp;Heights</source>
         <translatorcomment>If &amp;&lt;alphabet&gt; means a shortcut for the menu, I may have to revisit and assign them because Japanese characters are not on the keyboard.</translatorcomment>
-        <translation>グラフの&amp;H高さを元に戻す</translation>
+        <translation>&amp;H グラフの高さを元に戻す</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2647"/>
@@ -1740,7 +1740,7 @@ Hint: Change the start date first</source>
         <location filename="../oscar/mainwindow.ui" line="2688"/>
         <source>&amp;Automatic Oximetry Cleanup</source>
         <translatorcomment>If &amp;&lt;alphabet&gt; means a shortcut for the menu, I may have to revisit and assign them because Japanese characters are not on the keyboard.</translatorcomment>
-        <translation>オキシメーターを自動でクリーンアップする &amp;A</translation>
+        <translation>&amp;A オキシメーターを自動でクリーンアップする</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="2693"/>
@@ -3151,7 +3151,7 @@ Index</source>
     <message>
         <location filename="../oscar/oximeterimport.cpp" line="1153"/>
         <source>If you are trying to sync oximetry and CPAP data, please make sure you imported your CPAP sessions first before proceeding!</source>
-        <translation>酸素濃度計と CPAP データを同期しようとしている場合は、先に進む前に CPAP セッションをインポートしたことを確認してください!</translation>
+        <translation>オキシメトリと CPAP データを同期しようとしている場合は、先に進む前に CPAP セッションをインポートしたことを確認してください!</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.cpp" line="1156"/>
@@ -3477,7 +3477,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1645"/>
         <source>&amp;Oximetry</source>
-        <translation>&amp;O 酸素濃度計</translation>
+        <translation>&amp;O オキシメトリー</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1109"/>
@@ -3519,7 +3519,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1716"/>
         <source>Small chunks of oximetry data under this amount will be discarded.</source>
-        <translation>この値以下の小さな酸素濃度計のデータのかたまりは破棄されます。</translation>
+        <translation>この値以下の小さなオキシメトリーのデータのかたまりは破棄されます。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2097"/>
@@ -3594,7 +3594,7 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="810"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
-        <translation>データがない場合意図しない漏れを計算する</translation>
+        <translation>（データが）ない場合意図しない漏れを計算する</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="948"/>
@@ -3790,12 +3790,12 @@ Mainly affects the importer.</source>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1788"/>
         <source>Flag rapid changes in oximetry stats</source>
-        <translation>酸素濃度計の統計の急な変化にフラグをつける</translation>
+        <translation>オキシメトリーの統計の急な変化にフラグをつける</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1696"/>
         <source>Other oximetry options</source>
-        <translation>その他の酸素濃度計のオプション</translation>
+        <translation>その他のオキシメトリーのオプション</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1729"/>
@@ -4036,7 +4036,7 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1666"/>
         <source>Oximetry Settings</source>
-        <translation>酸素濃度計設定</translation>
+        <translation>オキシメトリー設定</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1749"/>
@@ -4053,7 +4053,7 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="vanished"> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;酸素濃度計と CPAP データを同期しています&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;オキシメトリーと CPAP データを同期しています&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 データが SpO2レビュー (あるいは .spoR ファイル)からインポートされたあるいはシリアルインポートが同期のための正しいタイムスタンプを含んで&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;いません&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;ライブビューモード（シリアルケーブル利用）はCM50オキシメーター立と正しく同期する唯一の方法ですが、CPAPの時計のずれに対応するものではありません。&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;もしCPAPデバイスの開始に&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;正確に&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;オキシメーターの記録を開すれば同期することができます。 &lt;/span&gt;&lt;/p&gt;
@@ -4352,13 +4352,13 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;オキシメーターと CPAP のデータを同期する&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 を SpO2Review (spoR ファイルを利用して）インポートするか、シリアルインポートを利用した場合、 同期に必要な正しいタイムスタンプが含まれて&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;いません。&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 を SpO2Review (spoR ファイルを利用して）インポートするか、シリアルインポートを利用した場合、&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; 同期に必要な正しいタイムスタンプが含まれています。&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;(シリアルケーブルを使った）ライブビューモードが CM50 オキシメーターと正しく同期する方法で蓮が、CPAP の時計のずれは考慮されません。&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;オキシメーターの記録モードを &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;正確に &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt; CPAPと同時に開始した場合、同期が可能です。&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;シアルインポートを行った場合、昨晩のデータから開始時刻を求めます。(先にCPAPのデータのインポートを行ってください！）&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -4530,7 +4530,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="96"/>
         <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; devices due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed devices, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;ご注意:&lt;/b&gt; OSCAR の高度なセッション分割機能は、&lt;b&gt;ResMed&lt;/b&gt; デバイスでは設定と概要データの保存方法に制限があるため使用できません。そのため、このプロフィールでは無効になっています。&lt;/p&gt;&lt;p&gt;ResMed デバイスでは、ResMed の商用ソフトウェアと同様に、&lt;b&gt;正午に 1 日が分割されます&lt;/b&gt;。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;ご注意:&lt;/b&gt; OSCAR の高度なセッション分割機能は、&lt;b&gt;ResMed&lt;/b&gt; デバイスでは設定と概要データの保存方法に制限があるため使用できません。そのため、このプロファイルでは無効になっています。&lt;/p&gt;&lt;p&gt;ResMed デバイスでは、ResMed の商用ソフトウェアと同様に、&lt;b&gt;正午に 1 日が分割されます&lt;/b&gt;。&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="561"/>
@@ -4718,7 +4718,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="55"/>
         <source>Allows user to select which data sets/ sessions to be used for calculations and display.</source>
-        <translation>ユーザーが計算したり表示するデータセットやセッションを選ぶことを許可します。</translation>
+        <translation>ユーザーが計算したり表示するデータセットやセッションを選ぶことを許可する。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="56"/>
@@ -4733,7 +4733,7 @@ Would you like do this now?</source>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="59"/>
         <source>Requires a reload of the user&apos;s profile. Data will be saved and restored.</source>
-        <translation>ユーザーのプロフィールをリロードする必要があります。 データは保存および復元されます。</translation>
+        <translation>ユーザーのプロファイルをリロードする必要があります。 データは保存および復元されます。</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="73"/>
@@ -5436,7 +5436,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="749"/>
         <source>Oximetry</source>
-        <translation>酸素濃度計</translation>
+        <translation>オキシメトリー</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="751"/>
@@ -5835,7 +5835,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/common.cpp" line="835"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="278"/>
         <source>Total Leaks</source>
-        <translation>漏れ合計</translation>
+        <translation>漏れ計</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="836"/>
@@ -7265,7 +7265,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="611"/>
         <source>OSCAR will now exit, then (attempt to) launch your computers file manager so you can manually back your profile up:</source>
-        <translation>OSCAR が終了し、コンピューターのファイル マネージャーを起動し（ようと試み）、プロフィールを手動でバックアップできるようにします:</translation>
+        <translation>OSCAR が終了し、コンピューターのファイル マネージャーを起動し（ようと試み）、プロファイルを手動でバックアップできるようにします:</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="613"/>
@@ -7275,7 +7275,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="559"/>
         <source>Once you upgrade, you &lt;font size=+1&gt;cannot&lt;/font&gt; use this profile with the previous version anymore.</source>
-        <translation>アップグレードすると、以前のバージョンでこのプロフィールを&lt;font size=+1&gt;使用できなくなります&lt;/font&gt;。</translation>
+        <translation>アップグレードすると、以前のバージョンでこのプロファイルを&lt;font size=+1&gt;使用できなくなります&lt;/font&gt;。</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/profiles.cpp" line="577"/>
@@ -7705,7 +7705,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="250"/>
         <source>Leak Rate</source>
-        <translation>漏れの割合</translation>
+        <translation>漏割合</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="250"/>
@@ -8429,7 +8429,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1247"/>
         <source>Are you sure you want to reset all your oximetry settings to defaults?</source>
-        <translation>すべての酸素濃度計の設定をデフォルトにリセットしてもよろしいですか?</translation>
+        <translation>すべてのオキシメトリーの設定をデフォルトにリセットしてもよろしいですか?</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="1326"/>
@@ -8640,7 +8640,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="369"/>
         <source>Most recent Oximetry data: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </source>
-        <translation>最新の酸素濃度計 データ: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </translation>
+        <translation>最新のオキシメトリ データ: &lt;a onclick=&apos;alert(&quot;daily=%2&quot;);&apos;&gt;%1&lt;/a&gt; </translation>
     </message>
     <message>
         <location filename="../oscar/welcome.cpp" line="370"/>
@@ -8660,7 +8660,7 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/welcome.cpp" line="377"/>
         <source>No oximetry data has been imported yet.</source>
-        <translation>酸素濃度計データはまだインポートされていません。</translation>
+        <translation>オキシメトリーデータはまだインポートされていません。</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50_loader.h" line="41"/>
@@ -8892,7 +8892,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="50"/>
         <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
-        <translation>OSCAR のプロフィール フォルダでプレイするときは注意してください :-P</translation>
+        <translation>OSCAR のプロファイル フォルダでプレイするときは注意してください :-P</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/journal.cpp" line="57"/>
@@ -9700,7 +9700,7 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="291"/>
         <source>Saves the current Layout Settings to the selection.</source>
-        <translation>現在のレイアウト設定を選択範囲に保存します。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="293"/>
@@ -9726,116 +9726,116 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="305"/>
         <source>(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.</source>
-        <translation>（赤い丸に白のX）OSCAR のメニューに戻ります。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="307"/>
         <source>Return</source>
-        <translation>戻る</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="309"/>
         <source>Next to Exit icon. Only in Help Menu. Returns to Layout menu.</source>
-        <translation>終了アイコンの隣。へプルメニュー内に限り、レイアウトメニューに戻る。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="311"/>
         <source>Escape Key</source>
-        <translation>エスケープキー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="313"/>
         <source>Exit the Help or Layout menu.</source>
-        <translation>ヘルプまたはレイアウトメニューを終了。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="315"/>
         <source>Layout Settings</source>
-        <translation>レイアウト設定</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="317"/>
         <source>* Name</source>
-        <translation>* 名前</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="319"/>
         <source>* Pinning</source>
-        <translation>* 固定</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="321"/>
         <source>* Plots Enabled</source>
-        <translation>* 有効なプロット</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="323"/>
         <source>* Height</source>
-        <translation>* 高さ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="325"/>
         <source>* Order</source>
-        <translation>* 順序</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="327"/>
         <source>* Event Flags</source>
-        <translation>* イベントフラグ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="329"/>
         <source>* Dotted Lines</source>
-        <translation>* 点線</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="331"/>
         <source>* Height Options</source>
-        <translation>* 高さのオプション</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="333"/>
         <source>General Information</source>
-        <translation>一般情報</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="335"/>
         <source>Maximum description size = 80 characters.	</source>
-        <translation>説明の長さ = 80 文字まで。	</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="337"/>
         <source>Maximum Saved Layout Settings = 30.	</source>
-        <translation>保管できるレイアウト設定の最大数 = 30。	</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="339"/>
         <source>Saved Layout Settings can be accessed by all profiles.</source>
-        <translation>保管されたレイアウト設定はすべてのプロフィールからアクセスできます。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="341"/>
         <source>Layout Settings only control the layout of a graph or chart.</source>
-        <translation>レイアウト設定でグラフやチャートの配置を制御できます。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="343"/>
         <source>They do not contain any other data.</source>
-        <translation>その他の情報は含まれていません。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="345"/>
         <source>They do not control if a graph is displayed or not.</source>
-        <translation>グラフが表示されるかどうかについては制御しません。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="347"/>
         <source>Layout Settings for daily and overview are managed independantly.</source>
-        <translation>日次ビューと概要のレイアウト設定は別々に管理されています。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>     &lt;p style=&quot;color:black;&quot;&gt;        This feature manages the saving and restoring of Layout Settings.      &lt;br&gt;      Layout Settings control the layout of a graph or chart.      &lt;br&gt;      Different Layouts Settings can be saved and later restored.      &lt;br&gt;     &lt;/p&gt;     &lt;table width=&quot;100%&quot;&gt;         &lt;tr&gt;&lt;td&gt;&lt;b&gt;Button&lt;/b&gt;&lt;/td&gt;             &lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Add&lt;/td&gt; 			&lt;td&gt;Creates a copy of the current Layout Settings. &lt;br&gt; 				The default description is the current date. &lt;br&gt; 				The description may be changed. &lt;br&gt; 				The Add button will be greyed out when maximum number is reached.&lt;/td&gt;&lt;/tr&gt;                 &lt;br&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Other Buttons&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;Greyed out when there are no selections&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Restore&lt;/td&gt; 			&lt;td&gt;Loads the Layout Settings from the selection. Automatically exits. &lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Rename &lt;/td&gt;         			&lt;td&gt;Modify the description of the selection. Same as a double click.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Update&lt;/td&gt;&lt;td&gt; Saves the current Layout Settings to the selection.&lt;br&gt; 		        Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Delete&lt;/td&gt; 			&lt;td&gt;Deletes the selecton. &lt;br&gt; 			    Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Control&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Exit &lt;/td&gt; 			&lt;td&gt;(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Return&lt;/td&gt; 			&lt;td&gt;Next to Exit icon. Only in Help Menu. Returns to Layout menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Escape Key&lt;/td&gt; 			&lt;td&gt;Exit the Help or Layout menu.&lt;/td&gt;&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;Layout Settings&lt;/b&gt;&lt;/p&gt;       &lt;table width=&quot;100%&quot;&gt;          &lt;tr&gt; 			&lt;td&gt;* Name&lt;/td&gt; 			&lt;td&gt;* Pinning&lt;/td&gt; 			&lt;td&gt;* Plots Enabled &lt;/td&gt; 			&lt;td&gt;* Height&lt;/td&gt; 		&lt;/tr&gt;         &lt;tr&gt; 			&lt;td&gt;* Order&lt;/td&gt; 			&lt;td&gt;* Event Flags&lt;/td&gt; 			&lt;td&gt;* Dotted Lines&lt;/td&gt; 			&lt;td&gt;* Height Options&lt;/td&gt; 		&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;General Information&lt;/b&gt;&lt;/p&gt; 	  &lt;ul style=margin-left=&quot;20&quot;; &gt;  		&lt;li&gt; Maximum description size = 80 characters.	&lt;/li&gt;  		&lt;li&gt; Maximum Saved Layout Settings = 30.	&lt;/li&gt;  		&lt;li&gt; Saved Layout Settings can be accessed by all profiles.  		&lt;li&gt; Layout Settings only control the layout of a graph or chart. &lt;br&gt;               They do not contain any other data. &lt;br&gt;              They do not control if a graph is displayed or not. &lt;/li&gt; 		&lt;li&gt; Layout Settings for daily and overview are managed independantly. &lt;/li&gt;	  &lt;/ul&gt;   </source>
-        <translation type="vanished">&lt;p style=&quot;color:black;&quot;&gt; この機能は、レイアウト設定の保存と復元を管理します。 &lt;br&gt; レイアウト設定は、グラフまたはチャートのレイアウトを制御します。 &lt;br&gt; さまざまなレイアウト設定を保存して、後で復元できます。 &lt;br&gt; &lt;/p&gt; &lt;table width=&quot;100%&quot;&gt; &lt;tr&gt;&lt;td&gt;&lt;b&gt;ボタン&lt;/b&gt;&lt;/td&gt; &lt;td&gt;&lt;b&gt;説明&lt;/b&gt;&lt;/td&gt;&lt; /tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;追加&lt;/td&gt; &lt;td&gt;現在のレイアウト設定のコピーを作成します。 &lt;br&gt; デフォルトの説明は現在の日付です。 &lt;br&gt; 記載内容は変更になる場合があります。 &lt;br&gt; 最大数に達すると、[追加] ボタンはグレー表示になります。&lt;/td&gt;&lt;/tr&gt; &lt;br&gt; &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;その他のボタン&lt;/u&gt; &lt;/i&gt;&lt; /td&gt; &lt;td&gt;選択がない場合は灰色表示&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;復元&lt;/td&gt; &lt;td&gt;選択範囲からレイアウト設定を読み込みます。 自動的に終了します。 &lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;名前の変更 &lt;/td&gt; &lt;td&gt;選択範囲の説明を変更します。 ダブルクリックと同じです。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;更新&lt;/td&gt;&lt;td&gt;現在のレイアウト設定を選択に保存します。&lt;br&gt;確認を求めます。&lt; /td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;削除&lt;/td&gt; &lt;td&gt;選択したものを削除します。 &lt;br&gt; 確認を求めます。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;コントロール&lt;/u&gt; &lt;/i&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt;&lt;/tr &gt; &lt;tr&gt;&lt;td&gt;終了&lt;/td&gt; &lt;td&gt;(白い「X」が付いた赤い丸。) OSCAR メニューに戻ります。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;戻る&lt;/td&gt; &lt;td&gt;終了アイコンの横。 ヘルプ メニューのみ。 レイアウト メニューに戻ります。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;エスケープ キー&lt;/td&gt; &lt;td&gt;ヘルプまたはレイアウト メニューを終了します。&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; &lt;p&gt; &lt;b&gt;レイアウト設定&lt;/b&gt;&lt;/p&gt; &lt;table width=&quot;100%&quot;&gt; &lt;tr&gt; &lt;td&gt;* 名前&lt;/td&gt; &lt;td&gt;* 固定&lt;/td&gt; &lt;td&gt;* プロット有効 &lt; /td&gt; &lt;td&gt;* 高さ&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;* 順序&lt;/td&gt; &lt;td&gt;* イベント フラグ&lt;/td&gt; &lt;td&gt;* 点線&lt;/td&gt; &lt;td &gt;* 高さのオプション&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;p&gt;&lt;b&gt;一般情報&lt;/b&gt;&lt;/p&gt; &lt;ul style=margin-left=&quot;20&quot;; &gt; &lt;li&gt; 説明の最大サイズ = 80 文字。 &lt;/li&gt; &lt;li&gt; 保存されたレイアウト設定の最大数 = 30。&lt;/li&gt; &lt;li&gt; 保存されたレイアウト設定には、すべてのプロフィールからアクセスできます。 &lt;li&gt; レイアウト設定は、グラフまたはチャートのレイアウトのみを制御します。 &lt;br&gt; その他のデータは含まれていません。 &lt;br&gt; グラフを表示するかどうかは制御しません。 &lt;/li&gt; &lt;li&gt; デイリーと概要のレイアウト設定は独立して管理されます。 &lt;/li&gt; &lt;/ul&gt;</translation>
+        <translation type="vanished">&lt;p style=&quot;color:black;&quot;&gt; この機能は、レイアウト設定の保存と復元を管理します。 &lt;br&gt; レイアウト設定は、グラフまたはチャートのレイアウトを制御します。 &lt;br&gt; さまざまなレイアウト設定を保存して、後で復元できます。 &lt;br&gt; &lt;/p&gt; &lt;table width=&quot;100%&quot;&gt; &lt;tr&gt;&lt;td&gt;&lt;b&gt;ボタン&lt;/b&gt;&lt;/td&gt; &lt;td&gt;&lt;b&gt;説明&lt;/b&gt;&lt;/td&gt;&lt; /tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;追加&lt;/td&gt; &lt;td&gt;現在のレイアウト設定のコピーを作成します。 &lt;br&gt; デフォルトの説明は現在の日付です。 &lt;br&gt; 記載内容は変更になる場合があります。 &lt;br&gt; 最大数に達すると、[追加] ボタンはグレー表示になります。&lt;/td&gt;&lt;/tr&gt; &lt;br&gt; &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;その他のボタン&lt;/u&gt; &lt;/i&gt;&lt; /td&gt; &lt;td&gt;選択がない場合は灰色表示&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;復元&lt;/td&gt; &lt;td&gt;選択範囲からレイアウト設定を読み込みます。 自動的に終了します。 &lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;名前の変更 &lt;/td&gt; &lt;td&gt;選択範囲の説明を変更します。 ダブルクリックと同じです。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;更新&lt;/td&gt;&lt;td&gt;現在のレイアウト設定を選択に保存します。&lt;br&gt;確認を求めます。&lt; /td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;削除&lt;/td&gt; &lt;td&gt;選択したものを削除します。 &lt;br&gt; 確認を求めます。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;コントロール&lt;/u&gt; &lt;/i&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt;&lt;/tr &gt; &lt;tr&gt;&lt;td&gt;終了&lt;/td&gt; &lt;td&gt;(白い「X」が付いた赤い丸。) OSCAR メニューに戻ります。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;戻る&lt;/td&gt; &lt;td&gt;終了アイコンの横。 ヘルプ メニューのみ。 レイアウト メニューに戻ります。&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;エスケープ キー&lt;/td&gt; &lt;td&gt;ヘルプまたはレイアウト メニューを終了します。&lt;/td&gt;&lt;/tr&gt; &lt;/table&gt; &lt;p&gt; &lt;b&gt;レイアウト設定&lt;/b&gt;&lt;/p&gt; &lt;table width=&quot;100%&quot;&gt; &lt;tr&gt; &lt;td&gt;* 名前&lt;/td&gt; &lt;td&gt;* ピン留め&lt;/td&gt; &lt;td&gt;* プロット有効 &lt; /td&gt; &lt;td&gt;* 高さ&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;* 順序&lt;/td&gt; &lt;td&gt;* イベント フラグ&lt;/td&gt; &lt;td&gt;* 点線&lt;/td&gt; &lt;td &gt;* 高さのオプション&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;p&gt;&lt;b&gt;一般情報&lt;/b&gt;&lt;/p&gt; &lt;ul style=margin-left=&quot;20&quot;; &gt; &lt;li&gt; 説明の最大サイズ = 80 文字。 &lt;/li&gt; &lt;li&gt; 保存されたレイアウト設定の最大数 = 30。&lt;/li&gt; &lt;li&gt; 保存されたレイアウト設定には、すべてのプロフィールからアクセスできます。 &lt;li&gt; レイアウト設定は、グラフまたはチャートのレイアウトのみを制御します。 &lt;br&gt; その他のデータは含まれていません。 &lt;br&gt; グラフを表示するかどうかは制御しません。 &lt;/li&gt; &lt;li&gt; デイリーと概要のレイアウト設定は独立して管理されます。 &lt;/li&gt; &lt;/ul&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="488"/>
@@ -10025,27 +10025,27 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/statistics.cpp" line="1362"/>
         <source>Database has No %1 data available.</source>
-        <translation>%1 のデータがデータベースに存在しません。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1365"/>
         <source>Database has %1 day of %2 Data on %3</source>
-        <translation>データベースには %3 に %1 日分の %2 のデータがあります</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1371"/>
         <source>Database has %1 days of %2 Data, between %3 and %4</source>
-        <translation>データベースには  %2 のデータが %1 件あります。（%3 から %4 まで）</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1547"/>
         <source>Total Days: %1</source>
-        <translation>利用日数合計: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1548"/>
         <source>Days Not Used: %1</source>
-        <translation>利用しなかった日: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1550"/>
@@ -10056,7 +10056,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/statistics.cpp" line="1551"/>
         <location filename="../oscar/statistics.cpp" line="1552"/>
         <source>Days %1 %2 Hours: %3</source>
-        <translation>日 %1 %2 時間: %3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1783"/>
@@ -10581,7 +10581,7 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/Graphs/gGraphView.cpp" line="2020"/>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
-        <translation>タイトルをダブルクリックして固定/固定解除
+        <translation>タイトルをダブルクリックして固定 / 固定解除
 クリックしてドラッグでグラフの順序変更</translation>
     </message>
     <message>
