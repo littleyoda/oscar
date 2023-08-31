@@ -544,12 +544,12 @@ Sessie toch uitschakelen?</translation>
     <message>
         <location filename="../oscar/daily.cpp" line="582"/>
         <source>Clinical Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinische modus</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="582"/>
         <source> Disabling Sessions requires the Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Om sessies uit te schakelen is de vrije modus nodig</translation>
     </message>
     <message>
         <location filename="../oscar/daily.cpp" line="1026"/>
@@ -856,12 +856,12 @@ Springt naar de gebeurtenissen van de datum</translation>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1123"/>
         <source>%1/%2%3 days</source>
-        <translation type="unfinished">%1 dagen {1/%2%3 ?}</translation>
+        <translation>%1/%2%3  dagen</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1126"/>
         <source>Found %1 </source>
-        <translation type="unfinished">%1 gevonden. {1 ?}</translation>
+        <translation>%1 gevonden.</translation>
     </message>
     <message>
         <location filename="../oscar/dailySearchTab.cpp" line="1214"/>
@@ -1356,7 +1356,7 @@ Het zit in de bestandsnaam, het streepje is een spatie</translatorcomment>
     <message>
         <location filename="../oscar/mainwindow.ui" line="568"/>
         <source>Show Standard Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon standaard rapport</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="571"/>
@@ -1366,7 +1366,7 @@ Het zit in de bestandsnaam, het streepje is een spatie</translatorcomment>
     <message>
         <location filename="../oscar/mainwindow.ui" line="581"/>
         <source>Show Monthly Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon maandelijks rapport</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="584"/>
@@ -1376,7 +1376,7 @@ Het zit in de bestandsnaam, het streepje is een spatie</translatorcomment>
     <message>
         <location filename="../oscar/mainwindow.ui" line="591"/>
         <source>Show Range Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon rapport over een bereik</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="594"/>
@@ -1386,12 +1386,12 @@ Het zit in de bestandsnaam, het streepje is een spatie</translatorcomment>
     <message>
         <location filename="../oscar/mainwindow.ui" line="622"/>
         <source>Select Report Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de rapportdatum</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="625"/>
         <source>Report Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum verslag</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1009"/>
@@ -3902,12 +3902,12 @@ want dit is de enige waarde die beschikbaar is op de dagen met alleen een samenv
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2893"/>
         <source>For multiple sessions, displays a thin gray line for each session at the top of the Event Flag graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geeft voor meerdere sessies een dunne grijze lijn weer voor elke sessie bovenaan de Gebeurtenis grafiek.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2896"/>
         <source>Enables SessionBar in Event Flags Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessiebalk inschakelen in gebeurtenissen grafiek</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2928"/>
@@ -4178,42 +4178,42 @@ Als U een nieuwe computer met SSD hebt, is dit een goede keuze.</translation>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1487"/>
         <source>Clinical</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinisch</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1514"/>
         <source>Clinical Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinische instellingen</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1583"/>
         <source>Select  Oscar Operating Mode </source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de bedieningsmodus van OSCAR </translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1589"/>
         <source>Clinical Mode does not allow disabled sessions.\nDisabled Session are not used for graphing or Statistics.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinische modus staat geen uitgeschakelde sessies toe. Uitgeschakelde sessies worden niet gebruikt voor grafieken of statistieken.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1592"/>
         <source>Clinical Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinische modus</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1605"/>
         <source>permissive Mode allows disabled sessions.\nDisabled Session are used for graphing and Statistics.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije modus staat het uitzetten van sessies toe. Uitgeschakelde sessies worden gebruikt voor grafieken en statistieken.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1608"/>
         <source>Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije modus</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1618"/>
         <source> Hours</source>
-        <translation type="unfinished"> Uren</translation>
+        <translation> Uren</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1666"/>
@@ -4232,7 +4232,13 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (using a serial cable) is one way to acheive an accurate sync on CMS50 oximeters, but does not counter for CPAP clock drift.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;If you start your Oximeters recording mode at &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-style:italic;&quot;&gt;exactly &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;the same time you start your CPAP device, you can now also achieve sync. &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;The serial import process takes the starting time from last nights first CPAP session. (Remember to import your CPAP data first!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt; p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Segoe UI&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:600;&quot;&gt;Synchroniseren van oximetrie- en CPAP-gegevens&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;CMS50 gegevens geïmporteerd uit SpO2Review (van .spoR bestanden) of de seriële import methode hebben &lt;b&gt;niet&lt;/b&gt; de juiste tijdsaanduiding die nodig is om te synchroniseren.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Live view mode (met behulp van een seriële kabel) is één manier om een nauwkeurige synchronisatie te bereiken op CMS50 oximeters, maar biedt geen compensatie voor CPAP klokdrift.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Als u de opnamemodus van uw Oximeters start op &lt;b&gt;precies hetzelfde moment&lt;/b&gt; dat u uw CPAP-apparaat start, kunt u nu ook synchronisatie bereiken. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:10pt;&quot;&gt;Het seriële importproces neemt de begintijd van de eerste CPAP-sessie van afgelopen nacht. (Vergeet niet om eerst uw CPAP-gegevens te importeren!)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2150"/>
@@ -4516,52 +4522,52 @@ Weet U zeker dat U deze wijzigingen wilt doorvoeren?</translation>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="48"/>
         <source>Clinical Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Klinische modus:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="49"/>
         <source>Reports what is on the data card, all of it including any and all data deselected in the Permissive mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapporteert wat er op de gegevenskaart staat, alles inclusief alle gegevens die in de vrije modus waren uitgeschakeld.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Basically replicates the reports and data stored on the devices data card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Repliceert in essentie de rapporten en gegevens die zijn opgeslagen op de gegevenskaart van het apparaat.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="51"/>
         <source>This includes pap devices, oximeters, etc. Compliance reports fall under this mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit omvat PAP-apparaten, oximeters, enz. Rapporten over naleving vallen onder deze modus.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="52"/>
         <source>Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nalevingsrapporten bevatten altijd alle gegevens binnen de gekozen nalevingperiode, zelfs als deze elders niet is geselecteerd.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="54"/>
         <source>Permissive Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije mode:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="55"/>
         <source>Allows user to select which data sets/ sessions to be used for calculations and display.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee kan de gebruiker selecteren welke gegevenssets/sessies moeten worden gebruikt voor berekeningen en weergave.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="56"/>
         <source>Additional charts and calculations may be available that are not available from the vendor data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er kunnen extra grafieken en berekeningen beschikbaar zijn die niet beschikbaar zijn via de gegevens van de leverancier.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="58"/>
         <source>Changing the Oscar Operating Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>De bedrijfsmodus van Oscar wijzigen:</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="59"/>
         <source>Requires a reload of the user&apos;s profile. Data will be saved and restored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vereist dat het gebruikersprofiel opnieuw wordt geladen. Gegevens worden opgeslagen en hersteld.</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.cpp" line="73"/>
@@ -5399,7 +5405,7 @@ TTiA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="699"/>
         <source>milliSeconds</source>
-        <translation type="unfinished"></translation>
+        <translation>milliseconden</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="700"/>
@@ -7766,7 +7772,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="170"/>
         <source>An apnea reported by your CPAP device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Een apneu die door het apparaat is geregistreerd.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="181"/>
@@ -7854,7 +7860,7 @@ http://www.apneaboard.com/forums/Thread-CMS50D--3956
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="254"/>
         <source>I/E Value</source>
-        <translation type="unfinished"></translation>
+        <translation>I/E waarde</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/schema.cpp" line="263"/>
@@ -8993,32 +8999,32 @@ Gaarne gegevens opnieuw inlezen</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="239"/>
         <source>RiseEnable</source>
-        <translation type="unfinished"></translation>
+        <translation>Stijgtijd vrijgegeven</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="244"/>
         <source>RiseTime</source>
-        <translation type="unfinished"></translation>
+        <translation>Stijgtijd</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="247"/>
         <source>Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>cyclus</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="255"/>
         <source>Trigger</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="263"/>
         <source>TiMax</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="267"/>
         <source>TiMin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="492"/>
@@ -9389,22 +9395,22 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="240"/>
         <source>Permissive Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrije mode</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="243"/>
         <source>Total disabled sessions: %1, found in %2 days</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaal aantal uitgeschakelde sessies: %1, gevonden in %2 dagen</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="245"/>
         <source>Total disabled sessions: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaal aantal uitgeschakelde sessies: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="248"/>
         <source>Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Duur van langste uitgeschakelde sessie: %1 minuten. Totale duur van alle uitgeschakelde sessies: %2 minuten.</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="256"/>
@@ -9668,203 +9674,203 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="257"/>
         <source>This feature manages the saving and restoring of Layout Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze functie beheert het opslaan en herstellen van Lay-out instellingen.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="259"/>
         <source>Layout Settings control the layout of a graph or chart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lay-out Instellingen bepalen de lay-out van een grafiek of diagram.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="261"/>
         <source>Different Layouts Settings can be saved and later restored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschillende lay-out instellingen kunnen worden opgeslagen en later hersteld.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="263"/>
         <source>Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Knop</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="265"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschrijving</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="269"/>
         <source>Creates a copy of the current Layout Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maakt een kopie van de huidige lay-outinstellingen.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="271"/>
         <source>The default description is the current date.</source>
-        <translation type="unfinished"></translation>
+        <translation>De standaardomschrijving is de huidige datum.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="273"/>
         <source>The description may be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>De beschrijving kan gewijzigd worden.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="275"/>
         <source>The Add button will be greyed out when maximum number is reached.</source>
-        <translation type="unfinished"></translation>
+        <translation>De knop Toevoegen wordt grijs als het maximale aantal is bereikt.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="277"/>
         <source>Other Buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Overige knoppen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="279"/>
         <source>Greyed out when there are no selections</source>
-        <translation type="unfinished"></translation>
+        <translation>Grijs als er geen selecties zijn</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="283"/>
         <source>Loads the Layout Settings from the selection. Automatically exits. io</source>
-        <translation type="unfinished"></translation>
+        <translation>Laadt de lay-out instellingen van de selectie. Sluit automatisch af.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="287"/>
         <source>Modify the description of the selection. Same as a double click.io</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de beschrijving van de selectie. Dit is hetzelfde als dubbelklikken.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="291"/>
         <source>Saves the current Layout Settings to the selection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaat de huidige Lay-out instellingen op in de selectie.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="293"/>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="299"/>
         <source>Prompts for confirmation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vraagt om bevestiging.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="297"/>
         <source>Deletes the selecton.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijdert de selectie.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="301"/>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="303"/>
         <source>Exit</source>
-        <translation type="unfinished">Afsluiten</translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="305"/>
         <source>(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>(Rode cirkel met een witte &quot;X&quot;.) Hiermee keert u terug naar het OSCAR-menu.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="307"/>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="309"/>
         <source>Next to Exit icon. Only in Help Menu. Returns to Layout menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Naast het pictogram Afsluiten. Alleen in menu Help. Terug naar menu Lay-out.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="311"/>
         <source>Escape Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Escape toets</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="313"/>
         <source>Exit the Help or Layout menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit het menu Help of Layout af.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="315"/>
         <source>Layout Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Lay-out instellingen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="317"/>
         <source>* Name</source>
-        <translation type="unfinished"></translation>
+        <translation>* Naam</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="319"/>
         <source>* Pinning</source>
-        <translation type="unfinished"></translation>
+        <translation>* Vastmaken</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="321"/>
         <source>* Plots Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>* Grafieken ingeschakeld</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="323"/>
         <source>* Height</source>
-        <translation type="unfinished"></translation>
+        <translation>* Hoogte</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="325"/>
         <source>* Order</source>
-        <translation type="unfinished"></translation>
+        <translation>* Volgorde</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="327"/>
         <source>* Event Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>* Gebeurtenis vlaggen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="329"/>
         <source>* Dotted Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>* Stippellijnen</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="331"/>
         <source>* Height Options</source>
-        <translation type="unfinished"></translation>
+        <translation>* Hoogte opties</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="333"/>
         <source>General Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemene informatie</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="335"/>
         <source>Maximum description size = 80 characters.	</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale grootte beschrijving = 80 tekens.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="337"/>
         <source>Maximum Saved Layout Settings = 30.	</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximaal aantal opgeslagen lay-outinstellingen = 30.	</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="339"/>
         <source>Saved Layout Settings can be accessed by all profiles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opgeslagen lay-out instellingen zijn toegankelijk voor alle profielen.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="341"/>
         <source>Layout Settings only control the layout of a graph or chart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lay-out instellingen bepalen alleen de lay-out van een grafiek of diagram.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="343"/>
         <source>They do not contain any other data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze bevatten geen andere gegevens.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="345"/>
         <source>They do not control if a graph is displayed or not.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ze bepalen niet of een grafiek al dan niet wordt weergegeven.</translation>
     </message>
     <message>
         <location filename="../oscar/saveGraphLayoutSettings.cpp" line="347"/>
         <source>Layout Settings for daily and overview are managed independantly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lay-out instellingen voor dag en overzicht worden onafhankelijk beheerd.</translation>
     </message>
     <message>
         <source>     &lt;p style=&quot;color:black;&quot;&gt;        This feature manages the saving and restoring of Layout Settings.      &lt;br&gt;      Layout Settings control the layout of a graph or chart.      &lt;br&gt;      Different Layouts Settings can be saved and later restored.      &lt;br&gt;     &lt;/p&gt;     &lt;table width=&quot;100%&quot;&gt;         &lt;tr&gt;&lt;td&gt;&lt;b&gt;Button&lt;/b&gt;&lt;/td&gt;             &lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Add&lt;/td&gt; 			&lt;td&gt;Creates a copy of the current Layout Settings. &lt;br&gt; 				The default description is the current date. &lt;br&gt; 				The description may be changed. &lt;br&gt; 				The Add button will be greyed out when maximum number is reached.&lt;/td&gt;&lt;/tr&gt;                 &lt;br&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Other Buttons&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;Greyed out when there are no selections&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Restore&lt;/td&gt; 			&lt;td&gt;Loads the Layout Settings from the selection. Automatically exits. &lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Rename &lt;/td&gt;         			&lt;td&gt;Modify the description of the selection. Same as a double click.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Update&lt;/td&gt;&lt;td&gt; Saves the current Layout Settings to the selection.&lt;br&gt; 		        Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Delete&lt;/td&gt; 			&lt;td&gt;Deletes the selecton. &lt;br&gt; 			    Prompts for confirmation.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;&lt;i&gt;&lt;u&gt;Control&lt;/u&gt; &lt;/i&gt;&lt;/td&gt;              &lt;td&gt;&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Exit &lt;/td&gt; 			&lt;td&gt;(Red circle with a white &quot;X&quot;.) Returns to OSCAR menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Return&lt;/td&gt; 			&lt;td&gt;Next to Exit icon. Only in Help Menu. Returns to Layout menu.&lt;/td&gt;&lt;/tr&gt;         &lt;tr&gt;&lt;td&gt;Escape Key&lt;/td&gt; 			&lt;td&gt;Exit the Help or Layout menu.&lt;/td&gt;&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;Layout Settings&lt;/b&gt;&lt;/p&gt;       &lt;table width=&quot;100%&quot;&gt;          &lt;tr&gt; 			&lt;td&gt;* Name&lt;/td&gt; 			&lt;td&gt;* Pinning&lt;/td&gt; 			&lt;td&gt;* Plots Enabled &lt;/td&gt; 			&lt;td&gt;* Height&lt;/td&gt; 		&lt;/tr&gt;         &lt;tr&gt; 			&lt;td&gt;* Order&lt;/td&gt; 			&lt;td&gt;* Event Flags&lt;/td&gt; 			&lt;td&gt;* Dotted Lines&lt;/td&gt; 			&lt;td&gt;* Height Options&lt;/td&gt; 		&lt;/tr&gt;       &lt;/table&gt;        &lt;p&gt;&lt;b&gt;General Information&lt;/b&gt;&lt;/p&gt; 	  &lt;ul style=margin-left=&quot;20&quot;; &gt;  		&lt;li&gt; Maximum description size = 80 characters.	&lt;/li&gt;  		&lt;li&gt; Maximum Saved Layout Settings = 30.	&lt;/li&gt;  		&lt;li&gt; Saved Layout Settings can be accessed by all profiles.  		&lt;li&gt; Layout Settings only control the layout of a graph or chart. &lt;br&gt;               They do not contain any other data. &lt;br&gt;              They do not control if a graph is displayed or not. &lt;/li&gt; 		&lt;li&gt; Layout Settings for daily and overview are managed independantly. &lt;/li&gt;	  &lt;/ul&gt;   </source>
@@ -10076,27 +10082,27 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
     <message>
         <location filename="../oscar/statistics.cpp" line="1362"/>
         <source>Database has No %1 data available.</source>
-        <translation type="unfinished"></translation>
+        <translation>De database heeft geen %1 gegevens beschikbaar.</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1365"/>
         <source>Database has %1 day of %2 Data on %3</source>
-        <translation type="unfinished"></translation>
+        <translation>De database heeft %1 dag van %2 gegevens op %3</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1371"/>
         <source>Database has %1 days of %2 Data, between %3 and %4</source>
-        <translation type="unfinished"></translation>
+        <translation>De database heeft %1 dagen van %2 gegevens, tussen %3 en %4</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1547"/>
         <source>Total Days: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaal aantal dagen: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1548"/>
         <source>Days Not Used: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dagen niet gebruikt: %1</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1550"/>
@@ -10107,17 +10113,17 @@ popout venster verwijderen en dan deze grafiek weer vastzetten.</translation>
         <location filename="../oscar/statistics.cpp" line="1551"/>
         <location filename="../oscar/statistics.cpp" line="1552"/>
         <source>Days %1 %2 Hours: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Dagen %1 %2 Uren: %3</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1783"/>
         <source>Best Device Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Beste apparaatinstelling</translation>
     </message>
     <message>
         <location filename="../oscar/statistics.cpp" line="1795"/>
         <source>Worst Device Setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Slechtste apparaatinstelling</translation>
     </message>
     <message>
         <source>Low Use Days: %1</source>
