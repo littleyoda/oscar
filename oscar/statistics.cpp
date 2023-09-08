@@ -142,7 +142,18 @@ void Statistics::loadRXChanges()
 
     in >> rxitems;
 
+    {   // Bug Fix. during testing, a crash occured due to a null machie value. in saveRxChanges. out << rx.machine->loaderName()
+        QList<QDate> toErase;
+        for (auto ri = rxitems.begin(); ri != rxitems.end();++ri ) {
+            RXItem rxitem = ri.value();
+            if (rxitem.machine==0) toErase.append(ri.key());
+        }
+        for (auto date : toErase) {
+            rxitems.remove(date) ;
+        }
+    }
 }
+
 void Statistics::saveRXChanges()
 {
     QString path = p_profile->Get("{" + STR_GEN_DataFolder + "}/RXChanges.cache" );
