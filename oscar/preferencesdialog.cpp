@@ -31,6 +31,7 @@
 #include <mainwindow.h>
 #include "ui_preferencesdialog.h"
 #include "SleepLib/machine_common.h"
+#include "highresolution.h"
 
 extern QFont *defaultfont;
 extern QFont *mediumfont;
@@ -248,6 +249,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     // clinicalMode and permissiveMode are radio buttons and must be set to opposite values. Once clinicalMode is used.
     // Radio Buttons illustrate the operating mode.
     ui->permissiveMode->setChecked(!profile->cpap->clinicalMode());
+    HighResolution::checkBox(false,ui->highResolution);
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -860,6 +862,7 @@ bool PreferencesDialog::Save()
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
     p_profile->appearance->setEventFlagSessionBar(ui->eventFlagSessionBar->isChecked());
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
+    HighResolution::checkBox(true,ui->highResolution);
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());

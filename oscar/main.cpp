@@ -32,6 +32,7 @@
 #include "translation.h"
 #include "SleepLib/common.h"
 #include "SleepLib/deviceconnection.h"
+#include "highresolution.h"
 
 #include <ctime>
 #include <chrono>
@@ -300,6 +301,8 @@ void optionExit(int exitCode, QString error) {
     --datadir  <folderName>  Use folderName as Oscar Data folder. For relatve paths: <Documents folder>/<relative path>.
                              If folder does not exist then prompts user.
     --help                   Displays this menu and exits.
+    --hires                  Enables high Resolution
+    --hiresoff               Disables high Resolution
     )" );
     exit (exitCode);
 }
@@ -309,7 +312,23 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setApplicationName(getAppName());
     QCoreApplication::setOrganizationName(getDeveloperName());
     QCoreApplication::setOrganizationDomain(getDeveloperDomain());
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    HighResolution::init();
+    bool hiResEnabled=false;
+
+    for (int i = 1; i < argc; i++) {
+        if (0 == strcmp(argv[i] ,"--hires"))  {
+            HighResolution::init(HighResolution::HRM_ENABLED);
+        } else if (0 == strcmp(argv[i] ,"--hiresoff"))  {
+            HighResolution::init(HighResolution::HRM_DISABLED);
+        } else if (0 == strcmp(argv[i] ,"--datadir"))  { i++;
+        } else if (0 == strcmp(argv[i] ,"-profile"))  { i++;
+        }
+    }
+    if (HighResolution::isEnabled()) {
+        hiResEnabled=true;
+        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    }
 
     QSettings settings;
 
@@ -408,6 +427,8 @@ int main(int argc, char *argv[]) {
             } else {
                 optionExit(2,"Missing argument to --datadir\n");
             }
+        } else if (0 == strcmp(argv[i] ,"--hires"))  {      // already handle in 1st scan
+        } else if (0 == strcmp(argv[i] ,"--hiresoff"))  {       // already handle in 1st scan
         } else if (QString(args[i]).contains("help",Qt::CaseInsensitive)) {
             optionExit(0,QString(""));
         } else {
@@ -420,6 +441,7 @@ int main(int argc, char *argv[]) {
     qDebug() << "APP-NAME:" << QCoreApplication::applicationName();
     qDebug() << "APP-PATH:" << QCoreApplication::applicationDirPath();
     qDebug() << "APP-RESOURCES:" << appResourcePath();
+    HighResolution::display(hiResEnabled);
 
 #ifdef QT_DEBUG
     QString relinfo = " debug";
