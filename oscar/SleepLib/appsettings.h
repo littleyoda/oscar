@@ -129,7 +129,7 @@ public:
   //! \brief Returns true if Graphical animations & Transitions will be drawn
   bool animations() const { return m_animations; }
   //! \brief Returns true if PixmapCaching acceleration will be used
-  inline bool usePixmapCaching() const { return m_usePixmapCaching; }
+  inline bool usePixmapCaching() const { return /*m_usePixmapCaching*/false; } //disables use pixmap caching without modifing any code.
   //! \brief Returns true if Square Wave plots are preferred (where possible)
   inline bool squareWavePlots() const { return m_squareWavePlots; }
   //! \brief Whether to allow double clicking on Y-Axis labels to change vertical scaling mode

@@ -255,6 +255,7 @@ lessThan(QT_MAJOR_VERSION,5)|lessThan(QT_MINOR_VERSION,12) {
 
 SOURCES += \
     checkupdates.cpp \
+    highresolution.cpp \
     Graphs/gGraph.cpp \
     Graphs/gGraphView.cpp \
     dailySearchTab.cpp \
@@ -364,6 +365,7 @@ QMAKE_EXTRA_COMPILERS += optimize
 
 HEADERS  += \
     checkupdates.h \
+    highresolution.h \
     dailySearchTab.h \
     daily.h \
     saveGraphLayoutSettings.h \

@@ -274,7 +274,7 @@ void MainWindow::closeEvent(QCloseEvent * event)
             QThread::msleep(1000);
             QApplication::processEvents();
         }
-        schema::channel.Save();
+        // Profile/User/chanels.xml is not read so it does not need to be saved//schema::channel.Save();
         if (p_profile) {
             CloseProfile();
         }

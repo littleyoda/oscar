@@ -32,6 +32,7 @@
 #include "translation.h"
 #include "SleepLib/common.h"
 #include "SleepLib/deviceconnection.h"
+#include "highresolution.h"
 
 #include <ctime>
 #include <chrono>
@@ -226,8 +227,8 @@ bool migrateFromSH(QString destDir) {
     qDebug() << "Number of files to migrate: " << numFiles;
 
     QProgressDialog progress (QObject::tr("Migrating ") + QString::number(numFiles) + QObject::tr(" files")+"\n"+
-    						  QObject::tr("from ") + QDir(datadir).dirName() + "\n"+QObject::tr("to ") + 
-    						  QDir(destDir).dirName(), QString(), 0, numFiles, 0, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+    QObject::tr("from ") + QDir(datadir).dirName() + "\n"+QObject::tr("to ") +
+    QDir(destDir).dirName(), QString(), 0, numFiles, 0, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
     progress.setValue(0);
     progress.setMinimumWidth(300);
     progress.show();
@@ -286,13 +287,48 @@ bool shiftKeyPressedAtLaunch(int argc, char *argv[])
 }
 #endif
 
-int main(int argc, char *argv[]) {
 
+void optionExit(int exitCode, QString error) {
+    if (exitCode) {
+        error.prepend("Command option error: ");
+    }
+    qCritical() << error << ( R"(
+    Help Menu
+    Option                   Description
+    -p                       Pauses execution for 1 second
+    --profile  <name>        Name of profile. if name does not exist then uses last used profile.
+    --l or --language        Force language prompt
+    --datadir  <folderName>  Use folderName as Oscar Data folder. For relatve paths: <Documents folder>/<relative path>.
+                             If folder does not exist then prompts user.
+    --help                   Displays this menu and exits.
+    --hires                  Enables high Resolution
+    --hiresoff               Disables high Resolution
+    )" );
+    exit (exitCode);
+}
+
+int main(int argc, char *argv[]) {
     QString homeDocs = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/";
     QCoreApplication::setApplicationName(getAppName());
     QCoreApplication::setOrganizationName(getDeveloperName());
     QCoreApplication::setOrganizationDomain(getDeveloperDomain());
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    HighResolution::init();
+    bool hiResEnabled=false;
+
+    for (int i = 1; i < argc; i++) {
+        if (0 == strcmp(argv[i] ,"--hires"))  {
+            HighResolution::init(HighResolution::HRM_ENABLED);
+        } else if (0 == strcmp(argv[i] ,"--hiresoff"))  {
+            HighResolution::init(HighResolution::HRM_DISABLED);
+        } else if (0 == strcmp(argv[i] ,"--datadir"))  { i++;
+        } else if (0 == strcmp(argv[i] ,"-profile"))  { i++;
+        }
+    }
+    if (HighResolution::isEnabled()) {
+        hiResEnabled=true;
+        QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    }
 
     QSettings settings;
 
@@ -338,8 +374,8 @@ int main(int argc, char *argv[]) {
         QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
     }
 
-    QApplication a(argc, argv);
-    QStringList args = a.arguments();
+    QApplication mainapp(argc, argv);
+    QStringList args = mainapp.arguments();
 
 #ifdef Q_OS_WIN
     // QMessageBox must come after the application is created. The graphics engine has to be selected before.
@@ -359,36 +395,18 @@ int main(int argc, char *argv[]) {
     // The only time this is really noticeable is when initTranslations() presents its language
     // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
 
-    QString lastlanguage = settings.value(LangSetting, "").toString();
-    if (lastlanguage.compare("is", Qt::CaseInsensitive))    // Convert code for Hebrew from 'is' to 'he'
-        lastlanguage = "he";
-
-    bool dont_load_profile = false;
     bool force_data_dir = false;
-    bool changing_language = false;
     QString load_profile = "";
-
-    if (lastlanguage.isEmpty())
-        changing_language = true;
-
     for (int i = 1; i < args.size(); i++) {
-        if (args[i] == "-l")
-            dont_load_profile = true;
-//        else if (args[i] == "-d")
-//            force_data_dir = true;
-        else if (args[i] == "--language") {
-            changing_language = true; // reset to force language dialog
+        if ((args[i] == "--language") || (args[i] == "--l") ) {
             settings.setValue(LangSetting,"");
-        }
-        // "--legacy" is handle above, as it needs to be processed before creating QApplication.
-        else if (args[i] == "-p")
+        } else if (args[i] == "-p") {
             QThread::msleep(1000);
-        else if (args[i] == "--profile") {
+        } else if (args[i] == "--profile") {
             if ((i+1) < args.size())
                 load_profile = args[++i];
             else {
-                fprintf(stderr, "Missing argument to --profile\n");
-                exit(1);
+                optionExit(1,"Missing argument to --profile");
             }
         } else if (args[i] == "--datadir") { // mltam's idea
             QString datadir, datadirwas ;
@@ -400,22 +418,30 @@ int main(int argc, char *argv[]) {
                                    || (datadir.at(0) == '/')              // or Linux full path
                                    || (datadir.at(0) == '\\');
                 }
-                if (!havefullpath)
+                if (!havefullpath) {
                     datadir = homeDocs+datadir;
+                    qDebug() << "--datadir was:" << datadirwas << "; --datadir is:" << datadir;
+                }
                 settings.setValue("Settings/AppData", datadir);
-                qDebug() << "--datadir" << datadirwas << "homeDocs:" << homeDocs << "appdata:" << datadir;
 //            force_data_dir = true;
             } else {
-                fprintf(stderr, "Missing argument to --datadir\n");
-                exit(1);
+                optionExit(2,"Missing argument to --datadir\n");
             }
+        } else if (0 == strcmp(argv[i] ,"--hires"))  {      // already handle in 1st scan
+        } else if (0 == strcmp(argv[i] ,"--hiresoff"))  {       // already handle in 1st scan
+        } else if (QString(args[i]).contains("help",Qt::CaseInsensitive)) {
+            optionExit(0,QString(""));
+        } else {
+            optionExit(3,QString("Invalid Argument. %1").arg(args[i]));
         }
+
     }   // end of for args loop
 
     qDebug().noquote() << "OSCAR starting" << QDateTime::currentDateTime().toString();
     qDebug() << "APP-NAME:" << QCoreApplication::applicationName();
     qDebug() << "APP-PATH:" << QCoreApplication::applicationDirPath();
     qDebug() << "APP-RESOURCES:" << appResourcePath();
+    HighResolution::display(hiResEnabled);
 
 #ifdef QT_DEBUG
     QString relinfo = " debug";
@@ -564,10 +590,11 @@ int main(int argc, char *argv[]) {
 
     QDir newDir(GetAppData());
 #if QT_VERSION < QT_VERSION_CHECK(5,9,0)
-    if ( ! newDir.exists() || newDir.count() == 0 ) {     // directory doesn't exist yet or is empty, try to migrate old data
+    if ( ! newDir.exists() || newDir.count() == 0 )      // directory doesn't exist yet or is empty, try to migrate old data
 #else
-    if ( ! newDir.exists() || newDir.isEmpty() ) {        // directory doesn't exist yet or is empty, try to migrate old data
+    if ( ! newDir.exists() || newDir.isEmpty() )         // directory doesn't exist yet or is empty, try to migrate old data
 #endif
+    {
         if (QMessageBox::question(nullptr, QObject::tr("Migrate SleepyHead or OSCAR Data?"),
                                   QObject::tr("On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data") +"\n" +
                                   QObject::tr("Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data."),
@@ -604,6 +631,7 @@ int main(int argc, char *argv[]) {
         QMessageBox::warning(nullptr, STR_MessageBox_Warning,
                              QObject::tr("Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk."));
     }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // Initialize preferences system (Don't use p_pref before this point!)
@@ -720,9 +748,6 @@ int main(int argc, char *argv[]) {
     // Scan for user profiles
     Profiles::Scan();
 
-    Q_UNUSED(changing_language)
-    Q_UNUSED(dont_load_profile)
-
 #ifndef NO_CHECKUPDATES
     if (check_updates) {
         mainwin->CheckForUpdates(false);
@@ -732,10 +757,10 @@ int main(int argc, char *argv[]) {
     mainwin->SetupGUI();
     mainwin->show();
 
-    int result = a.exec();
-    
+    int result = mainapp.exec();
+
     DeviceConnectionManager::getInstance().record(nullptr);
-    
+
     return result;
 }
 

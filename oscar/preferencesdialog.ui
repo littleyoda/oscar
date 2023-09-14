@@ -2835,6 +2835,9 @@ Try it and see if you like it.</string>
                  <property name="text">
                   <string>Use Pixmap Caching</string>
                  </property>
+                 <property name="visible" stdset="0">
+                  <bool>false</bool>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -2894,6 +2897,16 @@ Try it and see if you like it.</string>
                  </property>
                  <property name="text">
                   <string>Enables SessionBar in Event Flags Graph</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="highResolution">
+                 <property name="toolTip">
+                  <string> Enables High Resoluton Mode. Changes take effect when Oscar is restarted.</string>
+                 </property>
+                 <property name="text">
+                  <string>Enables High Resolutiom Mode</string>
                  </property>
                 </widget>
                </item>

@@ -1049,6 +1049,8 @@ Profile *Get()
     return profiles[getUserName()];;
 }
 
+//profiles.xml is never read so it does not need to be saved.
+#if 0
 void saveProfileList()
 {
     QString filename = p_pref->Get("{home}/profiles.xml");
@@ -1078,6 +1080,7 @@ void saveProfileList()
 
     file.close();
 }
+#endif
 
 int CleanupProfile(Profile *prof)
 {
@@ -1157,7 +1160,8 @@ void Scan()
         p_pref->Save();
     }
     // Update profiles.xml for mobile version
-    saveProfileList();
+    // profiles.xml is never read so it does not need to be saved.
+    // saveProfileList();
 }
 
 
@@ -1993,7 +1997,8 @@ const quint16 chandata_version = 1;
 void Profile::saveChannels()
 {
     // First save the XML version for Mobile versions
-    schema::channel.Save(Get("{DataFolder}/") + "channels.xml");
+    // Profile/User/chanels.xml is not read so it does not need to be saved
+    // schema::channel.Save(Get("{DataFolder}/") + "channels.xml");
 
     QString filename = Get("{DataFolder}/") + "channels.dat";
     QFile f(filename);

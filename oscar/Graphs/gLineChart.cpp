@@ -26,6 +26,7 @@
 
 #define EXTRA_ASSERTS 1
 
+#if 0
 QDataStream & operator<<(QDataStream & stream, const DottedLine & dot)
 {
     stream << dot.code;
@@ -46,6 +47,7 @@ QDataStream & operator>>(QDataStream & stream, DottedLine & dot)
     dot.type = (ChannelCalcType)tmp;
     return stream;
 }
+#endif
 
 QColor darken(QColor color, float p)
 {

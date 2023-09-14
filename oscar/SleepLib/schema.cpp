@@ -47,7 +47,7 @@ void resetChannels();
 
 ChannelList channel;
 Channel EmptyChannel;
-Channel *SessionEnabledChannel;
+// SessionEnabledChannel is not used//Channel *SessionEnabledChannel;
 
 QHash<QString, ChanType> ChanTypes;
 QHash<QString, DataType> DataTypes;
@@ -91,11 +91,13 @@ void init()
     schema_initialized = true;
 
     EmptyChannel = Channel(0, DATA, MT_UNKNOWN, DAY, "Empty", "Empty", "Empty Channel", "", "");
+    #if 0 // SessionEnabledChannel is not used
     SessionEnabledChannel = new Channel(1, DATA, MT_UNKNOWN, DAY, "Enabled", "Enabled", "Session Enabled", "", "");
 
     channel.channels[1] = SessionEnabledChannel;
     channel.names["Enabled"] = SessionEnabledChannel;
     SESSION_ENABLED = 1;
+#endif  // SessionEnabledChannel is not used
     ChanTypes["data"] = DATA;
     //Types["waveform"]=WAVEFORM;
     ChanTypes["setting"] = SETTING;
@@ -695,6 +697,7 @@ void ChannelList::add(QString group, Channel *chan)
     }
 }
 
+#if 0 // Profile/User/chanels.xml is not read so it does not need to be saved
 bool ChannelList::Save(QString filename)
 {
     if (filename.isEmpty())
@@ -757,6 +760,7 @@ bool ChannelList::Save(QString filename)
 
     return true;
 }
+#endif  // Profile/User/chanels.xml is not read so it does not need to be saved
 
 } // namespace
 
