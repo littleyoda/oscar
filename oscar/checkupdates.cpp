@@ -64,7 +64,7 @@ QString platformStr()
     return platform;
 }
 
-static const QString OSCAR_Version_File = "http://www.apneaboard.net/OSCAR/versions.xml";
+static const QString OSCAR_Version_File = "http://apneaboard.net/OSCAR/versions.xml";
 
 static QString versionXML;
 

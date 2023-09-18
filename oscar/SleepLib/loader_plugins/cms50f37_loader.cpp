@@ -1041,7 +1041,7 @@ void CMS50F37Loader::Register()
 {
     if (cms50f37_initialized) { return; }
 
-    qDebug() << "cms50f37 - Registering CMS50F37Loader";
+    qDebug() << "Registering CMS50F37Loader";
     RegisterLoader(new CMS50F37Loader());
     cms50f37_initialized = true;
 }
