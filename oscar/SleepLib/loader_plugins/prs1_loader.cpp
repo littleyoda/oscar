@@ -1,6 +1,6 @@
 /* SleepLib PRS1 Loader Implementation
  *
- * Copyright (c) 2019-2022 The OSCAR Team
+ * Copyright (c) 2019-2023 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -128,6 +128,7 @@ static const PRS1TestedModel s_PRS1TestedModels[] = {
     { "501X120", 0, 6, "DreamStation Auto CPAP with P-Flex" },
     { "500G110", 0, 6, "DreamStation Go Auto" },
     { "500G120", 0, 6, "DreamStation Go Auto" },
+    { "500G150", 0, 6, "DreamStation Go Auto" },
     { "502G150", 0, 6, "DreamStation Go Auto" },
     { "600X110", 0, 6, "DreamStation BiPAP Pro" },
     { "600X150", 0, 6, "DreamStation BiPAP Pro" },
