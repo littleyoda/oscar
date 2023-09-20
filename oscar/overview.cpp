@@ -350,8 +350,8 @@ void Overview::CreateAllGraphs() {
     bmi->addSlice(Journal_BMI, QColor("black"), ST_SETAVG);
     BMI->AddLayer(bmi);
 
-    ZOMBIE = createGraph(STR_GRAPH_Zombie, STR_TR_Zombie, tr("How you felt\n(0-10)"));
-    zombie = new gOverviewGraph("Zombie", GT_LINE);
+    ZOMBIE = createGraph(STR_GRAPH_Zombie, STR_TR_Zombie, tr("How you felt\n(1-10)"));
+    zombie = new gOverviewGraph("Feeling", GT_LINE);
     zombie->setMachineType(MT_JOURNAL);
     zombie->addSlice(Journal_ZombieMeter, QColor("black"), ST_SETAVG);
     ZOMBIE->AddLayer(zombie);

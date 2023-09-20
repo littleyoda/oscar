@@ -251,6 +251,8 @@ private slots:
         */
     void on_ZombieMeter_valueChanged(int value);
 
+    void set_ZombieMeterLabel();
+
     /*! \fn on_weightSpinBox_editingFinished();
         \brief Called when weight has changed.. Updates the BMI dislpay and journal objects.
 
