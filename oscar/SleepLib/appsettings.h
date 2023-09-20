@@ -18,7 +18,7 @@
 
 class Preferences;
 
-#define REMOVE_FITNESS
+#define REMOVE_FITNESS_OFF
 /* valid values are REMOVE_FITNESS or REMOVE_FITNESS_OFF */
 
 #ifndef REMOVE_FITNESS

@@ -323,7 +323,7 @@ void init()
     schema::channel.add(GRP_JOURNAL, ch = new Channel(Bookmark_Notes=0x0805, DATA,   MT_JOURNAL,  DAY, "BookmarkNotes",      QObject::tr("Notes"), QObject::tr("Bookmark Notes"), QObject::tr("Notes"),  QString(), STRING,  Qt::black));
     // This may as well be calculated
     schema::channel.add(GRP_JOURNAL, ch = new Channel(Journal_BMI = 0x0806, DATA,   MT_JOURNAL,  DAY, "BMI",      QObject::tr("BMI"), QObject::tr("Body Mass Index"), QObject::tr("BMI"),  QString(), DOUBLE,  Qt::black));
-    schema::channel.add(GRP_JOURNAL, ch = new Channel(Journal_ZombieMeter = 0x0807, DATA,   MT_JOURNAL,  DAY, "ZombieMeter", QObject::tr("Zombie"), QObject::tr("How you feel (0 = like crap, 10 = unstoppable)"), QObject::tr("Zombie"),  QString(), DOUBLE,  Qt::black));
+    schema::channel.add(GRP_JOURNAL, ch = new Channel(Journal_ZombieMeter = 0x0807, DATA,   MT_JOURNAL,  DAY, "FeelingMeter", QObject::tr("Feeling"), QObject::tr("How you feel (1 = like crap, 10 = unstoppable)"), QObject::tr("Feeling"),  QString(), DOUBLE,  Qt::black));
     schema::channel.add(GRP_JOURNAL, ch = new Channel(Bookmark_Start=0x0808, DATA,   MT_JOURNAL,  DAY, "BookmarkStart",      QObject::tr("Start"), QObject::tr("Bookmark Start"), QObject::tr("Start"),  QString(), INTEGER,  Qt::black));
     schema::channel.add(GRP_JOURNAL, ch = new Channel(Bookmark_End=0x0809, DATA,   MT_JOURNAL,  DAY, "BookmarkEnd",      QObject::tr("End"), QObject::tr("Bookmark End"), QObject::tr("End"),  QString(), DOUBLE,  Qt::black));
     schema::channel.add(GRP_JOURNAL, ch = new Channel(LastUpdated=0x080a, DATA,   MT_JOURNAL,  DAY, "LastUpdated", QObject::tr("Last Updated"), QObject::tr("Last Updated"), QObject::tr("Last Updated"),  QString(), DATETIME,  Qt::black));

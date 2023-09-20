@@ -1885,7 +1885,8 @@ void Daily::Load(QDate date)
 
     ui->weightSpinBox->setValue(0);
     ui->ouncesSpinBox->setValue(0);
-    ui->ZombieMeter->setValue(5);
+    ui->ZombieMeter->setValue(0);
+    set_ZombieMeterLabel();
     ui->ouncesSpinBox->blockSignals(false);
     ui->weightSpinBox->blockSignals(false);
     ui->ZombieMeter->blockSignals(false);
@@ -1941,6 +1942,7 @@ void Daily::Load(QDate date)
         if (journal->settings.contains(Journal_ZombieMeter)) {
             ui->ZombieMeter->blockSignals(true);
             ui->ZombieMeter->setValue(journal->settings[Journal_ZombieMeter].toDouble(&ok));
+            set_ZombieMeterLabel();
             ui->ZombieMeter->blockSignals(false);
         }
 #endif
@@ -2498,9 +2500,18 @@ void Daily::on_removeBookmarkButton_clicked()
     mainwin->updateFavourites();
 }
 #ifndef REMOVE_FITNESS
+void Daily::set_ZombieMeterLabel()
+{
+    if (ui->ZombieMeter->value()==0 ) {
+        ui->ZombieValue->setText(tr("No Value Selected"));
+    } else {
+        ui->ZombieValue->setText(QString("%1:%2").arg(tr("Value")).arg(ui->ZombieMeter->value()));
+    }
+}
 void Daily::on_ZombieMeter_valueChanged(int action)
 {
     Q_UNUSED(action);
+    set_ZombieMeterLabel();
     ZombieMeterMoved=true;
     Session *journal=GetJournalSession(previous_date);
     if (!journal) {

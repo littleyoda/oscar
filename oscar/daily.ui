@@ -1167,7 +1167,7 @@ QToolButton:pressed {
             </property>
             <item row="0" column="0" colspan="2">
              <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="0">
+              <item row="0" column="3" colspan="5">
                <widget class="QLabel" name="label">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -1181,12 +1181,33 @@ QToolButton:pressed {
                  </font>
                 </property>
                 <property name="text">
-                 <string>Zombie</string>
+                 <string>Feelings</string>
+                </property>
+                <property name="toolTip">
+                 <string>Feelings have a range 1 - 10. 1 is the worst feeling and 10 is the Best.</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1" colspan="6">
-               <widget class="QLabel" name="label_9">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Poor</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="6">
+               <widget class="QLabel" name="ZombieValue">
                 <property name="font">
                  <font>
                   <bold>false</bold>
@@ -1200,7 +1221,28 @@ QToolButton:pressed {
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="1" column="7">
+               <widget class="QLabel" name="label_10">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Awesome</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
                <widget class="QLabel" name="label_8">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1213,7 +1255,7 @@ QToolButton:pressed {
                 </property>
                </widget>
               </item>
-              <item row="2" column="1" colspan="2">
+              <item row="3" column="1" colspan="2">
                <widget class="QDoubleSpinBox" name="weightSpinBox">
                 <property name="toolTip">
                  <string>If height is greater than zero in Preferences Dialog, setting weight here will show Body Mass Index (BMI) value</string>
@@ -1223,8 +1265,11 @@ QToolButton:pressed {
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="8">
+              <item row="2" column="0" colspan="8">
                <widget class="QSlider" name="ZombieMeter">
+                <property name="toolTip">
+                 <string>Feelings have a range 1 - 10. 1 is the worst feeling and 10 is the Best.</string>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">QSlider::groove:horizontal  {
     border: 1px solid #999999;
@@ -1248,7 +1293,7 @@ QSlider::handle:horizontal  {
                  <number>10</number>
                 </property>
                 <property name="pageStep">
-                 <number>5</number>
+                 <number>1</number>
                 </property>
                 <property name="value">
                  <number>5</number>
@@ -1264,35 +1309,14 @@ QSlider::handle:horizontal  {
                 </property>
                </widget>
               </item>
-              <item row="2" column="3">
+              <item row="3" column="3">
                <widget class="QSpinBox" name="ouncesSpinBox">
                 <property name="suffix">
                  <string/>
                 </property>
                </widget>
               </item>
-              <item row="0" column="7">
-               <widget class="QLabel" name="label_10">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Awesome</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="7">
+              <item row="3" column="7">
                <widget class="QLCDNumber" name="BMI">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -1314,7 +1338,7 @@ QSlider::handle:horizontal  {
                 </property>
                </widget>
               </item>
-              <item row="2" column="4" colspan="3">
+              <item row="3" column="4" colspan="3">
                <widget class="QLabel" name="BMIlabel">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">

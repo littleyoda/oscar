@@ -861,11 +861,14 @@ jumpnext:
     QString a, b;
     int x, y;
 
-    QFontMetrics fm(*defaultfont);
-    int bw = fm.width('X');
-    int bh = fm.height() / 1.8;
+    QSize size = QFontMetrics(*defaultfont).size(Qt::TextSingleLine ,"X");
+    int bw = size.width();
+    int bh = size.height() / 1.8;
+    //QFontMetrics fm(*defaultfont);
+    //int bw = fm.width('X');
+    //int bh = fm.height() / 1.8;
 
-    bool ishours = false;
+    // bool ishours = false;
     int good = 0;
 
     for (int j = 0; j < m_codes.size(); j++) {
@@ -954,7 +957,7 @@ jumpnext:
             int h = f;
             int m = int(f * 60) % 60;
             val = QString::asprintf("%02i:%02i", h, m);
-            ishours = true;
+            // ishours = true;
         } else {
             val = QString::number(f, 'f', 2);
         }
@@ -1230,7 +1233,6 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
                         } else {
                             val = QString::number(v, 'f', 2);
                         }
-
                         strTooltip += "\r\n" + chan.label() + " " + strDataType + ": " + val;
                         //}
                     }

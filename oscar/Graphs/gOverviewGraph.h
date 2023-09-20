@@ -18,7 +18,7 @@
 #ifndef REMOVE_FITNESS
 
 /*
-BMI, Weight  and Zombie graphs are are hard coded in Overview.cpp
+BMI, Weight  and Feeling graphs are are hard coded in Overview.cpp
 These graph require special handling in class gOverviewGraph.
 
 Currently there are 4 graphs types, one of which is not used.
@@ -27,7 +27,7 @@ GT_LINE			? Used for making a line ?
 GT_POINT		? Used to display points instead of lines ?
 GT_SESSION		?? NOT USED.
 
-BMI, Weight  and Zombie graphs current use GT_LINE and not GT_BAR
+BMI, Weight  and Feeling graphs current use GT_LINE and not GT_BAR
 The Overview Linecharts preference allows points to be displayed instead of lines.
 */
 

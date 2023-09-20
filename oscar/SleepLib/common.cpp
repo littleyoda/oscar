@@ -737,7 +737,7 @@ void initializeStrings()
 
     STR_TR_BMI = QObject::tr("BMI");              // Short form of Body Mass Index
     STR_TR_Weight = QObject::tr("Weight");
-    STR_TR_Zombie = QObject::tr("Zombie");
+    STR_TR_Zombie = QObject::tr("Feeling");
     STR_TR_PulseRate = QObject::tr("Pulse Rate"); // Pulse / Heart rate
     STR_TR_SpO2 = QString("SpO2");
     STR_TR_Plethy = QObject::tr("Plethy");        // Plethysomogram
