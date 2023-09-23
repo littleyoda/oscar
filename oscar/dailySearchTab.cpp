@@ -296,6 +296,12 @@ QListWidgetItem* DailySearchTab::calculateMaxSize(QString str,int topic) {  //ca
     return item;
 }
 
+void DailySearchTab::updateEvents(ChannelID id,QString fullname) {
+    if (commandEventList.contains(fullname)) return;
+    commandEventList.insert(fullname);
+    commandList->addItem(calculateMaxSize(fullname,id));
+}
+
 void DailySearchTab::populateControl() {
 
         commandList->clear(); 
@@ -312,25 +318,6 @@ void DailySearchTab::populateControl() {
         }
         commandList->addItem(calculateMaxSize(tr("Number of Sessions"),ST_SESSIONS_QTY));
         //commandList->insertSeparator(commandList->count());  // separate from events
-
-        // Now add events
-        QDate date = p_profile->LastDay(MT_CPAP);
-        if ( !date.isValid()) return;
-        Day* day = p_profile->GetDay(date);
-        if (!day) return;
-
-        // the following is copied from daily.
-        qint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
-        if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
-        QList<ChannelID> available;
-        available.append(day->getSortedMachineChannels(chans));
-        for (int i=0; i < available.size(); ++i) {
-            ChannelID id = available.at(i);
-            schema::Channel chan = schema::channel[ id  ];
-            // new stuff now
-            QString displayName= chan.fullname();
-            commandList->addItem(calculateMaxSize(displayName,id));
-        }
 
         opCodeMap.clear();
         opCodeMap.insert( opCodeStr(OP_LT),OP_LT);
@@ -351,6 +338,22 @@ void DailySearchTab::populateControl() {
         operationCombo->addItem(opCodeStr(OP_GE));
         operationCombo->addItem(opCodeStr(OP_EQ));
         operationCombo->addItem(opCodeStr(OP_NE));
+
+        // Now add events
+        QDate date = p_profile->LastDay(MT_CPAP);
+        if ( !date.isValid()) return;
+        Day* day = p_profile->GetDay(date);
+        if (!day) return;
+
+        qint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
+        if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
+        QList<ChannelID> available;
+        available.append(day->getSortedMachineChannels(chans));
+        for (int i=0; i < available.size(); ++i) {
+            ChannelID id = available.at(i);
+            schema::Channel chan = schema::channel[ id  ];
+            updateEvents(id,chan.fullname());
+        }
 
 }
 

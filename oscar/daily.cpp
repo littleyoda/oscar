@@ -2792,6 +2792,7 @@ void Daily::updateEventsCombo(Day* day) {
         schema::Channel & chan = schema::channel[code];
         ui->eventsCombo->addItem(chan.enabled() ? *icon_on : * icon_off, chan.label(), code);
         ui->eventsCombo->setItemData(comboxBoxIndex, chan.fullname(), Qt::ToolTipRole);
+        dailySearchTab->updateEvents(code,chan.fullname());
     }
     ui->eventsCombo->addItem(*icon_on,"" , Qt::ToolTipRole);
     ui->eventsCombo->setCurrentIndex(0);

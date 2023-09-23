@@ -19,6 +19,7 @@
 #include <QMap>
 #include <QTextEdit>
 #include "SleepLib/common.h"
+#include "SleepLib/machine_common.h"
 
 class GPushButton;
 class QWidget ;
@@ -45,6 +46,7 @@ class DailySearchTab : public QWidget
 public:
     DailySearchTab ( Daily* daily , QWidget* ,  QTabWidget* ) ;
     ~DailySearchTab();
+    void updateEvents(ChannelID id,QString fullname);
 
 private:
 
@@ -160,6 +162,7 @@ enum OpCode {
     QListWidgetItem*     calculateMaxSize(QString str,int topic);
     float       commandListItemMaxWidth = 0;
     float       commandListItemHeight = 0;
+    QSet<QString> commandEventList;
 
     EventDataType calculateAhi(Day* day);
     bool        compare(int,int );
