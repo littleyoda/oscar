@@ -85,6 +85,12 @@ bool operator <(const ValueCount &a, const ValueCount &b);
 const float ounce_convert = 28.3495231F; // grams
 const float pound_convert = ounce_convert * 16;
 const float gram_ounce_convert = 0.0352754; // ounces in a gram
+const float pounds_per_kg = 2.2046226218 ; // kg to pounds
+const float kgs_per_pound = (1.0/pounds_per_kg) ; //pounds to kg.
+const float cms_per_inch  = 2.54 ; // inches to cm
+const float cms_per_foot  = (12.0*cms_per_inch) ; // feet to cm
+const float inches_per_cm = (1.0/cms_per_inch) ; // cm to inch
+
 
 QString weightString(float kg, UnitSystem us = US_Undefined);
 
