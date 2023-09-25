@@ -347,7 +347,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     gGraph *FRW = graphlist[schema::channel[CPAP_FlowRate].code()];
     FRW->AddLayer(l);
     l -> setMinimumHeight(80);      // set the layer height to 80. or about 130 graph height.
-    
+
 //    FRW->AddLayer(AddOXI(new gLineOverlayBar(OXI_SPO2Drop, COLOR_SPO2Drop, STR_TR_O2)));
 
     bool square=AppSetting->squareWavePlots();
@@ -502,21 +502,10 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
 #ifndef REMOVE_FITNESS
     ZombieMeterMoved=false;
-
-    if (p_profile->general->unitSystem()==US_English) {
-        ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
-        ui->weightSpinBox->setDecimals(0);
-        ui->ouncesSpinBox->setVisible(true);
-        ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
-    } else {
-        ui->ouncesSpinBox->setVisible(false);
-        ui->weightSpinBox->setDecimals(1);
-        ui->weightSpinBox->setSuffix(STR_UNIT_KG);
-    }
 #else // REMOVE_FITNESS
         // hide the parent widget to make the gridlayout invisible
         QWidget *myparent ;
-        myparent = ui->gridLayout->parentWidget();
+        myparent = ui->bioMetrics->parentWidget();
         if(myparent) myparent->hide();
 #endif
 
@@ -958,17 +947,7 @@ void Daily::on_ReloadDay()
 
 #ifndef REMOVE_FITNESS
     ZombieMeterMoved=false;
-
-    if (p_profile->general->unitSystem()==US_English) {
-        ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
-        ui->weightSpinBox->setDecimals(0);
-        ui->ouncesSpinBox->setVisible(true);
-        ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
-    } else {
-        ui->ouncesSpinBox->setVisible(false);
-        ui->weightSpinBox->setDecimals(1);
-        ui->weightSpinBox->setSuffix(STR_UNIT_KG);
-    }
+    ui->weightSpinBox->setDecimals(1);
 #endif
     this->setCursor(Qt::ArrowCursor);
     other_time=time.restart();
@@ -1875,24 +1854,17 @@ void Daily::Load(QDate date)
     ui->bookmarkTable->clearContents();
     ui->bookmarkTable->setRowCount(0);
     QStringList sl;
-    //sl.append(tr("Starts"));
-    //sl.append(tr("Notes"));
     ui->bookmarkTable->setHorizontalHeaderLabels(sl);
 #ifndef REMOVE_FITNESS
     ui->ZombieMeter->blockSignals(true);
-    ui->weightSpinBox->blockSignals(true);
-    ui->ouncesSpinBox->blockSignals(true);
-
-    ui->weightSpinBox->setValue(0);
-    ui->ouncesSpinBox->setValue(0);
     ui->ZombieMeter->setValue(0);
     set_ZombieMeterLabel();
-    ui->ouncesSpinBox->blockSignals(false);
-    ui->weightSpinBox->blockSignals(false);
     ui->ZombieMeter->blockSignals(false);
-    ui->BMI->display(0);
-    ui->BMI->setVisible(false);
-    ui->BMIlabel->setVisible(false);
+
+    set_WeightUI(0);
+    user_height_cm  = p_profile->user->height();
+    set_BmiUI();
+
 #endif
     BookmarksChanged=false;
     Session *journal=GetJournalSession(date);
@@ -1904,44 +1876,21 @@ void Daily::Load(QDate date)
         bool ok;
         if (journal->settings.contains(Journal_Weight)) {
             double kg=journal->settings[Journal_Weight].toDouble(&ok);
-
-            if (p_profile->general->unitSystem()==US_Metric) {
-                ui->weightSpinBox->setDecimals(1);
-                ui->weightSpinBox->blockSignals(true);
-                ui->weightSpinBox->setValue(kg);
-                ui->weightSpinBox->blockSignals(false);
-                ui->ouncesSpinBox->setVisible(false);
-                ui->weightSpinBox->setSuffix(STR_UNIT_KG);
-            } else {
-                float ounces=(kg*1000.0)/ounce_convert;
-                int pounds=ounces/16.0;
-                double oz;
-                double frac=modf(ounces,&oz);
-                ounces=(int(ounces) % 16)+frac;
-                ui->weightSpinBox->blockSignals(true);
-                ui->ouncesSpinBox->blockSignals(true);
-                ui->weightSpinBox->setValue(pounds);
-                ui->ouncesSpinBox->setValue(ounces);
-                ui->ouncesSpinBox->blockSignals(false);
-                ui->weightSpinBox->blockSignals(false);
-
-                ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
-                ui->weightSpinBox->setDecimals(0);
-                ui->ouncesSpinBox->setVisible(true);
-                ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
-            }
-            double height=p_profile->user->height()/100.0;
-            if (height>0 && kg>0) {
-                double bmi=kg/(height*height);
-                ui->BMI->setVisible(true);
-                ui->BMIlabel->setVisible(true);
-                ui->BMI->display(bmi);
-            }
+            set_WeightUI(kg);
+            set_BmiUI(journal);
         }
 
         if (journal->settings.contains(Journal_ZombieMeter)) {
             ui->ZombieMeter->blockSignals(true);
-            ui->ZombieMeter->setValue(journal->settings[Journal_ZombieMeter].toDouble(&ok));
+            int value = journal->settings[Journal_ZombieMeter].toInt(&ok);
+            // value of 0 means there is not an entry for feelings.
+            if (value==0) {
+                // set minimum to 1 zero means empty value. Should upgrade older systems.
+                value=1;
+                journal->settings[Journal_ZombieMeter] = value;
+                journal->SetChanged(true);
+            } ;
+            ui->ZombieMeter->setValue(value);
             set_ZombieMeterLabel();
             ui->ZombieMeter->blockSignals(false);
         }
@@ -1984,27 +1933,9 @@ void Daily::Load(QDate date)
 void Daily::UnitsChanged()
 {
 #ifndef REMOVE_FITNESS
-    double kg;
-    if (p_profile->general->unitSystem()==US_English) {
-        kg=ui->weightSpinBox->value();
-        float ounces=(kg*1000.0)/ounce_convert;
-        int pounds=ounces/16;
-        float oz=fmodf(ounces,16);
-        ui->weightSpinBox->setValue(pounds);
-        ui->ouncesSpinBox->setValue(oz);
-
-        ui->weightSpinBox->setDecimals(0);
-        ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
-        ui->ouncesSpinBox->setVisible(true);
-        ui->ouncesSpinBox->setSuffix(STR_UNIT_OUNCE);
-    } else {
-        kg=(ui->weightSpinBox->value()*(ounce_convert*16.0))+(ui->ouncesSpinBox->value()*ounce_convert);
-        kg/=1000.0;
-        ui->weightSpinBox->setDecimals(1);
-        ui->weightSpinBox->setValue(kg);
-        ui->ouncesSpinBox->setVisible(false);
-        ui->weightSpinBox->setSuffix(STR_UNIT_KG);
-    }
+    user_height_cm  = p_profile->user->height();
+    set_WeightUI(user_weight_kg);
+    set_BmiUI();
 #endif
 }
 
@@ -2239,7 +2170,7 @@ void Daily::on_treeWidget_itemClicked(QTreeWidgetItem *item, int )
         // for end   time skip abut after graph
 
         qint64 period = qint64(p_profile->general->eventWindowSize())*60000L;  // eventwindowsize units  minutes
-        qint64 small  = period/10; 
+        qint64 small  = period/10;
 
         qint64 start,end;
         if (eventType == eventTypeStart ) {
@@ -2500,6 +2431,48 @@ void Daily::on_removeBookmarkButton_clicked()
     mainwin->updateFavourites();
 }
 #ifndef REMOVE_FITNESS
+
+void Daily::set_BmiUI(Session* journal) {
+    if ((user_height_cm>0) && (user_weight_kg>0)) {
+        double height = user_height_cm/100.0;
+        double bmi=user_weight_kg/(height * height);
+        ui->BMI->display(bmi);
+        ui->BMI->setVisible(true);
+        ui->BMIlabel->setVisible(true);
+        if (journal) {
+            journal->settings[Journal_BMI]=bmi;
+            journal->SetChanged(true);
+        }
+    } else {
+        // BMI now zero - remove it
+        if (journal) {
+            auto jit = journal->settings.find(Journal_BMI);
+            if (jit != journal->settings.end()) {
+                journal->settings.erase(jit);
+            }
+            journal->SetChanged(true);
+        }
+        // And make it invisible
+        ui->BMI->setVisible(false);
+        ui->BMIlabel->setVisible(false);
+    }
+    mainwin->updateOverview();
+};
+
+void Daily::set_WeightUI(double kg) {
+    ui->weightSpinBox->blockSignals(true);
+    ui->weightSpinBox->setDecimals(1);
+    user_weight_kg = kg;
+    if (p_profile->general->unitSystem()==US_Metric) {
+        ui->weightSpinBox->setSuffix(STR_UNIT_KG);
+    } else {
+        kg *= pounds_per_kg;
+        ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
+    }
+    ui->weightSpinBox->setValue(kg);
+    ui->weightSpinBox->blockSignals(false);
+};
+
 void Daily::set_ZombieMeterLabel()
 {
     if (ui->ZombieMeter->value()==0 ) {
@@ -2508,16 +2481,24 @@ void Daily::set_ZombieMeterLabel()
         ui->ZombieValue->setText(QString("%1:%2").arg(tr("Value")).arg(ui->ZombieMeter->value()));
     }
 }
-void Daily::on_ZombieMeter_valueChanged(int action)
+
+void Daily::on_ZombieMeter_valueChanged(int value)
 {
-    Q_UNUSED(action);
     set_ZombieMeterLabel();
     ZombieMeterMoved=true;
     Session *journal=GetJournalSession(previous_date);
     if (!journal) {
         journal=CreateJournalSession(previous_date);
     }
-    journal->settings[Journal_ZombieMeter]=ui->ZombieMeter->value();
+    if (value==0) {
+        // should delete zombie entry here. if null.
+        auto jit = journal->settings.find(Journal_ZombieMeter);
+        if (jit != journal->settings.end()) {
+           journal->settings.erase(jit);
+        }
+    } else {
+        journal->settings[Journal_ZombieMeter]=value;
+    }
     journal->SetChanged(true);
     mainwin->updateOverview();
 }
@@ -2530,41 +2511,38 @@ void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
 }
 
 #ifndef REMOVE_FITNESS
-void Daily::on_weightSpinBox_valueChanged(double arg1)
+void Daily::on_weightSpinBox_valueChanged(double )
 {
-    // This is called if up/down arrows are used, in which case editingFinished is
-    // never called. So always call editingFinished instead
-    Q_UNUSED(arg1);
     this->on_weightSpinBox_editingFinished();
 }
 
+const double zeroKg=0.011; //
 void Daily::on_weightSpinBox_editingFinished()
 {
-    double arg1=ui->weightSpinBox->value();
+    user_height_cm = p_profile->user->height();
+    double kg = ui->weightSpinBox->value();
+    if (p_profile->general->unitSystem()==US_English) {
+        kg *=  kgs_per_pound; // convert pounds to kg.
+    }
+    if (kg < zeroKg) kg = 0.0;
+    user_weight_kg = kg;
 
-    double height=p_profile->user->height()/100.0;
     Session *journal=GetJournalSession(previous_date);
     if (!journal) {
         journal=CreateJournalSession(previous_date);
     }
 
-    double kg;
-    if (p_profile->general->unitSystem()==US_English) {
-            kg=((arg1*pound_convert) + (ui->ouncesSpinBox->value()*ounce_convert)) / 1000.0;
-    } else {
-            kg=arg1;
-    }
     if (journal->settings.contains(Journal_Weight)) {
         QVariant old = journal->settings[Journal_Weight];
-        if (old == kg && kg > 0) {
+        if (abs(old.toDouble() - kg) < zeroKg  && kg > zeroKg) {
             // No change to weight - skip
             return;
         }
-    } else if (kg == 0) {
+    } else if (kg < zeroKg) {
         // Still zero - skip
         return;
     }
-    if (kg > 0) {
+    if (kg > zeroKg) {
         journal->settings[Journal_Weight]=kg;
     } else {
         // Weight now zero - remove from journal
@@ -2573,48 +2551,20 @@ void Daily::on_weightSpinBox_editingFinished()
             journal->settings.erase(jit);
         }
     }
+    user_weight_kg=kg;
     gGraphView *gv=mainwin->getOverview()->graphView();
     gGraph *g;
     if (gv) {
         g=gv->findGraph(STR_GRAPH_Weight);
         if (g) g->setDay(nullptr);
     }
-    if ((height>0) && (kg>0)) {
-        double bmi=kg/(height * height);
-        ui->BMI->display(bmi);
-        ui->BMI->setVisible(true);
-        ui->BMIlabel->setVisible(true);
-        journal->settings[Journal_BMI]=bmi;
-    } else {
-        // BMI now zero - remove it
-        auto jit = journal->settings.find(Journal_BMI);
-        if (jit != journal->settings.end()) {
-            journal->settings.erase(jit);
-        }
-        // And make it invisible
-        ui->BMI->setVisible(false);
-        ui->BMIlabel->setVisible(false);
-    }
+    set_BmiUI(journal);
     if (gv) {
         g=gv->findGraph(STR_GRAPH_BMI);
         if (g) g->setDay(nullptr);
     }
     journal->SetChanged(true);
     mainwin->updateOverview();
-}
-
-void Daily::on_ouncesSpinBox_valueChanged(int arg1)
-{
-    // This is called if up/down arrows are used, in which case editingFinished is
-    // never called. So always call editingFinished instead
-    Q_UNUSED(arg1);
-    this->on_weightSpinBox_editingFinished();
-}
-
-void Daily::on_ouncesSpinBox_editingFinished()
-{
-    // This is functionally identical to the weightSpinBox_editingFinished, so just call that
-    this->on_weightSpinBox_editingFinished();
 }
 #endif
 

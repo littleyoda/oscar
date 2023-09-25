@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QMessageBox>
@@ -261,6 +261,8 @@ void NewProfile::on_nextButton_clicked()
 
             if (m_height_modified) {
                 profile->user->setHeight(m_tmp_height_cm);
+                // also call unitsChanged if height also changed. Need for update BMI.
+                if (mainwin && mainwin->getDaily()) { mainwin->getDaily()->UnitsChanged(); }
             }
 
             AppSetting->setProfileName(username);
