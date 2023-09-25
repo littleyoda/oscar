@@ -53,12 +53,16 @@ class NewProfile : public QDialog
     void on_heightCombo_currentIndexChanged(int index);
 
     void on_textBrowser_anchorClicked(const QUrl &arg1);
+    void on_heightEdit_valueChanged(double height);
+    void on_heightEdit2_valueChanged(double inches);
 
   private:
     QString getIntroHTML();
 
     Ui::NewProfile *ui;
     bool m_editMode;
+    bool m_height_modified;
+    double m_tmp_height_cm;
     int m_firstPage;
     bool m_passwordHashed;
 };

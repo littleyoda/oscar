@@ -444,6 +444,9 @@
                   <property name="decimals">
                    <number>0</number>
                   </property>
+                  <property name="maximum">
+                   <double>11.9</double>
+                  </property>
                   <property name="singleStep">
                    <double>1.000000000000000</double>
                   </property>

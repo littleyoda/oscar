@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLED
+#include <test_macros.h>
+
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
@@ -137,6 +140,17 @@ QString NewProfile::getIntroHTML()
            "</html>";
 }
 
+int cmToFeetInch( double cm, double& inches ) {
+    inches = cm * inches_per_cm;
+    int feet = inches / 12;
+    inches -=   (double)(feet *12);
+    return feet;
+}
+
+double feetInchToCm( int feet , double inches ) {
+    return cms_per_inch*(inches + (double)(feet *12));
+}
+
 void NewProfile::on_nextButton_clicked()
 {
     const QString xmlext = ".xml";
@@ -237,31 +251,18 @@ void NewProfile::on_nextButton_clicked()
                                            ui->timezoneCombo->currentIndex()).toString());
             profile->user->setCountry(ui->countryCombo->currentText());
             profile->user->setDaylightSaving(ui->DSTcheckbox->isChecked());
-            UnitSystem us;
 
-            if (ui->heightCombo->currentIndex() == 0) { us = US_Metric; }
-            else if (ui->heightCombo->currentIndex() == 1) { us = US_English; }
-            else { us = US_Metric; }
-
+            UnitSystem us = US_Metric;
+            if (ui->heightCombo->currentIndex() == 1) { us = US_English; };
             if (profile->general->unitSystem() != us) {
                 profile->general->setUnitSystem(us);
-
                 if (mainwin && mainwin->getDaily()) { mainwin->getDaily()->UnitsChanged(); }
             }
 
-            double v = 0;
-
-            if (us == US_English) {
-                // convert to metric
-                v = (ui->heightEdit->value() * 30.48);
-                v += ui->heightEdit2->value() * 2.54;
-            } else {
-                v = ui->heightEdit->value();
+            if (m_height_modified) {
+                profile->user->setHeight(m_tmp_height_cm);
             }
 
-            profile->user->setHeight(v);
-
-            //profile->user->setUserName(username);
             AppSetting->setProfileName(username);
 
             profile->Save();
@@ -322,6 +323,7 @@ void NewProfile::skipWelcomeScreen()
     ui->backButton->setEnabled(false);
     ui->nextButton->setEnabled(true);
 }
+
 void NewProfile::edit(const QString name)
 {
     skipWelcomeScreen();
@@ -388,25 +390,9 @@ void NewProfile::edit(const QString name)
 
     ui->heightCombo->setCurrentIndex(i);
 
-    double v = profile->user->height();
-
-    if (us == US_English)  { // evil non-metric
-        int ti = v / 2.54;
-        int feet = ti / 12;
-        int inches = ti % 12;
-        ui->heightEdit->setValue(feet);
-        ui->heightEdit2->setValue(inches);
-        ui->heightEdit2->setVisible(true);
-        ui->heightEdit->setDecimals(0);
-        ui->heightEdit2->setDecimals(0);
-        ui->heightEdit->setSuffix(STR_UNIT_FOOT); // foot
-        ui->heightEdit2->setSuffix(STR_UNIT_INCH); // inches
-    } else { // good wholesome metric
-        ui->heightEdit->setValue(v);
-        ui->heightEdit2->setVisible(false);
-        ui->heightEdit->setDecimals(0);
-        ui->heightEdit->setSuffix(STR_UNIT_CM);
-    }
+    m_tmp_height_cm = profile->user->height();
+    m_height_modified = false;
+    on_heightCombo_currentIndexChanged(i);
 }
 
 void NewProfile::on_passwordEdit1_editingFinished()
@@ -421,26 +407,40 @@ void NewProfile::on_passwordEdit2_editingFinished()
 
 void NewProfile::on_heightCombo_currentIndexChanged(int index)
 {
+    ui->heightEdit->blockSignals(true);
+    ui->heightEdit2->blockSignals(true);
     if (index == 0) {
         //metric
-        ui->heightEdit2->setVisible(false);
-        ui->heightEdit->setDecimals(0);
+        ui->heightEdit->setDecimals(1);
         ui->heightEdit->setSuffix(STR_UNIT_CM);
-        double v = ui->heightEdit->value() * 30.48;
-        v += ui->heightEdit2->value() * 2.54;
-        ui->heightEdit->setValue(v);
+        ui->heightEdit->setValue(m_tmp_height_cm);
+        ui->heightEdit2->setVisible(false);
     } else {        //evil
-        ui->heightEdit->setDecimals(0);
-        ui->heightEdit2->setDecimals(0);
+        ui->heightEdit->setDecimals(0);  // feet are always a whole number.
+        ui->heightEdit2->setDecimals(1);  // inches can be seen as double.
         ui->heightEdit->setSuffix(STR_UNIT_FOOT);
         ui->heightEdit2->setVisible(true);
         ui->heightEdit2->setSuffix(STR_UNIT_INCH);
-        int v = ui->heightEdit->value() / 2.54;
-        int feet = v / 12;
-        int inches = v % 12;
-        ui->heightEdit->setValue(feet);
+        double inches=0;
+        ui->heightEdit->setValue(cmToFeetInch(m_tmp_height_cm,inches));
         ui->heightEdit2->setValue(inches);
     }
+    ui->heightEdit->blockSignals(false);
+    ui->heightEdit2->blockSignals(false);
+}
+
+void NewProfile::on_heightEdit_valueChanged(double ) {
+    m_height_modified = true;
+    double cm = ui->heightEdit->value();
+    if (ui->heightCombo->currentIndex() == 1) {
+        //US_English;
+        cm = feetInchToCm (cm,ui->heightEdit2->value());
+    };
+    m_tmp_height_cm = cm;
+}
+
+void NewProfile::on_heightEdit2_valueChanged(double value) {
+    on_heightEdit_valueChanged(value);
 }
 
 void NewProfile::on_textBrowser_anchorClicked(const QUrl &arg1)
