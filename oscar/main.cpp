@@ -303,7 +303,7 @@ void optionExit(int exitCode, QString error) {
     --help                   Displays this menu and exits.
     --hires                  Enables high Resolution
     --hiresoff               Disables high Resolution
-    -l or --nop              internal call to main from OSCAR.
+    -l                       Force login option. Internal OSCAR call from RestartApplication.
     )" );
     exit (exitCode);
 }
@@ -401,8 +401,8 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < args.size(); i++) {
         if ((args[i] == "--language") || (args[i] == "--l") ) {
             settings.setValue(LangSetting,"");
-        } else if ( (args[i] == "-l") || (args[i] == "--nop")){
-            // do nothing. internal call to change language.
+        } else if ( (args[i] == "-l") || (args[i] == "-nop")){
+            // do nothing. internal calls that current don't have any functions in main.
         } else if (args[i] == "-p") {
             QThread::msleep(1000);
         } else if (args[i] == "--profile") {
