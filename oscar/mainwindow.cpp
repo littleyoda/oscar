@@ -551,7 +551,7 @@ bool MainWindow::OpenProfile(QString profileName, bool skippassword)
     // Should really create welcome and statistics here, but they need redoing later anyway to kill off webkit
     ui->tabWidget->setCurrentIndex(AppSetting->openTabAtStart());
 
-    p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
+    // always use last user setting - so don't reset. // p_profile->general->setStatReportMode(STAT_MODE_STANDARD);
     GenerateStatistics();
     PopulatePurgeMenu();
 
