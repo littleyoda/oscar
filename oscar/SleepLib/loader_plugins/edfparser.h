@@ -27,7 +27,7 @@ const char AnnoDurMark = 21;
 const char AnnoEnd = 0;
 
 // EDFType is used by all the edf loaders - resmed and sleepstyle, so far
-enum EDFType { EDF_UNKNOWN, EDF_BRP, EDF_PLD, EDF_SAD, EDF_EVE, EDF_CSL, EDF_AEV, EDF_RT };
+enum EDFType { EDF_UNKNOWN, EDF_BRP, EDF_PLD, EDF_SAD, EFF_SA2, EDF_EVE, EDF_CSL, EDF_AEV, EDF_RT };
 
 /*! \struct EDFHeader
     \brief  Represents the EDF+ header structure, used as a place holder while processing the text data.

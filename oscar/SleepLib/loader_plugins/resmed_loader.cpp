@@ -2182,7 +2182,7 @@ EDFType lookupEDFType(const QString & filename)
         return EDF_BRP;
     } else if (text == "PLD") {
         return EDF_PLD;
-    } else if (text == "SAD") {
+    } else if ((text == "SAD") || (test == "SA2")){
         return EDF_SAD;
     } else if (text == "CSL") {
         return EDF_CSL;
@@ -2752,6 +2752,7 @@ void ResDayTask::run()
                 loader->LoadPLD(sess, fullpath);
                 break;
             case EDF_SAD:
+            case EDF_SA2:
                 loader->LoadSAD(sess, fullpath);
                 break;
             case EDF_EVE:
