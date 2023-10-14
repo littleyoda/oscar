@@ -2182,7 +2182,7 @@ EDFType lookupEDFType(const QString & filename)
         return EDF_BRP;
     } else if (text == "PLD") {
         return EDF_PLD;
-    } else if ((text == "SAD") || (test == "SA2")){
+    } else if ((text == "SAD") || (text == "SA2")){
         return EDF_SAD;
     } else if (text == "CSL") {
         return EDF_CSL;
