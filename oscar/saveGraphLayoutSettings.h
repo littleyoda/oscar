@@ -39,14 +39,41 @@ private:
     const QChar delimiter = QChar(':');
 };
 
+class HelpData {
+public:
+    void setDialog(QString windowsTitle);
+    void setDialog(QWidget*,QString windowsTitle );
+    void finishInit();
+
+    QLabel title ;
+    QLabel message ;
+
+    QDialog*dialog = nullptr;
+    bool    open = false;
+    QVBoxLayout* layout =nullptr;
+
+    QFont   font ;
+    QFont   fontBold ;
+    QLabel* label ;
+
+    // For frameless
+    QPushButton* exitBtn=nullptr;
+    QHBoxLayout* headerLayout=nullptr;
+
+};
+
 class SaveGraphLayoutSettings : public QWidget
 {
 	Q_OBJECT
 public:
     SaveGraphLayoutSettings(QString title, QWidget* parent) ;
     ~SaveGraphLayoutSettings();
-    void menu(gGraphView* graphView);
+    void triggerLayout(gGraphView* graphView);
+    void    hintHelp();
 protected:
+    HelpData hint;
+    HelpData help;
+    HelpData menu;
     QIcon*  m_icon_return       = new QIcon(":/icons/return.png");
     QIcon*  m_icon_help         = new QIcon(":/icons/question_mark.png");
     QIcon*  m_icon_exit         = new QIcon(":/icons/exit.png");
@@ -63,7 +90,6 @@ private:
     const static int maxDescriptionLen = 80;
     const QString fileBaseName = QString("layout");
     const int fileNameRole = Qt::UserRole;
-    int   fontSizeIncrease = 0;
     int   horizontalWidthAdjustment=60;     // this seem to make menu size changes work. Testing says it is 60 but what causes it is unknown.
 
     QSize minMenuListSize = QSize(0,0);
@@ -85,9 +111,9 @@ private:
     QWidget*            parent;
     const   QString     title;
     gGraphView*         graphView = nullptr;
-    QFont       menuListFont;
 
-    QDialog*     menuDialog;
+    void         createHint();
+    QString      hintInfo();
     QListWidget* menuList;
 
     QPushButton* menuAddFullBtn;   // Must be first item for workaround.
@@ -96,23 +122,15 @@ private:
     QPushButton* menuRestoreBtn;
     QPushButton* menuUpdateBtn;
     QPushButton* menuRenameBtn;
-    QPushButton* menuExitBtn;
     QPushButton* menuHelpBtn;
 
-
-    QVBoxLayout* menuLayout;
     QHBoxLayout* menuLayoutButtons;
 
     void         createHelp();
+    void         createHelp(HelpData & help , QString title , QString text);
+    void         initDialog(HelpData & help , QString title );
     void         helpDestructor();
     QString      helpInfo();
-    QDialog*     helpDialog=nullptr;
-    QPushButton* helpInfoExitBtn=nullptr;
-    QPushButton* helpExitBtn=nullptr;
-    int          helpFontSizeIncrease = 0;
-    QHBoxLayout* helpLayoutButtons = nullptr;
-
-
 
     QDir*   dir = nullptr;
     QString dirName;
@@ -129,9 +147,9 @@ private:
     void    looksOn(QPushButton* button,bool on);
     DescriptionMap* descriptionMap;
     bool    confirmAction(QString name,QString question,QIcon* icon,
-                QMessageBox::StandardButtons flags = (QMessageBox::Cancel|QMessageBox::Yes) , 
-                QMessageBox::StandardButton adefault = QMessageBox::Cancel, 
-                QMessageBox::StandardButton success = QMessageBox::Yes 
+                QMessageBox::StandardButtons flags = (QMessageBox::Cancel|QMessageBox::Yes) ,
+                QMessageBox::StandardButton adefault = QMessageBox::Cancel,
+                QMessageBox::StandardButton success = QMessageBox::Yes
                 );
     bool    verifyItem(QListWidgetItem* item,QString name,QIcon* icon) ;
 
@@ -145,7 +163,6 @@ private:
     void    createSaveFolder();
     QPushButton*  newBtnRtn(QHBoxLayout*, QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
     QPushButton*  menuBtn(                QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
-    QPushButton*  helpBtn(                QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip);
 
     void    manageButtonApperance();
     void    resizeMenu();
@@ -154,6 +171,8 @@ private:
     void    writeSettings(QString filename);
     void    loadSettings(QString filename);
     void    deleteSettings(QString filename);
+    void    closeMenu();
+    void    closeHelp();
 
 public slots:
 private slots:
@@ -163,13 +182,12 @@ private slots:
     void    rename_feature();
     void    update_feature();
     void    help_feature();
-    void    help_off_feature();
     void    help_exit_feature();
     void    delete_feature();
-    void    exit();
-
     void    itemChanged(QListWidgetItem *item);
     void    itemSelectionChanged();
+
+    void    closeHint();
 };
 
 

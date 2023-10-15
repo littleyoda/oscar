@@ -144,6 +144,7 @@ class Overview : public QWidget
     void setGraphText ();
 
     void on_layout_clicked();
+    void on_graphHelp_clicked();
 
   private:
     void CreateAllGraphs();

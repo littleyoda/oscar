@@ -1510,6 +1510,20 @@ QSlider::handle:horizontal  {
            </layout>
           </item>
           <item>
+           <widget class="QPushButton" name="graphHelp">
+            <property name="text">
+             <string>Hint</string>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/icons/question_mark.png</normaloff>:/icons/question_mark.png</iconset>
+            </property>
+            <property name="toolTip">
+             <string>Graphing Help</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="layout">
             <property name="text">
              <string>Layout</string>

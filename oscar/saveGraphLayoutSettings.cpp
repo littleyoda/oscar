@@ -11,19 +11,24 @@
 
 #include <QMessageBox>
 #include <QAbstractButton>
+#include <QWindow>
+#include <QApplication>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QTextEdit>
 #include <QPixmap>
 #include <QSize>
 #include <QChar>
 #include "SleepLib/profiles.h"
 #include "saveGraphLayoutSettings.h"
 
-#define USE_FRAMELESS_WINDOW
+
+
+#define USE_FRAMELESS_WINDOW_off
 #define USE_PROFILE_SPECIFIC_FOLDERoff      // off implies saved layouts worked for all profiles.
 
 SaveGraphLayoutSettings::SaveGraphLayoutSettings(QString title,QWidget* parent) : parent(parent),title(title)
 {
-    fontSizeIncrease = 1;
-    helpFontSizeIncrease = 1;
     createSaveFolder();
     if (dir==nullptr) return;
     dir->setFilter(QDir::Files | QDir::Readable | QDir::Writable | QDir::NoSymLinks);
@@ -33,16 +38,15 @@ SaveGraphLayoutSettings::SaveGraphLayoutSettings(QString title,QWidget* parent) 
 
     createMenu() ;
 
-    menuDialog->connect(menuAddFullBtn, SIGNAL(clicked()), this, SLOT (addFull_feature()  ));
-    menuDialog->connect(menuAddBtn,     SIGNAL(clicked()), this, SLOT (add_feature()  ));
-    menuDialog->connect(menuRestoreBtn, SIGNAL(clicked()), this, SLOT (restore_feature()  ));
-    menuDialog->connect(menuUpdateBtn,  SIGNAL(clicked()), this, SLOT (update_feature()  ));
-    menuDialog->connect(menuRenameBtn,  SIGNAL(clicked()), this, SLOT (rename_feature()  ));
-    menuDialog->connect(menuDeleteBtn,  SIGNAL(clicked()), this, SLOT (delete_feature()  ));
-    menuDialog->connect(menuHelpBtn,    SIGNAL(clicked()), this, SLOT (help_feature()  ));
-    menuDialog->connect(menuExitBtn,    SIGNAL(clicked()), this, SLOT (exit()  ));
-    menuDialog->connect(menuList,       SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(itemChanged(QListWidgetItem*)   ));
-    menuDialog->connect(menuList,       SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()   ));
+    menu.dialog->connect(menuAddFullBtn, SIGNAL(clicked()), this, SLOT (addFull_feature()  ));
+    menu.dialog->connect(menuAddBtn,     SIGNAL(clicked()), this, SLOT (add_feature()  ));
+    menu.dialog->connect(menuRestoreBtn, SIGNAL(clicked()), this, SLOT (restore_feature()  ));
+    menu.dialog->connect(menuUpdateBtn,  SIGNAL(clicked()), this, SLOT (update_feature()  ));
+    menu.dialog->connect(menuRenameBtn,  SIGNAL(clicked()), this, SLOT (rename_feature()  ));
+    menu.dialog->connect(menuDeleteBtn,  SIGNAL(clicked()), this, SLOT (delete_feature()  ));
+    menu.dialog->connect(menuHelpBtn,    SIGNAL(clicked()), this, SLOT (help_feature()  ));
+    menu.dialog->connect(menuList,       SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(itemChanged(QListWidgetItem*)   ));
+    menu.dialog->connect(menuList,       SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()   ));
 
 
 
@@ -55,16 +59,15 @@ SaveGraphLayoutSettings::~SaveGraphLayoutSettings()
 {
 
     if (dir==nullptr) {return;}
-    menuDialog->disconnect(menuAddFullBtn, SIGNAL(clicked()), this, SLOT (addFull_feature()  ));
-    menuDialog->disconnect(menuAddBtn,     SIGNAL(clicked()), this, SLOT (add_feature()  ));
-    menuDialog->disconnect(menuRestoreBtn, SIGNAL(clicked()), this, SLOT (restore_feature()  ));
-    menuDialog->disconnect(menuUpdateBtn,  SIGNAL(clicked()), this, SLOT (update_feature()  ));
-    menuDialog->disconnect(menuRenameBtn,  SIGNAL(clicked()), this, SLOT (rename_feature()  ));
-    menuDialog->disconnect(menuDeleteBtn,  SIGNAL(clicked()), this, SLOT (delete_feature()  ));
-    menuDialog->disconnect(menuExitBtn,    SIGNAL(clicked()), this, SLOT (exit()  ));
-    menuDialog->disconnect(menuHelpBtn,    SIGNAL(clicked()), this, SLOT (help_feature()  ));
-    menuDialog->disconnect(menuList,       SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(itemChanged(QListWidgetItem*)   ));
-    menuDialog->disconnect(menuList,       SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()   ));
+    menu.dialog->disconnect(menuAddFullBtn, SIGNAL(clicked()), this, SLOT (addFull_feature()  ));
+    menu.dialog->disconnect(menuAddBtn,     SIGNAL(clicked()), this, SLOT (add_feature()  ));
+    menu.dialog->disconnect(menuRestoreBtn, SIGNAL(clicked()), this, SLOT (restore_feature()  ));
+    menu.dialog->disconnect(menuUpdateBtn,  SIGNAL(clicked()), this, SLOT (update_feature()  ));
+    menu.dialog->disconnect(menuRenameBtn,  SIGNAL(clicked()), this, SLOT (rename_feature()  ));
+    menu.dialog->disconnect(menuDeleteBtn,  SIGNAL(clicked()), this, SLOT (delete_feature()  ));
+    menu.dialog->disconnect(menuHelpBtn,    SIGNAL(clicked()), this, SLOT (help_feature()  ));
+    menu.dialog->disconnect(menuList,       SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(itemChanged(QListWidgetItem*)   ));
+    menu.dialog->disconnect(menuList,       SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()   ));
     helpDestructor();
 
 
@@ -97,7 +100,7 @@ void SaveGraphLayoutSettings::createSaveFolder() {
     QDir* tmpDir = new QDir(dirName);
     if (!tmpDir->exists()) {
         QDir* baseDir=new QDir(baseName);
-        if (!baseDir->exists()) { 
+        if (!baseDir->exists()) {
             // Base folder does not exist - terminate
             return ;
         }
@@ -118,11 +121,13 @@ void SaveGraphLayoutSettings::createSaveFolder() {
 QPushButton*  SaveGraphLayoutSettings::menuBtn(QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip) {
     return newBtnRtn(menuLayoutButtons, name, icon, style, hPolicy,tooltip) ;
 }
-QPushButton*  SaveGraphLayoutSettings::helpBtn(QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip) {
-    return newBtnRtn(helpLayoutButtons, name, icon, style, hPolicy,tooltip) ;
-}
+
+//QPushButton*  SaveGraphLayoutSettings::helpBtn(QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip) {
+    //return newBtnRtn(menuLayoutButtons, name, icon, style, hPolicy,tooltip) ;
+//}
+
 QPushButton*  SaveGraphLayoutSettings::newBtnRtn(QHBoxLayout* layout,QString name, QIcon* icon, QString style,QSizePolicy::Policy hPolicy,QString tooltip) {
-    QPushButton* button = new QPushButton(name, menuDialog);
+    QPushButton* button = new QPushButton(name, menu.dialog);
     button->setIcon(*icon);
     button->setStyleSheet(style);
     button->setSizePolicy(hPolicy,QSizePolicy::Fixed);
@@ -155,31 +160,19 @@ void SaveGraphLayoutSettings::createStyleSheets() {
                 "vertical-align:top;"
             "}"
             ;
-    styleDialog=
-            "QDialog { "
-                "border: 3px solid black;"
-            "}";
+    styleDialog= QString ( R"( QDialog { border: 3px solid black; } )") ;
 }
 
 
 void SaveGraphLayoutSettings::createMenu() {
-
-    menuListFont =*defaultfont;
-    menuListFont.setPointSize(fontSizeIncrease+menuListFont.pointSize());
-
+    if(menu.dialog) return;
+    initDialog(menu,tr("Manage Save Layout Settings") );
 
     createStyleSheets();
 
-    #ifdef USE_FRAMELESS_WINDOW
-        menuDialog= new QDialog(parent, Qt::FramelessWindowHint);
-        menuDialog->setSizeGripEnabled(true);       // allows lower right hand corner to resize dialog
-    #else
-        menuDialog= new QDialog(parent, Qt::WindowTitleHint | Qt::WindowCloseButtonHint|Qt::WindowSystemMenuHint);
-        menuDialog->setWindowTitle(tr("Manage Save Layout Settings")) ;
-    #endif
-    menuDialog->setStyleSheet(styleDialog);
+    QString styleDialog( R"( QDialog { border: 3px solid black; } )") ;
+    menu.dialog->setStyleSheet(styleDialog);
 
-    menuLayout  = new QVBoxLayout(menuDialog);
     menuLayoutButtons = new QHBoxLayout();
 
     menuAddFullBtn = menuBtn(tr("Add"    ),m_icon_add     , styleOff ,QSizePolicy::Minimum, tr("Add Feature inhibited. The maximum number of Items has been exceeded.") );
@@ -189,66 +182,147 @@ void SaveGraphLayoutSettings::createMenu() {
     menuUpdateBtn  = menuBtn(tr("Update" ),m_icon_update  , styleOn  ,QSizePolicy::Minimum, tr("Updates the selection with current settings."));
     menuDeleteBtn  = menuBtn(tr("Delete" ),m_icon_delete  , styleOn  ,QSizePolicy::Minimum, tr("Deletes the selection."));
     menuHelpBtn    = menuBtn(""           ,m_icon_help    , styleOn  ,QSizePolicy::Fixed  , tr("Expanded Help menu."));
-    menuExitBtn    = menuBtn(""           ,m_icon_exit    , styleExit,QSizePolicy::Fixed  , tr("Exits the Layout menu."));
 
-    #ifndef USE_FRAMELESS_WINDOW
-        menuExitBtn->hide();
-    #endif
-
-    menuList = new QListWidget(menuDialog);
+    menuList = new QListWidget(menu.dialog);
     menuList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     menuList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    menuList->setFont(menuListFont);
+    menuList->setFont(menu.font);
 
 
-    menuLayout->addLayout(menuLayoutButtons);
-    menuLayout->addWidget(menuList, 1);
+    menu.layout->addLayout(menuLayoutButtons);
+    menu.layout->addWidget(menuList, 1);
 
     //menuList->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     menuList->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-
-
 };
 
+void HelpData::setDialog(QWidget* parent,QString windowsTitle) {
+    if (dialog) return;
+    open=false;
+    #ifdef USE_FRAMELESS_WINDOW
+        dialog= new QDialog(parent, Qt::FramelessWindowHint);
+        title.setText(QString("<h4>%1</h4>").arg(windowsTitle) );
+        headerLayout = new QHBoxLayout();
+    #else
+        dialog = new QDialog(nullptr, Qt::WindowTitleHint | Qt::WindowCloseButtonHint|Qt::WindowSystemMenuHint);
+        dialog->setWindowTitle(windowsTitle) ;
+        dialog->setWindowModality(Qt::WindowModal);
+        dialog->setStyleSheet(QString ( "QDialog { border: 3px solid black; }"));
+    #endif
+    Q_UNUSED(parent);
+    font = QApplication::font();
+    fontBold = font;
+    fontBold.setWeight(QFont::Bold);
+    layout = new QVBoxLayout(dialog);
+}
+
+void SaveGraphLayoutSettings::initDialog(
+    HelpData & aHelp
+    , QString title
+    ) {
+    if(aHelp.dialog) return;
+    aHelp.setDialog(parent,title);
+    #ifdef USE_FRAMELESS_WINDOW
+        aHelp.headerLayout->addWidget(&aHelp.title);
+        aHelp.exitBtn = newBtnRtn(aHelp.headerLayout, "", m_icon_exit, styleExit , QSizePolicy::Fixed, tr("Exits the dialog menu.")) ;
+        aHelp.layout->addLayout(aHelp.headerLayout);
+    #endif
+    // YXXXXXXXXXXXXXXXXXXX
+    // dialog->setFont(font) ;
+    aHelp.dialog->setSizeGripEnabled(true);       // allows lower right hand corner to resize dialog
+    aHelp.dialog->setStyleSheet(QString ( "QDialog { border: 3px solid black; }"));
+}
+
 void SaveGraphLayoutSettings::createHelp() {
-    if(helpDialog) return;
+    createHelp(help, tr("Help Menu - Manage Layout Settings"), helpInfo());
+    if (help.exitBtn) help.dialog->connect(help.exitBtn,    SIGNAL(clicked()), this, SLOT (help_exit_feature()  ));
+};
 
-    helpDialog= new QDialog(parent, Qt::FramelessWindowHint);
-    helpDialog->setStyleSheet(styleDialog);
-    menuDialog->setSizeGripEnabled(true);       // allows lower right hand corner to resize dialog
+void SaveGraphLayoutSettings::createHelp(HelpData & ahelp , QString title , QString text) {
+    if(ahelp.dialog) return;
+    initDialog(ahelp,title );
 
-    QFont helpInfoFont = menuListFont;
-    helpInfoFont.setPointSize(helpFontSizeIncrease+helpInfoFont.pointSize());
-
-    QFont helpInfoLabelFont = helpInfoFont;
-    helpInfoLabelFont.setPointSize(fontSizeIncrease+ helpInfoFont.pointSize());
-
-    QLabel* helpInfoHeaderLabel = new QLabel("helpInfoHeaderLabel",parent);
-    helpInfoHeaderLabel->setText(QString( tr("<h4>Help Menu - Manage Layout Settings</h4>")));
-    helpInfoHeaderLabel->setFont(helpInfoLabelFont);
-
-    QLabel* helpInfoLabel = new QLabel("helpInfo",parent);
-    helpInfoLabel->setFont(helpInfoFont);
-    helpInfoLabel->setText(helpInfo()) ;
-
-    helpLayoutButtons = new QHBoxLayout();
-    helpLayoutButtons->addWidget(helpInfoHeaderLabel);
-    helpInfoExitBtn= helpBtn(""          ,m_icon_return  , styleOn  ,QSizePolicy::Fixed  , tr("Exits the help menu."));
-    helpExitBtn    = helpBtn(""          ,m_icon_exit    , styleExit,QSizePolicy::Fixed  , tr("Exits the dialog menu."));
-
-    QVBoxLayout* helpLayout = new QVBoxLayout(helpDialog);
-    helpLayout->addLayout(helpLayoutButtons);
-    helpLayout->addWidget(helpInfoLabel, 1);
-
-    helpDialog->connect(helpInfoExitBtn,SIGNAL(clicked()), this, SLOT (help_off_feature()  ));
-    helpDialog->connect(helpExitBtn,    SIGNAL(clicked()), this, SLOT (help_exit_feature()  ));
+    ahelp.label = new QLabel(parent);
+    ahelp.label->setFont(ahelp.font);
+    ahelp.label->setText(text) ;
+    ahelp.layout->addWidget(ahelp.label, 1);
 
 }
 
 void SaveGraphLayoutSettings::helpDestructor() {
-    if(!helpDialog) return;
-    helpDialog->disconnect(helpInfoExitBtn,SIGNAL(clicked()), this, SLOT (help_off_feature()  ));
-    helpDialog->disconnect(helpExitBtn,    SIGNAL(clicked()), this, SLOT (help_exit_feature()  ));
+    closeHelp();
+    closeHint();
+    closeMenu();
+    if (hint.exitBtn) hint.dialog->disconnect(hint.exitBtn,    SIGNAL(clicked()), this, SLOT ( closeHint()  ));
+    if (help.exitBtn) help.dialog->disconnect(help.exitBtn,    SIGNAL(clicked()), this, SLOT ( closeHelp()  ));
+    if (menu.exitBtn) menu.dialog->disconnect(menu.exitBtn,    SIGNAL(clicked()), this, SLOT ( help_exit_feature()  ));
+}
+
+#define TABLES   QString(R"( <table width="100%"> )")
+#define TABLEE   QString(R"( </table> )")
+#define CENTERS  QString(R"( <div style="text-align: center;"><p> )")
+#define CENTERE  QString(R"( </p></div> )")
+#define BREAK    QString(R"( <br> )")
+#define PARAS    QString(R"( <p> )")
+#define PARAE    QString(R"( </p> )")
+#define ROWS     QString(R"( <tr> )")
+#define ROWE     QString(R"( </tr> )")
+#define COLS     QString(R"( <td> )")
+#define COLE     QString(R"( </td> )")
+#define CSEP     QString(R"( </th><td>  )")
+
+QString SaveGraphLayoutSettings::hintInfo() {
+
+QStringList strList;
+
+    strList
+    <<  CENTERS <<  "<b>"
+    <<  tr("Basic Hints")
+    <<  "</b>" <<  CENTERE
+    <<  TABLES
+    <<  ROWS  << COLS << "<b>" << QString(tr("Key Sequence")) << "</b>" << CSEP << "<b>" <<  QString(tr("Description")) << "</b>" << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("MouseWheel")) << CSEP << QString(tr("Scrolls unpinned Graphs")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Ctrl + MouseWheel")) << CSEP << QString(tr("Zooms Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("LeftMouse dragDrop")) << CSEP << QString(tr("Defines Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("RightMouse dragDrop")) << CSEP << QString(tr("Moves Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Ctrl + (right/left)MouseClick")) << CSEP << QString(tr("Zooms Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr(" (right/left)MouseClick")) << CSEP << QString(tr("Moves Time Selection")) << COLE << ROWE
+    <<  BREAK
+    <<  ROWS  << COLS << QString(tr("(right/left) Arrow (Ctrl => faster)")) << CSEP << QString(tr("Moves Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Up/Down Arrow")) << CSEP << QString(tr("Scrolls graphs")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Up/Down Arrow+Focus")) << CSEP << QString(tr("Zooms graphs")) << COLE << ROWE
+    <<  TABLEE
+    <<  CENTERS <<  "<b>"
+    <<  tr("Graph Layout Hints")
+    <<  "</b>" <<  CENTERE
+    <<  TABLES
+    <<  ROWS  << COLS << QString(tr("Double Click Graph Title")) << CSEP << QString(tr("Toggles Pinning")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Daily:Double Click Y-axis label")) << CSEP << QString(tr("Toggle Time Selection Auto Zoom")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("DragDrop Graph Title")) << CSEP << QString(tr("Reorders Graph layout")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("DragDrop graph’s bottom line")) << CSEP << QString(tr("Changes Size of Graphs")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Layout Button (next to Graph Button)")) << CSEP << QString(tr("Save / Restore Graph Layouts")) << COLE << ROWE
+    <<  TABLEE
+    <<  CENTERS <<  "<b>"
+    <<  tr("Daily Graph Hints")
+    <<  "</b>" <<  CENTERE
+    <<  TABLES
+    <<  ROWS  << COLS << QString(tr("Click on date")) << CSEP << QString(tr("Toggle Calendar on/off")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Detailed: Click on colored event")) << CSEP << QString(tr("Jump to event tab with event opened")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Detailed: Click on a session (at bottom)")) << CSEP << QString(tr("Toggle session disable / enable session")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Event: Click on an event")) << CSEP << QString(tr("Time Selection 3 min before event 20 sec after")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Bookmark")) << CSEP << QString(tr("Save current Time Selection")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Search Tab")) << CSEP << QString(tr("Search data base")) << COLE << ROWE
+    <<  TABLEE
+    <<  CENTERS <<  "<b>"
+    <<  tr("Miscellaneous Hints")
+    <<  "</b>" <<  CENTERE
+    <<  TABLES
+    <<  ROWS  << COLS << QString(tr("OverView: Shift Click on a date")) << CSEP << QString(tr("Jumps to date in the Daily Tab")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Daily: Event (bottom left corner) ")) << CSEP << QString(tr("Select Events to view")) << COLE << ROWE
+    <<  ROWS  << COLS << QString(tr("Graph / Chart (bottom right corner)")) << CSEP << QString(tr("Selects graphs to view")) << COLE << ROWE
+    <<  TABLEE
+        ;
+return strList.join("\n");
 }
 
 QString SaveGraphLayoutSettings::helpInfo() {
@@ -273,14 +347,15 @@ QStringList strList;
 <<QString(tr("The description may be changed."))
     <<QString("<br>")
 <<QString(tr("The Add button will be greyed out when maximum number is reached."))
-    <<QString("</td></tr> <br> <tr><td><i><u>")
+    <<QString("<br>")
+    <<QString("</td></tr> <tr><td><i><u>")
 <<QString(tr("Other Buttons"))
     <<QString("</u> </i></td>  <td>")
 <<QString(tr("Greyed out when there are no selections"))
     <<QString("</td></tr> <tr><td>")
 <<QString(tr("Restore"))
     <<QString("</td> <td>")
-<<QString(tr("Loads the Layout Settings from the selection. Automatically exits."))
+<<QString(tr("Loads the Layout Settings from the selection. Stays Open"))
     <<QString("</td></tr> <tr><td>")
 <<QString(tr("Rename"))
     <<QString("</td><td>")
@@ -378,7 +453,7 @@ bool SaveGraphLayoutSettings::confirmAction(QString top ,QString bottom,QIcon* i
     QString topText=QString("<p style=""text-align:center"">%1</p>").arg(top);
     QString bottomText=QString("<p style=""text-align:center"">%1</p>").arg(bottom);
 
-    QMessageBox msgBox(menuDialog);
+    QMessageBox msgBox(menu.dialog);
     msgBox.setText(topText);
     msgBox.setInformativeText(bottomText);
     if (icon!=nullptr) {
@@ -389,7 +464,7 @@ bool SaveGraphLayoutSettings::confirmAction(QString top ,QString bottom,QIcon* i
     msgBox.setDefaultButton(adefault);
     msgBox.setWindowFlag(Qt::FramelessWindowHint,true);
 
-    msgBox.setStyleSheet(calculateStyleMessageBox(&menuListFont,top,bottom));
+    msgBox.setStyleSheet(calculateStyleMessageBox(&menu.font,top,bottom));
 
     // displaywidgets((QWidget*)&msgBox);
     bool ret= msgBox.exec()==success;
@@ -397,11 +472,11 @@ bool SaveGraphLayoutSettings::confirmAction(QString top ,QString bottom,QIcon* i
 }
 #else
 bool SaveGraphLayoutSettings::confirmAction(QString name ,QString question,QIcon* icon,QMessageBox::StandardButtons flags , QMessageBox::StandardButton adefault, QMessageBox::StandardButton success) {
-//bool SaveGraphLayoutSettings::confirmAction(QString name,QString question,QIcon* icon) 
+//bool SaveGraphLayoutSettings::confirmAction(QString name,QString question,QIcon* icon)
     Q_UNUSED(flags);
     Q_UNUSED(adefault);
     Q_UNUSED(success);
-    QMessageBox msgBox(menuDialog);
+    QMessageBox msgBox(menu.dialog);
     msgBox.setText(question);
     if (icon!=nullptr) {
         msgBox.setIconPixmap(icon->pixmap(QSize(50,50)));
@@ -503,7 +578,7 @@ void SaveGraphLayoutSettings::restore_feature() {
     if (!verifyItem(item,  tr("No Item Selected") ,  m_icon_restore)) return ;
     QString fileName = item->data(fileNameRole).toString();
     loadSettings(fileName);
-    exit();
+    closeMenu();
 };
 
 void SaveGraphLayoutSettings::rename_feature() {
@@ -516,20 +591,22 @@ void SaveGraphLayoutSettings::rename_feature() {
 }
 
 void SaveGraphLayoutSettings::help_exit_feature() {
-    helpDialog->close();
-    exit();
-}
-
-void SaveGraphLayoutSettings::help_off_feature() {
-    helpDialog->close();
+    closeMenu();
+    closeHelp();
 }
 
 void SaveGraphLayoutSettings::help_feature() {
     initminMenuListSize();
     createHelp();
-    if(!helpDialog) return;
-    helpDialog->raise();
-    helpDialog->exec();
+    if(!help.dialog) return;
+    if (help.open) {
+        closeHelp();
+        return;
+    }
+    help.dialog->raise();
+    help.open=true;
+    help.dialog->exec();
+    help.open=false;
     manageButtonApperance();
 }
 
@@ -591,7 +668,7 @@ void SaveGraphLayoutSettings::itemSelectionChanged()
 
 void SaveGraphLayoutSettings::initminMenuListSize() {
     if (minMenuDialogSize.width()==0) {
-        menuDialogSize     = menuDialog->size();
+        menuDialogSize     = menu.dialog->size();
         minMenuDialogSize  = menuDialogSize;
 
         menuListSize       = menuList->size();
@@ -639,31 +716,31 @@ bool  SaveGraphLayoutSettings::sizeEqual(const QSize AA , const QSize BB ) {
 
 
 void SaveGraphLayoutSettings::resizeMenu() {
-    if (minMenuDialogSize.width()==0) return; 
+    if (minMenuDialogSize.width()==0) return;
 
     QSize newSize = calculateMenuDialogSize();
     newSize.setWidth ( newSize.width());
 
-    menuDialogSize = menuDialog->size();
+    menuDialogSize = menu.dialog->size();
 
     if ( sizeEqual(newSize , menuDialogSize)) {
-        // no work to do 
+        // no work to do
         return;
     };
 
     if ( menuDialogSize.width() < newSize.width() )  {
-        menuDialog->setMinimumWidth(newSize.width());
-        menuDialog->setMaximumWidth(QWIDGETSIZE_MAX);
+        menu.dialog->setMinimumWidth(newSize.width());
+        menu.dialog->setMaximumWidth(QWIDGETSIZE_MAX);
     } else if ( menuDialogSize.width() > newSize.width() )  {
-        menuDialog->setMaximumWidth(newSize.width());
-        menuDialog->setMinimumWidth(newSize.width());
+        menu.dialog->setMaximumWidth(newSize.width());
+        menu.dialog->setMinimumWidth(newSize.width());
     }
     if ( menuDialogSize.height() < newSize.height() )  {
-        menuDialog->setMinimumHeight(newSize.height());
-        menuDialog->setMaximumHeight(QWIDGETSIZE_MAX);
+        menu.dialog->setMinimumHeight(newSize.height());
+        menu.dialog->setMaximumHeight(QWIDGETSIZE_MAX);
     } else if ( menuDialogSize.height() > newSize.height() )  {
-        menuDialog->setMaximumHeight(newSize.height());
-        menuDialog->setMinimumHeight(newSize.height());
+        menu.dialog->setMaximumHeight(newSize.height());
+        menu.dialog->setMinimumHeight(newSize.height());
     }
     menuDialogSize = newSize;
 }
@@ -672,7 +749,7 @@ QSize SaveGraphLayoutSettings::calculateMenuDialogSize() {
     if (menuDialogSize.width()==0) return QSize(0,0);
     QListWidgetItem* item;
     widestItem=nullptr;
-    QFontMetrics fm = QFontMetrics(menuListFont);
+    QFontMetrics fm = QFontMetrics(menu.font);
 
     // account for scrollbars.
     QSize returnValue = QSize( 0 , fm.height() );  // add an extra space at the bottom. width didn't work
@@ -751,23 +828,72 @@ QListWidgetItem* SaveGraphLayoutSettings::updateFileList(QString find) {
 }
 
 
-void SaveGraphLayoutSettings::exit() {
-    menuDialog->close();
+void SaveGraphLayoutSettings::closeHelp() {
+    if (help.open) {
+        help.dialog->close();
+    }
 }
 
-void SaveGraphLayoutSettings::menu(gGraphView* graphView) {
+void SaveGraphLayoutSettings::closeHint() {
+    if (hint.open) {
+        hint.dialog->close();
+    }
+}
+
+void SaveGraphLayoutSettings::closeMenu() {
+    closeHelp();
+    closeHint();
+    if (menu.open) {
+        menu.dialog->close();
+    }
+}
+
+void SaveGraphLayoutSettings::triggerLayout(gGraphView* graphView) {
     if (dir==nullptr) {
         //const char* err=qPrintable(QString("Cannot find directory %1").arg(dirName));
         //qWarning(err);
         return;
     }
+    if (menu.open) {
+        closeMenu();
+        return;
+    }
     this->graphView=graphView;
     updateFileList();
     manageButtonApperance();
-    menuDialog->raise();
-    menuDialog->exec();
-    exit();
+    menu.dialog->raise();
+    menu.open=true;
+    menu.dialog->exec();
+    menu.open=false;
+    closeMenu();
 }
+
+QSize   textsize(QFont font ,QString text) {
+   return QFontMetrics(font).size(0 , text);
+}
+
+void SaveGraphLayoutSettings::createHint() {
+    createHelp(hint, tr("Graph Short-Cuts Help"), hintInfo());
+    if (hint.exitBtn) {
+        hint.dialog->connect(hint.exitBtn,    SIGNAL(clicked()), this, SLOT (closeHint()));
+    }
+};
+
+void SaveGraphLayoutSettings::hintHelp() {
+    if (hint.open) {
+        hint.dialog->close();
+        return;
+    }
+    createHint();
+    if (!hint.dialog) return;
+
+    hint.dialog->raise();
+    hint.dialog->show();
+    hint.open=true;
+    hint.dialog->exec();
+    hint.open=false;
+}
+
 
 //====================================================================================================
 //====================================================================================================
@@ -847,4 +973,3 @@ void DescriptionMap::load() {
     عذرا ، لا يمكن تحديد موقع ملف.
 
 #endif
-

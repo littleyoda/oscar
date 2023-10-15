@@ -38,13 +38,18 @@ To turn off the the test macros.
 #include <QRegularExpression>
 #include <QFileInfo>
 
+#define DEBUGI   qInfo().noquote() << "INFO;"
+#define DEBUGD   qInfo().noquote() << "DEBUG;"
 #define DEBUGQ   qDebug().noquote()
 #define DEBUGW   qWarning().noquote()
-#define DEBUGL   DEBUGQ	<<QString("%1[%2]").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
-#define DEBUGF   DEBUGQ	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGC   qCritical().noquote()
+#define DEBUGF   DEBUGI	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGFW  DEBUGW	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-//#define DEBUGFW  qCritical().noquote()<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-#define DEBUGFC  qCritical().noquote()<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGFC  DEBUGC <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGFD  DEBUGD <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGFI  DEBUGI <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+
+
 #define DEBUGT   DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
 #define DEBUGTF  DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGTFW  DEBUGW	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
@@ -69,6 +74,7 @@ To turn off the the test macros.
                                     //display the date and Time of an epoch time stamp "qint64"
 #define DATETIME( EPOCH ) 		<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy hh:mm:ss.zzz")
 #define IF( EXPRESSION )    if (EXPRESSION )
+#define IFD( EXPA , EXPB )   bool EXPA = EXPB
 
 
 #ifdef __clang__
@@ -82,9 +88,6 @@ To turn off the the test macros.
 
 
 #if 0
-//example:  DEBUGL;
-//12361: Debug: "gGraphView[572]"
-
 //example:  DEBUGF;
 //12361: Debug: "gGraphView[572]popoutGraph"
 
@@ -107,15 +110,19 @@ To turn off the the test macros.
 #else
 // Turn debugging off.  macros expands to white space
 
+#define DEBUGI
+#define DEBUGD
 #define DEBUGQ
 #define DEBUGW
-#define DEBUGL
+#define DEBUGC
 #define DEBUGF
 #define DEBUGFW
+#define DEBUGFC
+#define DEBUGFD
+#define DEBUGFI
 #define DEBUGT
 #define DEBUGTF
 #define DEBUGTFW
-#define DEBUGFC
 
 #define Z( XX )
 #define ZZ( XX , YY)
@@ -128,6 +135,7 @@ To turn off the the test macros.
 #define DATETIME( XX )
 #define COMPILER
 #define IF( XX )
+#define IFD( XX , YY )
 
 #endif  // TEST_MACROS_ENABLED
 #ifdef TEST_ROUTIMES_ENABLED

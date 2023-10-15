@@ -2799,12 +2799,21 @@ void Daily::on_splitter_2_splitterMoved(int, int)
     AppSetting->setDailyPanelWidth(size);
 }
 
+void Daily::on_graphHelp_clicked() {
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("daily",this);
+    }
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->hintHelp();
+    }
+}
+
 void Daily::on_layout_clicked() {
     if (!saveGraphLayoutSettings) {
         saveGraphLayoutSettings= new SaveGraphLayoutSettings("daily",this);
     }
     if (saveGraphLayoutSettings) {
-        saveGraphLayoutSettings->menu(GraphView);
+        saveGraphLayoutSettings->triggerLayout(GraphView);
     }
 }
 

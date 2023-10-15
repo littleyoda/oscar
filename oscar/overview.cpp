@@ -937,12 +937,21 @@ void Overview::updateCube()
     }
 }
 
+void Overview::on_graphHelp_clicked() {
+    if (!saveGraphLayoutSettings) {
+        saveGraphLayoutSettings= new SaveGraphLayoutSettings("overview",this);
+    }
+    if (saveGraphLayoutSettings) {
+        saveGraphLayoutSettings->hintHelp();
+    }
+}
+
 void Overview::on_layout_clicked() {
     if (!saveGraphLayoutSettings) {
         saveGraphLayoutSettings= new SaveGraphLayoutSettings("overview",this);
     }
     if (saveGraphLayoutSettings) {
-        saveGraphLayoutSettings->menu(GraphView);
+        saveGraphLayoutSettings->triggerLayout(GraphView);
     }
 }
 

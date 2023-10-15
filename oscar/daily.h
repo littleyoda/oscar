@@ -277,6 +277,7 @@ private slots:
     void on_splitter_2_splitterMoved(int pos, int index);
 
     void on_layout_clicked();
+    void on_graphHelp_clicked();
 
 protected:
     virtual void showEvent(QShowEvent *);
