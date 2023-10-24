@@ -87,7 +87,8 @@ bool operator<(const BreathPeak &p1, const BreathPeak &p2);
 
 const int num_filter_buffers = 2;
 
-const int max_filter_buf_size = 2097152 * sizeof(EventDataType);
+const int max_filter_buf_size_entries = 2097152 ;
+const int max_filter_buf_size_malloc = max_filter_buf_size_entries * sizeof(EventDataType);
 
 //! \brief Class to process Flow Rate waveform data
 class FlowParser

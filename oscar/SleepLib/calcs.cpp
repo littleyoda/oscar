@@ -204,7 +204,7 @@ FlowParser::FlowParser()
     m_startsUpper = true;
 
     // Allocate filter chain buffers..
-    m_filtered = (EventDataType *) malloc(max_filter_buf_size);
+    m_filtered = (EventDataType *) malloc(max_filter_buf_size_malloc);
 }
 FlowParser::~FlowParser()
 {
@@ -228,7 +228,7 @@ EventDataType *FlowParser::applyFilters(EventDataType *data, int samples)
     }
 
     for (int i = 0; i < num_filter_buffers; i++) {
-        m_buffers[i] = (EventDataType *) malloc(max_filter_buf_size);
+        m_buffers[i] = (EventDataType *) malloc(max_filter_buf_size_malloc);
     }
 
     int numfilt = m_filters.size();
@@ -287,9 +287,9 @@ void FlowParser::openFlow(Session *session, EventList *flow)
     EventStoreType *inraw = flow->rawData();
 
     // Make sure we won't overflow internal buffers
-    if (m_samples > max_filter_buf_size) {
-        qDebug() << "Error: Sample size exceeds max_filter_buf_size in FlowParser::openFlow().. Capping!!!";
-        m_samples = max_filter_buf_size;
+    if (m_samples > max_filter_buf_size_entries) {
+        qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!";
+        m_samples = max_filter_buf_size_entries;
     }
 
     // Begin with the second internal buffer
