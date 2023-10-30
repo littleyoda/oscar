@@ -45,6 +45,7 @@ void ProgressDialog::setProgressMax(int max)
 void ProgressDialog::setProgressValue(int val)
 {
     progress->setValue(val);
+    progress->raise();
 }
 
 

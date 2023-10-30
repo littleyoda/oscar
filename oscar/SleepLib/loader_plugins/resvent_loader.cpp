@@ -67,6 +67,33 @@ constexpr int kDescriptionCountOffset = 0x12;
 constexpr int kDescriptionSamplesByChunk = 0x1e;
 constexpr double kDefaultGain = 0.01;
 
+int countDaysWithRecordData(QDir& dir) {
+    int count = 0;
+    QDirIterator it(dir);
+    while (it.hasNext()) {
+        QFileInfo fi = it.next();
+        QString filename = fi.fileName();
+        if (filename == "." || filename == "..") continue;
+        bool isDir = dir.cd(filename);
+        if (isDir) {
+            // It is a directory.
+			// check if name is between 1 and 31. for day in month
+			int dayInMonth = filename.toInt();
+			if ( dayInMonth>0 && dayInMonth<=31) {
+				count++;
+			}  else {
+				count += countDaysWithRecordData(dir);
+			}
+            //Change back to parent.
+            dir.cdUp();
+			//} else {
+            // It is a file.
+            //count++;
+        }
+    }
+    return count;
+}
+
 bool ResventLoader::Detect(const QString & givenpath)
 {
     QDir dir(givenpath);
@@ -84,10 +111,16 @@ bool ResventLoader::Detect(const QString & givenpath)
         return false;
     }
 
-    if (!dir.exists(kResventRecordFolder)) {
+    if (!dir.cd(kResventRecordFolder)) {
         return false;
     }
 
+    int count = countDaysWithRecordData(dir);
+
+    progress =  0;
+    emit setProgressMax(count+1);
+    emit setProgressValue(progress);
+    QCoreApplication::processEvents();
     return true;
 }
 
@@ -572,7 +605,7 @@ QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
     return usage_data;
 }
 
-int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
+int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
@@ -594,6 +627,7 @@ int LoadSession(const QString& dirpath, const QDate& session_date, Machine* mach
         session->UpdateSummaries();
         session->Store(machine->getDataPath());
         machine->AddSession(session);
+        emit setProgressValue(++progress);
         QCoreApplication::processEvents();
         return base + 1;
     });

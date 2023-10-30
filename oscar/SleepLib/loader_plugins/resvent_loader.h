@@ -71,6 +71,10 @@ public:
     virtual ChannelID CPAPModeChannel();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private:
+    int progress = 0;
+    int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine);
+
 };
 
 #endif // RESVENT_LOADER_H
