@@ -23,10 +23,11 @@ using namespace std;
 
 // Do not change these without considering the consequences.. For one the Loader needs changing & version increase
 typedef quint32 ChannelID;
-typedef long MachineID;
-typedef long SessionID;
+typedef quint32 MachineID;
+typedef quint32 SessionID;
 typedef float EventDataType;
 typedef qint16 EventStoreType;
+extern QString toHexid(quint32);
 
 //! \brief Exception class for out of Bounds error.. Unused.
 class BoundsError {};

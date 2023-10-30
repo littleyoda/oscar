@@ -628,6 +628,9 @@ void Machine::setInfo(MachineInfo inf)
     m_loader = GetLoader(inf.loadername);
 }
 
+QString toHexid(quint32 id) { return QString("%1").arg(id,8,16,QLatin1Char('0')); };
+QString Machine::hexid() { return toHexid((qint32)m_id);};
+
 const QString Machine::getDataPath()
 {
     // TODO: Rework the underlying database so that file storage doesn't rely on consistent presence or absence of the serial number.

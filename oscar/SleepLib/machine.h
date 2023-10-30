@@ -159,8 +159,7 @@ class Machine
 
 
     //! \brief Returns the machineID as a lower case hexadecimal string
-    QString hexid() { return QString::asprintf("%08lx", m_id); }
-
+    QString hexid() ;
 
     //! \brief Unused, increments the most recent sessionID
     SessionID CreateSessionID() { return highest_sessionid + 1; }

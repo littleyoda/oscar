@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <limits>
 
+#include "SleepLib/machine_common.h"
 #include "SleepLib/calcs.h"
 #include "SleepLib/profiles.h"
 
@@ -110,7 +111,7 @@ void Session::setEnabled(bool b)
 
 QString Session::eventFile() const
 {
-    return s_machine->getEventsPath()+QString::asprintf("%08lx.001", s_session);
+    return s_machine->getEventsPath()+toHexid(s_session)+".001";
 }
 
 //const int max_pack_size=128;
@@ -145,7 +146,7 @@ bool Session::Destroy()
 {
     QDir dir;
     QString base;
-    base=QString::asprintf("%08lx", s_session);
+    base=toHexid(s_session);
 
     QString summaryfile = s_machine->getSummariesPath() + base + ".000";
     QString eventfile = s_machine->getEventsPath() + base + ".001";
@@ -320,7 +321,7 @@ bool Session::StoreSummary()
         return false;
     }
 
-    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session) ;
+    QString filename = s_machine->getSummariesPath() + toHexid(s_session) + ".000" ;
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -397,7 +398,7 @@ bool Session::LoadSummary()
 //    static int sumcnt = 0;
 
     if (s_summary_loaded) return true;
-    QString filename = s_machine->getSummariesPath() + QString::asprintf("%08lx.000", s_session);
+    QString filename = s_machine->getSummariesPath() + toHexid(s_session) + ".000";
 
     if (filename.isEmpty()) {
         qDebug() << "Empty summary filename";
@@ -448,11 +449,11 @@ bool Session::LoadSummary()
     }
 
 
-    qint32 ts32;
+    quint32 ts32;
     in >> ts32;      // MachineID (dont need this result)
 
     bool upgrade = false;
-    if (ts32 != s_machine->id()) {
+    if ( ts32 != s_machine->id()) {
         upgrade = true;
         qWarning() << "Machine ID does not match in" << filename <<
                    " I will try to load anyway in case you know what your doing.";
@@ -678,7 +679,7 @@ bool Session::StoreEvents()
     QString path = s_machine->getEventsPath();
     QDir dir;
     dir.mkpath(path);
-    QString filename = path+ QString::asprintf("%08lx.001", s_session) ;
+    QString filename = path+ toHexid(s_session) +".001";
 
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {

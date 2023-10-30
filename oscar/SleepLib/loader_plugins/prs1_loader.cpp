@@ -2302,7 +2302,7 @@ QList<PRS1DataChunk *> PRS1Import::CoalesceWaveformChunks(QList<PRS1DataChunk *>
         QFileInfo fi(chunk->m_path);
         bool numeric;
         QString session_s = fi.fileName().section(".", 0, -2);
-        qint32 sid = session_s.toInt(&numeric, m_sessionid_base);
+        quint32 sid = session_s.toInt(&numeric, m_sessionid_base);
         if (!numeric || sid != chunk->sessionid) {
             qWarning() << chunk->m_path << "@" << chunk->m_filepos << "session ID mismatch:" << chunk->sessionid;
         }
