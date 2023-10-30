@@ -15,6 +15,10 @@
 // i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
+#include <QCoreApplication>
 #include <QString>
 #include <QDateTime>
 #include <QDir>
@@ -590,6 +594,7 @@ int LoadSession(const QString& dirpath, const QDate& session_date, Machine* mach
         session->UpdateSummaries();
         session->Store(machine->getDataPath());
         machine->AddSession(session);
+        QCoreApplication::processEvents();
         return base + 1;
     });
 }
