@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QMutex>
 #include <QFile>
 #include <QDataStream>
@@ -288,7 +291,8 @@ void FlowParser::openFlow(Session *session, EventList *flow)
 
     // Make sure we won't overflow internal buffers
     if (m_samples > max_filter_buf_size_entries) {
-        qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!";
+        qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!  " 
+            << DateTime::fromMSecsSinceEpoch(session->realFirst()).toString();
         m_samples = max_filter_buf_size_entries;
     }
 

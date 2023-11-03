@@ -1067,7 +1067,7 @@ void Session::destroyEvent(ChannelID code)
 
 // TODO: The below assumes values are held for their duration. This does not properly handle
 // CPAP_PressureSet/EPAPSet/IPAPSet or other interpolated channels. The proper "value" held
-// for any given duration is the average of the starding and ending values, for the duration
+// for any given duration is the average of the starting and ending values, for the duration
 // between them.
 void Session::updateCountSummary(ChannelID code)
 {
@@ -1109,9 +1109,20 @@ void Session::updateCountSummary(ChannelID code)
         m_gain[code] = e.gain();
 
         if (e.type() == EVL_Event) {
-            lastraw = *dptr++;
             tptr = e.rawTime();
+            // The last event event raw time is never updated with the len to the next.
+            // this is true for multiple samples or for a single sample.
+            // a single sample is the first as well as the last sample.
+            // so a single sample should work.
+            // the iBreeze loader had snore events with a single snore sample for a session.
+            // which triggered this investigation.
+            #if defined(FIX_FOR_SINGLE_EVENT)
+            lastraw = *dptr;
+            lasttime = start + *tptr;
+            #else
+            lastraw = *dptr++;
             lasttime = start + *tptr++;
+            #endif
             // Event version
 
             for (; dptr < eptr; dptr++) {
@@ -1127,7 +1138,7 @@ void Session::updateCountSummary(ChannelID code)
 
                 lastraw = raw;
                 lasttime = time;
-            }
+            } 
         } else {
             // Waveform version, first just count
             for (; dptr < eptr; dptr++) {
@@ -1154,7 +1165,7 @@ void Session::updateCountSummary(ChannelID code)
         Channel *ch_p = channel.channels[code];
         if (  ! ch_p->isNull() ) {                      // the channel was found in the channel list
             if ( ((ch_p->type() & (FLAG|SPAN|MINOR_FLAG)) == 0) ) {  // the channel is not a flag or span type
-                qDebug() << "No valuesummary for channel " << ch_p->label();    // so tell about missing summary
+                qDebug() << "No valuesummary for channel " << ch_p->label() <<  " " << QDateTime::fromMSecsSinceEpoch( realFirst()).toString() ;    // so tell about missing summary
             }
         } else {
             // This channel wasn't added to the channel list, so we can't check its type
