@@ -292,7 +292,7 @@ void FlowParser::openFlow(Session *session, EventList *flow)
     // Make sure we won't overflow internal buffers
     if (m_samples > max_filter_buf_size_entries) {
         qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!  " 
-            << DateTime::fromMSecsSinceEpoch(session->realFirst()).toString();
+            << QDateTime::fromMSecsSinceEpoch(session->realFirst()).toString();
         m_samples = max_filter_buf_size_entries;
     }
 
