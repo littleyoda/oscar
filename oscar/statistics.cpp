@@ -645,8 +645,12 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Days In Period"), SC_SELECTED_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Days Used"), SC_DAYS_W_DATA ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Days (%1 hrs/day)"), SC_COMPLIANCE_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Percent Days (%1 hrs/day)"),  SC_COMPLIANCE,  MT_CPAP));
     rows.push_back(StatisticsRow(tr("Average Hours per Night"),      SC_HOURS,     MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Compliance (%1 hrs/day)"),  SC_COMPLIANCE,  MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Therapy Efficacy"),  SC_SUBHEADING, MT_CPAP));
     rows.push_back(StatisticsRow("AHI",        SC_AHI,     MT_CPAP));
@@ -1360,6 +1364,14 @@ QString Statistics::GenerateCPAPUsage()
             }
             html += "</tr>";
             continue;
+        } else if (row.calc == SC_DAYS_WO_DATA) {
+            name = row.src;
+        } else if (row.calc == SC_DAYS_W_DATA) {
+            name = row.src;
+        } else if (row.calc == SC_SELECTED_DAYS) {
+            name = row.src;
+        } else if (row.calc == SC_COMPLIANCE_DAYS) {
+            name = QString(row.src).arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
             QDate last=p_profile->LastGoodDay(row.type);
@@ -1417,7 +1429,8 @@ QString Statistics::GenerateCPAPUsage()
         // both create header column and 5 data columns for a total of 100
         int dataWidth = 14;
         int headerWidth = 30;
-        if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
+        if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY)
+        {
             // both create header column and 13  data columns for a total of 100
             dataWidth = 6;
             headerWidth = 22;
@@ -1549,7 +1562,7 @@ QString Statistics::UpdateRecordsBox()
         int totalDays = 1+first.daysTo(last);
         int daysUsed = p_profile->countDays(MT_CPAP, first, last);
         int daysSkipped = totalDays - daysUsed;
-        int compliant = p_profile->countCompliantDays(MT_CPAP, first, last);
+        int compliant = p_profile->countCompliantDays(MT_CPAP, first, last );
         int lowUsed = daysUsed - compliant;
         float comperc = (100.0 / float(totalDays)) * float(compliant);
 
@@ -1842,11 +1855,21 @@ QString StatisticsRow::value(QDate start, QDate end)
     } else if (calc == SC_HOURS) {
         value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
     } else if (calc == SC_COMPLIANCE) {
-        float c = p_profile->countCompliantDays(type, start, end);
+        float c = p_profile->countCompliantDays(type, start, end );
 //        float p = (100.0 / days) * c;
         float realDays = qAbs(start.daysTo(end)) + 1;
-        float p = (100.0 / realDays) * c;
-        value = QString("%1%").arg(p, 0, 'f', 0);
+        float p = (100.0 *c / realDays) ;
+        value = QString("%1%").arg(p, 0, 'f', 2);
+    } else if (calc == SC_DAYS_WO_DATA) {
+        value = QString::number((1+start.daysTo(end)) - p_profile->countDays(type, start, end ));
+    } else if (calc == SC_DAYS_W_DATA) {
+        value = QString::number(p_profile->countDays(type, start, end));
+    } else if (calc == SC_SELECTED_DAYS) {
+        value = QString::number(1+start.daysTo(end));
+    } else if (calc == SC_COMPLIANCE_DAYS) {
+        int value1 = p_profile->countCompliantDays(type, start, end );
+        value = QString("%1 ").arg(value1);
+        //value += QString(" / %1").arg(double(100*value1)/double(1+start.daysTo(end)));
     } else if (calc == SC_DAYS) {
         value = QString("%1").arg(p_profile->countDays(type, start, end));
     } else if ((calc == SC_COLUMNHEADERS) || (calc == SC_SUBHEADING) || (calc == SC_UNDEFINED))  {
