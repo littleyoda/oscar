@@ -249,8 +249,8 @@ void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>
 }
 
 QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
-    const auto year_month_folder = QString::number(session_date.year()) + (session_date.month() > 10 ? "" : "0") + QString::number(session_date.month());
-    const auto day_folder = (session_date.day() > 10 ? "" : "0") + QString::number(session_date.day());
+    const auto year_month_folder = QString("%1%2").arg(session_date.year()).arg(session_date.month(),2,10,QLatin1Char('0'));
+    const auto day_folder = QString("%1").arg(session_date.day(),2,10,QLatin1Char('0')) ;
     const auto session_folder_path = dirpath + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventRecordFolder + QDir::separator() + year_month_folder + QDir::separator() + day_folder;
     return session_folder_path;
 }
