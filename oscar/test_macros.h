@@ -72,7 +72,7 @@ To turn off the the test macros.
                                     //display the date of an epoch time stamp "qint64"
 #define DATE( EPOCH ) 			<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy")
                                     //display the date and Time of an epoch time stamp "qint64"
-#define DATETIME( EPOCH ) 		<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("dd MMM yyyy hh:mm:ss.zzz")
+#define DATETIME( EPOCH ) 		<<  QDateTime::fromMSecsSinceEpoch( EPOCH ).toString("ddMMMyyyy hh:mm:ss.zzz")
 #define IF( EXPRESSION )    if (EXPRESSION )
 #define IFD( EXPA , EXPB )   bool EXPA = EXPB
 
