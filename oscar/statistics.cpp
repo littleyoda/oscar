@@ -1002,15 +1002,18 @@ struct Period {
             next = last.addMonths(advance).addDays(+1);
         } else {
             next = last.addDays(advance);
-        }
+        };
         if (next<=first) {
+            if ( (next<first) && (p_profile->general->statReportMode() == STAT_MODE_RANGE) ){
+                name = QObject::tr("Everything");
+            }
             finished = true;
             next = first;
         }
         name = name + "<br>"  + next.toString(Qt::SystemLocaleShortDate) ;
         if (advance!=0) {
             name =  name + " - "  +  last.toString(Qt::SystemLocaleShortDate);
-        }
+        };
         this->header = name;
         this->start = next ;
         this->end = last ;
@@ -1298,16 +1301,7 @@ QString Statistics::GenerateCPAPUsage()
 
             // Clear the periods (columns)
             periods.clear();
-            if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
-                // note add days or addmonths returns the start of the next day or the next month.
-                // must shorten one day for each. Month executed in Period method
-                bool finished = false;  // used to detect end of data - when less than a year of data.
-                periods.push_back(Period(first,last,finished, 0, false ,tr("Most Recent")));
-                periods.push_back(Period(first,last,finished, -6, false ,tr("Last Week")));
-                periods.push_back(Period(first,last,finished, -29,false, tr("Last 30 Days")));
-                periods.push_back(Period(first,last,finished, -6,true, tr("Last 6 Months")));
-                periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
-            } else if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
+            if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
                 QDate l=last,s=last;
 
                 periods.push_back(Period(last,last,tr("Last Session")));
@@ -1330,13 +1324,24 @@ QString Statistics::GenerateCPAPUsage()
                 for (; j < number_periods; ++j) {
                     periods.push_back(Period(last,last, ""));
                 }
-            } else {            // STAT_MODE_RANGE
-                first = p_profile->general->statReportRangeStart();
-                last = p_profile->general->statReportRangeEnd();
-                if (first > last) {
-                    first = last;
+            } else {  // STAT_MODE_STANDARD or STAT_MODE_RANGE
+                if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
+                    first = p_profile->general->statReportRangeStart();
+                    last = p_profile->general->statReportRangeEnd();
+                    if (first > last) { first=last; };
                 }
-                periods.push_back(Period(first,last,first.toString(MedDateFormat)+" - "+last.toString(MedDateFormat)));
+                // note add days or addmonths returns the start of the next day or the next month.
+                // must shorten one day for each. Month executed in Period method
+                bool finished = false;  // used to detect end of data - when less than a year of data.
+                periods.push_back(Period(first,last,finished, 0, false ,tr("Most Recent")));
+                periods.push_back(Period(first,last,finished, -6, false ,tr("Last Week")));
+                periods.push_back(Period(first,last,finished, -29,false, tr("Last 30 Days")));
+                periods.push_back(Period(first,last,finished, -6,true, tr("Last 6 Months")));
+                if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
+                periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
+                } else {
+                periods.push_back(Period(first,last,finished, last.daysTo(first),false,tr("Everything")));
+                }
             }
 
             int days = p_profile->countDays(row.type, first, last);
@@ -1375,9 +1380,7 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
             QDate last=p_profile->LastGoodDay(row.type);
-            if (last > p_profile->general->statReportDate() ) {
-                last = p_profile->general->statReportDate();
-            }
+            // there no relationship to reports date. It just specifies the number of days used for a cetain range of dates.
             QString & machine = machinenames[row.type];
             int value=p_profile->countDays(row.type, first, last);
 
@@ -1853,7 +1856,11 @@ QString StatisticsRow::value(QDate start, QDate end)
     if (calc == SC_AHI) {
         value = QString("%1").arg(calcAHI(start, end), 0, 'f', decimals);
     } else if (calc == SC_HOURS) {
-        value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
+        if (days==0) {
+            value = QString("0");
+        } else {
+            value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
+        }
     } else if (calc == SC_COMPLIANCE) {
         float c = p_profile->countCompliantDays(type, start, end );
 //        float p = (100.0 / days) * c;
