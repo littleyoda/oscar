@@ -206,6 +206,12 @@ enum class EventType {
     RERA = 21,
     PeriodicBreathing = 22,
     Snore = 23
+    #if defined(TEST_MACROS_ENABLED)
+    , EventTypeMIN = 16
+    , EventTypeMAX = 24
+    // SNI - SNore ???
+    //
+    #endif
 };
 
 struct EventData {
@@ -230,7 +236,7 @@ struct UsageData {
 
 void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>>& events, Session* session) {
     static QMap<EventType, unsigned int> mapping {{EventType::ObstructiveApnea, CPAP_Obstructive},
-                                                 {EventType::CentralApnea, CPAP_Apnea},
+                                                 {EventType::CentralApnea, CPAP_ClearAirway},
                                                  {EventType::Hypopnea, CPAP_Hypopnea},
                                                  {EventType::FlowLimitation, CPAP_FlowLimit},
                                                  {EventType::RERA, CPAP_RERA},
@@ -255,15 +261,47 @@ QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
     return session_folder_path;
 }
 
+bool VerifyEvent(EventData& eventData) {
+    switch (eventData.type) {
+        case EventType::ObstructiveApnea:       // OA
+        case EventType::CentralApnea:           // CA and same clear airway.
+            // adjust time of event to be after the event ends rather than when the event starts.
+            eventData.date_time = eventData.date_time.addMSecs(eventData.duration*1000);
+            break;
+        case EventType::RERA:
+            eventData.duration = 0 ;    // duration is large and suppress duration display of eariler OA events.
+            break;
+        case EventType::Hypopnea:
+        case EventType::FlowLimitation:
+        case EventType::PeriodicBreathing:
+        case EventType::Snore:
+            // do nothing
+            break;
+        default:
+            // not an event
+            break;
+    }
+
+    #if defined(TEST_MACROS_ENABLED)
+    if (( eventData.type<= EventType::EventTypeMIN) || (eventData.type >= EventType::EventTypeMAX) ) {
+        DEBUGFC Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
+    } else {
+        DEBUGFW Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
+    }
+    #endif
+    return true;
+}
+
 void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage) {
     const auto event_file_path = session_folder_path + QDir::separator() + "EV" + usage.number;
+    // Oscar (resmed) plots events at end.
 
     QMap<EventType, QVector<EventData>> events;
     QFile f(event_file_path);
     f.open(QIODevice::ReadOnly | QIODevice::Text);
     f.seek(4);
     while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
+        QString line = f.readLine().trimmed(); // ID=20,DT=1692022874,DR=6,GD=0,
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         const auto elems = line.split(",", Qt::SkipEmptyParts);
@@ -280,11 +318,13 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
 
         Q_ASSERT(event_type_elems.size() == 2);
         Q_ASSERT(date_time_elems.size() == 2);
-        const auto event_type = static_cast<EventType>(std::stoi(event_type_elems[1].toStdString()));
-        const auto date_time = QDateTime::fromTime_t(std::stoi(date_time_elems[1].toStdString()));
-        const auto duration = std::stoi(duration_elems[1].toStdString());
-
-        events[event_type].push_back(EventData{event_type, date_time, duration});
+        Q_ASSERT(duration_elems.size() == 2);
+        auto event_type = static_cast<EventType>(std::stoi(event_type_elems[1].toStdString()));
+        auto duration = std::stoi(duration_elems[1].toStdString());
+        auto date_time = QDateTime::fromTime_t(std::stoi(date_time_elems[1].toStdString()));
+        EventData eventData({event_type, date_time, duration});
+        VerifyEvent(eventData);
+        events[event_type].push_back(eventData);
     }
 
     static QVector<EventType> mapping {EventType::ObstructiveApnea,
@@ -427,6 +467,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                 auto& total_samples_by_chunk = wave_forms[i].total_samples_by_chunk;
                 const auto sample_rate = wave_forms[i].sample_rate;
 
+                const auto duration = samples_by_chunk_actual * 1000.0 / sample_rate;
                 const auto readed = f.read(reinterpret_cast<char*>(chunk.data()), chunk.size() * sizeof(qint16));
                 if (wave_form) {
                     const auto readed_elements = readed / sizeof(qint16);
@@ -441,7 +482,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                     });
                 }
 
-                start_time_current += samples_by_chunk_actual * 1000.0 / sample_rate;
+                start_time_current += duration;
                 total_samples_by_chunk += samples_by_chunk_actual;
             }
         }
@@ -471,7 +512,6 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
 
     QVector<ChunkData> wave_forms;
     bool initialized = false;
-
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
         // W01_ file
         QFile f(session_folder_path + QDir::separator() + wave_file);
@@ -609,16 +649,19 @@ int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
-
-    return std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage){
+    //return std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
+    // std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
+    int base = 0;
+    for (auto usage : different_usage)
+    {
         if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset)) {
+            // session alreadt exists
             return base;
         }
         Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset);
         session->SetChanged(true);
         session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset);
         session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset);
-
         LoadStats(usage, session);
         LoadWaveForms(session_folder_path, session, usage);
         LoadOtherWaveForms(session_folder_path, session, usage);
@@ -629,8 +672,9 @@ int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date
         machine->AddSession(session);
         emit setProgressValue(++progress);
         QCoreApplication::processEvents();
-        return base + 1;
-    });
+        ++base;
+    };
+    return base;
 }
 
 
