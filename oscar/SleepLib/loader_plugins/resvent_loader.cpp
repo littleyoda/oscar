@@ -322,6 +322,7 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
         auto event_type = static_cast<EventType>(std::stoi(event_type_elems[1].toStdString()));
         auto duration = std::stoi(duration_elems[1].toStdString());
         auto date_time = QDateTime::fromTime_t(std::stoi(date_time_elems[1].toStdString()));
+
         EventData eventData({event_type, date_time, duration});
         VerifyEvent(eventData);
         events[event_type].push_back(eventData);
@@ -656,7 +657,8 @@ int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date
     {
         if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset)) {
             // session alreadt exists
-            return base;
+            //return base;
+            continue;
         }
         Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset);
         session->SetChanged(true);
