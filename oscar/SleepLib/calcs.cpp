@@ -291,8 +291,9 @@ void FlowParser::openFlow(Session *session, EventList *flow)
 
     // Make sure we won't overflow internal buffers
     if (m_samples > max_filter_buf_size_entries) {
-        qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!  " 
-            << QDateTime::fromMSecsSinceEpoch(session->realFirst()).toString();
+        qDebug() << "Error: Sample size exceeds max_filter_buf_size_entries in FlowParser::openFlow().. Capping!!!  \n"
+            << QDateTime::fromMSecsSinceEpoch(session->realFirst()).toString()
+            << "   " << m_samples << "  >  " << max_filter_buf_size_entries; ;
         m_samples = max_filter_buf_size_entries;
     }
 
@@ -1290,7 +1291,7 @@ int calcLeaks(Session *session)
 
     // Choose the formula for calculating mask leakage as a function of pressure.
     LeakCalculator* calc = new ProfileLeakCalculator(p_profile);
-    
+
     // Prefer IPAPSet/PressureSet for devices (PRS1) that use these, since they use Pressure to report averages.
     ChannelID pressure_channel = CPAP_Pressure;  // default
     for (auto & ch : { CPAP_IPAPSet, CPAP_IPAP, CPAP_PressureSet }) {
@@ -1323,7 +1324,7 @@ int calcLeaks(Session *session)
                 leak->AddEvent(time, val);
             }
         }
-        
+
         totalEvents += leak->count();
     }
 
