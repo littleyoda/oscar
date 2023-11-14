@@ -15,7 +15,7 @@
 // i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLEDoff         // Turn off for offical release.
 #include <test_macros.h>
 
 #include <QCoreApplication>
@@ -77,18 +77,17 @@ int countDaysWithRecordData(QDir& dir) {
         bool isDir = dir.cd(filename);
         if (isDir) {
             // It is a directory.
-			// check if name is between 1 and 31. for day in month
-			int dayInMonth = filename.toInt();
-			if ( dayInMonth>0 && dayInMonth<=31) {
-				count++;
-			}  else {
-				count += countDaysWithRecordData(dir);
-			}
+            // check if name is between 1 and 31. for day in month
+            int dayInMonth = filename.toInt();
+            if ( dayInMonth>0 && dayInMonth<=31) {
+                // in month folder.
+                count++;
+            }  else {
+                // recurse into folder.
+                count += countDaysWithRecordData(dir);
+            }
             //Change back to parent.
             dir.cdUp();
-			//} else {
-            // It is a file.
-            //count++;
         }
     }
     return count;
@@ -197,8 +196,8 @@ QVector<QDate> GetSessionsDate(const QString& dirpath) {
 }
 
 enum class EventType {
-    UsageSec= 1,
-    UnixStart = 2,
+    //UsageSec = 1,
+    //UnixStart = 2,
     ObstructiveApnea = 17,
     CentralApnea = 18,
     Hypopnea = 19,
@@ -206,12 +205,6 @@ enum class EventType {
     RERA = 21,
     PeriodicBreathing = 22,
     Snore = 23
-    #if defined(TEST_MACROS_ENABLED)
-    , EventTypeMIN = 16
-    , EventTypeMAX = 24
-    // SNI - SNore ???
-    //
-    #endif
 };
 
 struct EventData {
@@ -263,6 +256,10 @@ QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
 
 bool VerifyEvent(EventData& eventData) {
     switch (eventData.type) {
+        case EventType::Snore:
+        case EventType::FlowLimitation:
+        case EventType::PeriodicBreathing:
+        case EventType::Hypopnea:
         case EventType::ObstructiveApnea:       // OA
         case EventType::CentralApnea:           // CA and same clear airway.
             // adjust time of event to be after the event ends rather than when the event starts.
@@ -271,24 +268,11 @@ bool VerifyEvent(EventData& eventData) {
         case EventType::RERA:
             eventData.duration = 0 ;    // duration is large and suppress duration display of eariler OA events.
             break;
-        case EventType::Hypopnea:
-        case EventType::FlowLimitation:
-        case EventType::PeriodicBreathing:
-        case EventType::Snore:
-            // do nothing
-            break;
         default:
-            // not an event
+            DEBUGFW Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
             break;
     }
 
-    #if defined(TEST_MACROS_ENABLED)
-    if (( eventData.type<= EventType::EventTypeMIN) || (eventData.type >= EventType::EventTypeMAX) ) {
-        DEBUGFC Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
-    } else {
-        DEBUGFW Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
-    }
-    #endif
     return true;
 }
 
@@ -366,7 +350,8 @@ EventList* GetEventList(const QString& name, Session* session, float sample_rate
         return session->AddEventList(CPAP_EPAP, EVL_Event);
     }
     else if (name == "Leak") {
-        return session->AddEventList(CPAP_Leak, EVL_Event);
+        // was was adjusted from the default 1.0 to 13. so that the graph of gain would match iMatrix values.
+        return session->AddEventList(CPAP_Leak, EVL_Event, 13.0);
     }
     else if (name == "Vt") {
         return session->AddEventList(CPAP_TidalVolume, EVL_Event);
@@ -424,6 +409,7 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
     f.seek(kDescriptionCountOffset);
     const auto description_count = read_from_file<uint16_t>(f);
     wave_forms.resize(description_count);
+	//DEBUGFW Q(chunk_duration_in_sec) Q(description_count);
 
     for (unsigned int i = 0; i < description_count; i++) {
         const auto description_header_offset = kMainHeaderSize + i * kDescriptionHeaderSize;
@@ -436,6 +422,12 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
         wave_forms[i].event_list = GetEventList(name, session, wave_forms[i].sample_rate);
         wave_forms[i].samples_by_chunk = samples_by_chunk;
         wave_forms[i].start_time = usage.start_time.toMSecsSinceEpoch();
+        DEBUGFW Q(name)
+            Q(samples_by_chunk)
+            QQ("sampleRate",wave_forms[i].sample_rate )
+            QQ("epoch", wave_forms[i].start_time  )
+            DATETIME(wave_forms[i].start_time)
+			;
     }
 }
 
