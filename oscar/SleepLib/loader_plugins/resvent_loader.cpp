@@ -324,7 +324,8 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
         UpdateEvents(event_type, events, session);
     });
     session->settings[CPAP_PressureMin] = 4.0;
-    session->settings[CPAP_PressureMax] = qMax(session->calcMax(CPAP_Pressure),session->calcMax(CPAP_IPAP));
+    session->settings[CPAP_PressureMax] = 20.0 ; // was qMax(session->calcMax(CPAP_Pressure),session->calcMax(CPAP_IPAP)); // this results in a change of device settings.
+
 }
 
 template <typename T>
