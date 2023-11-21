@@ -10,6 +10,8 @@
 #define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
+#define HI_RES_FONT_SIZE
+
 #include <QApplication>
 #include <QFile>
 #include <QDataStream>
@@ -772,6 +774,9 @@ const QString table_width = "width='100%'";
 QString Statistics::generateHeader(bool onScreen)
 {
     QString html = QString("<html><head>");
+        #if defined(HI_RES_FONT_SIZE)
+            html += "<font size='+0'>";
+        #endif
     html += "<title>Oscar Statistics Report</title>";
     html += "<style type='text/css'>";
 
@@ -818,7 +823,12 @@ QString Statistics::generateHeader(bool onScreen)
     QPixmap logoPixmap(":/icons/logo-lg.png");
 
  //       html += "<div align=center><table class=curved width='100%'>"
-    html += "<div align=center><table class=curved " + table_width + ">"
+    //html += "<div align=center><table class=curved " + table_width + ">"
+    html += "<div align=center>"
+            #if defined(HI_RES_FONT_SIZE)
+                "<font size='+0'>"
+            #endif
+            "<table class=curved " + table_width + ">"
             "<tr>"
                 "<td align='left' valign='middle'>" + getUserInfo() + "</td>"
                 "<td align='right' valign='middle' width='200'>"
@@ -841,6 +851,9 @@ QString Statistics::generateFooter(bool showinfo)
 
     if (showinfo) {
         html += "<hr><div align=center><font size='-1'><i>";
+        #if defined(HI_RES_FONT_SIZE)
+            html += "<font size='+0'>";
+        #endif
         QDateTime timestamp = QDateTime::currentDateTime();
         html += tr("This report was prepared on %1 by OSCAR %2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
                                                                      .arg(getVersion())
@@ -1052,6 +1065,9 @@ QString Statistics::GenerateMachineList()
     QString html;
     if (mach.size() > 0) {
         html += "<div align=center><br>";
+        #if defined(HI_RES_FONT_SIZE)
+            html += "<font size='+0'>";
+        #endif
 
         html += QString("<table class=curved style='page-break-before:auto' "+table_width+">");
 
@@ -1116,6 +1132,9 @@ QString Statistics::GenerateRXChanges()
 
 
     QString html = "<div align=center><br>";
+    #if defined(HI_RES_FONT_SIZE)
+        html += "<font size='+0'>";
+    #endif
     html += QString("<table class=curved style='page-break-before:always' " + table_width+">");
     html += "<thead>";
     html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size='+2'>" + tr("Changes to Device Settings") + "</font></th></tr>";
@@ -1207,6 +1226,9 @@ QString Statistics::GenerateRXChanges()
 QString Statistics::htmlNoData()
 {
             QString html = "<div align=center>";
+            #if defined(HI_RES_FONT_SIZE)
+                html += "<font size='+0'>";
+            #endif
             html += QString( "<p><font size=\"+3\"><br>" + tr("No data found?!?") + "</font></p>"+
                     "<p><img src='qrc:/icons/logo-lm.png' alt='logo' width='100' height='100'></p>"
                     "<p><i>"+tr("Oscar has no data to report :(")+"</i></p>");
@@ -1259,6 +1281,9 @@ QString Statistics::GenerateCPAPUsage()
 
     // Prepare top of table
     html += "<div align=center>";
+    #if defined(HI_RES_FONT_SIZE)
+        html += "<font size='+0'>";
+    #endif
     html += "<table class=curved "+table_width+">";
 
     // Compute number of monthly periods for a monthly rather than standard time distribution
@@ -1569,6 +1594,9 @@ QString Statistics::UpdateRecordsBox()
         int lowUsed = daysUsed - compliant;
         float comperc = (100.0 / float(totalDays)) * float(compliant);
 
+        #if defined(HI_RES_FONT_SIZE)
+            html += "<font size='+0'>";
+        #endif
         html += "<b>"+tr("CPAP Usage")+"</b><br>";
         html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br>";
         if (daysSkipped > 0) {
