@@ -7,10 +7,16 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLEDoff              // remember to turn off for release.
 #include <test_macros.h>
 
-#define HI_RES_FONT_SIZE
+/*
+ToDO ??
+mild yellow 5-15
+moderate Orange 16-29
+server= red 30+
+*/
+
 
 #include <QApplication>
 #include <QFile>
@@ -627,6 +633,44 @@ void Statistics::updateRXChanges()
     delete progress;
 }
 
+EventDataType calcAHI(QDate start, QDate end); //forward declareation
+
+EventDataType MEDIAN_NULL = std::numeric_limits<double>::infinity();
+
+EventDataType getHours(Day* day) {return day->hours(MT_CPAP); };
+EventDataType getAHI(Day*   day) {QDate date=day->date(); return calcAHI(date,date); };
+
+typedef EventDataType (*DAY_VALUE)(Day*) ;
+
+EventDataType calcMedian(QDate start, QDate end,  DAY_VALUE funct )
+{
+        QList<Day*>list = p_profile->getDays(MT_CPAP,start,end);
+        QVector<EventDataType> vec; vec.clear();
+        for (Day* day:list) vec.push_back(funct(day));
+        int len = vec.size();
+        if (len==0) return MEDIAN_NULL;
+        int mediaOffset = len/2;
+        auto be = vec.begin();
+        auto me = be+mediaOffset ;
+        auto en = vec.end();
+        EventDataType median;
+        if ((len&1)==0) {
+            // have an even number of sample to find median. must take average of two.
+            auto me0 = me-1;
+            nth_element(be ,me0, en);
+            EventDataType median0 = vec[mediaOffset-1];
+
+            nth_element(be ,me, en);
+            median = (median0+vec[mediaOffset])/2;
+        } else {
+            // Odd then there will be a unique number that is truely the median
+            nth_element(be ,me, en);
+            median = vec[mediaOffset];
+        }
+        IF(len <  66) DEBUGFC Q(len) Q(median) Z(vec);
+        return median;
+}
+
 
 // Statistics constructor is responsible for creating list of rows that will on the Statistics page
 // and skeletons of column 1 text that correspond to each calculation type.
@@ -644,18 +688,31 @@ Statistics::Statistics(QObject *parent) :
             rows.push_back(StatisticsRow(disabledInfo.display(2),SC_WARNING2,MT_CPAP));
         }
     }
-    rows.push_back(StatisticsRow("",   SC_DAYS, MT_CPAP));
+    rows.push_back(StatisticsRow("", SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Days In Period"), SC_SELECTED_DAYS ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Days Used"), SC_DAYS_W_DATA ,    MT_CPAP));
+
+    rows.push_back(StatisticsRow(tr("Total Days"), SC_SELECTED_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Used Days"), SC_DAYS_W_DATA ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_COMPLIANCE_DAYS ,    MT_CPAP));
+
+    rows.push_back(StatisticsRow(tr("Percent Total Days %1%2 hrs/day"), SC_COMPLIANCE ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Percent Used Days %1%2 hrs/day"), SC_USED_DAY_COMPLIANCE_PERCENT ,    MT_CPAP));
+
+    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_NON_COMPLIANCE_DAYS ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Days (%1 hrs/day)"), SC_COMPLIANCE_DAYS ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Percent Days (%1 hrs/day)"),  SC_COMPLIANCE,  MT_CPAP));
+
     rows.push_back(StatisticsRow(tr("Average Hours per Night"),      SC_HOURS,     MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Median Hours per Night"),      SC_MEDIAN_HOURS ,     MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Therapy Efficacy"),  SC_SUBHEADING, MT_CPAP));
-    rows.push_back(StatisticsRow("AHI",        SC_AHI,     MT_CPAP));
+    rows.push_back(StatisticsRow("AHI",        SC_AHI_RDI,     MT_CPAP));
+    if (p_profile->general->calculateRDI()) {
+        // then RDI will be displayed instead of AHI everywhere.
+        // so to see AHI a new row must be added.
+        rows.push_back(StatisticsRow(STR_TR_AHI ,        SC_AHI_ONLY ,     MT_CPAP));
+    }
+    rows.push_back(StatisticsRow(tr("AHI Median"),  SC_MEDIAN_AHI,MT_CPAP));
     rows.push_back(StatisticsRow("AllApnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Obstructive",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Hypopnea",   SC_CPH,     MT_CPAP));
@@ -774,9 +831,7 @@ const QString table_width = "width='100%'";
 QString Statistics::generateHeader(bool onScreen)
 {
     QString html = QString("<html><head>");
-        #if defined(HI_RES_FONT_SIZE)
             html += "<font size='+0'>";
-        #endif
     html += "<title>Oscar Statistics Report</title>";
     html += "<style type='text/css'>";
 
@@ -823,11 +878,8 @@ QString Statistics::generateHeader(bool onScreen)
     QPixmap logoPixmap(":/icons/logo-lg.png");
 
  //       html += "<div align=center><table class=curved width='100%'>"
-    //html += "<div align=center><table class=curved " + table_width + ">"
     html += "<div align=center>"
-            #if defined(HI_RES_FONT_SIZE)
                 "<font size='+0'>"
-            #endif
             "<table class=curved " + table_width + ">"
             "<tr>"
                 "<td align='left' valign='middle'>" + getUserInfo() + "</td>"
@@ -851,9 +903,7 @@ QString Statistics::generateFooter(bool showinfo)
 
     if (showinfo) {
         html += "<hr><div align=center><font size='-1'><i>";
-        #if defined(HI_RES_FONT_SIZE)
             html += "<font size='+0'>";
-        #endif
         QDateTime timestamp = QDateTime::currentDateTime();
         html += tr("This report was prepared on %1 by OSCAR %2").arg(timestamp.toString(MedDateFormat + " hh:mm"))
                                                                      .arg(getVersion())
@@ -866,23 +916,27 @@ QString Statistics::generateFooter(bool showinfo)
     return html;
 }
 
+/*
+bool isRERAenabled()
+{
+ return p_profile->general->calculateRDI() || (p_profile->calcCount(CPAP_RERA, MT_CPAP, start, end)) ;
 
-// Calculate AHI for a period as total # of events / total hours used
+}
+*/
+
+// Calculate AHI or RDI for a period as total # of events / total hours used
 // Add RERA if calculating RDI instead of just AHI
-EventDataType calcAHI(QDate start, QDate end)
+enum class RDI_MODE {RM_RDI=1,RM_AHI=0};
+
+EventDataType calcAHIorRDI(QDate start, QDate end , RDI_MODE mode)
 {
     EventDataType val = 0;
 
     for (int i = 0; i < ahiChannels.size(); i++)
+    {
         val += p_profile->calcCount(ahiChannels.at(i), MT_CPAP, start, end);
-
-//                        (p_profile->calcCount(CPAP_Obstructive, MT_CPAP, start, end)
-//                         + p_profile->calcCount(CPAP_AllApnea, MT_CPAP, start, end)
-//                         + p_profile->calcCount(CPAP_Hypopnea, MT_CPAP, start, end)
-//                         + p_profile->calcCount(CPAP_ClearAirway, MT_CPAP, start, end)
-//                         + p_profile->calcCount(CPAP_Apnea, MT_CPAP, start, end));
-
-    if (p_profile->general->calculateRDI()) {
+    }
+    if (mode == RDI_MODE::RM_RDI) {
         val += p_profile->calcCount(CPAP_RERA, MT_CPAP, start, end);
     }
 
@@ -895,6 +949,10 @@ EventDataType calcAHI(QDate start, QDate end)
     }
 
     return val;
+}
+
+EventDataType calcAHI(QDate start, QDate end) {
+  return calcAHIorRDI(start,end,p_profile->general->calculateRDI()?RDI_MODE::RM_RDI:RDI_MODE::RM_AHI);
 }
 
 // Calculate flow limits per hour
@@ -1065,9 +1123,7 @@ QString Statistics::GenerateMachineList()
     QString html;
     if (mach.size() > 0) {
         html += "<div align=center><br>";
-        #if defined(HI_RES_FONT_SIZE)
             html += "<font size='+0'>";
-        #endif
 
         html += QString("<table class=curved style='page-break-before:auto' "+table_width+">");
 
@@ -1132,9 +1188,7 @@ QString Statistics::GenerateRXChanges()
 
 
     QString html = "<div align=center><br>";
-    #if defined(HI_RES_FONT_SIZE)
         html += "<font size='+0'>";
-    #endif
     html += QString("<table class=curved style='page-break-before:always' " + table_width+">");
     html += "<thead>";
     html += "<tr bgcolor='"+heading_color+"'><th colspan=9 align=center><font size='+2'>" + tr("Changes to Device Settings") + "</font></th></tr>";
@@ -1226,9 +1280,7 @@ QString Statistics::GenerateRXChanges()
 QString Statistics::htmlNoData()
 {
             QString html = "<div align=center>";
-            #if defined(HI_RES_FONT_SIZE)
                 html += "<font size='+0'>";
-            #endif
             html += QString( "<p><font size=\"+3\"><br>" + tr("No data found?!?") + "</font></p>"+
                     "<p><img src='qrc:/icons/logo-lm.png' alt='logo' width='100' height='100'></p>"
                     "<p><i>"+tr("Oscar has no data to report :(")+"</i></p>");
@@ -1269,6 +1321,7 @@ QString Statistics::GenerateCPAPUsage()
     if (!havedata) {
         return "";
     }
+        html += "<font size='+0'>";
 
     // Find first and last days with valid CPAP data
     QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
@@ -1281,9 +1334,7 @@ QString Statistics::GenerateCPAPUsage()
 
     // Prepare top of table
     html += "<div align=center>";
-    #if defined(HI_RES_FONT_SIZE)
         html += "<font size='+0'>";
-    #endif
     html += "<table class=curved "+table_width+">";
 
     // Compute number of monthly periods for a monthly rather than standard time distribution
@@ -1363,9 +1414,9 @@ QString Statistics::GenerateCPAPUsage()
                 periods.push_back(Period(first,last,finished, -29,false, tr("Last 30 Days")));
                 periods.push_back(Period(first,last,finished, -6,true, tr("Last 6 Months")));
                 if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
-                periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
+                    periods.push_back(Period(first,last,finished, -12,true,tr("Last Year")));
                 } else {
-                periods.push_back(Period(first,last,finished, last.daysTo(first),false,tr("Everything")));
+                    periods.push_back(Period(first,last,finished, last.daysTo(first),false,tr("Everything")));
                 }
             }
 
@@ -1381,12 +1432,30 @@ QString Statistics::GenerateCPAPUsage()
         // Bypass this entire section if no data is present
         if (skipsection) continue;
 
-        if (row.calc == SC_AHI) {
+        if (row.calc == SC_AHI_RDI) {
             name = ahitxt;
+        } else if (row.calc == SC_AHI_ONLY) {
+            name = row.src;
         } else if (row.calc == SC_HOURS) {
             name = row.src;
+        } else if (row.calc == SC_MEDIAN_AHI) {
+            name = row.src;
+        } else if (row.calc == SC_MEDIAN_HOURS) {
+            name = row.src;
+        } else if (row.calc == SC_DAYS_WO_DATA) {
+            name = row.src;
+        } else if (row.calc == SC_DAYS_W_DATA) {
+            name = row.src;
+        } else if (row.calc == SC_SELECTED_DAYS) {
+            name = row.src;
+        } else if (row.calc == SC_NON_COMPLIANCE_DAYS) {
+            name = QString(row.src).arg("&lt; ").arg(p_profile->cpap->m_complianceHours);
+        } else if (row.calc == SC_USED_DAY_COMPLIANCE_PERCENT) {
+            name = QString(row.src).arg("&gt;= ").arg(p_profile->cpap->m_complianceHours);
+        } else if (row.calc == SC_COMPLIANCE_DAYS) {
+            name = QString(row.src).arg("&gt;= ").arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_COMPLIANCE) {
-            name = QString(row.src).arg(p_profile->cpap->m_complianceHours);
+            name = QString(row.src).arg("&gt;= " ).arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_COLUMNHEADERS) {
             html += QString("<tr><td><b>%1</b></td>").arg(tr("Details"));
             for (int j=0; j < periods.size(); j++) {
@@ -1394,20 +1463,12 @@ QString Statistics::GenerateCPAPUsage()
             }
             html += "</tr>";
             continue;
-        } else if (row.calc == SC_DAYS_WO_DATA) {
-            name = row.src;
-        } else if (row.calc == SC_DAYS_W_DATA) {
-            name = row.src;
-        } else if (row.calc == SC_SELECTED_DAYS) {
-            name = row.src;
-        } else if (row.calc == SC_COMPLIANCE_DAYS) {
-            name = QString(row.src).arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_DAYS) {
             QDate first=p_profile->FirstGoodDay(row.type);
             QDate last=p_profile->LastGoodDay(row.type);
             // there no relationship to reports date. It just specifies the number of days used for a cetain range of dates.
             QString & machine = machinenames[row.type];
-            int value=p_profile->countDays(row.type, first, last);
+            int value=p_profile->countDays(row.type, first, last );
 
             if (value == 0) {
                 html+=QString("<tr><td colspan=%1 align=center>%2</td></tr>").arg(periods.size()+1).
@@ -1594,9 +1655,7 @@ QString Statistics::UpdateRecordsBox()
         int lowUsed = daysUsed - compliant;
         float comperc = (100.0 / float(totalDays)) * float(compliant);
 
-        #if defined(HI_RES_FONT_SIZE)
             html += "<font size='+0'>";
-        #endif
         html += "<b>"+tr("CPAP Usage")+"</b><br>";
         html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br>";
         if (daysSkipped > 0) {
@@ -1604,9 +1663,9 @@ QString Statistics::UpdateRecordsBox()
             html += tr("Days Not Used: %1").arg(daysSkipped) + "<br>";
         }
         html += tr("Days Used: %1").arg(daysUsed) + "<br>";
+        html += tr("Days %1 %2 %3%").arg("&gt;=")  .arg(p_profile->cpap->complianceHours(),0,'f',1) .arg(comperc,0,'f',1) + "<br>";
         html += tr("Days %1 %2 Hours: %3").arg("&gt;=")  .arg(p_profile->cpap->complianceHours(),0,'f',1) .arg(compliant) + "<br>";
         html += tr("Days %1 %2 Hours: %3").arg("&lt;").arg(p_profile->cpap->complianceHours(),0,'f',1) .arg(lowUsed) + "<br>";
-        html += tr("Compliance: %1%").arg(comperc, 0, 'f', 1)  + "<br>";
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// AHI Records
@@ -1881,12 +1940,41 @@ QString StatisticsRow::value(QDate start, QDate end)
     EventDataType percent = percentile;                                 // was 0.90F
 
     // Handle special data sources first
-    if (calc == SC_AHI) {
+    if (calc == SC_AHI_RDI) {
         value = QString("%1").arg(calcAHI(start, end), 0, 'f', decimals);
-    } else if (calc == SC_HOURS) {
-        if (days==0) {
-            value = QString("0");
+    } else if (calc == SC_AHI_ONLY) {
+        value = QString("%1").arg((calcAHIorRDI(start, end, RDI_MODE::RM_AHI)), 0, 'f', decimals);
+    } else if (calc == SC_MEDIAN_HOURS) {
+        EventDataType median = calcMedian(start, end,  &getHours );
+        if (median==MEDIAN_NULL) { value = QString("-"); } else {
+            value = QString("%1").arg(formatTime(median));
+        }
+    } else if (calc == SC_MEDIAN_AHI) {
+        EventDataType median = calcMedian(start, end,  &getAHI );
+        if (median==MEDIAN_NULL) { value = QString("-"); } else {
+            value = QString("%1").arg(median, 0, 'f', decimals);
+        }
+    } else if (calc == SC_DAYS_WO_DATA) {
+        value = QString::number((1+start.daysTo(end)) - p_profile->countDays(type, start, end ));
+    } else if (calc == SC_USED_DAY_COMPLIANCE_PERCENT) {
+        int days = p_profile->countDays(type, start, end );
+        if (days)  {
+            value = QString("%1%").arg( ( (
+                ((100.0*(EventDataType)p_profile->countCompliantDays(type, start, end )) / (EventDataType)days) )
+                ), 0, 'f', decimals);
         } else {
+            value = 0.0 ;
+        }
+    } else if (calc == SC_DAYS_W_DATA) {
+        value = QString::number(p_profile->countDays(type, start, end));
+    } else if (calc == SC_SELECTED_DAYS) {
+        value = QString::number(1+start.daysTo(end));
+    } else if (calc == SC_NON_COMPLIANCE_DAYS) {
+        int value1 = ( (1+start.daysTo(end)) - p_profile->countCompliantDays(type, start, end ) );
+        value = QString("%1 ").arg(value1);
+        //value += QString(" / %1").arg(double(100*value1)/double(1+start.daysTo(end)));
+    } else if (calc == SC_HOURS) {
+        if (days==0) { value = QString("0"); } else {
             value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
         }
     } else if (calc == SC_COMPLIANCE) {
@@ -1895,16 +1983,9 @@ QString StatisticsRow::value(QDate start, QDate end)
         float realDays = qAbs(start.daysTo(end)) + 1;
         float p = (100.0 *c / realDays) ;
         value = QString("%1%").arg(p, 0, 'f', 2);
-    } else if (calc == SC_DAYS_WO_DATA) {
-        value = QString::number((1+start.daysTo(end)) - p_profile->countDays(type, start, end ));
-    } else if (calc == SC_DAYS_W_DATA) {
-        value = QString::number(p_profile->countDays(type, start, end));
-    } else if (calc == SC_SELECTED_DAYS) {
-        value = QString::number(1+start.daysTo(end));
     } else if (calc == SC_COMPLIANCE_DAYS) {
         int value1 = p_profile->countCompliantDays(type, start, end );
         value = QString("%1 ").arg(value1);
-        //value += QString(" / %1").arg(double(100*value1)/double(1+start.daysTo(end)));
     } else if (calc == SC_DAYS) {
         value = QString("%1").arg(p_profile->countDays(type, start, end));
     } else if ((calc == SC_COLUMNHEADERS) || (calc == SC_SUBHEADING) || (calc == SC_UNDEFINED))  {

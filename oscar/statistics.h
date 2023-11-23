@@ -58,7 +58,8 @@ public:
 
 //! \brief Type of calculation on one statistics row
 enum StatCalcType {
-    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI, SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_WARNING2 , SC_SELECTED_DAYS , SC_COMPLIANCE_DAYS , SC_DAYS_W_DATA , SC_DAYS_WO_DATA
+    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI_RDI , SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_WARNING2 ,
+    SC_SELECTED_DAYS , SC_DAYS_W_DATA , SC_DAYS_WO_DATA , SC_COMPLIANCE_DAYS , SC_USED_DAY_COMPLIANCE_PERCENT , SC_NON_COMPLIANCE_DAYS , SC_MEDIAN_HOURS , SC_MEDIAN_AHI , SC_AHI_ONLY
 };
 
 /*! \struct StatisticsRow
@@ -107,7 +108,7 @@ struct StatisticsRow {
         } else if (calc.compare("sph", Qt::CaseInsensitive)==0) {
             return SC_SPH;
         } else if (calc.compare("ahi", Qt::CaseInsensitive)==0) {
-            return SC_AHI;
+            return SC_AHI_RDI;
         } else if (calc.compare("hours", Qt::CaseInsensitive)==0) {
             return SC_HOURS;
         } else if (calc.compare("compliance", Qt::CaseInsensitive)==0) {
@@ -140,7 +141,7 @@ struct StatisticsRow {
         return schema::channel[src].id();
     }
 
-    QString value(QDate start, QDate end);
+    QString value(QDate start, QDate end );
 };
 
 //! \class Prescription (device) setting
