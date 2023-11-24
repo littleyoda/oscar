@@ -26,6 +26,7 @@
 #include "SleepLib/profiles.h"
 
 using namespace std;
+#define FIX_FOR_SINGLE_EVENT            // fixes ibreeze "No valuesummary for channel" error during import.
 
 // This is the uber important database version for OSCAR's internal storage
 // Increment this after stuffing with Session's save & load code.
