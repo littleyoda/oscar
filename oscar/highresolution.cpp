@@ -75,14 +75,14 @@ namespace HighResolution {
         QString label;
         if (hiResolutionNextSessionMode == HRM_ENABLED ) {
             if ( hiResolutionOperaingMode == hiResolutionNextSessionMode ) {
-                label = QObject::tr("High Resolution Mode is Enabled");
+                label = QObject::tr("High Resolution Mode is Enabled (Experimental)");
             } else {
                 label = QObject::tr("The High Resolution Mode will be Enabled after Oscar is restarted.");
             }
             button->setChecked(true);
         } else {
             if ( hiResolutionOperaingMode == hiResolutionNextSessionMode ) {
-                label = QObject::tr("High Resolution Mode is Disabled");
+                label = QObject::tr("High Resolution Mode is Disabled (Experimental)");
             } else {
                 label = QObject::tr("High Resolution Mode will be Disabled after Oscar is restarted.");
             }
