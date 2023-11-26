@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of Source Code. */
 
 #include <cmath>
+// remember to turn test_macros off for release.
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
 
 #include "welcome.h"
 #include "ui_welcome.h"
@@ -151,9 +154,10 @@ QString Welcome::GenerateCPAPHTML()
     "p,a,td,body { font-family: '"+QApplication::font().family()+"'; }"
     "p,a,td,body { font-size: "+QString::number(QApplication::font().pointSize() + 2)+"px; }"
     "</style>"
-
     "</head>"
+
     "<body leftmargin=5 topmargin=10 rightmargin=5 bottommargin=5 vertical-align=center align=center>";
+    html += "<font size='+0'>" ;
 
     Machine * cpap = nullptr;
     if (!havecpapdata && !haveoximeterdata) {
@@ -170,7 +174,6 @@ QString Welcome::GenerateCPAPHTML()
         }
         if (day && (cpap != nullptr)) {
             QString cpapimage = cpap->getPixmapPath();
-
             ui->cpapIcon->setPixmap(QPixmap(cpapimage));
 
             html+= "<b>"+tr("The last time you used your %1...").arg(cpap->brand()+" "+cpap->model())+"</b><br/>";
@@ -360,7 +363,9 @@ QString Welcome::GenerateOxiHTML()
     "p,a,td,body { font-size: "+QString::number(QApplication::font().pointSize() + 2)+"px; }"
     "</style>"
     "</head>"
+
     "<body leftmargin=5 topmargin=5 rightmargin=5 bottommargin=5 valign=center align=center>";
+    html += "<font size='+0'>" ;
 
     if (haveoximeterdata) {
         QDate oxidate=p_profile->LastDay(MT_OXIMETER);
