@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QDebug>
 #include <QFontMetrics>
 
@@ -18,6 +21,8 @@
 #include "Graphs/glcommon.h"
 #include "Graphs/gGraph.h"
 #include "Graphs/gGraphView.h"
+
+#define FIX_FOR_DATE_MISMATCH
 
 // These divisors are used to round xaxis timestamps to reasonable increments
 const quint64 divisors[] = {
@@ -42,8 +47,10 @@ gXAxis::gXAxis(QColor col, bool fadeout)
     m_utcfix = false;
     m_fadeout = fadeout;
 
+    #if !defined (FIX_FOR_DATE_MISMATCH)  // between labels on graphs and system data,
     tz_offset = timezoneOffset();
     tz_hours = tz_offset / 3600000.0;
+    #endif
 
     m_roundDays = false;
 }
@@ -68,6 +75,14 @@ const QString months[] = {
 };
 //static QString dow[]={"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
 
+
+void gXAxis::SetDay(Day* day) {
+    if (!day) return;
+
+    #if defined (FIX_FOR_DATE_MISMATCH)  // between labels on graphs and system data,
+    startOfDay = QDateTime::fromMSecsSinceEpoch(day->first()).date().startOfDay().toMSecsSinceEpoch();
+    #endif
+}
 
 void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
 {
@@ -230,10 +245,6 @@ void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
         painter.setPen(QColor(Qt::black));
 
-
-        //int utcoff=m_utcfix ? tz_hours : 0;
-
-        //utcoff=0;
         int num_minor_ticks;
 
         if (step >= 86400000) {
@@ -289,6 +300,14 @@ void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
             j = i;
 
+            #if defined (FIX_FOR_DATE_MISMATCH)  // between labels on graphs and system data,
+            qint64 msInDay  = j - startOfDay;
+
+            ms = msInDay % 1000;
+            s = (msInDay / 1000L) % 60L;
+            m = (msInDay / 60000L) % 60L;
+            h = (msInDay / 3600000L) % 24L;
+            #else
             if (!m_utcfix) { j += tz_offset; }
 
             ms = j % 1000;
@@ -296,6 +315,7 @@ void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
             m = (j / 60000L) % 60L;
             h = (j / 3600000L) % 24L;
             //int d=(j/86400000) % 7;
+            #endif
 
             if (fitmode == 0) {
                 d = (j / 1000);

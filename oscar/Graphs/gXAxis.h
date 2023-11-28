@@ -16,6 +16,8 @@
 
 /*! \class gXAxis
     \brief Draws the XTicker timescales underneath graphs */
+
+// For daily graphs
 class gXAxis: public Layer
 {
   public:
@@ -41,6 +43,9 @@ class gXAxis: public Layer
     //! \brief Returns the minimum height needed to fit
     virtual int minimumHeight();
 
+    // used to precalculate day information.
+    virtual void SetDay(Day *d);
+
     virtual Layer * Clone() {
         gXAxis * xaxis = new gXAxis();
         Layer::CloneInto(xaxis);
@@ -61,6 +66,7 @@ class gXAxis: public Layer
         layer->m_utcfix = m_utcfix;
         layer->m_fadeout = m_fadeout;
 
+        layer->startOfDay = startOfDay;
         layer->tz_offset = tz_offset;
         layer->tz_hours = tz_hours;
 
@@ -82,6 +88,7 @@ class gXAxis: public Layer
     QColor m_major_color;
     QColor m_minor_color;
     bool m_fadeout;
+    qint64 startOfDay;
     qint64 tz_offset;
     float tz_hours;
 
@@ -90,6 +97,8 @@ class gXAxis: public Layer
     bool m_roundDays;
 };
 
+
+// for overview charts
 class gXAxisDay: public Layer
 {
   public:
@@ -148,6 +157,8 @@ class gXAxisDay: public Layer
 
 };
 
+
+// FOr time at pressure.
 class gXAxisPressure: public Layer
 {
 public:
