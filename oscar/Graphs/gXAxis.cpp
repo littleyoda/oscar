@@ -80,7 +80,11 @@ void gXAxis::SetDay(Day* day) {
     if (!day) return;
 
     #if defined (FIX_FOR_DATE_MISMATCH)  // between labels on graphs and system data,
-    startOfDay = QDateTime::fromMSecsSinceEpoch(day->first()).date().startOfDay().toMSecsSinceEpoch();
+        #if QT_VERSION < QT_VERSION_CHECK(5,14,0)
+            startOfDay = QDateTime(QDateTime::fromMSecsSinceEpoch(day->first()).date()).toMSecsSinceEpoch();
+        #else
+            startOfDay = QDateTime::fromMSecsSinceEpoch(day->first()).date().startOfDay().toMSecsSinceEpoch();
+        #endif
     #endif
 }
 
