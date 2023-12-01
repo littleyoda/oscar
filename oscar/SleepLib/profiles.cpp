@@ -1149,6 +1149,23 @@ void Scan()
         Profile *prof = new Profile(npath);
         //prof->Open();
 
+        // validate user name in profile.
+        QString dbname = prof->user->userName();
+        if (dbname.isEmpty()) {
+            qWarning() << "Not a Profile " << npath;
+            delete prof;
+            continue; // skip over this folder. it is not a profile.
+        }
+        QString fname = QFileInfo(fi).fileName();
+        if (fname != dbname) {
+            // this condition currently causes an infinite loop - causes oscar issue.
+            // one solution is to avoid putting this profile in profiles MAP.
+            // the other solution is to update userName with its new name.
+            prof->user->setUserName(fname);
+            QString message = QString("%1 %2 %3 %4").arg("Changing Profile Name").arg(dbname).arg("==>").arg(fname);
+            qWarning() << message;
+        }
+
         profiles[fi.fileName()] = prof;
 
         // Migrate any old settings
