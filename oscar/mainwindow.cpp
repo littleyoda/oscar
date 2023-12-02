@@ -2361,6 +2361,7 @@ void MainWindow::on_actionImport_Viatom_Data_triggered()
 void MainWindow::GenerateStatistics()
 {
     reset_reportModeUi() ;
+    if (!p_profile) return;
 
     Statistics stats;
     QString htmlStats = stats.GenerateHTML();

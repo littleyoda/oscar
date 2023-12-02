@@ -33,9 +33,11 @@ NewProfile::NewProfile(QWidget *parent, const QString *user) :
     ui(new Ui::NewProfile)
 {
     ui->setupUi(this);
-    if (user)
+    if (user) {
+      originalProfileName=*user;
       ui->userNameEdit->setText(*user);
 //    ui->userNameEdit->setText(getUserName());
+    }
     QLocale locale = QLocale::system();
     QString shortformat = locale.dateFormat(QLocale::ShortFormat);
 
@@ -206,14 +208,23 @@ void NewProfile::on_nextButton_clicked()
         ui->stackedWidget->setCurrentIndex(index);
     } else {
         // Finish button clicked.
-        QString username = ui->userNameEdit->text().trimmed();
+        newProfileName = ui->userNameEdit->text().trimmed();
+        QString profileName;
+        if (originalProfileName.isEmpty() ) {
+            profileName = newProfileName;
+        } else {
+            profileName = originalProfileName;
+            ui->userNameEdit->setText(originalProfileName);
+            //QString profileName = originalProfileName.isEmpty()? newProfileName : originalProfileName;
+        }
+        //QString profileName = originalProfileName.isEmpty()? newProfileName : originalProfileName;
 
         if (QMessageBox::question(this, tr("Profile Changes"), tr("Accept and save this information?"),
                                   QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-            Profile *profile = Profiles::Get(username);
 
+            Profile *profile = Profiles::Get(profileName);
             if (!profile) { // No profile, create one.
-                profile = Profiles::Create(username);
+                profile = Profiles::Create(profileName);
             }
 
             Profile &prof = *profile;
@@ -264,15 +275,31 @@ void NewProfile::on_nextButton_clicked()
                 // also call unitsChanged if height also changed. Need for update BMI.
                 if (mainwin && mainwin->getDaily()) { mainwin->getDaily()->UnitsChanged(); }
             }
-
-            AppSetting->setProfileName(username);
+            AppSetting->setProfileName(profileName);
 
             profile->Save();
-
-            if (mainwin)
-                mainwin->GenerateStatistics();
-
-            this->accept();
+            if ( !originalProfileName.isEmpty() && !newProfileName.isEmpty() && (originalProfileName != newProfileName)) {
+                QString originalProfileFullName = p_pref->Get("{home}/Profiles/") + originalProfileName;
+                QString newProfileFullName = p_pref->Get("{home}/Profiles/") + newProfileName;
+                QFile file(originalProfileFullName);
+                if (file.exists()) {
+                    bool status = file.rename(newProfileFullName);
+                    if (status) {  // successful rename
+                        QCoreApplication::processEvents();
+                        mainwin->RestartApplication(true,"-l");
+                        exit(0);
+                    } else {
+                        QMessageBox::question(this, tr("Invalid User Name"), tr("Please Update User without special characters"), QMessageBox::Ok);
+                        ui->stackedWidget->setCurrentIndex(1);
+                        ui->userNameEdit->setText(newProfileName);
+                    }
+                }
+            } else {
+                if (mainwin) {
+                    mainwin->GenerateStatistics();
+                }
+                this->accept();
+            }
         }
     }
 
@@ -336,7 +363,7 @@ void NewProfile::edit(const QString name)
     }
 
     ui->userNameEdit->setText(name);
-    ui->userNameEdit->setReadOnly(true);
+    // ui->userNameEdit->setReadOnly(true);
     ui->firstNameEdit->setText(profile->user->firstName());
     ui->lastNameEdit->setText(profile->user->lastName());
 

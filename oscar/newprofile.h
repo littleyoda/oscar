@@ -65,6 +65,8 @@ class NewProfile : public QDialog
     double m_tmp_height_cm;
     int m_firstPage;
     bool m_passwordHashed;
+    QString originalProfileName;
+    QString newProfileName;
 };
 
 #endif // NEWPROFILE_H

@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QMessageBox>
 
 #include "profileselector.h"
@@ -60,7 +63,7 @@ ProfileSelector::ProfileSelector(QWidget *parent) :
     ui->diskSpaceInfo->setVisible(false);
 
     QItemSelectionModel * sm = ui->profileView->selectionModel();
-    if (sm) 
+    if (sm)
         connect(sm, SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(on_selectionChanged(QModelIndex,QModelIndex)));
     ui->buttonEditProfile->setEnabled(false);
     ui->buttonOpenProfile->setEnabled(false);
@@ -302,7 +305,7 @@ void ProfileSelector::on_buttonEditProfile_clicked()
         Profile * prof = Profiles::profiles[name];
         //SelectProfile(name); // may not be necessary...
 
-        NewProfile *newprof = new NewProfile(this);
+        NewProfile *newprof = new NewProfile(this,&name);
         newprof->edit(name);
         newprof->setWindowModality(Qt::ApplicationModal);
         newprof->setModal(true);
