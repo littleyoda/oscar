@@ -1163,7 +1163,7 @@ void Scan()
             // the other solution is to update userName with its new name.
             prof->user->setUserName(fname);
             QString message = QString("%1 %2 %3 %4").arg("Changing Profile Name").arg(dbname).arg("==>").arg(fname);
-            qWarning() << message;
+            qDebug() << message;
         }
 
         profiles[fi.fileName()] = prof;

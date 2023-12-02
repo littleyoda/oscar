@@ -208,7 +208,7 @@ void NewProfile::on_nextButton_clicked()
         ui->stackedWidget->setCurrentIndex(index);
     } else {
         // Finish button clicked.
-        newProfileName = ui->userNameEdit->text().trimmed();
+        newProfileName = ui->userNameEdit->text().simplified();
         QString profileName;
         if (originalProfileName.isEmpty() ) {
             profileName = newProfileName;
@@ -285,14 +285,20 @@ void NewProfile::on_nextButton_clicked()
                 if (file.exists()) {
                     bool status = file.rename(newProfileFullName);
                     if (status) {  // successful rename
+                        Profiles::profiles[newProfileName] = p_profile;
+                        AppSetting->setProfileName(newProfileName);
+                        if (mainwin) mainwin->CloseProfile();
                         QCoreApplication::processEvents();
                         mainwin->RestartApplication(true,"-l");
+                        QCoreApplication::processEvents();
                         exit(0);
                     } else {
-                        QMessageBox::question(this, tr("Invalid User Name"), tr("Please Update User without special characters"), QMessageBox::Ok);
+                        QMessageBox::question(this, tr("Duplicate or Invalid User Name"), tr("Please Change User Name "), QMessageBox::Ok);
                         ui->stackedWidget->setCurrentIndex(1);
                         ui->userNameEdit->setText(newProfileName);
                     }
+                } else {
+                    qWarning() << "Rename Profile failed";
                 }
             } else {
                 if (mainwin) {
