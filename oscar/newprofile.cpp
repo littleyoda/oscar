@@ -294,7 +294,8 @@ void NewProfile::on_nextButton_clicked()
                         exit(0);
                     } else {
                         QMessageBox::question(this, tr("Duplicate or Invalid User Name"), tr("Please Change User Name "), QMessageBox::Ok);
-                        ui->stackedWidget->setCurrentIndex(1);
+                        index=1;
+                        ui->stackedWidget->setCurrentIndex(index);
                         ui->userNameEdit->setText(newProfileName);
                     }
                 } else {
