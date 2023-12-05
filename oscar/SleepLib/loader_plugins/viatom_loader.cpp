@@ -285,12 +285,12 @@ bool ViatomFile::ParseHeader()
     int min   = header[7];
     int sec   = header[8];
 
-    switch (sig) {
+    switch (sig) { //Viatom database version number  - Crimson Nape
     case 0x0003:
-    case 0x0005:  // CheckMe O2 Max
+    case 0x0005:  
         break;
     default:
-        qDebug() << m_file.fileName() << "invalid signature for Viatom data file" << sig;
+        qDebug() << m_file.fileName() << "Unrecognized DB version number in Viatom data file" << sig;
         return false;
         break;
     }
