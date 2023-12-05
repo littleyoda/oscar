@@ -55,9 +55,6 @@ QString PreferencesDialog::clinicalHelp() {
     <<tr("Permissive Mode:")
     <<tr("Allows user to select which data sets/ sessions to be used for calculations and display.")
     <<tr("Additional charts and calculations may be available that are not available from the vendor data.")
-    <<""
-    <<tr("Changing the Oscar Operating Mode:")
-    <<tr("Requires a reload of the user's profile. Data will be saved and restored.")
     <<"";
     return str.join("\n");
 }
@@ -861,7 +858,10 @@ bool PreferencesDialog::Save()
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
     p_profile->appearance->setEventFlagSessionBar(ui->eventFlagSessionBar->isChecked());
+
+    bool clicicalModeChanged = profile->cpap->clinicalMode() != ui->clinicalMode->isChecked() ;
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
+
     HighResolution::checkBox(true,ui->highResolution);
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
@@ -1014,6 +1014,12 @@ bool PreferencesDialog::Save()
     profile->Save();
     profile->resetOxiChannelPref();
 
+    if (clicicalModeChanged) {
+        // this fails - causing duplicate reload.
+        //QTimer::singleShot(0, mainwin, SLOT(reloadProfile()));
+        // while this one works.
+        mainwin->reloadProfile();
+    } else
     if (recompress_events) {
         mainwin->recompressEvents();
     } else if (recalc_events) {
@@ -1022,7 +1028,7 @@ bool PreferencesDialog::Save()
     } else if (needs_reload) {
         QTimer::singleShot(0, mainwin, SLOT(reloadProfile()));
     } else if (needs_restart) {
-        mainwin->RestartApplication();
+        mainwin->RestartApplication(true,"-l");
     } else {
         mainwin->getDaily()->LoadDate(mainwin->getDaily()->getDate());
         // Save early.. just in case..

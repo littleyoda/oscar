@@ -367,8 +367,6 @@ class MainWindow : public QMainWindow
 
     void on_profilesButton_clicked();
 
-    void reloadProfile();
-
     void on_bookmarkView_anchorClicked(const QUrl &arg1);
 
     void on_recordsBox_anchorClicked(const QUrl &linkurl);
@@ -377,6 +375,8 @@ class MainWindow : public QMainWindow
 
     void on_actionShowPersonalData_toggled(bool visible);
 
+public slots:
+    void reloadProfile();
 
 private:
     QString getMainWindowTitle();
