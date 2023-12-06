@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff              // remember to turn off for release.
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 /*
@@ -667,7 +667,6 @@ EventDataType calcMedian(QDate start, QDate end,  DAY_VALUE funct )
             nth_element(be ,me, en);
             median = vec[mediaOffset];
         }
-        IF(len <  66) DEBUGFC Q(len) Q(median) Z(vec);
         return median;
 }
 
@@ -718,9 +717,13 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("Hypopnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("Apnea",   SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("ClearAirway",   SC_CPH,     MT_CPAP));
+    rows.push_back(StatisticsRow("RERA",       SC_CPH,     MT_CPAP));
+    if (p_profile->cpap->userEventFlagging() && !p_profile->cpap->clinicalMode()) {
+        rows.push_back(StatisticsRow("UserFlag1",   SC_CPH,     MT_CPAP));
+        rows.push_back(StatisticsRow("UserFlag2",   SC_CPH,     MT_CPAP));
+    }
     rows.push_back(StatisticsRow("FlowLimit",  SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("FLG",  SC_90P,     MT_CPAP));
-    rows.push_back(StatisticsRow("RERA",       SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("SensAwake",       SC_CPH,     MT_CPAP));
     rows.push_back(StatisticsRow("CSR", SC_SPH, MT_CPAP));
 
