@@ -1366,6 +1366,7 @@ QString Statistics::GenerateCPAPUsage()
     QList<Period> periods;
 
     bool skipsection = false;;
+    int alternateColorCounter = 0 ;
     // Loop through all rows of the Statistics report
     for (QList<StatisticsRow>::iterator i = rows.begin(); i != rows.end(); ++i) {
         StatisticsRow &row = (*i);
@@ -1492,6 +1493,7 @@ QString Statistics::GenerateCPAPUsage()
             }
             continue;
         } else if (row.calc == SC_SUBHEADING) {  // subheading..
+            alternateColorCounter = 0 ;
             html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><b>%3</b></td></tr>").
                     arg(subheading_color).arg(periods.size()+1).arg(row.src);
             continue;
@@ -1527,7 +1529,17 @@ QString Statistics::GenerateCPAPUsage()
             dataWidth = 6;
             headerWidth = 22;
         }
-        line += QString("<tr class=datarow><td width='%1%'>%2</td>").arg(headerWidth).arg(name);
+        QString bgColor = "#ffffff";
+        alternateColorCounter %= 2;
+        switch (alternateColorCounter) {
+            case 1 :
+                bgColor = "#e8ffe8"; // lightGreen
+                break;
+            default: ;
+        }
+        alternateColorCounter++;
+        line += QString("<tr class=datarow bgcolor='%3'><td width='%1%'>%2</td>").arg(headerWidth).arg(name).arg(bgColor);
+        //line += QString("<tr class=datarow><td width='%1%'>%2</td>").arg(headerWidth).arg(name);
         for (int j=0; j < np; j++) {
             width = j < np-1 ? dataWidth : 100 - (headerWidth + dataWidth*(np-1));
             line += QString("<td width='%1%'>").arg(width);
