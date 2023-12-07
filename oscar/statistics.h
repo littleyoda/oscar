@@ -150,7 +150,6 @@ public:
     RXItem() {
         machine = nullptr;
         ahi = rdi = 0;
-        highlight = 0;
         hours = 0;
     }
     RXItem(const RXItem & copy) {
@@ -167,7 +166,6 @@ public:
         mode = copy.mode;
         pressure = copy.pressure;
         dates = copy.dates;
-        highlight = copy.highlight;
     }
     RXItem& operator=(const RXItem&) = default;
     inline quint64 count(ChannelID id) const {
@@ -193,7 +191,6 @@ public:
     QString mode;
     QString pressure;
     QMap<QDate, Day *> dates;
-    short highlight;
 };
 
 

@@ -46,6 +46,18 @@ QString htmlMachineSettings = "";   // Device (formerly Rx) changes
 QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
+QString alternatingColor(int& counter) {
+    counter++;
+    int offset = counter %= 3;
+    if ( offset == 0) {
+        return "#d0ffd0";       // very lightgreen
+        //return "#d8ffd8";       // very lightgreen
+        //return "#e0ffe0";       // very lightgreen
+        //return "#e8ffe8";       // very lightgreen even lighter
+    }
+    return "#ffffff";
+}
+
 QString resizeHTMLPixmap(QPixmap &pixmap, int width, int height) {
     QByteArray byteArray;
     QBuffer buffer(&byteArray); // use buffer to store pixmap into byteArray
@@ -603,30 +615,15 @@ void Statistics::updateRXChanges()
     // Store RX cache to disk
     saveRXChanges();
 
-    // Now do the setup for the best worst highlighting
+    // Now do the setup for the best worst
     QList<RXItem *> list;
     ri_end = rxitems.end();
 
     for (ri = rxitems.begin(); ri != ri_end; ++ri) {
         list.append(&ri.value());
-        ri.value().highlight = 0;
     }
 
     std::sort(list.begin(), list.end(), rxAHILessThan);
-
-    if (list.size() >= 4) {
-        list[0]->highlight = 1; // best
-        list[1]->highlight = 2; // best
-        int ls = list.size() - 1;
-        list[ls-1]->highlight = 3; // best
-        list[ls]->highlight = 4;
-    } else if (list.size() >= 2) {
-        list[0]->highlight = 1; // best
-        int ls = list.size() - 1;
-        list[ls]->highlight = 4;
-    } else if (list.size() > 0) {
-        list[0]->highlight = 1; // best
-    }
 
     // Close the progress bar
     progress->close();
@@ -990,7 +987,7 @@ EventDataType calcSA(QDate start, QDate end)
 
 // Structure for recording Prescription Changes (now called Device Settings Changes)
 struct RXChange {
-    RXChange() { highlight = 0; machine = nullptr; }
+    RXChange() { machine = nullptr; }
     RXChange(const RXChange &copy) {
         first = copy.first;
         last = copy.last;
@@ -1006,7 +1003,6 @@ struct RXChange {
         machine = copy.machine;
         per1 = copy.per1;
         per2 = copy.per2;
-        highlight = copy.highlight;
         weighted = copy.weighted;
         pressure_string = copy.pressure_string;
         pr_relief_string = copy.pr_relief_string;
@@ -1028,7 +1024,6 @@ struct RXChange {
     EventDataType per2;
     EventDataType weighted;
     Machine *machine;
-    short highlight;
 };
 
 struct UsageData {
@@ -1226,6 +1221,7 @@ QString Statistics::GenerateRXChanges()
 
     QMapIterator<QDate, RXItem> it(rxitems);
     it.toBack();
+    int alternatingColorCounter = 0 ;
     while (it.hasPrevious()) {
         it.previous();
         const RXItem & rx = it.value();
@@ -1233,20 +1229,10 @@ QString Statistics::GenerateRXChanges()
         QDate rxend=rx.end;
         if (rxend > p_profile->general->statReportDate() ) rxend = p_profile->general->statReportDate();
 
-        QString color;
+        QString color = alternatingColor(alternatingColorCounter);
 
-        if (rx.highlight == 1) {
-            color = "#c0ffc0";
-        } else if (rx.highlight == 2) {
-            color = "#e0ffe0";
-        } else if (rx.highlight == 3) {
-            color = "#ffe0e0";
-        } else if (rx.highlight == 4) {
-            color = "#ffc0c0";
-        } else { color = ""; }
+        QString datarowclass="class=datarow";
 
-        QString datarowclass;
-        if (rx.highlight == 0) datarowclass="class=datarow";
         html += QString("<tr %4 bgcolor='%1' onmouseover='ChangeColor(this, \"#dddddd\");' onmouseout='ChangeColor(this, \"%1\");' onclick='alert(\"overview=%2,%3\");'>")
                 .arg(color)
                 .arg(rx.start.toString(Qt::ISODate))
@@ -1366,7 +1352,7 @@ QString Statistics::GenerateCPAPUsage()
     QList<Period> periods;
 
     bool skipsection = false;;
-    int alternateColorCounter = 0 ;
+    int alternatingColorCounter = 0 ;
     // Loop through all rows of the Statistics report
     for (QList<StatisticsRow>::iterator i = rows.begin(); i != rows.end(); ++i) {
         StatisticsRow &row = (*i);
@@ -1493,7 +1479,7 @@ QString Statistics::GenerateCPAPUsage()
             }
             continue;
         } else if (row.calc == SC_SUBHEADING) {  // subheading..
-            alternateColorCounter = 0 ;
+            alternatingColorCounter = 0 ;
             html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><b>%3</b></td></tr>").
                     arg(subheading_color).arg(periods.size()+1).arg(row.src);
             continue;
@@ -1529,15 +1515,7 @@ QString Statistics::GenerateCPAPUsage()
             dataWidth = 6;
             headerWidth = 22;
         }
-        QString bgColor = "#ffffff";
-        alternateColorCounter %= 2;
-        switch (alternateColorCounter) {
-            case 1 :
-                bgColor = "#e8ffe8"; // lightGreen
-                break;
-            default: ;
-        }
-        alternateColorCounter++;
+        QString bgColor = alternatingColor(alternatingColorCounter);
         line += QString("<tr class=datarow bgcolor='%3'><td width='%1%'>%2</td>").arg(headerWidth).arg(name).arg(bgColor);
         //line += QString("<tr class=datarow><td width='%1%'>%2</td>").arg(headerWidth).arg(name);
         for (int j=0; j < np; j++) {
@@ -1903,7 +1881,6 @@ QString Statistics::UpdateRecordsBox()
 
         for (ri = rxitems.begin(); ri != ri_end; ++ri) {
             list.append(&ri.value());
-            ri.value().highlight = 0;
         }
 
         std::sort(list.begin(), list.end(), rxAHILessThan);
