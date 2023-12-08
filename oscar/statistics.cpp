@@ -47,6 +47,7 @@ QString htmlMachineSettings = "";   // Device (formerly Rx) changes
 QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
+SummaryInfo summaryInfo;
 QSet<QDate> noDaysInPeriod;
 QString alternatingColor(int& counter) {
     counter++;
@@ -199,20 +200,26 @@ bool rxAHILessThan(const RXItem * rx1, const RXItem * rx2)
     return (double(rx1->ahi) / rx1->hours) < (double(rx2->ahi) / rx2->hours);
 }
 
-void Statistics::updateDisabledInfo()
-{
-    QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
-    QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
-    if (lastcpap > p_profile->general->statReportDate() ) {
-        lastcpap = p_profile->general->statReportDate();
+void Statistics::adjustRange(QDate& start , QDate& last) {
+    start = qMax(start,p_profile->FirstDay());
+    last  = qMin(last ,p_profile->LastDay() );
+    if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
+        start = qMax(start,p_profile->general->statReportRangeStart());
+        last  = qMin(last ,p_profile->general->statReportRangeEnd()  );
+    } else {
+        last  = qMin(last ,p_profile->general->statReportDate()  );
     }
-    disabledInfo.update( lastcpap, firstcpap );
+    start = qMin(start,last);
+    summaryInfo.update(start,last);
 }
 
-void DisabledInfo::update(QDate latestDate, QDate earliestDate)
+void SummaryInfo::update(QDate earliestDate , QDate latestDate)
 {
-    clear();
-    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) || (p_profile->cpap->clinicalMode()) ) return;
+    if  ( (!latestDate.isValid()) ||  (!earliestDate.isValid()) ) return;
+    if  ( (latestDate == last()) &&  (earliestDate == start()) ) return;
+    clear(earliestDate,latestDate);
+    _start = earliestDate;
+    _last = latestDate;
     qint64 complianceHours = 3600000.0 * p_profile->cpap->complianceHours();  // conbvert to ms
     totalDays = 1+earliestDate.daysTo(latestDate);
     for (QDate date = latestDate ; date >= earliestDate ; date=date.addDays(-1) ) {
@@ -258,8 +265,9 @@ void DisabledInfo::update(QDate latestDate, QDate earliestDate)
     totalDurationOfDisabledSessions/=60000 ;
 };
 
-QString DisabledInfo::display(int type)
+QString SummaryInfo::display(QString typeStr)
 {
+    int type=typeStr.toInt();
 /*
 Permissive mode: some sessions are excluded from this report, as follows:
 Total disabled sessions: xx, found in yy days.
@@ -268,19 +276,23 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
 */
     switch (type) {
         default :
-        case 0:
-            //return QString(QObject::tr("Permissive mode is set (Preferences/Clinical), disabled sessions are excluded from this report"));
-            //return QString(QObject::tr("Permissive mode allows disabled sessions"));
-            return QString(QObject::tr("Permissive Mode"));
+            return QString();
         case 1:
+            return QString(QObject::tr("Permissive Mode"));
+        case 2:
             if (numDisabledsessions>0) {
                 return QString(QObject::tr("Total disabled sessions: %1, found in %2 days") .arg(numDisabledsessions) .arg(numDaysWithDisabledsessions));
             } else {
                 return QString(QObject::tr("Total disabled sessions: %1") .arg(numDisabledsessions) );
             }
-        case 2:
+        case 3:
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
                 .arg(maxDurationOfaDisabledsession, 0, 'f', 1) .arg(totalDurationOfDisabledSessions, 0, 'f', 1));
+        case 4:
+            return QString(QObject::tr( "The reportng period is %1 days between %2 and %3")
+                .arg(1+_start.daysTo(_last))
+                .arg(_start.toString(MedDateFormat))
+                .arg(_last.toString(MedDateFormat)));
     }
 }
 
@@ -679,13 +691,17 @@ Statistics::Statistics(QObject *parent) :
 {
     rows.push_back(StatisticsRow(tr("CPAP Statistics"), SC_HEADING, MT_CPAP));
     if (!p_profile->cpap->clinicalMode()) {
-        updateDisabledInfo();
-        rows.push_back(StatisticsRow(disabledInfo.display(0),SC_WARNING ,MT_CPAP));
-        rows.push_back(StatisticsRow(disabledInfo.display(1),SC_WARNING2,MT_CPAP));
-        if (disabledInfo.size()>0) {
-            rows.push_back(StatisticsRow(disabledInfo.display(2),SC_WARNING2,MT_CPAP));
+        rows.push_back(StatisticsRow("1",SC_WARNING ,MT_CPAP));
+        rows.push_back(StatisticsRow("2",SC_WARNING,MT_CPAP));
+        if (summaryInfo.size()>0)
+        {   // this row display detailed information about disabled sessions.
+            rows.push_back(StatisticsRow("3",SC_WARNING,MT_CPAP));
         }
     }
+    // this row display the reporting period. It is required for the Monthlt reports .
+    // but is also included for Standard and data range
+    rows.push_back(StatisticsRow("4",SC_MESSAGE , MT_CPAP));
+
     rows.push_back(StatisticsRow("", SC_DAYS, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
@@ -1148,9 +1164,7 @@ QString Statistics::GenerateMachineList()
 //qDebug() << "Device" << m->brand() << "series" << m->series() << "model" << m->model() << "model number" << m->modelnumber();
             QDate d1 = m->FirstDay();
             QDate d2 = m->LastDay();
-            if (d2 > p_profile->general->statReportDate() ) {
-                d2 = p_profile->general->statReportDate();
-            }
+            adjustRange(d1,d2);
             QString mn = m->modelnumber();
             html += QString("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td>%5</td></tr>")
                     .arg(m->brand())
@@ -1289,6 +1303,7 @@ QString Statistics::getRDIorAHIText() {
 // Create the HTML for CPAP and Oximetry usage
 QString Statistics::GenerateCPAPUsage()
 {
+    summaryInfo.clear(p_profile->FirstDay(),p_profile->LastDay());
     QList<Machine *> cpap_machines = p_profile->GetMachines(MT_CPAP);
     QList<Machine *> oximeters = p_profile->GetMachines(MT_OXIMETER);
     QList<Machine *> mach;
@@ -1317,9 +1332,7 @@ QString Statistics::GenerateCPAPUsage()
     // Find first and last days with valid CPAP data
     QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
     QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
-    if (lastcpap > p_profile->general->statReportDate() ) {
-        lastcpap = p_profile->general->statReportDate();
-    }
+    adjustRange(firstcpap,lastcpap);
 
     QString ahitxt = getRDIorAHIText();
 
@@ -1332,21 +1345,26 @@ QString Statistics::GenerateCPAPUsage()
     int number_periods = 0;
     noDaysInPeriod.clear();
     if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
-        int firstMonth = firstcpap.month();
-        int lastMonth = lastcpap.month();
-        int years = lastcpap.year() - firstcpap.year();
-        lastMonth += (12 * years); // handle time extending to next year
-        number_periods = lastMonth - firstMonth + 1;
+        QDate startMonth = lastcpap.addMonths(-12);
+        // Go to the the start of the next months
+        firstcpap = startMonth.addDays((  1 +  (startMonth.daysInMonth()-startMonth.day())   ));
+        adjustRange(firstcpap,lastcpap);
 
+        int lastMonth = lastcpap.month() + (12*(lastcpap.year() -firstcpap.year() ) );
+
+        number_periods = 1+ (lastMonth - firstcpap.month() );
         if (number_periods < 1) {
-            qDebug() << "*** Begin" << firstcpap << "beginMonth" << firstMonth << "lastMonth" << lastMonth << "periods" << number_periods;
             number_periods = 1;
         }
-        qDebug() << "Number of months for stats (trim to 12 max)" << number_periods;
+        //qDebug() << "Number of months for stats (trim to 12 max)" << number_periods;
         // But not more than one year
         if (number_periods > 12) {
+            // should never get here.
             number_periods = 12;
         }
+    } else if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
+        firstcpap = lastcpap.addYears(-1).addDays(1);
+        adjustRange(firstcpap,lastcpap);
     }
 
     QDate last = lastcpap, first = lastcpap;
@@ -1361,11 +1379,8 @@ QString Statistics::GenerateCPAPUsage()
         QString name;
 
         if (row.calc == SC_HEADING) {  // All sections begin with a heading
-            last = p_profile->LastGoodDay(row.type);
-            first = p_profile->FirstGoodDay(row.type);
-            if (last > p_profile->general->statReportDate() ) {
-                last = p_profile->general->statReportDate();
-            }
+            first = summaryInfo.first();
+            last = summaryInfo.last();
 
             // Clear the periods (columns)
             periods.clear();
@@ -1396,7 +1411,7 @@ QString Statistics::GenerateCPAPUsage()
                 if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
                     first = p_profile->general->statReportRangeStart();
                     last = p_profile->general->statReportRangeEnd();
-                    if (first > last) { first=last; };
+                    adjustRange(first,last);
                 }
                 // note add days or addmonths returns the start of the next day or the next month.
                 // must shorten one day for each. Month executed in Period method
@@ -1488,14 +1503,14 @@ QString Statistics::GenerateCPAPUsage()
         } else if (row.calc == SC_UNDEFINED) {
             continue;
         } else if (row.calc == SC_WARNING) {
-                //html+=QString("<tr bgcolor='%1'><td colspan=%2 align=center><font size='+1'>%3</font></td></tr>").
-                //        arg(warning_color).arg(periods.size()+1).arg(row.src);
+                QString text = summaryInfo.display(row.src);
                 html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
-                        arg(warning_color).arg(periods.size()+1).arg(row.src);
+                        arg(warning_color).arg(periods.size()+1).arg(text);
             continue;
-        } else if (row.calc == SC_WARNING2) {
-                html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+0'><i>%3</i></font></th></tr>").
-                        arg(warning_color).arg(periods.size()+1).arg(row.src);
+        } else if (row.calc == SC_MESSAGE) {
+                QString text = summaryInfo.display(row.src);
+                html+=QString("<tr><td colspan=%1 align=center>%2</th></tr>").
+                        arg(periods.size()+1).arg(text);
             continue;
         } else {
             ChannelID id = schema::channel[row.src].id();

@@ -22,12 +22,15 @@
 #include "SleepLib/machine.h"
 
 
-class DisabledInfo
+class SummaryInfo
 {
 public:
-    QString display(int);
+    QString display(QString);
     void update(QDate latest, QDate earliest) ;
     int size() {return numDisabledsessions;};
+    QDate first() {return _start;};
+    QDate start() {return _start;};
+    QDate last() {return _last;};
 private:
     int totalDays ;
     int daysNoData ;
@@ -38,8 +41,10 @@ private:
     int numDaysDisabledSessionChangedCompliance ;
     double maxDurationOfaDisabledsession ;
     double totalDurationOfDisabledSessions ;
+    QDate _start;
+    QDate _last;
 public:
-    void clear () {
+    void clear (QDate s,QDate l) {
         totalDays = 0;
         daysNoData = 0;
         daysOutOfCompliance = 0;
@@ -49,8 +54,9 @@ public:
         maxDurationOfaDisabledsession = 0;
         numDaysDisabledSessionChangedCompliance = 0;
         totalDurationOfDisabledSessions = 0;
+        _start = QDate(s);
+        _last = QDate(l);
     };
-
 };
 
 
@@ -58,7 +64,7 @@ public:
 
 //! \brief Type of calculation on one statistics row
 enum StatCalcType {
-    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI_RDI , SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_WARNING2 ,
+    SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI_RDI , SC_HOURS, SC_COMPLIANCE, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_MESSAGE ,
     SC_SELECTED_DAYS , SC_DAYS_W_DATA , SC_DAYS_WO_DATA , SC_COMPLIANCE_DAYS , SC_USED_DAY_COMPLIANCE_PERCENT , SC_NON_COMPLIANCE_DAYS , SC_MEDIAN_HOURS , SC_MEDIAN_AHI , SC_AHI_ONLY
 };
 
@@ -207,9 +213,9 @@ class Statistics : public QObject
 
     static void printReport(QWidget *parent = nullptr);
 
-    void updateDisabledInfo();
-
     static void updateReportDate();
+
+    void adjustRange(QDate& start , QDate& last);
 
   protected:
     void loadRXChanges();
@@ -236,8 +242,6 @@ class Statistics : public QObject
 
     QList<QDate> record_best_ahi;
     QList<QDate> record_worst_ahi;
-    DisabledInfo disabledInfo;
-
 
   signals:
 
