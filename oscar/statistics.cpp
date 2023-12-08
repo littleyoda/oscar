@@ -23,6 +23,7 @@ server= red 30+
 #include <QDataStream>
 #include <QBuffer>
 #include <cmath>
+#include <QSet>
 
 #include <QPrinter>
 #include <QPrintDialog>
@@ -46,6 +47,7 @@ QString htmlMachineSettings = "";   // Device (formerly Rx) changes
 QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
+QSet<QDate> noDaysInPeriod;
 QString alternatingColor(int& counter) {
     counter++;
     int offset = counter %= 3;
@@ -1328,6 +1330,7 @@ QString Statistics::GenerateCPAPUsage()
 
     // Compute number of monthly periods for a monthly rather than standard time distribution
     int number_periods = 0;
+    noDaysInPeriod.clear();
     if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
         int firstMonth = firstcpap.month();
         int lastMonth = lastcpap.month();
@@ -1344,7 +1347,6 @@ QString Statistics::GenerateCPAPUsage()
         if (number_periods > 12) {
             number_periods = 12;
         }
-//    } else if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
     }
 
     QDate last = lastcpap, first = lastcpap;
@@ -1380,11 +1382,11 @@ QString Statistics::GenerateCPAPUsage()
                         //done = true;
                         s = first;
                     }
-                    if (p_profile->countDays(row.type, s, l) > 0) {
-                        periods.push_back(Period(s, l, s.toString("MMMM<br>yyyy")));
-                        j++;
-                    }
-                   l = s.addDays(-1);
+
+                    // all periods must be displayed to indicate that it is not used.
+                    periods.push_back(Period(s, l, s.toString("MMMM<br>yyyy")));
+                    j++;
+                    l = s.addDays(-1);
                 } while ((l > first) && (j < number_periods));
 
                 for (; j < number_periods; ++j) {
@@ -1924,6 +1926,7 @@ QString Statistics::UpdateRecordsBox()
 
 QString StatisticsRow::value(QDate start, QDate end)
 {
+    if (noDaysInPeriod.contains(start) ) return "-";
     const int decimals=2;
     QString value;
     float days = p_profile->countDays(type, start, end);
@@ -1958,7 +1961,12 @@ QString StatisticsRow::value(QDate start, QDate end)
             value = 0.0 ;
         }
     } else if (calc == SC_DAYS_W_DATA) {
-        value = QString::number(p_profile->countDays(type, start, end));
+        int daysUsed = p_profile->countDays(type, start, end);
+        value = QString::number(daysUsed);
+        if (daysUsed==0) {
+            noDaysInPeriod.insert(start);
+            return value;
+        };
     } else if (calc == SC_SELECTED_DAYS) {
         value = QString::number(1+start.daysTo(end));
     } else if (calc == SC_NON_COMPLIANCE_DAYS) {
