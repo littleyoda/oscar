@@ -55,6 +55,7 @@ QString PreferencesDialog::clinicalHelp() {
     <<tr("Permissive Mode:")
     <<tr("Allows user to select which data sets/ sessions to be used for calculations and display.")
     <<tr("Additional charts and calculations may be available that are not available from the vendor data.")
+    <<tr("Enables Custom UserFlags displayed in the statistics Therapy Efficacy section")
     <<"";
     return str.join("\n");
 }
