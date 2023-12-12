@@ -851,7 +851,7 @@ void DailySearchTab::find(QDate& date) {
                 QList<Session *> sessions = day->getSessions(MT_CPAP);
                 QMap<ChannelID,int> values;
                 // find possible channeld to use
-                QList<ChannelID> apneaLikeChannels(ahiChannels.begin(),ahiChannels.end());
+                QVector<ChannelID> apneaLikeChannels(ahiChannels);
                 #if 1
                 if (p_profile->cpap->userEventFlagging()) {
                     apneaLikeChannels.push_back(CPAP_UserFlag1);
