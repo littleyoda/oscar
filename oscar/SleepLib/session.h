@@ -90,13 +90,16 @@ class Session
 //    void LoadSummaryData(QDataStream & in);
 
     //! \brief Loads the Sessions Summary Indexes from filename, from SleepLibs custom data format.
-    bool LoadSummary();
+    // debug option is set to false because file errors are normal when there is summary but no details data
+    bool LoadSummary(bool debug=false);
 
     //! \brief Loads the Sessions EventLists from filename, from SleepLibs custom data format.
-    bool LoadEvents(QString filename);
+    // debug option is set to false because file errors are normal when there is summary but no details data
+    bool LoadEvents(QString filename, bool debug=false);
 
     //! \brief Loads the events for this session when requested (only the summaries are loaded at startup)
-    bool OpenEvents();
+    // debug option is set to false because file errors are normal when there is summary but no details data
+    bool OpenEvents(bool debug=false);
 
     //! \brief Put the events away until needed again, freeing memory
     void TrashEvents();

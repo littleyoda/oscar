@@ -116,7 +116,7 @@ QString Session::eventFile() const
 }
 
 //const int max_pack_size=128;
-bool Session::OpenEvents()
+bool Session::OpenEvents(bool debug)
 {
     if (s_events_loaded) {
         return true;
@@ -131,12 +131,12 @@ bool Session::OpenEvents()
 
     QString filename = eventFile();
 #ifdef DEBUG_EVENTS
-    qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
+    if (debug) qDebug() << "Loading" << s_machine->loaderName().toLocal8Bit().data() << "Events:" << filename.toLocal8Bit().data();
 #endif
-    bool b = LoadEvents(filename);
+    bool b = LoadEvents(filename,debug);
 
     if ( ! b) {
-        qWarning() << "Error Loading Events" << filename;
+        if (debug) qWarning() << "Error Loading Events" << filename;
         return false;
     }
 
@@ -394,7 +394,7 @@ bool Session::StoreSummary()
 }
 
 
-bool Session::LoadSummary()
+bool Session::LoadSummary(bool debug)
 {
 //    static int sumcnt = 0;
 
@@ -402,14 +402,14 @@ bool Session::LoadSummary()
     QString filename = s_machine->getSummariesPath() + toHexid(s_session) + ".000";
 
     if (filename.isEmpty()) {
-        qDebug() << "Empty summary filename";
+        if (debug) qDebug() << "Empty summary filename";
         return false;
     }
 
     QFile file(filename);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Could not open summary file" << filename << "for reading, error code" << file.error() << file.errorString();
+        if (debug) qWarning() << "Could not open summary file" << filename << "for reading, error code" << file.error() << file.errorString();
         return false;
     }
 
@@ -428,7 +428,7 @@ bool Session::LoadSummary()
     in >> t32;
 
     if (t32 != magic) {
-        qDebug() << "Wrong magic number in " << filename;
+        if (debug) qDebug() << "Wrong magic number in " << filename;
         return false;
     }
 
@@ -815,7 +815,7 @@ bool Session::StoreEvents()
     return true;
 }
 
-bool Session::LoadEvents(QString filename)
+bool Session::LoadEvents(QString filename, bool debug)
 {
     quint32 magicnum, machid, sessid;
     quint16 version, type, crc16, machtype, compmethod;
@@ -831,7 +831,7 @@ bool Session::LoadEvents(QString filename)
 
     if ( ! file.open(QIODevice::ReadOnly)) {
 //        qDebug() << "No Event/Waveform data available for" << s_session;
-        qWarning() << "No Event/Waveform data available for" << s_session << "filename" << filename << "error code" << file.error() << file.errorString();
+        if (debug) qWarning() << "No Event/Waveform data available for" << s_session << "filename" << filename << "error code" << file.error() << file.errorString();
         return false;
     }
 
