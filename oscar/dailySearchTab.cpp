@@ -6,8 +6,10 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+// Issues no clear of results between runs or between passes.
+// automatically open event. in graph view for events TAB
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 #include <QWidget>
@@ -24,10 +26,12 @@
 #include <QDoubleSpinBox>
 #include <QtGlobal>
 #include <QHeaderView>
+#include <QCoreApplication>
 #include "dailySearchTab.h"
 #include "SleepLib/day.h"
 #include "SleepLib/profiles.h"
 #include "daily.h"
+#include "SleepLib/machine_common.h"
 
 enum DS_COL { DS_COL_LEFT=0, DS_COL_RIGHT, DS_COL_MAX };
 enum DS_ROW{ DS_ROW_HEADER, DS_ROW_DATA };
@@ -44,7 +48,7 @@ enum DS_ROW{ DS_ROW_HEADER, DS_ROW_DATA };
 |------------------------|
 | control:cmd op value   |
 +========================+
-|          Progress      | 
+|     Progress Bar       | 
 +========================+
 |          Summary       |
 +========================+
@@ -187,7 +191,7 @@ void    DailySearchTab::createUi() {
         matchButton->setIcon(*m_icon_configure);
         matchButton->setStyleSheet( styleButton );
         clearButton->setStyleSheet( styleButton );
-        startButton->setStyleSheet( styleButton );
+        //startButton->setStyleSheet( styleButton );
         //matchButton->setSizePolicy( sizePolicyEE);
         //clearButton->setSizePolicy( sizePolicyEE);
         //startButton->setSizePolicy( sizePolicyEE);
@@ -303,7 +307,6 @@ void DailySearchTab::updateEvents(ChannelID id,QString fullname) {
 }
 
 void DailySearchTab::populateControl() {
-
         commandList->clear(); 
         commandList->addItem(calculateMaxSize(tr("Notes"),ST_NOTES));
         commandList->addItem(calculateMaxSize(tr("Notes containing"),ST_NOTES_STRING));
@@ -313,6 +316,7 @@ void DailySearchTab::populateControl() {
         commandList->addItem(calculateMaxSize(tr("Daily Duration"),ST_DAILY_USAGE));
         commandList->addItem(calculateMaxSize(tr("Session Duration" ),ST_SESSION_LENGTH));
         commandList->addItem(calculateMaxSize(tr("Days Skipped"),ST_DAYS_SKIPPED));
+        commandList->addItem(calculateMaxSize(tr("Apnea Length"),ST_APNEA_LENGTH));
         if ( !p_profile->cpap->clinicalMode() ) {
             commandList->addItem(calculateMaxSize(tr("Disabled Sessions"),ST_DISABLED_SESSIONS));
         }
@@ -514,6 +518,7 @@ QString DailySearchTab::valueToString(int value, QString defaultValue) {
             case opWhole:
                 return QString().setNum(value);
             break;
+            case secondsDisplayString:
             case displayString:
             case opString:
                 return foundString;
@@ -638,6 +643,15 @@ void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
                 selectDouble->setValue(5.0);
                 selectDouble->setSingleStep(0.1);
                 break;
+            case ST_APNEA_LENGTH :
+                DaysWithFileErrors = 0;
+                setResult(DS_ROW_HEADER,1,QDate(),tr("Set of Apnea:Length\nJumps to Date's Events"));
+                nextTab = TW_EVENTS ;
+                setoperation(OP_GE,secondsDisplayString);
+                selectInteger->setRange(0,999);
+                selectInteger->setValue(25);
+                setText(selectUnits,tr(" Seconds"));
+                break;
             case ST_SESSION_LENGTH :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Session Duration\nJumps to Date's Details"));
                 nextTab = TW_DETAILED ;
@@ -653,7 +667,7 @@ void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
                 setoperation(OP_GT,opWhole);
                 selectInteger->setRange(0,999);
                 selectInteger->setValue(2);
-                 setText(selectUnits,tr(" Sessions"));
+                setText(selectUnits,tr(" Sessions"));
                 break;
             case ST_DAILY_USAGE :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Daily Duration\nJumps to Date's Details"));
@@ -677,10 +691,12 @@ void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
         if (operationOpCode == OP_NO_PARMS ) {
             // auto start searching
             setText(startButton,tr("Automatic start"));
+            setColor(startButton,red);
             startButtonMode=true;
             on_startButton_clicked();
             return;
         }
+        setColor(startButton,green);
         return;
 }
 
@@ -740,8 +756,8 @@ void DailySearchTab::updateValues(qint32 value) {
 }
 
 
-void DailySearchTab::find(QDate& date)
-{
+void DailySearchTab::find(QDate& date) {
+        QCoreApplication::processEvents();
         bool found=false;
         Qt::Alignment alignment=Qt::AlignCenter;
         Day* day = p_profile->GetDay(date);
@@ -830,6 +846,88 @@ void DailySearchTab::find(QDate& date)
                 found = compare (ahi , selectValue);
                 }
                 break;
+            case ST_APNEA_LENGTH :
+                {
+                QList<Session *> sessions = day->getSessions(MT_CPAP);
+                QMap<ChannelID,int> values;
+                // find possible channeld to use
+                QList<ChannelID> apneaLikeChannels(ahiChannels.begin(),ahiChannels.end());
+                #if 1
+                if (p_profile->cpap->userEventFlagging()) {
+                    apneaLikeChannels.push_back(CPAP_UserFlag1);
+                    apneaLikeChannels.push_back(CPAP_UserFlag2);
+                }
+                #endif
+                apneaLikeChannels.push_back(CPAP_RERA);
+
+                QList<ChannelID> chans;
+                for( auto code : apneaLikeChannels) {
+                    if (day->count(code)) { chans.push_back(code); }
+                }
+                bool errorFound = false;
+                QString result;
+                if (!chans.isEmpty()) {
+                    for (Session* sess : sessions ) {
+                        if (!sess->enabled()) continue;
+                        auto keys = sess->eventlist.keys();
+                        if (keys.size() <= 0) {
+                            bool ok = sess->LoadSummary(false);
+                            bool ok1 = sess->OpenEvents(false);
+                            keys = sess->eventlist.keys();
+                            if ((keys.size() <= 0) || !ok || !ok1 ) {
+                                if ((keys.size() <= 0) || !ok || !ok1 ) {
+                                    errorFound |= true;
+                                    DEBUGFC O(day->date()) O(keys.size()) Q(daysSkipped) O("NO KEYS STILL")  ;
+                                    // skip this channel
+                                    continue;
+                                }
+                            }
+                        }
+                        for( ChannelID code : chans) {
+                            auto evlist = sess->eventlist.find(code);
+                            if (evlist == sess->eventlist.end()) {
+                                continue;
+                            }
+                            // Now we go through the event list for the *session* (not for the day)
+                            for (int z=0;z<evlist.value().size();z++) {
+                                EventList & ev=*(evlist.value()[z]);
+                                for (quint32 o=0;o<ev.count();o++) {
+                                    int sec = evlist.value()[z]->raw(o);
+                                    if (compare (sec , selectValue)) {
+                                        // save value in map
+                                        auto it = values.find(code);
+                                        if (it == values.end() ) {
+                                            values.insert(code,sec);
+                                        } else {
+                                            // save max or min value in map
+                                            int saved_sec = it.value(); 
+                                            // save highest or lowest value.
+                                            if (compare (sec ,saved_sec) ) {
+                                                *it = sec;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                for ( auto it= values.begin() ; it != values.end() ; it++) {
+                    ChannelID code = it.key();
+                    int value = it.value();
+                    result += QString("%1:%2 ").arg(schema::channel[ code  ].label()).arg(value);
+                }
+                if (errorFound) {
+                    daysSkipped++; 
+                    return;
+                };
+                found = !result.isEmpty();
+                if (found) {
+                    foundString = result;
+                    alignment=Qt::AlignLeft;
+                } 
+                }
+                break;
             case ST_SESSION_LENGTH :
                 {
                 bool valid=false;
@@ -888,8 +986,7 @@ void DailySearchTab::find(QDate& date)
         return ;
 };
 
-void DailySearchTab::search(QDate date)
-{
+void DailySearchTab::search(QDate date) {
         if (!date.isValid()) {
             qWarning() << "DailySearchTab::find invalid date." << date;
             return;
@@ -919,15 +1016,20 @@ void DailySearchTab::addItem(QDate date, QString value,Qt::Alignment alignment) 
 void    DailySearchTab::endOfPass() {
         startButtonMode=false;      // display Continue;
         QString display;
+        if (DaysWithFileErrors) {
+        }
         if ((passFound >= passDisplayLimit) && (daysProcessed<daysTotal)) {
             startButton->setEnabled(true);
             setText(startButton,(tr("Continue Search")));
+            setColor(startButton,green);
         } else if (daysFound>0) {
             startButton->setEnabled(false);
             setText(startButton,tr("End of Search"));
+            setColor(startButton,red);
         } else {
             startButton->setEnabled(false);
             setText(startButton,tr("No Matches"));
+            setColor(startButton,red);
         }
 
         displayStatistics();
@@ -974,11 +1076,11 @@ void    DailySearchTab::on_operationButton_clicked() {
 
 
 void    DailySearchTab::on_matchButton_clicked() {
+        setColor(startButton,grey);
         setCommandPopupEnabled(!commandPopupEnabled);
 }
 
-void    DailySearchTab::on_commandButton_clicked()
-{
+void    DailySearchTab::on_commandButton_clicked() {
         setCommandPopupEnabled(true);
 }
 
@@ -1020,6 +1122,11 @@ void    DailySearchTab::setoperation(OpCode opCode,ValueMode mode)  {
                 setText(selectUnits,tr(" Hours"));
                 selectUnits->show();
                 selectDouble->show();
+                break;
+            case secondsDisplayString:
+                setText(selectUnits,tr(" Seconds"));
+                selectUnits->show();
+                selectInteger->show();
                 break;
             case minutesToMs:
                 setText(selectUnits,tr(" Minutes"));
@@ -1065,9 +1172,11 @@ QSize   DailySearchTab::textsize(QFont font ,QString text) {
 
 void    DailySearchTab::on_clearButton_clicked()
 {
+        DaysWithFileErrors = 0 ;
         searchTopic = ST_NONE;
         // make these button text back to start.
         startButton->setText(tr("Start Search"));
+        setColor(startButton,grey);
         startButtonMode=true;
         startButton->setEnabled( false);
 
@@ -1092,9 +1201,9 @@ void    DailySearchTab::on_clearButton_clicked()
         //controlWidget->show();
 }
 
-void    DailySearchTab::on_startButton_clicked()
-{
+void    DailySearchTab::on_startButton_clicked() {
         hideResults(false);
+        setColor(startButton,grey);
         if (startButtonMode) {
             search (latestDate );
             startButtonMode=false;
@@ -1117,6 +1226,22 @@ void    DailySearchTab::on_textEdited(QString ) {
         criteriaChanged();
 }
 
+void    DailySearchTab::setColor(QPushButton* button,QString color)  {
+        #if 0
+        QPalette pal = button->palette(); 
+        pal.setColor(QPalette::Button, color);
+        button->setPalette(pal);
+        button->setAutoFillBackground(true);
+        #else 
+        QString style=QString(
+            "QPushButton { color: black; border: 1px solid black; padding: 5px ;background-color:%1; }"
+            ).arg(color);
+            //"QPushButton:disabled { background-color:#EEEEEE ;}"
+        button->setStyleSheet(style);
+        #endif
+        QCoreApplication::processEvents();
+}
+
 void    DailySearchTab::displayStatistics() {
         QString extra;
         summaryProgress->show();
@@ -1137,7 +1262,13 @@ void    DailySearchTab::displayStatistics() {
             setText(summaryMinMax,extra);
             summaryMinMax->show();
         } else {
-            summaryMinMax->hide();
+            if (DaysWithFileErrors) {
+                QString msg = tr("File errors:%1");
+                setText(summaryMinMax, QString(msg).arg(DaysWithFileErrors)); 
+                summaryMinMax->show();
+            } else {
+                summaryMinMax->hide();
+            }
         }
         summaryProgress->show();
         summaryFound->show();
@@ -1160,6 +1291,7 @@ void    DailySearchTab::criteriaChanged() {
             case hoursToMs:
                 selectValue = (int)(selectDouble->value()*3600000.0);   //convert to ms
             break;
+            case secondsDisplayString:
             case displayWhole:
             case opWhole:
                 selectValue = selectInteger->value();;
@@ -1175,6 +1307,7 @@ void    DailySearchTab::criteriaChanged() {
         commandButton->show();
 
         setText(startButton,tr("Start Search"));
+        setColor(startButton,green);
         startButtonMode=true;
         startButton->setEnabled( true);
 
@@ -1215,30 +1348,38 @@ QString DailySearchTab::helpStr()
 {
     QStringList str; str
     <<tr("Finds days that match specified criteria.") <<"\n"
-    <<tr("  Searches from last day to first day.") <<"\n" <<"\n"
+    <<tr("  Searches from last day to first day.") <<"\n"
+    <<tr("  Skips Days with no graphing data.") <<"\n"
+    <<"\n"
     <<tr("First click on Match Button then select topic.") <<"\n"
     <<tr("  Then click on the operation to modify it.") <<"\n"
     <<tr("  or update the value") <<"\n"
-    <<tr("Topics without operations will automatically start.") <<"\n" <<"\n"
+    <<"\n"
+    <<tr("Topics without operations will automatically start.") <<"\n" 
+    <<"\n"
     <<tr("Compare Operations: numberic or character. ") <<"\n"
     <<tr("  Numberic  Operations: ") <<"   >  ,  >=  ,  <  ,  <=  ,  ==  ,  != " <<"\n"
-    <<tr("  Character Operations: ") <<"   ==  ,  *? " <<"\n" <<"\n"
+    <<tr("  Character Operations: ") <<"   ==  ,  *? " <<"\n" 
+    <<"\n"
     <<tr("Summary Line") <<"\n"
     <<tr("  Left:Summary - Number of Day searched") <<"\n"
     <<tr("  Center:Number of Items Found") <<"\n"
     <<tr("  Right:Minimum/Maximum for item searched") <<"\n"
+    <<"\n"
     <<tr("Result Table") <<"\n"
     <<tr("  Column One: Date of match. Click selects date.") <<"\n"
     <<tr("  Column two: Information. Click selects date.") <<"\n"
-    <<tr("    Then Jumps the appropiate tab.") <<"\n" <<"\n"
+    <<tr("    Then Jumps the appropiate tab.") <<"\n" 
+    <<"\n"
     <<tr("Wildcard Pattern Matching:") <<" *? " <<"\n"
     <<tr("  Wildcards use 3 characters:") <<"\n"
     <<tr("  Asterisk") <<" *  " <<"   "
-    <<tr(" Question Mark") <<" ? " <<"   "
-    <<tr(" Backslash.") <<" \\ " <<"\n"
+    <<tr("  Question Mark") <<" ? " <<"   "
+    <<tr("  Backslash.") <<" \\ " <<"\n"
     <<tr("  Asterisk matches any number of characters.") <<"\n"
     <<tr("  Question Mark matches a single character.") <<"\n"
-    <<tr("  Backslash matches next character.") <<"\n";
+    <<tr("  Backslash matches next character.") <<"\n\n"
+    ;
     return str.join("");
 }
 
@@ -1296,12 +1437,14 @@ void    DailySearchTab::on_activated(GPushButton* item ) {
 
         item->setIcon (*m_icon_selected);
         daily->LoadDate( item->date() );
+
         if ((col!=0) &&  nextTab>=0 && nextTab < dailyTabWidget->count())  {
             dailyTabWidget->setCurrentIndex(nextTab);    // 0 = details ; 1=events =2 notes ; 3=bookarks;
         }
 }
 
-GPushButton::GPushButton (int row,int column,QDate date,DailySearchTab* parent) : QPushButton(parent), _parent(parent), _row(row), _column(column), _date(date)
+GPushButton::GPushButton (int row,int column,QDate date,DailySearchTab* parent , ChannelID code, quint32 offset) : 
+    QPushButton(parent), _parent(parent), _row(row), _column(column), _date(date), _code(code) , _offset(offset)
 {
         connect(this, SIGNAL(clicked()), this, SLOT(on_clicked()));
         connect(this, SIGNAL(activated(GPushButton*)), _parent, SLOT(on_activated(GPushButton*)));

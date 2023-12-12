@@ -49,6 +49,10 @@ public:
     void updateEvents(ChannelID id,QString fullname);
 
 private:
+    QString red =  "#ff8080";
+    QString green="#80ff80";
+    QString grey= "#c0c0c0";
+    QString blue= "#8080ff";
 
     // these values are hard coded. because dynamic translation might not do the proper assignment.
     // Dynamic code is commented out using c preprocess #if #endif
@@ -64,9 +68,9 @@ private:
     const int     passDisplayLimit = 30;
     const int     stringDisplayLen = 80;
 
-enum ValueMode { invalidValueMode , notUsed , minutesToMs  , hoursToMs , hundredths , opWhole , displayWhole , opString , displayString};
+enum ValueMode { invalidValueMode , notUsed , minutesToMs  , hoursToMs , hundredths , opWhole , displayWhole , opString , displayString, secondsDisplayString};
 
-enum SearchTopic { ST_NONE = 0 , ST_DAYS_SKIPPED = 1 , ST_DISABLED_SESSIONS = 2 , ST_NOTES = 3 , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE, ST_EVENT };
+enum SearchTopic { ST_NONE = 0 , ST_DAYS_SKIPPED = 1 , ST_DISABLED_SESSIONS = 2 , ST_NOTES = 3 , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE , ST_APNEA_LENGTH , ST_EVENT };
 
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
@@ -136,6 +140,7 @@ enum OpCode {
     QSize       setText(QPushButton*,QString);
     QSize       setText(QLabel*,QString);
     QSize       textsize(QFont font ,QString text);
+    void        setColor(QPushButton*,QString);
 
     void        search(QDate date);
     void        find(QDate&);
@@ -185,6 +190,7 @@ enum OpCode {
     int         daysProcessed;
     int         daysFound;
     int         passFound;
+    int         DaysWithFileErrors;
 
     void        setoperation(OpCode opCode,ValueMode mode) ;
 
@@ -231,17 +237,23 @@ class GPushButton : public QPushButton
 {
 	Q_OBJECT
 public:
-    GPushButton (int,int,QDate,DailySearchTab* parent); 
+    GPushButton (int,int,QDate,DailySearchTab* parent, ChannelID code=0, quint32 offset=0); 
     virtual ~GPushButton(); 
     int row() { return _row;};
     int column() { return _column;};
     QDate date() { return _date;};
+    ChannelID code() {return _code;};
+    quint32 offset() {return _offset;};
     void setDate(QDate date) {_date=date;};
+    void setChannelId(ChannelID code) {_code=code;};
+    void setOffset(quint32 offset) {_offset=offset;};
 private:
     const DailySearchTab* _parent;
     const int _row;
     const int _column;
     QDate _date;
+    ChannelID _code;
+    quint32 _offset;
 signals:
     void activated(GPushButton*);
 public slots:
