@@ -330,9 +330,6 @@ void DailySearchTab::populateControl() {
         opCodeMap.insert( opCodeStr(OP_LE),OP_LE);
         opCodeMap.insert( opCodeStr(OP_GE),OP_GE);
         opCodeMap.insert( opCodeStr(OP_EQ),OP_EQ);
-        opCodeMap.insert( opCodeStr(OP_NE),OP_NE);
-        opCodeMap.insert( opCodeStr(OP_CONTAINS),OP_CONTAINS);
-        opCodeMap.insert( opCodeStr(OP_WILDCARD),OP_WILDCARD);
 
         // The order here is the order in the popup box
         operationCombo->clear();
