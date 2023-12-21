@@ -337,7 +337,6 @@ private:
     QHash<QString, gGraph *> graphlist;
 
     QHash<QString,QPushButton *> GraphToggles;
-    QVector<QAction *> GraphAction;
     QGLContext *offscreen_context;
 
     QList<int> splitter_sizes;
