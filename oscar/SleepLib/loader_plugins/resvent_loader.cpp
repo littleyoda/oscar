@@ -353,8 +353,7 @@ EventList* GetEventList(const QString& name, Session* session, float sample_rate
         return session->AddEventList(CPAP_EPAP, EVL_Event);
     }
     else if (name == "Leak") {
-        // was was adjusted from the default 1.0 to 13. so that the graph of gain would match iMatrix values.
-        return session->AddEventList(CPAP_Leak, EVL_Event, 13.0);
+        return session->AddEventList(CPAP_Leak, EVL_Event);
     }
     else if (name == "Vt") {
         return session->AddEventList(CPAP_TidalVolume, EVL_Event);
