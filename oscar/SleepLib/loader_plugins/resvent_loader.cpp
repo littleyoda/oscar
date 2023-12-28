@@ -67,32 +67,6 @@ constexpr int kDescriptionCountOffset = 0x12;
 constexpr int kDescriptionSamplesByChunk = 0x1e;
 constexpr double kDefaultGain = 0.01;
 
-int countDaysWithRecordData(QDir& dir) {
-    int count = 0;
-    QDirIterator it(dir);
-    while (it.hasNext()) {
-        QFileInfo fi = it.next();
-        QString filename = fi.fileName();
-        if (filename == "." || filename == "..") continue;
-        bool isDir = dir.cd(filename);
-        if (isDir) {
-            // It is a directory.
-            // check if name is between 1 and 31. for day in month
-            int dayInMonth = filename.toInt();
-            if ( dayInMonth>0 && dayInMonth<=31) {
-                // in month folder.
-                count++;
-            }  else {
-                // recurse into folder.
-                count += countDaysWithRecordData(dir);
-            }
-            //Change back to parent.
-            dir.cdUp();
-        }
-    }
-    return count;
-}
-
 bool ResventLoader::Detect(const QString & givenpath)
 {
     QDir dir(givenpath);
@@ -113,13 +87,6 @@ bool ResventLoader::Detect(const QString & givenpath)
     if (!dir.cd(kResventRecordFolder)) {
         return false;
     }
-
-    int count = countDaysWithRecordData(dir);
-
-    progress =  0;
-    emit setProgressMax(count+1);
-    emit setProgressValue(progress);
-    QCoreApplication::processEvents();
     return true;
 }
 
@@ -256,9 +223,7 @@ QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
 
 bool VerifyEvent(EventData& eventData) {
     switch (eventData.type) {
-        case EventType::Snore:
         case EventType::FlowLimitation:
-        case EventType::PeriodicBreathing:
         case EventType::Hypopnea:
         case EventType::ObstructiveApnea:       // OA
         case EventType::CentralApnea:           // CA and same clear airway.
@@ -268,11 +233,11 @@ bool VerifyEvent(EventData& eventData) {
         case EventType::RERA:
             eventData.duration = 0 ;    // duration is large and suppress duration display of eariler OA events.
             break;
+        case EventType::PeriodicBreathing:
+        case EventType::Snore:
         default:
-            DEBUGFW Q((int)eventData.type) O(eventData.date_time) Q(eventData.duration);
             break;
     }
-
     return true;
 }
 
@@ -323,7 +288,7 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
     std::for_each(mapping.cbegin(), mapping.cend(), [&](EventType event_type){
         UpdateEvents(event_type, events, session);
     });
-    session->settings[CPAP_PressureMin] = 4.0;
+    session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
     session->settings[CPAP_PressureMax] = 20.0 ; // was qMax(session->calcMax(CPAP_Pressure),session->calcMax(CPAP_IPAP)); // this results in a change of device settings.
 
 }
@@ -411,7 +376,6 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
     f.seek(kDescriptionCountOffset);
     const auto description_count = read_from_file<uint16_t>(f);
     wave_forms.resize(description_count);
-	//DEBUGFW Q(chunk_duration_in_sec) Q(description_count);
 
     for (unsigned int i = 0; i < description_count; i++) {
         const auto description_header_offset = kMainHeaderSize + i * kDescriptionHeaderSize;
@@ -424,12 +388,6 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
         wave_forms[i].event_list = GetEventList(name, session, wave_forms[i].sample_rate);
         wave_forms[i].samples_by_chunk = samples_by_chunk;
         wave_forms[i].start_time = usage.start_time.toMSecsSinceEpoch();
-        DEBUGFW Q(name)
-            Q(samples_by_chunk)
-            QQ("sampleRate",wave_forms[i].sample_rate )
-            QQ("epoch", wave_forms[i].start_time  )
-            DATETIME(wave_forms[i].start_time)
-			;
     }
 }
 
@@ -640,7 +598,7 @@ QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
     return usage_data;
 }
 
-int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
+int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
@@ -666,8 +624,6 @@ int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date
         session->UpdateSummaries();
         session->Store(machine->getDataPath());
         machine->AddSession(session);
-        emit setProgressValue(++progress);
-        QCoreApplication::processEvents();
         ++base;
     };
     return base;
@@ -688,16 +644,24 @@ int ResventLoader::Open(const QString & dirpath)
     }
 
     const auto sessions_date = GetSessionsDate(dirpath);
+    int progress =  0;
+    emit setProgressMax(1+sessions_date.size());    // add one to include Save in progress.
+    emit setProgressValue(progress);
+    QCoreApplication::processEvents();
 
     Machine *machine = p_profile->CreateMachine(machine_info);
 
     int new_sessions = 0;
     std::for_each(sessions_date.cbegin(), sessions_date.cend(), [&](const QDate& session_date){
         new_sessions += LoadSession(dirpath, session_date, machine);
+        emit setProgressValue(++progress);
+        QCoreApplication::processEvents();
     });
 
     machine->Save();
 
+    emit setProgressValue(++progress);
+    QCoreApplication::processEvents();
     return new_sessions;
 }
 
