@@ -66,6 +66,8 @@ constexpr int kChunkDurationInSecOffset = 0x10;
 constexpr int kDescriptionCountOffset = 0x12;
 constexpr int kDescriptionSamplesByChunk = 0x1e;
 constexpr double kDefaultGain = 0.01;
+constexpr double kMilliSecGain = 0.001;
+constexpr double kRespRateGain = 0.1;
 
 bool ResventLoader::Detect(const QString & givenpath)
 {
@@ -309,37 +311,35 @@ struct WaveFileData {
 
 EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
     if (name == "Press") {
-        return session->AddEventList(CPAP_Pressure, EVL_Event);
+        return session->AddEventList(CPAP_Pressure, EVL_Event,kDefaultGain);
     }
     else if (name == "IPAP") {
-        return session->AddEventList(CPAP_IPAP, EVL_Event);
+        return session->AddEventList(CPAP_IPAP, EVL_Event,kDefaultGain);
     }
     else if (name == "EPAP") {
-        return session->AddEventList(CPAP_EPAP, EVL_Event);
+        return session->AddEventList(CPAP_EPAP, EVL_Event,kDefaultGain);
     }
     else if (name == "Leak") {
-        return session->AddEventList(CPAP_Leak, EVL_Event);
+        return session->AddEventList(CPAP_Leak, EVL_Event,kDefaultGain);
     }
     else if (name == "Vt") {
-        return session->AddEventList(CPAP_TidalVolume, EVL_Event);
+        return session->AddEventList(CPAP_TidalVolume, EVL_Event,kDefaultGain);
     }
     else if (name == "MV") {
-        return session->AddEventList(CPAP_MinuteVent, EVL_Event);
+        return session->AddEventList(CPAP_MinuteVent, EVL_Event,kDefaultGain);
     }
     else if (name == "RR") {
-        return session->AddEventList(CPAP_RespRate, EVL_Event);
+        return session->AddEventList(CPAP_RespRate, EVL_Event,kRespRateGain);
     }
     else if (name == "Ti") {
-        return session->AddEventList(CPAP_Ti, EVL_Event);
+        return session->AddEventList(CPAP_Ti, EVL_Event,kMilliSecGain);
     }
     else if (name == "I:E") {
-        return session->AddEventList(CPAP_IE, EVL_Event);
-    }
-    else if (name == "SpO2" || name == "PR") {
+        return session->AddEventList(CPAP_IE, EVL_Event,kMilliSecGain);
+    } else if (name == "SpO2" || name == "PR") {
         // Not present
         return nullptr;
-    }
-    else if (name == "Pressure") {
+    } else if (name == "Pressure") {
         return session->AddEventList(CPAP_MaskPressure, EVL_Waveform, kDefaultGain, 0.0, 0.0, 0.0, 1000.0 / sample_rate);
     }
     else if (name == "Flow") {
@@ -399,7 +399,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
     QVector<ChunkData> wave_forms;
     bool initialized = false;
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
-        // W01_ file
+        // P01_ file
         QFile f(session_folder_path + QDir::separator() + wave_file);
         f.open(QIODevice::ReadOnly);
 
@@ -430,7 +430,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
 
                     int offset = 0;
                     std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value * kDefaultGain);
+                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value );
                         offset += 1000.0 / sample_rate;
                     });
                 }
@@ -450,7 +450,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
             if (wave_form.event_list) {
                 int offset = 0;
                 std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value * kDefaultGain);
+                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value );
                     offset += 1000.0 / wave_form.sample_rate;
                 });
             }
