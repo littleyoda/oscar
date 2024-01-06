@@ -15,7 +15,8 @@
 // i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
-#define TEST_MACROS_ENABLEDoff         // Turn off for offical release.
+// Turn off for offical release.
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QCoreApplication>
@@ -59,15 +60,18 @@ const QString kResventTherapyFolder = "THERAPY";
 const QString kResventConfigFolder = "CONFIG";
 const QString kResventRecordFolder = "RECORD";
 const QString kResventSysConfigFilename = "SYSCFG";
-constexpr qint64 kDateTimeOffset = 7 * 60 * 60 * 1000;
+constexpr qint64 kDateTimeOffset = 7 * 60 * 60 * 1000;    // why is 7 hours added.??? COnvert to gmt??
 constexpr int kMainHeaderSize = 0x24;
 constexpr int kDescriptionHeaderSize = 0x20;
 constexpr int kChunkDurationInSecOffset = 0x10;
 constexpr int kDescriptionCountOffset = 0x12;
 constexpr int kDescriptionSamplesByChunk = 0x1e;
-constexpr double kDefaultGain = 0.01;
-constexpr double kMilliSecGain = 0.001;
-constexpr double kRespRateGain = 0.1;
+constexpr double kMilliGain = 0.001;
+constexpr double kHundredthGain = 0.01;
+constexpr double kTenthGain = 0.1;
+constexpr double kNoGain = 1.0;
+
+constexpr double kDefaultGain = kHundredthGain ;           // For Flow (rate) and (mask)Pressure - High Resolutions data.
 
 bool ResventLoader::Detect(const QString & givenpath)
 {
@@ -243,7 +247,7 @@ bool VerifyEvent(EventData& eventData) {
     return true;
 }
 
-void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage) {
+void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage ) {
     const auto event_file_path = session_folder_path + QDir::separator() + "EV" + usage.number;
     // Oscar (resmed) plots events at end.
 
@@ -290,9 +294,6 @@ void LoadEvents(const QString& session_folder_path, Session* session, const Usag
     std::for_each(mapping.cbegin(), mapping.cend(), [&](EventType event_type){
         UpdateEvents(event_type, events, session);
     });
-    session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
-    session->settings[CPAP_PressureMax] = 20.0 ; // was qMax(session->calcMax(CPAP_Pressure),session->calcMax(CPAP_IPAP)); // this results in a change of device settings.
-
 }
 
 template <typename T>
@@ -310,32 +311,33 @@ struct WaveFileData {
 };
 
 EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
+    DEBUGFC Q(name);
     if (name == "Press") {
-        return session->AddEventList(CPAP_Pressure, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_Pressure, EVL_Event, kHundredthGain);
     }
     else if (name == "IPAP") {
-        return session->AddEventList(CPAP_IPAP, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_IPAP, EVL_Event, kHundredthGain);
     }
     else if (name == "EPAP") {
-        return session->AddEventList(CPAP_EPAP, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_EPAP, EVL_Event, kHundredthGain);
     }
     else if (name == "Leak") {
-        return session->AddEventList(CPAP_Leak, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_Leak, EVL_Event , kTenthGain);
     }
     else if (name == "Vt") {
-        return session->AddEventList(CPAP_TidalVolume, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_TidalVolume, EVL_Event , kNoGain);
     }
     else if (name == "MV") {
-        return session->AddEventList(CPAP_MinuteVent, EVL_Event,kDefaultGain);
+        return session->AddEventList(CPAP_MinuteVent, EVL_Event , kHundredthGain);
     }
     else if (name == "RR") {
-        return session->AddEventList(CPAP_RespRate, EVL_Event,kRespRateGain);
+        return session->AddEventList(CPAP_RespRate, EVL_Event, kTenthGain);
     }
     else if (name == "Ti") {
-        return session->AddEventList(CPAP_Ti, EVL_Event,kMilliSecGain);
+        return session->AddEventList(CPAP_Ti, EVL_Event, kMilliGain);
     }
     else if (name == "I:E") {
-        return session->AddEventList(CPAP_IE, EVL_Event,kMilliSecGain);
+        return session->AddEventList(CPAP_IE, EVL_Event, kMilliGain);
     } else if (name == "SpO2" || name == "PR") {
         // Not present
         return nullptr;
@@ -358,6 +360,10 @@ struct ChunkData {
     qint64 start_time;
     int total_samples_by_chunk;
     float sample_rate;
+    #ifdef TEST_MACROS_ENABLED
+    QString chunkName ;
+    int chunkDebug = -1;
+    #endif
 };
 
 QString ReadDescriptionName(QFile& f) {
@@ -376,6 +382,7 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
     f.seek(kDescriptionCountOffset);
     const auto description_count = read_from_file<uint16_t>(f);
     wave_forms.resize(description_count);
+	DEBUGFC Q(chunk_duration_in_sec) Q(description_count);
 
     for (unsigned int i = 0; i < description_count; i++) {
         const auto description_header_offset = kMainHeaderSize + i * kDescriptionHeaderSize;
@@ -388,6 +395,19 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
         wave_forms[i].event_list = GetEventList(name, session, wave_forms[i].sample_rate);
         wave_forms[i].samples_by_chunk = samples_by_chunk;
         wave_forms[i].start_time = usage.start_time.toMSecsSinceEpoch();
+        #ifdef TEST_MACROS_ENABLED
+        wave_forms[i].chunkName = name;
+        wave_forms[i].chunkDebug = -1;
+
+        DEBUGNC O( wave_forms[i].chunkName) DATETIME(wave_forms[i].start_time) O(usage.number);
+        //IF ((name == "I:E" || name == "Ti") && f.fileName().contains("P01_01"))
+        //DEBUGFC Q( wave_forms[i].chunkName) O(f.fileName()) ;
+        IF ( (name == "Leak") &&  f.fileName().contains("P01_01"))
+        OO ({
+            wave_forms[i].chunkDebug = 1;
+            DEBUGFC Q( wave_forms[i].chunkName) DATETIME(wave_forms[i].start_time) O("\n") O(f.fileName()) ;
+        })
+        #endif
     }
 }
 
@@ -400,6 +420,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
     bool initialized = false;
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
         // P01_ file
+        DEBUGFC O("LoadOtherWaveForms") Q(usage.number);
         QFile f(session_folder_path + QDir::separator() + wave_file);
         f.open(QIODevice::ReadOnly);
 
@@ -415,6 +436,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
         while (!f.atEnd()) {
             for (int i = 0; i < wave_forms.size(); i++) {
                 const auto& wave_form = wave_forms[i].event_list;
+                IF (wave_forms[i].chunkDebug>0) DEBUGFC O(wave_forms[i].chunkName) O(wave_form);
                 const auto samples_by_chunk_actual = wave_forms[i].samples_by_chunk;
                 auto& start_time_current = wave_forms[i].start_time;
                 auto& total_samples_by_chunk = wave_forms[i].total_samples_by_chunk;
@@ -424,13 +446,15 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                 const auto readed = f.read(reinterpret_cast<char*>(chunk.data()), chunk.size() * sizeof(qint16));
                 if (wave_form) {
                     const auto readed_elements = readed / sizeof(qint16);
+                    IF (wave_forms[i].chunkDebug>0) DEBUGFC Q(readed_elements) Q(samples_by_chunk_actual);
                     if (readed_elements != samples_by_chunk_actual) {
                         std::fill(std::begin(chunk) + readed_elements, std::end(chunk), 0);
                     }
 
                     int offset = 0;
-                    std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value );
+             std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
+                        IF (wave_forms[i].chunkDebug>0 && value>0) DEBUGFC O(wave_forms[i].chunkName) DATETIME(start_time_current + offset + kDateTimeOffset) O(value) Q(offset) Q(sample_rate);
+                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value);
                         offset += 1000.0 / sample_rate;
                     });
                 }
@@ -451,6 +475,12 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                 int offset = 0;
                 std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
                     wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value );
+                    IF (wave_forms[i].chunkDebug>0 && offset>=0 && value > 0)
+                        DEBUGFC O(wave_forms[i].chunkName)
+                        DATETIME(wave_form.start_time + offset + kDateTimeOffset)
+                        O(value)
+                        //Q(sample_rate)
+                        ;
                     offset += 1000.0 / wave_form.sample_rate;
                 });
             }
@@ -486,6 +516,7 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
                 auto& start_time_current = wave_forms[i].start_time;
                 auto& total_samples_by_chunk = wave_forms[i].total_samples_by_chunk;
                 const auto sample_rate = wave_forms[i].sample_rate;
+                //DEBUGFC O(wave_forms[i].chunkName) DATE(wave_forms[i].start_time) Q(usage.number);
 
                 const auto duration = samples_by_chunk_actual * 1000.0 / sample_rate;
                 const auto readed = f.read(reinterpret_cast<char*>(chunk.data()), chunk.size() * sizeof(qint16));
@@ -496,7 +527,6 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
                     }
                     wave_form->AddWaveform(start_time_current + kDateTimeOffset, chunk.data(), samples_by_chunk_actual, duration);
                 }
-
                 start_time_current += duration;
                 total_samples_by_chunk += samples_by_chunk_actual;
             }
@@ -517,15 +547,10 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
     }
 }
 
-void LoadStats(const UsageData& /*usage_data*/, Session* session) {
-    //    session->settings[CPAP_AHI] = usage_data.countAHI;
-    //    session->setCount(CPAP_AI, usage_data.countAI);
-    //    session->setCount(CPAP_CAI, usage_data.countCAI);
-    //    session->setCount(CPAP_HI, usage_data.countHI);
-    //    session->setCount(CPAP_Obstructive, usage_data.countOAI);
-    //    session->settings[CPAP_RERA] = usage_data.countRERA;
-    //    session->settings[CPAP_Snore] = usage_data.countSNI;
+void LoadStats(const UsageData& /*usage_data*/, Session* session ) {
     session->settings[CPAP_Mode] = MODE_APAP;
+    session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
+    session->settings[CPAP_PressureMax] = 20.0;   // these value are hard coded for now.
 }
 
 UsageData ReadUsage(const QString& session_folder_path, const QString& usage_number) {
@@ -585,6 +610,7 @@ QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
     QDir session_folder(session_folder_path);
 
     const auto stat_files = session_folder.entryList(QStringList() << "STAT*", QDir::Files, QDir::Name);
+
     QVector<UsageData> usage_data;
     std::for_each(stat_files.cbegin(), stat_files.cend(), [&](const QString& stat_file){
         if (stat_file.size() != 6) {
@@ -599,6 +625,7 @@ QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
 }
 
 int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
+    // Handles one day - all OSCAR sessions for a  day.
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
@@ -651,7 +678,9 @@ int ResventLoader::Open(const QString & dirpath)
 
     Machine *machine = p_profile->CreateMachine(machine_info);
 
+
     int new_sessions = 0;
+    // do for each day found.
     std::for_each(sessions_date.cbegin(), sessions_date.cend(), [&](const QDate& session_date){
         new_sessions += LoadSession(dirpath, session_date, machine);
         emit setProgressValue(++progress);
