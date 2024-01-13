@@ -1,6 +1,6 @@
 ﻿/* SleepLib Resvent Loader Implementation
  *
- * Copyright (c) 2019-2023 The OSCAR Team
+ * Copyright (c) 2019-2024 The OSCAR Team
  * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public

@@ -2,7 +2,7 @@
  *
  * Date created: 7/5/2018
  *
- * Copyright (c) 2019-2022 The OSCAR Team
+ * Copyright (c) 2019-2024 The OSCAR Team
  * Copyright (c) 2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
