@@ -35,7 +35,6 @@
 #include "common_gui.h"
 #include "SleepLib/profiles.h"
 #include "SleepLib/session.h"
-#include "Graphs/graphdata_custom.h"
 #include "Graphs/gLineOverlay.h"
 #include "Graphs/gFlagsLine.h"
 #include "Graphs/gFooBar.h"
