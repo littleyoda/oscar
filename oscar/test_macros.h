@@ -1,6 +1,6 @@
 /* Test macros Implemntation
  *
- * Copyright (c) 2019-2024 The OSCAR Team
+ * Copyright (c) 2019-2022 The OSCAR Team
  * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
  *
  * This file is subject to the terms and conditions of the GNU General Public
@@ -47,7 +47,7 @@ To turn off the the test macros.
 #define DEBUGFW  DEBUGW	<<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGFC  DEBUGC <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
 #define DEBUGFD  DEBUGD <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
-#define DEBUGFI  DEBUGI <<QString("%1[%2]%3").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__).arg(__func__)
+#define DEBUGNC  DEBUGC <<QString("%1[%2").arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
 
 
 #define DEBUGT   DEBUGQ	<<QString("%1 %2[%3]%4").arg(QDateTime::currentDateTime().time().toString("hh:mm:ss.zzz")).arg(QFileInfo( __FILE__).baseName()).arg(__LINE__)
@@ -59,6 +59,7 @@ To turn off the the test macros.
 #define ZZ( A ,EXPRESSION ) 		/* comment out display of variable */
                                     // Macros to display variables
 #define O( EXPRESSION ) 			<<  EXPRESSION
+#define OO( EXPRESSION ) 			    EXPRESSION
 #define Q( VALUE ) 			        <<  "" #VALUE ":" << VALUE
 #define QQ( TEXT , EXPRESSION) 		<<  #TEXT ":" << EXPRESSION
 //#define Q( VALUE ) 			        <<  QString("%1:%2").arg( ""  #VALUE).arg(VALUE)
@@ -120,7 +121,7 @@ To turn off the the test macros.
 #define DEBUGFW
 #define DEBUGFC
 #define DEBUGFD
-#define DEBUGFI
+#define DEBUGNC
 #define DEBUGT
 #define DEBUGTF
 #define DEBUGTFW
@@ -128,6 +129,7 @@ To turn off the the test macros.
 #define Z( XX )
 #define ZZ( XX , YY)
 #define O( XX )
+#define OO( XX )
 #define Q( XX )
 #define QQ( XX , YY )
 #define NAME( id)

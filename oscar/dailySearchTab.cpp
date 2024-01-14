@@ -9,7 +9,7 @@
 // Issues no clear of results between runs or between passes.
 // automatically open event. in graph view for events TAB
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QWidget>
