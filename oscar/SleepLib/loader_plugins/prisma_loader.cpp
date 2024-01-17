@@ -194,11 +194,11 @@ void PrismaImport::run()
 
             break;
         }
-        session->settings[CPAP_PressureMin] = parameters[PRISMA_SMART_PRESSURE] / 100;
-        session->settings[CPAP_PressureMax] = parameters[PRISMA_SMART_PRESSURE_MAX] / 100;
+        session->settings[CPAP_PressureMin] = parameters[PRISMA_SMART_PRESSURE] / 100.0;
+        session->settings[CPAP_PressureMax] = parameters[PRISMA_SMART_PRESSURE_MAX] / 100.0;
         session->settings[Prisma_SoftPAP] = parameters[PRISMA_SMART_SOFTPAP];
         session->settings[Prisma_PSoft] = parameters[PRISMA_SMART_PSOFT] / 100.0;
-        session->settings[Prisma_PSoft_Min] = parameters[PRISMA_SMART_PSOFT_MIN] / 100;
+        session->settings[Prisma_PSoft_Min] = parameters[PRISMA_SMART_PSOFT_MIN] / 100.0;
         session->settings[Prisma_AutoStart] = parameters[PRISMA_SMART_AUTOSTART];
 
         session->settings[Prisma_Softstart_Time] = parameters[PRISMA_SMART_SOFTSTART_TIME];
