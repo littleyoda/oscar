@@ -53,10 +53,12 @@ QString alternatingColor(int& counter) {
     counter++;
     int offset = counter %= 3;
     if ( offset == 0) {
-        return "#d0ffd0";       // very lightgreen
+        //return "#d0ffd0";       // very lightgreen
         //return "#d8ffd8";       // very lightgreen
         //return "#e0ffe0";       // very lightgreen
-        //return "#e8ffe8";       // very lightgreen even lighter
+        return "#e8ffe8";       // very lightgreen even lighter
+        //return "#f0fff0";       // very lightgreen
+        //return "#f8fff8";       // very lightgreen
     }
     return "#ffffff";
 }
