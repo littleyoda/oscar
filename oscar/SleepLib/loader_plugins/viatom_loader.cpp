@@ -314,7 +314,11 @@ bool ViatomFile::ParseHeader()
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
 
     QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
-    QString format_string = "yyyyMMddHHmmss";
+  
+    int lastPoint = date_string.lastIndexOf("."); // Added to strip off any filename extension
+    date_string = date_string.left(lastPoint);
+
+      QString format_string = "yyyyMMddHHmmss";
     if (date_string.contains(":")) {
         format_string = "yyyy-MM-dd HH:mm:ss";
     }
