@@ -60,7 +60,7 @@ const QString kResventTherapyFolder = "THERAPY";
 const QString kResventConfigFolder = "CONFIG";
 const QString kResventRecordFolder = "RECORD";
 const QString kResventSysConfigFilename = "SYSCFG";
-constexpr qint64 kDateTimeOffset = 7 * 60 * 60 * 1000;    // why is 7 hours added.??? COnvert to gmt??
+constexpr qint64 kDateTimeOffset = 8 * 60 * 60 * 1000; // Offset to GMT
 constexpr int kMainHeaderSize = 0x24;
 constexpr int kDescriptionHeaderSize = 0x20;
 constexpr int kChunkDurationInSecOffset = 0x10;
@@ -216,7 +216,7 @@ void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>
 
     EventList* event_list  = session->AddEventList(it_mapping.value(), EVL_Event);
     std::for_each(it_events.value().cbegin(), it_events.value().cend(), [&](const EventData& event_data){
-        event_list->AddEvent(event_data.date_time.toMSecsSinceEpoch() + kDateTimeOffset, event_data.duration);
+        event_list->AddEvent(event_data.date_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset(), event_data.duration);
     });
 }
 
@@ -453,8 +453,8 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
 
                     int offset = 0;
              std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                        IF (wave_forms[i].chunkDebug>0 && value>0) DEBUGFC O(wave_forms[i].chunkName) DATETIME(start_time_current + offset + kDateTimeOffset) O(value) Q(offset) Q(sample_rate);
-                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset, value);
+                        IF (wave_forms[i].chunkDebug>0 && value>0) DEBUGFC O(wave_forms[i].chunkName) DATETIME(start_time_current + offset + kDateTimeOffset - timezoneOffset()) O(value) Q(offset) Q(sample_rate);
+                        wave_form->AddEvent(start_time_current + offset + kDateTimeOffset - timezoneOffset(), value);
                         offset += 1000.0 / sample_rate;
                     });
                 }
@@ -474,10 +474,10 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
             if (wave_form.event_list) {
                 int offset = 0;
                 std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset, value );
+                    wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset - timezoneOffset(), value );
                     IF (wave_forms[i].chunkDebug>0 && offset>=0 && value > 0)
                         DEBUGFC O(wave_forms[i].chunkName)
-                        DATETIME(wave_form.start_time + offset + kDateTimeOffset)
+                        DATETIME(wave_form.start_time + offset + kDateTimeOffset - timezoneOffset())
                         O(value)
                         //Q(sample_rate)
                         ;
@@ -525,7 +525,7 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
                     if (readed_elements != samples_by_chunk_actual) {
                         std::fill(std::begin(chunk) + readed_elements, std::end(chunk), 0);
                     }
-                    wave_form->AddWaveform(start_time_current + kDateTimeOffset, chunk.data(), samples_by_chunk_actual, duration);
+                    wave_form->AddWaveform(start_time_current + kDateTimeOffset - timezoneOffset(), chunk.data(), samples_by_chunk_actual, duration);
                 }
                 start_time_current += duration;
                 total_samples_by_chunk += samples_by_chunk_actual;
@@ -541,7 +541,7 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
             chunk.resize(expected_samples - wave_form.total_samples_by_chunk);
             if (wave_form.event_list) {
                 const auto duration = chunk.size() * 1000.0 / wave_form.sample_rate;
-                wave_form.event_list->AddWaveform(wave_form.start_time + kDateTimeOffset, chunk.data(), chunk.size(), duration);
+                wave_form.event_list->AddWaveform(wave_form.start_time + kDateTimeOffset - timezoneOffset(), chunk.data(), chunk.size(), duration);
             }
         }
     }
@@ -634,15 +634,15 @@ int LoadSession(const QString& dirpath, const QDate& session_date, Machine* mach
     int base = 0;
     for (auto usage : different_usage)
     {
-        if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset)) {
+        if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset())) {
             // session alreadt exists
             //return base;
             continue;
         }
-        Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset);
+        Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         session->SetChanged(true);
-        session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset);
-        session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset);
+        session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
+        session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         LoadStats(usage, session);
         LoadWaveForms(session_folder_path, session, usage);
         LoadOtherWaveForms(session_folder_path, session, usage);
