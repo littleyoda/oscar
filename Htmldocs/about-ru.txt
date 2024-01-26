@@ -1,0 +1,55 @@
+Welcome to OSCAR,
+the Open Source CPAP Analysis Reporter
+This software has been designed to assist you in reviewing the data produced by your CPAP devices and related equipment.
+
+Volunteers translated it into many languages. Click the Help tab to change the displayed language.
+
+Any Chromium-based browser like Google Chrome or Microsoft Edge Chromium currently offers the best automatic translation options.
+You will find extensive help in the OSCAR Wiki. Open http://www.apneaboard.com/wiki/index.php/OSCAR_Help.
+
+For questions visit http://www.apneaboard.com or a local apnea forum.
+=========================================================================================================================================
+PLEASE READ CAREFULLY
+=========================================================================================================================================
+OSCAR is NOT a substitute for competent medical guidance from your Doctor.
+
+Due to the lack of documentation released by manufacturers regarding file formats, the accuracy of data displayed in OSCAR can not in any way be guaranteed.
+
+All reports generated are for PERSONAL USE ONLY and are intended to be as accurate as possible.
+
+OSCAR reports are based on data reported by the CPAP machine. Acceptance of this data for compliance or other purposes is subject to the approval discretion of the reviewing agency.
+The use of this software is entirely at your own risk. The authors will not be held liable for anything related to the use or misuse of this software.
+=========================================================================================================================================
+OSCAR is free (as in freedom) software, released under the GNU Public License v3, and comes with no warranty, and without ANY claims to fitness for any purpose.
+
+OSCAR is © 2019-2022 The OSCAR Team: a group of volunteer developers from the Apnea Community and members of multiple forums and various nationalities.
+
+OSCAR is a derivative of the SleepyHead program which is copyright © 2011-2018, Mark Watkins.
+----------------------------------------------------------------------------------------------------------------------------------------
+Добро пожаловать в OSCAR,
+Open Source CPAP Analysis Reporter
+Это программное обеспечение было разработано для того, чтобы помочь вам в анализе данных, получаемых вашими CPAP-аппаратами и сопутствующим оборудованием.
+
+Добровольцы перевели его на многие языки. Перейдите на вкладку "Справка", чтобы изменить отображаемый язык.
+
+Любой браузер на базе Chromium, например Google Chrome или Microsoft Edge Chromium в настоящее время предлагает лучшие возможности автоматического перевода.
+Вы найдете обширную помощь в OSCAR Wiki. Откройте http://www.apneaboard.com/wiki/index.php/OSCAR_Help.
+
+Для получения ответов на вопросы посетите http://www.apneaboard.com или местный форум по апноэ.
+=========================================================================================================================================
+ПОЖАЛУЙСТА, ВНИМАТЕЛЬНО ПРОЧИТАЙТЕ
+=========================================================================================================================================
+OSCAR НЕ является заменой компетентному медицинскому руководству вашего врача.
+
+Из-за отсутствия документации, выпущенной производителями в отношении форматов файлов, точность данных, отображаемых в OSCAR, не может быть гарантирована.
+
+Все создаваемые отчеты предназначены ТОЛЬКО ДЛЯ ЛИЧНОГО ИСПОЛЬЗОВАНИЯ и должны быть максимально точными.
+
+Отчеты OSCAR основаны на данных, сообщаемых CPAP-аппаратом. Принятие этих данных для соответствия требованиям или других целей зависит от усмотрения проверяющей организации.
+Использование данного программного обеспечения осуществляется исключительно на ваш страх и риск. Авторы не несут ответственности за что-либо, связанное с использованием или неправильным использованием данного программного обеспечения.
+========================================================================================================================================
+OSCAR является свободным (в смысле свободы) программным обеспечением, выпускается под GNU Public License v3, поставляется без гарантий и без ЛЮБЫХ претензий на пригодность для любых целей.
+
+OSCAR - это © 2019-2022 The OSCAR Team: группа разработчиков-добровольцев из сообщества Apnea и членов многочисленных форумов и различных национальностей.
+
+OSCAR является производной от программы SleepyHead, авторские права на которую © 2011-2018, Марк Уоткинс.
