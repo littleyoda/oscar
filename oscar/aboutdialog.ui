@@ -32,7 +32,7 @@
      </property>
      <widget class="QWidget" name="aboutTab">
       <attribute name="title">
-       <string>&amp;About</string>
+       <string>About</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>

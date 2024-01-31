@@ -1771,7 +1771,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Information Page</string>
+         <string>Information Page</string>
         </property>
        </widget>
       </item>
@@ -1790,7 +1790,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Cancel</string>
+         <string>Cancel</string>
         </property>
        </widget>
       </item>
@@ -1809,7 +1809,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Retry</string>
+         <string>Retry</string>
         </property>
        </widget>
       </item>
@@ -1828,7 +1828,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Choose Session</string>
+         <string>Choose Session</string>
         </property>
        </widget>
       </item>
@@ -1847,7 +1847,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;End Recording</string>
+         <string>End Recording</string>
         </property>
        </widget>
       </item>
@@ -1866,7 +1866,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Sync and Save</string>
+         <string>Sync and Save</string>
         </property>
        </widget>
       </item>
@@ -1885,7 +1885,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Save and Finish</string>
+         <string>Save and Finish</string>
         </property>
        </widget>
       </item>
@@ -1904,7 +1904,7 @@ background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 white, stop:1 #cccccc)
          </size>
         </property>
         <property name="text">
-         <string>&amp;Start</string>
+         <string>Start</string>
         </property>
        </widget>
       </item>

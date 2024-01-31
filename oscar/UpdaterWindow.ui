@@ -192,7 +192,7 @@
            <item>
             <widget class="QPushButton" name="CloseButton">
              <property name="text">
-              <string>Maybe &amp;Later</string>
+              <string>Maybe Later</string>
              </property>
             </widget>
            </item>
@@ -212,7 +212,7 @@
            <item>
             <widget class="QPushButton" name="upgradeButton">
              <property name="text">
-              <string>&amp;Upgrade Now</string>
+              <string>Upgrade Now</string>
              </property>
             </widget>
            </item>
@@ -371,7 +371,7 @@
            <item>
             <widget class="QLabel" name="downloadLabel">
              <property name="text">
-              <string>Downloading &amp; Installing Updates</string>
+              <string>Downloading  Installing Updates</string>
              </property>
             </widget>
            </item>
@@ -391,7 +391,7 @@
            <item>
             <widget class="QPushButton" name="FinishedButton">
              <property name="text">
-              <string>&amp;Finished</string>
+              <string>Finished</string>
              </property>
             </widget>
            </item>

@@ -212,7 +212,7 @@ QToolButton:pressed {
         <item>
          <widget class="QPushButton" name="buttonOpenProfile">
           <property name="text">
-           <string>&amp;Open Profile</string>
+           <string>Open Profile</string>
           </property>
           <property name="icon">
            <iconset resource="Resources.qrc">
@@ -223,7 +223,7 @@ QToolButton:pressed {
         <item>
          <widget class="QPushButton" name="buttonEditProfile">
           <property name="text">
-           <string>&amp;Edit Profile</string>
+           <string>Edit Profile</string>
           </property>
          </widget>
         </item>
@@ -237,7 +237,7 @@ QToolButton:pressed {
         <item>
          <widget class="QPushButton" name="buttonNewProfile">
           <property name="text">
-           <string>&amp;New Profile</string>
+           <string>New Profile</string>
           </property>
          </widget>
         </item>

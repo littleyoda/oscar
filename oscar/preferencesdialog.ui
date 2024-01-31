@@ -67,7 +67,7 @@
         </property>
         <widget class="QWidget" name="importTab">
          <attribute name="title">
-          <string>&amp;Import</string>
+          <string>Import</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
@@ -432,7 +432,7 @@
                <property name="toolTip">
                 <string>Compress ResMed (EDF) backups to save disk space.
 Backed up EDF files are stored in the .gz format, 
-which is common on Mac &amp; Linux platforms.. 
+which is common on Mac  Linux platforms..
 
 OSCAR can import from this compressed backup directory natively.. 
 To use it with ResScan will require the .gz files to be uncompressed first..</string>
@@ -656,7 +656,7 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
         </widget>
         <widget class="QWidget" name="tabCPAP">
          <attribute name="title">
-          <string>&amp;CPAP</string>
+          <string>CPAP</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_8">
           <property name="leftMargin">
@@ -1570,7 +1570,7 @@ as this is the only value available on summary-only days.</string>
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Reset &amp;Defaults</string>
+                <string>Reset Defaults</string>
                </property>
               </widget>
              </item>
@@ -1645,7 +1645,7 @@ as this is the only value available on summary-only days.</string>
         </widget>
         <widget class="QWidget" name="oximetryTab">
          <attribute name="title">
-          <string>&amp;Oximetry</string>
+          <string>Oximetry</string>
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_12">
           <property name="spacing">
@@ -1900,7 +1900,7 @@ as this is the only value available on summary-only days.</string>
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Reset &amp;Defaults</string>
+                <string>Reset Defaults</string>
                </property>
               </widget>
              </item>
@@ -1992,7 +1992,7 @@ p, li { white-space: pre-wrap; }
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Reset &amp;Defaults</string>
+               <string>Reset Defaults</string>
               </property>
              </widget>
             </item>
@@ -2071,7 +2071,7 @@ p, li { white-space: pre-wrap; }
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Reset &amp;Defaults</string>
+               <string>Reset Defaults</string>
               </property>
              </widget>
             </item>
@@ -2097,7 +2097,7 @@ p, li { white-space: pre-wrap; }
         </widget>
         <widget class="QWidget" name="generalTab">
          <attribute name="title">
-          <string>&amp;General</string>
+          <string>General</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
@@ -2386,7 +2386,7 @@ Mainly affects the importer.</string>
         </widget>
         <widget class="QWidget" name="appearanceTab">
          <attribute name="title">
-          <string>&amp;Appearance</string>
+          <string>Appearance</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <property name="spacing">
@@ -2849,7 +2849,7 @@ Try it and see if you like it.</string>
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="text">
-                  <string>Animations &amp;&amp; Fancy Stuff</string>
+                  <string>Animations  Fancy Stuff</string>
                  </property>
                 </widget>
                </item>
@@ -3334,14 +3334,14 @@ Try it and see if you like it.</string>
    <item row="2" column="2">
     <widget class="QPushButton" name="cancelButton">
      <property name="text">
-      <string>&amp;Cancel</string>
+      <string>Cancel</string>
      </property>
     </widget>
    </item>
    <item row="2" column="3">
     <widget class="QPushButton" name="okButton">
      <property name="text">
-      <string>&amp;Ok</string>
+      <string>Ok</string>
      </property>
     </widget>
    </item>

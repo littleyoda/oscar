@@ -128,7 +128,7 @@ QToolButton:pressed {
 }</string>
           </property>
           <property name="text">
-           <string>R&amp;eset</string>
+           <string>Reset</string>
           </property>
          </widget>
         </item>
@@ -363,7 +363,7 @@ QToolButton:pressed {
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>&amp;Open .spo/R File</string>
+           <string>Open .spo/R File</string>
           </property>
           <property name="checkable">
            <bool>false</bool>
@@ -382,7 +382,7 @@ QToolButton:pressed {
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Serial &amp;Import</string>
+           <string>Serial Import</string>
           </property>
          </widget>
         </item>
@@ -395,7 +395,7 @@ QToolButton:pressed {
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&amp;Start Live</string>
+           <string>Start Live</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -447,7 +447,7 @@ QToolButton:pressed {
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&amp;Rescan Ports</string>
+           <string>Rescan Ports</string>
           </property>
          </widget>
         </item>

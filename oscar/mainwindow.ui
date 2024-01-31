@@ -504,7 +504,7 @@
         </property>
         <widget class="QWidget" name="statisticsTab">
          <attribute name="title">
-          <string>&amp;Statistics</string>
+          <string>Statistics</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="spacing">
@@ -2393,11 +2393,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
-     <string>&amp;File</string>
+     <string>File</string>
     </property>
     <widget class="QMenu" name="menuExp_ort_CSV_Data">
      <property name="title">
-      <string>Exp&amp;ort Data</string>
+      <string>Export Data</string>
      </property>
      <addaction name="actionExport_CSV"/>
      <addaction name="separator"/>
@@ -2418,11 +2418,11 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
-     <string>&amp;View</string>
+     <string>View</string>
     </property>
     <widget class="QMenu" name="menu_Reset_Graphs">
      <property name="title">
-      <string>&amp;Reset Graphs</string>
+      <string>Reset Graphs</string>
      </property>
      <addaction name="action_Standard_Graph_Order"/>
      <addaction name="action_Advanced_Graph_Order"/>
@@ -2447,7 +2447,7 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
-     <string>&amp;Help</string>
+     <string>Help</string>
     </property>
     <widget class="QMenu" name="menuTroubleshooting">
      <property name="title">
@@ -2477,11 +2477,11 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menu_Data">
     <property name="title">
-     <string>&amp;Data</string>
+     <string>Data</string>
     </property>
     <widget class="QMenu" name="menu_Advanced">
      <property name="title">
-      <string>&amp;Advanced</string>
+      <string>Advanced</string>
      </property>
      <widget class="QMenu" name="menuPurge_Oximetry_Data">
       <property name="title">
@@ -2496,7 +2496,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QMenu" name="menuPurge_Current_Selected_Day">
       <property name="title">
-       <string>Purge &amp;Current Selected Day</string>
+       <string>Purge Current Selected Day</string>
       </property>
       <addaction name="actionPurge_Current_Day"/>
       <addaction name="actionPurgeCurrentDayOximetry"/>
@@ -2536,7 +2536,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <action name="action_Import_Data">
    <property name="text">
-    <string>&amp;Import CPAP Card Data</string>
+    <string>Import CPAP Card Data</string>
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F2</string>
@@ -2544,12 +2544,12 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_Preferences">
    <property name="text">
-    <string>&amp;Preferences</string>
+    <string>Preferences</string>
    </property>
   </action>
   <action name="action_Profiles">
    <property name="text">
-    <string>&amp;Profiles</string>
+    <string>Profiles</string>
    </property>
   </action>
   <action name="action_Exit">
@@ -2559,7 +2559,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionView_Daily">
    <property name="text">
-    <string>View &amp;Daily</string>
+    <string>View Daily</string>
    </property>
    <property name="toolTip">
     <string>Show Daily view</string>
@@ -2570,7 +2570,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionView_Overview">
    <property name="text">
-    <string>View &amp;Overview</string>
+    <string>View Overview</string>
    </property>
    <property name="toolTip">
     <string>Show Overview view</string>
@@ -2581,7 +2581,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionView_Welcome">
    <property name="text">
-    <string>View &amp;Welcome</string>
+    <string>View Welcome</string>
    </property>
    <property name="shortcut">
     <string notr="true">F4</string>
@@ -2606,12 +2606,12 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Use &amp;AntiAliasing</string>
+    <string>Use AntiAliasing</string>
    </property>
   </action>
   <action name="action_About">
    <property name="text">
-    <string>&amp;About OSCAR</string>
+    <string>About OSCAR</string>
    </property>
   </action>
   <action name="action_Fullscreen">
@@ -2619,7 +2619,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Maximize Toggle</string>
+    <string>Maximize Toggle</string>
    </property>
    <property name="toolTip">
     <string>Maximize window</string>
@@ -2641,7 +2641,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_Reset_Graph_Layout">
    <property name="text">
-    <string>Reset Graph &amp;Heights</string>
+    <string>Reset Graph Heights</string>
    </property>
    <property name="toolTip">
     <string>Reset sizes of graphs</string>
@@ -2649,7 +2649,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_Screenshot">
    <property name="text">
-    <string>Take &amp;Screenshot</string>
+    <string>Take Screenshot</string>
    </property>
    <property name="shortcut">
     <string notr="true">F12</string>
@@ -2657,7 +2657,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionView_Oximetry">
    <property name="text">
-    <string>O&amp;ximetry Wizard</string>
+    <string>Oximetry Wizard</string>
    </property>
    <property name="shortcut">
     <string notr="true">F7</string>
@@ -2665,32 +2665,32 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionPrint_Report">
    <property name="text">
-    <string>Print &amp;Report</string>
+    <string>Print Report</string>
    </property>
   </action>
   <action name="action_Edit_Profile">
    <property name="text">
-    <string>&amp;Edit Profile</string>
+    <string>Edit Profile</string>
    </property>
   </action>
   <action name="actionOnline_Users_Guide">
    <property name="text">
-    <string>Online Users &amp;Guide</string>
+    <string>Online Users Guide</string>
    </property>
   </action>
   <action name="action_Frequently_Asked_Questions">
    <property name="text">
-    <string>&amp;Frequently Asked Questions</string>
+    <string>Frequently Asked Questions</string>
    </property>
   </action>
   <action name="action_Rebuild_Oximetry_Index">
    <property name="text">
-    <string>&amp;Automatic Oximetry Cleanup</string>
+    <string>Automatic Oximetry Cleanup</string>
    </property>
   </action>
   <action name="actionChange_User">
    <property name="text">
-    <string>Change &amp;User</string>
+    <string>Change User</string>
    </property>
   </action>
   <action name="action_Sidebar_Toggle">
@@ -2701,7 +2701,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Right &amp;Sidebar</string>
+    <string>Right Sidebar</string>
    </property>
    <property name="toolTip">
     <string>Show Right Sidebar</string>
@@ -2712,7 +2712,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionView_Statistics">
    <property name="text">
-    <string>View S&amp;tatistics</string>
+    <string>View Statistics</string>
    </property>
    <property name="iconText">
     <string>View Statistics</string>
@@ -2726,42 +2726,42 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionImport_ZEO_Data">
    <property name="text">
-    <string>Import &amp;ZEO Data</string>
+    <string>Import ZEO Data</string>
    </property>
   </action>
   <action name="actionImport_Dreem_Data">
    <property name="text">
-    <string>Import &amp;Dreem Data</string>
+    <string>Import Dreem Data</string>
    </property>
   </action>
   <action name="actionImport_RemStar_MSeries_Data">
    <property name="text">
-    <string>Import RemStar &amp;MSeries Data</string>
+    <string>Import RemStar MSeries Data</string>
    </property>
   </action>
   <action name="actionSleep_Disorder_Terms_Glossary">
    <property name="text">
-    <string>Sleep Disorder Terms &amp;Glossary</string>
+    <string>Sleep Disorder Terms Glossary</string>
    </property>
   </action>
   <action name="actionChange_Language">
    <property name="text">
-    <string>Change &amp;Language</string>
+    <string>Change Language</string>
    </property>
   </action>
   <action name="actionChange_Data_Folder">
    <property name="text">
-    <string>Change &amp;Data Folder</string>
+    <string>Change Data Folder</string>
    </property>
   </action>
   <action name="actionImport_Somnopose_Data">
    <property name="text">
-    <string>Import &amp;Somnopose Data</string>
+    <string>Import Somnopose Data</string>
    </property>
   </action>
   <action name="actionImport_Viatom_Data">
    <property name="text">
-    <string>Import &amp;Viatom/Wellue Data</string>
+    <string>Import Viatom/Wellue Data</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDaysOximetry">
@@ -2774,7 +2774,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show &amp;Line Cursor</string>
+    <string>Show Line Cursor</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+L</string>
@@ -2821,7 +2821,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionExport_Journal">
    <property name="text">
-    <string>Backup &amp;Journal</string>
+    <string>Backup Journal</string>
    </property>
   </action>
   <action name="actionShow_Performance_Counters">
@@ -2875,7 +2875,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Show &amp;Pie Chart</string>
+    <string>Show Pie Chart</string>
    </property>
    <property name="toolTip">
     <string>Show Pie Chart on Daily page</string>
@@ -2916,7 +2916,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Check For &amp;Updates</string>
+    <string>Check For Updates</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -2929,32 +2929,32 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionPurge_Current_Day">
    <property name="text">
-    <string>&amp;CPAP</string>
+    <string>CPAP</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDayOximetry">
    <property name="text">
-    <string>&amp;Oximetry</string>
+    <string>Oximetry</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDaySleepStage">
    <property name="text">
-    <string>&amp;Sleep Stage</string>
+    <string>Sleep Stage</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDayPosition">
    <property name="text">
-    <string>&amp;Position</string>
+    <string>Position</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDayAllExceptNotes">
    <property name="text">
-    <string>&amp;All except Notes</string>
+    <string>All except Notes</string>
    </property>
   </action>
   <action name="actionPurgeCurrentDayAll">
    <property name="text">
-    <string>All including &amp;Notes</string>
+    <string>All including Notes</string>
    </property>
   </action>
  </widget>
