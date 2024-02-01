@@ -1,7 +1,7 @@
 /* SleepLib Profiles Header
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -565,7 +565,7 @@ class CPAPSettings : public PrefSettings
         m_complianceHours = initPref(STR_CS_ComplianceHours, 4.0f).toFloat();
         m_clinicalMode = initPref(STR_CS_ClinicalMode, false).toBool();
         initPref(STR_CS_ShowLeaksMode, 0);
-        // TODO: jedimark: Check if this date is initiliazed yet
+        // TODO: Check if this date is initiliazed yet
         initPref(STR_CS_MaskStartDate, QDate());
         initPref(STR_CS_MaskDescription, QString());
         initPref(STR_CS_MaskType, Mask_Unknown);
@@ -765,7 +765,7 @@ class UserSettings : public PrefSettings
         initPref(STR_US_UnitSystem, US_Metric);
         setPref(STR_US_EventWindowSize, 3.0);
         m_skipEmptyDays = initPref(STR_US_SkipEmptyDays, true).toBool();
-        initPref(STR_US_RebuildCache, false); // FIXME: jedimark: can't remember...
+        initPref(STR_US_RebuildCache, false); // FIXME: can't remember...
         m_calculateRDI = initPref(STR_US_CalculateRDI, false).toBool();
         m_prefCalcMiddle = initPref(STR_US_PrefCalcMiddle, (int)0).toInt();
         m_prefCalcPercentile = initPref(STR_US_PrefCalcPercentile, (double)95.0).toDouble();

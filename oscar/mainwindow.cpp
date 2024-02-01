@@ -1,7 +1,7 @@
 /* OSCAR MainWindow Implementation
  *
  * Copyright (c) 2020-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -1519,8 +1519,6 @@ void MainWindow::on_action_CycleTabs_triggered()
 
 void MainWindow::on_actionOnline_Users_Guide_triggered()
 {
-//    QDesktopServices::openUrl(QUrl("http://sleepyhead.sourceforge.net/wiki/index.php?title=OSCAR_Users_Guide"));
-//    QMessageBox::information(nullptr, STR_MessageBox_Information, tr("The User's Guide is not yet available"));
     if (QMessageBox::question(nullptr, STR_MessageBox_Question, tr("The User's Guide will open in your default browser"),
             QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok )
         QDesktopServices::openUrl(QUrl("https://www.apneaboard.com/wiki/index.php?title=OSCAR_Help"));
@@ -1528,7 +1526,6 @@ void MainWindow::on_actionOnline_Users_Guide_triggered()
 
 void MainWindow::on_action_Frequently_Asked_Questions_triggered()
 {
-//    QDesktopServices::openUrl(QUrl("http://sleepyhead.sourceforge.net/wiki/index.php?title=Frequently_Asked_Questions"));
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("The FAQ is not yet implemented"));
 }
 
@@ -2240,8 +2237,6 @@ void MainWindow::on_actionImport_RemStar_MSeries_Data_triggered()
 
 void MainWindow::on_actionSleep_Disorder_Terms_Glossary_triggered()
 {
-//    QDesktopServices::openUrl(QUrl("http://sleepyhead.sourceforge.net/wiki/index.php?title=Glossary"));
-//    QMessageBox::information(nullptr, STR_MessageBox_Information, tr("The Glossary is not yet implemented"));
     if (QMessageBox::question(nullptr, STR_MessageBox_Question, tr("The Glossary will open in your default browser"),
             QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok )
         QDesktopServices::openUrl(QUrl("https://www.apneaboard.com/wiki/index.php?title=Definitions"));
@@ -2250,7 +2245,6 @@ void MainWindow::on_actionSleep_Disorder_Terms_Glossary_triggered()
 /*
 void MainWindow::on_actionHelp_Support_OSCAR_Development_triggered()
 {
-//    QDesktopServices().openUrl(QUrl("https://sleepyhead.jedimark.net/donate.php"));
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Donations are not implemented"));
 }
 */
@@ -2852,7 +2846,6 @@ void MainWindow::on_actionReport_a_Bug_triggered()
 //    QSettings settings;
 //    QString language = settings.value(LangSetting).toString();
 //
-//    QDesktopServices::openUrl(QUrl(QString("https://sleepyhead.jedimark.net/report_bugs.php?lang=%1&version=%2&platform=%3").arg(language).arg(getVersion()).arg(PlatformString)));
     QMessageBox::information(nullptr, STR_MessageBox_Error, tr("Reporting issues is not yet implemented"));
 }
 

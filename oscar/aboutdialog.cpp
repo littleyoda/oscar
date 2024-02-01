@@ -3,7 +3,7 @@
  * Date created: 7/5/2018
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the Source Directory. */
@@ -56,7 +56,6 @@ AboutDialog::~AboutDialog()
 /***************************************************
 void AboutDialog::on_donateButton_clicked()
 {
-//    QDesktopServices::openUrl(QUrl("http://sleepyhead.jedimark.net/donate.php"));
     QMessageBox::information(nullptr, STR_MessageBox_Information, tr("Donations are not yet implemented"));
 }
 ******************************************************/

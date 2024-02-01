@@ -1,7 +1,7 @@
 /* Overview GUI Headers
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (C) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -59,7 +59,7 @@ private slots:
 enum YTickerType { YT_Number, YT_Time, YT_Weight };
 
 /*! \class Overview
-    \author Mark Watkins <jedimark_at_users.sourceforge.net>
+    \author Mark Watkins 
     \brief Overview tab, showing overall summary data
     */
 class Overview : public QWidget

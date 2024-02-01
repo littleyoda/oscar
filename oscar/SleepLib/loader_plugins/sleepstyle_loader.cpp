@@ -3,7 +3,7 @@
  * Copyright (c) 2020-2024 The Oscar Team
  *
  * Derived from icon_loader.cpp
- * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code

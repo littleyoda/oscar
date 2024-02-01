@@ -1,7 +1,7 @@
 /* OSCAR MainWindow Headers
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (C) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -43,7 +43,7 @@ class MainWindow;
 
  SleepyHead was a Cross-Platform Open-Source software for reviewing data from %CPAP devices, which are used in the treatment of Sleep Disorders.
 
- SleepyHead was created by <a href="http://jedimark64.blogspot.com">Mark Watkins</a> (JediMark), an Australian software developer.
+ SleepyHead was created by Mark Watkins, an Australian software developer.
 
  This document is an attempt to provide a little technical insight into OSCAR's program internals.
 
@@ -54,8 +54,6 @@ class MainWindow;
 
  Data structures are described in a <a href="http://www.apneaboard.com/wiki/index.php?title=OSCAR_Data_Information">OSCAR Data Information Wiki</a>.
 
- The SleepyHead project was hosted on sourceforge, and it's original project page can be reached at <a href="http://sourceforge.net/projects/sleepyhead">http://sourceforge.net/projects/sleepyhead</a>.
- There was also a <a href="http://sourceforge.net/apps/mediawiki/sleepyhead/index.php?title=Main_Page">SleepyHead Wiki</a> containing further information.
 
  \section structure Program Structure
  OSCAR is written in C++ using Qt Toolkit library, and comprises of 3 main components

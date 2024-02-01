@@ -15,7 +15,7 @@
      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-#  Author: Mark Watkins <jedimark64[at]users.sourceforge.net>
+#  Author: Mark Watkins 
 #    Date: 09/03/2011
 # Purpose: CPAP Support
 # License: GPL
@@ -1415,8 +1415,6 @@ def AboutBox(a):
 
 <b>Details:</b>
 Author: Mark Watkins (jedimark)
-Homepage: <a href='http://sleepyhead.sourceforge.net'>http://sleepyhead.sourceforge.net</a>
-Please report any bugs <a href='https://sourceforge.net/projects/sleepyhead/support'>on sourceforge</a>.
 
 <b>License:</b>
 This software is released under the <i>GNU Public Licence</i>.
@@ -1426,7 +1424,7 @@ This is <b>not</b> medical software. Any output this program
 produces should <b>not</b> be used to make medical decisions.
 
 <b>Special Thanks:</b>
-Mike Hoolehan - Check out his awesome <a href='http://www.hoolehan.com/onkor/'>Onkor Project</a>
+Mike Hoolehan - Check out his awesome Onkor Project
 Troy Schultz - For great technical advice
 Mark Bruscke - For encouragement and advice
 

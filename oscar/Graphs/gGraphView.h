@@ -1,7 +1,7 @@
 ﻿/* gGraphView Header
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2015 Mark Watkins <jedimark@users.sourceforge.net>
+ * Copyright (c) 2011-2015 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code

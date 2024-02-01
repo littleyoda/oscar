@@ -1,7 +1,7 @@
 /* EDF Parser Header
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -113,7 +113,7 @@ class Annotation
 
 /*! \class EDFInfo
     \author Phil Olynyk
-    \author Mark Watkins <mark@jedimark.net>
+    \author Mark Watkins 
     \brief Parse an EDF+ data file into a list of EDFSignal's
     \note More information on the EDF+ file format can be obtained from http://edfplus.info
     */

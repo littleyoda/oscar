@@ -1,6 +1,6 @@
 /* CheckUpdates
  *
- * Copyright (c) 2011-2018 Mark Watkins <mark@jedimark.net>
+ * Copyright (c) 2011-2018 Mark Watkins 
  * Copyright (c) 2020-2024 OSCAR Team
  *
  * This file is subject to the terms and conditions of the GNU General Public
