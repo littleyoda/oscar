@@ -291,7 +291,7 @@ Duration of longest disabled session: aa minutes, Total duration of all disabled
             return QString(QObject::tr( "Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.")
                 .arg(maxDurationOfaDisabledsession, 0, 'f', 1) .arg(totalDurationOfDisabledSessions, 0, 'f', 1));
         case 4:
-            return QString(QObject::tr( "The reportng period is %1 days between %2 and %3")
+            return QString(QObject::tr( "The reporting period is %1 days between %2 and %3")
                 .arg(1+_start.daysTo(_last))
                 .arg(_start.toString(MedDateFormat))
                 .arg(_last.toString(MedDateFormat)));
