@@ -14,6 +14,9 @@
 // loader that change loader behaviour or modify channels.
 //********************************************************************************************
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 // #include <QProgressBar>
 #include <QApplication>
 #include <QDir>
@@ -158,7 +161,6 @@ void MD300W1Loader::resetImportTimeout()
 bool MD300W1Loader::readDATFile(const QString & path)
 {
     QFile file(path);
-    
     qDebug() << "MD300W Loader attempting to read " << path;
     
     if (!file.exists()) {

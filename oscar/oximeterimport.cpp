@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QThread>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -419,14 +422,14 @@ void OximeterImport::on_fileImportButton_clicked()
     // Make sure filename dialog had time to close properly..
     QApplication::processEvents();
 
-	qDebug() << "oximod - Chosen filename is " << filename;
+    qDebug() << "oximod - Chosen filename is " << filename;
     QList<SerialOximeter *> loaders = GetOxiLoaders();
 
     bool success = false;
 
     oximodule = nullptr;
     Q_FOREACH(SerialOximeter * loader, loaders) {
-        if (loader->Open(filename)) {
+        if (loader && loader->Open(filename)) { // there is a null entry in loaders. so ths check is necessary
             success = true;
             oximodule = loader;
             break;
