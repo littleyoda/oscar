@@ -14,8 +14,11 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QList>
+#include <QFrame>
 #include <QWidget>
 #include <QPushButton>
+#include <QRadioButton>
+#include <QButtonGroup>
 #include <QTabWidget>
 #include <QMap>
 #include <QTextEdit>
@@ -184,7 +187,9 @@ private:
 
     // Command Widget
     QListWidget*  commandList;
-    // command Widget
+    QButtonGroup* buttonGroup;
+    QRadioButton* lastButton;
+    qint32        lastTopic = ST_NONE;
     QPushButton*  commandButton;
     QComboBox*    operationCombo;
     QPushButton*  operationButton;
@@ -238,7 +243,7 @@ private:
     QString     centerLine(QString line);
     QString     convertRichText2Plain (QString rich);
     QRegExp     searchPatterToRegex (QString wildcard);
-    QListWidgetItem*     calculateMaxSize(QString str,int topic);
+    void        addCommandItem(QString str,int topic);
     float       commandListItemMaxWidth = 0;
     float       commandListItemHeight = 0;
     QSet<QString> commandEventList;
@@ -265,9 +270,11 @@ private:
     QTextDocument richText;
 
 
+void process_match_info(QString text, int topic);
 
 public slots:
 private slots:
+    void on_radioGroupButton_clicked(QAbstractButton* );
     void on_startButton_clicked();
     void on_clearButton_clicked();
     void on_matchButton_clicked();
@@ -277,7 +284,6 @@ private slots:
     void on_commandButton_clicked();
     void on_operationButton_clicked();
 
-    void on_commandList_activated(QListWidgetItem* item);
     void on_operationCombo_activated(int index);
 
     void on_intValueChanged(int);

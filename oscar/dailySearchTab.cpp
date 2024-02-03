@@ -163,6 +163,7 @@ void    DailySearchTab::createUi() {
         commandWidget    = new QWidget(searchTabWidget);
         commandLayout    = new QHBoxLayout();
         commandButton    = new QPushButton(commandWidget);
+        buttonGroup      = new QButtonGroup(commandWidget);
         operationCombo   = new QComboBox(commandWidget);
         operationButton  = new QPushButton(commandWidget);
         selectDouble     = new QDoubleSpinBox(commandWidget);
@@ -174,7 +175,6 @@ void    DailySearchTab::createUi() {
 
         cmdDescList      = new QFrame(searchTabWidget);
         cmdDescLayout    = new QVBoxLayout(cmdDescList);
-        //cmdDescBtn       = new QPushButton(cmdDescList);
         cmdDescLabelsUsed = 0;
 
         summaryWidget    = new QWidget(searchTabWidget);
@@ -274,7 +274,6 @@ void    DailySearchTab::createUi() {
 
         commandButton->setStyleSheet("border:none;");
 
-        //float height = float(1+commandList->count())*commandListItemHeight ;
         float height = float(commandList->count())*commandListItemHeight ;
         commandList->setMinimumHeight(height);
         commandList->setMinimumWidth(commandListItemMaxWidth);
@@ -285,8 +284,6 @@ void    DailySearchTab::createUi() {
         cmdDescLayout->setContentsMargins(0,0,0,0);
         cmdDescList->setLayout(cmdDescLayout);
         cmdDescList->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Fixed);
-        cmdDescList->show();
-        //cmdDescList->hide();
         cmdDescList->show();
 
         setText(operationButton,"");
@@ -333,6 +330,7 @@ void    DailySearchTab::createUi() {
 void DailySearchTab::connectUi(bool doConnect) {
     if (doConnect) {
         daily->connect(startButton,     SIGNAL(clicked()), this, SLOT(on_startButton_clicked()) );
+        daily->connect(buttonGroup,     SIGNAL(buttonReleased(QAbstractButton*)), this, SLOT(on_radioGroupButton_clicked(QAbstractButton*)));
         daily->connect(clearButton,     SIGNAL(clicked()), this, SLOT(on_clearButton_clicked()) );
         daily->connect(matchButton,     SIGNAL(clicked()), this, SLOT(on_matchButton_clicked()) );
         daily->connect(addMatchButton,  SIGNAL(clicked()), this, SLOT(on_addMatchButton_clicked()) );
@@ -340,9 +338,6 @@ void DailySearchTab::connectUi(bool doConnect) {
 
         daily->connect(commandButton,   SIGNAL(clicked()), this, SLOT(on_commandButton_clicked()) );
         daily->connect(operationButton, SIGNAL(clicked()), this, SLOT(on_operationButton_clicked()) );
-
-        daily->connect(commandList,     SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_commandList_activated(QListWidgetItem*)   ));
-        daily->connect(commandList,     SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(on_commandList_activated(QListWidgetItem*)   ));
         daily->connect(operationCombo,  SIGNAL(activated(int)), this, SLOT(on_operationCombo_activated(int)   ));
 
         daily->connect(selectInteger,   SIGNAL(valueChanged(int)), this, SLOT(on_intValueChanged(int)) );
@@ -351,6 +346,7 @@ void DailySearchTab::connectUi(bool doConnect) {
 
     } else {
         daily->disconnect(startButton,     SIGNAL(clicked()), this, SLOT(on_startButton_clicked()) );
+        daily->disconnect(buttonGroup,     SIGNAL(buttonReleased(QAbstractButton*)), this, SLOT(on_radioGroupButton_clicked(QAbstractButton*)));
         daily->disconnect(clearButton,     SIGNAL(clicked()), this, SLOT(on_clearButton_clicked()) );
         daily->disconnect(matchButton,     SIGNAL(clicked()), this, SLOT(on_matchButton_clicked()) );
         daily->disconnect(addMatchButton,  SIGNAL(clicked()), this, SLOT(on_addMatchButton_clicked()) );
@@ -358,9 +354,6 @@ void DailySearchTab::connectUi(bool doConnect) {
 
         daily->disconnect(commandButton,   SIGNAL(clicked()), this, SLOT(on_commandButton_clicked()) );
         daily->disconnect(operationButton, SIGNAL(clicked()), this, SLOT(on_operationButton_clicked()) );
-
-        daily->disconnect(commandList,     SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(on_commandList_activated(QListWidgetItem*)   ));
-        daily->disconnect(commandList,     SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(on_commandList_activated(QListWidgetItem*)   ));
         daily->disconnect(operationCombo,  SIGNAL(activated(int)), this, SLOT(on_operationCombo_activated(int)   ));
 
         daily->disconnect(selectInteger,   SIGNAL(valueChanged(int)), this, SLOT(on_intValueChanged(int)) );
@@ -370,41 +363,46 @@ void DailySearchTab::connectUi(bool doConnect) {
     }
 }
 
-QListWidgetItem* DailySearchTab::calculateMaxSize(QString str,int topic) {  //calculate max size of strings
+void DailySearchTab::addCommandItem(QString str,int topic) {
     float scaleX= (float)(QWidget::logicalDpiX()*100.0)/(float)(QWidget::physicalDpiX());
     float percentX = scaleX/100.0;
     float width = QFontMetricsF(this->font()).size(Qt::TextSingleLine , str).width();
     width += 30 ; // account for scrollbar width;
     commandListItemMaxWidth = max (commandListItemMaxWidth, (width*percentX));
     commandListItemHeight = QFontMetricsF(this->font()).size(Qt::TextSingleLine , str).height();
-    QListWidgetItem* item = new QListWidgetItem(str);
+    QAbstractButton* radioButton ;
+    if (topic<=0) {
+        radioButton = new QPushButton(str,commandList);
+    } else {
+        radioButton = new QRadioButton(str,commandList);
+    }
+    buttonGroup->addButton(radioButton,topic);
+
+    QListWidgetItem* item = new QListWidgetItem(commandList);
     item->setData(Qt::UserRole,topic);
-    return item;
+    commandList->setItemWidget(item, radioButton);
+}
+
+void DailySearchTab::on_radioGroupButton_clicked(QAbstractButton* but ) {
+    QRadioButton* radio = dynamic_cast<QRadioButton*>(but);
+    if (radio) {
+        lastButton = radio;
+        lastTopic = buttonGroup->id(radio);
+    //} else if (!lastTopic || !lastButton) {
+        //return;
+    } else {
+        return;
+    }
+    process_match_info(lastButton->text(), lastTopic );
 }
 
 void DailySearchTab::updateEvents(ChannelID id,QString fullname) {
     if (commandEventList.contains(fullname)) return;
     commandEventList.insert(fullname);
-    commandList->addItem(calculateMaxSize(fullname,id));
+    addCommandItem(fullname,id);
 }
 
 void DailySearchTab::populateControl() {
-        commandList->clear();
-        commandList->addItem(calculateMaxSize(tr("Notes"),ST_NOTES));
-        commandList->addItem(calculateMaxSize(tr("Notes containing"),ST_NOTES_STRING));
-        commandList->addItem(calculateMaxSize(tr("Bookmarks"),ST_BOOKMARKS));
-        commandList->addItem(calculateMaxSize(tr("Bookmarks containing"),ST_BOOKMARKS_STRING));
-        commandList->addItem(calculateMaxSize(tr("AHI "),ST_AHI));
-        commandList->addItem(calculateMaxSize(tr("Daily Duration"),ST_DAILY_USAGE));
-        commandList->addItem(calculateMaxSize(tr("Session Duration" ),ST_SESSION_LENGTH));
-        commandList->addItem(calculateMaxSize(tr("Days Skipped"),ST_DAYS_SKIPPED));
-        commandList->addItem(calculateMaxSize(tr("Apnea Length"),ST_APNEA_LENGTH));
-        if ( !p_profile->cpap->clinicalMode() ) {
-            commandList->addItem(calculateMaxSize(tr("Disabled Sessions"),ST_DISABLED_SESSIONS));
-        }
-        commandList->addItem(calculateMaxSize(tr("Number of Sessions"),ST_SESSIONS_QTY));
-        //commandList->insertSeparator(commandList->count());  // separate from events
-
         opCodeMap.clear();
         opCodeMap.insert( opCodeStr(OP_LT),OP_LT);
         opCodeMap.insert( opCodeStr(OP_GT),OP_GT);
@@ -428,10 +426,28 @@ void DailySearchTab::populateControl() {
         Day* day = p_profile->GetDay(date);
         if (!day) return;
 
+        commandList->clear();
+        //addCommandItem(tr("Done"),ST_NONE);
+        addCommandItem(tr("Notes"),ST_NOTES);
+        addCommandItem(tr("Notes containing"),ST_NOTES_STRING);
+        addCommandItem(tr("Bookmarks"),ST_BOOKMARKS);
+        addCommandItem(tr("Bookmarks containing"),ST_BOOKMARKS_STRING);
+        addCommandItem(tr("AHI "),ST_AHI);
+        addCommandItem(tr("Daily Duration"),ST_DAILY_USAGE);
+        addCommandItem(tr("Session Duration" ),ST_SESSION_LENGTH);
+        addCommandItem(tr("Days Skipped"),ST_DAYS_SKIPPED);
+        addCommandItem(tr("Apnea Length"),ST_APNEA_LENGTH);
         qint32 chans = schema::SPAN | schema::FLAG | schema::MINOR_FLAG;
+        if ( !p_profile->cpap->clinicalMode() ) {
+            addCommandItem(tr("Disabled Sessions"),ST_DISABLED_SESSIONS);
+        }
+        addCommandItem(tr("Number of Sessions"),ST_SESSIONS_QTY);
+
+
         if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
         QList<ChannelID> available;
         available.append(day->getSortedMachineChannels(chans));
+
         for (int i=0; i < available.size(); ++i) {
             ChannelID id = available.at(i);
             schema::Channel chan = schema::channel[ id  ];
@@ -997,11 +1013,19 @@ void    DailySearchTab::setCommandPopupEnabled(bool on) {
         }
 }
 
-void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
+void    DailySearchTab::process_match_info(QString text, int topic) {
         // here to select new search criteria
         // must reset all variables and label, button, etc
         clearMatch() ;
         commandWidget->show();
+        match->matchName = text;
+        // get item selected
+        if (topic>=ST_EVENT) {
+            match->channelId = topic;
+            match->searchTopic = ST_EVENT;
+        } else {
+            match->searchTopic = (SearchTopic)topic;
+        }
 
         match->valueMode = notUsed;
         match->compareValue = 0;
@@ -1009,21 +1033,10 @@ void    DailySearchTab::on_commandList_activated(QListWidgetItem* item) {
         // workaround for combo box alignmnet and sizing.
         // copy selections to a pushbutton. hide combobox and show pushButton. Pushbutton activation can show popup.
         // always hide first before show. allows for best fit
-        match->matchName = item->text();
-        setText(commandButton, item->text());
-
+        setText(commandButton, text);
         setCommandPopupEnabled(false);
+
         match->operationOpCode = OP_INVALID;
-
-        // get item selected
-        int itemTopic = item->data(Qt::UserRole).toInt();
-        if (itemTopic>=ST_EVENT) {
-            match->channelId = itemTopic;
-            match->searchTopic = ST_EVENT;
-        } else {
-            match->searchTopic = (SearchTopic)itemTopic;
-        }
-
         match->nextTab = TW_NONE;
         match->compareString = "9999";
 
@@ -1599,7 +1612,6 @@ QString Match::formatTime (qint32 ms) {
         qint32 minutes = ms / 60000;
         ms = ms % 60000;
         qint32 seconds = ms /1000;
-        //return QString(tr("%1h %2m %3s")).arg(hours).arg(minutes).arg(seconds);
         return QString("%1:%2:%3").arg(hours).arg(minutes,2,10,QLatin1Char('0')).arg(seconds,2,10,QLatin1Char('0'));
 }
 
