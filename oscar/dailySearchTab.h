@@ -18,6 +18,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QAbstractButton>
 #include <QButtonGroup>
 #include <QTabWidget>
 #include <QMap>
@@ -46,7 +47,7 @@ class Daily;  //forward declaration.
 
 enum ValueMode { invalidValueMode , notUsed , minutesToMs  , hoursToMs , hundredths , opWhole , displayWhole , opString , displayString, secondsDisplayString};
 
-enum SearchTopic { ST_NONE , ST_DAYS_SKIPPED , ST_DISABLED_SESSIONS  , ST_NOTES  , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE , ST_APNEA_LENGTH , ST_EVENT };
+enum SearchTopic { ST_NONE , ST_DAYS_SKIPPED , ST_DISABLED_SESSIONS  , ST_NOTES  , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE , ST_APNEA_LENGTH , ST_APNEA_ALL , ST_CLEAR , ST_EVENT };
 
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
@@ -103,6 +104,7 @@ public:
     Matches() ;
     ~Matches() ;
     Match* addMatch();
+    Match* reset() {clear();return addMatch();};
     void clear() ;
     Match* at(int offset) {
         if (offset<0 || offset>= size()) return empty();
@@ -126,8 +128,17 @@ public:
     void updateEvents(ChannelID id,QString fullname);
 
 private:
-	enum STATE { INIT ,  waitForSearchParameters , waitForStart ,  searching ,  endOfSeaching ,  waitForContinue };
-	STATE state;
+    enum STATE { reset = 0 ,
+    waitForSearchTopic   = 1 ,
+    matching = 2 ,
+    multpileMatches =3 ,
+    waitForStart =4 ,
+    autoStart =5 ,
+    searching =6 ,
+    endOfSeaching =7 ,
+    waitForContinue =8 ,
+    noDataFound =9 };
+	STATE state = waitForSearchTopic;
 
     QString red =  "#ff8080";
     QString green="#80ff80";
@@ -188,7 +199,7 @@ private:
     // Command Widget
     QListWidget*  commandList;
     QButtonGroup* buttonGroup;
-    QRadioButton* lastButton;
+    QAbstractButton* lastButton = nullptr;
     qint32        lastTopic = ST_NONE;
     QPushButton*  commandButton;
     QComboBox*    operationCombo;
@@ -208,12 +219,16 @@ private:
 
     QMap <QString,OpCode> opCodeMap;
     QString     opCodeStr(OpCode);
+    QVector<ChannelID> apneaLikeChannels;
 
     bool        helpMode=false;
     QString     helpString = helpStr();
     void        clearMatch();
+    void        debugStates();
+    void        setState(STATE);
     void        createUi();
     void        populateControl();
+    void        initApneaLikeChannels();
     QSize       setText(QPushButton*,QString);
     QSize       setText(QLabel*,QString);
     QSize       textsize(QFont font ,QString text);
@@ -236,6 +251,7 @@ private:
     void        setOperation( );
     void        hideResults(bool);
     void        hideCommand(bool showcommand=false);
+    void        showOnlyAhiChannels(bool);
     void        connectUi(bool);
 
 
@@ -251,7 +267,7 @@ private:
     EventDataType calculateAhi(Day* day);
 
     bool        createUiFinished=false;
-    bool        startButtonMode=true;
+    bool        startButton_1stPass = true;
     bool        commandPopupEnabled=false;
 
     QDate       earliestDate ;
@@ -274,7 +290,7 @@ void process_match_info(QString text, int topic);
 
 public slots:
 private slots:
-    void on_radioGroupButton_clicked(QAbstractButton* );
+    void on_matchGroupButton_toggled(QAbstractButton* );
     void on_startButton_clicked();
     void on_clearButton_clicked();
     void on_matchButton_clicked();
