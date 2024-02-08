@@ -1721,6 +1721,11 @@ void Daily::Load(QDate date)
                 schema::Channel & chan = schema::channel[code];
 //                if (!chan.enabled()) continue;
                 QString data;
+                if ( 
+                    ( code == CPAP_UserFlag1 || code == CPAP_UserFlag2) &&
+                    ( ( !p_profile->cpap->userEventFlagging()) ||  (p_profile->cpap->clinicalMode()))  ){
+                    continue;
+                }
                 float channelHours = hours;
                 if (chan.machtype() != MT_CPAP) {
                     // Use device type hours (if available) rather than CPAP hours, since
