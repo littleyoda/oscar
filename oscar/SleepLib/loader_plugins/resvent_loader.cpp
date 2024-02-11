@@ -549,8 +549,8 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
 
 void LoadStats(const UsageData& /*usage_data*/, Session* session ) {
     session->settings[CPAP_Mode] = MODE_APAP;
-    session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
-    session->settings[CPAP_PressureMax] = 20.0;   // these value are hard coded for now.
+    //session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
+    //session->settings[CPAP_PressureMax] = 20.0;   // these value are hard coded for now.
 }
 
 UsageData ReadUsage(const QString& session_folder_path, const QString& usage_number) {
