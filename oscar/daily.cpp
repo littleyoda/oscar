@@ -587,7 +587,7 @@ void Daily::Link_clicked(const QUrl &url)
 {
     QString code=url.toString().section("=",0,0).toLower();
     QString data=url.toString().section("=",1);
-    int sid=data.toInt();
+    SessionID sid=data.toUInt();
     Day *day=nullptr;
 
     if (code=="togglecpapsession") { // Enable/Disable CPAP session
