@@ -1,7 +1,7 @@
 /* SleepLib Resvent Loader Implementation
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -72,6 +72,7 @@ constexpr double kTenthGain = 0.1;
 constexpr double kNoGain = 1.0;
 
 constexpr double kDefaultGain = kHundredthGain ;           // For Flow (rate) and (mask)Pressure - High Resolutions data.
+const QDate baseDate(2010 , 1, 1);                      // start of development
 
 bool ResventLoader::Detect(const QString & givenpath)
 {
@@ -629,17 +630,23 @@ int LoadSession(const QString& dirpath, const QDate& session_date, Machine* mach
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
-    //return std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
-    // std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
     int base = 0;
+    // Session ID must be unique.
+    // SessioId is defined as an unsigned int. Oscar however has a problem .
+    // if the most signifigant bit is set then Oscat misbehaves.
+    // typically with signed vs unsigned int issues.
+    // so sessionID has an implicit limit of a max postive value of of signed int.
+    // sessionID  be must a unique positive ingteger ei. <= (2**31 -1)  (2,147,483,647)
+    //
+    SessionID sessionId = (baseDate.daysTo(session_date)) * 64; // leave space for N sessions.
     for (auto usage : different_usage)
     {
-        if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset())) {
+        if (machine->SessionExists(sessionId)) {
             // session alreadt exists
             //return base;
             continue;
         }
-        Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
+        Session* session = new Session(machine, sessionId++);
         session->SetChanged(true);
         session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
