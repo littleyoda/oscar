@@ -60,22 +60,7 @@ if exist %shadowBuildDir%\buildInfo.iss  del /q %shadowBuildDir%\buildInfo.iss  
 if exist %shadowBuildDir%\buildInstall.iss  del /q %shadowBuildDir%\buildInstall.iss  || (call :err 43	& goto :endProgram)
 if exist %shadowBuildDir%\setup.ico   del /q %shadowBuildDir%\setup.ico  || (call :err 44	& goto :endProgram)
 
-where gawk  > temp.txt 2>nul
-set er=%errorlevel%
-set gawk=<temp.txt
-if %er%==0 (del temp.txt && goto :eof)
-:: get location of Git command - then find where Git was downloaded.
-where Git > temp.txt 2>nul
-set er=%errorlevel%
-set /p git=<temp.txt
-del temp.txt
-if NOT %er%==0 (echo git command not found && exit /b 33)
-::: found the location of GIT. because git has gawk		
-:: have fullpath of git.exe which is in Git\cmd\git.exe need Git\usr\bin\gawk
-FOR %%i IN ("%git%") DO (set git=%%~dpi)
-:: get rid of trailing \ for above command to decend one level
-FOR %%i IN ("%git:~0,-1%") DO (set git=%%~dpi)
-set path=%git:~0,-1%\usr\bin;%path%
+call :getGawk
 
 ::: Now have gawk. -- do not delete this line.
 ::: Now copy the base installation control file
