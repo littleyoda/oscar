@@ -7,6 +7,10 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+// Turn off for offical release.
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 //********************************************************************************************
 // Please only INCREMENT the resvent_data_version in resvent_loader.h when making changes
 // that change loader behaviour or modify channels in a manner that fixes old data imports.
@@ -15,9 +19,125 @@
 // i.e. there is no need to change the version when adding support for new devices
 //********************************************************************************************
 
-// Turn off for offical release.
-#define TEST_MACROS_ENABLEDoff
-#include <test_macros.h>
+/*
+Resvent     iBreeze 20A     works.
+possible machines taht might work
+Hoffrichter Point 2 Auto CPAP:
+Hoffrichter Trend II Bilevel ST20/30:
+
+SD-CARD Format and information
+Folder Name                  Folders containing folders.
+THERAPY                             All files on the sdcard are in this folder
+THERAPY/RECORD                      all PAP data per day. contains a list of folder by year and month.
+                                    example of contents:    202312/  202401/  202402/
+
+THERAPY/LOG                         Logs of device events. like settings per day.  contains a list of folders.
+                                    example of contents:    14/  17/
+
+THERAPY/CFGDUP                      ??? ALways empty
+
+THERAPY/RECORD/<Month>              contains a list of days. 01 - 31
+                                    example of contents:   01/  02/  03/  04/  05/  06/  07/  08/	09/  10/
+
+THERAPY/LOG/<xxxx>                  contains a list of folders NNNNNNNNN
+                                    03260800*
+                                    03347200*
+                                    03433600*
+
+Folder Name                  Folder containing Files
+THERAPY/CONFIG                      configuration Files. all files are name/value pars
+                                    Therphy Configuration files
+                                        The name format is  T_XXXX where T indicates a Class and XXXX is a specific version
+                                        examples C_ST30 F_COPD H_AST30 N_APAP N_CPAP ...
+                                    there are other unique file
+                                        examples SETTING SYSCFG TCTRL ALARM CHECK.TXT COMFORT
+                                    The set of all keys used is all the unique files plus one theraphy  file
+                                    TCTRL / VentMode   seems to determine which Therphy COnfiguration to use. need verification
+
+THERAPY/RECORD/<Month>/<day>        Contains a list of files
+                                    STAT        Summaries the day; count of events and other info
+                                    All the othere file are sessions. starting with 1
+                                    ALM<session>
+                                    EV<session>
+                                        ID=20,DT=1707490206,DR=3,GD=0,
+                                    STAT<session>
+                                        Name/Value pair session summary counts and other info
+                                    Channel Data. two types (25 samples/second) or (2-4 seconds per sample)
+                                    W<session>_<chunk> 25 samples per second  Pressure and Flow
+                                    P<session>_<chunk> 2-4 seconds per sample other channels..
+
+
+THERAPY/LOG/<xxxx>/<NNNNNN>         Contains a list of log files.
+                                    Each log file has  dateTime followed by the event.
+                                    for example
+                                    File: 17/04124800
+                                        2024/01/02 00:12:25 [STAT MAIN]: close record.
+                                        2024/01/02 00:12:27 [STAT MAIN]: sdcard is inserting
+                                        2024/01/02 00:16:38 [STAT MAIN]: open record.
+                                        2024/01/02 00:18:19 [STAT MAIN]: close record.
+                                        2024/01/02 00:18:21 [STAT MAIN]: sdcard is inserting
+                                        2024/01/02 00:18:58 comfortRampPress3.00
+                                        2024/01/02 00:21:21 [STAT MAIN]: open record.
+                                        2024/01/02 04:39:09 [STAT MAIN]: close record.
+                                        2024/01/02 04:39:11 [STAT MAIN]: sdcard is inserting
+                                        2024/01/02 12:00:00 [STAT MAIN]: sdcard is inserting
+                                        2024/01/02 22:30:06 [STAT MAIN]: sdcard is inserting
+                                        2024/01/02 22:39:12 comfortMaskType0
+                                        2024/01/02 22:42:16 [STAT MAIN]: open record.
+                                    File: 17/04211200 - next in order
+                                        2024/01/03 00:40:36 [STAT MAIN]: close record.
+                                        2024/01/03 00:40:38 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 00:47:16 [STAT MAIN]: open record.
+                                        2024/01/03 05:58:40 [STAT MAIN]: close record.
+                                        2024/01/03 05:58:42 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 05:58:47 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 12:00:00 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 21:46:10 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 21:46:16 ComfortmaskFitlaunch
+                                        2024/01/03 21:46:56 ComfortmaskFitlaunch
+                                        2024/01/03 21:48:05 ComfortmaskFitlaunch
+                                        2024/01/03 21:49:51 ComfortmaskFitlaunch
+                                        2024/01/03 21:51:44 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 21:51:48 ComfortmaskFitlaunch
+                                        2024/01/03 22:23:58 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 22:24:13 comfortMaskType2
+                                        2024/01/03 22:24:28 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 22:57:38 [STAT MAIN]: open record.
+                                        2024/01/03 23:02:52 [STAT MAIN]: close record.
+                                        2024/01/03 23:02:54 [STAT MAIN]: sdcard is inserting
+                                        2024/01/03 23:08:32 [STAT MAIN]: open record.
+                                    Example: of configuration changes. 
+                                        2023/12/23 05:25:02 settingLanguage2
+                                        2023/12/23 05:25:29 settingBrightness1
+                                        2023/12/23 05:27:42 ComfortmaskFitlaunch
+                                        2023/12/23 05:28:26 comfortRampTime60
+                                        2023/12/23 05:28:35 comfortMaskType2
+                                        2023/12/23 05:28:48 ComfortmaskFitlaunch
+                                        2023/12/23 17:38:43 comfortTubeType0
+                                        2023/12/23 17:46:22 comfortiPR3
+                                        2023/12/23 22:48:20 comfortiPR1
+                                        2023/12/23 22:48:43 comfortiPR2
+                                        2023/12/23 22:50:17 comfortiPR3
+                                        2023/12/23 22:53:38 comfortAutoStart16
+                                        2023/12/23 22:53:43 comfortAutoStart0
+                                        2023/12/23 23:14:25 ComfortmaskFitlaunch
+                                        2023/12/23 23:15:01 comfortRampPress3.00
+                                        2023/12/23 23:15:07 comfortRampTime40
+                                        2023/12/24 22:54:10 comfortHumidity2
+                                        2023/12/24 23:01:03 ComfortmaskFitlaunch
+                                        2023/12/26 21:03:34 comfortiPR2
+                                        2023/12/26 21:03:54 comfortRampTime20
+                                        2023/12/27 22:13:35 comfortAutoStart1
+                                        2023/12/27 22:13:52 comfortRampPress3.50
+                                        2023/12/27 22:14:00 comfortRampTime10
+                                        2023/12/29 22:34:43 comfortRampPress3.50
+                                        2023/12/29 22:35:08 comfortHumidity3
+                                        2023/12/30 22:39:25 ComfortmaskFitlaunch
+                                        2023/12/30 22:39:47 comfortMaskType0
+                                        2023/12/31 22:46:12 comfortMaskType2
+
+*/
+
 
 #include <QCoreApplication>
 #include <QString>
@@ -42,6 +162,15 @@
 // the different files of the same type. And later contain the previous describe quantity of description header of size 0x20
 // containing the details for every type of record (e.g. sample chunk size).
 
+// each device setting listed in daily left sidebar  "Device settings" must have its ownn channel.
+
+ChannelID RESVENT_iPR, RESVENT_iPRLevel, RESVENT_Mode, RESVENT_SmartStart
+    /* examples of setting for resmed renamed for resvent.
+     RESVENT_HumidStatus, RESVENT_HumidLevel,
+     RESVENT_PtAccess, RESVENT_Mask, RESVENT_ABFilter, RESVENT_ClimateControl, RESVENT_TubeType,
+     RESVENT_Temp, RESVENT_TempEnable, RESVENT_RampEnable*/
+     ;
+
 ResventLoader::ResventLoader()
 {
     const QString RESVENT_ICON = ":/icons/resvent.png";
@@ -59,6 +188,7 @@ ResventLoader::~ResventLoader()
 const QString kResventTherapyFolder = "THERAPY";
 const QString kResventConfigFolder = "CONFIG";
 const QString kResventRecordFolder = "RECORD";
+const QString kResventLogFolder = "LOG";
 const QString kResventSysConfigFilename = "SYSCFG";
 constexpr qint64 kDateTimeOffset = 8 * 60 * 60 * 1000; // Offset to GMT
 constexpr int kMainHeaderSize = 0x24;
@@ -72,7 +202,10 @@ constexpr double kTenthGain = 0.1;
 constexpr double kNoGain = 1.0;
 
 constexpr double kDefaultGain = kHundredthGain ;           // For Flow (rate) and (mask)Pressure - High Resolutions data.
-const QDate baseDate(2010 , 1, 1);                      // start of development
+
+double applyGain(QString value, double gain) {
+    return (gain*(double)value.toUInt()); 
+}
 
 bool ResventLoader::Detect(const QString & givenpath)
 {
@@ -97,53 +230,86 @@ bool ResventLoader::Detect(const QString & givenpath)
     return true;
 }
 
+void ResventLoader::readAllConfigFiles(const QString & path ,QMap<QString,QString>& hash ) {
+    const auto configPath = path + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventConfigFolder + QDir::separator() ;
+    static const QStringList uniqueFiles({ "ALARM" , "COMFORT" , "CHECK.TXT" , "SETTING" , "VERSION" , "SYSCFG" , "TCTRL" });
+    DEBUGFC;
+    for (const QString& fileName : uniqueFiles) {
+        QString filepath = configPath+fileName;
+        readConfigFile(filepath, hash);
+    }
+    int papMode = configSettings.value("VentMode").toInt();
+    if (papMode == RESVENT_DEVICE_APAP) {
+        readConfigFile(configPath+"N_APAP", hash);
+        myCPAPMode = MODE_APAP;
+        myRESVENT_PAP_MODE = RESVENT_PAP_APAP1 ;
+    } else {
+        readConfigFile(configPath+"N_CPAP", hash);
+        myCPAPMode = MODE_CPAP;
+        myRESVENT_PAP_MODE = RESVENT_PAP_CPAP0 ;
+    }
+}
+
+void ResventLoader::readConfigFile(const QString & configFile, QMap<QString,QString>& hash) {
+    //DEBUGFC O(QFileInfo(configFile).fileName());
+    if (!QFile::exists(configFile)) {
+        qDebug() << "Resvent Data card has no file" << configFile;
+    } else {
+        QFile f(configFile);
+        f.open(QIODevice::ReadOnly | QIODevice::Text);
+        f.seek(4);
+        while (!f.atEnd()) {
+            QString line = f.readLine().trimmed();
+            const auto elems = line.split("=");
+            Q_ASSERT(elems.size() == 2);
+            QString key=elems[0].simplified();
+            QString value=elems[1].simplified();
+            auto it = hash.insert(key,value);
+            DEBUGFC O(QFileInfo(configFile).fileName())  O(key) O(value);
+            Q_UNUSED(it);
+            /*
+            auto it = hash.insert(key,value);
+            if (it != hash.end() ) {
+                QString oldKey=it.key().simplified();
+                QString old=it.value().simplified();
+                IF (it.value() != old ) { DEBUGFC O(QFileInfo(configFile).fileName())  O(oldKey) O(old) O("==>") O(key) O(value); }
+            } else {
+                DEBUGFC O(QFileInfo(configFile).fileName())  O(key) O(value);
+            }
+            */
+        }
+    }
+}
 
 MachineInfo ResventLoader::PeekInfo(const QString & path)
 {
     if (!Detect(path)) {
         return MachineInfo();
     }
+    readAllConfigFiles( path , configSettings);
 
     MachineInfo info = newInfo();
-
-    const auto sys_config_path = path + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventConfigFolder + QDir::separator() + kResventSysConfigFilename;
-    if (!QFile::exists(sys_config_path)) {
-        qDebug() << "Resvent Data card has no" << kResventSysConfigFilename << "file in " << sys_config_path;
-        return MachineInfo();
+    for (auto it = configSettings.begin(); it != configSettings.end(); ++it) {
+        QString key = it.key(),  value = it.value();
+        if (key == "models") {
+            info.model = value;
+            if ( (info.model.contains("Point", Qt::CaseInsensitive))  ||
+                 (info.model.contains("Trend", Qt::CaseInsensitive)) ){
+                info.brand = "Hoffrichter";
+            } else {
+                info.brand = "Resvent";
+            }
+        } else if (key == "sn") {
+            info.serial = value;
+        } else if (key == "num") {
+            info.version = value.toInt();
+        }
+        info.type = MachineType::MT_CPAP;
     }
-    QFile f(sys_config_path);
-    f.open(QIODevice::ReadOnly | QIODevice::Text);
-    f.seek(4);
-    while (!f.atEnd()) {
-        QString line = f.readLine().trimmed();
-
-        const auto elems = line.split("=");
-        Q_ASSERT(elems.size() == 2);
-
-        if (elems[0] == "models") {
-            info.model = elems[1];
-        }
-        else if (elems[0] == "sn") {
-            info.serial = elems[1];
-        }
-        else if (elems[0] == "num") {
-            info.version = elems[1].toInt();
-        }
-        else if (elems[0] == "num") {
-            info.type = MachineType::MT_CPAP;
-        }
-    }
-
-    if (info.model.contains("Point", Qt::CaseInsensitive)) {
-        info.brand = "Hoffrichter";
-    } else {
-        info.brand = "Resvent";
-    }
-
     return info;
 }
 
-QVector<QDate> GetSessionsDate(const QString& dirpath) {
+QVector<QDate> ResventLoader::GetSessionsDate(const QString& dirpath) {
     QVector<QDate> sessions_date;
 
     const auto records_path = dirpath + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventRecordFolder;
@@ -169,39 +335,7 @@ QVector<QDate> GetSessionsDate(const QString& dirpath) {
     return sessions_date;
 }
 
-enum class EventType {
-    //UsageSec = 1,
-    //UnixStart = 2,
-    ObstructiveApnea = 17,
-    CentralApnea = 18,
-    Hypopnea = 19,
-    FlowLimitation = 20,
-    RERA = 21,
-    PeriodicBreathing = 22,
-    Snore = 23
-};
-
-struct EventData {
-    EventType type;
-    QDateTime date_time;
-    int duration;
-};
-
-struct UsageData {
-    QString number{};
-    QDateTime start_time{};
-    QDateTime end_time{};
-    qint32 countAHI = 0;
-    qint32 countOAI = 0;
-    qint32 countCAI = 0;
-    qint32 countAI = 0;
-    qint32 countHI = 0;
-    qint32 countRERA = 0;
-    qint32 countSNI = 0;
-    qint32 countBreath = 0;
-};
-
-void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>>& events, Session* session) {
+void ResventLoader::UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>>& events, Session* session) {
     static QMap<EventType, unsigned int> mapping {{EventType::ObstructiveApnea, CPAP_Obstructive},
                                                  {EventType::CentralApnea, CPAP_ClearAirway},
                                                  {EventType::Hypopnea, CPAP_Hypopnea},
@@ -221,14 +355,14 @@ void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>
     });
 }
 
-QString GetSessionFolder(const QString& dirpath, const QDate& session_date) {
+QString ResventLoader::GetSessionFolder(const QString& dirpath, const QDate& session_date) {
     const auto year_month_folder = QString("%1%2").arg(session_date.year()).arg(session_date.month(),2,10,QLatin1Char('0'));
     const auto day_folder = QString("%1").arg(session_date.day(),2,10,QLatin1Char('0')) ;
     const auto session_folder_path = dirpath + QDir::separator() + kResventTherapyFolder + QDir::separator() + kResventRecordFolder + QDir::separator() + year_month_folder + QDir::separator() + day_folder;
     return session_folder_path;
 }
 
-bool VerifyEvent(EventData& eventData) {
+bool ResventLoader::VerifyEvent(EventData& eventData) {
     switch (eventData.type) {
         case EventType::FlowLimitation:
         case EventType::Hypopnea:
@@ -247,8 +381,8 @@ bool VerifyEvent(EventData& eventData) {
     }
     return true;
 }
-
-void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage ) {
+// ResventLoader::
+void ResventLoader::LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage ) {
     const auto event_file_path = session_folder_path + QDir::separator() + "EV" + usage.number;
     // Oscar (resmed) plots events at end.
 
@@ -311,8 +445,7 @@ struct WaveFileData {
     unsigned int start_offset;
 };
 
-EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) {
-    DEBUGFC Q(name);
+EventList* ResventLoader::GetEventList(const QString& name, Session* session, float sample_rate) {
     if (name == "Press") {
         return session->AddEventList(CPAP_Pressure, EVL_Event, kHundredthGain);
     }
@@ -355,18 +488,6 @@ EventList* GetEventList(const QString& name, Session* session, float sample_rate
     }
 }
 
-struct ChunkData {
-    EventList* event_list;
-    uint16_t samples_by_chunk;
-    qint64 start_time;
-    int total_samples_by_chunk;
-    float sample_rate;
-    #ifdef TEST_MACROS_ENABLED
-    QString chunkName ;
-    int chunkDebug = -1;
-    #endif
-};
-
 QString ReadDescriptionName(QFile& f) {
     constexpr int kNameSize = 9;
     QVector<char> name(kNameSize);
@@ -377,13 +498,12 @@ QString ReadDescriptionName(QFile& f) {
     return QString(name.data());
 }
 
-void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const UsageData& usage) {
+void ResventLoader::ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const UsageData& usage) {
     f.seek(kChunkDurationInSecOffset);
     const auto chunk_duration_in_sec = read_from_file<uint16_t>(f);
     f.seek(kDescriptionCountOffset);
     const auto description_count = read_from_file<uint16_t>(f);
     wave_forms.resize(description_count);
-	DEBUGFC Q(chunk_duration_in_sec) Q(description_count);
 
     for (unsigned int i = 0; i < description_count; i++) {
         const auto description_header_offset = kMainHeaderSize + i * kDescriptionHeaderSize;
@@ -399,20 +519,11 @@ void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* ses
         #ifdef TEST_MACROS_ENABLED
         wave_forms[i].chunkName = name;
         wave_forms[i].chunkDebug = -1;
-
-        DEBUGNC O( wave_forms[i].chunkName) DATETIME(wave_forms[i].start_time) O(usage.number);
-        //IF ((name == "I:E" || name == "Ti") && f.fileName().contains("P01_01"))
-        //DEBUGFC Q( wave_forms[i].chunkName) O(f.fileName()) ;
-        IF ( (name == "Leak") &&  f.fileName().contains("P01_01"))
-        OO ({
-            wave_forms[i].chunkDebug = 1;
-            DEBUGFC Q( wave_forms[i].chunkName) DATETIME(wave_forms[i].start_time) O("\n") O(f.fileName()) ;
-        })
         #endif
     }
 }
 
-void LoadOtherWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
+void ResventLoader::LoadOtherWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
     QDir session_folder(session_folder_path);
 
     const auto wave_files = session_folder.entryList(QStringList() << "P" + usage.number + "_*", QDir::Files, QDir::Name);
@@ -421,7 +532,6 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
     bool initialized = false;
     std::for_each(wave_files.cbegin(), wave_files.cend(), [&](const QString& wave_file){
         // P01_ file
-        DEBUGFC O("LoadOtherWaveForms") Q(usage.number);
         QFile f(session_folder_path + QDir::separator() + wave_file);
         f.open(QIODevice::ReadOnly);
 
@@ -437,7 +547,6 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
         while (!f.atEnd()) {
             for (int i = 0; i < wave_forms.size(); i++) {
                 const auto& wave_form = wave_forms[i].event_list;
-                IF (wave_forms[i].chunkDebug>0) DEBUGFC O(wave_forms[i].chunkName) O(wave_form);
                 const auto samples_by_chunk_actual = wave_forms[i].samples_by_chunk;
                 auto& start_time_current = wave_forms[i].start_time;
                 auto& total_samples_by_chunk = wave_forms[i].total_samples_by_chunk;
@@ -447,14 +556,12 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                 const auto readed = f.read(reinterpret_cast<char*>(chunk.data()), chunk.size() * sizeof(qint16));
                 if (wave_form) {
                     const auto readed_elements = readed / sizeof(qint16);
-                    IF (wave_forms[i].chunkDebug>0) DEBUGFC Q(readed_elements) Q(samples_by_chunk_actual);
                     if (readed_elements != samples_by_chunk_actual) {
                         std::fill(std::begin(chunk) + readed_elements, std::end(chunk), 0);
                     }
 
                     int offset = 0;
              std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
-                        IF (wave_forms[i].chunkDebug>0 && value>0) DEBUGFC O(wave_forms[i].chunkName) DATETIME(start_time_current + offset + kDateTimeOffset - timezoneOffset()) O(value) Q(offset) Q(sample_rate);
                         wave_form->AddEvent(start_time_current + offset + kDateTimeOffset - timezoneOffset(), value);
                         offset += 1000.0 / sample_rate;
                     });
@@ -476,12 +583,6 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
                 int offset = 0;
                 std::for_each(chunk.cbegin(), chunk.cend(), [&](const qint16& value){
                     wave_form.event_list->AddEvent(wave_form.start_time + offset + kDateTimeOffset - timezoneOffset(), value );
-                    IF (wave_forms[i].chunkDebug>0 && offset>=0 && value > 0)
-                        DEBUGFC O(wave_forms[i].chunkName)
-                        DATETIME(wave_form.start_time + offset + kDateTimeOffset - timezoneOffset())
-                        O(value)
-                        //Q(sample_rate)
-                        ;
                     offset += 1000.0 / wave_form.sample_rate;
                 });
             }
@@ -489,7 +590,7 @@ void LoadOtherWaveForms(const QString& session_folder_path, Session* session, co
     }
 }
 
-void LoadWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
+void ResventLoader::LoadWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
     QDir session_folder(session_folder_path);
 
     const auto wave_files = session_folder.entryList(QStringList() << "W" + usage.number + "_*", QDir::Files, QDir::Name);
@@ -517,7 +618,6 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
                 auto& start_time_current = wave_forms[i].start_time;
                 auto& total_samples_by_chunk = wave_forms[i].total_samples_by_chunk;
                 const auto sample_rate = wave_forms[i].sample_rate;
-                //DEBUGFC O(wave_forms[i].chunkName) DATE(wave_forms[i].start_time) Q(usage.number);
 
                 const auto duration = samples_by_chunk_actual * 1000.0 / sample_rate;
                 const auto readed = f.read(reinterpret_cast<char*>(chunk.data()), chunk.size() * sizeof(qint16));
@@ -547,14 +647,27 @@ void LoadWaveForms(const QString& session_folder_path, Session* session, const U
         }
     }
 }
+// The following modes are specific to the resvent device. there could change based on manufactures differences
+// See resmed loader for more examples.
+// enum RESVENT_PAP_MODE  now in header file.
 
-void LoadStats(const UsageData& /*usage_data*/, Session* session ) {
-    session->settings[CPAP_Mode] = MODE_APAP;
-    //session->settings[CPAP_PressureMin] = 4.0;    // these value are hard coded for now.
-    //session->settings[CPAP_PressureMax] = 20.0;   // these value are hard coded for now.
+enum RESVENT_iPR_MODE {
+    RESVENT_iPR_OFF , RESVENT_iPR_ON , RESVENT_iPR_RAMP
+};
+
+void ResventLoader::LoadStats(const UsageData& /*usage_data*/, Session* session ) {
+    // these should be set once per day or once per sessio or once per oscar sessionFull mode
+    session->settings[CPAP_Mode] = myCPAPMode ;
+    session->settings[CPAP_PressureMin] = applyGain(configSettings.value("PMin"),kHundredthGain);
+    session->settings[CPAP_PressureMax] = applyGain(configSettings.value("PMax"),kHundredthGain);
+
+    session->settings[RESVENT_Mode] = myRESVENT_PAP_MODE;
+    int level = (configSettings.value("iPR").toInt()) ;
+    session->settings[RESVENT_iPR] =  level<=0?RESVENT_iPR_OFF:RESVENT_iPR_ON ; // defined in options.
+    session->settings[RESVENT_iPRLevel] = level;
 }
 
-UsageData ReadUsage(const QString& session_folder_path, const QString& usage_number) {
+UsageData ResventLoader::ReadUsage(const QString& session_folder_path, const QString& usage_number) {
     UsageData usage_data;
     usage_data.number = usage_number;
 
@@ -607,7 +720,7 @@ UsageData ReadUsage(const QString& session_folder_path, const QString& usage_num
     return usage_data;
 }
 
-QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
+QVector<UsageData> ResventLoader::GetDifferentUsage(const QString& session_folder_path) {
     QDir session_folder(session_folder_path);
 
     const auto stat_files = session_folder.entryList(QStringList() << "STAT*", QDir::Files, QDir::Name);
@@ -625,28 +738,22 @@ QVector<UsageData> GetDifferentUsage(const QString& session_folder_path) {
     return usage_data;
 }
 
-int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
+int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine) {
     // Handles one day - all OSCAR sessions for a  day.
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
+    //return std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
+    // std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
     int base = 0;
-    // Session ID must be unique.
-    // SessioId is defined as an unsigned int. Oscar however has a problem .
-    // if the most signifigant bit is set then Oscat misbehaves.
-    // typically with signed vs unsigned int issues.
-    // so sessionID has an implicit limit of a max postive value of of signed int.
-    // sessionID  be must a unique positive ingteger ei. <= (2**31 -1)  (2,147,483,647)
-    //
-    SessionID sessionId = (baseDate.daysTo(session_date)) * 64; // leave space for N sessions.
     for (auto usage : different_usage)
     {
-        if (machine->SessionExists(sessionId)) {
+        if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset())) {
             // session alreadt exists
             //return base;
             continue;
         }
-        Session* session = new Session(machine, sessionId++);
+        Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         session->SetChanged(true);
         session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
@@ -671,6 +778,7 @@ int ResventLoader::Open(const QString & dirpath)
 {
     const auto machine_info = PeekInfo(dirpath);
 
+
     // Abort if no serial number
     if (machine_info.serial.isEmpty()) {
         qDebug() << "Resvent Data card has no valid serial number in " << kResventSysConfigFilename;
@@ -694,6 +802,7 @@ int ResventLoader::Open(const QString & dirpath)
         QCoreApplication::processEvents();
     });
 
+    
     machine->Save();
 
     emit setProgressValue(++progress);
@@ -703,11 +812,43 @@ int ResventLoader::Open(const QString & dirpath)
 
 void ResventLoader::initChannels()
 {
+    // Remember there must a one-to-one coresponce between channelId and ChannelName.
+    // channel XX: the ID of xX:  RESVENT_Mode must be a unique channelId and
+    // channel xx: the Name of XX: "RESVENT_Mode must be a unique channel Name.
+    // Copied from resmed
+    using namespace schema;
+    int RESVENT_CHANNELS = 0xe8A0;
+
+    Channel * chan = new Channel(RESVENT_Mode = RESVENT_CHANNELS , SETTING, MT_CPAP,   SESSION,
+        "RESVENT_Mode", QObject::tr("Mode"), QObject::tr("CPAP Mode"), QObject::tr("Mode"), "", LOOKUP, Qt::green);
+    channel.add(GRP_CPAP, chan);
+
+    // These should be resvent loader names. must start at 0 and increment
+    chan->addOption(RESVENT_PAP_CPAP0, STR_TR_CPAP);    // strings have already been translated
+    chan->addOption(RESVENT_PAP_APAP1, STR_TR_APAP);    // strings have already been translated
+    
+
+    channel.add(GRP_CPAP, chan = new Channel(RESVENT_iPR = RESVENT_CHANNELS+1 , SETTING, MT_CPAP,   SESSION,
+        "iPR", QObject::tr("iPR"), QObject::tr("Resvent Exhale Pressure Relief"), QObject::tr("iPR"), "", LOOKUP, Qt::green));
+
+    chan->addOption(RESVENT_iPR_OFF, STR_TR_Off);   // strings have already been translated
+    chan->addOption(RESVENT_iPR_ON, STR_TR_On); // strings have already been translated
+    // This is a resmed option include as example. chan->addOption(RESVENT_iPR_RAMP, QObject::tr("Ramp Only"));
+
+    channel.add(GRP_CPAP, chan = new Channel(RESVENT_iPRLevel = RESVENT_CHANNELS+2 , SETTING,  MT_CPAP,  SESSION,
+        "iPRLevel", QObject::tr("iPR Level"), QObject::tr("Exhale Pressure Relief Level"), QObject::tr("iPR Level"),
+        STR_UNIT_CMH2O, LOOKUP, Qt::blue));
 }
 
-ChannelID ResventLoader::PresReliefMode() { return 0; }
-ChannelID ResventLoader::PresReliefLevel() { return 0; }
-ChannelID ResventLoader::CPAPModeChannel() { return 0; }
+ChannelID ResventLoader::PresReliefMode() {
+    return RESVENT_iPR;
+}
+ChannelID ResventLoader::PresReliefLevel() {
+    return RESVENT_iPRLevel;
+}
+ChannelID ResventLoader::CPAPModeChannel() {
+    return RESVENT_Mode;
+}
 
 bool resvent_initialized = false;
 void ResventLoader::Register()
