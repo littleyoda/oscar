@@ -708,14 +708,14 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
 
-    rows.push_back(StatisticsRow(tr("Total Days"), SC_SELECTED_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Total Days"), SC_TOTAL_DAYS ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Used Days"), SC_DAYS_W_DATA ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_COMPLIANCE_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_DAYS_GE_COMPLIANCE_HOURS ,    MT_CPAP));
 
-    rows.push_back(StatisticsRow(tr("Percent Total Days %1%2 hrs/day"), SC_COMPLIANCE ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Percent Used Days %1%2 hrs/day"), SC_USED_DAY_COMPLIANCE_PERCENT ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Percent Total Days %1%2 hrs/day"), SC_TOTAL_DAYS_PERCENT ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Percent Used Days %1%2 hrs/day"), SC_USED_DAY_PERCENT ,    MT_CPAP));
 
-    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_NON_COMPLIANCE_DAYS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_DAYS_LT_COMPLAINCE_HOURS ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Average Hours per Night"),      SC_HOURS,     MT_CPAP));
@@ -1332,8 +1332,8 @@ QString Statistics::GenerateCPAPUsage()
         html += "<font size='+0'>";
 
     // Find first and last days with valid CPAP data
-    QDate lastcpap = p_profile->LastGoodDay(MT_CPAP);
-    QDate firstcpap = p_profile->FirstGoodDay(MT_CPAP);
+    QDate lastcpap = p_profile->LastDay();
+    QDate firstcpap = p_profile->FirstDay();
     adjustRange(firstcpap,lastcpap);
 
     QString ahitxt = getRDIorAHIText();
@@ -1455,15 +1455,15 @@ QString Statistics::GenerateCPAPUsage()
             name = row.src;
         } else if (row.calc == SC_DAYS_W_DATA) {
             name = row.src;
-        } else if (row.calc == SC_SELECTED_DAYS) {
+        } else if (row.calc == SC_TOTAL_DAYS) {
             name = row.src;
-        } else if (row.calc == SC_NON_COMPLIANCE_DAYS) {
+        } else if (row.calc == SC_DAYS_LT_COMPLAINCE_HOURS) {
             name = QString(row.src).arg("&lt; ").arg(p_profile->cpap->m_complianceHours);
-        } else if (row.calc == SC_USED_DAY_COMPLIANCE_PERCENT) {
+        } else if (row.calc == SC_USED_DAY_PERCENT) {
             name = QString(row.src).arg("&gt;= ").arg(p_profile->cpap->m_complianceHours);
-        } else if (row.calc == SC_COMPLIANCE_DAYS) {
+        } else if (row.calc == SC_DAYS_GE_COMPLIANCE_HOURS) {
             name = QString(row.src).arg("&gt;= ").arg(p_profile->cpap->m_complianceHours);
-        } else if (row.calc == SC_COMPLIANCE) {
+        } else if (row.calc == SC_TOTAL_DAYS_PERCENT) {
             name = QString(row.src).arg("&gt;= " ).arg(p_profile->cpap->m_complianceHours);
         } else if (row.calc == SC_COLUMNHEADERS) {
             html += QString("<tr><td><b>%1</b></td>").arg(tr("Details"));
@@ -1473,8 +1473,8 @@ QString Statistics::GenerateCPAPUsage()
             html += "</tr>";
             continue;
         } else if (row.calc == SC_DAYS) {
-            QDate first=p_profile->FirstGoodDay(row.type);
-            QDate last=p_profile->LastGoodDay(row.type);
+            QDate first=p_profile->FirstDay(row.type);
+            QDate last=p_profile->LastDay(row.type);
             // there no relationship to reports date. It just specifies the number of days used for a cetain range of dates.
             QString & machine = machinenames[row.type];
             int value=p_profile->countDays(row.type, first, last );
@@ -1654,8 +1654,8 @@ QString Statistics::UpdateRecordsBox()
 
     Machine * cpap = p_profile->GetMachine(MT_CPAP);
     if (cpap) {
-        QDate first = p_profile->FirstGoodDay(MT_CPAP);
-        QDate last = p_profile->LastGoodDay(MT_CPAP);
+        QDate first = p_profile->FirstDay(MT_CPAP);
+        QDate last = p_profile->LastDay(MT_CPAP);
 
         /////////////////////////////////////////////////////////////////////////////////////
         /// Compliance and usage information
@@ -1932,14 +1932,9 @@ QString Statistics::UpdateRecordsBox()
         }
     }
 
-
-
     html += "</body></html>";
-
     return html;
 }
-
-
 
 QString StatisticsRow::value(QDate start, QDate end)
 {
@@ -1968,14 +1963,14 @@ QString StatisticsRow::value(QDate start, QDate end)
         }
     } else if (calc == SC_DAYS_WO_DATA) {
         value = QString::number((1+start.daysTo(end)) - p_profile->countDays(type, start, end ));
-    } else if (calc == SC_USED_DAY_COMPLIANCE_PERCENT) {
+    } else if (calc == SC_USED_DAY_PERCENT) {
         int days = p_profile->countDays(type, start, end );
         if (days)  {
             value = QString("%1%").arg( ( (
                 ((100.0*(EventDataType)p_profile->countCompliantDays(type, start, end )) / (EventDataType)days) )
                 ), 0, 'f', decimals);
         } else {
-            value = 0.0 ;
+            value = QString("-");
         }
     } else if (calc == SC_DAYS_W_DATA) {
         int daysUsed = p_profile->countDays(type, start, end);
@@ -1984,23 +1979,28 @@ QString StatisticsRow::value(QDate start, QDate end)
             noDaysInPeriod.insert(start);
             return value;
         };
-    } else if (calc == SC_SELECTED_DAYS) {
+    } else if (calc == SC_TOTAL_DAYS) {
         value = QString::number(1+start.daysTo(end));
-    } else if (calc == SC_NON_COMPLIANCE_DAYS) {
-        int value1 = ( (1+start.daysTo(end)) - p_profile->countCompliantDays(type, start, end ) );
+    } else if (calc == SC_DAYS_LT_COMPLAINCE_HOURS) {
+        int daysUsed = p_profile->countDays(type, start, end);
+        int value1 =  ( daysUsed - p_profile->countCompliantDays(type, start, end ) );
+        if (value1<0) value1 =0;
         value = QString("%1 ").arg(value1);
         //value += QString(" / %1").arg(double(100*value1)/double(1+start.daysTo(end)));
     } else if (calc == SC_HOURS) {
         if (days==0) { value = QString("0"); } else {
             value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
         }
-    } else if (calc == SC_COMPLIANCE) {
+    } else if (calc == SC_TOTAL_DAYS_PERCENT) {
         float c = p_profile->countCompliantDays(type, start, end );
-//        float p = (100.0 / days) * c;
-        float realDays = qAbs(start.daysTo(end)) + 1;
-        float p = (100.0 *c / realDays) ;
-        value = QString("%1%").arg(p, 0, 'f', 2);
-    } else if (calc == SC_COMPLIANCE_DAYS) {
+        int days = 1+start.daysTo(end);
+        if (days) {
+            float p = (100.0 *c / (float)days) ;
+            value = QString("%1%").arg(p, 0, 'f', 2);
+        } else {
+            value = QString("-");
+        }
+    } else if (calc == SC_DAYS_GE_COMPLIANCE_HOURS) {
         int value1 = p_profile->countCompliantDays(type, start, end );
         value = QString("%1 ").arg(value1);
     } else if (calc == SC_DAYS) {
@@ -2058,7 +2058,7 @@ QString StatisticsRow::value(QDate start, QDate end)
             value = fmt.arg(val, 0, 'f', decimals);
         }
     }
-
+    if (value.contains("nan",Qt::CaseInsensitive) ) value='-';
     return value;
 }
 
