@@ -65,7 +65,7 @@ public:
 //! \brief Type of calculation on one statistics row
 enum StatCalcType {
     SC_UNDEFINED=0, SC_COLUMNHEADERS, SC_HEADING, SC_SUBHEADING, SC_MEDIAN, SC_AVG, SC_WAVG, SC_90P, SC_MIN, SC_MAX, SC_CPH, SC_SPH, SC_AHI_RDI , SC_HOURS, SC_TOTAL_DAYS_PERCENT, SC_DAYS, SC_ABOVE, SC_BELOW , SC_WARNING , SC_MESSAGE ,
-    SC_TOTAL_DAYS , SC_DAYS_W_DATA , SC_DAYS_WO_DATA , SC_DAYS_GE_COMPLIANCE_HOURS , SC_USED_DAY_PERCENT , SC_DAYS_LT_COMPLAINCE_HOURS , SC_MEDIAN_HOURS , SC_MEDIAN_AHI , SC_AHI_ONLY
+    SC_TOTAL_DAYS , SC_DAYS_W_DATA , SC_DAYS_WO_DATA , SC_DAYS_GE_COMPLIANCE_HOURS , SC_USED_DAY_PERCENT , SC_DAYS_LT_COMPLAINCE_HOURS , SC_MEDIAN_HOURS , SC_MEDIAN_AHI , SC_AHI_ONLY , SC_SPACE
 };
 
 /*! \struct StatisticsRow
@@ -117,6 +117,7 @@ struct StatisticsRow {
             return SC_AHI_RDI;
         } else if (calc.compare("hours", Qt::CaseInsensitive)==0) {
             return SC_HOURS;
+        #if 0
         } else if (calc.compare("compliance", Qt::CaseInsensitive)==0) {
             return SC_TOTAL_DAYS_PERCENT;
         } else if (calc.compare("days", Qt::CaseInsensitive)==0) {
@@ -125,6 +126,7 @@ struct StatisticsRow {
             return SC_HEADING;
         } else if (calc.compare("subheading", Qt::CaseInsensitive)==0) {
             return SC_SUBHEADING;
+        #endif
         }
         return SC_UNDEFINED;
     }

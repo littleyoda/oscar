@@ -48,7 +48,6 @@ QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
 SummaryInfo summaryInfo;
-QSet<QDate> noDaysInPeriod;
 QString alternatingColor(int& counter) {
     counter++;
     int offset = counter %= 3;
@@ -773,11 +772,14 @@ Statistics::Statistics(QObject *parent) :
     rows.push_back(StatisticsRow("IPAPSet",       SC_MIN,     MT_CPAP));
     rows.push_back(StatisticsRow("IPAPSet",       SC_MAX,     MT_CPAP));
 
-    rows.push_back(StatisticsRow("", SC_HEADING, MT_OXIMETER));         // Just adds some space
+    rows.push_back(StatisticsRow("", SC_SPACE, MT_OXIMETER));         // Just adds some space
     rows.push_back(StatisticsRow(tr("Oximeter Statistics"), SC_HEADING, MT_OXIMETER));
     rows.push_back(StatisticsRow("",           SC_DAYS,    MT_OXIMETER));
     rows.push_back(StatisticsRow("",           SC_COLUMNHEADERS, MT_OXIMETER));
 
+    rows.push_back(StatisticsRow(tr("Oximeter Usage"),  SC_SUBHEADING, MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Total Days"), SC_TOTAL_DAYS ,    MT_OXIMETER));
+    rows.push_back(StatisticsRow(tr("Used Days"), SC_DAYS_W_DATA ,    MT_OXIMETER));
     rows.push_back(StatisticsRow(tr("Blood Oxygen Saturation"),  SC_SUBHEADING, MT_CPAP));
     rows.push_back(StatisticsRow("SPO2",       SC_WAVG,     MT_OXIMETER));
     rows.push_back(StatisticsRow("SPO2",       SC_MIN,     MT_OXIMETER));
@@ -1345,7 +1347,6 @@ QString Statistics::GenerateCPAPUsage()
 
     // Compute number of monthly periods for a monthly rather than standard time distribution
     int number_periods = 0;
-    noDaysInPeriod.clear();
     if (p_profile->general->statReportMode() == STAT_MODE_MONTHLY) {
         QDate startMonth = lastcpap.addMonths(-12);
         // Go to the the start of the next months
@@ -1368,7 +1369,6 @@ QString Statistics::GenerateCPAPUsage()
         firstcpap = lastcpap.addYears(-1).addDays(1);
         adjustRange(firstcpap,lastcpap);
     }
-
     QDate last = lastcpap, first = lastcpap;
 
     QList<Period> periods;
@@ -1514,6 +1514,11 @@ QString Statistics::GenerateCPAPUsage()
                 html+=QString("<tr><td colspan=%1 align=center>%2</th></tr>").
                         arg(periods.size()+1).arg(text);
             continue;
+        } else if (row.calc == SC_SPACE) {
+            // if (CPAP HAS rows and OXI has rows then add space
+            html+=QString("<tr bgcolor='%1'><th colspan=%2 align=center><font size='+2'>%3</font></th></tr>").
+                        arg(heading_color).arg(periods.size()+1).arg(row.src);
+            continue;
         } else {
             ChannelID id = schema::channel[row.src].id();
             if ((id == NoChannel) || (!p_profile->channelAvailable(id))) {
@@ -1536,7 +1541,6 @@ QString Statistics::GenerateCPAPUsage()
         }
         QString bgColor = alternatingColor(alternatingColorCounter);
         line += QString("<tr class=datarow bgcolor='%3'><td width='%1%'>%2</td>").arg(headerWidth).arg(name).arg(bgColor);
-        //line += QString("<tr class=datarow><td width='%1%'>%2</td>").arg(headerWidth).arg(name);
         for (int j=0; j < np; j++) {
             width = j < np-1 ? dataWidth : 100 - (headerWidth + dataWidth*(np-1));
             line += QString("<td width='%1%'>").arg(width);
@@ -1938,7 +1942,6 @@ QString Statistics::UpdateRecordsBox()
 
 QString StatisticsRow::value(QDate start, QDate end)
 {
-    if (noDaysInPeriod.contains(start) ) return "-";
     const int decimals=2;
     QString value;
     float days = p_profile->countDays(type, start, end);
@@ -1975,12 +1978,10 @@ QString StatisticsRow::value(QDate start, QDate end)
     } else if (calc == SC_DAYS_W_DATA) {
         int daysUsed = p_profile->countDays(type, start, end);
         value = QString::number(daysUsed);
-        if (daysUsed==0) {
-            noDaysInPeriod.insert(start);
-            return value;
-        };
+        return value;   // always display days used.
     } else if (calc == SC_TOTAL_DAYS) {
         value = QString::number(1+start.daysTo(end));
+        return value;   // always display total days
     } else if (calc == SC_DAYS_LT_COMPLAINCE_HOURS) {
         int daysUsed = p_profile->countDays(type, start, end);
         int value1 =  ( daysUsed - p_profile->countCompliantDays(type, start, end ) );
@@ -2058,7 +2059,10 @@ QString StatisticsRow::value(QDate start, QDate end)
             value = fmt.arg(val, 0, 'f', decimals);
         }
     }
-    if (value.contains("nan",Qt::CaseInsensitive) ) value='-';
+    if ( (p_profile->countDays(type, start, end) == 0) ||
+         (value.contains("nan",Qt::CaseInsensitive) ) ) {
+         value='-';
+    }
     return value;
 }
 
