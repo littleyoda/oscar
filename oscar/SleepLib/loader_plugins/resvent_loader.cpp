@@ -106,7 +106,7 @@ THERAPY/LOG/<xxxx>/<NNNNNN>         Contains a list of log files.
                                         2024/01/03 23:02:52 [STAT MAIN]: close record.
                                         2024/01/03 23:02:54 [STAT MAIN]: sdcard is inserting
                                         2024/01/03 23:08:32 [STAT MAIN]: open record.
-                                    Example: of configuration changes. 
+                                    Example: of configuration changes.
                                         2023/12/23 05:25:02 settingLanguage2
                                         2023/12/23 05:25:29 settingBrightness1
                                         2023/12/23 05:27:42 ComfortmaskFitlaunch
@@ -202,9 +202,10 @@ constexpr double kTenthGain = 0.1;
 constexpr double kNoGain = 1.0;
 
 constexpr double kDefaultGain = kHundredthGain ;           // For Flow (rate) and (mask)Pressure - High Resolutions data.
+const QDate baseDate(2010 , 1, 1);
 
 double applyGain(QString value, double gain) {
-    return (gain*(double)value.toUInt()); 
+    return (gain*(double)value.toUInt());
 }
 
 bool ResventLoader::Detect(const QString & givenpath)
@@ -743,17 +744,23 @@ int ResventLoader::LoadSession(const QString& dirpath, const QDate& session_date
     const auto session_folder_path = GetSessionFolder(dirpath, session_date);
 
     const auto different_usage = GetDifferentUsage(session_folder_path);
-    //return std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
-    // std::accumulate(different_usage.cbegin(), different_usage.cend(), 0, [&](int base, const UsageData& usage)
     int base = 0;
+    // Session ID must be unique.
+    // SessioId is defined as an unsigned int. Oscar however has a problem .
+    // if the most signifigant bit is set then Oscat misbehaves.
+    // typically with signed vs unsigned int issues.
+    // so sessionID has an implicit limit of a max postive value of of signed int.
+    // sessionID  be must a unique positive ingteger ei. <= (2**31 -1)  (2,147,483,647)
+    //
+    SessionID sessionId = (baseDate.daysTo(session_date)) * 64; // leave space for N sessions.
     for (auto usage : different_usage)
     {
-        if (machine->SessionExists(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset())) {
+        if (machine->SessionExists(sessionId)) {
             // session alreadt exists
             //return base;
             continue;
         }
-        Session* session = new Session(machine, usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
+        Session* session = new Session(machine, sessionId++);
         session->SetChanged(true);
         session->really_set_first(usage.start_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
         session->really_set_last(usage.end_time.toMSecsSinceEpoch() + kDateTimeOffset - timezoneOffset());
@@ -802,7 +809,7 @@ int ResventLoader::Open(const QString & dirpath)
         QCoreApplication::processEvents();
     });
 
-    
+
     machine->Save();
 
     emit setProgressValue(++progress);
@@ -826,7 +833,7 @@ void ResventLoader::initChannels()
     // These should be resvent loader names. must start at 0 and increment
     chan->addOption(RESVENT_PAP_CPAP0, STR_TR_CPAP);    // strings have already been translated
     chan->addOption(RESVENT_PAP_APAP1, STR_TR_APAP);    // strings have already been translated
-    
+
 
     channel.add(GRP_CPAP, chan = new Channel(RESVENT_iPR = RESVENT_CHANNELS+1 , SETTING, MT_CPAP,   SESSION,
         "iPR", QObject::tr("iPR"), QObject::tr("Resvent Exhale Pressure Relief"), QObject::tr("iPR"), "", LOOKUP, Qt::green));
