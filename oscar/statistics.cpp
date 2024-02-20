@@ -1,7 +1,7 @@
 /* Statistics Report Generator Implementation
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -703,19 +703,19 @@ Statistics::Statistics(QObject *parent) :
     // but is also included for Standard and data range
     rows.push_back(StatisticsRow("4",SC_MESSAGE , MT_CPAP));
 
-    rows.push_back(StatisticsRow("", SC_DAYS, MT_CPAP));
+    rows.push_back(StatisticsRow("", SC_DAYS_HEADER, MT_CPAP));
     rows.push_back(StatisticsRow("", SC_COLUMNHEADERS, MT_CPAP));
     rows.push_back(StatisticsRow(tr("CPAP Usage"),  SC_SUBHEADING, MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Total Days"), SC_TOTAL_DAYS ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Used Days"), SC_DAYS_W_DATA ,    MT_CPAP));
+
+    rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_DAYS_GE_COMPLIANCE_HOURS ,    MT_CPAP));
+    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_DAYS_LT_COMPLAINCE_HOURS ,    MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Percent Total Days %1%2 hrs/day"), SC_TOTAL_DAYS_PERCENT ,    MT_CPAP));
     rows.push_back(StatisticsRow(tr("Percent Used Days %1%2 hrs/day"), SC_USED_DAY_PERCENT ,    MT_CPAP));
-
-    rows.push_back(StatisticsRow(tr("Used Days %1%2 hrs/day"), SC_DAYS_LT_COMPLAINCE_HOURS ,    MT_CPAP));
-    rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_CPAP));
 
     rows.push_back(StatisticsRow(tr("Average Hours per Night"),      SC_HOURS,     MT_CPAP));
     rows.push_back(StatisticsRow(tr("Median Hours per Night"),      SC_MEDIAN_HOURS ,     MT_CPAP));
@@ -774,12 +774,13 @@ Statistics::Statistics(QObject *parent) :
 
     rows.push_back(StatisticsRow("", SC_SPACE, MT_OXIMETER));         // Just adds some space
     rows.push_back(StatisticsRow(tr("Oximeter Statistics"), SC_HEADING, MT_OXIMETER));
-    rows.push_back(StatisticsRow("",           SC_DAYS,    MT_OXIMETER));
+    rows.push_back(StatisticsRow("",           SC_DAYS_HEADER,    MT_OXIMETER));
     rows.push_back(StatisticsRow("",           SC_COLUMNHEADERS, MT_OXIMETER));
 
     rows.push_back(StatisticsRow(tr("Oximeter Usage"),  SC_SUBHEADING, MT_CPAP));
     rows.push_back(StatisticsRow(tr("Total Days"), SC_TOTAL_DAYS ,    MT_OXIMETER));
     rows.push_back(StatisticsRow(tr("Used Days"), SC_DAYS_W_DATA ,    MT_OXIMETER));
+    rows.push_back(StatisticsRow(tr("Days Not Used"), SC_DAYS_WO_DATA ,    MT_OXIMETER));
     rows.push_back(StatisticsRow(tr("Blood Oxygen Saturation"),  SC_SUBHEADING, MT_CPAP));
     rows.push_back(StatisticsRow("SPO2",       SC_WAVG,     MT_OXIMETER));
     rows.push_back(StatisticsRow("SPO2",       SC_MIN,     MT_OXIMETER));
@@ -1472,7 +1473,7 @@ QString Statistics::GenerateCPAPUsage()
             }
             html += "</tr>";
             continue;
-        } else if (row.calc == SC_DAYS) {
+        } else if (row.calc == SC_DAYS_HEADER) {
             QDate first=p_profile->FirstDay(row.type);
             QDate last=p_profile->LastDay(row.type);
             // there no relationship to reports date. It just specifies the number of days used for a cetain range of dates.
@@ -1944,10 +1945,30 @@ QString StatisticsRow::value(QDate start, QDate end)
 {
     const int decimals=2;
     QString value;
-    float days = p_profile->countDays(type, start, end);
-
     float percentile=p_profile->general->prefCalcPercentile()/100.0;    // Pholynyk, 10Mar2016
     EventDataType percent = percentile;                                 // was 0.90F
+
+    float  daysUsed=0;
+    { // hide days to prevent divide by zero crashes.
+        // Use integer values here
+        int  days = p_profile->countDays(type, start, end);
+
+        //  HAndle number of days
+        //  with no divide - avoid divide by zero
+        if (calc == SC_TOTAL_DAYS) {
+            //Always return value immediately
+            return  QString::number(1+start.daysTo(end));
+        } else if (calc == SC_DAYS_W_DATA) {
+            //Always return value immediately
+            return  QString::number(days);
+        } else if (calc == SC_DAYS_HEADER) {
+            return  QString::number(days);
+        }
+
+        daysUsed = (float)days;
+        if (days==0) return "-";
+    }
+    // daysUsed is always non-zero ;
 
     // Handle special data sources first
     if (calc == SC_AHI_RDI) {
@@ -1965,47 +1986,24 @@ QString StatisticsRow::value(QDate start, QDate end)
             value = QString("%1").arg(median, 0, 'f', decimals);
         }
     } else if (calc == SC_DAYS_WO_DATA) {
-        value = QString::number((1+start.daysTo(end)) - p_profile->countDays(type, start, end ));
+        value = QString::number((1+start.daysTo(end)) - daysUsed);
     } else if (calc == SC_USED_DAY_PERCENT) {
-        int days = p_profile->countDays(type, start, end );
-        if (days)  {
-            value = QString("%1%").arg( ( (
-                ((100.0*(EventDataType)p_profile->countCompliantDays(type, start, end )) / (EventDataType)days) )
-                ), 0, 'f', decimals);
-        } else {
-            value = QString("-");
-        }
-    } else if (calc == SC_DAYS_W_DATA) {
-        int daysUsed = p_profile->countDays(type, start, end);
-        value = QString::number(daysUsed);
-        return value;   // always display days used.
-    } else if (calc == SC_TOTAL_DAYS) {
-        value = QString::number(1+start.daysTo(end));
-        return value;   // always display total days
+        value = QString("%1%").arg( ( (
+            ((100.0*(EventDataType)p_profile->countCompliantDays(type, start, end )) / (EventDataType)daysUsed) )
+            ), 0, 'f', decimals);
     } else if (calc == SC_DAYS_LT_COMPLAINCE_HOURS) {
-        int daysUsed = p_profile->countDays(type, start, end);
         int value1 =  ( daysUsed - p_profile->countCompliantDays(type, start, end ) );
         if (value1<0) value1 =0;
-        value = QString("%1 ").arg(value1);
-        //value += QString(" / %1").arg(double(100*value1)/double(1+start.daysTo(end)));
+        value = QString::number(value1);
     } else if (calc == SC_HOURS) {
-        if (days==0) { value = QString("0"); } else {
-            value = QString("%1").arg(formatTime(p_profile->calcHours(type, start, end) / days));
-        }
+        value = formatTime(p_profile->calcHours(type, start, end) / daysUsed);
     } else if (calc == SC_TOTAL_DAYS_PERCENT) {
-        float c = p_profile->countCompliantDays(type, start, end );
-        int days = 1+start.daysTo(end);
-        if (days) {
-            float p = (100.0 *c / (float)days) ;
-            value = QString("%1%").arg(p, 0, 'f', 2);
-        } else {
-            value = QString("-");
-        }
+        float daysCompliant = p_profile->countCompliantDays(type, start, end );
+        int daysTotal = 1+start.daysTo(end);
+        float p = (100.0 *daysCompliant / (float)daysTotal) ;
+        value = QString("%1%").arg(p, 0, 'f', 2);
     } else if (calc == SC_DAYS_GE_COMPLIANCE_HOURS) {
-        int value1 = p_profile->countCompliantDays(type, start, end );
-        value = QString("%1 ").arg(value1);
-    } else if (calc == SC_DAYS) {
-        value = QString("%1").arg(p_profile->countDays(type, start, end));
+        value =  QString::number(p_profile->countCompliantDays(type, start, end ));
     } else if ((calc == SC_COLUMNHEADERS) || (calc == SC_SUBHEADING) || (calc == SC_UNDEFINED))  {
     } else {
         //
@@ -2058,10 +2056,6 @@ QString StatisticsRow::value(QDate start, QDate end)
         } else {
             value = fmt.arg(val, 0, 'f', decimals);
         }
-    }
-    if ( (p_profile->countDays(type, start, end) == 0) ||
-         (value.contains("nan",Qt::CaseInsensitive) ) ) {
-         value='-';
     }
     return value;
 }
