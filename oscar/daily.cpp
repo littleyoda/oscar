@@ -1,7 +1,7 @@
 /* Daily Panel
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -9,6 +9,9 @@
 
 #define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
+
+#define CONFIGURE_MODE
+#define COMBINE_MODE_3
 
 #include <QTextCharFormat>
 #include <QPalette>
@@ -529,6 +532,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 //    sleep(3);
     saveGraphLayoutSettings=nullptr;
     dailySearchTab = new DailySearchTab(this,ui->searchTab,ui->tabWidget);
+    htmlLsbSectionHeaderInit(false);
 }
 
 Daily::~Daily()
@@ -656,6 +660,9 @@ void Daily::Link_clicked(const QUrl &url)
         }
     } else if (code=="graph") {
         qDebug() << "Select graph " << data;
+    } else if (code=="leftsidebarenable") {
+        leftSideBarEnable.toggleBit(data.toInt());
+        LoadDate(previous_date);
     } else {
         qDebug() << "Clicked on" << code << data;
     }
@@ -1000,13 +1007,14 @@ QString Daily::getSessionInformation(Day * day)
     QString html;
     if (!day) return html;
 
-    html="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
-    html+=QString("<tr><td colspan=5 align=center><b>"+tr("Session Information")+"</b></td></tr>");
+    htmlLsbSectionHeader(html,tr("Session Information"),LSB_SESSION_INFORMATION );
+    if (!leftSideBarEnable[LSB_SESSION_INFORMATION] ) {
+        html+="<hr/>"; // Have sep at the end of sections.
+        return html;
+    }
+    html+="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
     html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
     QFontMetrics FM(*defaultfont);
-//    QRect r=FM.boundingRect('@');
-
- //   Machine * cpap = day->machine(MT_CPAP);
 
     QDateTime fd,ld;
     //bool corrupted_waveform=false;
@@ -1103,6 +1111,7 @@ QString Daily::getSessionInformation(Day * day)
     }
     */
     html+="</table>";
+    html+="<hr/>"; // Have sep at the end of sections.
     return html;
 }
 
@@ -1111,20 +1120,16 @@ QString Daily::getMachineSettings(Day * day) {
 
     Machine * cpap = day->machine(MT_CPAP);
     if (cpap && day->hasEnabledSessions(MT_CPAP)) {
-        html="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
-        html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>").arg(tr("Device Settings"));
-
+        htmlLsbSectionHeader(html,tr("Device Settings"),LSB_DEVICE_SETTINGS );
+        if (!leftSideBarEnable[LSB_DEVICE_SETTINGS] ) {
+            return html;
+        }
+        html+="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
         if (day->noSettings(cpap)) {
             html+="<tr><td colspan=5 align=center><i><font color='red'>"+tr("<b>Please Note:</b> All settings shown below are based on assumptions that nothing has changed since previous days.")+"</font></i></td></tr>\n";
         } else {
             html+="<tr><td colspan=5>&nbsp;</td></tr>";
         }
-        /*
-        } else if ((day->settingExists(CPAP_BrokenSummary))) {
-            html+="<tr><td colspan=5 align=center><i>"+tr("Device Settings Unavailable")+"</i></td></tr></table><hr/>\n";
-            return html;
-        }
-        */
 
         QMap<QString, QString> other;
         Session * sess = day->firstSession(MT_CPAP);
@@ -1187,7 +1192,6 @@ QString Daily::getMachineSettings(Day * day) {
                     .arg(schema::channel[code].label())
                     .arg(schema::channel[code].description())
                     .arg(data);
-//qDebug() << QString::number( code, 16 ) << tmp;
             if (first_channels.contains(code)) {
                 first[code] = tmp;
             } else {
@@ -1205,34 +1209,6 @@ QString Daily::getMachineSettings(Day * day) {
             html += it.value();
         }
 
-  /*      ChannelID pr_level_chan = NoChannel;
-        ChannelID pr_mode_chan = NoChannel;
-        ChannelID hum_stat_chan = NoChannel;
-        ChannelID hum_level_chan = NoChannel;
-        CPAPLoader * loader = dynamic_cast<CPAPLoader *>(cpap->machine->loader());
-        if (loader) {
-            pr_level_chan = loader->PresReliefLevel();
-            pr_mode_chan = loader->PresReliefMode();
-            hum_stat_chan = loader->HumidifierConnected();
-            hum_level_chan = loader->HumidifierLevel();
-        }
-
-        if ((pr_level_chan != NoChannel) && (cpap->settingExists(pr_level_chan))) {
-            QString flexstr = cpap->getPressureRelief();
-
-            html+=QString("<tr><td><a class='info' href='#'>%1<span>%2</span></a></td><td colspan=4>%3</td></tr>")
-                    .arg(schema::channel[pr_mode_chan].label())
-                    .arg(schema::channel[pr_mode_chan].description())
-                    .arg(flexstr);
-        }
-
-
-        if (cpap->settingExists(hum_level_chan)) {
-            int humid=round(cpap->settings_wavg(hum_level_chan));
-            html+=QString("<tr><td><a class='info' href='#'>"+schema::channel[hum_level_chan].label()+"<span>%1</span></a></td><td colspan=4>%2</td></tr>")
-                .arg(schema::channel[hum_level_chan].description())
-                .arg(humid == 0 ? STR_GEN_Off : "x"+QString::number(humid));
-        } */
         html+="</table>";
         html+="<hr/>\n";
     }
@@ -1244,8 +1220,11 @@ QString Daily::getOximeterInformation(Day * day)
     QString html;
     Machine * oxi = day->machine(MT_OXIMETER);
     if (oxi && day->hasEnabledSessions(MT_OXIMETER)) {
-        html="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
-        html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>\n").arg(tr("Oximeter Information"));
+        htmlLsbSectionHeader(html,tr("Oximeter Information"),LSB_OXIMETER_INFORMATION );
+        if (!leftSideBarEnable[LSB_OXIMETER_INFORMATION] ) {
+            return html;
+        }
+        html+="<table cellpadding=0 cellspacing=0 border=0 width=100%>";
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
         html+="<tr><td colspan=5 align=center>"+oxi->brand()+" "+oxi->model()+"</td></tr>\n";
         html+="<tr><td colspan=5 align=center>&nbsp;</td></tr>";
@@ -1258,7 +1237,6 @@ QString Daily::getOximeterInformation(Day * day)
     }
     return html;
 }
-
 QString Daily::getCPAPInformation(Day * day)
 {
     QString html;
@@ -1269,12 +1247,15 @@ QString Daily::getCPAPInformation(Day * day)
     if (!cpap) return html;
 
     MachineInfo info = cpap->getInfo();
-
-    html="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
+    htmlLsbSectionHeader(html , info.brand ,LSB_MACHINE_INFO );
+    if (!leftSideBarEnable[LSB_MACHINE_INFO] ) {
+        return html;
+    }
+    html+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
 
     QString tooltip=tr("Model %1 - %2").arg(info.modelnumber).arg(info.serial);
     tooltip=tooltip.replace(" ","&nbsp;");
-    html+="<tr><td align=center><p title=\""+tooltip+"\">"+info.brand+"<br/>"+info.model+"</p></td></tr>\n";
+    html+="<tr><td align=center><p title=\""+tooltip+"\">"+info.model+"</p></td></tr>\n";
     html+="<tr><td align=center>";
 
     html+=tr("PAP Mode: %1").arg(day->getCPAPModeStr())+"<br/>";
@@ -1317,8 +1298,11 @@ QString Daily::getStatisticsInfo(Day * day)
 
     QString html;
 
+    htmlLsbSectionHeader(html,tr("Statistics"),LSB_STATISTICS );
+    if (!leftSideBarEnable[LSB_STATISTICS] ) {
+        return html;
+    }
     html+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
-    html+=QString("<tr><td colspan=5 align=center><b>%1</b></td></tr>\n").arg(tr("Statistics"));
     html+=QString("<tr><td><b>%1</b></td><td><b>%2</b></td><td><b>%3</b></td><td><b>%4</b></td><td><b>%5</b></td></tr>")
             .arg(STR_TR_Channel)
             .arg(STR_TR_Min)
@@ -1468,6 +1452,15 @@ QString Daily::getSleepTime(Day * day)
     if (!day || (day->hours() < 0.0000001))
         return html;
 
+#ifndef COMBINE_MODE_3 
+    htmlLsbSectionHeader(html , tr("General") ,LSB_SLEEPTIME_INDICES );
+    if (!leftSideBarEnable[LSB_SLEEPTIME_INDICES] ) {
+        return html;
+    }
+#else
+    if (!leftSideBarEnable[LSB_MACHINE_INFO] )  return html;
+#endif
+
     html+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
     html+="<tr><td align='center'><b>"+STR_TR_Date+"</b></td><td align='center'><b>"+tr("Start")+"</b></td><td align='center'><b>"+tr("End")+"</b></td><td align='center'><b>"+STR_UNIT_Hours+"</b></td></tr>";
     int tt=qint64(day->total_time(MT_CPAP))/1000L;
@@ -1483,17 +1476,172 @@ QString Daily::getSleepTime(Day * day)
             .arg(date2.toString("HH:mm:ss"))
             .arg(QString::asprintf("%02i:%02i:%02i",h,m,s));
     html+="</table>\n";
-//    html+="<hr/>";
+    html+="<hr/>";
 
     return html;
 }
 
+
+QString Daily::getAHI(Day * day, bool isBrick) {
+    QString html;
+
+    float hours=day->hours(MT_CPAP);
+    EventDataType ahi=day->count(AllAhiChannels);
+    if (p_profile->general->calculateRDI()) ahi+=day->count(CPAP_RERA);
+    ahi/=hours;
+
+    html ="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
+
+    // Show application font, for debugging font issues
+    // QString appFont = QApplication::font().toString();
+    // html +=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
+
+    html +="<tr>";
+    if (!isBrick) {
+        ChannelID ahichan=CPAP_AHI;
+        QString ahiname=STR_TR_AHI;
+        if (p_profile->general->calculateRDI()) {
+            ahichan=CPAP_RDI;
+            ahiname=STR_TR_RDI;
+        }
+        html +=QString("<td colspan=5 bgcolor='%1' align=center><p title='%4'><font size=+3 color='%2'><b>%3</b></font></p> &nbsp; <font size=+3 color='%2'><b>%5</b></font></td>\n")
+                .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
+    } else {
+        html +=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'><b>%2</b></font></td>\n")
+                .arg("#F88017").arg(tr("This CPAP device does NOT record detailed data"));
+    }
+    html +="</tr>\n";
+    html +="</table>\n";
+
+    return html;
+}
+
+QString Daily::getIndices(Day * day, QHash<ChannelID, EventDataType>& values ) {
+    QString html;
+    float hours=day->hours(MT_CPAP);
+
+    html = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
+
+    quint32 zchans = schema::SPAN | schema::FLAG;
+    bool show_minors = false; // true;
+    if (p_profile->general->showUnknownFlags()) zchans |= schema::UNKNOWN;
+
+    if (show_minors) zchans |= schema::MINOR_FLAG;
+    QList<ChannelID> available = day->getSortedMachineChannels(zchans);
+
+    EventDataType val;
+    for (int i=0; i < available.size(); ++i) {
+        ChannelID code = available.at(i);
+        schema::Channel & chan = schema::channel[code];
+//                if (!chan.enabled()) continue;
+        QString data;
+        if (
+            ( code == CPAP_UserFlag1 || code == CPAP_UserFlag2) &&
+            ( ( !p_profile->cpap->userEventFlagging()) ||  (p_profile->cpap->clinicalMode()))  ){
+            continue;
+        }
+        float channelHours = hours;
+        if (chan.machtype() != MT_CPAP) {
+            // Use device type hours (if available) rather than CPAP hours, since
+            // might have Oximetry (for example) longer or shorter than CPAP
+            channelHours = day->hours(chan.machtype());
+            if (channelHours <= 0) {
+                channelHours = hours;
+            }
+        }
+        if (chan.type() == schema::SPAN) {
+            val = (100.0 / channelHours)*(day->sum(code)/3600.0);
+            data = QString("%1%").arg(val,0,'f',2);
+        } else if (code == CPAP_VSnore2) {  // TODO: This should be generalized rather than special-casing a single channel here.
+            val = day->sum(code) / channelHours;
+            data = QString("%1").arg(val,0,'f',2);
+        } else {
+            val = day->count(code) / channelHours;
+            data = QString("%1").arg(val,0,'f',2);
+        }
+        // TODO: percentage would be another useful option here for things like
+        // percentage of patient-triggered breaths, which is much more useful
+        // than the duration of timed breaths per hour.
+        values[code] = val;
+        QString tooltip=schema::channel[code].description();
+        tooltip.replace("'", "&apos;");
+        QColor altcolor = (brightness(chan.defaultColor()) < 0.3) ? Qt::white : Qt::black; // pick a contrasting color
+        html+=QString("<tr><td align='left' bgcolor='%1'><b><font color='%2'><a href='event=%5' style='text-decoration:none;color:%2' title='<p>%6</p>'>%3</a></font></b></td><td width=20% bgcolor='%1'><b><font color='%2'>%4</font></b></td></tr>")
+                .arg(chan.defaultColor().name())
+                .arg(altcolor.name())
+                .arg(chan.fullname())
+                .arg(data)
+                .arg(code)
+                .arg(tooltip);
+    }
+
+    html+="</table><hr/>";
+
+#ifndef COMBINE_MODE_3 
+    if (!leftSideBarEnable[LSB_SLEEPTIME_INDICES] ) 
+#else
+    if (!leftSideBarEnable[LSB_MACHINE_INFO] ) 
+#endif
+    {
+        return QString();       // must calculate values first for pie chart.
+    }
+
+    return html;
+}
+
+
+void Daily::htmlLsbSectionHeaderInit (bool section) {
+    if (!section) {
+        leftSideBarEnable.fill(true);  // turn all sections On
+        //leftSideBarEnable.fill(false);  // turn all sections off for testing
+    }
+    htmlLsbPrevSectionHeader = true;
+}
+
+void Daily::htmlLsbSectionHeader (QString&html , const QString& name,LEFT_SIDEBAR checkBox) {
+        QString handle = "leftsidebarenable";
+        bool on   = leftSideBarEnable[checkBox];  // this section is enabled
+        bool prev = htmlLsbPrevSectionHeader;  // prev section will be displayed
+                                                // only false when just section name is display
+                                                // true when full section should be displayed.
+        htmlLsbPrevSectionHeader = on;
+
+        if ( (!prev) && on) {
+            html+="<hr/>";
+        }
+        // DEBUGFC Q(checkBox) O(prev) O("==>") O(on) O(name)  ;
+
+        html += QString(
+            "<table cellspacing=0 cellpadding=0 border=0 width='100%'>"
+            "<tr>"
+            "<td align=left>"
+            #ifdef CONFIGURE_MODE
+                "<a href='leftsidebarenable=%3'>" "<img src='qrc:/icons/session-%2.png'/a>"
+            #else
+                " "
+            #endif
+            "</td>"
+            "<td align=centered;>"
+                "<a href='leftsidebarenable=%3' style='text-decoration:none;color:black'>"
+                   "<b>%1</b></a>"
+            "</td>"
+            "</table>\n"
+            )
+            .arg(name)
+            .arg(on ? "on" : "off")
+            .arg(checkBox);
+}
+
 QString Daily::getPieChart (float values, Day * day) {
-//    qDebug() << "Daily:getPieChart, values" << values;
-    QString html = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>";
+    QString pieChartName = tr("Event Breakdown");
+    QString html ;
+    htmlLsbSectionHeader(html , pieChartName,LSB_PIE_CHART );
+    if (!leftSideBarEnable[LSB_PIE_CHART] ) {
+        return html;
+    }
+    html += "<table cellspacing=0 cellpadding=0 border=0 width='100%'>";
     if (values > 0) {
-//        html += "<tr><td align=center>&nbsp;</td></tr>";
-        html += QString("<tr><td align=center><b>%1</b></td></tr>").arg(tr("Event Breakdown"));
+        html += QString("<tr><td align=center><b>%1</b></td></tr>").arg("");
         eventBreakdownPie()->setShowTitle(false);
 
         int w=155;
@@ -1504,7 +1652,12 @@ QString Daily::getPieChart (float values, Day * day) {
             QBuffer buffer(&byteArray); // use buffer to store pixmap into byteArray
             buffer.open(QIODevice::WriteOnly);
             pixmap.save(&buffer, "PNG");
-            html += "<tr><td align=center><img src=\"data:image/png;base64," + byteArray.toBase64() + "\"></td></tr>\n";
+            // Close section where pie chart is pressed
+            html += QString("<tr><td align=center>"
+                "<a href='%1' style='text-decoration:none;color:black'>"
+                "<img src=\"data:image/png;base64," + byteArray.toBase64() + "\"></td></tr>\n")
+                .arg("leftsidebarenable=%1").arg(LSB_PIE_CHART)
+                ;
         } else {
             html += "<tr><td align=center>"+tr("Unable to display Pie Chart on this system")+"</td></tr>\n";
         }
@@ -1655,10 +1808,9 @@ void Daily::Load(QDate date)
             // TODO: Eventually we should get isBrick from the loader, since some summary days
             // on a non-brick might legitimately have no graph data.
             bool gotsome = false;
-            for (int i = 0; i < ahiChannels.size(); i++)
-                gotsome = gotsome || p_profile->hasChannel(ahiChannels.at(i));
-
-//            if (!p_profile->hasChannel(CPAP_Obstructive) && !p_profile->hasChannel(CPAP_Hypopnea) && !p_profile->hasChannel(CPAP_AllApnea)  && !p_profile->hasChannel(CPAP_ClearAirway)) {
+            for (int i = 0; i < ahiChannels.size() && !gotsome ; i++) {
+                gotsome = p_profile->hasChannel(ahiChannels.at(i));
+            }
             if (!gotsome) {
                 GraphView->setEmptyText(STR_Empty_Brick);
 
@@ -1673,99 +1825,22 @@ void Daily::Load(QDate date)
 
         modestr=schema::channel[CPAP_Mode].m_options[mode];
 
-        EventDataType ahi=day->count(AllAhiChannels);
-        if (p_profile->general->calculateRDI()) ahi+=day->count(CPAP_RERA);
-        ahi/=hours;
-
         if (hours>0) {
-            htmlLeftAHI="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
-
-            // Show application font, for debugging font issues
-            // QString appFont = QApplication::font().toString();
-            // htmlLeftAHI+=QString("<tr><td colspan=5 align=center>%1</td></tr>").arg(appFont);
-
-            htmlLeftAHI+="<tr>";
-            if (!isBrick) {
-                ChannelID ahichan=CPAP_AHI;
-                QString ahiname=STR_TR_AHI;
-                if (p_profile->general->calculateRDI()) {
-                    ahichan=CPAP_RDI;
-                    ahiname=STR_TR_RDI;
-                }
-                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><p title='%4'><font size=+3 color='%2'><b>%3</b></font></p> &nbsp; <font size=+3 color='%2'><b>%5</b></font></td>\n")
-                        .arg("#F88017").arg(COLOR_Text.name()).arg(ahiname).arg(schema::channel[ahichan].fullname()).arg(ahi,0,'f',2);
-            } else {
-                htmlLeftAHI+=QString("<td colspan=5 bgcolor='%1' align=center><font size=+3 color='yellow'><b>%2</b></font></td>\n")
-                        .arg("#F88017").arg(tr("This CPAP device does NOT record detailed data"));
-            }
-            htmlLeftAHI+="</tr>\n";
-            htmlLeftAHI+="</table>\n";
+            htmlLeftAHI= getAHI(day,isBrick);
 
             htmlLeftMachineInfo = getCPAPInformation(day);
 
+            htmlLsbSectionHeaderInit();
+
             htmlLeftSleepTime = getSleepTime(day);
 
-            htmlLeftIndices = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
-
-            quint32 zchans = schema::SPAN | schema::FLAG;
-            bool show_minors = false; // true;
-            if (p_profile->general->showUnknownFlags()) zchans |= schema::UNKNOWN;
-
-            if (show_minors) zchans |= schema::MINOR_FLAG;
-            QList<ChannelID> available = day->getSortedMachineChannels(zchans);
-
-            EventDataType val;
             QHash<ChannelID, EventDataType> values;
-            for (int i=0; i < available.size(); ++i) {
-                ChannelID code = available.at(i);
-                schema::Channel & chan = schema::channel[code];
-//                if (!chan.enabled()) continue;
-                QString data;
-                if ( 
-                    ( code == CPAP_UserFlag1 || code == CPAP_UserFlag2) &&
-                    ( ( !p_profile->cpap->userEventFlagging()) ||  (p_profile->cpap->clinicalMode()))  ){
-                    continue;
-                }
-                float channelHours = hours;
-                if (chan.machtype() != MT_CPAP) {
-                    // Use device type hours (if available) rather than CPAP hours, since
-                    // might have Oximetry (for example) longer or shorter than CPAP
-                    channelHours = day->hours(chan.machtype());
-                    if (channelHours <= 0) {
-                        channelHours = hours;
-                    }
-                }
-                if (chan.type() == schema::SPAN) {
-                    val = (100.0 / channelHours)*(day->sum(code)/3600.0);
-                    data = QString("%1%").arg(val,0,'f',2);
-                } else if (code == CPAP_VSnore2) {  // TODO: This should be generalized rather than special-casing a single channel here.
-                    val = day->sum(code) / channelHours;
-                    data = QString("%1").arg(val,0,'f',2);
-                } else {
-                    val = day->count(code) / channelHours;
-                    data = QString("%1").arg(val,0,'f',2);
-                }
-                // TODO: percentage would be another useful option here for things like
-                // percentage of patient-triggered breaths, which is much more useful
-                // than the duration of timed breaths per hour.
-                values[code] = val;
-                QString tooltip=schema::channel[code].description();
-                tooltip.replace("'", "&apos;");
-                QColor altcolor = (brightness(chan.defaultColor()) < 0.3) ? Qt::white : Qt::black; // pick a contrasting color
-                htmlLeftIndices+=QString("<tr><td align='left' bgcolor='%1'><b><font color='%2'><a href='event=%5' style='text-decoration:none;color:%2' title='<p>%6</p>'>%3</a></font></b></td><td width=20% bgcolor='%1'><b><font color='%2'>%4</font></b></td></tr>")
-                        .arg(chan.defaultColor().name())
-                        .arg(altcolor.name())
-                        .arg(chan.fullname())
-                        .arg(data)
-                        .arg(code)
-                        .arg(tooltip);
-            }
-
-            htmlLeftIndices+="</table><hr/>";
+            htmlLeftIndices = getIndices(day,values);
 
             htmlLeftPieChart = getPieChart((values[CPAP_Obstructive] + values[CPAP_Hypopnea] + values[CPAP_AllApnea] +
                                             values[CPAP_ClearAirway] + values[CPAP_Apnea] + values[CPAP_RERA] +
                                             values[CPAP_FlowLimit] + values[CPAP_SensAwake]), day);
+            htmlLsbSectionHeaderInit();
 
         } else {  // No hours
             htmlLeftNoHours+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
@@ -1786,7 +1861,7 @@ void Daily::Load(QDate date)
                 htmlLeftNoHours+="<tr><td colspan=5 align='center'><i>"+tr("Complain to your Equipment Provider!")+"</i></td></tr>\n";
             }
             htmlLeftNoHours+="<tr><td colspan='5'>&nbsp;</td></tr>\n";
-            htmlLeftNoHours+="</table>\n";
+            htmlLeftNoHours+="</table><hr/>\n";
         }
 
     } // if (!CPAP)
