@@ -48,9 +48,22 @@ QString htmlMachines = "";          // Devices used in this profile
 QString htmlReportFooter = "";      // Page footer
 
 SummaryInfo summaryInfo;
+int alternatingModulo = 0;
+void  initAlternatingColor() {
+    DEBUGFC Q(alternatingModulo) ;
+    int alternateMode = AppSetting->alternatingColorsCombo();
+    DEBUGFC Q(alternatingModulo) ;
+    if (alternateMode==0) alternatingModulo=3;
+    else if (alternateMode==1) alternatingModulo=2;
+    else alternatingModulo = 0xffff;
+}
 QString alternatingColor(int& counter) {
+    if (alternatingModulo<=0) {
+        initAlternatingColor();
+    }
     counter++;
-    int offset = counter %= 3;
+    int offset = counter % alternatingModulo;
+    //DEBUGFC Q(alternatingModulo) Q(counter) Q(offset);
     if ( offset == 0) {
         //return "#d0ffd0";       // very lightgreen
         //return "#d8ffd8";       // very lightgreen
@@ -1308,6 +1321,7 @@ QString Statistics::getRDIorAHIText() {
 // Create the HTML for CPAP and Oximetry usage
 QString Statistics::GenerateCPAPUsage()
 {
+    
     summaryInfo.clear(p_profile->FirstDay(),p_profile->LastDay());
     QList<Machine *> cpap_machines = p_profile->GetMachines(MT_CPAP);
     QList<Machine *> oximeters = p_profile->GetMachines(MT_OXIMETER);
@@ -1565,6 +1579,8 @@ QString Statistics::GenerateCPAPUsage()
 // Create the HTML that will be the Statistics page.
 QString Statistics::GenerateHTML()
 {
+    DEBUGFC;
+    initAlternatingColor();
     htmlReportHeader = generateHeader(true);
     htmlReportHeaderPrint = generateHeader(false);
     htmlReportFooter = generateFooter(true);

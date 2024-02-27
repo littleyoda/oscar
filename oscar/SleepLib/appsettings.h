@@ -39,6 +39,7 @@ const QString STR_AS_ShowPieChart = "EnablePieChart";
 const QString STR_AS_Animations = "AnimationsAndTransitions";
 const QString STR_AS_SquareWave = "SquareWavePlots";
 const QString STR_AS_OverlayType = "OverlayType";
+const QString STR_AS_setAlternatingColorsCombo = "AlternatingColorsCombo";
 #ifndef REMOVE_FITNESS
 const QString STR_AS_OverviewLinechartMode = "OverviewLinechartMode";
 #endif
@@ -87,6 +88,7 @@ public:
   bool m_usePixmapCaching, m_antiAliasing, m_squareWavePlots,m_graphTooltips, m_lineCursorMode, m_animations;
   bool m_showPerformance, m_showDebug;
   int m_tooltipTimeout, m_graphHeight, m_scrollDampening;
+  int m_alternatingColorsCombo;
   bool m_multithreading, m_cacheSessions;
   float m_lineThickness;
 
@@ -142,6 +144,7 @@ public:
   //! \Allow disabling of sessions
   //! \brief Whether to show graph tooltips
   inline bool graphTooltips() const { return m_graphTooltips; }
+  inline int  alternatingColorsCombo() { return m_alternatingColorsCombo;}
   //! \brief Pen width of line plots
   inline float lineThickness() const { return m_lineThickness; }
   //! \brief Whether to show line cursor
@@ -203,6 +206,7 @@ public:
   //! \brief Sets whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   void setGraphTooltips(bool b) { setPref(STR_AS_GraphTooltips, m_graphTooltips=b); }
   //! \brief Sets the type of overlay flags (which are displayed over the Flow Waveform)
+  void setAlternatingColorsCombo(int b) { setPref(STR_AS_setAlternatingColorsCombo, m_alternatingColorsCombo=b); }
 #ifndef REMOVE_FITNESS
   void setOverviewLinechartMode(OverviewLinechartModes olm) { setPref(STR_AS_OverviewLinechartMode, (int)(m_olm=olm)); }
 #endif

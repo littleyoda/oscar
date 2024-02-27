@@ -32,6 +32,7 @@
 #include "ui_preferencesdialog.h"
 #include "SleepLib/machine_common.h"
 #include "highresolution.h"
+#include "daily.h"
 
 extern QFont *defaultfont;
 extern QFont *mediumfont;
@@ -248,6 +249,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     // Radio Buttons illustrate the operating mode.
     ui->permissiveMode->setChecked(!profile->cpap->clinicalMode());
     HighResolution::checkBox(false,ui->highResolution);
+    ui->alternatingColorsCombo->setCurrentIndex(AppSetting->alternatingColorsCombo());
 
     ui->autoLaunchImporter->setChecked(AppSetting->autoLaunchImport());
 #ifndef NO_CHECKUPDATES
@@ -864,6 +866,12 @@ bool PreferencesDialog::Save()
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
 
     HighResolution::checkBox(true,ui->highResolution);
+    
+    if (ui->alternatingColorsCombo->currentIndex() != AppSetting->alternatingColorsCombo()) {
+        AppSetting->setAlternatingColorsCombo(ui->alternatingColorsCombo->currentIndex());
+        mainwin->GenerateStatistics();
+    }
+
     AppSetting->setGraphTooltips(ui->graphTooltips->isChecked());
 
     AppSetting->setAntiAliasing(ui->useAntiAliasing->isChecked());

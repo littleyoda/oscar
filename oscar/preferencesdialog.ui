@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>942</width>
-    <height>737</height>
+    <height>994</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,6 +31,9 @@
   <property name="windowIcon">
    <iconset resource="Resources.qrc">
     <normaloff>:/icons/preferences.png</normaloff>:/icons/preferences.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">&lt;string&gt;&quot;QGroupBox{ margin: 0px; padding: 0px; border: 1px solid gray; }&quot;&lt;/string&gt;</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -63,7 +66,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>7</number>
         </property>
         <widget class="QWidget" name="importTab">
          <attribute name="title">
@@ -1073,9 +1076,6 @@ This option must be enabled before import, otherwise a purge is required.</strin
                   </font>
                  </property>
                  <property name="text">
-                  <!--
-				  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Custom flagging is an experimental method of detecting events missed by the device. They are &lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; text-decoration: underline;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt; included in AHI.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  -->
                   <string>Custom flagging is an experimental method of detecting events missed by the device. They are not included in AHI. They are also displayed in the Statistics Tab using the Permissive mode (see Clinical tab).</string>
                  </property>
                  <property name="alignment">
@@ -2832,14 +2832,14 @@ Try it and see if you like it.</string>
                </item>
                <item>
                 <widget class="QCheckBox" name="usePixmapCaching">
+                 <property name="visible">
+                  <bool>false</bool>
+                 </property>
                  <property name="toolTip">
                   <string>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</string>
                  </property>
                  <property name="text">
                   <string>Use Pixmap Caching</string>
-                 </property>
-                 <property name="visible" stdset="0">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -2849,7 +2849,7 @@ Try it and see if you like it.</string>
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="text">
-                  <string>Animations  Fancy Stuff</string>
+                  <string>Animations &amp;&amp; Fancy Stuff</string>
                  </property>
                 </widget>
                </item>
@@ -2925,6 +2925,75 @@ Try it and see if you like it.</string>
                   </size>
                  </property>
                 </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QGroupBox" name="groupBox_Statistics">
+              <property name="styleSheet">
+               <string notr="true">QGroupBox { margin: 0px;    padding: 0px;    border: none}</string>
+              </property>
+              <property name="title">
+               <string>Statistics</string>
+              </property>
+              <property name="leftMargin" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="topMargin" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="rightMargin" stdset="0">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin" stdset="0">
+               <number>0</number>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_Statisticss">
+               <item row="0" column="1">
+                <widget class="QComboBox" name="alternatingColorsCombo">
+                 <item>
+                  <property name="text">
+                   <string>Every 3rd Line</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Every 2nd Line</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Disabled</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="Label_47a">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string> Alternating Color Spacing</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>

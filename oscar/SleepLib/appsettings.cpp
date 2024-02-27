@@ -35,6 +35,8 @@ AppWideSetting::AppWideSetting(Preferences *pref) : PrefSettings(pref)
     m_graphTooltips = initPref(STR_AS_GraphTooltips, true).toBool();
     m_usePixmapCaching = initPref(STR_AS_UsePixmapCaching, false).toBool();
     m_odt = (OverlayDisplayType)initPref(STR_AS_OverlayType, (int)ODT_Bars).toInt();
+    initPref(STR_AS_GraphTooltips, 0);
+    m_alternatingColorsCombo = initPref(STR_AS_setAlternatingColorsCombo, 0).toInt(); 
 #ifndef REMOVE_FITNESS
     m_olm = (OverviewLinechartModes)initPref(STR_AS_OverviewLinechartMode, (int)OLC_Bartop).toInt();
 #endif
