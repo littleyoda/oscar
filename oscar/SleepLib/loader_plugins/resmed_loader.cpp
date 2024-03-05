@@ -118,10 +118,10 @@ void ResmedLoader::initChannels()
 
     chan->addOption(0, QObject::tr("CPAP"));
     chan->addOption(1, QObject::tr("APAP"));
-    chan->addOption(2, QObject::tr("BiPAP-T"));
-    chan->addOption(3, QObject::tr("BiPAP-S"));
-    chan->addOption(4, QObject::tr("BiPAP-S/T"));
-    chan->addOption(5, QObject::tr("BiPAP-T"));
+    chan->addOption(2, QObject::tr("BiLevel-T"));
+    chan->addOption(3, QObject::tr("BiLevel-S"));
+    chan->addOption(4, QObject::tr("BiLevel-S/T"));
+    chan->addOption(5, QObject::tr("BiLevel-T"));
     chan->addOption(6, QObject::tr("VPAPauto"));
     chan->addOption(7, QObject::tr("ASV"));
     chan->addOption(8, QObject::tr("ASVAuto"));
