@@ -44,7 +44,7 @@ namespace HighResolution {
     }
 
     HiResolutionMode setHiResolutionMode(HiResolutionMode value) {
-        QString filename = GetAppData() + HI_RES_FILENAME;
+        QString filename = GetAppData() +  QDir::separator() +  HI_RES_FILENAME;
         if (value == HRM_ENABLED ) {
             writeMode( filename , HRM_ENABLED ,"HiResolutionMode Enabled");
             return HRM_ENABLED;
@@ -55,22 +55,22 @@ namespace HighResolution {
     }
 
     HiResolutionMode  getHiResolutionMode() {
-        QString filename = GetAppData() + HI_RES_FILENAME;
+        QString filename = GetAppData() +  QDir::separator() +  HI_RES_FILENAME;
         int hiResMode= readMode( filename );
         return (hiResMode == HRM_ENABLED ) ? HRM_ENABLED : HRM_DISABLED ;
     }
 
     // this function is used to control the text name of the high resolution preference checkbox.
-    void checkBox(bool set,QCheckBox* button) {
+    bool checkBox(bool set,QCheckBox* button) {
         if (set) {
             hiResolutionNextSessionMode = button->isChecked()? HRM_ENABLED : HRM_DISABLED ;
             setHiResolutionMode(hiResolutionNextSessionMode);
             if ( hiResolutionOperaingMode != hiResolutionNextSessionMode ) {
-                QMessageBox::information(nullptr,
-                    STR_MessageBox_Information,
-                    QObject::tr("High Resolution Mode change will take effect when OSCAR is restarted."));
+                QString msg = QString("%1\n%2").arg(QObject::tr("High Resolution Mode change will take effect when OSCAR is restarted."))
+                    .arg(QObject::tr("Restart Oscar now?") );
+                 return QMessageBox::question(nullptr, STR_MessageBox_Question, msg, QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes;
             }
-            return;
+            return false;
         }
         QString label;
         if (hiResolutionNextSessionMode == HRM_ENABLED ) {
@@ -89,6 +89,7 @@ namespace HighResolution {
             button->setChecked(false);
         }
         button->setText(label);
+        return false;
     }
 
     // These functions are for main.cpp

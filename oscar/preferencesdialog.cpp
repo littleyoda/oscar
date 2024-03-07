@@ -865,7 +865,7 @@ bool PreferencesDialog::Save()
     bool clicicalModeChanged = profile->cpap->clinicalMode() != ui->clinicalMode->isChecked() ;
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());
 
-    HighResolution::checkBox(true,ui->highResolution);
+    needs_restart |= HighResolution::checkBox(true,ui->highResolution);
     
     if (ui->alternatingColorsCombo->currentIndex() != AppSetting->alternatingColorsCombo()) {
         AppSetting->setAlternatingColorsCombo(ui->alternatingColorsCombo->currentIndex());

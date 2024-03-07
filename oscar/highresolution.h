@@ -19,7 +19,7 @@ namespace HighResolution {
     void display(bool);
     
     // used by preferences
-    void checkBox(bool set,QCheckBox* button);
+    bool checkBox(bool set,QCheckBox* button);
 }
 
 #endif // HIGHRESOLUTION_H
