@@ -256,7 +256,7 @@ QString appResourcePath()
     paths.append( QString( "/usr/local/share/" ) + appName );
 #endif    
     for (auto p = begin(paths); p != end(paths); ++p ) {
-        QString fname = *p+QString("/Translations/oscar_qt_fr.qm");
+        QString fname = *p+QString("/Html/about.html"); // was "/Translations/oscar_qt_fr.qm"  - Crimson Nape
         qDebug() << "Trying" << fname;
         QFileInfo f = QFileInfo(fname);
         if ( f.exists() ) {
