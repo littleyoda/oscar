@@ -1,7 +1,7 @@
 ﻿/* Daily GUI Headers
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins 
+ * Copyright (C) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -21,6 +21,7 @@
 #include <QScrollBar>
 #include <QTableWidgetItem>
 #include <QTextBrowser>
+#include <QBitArray>
 
 #include "SleepLib/profiles.h"
 #include "mainwindow.h"
@@ -322,7 +323,7 @@ private:
     DailySearchTab* dailySearchTab = nullptr;
 
 
-    //QString getLeftAHI (Day * day);
+    QString getAHI (Day * day, bool isBrick);
     QString getSessionInformation(Day *);
     QString getMachineSettings(Day *);
     QString getStatisticsInfo(Day *);
@@ -330,7 +331,7 @@ private:
     QString getOximeterInformation(Day *);
     QString getEventBreakdown(Day *);
     QString getPieChart(float values, Day *);
-    //QString getIndicesAndPie(Day *, float hours, bool isBrick);
+    QString getIndices(Day * day, QHash<ChannelID, EventDataType>& values );
     QString getSleepTime(Day *);
     QString getLeftSidebar (bool honorPieChart);
 
@@ -375,6 +376,20 @@ private:
     bool BookmarksChanged;
 
     SaveGraphLayoutSettings* saveGraphLayoutSettings=nullptr;
+
+    enum LEFT_SIDEBAR { LSB_FIRST ,
+        LSB_MACHINE_INFO ,
+        LSB_SLEEPTIME_INDICES ,
+        LSB_PIE_CHART ,
+        LSB_STATISTICS ,
+        LSB_OXIMETER_INFORMATION ,
+        LSB_DEVICE_SETTINGS  ,
+        LSB_SESSION_INFORMATION  ,
+        LSB_END_SIZE };
+    QBitArray leftSideBarEnable = QBitArray(LSB_END_SIZE,true);
+    void htmlLsbSectionHeader (QString& html, const QString& name,LEFT_SIDEBAR checkBox) ;
+    void htmlLsbSectionHeaderInit (bool section=true) ;
+    bool htmlLsbPrevSectionHeader = true;
 };
 
 #endif // DAILY_H
