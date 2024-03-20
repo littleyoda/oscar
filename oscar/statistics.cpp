@@ -50,9 +50,7 @@ QString htmlReportFooter = "";      // Page footer
 SummaryInfo summaryInfo;
 int alternatingModulo = 0;
 void  initAlternatingColor() {
-    DEBUGFC Q(alternatingModulo) ;
     int alternateMode = AppSetting->alternatingColorsCombo();
-    DEBUGFC Q(alternatingModulo) ;
     if (alternateMode==0) alternatingModulo=3;
     else if (alternateMode==1) alternatingModulo=2;
     else alternatingModulo = 0xffff;
@@ -63,7 +61,6 @@ QString alternatingColor(int& counter) {
     }
     counter++;
     int offset = counter % alternatingModulo;
-    //DEBUGFC Q(alternatingModulo) Q(counter) Q(offset);
     if ( offset == 0) {
         //return "#d0ffd0";       // very lightgreen
         //return "#d8ffd8";       // very lightgreen
@@ -214,9 +211,30 @@ bool rxAHILessThan(const RXItem * rx1, const RXItem * rx2)
     return (double(rx1->ahi) / rx1->hours) < (double(rx2->ahi) / rx2->hours);
 }
 
+QDate firstGoodDay() {
+    QDate first2  = p_profile->FirstGoodDay(MT_CPAP);
+    QDate first1  = p_profile->FirstGoodDay(MT_OXIMETER);
+    if (!first2.isValid()) return first1;
+    if (!first1.isValid()) return first2;
+    return qMax(first2,first1);
+}
+
+QDate lastGoodDay() {
+    QDate date1   = p_profile->LastGoodDay(MT_CPAP);
+    QDate date2  = p_profile->LastGoodDay(MT_OXIMETER);
+    if (date1.isValid() && date2.isValid()) {
+        date1 = qMax(date1,date2);
+    } else if (date2.isValid() ) {
+        date1 = date2;
+    } else if (!date1.isValid() ) {
+        return QDate();
+    }
+    // this followng line is to fix the case where date was 8 months  in the future.
+    return qMin(date1,QDate::currentDate());
+}
+
 void Statistics::adjustRange(QDate& start , QDate& last) {
-    start = qMax(start,p_profile->FirstDay());
-    last  = qMin(last ,p_profile->LastDay() );
+    // this method reduces the size of the available to meet the statistics pages requirements.
     if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
         start = qMax(start,p_profile->general->statReportRangeStart());
         last  = qMin(last ,p_profile->general->statReportRangeEnd()  );
@@ -1321,7 +1339,7 @@ QString Statistics::getRDIorAHIText() {
 // Create the HTML for CPAP and Oximetry usage
 QString Statistics::GenerateCPAPUsage()
 {
-    
+
     summaryInfo.clear(p_profile->FirstDay(),p_profile->LastDay());
     QList<Machine *> cpap_machines = p_profile->GetMachines(MT_CPAP);
     QList<Machine *> oximeters = p_profile->GetMachines(MT_OXIMETER);
@@ -1349,6 +1367,7 @@ QString Statistics::GenerateCPAPUsage()
         html += "<font size='+0'>";
 
     // Find first and last days with valid CPAP data
+    QDate last , first ;
     QDate lastcpap = p_profile->LastDay();
     QDate firstcpap = p_profile->FirstDay();
     adjustRange(firstcpap,lastcpap);
@@ -1380,12 +1399,20 @@ QString Statistics::GenerateCPAPUsage()
             // should never get here.
             number_periods = 12;
         }
+        last = lastcpap;
+        first = lastcpap;
     } else if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
         firstcpap = lastcpap.addYears(-1).addDays(1);
         adjustRange(firstcpap,lastcpap);
+        last = lastcpap;
+        first = lastcpap;
+    } else if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
+        firstcpap = p_profile->general->statReportRangeStart();
+        lastcpap = p_profile->general->statReportRangeEnd();
+        adjustRange(firstcpap,lastcpap);
+        first = firstcpap;
+        last  = lastcpap;
     }
-    QDate last = lastcpap, first = lastcpap;
-
     QList<Period> periods;
 
     bool skipsection = false;;
@@ -1425,11 +1452,6 @@ QString Statistics::GenerateCPAPUsage()
                     periods.push_back(Period(last,last, ""));
                 }
             } else {  // STAT_MODE_STANDARD or STAT_MODE_RANGE
-                if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
-                    first = p_profile->general->statReportRangeStart();
-                    last = p_profile->general->statReportRangeEnd();
-                    adjustRange(first,last);
-                }
                 // note add days or addmonths returns the start of the next day or the next month.
                 // must shorten one day for each. Month executed in Period method
                 bool finished = false;  // used to detect end of data - when less than a year of data.
@@ -1579,7 +1601,6 @@ QString Statistics::GenerateCPAPUsage()
 // Create the HTML that will be the Statistics page.
 QString Statistics::GenerateHTML()
 {
-    DEBUGFC;
     initAlternatingColor();
     htmlReportHeader = generateHeader(true);
     htmlReportHeaderPrint = generateHeader(false);
@@ -2080,8 +2101,10 @@ QDate lastdate;
 QDate firstdate;
 void Statistics::updateReportDate() {
     if (p_profile) {
-        QDate last = p_profile->LastDay();
-        QDate first = p_profile->FirstDay();
+        QDate last = lastGoodDay();
+        QDate first = firstGoodDay();
+        if (!first.isValid()) return;
+        if (!last.isValid()) return;
         if (last == lastdate  && first == firstdate) return;
         p_profile->general->setStatReportRangeStart(first);
         p_profile->general->setStatReportRangeEnd(last);
