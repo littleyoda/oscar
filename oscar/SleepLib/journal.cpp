@@ -1,216 +1,36 @@
 /* SleepLib Journal Implementation
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
-#include "journal.h"
-#include "machine_common.h"
+#include <QMessageBox>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
 #include <QTextStream>
 #include <QXmlStreamWriter>
 #include <QDir>
-#include <QMessageBox>
+#include "journal.h"
+#include "daily.h"
+#include "SleepLib/common.h"
+#include "SleepLib/machine_common.h"
+#include "SleepLib/session.h"
+#include "SleepLib/profiles.h"
+#include "mainwindow.h"
 
-const int journal_data_version = 1;
+extern MainWindow * mainwin;
+const QString OLD_ZOMBIE = QString("zombie");
+const QString ZOMBIE = QString("Feelings");
+const QString WEIGHT = QString("weight");
 
-JournalEntry::JournalEntry(QDate date)
-{
-    Machine * jmach = p_profile->GetMachine(MT_JOURNAL);
-    if (jmach == nullptr) { // Create Journal Device record if it doesn't already exist
-        MachineInfo info(MT_JOURNAL,0, "Journal", QObject::tr("Journal Data"), QString(), QString(), QString(), QString("OSCAR"), QDateTime::currentDateTime(), journal_data_version);
-
-        // Using device ID 1 rather than a random number, so in future, if profile.xml gets screwed up they'll get their data back..
-        // TODO: Perhaps search for unlinked journal folders here to save some anger and frustration? :P
-
-        MachineID machid = 1;
-        QString path = p_profile->Get("{" + STR_GEN_DataFolder + "}");
-        QDir dir(path);
-        QStringList filters;
-        filters << "Journal_*";
-        QStringList dirs = dir.entryList(filters,QDir::Dirs);
-        int journals = dirs.size();
-        if (journals > 0) {
-            QString tmp = dirs[0].section("_", -1);
-            bool ok;
-            machid = tmp.toUInt(&ok, 16);
-            if (!ok) {
-                QMessageBox::warning(nullptr, STR_MessageBox_Warning,
-                    QObject::tr("OSCAR found an old Journal folder, but it looks like it's been renamed:")+"\n\n"+
-                    QString("%1").arg(dirs[0])+
-                    QObject::tr("OSCAR will not touch this folder, and will create a new one instead.")+"\n\n"+
-                    QObject::tr("Please be careful when playing in OSCAR's profile folders :-P"), QMessageBox::Ok);
-
-                // User renamed the folder.. report this
-                machid = 1;
-            }
-            if (journals > 1) {
-                QMessageBox::warning(nullptr, STR_MessageBox_Warning,
-                    QObject::tr("For some reason, OSCAR couldn't find a journal object record in your profile, but did find multiple Journal data folders.\n\n")+
-                    QObject::tr("OSCAR picked only the first one of these, and will use it in future:\n\n")+
-                    QString("%1").arg(dirs[0])+
-                    QObject::tr("If your old data is missing, copy the contents of all the other Journal_XXXXXXX folders to this one manually."), QMessageBox::Ok);
-                // more then one.. report this.
-            }
-        }
-        jmach = p_profile->CreateMachine(info, machid);
-    }
-
-    m_date = date;
-    session = nullptr;
-    day = p_profile->GetDay(date, MT_JOURNAL);
-    if (day != nullptr) {
-        session = day->firstSession(MT_JOURNAL);
-    } else {
-        // Doesn't exist.. create a new one..
-        session = new Session(jmach,0);
-        qint64 st,et;
-        QDateTime dt(date,QTime(22,0)); // 10pm localtime
-        st=qint64(dt.toTime_t())*1000L;
-        et=st+3600000L;
-        session->set_first(st);
-        session->set_last(et);
-
-        // Let it live in memory...but not on disk unless data is changed...
-        jmach->AddSession(session, true);
-
-        // and where does day get set??? does day actually need to be set??
-        day = p_profile->GetDay(date, MT_JOURNAL);
-    }
-}
-JournalEntry::~JournalEntry()
-{
-    if (session && session->IsChanged()) {
-        Save();
-    }
-}
-
-
-bool JournalEntry::Save()
-{
-    if (session && session->IsChanged()) {
-        qDebug() << "Saving journal session for" << m_date;
-
-        // just need to write bookmarks, the rest are already stored in the session
-        QVariantList start;
-        QVariantList end;
-        QStringList notes;
-
-        int size = bookmarks.size();
-        for (int i=0; i<size; ++i) {
-            const Bookmark & bm = bookmarks.at(i);
-            start.append(bm.start);
-            end.append(bm.end);
-            notes.append(bm.notes);
-        }
-        session->settings[Bookmark_Start] = start;
-        session->settings[Bookmark_End] = end;
-        session->settings[Bookmark_Notes] = notes;
-
-        session->settings[LastUpdated] = QDateTime::currentDateTime().toTime_t();
-
-        session->StoreSummary();
-        return true;
-    }
-    return false;
-}
-
-QString JournalEntry::notes()
-{
-    QHash<ChannelID, QVariant>::iterator it;
-    if (session && ((it=session->settings.find(Journal_Notes)) != session->settings.end())) {
-        return it.value().toString();
-    }
-    return QString();
-}
-void JournalEntry::setNotes(QString notes)
-{
-    if (!session) return;
-    session->settings[Journal_Notes] = notes;
-    session->SetChanged(true);
-}
-EventDataType JournalEntry::weight()
-{
-    QHash<ChannelID, QVariant>::iterator it;
-    if (session && ((it = session->settings.find(Journal_Weight)) != session->settings.end())) {
-        return it.value().toFloat();
-    }
-    return 0;
-}
-void JournalEntry::setWeight(EventDataType weight)
-{
-    if (!session) return;
-    session->settings[Journal_Weight] = weight;
-    session->SetChanged(true);
-}
-int JournalEntry::zombie()
-{
-    QHash<ChannelID, QVariant>::iterator it;
-    if (session && ((it = session->settings.find(Journal_ZombieMeter)) != session->settings.end())) {
-        return it.value().toFloat();
-    }
-    return 0;
-}
-void JournalEntry::setZombie(int zombie)
-{
-    if (!session) return;
-    session->settings[Journal_ZombieMeter] = zombie;
-    session->SetChanged(true);
-}
-
-QList<Bookmark> & JournalEntry::getBookmarks()
-{
-    bookmarks.clear();
-    if (!session || !session->settings.contains(Bookmark_Start)) {
-        return bookmarks;
-    }
-
-    QVariantList start=session->settings[Bookmark_Start].toList();
-    QVariantList end=session->settings[Bookmark_End].toList();
-    QStringList notes=session->settings[Bookmark_Notes].toStringList();
-
-    int size = start.size();
-    for (int i=0; i < size; ++i) {
-        bookmarks.append(Bookmark(start.at(i).toLongLong(), end.at(i).toLongLong(), notes.at(i)));
-    }
-    return bookmarks;
-}
-
-void JournalEntry::addBookmark(qint64 start, qint64 end, QString note)
-{
-    bookmarks.append(Bookmark(start,end,note));
-    session->SetChanged(true);
-}
-
-void JournalEntry::delBookmark(qint64 start, qint64 end)
-{
-    bool removed;
-    do {
-        removed = false;
-        int size = bookmarks.size();
-        for (int i=0; i<size; ++i) {
-            const Bookmark & bm = bookmarks.at(i);
-            if ((bm.start == start) && (bm.end == end)) {
-                bookmarks.removeAt(i);
-                session->SetChanged(true); // make sure it gets saved later..
-                removed=true;
-                break;
-            }
-        }
-    } while (removed); // clean up any stupid duplicates just in case.. :P
-    // if I wanted to be nice above, I could add the note string to the search as well..
-    // (some users might be suprised to see the lot go with the same start and end index)
-}
-
-void BackupJournal(QString filename)
+bool Journal::BackupJournal(QString filename)
 {
     QString outBuf;
     QXmlStreamWriter stream(&outBuf);
@@ -220,13 +40,22 @@ void BackupJournal(QString filename)
     stream.writeStartDocument();
 //    stream.writeProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
     stream.writeStartElement("OSCAR");
+    stream.writeAttribute("created", QDateTime::currentDateTime().toString(Qt::ISODate));
+
     stream.writeStartElement("Journal");
     stream.writeAttribute("username", p_profile->user->userName());
+    stream.writeAttribute("height_cm", QString::number(p_profile->user->height()));
+    if (p_profile->general->unitSystem()!=US_Undefined) {
+        stream.writeAttribute("systemUnits", ( p_profile->general->unitSystem()==US_Metric?"Metric":"Englsh") );
+    }
 
     QDate first = p_profile->FirstDay(MT_JOURNAL);
     QDate last = p_profile->LastDay(MT_JOURNAL);
+    DEBUGFC Q(first) Q(last);
+
 
     QDate date = first.addDays(-1);
+    int days_saved = 0 ;
     do {
         date = date.addDays(1);
 
@@ -243,18 +72,33 @@ void BackupJournal(QString filename)
             && !journal->settingExists(Bookmark_Start)) {
             continue;
         }
+        QString weight;
+        QString zombie;
+        QString notes;
+        QString lastupdated;
+        QVariantList start;
+        int havedata=0;
 
-        stream.writeStartElement("day");
-        stream.writeAttribute("date", date.toString());
 
         if (journal->settingExists(Journal_Weight)) {
-            QString weight = sess->settings[Journal_Weight].toString();
-            stream.writeAttribute("weight", weight);
+            weight = sess->settings[Journal_Weight].toString();
+            havedata |= JRNL_Weight ;
         }
 
         if (journal->settingExists(Journal_ZombieMeter)) {
-            QString zombie = sess->settings[Journal_ZombieMeter].toString();
-            stream.writeAttribute("zombie", zombie);
+            zombie = sess->settings[Journal_ZombieMeter].toString();
+            havedata |= JRNL_Zombie ;
+        }
+
+        if (journal->settingExists(Journal_Notes)) {
+            notes = sess->settings[Journal_Notes].toString();
+            //notes = Daily::convertHtmlToPlainText(notes).trimmed();
+            havedata |= JRNL_Notes ;
+        }
+
+        if (journal->settingExists(Bookmark_Start)) {
+            start=sess->settings[Bookmark_Start].toList();
+            if (start.size()>0) havedata |= JRNL_Bookmarks ;
         }
 
         if (journal->settingExists(LastUpdated)) {
@@ -264,35 +108,45 @@ void BackupJournal(QString filename)
 #else
             qint64 dtx = dt.toSecsSinceEpoch();
 #endif
-            QString dts = QString::number(dtx);
-            stream.writeAttribute("lastupdated", dts);
+            lastupdated = QString::number(dtx);
         }
 
-        if (journal->settingExists(Journal_Notes)) {
-            stream.writeStartElement("note");
-            stream.writeTextElement("text", sess->settings[Journal_Notes].toString());
-            stream.writeEndElement(); // notes
+        if (!havedata) {
+            // No data to archive.
+            continue ;
         }
+        //QString dateStr = ((++count & 1)==0) ? date.toString(/*Qt::ISODate*/) : date.toString(Qt::ISODate) ;
+        QString dateStr =date.toString(Qt::ISODate) ;
+        stream.writeStartElement("day");
+            stream.writeAttribute("date", dateStr);
+                if(!weight.isEmpty()) stream.writeAttribute(WEIGHT, weight);
+                if(!zombie.isEmpty()) stream.writeAttribute(ZOMBIE, zombie);
+                stream.writeAttribute("lastupdated", lastupdated);
 
-        if (journal->settingExists(Bookmark_Start)) {
-            QVariantList start=sess->settings[Bookmark_Start].toList();
-            QVariantList end=sess->settings[Bookmark_End].toList();
-            QStringList notes=sess->settings[Bookmark_Notes].toStringList();
-            stream.writeStartElement("bookmarks");
-            int size = start.size();
-            for (int i=0; i< size; i++) {
-                stream.writeStartElement("bookmark");
-                stream.writeAttribute("notes",notes.at(i));
-                stream.writeAttribute("start",start.at(i).toString());
-                stream.writeAttribute("end",end.at(i).toString());
-                stream.writeEndElement(); // bookmark
+            if (!notes.isEmpty() ) {
+                stream.writeStartElement("note");
+                    stream.writeTextElement("text", notes);
+                stream.writeEndElement(); // notes
             }
-            stream.writeEndElement(); // bookmarks
-        }
 
+            if (start.size()>0) {
+                QVariantList end=sess->settings[Bookmark_End].toList();
+                QStringList notes=sess->settings[Bookmark_Notes].toStringList();
+                stream.writeStartElement("bookmarks");
+                int size = start.size();
+                for (int i=0; i< size; i++) {
+                    stream.writeStartElement("bookmark");
+                    stream.writeAttribute("notes",notes.at(i));
+                    stream.writeAttribute("start",start.at(i).toString());
+                    stream.writeAttribute("end",end.at(i).toString());
+                    stream.writeEndElement(); // bookmark
+                }
+                stream.writeEndElement(); // bookmarks
+            }
+        days_saved++;
         stream.writeEndElement(); // day
-
     } while (date <= last);
+    // //stream.writeAttribute("DaysSaved", QString::number(days_saved));
 
     stream.writeEndElement(); // Journal
     stream.writeEndElement(); // OSCAR
@@ -302,7 +156,7 @@ void BackupJournal(QString filename)
 
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Couldn't open journal file" << filename << "error code" << file.error() << file.errorString();
-        return;
+        return false;
     }
 
     QTextStream ts(&file);
@@ -310,23 +164,269 @@ void BackupJournal(QString filename)
     ts.setGenerateByteOrderMark(true);
     ts << outBuf;
     file.close();
+    QMessageBox::information(nullptr, STR_MessageBox_Information,
+        QString(QObject::tr("%1 days Journal Data was saved in file %2")).arg(days_saved).arg(filename) ,
+        QMessageBox::Ok);
+
+    return true;
 }
 
-DayController::DayController()
-{
-    journal = nullptr;
-    cpap = nullptr;
-    oximeter = nullptr;
-}
-DayController::~DayController()
-{
-    delete journal;
+void Journal::getJournal(Daily*& daily,QDate& date,Session* & journal) {
+    if (journal) return;
+    journal = daily->GetJournalSession(date,true);
+    if (journal) return;
+    journal = daily->CreateJournalSession(date);
 }
 
-void DayController::setDate(QDate date)
-{
-    if (journal) {
-        delete journal;
+
+bool Journal::RestoreDay (QDomElement& dayElement,QDate& date,QString& filename) {
+    Daily* daily = mainwin->getDaily();
+    if (!daily) return false;
+    Session* journal = nullptr;
+    bool changed = false;
+
+    // handle zombie - feelings
+    bool ok = false;
+    int zombie = 0;
+    zombie =  (dayElement.attribute(ZOMBIE)).toInt(&ok);
+    if (!ok) { zombie=0; }
+    if (zombie == 0 ) {
+        zombie =  (dayElement.attribute(OLD_ZOMBIE)).toInt(&ok);
+        if (!ok) { zombie=0; }
     }
-    journal = new JournalEntry(date);
+    DEBUGFC O("\n\n") ;
+    DEBUGFC O(date) O(filename); Q_UNUSED(filename);
+    if (zombie>0) {
+        int jvalue =  0 ;
+        getJournal(daily,date,journal);
+        if (journal->settings.contains(Journal_ZombieMeter)) {
+            jvalue = journal->settings[Journal_ZombieMeter].toInt();
+        }
+        if (jvalue == 0)  {
+            DEBUGFC O(date) Q(zombie);
+            daily->set_JournalZombie(date,zombie);
+            if (date == daily->getDate()) daily->set_ZombieUI(zombie);
+            changed = true;
+        }
+    }
+
+    // handle Weight
+    double weight =  (dayElement.attribute(WEIGHT)).toDouble(&ok);
+    if (weight>zeroD) {
+        getJournal(daily,date,journal);
+        double jvalue = 0.0 ;
+        if (journal->settings.contains(Journal_Weight)) {
+            jvalue = journal->settings[Journal_Weight].toDouble();
+        }
+        if (jvalue < zeroD )  {
+            DEBUGFC O(date) Q(weight);
+            daily->set_JournalWeightValue(date,weight);
+            if (date == daily->getDate()) daily->set_WeightUI(weight);
+            changed = true;
+        }
+    }
+
+    // Handle Notes.
+    QDomElement noteText = dayElement.elementsByTagName("note").at(0).toElement().elementsByTagName("text").at(0).toElement();
+    if (!noteText.text().isEmpty() ) {
+        getJournal(daily,date,journal);
+        // there are characters in notes. maybe just spaces. Ignore spaces.
+        QString plainTextToAdd = Daily::convertHtmlToPlainText(noteText.text());
+
+        // get existing note if any.
+        QString currNoteHtml = journal->settings[Journal_Notes].toString();
+        QString currNotePlainText = Daily::convertHtmlToPlainText(currNoteHtml);
+        if (currNotePlainText.contains(plainTextToAdd) ) {
+            // plainText to add is equal to curr or is it a subset of the current Note
+            // use the current notes.. ignore text in backup.
+        } else {
+            // plainText is not equal to curr nor is it a subset of the current Note
+            if (plainTextToAdd.contains(currNotePlainText) ) {
+                //curr note is a subset of the new - so use new.
+                currNoteHtml = noteText.text();
+            } else {
+                // ToAdd text and Current text are different.
+                // use previous verson append with  current 
+                currNoteHtml.prepend(noteText.text());
+            }
+            daily->set_JournalNotesHtml(date,currNoteHtml);
+            if (date == daily->getDate()) daily->set_NotesUI(noteText.text());
+            DEBUGFC O(date) Q((void*)journal) O( )Daily::convertHtmlToPlainText(currNoteHtml);
+            changed = true;
+        }
+    }
+
+    QDomNodeList bookmarks = dayElement.elementsByTagName("bookmarks").at(0).toElement().elementsByTagName("bookmark");
+    if (bookmarks.size()>0) {
+        DEBUGFC Q(bookmarks.size());
+        getJournal(daily,date,journal);
+        // get list of bookmarks for journal. These will not be removed.
+        QVariantList start;
+        QVariantList end;
+        QStringList notes;
+        if (journal->settings.contains(Bookmark_Start)) {
+            //DEBUGFC;
+            start=journal->settings[Bookmark_Start].toList();
+            end=journal->settings[Bookmark_End].toList();
+            notes=journal->settings[Bookmark_Notes].toStringList();
+        }
+        // check if arcived bookmark is current list
+        bool bmChanged = false;
+        for (int idx=0 ; idx < bookmarks.size() ; idx++) {
+            // get archived bookmark
+            //DEBUGFC Q(idx) Q(bookmarks.size()) Q(start.size()) ;
+            QDomElement bookmark = bookmarks.at(idx).toElement();
+            qint64 archiveStart = bookmark.attribute("start").toLongLong();
+            qint64 archiveEnd   = bookmark.attribute("end").toLongLong();
+            QString archiveNote = bookmark.attribute("notes");
+            // check if bookmark already exists.
+
+            bool duplicate = false;
+            bool bNoteChanged = false;
+            for (int idy=0 ; idy < start.size() ; idy++) {
+                //DEBUGFC Q(idy);
+                qint64 bmStart = start.at(idy).toLongLong();
+                qint64 bmEnd   = end.at(idy).toLongLong();
+                if ( (bmStart == archiveStart) && (bmEnd == archiveEnd) ) {
+                    duplicate = true;
+                    //DEBUGFC Q(idx) Q(idy);
+                    // have same bookmark - new check if notes need merging
+                    QString aNote = archiveNote.simplified();
+                    QString bmNote = notes.at(idy);
+                    QString bNote = bmNote.simplified();
+                    DEBUGFC  Q(aNote) Q(bNote) Q(bNote.contains(aNote)) Q(aNote.contains(bNote));
+                    if (bNote.contains(aNote) ) {
+                        // no action needed.
+                        //DEBUGFC Q(idx) Q(idy) Q(bNote);;
+                        break;
+                    } else {
+                        // updated existing bookmark label
+                        //DEBUGFC Q(idx) Q(idy);
+                        // if an append is needed.
+                        if (aNote.contains(bNote)) {
+                            // use archived note
+                            //DEBUGFC Q(idx) Q(idy);
+                        } else {
+                            //DEBUGFC Q(idx) Q(idy);
+                            // prepend  archive note to bmNote
+                            archiveNote.append(" :: ").append(bmNote);
+                        }
+                        // use archiveNote.
+                        notes[idy]= archiveNote;
+                        bmChanged = true;
+                        bNoteChanged = true;
+                    }
+                }
+            }
+            if (!duplicate) {
+                DEBUGFC Q(date) Q(idx) Q(archiveNote);
+                // here if need to add archive bookmark.
+                // add archive bookmark to currrent list
+                start.push_back(archiveStart);
+                end.push_back(archiveEnd);
+                notes.push_back(archiveNote);
+                bmChanged = true;
+            } else if (bNoteChanged) {
+                DEBUGFC Q(date) Q(idx) Q(archiveNote);
+            }
+        }
+        if (bmChanged) {
+            //DEBUGFC Q(bmChanged);
+            getJournal(daily,date,journal);
+            journal->settings[Bookmark_Start]=start;
+            journal->settings[Bookmark_End]=end;
+            journal->settings[Bookmark_Notes]=notes;
+            if (date == daily->getDate()) daily->set_BookmarksUI(start,end,notes,0);
+        } else {
+            DEBUGFC O("bookmark ignored") ;
+        }
+
+    }
+
+    if (!journal) {
+        return true;
+    }
+    if (!journal->machine()) {
+        return true;
+    }
+    if (changed) {
+        journal->SetChanged(true);
+        journal->settings[LastUpdated] = QDateTime::currentDateTime();
+        journal->machine()->SaveSummaryCache();
+        journal->SetChanged(false);
+    }
+    DEBUGFC O(date) O("\n\n");
+    return true;
 }
+
+
+bool Journal::RestoreJournal(QString filename)
+{
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly)) {
+        qWarning() << "Could not open" << filename.toLocal8Bit().data() << "for reading, error code" << file.error() << file.errorString();
+        return false;
+    }
+
+    QDomDocument doc("machines.xml");
+
+    if (!doc.setContent(&file)) {
+        qWarning() << "Invalid XML Content in" << filename.toLocal8Bit().data();
+        return false;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement(); // Get the root element of the document
+    if (root.isNull()) {
+        return false;
+    }
+    QDomNodeList days = doc.elementsByTagName("day");
+    if (days.isEmpty()) {
+        return false;
+    }
+
+    QDate first = p_profile->FirstDay();
+    QDate last = p_profile->LastDay();
+    QDate current = QDate::currentDate();
+    int error=0;
+    int ignored=0;
+    int used=0;
+    for (int idx=0 ; idx < days.size() ; idx++) {
+        QDomElement dayElement = days.at(idx).toElement();
+
+        QString dateStr = dayElement.attribute("date") ;
+        QDate   date    = QDate::fromString(dateStr,Qt::ISODate) ;
+        if (!date.isValid()) {
+            QDate newdate   = QDate::fromString(dateStr) ;  // read original date format 
+            date = newdate;
+        }
+        if (!date.isValid()) {
+            error++ ;
+            continue;
+        }
+        if (date < first) {
+            ignored++ ;
+            continue;
+        }
+        if (date > last) {
+            ignored++ ;
+            continue;
+        }
+        if (date > current) {
+            error++ ;
+            continue;
+        }
+        if ( RestoreDay(dayElement,date,filename) ) {
+           used++;
+        }
+    }
+    double user_height_cm  = p_profile->user->height();
+    if (user_height_cm<zeroD) {
+        QDomElement journal = root.elementsByTagName("Journal").at(0).toElement();
+        double height_cm = journal.attribute("height_cm").toDouble();
+        DEBUGFC  Q(journal.tagName()) Q(height_cm);
+        if (height_cm>=zeroD) p_profile->user->setHeight(height_cm);
+    }
+    return true;
+}
+

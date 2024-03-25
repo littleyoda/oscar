@@ -1,7 +1,7 @@
 /* OSCAR MainWindow Implementation
  *
  * Copyright (c) 2020-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -45,6 +45,7 @@
 #include "common_gui.h"
 #include "version.h"
 #include "SleepLib/appsettings.h"       // defines for REMSTAR_M_SUPPORT
+#include "SleepLib/journal.h"
 
 
 // Custom loaders that don't autoscan..
@@ -2400,7 +2401,7 @@ void MainWindow::on_statisticsButton_clicked()
     }
 }
 
-void MainWindow::init_reportModeUi() 
+void MainWindow::init_reportModeUi()
 {
     QTextCharFormat format = ui->statStartDate->calendarWidget()->weekdayTextFormat(Qt::Saturday);
     format.setForeground(QBrush(Qt::black, Qt::SolidPattern));
@@ -2609,17 +2610,50 @@ void MainWindow::on_actionShowPersonalData_toggled(bool visible)
 
 #include "SleepLib/journal.h"
 
+void MainWindow::on_actionImport_Journal_triggered()
+{
+    QString folder;
+	if (p_profile->contains(STR_PREF_LastJournalPath)) {
+		folder = (*p_profile)[STR_PREF_LastJournalPath].toString();
+	}
+    QFileInfo fi(folder);
+	if (!fi.isDir() ) {
+        folder = QStandardPaths::StandardLocation(QStandardPaths::DocumentsLocation);
+	}
+    QString filename = QFileDialog::getOpenFileName(this,
+            tr("Choose where to read journal"),
+            folder,
+            tr("XML Files (*.xml)"));
+    if (Journal::RestoreJournal(filename) ) {
+		QFileInfo fi(filename);
+		QDir dir = fi.dir();
+		if (dir.exists() ) {
+			(*p_profile)[STR_PREF_LastJournalPath] = dir.absolutePath();
+		}
+	}
+}
+
 void MainWindow::on_actionExport_Journal_triggered()
 {
     QString folder;
-
-    folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-
+	if (p_profile->contains(STR_PREF_LastJournalPath)) {
+		folder = (*p_profile)[STR_PREF_LastJournalPath].toString();
+	}
+    QFileInfo fi(folder);
+	if (!fi.isDir() ) {
+        folder = QStandardPaths::StandardLocation(QStandardPaths::DocumentsLocation);
+    }
     folder += QDir::separator() + tr("%1's Journal").arg(p_profile->user->userName()) + ".xml";
 
     QString filename = QFileDialog::getSaveFileName(this, tr("Choose where to save journal"), folder, tr("XML Files (*.xml)"));
 
-    BackupJournal(filename);
+    if (Journal::BackupJournal(filename) ) {
+		QFileInfo fi(filename);
+		QDir dir = fi.dir();
+		if (dir.exists() ) {
+			(*p_profile)[STR_PREF_LastJournalPath] = dir.absolutePath();
+		}
+	}
 }
 
 void MainWindow::on_actionShow_Performance_Counters_toggled(bool arg1)

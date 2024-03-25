@@ -1,7 +1,7 @@
 /* OSCAR MainWindow Headers
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins 
+ * Copyright (C) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -344,6 +344,8 @@ class MainWindow : public QMainWindow
     void on_actionPie_Chart_toggled(bool arg1);
 
     void on_actionExport_Journal_triggered();
+
+    void on_actionImport_Journal_triggered();
 
     void on_actionShow_Performance_Counters_toggled(bool arg1);
 

@@ -2411,6 +2411,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="menuExp_ort_CSV_Data"/>
     <addaction name="actionExport_Journal"/>
+    <addaction name="actionImport_Journal"/>
     <addaction name="separator"/>
     <addaction name="actionChange_Data_Folder"/>
     <addaction name="separator"/>
@@ -2822,6 +2823,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionExport_Journal">
    <property name="text">
     <string>Backup Journal</string>
+   </property>
+  </action>
+  <action name="actionImport_Journal">
+   <property name="text">
+    <string>Import Journal</string>
    </property>
   </action>
   <action name="actionShow_Performance_Counters">
