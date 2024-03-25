@@ -1,7 +1,7 @@
 ﻿/* Daily GUI Headers
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (C) 2011-2018 Mark Watkins
+ * Copyright (C) 2011-2018 Mark Watkins 
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -48,6 +48,7 @@ class Daily : public QWidget
 {
     Q_OBJECT
 
+friend class Journal;
 public:
     /*! \fn Daily()
         \brief Constructs a Daily object
@@ -113,7 +114,7 @@ public:
         \param QDate date
         \returns Session * containing valid Journal Session object or nullptr if none found.
     */
-    Session * GetJournalSession(QDate date);
+    Session * GetJournalSession(QDate date, bool create=true);
 
     QString GetDetailsText();
     /*! \fn eventBreakdownPie()
@@ -150,7 +151,7 @@ public:
     QString STR_SHOW_ALL_EVENTS =QString(tr("Show All Events"));
     QString STR_HIDE_ALL_GRAPHS =QString(tr("Hide All Graphs"));
     QString STR_SHOW_ALL_GRAPHS =QString(tr("Show All Graphs"));
-
+    static QString convertHtmlToPlainText(QString html) ;
 public slots:
     void on_LineCursorUpdate(double time);
     void on_RangeUpdate(double minx, double maxx);
@@ -252,9 +253,11 @@ private slots:
         */
     void on_ZombieMeter_valueChanged(int value);
 
-    void set_ZombieMeterLabel();
+    void set_ZombieUI(int value);
     void set_WeightUI(double weight_kg);
-    void set_BmiUI(Session *journal = nullptr);
+    void set_BmiUI(double weight_kg);                               // should be a part of weight.
+    void set_NotesUI(QString htmlNote);
+    void set_BookmarksUI( QVariantList& start , QVariantList& end , QStringList& notes, qint64 drift=0);
 
     /*! \fn on_weightSpinBox_editingFinished();
         \brief Called when weight has changed.. Updates the BMI dislpay and journal objects.
@@ -284,6 +287,11 @@ protected:
     virtual void showEvent(QShowEvent *);
 
 private:
+    double  calculateBMI(double weight_kg, double height_cm);
+    void set_JournalZombie(QDate&, int);
+    void set_JournalWeightValue(QDate&, double kgs);
+    void set_JournalNotesHtml(QDate&, QString html);
+
     /*! \fn CreateJournalSession()
         \brief Create a new journal session for this date, if one doesn't exist.
         \param QDate date
@@ -369,9 +377,9 @@ private:
     const int eventTypeEnd   = QTreeWidgetItem::UserType+2;
 
 #ifndef REMOVE_FITNESS
-    bool ZombieMeterMoved;
     double user_weight_kg;
     double user_height_cm;
+    constexpr static double zeroD = 0.0001 ;
 #endif
     bool BookmarksChanged;
 

@@ -503,7 +503,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     ui->splitter->setVisible(false);
 
 #ifndef REMOVE_FITNESS
-    ZombieMeterMoved=false;
 #else // REMOVE_FITNESS
         // hide the parent widget to make the gridlayout invisible
         QWidget *myparent ;
@@ -941,7 +940,6 @@ void Daily::on_ReloadDay()
     unload_time=time.restart();
     //bool fadedir=previous_date < ui->calendar->selectedDate();
 #ifndef REMOVE_FITNESS
-    ZombieMeterMoved=false;
 #endif
     Load(ui->calendar->selectedDate());
     load_time=time.restart();
@@ -952,7 +950,6 @@ void Daily::on_ReloadDay()
     ui->calendar->setFocus(Qt::ActiveWindowFocusReason);
 
 #ifndef REMOVE_FITNESS
-    ZombieMeterMoved=false;
     ui->weightSpinBox->setDecimals(1);
 #endif
     this->setCursor(Qt::ArrowCursor);
@@ -1609,8 +1606,6 @@ void Daily::htmlLsbSectionHeader (QString&html , const QString& name,LEFT_SIDEBA
         if ( (!prev) && on) {
             html+="<hr/>";
         }
-        // DEBUGFC Q(checkBox) O(prev) O("==>") O(on) O(name)  ;
-
         html += QString(
             "<table cellspacing=0 cellpadding=0 border=0 width='100%'>"
             "<tr>"
@@ -1935,43 +1930,28 @@ void Daily::Load(QDate date)
     QStringList sl;
     ui->bookmarkTable->setHorizontalHeaderLabels(sl);
 #ifndef REMOVE_FITNESS
-    ui->ZombieMeter->blockSignals(true);
-    ui->ZombieMeter->setValue(0);
-    set_ZombieMeterLabel();
-    ui->ZombieMeter->blockSignals(false);
-
-    set_WeightUI(0);
     user_height_cm  = p_profile->user->height();
-    set_BmiUI();
+    set_ZombieUI(0);
+    set_WeightUI(0);
 
 #endif
     BookmarksChanged=false;
     Session *journal=GetJournalSession(date);
     if (journal) {
-        if (journal->settings.contains(Journal_Notes))
-            ui->JournalNotes->setHtml(journal->settings[Journal_Notes].toString());
+        if (journal->settings.contains(Journal_Notes)) {
+            set_NotesUI(journal->settings[Journal_Notes].toString());
+        }
 
 #ifndef REMOVE_FITNESS
         bool ok;
         if (journal->settings.contains(Journal_Weight)) {
             double kg=journal->settings[Journal_Weight].toDouble(&ok);
             set_WeightUI(kg);
-            set_BmiUI(journal);
         }
 
         if (journal->settings.contains(Journal_ZombieMeter)) {
-            ui->ZombieMeter->blockSignals(true);
             int value = journal->settings[Journal_ZombieMeter].toInt(&ok);
-            // value of 0 means there is not an entry for feelings.
-            if (value==0) {
-                // set minimum to 1 zero means empty value. Should upgrade older systems.
-                value=1;
-                journal->settings[Journal_ZombieMeter] = value;
-                journal->SetChanged(true);
-            } ;
-            ui->ZombieMeter->setValue(value);
-            set_ZombieMeterLabel();
-            ui->ZombieMeter->blockSignals(false);
+            set_ZombieUI(value);
         }
 #endif
 
@@ -1980,31 +1960,14 @@ void Daily::Load(QDate date)
             QVariantList end=journal->settings[Bookmark_End].toList();
             QStringList notes=journal->settings[Bookmark_Notes].toStringList();
 
-            ui->bookmarkTable->blockSignals(true);
-
-            // Careful with drift here - apply to the label but not the
-            // stored data (which will be saved if journal changes occur).
-            qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
-            Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
-            drift=(dday!=nullptr) ? clockdrift : 0;
-
-            bool ok;
-            for (int i=0;i<start.size();i++) {
-                qint64 st=start.at(i).toLongLong(&ok);
-                qint64 et=end.at(i).toLongLong(&ok);
-
-                QDateTime d=QDateTime::fromTime_t((st+drift)/1000L);
-                //int row=ui->bookmarkTable->rowCount();
-                ui->bookmarkTable->insertRow(i);
-                QTableWidgetItem *tw=new QTableWidgetItem(notes.at(i));
-                QTableWidgetItem *dw=new QTableWidgetItem(d.time().toString("HH:mm:ss"));
-                dw->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-                ui->bookmarkTable->setItem(i,0,dw);
-                ui->bookmarkTable->setItem(i,1,tw);
-                tw->setData(Qt::UserRole,st);
-                tw->setData(Qt::UserRole+1,et);
-            } // for (int i
-            ui->bookmarkTable->blockSignals(false);
+            if (start.size() > 0) {
+                // Careful with drift here - apply to the label but not the
+                // stored data (which will be saved if journal changes occur).
+                qint64 clockdrift=p_profile->cpap->clockDrift()*1000L,drift;
+                Day * dday=p_profile->GetDay(previous_date,MT_CPAP);
+                drift=(dday!=nullptr) ? clockdrift : 0;
+                set_BookmarksUI(start ,end , notes, drift);
+            }
         } // if (journal->settings.contains(Bookmark_Start))
     } // if (journal)
 }
@@ -2012,17 +1975,113 @@ void Daily::Load(QDate date)
 void Daily::UnitsChanged()
 {
 #ifndef REMOVE_FITNESS
-    user_height_cm  = p_profile->user->height();
-    set_WeightUI(user_weight_kg);
-    set_BmiUI();
+    // Called from newprofile when height changed or when units changed metric / english
+    // just as if weight changed. may make bmi visible.
+    on_weightSpinBox_editingFinished();
 #endif
 }
+
+double  Daily::calculateBMI(double weight_kg, double height_cm) {
+    double height = height_cm/100.0;
+    double bmi    = weight_kg/(height * height);
+    return bmi;
+}
+
+
+QString Daily::convertHtmlToPlainText( QString html) {
+    QTextDocument doc;
+    doc.setHtml(html);
+    QString plain = doc.toPlainText();
+    return plain.simplified();
+}
+
+void Daily::set_JournalZombie(QDate& date, int value) {
+    Session *journal=GetJournalSession(date);
+    if (!journal) {
+        journal=CreateJournalSession(date);
+    }
+    if (value==0) {
+        // should delete zombie entry here. if null.
+        auto jit = journal->settings.find(Journal_ZombieMeter);
+        if (jit != journal->settings.end()) {
+           journal->settings.erase(jit);
+        }
+    } else {
+        journal->settings[Journal_ZombieMeter]=value;
+    }
+    journal->SetChanged(true);
+};
+
+
+void Daily::set_JournalWeightValue(QDate& date, double kg) {
+    Session *journal=GetJournalSession(date);
+    if (!journal) {
+        journal=CreateJournalSession(date);
+    }
+
+    if (journal->settings.contains(Journal_Weight)) {
+        QVariant old = journal->settings[Journal_Weight];
+        if (abs(old.toDouble() - kg) < zeroD  && kg > zeroD) {
+            // No change to weight - skip
+            return ;
+        }
+    } else if (kg < zeroD) {
+        // Still zero - skip
+        return ;
+    }
+    if (kg > zeroD) {
+        journal->settings[Journal_Weight]=kg;
+    } else {
+        // Weight now zero - remove from journal
+        auto jit = journal->settings.find(Journal_Weight);
+        if (jit != journal->settings.end()) {
+            journal->settings.erase(jit);
+        }
+    }
+    journal->SetChanged(true);
+    return ;
+}
+
+void Daily::set_JournalNotesHtml(QDate& date, QString html) {
+    QString newHtmlPlaintText = convertHtmlToPlainText(html); // have a look as plaintext to see if really empty.
+    bool newHtmlHasContent = !newHtmlPlaintText.isEmpty(); // have a look as plaintext to see if really empty.
+    Session* journal = GetJournalSession(date,false);
+    QString prevHtml;
+    if (journal) {
+        auto jit = journal->settings.find(Journal_Notes);
+        if (jit != journal->settings.end()) {
+            prevHtml = journal->settings[Journal_Notes].toString();
+        }
+    }
+    if (!newHtmlHasContent) {
+        if (!journal)  {
+            return ; //no action required
+        }
+        // removing previous notes.
+        auto jit = journal->settings.find(Journal_Notes);
+        if (jit != journal->settings.end()) {
+            journal->settings.erase(jit);
+            journal->SetChanged(true);
+        }
+        return;
+    } else if (html == prevHtml) {
+        return ; //no action required
+    }
+    if (!journal) {
+        journal = GetJournalSession(date,true);
+        if (!journal) {
+            journal = CreateJournalSession(date);
+        }
+    }
+    journal->settings[Journal_Notes] = html;
+    journal->SetChanged(true);
+}
+
 
 void Daily::clearLastDay()
 {
     lastcpapday=nullptr;
 }
-
 
 void Daily::Unload(QDate date)
 {
@@ -2035,37 +2094,9 @@ void Daily::Unload(QDate date)
     }
 
     // Update the journal notes
+    set_JournalNotesHtml(date,ui->JournalNotes->toHtml() ) ;
     Session *journal = GetJournalSession(date);
-
-    bool editorHasContent = !ui->JournalNotes->toPlainText().isEmpty(); // have a look as plaintext to see if really empty.
-
-    if (!journal && editorHasContent) {
-        journal = CreateJournalSession(date);
-    }
-
     if (journal) {
-        auto jit = journal->settings.find(Journal_Notes);
-
-        if (jit != journal->settings.end()) {
-            // we do have a journal_notes record
-            if (editorHasContent) {
-                const QString & html = ui->JournalNotes->toHtml();
-
-                if (jit.value() != html) { // has the content of it changed?
-                    jit.value() = html;
-                    journal->SetChanged(true);
-                }
-            } else {
-                // empty, so don't need this notes setting anymore
-                journal->settings.erase(jit);
-                journal->SetChanged(true);
-            }
-        } else if (editorHasContent) {
-            // Create the note
-            journal->settings[Journal_Notes] = ui->JournalNotes->toHtml();
-            journal->SetChanged(true);
-        }
-
         if (journal->IsChanged()) {
             journal->settings[LastUpdated] = QDateTime::currentDateTime();
             journal->machine()->SaveSummaryCache();
@@ -2183,12 +2214,13 @@ Session * Daily::CreateJournalSession(QDate date)
     m->AddSession(sess, true);
     return sess;
 }
-Session * Daily::GetJournalSession(QDate date) // Get the first journal session
+
+Session * Daily::GetJournalSession(QDate date , bool create) // Get the first journal session
 {
     Day *day=p_profile->GetDay(date, MT_JOURNAL);
     if (day) {
         Session * session = day->firstSession(MT_JOURNAL);
-        if (!session) {
+        if (!session && create) {
             session = CreateJournalSession(date);
         }
         return session;
@@ -2509,28 +2541,20 @@ void Daily::on_removeBookmarkButton_clicked()
     }
     mainwin->updateFavourites();
 }
-#ifndef REMOVE_FITNESS
 
-void Daily::set_BmiUI(Session* journal) {
-    if ((user_height_cm>0) && (user_weight_kg>0)) {
-        double height = user_height_cm/100.0;
-        double bmi=user_weight_kg/(height * height);
+#ifndef REMOVE_FITNESS
+void Daily::set_NotesUI(QString htmlNote) {
+    ui->JournalNotes->setHtml(htmlNote);
+};
+
+void Daily::set_BmiUI(double user_weight_kg) {
+    if ((user_height_cm>zeroD) && (user_weight_kg>zeroD)) {
+        double bmi = calculateBMI(user_weight_kg, user_height_cm);
         ui->BMI->display(bmi);
         ui->BMI->setVisible(true);
         ui->BMIlabel->setVisible(true);
-        if (journal) {
-            journal->settings[Journal_BMI]=bmi;
-            journal->SetChanged(true);
-        }
     } else {
         // BMI now zero - remove it
-        if (journal) {
-            auto jit = journal->settings.find(Journal_BMI);
-            if (jit != journal->settings.end()) {
-                journal->settings.erase(jit);
-            }
-            journal->SetChanged(true);
-        }
         // And make it invisible
         ui->BMI->setVisible(false);
         ui->BMIlabel->setVisible(false);
@@ -2541,7 +2565,6 @@ void Daily::set_BmiUI(Session* journal) {
 void Daily::set_WeightUI(double kg) {
     ui->weightSpinBox->blockSignals(true);
     ui->weightSpinBox->setDecimals(1);
-    user_weight_kg = kg;
     if (p_profile->general->unitSystem()==US_Metric) {
         ui->weightSpinBox->setSuffix(STR_UNIT_KG);
     } else {
@@ -2550,35 +2573,49 @@ void Daily::set_WeightUI(double kg) {
     }
     ui->weightSpinBox->setValue(kg);
     ui->weightSpinBox->blockSignals(false);
+    set_BmiUI(kg);
 };
 
-void Daily::set_ZombieMeterLabel()
+void Daily::set_ZombieUI(int value)
 {
-    if (ui->ZombieMeter->value()==0 ) {
+    ui->ZombieMeter->blockSignals(true);
+    if (value==0 ) {
         ui->ZombieValue->setText(tr("No Value Selected"));
     } else {
-        ui->ZombieValue->setText(QString("%1:%2").arg(tr("Value")).arg(ui->ZombieMeter->value()));
+        ui->ZombieValue->setText(QString("%1:%2").arg(tr("Value")).arg(value) );
     }
+    ui->ZombieMeter->setValue(value);
+    ui->ZombieMeter->blockSignals(false);
+}
+
+void Daily::set_BookmarksUI( QVariantList& start , QVariantList& end , QStringList& notes, qint64 drift) {
+    ui->bookmarkTable->blockSignals(true);
+    ui->bookmarkTable->setRowCount(0);
+    // Careful with drift here - apply to the label but not the
+    // stored data (which will be saved if journal changes occur).
+    bool ok;
+    int qty = start.size();
+    for (int i=0;i<qty;i++) {
+        qint64 st=start.at(i).toLongLong(&ok);
+        qint64 et=end.at(i).toLongLong(&ok);
+
+        QDateTime d=QDateTime::fromTime_t((st+drift)/1000L);
+        ui->bookmarkTable->insertRow(i);
+        QTableWidgetItem *tw=new QTableWidgetItem(notes.at(i));
+        QTableWidgetItem *dw=new QTableWidgetItem(d.time().toString("HH:mm:ss"));
+        dw->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        ui->bookmarkTable->setItem(i,0,dw);
+        ui->bookmarkTable->setItem(i,1,tw);
+        tw->setData(Qt::UserRole,st);
+        tw->setData(Qt::UserRole+1,et);
+    } // for (int i
+    ui->bookmarkTable->blockSignals(false);
 }
 
 void Daily::on_ZombieMeter_valueChanged(int value)
 {
-    set_ZombieMeterLabel();
-    ZombieMeterMoved=true;
-    Session *journal=GetJournalSession(previous_date);
-    if (!journal) {
-        journal=CreateJournalSession(previous_date);
-    }
-    if (value==0) {
-        // should delete zombie entry here. if null.
-        auto jit = journal->settings.find(Journal_ZombieMeter);
-        if (jit != journal->settings.end()) {
-           journal->settings.erase(jit);
-        }
-    } else {
-        journal->settings[Journal_ZombieMeter]=value;
-    }
-    journal->SetChanged(true);
+    set_ZombieUI(value);
+    set_JournalZombie(previous_date,value);
     mainwin->updateOverview();
 }
 #endif
@@ -2592,10 +2629,9 @@ void Daily::on_bookmarkTable_itemChanged(QTableWidgetItem *item)
 #ifndef REMOVE_FITNESS
 void Daily::on_weightSpinBox_valueChanged(double )
 {
-    this->on_weightSpinBox_editingFinished();
+    on_weightSpinBox_editingFinished();
 }
 
-const double zeroKg=0.011; //
 void Daily::on_weightSpinBox_editingFinished()
 {
     user_height_cm = p_profile->user->height();
@@ -2603,46 +2639,19 @@ void Daily::on_weightSpinBox_editingFinished()
     if (p_profile->general->unitSystem()==US_English) {
         kg *=  kgs_per_pound; // convert pounds to kg.
     }
-    if (kg < zeroKg) kg = 0.0;
-    user_weight_kg = kg;
-
-    Session *journal=GetJournalSession(previous_date);
-    if (!journal) {
-        journal=CreateJournalSession(previous_date);
-    }
-
-    if (journal->settings.contains(Journal_Weight)) {
-        QVariant old = journal->settings[Journal_Weight];
-        if (abs(old.toDouble() - kg) < zeroKg  && kg > zeroKg) {
-            // No change to weight - skip
-            return;
-        }
-    } else if (kg < zeroKg) {
-        // Still zero - skip
-        return;
-    }
-    if (kg > zeroKg) {
-        journal->settings[Journal_Weight]=kg;
-    } else {
-        // Weight now zero - remove from journal
-        auto jit = journal->settings.find(Journal_Weight);
-        if (jit != journal->settings.end()) {
-            journal->settings.erase(jit);
-        }
-    }
-    user_weight_kg=kg;
+    if (kg < zeroD) kg = 0.0;
+    set_JournalWeightValue(previous_date,kg) ;
+    set_BmiUI(kg);
     gGraphView *gv=mainwin->getOverview()->graphView();
     gGraph *g;
     if (gv) {
         g=gv->findGraph(STR_GRAPH_Weight);
         if (g) g->setDay(nullptr);
     }
-    set_BmiUI(journal);
     if (gv) {
         g=gv->findGraph(STR_GRAPH_BMI);
         if (g) g->setDay(nullptr);
     }
-    journal->SetChanged(true);
     mainwin->updateOverview();
 }
 #endif
