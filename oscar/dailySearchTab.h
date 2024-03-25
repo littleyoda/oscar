@@ -224,7 +224,6 @@ private:
     bool        helpMode=false;
     QString     helpString = helpStr();
     void        clearMatch();
-    void        debugStates();
     void        setState(STATE);
     void        createUi();
     void        populateControl();
@@ -257,7 +256,6 @@ private:
 
     QString     helpStr();
     QString     centerLine(QString line);
-    QString     convertRichText2Plain (QString rich);
     QRegExp     searchPatterToRegex (QString wildcard);
     void        addCommandItem(QString str,int topic);
     float       commandListItemMaxWidth = 0;
@@ -283,8 +281,6 @@ private:
     int         DaysWithFileErrors;
 
     void        setoperation(OpCode opCode,ValueMode mode) ;
-    QTextDocument richText;
-
 
 void process_match_info(QString text, int topic);
 

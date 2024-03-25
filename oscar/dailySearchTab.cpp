@@ -381,25 +381,6 @@ void DailySearchTab::addCommandItem(QString str,int topic) {
     commandList->setItemWidget(item, topicButton);
 }
 
-void DailySearchTab::debugStates() {
-    #ifdef TEST_MACROS_ENABLED
-    return;
-    qDebug() ;
-    for (int ind = 0; ind <commandList->count() ; ++ind) {
-        QListWidgetItem *item = commandList->item(ind);
-        QAbstractButton* topicButton = dynamic_cast<QAbstractButton*>(commandList->itemWidget(item));
-        if (!topicButton) continue;
-        int topic = buttonGroup->id(topicButton);
-        DEBUGFC
-            QQ("checkable",topicButton->isCheckable())
-            QQ("check",topicButton->isChecked())
-            O(topicButton->text())
-            O(topic)
-            ;
-    }
-    #endif
-}
-
 void DailySearchTab::showOnlyAhiChannels(bool ahiOnly) {
     for (int ind = 0; ind <commandList->count() ; ++ind) {
         QListWidgetItem *item = commandList->item(ind);
@@ -423,7 +404,6 @@ void DailySearchTab::showOnlyAhiChannels(bool ahiOnly) {
         lastButton = nullptr;
         lastTopic = ST_NONE ;
     };
-    debugStates();
 };
 
 void DailySearchTab::on_matchGroupButton_toggled(QAbstractButton* topicButton ) {
@@ -487,11 +467,6 @@ void DailySearchTab::populateControl() {
         operationCombo->addItem(opCodeStr(OP_NE));
 
         // Now add events
-        QDate date = p_profile->LastDay(MT_CPAP);
-        if ( !date.isValid()) return;
-        Day* day = p_profile->GetDay(date);
-        if (!day) return;
-
         commandList->clear();
         addCommandItem(tr("Notes"),ST_NOTES);
         addCommandItem(tr("Notes containing"),ST_NOTES_STRING);
@@ -508,6 +483,10 @@ void DailySearchTab::populateControl() {
         }
         addCommandItem(tr("Number of Sessions"),ST_SESSIONS_QTY);
 
+        QDate date = p_profile->LastDay(MT_CPAP);
+        if ( !date.isValid()) return;
+        Day* day = p_profile->GetDay(date);
+        if (!day) return;
 
         if (p_profile->general->showUnknownFlags()) chans |= schema::UNKNOWN;
         QList<ChannelID> available;
@@ -526,8 +505,6 @@ void DailySearchTab::populateControl() {
 void    DailySearchTab::setState(STATE newState) {
             STATE prev=state;
             state = newState;
-            //enum STATE { reset , waitForSearchTopic   ,  matching , multpileMatches , waitForStart ,  autoStart , searching ,  endOfSeaching ,  waitForContinue , noDataFound};
-            //DEBUGFC O(prev) O("==>") O(state) Q( matches.size()) QQ("name",match->matchName) O(match->opCodeStr) O(match->compareString) O(match->units);
             switch (state) {
                 case multpileMatches :
                     break;
@@ -598,7 +575,6 @@ void    DailySearchTab::setState(STATE newState) {
                     hideResults(true);
                     break;
             };
-            //DEBUGFC O(prev) O("==>") O(state) Q(matchButton->isVisible()) Q(addMatchButton->isVisible()) Q( matches.size());
         };
 
 QRegExp Match::searchPatterToRegex (QString searchPattern) {
@@ -852,9 +828,9 @@ bool DailySearchTab::matchFind(Match* myMatch ,Day* day, QDate& date, Qt::Alignm
                 break;
             case ST_NOTES :
                 {
-                Session* journal=daily->GetJournalSession(date);
+                Session* journal=daily->GetJournalSession(date,false);
                 if (journal && journal->settings.contains(Journal_Notes)) {
-                    QString jcontents = convertRichText2Plain(journal->settings[Journal_Notes].toString());
+                    QString jcontents = Daily::convertHtmlToPlainText(journal->settings[Journal_Notes].toString());
                     myMatch->foundString = jcontents.simplified().left(stringDisplayLen).simplified();
                     found=true;
                     alignment=Qt::AlignLeft;
@@ -863,7 +839,7 @@ bool DailySearchTab::matchFind(Match* myMatch ,Day* day, QDate& date, Qt::Alignm
                 break;
             case ST_BOOKMARKS :
                 {
-                Session* journal=daily->GetJournalSession(date);
+                Session* journal=daily->GetJournalSession(date,false);
                 if (journal && journal->settings.contains(Bookmark_Notes)) {
                     found=true;
                     QStringList notes = journal->settings[Bookmark_Notes].toStringList();
@@ -877,7 +853,7 @@ bool DailySearchTab::matchFind(Match* myMatch ,Day* day, QDate& date, Qt::Alignm
                 break;
             case ST_BOOKMARKS_STRING :
                 {
-                Session* journal=daily->GetJournalSession(date);
+                Session* journal=daily->GetJournalSession(date,false);
                 if (journal && journal->settings.contains(Bookmark_Notes)) {
                     QStringList notes = journal->settings[Bookmark_Notes].toStringList();
                     QString findStr = selectString->text();
@@ -895,9 +871,9 @@ bool DailySearchTab::matchFind(Match* myMatch ,Day* day, QDate& date, Qt::Alignm
                 break;
             case ST_NOTES_STRING :
                 {
-                Session* journal=daily->GetJournalSession(date);
+                Session* journal=daily->GetJournalSession(date,false);
                 if (journal && journal->settings.contains(Journal_Notes)) {
-                    QString jcontents = convertRichText2Plain(journal->settings[Journal_Notes].toString());
+                    QString jcontents = Daily::convertHtmlToPlainText(journal->settings[Journal_Notes].toString());
                     QString findStr = selectString->text();
                     if (jcontents.contains(findStr,Qt::CaseInsensitive) ) {
                        found=true;
@@ -1147,7 +1123,6 @@ void    DailySearchTab::process_match_info(QString text, int topic) {
         // here to select new search criteria
         // must reset all variables and label, button, etc
         clearMatch() ;
-        //DEBUGFC QQ("name",match->matchName) O(match->opCodeStr) O(match->compareString) O(match->units) O(selectUnits->text());
         commandWidget->show();
         match->matchName = text;
         // get item selected
@@ -1731,12 +1706,6 @@ QString Match::formatTime (qint32 ms) {
         ms = ms % 60000;
         qint32 seconds = ms /1000;
         return QString("%1:%2:%3").arg(hours).arg(minutes,2,10,QLatin1Char('0')).arg(seconds,2,10,QLatin1Char('0'));
-}
-
-QString DailySearchTab::convertRichText2Plain (QString rich) {
-        richText.setHtml(rich);
-        QString line=richText.toPlainText().simplified();
-        return line.replace(QRegExp("[\\s\\r\\n]+")," ").simplified();
 }
 
 QString DailySearchTab::opCodeStr(OpCode opCode) {
