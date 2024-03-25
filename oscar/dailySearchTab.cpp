@@ -30,6 +30,7 @@
 #include "dailySearchTab.h"
 #include "SleepLib/day.h"
 #include "SleepLib/profiles.h"
+#include "SleepLib/journal.h"
 #include "daily.h"
 #include "SleepLib/machine_common.h"
 
@@ -468,6 +469,7 @@ void DailySearchTab::populateControl() {
 
         // Now add events
         commandList->clear();
+        addCommandItem(tr("Journal"),ST_JOURNAL);
         addCommandItem(tr("Notes"),ST_NOTES);
         addCommandItem(tr("Notes containing"),ST_NOTES_STRING);
         addCommandItem(tr("Bookmarks"),ST_BOOKMARKS);
@@ -505,6 +507,7 @@ void DailySearchTab::populateControl() {
 void    DailySearchTab::setState(STATE newState) {
             STATE prev=state;
             state = newState;
+            //enum STATE { reset , waitForSearchTopic   ,  matching , multpileMatches , waitForStart ,  autoStart , searching ,  endOfSeaching ,  waitForContinue , noDataFound};
             switch (state) {
                 case multpileMatches :
                     break;
@@ -824,6 +827,47 @@ bool DailySearchTab::matchFind(Match* myMatch ,Day* day, QDate& date, Qt::Alignm
                     }
                 }
                 myMatch->updateMinMaxValues(numDisabled);
+                }
+                break;
+            case ST_JOURNAL :
+                {
+                Session* journal=daily->GetJournalSession(date,false);
+                if (journal) {
+                    myMatch->foundString = journal->settings[LastUpdated].toDateTime().toString();
+                    myMatch->foundString.append(" ");
+                    bool empty =true;
+                    if ( journal->settings.contains(Bookmark_Start)  ) {
+                        if (journal->settings[Bookmark_Start].toList().size()>0) {
+                            empty = false;
+                            myMatch->foundString.append("B");
+                            /* Not reuired.
+                            if ( journal->settings.contains(Bookmark_Notes)  ) {
+                                if (journal->settings[Bookmark_Start].toList().size()>0) {
+                                    myMatch->foundString.append("n");
+                                }
+                            }
+                            */
+                        }
+                    }
+                    if ( journal->settings.contains(Journal_Notes) ) {
+                        myMatch->foundString.append("N");
+                        empty = false;
+                    }
+                    if ( journal->settings.contains(Journal_Weight) ) {
+                        myMatch->foundString.append("W");
+                        empty = false;
+                    }
+                    if ( journal->settings.contains(Journal_ZombieMeter) ) {
+                        myMatch->foundString.append("F");
+                        empty = false;
+                    }
+                    if (empty) {
+                        break;
+                        myMatch->foundString.append(tr("Empty"));
+                    }
+                    found=true;
+                    alignment=Qt::AlignLeft;
+                }
                 }
                 break;
             case ST_NOTES :
@@ -1163,6 +1207,11 @@ void    DailySearchTab::process_match_info(QString text, int topic) {
                 match->nextTab = TW_DETAILED ;
                 selectInteger->setValue(0);
                 setoperation(OP_NO_PARMS,displayWhole);
+                break;
+            case ST_JOURNAL :
+                setResult(DS_ROW_HEADER,1,QDate(),tr("JUmps\nJumps to Date's Notes"));
+                match->nextTab = TW_NOTES ;
+                setoperation( OP_NO_PARMS ,displayString);
                 break;
             case ST_NOTES :
                 setResult(DS_ROW_HEADER,1,QDate(),tr("Note\nJumps to Date's Notes"));

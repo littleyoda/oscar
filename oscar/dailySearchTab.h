@@ -47,7 +47,7 @@ class Daily;  //forward declaration.
 
 enum ValueMode { invalidValueMode , notUsed , minutesToMs  , hoursToMs , hundredths , opWhole , displayWhole , opString , displayString, secondsDisplayString};
 
-enum SearchTopic { ST_NONE , ST_DAYS_SKIPPED , ST_DISABLED_SESSIONS  , ST_NOTES  , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE , ST_APNEA_LENGTH , ST_APNEA_ALL , ST_CLEAR , ST_EVENT };
+enum SearchTopic { ST_NONE , ST_DAYS_SKIPPED , ST_DISABLED_SESSIONS  , ST_JOURNAL , ST_NOTES  , ST_NOTES_STRING , ST_BOOKMARKS , ST_BOOKMARKS_STRING , ST_AHI , ST_SESSION_LENGTH , ST_SESSIONS_QTY , ST_DAILY_USAGE , ST_APNEA_LENGTH , ST_APNEA_ALL , ST_CLEAR , ST_EVENT };
 
 enum OpCode {
     //DO NOT CHANGE NUMERIC OP CODES because THESE VALUES impact compare operations.
