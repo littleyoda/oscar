@@ -93,7 +93,7 @@ if [[ ${VERSION} == *-* ]]; then
     if [[ ${PRERELEASE} == *rc* ]]; then
         RC=1
     fi
-    VERSION="${VERSION}~${PRERELEASE}"
+    VERSION="${VERSION}-${PRERELEASE}"
 fi
 GIT_REVISION=`awk '/#define GIT_REVISION / { gsub(/"/, "", $3); print $3 }' ${SRC}/git_info.h`
 echo Version: ${VERSION}
