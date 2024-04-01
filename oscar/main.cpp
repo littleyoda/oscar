@@ -296,7 +296,7 @@ void optionExit(int exitCode, QString error) {
     Help Menu
     Option                   Description
     -p                       Pauses execution for 1 second
-    --profile  <name>        Name of profile. if name does not exist then uses last used profile.
+    --profile  <name>        Name of profile. if name does not exist then uses profile tab.
     --l or --language        Force language prompt
     --datadir  <folderName>  Use folderName as Oscar Data folder. For relatve paths: <Documents folder>/<relative path>.
                              If folder does not exist then prompts user.
@@ -397,7 +397,7 @@ int main(int argc, char *argv[]) {
     // selection QDialog, which waits indefinitely for user input before MainWindow is constructed.
 
     bool force_data_dir = false;
-    QString load_profile = "";
+    QString load_profile; // null profile means no --profile param
     for (int i = 1; i < args.size(); i++) {
         if ((args[i] == "--language") || (args[i] == "--l") ) {
             settings.setValue(LangSetting,"");
@@ -645,6 +645,7 @@ int main(int argc, char *argv[]) {
 
     QString language = settings.value(LangSetting, "").toString();
     AppSetting->setLanguage(language);
+    if (!load_profile.isEmpty()) AppSetting->setProfileName(load_profile);
 
     // Set fonts from preferences file
     qDebug() << "App font before Prefs setting" << QApplication::font();
