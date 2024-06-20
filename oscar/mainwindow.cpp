@@ -10,7 +10,6 @@
 #define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
-
 #include <QHostInfo>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -2324,6 +2323,12 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
             progress.close();
             QCoreApplication::processEvents();
         }
+        if (res < 0) {
+            // res is used as an index to an array and will cause a crash if not handled.
+            // Negative numbers indicate a problem with the file format or the file does not exist.
+            QMessageBox::information(this, STR_MessageBox_Information,
+                tr("There was a problem parsing %1 Data File: %2").arg(name, files[0]),QMessageBox::Ok);
+        } else
         if (res == 0) {
             Notify(tr("There was a problem opening %1 Data File: %2").arg(name, files[0]));
             return;
