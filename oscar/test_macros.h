@@ -37,6 +37,9 @@ To turn off the the test macros.
 #ifdef TEST_MACROS_ENABLED
 #include <QRegularExpression>
 #include <QFileInfo>
+#include <QDebug>
+#include <QDateTime>
+#include "SleepLib/schema.h"
 
 #define DEBUGI   qInfo().noquote() << "INFO;"
 #define DEBUGD   qInfo().noquote() << "DEBUG;"
