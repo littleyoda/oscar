@@ -241,7 +241,8 @@ void Statistics::adjustRange(QDate& start , QDate& last) {
     } else {
         last  = qMin(last ,p_profile->general->statReportDate()  );
     }
-    start = qMin(start,last);
+    start = qMax(start,p_profile->FirstDay());  // need if less than a years samples
+    start = qMin(start,last);   // insure start is always less than max. SHould be but???
     summaryInfo.update(start,last);
 }
 
@@ -1399,20 +1400,16 @@ QString Statistics::GenerateCPAPUsage()
             // should never get here.
             number_periods = 12;
         }
-        last = lastcpap;
-        first = lastcpap;
     } else if (p_profile->general->statReportMode() == STAT_MODE_STANDARD) {
         firstcpap = lastcpap.addYears(-1).addDays(1);
         adjustRange(firstcpap,lastcpap);
-        last = lastcpap;
-        first = lastcpap;
     } else if (p_profile->general->statReportMode() == STAT_MODE_RANGE) {
         firstcpap = p_profile->general->statReportRangeStart();
         lastcpap = p_profile->general->statReportRangeEnd();
         adjustRange(firstcpap,lastcpap);
-        first = firstcpap;
-        last  = lastcpap;
     }
+    last = lastcpap;
+    first = lastcpap;
     QList<Period> periods;
 
     bool skipsection = false;;
