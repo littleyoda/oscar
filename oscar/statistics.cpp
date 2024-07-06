@@ -108,7 +108,8 @@ QDataStream & operator>>(QDataStream & in, RXItem & rx)
     if (loader) {
         rx.machine = p_profile->lookupMachine(serial, loadername);
     } else {
-        qDebug() << "Bad machine object" << loadername << serial;
+        qDebug() << "Bad machine object" << loadername << serial << (void*)loader;
+
         rx.machine = nullptr;
     }
 
@@ -180,7 +181,9 @@ void Statistics::loadRXChanges()
         QList<QDate> toErase;
         for (auto ri = rxitems.begin(); ri != rxitems.end();++ri ) {
             RXItem rxitem = ri.value();
-            if (rxitem.machine==0) toErase.append(ri.key());
+            if (rxitem.machine==nullptr) {
+                toErase.append(ri.key());
+            }
         }
         for (auto date : toErase) {
             rxitems.remove(date) ;
@@ -339,6 +342,9 @@ void Statistics::updateRXChanges()
 
     // Read the cache from disk
     loadRXChanges();
+    if (rxitems.size() == 0) {
+        return;
+    }
     QMap<QDate, Day *>::iterator di;
 
     QMap<QDate, Day *>::iterator it;
@@ -560,6 +566,10 @@ void Statistics::updateRXChanges()
                 }
             }
         }
+        if (rxitems.size() == 0) {
+            return;
+        }
+
 
 
         if (fnd) continue; // already in rx list, move onto the next daylist entry

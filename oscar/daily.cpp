@@ -1114,9 +1114,13 @@ QString Daily::getSessionInformation(Day * day)
 
 QString Daily::getMachineSettings(Day * day) {
     QString html;
-
     Machine * cpap = day->machine(MT_CPAP);
     if (cpap && day->hasEnabledSessions(MT_CPAP)) {
+        CPAPLoader * loader = qobject_cast<CPAPLoader *>(cpap->loader());
+        if (!loader) {
+            htmlLsbSectionHeader(html,tr("DEVICE SETTINGS ERROR"),LSB_DEVICE_SETTINGS );
+            return html;
+        }
         htmlLsbSectionHeader(html,tr("Device Settings"),LSB_DEVICE_SETTINGS );
         if (!leftSideBarEnable[LSB_DEVICE_SETTINGS] ) {
             return html;
@@ -1138,8 +1142,6 @@ QString Daily::getMachineSettings(Day * day) {
             it = sess->settings.begin();
         }
         QMap<int, QString> first;
-
-        CPAPLoader * loader = qobject_cast<CPAPLoader *>(cpap->loader());
 
         ChannelID cpapmode = loader->CPAPModeChannel();
         schema::Channel & chan = schema::channel[cpapmode];

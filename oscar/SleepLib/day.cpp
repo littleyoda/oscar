@@ -1,7 +1,7 @@
 /* SleepLib Day Class Implementation
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -136,7 +136,7 @@ void Day::addSession(Session *s)
                  << "from machine" << s->machine()->serial() << "with first=0";
         return;
     }
-    
+
     for (auto & sess : sessions) {
         if (sess->session() == s->session() && sess->type() == s->type()) {
             // This usually indicates a problem in purging or cleanup somewhere,
@@ -854,7 +854,7 @@ ChannelID Day::getPressureChannelID() {
             return preferredID;
         }
     }
-    
+
     qDebug() << "No pressure channel for " << getCPAPModeStr();
     return NoChannel;
 }
@@ -1419,7 +1419,7 @@ void Day::removeMachine(Machine * mach)
     //
     // This has no functional use and can be removed when the data structures are cleaned up
     // with better encapsulation and fewer unnecessary references between each other.
-    
+
     QList<Session*> list = sessions;  // make a copy so the iterator doesn't get broken by removals
     for (auto & sess : list) {
         if (sess->machine() == mach) {
@@ -1430,7 +1430,7 @@ void Day::removeMachine(Machine * mach)
             removeSession(sess);
         }
     }
-    
+
     for (auto & m : machines.keys()) {
         if (machines[m] == mach) {
             // This indicates a problem internal to the Day class, since removeSession should remove
@@ -1452,6 +1452,7 @@ int Day::getCPAPMode()
     if (!mach) return 0;
 
     CPAPLoader * loader = qobject_cast<CPAPLoader *>(mach->loader());
+    if (!loader) return 0;
 
     ChannelID modechan = loader->CPAPModeChannel();
     */
@@ -1472,6 +1473,9 @@ QString Day::getCPAPModeStr()
     if (!mach) return STR_MessageBox_Error;
 
     CPAPLoader * loader = qobject_cast<CPAPLoader *>(mach->loader());
+    if (!loader) {
+        return QObject::tr("ERROR:NOT AVAILABLE"); //STR_MessageBox_Error;
+    }
 
     ChannelID modechan = loader->CPAPModeChannel();
 
@@ -1511,8 +1515,9 @@ QString Day::getPressureRelief()
     if (!mach) return STR_MessageBox_Error;
 
     CPAPLoader * loader = qobject_cast<CPAPLoader *>(mach->loader());
-
-    if (!loader) return STR_MessageBox_Error;
+    if (!loader) {
+        return QObject::tr("ERROR:NOT AVAILABLE"); //STR_MessageBox_Error;
+    }
 
     QString pr_str;
 
@@ -1633,7 +1638,7 @@ QString Day::getPressureSettings()
                 arg(validPressure(settings_max(CPAP_IPAPLo))).
                 arg(validPressure(settings_max(CPAP_IPAPHi))).
                 arg(units);
-        else 
+        else
             retStr = QObject::tr("EPAP %1-%2 IPAP %3-%4 (%5)").
                 arg(validPressure(settings_min(CPAP_EPAPLo))).
                 arg(validPressure(settings_min(CPAP_EPAPHi))).
