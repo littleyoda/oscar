@@ -242,6 +242,7 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, Profile *_profile) :
     ui->includeSerial->setChecked(AppSetting->includeSerial());
     ui->monochromePrinting->setChecked(AppSetting->monochromePrinting());
     ui->eventFlagSessionBar->setChecked(profile->appearance->eventFlagSessionBar());
+    ui->disableDailyGraphTitles->setChecked(AppSetting->disableDailyGraphTitles());
     ui->complianceHours->setValue(profile->cpap->complianceHours());
     ui->clinicalMode->setChecked(profile->cpap->clinicalMode());
     ui->clinicalTextEdit->setPlainText(clinicalHelp());
@@ -861,6 +862,7 @@ bool PreferencesDialog::Save()
     AppSetting->setIncludeSerial(ui->includeSerial->isChecked());
     AppSetting->setMonochromePrinting(ui->monochromePrinting->isChecked());
     p_profile->appearance->setEventFlagSessionBar(ui->eventFlagSessionBar->isChecked());
+    AppSetting->setDisableDailyGraphTitles(ui->disableDailyGraphTitles->isChecked());
 
     bool clicicalModeChanged = profile->cpap->clinicalMode() != ui->clinicalMode->isChecked() ;
     p_profile->cpap->setClinicalMode(ui->clinicalMode->isChecked());

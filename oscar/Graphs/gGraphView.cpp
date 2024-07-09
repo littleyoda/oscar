@@ -1415,7 +1415,14 @@ bool gGraphView::renderGraphs(QPainter &painter)
     float pinned_height = 0; // pixel height total
     int pinned_graphs = 0; // count
 
+    bool showTitle=!AppSetting->disableDailyGraphTitles();
+    bool dailyGraph= mainwin->getDaily()->graphView() == this;
     for (auto & g : m_graphs) {
+        if (dailyGraph) {
+            // suppress graph titles in daily graphs based on user preferences
+            g->setShowTitle(showTitle) ;
+        }
+
         int minh = g->minHeight();
         if (g->height() < minh) {
             g->setHeight(minh);

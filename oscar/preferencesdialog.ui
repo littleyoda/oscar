@@ -2904,6 +2904,16 @@ Try it and see if you like it.</string>
                 </widget>
                </item>
                <item>
+                <widget class="QCheckBox" name="disableDailyGraphTitles">
+                 <property name="toolTip">
+                  <string>Needed for high Resolution displays where title overwrites labels</string>
+                 </property>
+                 <property name="text">
+                  <string>Disable daily graph titles</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="highResolution">
                  <property name="toolTip">
                   <string> Enables High Resoluton Mode. Changes take effect when Oscar is restarted.</string>

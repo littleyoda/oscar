@@ -48,6 +48,7 @@ const QString STR_AS_AllowYAxisScaling = "AllowYAxisScaling";
 const QString STR_AS_IncludeSerial = "IncludeSerial";
 const QString STR_AS_MonochromePrinting = "PrintBW";
 //const QString STR_AS_EventFlagSessionBar = "EventFlagSessionBar";
+const QString STR_AS_DisableDailyGraphTitles = "DisableDailyGraphTitles";
 const QString STR_AS_GraphTooltips = "GraphTooltips";
 const QString STR_AS_LineThickness = "LineThickness";
 const QString STR_AS_LineCursorMode = "LineCursorMode";
@@ -141,6 +142,7 @@ public:
   //! \brief Whether to print reports in black and white, which can be more legible on non-color printers
   bool monochromePrinting() const { return getPref(STR_AS_MonochromePrinting).toBool(); }
   //bool eventFlagSessionBar() const { return getPref(STR_AS_EventFlagSessionBar).toBool(); }
+  bool disableDailyGraphTitles() const { return getPref(STR_AS_DisableDailyGraphTitles).toBool(); }
   //! \Allow disabling of sessions
   //! \brief Whether to show graph tooltips
   inline bool graphTooltips() const { return m_graphTooltips; }
@@ -203,6 +205,7 @@ public:
   //! \brief Sets whether to print reports in black and white, which can be more legible on non-color printers
   void setMonochromePrinting(bool b) { setPref(STR_AS_MonochromePrinting, b); }
   // void setEventFlagSessionBar(bool b) { setPref(STR_AS_EventFlagSessionBar, b); }
+  void setDisableDailyGraphTitles(bool b) { setPref(STR_AS_DisableDailyGraphTitles, b); }
   //! \brief Sets whether to allow double clicking on Y-Axis labels to change vertical scaling mode
   void setGraphTooltips(bool b) { setPref(STR_AS_GraphTooltips, m_graphTooltips=b); }
   //! \brief Sets the type of overlay flags (which are displayed over the Flow Waveform)
