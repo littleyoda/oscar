@@ -6,7 +6,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#include "NotifyMessageBox.h"
+#include "notifyMessageBox.h"
 
 #define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
