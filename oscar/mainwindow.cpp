@@ -45,6 +45,7 @@
 #include "version.h"
 #include "SleepLib/appsettings.h"       // defines for REMSTAR_M_SUPPORT
 #include "SleepLib/journal.h"
+#include "notifyMessageBox.h"
 
 
 // Custom loaders that don't autoscan..
@@ -328,11 +329,11 @@ void MainWindow::EnableTabs(bool b)
 
 void MainWindow::Notify(QString s, QString title, int ms)
 {
+    QString msg = s;
     if (title.isEmpty()) {
         title = STR_TR_OSCAR + " " + getVersion().displayString();
     }
-    if (systray) {
-        QString msg = s;
+    if (systray && !AppSetting->notifyMessagBoxOption()) {
 
 #ifdef Q_OS_UNIX
         // GNOME3's systray hides the last line of the displayed Qt message.
@@ -346,6 +347,8 @@ void MainWindow::Notify(QString s, QString title, int ms)
 #endif
 
         systray->showMessage(title, msg, QSystemTrayIcon::Information, ms);
+    } else {
+        createNotifyMessageBox(this, title , msg, (ms+999)/1000);
     }
 }
 
@@ -2326,8 +2329,11 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
         if (res < 0) {
             // res is used as an index to an array and will cause a crash if not handled.
             // Negative numbers indicate a problem with the file format or the file does not exist.
-            QMessageBox::information(this, STR_MessageBox_Information,
-                tr("There was a problem parsing %1 Data File: %2").arg(name, files[0]),QMessageBox::Ok);
+            //QString fileName = QFileInfo(files[0]).fileName();
+            QString msg = QString(tr("There was a problem parsing %1 \nData File: %2") 
+                .arg(name, QFileInfo( files[0]).fileName() ) );
+            //QString msg = QString(tr("There was a problem parsing %1 \nData File: %2") .arg(name, fileName) );
+            Notify(msg,"",20*1000 /* convert sec to ms */);
         } else
         if (res == 0) {
             Notify(tr("There was a problem opening %1 Data File: %2").arg(name, files[0]));
