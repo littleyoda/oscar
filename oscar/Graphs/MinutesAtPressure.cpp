@@ -625,6 +625,10 @@ void RecalcMAP::updateTimes(PressureInfo & info) {
 
 void RecalcMAP:: setSelectionRange(gGraph* graph) {
     graph->graphView()->GetXBounds(minTime, maxTime);
+    // changes suggested by grnbrg
+    qint64 clockdrift = qint64(p_profile->cpap->clockDrift()) * 1000L;
+    minTime -= clockdrift;
+    maxTime -= clockdrift;
 }
 
 void RecalcMAP::run()
