@@ -138,14 +138,6 @@ class MainWindow : public QMainWindow
 
     void updateOverview();
 
-    /*! \fn void RestartApplication(bool force_login=false);
-        \brief Closes down OSCAR and restarts it
-        \param bool force_login
-
-        If force_login is set, it will return to the login menu even if it's set to skip
-        */
-    void RestartApplication(bool force_login = false, QString cmdline = QString());
-
     void JumpDaily();
     void JumpOverview();
     void JumpStatistics();
@@ -179,6 +171,14 @@ class MainWindow : public QMainWindow
     //! \brief Recalculate all event summaries and flags
     void doReprocessEvents();
     void doRecompressEvents();
+    /*! \fn void RestartApplication(bool force_login=false);
+        \brief Closes down OSCAR and restarts it
+        \param bool force_login
+
+        If force_login is set, it will return to the login menu even if it's set to skip
+        allow timer to restart application.
+        */
+    void RestartApplication(bool force_login = false, QString cmdline = QString());
 
 
   protected:

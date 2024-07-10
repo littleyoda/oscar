@@ -1644,6 +1644,7 @@ void MainWindow::reloadProfile()
 
 void MainWindow::RestartApplication(bool force_login, QString cmdline)
 {
+    qDebug() << "Restarting OSCAR";
     CloseProfile();
     p_pref->Save();
 

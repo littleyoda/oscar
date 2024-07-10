@@ -401,7 +401,7 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < args.size(); i++) {
         if ((args[i] == "--language") || (args[i] == "--l") ) {
             settings.setValue(LangSetting,"");
-        } else if ( (args[i] == "-l") || (args[i] == "-nop")){
+        } else if ( (args[i] == "-l") || (args[i] == "-nop") || (args[i] == "") ){
             // do nothing. internal calls that current don't have any functions in main.
         } else if (args[i] == "-p") {
             QThread::msleep(1000);
@@ -409,7 +409,8 @@ int main(int argc, char *argv[]) {
             if ((i+1) < args.size())
                 load_profile = args[++i];
             else {
-                optionExit(1,"Missing argument to --profile");
+                // Just view all profiles.
+                load_profile = " ";
             }
         } else if (args[i] == "--datadir") { // mltam's idea
             QString datadir, datadirwas ;
@@ -435,7 +436,7 @@ int main(int argc, char *argv[]) {
         } else if (QString(args[i]).contains("help",Qt::CaseInsensitive)) {
             optionExit(0,QString(""));
         } else {
-            optionExit(3,QString("Invalid Argument. %1").arg(args[i]));
+            optionExit(3,QString("Invalid Argument: '%1'").arg(args[i]));
         }
 
     }   // end of for args loop
