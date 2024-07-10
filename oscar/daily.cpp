@@ -1114,6 +1114,7 @@ QString Daily::getSessionInformation(Day * day)
 
 QString Daily::getMachineSettings(Day * day) {
     QString html;
+
     Machine * cpap = day->machine(MT_CPAP);
     if (cpap && day->hasEnabledSessions(MT_CPAP)) {
         CPAPLoader * loader = qobject_cast<CPAPLoader *>(cpap->loader());
@@ -1821,7 +1822,6 @@ void Daily::Load(QDate date)
         mode=(CPAPMode)(int)day->settings_max(CPAP_Mode);
 
         modestr=schema::channel[CPAP_Mode].m_options[mode];
-
         if (hours>0) {
             htmlLeftAHI= getAHI(day,isBrick);
 
@@ -1861,16 +1861,34 @@ void Daily::Load(QDate date)
             htmlLeftNoHours+="</table><hr/>\n";
         }
 
-    } // if (!CPAP)
-    else htmlLeftSleepTime = getSleepTime(day);
+    } else { // if (!CPAP)
+
+        htmlLeftSleepTime = getSleepTime(day);
+    }
+    if (day) {
+        htmlLeftOximeter = getOximeterInformation(day);
+        htmlLeftMachineSettings = getMachineSettings(day);
+        htmlLeftSessionInfo= getSessionInformation(day);
+    }
 
     if ((cpap && !isBrick && (day->hours()>0)) || oxi || posit) {
+
+        if ( (!cpap) && (!isBrick) ) {
+            // add message when there is no cpap data but there exists oximeter data.
+            QString  msg = tr("No CPAP data is available for this day");
+            QString  beg = "<table cellspacing=0 cellpadding=0 border=0 width='100%'>"
+            "<tr><td colspan=5 bgcolor='#89abcd' align=center><p title=''> &nbsp; <b><font size=+0 color=white>";
+            htmlLeftAHI  = QString("%1 %2 </b></td></tr></table>").arg(beg).arg(msg);
+        }
 
         htmlLeftStatistics = getStatisticsInfo(day);
 
     } else {
         if (cpap && day->hours(MT_CPAP)<0.0000001) {
         } else if (!isBrick) {
+            htmlLeftAHI.clear();  // clear AHI (no cpap data) msg when there is no oximeter data
+            htmlLeftSessionInfo.clear(); // clear session info
+
             htmlLeftStatistics ="<table cellspacing=0 cellpadding=0 border=0 height=100% width=100%>";
             htmlLeftStatistics+="<tr height=25%><td align=center></td></tr>";
             htmlLeftStatistics+="<tr><td align=center><font size='+3'>"+tr("\"Nothing's here!\"")+"</font></td></tr>";
@@ -1881,11 +1899,6 @@ void Daily::Load(QDate date)
             htmlLeftStatistics+="</table>\n";
         }
 
-    }
-    if (day) {
-        htmlLeftOximeter = getOximeterInformation(day);
-        htmlLeftMachineSettings = getMachineSettings(day);
-        htmlLeftSessionInfo= getSessionInformation(day);
     }
 
     htmlLeftFooter ="</body></html>";
