@@ -2439,7 +2439,7 @@ void Daily::on_evViewSlider_valueChanged(int value)
     GraphView->SetXBounds(st,et);
 }
 
-void Daily::on_bookmarkTable_itemClicked(QTableWidgetItem *item)
+void Daily::on_bookmarkTable_currentItemChanged(QTableWidgetItem *item, QTableWidgetItem *) 
 {
     int row=item->row();
     qint64 st,et;

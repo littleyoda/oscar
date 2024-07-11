@@ -232,11 +232,13 @@ private slots:
         */
     void on_removeBookmarkButton_clicked();
 
-    /*! \fn on_bookmarkTable_itemClicked(QTableWidgetItem *item);
+    /*! \fn on_bookmarkTable_currentItemChanged(QTableWidgetItem *item, QTableWidgetItem *previous)
         \brief Called when a bookmark has been selected.. Zooms in on the area
         \param QTableWidgetItem *item
+        \param QTableWidgetItem *previous
         */
-    void on_bookmarkTable_itemClicked(QTableWidgetItem *item);
+   
+   void on_bookmarkTable_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
 
     /*! \fn on_bookmarkTable_itemChanged(QTableWidgetItem *item);
         \brief Called when bookmarks have been altered.. Saves the bookmark list to Journal object.
