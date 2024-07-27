@@ -462,7 +462,6 @@ void RecalcMAP::updateSpanData(int &currentLoc, int & currentEL,int& currentData
 void RecalcMAP::updateEventsChannel(Session*sess,ChannelID chanId, QVector<int> &dataArray, PressureInfo & info )
 {
     this->chanId=chanId;
-    int qtyEvents=0;
     EventDataType duration = 0, gain;
 
     qint64 t , start;
@@ -502,7 +501,6 @@ void RecalcMAP::updateEventsChannel(Session*sess,ChannelID chanId, QVector<int> 
                 if (ts>maxx) continue;
                 if (ts<minx) ts=minx;
                 if (t>maxx) t=maxx;
-                qtyEvents++;
                 updateSpanData(currentLoc ,  currentEL , currentData , ts , t , dataArray , info ) ;
             } else {
                 if (t>maxx) continue;

@@ -533,13 +533,11 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
     progress.setProgressMax(graphs.size());
 
     int page = 1;
-    int gcnt = 0;
 
     for (int i = 0; i < graphs.size(); i++) {
 
         if ((top + full_graph_height + normal_height) > virt_height) {
             top = 0;
-            gcnt = 0;
             first = true;
 
             if (page > pages) {
@@ -615,8 +613,6 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
         }
 
         top += full_graph_height;
-
-        gcnt++;
 
         progress.setProgressValue(i);
         QApplication::processEvents();

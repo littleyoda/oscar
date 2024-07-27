@@ -388,9 +388,7 @@ bool Journal::RestoreJournal(QString filename)
     QDate first = p_profile->FirstDay();
     QDate last = p_profile->LastDay();
     QDate current = QDate::currentDate();
-    int error=0;
-    int ignored=0;
-    int used=0;
+    //int used=0;
     for (int idx=0 ; idx < days.size() ; idx++) {
         QDomElement dayElement = days.at(idx).toElement();
 
@@ -401,23 +399,19 @@ bool Journal::RestoreJournal(QString filename)
             date = newdate;
         }
         if (!date.isValid()) {
-            error++ ;
             continue;
         }
         if (date < first) {
-            ignored++ ;
             continue;
         }
         if (date > last) {
-            ignored++ ;
             continue;
         }
         if (date > current) {
-            error++ ;
             continue;
         }
         if ( RestoreDay(dayElement,date,filename) ) {
-           used++;
+           //used++;
         }
     }
     double user_height_cm  = p_profile->user->height();

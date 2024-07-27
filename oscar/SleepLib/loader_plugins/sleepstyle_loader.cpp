@@ -688,6 +688,8 @@ bool SleepStyleLoader::OpenSummary(Machine *mach, const QString & filename)
         if (ts == 0xffffffff) {
 #ifdef DEBUGSS
             qDebug() << "SS SUM 0xffffffff terminator found at block" << nblock;
+#else
+            Q_UNUSED(nblock);
 #endif
             break;
         }
@@ -996,6 +998,8 @@ bool SleepStyleLoader::OpenDetail(Machine *mach, const QString & filename)
 
 #ifdef DEBUGSS
         qDebug() << "SS DET pressure events" << PR->count() << "prSessVount" << PRSessCount << "beginning" << QDateTime::fromSecsSinceEpoch(ti/1000).toString("MM/dd/yyyy hh:mm:ss");
+#else
+            Q_UNUSED(PRSessCount);
 #endif
         // Update indexes, process waveform and perform flagging
         sess->setSummaryOnly(false);

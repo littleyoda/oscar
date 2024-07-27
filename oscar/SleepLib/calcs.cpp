@@ -1,7 +1,7 @@
 /* Custom CPAP/Oximetry Calculations Header
  *
  * Copyright (c) 2019-2024 The OSCAR Team
- * Copyright (c) 2011-2018 Mark Watkins 
+ * Copyright (c) 2011-2018 Mark Watkins
  *
  * This file is subject to the terms and conditions of the GNU General Public
  * License. See the file COPYING in the main directory of the source code
@@ -1498,7 +1498,7 @@ int calcSPO2Drop(Session *session)
     //qint64 rtime[ringsize]={0};
     //int rp=0;
     int min;
-    int cnt = 0;
+    // int cnt = 0;
     // tmp = 0;
 
     qint64 start = 0;
@@ -1520,7 +1520,7 @@ int calcSPO2Drop(Session *session)
             if (time > start + 3600000) { break; } // just look at the first hour
 
             // tmp += val;
-            cnt++;
+            // cnt++;
         }
     }
 
@@ -1551,7 +1551,8 @@ int calcSPO2Drop(Session *session)
             if (!current) { continue; }
 
             time = el->time(i);
-            /*ring[rp]=val;
+            /*
+            ring[rp]=val;
             rtime[rp]=time;
             rp++;
             rp=rp % ringsize;
@@ -1572,7 +1573,8 @@ int calcSPO2Drop(Session *session)
             if (!cnt) {
                 unsigned j=abs((rp-1) % ringsize);
                 tmp=(ring[j]+val)/2;
-            } else tmp/=EventDataType(cnt); */
+            } else tmp/=EventDataType(cnt);
+            */
 
             val = baseline;
             lastt = 0;

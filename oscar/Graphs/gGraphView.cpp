@@ -1413,7 +1413,6 @@ bool gGraphView::renderGraphs(QPainter &painter)
     // Calculate the height of pinned graphs
 
     float pinned_height = 0; // pixel height total
-    int pinned_graphs = 0; // count
 
     bool showTitle=!AppSetting->disableDailyGraphTitles();
     bool dailyGraph= mainwin->getDaily()->graphView() == this;
@@ -1435,7 +1434,6 @@ bool gGraphView::renderGraphs(QPainter &painter)
 
         h = g->height() * m_scaleY;
         pinned_height += h + graphSpacer;
-        pinned_graphs++;
     }
 
     py += pinned_height; // start drawing at the end of pinned space
