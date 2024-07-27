@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLEDoff
+#define TEST_MACROS_ENABLED
 #include <test_macros.h>
 
 #include <QHostInfo>
@@ -45,6 +45,7 @@
 #include "version.h"
 #include "SleepLib/appsettings.h"       // defines for REMSTAR_M_SUPPORT
 #include "SleepLib/journal.h"
+#include "SleepLib/common.h"
 #include "notifyMessageBox.h"
 
 
@@ -2273,9 +2274,34 @@ void MainWindow::on_actionChange_Data_Folder_triggered()
     RestartApplication(false, "-d");
 }
 
+QString /*MainWindow::*/profilePath(QString folderProfileName ) {
+    QString folderName;
+    if (p_profile->contains(folderProfileName)) {
+        folderName = (*p_profile)[STR_PREF_LastOximetryPath].toString();
+        QFileInfo fi(folderName);
+        if (fi.exists() && fi.isDir()) return folderName;
+    }
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+    if (paths.size()>1) folderName = paths[0];
+    return folderName;
+}
+
+void /*MainWindow::*/saveProfilePath(QString folderProfileName , QString pathName) {
+        DEBUGFC Q(pathName);
+        (*p_profile)[folderProfileName] = pathName;
+}
+
 void MainWindow::importNonCPAP(MachineLoader &loader)
 {
+    // get save location from profile.
+    QDir folder = QDir(profilePath(STR_PREF_LastOximetryPath));
+
     QFileDialog w;
+
+    if (folder.exists() ) {
+        DEBUGFC Q(folder);
+        w.setDirectory(folder);
+    }
     w.setFileMode(QFileDialog::ExistingFiles);
     w.setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     w.setOption(QFileDialog::ShowDirsOnly, false);
@@ -2289,6 +2315,7 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
     ProgressDialog progress(this);
 
     if (w.exec() == QFileDialog::Accepted) {
+        saveProfilePath(STR_PREF_LastOximetryPath,w.directory().absolutePath());
         QStringList files = w.selectedFiles();
         int size = files.size();
         if (size > 1) {
@@ -2620,27 +2647,19 @@ void MainWindow::on_actionShowPersonalData_toggled(bool visible)
     }
 }
 
-#include "SleepLib/journal.h"
 
 void MainWindow::on_actionImport_Journal_triggered()
 {
-    QString folder;
-	if (p_profile->contains(STR_PREF_LastJournalPath)) {
-		folder = (*p_profile)[STR_PREF_LastJournalPath].toString();
-	}
-    QFileInfo fi(folder);
-	if (!fi.isDir() ) {
-        folder = QStandardPaths::StandardLocation(QStandardPaths::DocumentsLocation);
-	}
+
     QString filename = QFileDialog::getOpenFileName(this,
             tr("Choose where to read journal"),
-            folder,
+            profilePath(STR_PREF_LastJournalPath),
             tr("XML Files (*.xml)"));
     if (Journal::RestoreJournal(filename) ) {
 		QFileInfo fi(filename);
 		QDir dir = fi.dir();
 		if (dir.exists() ) {
-			(*p_profile)[STR_PREF_LastJournalPath] = dir.absolutePath();
+            saveProfilePath(STR_PREF_LastJournalPath,dir.absolutePath());
 		}
 	}
 }
