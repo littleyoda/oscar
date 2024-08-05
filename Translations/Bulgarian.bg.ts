@@ -4,10 +4,6 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>&amp;About</source>
-        <translation type="vanished">За &amp;приложение</translation>
-    </message>
-    <message>
         <location filename="../oscar/aboutdialog.ui" line="35"/>
         <source>About</source>
         <translation type="unfinished"></translation>
@@ -291,317 +287,332 @@
         <translation>Премахни отметка</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="297"/>
+        <location filename="../oscar/daily.cpp" line="300"/>
         <source>Breakdown</source>
         <translation>Класифициране</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="297"/>
+        <location filename="../oscar/daily.cpp" line="300"/>
         <source>events</source>
         <translation>събития</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="655"/>
+        <location filename="../oscar/daily.cpp" line="658"/>
         <source>No %1 events are recorded this day</source>
         <translation>Няма %1 събития записани за този ден</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="773"/>
+        <location filename="../oscar/daily.cpp" line="779"/>
         <source>%1 event</source>
         <translation>%1 събитие</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="774"/>
+        <location filename="../oscar/daily.cpp" line="780"/>
         <source>%1 events</source>
         <translation>%1 събития</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="309"/>
+        <location filename="../oscar/daily.cpp" line="312"/>
         <source>UF1</source>
         <translation>UF1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="310"/>
+        <location filename="../oscar/daily.cpp" line="313"/>
         <source>UF2</source>
         <translation>UF2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="817"/>
+        <location filename="../oscar/daily.cpp" line="823"/>
         <source>Session Start Times</source>
         <translation>Начала на сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="818"/>
+        <location filename="../oscar/daily.cpp" line="824"/>
         <source>Session End Times</source>
         <translation>Край на сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1047"/>
+        <location filename="../oscar/daily.cpp" line="1052"/>
         <source>Duration</source>
         <translation>Продължителност</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1033"/>
+        <location filename="../oscar/daily.cpp" line="1038"/>
         <source>Position Sensor Sessions</source>
         <translation>Позиционен сензор сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1038"/>
+        <location filename="../oscar/daily.cpp" line="1043"/>
         <source>Unknown Session</source>
         <translation>Непознати сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1411"/>
+        <location filename="../oscar/daily.cpp" line="1395"/>
         <source>Total time in apnea</source>
         <translation>Общо време в апнея</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1421"/>
+        <location filename="../oscar/daily.cpp" line="1405"/>
         <source>Time over leak redline</source>
         <translation>Общо време с теч на въздух над граница</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1496"/>
+        <location filename="../oscar/daily.cpp" line="1634"/>
         <source>Event Breakdown</source>
         <translation>Класифициране на събития</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1509"/>
+        <location filename="../oscar/daily.cpp" line="1660"/>
         <source>Unable to display Pie Chart on this system</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1775"/>
+        <location filename="../oscar/daily.cpp" line="1847"/>
         <source>Sessions all off!</source>
         <translation>Всички сесии са изключени!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1777"/>
+        <location filename="../oscar/daily.cpp" line="1849"/>
         <source>Sessions exist for this day but are switched off.</source>
         <translation>Съществуват сесии за този ден, но са изключени.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1780"/>
+        <location filename="../oscar/daily.cpp" line="1852"/>
         <source>Impossibly short session</source>
         <translation>Невъзможно къса сесия</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1781"/>
+        <location filename="../oscar/daily.cpp" line="1853"/>
         <source>Zero hours??</source>
         <translation>Нула часа??</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1786"/>
+        <location filename="../oscar/daily.cpp" line="1858"/>
         <source>Complain to your Equipment Provider!</source>
         <translation>Оплачете се на този който ви го е препоръчал/продал!</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1321"/>
+        <location filename="../oscar/daily.cpp" line="1301"/>
         <source>Statistics</source>
         <translation>Статистики</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="189"/>
+        <location filename="../oscar/daily.cpp" line="192"/>
         <source>Details</source>
         <translation>Детайли</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="369"/>
+        <location filename="../oscar/daily.cpp" line="372"/>
         <source>Time at Pressure</source>
         <translation>Време с налягане</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="570"/>
+        <location filename="../oscar/daily.cpp" line="573"/>
         <source> Disabling Sessions requires Permissive Mode be set in OSCAR Preferences in the Clinical tab.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1067"/>
+        <location filename="../oscar/daily.cpp" line="1072"/>
         <source>Click to %1 this session.</source>
         <translation>Натисни за да се  %1 тази сесия.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1067"/>
+        <location filename="../oscar/daily.cpp" line="1072"/>
         <source>disable</source>
         <translation>изключи</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1067"/>
+        <location filename="../oscar/daily.cpp" line="1072"/>
         <source>enable</source>
         <translation>включи</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1083"/>
+        <location filename="../oscar/daily.cpp" line="1088"/>
         <source>%1 Session #%2</source>
         <translation>%1 Сесия #%2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1084"/>
+        <location filename="../oscar/daily.cpp" line="1089"/>
         <source>%1h %2m %3s</source>
         <translation>%1h %2m %3s</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1115"/>
+        <location filename="../oscar/daily.cpp" line="1122"/>
+        <source>DEVICE SETTINGS ERROR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="1125"/>
         <source>Device Settings</source>
         <translation>Настройки за апарата</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1118"/>
+        <location filename="../oscar/daily.cpp" line="1131"/>
         <source>&lt;b&gt;Please Note:&lt;/b&gt; All settings shown below are based on assumptions that nothing has changed since previous days.</source>
         <translation>&lt;b&gt;Моля, Забележете:&lt;/b&gt;Всичките настройки, които са показани надолу, се основават на предположения, че нищо не се е променило от предишните дни.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1248"/>
+        <location filename="../oscar/daily.cpp" line="1223"/>
         <source>Oximeter Information</source>
         <translation>Информация за оксиметър</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1253"/>
+        <location filename="../oscar/daily.cpp" line="1232"/>
         <source>SpO2 Desaturations</source>
         <translation>SpO2 десатурации</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1254"/>
+        <location filename="../oscar/daily.cpp" line="1233"/>
         <source>Pulse Change events</source>
         <translation>Събития промяна на пулс</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1255"/>
+        <location filename="../oscar/daily.cpp" line="1234"/>
         <source>SpO2 Baseline Used</source>
         <translation>Изплзвана базова линия SpO2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1284"/>
+        <location filename="../oscar/daily.cpp" line="1265"/>
         <source>(Mode and Pressure settings missing; yesterday&apos;s shown.)</source>
         <translation>(липсват настройките на Режима и Налягането; показват се вчерашните.)</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1472"/>
+        <location filename="../oscar/daily.cpp" line="1456"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="1465"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1472"/>
+        <location filename="../oscar/daily.cpp" line="1465"/>
         <source>End</source>
         <translation>Край</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2354"/>
+        <location filename="../oscar/daily.cpp" line="1878"/>
+        <source>No CPAP data is available for this day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/daily.cpp" line="2476"/>
         <source>This bookmark is in a currently disabled area..</source>
         <translation>Тази отметка се намира в зона, която в момента е деактивирана..</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2483"/>
+        <location filename="../oscar/daily.cpp" line="2598"/>
         <source>No Value Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2485"/>
+        <location filename="../oscar/daily.cpp" line="2600"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1004"/>
+        <location filename="../oscar/daily.cpp" line="1007"/>
         <source>Session Information</source>
         <translation>Информация за сесия</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="570"/>
+        <location filename="../oscar/daily.cpp" line="573"/>
         <source>Clinical Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1024"/>
+        <location filename="../oscar/daily.cpp" line="1029"/>
         <source>CPAP Sessions</source>
         <translation>CPAP сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1027"/>
+        <location filename="../oscar/daily.cpp" line="1032"/>
         <source>Oximetry Sessions</source>
         <translation>Оксиметрични сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1030"/>
+        <location filename="../oscar/daily.cpp" line="1035"/>
         <source>Sleep Stage Sessions</source>
         <translation>Сесии фази на сън</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1275"/>
+        <location filename="../oscar/daily.cpp" line="1256"/>
         <source>Model %1 - %2</source>
         <translation>Модел %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1280"/>
+        <location filename="../oscar/daily.cpp" line="1261"/>
         <source>PAP Mode: %1</source>
         <translation>PAP оперативен режим: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1401"/>
+        <location filename="../oscar/daily.cpp" line="1385"/>
         <source>This day just contains summary data, only limited information is available.</source>
         <translation>Този ден съдържа само обобщаващи данни, а наличната информация е ограничена.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1427"/>
+        <location filename="../oscar/daily.cpp" line="1411"/>
         <source>Total ramp time</source>
         <translation>Общо рампинг време</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1431"/>
+        <location filename="../oscar/daily.cpp" line="1415"/>
         <source>Time outside of ramp</source>
         <translation>Време извън рампинг</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1699"/>
+        <location filename="../oscar/daily.cpp" line="1511"/>
         <source>This CPAP device does NOT record detailed data</source>
         <translation>Този CPAP апарат не записва подробни данни</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1784"/>
+        <location filename="../oscar/daily.cpp" line="1856"/>
         <source>no data :(</source>
         <translation>няма данни :(</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1785"/>
+        <location filename="../oscar/daily.cpp" line="1857"/>
         <source>Sorry, this device only provides compliance data.</source>
         <translation>За съжаление, апаратът предоставя само данни за съответствие.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1804"/>
+        <location filename="../oscar/daily.cpp" line="1894"/>
         <source>&quot;Nothing&apos;s here!&quot;</source>
         <translation>&quot;Няма нищо тук!&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="1807"/>
+        <location filename="../oscar/daily.cpp" line="1897"/>
         <source>No data is available for this day.</source>
         <translation>Няма налични данни за този ден.</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2060"/>
+        <location filename="../oscar/daily.cpp" line="2181"/>
         <source>Pick a Colour</source>
         <translation>Избери цвят</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2397"/>
+        <location filename="../oscar/daily.cpp" line="2519"/>
         <source>Bookmark at %1</source>
         <translation>Отметка в %1</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.h" line="148"/>
+        <location filename="../oscar/daily.h" line="150"/>
         <source>Hide All Events</source>
         <translation type="unfinished">Скрий всички събития</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.h" line="149"/>
+        <location filename="../oscar/daily.h" line="151"/>
         <source>Show All Events</source>
         <translation type="unfinished">Покажи всички събития</translation>
     </message>
     <message>
-        <location filename="../oscar/daily.h" line="150"/>
+        <location filename="../oscar/daily.h" line="152"/>
         <source>Hide All Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.h" line="151"/>
+        <location filename="../oscar/daily.h" line="153"/>
         <source>Show All Graphs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -609,353 +620,369 @@
 <context>
     <name>DailySearchTab</name>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="273"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="274"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1198"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1203"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1222"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1227"/>
         <source>Bookmark
 Jumps to Date&apos;s Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1445"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1652"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1469"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1676"/>
         <source>Start Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="327"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="328"/>
         <source>DATE
 Jumps to Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="272"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="273"/>
         <source>Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="496"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="473"/>
         <source>Notes</source>
         <translation type="unfinished">Бележки</translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="497"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="474"/>
         <source>Notes containing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="498"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="475"/>
         <source>Bookmarks</source>
         <translation type="unfinished">Отметки</translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="499"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="476"/>
         <source>Bookmarks containing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="500"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="477"/>
         <source>AHI </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="501"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="478"/>
         <source>Daily Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="502"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="479"/>
         <source>Session Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="503"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="480"/>
         <source>Days Skipped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="504"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="481"/>
         <source>Apnea Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="507"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="484"/>
         <source>Disabled Sessions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="509"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="486"/>
         <source>Number of Sessions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1334"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1358"/>
         <source>Click HERE to close Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1339"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1363"/>
         <source>Help</source>
         <translation type="unfinished">Помощ</translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1187"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1206"/>
         <source>Number Disabled Session
 Jumps to Date&apos;s Details </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1193"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1209"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1217"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1233"/>
         <source>Note
 Jumps to Date&apos;s Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1215"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1239"/>
         <source>AHI
 Jumps to Date&apos;s Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1218"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1242"/>
         <source> EventsPerHour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1228"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1252"/>
         <source>Set of Apnea:Length
 Jumps to Date&apos;s Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1234"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1385"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1258"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1409"/>
         <source> Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1237"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1261"/>
         <source>Session Duration
 Jumps to Date&apos;s Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1241"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1390"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1265"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1414"/>
         <source> Minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1246"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1270"/>
         <source>Number of Sessions
 Jumps to Date&apos;s Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1251"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1275"/>
         <source> Sessions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1254"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1278"/>
         <source>Daily Duration
 Jumps to Date&apos;s Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1260"/>
-        <location filename="../oscar/dailySearchTab.cpp" line="1380"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1284"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1404"/>
         <source> Hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1264"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1288"/>
         <source>Number of events
 Jumps to Date&apos;s Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1268"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1292"/>
         <source> Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="578"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="558"/>
         <source>Continue Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="522"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="472"/>
+        <source>Journal</source>
+        <translation type="unfinished">Журнал</translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="503"/>
         <source>All Apnea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="586"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="566"/>
         <source>End of Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="594"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="574"/>
         <source>No Matches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1276"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="866"/>
+        <source>Empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1212"/>
+        <source>JUmps
+Jumps to Date&apos;s Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/dailySearchTab.cpp" line="1300"/>
         <source>add another match?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1580"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1604"/>
         <source> Skip:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1581"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1605"/>
         <source>%1/%2%3 days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1584"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1608"/>
         <source>Found %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1602"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1626"/>
         <source>File errors:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1691"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1715"/>
         <source>Finds days that match specified criteria.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1692"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1716"/>
         <source>  Searches from last day to first day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1693"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1717"/>
         <source>  Skips Days with no graphing data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1695"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1719"/>
         <source>First click on Match Button then select topic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1696"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1720"/>
         <source>  Then click on the operation to modify it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1697"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1721"/>
         <source>  or update the value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1699"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1723"/>
         <source>Topics without operations will automatically start.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1701"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1725"/>
         <source>Compare Operations: numberic or character. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1702"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1726"/>
         <source>  Numberic  Operations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1703"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1727"/>
         <source>  Character Operations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1705"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1729"/>
         <source>Summary Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1706"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1730"/>
         <source>  Left:Summary - Number of Day searched</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1707"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1731"/>
         <source>  Center:Number of Items Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1708"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1732"/>
         <source>  Right:Minimum/Maximum for item searched</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1710"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1734"/>
         <source>Result Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1711"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1735"/>
         <source>  Column One: Date of match. Click selects date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1712"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1736"/>
         <source>  Column two: Information. Click selects date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1713"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1737"/>
         <source>    Then Jumps the appropiate tab.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1715"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1739"/>
         <source>Wildcard Pattern Matching:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1716"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1740"/>
         <source>  Wildcards use 3 characters:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1717"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1741"/>
         <source>  Asterisk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1718"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1742"/>
         <source>  Question Mark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1719"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1743"/>
         <source>  Backslash.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1720"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1744"/>
         <source>  Asterisk matches any number of characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1721"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1745"/>
         <source>  Question Mark matches a single character.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/dailySearchTab.cpp" line="1722"/>
+        <location filename="../oscar/dailySearchTab.cpp" line="1746"/>
         <source>  Backslash matches next character.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1304,10 +1331,6 @@ Hint: Change the start date first</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>&amp;Statistics</source>
-        <translation type="vanished">&amp;Статистики</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="561"/>
         <source>Report Mode</source>
         <translation>Режим на отчет</translation>
@@ -1353,107 +1376,112 @@ Hint: Change the start date first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2584"/>
+        <location filename="../oscar/mainwindow.ui" line="2585"/>
         <source>View Welcome</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2609"/>
+        <location filename="../oscar/mainwindow.ui" line="2610"/>
         <source>Use AntiAliasing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2614"/>
+        <location filename="../oscar/mainwindow.ui" line="2615"/>
         <source>About OSCAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2622"/>
+        <location filename="../oscar/mainwindow.ui" line="2623"/>
         <source>Maximize Toggle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2644"/>
+        <location filename="../oscar/mainwindow.ui" line="2645"/>
         <source>Reset Graph Heights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2729"/>
+        <location filename="../oscar/mainwindow.ui" line="2730"/>
         <source>Import ZEO Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2734"/>
+        <location filename="../oscar/mainwindow.ui" line="2735"/>
         <source>Import Dreem Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2739"/>
+        <location filename="../oscar/mainwindow.ui" line="2740"/>
         <source>Import RemStar MSeries Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2744"/>
+        <location filename="../oscar/mainwindow.ui" line="2745"/>
         <source>Sleep Disorder Terms Glossary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2749"/>
+        <location filename="../oscar/mainwindow.ui" line="2750"/>
         <source>Change Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2754"/>
+        <location filename="../oscar/mainwindow.ui" line="2755"/>
         <source>Change Data Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2759"/>
+        <location filename="../oscar/mainwindow.ui" line="2760"/>
         <source>Import Somnopose Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2764"/>
+        <location filename="../oscar/mainwindow.ui" line="2765"/>
         <source>Import Viatom/Wellue Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2777"/>
+        <location filename="../oscar/mainwindow.ui" line="2778"/>
         <source>Show Line Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2878"/>
+        <location filename="../oscar/mainwindow.ui" line="2830"/>
+        <source>Import Journal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.ui" line="2884"/>
         <source>Show Pie Chart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2919"/>
+        <location filename="../oscar/mainwindow.ui" line="2925"/>
         <source>Check For Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2932"/>
+        <location filename="../oscar/mainwindow.ui" line="2938"/>
         <source>CPAP</source>
         <translation type="unfinished">CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2942"/>
+        <location filename="../oscar/mainwindow.ui" line="2948"/>
         <source>Sleep Stage</source>
         <translation type="unfinished">Фаза на сън</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2947"/>
+        <location filename="../oscar/mainwindow.ui" line="2953"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2952"/>
+        <location filename="../oscar/mainwindow.ui" line="2958"/>
         <source>All except Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2957"/>
+        <location filename="../oscar/mainwindow.ui" line="2963"/>
         <source>All including Notes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1475,7 +1503,7 @@ Hint: Change the start date first</source>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1147"/>
-        <location filename="../oscar/mainwindow.ui" line="2937"/>
+        <location filename="../oscar/mainwindow.ui" line="2943"/>
         <source>Oximetry</source>
         <translation>Оксиметрия</translation>
     </message>
@@ -1486,387 +1514,235 @@ Hint: Change the start date first</source>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="1247"/>
-        <location filename="../oscar/mainwindow.ui" line="2450"/>
+        <location filename="../oscar/mainwindow.ui" line="2451"/>
         <source>Help</source>
         <translation>Помощ</translation>
     </message>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Файл</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Преглед</translation>
-    </message>
-    <message>
-        <source>&amp;Reset Graphs</source>
-        <translation type="vanished">&amp;Възстановяване на графики</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Помощ</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2454"/>
+        <location filename="../oscar/mainwindow.ui" line="2455"/>
         <source>Troubleshooting</source>
         <translation>Отстраняване на неизправности</translation>
     </message>
     <message>
-        <source>&amp;Data</source>
-        <translation type="vanished">&amp;Данни</translation>
-    </message>
-    <message>
-        <source>&amp;Advanced</source>
-        <translation type="vanished">&amp;Операции за напреднали</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2494"/>
+        <location filename="../oscar/mainwindow.ui" line="2495"/>
         <source>Purge ALL Device Data</source>
         <translation>Изтрий ВСИЧКИ данни за апарата</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2539"/>
+        <location filename="../oscar/mainwindow.ui" line="2540"/>
         <source>Import CPAP Card Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2547"/>
+        <location filename="../oscar/mainwindow.ui" line="2548"/>
         <source>Preferences</source>
         <translation type="unfinished">Настройки</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2562"/>
+        <location filename="../oscar/mainwindow.ui" line="2563"/>
         <source>View Daily</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2565"/>
+        <location filename="../oscar/mainwindow.ui" line="2566"/>
         <source>Show Daily view</source>
         <translation>Покажи ежедневния изглед</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2573"/>
+        <location filename="../oscar/mainwindow.ui" line="2574"/>
         <source>View Overview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2576"/>
+        <location filename="../oscar/mainwindow.ui" line="2577"/>
         <source>Show Overview view</source>
         <translation>Покажи изглед за преглед</translation>
     </message>
     <message>
-        <source>&amp;Maximize Toggle</source>
-        <translation type="vanished">Превключването на &amp;максимизиране</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2625"/>
+        <location filename="../oscar/mainwindow.ui" line="2626"/>
         <source>Maximize window</source>
         <translation>Максимизирай прозорец</translation>
     </message>
     <message>
-        <source>Reset Graph &amp;Heights</source>
-        <translation type="vanished">Възстановяване на височините на &amp;графиката</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2647"/>
+        <location filename="../oscar/mainwindow.ui" line="2648"/>
         <source>Reset sizes of graphs</source>
         <translation>Възстановяване на размерите на графиките</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2652"/>
+        <location filename="../oscar/mainwindow.ui" line="2653"/>
         <source>Take Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2660"/>
+        <location filename="../oscar/mainwindow.ui" line="2661"/>
         <source>Oximetry Wizard</source>
         <translation type="unfinished">Помощник за оксиметър</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2668"/>
+        <location filename="../oscar/mainwindow.ui" line="2669"/>
         <source>Print Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2673"/>
+        <location filename="../oscar/mainwindow.ui" line="2674"/>
         <source>Edit Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2678"/>
+        <location filename="../oscar/mainwindow.ui" line="2679"/>
         <source>Online Users Guide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2683"/>
+        <location filename="../oscar/mainwindow.ui" line="2684"/>
         <source>Frequently Asked Questions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2688"/>
+        <location filename="../oscar/mainwindow.ui" line="2689"/>
         <source>Automatic Oximetry Cleanup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2693"/>
+        <location filename="../oscar/mainwindow.ui" line="2694"/>
         <source>Change User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2704"/>
+        <location filename="../oscar/mainwindow.ui" line="2705"/>
         <source>Right Sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2707"/>
+        <location filename="../oscar/mainwindow.ui" line="2708"/>
         <source>Show Right Sidebar</source>
         <translation>Покажи дясната странична лента</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2721"/>
+        <location filename="../oscar/mainwindow.ui" line="2722"/>
         <source>Show Statistics view</source>
         <translation>Покажи изглед на Статистика</translation>
     </message>
     <message>
-        <source>Import &amp;Dreem Data</source>
-        <translation type="vanished">Импортирай данни от &amp;Dreem</translation>
-    </message>
-    <message>
-        <source>Show &amp;Line Cursor</source>
-        <translation type="vanished">Покажи стрелка за &amp;линя</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2799"/>
+        <location filename="../oscar/mainwindow.ui" line="2800"/>
         <source>Show Daily Left Sidebar</source>
         <translation>Покажи на ежедневната лява странична лента</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2816"/>
+        <location filename="../oscar/mainwindow.ui" line="2817"/>
         <source>Show Daily Calendar</source>
         <translation>Покажи ежедневния календар</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2824"/>
+        <location filename="../oscar/mainwindow.ui" line="2825"/>
         <source>Backup Journal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2837"/>
+        <location filename="../oscar/mainwindow.ui" line="2843"/>
         <source>Create zip of CPAP data card</source>
         <translation>Създай цип от карта с данни на CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2842"/>
+        <location filename="../oscar/mainwindow.ui" line="2848"/>
         <source>Create zip of OSCAR diagnostic logs</source>
         <translation>Създай цип от диагностични журнали на OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2847"/>
+        <location filename="../oscar/mainwindow.ui" line="2853"/>
         <source>Create zip of all OSCAR data</source>
         <translation>Създай цип от всички данни на OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2862"/>
+        <location filename="../oscar/mainwindow.ui" line="2868"/>
         <source>Report an Issue</source>
         <translation>Съобщи за проблем</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2867"/>
+        <location filename="../oscar/mainwindow.ui" line="2873"/>
         <source>System Information</source>
         <translation>Информация за система</translation>
     </message>
     <message>
-        <source>Show &amp;Pie Chart</source>
-        <translation type="vanished">Покажи &amp;Кръгова диаграма</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2881"/>
+        <location filename="../oscar/mainwindow.ui" line="2887"/>
         <source>Show Pie Chart on Daily page</source>
         <translation>Покажи кръгова диаграма в ежедневната страница</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2889"/>
+        <location filename="../oscar/mainwindow.ui" line="2895"/>
         <source>Standard - CPAP, APAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2892"/>
+        <location filename="../oscar/mainwindow.ui" line="2898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard graph order, good for CPAP, APAP,  Basic BPAP&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2897"/>
+        <location filename="../oscar/mainwindow.ui" line="2903"/>
         <source>Advanced - BPAP, ASV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2900"/>
+        <location filename="../oscar/mainwindow.ui" line="2906"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Advanced graph order, good for BPAP w/BU, ASV, AVAPS, IVAPS&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2911"/>
+        <location filename="../oscar/mainwindow.ui" line="2917"/>
         <source>Show Personal Data</source>
         <translation>Покажи лични данни</translation>
     </message>
     <message>
-        <source>Check For &amp;Updates</source>
-        <translation type="vanished">Провери за &amp;обновления</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2499"/>
-        <location filename="../oscar/mainwindow.ui" line="2927"/>
+        <location filename="../oscar/mainwindow.ui" line="2500"/>
+        <location filename="../oscar/mainwindow.ui" line="2933"/>
         <source>Purge Current Selected Day</source>
         <translation>Изтрий избрания текущ ден</translation>
     </message>
     <message>
-        <source>&amp;CPAP</source>
-        <translation type="vanished">&amp;CPAP</translation>
-    </message>
-    <message>
-        <source>&amp;Oximetry</source>
-        <translation type="vanished">&amp;Оксиметрия</translation>
-    </message>
-    <message>
-        <source>&amp;Sleep Stage</source>
-        <translation type="vanished">Фаза на &amp;сън</translation>
-    </message>
-    <message>
-        <source>&amp;Position</source>
-        <translation type="vanished">&amp;Позиция</translation>
-    </message>
-    <message>
-        <source>&amp;All except Notes</source>
-        <translation type="vanished">&amp;Всички с изключение на бележки</translation>
-    </message>
-    <message>
-        <source>All including &amp;Notes</source>
-        <translation type="vanished">Всички, включително &amp;бележки</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2516"/>
+        <location filename="../oscar/mainwindow.ui" line="2517"/>
         <source>Rebuild CPAP Data</source>
         <translation>Презареждане на CPAP данни</translation>
     </message>
     <message>
-        <source>&amp;Preferences</source>
-        <translation type="vanished">&amp;Настройки</translation>
-    </message>
-    <message>
-        <source>&amp;Profiles</source>
-        <translation type="vanished">&amp;Профили</translation>
-    </message>
-    <message>
-        <source>&amp;About OSCAR</source>
-        <translation type="vanished">&amp;За приложение OSCAR</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2832"/>
+        <location filename="../oscar/mainwindow.ui" line="2838"/>
         <source>Show Performance Information</source>
         <translation>Показване на информацията за работата</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2852"/>
+        <location filename="../oscar/mainwindow.ui" line="2858"/>
         <source>CSV Export Wizard</source>
         <translation>Помощник за CSV експорт</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2857"/>
+        <location filename="../oscar/mainwindow.ui" line="2863"/>
         <source>Export for Review</source>
         <translation>Експорт за преглед</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="119"/>
+        <location filename="../oscar/mainwindow.cpp" line="121"/>
         <source>E&amp;xit</source>
         <translation>И&amp;зход</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2557"/>
+        <location filename="../oscar/mainwindow.ui" line="2558"/>
         <source>Exit</source>
         <translation>Изход</translation>
     </message>
     <message>
-        <source>View &amp;Daily</source>
-        <translation type="vanished">Преглед по &amp;дни</translation>
-    </message>
-    <message>
-        <source>View &amp;Overview</source>
-        <translation type="vanished">Преглед &amp;общ поглед</translation>
-    </message>
-    <message>
-        <source>View &amp;Welcome</source>
-        <translation type="vanished">Преглед &amp;начална страница</translation>
-    </message>
-    <message>
-        <source>Use &amp;AntiAliasing</source>
-        <translation type="vanished">Използване на заглаждане (&amp;AntiAliasing)</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2636"/>
+        <location filename="../oscar/mainwindow.ui" line="2637"/>
         <source>Show Debug Pane</source>
         <translation>Показване на Debug прозорец</translation>
     </message>
     <message>
-        <source>Take &amp;Screenshot</source>
-        <translation type="vanished">Направи &amp;снимка на екрана</translation>
-    </message>
-    <message>
-        <source>O&amp;ximetry Wizard</source>
-        <translation type="vanished">Помощник за настройка на &amp;оксиметър</translation>
-    </message>
-    <message>
-        <source>Print &amp;Report</source>
-        <translation type="vanished">&amp;Печат на отчет</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Profile</source>
-        <translation type="vanished">&amp;Редактиране на профил</translation>
-    </message>
-    <message>
-        <source>Import &amp;Viatom/Wellue Data</source>
-        <translation type="vanished">Импортирай данни на &amp;Viatom/Wellvue</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2813"/>
+        <location filename="../oscar/mainwindow.ui" line="2814"/>
         <source>Daily Calendar</source>
         <translation>Календар по дни</translation>
     </message>
     <message>
-        <source>Backup &amp;Journal</source>
-        <translation type="vanished">Архивиране на &amp;журнал</translation>
-    </message>
-    <message>
-        <source>Online Users &amp;Guide</source>
-        <translation type="vanished">Онлайн &amp;Наръчник за употреба</translation>
-    </message>
-    <message>
-        <source>&amp;Frequently Asked Questions</source>
-        <translation type="vanished">&amp;Често задавани въпроси</translation>
-    </message>
-    <message>
-        <source>&amp;Automatic Oximetry Cleanup</source>
-        <translation type="vanished">&amp;Автоматично почистване на оксиметрия</translation>
-    </message>
-    <message>
-        <source>Change &amp;User</source>
-        <translation type="vanished">Промени &amp;потребител</translation>
-    </message>
-    <message>
-        <source>Purge &amp;Current Selected Day</source>
-        <translation type="vanished">Изтрий избрания &amp;текущ ден</translation>
-    </message>
-    <message>
-        <source>Right &amp;Sidebar</source>
-        <translation type="vanished">Десен &amp;прозорец</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2796"/>
+        <location filename="../oscar/mainwindow.ui" line="2797"/>
         <source>Daily Sidebar</source>
         <translation>Прозорец с дни</translation>
-    </message>
-    <message>
-        <source>View S&amp;tatistics</source>
-        <translation type="vanished">Преглед &amp;статистики</translation>
     </message>
     <message>
         <location filename="../oscar/mainwindow.ui" line="938"/>
@@ -1884,12 +1760,8 @@ Hint: Change the start date first</source>
         <translation>Записи</translation>
     </message>
     <message>
-        <source>Exp&amp;ort Data</source>
-        <translation type="vanished">&amp;Експорт на данни</translation>
-    </message>
-    <message>
         <location filename="../oscar/mainwindow.ui" line="965"/>
-        <location filename="../oscar/mainwindow.ui" line="2552"/>
+        <location filename="../oscar/mainwindow.ui" line="2553"/>
         <source>Profiles</source>
         <translation>Профили</translation>
     </message>
@@ -1904,133 +1776,105 @@ Hint: Change the start date first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2421"/>
+        <location filename="../oscar/mainwindow.ui" line="2422"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2425"/>
+        <location filename="../oscar/mainwindow.ui" line="2426"/>
         <source>Reset Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2480"/>
+        <location filename="../oscar/mainwindow.ui" line="2481"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2484"/>
+        <location filename="../oscar/mainwindow.ui" line="2485"/>
         <source>Advanced</source>
         <translation type="unfinished">Разширено</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.ui" line="2488"/>
+        <location filename="../oscar/mainwindow.ui" line="2489"/>
         <source>Purge Oximetry Data</source>
         <translation></translation>
     </message>
     <message>
-        <source>&amp;Import CPAP Card Data</source>
-        <translation type="vanished">&amp;Импортирай данни от картата CPAP</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2715"/>
-        <location filename="../oscar/mainwindow.ui" line="2718"/>
+        <location filename="../oscar/mainwindow.ui" line="2716"/>
+        <location filename="../oscar/mainwindow.ui" line="2719"/>
         <source>View Statistics</source>
         <translation>Преглед статистики</translation>
     </message>
     <message>
-        <source>Import &amp;ZEO Data</source>
-        <translation type="vanished">Импорт данни от &amp;ZEO</translation>
-    </message>
-    <message>
-        <source>Import RemStar &amp;MSeries Data</source>
-        <translation type="vanished">Импорт данни от RemStar &amp;MSeries</translation>
-    </message>
-    <message>
-        <source>Sleep Disorder Terms &amp;Glossary</source>
-        <translation type="vanished">&amp;Речник на термини относно разстройство на съня</translation>
-    </message>
-    <message>
-        <source>Change &amp;Language</source>
-        <translation type="vanished">Промени &amp;език</translation>
-    </message>
-    <message>
-        <source>Change &amp;Data Folder</source>
-        <translation type="vanished">Промени папката за &amp;данни</translation>
-    </message>
-    <message>
-        <source>Import &amp;Somnopose Data</source>
-        <translation type="vanished">Импорт на данни от &amp;Somnopose</translation>
-    </message>
-    <message>
-        <location filename="../oscar/mainwindow.ui" line="2769"/>
+        <location filename="../oscar/mainwindow.ui" line="2770"/>
         <source>Current Days</source>
         <translation>Текущи дни</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="536"/>
-        <location filename="../oscar/mainwindow.cpp" line="2183"/>
+        <location filename="../oscar/mainwindow.cpp" line="540"/>
+        <location filename="../oscar/mainwindow.cpp" line="2188"/>
         <source>Welcome</source>
         <translation>Добре дошли</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="116"/>
+        <location filename="../oscar/mainwindow.cpp" line="118"/>
         <source>&amp;About</source>
         <translation>&amp;Относно</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="972"/>
+        <location filename="../oscar/mainwindow.cpp" line="976"/>
         <source>Access to Import has been blocked while recalculations are in progress.</source>
         <translation>Достъп до импорт функцията е блокиран докато се извършват преизчисления.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1140"/>
+        <location filename="../oscar/mainwindow.cpp" line="1144"/>
         <source>Importing Data</source>
         <translation>Импорт на данни</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="781"/>
-        <location filename="../oscar/mainwindow.cpp" line="1859"/>
+        <location filename="../oscar/mainwindow.cpp" line="785"/>
+        <location filename="../oscar/mainwindow.cpp" line="1864"/>
         <source>Please wait, importing from backup folder(s)...</source>
         <translation>Моля изчакайте, извършва се импорт от архивната папка...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="717"/>
+        <location filename="../oscar/mainwindow.cpp" line="721"/>
         <source>Import Problem</source>
         <translation>Импорт проблем</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="882"/>
+        <location filename="../oscar/mainwindow.cpp" line="886"/>
         <source>Please insert your CPAP data card...</source>
         <translation>Моля поставете вашата карта със CPAP данни...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1024"/>
+        <location filename="../oscar/mainwindow.cpp" line="1028"/>
         <source>CPAP Data Located</source>
         <translation>Данни за CPAP са открити</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1059"/>
+        <location filename="../oscar/mainwindow.cpp" line="1063"/>
         <source>Import Reminder</source>
         <translation>Напомнянe при импорт</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1074"/>
+        <location filename="../oscar/mainwindow.cpp" line="1078"/>
         <source>Find your CPAP data card</source>
         <translation>Намери картата с данни за CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1119"/>
+        <location filename="../oscar/mainwindow.cpp" line="1123"/>
         <source>No supported data was found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1522"/>
+        <location filename="../oscar/mainwindow.cpp" line="1526"/>
         <source>The User&apos;s Guide will open in your default browser</source>
         <translation>Ръководството на потребителя ще се отвори в браузъра по подразбиране</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1834"/>
+        <location filename="../oscar/mainwindow.cpp" line="1839"/>
         <source>Are you sure you want to rebuild all CPAP data for the following device:
 
 </source>
@@ -2039,237 +1883,249 @@ Hint: Change the start date first</source>
 </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1844"/>
+        <location filename="../oscar/mainwindow.cpp" line="1849"/>
         <source>For some reason, OSCAR does not have any backups for the following device:</source>
         <translation>По някаква причина OSCAR не разполага с бекъп за следния апарат:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1846"/>
+        <location filename="../oscar/mainwindow.cpp" line="1851"/>
         <source>Provided you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your CPAP data&lt;/i&gt;, you can still complete this operation, but you will have to restore from your backups manually.</source>
         <translation>Ако сте правили &lt;i&gt;свой &lt;b&gt;собствен&lt;/b&gt; бекъп на абсолютно всички CPAP данни досега&lt;/i&gt; ще можете да завършите тази операция, но ще е необходимо да извършите възстановяването от бекъп ръчно.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1847"/>
+        <location filename="../oscar/mainwindow.cpp" line="1852"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Сигурни ли сте че желаете да направите това?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1863"/>
+        <location filename="../oscar/mainwindow.cpp" line="1868"/>
         <source>Would you like to import from your own backups now? (you will have no data visible for this device until you do)</source>
         <translation>Желаеш ли да извършиш импорт от свой собствен бекъп? (няма да виждаш никакви данни за този апарат докато не го направиш)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1912"/>
+        <location filename="../oscar/mainwindow.cpp" line="1917"/>
         <source>Note as a precaution, the backup folder will be left in place.</source>
         <translation>За всеки случай бекъп папката ще бъде оставена.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1914"/>
+        <location filename="../oscar/mainwindow.cpp" line="1919"/>
         <source>OSCAR does not have any backups for this device!</source>
         <translation>OSCAR не разполага с никой бекъп за този апарат!</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1915"/>
+        <location filename="../oscar/mainwindow.cpp" line="1920"/>
         <source>Unless you have made &lt;i&gt;your &lt;b&gt;own&lt;/b&gt; backups for ALL of your data for this device&lt;/i&gt;, &lt;font size=+2&gt;you will lose this device&apos;s data &lt;b&gt;permanently&lt;/b&gt;!&lt;/font&gt;</source>
         <translation>Освен ако не си направил &lt;i&gt;&lt;b&gt;собствения си&lt;/b&gt; бекъп на ВСИЧКИТЕ си данни за това устройство&lt;/i&gt;, &lt;font size=+2&gt;ще ги загубиш &lt;b&gt;завинаги&lt;/b&gt;!&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1921"/>
+        <location filename="../oscar/mainwindow.cpp" line="1926"/>
         <source>You are about to &lt;font size=+2&gt;obliterate&lt;/font&gt; OSCAR&apos;s device database for the following device:&lt;/p&gt;</source>
         <translation>На път си да &lt;font size=+2&gt;изтриеш&lt;/font&gt;базите данни на OSCAR за следното устройство:&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1924"/>
+        <location filename="../oscar/mainwindow.cpp" line="1929"/>
         <source>Are you &lt;b&gt;absolutely sure&lt;/b&gt; you want to proceed?</source>
         <translation>&lt;b&gt;Абсолютно ли сте сигурни&lt;/b&gt; че желаете да продължите?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1979"/>
+        <location filename="../oscar/mainwindow.cpp" line="1984"/>
         <source>A file permission error caused the purge process to fail; you will have to delete the following folder manually:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2240"/>
+        <location filename="../oscar/mainwindow.cpp" line="2245"/>
         <source>The Glossary will open in your default browser</source>
         <translation>Глосарият ще се отвори в браузъра по подразбиране</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2327"/>
-        <location filename="../oscar/mainwindow.cpp" line="2331"/>
+        <location filename="../oscar/mainwindow.cpp" line="2361"/>
+        <source>There was a problem parsing %1 
+Data File: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2367"/>
+        <location filename="../oscar/mainwindow.cpp" line="2371"/>
         <source>There was a problem opening %1 Data File: %2</source>
         <translation>Има проблем с отварянето %1 Файл с данни: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2330"/>
+        <location filename="../oscar/mainwindow.cpp" line="2370"/>
         <source>%1 Data Import of %2 file(s) complete</source>
         <translation>%1 Импортираните на данните от %2 файл(ове) приключи</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2332"/>
+        <location filename="../oscar/mainwindow.cpp" line="2372"/>
         <source>%1 Import Partial Success</source>
         <translation>%1 Частичен успех на импорта</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2334"/>
+        <location filename="../oscar/mainwindow.cpp" line="2374"/>
         <source>%1 Data Import complete</source>
         <translation>%1 Импортирането на данните приключи</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2605"/>
+        <location filename="../oscar/mainwindow.cpp" line="2645"/>
         <source>You must select and open the profile you wish to modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2618"/>
+        <location filename="../oscar/mainwindow.cpp" line="2655"/>
+        <source>Choose where to read journal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/mainwindow.cpp" line="2677"/>
         <source>%1&apos;s Journal</source>
         <translation>Журналът на %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2620"/>
+        <location filename="../oscar/mainwindow.cpp" line="2679"/>
         <source>Choose where to save journal</source>
         <translation>Изберете къде да запишете журналът</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2620"/>
+        <location filename="../oscar/mainwindow.cpp" line="2657"/>
+        <location filename="../oscar/mainwindow.cpp" line="2679"/>
         <source>XML Files (*.xml)</source>
         <translation>XML файлове (*.xml)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1862"/>
+        <location filename="../oscar/mainwindow.cpp" line="1867"/>
         <source>Because there are no internal backups to rebuild from, you will have to restore from your own.</source>
         <translation>Не е открит наличен вътрешен бекъп от който да се извърши възстановяването, ще трябва да възстановите от собствен бекъп.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="257"/>
+        <location filename="../oscar/mainwindow.cpp" line="259"/>
         <source>Help Browser</source>
         <translation>Браузър за помощ</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1331"/>
+        <location filename="../oscar/mainwindow.cpp" line="1335"/>
         <source>Please open a profile first.</source>
         <translation>Моля, първо отвори профил.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1529"/>
+        <location filename="../oscar/mainwindow.cpp" line="1533"/>
         <source>The FAQ is not yet implemented</source>
         <translation>ЧЗВ все още не е внедрен</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1671"/>
-        <location filename="../oscar/mainwindow.cpp" line="1698"/>
+        <location filename="../oscar/mainwindow.cpp" line="1676"/>
+        <location filename="../oscar/mainwindow.cpp" line="1703"/>
         <source>If you can read this, the restart command didn&apos;t work. You will have to do it yourself manually.</source>
         <translation>Ако можеш да прочетеш това, означава, че командата за рестартиране не е сработила. Ще трябва да го направиш сам ръчно.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="968"/>
+        <location filename="../oscar/mainwindow.cpp" line="972"/>
         <source>No profile has been selected for Import.</source>
         <translation>Не е избран профил за импортиране.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="559"/>
+        <location filename="../oscar/mainwindow.cpp" line="563"/>
         <source>%1 (Profile: %2)</source>
         <translation>%1 (Профил: %2)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1058"/>
+        <location filename="../oscar/mainwindow.cpp" line="1062"/>
         <source>Please remember to select the root folder or drive letter of your data card, and not a folder inside it.</source>
         <translation>Моля, не забрави да избереш главната папка или буквата на устройството на картата с данни, а не папка в нея.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1401"/>
+        <location filename="../oscar/mainwindow.cpp" line="1405"/>
         <source>Check for updates not implemented</source>
         <translation>Проверка за обновления не е внедрена</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1450"/>
+        <location filename="../oscar/mainwindow.cpp" line="1454"/>
         <source>Choose where to save screenshot</source>
         <translation>Избери къде да запишеш снимка на екрана</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1450"/>
+        <location filename="../oscar/mainwindow.cpp" line="1454"/>
         <source>Image files (*.png)</source>
         <translation>Файлове с изображения (*.png)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1837"/>
+        <location filename="../oscar/mainwindow.cpp" line="1842"/>
         <source>Please note, that this could result in loss of data if OSCAR&apos;s backups have been disabled.</source>
         <translation>Моля, имай предвид, че това може да доведе до загуба на данни, ако бекъп на OSCAR са били деактивирани.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2029"/>
+        <location filename="../oscar/mainwindow.cpp" line="2034"/>
         <source>No help is available.</source>
         <translation>Няма налична помощ.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2526"/>
+        <location filename="../oscar/mainwindow.cpp" line="2566"/>
         <source>Are you sure you want to delete oximetry data for %1</source>
         <translation>Сигурни ли сте че желаете да изтриете оксиметричните данни за %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2528"/>
+        <location filename="../oscar/mainwindow.cpp" line="2568"/>
         <source>&lt;b&gt;Please be aware you can not undo this operation!&lt;/b&gt;</source>
         <translation>&lt;b&gt;Моля имайте предвид, че тази операция не може да бъде отменена по-късно!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2558"/>
+        <location filename="../oscar/mainwindow.cpp" line="2598"/>
         <source>Select the day with valid oximetry data in daily view first.</source>
         <translation>Първо изберете ден с валидни оксметрични дани в дневния изглед.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2640"/>
+        <location filename="../oscar/mainwindow.cpp" line="2705"/>
         <source>Export review is not yet implemented</source>
         <translation>Прегледът на износа все още не е внедрен</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2650"/>
+        <location filename="../oscar/mainwindow.cpp" line="2715"/>
         <source>Would you like to zip this card?</source>
         <translation>Желаеш ли да компресираш тази карта?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2672"/>
-        <location filename="../oscar/mainwindow.cpp" line="2743"/>
-        <location filename="../oscar/mainwindow.cpp" line="2794"/>
+        <location filename="../oscar/mainwindow.cpp" line="2737"/>
+        <location filename="../oscar/mainwindow.cpp" line="2808"/>
+        <location filename="../oscar/mainwindow.cpp" line="2859"/>
         <source>Choose where to save zip</source>
         <translation>Избери къде да записеш компресирания файл</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2672"/>
-        <location filename="../oscar/mainwindow.cpp" line="2743"/>
-        <location filename="../oscar/mainwindow.cpp" line="2794"/>
+        <location filename="../oscar/mainwindow.cpp" line="2737"/>
+        <location filename="../oscar/mainwindow.cpp" line="2808"/>
+        <location filename="../oscar/mainwindow.cpp" line="2859"/>
         <source>ZIP files (*.zip)</source>
         <translation>Компресирани файлове (*.zip)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2719"/>
-        <location filename="../oscar/mainwindow.cpp" line="2757"/>
-        <location filename="../oscar/mainwindow.cpp" line="2828"/>
+        <location filename="../oscar/mainwindow.cpp" line="2784"/>
+        <location filename="../oscar/mainwindow.cpp" line="2822"/>
+        <location filename="../oscar/mainwindow.cpp" line="2893"/>
         <source>Creating zip...</source>
         <translation>Създаване на компресирания файл...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2704"/>
-        <location filename="../oscar/mainwindow.cpp" line="2812"/>
+        <location filename="../oscar/mainwindow.cpp" line="2769"/>
+        <location filename="../oscar/mainwindow.cpp" line="2877"/>
         <source>Calculating size...</source>
         <translation>Изчисляване на размера...</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2849"/>
+        <location filename="../oscar/mainwindow.cpp" line="2914"/>
         <source>Reporting issues is not yet implemented</source>
         <translation>Докладването на проблеми все още не е внедрено</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1119"/>
-        <location filename="../oscar/mainwindow.cpp" line="2858"/>
+        <location filename="../oscar/mainwindow.cpp" line="1123"/>
+        <location filename="../oscar/mainwindow.cpp" line="2923"/>
         <source>OSCAR Information</source>
         <translation>Информацията за OSCAR</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="520"/>
+        <location filename="../oscar/mainwindow.cpp" line="524"/>
         <source>Loading profile &quot;%1&quot;</source>
         <translation>Зареждане на профил &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="713"/>
+        <location filename="../oscar/mainwindow.cpp" line="717"/>
         <source>Imported %1 CPAP session(s) from
 
 %2</source>
@@ -2278,12 +2134,12 @@ Hint: Change the start date first</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="713"/>
+        <location filename="../oscar/mainwindow.cpp" line="717"/>
         <source>Import Success</source>
         <translation>Успешен импорт</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="715"/>
+        <location filename="../oscar/mainwindow.cpp" line="719"/>
         <source>Already up to date with CPAP data at
 
 %1</source>
@@ -2292,12 +2148,12 @@ Hint: Change the start date first</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="715"/>
+        <location filename="../oscar/mainwindow.cpp" line="719"/>
         <source>Up to date</source>
         <translation>Актуален</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="717"/>
+        <location filename="../oscar/mainwindow.cpp" line="721"/>
         <source>Couldn&apos;t find any valid Device Data at
 
 %1</source>
@@ -2306,57 +2162,57 @@ Hint: Change the start date first</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="889"/>
+        <location filename="../oscar/mainwindow.cpp" line="893"/>
         <source>Choose a folder</source>
         <translation>Избери папка</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="976"/>
+        <location filename="../oscar/mainwindow.cpp" line="980"/>
         <source>Import is already running in the background.</source>
         <translation>Импортирането вече работи във фонов режим.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1017"/>
+        <location filename="../oscar/mainwindow.cpp" line="1021"/>
         <source>A %1 file structure for a %2 was located at:</source>
         <translation>Файловата структура %1 за %2 беше открита тук:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1019"/>
+        <location filename="../oscar/mainwindow.cpp" line="1023"/>
         <source>A %1 file structure was located at:</source>
         <translation>Файловата структура %1 беше открита тук:</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="984"/>
+        <location filename="../oscar/mainwindow.cpp" line="988"/>
         <source>Would you like to import from this location?</source>
         <translation>Желаете ли да извършите импорт от това място?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1028"/>
+        <location filename="../oscar/mainwindow.cpp" line="1032"/>
         <source>Specify</source>
         <translation>Посочи</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1336"/>
+        <location filename="../oscar/mainwindow.cpp" line="1340"/>
         <source>Access to Preferences has been blocked until recalculation completes.</source>
         <translation>Достъпът до конфигурацията е блокиран, докато приключат преизчисленията.</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1460"/>
+        <location filename="../oscar/mainwindow.cpp" line="1464"/>
         <source>There was an error saving screenshot to file &quot;%1&quot;</source>
         <translation>Има проблем със запазването на снимка на екрана във файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="1462"/>
+        <location filename="../oscar/mainwindow.cpp" line="1466"/>
         <source>Screenshot saved to file &quot;%1&quot;</source>
         <translation>Снимката на екрана е записана във файл &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2227"/>
+        <location filename="../oscar/mainwindow.cpp" line="2232"/>
         <source>There was a problem opening MSeries block File: </source>
         <translation>Има проблем с отварянето на файл с данни от MSeries: </translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2231"/>
+        <location filename="../oscar/mainwindow.cpp" line="2236"/>
         <source>MSeries Import complete</source>
         <translation>Импорта от MSeries приключи</translation>
     </message>
@@ -2364,42 +2220,42 @@ Hint: Change the start date first</source>
 <context>
     <name>MinMaxWidget</name>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2186"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2191"/>
         <source>Auto-Fit</source>
         <translation>Автоматичен мащаб</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2187"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2192"/>
         <source>Defaults</source>
         <translation>По подразбиране</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2188"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2193"/>
         <source>Override</source>
         <translation>Ръчно указване</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2189"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2194"/>
         <source>The Y-Axis scaling mode, &apos;Auto-Fit&apos; for automatic scaling, &apos;Defaults&apos; for settings according to manufacturer, and &apos;Override&apos; to choose your own.</source>
         <translation>Режим на ординатната ос, &apos;Автоматичен мащаб&apos; за автоматично скалиране на изображенията, &apos;По подразбиране&apos; за настройки според производителя и &apos;Ръчно указване&apos; за да изберете ваш собствен изглед.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2195"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2200"/>
         <source>The Minimum Y-Axis value.. Note this can be a negative number if you wish.</source>
         <translation>Минимална стойност на ординатната ос.. Тя може да бъде и отрицателно число ако желаете.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2196"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2201"/>
         <source>The Maximum Y-Axis value.. Must be greater than Minimum to work.</source>
         <translation>Максимална стойност на ординатната ос.. Трябва да бъде повече от минималната за да работи.</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2231"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2236"/>
         <source>Scaling Mode</source>
         <translation>Режим на мащабиране</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2253"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2258"/>
         <source>This button resets the Min and Max to match the Auto-Fit</source>
         <translation>Този бутон възстановява Мин и Макс стойности до Автоматичен мащаб</translation>
     </message>
@@ -2635,14 +2491,6 @@ Hint: Change the start date first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="vanished">&amp;Отказ</translation>
-    </message>
-    <message>
-        <source>&amp;Back</source>
-        <translation type="vanished">&amp;Назад</translation>
-    </message>
-    <message>
         <location filename="../oscar/newprofile.cpp" line="316"/>
         <location filename="../oscar/newprofile.cpp" line="325"/>
         <source>&amp;Next</source>
@@ -2672,10 +2520,6 @@ Hint: Change the start date first</source>
         <location filename="../oscar/newprofile.cpp" line="136"/>
         <source>Use of this software is entirely at your own risk.</source>
         <translation>Използвайте на своя отговорност.</translation>
-    </message>
-    <message>
-        <source>OSCAR is copyright &amp;copy;2011-2018 Mark Watkins and portions &amp;copy;2019-2022 The OSCAR Team</source>
-        <translation type="vanished">OSCAR е авторско право &amp;copy;2011-2018 Марк Уаткинс и порциите са авторско право &amp;copy;2019-2022 Екипа на OSCAR</translation>
     </message>
     <message>
         <location filename="../oscar/newprofile.cpp" line="116"/>
@@ -2997,6 +2841,11 @@ Index</source>
         <translation>Импорт от файл с данни, записани от друга програма, например SpO2Review</translation>
     </message>
     <message>
+        <location filename="../oscar/oximeterimport.ui" line="918"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Reminder for CPAP users: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Did you remember to import your CPAP sessions first?&lt;br/&gt;&lt;/span&gt;If you forget, you won&apos;t have a valid time to sync this oximetry session to.&lt;br/&gt;To ensure a good sync between devices, always try to start both at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/oximeterimport.ui" line="953"/>
         <source>Please connect your oximeter device</source>
         <translation>Моля свържете вашия оксиметър</translation>
@@ -3123,14 +2972,6 @@ Index</source>
         <translation type="unfinished">Начало</translation>
     </message>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="vanished">&amp;Отказ</translation>
-    </message>
-    <message>
-        <source>&amp;Information Page</source>
-        <translation type="vanished">&amp;Информационна страница</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximeterimport.ui" line="688"/>
         <source>Set device date/time</source>
         <translation>Синхронизация на дата/час</translation>
@@ -3156,9 +2997,8 @@ Index</source>
         <translation>Импорт директно от запис на устройство</translation>
     </message>
     <message>
-        <location filename="../oscar/oximeterimport.ui" line="918"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Reminder for CPAP users: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Did you remember to import your CPAP sessions first?&lt;br/&gt;&lt;/span&gt;If you forget, you won&apos;t have a valid time to sync this oximetry session to.&lt;br/&gt;To a ensure good sync between devices, always try to start both at the same time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Напомняне за CPAP потребители: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Нали не забравихте да импортирате първо вашата CPAP сесия?&lt;br/&gt;&lt;/span&gt;Ако сте забравили няма да разполагате с валидно време, към което да синхронизирате тази оксиметрична сесия.&lt;br/&gt;За да си гарантирате добра синхронизация най-добре винаги се опитвайте да стартирате едновременно вашия оксиметър и CPAP апарат.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Напомняне за CPAP потребители: &lt;/span&gt;&lt;span style=&quot; color:#fb0000;&quot;&gt;Нали не забравихте да импортирате първо вашата CPAP сесия?&lt;br/&gt;&lt;/span&gt;Ако сте забравили няма да разполагате с валидно време, към което да синхронизирате тази оксиметрична сесия.&lt;br/&gt;За да си гарантирате добра синхронизация най-добре винаги се опитвайте да стартирате едновременно вашия оксиметър и CPAP апарат.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.ui" line="1325"/>
@@ -3179,30 +3019,6 @@ Index</source>
         <location filename="../oscar/oximeterimport.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OSCAR needs a starting time to know where to save this oximetry session to.&lt;/p&gt;&lt;p&gt;Choose one of the following options:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Retry</source>
-        <translation type="vanished">&amp;Опитай отново</translation>
-    </message>
-    <message>
-        <source>&amp;Choose Session</source>
-        <translation type="vanished">&amp;Избери сесия</translation>
-    </message>
-    <message>
-        <source>&amp;End Recording</source>
-        <translation type="vanished">&amp;Прекрати записа</translation>
-    </message>
-    <message>
-        <source>&amp;Sync and Save</source>
-        <translation type="vanished">&amp;Сихронизирай и запиши</translation>
-    </message>
-    <message>
-        <source>&amp;Save and Finish</source>
-        <translation type="vanished">&amp;Запиши и прекрати</translation>
-    </message>
-    <message>
-        <source>&amp;Start</source>
-        <translation type="vanished">&amp;Старт</translation>
     </message>
     <message>
         <location filename="../oscar/oximeterimport.cpp" line="193"/>
@@ -3483,34 +3299,14 @@ Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>R&amp;eset</source>
-        <translation type="vanished">А&amp;нулиране</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="245"/>
         <source>Pulse</source>
         <translation>Пулс</translation>
     </message>
     <message>
-        <source>&amp;Open .spo/R File</source>
-        <translation type="vanished">&amp;Отвори .spo/R</translation>
-    </message>
-    <message>
-        <source>Serial &amp;Import</source>
-        <translation type="vanished">Импорт от &amp;сериен порт</translation>
-    </message>
-    <message>
-        <source>&amp;Start Live</source>
-        <translation type="vanished">&amp;В реално време</translation>
-    </message>
-    <message>
         <location filename="../oscar/oximetry.ui" line="421"/>
         <source>Serial Port</source>
         <translation>Сериен порт</translation>
-    </message>
-    <message>
-        <source>&amp;Rescan Ports</source>
-        <translation type="vanished">&amp;Сканиране на портове</translation>
     </message>
 </context>
 <context>
@@ -3521,61 +3317,53 @@ Index</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation type="vanished">&amp;Импорт</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="160"/>
+        <location filename="../oscar/preferencesdialog.ui" line="163"/>
         <source>Combine Close Sessions </source>
         <translation>Комбиниране на затворени сесии </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="170"/>
-        <location filename="../oscar/preferencesdialog.ui" line="255"/>
-        <location filename="../oscar/preferencesdialog.ui" line="753"/>
+        <location filename="../oscar/preferencesdialog.ui" line="173"/>
+        <location filename="../oscar/preferencesdialog.ui" line="258"/>
+        <location filename="../oscar/preferencesdialog.ui" line="756"/>
         <source>Minutes</source>
         <translation>минути</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="190"/>
+        <location filename="../oscar/preferencesdialog.ui" line="193"/>
         <source>Multiple sessions closer together than this value will be kept on the same day.
 </source>
         <translation>Множество сесии по-близки като време от тази стойност ще бъдат запазвани в един и същ ден.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="245"/>
+        <location filename="../oscar/preferencesdialog.ui" line="248"/>
         <source>Ignore Short Sessions</source>
         <translation>Игнориране на кратки сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="311"/>
+        <location filename="../oscar/preferencesdialog.ui" line="314"/>
         <source>Day Split Time</source>
         <translation>Време за разделяне по дни</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="321"/>
+        <location filename="../oscar/preferencesdialog.ui" line="324"/>
         <source>Sessions starting before this time will go to the previous calendar day.</source>
         <translation>Сесии започнати преди това време ще бъдат зачислени към предишния календарен ден.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="394"/>
+        <location filename="../oscar/preferencesdialog.ui" line="397"/>
         <source>Session Storage Options</source>
         <translation>Опции за съхранение на сесиите</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="484"/>
+        <location filename="../oscar/preferencesdialog.ui" line="487"/>
         <source>Create SD Card Backups during Import (Turn this off at your own peril!)</source>
         <translation>Създаване на архивно копие на SD картата по време на импортиране (Изключете това само на ваша отговорност!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="441"/>
+        <location filename="../oscar/preferencesdialog.ui" line="444"/>
         <source>Compress SD Card Backups (slower first import, but makes backups smaller)</source>
         <translation>Компресиране на архивните копия на SD картата (първото импортиране е по-бавно, но прави архивите по-малки)</translation>
-    </message>
-    <message>
-        <source>&amp;CPAP</source>
-        <translation type="vanished">&amp;CPAP</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1541"/>
@@ -3583,7 +3371,7 @@ Index</source>
         <translation>Дните, в които апаратът е използван по-малко от тези часове, да се броят за дни с неспазване на терапията. Обикновено 4 часа се считат за достатъчни за спазване на терапия.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1058"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1061"/>
         <source>Flow Restriction</source>
         <translation>Дихателнo ограничение</translation>
     </message>
@@ -3600,7 +3388,7 @@ A value of 20% works well for detecting apneas. </source>
         <translation>Продължителност на дихателното ограничение</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="999"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1002"/>
         <location filename="../oscar/preferencesdialog.ui" line="1122"/>
         <location filename="../oscar/preferencesdialog.ui" line="1722"/>
         <location filename="../oscar/preferencesdialog.ui" line="1813"/>
@@ -3636,22 +3424,22 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation>Нулиране</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="706"/>
+        <location filename="../oscar/preferencesdialog.ui" line="709"/>
         <source>CPAP Clock Drift</source>
         <translation>Отместване на часовника на CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="502"/>
+        <location filename="../oscar/preferencesdialog.ui" line="505"/>
         <source>Do not import sessions older than:</source>
         <translation>Да не се прави импорт на сесии по-стари от:</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="509"/>
+        <location filename="../oscar/preferencesdialog.ui" line="512"/>
         <source>Sessions older than this date will not be imported</source>
         <translation>Сесии по-стари от тази дата няма да бъдат импортирани</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="535"/>
+        <location filename="../oscar/preferencesdialog.ui" line="538"/>
         <source>dd MMMM yyyy</source>
         <translation>дд мммм гггг</translation>
     </message>
@@ -3675,10 +3463,6 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <location filename="../oscar/preferencesdialog.ui" line="2044"/>
         <source>Search</source>
         <translation>Търсене</translation>
-    </message>
-    <message>
-        <source>&amp;Oximetry</source>
-        <translation type="vanished">&amp;Оксиметрия</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="1865"/>
@@ -3718,21 +3502,17 @@ Defaults to 60 minutes.. Highly recommend it&apos;s left at this value.</source>
         <translation>Малки откъси оксиметрични данни под тази бройка ще бъдат игнорирани.</translation>
     </message>
     <message>
-        <source>&amp;General</source>
-        <translation type="vanished">&amp;Основно</translation>
-    </message>
-    <message>
         <location filename="../oscar/preferencesdialog.ui" line="2114"/>
         <source>General Settings</source>
         <translation>Основни настройки</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2859"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2866"/>
         <source>Daily view navigation buttons will skip over days without data records</source>
         <translation>Навигационните бутони за дневен преглед ще прескачат дните, за които няма данни</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2862"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2869"/>
         <source>Skip over Empty Days</source>
         <translation>Прескачане на празни дни</translation>
     </message>
@@ -3749,12 +3529,12 @@ Mainly affects the importer.</source>
         <translation>Включване на многонишковост</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="575"/>
+        <location filename="../oscar/preferencesdialog.ui" line="578"/>
         <source>Bypass the login screen and load the most recent User Profile</source>
         <translation>Прескачане на екрана за вход и зареждане на последния използван потребителски профил</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2849"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2856"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These features have recently been pruned. They will come back later. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тези функции бяха отстранени наскоро. Ще се появят обратно по-късно. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -3821,47 +3601,47 @@ as this is the only value available on summary-only days.</source>
         <translation>Максимум изчисления</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="97"/>
+        <location filename="../oscar/preferencesdialog.ui" line="100"/>
         <source>Session Splitting Settings</source>
         <translation>Настройки за разделяне на сесии</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="357"/>
+        <location filename="../oscar/preferencesdialog.ui" line="360"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;This setting should be used with caution...&lt;/span&gt; Switching it off comes with consequences involving accuracy of summary only days, as certain calculations only work properly provided summary only sessions that came from individual day records are kept together. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ResMed users:&lt;/span&gt; Just because it seems natural to you and I that the 12 noon session restart should be in the previous day, does not mean ResMed&apos;s data agrees with us. The STF.edf summary index format has serious weaknesses that make doing this not a good idea.&lt;/p&gt;&lt;p&gt;This option exists to pacify those who don&apos;t care and want to see this &amp;quot;fixed&amp;quot; no matter the costs, but know it comes with a cost. If you keep your SD card in every night, and import at least once a week, you won&apos;t see problems with this very often.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Тази опция трябва да се използва внимателно...&lt;/span&gt; Изключването й носи последствия като например точността на дните само с общи данни. Това е така, тъй като някои изчисления работят коректно само когато са налични едновременно сесиите с общи данни и индивидуалните дни. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;За потребителите на ResMed:&lt;/span&gt; Само защото изглежда естествено рестарта на сесията в 12 часът на обяд да бъде в предишния ден не означава че данните на ResMed мислят също като вас. Индекс форматът STF.edf има сериозна слабост, която прави това лоша идея.&lt;/p&gt;&lt;p&gt;Тази възможност съществува само за спокойствие на тези, които не се притесняват от това и желаят да виждат това &amp;quot;фиксирано&amp;quot; без значение цената, която се плаща. Не го забравяйте. Ако държите SD картата си всяка нощ в CPAP апарата и правите импорт на данните поне веднъж седмично то би трябвало да нямате чести проблеми с това.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="360"/>
+        <location filename="../oscar/preferencesdialog.ui" line="363"/>
         <source>Don&apos;t Split Summary Days (Warning: read the tooltip!)</source>
         <translation>Не разделяй дните с обща информация (Внимание: прочетете подсказката!)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="569"/>
+        <location filename="../oscar/preferencesdialog.ui" line="572"/>
         <source>Memory and Startup Options</source>
         <translation>Настройки за стартиране и памет</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="611"/>
+        <location filename="../oscar/preferencesdialog.ui" line="614"/>
         <source>Pre-Load all summary data at startup</source>
         <translation>Предварително зареждане на обща информация при старт</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="598"/>
+        <location filename="../oscar/preferencesdialog.ui" line="601"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting keeps waveform and event data in memory after use to speed up revisiting days.&lt;/p&gt;&lt;p&gt;This is not really a necessary option, as your operating system caches previously used files too.&lt;/p&gt;&lt;p&gt;Recommendation is to leave it switched off, unless your computer has a ton of memory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тази настройка пази данните за вълните и събитията в паметта след употреба с цел ускоряване на зареждането при повторен достъп.&lt;/p&gt;&lt;p&gt;Това не е необходимо тъй като операционната система от своя страна също кешира скоро използваните файлове.&lt;/p&gt;&lt;p&gt;Препоръчително е да се изключи, освен ако компютърът ви не разполага с много излишна памет.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="601"/>
+        <location filename="../oscar/preferencesdialog.ui" line="604"/>
         <source>Keep Waveform/Event data in memory</source>
         <translation>Запазване на данните за вълни/събития в паметта</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="625"/>
+        <location filename="../oscar/preferencesdialog.ui" line="628"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuts down on any unimportant confirmation dialogs during import.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Спестява питането за маловажни въпроси при импортиране.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="628"/>
+        <location filename="../oscar/preferencesdialog.ui" line="631"/>
         <source>Import without asking for confirmation</source>
         <translation>Импортиране без потвърждение</translation>
     </message>
@@ -3910,17 +3690,17 @@ as this is the only value available on summary-only days.</source>
         <translation>Маркиране на течове над</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="787"/>
+        <location filename="../oscar/preferencesdialog.ui" line="790"/>
         <source>Seconds</source>
         <translation>секунди</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="733"/>
+        <location filename="../oscar/preferencesdialog.ui" line="736"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Note: This is not intended for timezone corrections! Make sure your operating system clock and timezone is set correctly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Забележка: Целта на това поле не е да се използва за корекция на часовата зона! Моля убедете се че часовникът и часовата зона са коректно указани във вашата операционна система.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="780"/>
+        <location filename="../oscar/preferencesdialog.ui" line="783"/>
         <source>Hours</source>
         <translation>Часове</translation>
     </message>
@@ -3945,42 +3725,29 @@ as this is the only value available on summary-only days.</source>
         <translation>Стандартна тежест на индекс</translation>
     </message>
     <message>
-        <source>Compress ResMed (EDF) backups to save disk space.
-Backed up EDF files are stored in the .gz format, 
-which is common on Mac &amp; Linux platforms.. 
-
-OSCAR can import from this compressed backup directory natively.. 
-To use it with ResScan will require the .gz files to be uncompressed first..</source>
-        <translation type="vanished">Компресирай резервните копия на ResMed (EDF), за да спестиш място на диска.
-Резервните копия на EDF файлове се съхраняват във формат .gz, който е обикновенен формат в Мак ОС и в Линукс
-
-OSCAR може да импортира от тази компресирина папка за резервни копия (.gz файл)..
-За да я използва с ResScan, първо е необходимо да декромпесираш .gz файловете..</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="453"/>
+        <location filename="../oscar/preferencesdialog.ui" line="456"/>
         <source>The following options affect the amount of disk space OSCAR uses, and have an effect on how long import takes.</source>
         <translation>Следните опции влияят на количеството дисково пространство, което OSCAR използва, и на времето, което отнема импортирането.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="463"/>
+        <location filename="../oscar/preferencesdialog.ui" line="466"/>
         <source>This makes OSCAR&apos;s data take around half as much space.
 But it makes import and day changing take longer.. 
 If you&apos;ve got a new computer with a small solid state disk, this is a good option.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="468"/>
+        <location filename="../oscar/preferencesdialog.ui" line="471"/>
         <source>Compress Session Data (makes OSCAR data smaller, but day changing slower.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="608"/>
+        <location filename="../oscar/preferencesdialog.ui" line="611"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes starting OSCAR a bit slower, by pre-loading all the summary data in advance, which speeds up overview browsing and a few other calculations later on. &lt;/p&gt;&lt;p&gt;If you have a large amount of data, it might be worth keeping this switched off, but if you typically like to view &lt;span style=&quot; font-style:italic;&quot;&gt;everything&lt;/span&gt; in overview, all the summary data still has to be loaded anyway. &lt;/p&gt;&lt;p&gt;Note this setting doesn&apos;t affect waveform and event data, which is always demand loaded as needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="972"/>
+        <location filename="../oscar/preferencesdialog.ui" line="975"/>
         <source>Custom CPAP User Event Flagging</source>
         <translation>Персонален избор за маркиране на CPAP събития</translation>
     </message>
@@ -3990,123 +3757,119 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2255"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2262"/>
         <source>Check for new version every</source>
         <translation>Проверка за нова версия всеки</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2278"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2285"/>
         <source>days.</source>
         <translation>дни.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2308"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2315"/>
         <source>Last Checked For Updates: </source>
         <translation>Последна проверка за обновления: </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2321"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2328"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2346"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2353"/>
         <source>I want to be notified of test versions. (Advanced users only please.)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Изглед</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2418"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2425"/>
         <source>Graph Settings</source>
         <translation>Графични настройки</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2434"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2441"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which tab to open on loading a profile. (Note: It will default to Profile if OSCAR is set to not open a profile on startup)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2692"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2699"/>
         <source>Bar Tops</source>
         <translation>Връх на стълб</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2697"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2704"/>
         <source>Line Chart</source>
         <translation>Линейна графика</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2787"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2794"/>
         <source>Overview Linecharts</source>
         <translation>Общ изглед линейни графики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2732"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2739"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This makes scrolling when zoomed in easier on sensitive bidirectional TouchPads&lt;/p&gt;&lt;p&gt;50ms is recommended value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Това прави по-лесно скролирането при увеличение когато се използва чувствителен двупосочен TouchPad&lt;/p&gt;&lt;p&gt;50мс е препоръчителната стойност.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2614"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2621"/>
         <source>Scroll Dampening</source>
         <translation>Плавност на скролиране</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2534"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2541"/>
         <source>Overlay Flags</source>
         <translation>Overlay маркери</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2544"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2551"/>
         <source>Line Thickness</source>
         <translation>Дебелина на линия</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2580"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2587"/>
         <source>The pixel thickness of line plots</source>
         <translation>Дебелина на пиксела в линейни графики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2836"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2846"/>
         <source>Pixmap caching is an graphics acceleration technique. May cause problems with font drawing in graph display area on your platform.</source>
         <translation>Pixmap кеширането е техника за графично ускорение. Може да причини проблеми с изрисуването на шрифтове в графиките.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2185"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2192"/>
         <source>Try changing this from the default setting (Desktop OpenGL) if you experience rendering problems with OSCAR&apos;s graphs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2944"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3030"/>
         <source>Fonts (Application wide settings)</source>
         <translation>Шрифтове (за тази програма)</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2560"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2567"/>
         <source>The visual method of displaying waveform overlay flags.
 </source>
         <translation>Визуален метод за показване на overlay вълни на маркери.
 </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2565"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2572"/>
         <source>Standard Bars</source>
         <translation>Стандартни стълбове</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2518"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2525"/>
         <source>Graph Height</source>
         <translation>Височина на графика</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2711"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2718"/>
         <source>Default display height of graphs in pixels</source>
         <translation>Стандартна височина на графиките в пиксели</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2626"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2633"/>
         <source>How long you want the tooltips to stay visible.</source>
         <translation>Колко дълго желаете да седят показани подсказките.</translation>
     </message>
@@ -4114,10 +3877,6 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <location filename="../oscar/preferencesdialog.ui" line="1942"/>
         <source>Events</source>
         <translation>Събития</translation>
-    </message>
-    <message>
-        <source>Reset &amp;Defaults</source>
-        <translation type="vanished">&amp;Възстановяване на настройки по подразбиране</translation>
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2008"/>
@@ -4156,77 +3915,77 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
         <translation>Маркиране при пулс под</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="810"/>
+        <location filename="../oscar/preferencesdialog.ui" line="813"/>
         <source>Calculate Unintentional Leaks When Not Present</source>
         <translation>Ръчно изчисляване за неумишлените течове</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="906"/>
+        <location filename="../oscar/preferencesdialog.ui" line="909"/>
         <source>4 cmH2O</source>
         <translation>4 cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="916"/>
+        <location filename="../oscar/preferencesdialog.ui" line="919"/>
         <source>20 cmH2O</source>
         <translation>20 cmH2O</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="948"/>
+        <location filename="../oscar/preferencesdialog.ui" line="951"/>
         <source>Note: A linear calculation method is used. Changing these values requires a recalculation.</source>
         <translation>Бележка: Използва се метод на линейни изчисления. Промяната на тези стойности изискват преизчисляване.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2604"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2611"/>
         <source>Tooltip Timeout</source>
         <translation>Време на показване на подсказка</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2684"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2691"/>
         <source>Graph Tooltips</source>
         <translation>Подсказки в графики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2570"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2577"/>
         <source>Top Markers</source>
         <translation>Топ маркери</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="272"/>
+        <location filename="../oscar/preferencesdialog.ui" line="275"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt;&quot;&gt;Sessions shorter in duration than this will not be displayed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Cantarell&apos;; font-size:11pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="423"/>
+        <location filename="../oscar/preferencesdialog.ui" line="426"/>
         <source>Changing SD Backup compression options doesn&apos;t automatically recompress backup data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="578"/>
+        <location filename="../oscar/preferencesdialog.ui" line="581"/>
         <source>Auto-Launch CPAP Importer after opening profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="618"/>
+        <location filename="../oscar/preferencesdialog.ui" line="621"/>
         <source>Automatically load last used profile on start-up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="645"/>
+        <location filename="../oscar/preferencesdialog.ui" line="648"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data that is somehow different from anything previously seen by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="648"/>
+        <location filename="../oscar/preferencesdialog.ui" line="651"/>
         <source>Warn when previously unseen data is encountered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="819"/>
+        <location filename="../oscar/preferencesdialog.ui" line="822"/>
         <source>Your masks vent rate at 20 cmH2O pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="875"/>
+        <location filename="../oscar/preferencesdialog.ui" line="878"/>
         <source>Your masks vent rate at 4 cmH2O pressure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4247,90 +4006,96 @@ If you&apos;ve got a new computer with a small solid state disk, this is a good 
     </message>
     <message>
         <location filename="../oscar/preferencesdialog.ui" line="2153"/>
+        <source>Use MessageBox to display Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2160"/>
         <source>Always save screenshots in the OSCAR Data folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2207"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2214"/>
         <source>Check For Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2222"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2229"/>
         <source>You are using a test version of OSCAR. Test versions check for updates automatically at least once every seven days.  You may set the interval to less than seven days.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2240"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2247"/>
         <source>Automatically check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2262"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2269"/>
         <source>How often OSCAR should check for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2343"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2350"/>
         <source>If you are interested in helping test new features and bugfixes early, click here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2359"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2366"/>
         <source>If you would like to help test early versions of OSCAR, please see the Wiki page about testing OSCAR.  We welcome everyone who would like to test OSCAR, help develop OSCAR, and help with translations to existing or new languages. https://www.sleepfiles.com/OSCAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2424"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2431"/>
         <source>On Opening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2437"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2441"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2444"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2448"/>
         <source>Profile</source>
         <translation>Профил</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2446"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2485"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2453"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2492"/>
         <source>Welcome</source>
         <translation>Добре дошли</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2451"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2490"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2458"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2497"/>
         <source>Daily</source>
         <translation>Дневна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2461"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2500"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2468"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2507"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2955"/>
         <source>Statistics</source>
         <translation>Статистики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2469"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2476"/>
         <source>Switch Tabs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2480"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2487"/>
         <source>No change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2508"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2515"/>
         <source>After Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2806"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2813"/>
         <source>Other Visual Settings</source>
         <translation>Други визауални настройки</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2812"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2819"/>
         <source>Anti-Aliasing applies smoothing to graph plots.. 
 Certain plots look more attractive with this on. 
 This also affects printed reports.
@@ -4343,56 +4108,57 @@ Try it and see if you like it.</source>
 Опитайте опцията за да прецените дали Ви допада.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2819"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2826"/>
         <source>Use Anti-Aliasing</source>
         <translation>Използване на заглаждане на ръбове</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2826"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2833"/>
         <source>Makes certain plots look more &quot;square waved&quot;.</source>
         <translation>Прави някои графики да изглеждат с по &quot;квадратни вълни&quot;.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2829"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2836"/>
         <source>Square Wave Plots</source>
         <translation>Графики с &quot;квадратни вълни&quot;</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2839"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2849"/>
         <source>Use Pixmap Caching</source>
         <translation>Използване на Pixmap кеширане</translation>
     </message>
     <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2859"/>
         <source>Animations &amp;&amp; Fancy Stuff</source>
-        <translation type="vanished">Анимации &amp;&amp; красоти</translation>
+        <translation>Анимации &amp;&amp; красоти</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2869"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2876"/>
         <source>Whether to allow changing yAxis scales by double clicking on yAxis labels</source>
         <translation>Да се позволи ли смяна на мащаба по абциса/ордината чрез двойно кликане върху етикетите</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2872"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2879"/>
         <source>Allow YAxis Scaling</source>
         <translation>Позволяване на мащабиране по ос/абциса</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2882"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2889"/>
         <source>Include Serial Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2179"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2186"/>
         <source>Graphics Engine (Requires Restart)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="70"/>
+        <location filename="../oscar/preferencesdialog.ui" line="73"/>
         <source>Import</source>
         <translation type="unfinished">Импорт</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="433"/>
+        <location filename="../oscar/preferencesdialog.ui" line="436"/>
         <source>Compress ResMed (EDF) backups to save disk space.
 Backed up EDF files are stored in the .gz format, 
 which is common on Mac  Linux platforms..
@@ -4402,7 +4168,7 @@ To use it with ResScan will require the .gz files to be uncompressed first..</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="475"/>
+        <location filename="../oscar/preferencesdialog.ui" line="478"/>
         <source>This maintains a backup of SD-card data for ResMed devices, 
 
 ResMed S9 series devices delete high resolution data older than 7 days, 
@@ -4413,22 +4179,22 @@ OSCAR can keep a copy of this data if you ever need to reinstall.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="635"/>
+        <location filename="../oscar/preferencesdialog.ui" line="638"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provide an alert when importing data from any device model that has not yet been tested by OSCAR developers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="638"/>
+        <location filename="../oscar/preferencesdialog.ui" line="641"/>
         <source>Warn when importing data from an untested device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="659"/>
+        <location filename="../oscar/preferencesdialog.ui" line="662"/>
         <source>CPAP</source>
         <translation type="unfinished">CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="803"/>
+        <location filename="../oscar/preferencesdialog.ui" line="806"/>
         <source>This calculation requires Total Leaks data to be provided by the CPAP device. (Eg, PRS1, but not ResMed, which has these already)
 
 The Unintentional Leak calculations used here are linear, they don&apos;t model the mask vent curve.
@@ -4437,19 +4203,19 @@ If you use a few different masks, pick average values instead. It should still b
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="967"/>
+        <location filename="../oscar/preferencesdialog.ui" line="970"/>
         <source>Enable/disable experimental event flagging enhancements. 
 It allows detecting borderline events, and some the device missed.
 This option must be enabled before import, otherwise a purge is required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1019"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1022"/>
         <source>This experimental option attempts to use OSCAR&apos;s event flagging system to improve device detected event positioning.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="1022"/>
+        <location filename="../oscar/preferencesdialog.ui" line="1025"/>
         <source>Resync Device Detected Events (Experimental)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4551,293 +4317,310 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2389"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2396"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2852"/>
-        <source>Animations  Fancy Stuff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2879"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2886"/>
         <source>Whether to include device serial number on device settings changes report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2889"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2896"/>
         <source>Print reports in black and white, which can be more legible on non-color printers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2892"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2899"/>
         <source>Print reports in black and white (monochrome)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2899"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2906"/>
         <source>For multiple sessions, displays a thin gray line for each session at the top of the Event Flag graph.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2902"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2909"/>
         <source>Enables SessionBar in Event Flags Graph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2909"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2916"/>
+        <source>Needed for high Resolution displays where title overwrites labels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2919"/>
+        <source>Disable daily graph titles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2926"/>
         <source> Enables High Resoluton Mode. Changes take effect when Oscar is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2912"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2929"/>
         <source>Enables High Resolutiom Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2974"/>
+        <source>Every 3rd Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../oscar/preferencesdialog.ui" line="2979"/>
+        <source>Every 2nd Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="2984"/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="3008"/>
+        <source> Alternating Color Spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/preferencesdialog.ui" line="3065"/>
         <source>Font</source>
         <translation>Шрифт</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2998"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3084"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3017"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3103"/>
         <source>Bold  </source>
         <translation>Удебелен  </translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3039"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3125"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3052"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3138"/>
         <source>Application</source>
         <translation>Приложение</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3116"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3202"/>
         <source>Graph Text</source>
         <translation>Текст към графики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3177"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3263"/>
         <source>Graph Titles</source>
         <translation>Заглавие към графики</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3238"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3324"/>
         <source>Big  Text</source>
         <translation>Голям текст</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3305"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="499"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="631"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3391"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="503"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="635"/>
         <source>Details</source>
         <translation>Детайли</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3337"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3423"/>
         <source>Cancel</source>
         <translation type="unfinished">Отказ</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="3344"/>
+        <location filename="../oscar/preferencesdialog.ui" line="3430"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="vanished">&amp;Отказ</translation>
-    </message>
-    <message>
-        <source>&amp;Ok</source>
-        <translation type="vanished">O&amp;K</translation>
-    </message>
-    <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="494"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="625"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="498"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="629"/>
         <source>Name</source>
         <translation>Име</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="495"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="626"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="499"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="630"/>
         <source>Color</source>
         <translation>Цвят</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="497"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="501"/>
         <source>Flag Type</source>
         <translation>Тип маркер</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="498"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="630"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="502"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="634"/>
         <source>Label</source>
         <translation>Етикет</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="515"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="519"/>
         <source>CPAP Events</source>
         <translation>CPAP събития</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="516"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="520"/>
         <source>Oximeter Events</source>
         <translation>Оксиметрични събития</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="517"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="521"/>
         <source>Positional Events</source>
         <translation>Позиционни събития</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="518"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="522"/>
         <source>Sleep Stage Events</source>
         <translation>Събития относно фази на сън</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="519"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="523"/>
         <source>Unknown Events</source>
         <translation>Непознати събития</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="691"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="695"/>
         <source>Double click to change the descriptive name this channel.</source>
         <translation>Направете двойно кликане с мишката за да смените описателното име на този канал.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="569"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="698"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="573"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="702"/>
         <source>Double click to change the default color for this channel plot/flag/data.</source>
         <translation>Направете двойно кликане с мишката за да смените цвят за графика/маркер/данни в този канал.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.ui" line="2456"/>
-        <location filename="../oscar/preferencesdialog.ui" line="2495"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="496"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="627"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2463"/>
+        <location filename="../oscar/preferencesdialog.ui" line="2502"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="500"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="631"/>
         <source>Overview</source>
         <translation>Общ преглед</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="58"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="59"/>
         <source>Enables Custom UserFlags displayed in the statistics Therapy Efficacy section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="87"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="88"/>
         <source>No CPAP devices detected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="88"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="89"/>
         <source>Will you be using a ResMed brand device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="95"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="96"/>
         <source>&lt;p&gt;&lt;b&gt;Please Note:&lt;/b&gt; OSCAR&apos;s advanced session splitting capabilities are not possible with &lt;b&gt;ResMed&lt;/b&gt; devices due to a limitation in the way their settings and summary data is stored, and therefore they have been disabled for this profile.&lt;/p&gt;&lt;p&gt;On ResMed devices, days will &lt;b&gt;split at noon&lt;/b&gt; like in ResMed&apos;s commercial software.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="561"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="565"/>
         <source>Double click to change the descriptive name the &apos;%1&apos; channel.</source>
         <translation>Направете двойно кликане с мишката за да смените описателното име за канал &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="574"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="578"/>
         <source>Whether this flag has a dedicated overview chart.</source>
         <translation>Дали този флаг да има собствена графика.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="584"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="588"/>
         <source>Here you can change the type of flag shown for this event</source>
         <translation>От тук можете да промените какъв тип маркер да се показва за това събитие</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="589"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="722"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="593"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="726"/>
         <source>This is the short-form label to indicate this channel on screen.</source>
         <translation>Това е кратък етикет, който ще се показва за този канал на екрана.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="595"/>
-        <location filename="../oscar/preferencesdialog.cpp" line="728"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="599"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="732"/>
         <source>This is a description of what this channel does.</source>
         <translation>Това е описание какво прави този канал.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="628"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="632"/>
         <source>Lower</source>
         <translation>Долна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="629"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="633"/>
         <source>Upper</source>
         <translation>Горна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="648"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="652"/>
         <source>CPAP Waveforms</source>
         <translation>CPAP вълна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="649"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="653"/>
         <source>Oximeter Waveforms</source>
         <translation>Оксиметрична вълна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="650"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="654"/>
         <source>Positional Waveforms</source>
         <translation>Позиционна вълна</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="651"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="655"/>
         <source>Sleep Stage Waveforms</source>
         <translation>Вълна за фази на съня</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="707"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="711"/>
         <source>Whether a breakdown of this waveform displays in overview.</source>
         <translation>Дали разбивката на тази вълна да се показва в преглед.</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="712"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="716"/>
         <source>Here you can set the &lt;b&gt;lower&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
         <translation>Тук можете да укажете &lt;b&gt;долна&lt;/b&gt; граница, която да се използва за калкулация на %1 вълната</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="717"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="721"/>
         <source>Here you can set the &lt;b&gt;upper&lt;/b&gt; threshold used for certain calculations on the %1 waveform</source>
         <translation>Тук можете да укажете &lt;b&gt;горна&lt;b&gt; граница, която да се използва за калкулация на %1 вълната</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="827"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="831"/>
         <source>Data Processing Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="828"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="832"/>
         <source>A data re/decompression proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
 Are you sure you want to make these changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="836"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="840"/>
         <source>Data Reindex Required</source>
         <translation>Необходимо е реиндексиране на данните</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="837"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="841"/>
         <source>A data reindexing proceedure is required to apply these changes. This operation may take a couple of minutes to complete.
 
 Are you sure you want to make these changes?</source>
@@ -4846,116 +4629,116 @@ Are you sure you want to make these changes?</source>
 Желаете ли да се извършат тези промени?</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="843"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="847"/>
         <source>Restart Required</source>
         <translation>Необходим е рестарт</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1211"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1227"/>
         <source>ResMed S9 devices routinely delete certain data from your SD card older than 7 and 30 days (depending on resolution).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1212"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1228"/>
         <source> If you ever need to reimport this data again (whether in OSCAR or ResScan) this data won&apos;t come back.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1213"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1229"/>
         <source> If you need to conserve disk space, please remember to carry out manual backups.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1214"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1230"/>
         <source> Are you sure you want to disable these backups?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1294"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1310"/>
         <source>Switching off backups is not a good idea, because OSCAR needs these to rebuild the database if errors are found.
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1295"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1311"/>
         <source>Are you really sure you want to do this?</source>
         <translation>Сигурни ли сте че желаете да направите това?</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="71"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="72"/>
         <source>Flag</source>
         <translation>Флаг</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="49"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="50"/>
         <source>Clinical Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="50"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="51"/>
         <source>Reports what is on the data card, all of it including any and all data deselected in the Permissive mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="51"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="52"/>
         <source>Basically replicates the reports and data stored on the devices data card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="52"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="53"/>
         <source>This includes pap devices, oximeters, etc. Compliance reports fall under this mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="53"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="54"/>
         <source>Compliance reports always include all data within the chosen Compliance period, even if otherwise deselected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="55"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="56"/>
         <source>Permissive Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="56"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="57"/>
         <source>Allows user to select which data sets/ sessions to be used for calculations and display.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="57"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="58"/>
         <source>Additional charts and calculations may be available that are not available from the vendor data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="72"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="73"/>
         <source>Minor Flag</source>
         <translation>Минимален маркер</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="73"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="74"/>
         <source>Span</source>
         <translation>Разделяне</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="74"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="75"/>
         <source>Always Minor</source>
         <translation>Постоянен маркер</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="322"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="326"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="844"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="848"/>
         <source>One or more of the changes you have made will require this application to be restarted, in order for these changes to come into effect.
 
 Would you like do this now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1210"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1226"/>
         <source>This may not be a good idea</source>
         <translation>Това може би не е добра идея</translation>
     </message>
@@ -4991,10 +4774,6 @@ Would you like do this now?</source>
         <location filename="../oscar/profileselector.ui" line="240"/>
         <source>New Profile</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Edit Profile</source>
-        <translation type="vanished">&amp;Редактиране на профил</translation>
     </message>
     <message>
         <location filename="../oscar/profileselector.ui" line="258"/>
@@ -5221,8 +5000,8 @@ Would you like do this now?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="820"/>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1249"/>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="822"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1238"/>
         <source>No Data</source>
         <translation>Няма данни</translation>
     </message>
@@ -5976,7 +5755,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/common.cpp" line="823"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1024"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1028"/>
         <source>SensAwake</source>
         <translation>Събуждания</translation>
     </message>
@@ -6091,6 +5870,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2837"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="2839"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="115"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="830"/>
         <source>Mode</source>
         <translation>Режим</translation>
     </message>
@@ -6340,7 +6120,7 @@ TTIA: %1</translation>
         <location filename="../oscar/SleepLib/loader_plugins/prisma_loader.cpp" line="645"/>
         <location filename="../oscar/SleepLib/loader_plugins/prs1_loader.cpp" line="906"/>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="780"/>
-        <location filename="../oscar/mainwindow.cpp" line="2291"/>
+        <location filename="../oscar/mainwindow.cpp" line="2322"/>
         <source>Importing Sessions...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6675,8 +6455,8 @@ TTIA: %1</translation>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/intellipap_loader.cpp" line="2748"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="368"/>
-        <location filename="../oscar/mainwindow.cpp" line="705"/>
-        <location filename="../oscar/mainwindow.cpp" line="2313"/>
+        <location filename="../oscar/mainwindow.cpp" line="709"/>
+        <location filename="../oscar/mainwindow.cpp" line="2344"/>
         <source>Finishing up...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7355,77 +7135,77 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="545"/>
+        <location filename="../oscar/main.cpp" line="546"/>
         <source>OSCAR will set up a folder for your data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="548"/>
+        <location filename="../oscar/main.cpp" line="549"/>
         <source>We suggest you use this folder: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="549"/>
+        <location filename="../oscar/main.cpp" line="550"/>
         <source>Click Ok to accept this, or No if you want to use a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="560"/>
+        <location filename="../oscar/main.cpp" line="561"/>
         <source>Next time you run OSCAR, you will be asked again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="601"/>
+        <location filename="../oscar/main.cpp" line="602"/>
         <source>Migrate SleepyHead or OSCAR Data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="602"/>
+        <location filename="../oscar/main.cpp" line="603"/>
         <source>On the next screen OSCAR will ask you to select a folder with SleepyHead or OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="603"/>
+        <location filename="../oscar/main.cpp" line="604"/>
         <source>Click [OK] to go to the next screen or [No] if you do not wish to use any SleepyHead or OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="612"/>
+        <location filename="../oscar/main.cpp" line="613"/>
         <source>Unable to create the OSCAR data folder at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="622"/>
+        <location filename="../oscar/main.cpp" line="623"/>
         <source>Unable to write to OSCAR data directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="623"/>
+        <location filename="../oscar/main.cpp" line="624"/>
         <source>Error code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="624"/>
+        <location filename="../oscar/main.cpp" line="625"/>
         <source>OSCAR cannot continue and is exiting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="635"/>
+        <location filename="../oscar/main.cpp" line="636"/>
         <source>Unable to write to debug log. You can still use the debug pane (Help/Troubleshooting/Show Debug Pane) but the debug log will not be written to disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="695"/>
+        <location filename="../oscar/main.cpp" line="697"/>
         <source>Version &quot;%1&quot; is invalid, cannot continue!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="704"/>
+        <location filename="../oscar/main.cpp" line="706"/>
         <source>The version of OSCAR you are running (%1) is OLDER than the one used to create this data (%2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="555"/>
+        <location filename="../oscar/main.cpp" line="556"/>
         <source>Choose or create a new folder for OSCAR data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7440,32 +7220,32 @@ TTIA: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="546"/>
+        <location filename="../oscar/main.cpp" line="547"/>
         <source>If you have been using SleepyHead or an older version of OSCAR,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="547"/>
+        <location filename="../oscar/main.cpp" line="548"/>
         <source>OSCAR can copy your old data to this folder later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="559"/>
+        <location filename="../oscar/main.cpp" line="560"/>
         <source>As you did not select a data folder, OSCAR will exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="571"/>
+        <location filename="../oscar/main.cpp" line="572"/>
         <source>The folder you chose is not empty, nor does it already contain valid OSCAR data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="592"/>
+        <location filename="../oscar/main.cpp" line="593"/>
         <source>Data directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="708"/>
+        <location filename="../oscar/main.cpp" line="710"/>
         <source>It is likely that doing this will cause data corruption, are you sure you want to do this?</source>
         <translation>Много е вероятно това да причини повреда на данни, сигурни ли сте че искате да продължите?</translation>
     </message>
@@ -7475,82 +7255,82 @@ TTIA: %1</translation>
         <translation>Въпрос</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="558"/>
-        <location filename="../oscar/main.cpp" line="611"/>
-        <location filename="../oscar/main.cpp" line="626"/>
+        <location filename="../oscar/main.cpp" line="559"/>
+        <location filename="../oscar/main.cpp" line="612"/>
+        <location filename="../oscar/main.cpp" line="627"/>
         <source>Exiting</source>
         <translation>Изход</translation>
     </message>
     <message>
-        <location filename="../oscar/main.cpp" line="572"/>
+        <location filename="../oscar/main.cpp" line="573"/>
         <source>Are you sure you want to use this folder?</source>
         <translation>Сигурни ли сте, че желаете да използвате тази папка?</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="273"/>
+        <location filename="../oscar/mainwindow.cpp" line="275"/>
         <source>OSCAR Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="273"/>
+        <location filename="../oscar/mainwindow.cpp" line="275"/>
         <source>Don&apos;t forget to place your datacard back in your CPAP device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="459"/>
+        <location filename="../oscar/mainwindow.cpp" line="463"/>
         <source>You can only work with one instance of an individual OSCAR profile at a time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="460"/>
+        <location filename="../oscar/mainwindow.cpp" line="464"/>
         <source>If you are using cloud storage, make sure OSCAR is closed and syncing has completed first on the other computer before proceeding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="472"/>
+        <location filename="../oscar/mainwindow.cpp" line="476"/>
         <source>Loading profile &quot;%1&quot;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="919"/>
+        <location filename="../oscar/mainwindow.cpp" line="923"/>
         <source>Chromebook file system detected, but no removable device found
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="920"/>
+        <location filename="../oscar/mainwindow.cpp" line="924"/>
         <source>You must share your SD card with Linux using the ChromeOS Files program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2095"/>
+        <location filename="../oscar/mainwindow.cpp" line="2100"/>
         <source>Recompressing Session Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2682"/>
+        <location filename="../oscar/mainwindow.cpp" line="2747"/>
         <source>Please select a location for your zip other than the data card itself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="2729"/>
-        <location filename="../oscar/mainwindow.cpp" line="2779"/>
-        <location filename="../oscar/mainwindow.cpp" line="2838"/>
+        <location filename="../oscar/mainwindow.cpp" line="2794"/>
+        <location filename="../oscar/mainwindow.cpp" line="2844"/>
+        <location filename="../oscar/mainwindow.cpp" line="2903"/>
         <source>Unable to create zip!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1247"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1263"/>
         <source>Are you sure you want to reset all your channel colors and settings to defaults?</source>
         <translation>Сигурни ли сте че желаете да възстановите всички цветове на канали и настройки към стойностите им по подразбиране?</translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1257"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1273"/>
         <source>Are you sure you want to reset all your oximetry settings to defaults?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/preferencesdialog.cpp" line="1336"/>
+        <location filename="../oscar/preferencesdialog.cpp" line="1352"/>
         <source>Are you sure you want to reset all your waveform channel colors and settings to defaults?</source>
         <translation>Сигурни ли сте че желаете да възстановите фабричните настройки за цветовете на каналите на вълните?</translation>
     </message>
@@ -7641,7 +7421,7 @@ TTIA: %1</translation>
         <translation>Цял ден</translation>
     </message>
     <message>
-        <location filename="../oscar/reports.cpp" line="568"/>
+        <location filename="../oscar/reports.cpp" line="566"/>
         <source>Page %1 of %2</source>
         <translation>Страница %1 от %2</translation>
     </message>
@@ -7840,7 +7620,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="211"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1041"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1045"/>
         <location filename="../oscar/SleepLib/schema.cpp" line="154"/>
         <source>Ramp</source>
         <translation>Рампинг</translation>
@@ -8653,32 +8433,32 @@ TTIA: %1</translation>
         <translation>Ъгъл на изправяне в градуси</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1008"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="997"/>
         <source>Days: %1</source>
         <translation>Дни: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1121"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1110"/>
         <source>(Sess: %1)</source>
         <translation>(Сесия: %1)</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1129"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1118"/>
         <source>Bedtime: %1</source>
         <translation>Лягане %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1131"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1120"/>
         <source>Waketime: %1</source>
         <translation>Ставане %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1243"/>
+        <location filename="../oscar/Graphs/gOverviewGraph.cpp" line="1232"/>
         <source>(Summary Only)</source>
         <translation>(само резюме)</translation>
     </message>
     <message>
-        <location filename="../oscar/mainwindow.cpp" line="458"/>
+        <location filename="../oscar/mainwindow.cpp" line="462"/>
         <source>There is a lockfile already present for this profile &apos;%1&apos;, claimed on &apos;%2&apos;.</source>
         <translation>Вече съществува lockfile за този профил &apos;%1&apos;, предявен на &apos;%2&apos;.</translation>
     </message>
@@ -8698,58 +8478,64 @@ TTIA: %1</translation>
         <translation>Автоматичен Bi-Level (променлив PS)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1539"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1477"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1519"/>
+        <source>ERROR:NOT AVAILABLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/day.cpp" line="1544"/>
         <source>varies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1573"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1578"/>
         <source>n/a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1590"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1595"/>
         <source>Fixed %1 (%2)</source>
         <translation>Фиксиран %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1593"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1598"/>
         <source>Min %1 Max %2 (%3)</source>
         <translation>Мин %1 Макс %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1597"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1602"/>
         <source>EPAP %1 IPAP %2 (%3)</source>
         <translation>EPAP %1 IPAP %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1601"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1606"/>
         <source>PS %1 over %2-%3 (%4)</source>
         <translation>PS %1 над %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1606"/>
-        <location filename="../oscar/SleepLib/day.cpp" line="1620"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1611"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1625"/>
         <source>Min EPAP %1 Max IPAP %2 PS %3-%4 (%5)</source>
         <translation>Мин EPAP %1 Макс IPAP %2 PS %3-%4 (%5)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1611"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1616"/>
         <source>Min EEPAP %1 Max EEPAP %2 PDIFF %3-%4 (%5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1616"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1621"/>
         <source>EPAP %1 PS %2-%3 (%4)</source>
         <translation>EPAP %1 PS %2-%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1631"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1636"/>
         <source>EPAP %1 IPAP %2-%3 (%4)</source>
         <translation>EPAP %1 IPAP %2 %3 (%4)</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/day.cpp" line="1637"/>
+        <location filename="../oscar/SleepLib/day.cpp" line="1642"/>
         <source>EPAP %1-%2 IPAP %3-%4 (%5)</source>
         <translation>EPAP %1  %2 IPAP %3 %4 (%5)</translation>
     </message>
@@ -8857,7 +8643,6 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.h" line="126"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="67"/>
         <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.h" line="98"/>
         <source>EPR: </source>
         <translation>EPR: </translation>
@@ -8904,8 +8689,25 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="115"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="830"/>
         <source>CPAP Mode</source>
         <translation>CPAP режим</translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="121"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
+        <source>BiLevel-T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="122"/>
+        <source>BiLevel-S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="123"/>
+        <source>BiLevel-S/T</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="125"/>
@@ -8934,7 +8736,7 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="134"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1034"/>
         <source>EPR</source>
         <translation>EPR</translation>
     </message>
@@ -8950,12 +8752,13 @@ TTIA: %1</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="142"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1040"/>
         <source>EPR Level</source>
         <translation>EPR степен</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="142"/>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="846"/>
         <source>Exhale Pressure Relief Level</source>
         <translation>Степен на облекчение на налягането при издишане</translation>
     </message>
@@ -9122,22 +8925,6 @@ TTIA: %1</translation>
         <translation type="unfinished">Стандартен</translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="121"/>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="124"/>
-        <source>BiPAP-T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="122"/>
-        <source>BiPAP-S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="123"/>
-        <source>BiPAP-S/T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../oscar/SleepLib/loader_plugins/resmed_loader.cpp" line="224"/>
         <source>SmartStop</source>
         <translation type="unfinished"></translation>
@@ -9234,48 +9021,48 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1621"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1626"/>
         <source>Your machine doesn&apos;t record data to graph in Daily View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1624"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1629"/>
         <source>There is no data to graph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1771"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1776"/>
         <source>d MMM yyyy [ %1 - %2 ]</source>
         <translation>d MMM yyyy [ %1 - %2 ]</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2442"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2447"/>
         <source>Hide All Events</source>
         <translation>Скрий всички събития</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2443"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2448"/>
         <source>Show All Events</source>
         <translation>Покажи всички събития</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2784"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2789"/>
         <source>Unpin %1 Graph</source>
         <translation>Откачи графика %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2786"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2861"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2791"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2866"/>
         <source>Popout %1 Graph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2863"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2868"/>
         <source>Pin %1 Graph</source>
         <translation>Закачи графика %1</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="809"/>
+        <location filename="../oscar/Graphs/MinutesAtPressure.cpp" line="811"/>
         <location filename="../oscar/Graphs/gLineChart.cpp" line="1055"/>
         <source>Plots Disabled</source>
         <translation>Графиките са изключени</translation>
@@ -9304,45 +9091,6 @@ popout window, delete it, then pop out this graph again.</source>
         <location filename="../oscar/Graphs/gdailysummary.cpp" line="264"/>
         <source>Machine Information</source>
         <translation>Информация за апарата</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="29"/>
-        <source>Journal Data</source>
-        <translation>Журнални данни</translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="47"/>
-        <source>OSCAR found an old Journal folder, but it looks like it&apos;s been renamed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="49"/>
-        <source>OSCAR will not touch this folder, and will create a new one instead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="50"/>
-        <source>Please be careful when playing in OSCAR&apos;s profile folders :-P</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="57"/>
-        <source>For some reason, OSCAR couldn&apos;t find a journal object record in your profile, but did find multiple Journal data folders.
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="58"/>
-        <source>OSCAR picked only the first one of these, and will use it in future:
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/journal.cpp" line="60"/>
-        <source>If your old data is missing, copy the contents of all the other Journal_XXXXXXX folders to this one manually.</source>
-        <translation>Ако старите Ви данни липсват копирайте съдържанието на всички останали Journal_XXXXXXX папки в тази ръчно.</translation>
     </message>
     <message>
         <location filename="../oscar/SleepLib/loader_plugins/cms50f37_loader.h" line="43"/>
@@ -9465,42 +9213,42 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="283"/>
+        <location filename="../oscar/statistics.cpp" line="317"/>
         <source>Permissive Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="286"/>
+        <location filename="../oscar/statistics.cpp" line="320"/>
         <source>Total disabled sessions: %1, found in %2 days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="288"/>
+        <location filename="../oscar/statistics.cpp" line="322"/>
         <source>Total disabled sessions: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="291"/>
+        <location filename="../oscar/statistics.cpp" line="325"/>
         <source>Duration of longest disabled session: %1 minutes, Total duration of all disabled sessions: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="294"/>
+        <location filename="../oscar/statistics.cpp" line="328"/>
         <source>The reporting period is %1 days between %2 and %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="304"/>
+        <location filename="../oscar/statistics.cpp" line="338"/>
         <source>Updating Statistics cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="908"/>
+        <location filename="../oscar/statistics.cpp" line="953"/>
         <source>Usage Statistics</source>
         <translation type="unfinished">Статистики за употреба</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1097"/>
+        <location filename="../oscar/statistics.cpp" line="1142"/>
         <source>Everything</source>
         <translation type="unfinished">Всичко</translation>
     </message>
@@ -9586,23 +9334,23 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1022"/>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1023"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1026"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1027"/>
         <source>SensAwake level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1030"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1034"/>
         <source>Expiratory Relief</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1036"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1040"/>
         <source>Expiratory Relief Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1048"/>
+        <location filename="../oscar/SleepLib/loader_plugins/sleepstyle_loader.cpp" line="1052"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9617,24 +9365,24 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2602"/>
+        <location filename="../oscar/daily.cpp" line="2701"/>
         <location filename="../oscar/overview.cpp" line="471"/>
         <source>%1 Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2606"/>
+        <location filename="../oscar/daily.cpp" line="2705"/>
         <location filename="../oscar/overview.cpp" line="475"/>
         <source>%1 of %2 Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2633"/>
+        <location filename="../oscar/daily.cpp" line="2732"/>
         <source>%1 Event Types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/daily.cpp" line="2637"/>
+        <location filename="../oscar/daily.cpp" line="2736"/>
         <source>%1 of %2 Event Types</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9649,18 +9397,13 @@ popout window, delete it, then pop out this graph again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="58"/>
-        <source>Resvent/Hoffrichter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="58"/>
-        <source>iBreeze/Point3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../oscar/highresolution.cpp" line="71"/>
+        <location filename="../oscar/highresolution.cpp" line="69"/>
         <source>High Resolution Mode change will take effect when OSCAR is restarted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/highresolution.cpp" line="70"/>
+        <source>Restart Oscar now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9681,6 +9424,46 @@ popout window, delete it, then pop out this graph again.</source>
     <message>
         <location filename="../oscar/highresolution.cpp" line="87"/>
         <source>High Resolution Mode will be Disabled after Oscar is restarted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/journal.cpp" line="168"/>
+        <source>%1 days Journal Data was saved in file %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="839"/>
+        <source>iPR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="839"/>
+        <source>Resvent Exhale Pressure Relief</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.cpp" line="846"/>
+        <source>iPR Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="125"/>
+        <source>Resvent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="125"/>
+        <source>iBreeze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/SleepLib/loader_plugins/resvent_loader.h" line="133"/>
+        <source>IPR: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/notifyMessageBox.cpp" line="18"/>
+        <source>Notifcation expires in %1 seconds.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10275,421 +10058,429 @@ popout window, delete it, then pop out this graph again.</source>
 <context>
     <name>Statistics</name>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1469"/>
+        <location filename="../oscar/statistics.cpp" line="1513"/>
         <source>Details</source>
         <translation>Детайли</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1421"/>
+        <location filename="../oscar/statistics.cpp" line="1465"/>
         <source>Most Recent</source>
         <translation>Последен ден</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="711"/>
+        <location filename="../oscar/statistics.cpp" line="752"/>
+        <location filename="../oscar/statistics.cpp" line="823"/>
         <source>Total Days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="712"/>
+        <location filename="../oscar/statistics.cpp" line="753"/>
+        <location filename="../oscar/statistics.cpp" line="824"/>
         <source>Used Days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="713"/>
-        <location filename="../oscar/statistics.cpp" line="718"/>
+        <location filename="../oscar/statistics.cpp" line="756"/>
+        <location filename="../oscar/statistics.cpp" line="757"/>
         <source>Used Days %1%2 hrs/day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="715"/>
+        <location filename="../oscar/statistics.cpp" line="759"/>
         <source>Percent Total Days %1%2 hrs/day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="716"/>
+        <location filename="../oscar/statistics.cpp" line="760"/>
         <source>Percent Used Days %1%2 hrs/day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="719"/>
+        <location filename="../oscar/statistics.cpp" line="755"/>
+        <location filename="../oscar/statistics.cpp" line="825"/>
         <source>Days Not Used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="722"/>
+        <location filename="../oscar/statistics.cpp" line="763"/>
         <source>Median Hours per Night</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="724"/>
+        <location filename="../oscar/statistics.cpp" line="765"/>
         <source>Therapy Efficacy</source>
         <translation>Ефикасност на терапията</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="731"/>
+        <location filename="../oscar/statistics.cpp" line="772"/>
         <source>AHI Median</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1423"/>
+        <location filename="../oscar/statistics.cpp" line="1467"/>
         <source>Last 30 Days</source>
         <translation>Последни 30 дни</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1426"/>
+        <location filename="../oscar/statistics.cpp" line="1470"/>
         <source>Last Year</source>
         <translation>Последна година</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="798"/>
-        <location filename="../oscar/statistics.cpp" line="799"/>
+        <location filename="../oscar/statistics.cpp" line="843"/>
+        <location filename="../oscar/statistics.cpp" line="844"/>
         <source>Average %1</source>
         <translation>Средно %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="694"/>
+        <location filename="../oscar/statistics.cpp" line="735"/>
         <source>CPAP Statistics</source>
         <translation>CPAP Статистики</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="709"/>
-        <location filename="../oscar/statistics.cpp" line="1671"/>
+        <location filename="../oscar/statistics.cpp" line="750"/>
+        <location filename="../oscar/statistics.cpp" line="1720"/>
         <source>CPAP Usage</source>
         <translation>Употреба на CPAP</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="721"/>
+        <location filename="../oscar/statistics.cpp" line="762"/>
         <source>Average Hours per Night</source>
         <translation>Часове средно за нощ</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="747"/>
+        <location filename="../oscar/statistics.cpp" line="788"/>
         <source>Leak Statistics</source>
         <translation>Статистики за изтекъл въздух</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="752"/>
+        <location filename="../oscar/statistics.cpp" line="793"/>
         <source>Pressure Statistics</source>
         <translation>Статистики за налягане</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="777"/>
+        <location filename="../oscar/statistics.cpp" line="818"/>
         <source>Oximeter Statistics</source>
         <translation>Статистики за оксиметър</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="781"/>
+        <location filename="../oscar/statistics.cpp" line="822"/>
+        <source>Oximeter Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../oscar/statistics.cpp" line="826"/>
         <source>Blood Oxygen Saturation</source>
         <translation>Кислородна сатурация</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="786"/>
+        <location filename="../oscar/statistics.cpp" line="831"/>
         <source>Pulse Rate</source>
         <translation>Пулс</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="797"/>
+        <location filename="../oscar/statistics.cpp" line="842"/>
         <source>%1 Median</source>
         <translation>%1 медиана</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="801"/>
+        <location filename="../oscar/statistics.cpp" line="846"/>
         <source>Min %1</source>
         <translation>Мин %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="802"/>
+        <location filename="../oscar/statistics.cpp" line="847"/>
         <source>Max %1</source>
         <translation>Макс %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="803"/>
+        <location filename="../oscar/statistics.cpp" line="848"/>
         <source>%1 Index</source>
         <translation>%1 индекс</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="804"/>
+        <location filename="../oscar/statistics.cpp" line="849"/>
         <source>% of time in %1</source>
         <translation>% от времето в %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="805"/>
+        <location filename="../oscar/statistics.cpp" line="850"/>
         <source>% of time above %1 threshold</source>
         <translation>% от времето над праг %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="806"/>
+        <location filename="../oscar/statistics.cpp" line="851"/>
         <source>% of time below %1 threshold</source>
         <translation>% от времето под праг %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="828"/>
+        <location filename="../oscar/statistics.cpp" line="873"/>
         <source>Name: %1, %2</source>
         <translation>Име: %1, %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="830"/>
+        <location filename="../oscar/statistics.cpp" line="875"/>
         <source>DOB: %1</source>
         <translation>Дата на раждане: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="833"/>
+        <location filename="../oscar/statistics.cpp" line="878"/>
         <source>Phone: %1</source>
         <translation>Телефон: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="836"/>
+        <location filename="../oscar/statistics.cpp" line="881"/>
         <source>Email: %1</source>
         <translation>E-мейл: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="839"/>
+        <location filename="../oscar/statistics.cpp" line="884"/>
         <source>Address:</source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="928"/>
+        <location filename="../oscar/statistics.cpp" line="973"/>
         <source>This report was prepared on %1 by OSCAR %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1149"/>
+        <location filename="../oscar/statistics.cpp" line="1194"/>
         <source>Device Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1210"/>
+        <location filename="../oscar/statistics.cpp" line="1255"/>
         <source>Changes to Device Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1293"/>
+        <location filename="../oscar/statistics.cpp" line="1338"/>
         <source>Oscar has no data to report :(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1428"/>
+        <location filename="../oscar/statistics.cpp" line="1472"/>
         <source>Everything</source>
         <translation type="unfinished">Всичко</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1484"/>
+        <location filename="../oscar/statistics.cpp" line="1528"/>
         <source>Database has No %1 data available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1487"/>
+        <location filename="../oscar/statistics.cpp" line="1531"/>
         <source>Database has %1 day of %2 Data on %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1493"/>
+        <location filename="../oscar/statistics.cpp" line="1537"/>
         <source>Database has %1 days of %2 Data, between %3 and %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1674"/>
+        <location filename="../oscar/statistics.cpp" line="1723"/>
         <source>Total Days: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1675"/>
+        <location filename="../oscar/statistics.cpp" line="1724"/>
         <source>Days Not Used: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1677"/>
+        <location filename="../oscar/statistics.cpp" line="1726"/>
         <source>Days Used: %1</source>
         <translation>Дни употреба: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1678"/>
+        <location filename="../oscar/statistics.cpp" line="1727"/>
         <source>Days %1 %2 %3%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1679"/>
-        <location filename="../oscar/statistics.cpp" line="1680"/>
+        <location filename="../oscar/statistics.cpp" line="1728"/>
+        <location filename="../oscar/statistics.cpp" line="1729"/>
         <source>Days %1 %2 Hours: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1909"/>
+        <location filename="../oscar/statistics.cpp" line="1958"/>
         <source>Best Device Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1921"/>
+        <location filename="../oscar/statistics.cpp" line="1970"/>
         <source>Worst Device Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1703"/>
+        <location filename="../oscar/statistics.cpp" line="1752"/>
         <source>Days AHI of 5 or greater: %1</source>
         <translation>Дни с AHI 5 или по-голям: %1</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1710"/>
+        <location filename="../oscar/statistics.cpp" line="1759"/>
         <source>Best AHI</source>
         <translation>Най-добро AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1714"/>
-        <location filename="../oscar/statistics.cpp" line="1726"/>
+        <location filename="../oscar/statistics.cpp" line="1763"/>
+        <location filename="../oscar/statistics.cpp" line="1775"/>
         <source>Date: %1 AHI: %2</source>
         <translation>Дата: %1 AHI: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1720"/>
+        <location filename="../oscar/statistics.cpp" line="1769"/>
         <source>Worst AHI</source>
         <translation>Най-лошо AHI</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1757"/>
+        <location filename="../oscar/statistics.cpp" line="1806"/>
         <source>Best Flow Limitation</source>
         <translation>Най-добро ограничение на дебита</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1761"/>
-        <location filename="../oscar/statistics.cpp" line="1774"/>
+        <location filename="../oscar/statistics.cpp" line="1810"/>
+        <location filename="../oscar/statistics.cpp" line="1823"/>
         <source>Date: %1 FL: %2</source>
         <translation>Дата: %1 FL: %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1767"/>
+        <location filename="../oscar/statistics.cpp" line="1816"/>
         <source>Worst Flow Limtation</source>
         <translation>Най-лошо ограничение на дебита</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1779"/>
+        <location filename="../oscar/statistics.cpp" line="1828"/>
         <source>No Flow Limitation on record</source>
         <translation>Без запис за ограничение на дебита</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1800"/>
+        <location filename="../oscar/statistics.cpp" line="1849"/>
         <source>Worst Large Leaks</source>
         <translation>Най-лоши големи течове</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1808"/>
+        <location filename="../oscar/statistics.cpp" line="1857"/>
         <source>Date: %1 Leak: %2%</source>
         <translation>Дата: %1 Течове: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1814"/>
+        <location filename="../oscar/statistics.cpp" line="1863"/>
         <source>No Large Leaks on record</source>
         <translation>Без запис за големи течове</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1837"/>
+        <location filename="../oscar/statistics.cpp" line="1886"/>
         <source>Worst CSR</source>
         <translation>Най-лошо CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1845"/>
+        <location filename="../oscar/statistics.cpp" line="1894"/>
         <source>Date: %1 CSR: %2%</source>
         <translation>Дата: %1 CSR: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1850"/>
+        <location filename="../oscar/statistics.cpp" line="1899"/>
         <source>No CSR on record</source>
         <translation>Без запис зa CSR</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1867"/>
+        <location filename="../oscar/statistics.cpp" line="1916"/>
         <source>Worst PB</source>
         <translation>Най-лошо PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1875"/>
+        <location filename="../oscar/statistics.cpp" line="1924"/>
         <source>Date: %1 PB: %2%</source>
         <translation>Дата: %1 PB: %2%</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1880"/>
+        <location filename="../oscar/statistics.cpp" line="1929"/>
         <source>No PB on record</source>
         <translation>Без запис за PB</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1888"/>
+        <location filename="../oscar/statistics.cpp" line="1937"/>
         <source>Want more information?</source>
         <translation>Желаете повече информация?</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1889"/>
+        <location filename="../oscar/statistics.cpp" line="1938"/>
         <source>OSCAR needs all summary data loaded to calculate best/worst data for individual days.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1890"/>
+        <location filename="../oscar/statistics.cpp" line="1939"/>
         <source>Please enable Pre-Load Summaries checkbox in preferences to make sure this data is available.</source>
         <translation>Моля включете опцията за предварително зареждане на обща информация при старт в настройките за да се осигури наличността на тези данни.</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1912"/>
-        <location filename="../oscar/statistics.cpp" line="1924"/>
+        <location filename="../oscar/statistics.cpp" line="1961"/>
+        <location filename="../oscar/statistics.cpp" line="1973"/>
         <source>Date: %1 - %2</source>
         <translation>Дати: %1 - %2</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1915"/>
-        <location filename="../oscar/statistics.cpp" line="1927"/>
+        <location filename="../oscar/statistics.cpp" line="1964"/>
+        <location filename="../oscar/statistics.cpp" line="1976"/>
         <source>AHI: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1916"/>
-        <location filename="../oscar/statistics.cpp" line="1928"/>
+        <location filename="../oscar/statistics.cpp" line="1965"/>
+        <location filename="../oscar/statistics.cpp" line="1977"/>
         <source>Total Hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1422"/>
+        <location filename="../oscar/statistics.cpp" line="1466"/>
         <source>Last Week</source>
         <translation>Последна седмица</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1291"/>
+        <location filename="../oscar/statistics.cpp" line="1336"/>
         <source>No data found?!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1424"/>
+        <location filename="../oscar/statistics.cpp" line="1468"/>
         <source>Last 6 Months</source>
         <translation>Последни 6 месеца</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1392"/>
+        <location filename="../oscar/statistics.cpp" line="1441"/>
         <source>Last Session</source>
         <translation>Последна сесия</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="931"/>
+        <location filename="../oscar/statistics.cpp" line="976"/>
         <source>OSCAR is free open-source CPAP report software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1218"/>
+        <location filename="../oscar/statistics.cpp" line="1263"/>
         <source>Days</source>
         <translation>Дни</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1222"/>
+        <location filename="../oscar/statistics.cpp" line="1267"/>
         <source>Pressure Relief</source>
         <translation>Облекчение на налягане</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1224"/>
+        <location filename="../oscar/statistics.cpp" line="1269"/>
         <source>Pressure Settings</source>
         <translation>Настройки налягане</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1155"/>
+        <location filename="../oscar/statistics.cpp" line="1200"/>
         <source>First Use</source>
         <translation>Първо използване</translation>
     </message>
     <message>
-        <location filename="../oscar/statistics.cpp" line="1156"/>
+        <location filename="../oscar/statistics.cpp" line="1201"/>
         <source>Last Use</source>
         <translation>Последно използване</translation>
     </message>
@@ -10970,19 +10761,19 @@ popout window, delete it, then pop out this graph again.</source>
         <translation>Пунктирани линии</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="1967"/>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2020"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="1972"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2025"/>
         <source>Double click title to pin / unpin
 Click and drag to reorder graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2266"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2271"/>
         <source>Remove Clone</source>
         <translation>Премахни клонинг</translation>
     </message>
     <message>
-        <location filename="../oscar/Graphs/gGraphView.cpp" line="2270"/>
+        <location filename="../oscar/Graphs/gGraphView.cpp" line="2275"/>
         <source>Clone %1 Graph</source>
         <translation>Клониране на %1 графиката</translation>
     </message>
