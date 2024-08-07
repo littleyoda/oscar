@@ -7,7 +7,7 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
-#define TEST_MACROS_ENABLED
+#define TEST_MACROS_ENABLEDoff
 #include <test_macros.h>
 
 #include <QHostInfo>
@@ -2274,20 +2274,21 @@ void MainWindow::on_actionChange_Data_Folder_triggered()
     RestartApplication(false, "-d");
 }
 
-QString /*MainWindow::*/profilePath(QString folderProfileName ) {
+QString MainWindow::profilePath(QString folderProfileName ) {
     QString folderName;
     if (p_profile->contains(folderProfileName)) {
-        folderName = (*p_profile)[STR_PREF_LastOximetryPath].toString();
+        folderName = (*p_profile)[folderProfileName].toString();
         QFileInfo fi(folderName);
-        if (fi.exists() && fi.isDir()) return folderName;
+        if (fi.exists() && fi.isDir()) {
+            return folderName;
+        }
     }
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
     if (paths.size()>1) folderName = paths[0];
     return folderName;
 }
 
-void /*MainWindow::*/saveProfilePath(QString folderProfileName , QString pathName) {
-        DEBUGFC Q(pathName);
+void MainWindow::saveProfilePath(QString folderProfileName , QString pathName) {
         (*p_profile)[folderProfileName] = pathName;
 }
 
@@ -2299,7 +2300,6 @@ void MainWindow::importNonCPAP(MachineLoader &loader)
     QFileDialog w;
 
     if (folder.exists() ) {
-        DEBUGFC Q(folder);
         w.setDirectory(folder);
     }
     w.setFileMode(QFileDialog::ExistingFiles);
@@ -2667,6 +2667,7 @@ void MainWindow::on_actionImport_Journal_triggered()
 void MainWindow::on_actionExport_Journal_triggered()
 {
     QString folder;
+    folder = profilePath(STR_PREF_LastJournalPath);
 	if (p_profile->contains(STR_PREF_LastJournalPath)) {
 		folder = (*p_profile)[STR_PREF_LastJournalPath].toString();
 	}

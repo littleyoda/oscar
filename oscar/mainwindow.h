@@ -181,6 +181,9 @@ class MainWindow : public QMainWindow
     void RestartApplication(bool force_login = false, QString cmdline = QString());
 
 
+    QString profilePath(QString folderProfileName );
+    void saveProfilePath(QString folderProfileName , QString pathName);
+
   protected:
     void closeEvent(QCloseEvent *) override;
     void keyPressEvent(QKeyEvent *event) override;
