@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QFileDialog>
 #include <QLocale>
 #include <QMessageBox>
@@ -85,9 +88,10 @@ void ExportCSV::on_filenameBrowseButton_clicked()
     if (ui->startDate->date() != ui->endDate->date()) { timestamp += "_" + ui->endDate->date().toString(Qt::ISODate); }
 
     timestamp += ".csv";
-    QString name = QFileDialog::getSaveFileName(this, tr("Select file to export to"),
-                   p_pref->Get("{home}/") + timestamp, tr("CSV Files (*.csv)"));
+    QString folder = mainwin->profilePath(STR_PREF_LastExportCsvPath);
 
+    QString name = QFileDialog::getSaveFileName(this, tr("Select file to export to"),
+                   folder + QDir::separator() + timestamp, tr("CSV Files (*.csv)"));
     if (name.isEmpty()) {
         ui->exportButton->setEnabled(false);
         return;
@@ -99,6 +103,8 @@ void ExportCSV::on_filenameBrowseButton_clicked()
 
     ui->filenameEdit->setText(name);
     ui->exportButton->setEnabled(true);
+    folder = QFileInfo(name).absolutePath();
+    mainwin->saveProfilePath(STR_PREF_LastExportCsvPath,folder);
 }
 
 void ExportCSV::on_quickRangeCombo_activated(const QString &arg1)
