@@ -127,8 +127,35 @@ Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
         return nullptr;
     }
 
-    ViatomFile v(file);
-    if (v.ParseHeader() == false) {
+    // Read in Viatom database version number
+    QByteArray data = file.read(2);
+    if (data.size() < 2) {
+        qDebug() << filename << "too short for a Viatom data file";
+        return nullptr;
+    }
+    const unsigned char* header = (const unsigned char*) data.constData();
+    int sig = header[0] | (header[1] << 8);
+    std::unique_ptr<ViatomFile> v = nullptr;
+    switch (sig) {
+    case 0x0003:
+    case 0x0005:
+        v = std::unique_ptr<ViatomFile>(new ViatomFile(file));
+        break;
+    case 0x0301:
+        v = std::unique_ptr<O2RingS>(new O2RingS(file));
+        break;
+    default:
+        qDebug() << filename << "Unrecognized DB version number in Viatom data file" << sig;
+        return nullptr;
+    }
+
+    if (!file.seek(0)) {
+        qDebug() << filename << "unable to seek to begining of file";
+        return nullptr;
+    }
+
+    // Parse header specific to database version number
+    if (v->ParseHeader() == false) {
         return nullptr;
     }
 
@@ -144,7 +171,7 @@ Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
     }
     Machine *mach = p_profile->CreateMachine(info);
 
-    if (mach->SessionExists(v.sessionid())) {
+    if (mach->SessionExists(v->sessionid())) {
         // Skip already imported session
         //qDebug() << filename << "session already exists, skipping" << v.sessionid();
         if (existing) {
@@ -154,12 +181,12 @@ Session* ViatomLoader::ParseFile(const QString & filename, bool *existing)
         return nullptr;
     }
 
-    qint64 time_ms = v.timestamp();
-    m_session = new Session(mach, v.sessionid());
+    qint64 time_ms = v->timestamp();
+    m_session = new Session(mach, v->sessionid());
     m_session->set_first(time_ms);
 
-    QList<ViatomFile::Record> records = v.ReadData();
-    m_step = v.duration() / records.size() * 1000L;
+    QList<ViatomFile::Record> records = v->ReadData();
+    m_step = v->duration() / records.size() * 1000L;
 
     // Import data
     for (auto & rec : records) {
@@ -267,6 +294,20 @@ ViatomFile::ViatomFile(QFile & file) : m_file(file)
 {
 }
 
+QDateTime ViatomFile::getFilenameTimestamp()
+{
+    QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
+
+    int lastPoint = date_string.lastIndexOf("."); // Added to strip off any filename extension
+    date_string = date_string.left(lastPoint);
+
+    QString format_string = "yyyyMMddHHmmss";
+    if (date_string.contains(":")) {
+        format_string = "yyyy-MM-dd HH:mm:ss";
+    }
+    return QDateTime::fromString(date_string, format_string);
+}
+
 bool ViatomFile::ParseHeader()
 {
     static const int HEADER_SIZE = 40;
@@ -312,17 +353,7 @@ bool ViatomFile::ParseHeader()
     // starting timestamp). Technically these should probably be square charts, but
     // the code currently forces them to be non-square.
     QDateTime data_timestamp = QDateTime(QDate(year, month, day), QTime(hour, min, sec));
-
-    QString date_string = QFileInfo(m_file).fileName().section("_", -1);  // Strip any SleepU_ etc. prefix.
-  
-    int lastPoint = date_string.lastIndexOf("."); // Added to strip off any filename extension
-    date_string = date_string.left(lastPoint);
-
-      QString format_string = "yyyyMMddHHmmss";
-    if (date_string.contains(":")) {
-        format_string = "yyyy-MM-dd HH:mm:ss";
-    }
-    QDateTime filename_timestamp = QDateTime::fromString(date_string, format_string);
+    QDateTime filename_timestamp = getFilenameTimestamp();
     if (filename_timestamp.isValid()) {
         if (filename_timestamp != data_timestamp) {
             // TODO: Once there's a better/easier way to adjust session times within OSCAR, we can remove the below.
@@ -462,3 +493,57 @@ QList<ViatomFile::Record> ViatomFile::ReadData()
     return records;
 }
 
+O2RingS::O2RingS(QFile & file) : ViatomFile(file)
+{
+}
+
+bool O2RingS::ParseHeader()
+{
+    // For the O2Ring S, the header only contains the signature
+    // Additional metadata is stored at the end of the file
+    // The record count is stored 36 bytes prior to EOF
+    int record_count_loc = m_file.size() - 36;
+    if (record_count_loc < 0 || !m_file.seek(record_count_loc)) {
+        qDebug() << m_file.fileName() << "error locating Viatom record count";
+        return false;
+    }
+
+    // read record count as a 2-byte little endian value
+    // max number of records in a O2Ring S file is 36000
+    QDataStream in(m_file.read(2));
+    in.setByteOrder(QDataStream::LittleEndian);
+    quint16 record_count;
+    in >> record_count;
+
+    m_sig = 0x0301;
+    m_record_count = m_duration = record_count;
+    m_timestamp = getFilenameTimestamp().toMSecsSinceEpoch();
+    m_sessionid = m_timestamp / 1000L;
+    m_resolution = 1000;
+
+    // advance past the header
+    return m_file.seek(10);
+}
+
+QList<ViatomFile::Record> O2RingS::ReadData()
+{
+    QList<ViatomFile::Record> records;
+
+    // Read all Pulse, SPO2 and Motion data
+    // 0xFF for spo2 or hr indicates an interruption in measurement
+    // Vibration data is likely stored in a variable length block following the
+    // fixed-width pulse/SPO2/motion data. Zero out for now since OSCAR doesn't
+    // use this data.
+    QDataStream in(m_file.readAll());
+    do {
+        ViatomFile::Record rec;
+        in >> rec.spo2 >> rec.hr >> rec.motion;
+        rec.oximetry_invalid = (rec.spo2 == 0xFF || rec.hr == 0xFF) ? 0xFF : 0;
+        rec.vibration = 0;
+        records.append(rec);
+    } while (records.size() < m_record_count);
+
+    // Confirm that we have a 1s sample rate
+    CHECK_VALUE(duration() / records.size(), 1);
+    return records;
+}

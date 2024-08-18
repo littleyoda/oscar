@@ -71,13 +71,14 @@ public:
         unsigned char vibration;
     };
     ViatomFile(QFile & file);
-    ~ViatomFile() = default;
+    virtual ~ViatomFile() = default;
 
-    bool ParseHeader();
-    QList<Record> ReadData();
+    virtual bool ParseHeader();
+    virtual QList<Record> ReadData();
     SessionID sessionid() const { return m_sessionid; }
     quint64 timestamp() const { return m_timestamp; }
     int duration() const { return m_duration; }
+    QDateTime getFilenameTimestamp();
 
 protected:
     static const int RECORD_SIZE = 5;
@@ -88,6 +89,15 @@ protected:
     int m_record_count;
     int m_resolution;
     SessionID m_sessionid;
+};
+
+class O2RingS : public ViatomFile
+{
+public:
+    O2RingS(QFile & file);
+    ~O2RingS() = default;
+    bool ParseHeader();
+    QList<Record> ReadData();
 };
 
 #endif // VIATOMLOADER_H
