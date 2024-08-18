@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include "viatom_loader.h"
 #include "SleepLib/machine.h"
+#include <memory>
 
 // TODO: Merge this with PRS1 macros and generalize for all loaders.
 #define SESSIONID m_session->session()
