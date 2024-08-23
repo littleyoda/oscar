@@ -66,6 +66,8 @@ QString htmlLeftFooter;
 extern ChannelID PRS1_PeakFlow;
 extern ChannelID Prisma_ObstructLevel, Prisma_rMVFluctuation, Prisma_rRMV, Prisma_PressureMeasured, Prisma_FlowFull;
 
+#define WEIGHT_SPIN_BOX_DECIMALS 1
+
 // This was Sean Stangl's idea.. but I couldn't apply that patch.
 inline QString channelInfo(ChannelID code) {
     return schema::channel[code].fullname()+"\n"+schema::channel[code].description()+"\n("+schema::channel[code].units()+")";
@@ -950,7 +952,7 @@ void Daily::on_ReloadDay()
     ui->calendar->setFocus(Qt::ActiveWindowFocusReason);
 
 #ifndef REMOVE_FITNESS
-    ui->weightSpinBox->setDecimals(1);
+    ui->weightSpinBox->setDecimals(WEIGHT_SPIN_BOX_DECIMALS);
 #endif
     this->setCursor(Qt::ArrowCursor);
     other_time=time.restart();
@@ -2579,14 +2581,15 @@ void Daily::set_BmiUI(double user_weight_kg) {
 
 void Daily::set_WeightUI(double kg) {
     ui->weightSpinBox->blockSignals(true);
-    ui->weightSpinBox->setDecimals(1);
+    ui->weightSpinBox->setDecimals(WEIGHT_SPIN_BOX_DECIMALS);
     if (p_profile->general->unitSystem()==US_Metric) {
-        ui->weightSpinBox->setSuffix(STR_UNIT_KG);
+        ui->weightSpinBox->setSuffix(QString(" %1").arg(STR_UNIT_KG));
+        ui->weightSpinBox->setValue(kg);
     } else {
-        kg *= pounds_per_kg;
-        ui->weightSpinBox->setSuffix(STR_UNIT_POUND);
+        double lbs = kg * pounds_per_kg;
+        ui->weightSpinBox->setSuffix(QString(" %1").arg(STR_UNIT_POUND));
+        ui->weightSpinBox->setValue(lbs);
     }
-    ui->weightSpinBox->setValue(kg);
     ui->weightSpinBox->blockSignals(false);
     set_BmiUI(kg);
 };
@@ -2652,7 +2655,8 @@ void Daily::on_weightSpinBox_editingFinished()
     user_height_cm = p_profile->user->height();
     double kg = ui->weightSpinBox->value();
     if (p_profile->general->unitSystem()==US_English) {
-        kg *=  kgs_per_pound; // convert pounds to kg.
+        double lbs = ui->weightSpinBox->value();
+        kg =  lbs*kgs_per_pound; // convert pounds to kg.
     }
     if (kg < zeroD) kg = 0.0;
     set_JournalWeightValue(previous_date,kg) ;
