@@ -12,7 +12,7 @@
 #include <test_macros.h>
 
 
-int defaultTimeoutSeconds = 6 ;
+int defaultTimeoutSeconds = 4 ;
 //QString defaultTimeoutMessage = QObject::tr("Notifcation expires in %1 seconds.\nTo Dismiss: Press Escape or Enter.");
 //QString timeoutStoppedMessage = QObject::tr("Timer Stopped.\nTo Dismiss: Press Escape or Enter.");
 QString defaultTimeoutMessage = QObject::tr("Notifcation expires in %1 seconds.");
