@@ -148,9 +148,8 @@ qtver=$PKGVERS
 
 getPkg libdouble
 dblPkg=$PKGNAME
-corePkg=$PKGNAME
 
-echo "QT name version " $corePkg $qtver
+echo "QT version " $qtver
 echo "DblConv package " $dblPkg
 
 # clean folders need to create the package
@@ -242,7 +241,7 @@ fpm --input-type dir --output-type deb  \
     --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-   --depends "${corePkg} >= ${qtver}"   \
+    --depends "libqt5core5a >= 5.9"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \
