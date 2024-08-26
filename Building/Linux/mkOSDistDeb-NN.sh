@@ -142,13 +142,13 @@ if [ -f "./$deb_file" ]; then
     exit
 fi
 
-# retrieve packages version for the dependencies
+## retrieve packages version for the dependencies
 getPkg libqt5core
 qtver=$PKGVERS
+corePkg=$PKGNAME
 
 getPkg libdouble
 dblPkg=$PKGNAME
-corePkg=$PKGNAME
 
 echo "QT name version " $corePkg $qtver
 echo "DblConv package " $dblPkg
@@ -242,7 +242,7 @@ fpm --input-type dir --output-type deb  \
     --depends $dblPkg \
     --depends libpcre16-3 \
     --depends qttranslations5-l10n \
-   --depends "${corePkg} >= ${qtver}"   \
+    --depends "${corePkg} >= ${qtver}"   \
     --depends libqt5serialport5     \
     --depends libqt5xml5            \
     --depends libqt5network5        \
