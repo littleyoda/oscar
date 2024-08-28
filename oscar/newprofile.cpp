@@ -56,7 +56,7 @@ NewProfile::NewProfile(QWidget *parent, const QString *user) :
     m_passwordHashed = false;
     ui->heightEdit2->setVisible(false);
     ui->heightEdit->setDecimals(0);
-    ui->heightEdit->setSuffix(STR_UNIT_CM);
+    ui->heightEdit->setSuffix(QString(" %1").arg(STR_UNIT_CM));
 
     {
         // process countries list
@@ -141,10 +141,10 @@ QString NewProfile::getIntroHTML()
            "</body>"
            "</html>";
 }
-
+#include <cmath>
 int cmToFeetInch( double cm, double& inches ) {
     inches = cm * inches_per_cm;
-    int feet = inches / 12;
+    int feet = std::round(inches / 12);
     inches -=   (double)(feet *12);
     return feet;
 }
@@ -448,15 +448,15 @@ void NewProfile::on_heightCombo_currentIndexChanged(int index)
     if (index == 0) {
         //metric
         ui->heightEdit->setDecimals(1);
-        ui->heightEdit->setSuffix(STR_UNIT_CM);
+        ui->heightEdit->setSuffix(QString(" %1").arg(STR_UNIT_CM));
         ui->heightEdit->setValue(m_tmp_height_cm);
         ui->heightEdit2->setVisible(false);
-    } else {        //evil
+    } else {        //english
         ui->heightEdit->setDecimals(0);  // feet are always a whole number.
         ui->heightEdit2->setDecimals(1);  // inches can be seen as double.
-        ui->heightEdit->setSuffix(STR_UNIT_FOOT);
+        ui->heightEdit->setSuffix(QString(" %1").arg(STR_UNIT_FOOT));
         ui->heightEdit2->setVisible(true);
-        ui->heightEdit2->setSuffix(STR_UNIT_INCH);
+        ui->heightEdit2->setSuffix(QString(" %1").arg(STR_UNIT_INCH));
         double inches=0;
         ui->heightEdit->setValue(cmToFeetInch(m_tmp_height_cm,inches));
         ui->heightEdit2->setValue(inches);
