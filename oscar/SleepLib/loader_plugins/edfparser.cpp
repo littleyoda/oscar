@@ -7,6 +7,9 @@
  * License. See the file COPYING in the main directory of the source code
  * for more details. */
 
+#define TEST_MACROS_ENABLEDoff
+#include <test_macros.h>
+
 #include <QDateTime>
 #include <QTimeZone>
 #include <QDebug>
@@ -305,6 +308,11 @@ bool EDFInfo::ParseSignalData() {
                 for (int j=0;j<sig.sampleCnt;j++) { // Big endian safe
                     qint16 t=Read16();
                     sig.dataArray[recNo*sig.sampleCnt+j]=t;
+                    // c++ macros IF DEBUGFC Q QQ will expand when TEST_MACROS_ENABLED is enabled
+                    // Displays the first entry in an edf signal when data is valid (not all ones).
+                    IF ( (j==0) && (t !=-1) ) {
+                        DEBUGFC Q(&sig) QQ(rec,recNo) QQ(Cnt,sig.sampleCnt) QQ(off,j) QQ(dat,t) QQ(lab,sig.label);
+                    }
                 }
             }
         }
