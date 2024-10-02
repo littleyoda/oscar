@@ -669,8 +669,9 @@ void parseModel(MachineInfo & info, const QString & modelnum)
     info.series = series;
 }
 
-bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString> & props)
+bool PRS1Loader::PeekProperties(const QString & filePath, QHash<QString,QString> & props)
 {
+    QString filename = filePath;
     const static QMap<QString,QString> s_longFieldNames = {
         // CF?
         { "SN", "SerialNumber" },
@@ -696,7 +697,22 @@ bool PRS1Loader::PeekProperties(const QString & filename, QHash<QString,QString>
         { "DFN", "DFileNum" },         // number of .003 files in the D directory
         { "VC", "ValidCheck" },
     };
-    
+
+    #if 1
+    // fix enpty PROP.TXT file problem. use PROP.BAK if it exists
+    // Otherwise import will fail.
+    // Just readis bak file instead of prop.txt. No other changes.
+    QFileInfo fi(filename);
+    if (fi.isFile() && fi.size()==0 && fi.suffix().toUpper() == "TXT")  {
+        QString newFilePath = fi.absolutePath() + "/" + fi.completeBaseName() + ".BAK";
+        fi = QFileInfo(newFilePath);
+        if (fi.isFile() && fi.size()>0)  {
+            filename = newFilePath;
+        }
+    }
+    // END fix enpty PROP.TXT file problem. use PROP.BAK if it exists
+    #endif
+
     QFile f(filename);
     if (!f.open(QFile::ReadOnly)) {
         return false;
