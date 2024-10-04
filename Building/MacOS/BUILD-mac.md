@@ -52,7 +52,7 @@ NOTE: Official builds are currently made with [macOS 10.14 Mojave] and Command-L
 
 1. Build OSCAR:
 
-        git clone https://gitlab.com/pholy/OSCAR-code.git
+        git clone https://gitlab.com/CrimsonNape/OSCAR-code.git
         cd OSCAR-code
         mkdir build
         cd build
