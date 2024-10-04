@@ -181,7 +181,7 @@ This also allows building using windows shortcuts.
 
 ## Start Developing Oscar in Qt Creator
 
-In browser, log into your account at gitlab.com. Select the Oscar project at https://gitlab.com/pholy/OSCAR-code. Clone a copy of the repository to a location on your computer.
+In browser, log into your account at gitlab.com. Select the Oscar project at https://gitlab.com/CrimsonNape/OSCAR-code. Clone a copy of the repository to a location on your computer.
 
 Start QT. There are two QT Oscar project files: OSCAR_QT.pro in the Oscar-code directory, and Oscar.pro in the Oscar-code\\oscar directory. You may use *either* project file. Both will create a running version of Oscar. I find building with Oscar.pro in the Oscar-code\\oscar directory to be very slightly faster, but the difference is negligible.
 
