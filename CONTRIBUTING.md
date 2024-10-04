@@ -22,9 +22,9 @@ Setting aside the religious wars that can arise over any development methodology
 ### How Do I Develop in a Branch?
 
 0. Create your own fork of the repo and configure it to stay up-to-date with the upstream repo.
-	* Go to https://gitlab.com/pholy/OSCAR-code and click on **Fork** in the top right of the project page.
+	* Go to https://gitlab.com/CrimsonNape/OSCAR-code and click on **Fork** in the top right of the project page.
 	* In your fork's sidebar, go to **Settings > Repository** then click on **Expand** for "Mirroring repositories".
-	* Enter "https://gitlab.com/pholy/OSCAR-code.git" for the repository **URL**, make sure the mirror is set to **Pull** and then click **Mirror repository**.
+	* Enter "https://gitlab.com/CrimsonNape/OSCAR-code.git" for the repository **URL**, make sure the mirror is set to **Pull** and then click **Mirror repository**.
 
 1. Create a branch to work on your feature or bugfix:
 
