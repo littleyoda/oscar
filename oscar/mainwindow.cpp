@@ -1077,32 +1077,6 @@ QList<ImportPath> MainWindow::selectCPAPDataCards(const QString & prompt, bool a
         w.setOption(QFileDialog::ShowDirsOnly, true);
         w.setWindowTitle(tr("Find your CPAP data card"));
 
-        // This doesn't work on WinXP
-
-#if defined(Q_OS_MAC)
-        w.setOption(QFileDialog::DontUseNativeDialog,false);
-
-#elif defined(Q_OS_UNIX)
-        w.setOption(QFileDialog::DontUseNativeDialog,false);
-#elif defined(Q_OS_WIN)
-        // check the Os version.. winxp chokes
-        w.setOption(QFileDialog::DontUseNativeDialog, true);
-#endif
-//#else
-//        w.setOption(QFileDialog::DontUseNativeDialog, false);
-
-//        QListView *l = w.findChild<QListView *>("listView");
-//        if (l) {
-//            l->setSelectionMode(QAbstractItemView::MultiSelection);
-//        }
-
-//        QTreeView *t = w.findChild<QTreeView *>();
-//        if (t) {
-//            t->setSelectionMode(QAbstractItemView::MultiSelection);
-//        }
-
-//#endif
-
         if (w.exec() != QDialog::Accepted) {
             datacards.clear();
             return datacards;
