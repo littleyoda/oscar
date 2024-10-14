@@ -412,7 +412,7 @@ void ResventLoader::LoadEvents(const QString& session_folder_path, Session* sess
         Q_ASSERT(duration_elems.size() == 2);
         auto event_type = static_cast<EventType>(std::stoi(event_type_elems[1].toStdString()));
         auto duration = std::stoi(duration_elems[1].toStdString());
-        auto date_time = QDateTime::fromTime_t(std::stoi(date_time_elems[1].toStdString()));
+        auto date_time = QDateTime::fromSecsSinceEpoch(std::stoi(date_time_elems[1].toStdString()));
 
         EventData eventData({event_type, date_time, duration});
         VerifyEvent(eventData);
@@ -687,10 +687,10 @@ UsageData ResventLoader::ReadUsage(const QString& session_folder_path, const QSt
         Q_ASSERT(elems.size() == 2);
 
         if (elems[0] == "secStart") {
-            usage_data.start_time = QDateTime::fromTime_t(std::stoi(elems[1].toStdString()));
+            usage_data.start_time = QDateTime::fromSecsSinceEpoch(std::stoi(elems[1].toStdString()));
         }
         else if (elems[0] == "secUsed") {
-            usage_data.end_time = QDateTime::fromTime_t(usage_data.start_time.toTime_t() + std::stoi(elems[1].toStdString()));
+            usage_data.end_time = QDateTime::fromSecsSinceEpoch(usage_data.start_time.toSecsSinceEpoch() + std::stoi(elems[1].toStdString()));
         }
         else if (elems[0] == "cntAHI") {
             usage_data.countAHI = std::stoi(elems[1].toStdString());

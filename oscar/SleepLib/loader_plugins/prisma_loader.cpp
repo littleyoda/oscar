@@ -155,7 +155,7 @@ void PrismaImport::run()
 
     eventFile = new PrismaEventFile(eventData);
 
-    startdate = qint64(wmedf.edfHdr.startdate_orig.toTime_t()) * 1000L;
+    startdate = qint64(wmedf.edfHdr.startdate_orig.toSecsSinceEpoch()) * 1000L;
     enddate = startdate + wmedf.GetDuration() * qint64(wmedf.GetNumDataRecords()) * 1000;
 
     session = loader->context()->CreateSession(sessionid);

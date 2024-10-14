@@ -193,8 +193,8 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
             int s = tt % 60;
 
             cpapinfo += STR_TR_MaskTime + QObject::tr(": %1 hours, %2 minutes, %3 seconds\n").arg(h).arg(m).arg(s);
-            cpapinfo += STR_TR_BedTime + ": " + QDateTime::fromTime_t(f).time().toString("HH:mm:ss") + " ";
-            cpapinfo += STR_TR_WakeUp + ": " + QDateTime::fromTime_t(l).time().toString("HH:mm:ss") + "\n\n";
+            cpapinfo += STR_TR_BedTime + ": " + QDateTime::fromSecsSinceEpoch(f).time().toString("HH:mm:ss") + " ";
+            cpapinfo += STR_TR_WakeUp + ": " + QDateTime::fromSecsSinceEpoch(l).time().toString("HH:mm:ss") + "\n\n";
             cpapinfo += STR_TR_Machine + ": ";
 
 
@@ -361,8 +361,8 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
             if (maxy + bounds.height() > maxy) { maxy = maxy + bounds.height(); }
         }
     } else if (name == STR_TR_Overview) {
-        QDateTime first = QDateTime::fromTime_t((*gv)[0]->min_x / 1000L);
-        QDateTime last = QDateTime::fromTime_t((*gv)[0]->max_x / 1000L);
+        QDateTime first = QDateTime::fromSecsSinceEpoch((*gv)[0]->min_x / 1000L);
+        QDateTime last = QDateTime::fromSecsSinceEpoch((*gv)[0]->max_x / 1000L);
         QString ovinfo = QObject::tr("Reporting from %1 to %2").
                 arg(first.date().toString(Qt::SystemLocaleShortDate)).
                 arg(last.date().toString(Qt::SystemLocaleShortDate));

@@ -302,7 +302,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
         QMap<SessionID, Session *>::iterator it = Sessions.end();
         it--;
 
-        dt = QDateTime::fromTime_t(qint64(it.value()->first()) / 1000L);
+        dt = QDateTime::fromSecsSinceEpoch(qint64(it.value()->first()) / 1000L);
         QDate date = dt.date().addDays(-7);
         it++;
 
@@ -312,7 +312,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
             sid = sess->session();
             hours = sess->hours();
             mins = hours * 60;
-            dt = QDateTime::fromTime_t(sid);
+            dt = QDateTime::fromSecsSinceEpoch(sid);
             qDebug() << cnt << ":" << dt << "session" << sid << "," << mins << "minutes" << a;
             if (dt.date() < date) {
                 break;
@@ -346,7 +346,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
         //            if (b) {
         //                if (Sessions[zz]->channelDataExists(CPAP_FlowRate)) c=true;
         //            }
-        //            qDebug() << k << "-" <<j << ":" << zz << qRound(dur) << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromTime_t(zz).toString() : "");
+        //            qDebug() << k << "-" <<j << ":" << zz << qRound(dur) << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromSecsSinceEpoch(zz).toString() : "");
         //        }
         //    }
         //    std::sort(chunks.begin(), chunks.end());
@@ -359,7 +359,7 @@ int SleepStyleLoader::OpenMachine(Machine *mach, const QString & path, const QSt
         //        if (b) {
         //            if (Sessions[zz]->channelDataExists(CPAP_FlowRate)) c=true;
         //        }
-        //        qDebug() << chunk.file << ":" << i << zz << dur << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromTime_t(zz).toString() : "");
+        //        qDebug() << chunk.file << ":" << i << zz << dur << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromSecsSinceEpoch(zz).toString() : "");
         //    }
 
     int c = Sessions.size();
@@ -410,7 +410,7 @@ quint32 ssconvertDate(quint32 timestamp)
     // 91596 = 00:23:12 WET
     // 19790 = 23:23:50 WET
 
-    return dt.addSecs(-54).toTime_t();  // Huh?  Why do this?
+    return dt.addSecs(-54).toSecsSinceEpoch();  // Huh?  Why do this?
 }
 
 // SessionID is in seconds, not msec

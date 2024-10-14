@@ -53,7 +53,7 @@ bool ResMedEDFInfo::Parse( )	// overrides and calls the super's Parse
         return false;
     }
 
-    startdate = qint64(edfHdr.startdate_orig.toTime_t()) * 1000LL;
+    startdate = qint64(edfHdr.startdate_orig.toSecsSinceEpoch()) * 1000LL;
     //startdate-=timezoneOffset();
     if (startdate == 0) {
         qDebug() << "Invalid startdate = 0 in EDF File " << filename;

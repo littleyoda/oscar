@@ -138,7 +138,7 @@ Session* DreemLoader::readNextSession()
 
         start_time = readDateTime(row["Start Time"]);
         if (start_time.isValid()) {
-            sid = start_time.toTime_t();
+            sid = start_time.toSecsSinceEpoch();
             if (mach->SessionExists(sid)) {
                 continue;
             }
@@ -192,8 +192,8 @@ Session* DreemLoader::readNextSession()
         // total sleep duration
         // # position changes
 
-        qint64 st = qint64(start_time.toTime_t()) * 1000L;
-        qint64 last = qint64(stop_time.toTime_t()) * 1000L;
+        qint64 st = qint64(start_time.toSecsSinceEpoch()) * 1000L;
+        qint64 last = qint64(stop_time.toSecsSinceEpoch()) * 1000L;
         sess->really_set_first(st);
 
         // It appears that the first sample occurs at start time and

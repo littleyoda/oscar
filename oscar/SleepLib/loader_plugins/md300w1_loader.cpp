@@ -206,7 +206,7 @@ bool MD300W1Loader::readDATFile(const QString & path)
             date = date.addYears(100);
         }
         QDateTime datetime = QDateTime(date, time);
-        ts = datetime.toTime_t();
+        ts = datetime.toSecsSinceEpoch();
         gap = ts - lasttime;
         if (gap > 1) {			// always true for first record, b/c time started on 1 Jan 1970
             if (gap < 360) {

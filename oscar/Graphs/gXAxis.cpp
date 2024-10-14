@@ -323,7 +323,7 @@ void gXAxis::paint(QPainter &painter, gGraph &w, const QRegion &region)
 
             if (fitmode == 0) {
                 d = (j / 1000);
-                QDateTime dt = QDateTime::fromTime_t(d).toLocalTime();
+                QDateTime dt = QDateTime::fromSecsSinceEpoch(d).toLocalTime();
                 QDate date = dt.date();
                 // SLOW SLOW SLOW!!! On Mac especially, this function is pathetically slow.
                 //dt.toString("MMM dd");

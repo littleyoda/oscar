@@ -37,8 +37,8 @@ MSeriesLoader::MSeriesLoader()
 {
     m_type = MT_CPAP;
 
-    epoch = QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0), Qt::UTC).toTime_t();
-    epoch -= QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0), Qt::UTC).toTime_t();
+    epoch = QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0), Qt::UTC).toSecsSinceEpoch();
+    epoch -= QDateTime(QDate(1970, 1, 1), QTime(0, 0, 0), Qt::UTC).toSecsSinceEpoch();
 }
 
 MSeriesLoader::~MSeriesLoader()
@@ -246,7 +246,7 @@ int MSeriesLoader::Open(const QString & path)
     for (int chk = 0; chk < 7; chk++) {
         ts = cb[0] << 24 | cb[1] << 16 | cb[2] << 8 | cb[3];
         //ts-=epoch;
-        dt = QDateTime::fromTime_t(ts);
+        dt = QDateTime::fromSecsSinceEpoch(ts);
         date = dt.date();
         time = dt.time();
         qDebug() << "New Sparse Chunk" << chk << dt << QTHEX << ts;
@@ -273,7 +273,7 @@ int MSeriesLoader::Open(const QString & path)
         //lt =
         st = ts;
         //ti = qint64(ts) * 1000L;
-        dt = QDateTime::fromTime_t(ts);
+        dt = QDateTime::fromSecsSinceEpoch(ts);
         date = dt.date();
         time = dt.time();
         qDebug() << "Details New Data Chunk" << cnt << dt << QTHEX << ts;
@@ -318,7 +318,7 @@ int MSeriesLoader::Open(const QString & path)
                     cb += 8;
                 } else { cb++; }
 
-                dt = QDateTime::fromTime_t(ts);
+                dt = QDateTime::fromSecsSinceEpoch(ts);
                 qDebug() << "Details Data Chunk" << cnt++ << dt;
 
                 do {
@@ -357,7 +357,7 @@ int MSeriesLoader::Open(const QString & path)
 
         cb += 2;
         st = ts = cb[0] << 24 | cb[1] << 16 | cb[2] << 8 | cb[3];
-        dt = QDateTime::fromTime_t(ts);
+        dt = QDateTime::fromSecsSinceEpoch(ts);
         date = dt.date();
         time = dt.time();
         //qDebug() << "Summary Data Chunk" << cnt << dt << QTHEX << ts;
@@ -374,7 +374,7 @@ int MSeriesLoader::Open(const QString & path)
 
             u2 = (cb[2] << 8 | cb[3]) & 0x7ff; // 0xBX XX??
             ts = st + u1 * 60;
-            dt = QDateTime::fromTime_t(ts);
+            dt = QDateTime::fromSecsSinceEpoch(ts);
             //qDebug() << "Summary Sub Chunk" << dt << u1 << u2 << QTHEX << ts;
             cb += 4;
 

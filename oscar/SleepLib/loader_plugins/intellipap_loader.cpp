@@ -283,7 +283,7 @@ int IntellipapLoader::OpenDV5(const QString & path)
     f.open(QFile::ReadOnly);
     int cnt = 0;
     QDateTime epoch(QDate(2002, 1, 1), QTime(0, 0, 0), Qt::UTC); // Intellipap Epoch
-    int ep = epoch.toTime_t();
+    int ep = epoch.toSecsSinceEpoch();
 
     do {
         cnt = f.read((char *)buf, 9);
@@ -903,7 +903,7 @@ unsigned int convertNum (unsigned char num[]) {
 unsigned int convertTime (unsigned char time[]) {
     if (ep == 0) {
         QDateTime epoch(QDate(2002, 1, 1), QTime(0, 0, 0), Qt::UTC); // Intellipap Epoch
-        ep = epoch.toTime_t();
+        ep = epoch.toSecsSinceEpoch();
     }
     return ((time[3] << 24) + (time[2] << 16) + (time[1] << 8) + time[0]) + ep; // Time as Unix epoch time
 }

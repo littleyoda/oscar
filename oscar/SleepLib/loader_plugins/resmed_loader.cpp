@@ -1368,7 +1368,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
 #endif
             STRRecord &R = rit.value().str;
 
-            uint noonstamp = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).toTime_t();
+            uint noonstamp = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).toSecsSinceEpoch();
             R.date = date;
 
             // skipday = false;
@@ -1406,7 +1406,7 @@ bool ResmedLoader::ProcessSTRfiles(Machine *mach, QMap<QDate, STRFile> & STRmap,
             }
             if ( (lastOn >= 0) && (lastOff >= 0) ) {
                 if ((R.maskon[lastOn] > 0) && (R.maskoff[lastOff] == 0)) {
-                    R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).addDays(1).toTime_t() - 1;
+                    R.maskoff[lastOff] = QDateTime(date,QTime(12,0,0), EDFInfo::localNoDST).addDays(1).toSecsSinceEpoch() - 1;
                 }
             }
 
@@ -2302,7 +2302,7 @@ EDFduration getEDFDuration(const QString & filename)
     if (!(ok1 && ok2))
         return EDFduration(0, 0, filename);
 
-    quint32 start = startDate.toTime_t();
+    quint32 start = startDate.toSecsSinceEpoch();
     quint32 end = start + rec_duration * num_records;
 
     QString filedate = filename.section("/",-1).section("_",0,1);
@@ -2310,7 +2310,7 @@ EDFduration getEDFDuration(const QString & filename)
     d2 = QDate::fromString( filedate.left(8), "yyyyMMdd");
     QTime t2 = QTime::fromString( filedate.right(6), "hhmmss");
     QDateTime dt2 = QDateTime( d2, t2, EDFInfo::localNoDST );
-    quint32 st2 = dt2.toTime_t();
+    quint32 st2 = dt2.toSecsSinceEpoch();
 
     start = qMin(st2, start);	// They should be the same, usually
 
@@ -2555,7 +2555,7 @@ void ResDayTask::run()
 /**
             QTime noon(12,00,00);
             QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
-            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toSecsSinceEpoch(); // End of ResMed day
             if ( (maskon > dayend) ||
                  (maskoff > dayend) ) {
                 qWarning() << "mask time in future" << resday->date << daybegin << dayend << "maskon" << maskon << "maskoff" << maskoff;
@@ -2599,15 +2599,15 @@ void ResDayTask::run()
     if (resday->str.date.isValid()) {
         //First populate Overlaps with Mask ON/OFF events
         for (int i=0; i < maskOnSize; ++i) {
-//            if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toTime_t()) ||
-//                 (resday->str.maskoff[i] > QDateTime::currentDateTime().toTime_t()) ) {
-//                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toTime_t() << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
+//            if ( (resday->str.maskon[i] > QDateTime::currentDateTime().toSecsSinceEpoch()) ||
+//                 (resday->str.maskoff[i] > QDateTime::currentDateTime().toSecsSinceEpoch()) ) {
+//                qWarning() << "mask time in future" << resday->date << "now" << QDateTime::currentDateTime().toSecsSinceEpoch() << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
 //                continue;
 //            }
 /*
             QTime noon(12,00,00);
             QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
-            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toSecsSinceEpoch(); // End of ResMed day
             if ( (resday->str.maskon[i] > dayend) ||
                  (resday->str.maskoff[i] > dayend) ) {
                 qWarning() << "mask time in future" << resday->date << "daybegin:" << daybegin << "dayend:" << dayend << "maskon" << resday->str.maskon[i] << "maskoff" << resday->str.maskoff[i];
@@ -2642,7 +2642,7 @@ void ResDayTask::run()
         QTime t2 = QTime::fromString( datestr.right(6), "hhmmss");
         QDateTime filetime = QDateTime( d2, t2, EDFInfo::localNoDST );
 
-        quint32 filetime_t = filetime.toTime_t();
+        quint32 filetime_t = filetime.toSecsSinceEpoch();
         if (type == EDF_EVE) {      // skip the EVE and CSL files, b/c they often cover all sessions
             EVElist[filetime_t] = filename;
             continue;
@@ -2663,7 +2663,7 @@ void ResDayTask::run()
 /**
             QTime noon(12,00,00);
             QDateTime daybegin(resday->date,noon); // Beginning of ResMed day
-            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toTime_t(); // End of ResMed day
+            quint32 dayend = daybegin.addDays(1).addMSecs(-1).toSecsSinceEpoch(); // End of ResMed day
               if ((dur.start > (dayend)) ||
                   (dur.end > (dayend)) ) {
                   qWarning() << "Future Date in" << fullpath << "dayend" << dayend << "dur.start" << dur.start << "dur.end" << dur.end;
@@ -2798,13 +2798,13 @@ void ResDayTask::run()
         if (sess->length() == 0) {
             // we want empty sessions even though they are crap
             qDebug() << "Session" << sess->session()
-                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "["+QDateTime::fromSecsSinceEpoch(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "has zero duration" << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
         }
         if (sess->length() < 0) {
             // we want empty sessions even though they are crap
             qDebug() << "Session" << sess->session()
-                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "["+QDateTime::fromSecsSinceEpoch(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "has negative duration";
             qDebug() << QString("Start: %1").arg(sess->realFirst(),0,16) << QString("End: %1").arg(sess->realLast(),0,16);
         }
@@ -2864,17 +2864,17 @@ void ResDayTask::run()
         sess->UpdateSummaries();
 #ifdef SESSION_DEBUG
         qDebug() << "Adding session" << sess->session()
-            << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
+            << "["+QDateTime::fromSecsSinceEpoch(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]";
 #endif
 
         // Save is not threadsafe? (meh... it seems to be)
        // loader->saveMutex.lock();
        // loader->saveMutex.unlock();
 
-//        if ( (QDateTime::fromTime_t(sess->session()) > QDateTime::currentDateTime()) ||
+//        if ( (QDateTime::fromSecsSinceEpoch(sess->session()) > QDateTime::currentDateTime()) ||
         if ( (sess->realFirst() == 0) || (sess->realLast() == 0) ) 
             qWarning().noquote() << "Skipping future or absent date session:" << sess->session()
-                << "["+QDateTime::fromTime_t(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                << "["+QDateTime::fromSecsSinceEpoch(sess->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                 << "\noriginal date is" << resday->date.toString()
                 << "session realFirst" << sess->realFirst() << "realLast" << sess->realLast();
         else    

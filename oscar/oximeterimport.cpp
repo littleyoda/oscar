@@ -496,7 +496,7 @@ void OximeterImport::on_liveImportButton_clicked()
 
     dummyday = new Day();
 
-    quint32 starttime = oximodule->startTime().toTime_t();
+    quint32 starttime = oximodule->startTime().toSecsSinceEpoch();
     ti = qint64(starttime) * 1000L;
     start_ti = ti;
 
@@ -863,7 +863,7 @@ void OximeterImport::on_saveButton_clicked()
     // this can move to SerialOximeter class process function...
     MachineInfo info = oximodule->newInfo();
     Machine * mach = p_profile->CreateMachine(info);
-    SessionID sid = ui->dateTimeEdit->dateTime().toUTC().toTime_t();
+    SessionID sid = ui->dateTimeEdit->dateTime().toUTC().toSecsSinceEpoch();
     quint64 start = quint64(sid) * 1000L;
 
 

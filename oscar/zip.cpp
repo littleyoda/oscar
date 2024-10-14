@@ -326,7 +326,7 @@ static bool zip_add(void* ctx, const QString & archive_name, const QByteArray & 
     mz_zip_archive* pZip = (mz_zip_archive*) ctx;
     
     // Add to .zip
-    time_t last_modified = modified.toTime_t();  // technically deprecated, but miniz expects a time_t
+    time_t last_modified = modified.toSecsSinceEpoch();  // technically deprecated, but miniz expects a time_t
     bool ok = mz_zip_writer_add_mem_ex_v2(pZip, archive_name.toLocal8Bit(), data.constData(), data.size(),
                                           nullptr, 0,  // no comment
                                           MZ_DEFAULT_COMPRESSION,

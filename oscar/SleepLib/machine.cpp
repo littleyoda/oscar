@@ -168,7 +168,7 @@ bool Machine::saveSessionInfo()
             out << (quint8)(sess->enabled(true));
         } else {
             qWarning() << "Machine::SaveSessionInfo discarding session" << sess->s_session
-                       << "["+QDateTime::fromTime_t(sess->s_session).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                       << "["+QDateTime::fromSecsSinceEpoch(sess->s_session).toString("MMM dd, yyyy hh:mm:ss")+"]"
                        << "from machine" << serial() << "with first=0";
         }
 
@@ -260,7 +260,7 @@ QDate Machine::pickDate(qint64 first)
     QTime split_time = profile->session->daySplitTime();
     int combine_sessions = profile->session->combineCloseSessions();
 
-    QDateTime d2 = QDateTime::fromTime_t(first / 1000);
+    QDateTime d2 = QDateTime::fromSecsSinceEpoch(first / 1000);
 
     QDate date = d2.date();
     QTime time = d2.time();
@@ -273,7 +273,7 @@ QDate Machine::pickDate(qint64 first)
         QMap<QDate, Day *>::iterator dit = day.find(date.addDays(-1)); // Check Day Before
 
         if (dit != day.end()) {
-            QDateTime lt = QDateTime::fromTime_t(dit.value()->last() / 1000L);
+            QDateTime lt = QDateTime::fromSecsSinceEpoch(dit.value()->last() / 1000L);
             closest_session = lt.secsTo(d2) / 60;
 
             if (closest_session < combine_sessions) {
@@ -301,14 +301,14 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
     }
     if (sessionlist.contains(s->session())) {
         qCritical() << "Machine::AddSession called with duplicate session" << s->session()
-                    << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                    << "["+QDateTime::fromSecsSinceEpoch(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                     << "for machine" << serial();
         return false;
     }
 
     if (s->first() == 0) {
         qWarning() << "Machine::AddSession called with session" << s->session()
-                   << "["+QDateTime::fromTime_t(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                   << "["+QDateTime::fromSecsSinceEpoch(s->session()).toString("MMM dd, yyyy hh:mm:ss")+"]"
                    << "with first=0";
         return false;
     }
@@ -352,7 +352,7 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
 
     //int drift=profile->cpap->clockDrift();
 
-    QDateTime d2 = QDateTime::fromTime_t(s->first() / 1000);
+    QDateTime d2 = QDateTime::fromSecsSinceEpoch(s->first() / 1000);
 
     QDate date = d2.date();
     QTime time = d2.time();
@@ -371,7 +371,7 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
         dit = day.find(date.addDays(-1)); // Check Day Before
 
         if (dit != day.end()) {
-            QDateTime lt = QDateTime::fromTime_t(dit.value()->last() / 1000);
+            QDateTime lt = QDateTime::fromSecsSinceEpoch(dit.value()->last() / 1000);
             closest_session = lt.secsTo(d2) / 60;
 
             if (closest_session < combine_sessions) {
@@ -387,7 +387,7 @@ bool Machine::AddSession(Session *s, bool allowOldSessions)
             nextday = day.find(date.addDays(1)); // Check Day Afterwards
 
             if (nextday != day.end()) {
-                QDateTime lt = QDateTime::fromTime_t(nextday.value()->first() / 1000);
+                QDateTime lt = QDateTime::fromSecsSinceEpoch(nextday.value()->first() / 1000);
                 closest_session = d2.secsTo(lt) / 60;
 
                 if (closest_session < combine_sessions) {

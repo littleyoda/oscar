@@ -339,7 +339,7 @@ int FPIconLoader::OpenMachine(Machine *mach, const QString & path)
         QMap<SessionID, Session *>::iterator it = Sessions.end();
         it--;
 
-        dt = QDateTime::fromTime_t(qint64(it.value()->first()) / 1000L);
+        dt = QDateTime::fromSecsSinceEpoch(qint64(it.value()->first()) / 1000L);
         QDate date = dt.date().addDays(-7);
         it++;
 
@@ -349,7 +349,7 @@ int FPIconLoader::OpenMachine(Machine *mach, const QString & path)
             sid = sess->session();
             hours = sess->hours();
             mins = hours * 60;
-            dt = QDateTime::fromTime_t(sid);
+            dt = QDateTime::fromSecsSinceEpoch(sid);
 
             if (sess->channelDataExists(CPAP_FlowRate)) { a = "(flow)"; }
             else { a = ""; }
@@ -385,7 +385,7 @@ int FPIconLoader::OpenMachine(Machine *mach, const QString & path)
         //            if (b) {
         //                if (Sessions[zz]->channelDataExists(CPAP_FlowRate)) c=true;
         //            }
-        //            qDebug() << k << "-" <<j << ":" << zz << qRound(dur) << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromTime_t(zz).toString() : "");
+        //            qDebug() << k << "-" <<j << ":" << zz << qRound(dur) << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromSecsSinceEpoch(zz).toString() : "");
         //        }
         //    }
         //    std::sort(chunks.begin(), chunks.end());
@@ -398,7 +398,7 @@ int FPIconLoader::OpenMachine(Machine *mach, const QString & path)
         //        if (b) {
         //            if (Sessions[zz]->channelDataExists(CPAP_FlowRate)) c=true;
         //        }
-        //        qDebug() << chunk.file << ":" << i << zz << dur << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromTime_t(zz).toString() : "");
+        //        qDebug() << chunk.file << ":" << i << zz << dur << "minutes" << (b ? "*" : "") << (c ? QDateTime::fromSecsSinceEpoch(zz).toString() : "");
         //    }
 
     int c = Sessions.size();
@@ -439,7 +439,7 @@ quint32 convertDate(quint32 timestamp)
     // 91596 = 00:23:12 WET
     // 19790 = 23:23:50 WET
 
-    return dt.addSecs(-54).toTime_t();
+    return dt.addSecs(-54).toSecsSinceEpoch();
 }
 
 quint32 convertFLWDate(quint32 timestamp) // Bit format: hhhhhmmmmmmssssssYYYYYYMMMMDDDDD
@@ -467,7 +467,7 @@ quint32 convertFLWDate(quint32 timestamp) // Bit format: hhhhhmmmmmmssssssYYYYYY
 //        int i=5;
 //    }
     // 87922 23:23:50 WET
-    return dt.addSecs(-54).toTime_t();
+    return dt.addSecs(-54).toSecsSinceEpoch();
 }
 
 //QDateTime FPIconLoader::readFPDateTime(quint8 *data)
@@ -588,7 +588,7 @@ bool FPIconLoader::OpenFLW(Machine *mach, const QString & filename)
 
     ts = convertFLWDate(t2);
 
-    if (ts < QDateTime(QDate(2010,1,1), QTime(0,1,0)).toTime_t()) {
+    if (ts < QDateTime(QDate(2010,1,1), QTime(0,1,0)).toSecsSinceEpoch()) {
         return false;
     }
 

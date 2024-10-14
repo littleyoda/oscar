@@ -252,8 +252,8 @@ void ExportCSV::on_exportButton_clicked()
             QString data;
 
             if (ui->rb1_Summary->isChecked()) {
-                QDateTime start = QDateTime::fromTime_t(day->first() / 1000L);
-                QDateTime end = QDateTime::fromTime_t(day->last() / 1000L);
+                QDateTime start = QDateTime::fromSecsSinceEpoch(day->first() / 1000L);
+                QDateTime end = QDateTime::fromSecsSinceEpoch(day->last() / 1000L);
                 data = date.toString(Qt::ISODate);
                 data += sep + QString::number(day->size(), 10);
                 data += sep + start.toString(Qt::ISODate);
@@ -296,8 +296,8 @@ void ExportCSV::on_exportButton_clicked()
                     if (sess->type() != MT_CPAP) {
                         continue;  // Not every session in a day with CPAP data will be a CPAP session.
                     }
-                    QDateTime start = QDateTime::fromTime_t(sess->first() / 1000L);
-                    QDateTime end = QDateTime::fromTime_t(sess->last() / 1000L);
+                    QDateTime start = QDateTime::fromSecsSinceEpoch(sess->first() / 1000L);
+                    QDateTime end = QDateTime::fromSecsSinceEpoch(sess->last() / 1000L);
 
                     sess->OpenEvents();
                     data = date.toString(Qt::ISODate);
@@ -354,7 +354,7 @@ void ExportCSV::on_exportButton_clicked()
                                 EventList *ev = fnd.value()[e];
 
                                 for (quint32 q = 0; q < ev->count(); q++) {
-                                    data = QDateTime::fromTime_t(ev->time(q) / 1000L).toString(Qt::ISODate);
+                                    data = QDateTime::fromSecsSinceEpoch(ev->time(q) / 1000L).toString(Qt::ISODate);
                                     data += sep + QString::number(sess->session());
                                     data += sep + schema::channel[key].code();
                                     data += sep + QString::number(ev->data(q), 'f', 2);

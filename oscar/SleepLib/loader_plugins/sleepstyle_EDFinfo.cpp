@@ -48,7 +48,7 @@ bool SleepStyleEDFInfo::Parse( )	// overrides and calls the super's Parse
         return false;
     }
 
-    startdate = qint64(edfHdr.startdate_orig.toTime_t()) * 1000L;
+    startdate = qint64(edfHdr.startdate_orig.toSecsSinceEpoch()) * 1000L;
     //startdate-=timezoneOffset();
     if (startdate == 0) {
         qDebug() << "sleepStyle EDFInfo::Parse Invalid startdate = 0 in EDF File" << filename;
