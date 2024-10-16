@@ -138,7 +138,7 @@ void gOverviewGraph::SetDay(Day * nullday)
         Day * day = d.value();
 
         // get the timestamp of this day.
-        tt = QDateTime(d.key(), QTime(0, 0, 0), Qt::UTC).toTime_t();
+        tt = QDateTime(d.key(), QTime(0, 0, 0), Qt::UTC).toSecsSinceEpoch();
 
         // calculate day number
         dn = tt / 86400;
@@ -387,8 +387,8 @@ void gOverviewGraph::SetDay(Day * nullday)
         m_miny = 0;
     }
 
-    // m_minx=qint64(QDateTime(p_profile->FirstDay(),QTime(0,0,0),Qt::UTC).toTime_t())*1000L;
-    m_maxx = qint64(QDateTime(p_profile->LastDay(), QTime(23, 59, 0), Qt::UTC).toTime_t()) * 1000L;
+    // m_minx=qint64(QDateTime(p_profile->FirstDay(),QTime(0,0,0),Qt::UTC).toSecsSinceEpoch())*1000L;
+    m_maxx = qint64(QDateTime(p_profile->LastDay(), QTime(23, 59, 0), Qt::UTC).toSecsSinceEpoch()) * 1000L;
     m_physmaxy = m_maxy;
     m_physminy = m_miny;
 }
@@ -1073,9 +1073,9 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
 
         xposLeft += m_rect.left(); //gYAxis::Margin+gGraphView::titleWidth; //graph->m_marginleft+
         int y = event->y() - m_rect.top() + rtop - 15;
-        //QDateTime dt1=QDateTime::fromTime_t(hl_day*86400).toLocalTime();
-        QDateTime dt2 = QDateTime::fromTime_t(hl_day * 86400).toUTC();
-//        QDateTime dt2 = QDateTime::fromTime_t(hl_day * 86400).toLocalTime();
+        //QDateTime dt1=QDateTime::fromSecsSinceEpoch(hl_day*86400).toLocalTime();
+        QDateTime dt2 = QDateTime::fromSecsSinceEpoch(hl_day * 86400).toUTC();
+//        QDateTime dt2 = QDateTime::fromSecsSinceEpoch(hl_day * 86400).toLocalTime();
 
         //QTime t1=dt1.time();
         //QTime t2=dt2.time();
@@ -1272,8 +1272,8 @@ bool gOverviewGraph::mouseReleaseEvent(QMouseEvent *event, gGraph *graph)
         }
 
         if (hl_day > 0) {
-            QDateTime d = QDateTime::fromTime_t(hl_day * 86400).toUTC();
-//            QDateTime d = QDateTime::fromTime_t(hl_day * 86400).toLocalTime();
+            QDateTime d = QDateTime::fromSecsSinceEpoch(hl_day * 86400).toUTC();
+//            QDateTime d = QDateTime::fromSecsSinceEpoch(hl_day * 86400).toLocalTime();
             mainwin->getDaily()->LoadDate(d.date());
             mainwin->JumpDaily();
             //qDebug() << "Jump to daily view?" << d;

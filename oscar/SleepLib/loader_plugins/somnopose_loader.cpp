@@ -99,7 +99,7 @@ int SomnoposeLoader::OpenFile(const QString & filename)
          qint64 ep = epoch.toMSecsSinceEpoch() , time=0;
      #else
         QDateTime epoch(QDate(2001, 1, 1));
-        qint64 ep = qint64(epoch.toTime_t()+epoch.offsetFromUtc()) * 1000, time=0;
+        qint64 ep = qint64(epoch.toSecsSinceEpoch()+epoch.offsetFromUtc()) * 1000, time=0;
     #endif
     qDebug() << "Epoch starts at" << epoch.toString();
 

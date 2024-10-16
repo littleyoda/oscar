@@ -317,7 +317,7 @@ bool Session::StoreSummary()
 {
     if (s_first == 0) {
         qWarning() << "Session::StoreSummary discarding session" << s_session
-                 << "["+QDateTime::fromTime_t(s_session).toString("MMM dd, yyyy hh:mm:ss")+"]"
+                 << "["+QDateTime::fromSecsSinceEpoch(s_session).toString("MMM dd, yyyy hh:mm:ss")+"]"
                  << "from machine" << machine()->serial() << "with first=0";
         return false;
     }
@@ -637,7 +637,7 @@ bool Session::LoadSummary(bool debug)
         if (version >= 18) {
             in >> s_noSettings;
 //            qDebug() << "Session::LoadSummary" << s_session << "["
-//                     << QDateTime::fromTime_t(s_session).toString("MM/dd/yyyy hh:mm:ss")
+//                     << QDateTime::fromSecsSinceEpoch(s_session).toString("MM/dd/yyyy hh:mm:ss")
 //                     << "] s_noSettings" << s_noSettings << "size" << settings.size();
         } else {
             s_noSettings = (settings.size() == 0);
@@ -2352,7 +2352,7 @@ EventList *Session::AddEventList(ChannelID code, EventListType et, EventDataType
 }
 void Session::offsetSession(qint64 offset)
 {
-    //qDebug() << "Session starts" << QDateTime::fromTime_t(s_first/1000).toString("yyyy-MM-dd HH:mm:ss");
+    //qDebug() << "Session starts" << QDateTime::fromSecsSinceEpoch(s_first/1000).toString("yyyy-MM-dd HH:mm:ss");
     s_first += offset;
     s_last += offset;
     QHash<ChannelID, quint64>::iterator it;
@@ -2390,7 +2390,7 @@ void Session::offsetSession(qint64 offset)
         }
     }
 
-    qDebug() << "Session now starts" << QDateTime::fromTime_t(s_first /
+    qDebug() << "Session now starts" << QDateTime::fromSecsSinceEpoch(s_first /
              1000).toString("yyyy-MM-dd HH:mm:ss");
 
 }

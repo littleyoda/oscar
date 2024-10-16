@@ -10,7 +10,7 @@ appli_name="OSCAR"
 # binary copy flag
 copy_flag=0
 
-#### Select the binary file for the goog version of QT (5.7 ou 5.9)
+#### Select the binary file for the goog version of QT (5.8 ou 5.9)
 ###echo "test the version of qt5 core version"
 ###
 ###if [ -f "/etc/redhat-release" ]; then

@@ -157,7 +157,7 @@ Session* ZEOLoader::readNextSession()
 
         start_of_night = readDateTime(row["Start of Night"]);
         if (start_of_night.isValid()) {
-            sid = start_of_night.toTime_t();
+            sid = start_of_night.toSecsSinceEpoch();
             if (mach->SessionExists(sid)) {
                 continue;
             }
@@ -209,7 +209,7 @@ Session* ZEOLoader::readNextSession()
         sess->settings[ZEO_TimeInLight] = TimeInLight;
         sess->settings[ZEO_TimeInDeep] = TimeInDeep;
 
-        st = qint64(start_of_night.toTime_t()) * 1000L;
+        st = qint64(start_of_night.toSecsSinceEpoch()) * 1000L;
         sess->really_set_first(st);
         tt = st;
 

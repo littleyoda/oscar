@@ -7,7 +7,7 @@
 message(Platform is $$QMAKESPEC )
 
 lessThan(QT_MAJOR_VERSION,5) {
-    error("You need Qt 5.7 or newer to build OSCAR");
+    error("You need Qt 5.8 or newer to build OSCAR");
 }
 
 if (equals(QT_MAJOR_VERSION,5)) {
@@ -16,7 +16,7 @@ if (equals(QT_MAJOR_VERSION,5)) {
         DEFINES += helpless
     }
     lessThan(QT_MINOR_VERSION,7) {
-        error("You need Qt 5.7 or newer to build OSCAR");
+        error("You need Qt 5.8 or newer to build OSCAR");
     }
 }
 

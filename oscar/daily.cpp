@@ -1062,8 +1062,8 @@ QString Daily::getSessionInformation(Day * day)
                     corrupted_waveform=true;
             */
 
-            fd=QDateTime::fromTime_t((*s)->first()/1000L);
-            ld=QDateTime::fromTime_t((*s)->last()/1000L);
+            fd=QDateTime::fromSecsSinceEpoch((*s)->first()/1000L);
+            ld=QDateTime::fromSecsSinceEpoch((*s)->last()/1000L);
             int len=(*s)->length()/1000L;
             int h=len/3600;
             int m=(len/60) % 60;
@@ -1466,8 +1466,8 @@ QString Daily::getSleepTime(Day * day)
     html+="<table cellspacing=0 cellpadding=0 border=0 width='100%'>\n";
     html+="<tr><td align='center'><b>"+STR_TR_Date+"</b></td><td align='center'><b>"+tr("Start")+"</b></td><td align='center'><b>"+tr("End")+"</b></td><td align='center'><b>"+STR_UNIT_Hours+"</b></td></tr>";
     int tt=qint64(day->total_time(MT_CPAP))/1000L;
-    QDateTime date=QDateTime::fromTime_t(day->first()/1000L);
-    QDateTime date2=QDateTime::fromTime_t(day->last()/1000L);
+    QDateTime date=QDateTime::fromSecsSinceEpoch(day->first()/1000L);
+    QDateTime date2=QDateTime::fromSecsSinceEpoch(day->last()/1000L);
 
     int h=tt/3600;
     int m=(tt/60)%60;
@@ -2222,7 +2222,7 @@ Session * Daily::CreateJournalSession(QDate date)
         et=cday->last();
     } else {
         QDateTime dt(date,QTime(20,0));
-        st=qint64(dt.toTime_t())*1000L;
+        st=qint64(dt.toSecsSinceEpoch())*1000L;
         et=st+3600000L;
     }
     sess->SetSessionID(st / 1000L);
@@ -2488,7 +2488,7 @@ void Daily::on_bookmarkTable_currentItemChanged(QTableWidgetItem *item, QTableWi
 void Daily::addBookmark(qint64 st, qint64 et, QString text)
 {
     ui->bookmarkTable->blockSignals(true);
-    QDateTime d=QDateTime::fromTime_t(st/1000L, Qt::LocalTime);
+    QDateTime d=QDateTime::fromSecsSinceEpoch(st/1000L, Qt::LocalTime);
     int row=ui->bookmarkTable->rowCount();
     ui->bookmarkTable->insertRow(row);
     QTableWidgetItem *tw=new QTableWidgetItem(text);
@@ -2516,7 +2516,7 @@ void Daily::on_addBookmarkButton_clicked()
 {
     qint64 st,et;
     GraphView->GetXBounds(st,et);
-    QDateTime d=QDateTime::fromTime_t(st/1000L, Qt::LocalTime);
+    QDateTime d=QDateTime::fromSecsSinceEpoch(st/1000L, Qt::LocalTime);
 
     addBookmark(st,et, tr("Bookmark at %1").arg(d.time().toString("HH:mm:ss")));
 }
@@ -2617,7 +2617,7 @@ void Daily::set_BookmarksUI( QVariantList& start , QVariantList& end , QStringLi
         qint64 st=start.at(i).toLongLong(&ok);
         qint64 et=end.at(i).toLongLong(&ok);
 
-        QDateTime d=QDateTime::fromTime_t((st+drift)/1000L);
+        QDateTime d=QDateTime::fromSecsSinceEpoch((st+drift)/1000L);
         ui->bookmarkTable->insertRow(i);
         QTableWidgetItem *tw=new QTableWidgetItem(notes.at(i));
         QTableWidgetItem *dw=new QTableWidgetItem(d.time().toString("HH:mm:ss"));

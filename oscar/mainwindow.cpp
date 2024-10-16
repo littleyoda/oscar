@@ -227,9 +227,9 @@ void MainWindow::SetupGUI()
 #endif
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-    QRandomGenerator(QDateTime::currentDateTime().toTime_t());
+    QRandomGenerator(QDateTime::currentDateTime().toSecsSinceEpoch());
 #else
-    qsrand(QDateTime::currentDateTime().toTime_t());
+    qsrand(QDateTime::currentDateTime().toSecsSinceEpoch());
 #endif
 
     QList<int> a;
@@ -1732,14 +1732,14 @@ void MainWindow::purgeDay(MachineType type)
         if (type == MT_JOURNAL || (type == MT_UNKNOWN && sess->type() != MT_JOURNAL) ||
                 sess->type() == type) {
             list.append(*s);
-            qDebug() << "Purging session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+            qDebug() << "Purging session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromSecsSinceEpoch((*s)->session()).toString()+"]";
             qDebug() << "First Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realFirst()).toString();
             qDebug() << "Last Time:" << QDateTime::fromMSecsSinceEpoch((*s)->realLast()).toString();
             if (sess->type() == MT_CPAP) {
                 cpap = day->machine(MT_CPAP);
             }
         } else {
-            qDebug() << "Skipping session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromTime_t((*s)->session()).toString()+"]";
+            qDebug() << "Skipping session from " << (*s)->machine()->loaderName() << " ID:" << (*s)->session() << "["+QDateTime::fromSecsSinceEpoch((*s)->session()).toString()+"]";
         }
     }
 

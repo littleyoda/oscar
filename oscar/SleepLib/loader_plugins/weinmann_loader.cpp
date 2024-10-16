@@ -170,7 +170,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         int minute = p[6];
         int second = p[7];
         QDateTime date = QDateTime(QDate(year,month,day), QTime(hour,minute,second));
-        quint32 ts = date.toTime_t();
+        quint32 ts = date.toSecsSinceEpoch();
         if (!mach->SessionExists(ts)) {
             qDebug() << date;
         }
@@ -207,7 +207,7 @@ int WeinmannLoader::Open(const QString & dirpath)
     p = comp;
 
     QDateTime dt_epoch(QDate(2000,1,1), QTime(0,0,0));
-    //int epoch = dt_epoch.toTime_t();
+    //int epoch = dt_epoch.toSecsSinceEpoch();
     //epoch = 0;
 
 
@@ -224,7 +224,7 @@ int WeinmannLoader::Open(const QString & dirpath)
         int minute = p[6];
         int second = p[7];
         QDateTime date = QDateTime(QDate(year,month,day), QTime(hour,minute,second));
-        quint32 ts = date.toTime_t();
+        quint32 ts = date.toSecsSinceEpoch();
 
         if (mach->SessionExists(ts)) continue;
 

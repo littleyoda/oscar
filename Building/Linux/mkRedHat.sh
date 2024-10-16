@@ -62,8 +62,8 @@ mkdir ${temp_folder}/share/applications
 strip -s -o ${temp_folder}/bin/${appli_name} ${build_folder}/oscar/OSCAR
 #old code : cp ${build_folder}/oscar/OSCAR ${temp_folder}/bin
 
-# for QT5.7
-# strip -s -o ${temp_folder}/bin/oscar.qt5.7 ./oscar.qt5.7
+# for QT5.8
+# strip -s -o ${temp_folder}/bin/oscar.qt5.8 ./oscar.qt5.8
 # for QT5.9
 # strip -s -o ${temp_folder}/bin/oscar.qt5.9 ./oscar.qt5.9
 
