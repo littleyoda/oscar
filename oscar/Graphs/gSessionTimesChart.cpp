@@ -202,7 +202,7 @@ void gSessionTimesChart::paint(QPainter &painter, gGraph &graph, const QRegion &
 
             QColor goodcolor = haveoxi ? QColor(128,255,196) : QColor(64,128,255);
 
-            QString datestr = date.toString(Qt::SystemLocaleShortDate);
+            QString datestr = date.toString(QLocale::system().dateFormat(QLocale::ShortFormat));
 
             for (const auto & sess : day->sessions) {
                 if (!sess->enabled() || (sess->type() != m_machtype)) continue;

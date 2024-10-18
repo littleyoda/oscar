@@ -1086,7 +1086,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
         if ((d != m_values.end()) && (day != nullptr)) {
             bool summary_only = day->summaryOnly();
 
-            QString strTooltip = dt.toString(Qt::SystemLocaleShortDate);
+            QString strTooltip = dt.toString(QLocale::system().dateFormat(QLocale::ShortFormat));
 
             // Day * day=m_days[hl_day];
             //EventDataType val;
@@ -1235,7 +1235,7 @@ bool gOverviewGraph::mouseMoveEvent(QMouseEvent *event, gGraph *graph)
             graph->ToolTip(strTooltip, xposLeft, y - 15);
             return false;
         } else {
-            QString z = dt.toString(Qt::SystemLocaleShortDate) + "\r\n"+QObject::tr("No Data");
+            QString z = dt.toString(QLocale::system().dateFormat(QLocale::ShortFormat)) + "\r\n"+QObject::tr("No Data");
             graph->ToolTip(z, xposLeft, y - 15);
             return false;
         }

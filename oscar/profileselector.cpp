@@ -145,7 +145,7 @@ void ProfileSelector::updateProfileList()
         if (mach) {
             model->setData(model->index(row, 1, QModelIndex()), mach->brand());
             model->setData(model->index(row, 2, QModelIndex()), mach->model());
-            model->setData(model->index(row, 4, QModelIndex()), mach->lastImported().toString(Qt::SystemLocaleShortDate));
+            model->setData(model->index(row, 4, QModelIndex()), mach->lastImported().toString(QLocale::system().dateFormat(QLocale::ShortFormat)));
         }
         QBrush bg = QColor(Qt::black);
         QFont font = QApplication::font();

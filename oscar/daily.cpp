@@ -1090,7 +1090,7 @@ QString Daily::getSessionInformation(Day * day)
                     .arg(tr("%1 Session #%2").arg((*s)->machine()->loaderName()).arg((*s)->session(),8,10,QChar('0')))
                     .arg(tr("%1h %2m %3s").arg(h,2,10,QChar('0')).arg(m,2,10,QChar('0')).arg(s1,2,10,QChar('0')))
                     .arg((sess->enabled() ? "on" : "off"))
-                    .arg(fd.date().toString(Qt::SystemLocaleShortDate))
+                    .arg(fd.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat)))
                     .arg(fd.toString("HH:mm:ss"))
                     .arg(ld.toString("HH:mm:ss"));
 
@@ -1473,7 +1473,7 @@ QString Daily::getSleepTime(Day * day)
     int m=(tt/60)%60;
     int s=tt % 60;
     html+=QString("<tr><td align='center'>%1</td><td align='center'>%2</td><td align='center'>%3</td><td align='center'>%4</td></tr>\n")
-            .arg(date.date().toString(Qt::SystemLocaleShortDate))
+            .arg(date.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat)))
             .arg(date.toString("HH:mm:ss"))
             .arg(date2.toString("HH:mm:ss"))
             .arg(QString::asprintf("%02i:%02i:%02i",h,m,s));
@@ -1726,7 +1726,7 @@ void Daily::Load(QDate date)
     qDebug() << "Setting App font in Daily::Load";
     setApplicationFont();
 
-    dateDisplay->setText("<i>"+date.toString(Qt::SystemLocaleLongDate)+"</i>");
+    dateDisplay->setText("<i>"+date.toString(QLocale::system().dateFormat(QLocale::ShortFormat))+"</i>");
     previous_date=date;
 
     Day * day = p_profile->GetDay(date);

@@ -1145,7 +1145,7 @@ void PreferencesDialog::on_IgnoreSlider_valueChanged(int position)
 extern MainWindow *mainwin;
 void PreferencesDialog::RefreshLastChecked()
 {
-    ui->updateLastChecked->setText(AppSetting->updatesLastChecked().toString(Qt::SystemLocaleLongDate));
+    ui->updateLastChecked->setText(AppSetting->updatesLastChecked().toString(QLocale::system().dateFormat(QLocale::LongFormat)));
 }
 #endif
 

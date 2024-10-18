@@ -675,7 +675,7 @@ void gGraphView::popoutGraph()
             // so the user knows what day the snapshot starts
             // because the name is displayed to the user, use local time
             QDateTime date = QDateTime::fromMSecsSinceEpoch(graph->min_x, Qt::LocalTime);
-            basename += date.date().toString(Qt::SystemLocaleLongDate);
+            basename += date.date().toString(QLocale::system().dateFormat(QLocale::LongFormat));
         }
         QString newname = basename;
         // Find a new name.. How many snapshots for each graph counts as stupid?
@@ -2516,7 +2516,7 @@ void gGraphView::onSnapshotGraphToggle()
             // so the user knows what day the snapshot starts
             // because the name is displayed to the user, use local time
             QDateTime date = QDateTime::fromMSecsSinceEpoch(graph->min_x, Qt::LocalTime);
-            basename += date.date().toString(Qt::SystemLocaleLongDate);
+            basename += date.date().toString(QLocale::system().dateFormat(QLocale::LongFormat));
         }
         QString newname;
 
