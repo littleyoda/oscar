@@ -655,7 +655,7 @@ void gSummaryChart::paint(QPainter &painter, gGraph &graph, const QRegion &regio
         QColor col2(255,0,0,64);
         painter.fillRect(hl_rect, QBrush(col2));
 
-        QString txt = hl_date.toString(Qt::SystemLocaleShortDate)+" ";
+        QString txt = hl_date.toString(QLocale::system().dateFormat(QLocale::ShortFormat))+" ";
         if (hl_day) {
             // grab extra tooltip data
             txt += tooltipData(hl_day, hl_idx);

@@ -293,7 +293,7 @@ void OximeterImport::on_directImportButton_clicked()
             m = (duration / 60) % 60;
             s = duration % 60;
 
-            item = new QTableWidgetItem(startTime.date().toString(Qt::SystemLocaleShortDate)+" "+startTime.time().toString("HH:mm:ss"));
+            item = new QTableWidgetItem(startTime.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat))+" "+startTime.time().toString("HH:mm:ss"));
             ui->tableOxiSessions->setItem(i, 0, item);
        //   item->setData(Qt::UserRole+1, datetime);
        //   item->setData(Qt::UserRole, i);
@@ -588,19 +588,19 @@ void OximeterImport::on_calendarWidget_clicked(const QDate &date)
                 sessbar->add((*i),colors.at(j++ % colors.size()));
             }
             sessbar->setVisible(true);
-            ui->sessbarLabel->setText(tr("%1 session(s) on %2, starting at %3").arg(day->size()).arg(time.date().toString(Qt::SystemLocaleLongDate)).arg(time.time().toString("hh:mm:ssap")));
+            ui->sessbarLabel->setText(tr("%1 session(s) on %2, starting at %3").arg(day->size()).arg(time.date().toString(QLocale::system().dateFormat(QLocale::LongFormat))).arg(time.time().toString("hh:mm:ssap")));
             sessbar->setSelected(0);
             ui->dateTimeEdit->setDateTime(time);
         } else {
-            ui->sessbarLabel->setText(tr("No CPAP data available on %1").arg(date.toString(Qt::SystemLocaleLongDate)));
-            qDebug() << "oximod - Using oximeter time " << oximodule->startTime().toString("yyyy-MMM-dd hh:mm:ssap") << "on date " << date.toString(Qt::SystemLocaleLongDate);
+            ui->sessbarLabel->setText(tr("No CPAP data available on %1").arg(date.toString(QLocale::system().dateFormat(QLocale::LongFormat))));
+            qDebug() << "oximod - Using oximeter time " << oximodule->startTime().toString("yyyy-MMM-dd hh:mm:ssap") << "on date " << date.toString(QLocale::system().dateFormat(QLocale::LongFormat));
             ui->dateTimeEdit->setDateTime(QDateTime(date,oximodule->startTime().time()));
         }
 
         sessbar->update();
     } else if (ui->radioSyncOximeter) {
         qDebug() << "oximod - Using oximeter date and time";
-        ui->sessbarLabel->setText(QString("%1").arg(date.toString(Qt::SystemLocaleLongDate)));
+        ui->sessbarLabel->setText(QString("%1").arg(date.toString(QLocale::system().dateFormat(QLocale::LongFormat))));
         ui->dateTimeEdit->setDateTime(QDateTime(date, ui->dateTimeEdit->dateTime().time()));
     }
 }

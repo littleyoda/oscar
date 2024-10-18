@@ -151,7 +151,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
                 arg(p_profile->user->firstName());
 
         userinfo += STR_TR_DOB + QString(":\t%1\n").
-                arg(p_profile->user->DOB().toString(Qt::SystemLocaleShortDate));
+                arg(p_profile->user->DOB().toString(QLocale::system().dateFormat(QLocale::ShortFormat)));
 
         if (!p_profile->doctor->patientID().isEmpty()) {
             userinfo += STR_TR_PatientID + QString(":\t%1\n").arg(p_profile->doctor->patientID());
@@ -182,7 +182,7 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
 
     if (name == STR_TR_Daily) {
 
-        QString cpapinfo = date.toString(Qt::SystemLocaleLongDate) + "\n\n";
+        QString cpapinfo = date.toString(QLocale::system().dateFormat(QLocale::LongFormat)) + "\n\n";
 
         if (cpap) {
             time_t f = day->first(MT_CPAP) / 1000L;
@@ -364,8 +364,8 @@ void Report::PrintReport(gGraphView *gv, QString name, QDate date)
         QDateTime first = QDateTime::fromSecsSinceEpoch((*gv)[0]->min_x / 1000L);
         QDateTime last = QDateTime::fromSecsSinceEpoch((*gv)[0]->max_x / 1000L);
         QString ovinfo = QObject::tr("Reporting from %1 to %2").
-                arg(first.date().toString(Qt::SystemLocaleShortDate)).
-                arg(last.date().toString(Qt::SystemLocaleShortDate));
+                arg(first.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).
+                arg(last.date().toString(QLocale::system().dateFormat(QLocale::ShortFormat)));
         QRectF bounds = painter.boundingRect(QRectF(0, top, virt_width, 0), ovinfo,
                                              QTextOption(Qt::AlignHCenter));
         painter.drawText(bounds, ovinfo, QTextOption(Qt::AlignHCenter));

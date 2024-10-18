@@ -1144,9 +1144,9 @@ struct Period {
             finished = true;
             next = first;
         }
-        name = name + "<br>"  + next.toString(Qt::SystemLocaleShortDate) ;
+        name = name + "<br>"  + next.toString(QLocale::system().dateFormat(QLocale::ShortFormat)) ;
         if (advance!=0) {
-            name =  name + " - "  +  last.toString(Qt::SystemLocaleShortDate);
+            name =  name + " - "  +  last.toString(QLocale::system().dateFormat(QLocale::ShortFormat));
         };
         this->header = name;
         this->start = next ;
@@ -1718,7 +1718,7 @@ QString Statistics::UpdateRecordsBox()
 
             html += "<font size='+0'>";
         html += "<b>"+tr("CPAP Usage")+"</b><br>";
-        html += first.toString(Qt::SystemLocaleShortDate) + " - " +  last.toString(Qt::SystemLocaleShortDate) + "<br>";
+        html += first.toString(QLocale::system().dateFormat(QLocale::ShortFormat)) + " - " +  last.toString(QLocale::system().dateFormat(QLocale::ShortFormat)) + "<br>";
         if (daysSkipped > 0) {
             html += tr("Total Days: %1").arg(totalDays) + "<br>";
             html += tr("Days Not Used: %1").arg(daysSkipped) + "<br>";
@@ -1760,7 +1760,7 @@ QString Statistics::UpdateRecordsBox()
 
                 for (int i=0; (i<show_records) && (it != it_end); ++i, ++it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                            +tr("Date: %1 AHI: %2").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
@@ -1772,7 +1772,7 @@ QString Statistics::UpdateRecordsBox()
                 it_end = ahilist.begin();
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                        +tr("Date: %1 AHI: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                        +tr("Date: %1 AHI: %2").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
@@ -1807,7 +1807,7 @@ QString Statistics::UpdateRecordsBox()
 
                 for (int i=0; (i<show_records) && (it != it_end); ++i, ++it) {
                     html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                        +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                        +tr("Date: %1 FL: %2").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
 
                 }
 
@@ -1820,7 +1820,7 @@ QString Statistics::UpdateRecordsBox()
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     if (it.key() > 0) {
                         html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 FL: %2").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                            +tr("Date: %1 FL: %2").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
                         cnt++;
                     }
                 }
@@ -1854,7 +1854,7 @@ QString Statistics::UpdateRecordsBox()
                 for (int i=0; (i<show_records) && (it != it_end); ++i, --it) {
                     if (it.key() > 0) {
                         html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                            +tr("Date: %1 Leak: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                            +tr("Date: %1 Leak: %2%").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
                         cnt++;
                     }
 
@@ -1891,7 +1891,7 @@ QString Statistics::UpdateRecordsBox()
 
                         if (it.key() > 0) {
                             html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                                +tr("Date: %1 CSR: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                                +tr("Date: %1 CSR: %2%").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
                             cnt++;
                         }
                     }
@@ -1921,7 +1921,7 @@ QString Statistics::UpdateRecordsBox()
 
                         if (it.key() > 0) {
                             html += QString("<a href='daily=%1'>").arg(it.value().toString(Qt::ISODate))
-                                +tr("Date: %1 PB: %2%").arg(it.value().toString(Qt::SystemLocaleShortDate)).arg(it.key(), 0, 'f', 2) + "</a><br>";
+                                +tr("Date: %1 PB: %2%").arg(it.value().toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(it.key(), 0, 'f', 2) + "</a><br>";
                             cnt++;
                         }
                     }
@@ -1958,7 +1958,7 @@ QString Statistics::UpdateRecordsBox()
             html += "<b>"+tr("Best Device Setting")+"</b><br>";
             const RXItem & rxbest = *list.at(0);
             html += QString("<a href='overview=%1,%2'>").arg(rxbest.start.toString(Qt::ISODate)).arg(rxbest.end.toString(Qt::ISODate)) +
-                tr("Date: %1 - %2").arg(rxbest.start.toString(Qt::SystemLocaleShortDate)).arg(rxbest.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
+                tr("Date: %1 - %2").arg(rxbest.start.toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(rxbest.end.toString(QLocale::system().dateFormat(QLocale::ShortFormat))) + "</a><br>";
             html += QString("%1").arg(rxbest.machine->model()) + "<br>";
             html += QString("Serial: %1").arg(rxbest.machine->serial()) + "<br>";
             html += tr("AHI: %1").arg(double(rxbest.ahi) / rxbest.hours, 0, 'f', 2) + "<br>";
@@ -1970,7 +1970,7 @@ QString Statistics::UpdateRecordsBox()
             html += "<b>"+tr("Worst Device Setting")+"</b><br>";
             const RXItem & rxworst = *list.at(list.size() -1);
             html += QString("<a href='overview=%1,%2'>").arg(rxworst.start.toString(Qt::ISODate)).arg(rxworst.end.toString(Qt::ISODate)) +
-                    tr("Date: %1 - %2").arg(rxworst.start.toString(Qt::SystemLocaleShortDate)).arg(rxworst.end.toString(Qt::SystemLocaleShortDate)) + "</a><br>";
+                    tr("Date: %1 - %2").arg(rxworst.start.toString(QLocale::system().dateFormat(QLocale::ShortFormat))).arg(rxworst.end.toString(QLocale::system().dateFormat(QLocale::ShortFormat))) + "</a><br>";
             html += QString("%1").arg(rxworst.machine->model()) + "<br>";
             html += QString("Serial: %1").arg(rxworst.machine->serial()) + "<br>";
             html += tr("AHI: %1").arg(double(rxworst.ahi) / rxworst.hours, 0, 'f', 2) + "<br>";
