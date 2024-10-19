@@ -101,7 +101,7 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
 
     QFrame *border = new QFrame(ui->graphArea);
 
-    framelayout->setMargin(1);
+    framelayout->setContentsMargins(1, 1, 1, 1);
     border->setFrameShape(QFrame::StyledPanel);
     framelayout->addWidget(border,1);
 
@@ -110,7 +110,6 @@ Overview::Overview(QWidget *parent, gGraphView *shared) :
     ///////////////////////////////////////////////////////////////////////////////
     layout = new QHBoxLayout(border);
     layout->setSpacing(0); // remove the ugly margins/spacing
-    layout->setMargin(0);
     layout->setContentsMargins(0, 0, 0, 0);
     border->setLayout(layout);
     border->setAutoFillBackground(false);

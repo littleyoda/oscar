@@ -55,7 +55,7 @@ OximeterImport::OximeterImport(QWidget *parent) :
     liveView->setVisible(false);
     liveView->setShowAuthorMessage(false);
     QVBoxLayout * lvlayout = new QVBoxLayout;
-    lvlayout->setMargin(0);
+    lvlayout->setContentsMargins(0, 0, 0, 0);
     lvlayout->addWidget(liveView);
     ui->liveViewFrame->setLayout(lvlayout);
 
@@ -80,7 +80,7 @@ OximeterImport::OximeterImport(QWidget *parent) :
     ui->syncCPAPGroup->setVisible(false);
 
     QVBoxLayout * layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     ui->sessBarFrame->setLayout(layout);
     sessbar = new SessionBar(this);
     sessbar->setSelectMode(true);
