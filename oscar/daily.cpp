@@ -150,7 +150,6 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
 
     layout=new QHBoxLayout();
     layout->setSpacing(0);
-    layout->setMargin(0);
     layout->setContentsMargins(0,0,0,0);
 
     dateDisplay=new MyLabel(this);
@@ -182,7 +181,7 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     sessionbar->setMouseTracking(true);
     connect(sessionbar, SIGNAL(sessionClicked(Session*)), this, SLOT(doToggleSession(Session*)));
     QVBoxLayout *layout2 = new QVBoxLayout();
-    layout2->setMargin(0);
+    layout2->setContentsMargins(0, 0, 0, 0);
     widget->setLayout(layout2);
 
     webView=new MyTextBrowser(widget);

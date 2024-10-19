@@ -152,9 +152,8 @@ void initTranslations()
         QVBoxLayout layout1;
         QVBoxLayout layout2;
 
-        layout2.setMargin(6);
-        lang_layout.setContentsMargins(4,4,4,4);
-        lang_layout.setMargin(6);
+        layout2.setContentsMargins(6, 6, 6, 6);
+        lang_layout.setContentsMargins(6, 6, 6, 6);
         layout2.setSpacing(6);
         QListWidget langlist;
 

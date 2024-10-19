@@ -188,9 +188,8 @@ void    DailySearchTab::createUi() {
 
         populateControl();
 
-        searchTabLayout->setContentsMargins(0, 0, 0, 0);
         searchTabLayout->addSpacing(2);
-        searchTabLayout->setMargin(2);
+        searchTabLayout->setContentsMargins(2, 2, 2, 2);
 
         startLayout->addWidget(matchButton);
         startLayout->addWidget(addMatchButton);
@@ -198,7 +197,7 @@ void    DailySearchTab::createUi() {
         startLayout->addWidget(startButton);
         startLayout->addStretch(0);
         startLayout->addSpacing(2);
-        startLayout->setMargin(2);
+        startLayout->setContentsMargins(2, 2, 2, 2);
         startWidget->setLayout(startLayout);
 
         commandLayout->addWidget(commandButton);
@@ -209,7 +208,7 @@ void    DailySearchTab::createUi() {
         commandLayout->addWidget(selectDouble);
         commandLayout->addWidget(selectUnits);
 
-        commandLayout->setMargin(2);
+        commandLayout->setContentsMargins(2, 2, 2, 2);
         commandLayout->setSpacing(2);
         commandLayout->addStretch(0);
         commandWidget->setLayout(commandLayout);
@@ -218,7 +217,7 @@ void    DailySearchTab::createUi() {
         summaryLayout->addWidget(summaryFound);
         summaryLayout->addWidget(summaryMinMax);
 
-        summaryLayout->setMargin(2);
+        summaryLayout->setContentsMargins(2, 2, 2, 2);
         summaryLayout->setSpacing(2);
         summaryWidget->setLayout(summaryLayout);
 

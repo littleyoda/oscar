@@ -2184,7 +2184,7 @@ void MinMaxWidget::onComboChanged(int _idx)
 void MinMaxWidget::createLayout()
 {
     QGridLayout * layout = new QGridLayout;
-    layout->setMargin(4);
+    layout->setContentsMargins(4, 4, 4, 4);
     layout->setSpacing(4);
 
     combobox = new QComboBox(this);
