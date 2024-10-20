@@ -47,7 +47,7 @@ struct EventData {
 };
 
 
-struct UsageData {
+struct ResVentUsageData {
     QString number{};
     QDateTime start_time{};
     QDateTime end_time{};
@@ -76,10 +76,10 @@ struct ChunkData {
 };
 
 
-class UsageData2 {
+class ResVentUsageData2 {
 public:
-    UsageData2();
-    virtual ~UsageData2();
+    ResVentUsageData2();
+    virtual ~ResVentUsageData2();
     QString number{};
     QDateTime start_time{};
     QDateTime end_time{};
@@ -144,15 +144,27 @@ private:
     //Resvent Loader Mode
     //These must start at zero. and increment. order is required for initChannels function
     enum RESVENT_PAP_MODE {
-        RESVENT_PAP_CPAP0 = 0  
-        , RESVENT_PAP_APAP1 = 1 
+        RESVENT_PAP_CPAP = 0  
+        , RESVENT_PAP_APAP = 1
+        , RESVENT_PAP_S30 = 2
+        , RESVENT_PAP_AUTO_S30 = 3
+        , RESVENT_PAP_ST30 = 4
+        , RESVENT_PAP_AUTO_ST30 = 5
+        , RESVENT_PAP_T30 = 6
+        , RESVENT_PAP_PC = 7
     };
-    enum RESVENT_PAP_MODE myRESVENT_PAP_MODE = RESVENT_PAP_CPAP0;
+    enum RESVENT_PAP_MODE myRESVENT_PAP_MODE = RESVENT_PAP_CPAP;
 
-    // Revent Devce Mode. value defined in file CONFIG/TCTRL VentMOde
+    // Revent Device Mode. value defined in file CONFIG/TCTRL VentMOde
     enum RESVENT_DEVICE_MODE{
+        RESVENT_DEVICE_CPAP = 1,
         RESVENT_DEVICE_APAP = 3,
-        //RESVENT_DEVICE_CPAP = ?    // needs to be verified.
+        RESVENT_DEVICE_S30 = 10,
+        RESVENT_DEVICE_AUTO_S30 = 11,
+        RESVENT_DEVICE_ST30 = 12,
+        RESVENT_DEVICE_AUTO_ST30 = 13,
+        RESVENT_DEVICE_T30 = 14,
+        RESVENT_DEVICE_PC = 15
     };
 
     QMap<QString,QString> configSettings ;
@@ -162,16 +174,16 @@ private:
     QVector<QDate> GetSessionsDate(const QString& dirpath);
     QString GetSessionFolder(const QString& dirpath, const QDate& session_date);
     int LoadSession(const QString& dirpath, const QDate& session_date, Machine* machine);
-    void LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage );
+    void LoadEvents(const QString& session_folder_path, Session* session, const ResVentUsageData& usage );
     void UpdateEvents(EventType event_type, const QMap<EventType, QVector<EventData>>& events, Session* session);
     bool VerifyEvent(EventData& eventData);
     EventList* GetEventList(const QString& name, Session* session, float sample_rate = 0.0) ;
-    void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const UsageData& usage);
-    void LoadOtherWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage);
-    void LoadWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage);
-    void LoadStats(const UsageData& /*usage_data*/, Session* session );
-    UsageData ReadUsage(const QString& session_folder_path, const QString& usage_number);
-    QVector<UsageData> GetDifferentUsage(const QString& session_folder_path);
+    void ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const ResVentUsageData& usage);
+    void LoadOtherWaveForms(const QString& session_folder_path, Session* session, const ResVentUsageData& usage);
+    void LoadWaveForms(const QString& session_folder_path, Session* session, const ResVentUsageData& usage);
+    void LoadStats(const ResVentUsageData& /*usage_data*/, Session* session );
+    ResVentUsageData ReadUsage(const QString& session_folder_path, const QString& usage_number);
+    QVector<ResVentUsageData> GetDifferentUsage(const QString& session_folder_path);
 };
 
 #endif // RESVENT_LOADER_H
