@@ -240,14 +240,50 @@ void ResventLoader::readAllConfigFiles(const QString & path ,QMap<QString,QStrin
         readConfigFile(filepath, hash);
     }
     int papMode = configSettings.value("VentMode").toInt();
-    if (papMode == RESVENT_DEVICE_APAP) {
-        readConfigFile(configPath+"N_APAP", hash);
-        myCPAPMode = MODE_APAP;
-        myRESVENT_PAP_MODE = RESVENT_PAP_APAP1 ;
-    } else {
+    // CPAP
+    if (papMode == RESVENT_DEVICE_CPAP) {
         readConfigFile(configPath+"N_CPAP", hash);
         myCPAPMode = MODE_CPAP;
-        myRESVENT_PAP_MODE = RESVENT_PAP_CPAP0 ;
+        myRESVENT_PAP_MODE = RESVENT_PAP_CPAP;
+    // APAP
+    } else if (papMode == RESVENT_DEVICE_APAP) {
+        readConfigFile(configPath+"N_APAP", hash);
+        myCPAPMode = MODE_APAP;
+        myRESVENT_PAP_MODE = RESVENT_PAP_APAP ;
+    // S(30)
+    } else if (papMode == RESVENT_DEVICE_S30) {
+        readConfigFile(configPath+"N_S30", hash);
+        myCPAPMode = MODE_BILEVEL_FIXED;
+        myRESVENT_PAP_MODE = RESVENT_PAP_S30;
+    // Auto S(30)
+    } else if (papMode == RESVENT_DEVICE_AUTO_S30) {
+        readConfigFile(configPath+"N_AS30", hash);
+        myCPAPMode = MODE_BILEVEL_AUTO_FIXED_PS;
+        myRESVENT_PAP_MODE = RESVENT_PAP_AUTO_S30 ; 
+    // S/T(30)
+    } else if (papMode == RESVENT_DEVICE_ST30) {
+        readConfigFile(configPath+"N_ST30", hash);
+        // No CPAPMode for x/T Modes
+        myCPAPMode = MODE_BILEVEL_FIXED;
+        myRESVENT_PAP_MODE = RESVENT_PAP_ST30;
+    // Auto S/T(30)
+    } else if (papMode == RESVENT_DEVICE_AUTO_ST30) {
+        readConfigFile(configPath+"N_AST30", hash);
+        // No CPAPMode for x/T Modes
+        myCPAPMode = MODE_BILEVEL_AUTO_FIXED_PS;
+        myRESVENT_PAP_MODE = RESVENT_PAP_AUTO_ST30 ; 
+    // T(30)
+    } else if (papMode == RESVENT_DEVICE_T30) {
+        readConfigFile(configPath+"N_T30", hash);
+        // No CPAPMode for T
+        myCPAPMode = MODE_BILEVEL_FIXED;
+        myRESVENT_PAP_MODE = RESVENT_PAP_T30;
+    // PC
+    } else if (papMode == RESVENT_DEVICE_PC) {
+        readConfigFile(configPath+"N_PC", hash);
+        // No CPAP Mode for PC
+        myCPAPMode = MODE_BILEVEL_FIXED;
+        myRESVENT_PAP_MODE = RESVENT_PAP_PC;
     }
 }
 
@@ -383,7 +419,7 @@ bool ResventLoader::VerifyEvent(EventData& eventData) {
     return true;
 }
 // ResventLoader::
-void ResventLoader::LoadEvents(const QString& session_folder_path, Session* session, const UsageData& usage ) {
+void ResventLoader::LoadEvents(const QString& session_folder_path, Session* session, const ResVentUsageData& usage ) {
     const auto event_file_path = session_folder_path + QDir::separator() + "EV" + usage.number;
     // Oscar (resmed) plots events at end.
 
@@ -499,7 +535,7 @@ QString ReadDescriptionName(QFile& f) {
     return QString(name.data());
 }
 
-void ResventLoader::ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const UsageData& usage) {
+void ResventLoader::ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_forms, Session* session, const ResVentUsageData& usage) {
     f.seek(kChunkDurationInSecOffset);
     const auto chunk_duration_in_sec = read_from_file<uint16_t>(f);
     f.seek(kDescriptionCountOffset);
@@ -524,7 +560,7 @@ void ResventLoader::ReadWaveFormsHeaders(QFile& f, QVector<ChunkData>& wave_form
     }
 }
 
-void ResventLoader::LoadOtherWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
+void ResventLoader::LoadOtherWaveForms(const QString& session_folder_path, Session* session, const ResVentUsageData& usage) {
     QDir session_folder(session_folder_path);
 
     const auto wave_files = session_folder.entryList(QStringList() << "P" + usage.number + "_*", QDir::Files, QDir::Name);
@@ -591,7 +627,7 @@ void ResventLoader::LoadOtherWaveForms(const QString& session_folder_path, Sessi
     }
 }
 
-void ResventLoader::LoadWaveForms(const QString& session_folder_path, Session* session, const UsageData& usage) {
+void ResventLoader::LoadWaveForms(const QString& session_folder_path, Session* session, const ResVentUsageData& usage) {
     QDir session_folder(session_folder_path);
 
     const auto wave_files = session_folder.entryList(QStringList() << "W" + usage.number + "_*", QDir::Files, QDir::Name);
@@ -656,11 +692,39 @@ enum RESVENT_iPR_MODE {
     RESVENT_iPR_OFF , RESVENT_iPR_ON , RESVENT_iPR_RAMP
 };
 
-void ResventLoader::LoadStats(const UsageData& /*usage_data*/, Session* session ) {
+void ResventLoader::LoadStats(const ResVentUsageData& /*usage_data*/, Session* session ) {
     // these should be set once per day or once per sessio or once per oscar sessionFull mode
     session->settings[CPAP_Mode] = myCPAPMode ;
-    session->settings[CPAP_PressureMin] = applyGain(configSettings.value("PMin"),kHundredthGain);
-    session->settings[CPAP_PressureMax] = applyGain(configSettings.value("PMax"),kHundredthGain);
+    if (myRESVENT_PAP_MODE == RESVENT_PAP_APAP) {
+        session->settings[CPAP_PressureMin] = applyGain(configSettings.value("PMin"),kHundredthGain);
+        session->settings[CPAP_PressureMax] = applyGain(configSettings.value("PMax"),kHundredthGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_CPAP) {
+        session->settings[CPAP_Pressure] = applyGain(configSettings.value("Press"),kHundredthGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_S30) {
+        session->settings[CPAP_EPAP] = applyGain(configSettings.value("EPAP"),kHundredthGain);
+        session->settings[CPAP_IPAP] = applyGain(configSettings.value("IPAP"),kHundredthGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_AUTO_S30){
+        session->settings[CPAP_EPAPLo] = applyGain(configSettings.value("EPAPMin"),kHundredthGain);
+        session->settings[CPAP_IPAPHi] = applyGain(configSettings.value("IPAPMax"),kHundredthGain);
+        session->settings[CPAP_PS] = applyGain(configSettings.value("PS"),kHundredthGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_ST30){
+        session->settings[CPAP_EPAP] = applyGain(configSettings.value("EPAP"),kHundredthGain);
+        session->settings[CPAP_IPAP] = applyGain(configSettings.value("IPAP"),kHundredthGain);
+        session->settings[CPAP_RespRate] = applyGain(configSettings.value("TitraTime"),kNoGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_AUTO_ST30) {
+        session->settings[CPAP_EPAPLo] = applyGain(configSettings.value("EPAPMin"),kHundredthGain);
+        session->settings[CPAP_IPAPHi] = applyGain(configSettings.value("IPAPMax"),kHundredthGain);
+        session->settings[CPAP_PS] = applyGain(configSettings.value("PS"),kHundredthGain);
+        session->settings[CPAP_RespRate] = applyGain(configSettings.value("TitraTime"),kNoGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_T30) {
+        session->settings[CPAP_EPAPLo] = applyGain(configSettings.value("EPAP"),kHundredthGain);
+        session->settings[CPAP_IPAPHi] = applyGain(configSettings.value("IPAP"),kHundredthGain);
+        session->settings[CPAP_RespRate] = applyGain(configSettings.value("TitraTime"),kNoGain);
+    } else if (myRESVENT_PAP_MODE == RESVENT_PAP_PC) {
+        session->settings[CPAP_EPAPLo] = applyGain(configSettings.value("EPAP"),kHundredthGain);
+        session->settings[CPAP_IPAPHi] = applyGain(configSettings.value("IPAP"),kHundredthGain);
+        session->settings[CPAP_RespRate] = applyGain(configSettings.value("TitraTime"),kNoGain);
+    }
 
     session->settings[RESVENT_Mode] = myRESVENT_PAP_MODE;
     int level = (configSettings.value("iPR").toInt()) ;
@@ -668,8 +732,8 @@ void ResventLoader::LoadStats(const UsageData& /*usage_data*/, Session* session 
     session->settings[RESVENT_iPRLevel] = level;
 }
 
-UsageData ResventLoader::ReadUsage(const QString& session_folder_path, const QString& usage_number) {
-    UsageData usage_data;
+ResVentUsageData ResventLoader::ReadUsage(const QString& session_folder_path, const QString& usage_number) {
+    ResVentUsageData usage_data;
     usage_data.number = usage_number;
 
     const auto session_stat_path = session_folder_path + QDir::separator() + "STAT" + usage_number;
@@ -721,12 +785,12 @@ UsageData ResventLoader::ReadUsage(const QString& session_folder_path, const QSt
     return usage_data;
 }
 
-QVector<UsageData> ResventLoader::GetDifferentUsage(const QString& session_folder_path) {
+QVector<ResVentUsageData> ResventLoader::GetDifferentUsage(const QString& session_folder_path) {
     QDir session_folder(session_folder_path);
 
     const auto stat_files = session_folder.entryList(QStringList() << "STAT*", QDir::Files, QDir::Name);
 
-    QVector<UsageData> usage_data;
+    QVector<ResVentUsageData> usage_data;
     std::for_each(stat_files.cbegin(), stat_files.cend(), [&](const QString& stat_file){
         if (stat_file.size() != 6) {
             return;
@@ -831,9 +895,15 @@ void ResventLoader::initChannels()
     channel.add(GRP_CPAP, chan);
 
     // These should be resvent loader names. must start at 0 and increment
-    chan->addOption(RESVENT_PAP_CPAP0, STR_TR_CPAP);    // strings have already been translated
-    chan->addOption(RESVENT_PAP_APAP1, STR_TR_APAP);    // strings have already been translated
-
+    chan->addOption(RESVENT_PAP_CPAP, STR_TR_CPAP);    // strings have already been translated
+    chan->addOption(RESVENT_PAP_APAP, STR_TR_APAP);    // strings have already been translated1
+    chan->addOption(RESVENT_PAP_S30, STR_TR_BIPAP);
+    chan->addOption(RESVENT_PAP_AUTO_S30, STR_TR_BIPAP);
+    chan->addOption(RESVENT_PAP_ST30, STR_TR_STASV);
+    chan->addOption(RESVENT_PAP_AUTO_ST30, STR_TR_STASV);
+    chan->addOption(RESVENT_PAP_T30, STR_TR_STASV);
+    chan->addOption(RESVENT_PAP_AUTO_ST30, STR_TR_STASV);// strings have already been translated
+    chan->addOption(RESVENT_PAP_PC, STR_TR_STASV);
 
     channel.add(GRP_CPAP, chan = new Channel(RESVENT_iPR = RESVENT_CHANNELS+1 , SETTING, MT_CPAP,   SESSION,
         "iPR", QObject::tr("iPR"), QObject::tr("Resvent Exhale Pressure Relief"), QObject::tr("iPR"), "", LOOKUP, Qt::green));
