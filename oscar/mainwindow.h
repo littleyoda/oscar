@@ -302,6 +302,8 @@ class MainWindow : public QMainWindow
 
     //void on_actionHelp_Support_OSCAR_Development_triggered();
 
+    void on_actionImport_Garmin_Data_triggered();
+
     void aboutBoxLinkClicked(const QUrl &url);
 
     void on_actionChange_Language_triggered();

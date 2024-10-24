@@ -322,6 +322,7 @@ SOURCES += \
     SleepLib/loader_plugins/somnopose_loader.cpp \
     SleepLib/loader_plugins/viatom_loader.cpp \
     SleepLib/loader_plugins/zeo_loader.cpp \
+    SleepLib/loader_plugins/garmin_loader.cpp \
     SleepLib/loader_plugins/resvent_loader.cpp \
     zip.cpp \
     SleepLib/thirdparty/miniz.c \
