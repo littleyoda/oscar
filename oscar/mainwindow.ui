@@ -2524,6 +2524,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionImport_Somnopose_Data"/>
     <addaction name="actionImport_Viatom_Data"/>
     <addaction name="actionImport_RemStar_MSeries_Data"/>
+    <addaction name="actionImport_Garmin_Data"/>
     <addaction name="separator"/>
     <addaction name="action_Rebuild_Oximetry_Index"/>
     <addaction name="menu_Rebuild_CPAP_Data"/>
@@ -2738,6 +2739,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionImport_RemStar_MSeries_Data">
    <property name="text">
     <string>Import RemStar MSeries Data</string>
+   </property>
+  </action>
+  <action name="actionImport_Garmin_Data">
+   <property name="text">
+    <string>Import Garmin Connect Data</string>
    </property>
   </action>
   <action name="actionSleep_Disorder_Terms_Glossary">

@@ -304,6 +304,8 @@ void init()
     schema::channel.add(GRP_CPAP, ch = new Channel(CPAP_Mode         = 0x1200, SETTING,   MT_CPAP,  SESSION, "PAPMode",
                         QObject::tr("PAP Mode"), QObject::tr("PAP Device Mode"), QObject::tr("PAP Mode"),  QString(), LOOKUP,  Qt::black));
 
+
+
     ch->addOption(0, STR_TR_Unknown);
     ch->addOption(1, STR_TR_CPAP);
     ch->addOption(2, QObject::tr("APAP (Variable)"));
@@ -345,6 +347,10 @@ void init()
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeInDeep = 0x2007, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeInDeep",   QObject::tr("Time In Deep Sleep"), QObject::tr("Time spent in deep sleep"), QObject::tr("Time in Deep Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_TimeToZ    = 0x2008, DATA,   MT_SLEEPSTAGE,  SESSION, "TimeToZ",      QObject::tr("Time to Sleep"), QObject::tr("Time taken to get to sleep"), QObject::tr("Time to Sleep"),  STR_UNIT_Minutes, INTEGER,  Qt::black));
     schema::channel.add(GRP_SLEEP, ch = new Channel(ZEO_ZQ         = 0x2009, DATA,   MT_SLEEPSTAGE,  SESSION, "ZeoZQ", QObject::tr("Zeo ZQ"), QObject::tr("Zeo sleep quality measurement"), QObject::tr("ZEO ZQ"),  QString(), INTEGER,  Qt::black));
+    schema::channel.add(GRP_SLEEP, ch = new Channel(GARMIN_Stress  = 0x3000, WAVEFORM,   MT_SLEEPSTAGE, SESSION, STR_GRAPH_Stress,
+            QObject::tr("Stress"), QObject::tr("Sleep Stress"),  QObject::tr("Stress"),  QString(), INTEGER,  QColor("dark green")));
+    schema::channel.add(GRP_SLEEP, ch = new Channel(GARMIN_HRV     = 0x3001, WAVEFORM,   MT_SLEEPSTAGE, SESSION, STR_GRAPH_HRV,
+            QObject::tr("HRV"), QObject::tr("Heart rate variability"),  QObject::tr("HRV"),  QString(), INTEGER,  QColor("dark green")));
 
     NoChannel = 0;
     /*

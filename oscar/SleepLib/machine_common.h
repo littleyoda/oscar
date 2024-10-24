@@ -190,6 +190,8 @@ extern ChannelID ZEO_SleepStage, ZEO_ZQ, ZEO_TotalZ, ZEO_TimeToZ, ZEO_TimeInWake
 
 extern ChannelID POS_Orientation, POS_Inclination, POS_Movement;
 
+extern ChannelID GARMIN_Stress, GARMIN_HRV;
+
 const QString GRP_CPAP = "CPAP";
 const QString GRP_POS = "POS";
 const QString GRP_OXI = "OXI";

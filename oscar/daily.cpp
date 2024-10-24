@@ -93,7 +93,8 @@ const QList<QString> standardGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull
+                                           STR_GRAPH_FlowFull,
+                                           STR_GRAPH_Stress, STR_GRAPH_HRV
                                           };
 
 // Advanced graph order
@@ -103,7 +104,8 @@ const QList<QString> advancedGraphOrder = {STR_GRAPH_SleepFlags, STR_GRAPH_FlowR
                                            STR_GRAPH_SleepStage, STR_GRAPH_Inclination, STR_GRAPH_Orientation, STR_GRAPH_Motion, STR_GRAPH_TestChan1,
                                            STR_GRAPH_Oxi_Pulse, STR_GRAPH_Oxi_SPO2, STR_GRAPH_Oxi_Perf, STR_GRAPH_Oxi_Plethy,
                                            STR_GRAPH_AHI, STR_GRAPH_TAP, STR_GRAPH_ObstructLevel, STR_GRAPH_PressureMeasured, STR_GRAPH_rRMV, STR_GRAPH_rMVFluctuation,
-                                           STR_GRAPH_FlowFull
+                                           STR_GRAPH_FlowFull,
+                                           STR_GRAPH_Stress, STR_GRAPH_HRV
                                           };
 
 // CPAP modes that should have Advanced graphs
@@ -253,7 +255,8 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
         CPAP_FlowRate, CPAP_Pressure, CPAP_Leak, CPAP_FLG, CPAP_Snore, CPAP_TidalVolume,
         CPAP_MaskPressure, CPAP_RespRate, CPAP_MinuteVent, CPAP_PTB, PRS1_PeakFlow, CPAP_RespEvent, CPAP_Ti, CPAP_Te,
         CPAP_IE, ZEO_SleepStage, POS_Inclination, POS_Orientation, POS_Movement, CPAP_Test1,
-        Prisma_ObstructLevel, Prisma_rRMV, Prisma_rMVFluctuation, Prisma_PressureMeasured, Prisma_FlowFull
+        Prisma_ObstructLevel, Prisma_rRMV, Prisma_rMVFluctuation, Prisma_PressureMeasured, Prisma_FlowFull,
+        GARMIN_Stress, GARMIN_HRV
     };
 
     // Create graphs from the cpap code list
@@ -448,6 +451,9 @@ Daily::Daily(QWidget *parent,gGraphView * shared)
     graphlist[schema::channel[OXI_SPO2].code()]->AddLayer(new gLineChart(OXI_SPO2, true));
     graphlist[schema::channel[OXI_Perf].code()]->AddLayer(new gLineChart(OXI_Perf, false));
     graphlist[schema::channel[OXI_Plethy].code()]->AddLayer(new gLineChart(OXI_Plethy, false));
+
+    graphlist[schema::channel[GARMIN_Stress].code()]->AddLayer(new gLineChart(GARMIN_Stress, false));
+    graphlist[schema::channel[GARMIN_HRV].code()]->AddLayer(new gLineChart(GARMIN_HRV, false));
 
 
     // Fix me
@@ -1317,7 +1323,8 @@ QString Daily::getStatisticsInfo(Day * day)
         Prisma_ObstructLevel, Prisma_PressureMeasured, Prisma_rRMV, Prisma_rMVFluctuation,
         CPAP_MinuteVent, CPAP_RespRate, CPAP_RespEvent,CPAP_FLG,
         CPAP_Leak, CPAP_LeakTotal, CPAP_Snore,  CPAP_IE,  CPAP_Ti,CPAP_Te, CPAP_TgMV,
-        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement
+        CPAP_TidalVolume, OXI_Pulse, OXI_SPO2, POS_Inclination, POS_Orientation, POS_Movement,
+        GARMIN_Stress, GARMIN_HRV
     };
     int numchans=sizeof(chans)/sizeof(ChannelID);
     int ccnt=0;

@@ -54,6 +54,7 @@
 #include <SleepLib/loader_plugins/dreem_loader.h>
 #include <SleepLib/loader_plugins/somnopose_loader.h>
 #include <SleepLib/loader_plugins/viatom_loader.h>
+#include <SleepLib/loader_plugins/garmin_loader.h>
 
 #ifdef REMSTAR_M_SUPPORT
 #include <SleepLib/loader_plugins/mseries_loader.h>
@@ -2182,6 +2183,12 @@ void MainWindow::on_actionImport_ZEO_Data_triggered()
     importNonCPAP(zeo);
 }
 
+void MainWindow::on_actionImport_Garmin_Data_triggered()
+{
+    GARMINLoader garmin;
+    importNonCPAP(garmin);
+}
+
 void MainWindow::on_actionImport_Dreem_Data_triggered()
 {
     DreemLoader dreem;
@@ -2577,7 +2584,6 @@ void MainWindow::on_importButton_clicked()
 {
     on_action_Import_Data_triggered();
 }
-
 
 void MainWindow::on_actionLine_Cursor_toggled(bool b)
 {
