@@ -52,7 +52,7 @@ protected:
   QDateTime getDateTime(QJsonValueRef obj);
   void importValues(ChannelID cid, QJsonArray heartrates, int minRange, int maxRange, QString attr);
   QString getTimeFieldField(QJsonArray items);
-
+  qint64 timezoneOffset(QDateTime dt);
 private:
   QFile file;
   Machine *mach;

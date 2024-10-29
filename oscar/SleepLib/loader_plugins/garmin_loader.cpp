@@ -82,7 +82,7 @@ int GARMINLoader::OpenFile(const QString &filename)
         startTS = min(startTS, first);
         endTS = max(endTS, last);
     }
-    qDebug() << "Starting Import. Timerange: " << startTS << endTS << "Entries:" << count;
+    qDebug() << "Starting Import. Timerange: " << startTS << endTS << "Entries:" << count << "Timezone-Offset: " << timezoneOffset(startTS) / 1000 / 60;
     SessionID sid = startTS.toTime_t();
     if (mach->SessionExists(sid))
     {
@@ -93,10 +93,11 @@ int GARMINLoader::OpenFile(const QString &filename)
     m_session = sess;
     sess->really_set_first(qint64(startTS.toTime_t()) * 1000L);
 
-    importValues(ZEO_SleepStage, levels, 0, 4, "activityLevel");
-    importValues(OXI_Pulse, heartrates, 0, 200, "value");
     importValues(POS_Movement, sleepmovements, 0, 10, "activityLevel");
+    importValues(ZEO_SleepStage, levels, 0, 4, "activityLevel");
     importValues(OXI_SPO2, o2, 70, 100, "spo2Reading");
+
+    importValues(OXI_Pulse, heartrates, 0, 200, "value");
     importValues(GARMIN_Stress, stress, 0, 100, "value");
     importValues(GARMIN_HRV, hrvData, 0, 100, "value");
 
@@ -140,14 +141,16 @@ void GARMINLoader::importValues(ChannelID cid, QJsonArray items, int minRange, i
     {
         qDebug() << "Nothing to import for " << schema::channel[cid].label() << schema::channel[cid].code();
     }
-
     QString timeFieldName = getTimeFieldField(items);
 
-    qDebug() << "Importing" << schema::channel[cid].label() << schema::channel[cid].code() << "Entries:" << items.size();
+    QDateTime first = getDateTime(items.first().toObject()[timeFieldName]);
+    QDateTime last = getDateTime(items.last().toObject()[timeFieldName]);
+    qDebug() << "Importing" << schema::channel[cid].label() << schema::channel[cid].code() 
+             << "Entries:" << items.size() << first << last;
 
     for (auto item : items)
     {
-        QDateTime start = getDateTime(item.toObject()[timeFieldName]);
+        QDateTime start     = getDateTime(item.toObject()[timeFieldName]);
         ts = qint64(start.toTime_t()) * 1000L;
         double level = item.toObject()[attr].toDouble();
         if (cid == ZEO_SleepStage)
@@ -170,11 +173,16 @@ void GARMINLoader::importValues(ChannelID cid, QJsonArray items, int minRange, i
     EndEventList(cid, ts);
 }
 
+
 /**
  * @brief get DateTime-Object from Json DateTime Value
  *
  * Handels Timestamps (1728880508000) and ISO-Format (2024-10-19T19:18:00.0)
  * and correct timezone
+ *
+ * Timestamp: Pulse, hrv, stress
+ * ISO-Format: movement, sleep-level, spo2
+ * 
  * @param obj QJsonValueRef with Timestamp or DateTime in ISO-Format
  * @return QDateTime
  */
@@ -189,10 +197,27 @@ QDateTime GARMINLoader::getDateTime(QJsonValueRef obj)
     {
         QString subString = obj.toString().mid(0, 19);
         dt = QDateTime::fromString(subString, "yyyy-MM-ddTHH:mm:ss");
-        dt = dt.addMSecs(timezoneOffset());
+        dt = dt.addMSecs(timezoneOffset(dt));
     }
-    dt = dt.addMSecs(-60 * 60 * 1000); // 1h correction for the incorret time of airsense 11
+    // CEST, CET
+    if (dt.timeZoneAbbreviation() == "CEST") 
+    {
+        dt = dt.addMSecs(-60 * 60 * 1000); // 1h correction for the incorret time of airsense 11
+    }
     return dt;
+}
+
+
+qint64 GARMINLoader::timezoneOffset(QDateTime dt)
+{
+    static qint64 _TZ_offset = 0;
+
+    QDateTime d1 = dt;
+    QDateTime d2 = d1;
+    d1.setTimeSpec(Qt::UTC);
+    _TZ_offset = d2.secsTo(d1);
+    _TZ_offset *= 1000L;
+    return _TZ_offset;
 }
 
 void GARMINLoader::closeFile()
